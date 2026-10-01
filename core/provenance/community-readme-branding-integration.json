@@ -1,0 +1,243 @@
+{
+  "date": "2026-10-02",
+  "source_commit": "f8d76b3b882c74c098b2ffbdddf910711a4fcb01",
+  "requester": "human user",
+  "scope": "bilingual README, shared branding and loading identity in the user-renamed repository",
+  "license_change": false,
+  "source_snapshots_modified": false,
+  "files": [
+    {
+      "path": "docs/work/BUILDING.md",
+      "sha256": "649494bacd14c191e3327d67b41dd06243ecca48eba99c66b5c963d6ae45cc81"
+    },
+    {
+      "path": "README.md",
+      "sha256": "eb61ebe7ba03e478dc448109c8e76bacdefb47f4d2d80557dc556735b51c3dd6"
+    },
+    {
+      "path": "README.zh-CN.md",
+      "sha256": "0c25f04ea5686f221079292c4f35af5f0ee68cac50e95107a25663c948262d44"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/api/mod/GregTechIdentity.java",
+      "sha256": "669bb008d92158fab0e167d5f97113dbd36630d122253f1fe11f936036d247dd"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/data/ModReferences.java",
+      "sha256": "95e035c7239dd3b3a925d103e107e8a0f05e804b6c767f7a2a5146a9072a09bc"
+    },
+    {
+      "path": "gradle.properties",
+      "sha256": "93079d304031b5e866995e69bb29dd76979a8665eb50fb2e0dd8ec17dc086c6e"
+    },
+    {
+      "path": "neoforge/build.gradle",
+      "sha256": "19142062732a549e6181d8009ec25534295985f3253407db885c1ca49dc7b6fb"
+    },
+    {
+      "path": "neoforge/src/bootstrapGameTest/java/com/gregtech/gregtech/integration/client/NeoForgeClientSmoke.java",
+      "sha256": "d29d98f2ccc9b8ff8265e76c86452fefe1de7f09f6f810886f70b902a0aa8984"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/MaterialClientModels.java",
+      "sha256": "aeecb0f0e124b6896fbf0a5dc3a104c6c1da51887e2102829ce796974aeb41d8"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "sha256": "78451bc55c657f355fea18b31894f0a27b88ea90fa82187e451038e7744c5724"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTItems.java",
+      "sha256": "5f2bbdf5df9ef2efa94401947a3c8d13652ed2d8543de72d2bcfa45f3293cd8e"
+    },
+    {
+      "path": "src/bootstrapGameTest/java/com/gregtech/gregtech/integration/client/ForgeClientSmoke.java",
+      "sha256": "588258197f68be0ca9e15b795d87436a108c32f6604f289989e0765c24a0f7b4"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/GregTech.java",
+      "sha256": "966684ef8786d10fc12bf2f5c8b959348917923fd7879271a4e377eb4adf2a75"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/block/misc/CoinItemExpireHandler.java",
+      "sha256": "7d007d9b084c86fb9a378eb49c5fae18c01ec220af5acfaa42a49ae1a05bf4a7"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/block/misc/PileItemExpireHandler.java",
+      "sha256": "c352cf7d858750d9976ef2bee329bf0fec7a5a72bf0242a0401d72f4cc192900"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/block/misc/PilePlacementHandler.java",
+      "sha256": "83144191a022329ce926c679253f051d6b4a9546886f2459e1e677874017efd6"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/BedrockFlowerTooltips.java",
+      "sha256": "acf9e1772a6b077efe83d48d94cf4139ddceff8ad7668398f6affbee4b854bd5"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/CreativeBuildTimings.java",
+      "sha256": "1b6835a246d7188ef8be12aa79baec22a4369be864d8839ad26c1b586cb0e186"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/CreativeTabIconClientModels.java",
+      "sha256": "0b820ef62df92c5f79b587c08258ddeca8418911efd26d9e32b9725a82226857"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/CrucibleClientModels.java",
+      "sha256": "a27d366ba98e5e624b2da46cf0b69f00591ef517697d0a9fc4674d658e1a8dfa"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/FluidItemClientModels.java",
+      "sha256": "ded2acd342512674fa6a6c60cb229c014ef3ccf4833ee691f4176c83a0a62bca"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/GTToolClient.java",
+      "sha256": "c19acdca9fcd63c0a394da6746c1abdadc5eec6d3d7b6c009537a757f94707bd"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/GTToolModel.java",
+      "sha256": "1ab9d4d61cd8a4669781ed112fd495b05319af3c4e01b1628c47584e658fb056"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/GearboxClientModels.java",
+      "sha256": "4396e1ab8fe3cf29092894a636b3a252d2a50942c1d04aa45186512259682114"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+      "sha256": "7b08693931b82834aa369d15b80ab8be05f372f250f899c3a15cc3977e69dce3"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/HopperClientModels.java",
+      "sha256": "253a16c51bdb4d838e6dd05b2d2c8dea8bac5c1433dcf2742da35ecf46eb77a4"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/MachineBlockClientModels.java",
+      "sha256": "dee55df8134e2983580ddc21e6fa3a94b44fa9161f033519785f87c73be88acf"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/MaterialBlockClientModels.java",
+      "sha256": "8b0f58568c99bafbb29b677b672ff3ffda862e33c12d0866465a5d3add6423d4"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/MaterialClientModels.java",
+      "sha256": "888238064e457dbadf9198bb275a24c02fb09dcb4e192d8bdecb0ff627985480"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/MaterialTooltipHandler.java",
+      "sha256": "db6d1b80b97021abb300567b8793b627322489c6b036e0821b96ed08322a3846"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/OreClientModels.java",
+      "sha256": "c21ede811294dd76cb070d435aa9bd0cd2c9100399138c6504410c325a1ea13a"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/PipeWireClientModels.java",
+      "sha256": "e6f2af0c63ddd31bf0e9691160b441f3e0522b4ee5a9d9f188f2cbe2f41dba29"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/SlabPlacementOverlayRenderer.java",
+      "sha256": "2c370b5ffed8a49daefea46823753fd01f25c65f9a9a01b7a8e22dc5f7e0f70b"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/SmelteryClientModels.java",
+      "sha256": "5b37c1ef55c4686fd1818428dfdf47c133176c2f8819c15ecae14da9ca9d4ab6"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/StoneBlockClientModels.java",
+      "sha256": "576ef669381cda9ca4cf661b063c2c071e9f898e48d881971fab382649bf8e41"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/content/food/FoodStatEvents.java",
+      "sha256": "a67aa2fff382178ffa77544a4ea61e839ab5b5ffac0bf8292478245901c828ef"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/content/food/GTFoodItems.java",
+      "sha256": "f6eb6a6b42bcfbd2e0374b3bca5209ee997beaf6810a6387d33bd5a48002fe04"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/content/hazard/BathingEffectEvents.java",
+      "sha256": "727e8fe001e78f424e28bd81a39936efcf5caf5ad77af644168db8741814dcbf"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/content/hazard/BreathingGasEvents.java",
+      "sha256": "de8fdcdef2da2ad41576581112ba7d95314e2f28fcf495ed6dce93161afa8fb4"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/content/loot/LootTableInjection.java",
+      "sha256": "255243a1cd9db07df1e3fadc4a1841a860468c12b55f16266024b6afd30a5596"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/content/multiblock/VonDaGraaggSpawnInhibitor.java",
+      "sha256": "e3b96507caa2fe7cd6e798e79f4bf3cde41789fc21393d982a22cb7e185e5dce"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/content/nuclear/PlayerRadiation.java",
+      "sha256": "ddd50bff38126f9ccbe7da72144e86d19a85fe4af57303a87e83b900d14c8b18"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/content/nuclear/ReactorNetwork.java",
+      "sha256": "8de23f3e586553b793cfc687d97b4b957c6dcde12e26d046e2e6a7dffc53a8ec"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/content/recipe/GTBumbleBeeRecipes.java",
+      "sha256": "7a861ac9a0d1292a66f8c8b517f9e0c427f23a67e0ec66e281603e94af2897c6"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/data/BasicMachineRecipePack.java",
+      "sha256": "196581239f2040cda84ff6a25bc2a5ee0b51b98b89172c74f361ef8b0f2b6537"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/data/BlockHarvestEvents.java",
+      "sha256": "c26a8e763bd29276a2955b8339665c3fbad46a4af5b39d263e54e1ba90afdee1"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/data/BlockLootPack.java",
+      "sha256": "048a91b0c831d2632978dfbeed57d05ed5b96fc79ab5dbc51769a9c4a23deab9"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/data/MaterialTagPack.java",
+      "sha256": "bf1d25618e378a7479aa7b3119bcd79c24e313392747adf13c17abe365e62aeb"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/data/MultiblockRecipePack.java",
+      "sha256": "fd1ccd3745c6f710c637387ce6428d53e6e646fc94766475f4143c6b46bbaf41"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/data/SensorRecipePack.java",
+      "sha256": "b628461cfe53358fb93946eaa621c974733607f51f1c2e450348c47f944f6457"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/data/ToolBlockConversionEvents.java",
+      "sha256": "2a34aeb01b0f80e61e171b82bb3f51b2e46c78046b70cae59688905d0301ec35"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/event/CrucibleInteractionHandler.java",
+      "sha256": "786e36f4b75b88b5c12242c2c0e59357e89aaaeffca96e14c2dbf6ad72e5d5fa"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/event/SmelteryInteractionHandler.java",
+      "sha256": "00976cbe42dbdcaf08d7f677c4f61a89e45a70d77c10b05b1d95a8b713ca4bea"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/loaders/b/Loader_Creative.java",
+      "sha256": "6e218042067fa8e39a655556618fd6621219af5c291ec5854119ee5088dc241f"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/recipe/RuntimeRecipeLifecycle.java",
+      "sha256": "c0fd59890fdeb0a5b47bd7b00a45ce149c6a3d50706e01a0425a38074f7e585f"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/recipe/ShapelessRecipeTooltipIndexLoader.java",
+      "sha256": "5be3e59355073cfc2ec54dc93eb5b0c2b53ec3303eb1bf8b5cc96429b3df00ec"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/registry/LegacyItemMappings.java",
+      "sha256": "bd115d567bd490749a642e32e4ce1c1714f2be22e8f66ad673ab32f4f481f44b"
+    },
+    {
+      "path": "tools/integration/verify_artifacts.py",
+      "sha256": "1fb5194663a6903dc4ec9dbd7cd2a2ee74bd8973ea04eb743372b638bbb6a533"
+    }
+  ],
+  "verification": "docs/integration/verification/community-readme-branding-20261002.json"
+}
