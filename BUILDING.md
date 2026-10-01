@@ -7,7 +7,7 @@
 目前不是两个完全独立的项目。`settings.gradle` 同时包含 `core` 和 `neoforge`，根项目本身是 Forge 平台。
 
 ```text
-gregtech6/
+GregTech6/
 ├── src/                  Forge 1.20.1 平台代码和平台资源
 ├── core/                 两平台共享的材料、配方、能源、物流、热量等逻辑与公共资源
 ├── neoforge/             NeoForge 1.21.1 平台代码和平台资源
@@ -23,7 +23,7 @@ Forge 和 NeoForge 的注册、网络、能力、物品组件及客户端 API �
 
 ## 模组名称与 ID
 
-两版显示名称均为 `GregTech 6 Integrated`，加载 ID 均为 `gregtech6`，元数据读取根目录 `gradle.properties`。两平台入口和事件订阅使用共享的 `GregTechIdentity.MOD_ID`。
+两版显示名称均为 `GregTech 6 Community Edition`，加载 ID 均为 `gregtech6`，元数据读取根目录 `gradle.properties`。两平台入口和事件订阅使用共享的 `GregTechIdentity.MOD_ID`。
 
 现有物品、方块、配方、模型、翻译和网络通道仍使用 `gregtech:` 内部命名空间。这与加载 ID 是不同用途；本次不批量改动注册身份和保存数据。配置文件默认名称可能随加载 ID 改变，原有自定义配置需手动核对迁移。旧世界和跨版本升级兼容仍未验证。
 
