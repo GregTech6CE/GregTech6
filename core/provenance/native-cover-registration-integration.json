@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-01",
+  "policy": "D011 Forge baseline parity; D010 grouped compile/jar only, no repeated client/server launch or new fixture.",
+  "authors": [
+    "saltnya",
+    "original GregTech6 contributors"
+  ],
+  "license": "Original author/history/notices retained, no donor changes or license reassignment.",
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/MachineCoverRenderer.java",
+      "sha256": "47774f81b468895c3cef317d6df89fece13a1e590b86f06f8beb55e31331868e",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/client/MachineCoverRenderer.java",
+      "currentForgeReferenceSha256": "7b03ca55af913885fc56c7f932e761fe4333b9838c94fa710c6b0424bf14f472",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\MachineCoverRenderer.java",
+      "sourceSha256": "7b03ca55af913885fc56c7f932e761fe4333b9838c94fa710c6b0424bf14f472"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/BasicMachineClientSetup.java",
+      "sha256": "a128e2b15e329d4c1c257dad0083b6e515d47f6843f357499492839932f55745",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+      "currentForgeReferenceSha256": "4d6e46a4d9c0c35796033a9a1f759d7afc014a0ec078cf2d4604f17fe76e1705",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\GregTechClient.java",
+      "sourceSha256": "4d6e46a4d9c0c35796033a9a1f759d7afc014a0ec078cf2d4604f17fe76e1705",
+      "priorNativeSha256": "693c61d3f5fecdce6c362ad24553ab156cb94c9e56930056f850f73dd0ff8b2b"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/LogisticsClientSetup.java",
+      "sha256": "c97e2cc510a24a8e60efbad6ab2eb4f04797acd36f86dab3d5d0aa2b02833432",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+      "currentForgeReferenceSha256": "4d6e46a4d9c0c35796033a9a1f759d7afc014a0ec078cf2d4604f17fe76e1705",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\GregTechClient.java",
+      "sourceSha256": "4d6e46a4d9c0c35796033a9a1f759d7afc014a0ec078cf2d4604f17fe76e1705",
+      "priorNativeSha256": "d351dc57e6a29e0b151503ca5e3ff39baf28e16269b1fe2e38a67c71d26d4528"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/RelayFilterClientSetup.java",
+      "sha256": "1b89d438bedaaa09b3b6b80d65ef8cdf9bec2e564f645b6b9b2cd2bf5e2d990b",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+      "currentForgeReferenceSha256": "4d6e46a4d9c0c35796033a9a1f759d7afc014a0ec078cf2d4604f17fe76e1705",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\GregTechClient.java",
+      "sourceSha256": "4d6e46a4d9c0c35796033a9a1f759d7afc014a0ec078cf2d4604f17fe76e1705"
+    }
+  ],
+  "scope": "Complete original machine plate renderer and registration on all actual BasicMachineRegistries types; existing full logistics renderer registered on core and ports as well as wire. Four filter and eight Source extender block/item tint callbacks restored.",
+  "assets": "No resource/core/common/Forge changes; existing covers, sprites, orientation mapping, item identities and synchronization reused."
+}

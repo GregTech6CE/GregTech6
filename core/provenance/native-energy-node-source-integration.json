@@ -1,0 +1,1530 @@
+{
+  "source": "saltnya",
+  "license": "unchanged; publication authorization unresolved",
+  "verification": "Grouped core/Neo/Forge Java compile PASS after one Neo sound holder API repair; final Neo compile also PASS after source legacy BE support correction",
+  "physicalNodes": 70,
+  "ids": [
+    "electric_motor_lv",
+    "electric_motor_mv",
+    "electric_motor_hv",
+    "electric_motor_ev",
+    "electric_motor_iv",
+    "electric_dynamo_lv",
+    "electric_dynamo_mv",
+    "electric_dynamo_hv",
+    "electric_dynamo_ev",
+    "electric_dynamo_iv",
+    "electric_heater_lv",
+    "electric_heater_mv",
+    "electric_heater_hv",
+    "electric_heater_ev",
+    "electric_heater_iv",
+    "electric_cooler_lv",
+    "electric_cooler_mv",
+    "electric_cooler_hv",
+    "electric_cooler_ev",
+    "electric_cooler_iv",
+    "electromagnet_lv",
+    "electromagnet_mv",
+    "electromagnet_hv",
+    "electromagnet_ev",
+    "electromagnet_iv",
+    "flux_magnet_lv",
+    "flux_magnet_mv",
+    "flux_magnet_hv",
+    "flux_magnet_ev",
+    "flux_magnet_iv",
+    "battery_box_ulv",
+    "battery_box_lv",
+    "battery_box_mv",
+    "battery_box_hv",
+    "battery_box_ev",
+    "battery_box_iv",
+    "battery_box_luv",
+    "battery_box_zpm",
+    "battery_box_uv",
+    "battery_box_xv",
+    "energy_storage_ulv",
+    "energy_storage_lv",
+    "energy_storage_mv",
+    "energy_storage_hv",
+    "energy_storage_ev",
+    "energy_storage_iv",
+    "energy_storage_luv",
+    "energy_storage_zpm",
+    "energy_storage_uv",
+    "energy_storage_xv",
+    "transformer_ulv_lv",
+    "transformer_lv_mv",
+    "transformer_mv_hv",
+    "transformer_hv_ev",
+    "transformer_ev_iv",
+    "transformer_iv_luv",
+    "transformer_luv_zpm",
+    "transformer_zpm_uv",
+    "transformer_uv_xv",
+    "flux_motor_lv",
+    "flux_motor_mv",
+    "flux_dynamo_lv",
+    "flux_dynamo_mv",
+    "steam_turbine_bronze",
+    "steam_turbine_brass",
+    "steam_turbine_invar",
+    "steam_turbine_steel",
+    "steam_turbine_chromium",
+    "solar_panel_silicon",
+    "solar_panel_germanium"
+  ],
+  "preserved": [
+    "full original converter/turbine/solar/magnet/battery-box node behavior",
+    "shared original buffer/state/catalogs",
+    "complete battery inventory and source menu",
+    "provider-aware empty item persistence and retained keys",
+    "native sided FE/item/fluid capabilities and panel covers"
+  ],
+  "gaps": [
+    "reactor factories and nuclear subsystem",
+    "full manual/powered tools and crafting",
+    "rotation transformers and axial factories",
+    "actual charging/traversal/conversion/client/restart tests"
+  ],
+  "records": [
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/blockentity/energy/EnergyNodeBlockEntity.java",
+      "sha256": "0c24b3ce02d882665841aa84fd32d6bf23cf0bdc289ebd49036fc847976d416e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/block/energy/EnergyNodeBlock.java",
+      "sha256": "f72831b5cc3fb75afaf6274e5c18876d1cee24f9dcabeaf375ed945874952bb0"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/block/energy/ElectricTransformerBlock.java",
+      "sha256": "ff73d05ab7975d1f6893a365cfc3e317e6b55e79a70d94b37828c19b0f11b807"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/block/energy/BatteryBoxBlock.java",
+      "sha256": "18b03fa0d2ef7811ebe18545c9c64754df53acbf39070693ffde43dc2bb8fd2b"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/block/energy/MagnetMachineBlock.java",
+      "sha256": "7b6e2cf5c7b545ee0b8f89f1b6a082bbba7dadc5af63666c9b54e960cdbe24f6"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/client/TooltipHelper.java",
+      "sha256": "56cc80c4ec8c3cad6688f5d212621b740dc3a4f2857a97b065c76ba0c79ac4b5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/client/EnergyNodeRenderer.java",
+      "sha256": "9da975a1ab66d4d03f736ab44fa9e0cf581d5972874d853cfaee807f35921b27"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/registry/GTEnergyNodes.java",
+      "sha256": "0216a1fdd398d758cef6c0955de95b9281aed2222463a61175262e37b2be16a2"
+    }
+  ],
+  "resources": [
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/electric_motor_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/electric_motor_lv.json",
+      "sha256": "0c6d66581e63fa3762c771de1e85d8368c2ba1c2dfada8708d8a0d3ae62e580a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_motor_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_motor_lv.json",
+      "sha256": "a3d58977f344dfb39ee161875c0c5f3313be4d3b801f49d4c90a76dd61c43201"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/electric_motor_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/electric_motor_lv.json",
+      "sha256": "6d8cdc4f7631d0abe00a9b6ad15848336090fda24b98305c47cf42c9e99207b8"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/electric_motor_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/electric_motor_mv.json",
+      "sha256": "21155126a89a546785e5a7debec36aaa66aabb28179001a279c43b9e2cacc956"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_motor_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_motor_mv.json",
+      "sha256": "a3d58977f344dfb39ee161875c0c5f3313be4d3b801f49d4c90a76dd61c43201"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/electric_motor_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/electric_motor_mv.json",
+      "sha256": "777dc672d2e3ad5e93d98d6cfc8454a85f7f3134b85014e4694d04548741badc"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/electric_motor_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/electric_motor_hv.json",
+      "sha256": "0b843cadc13e9d3ffab1be9113da15127e74ecfdbbdb0ee468a13492c97addb8"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_motor_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_motor_hv.json",
+      "sha256": "a3d58977f344dfb39ee161875c0c5f3313be4d3b801f49d4c90a76dd61c43201"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/electric_motor_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/electric_motor_hv.json",
+      "sha256": "d51be9befd17b66481ba65c6e432bd6aa512cf1a716b2c095099b9edb6aa85c9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/electric_motor_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/electric_motor_ev.json",
+      "sha256": "cae956fdb05c626b82bcf08c73e0d283dfd56be443864b64e3725b41e31b2c59"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_motor_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_motor_ev.json",
+      "sha256": "a3d58977f344dfb39ee161875c0c5f3313be4d3b801f49d4c90a76dd61c43201"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/electric_motor_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/electric_motor_ev.json",
+      "sha256": "c5fe565798ba60fd325d0da034db8024e738d132bcb9c12b733f14b2af976a54"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/electric_motor_iv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/electric_motor_iv.json",
+      "sha256": "e8f1a28ab5a936bef9fddeb6f994e2d820ff0390f84763819b35021975a1dbbc"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_motor_iv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_motor_iv.json",
+      "sha256": "a3d58977f344dfb39ee161875c0c5f3313be4d3b801f49d4c90a76dd61c43201"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/electric_motor_iv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/electric_motor_iv.json",
+      "sha256": "db34a0798ec09c82281bf0d3ae8ac5d77ac8eecdd4a8bd2bc77d5e6ead127675"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/electric_dynamo_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/electric_dynamo_lv.json",
+      "sha256": "2606687bdcf7f56615270a2d2a6ae86be7f2e4e7455f8b145ddc593c9ba1eba3"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_dynamo_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_dynamo_lv.json",
+      "sha256": "c73b4e16f9c66abec04b8e7b44977beff0593baba3b3737270068fff82673483"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/electric_dynamo_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/electric_dynamo_lv.json",
+      "sha256": "093670cdf62934a513ab286f82f7fdeb87f396c28b3ad308b603a46a6e9e577b"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/electric_dynamo_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/electric_dynamo_mv.json",
+      "sha256": "5177486ed28dd7fae9ddc4f831caa21e1d8e767ca0c2a83e0bccca116274a493"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_dynamo_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_dynamo_mv.json",
+      "sha256": "c73b4e16f9c66abec04b8e7b44977beff0593baba3b3737270068fff82673483"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/electric_dynamo_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/electric_dynamo_mv.json",
+      "sha256": "1d0a0ee64fda6807f02564a93ce8997cbc99eb0b0fc4c314bdf62888d272925d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/electric_dynamo_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/electric_dynamo_hv.json",
+      "sha256": "5b53f22dd82abb3823a606e9daadde29a07d9e271d34218544f579d4de6142ea"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_dynamo_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_dynamo_hv.json",
+      "sha256": "c73b4e16f9c66abec04b8e7b44977beff0593baba3b3737270068fff82673483"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/electric_dynamo_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/electric_dynamo_hv.json",
+      "sha256": "7876500b8b73465ccdf3361c1968c23e4be2a513b33e0af94736996896a50335"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/electric_dynamo_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/electric_dynamo_ev.json",
+      "sha256": "c941a614ec122cf802511d41c13509a52aac467605ae2b686d9fa7dabdc9559a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_dynamo_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_dynamo_ev.json",
+      "sha256": "c73b4e16f9c66abec04b8e7b44977beff0593baba3b3737270068fff82673483"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/electric_dynamo_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/electric_dynamo_ev.json",
+      "sha256": "1c99390959cf14bc50a4e82fc8ed9a4279c24cf11a9a9ea75ac509510af0bf68"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/electric_dynamo_iv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/electric_dynamo_iv.json",
+      "sha256": "29725b2f8232b74733978023d7e384eacf6fa6fb45c763ebf0dbf837fd348125"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_dynamo_iv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_dynamo_iv.json",
+      "sha256": "c73b4e16f9c66abec04b8e7b44977beff0593baba3b3737270068fff82673483"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/electric_dynamo_iv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/electric_dynamo_iv.json",
+      "sha256": "73ceec8d8a9a882423f0a4612a88ea6bca154d60b5167067f204a8102c893085"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/electric_heater_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/electric_heater_lv.json",
+      "sha256": "8d8399c9d85c80665a6f9bb85a8d3523ae0cc9e32e514c5d1a13f239e9144b4b"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_heater_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_heater_lv.json",
+      "sha256": "4d696507e32a6945508babcd9f382b0aa562c8b4e6b36a7541cf73ed487d3bcf"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/heaters/heat_electric/colored/front.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/heaters/heat_electric/colored/front.png",
+      "sha256": "b94934858d010e0381fd5056dbc0ec00e964cad00c152944b2e6e0918991f977"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/electric_heater_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/electric_heater_lv.json",
+      "sha256": "d4200234bc0129dadf2882faeba0d52b0bc21a0ddc1c84e384ada3e7a09624d6"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/electric_heater_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/electric_heater_mv.json",
+      "sha256": "5d04a8a2f9e1b1ed443333d91430f00d67d6de9e54aff45b6f709b194da22831"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_heater_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_heater_mv.json",
+      "sha256": "4d696507e32a6945508babcd9f382b0aa562c8b4e6b36a7541cf73ed487d3bcf"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/electric_heater_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/electric_heater_mv.json",
+      "sha256": "7368882763ad349591e426dceaf23d5c2829bf1d436164cd6682a3a6df93df5e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/electric_heater_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/electric_heater_hv.json",
+      "sha256": "70887c971b22c88deac9baac70d06a831b206b3e245048d8c938bba6e88069e2"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_heater_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_heater_hv.json",
+      "sha256": "4d696507e32a6945508babcd9f382b0aa562c8b4e6b36a7541cf73ed487d3bcf"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/electric_heater_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/electric_heater_hv.json",
+      "sha256": "dc87dc4e52206d0864bd12b9e680c6e5a701b471c5104eb023a46ef92e72c568"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/electric_heater_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/electric_heater_ev.json",
+      "sha256": "6340f9ff20ae4b22fd72e5786d6b17f9c79a8fa2976105a4ed950a5130bcff3b"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_heater_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_heater_ev.json",
+      "sha256": "4d696507e32a6945508babcd9f382b0aa562c8b4e6b36a7541cf73ed487d3bcf"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/electric_heater_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/electric_heater_ev.json",
+      "sha256": "2f2c54f4fe383acaf315913e5bdb793078a288959f0fffe3b69cd00c194a7ff0"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/electric_heater_iv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/electric_heater_iv.json",
+      "sha256": "10268f0a54634f85fad7374e9542a81bf00c6192ba3041ab61fc6cab1353f383"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_heater_iv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_heater_iv.json",
+      "sha256": "4d696507e32a6945508babcd9f382b0aa562c8b4e6b36a7541cf73ed487d3bcf"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/electric_heater_iv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/electric_heater_iv.json",
+      "sha256": "f105237bb59e3dd36b48d3d3a91c641839024d76a7c381e5c8c4351345c9bf0a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/electric_cooler_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/electric_cooler_lv.json",
+      "sha256": "99e6e7f3938fb61487a5677466c3dc9682c1c84f92701c661c9d669f8657fcc7"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_cooler_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_cooler_lv.json",
+      "sha256": "358a371402f2bda9c5f8fe2f7dad399132a72e98da9d843a00f2cecc0f870300"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/cooler/cryo_electric/colored/front.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/cooler/cryo_electric/colored/front.png",
+      "sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/electric_cooler_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/electric_cooler_lv.json",
+      "sha256": "0267e6793fb1f5c12a398539db8a1546eca8dd23d65fa1a9bd78c89b608a0322"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/electric_cooler_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/electric_cooler_mv.json",
+      "sha256": "4ff309c86a6cd0db5b7fe9c5c863f22d6f1322f66324fc8d565f759c9c5995a9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_cooler_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_cooler_mv.json",
+      "sha256": "358a371402f2bda9c5f8fe2f7dad399132a72e98da9d843a00f2cecc0f870300"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/electric_cooler_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/electric_cooler_mv.json",
+      "sha256": "1fd779ef22b9048e3832b049cd5e26000de3db86fd8a02a835888f37bf309eb1"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/electric_cooler_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/electric_cooler_hv.json",
+      "sha256": "71ef20653cb1f1ba2343a28ec6a396e37c25ebfa2741738619813da323977b8f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_cooler_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_cooler_hv.json",
+      "sha256": "358a371402f2bda9c5f8fe2f7dad399132a72e98da9d843a00f2cecc0f870300"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/electric_cooler_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/electric_cooler_hv.json",
+      "sha256": "ce2a2c35dc2a45583362ff6491d77ab5807bcc140c8a6999c4bed093eba542df"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/electric_cooler_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/electric_cooler_ev.json",
+      "sha256": "9298cca31e38974e637cd657c06781504f0d3c7fae594481b8b805e9e9d786af"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_cooler_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_cooler_ev.json",
+      "sha256": "358a371402f2bda9c5f8fe2f7dad399132a72e98da9d843a00f2cecc0f870300"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/electric_cooler_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/electric_cooler_ev.json",
+      "sha256": "680dd98b20fd1229725f8d7fb7372307ec041d55e12551c8e3f92388d18403d5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/electric_cooler_iv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/electric_cooler_iv.json",
+      "sha256": "7ed869286d2f5d99bbf8709fdd8d89266627c96646b8c6b52ca242f60b6e364a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_cooler_iv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_cooler_iv.json",
+      "sha256": "358a371402f2bda9c5f8fe2f7dad399132a72e98da9d843a00f2cecc0f870300"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/electric_cooler_iv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/electric_cooler_iv.json",
+      "sha256": "c3a437c9d6fd6d9b14479554ee3b240290ca4a92e64873a61d0755ebec3a40c0"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/electromagnet_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/electromagnet_lv.json",
+      "sha256": "0ab31530c259e7d54e957f3e3ece831821d7c38f37f8d8cc5854ee673e3ce28f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_lv.json",
+      "sha256": "fa500cb2d507bf1c7eb2b42bf780fefc1d0a45ff490c5c83267d3820efaddb7a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_lv_active.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_lv_active.json",
+      "sha256": "902fb07a60bcd2ec6e01df0a2673f324c9c8dcc9a0a82dd630300f1f8c355fb9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/electromagnet_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/electromagnet_lv.json",
+      "sha256": "83461ed15a0af13eb0951f6988079a81d72d87be9fd6f1af83d72719e2db78e0"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/electromagnet_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/electromagnet_mv.json",
+      "sha256": "281c98ef4cfbb8a108f476b5cfb7024ad8c846f815f4f0d4bda02863b7d2bc5d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_mv.json",
+      "sha256": "fa500cb2d507bf1c7eb2b42bf780fefc1d0a45ff490c5c83267d3820efaddb7a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_mv_active.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_mv_active.json",
+      "sha256": "902fb07a60bcd2ec6e01df0a2673f324c9c8dcc9a0a82dd630300f1f8c355fb9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/electromagnet_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/electromagnet_mv.json",
+      "sha256": "45a3aad6682c8269e9c935d0277123eb7705d5da9aec215a2e0a38c40b569af9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/electromagnet_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/electromagnet_hv.json",
+      "sha256": "7b169e107c66305f19e8652134505d48982cd2f499c0844ba4e2e352fbfc4cb0"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_hv.json",
+      "sha256": "fa500cb2d507bf1c7eb2b42bf780fefc1d0a45ff490c5c83267d3820efaddb7a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_hv_active.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_hv_active.json",
+      "sha256": "902fb07a60bcd2ec6e01df0a2673f324c9c8dcc9a0a82dd630300f1f8c355fb9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/electromagnet_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/electromagnet_hv.json",
+      "sha256": "a23b68eef2a75b4b1e35f0be68784b6585eb45ba37c320f0ba368ad9ba991f39"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/electromagnet_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/electromagnet_ev.json",
+      "sha256": "891ea003acb192ded4c66ba1b7a4c8887b4e29d6819ff5c619394c1b50cc0f3c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_ev.json",
+      "sha256": "fa500cb2d507bf1c7eb2b42bf780fefc1d0a45ff490c5c83267d3820efaddb7a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_ev_active.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_ev_active.json",
+      "sha256": "902fb07a60bcd2ec6e01df0a2673f324c9c8dcc9a0a82dd630300f1f8c355fb9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/electromagnet_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/electromagnet_ev.json",
+      "sha256": "593879185e3269cdc935d24c024e7163a29b3851e03b654a5c56add16361c7d0"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/electromagnet_iv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/electromagnet_iv.json",
+      "sha256": "6f1c23eec986f8aef6bb0248d73ab9b8a95e72cceb6f84c062e71bb1e1696930"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_iv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_iv.json",
+      "sha256": "fa500cb2d507bf1c7eb2b42bf780fefc1d0a45ff490c5c83267d3820efaddb7a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_iv_active.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_iv_active.json",
+      "sha256": "902fb07a60bcd2ec6e01df0a2673f324c9c8dcc9a0a82dd630300f1f8c355fb9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/electromagnet_iv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/electromagnet_iv.json",
+      "sha256": "a607266b09eba4a51736ace2943722bd92f279269cc615023b45d53b1e3c35b0"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/flux_magnet_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/flux_magnet_lv.json",
+      "sha256": "e8f4db5390bab162e4c702c33ae67830a9f388b55cc2d264fbeb4bf1af1ba762"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_lv.json",
+      "sha256": "4d559262ac3321a08e2718cae739a0ef437fb1b1abac821dae6f2af68d6194ff"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_lv_active.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_lv_active.json",
+      "sha256": "f186fd60978a72ea4ecfef3b9f2f4386d70d19c51c0a635dbee554fb6282f456"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/flux_magnet_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/flux_magnet_lv.json",
+      "sha256": "dd12cec26fb9b156bda0632b3656149761777d97a247fe26f9ceb083061882da"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/flux_magnet_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/flux_magnet_mv.json",
+      "sha256": "ff11b825fa01c67587b259ab5edb78a03d21c93090176259025e951fa109915d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_mv.json",
+      "sha256": "4d559262ac3321a08e2718cae739a0ef437fb1b1abac821dae6f2af68d6194ff"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_mv_active.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_mv_active.json",
+      "sha256": "f186fd60978a72ea4ecfef3b9f2f4386d70d19c51c0a635dbee554fb6282f456"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/flux_magnet_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/flux_magnet_mv.json",
+      "sha256": "0f6c327c1f9ab22e84f242cb3f477d743b915160aaf56b0542cd496a5be061c2"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/flux_magnet_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/flux_magnet_hv.json",
+      "sha256": "cec71e1af95116988a37bd662a2ccfed3188ae5e4c09aeae46b6610fedb7cf9f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_hv.json",
+      "sha256": "4d559262ac3321a08e2718cae739a0ef437fb1b1abac821dae6f2af68d6194ff"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_hv_active.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_hv_active.json",
+      "sha256": "f186fd60978a72ea4ecfef3b9f2f4386d70d19c51c0a635dbee554fb6282f456"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/flux_magnet_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/flux_magnet_hv.json",
+      "sha256": "16db55cdad10b99c9103c8ff1efd55402bcf816afab3ea84f146c9ddf9130688"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/flux_magnet_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/flux_magnet_ev.json",
+      "sha256": "f3e6718c8ec4e611e654306880c118304b77b5c3e7db196b9772f9b6ce1d7e05"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_ev.json",
+      "sha256": "4d559262ac3321a08e2718cae739a0ef437fb1b1abac821dae6f2af68d6194ff"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_ev_active.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_ev_active.json",
+      "sha256": "f186fd60978a72ea4ecfef3b9f2f4386d70d19c51c0a635dbee554fb6282f456"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/flux_magnet_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/flux_magnet_ev.json",
+      "sha256": "1d7a47c01e4cece3e9f91b769209e8387cedeeec32f8bb539c24bafa8ae36f01"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/flux_magnet_iv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/flux_magnet_iv.json",
+      "sha256": "d85fee13c05e16d0de929766ce54553155a94366e022df07c3f466cb70bde349"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_iv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_iv.json",
+      "sha256": "4d559262ac3321a08e2718cae739a0ef437fb1b1abac821dae6f2af68d6194ff"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_iv_active.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_iv_active.json",
+      "sha256": "f186fd60978a72ea4ecfef3b9f2f4386d70d19c51c0a635dbee554fb6282f456"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/flux_magnet_iv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/flux_magnet_iv.json",
+      "sha256": "65a972eebe9ba0b698897c51fbd4a9c241a922c4d586dc353d38a6c26ae35518"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_box_ulv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_box_ulv.json",
+      "sha256": "f7057fa52466664f4fe4738a4e7b5f0571a44cdf17613061f7587ec585d76a5b"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_ulv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_ulv.json",
+      "sha256": "184664f75a7b6ad3cf0523199875db835d4f0494a0812b6965943301ed073182"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_ulv_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_ulv_1.json",
+      "sha256": "f5b243f2807c923be9d73f39e222ab4cf3eeae137b1de419667b62d7ca91cd8a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_ulv_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_ulv_2.json",
+      "sha256": "215b10852f56452112d4d0cfe98a9a1ba0ee28a7951618da49e20673287ecd6e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_box_ulv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_box_ulv.json",
+      "sha256": "304fac7f0c51a876d7849f84966d73f87fb2d48326d70a589f771d168d782029"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_box_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_box_lv.json",
+      "sha256": "a2149383bc6419ab3f926e7972724e14594a12595e5e36792b985d722abdf073"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_lv.json",
+      "sha256": "184664f75a7b6ad3cf0523199875db835d4f0494a0812b6965943301ed073182"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_lv_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_lv_1.json",
+      "sha256": "f5b243f2807c923be9d73f39e222ab4cf3eeae137b1de419667b62d7ca91cd8a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_lv_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_lv_2.json",
+      "sha256": "215b10852f56452112d4d0cfe98a9a1ba0ee28a7951618da49e20673287ecd6e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_box_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_box_lv.json",
+      "sha256": "65307f6b72d02231d14487441085e00b72e754d4f75928b22e73c37295c00654"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_box_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_box_mv.json",
+      "sha256": "10f8643c61cd27c12a1bd05e032b3c039c9c248a41c75da320c7cd59fae83402"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_mv.json",
+      "sha256": "184664f75a7b6ad3cf0523199875db835d4f0494a0812b6965943301ed073182"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_mv_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_mv_1.json",
+      "sha256": "f5b243f2807c923be9d73f39e222ab4cf3eeae137b1de419667b62d7ca91cd8a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_mv_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_mv_2.json",
+      "sha256": "215b10852f56452112d4d0cfe98a9a1ba0ee28a7951618da49e20673287ecd6e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_box_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_box_mv.json",
+      "sha256": "c1d580b4d3876c739b0c7b976942b0a7e22b24a362fcd1f7048e23d81302260a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_box_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_box_hv.json",
+      "sha256": "124fdf0ff1480238d7ec091e44bf1bac4983a2f9b10b1247a62d94e3c9d14005"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_hv.json",
+      "sha256": "184664f75a7b6ad3cf0523199875db835d4f0494a0812b6965943301ed073182"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_hv_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_hv_1.json",
+      "sha256": "f5b243f2807c923be9d73f39e222ab4cf3eeae137b1de419667b62d7ca91cd8a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_hv_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_hv_2.json",
+      "sha256": "215b10852f56452112d4d0cfe98a9a1ba0ee28a7951618da49e20673287ecd6e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_box_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_box_hv.json",
+      "sha256": "36c4358be393ff052d48d1ec591c2f55eb772f6fcb75d814483886257f5b31a6"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_box_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_box_ev.json",
+      "sha256": "b1a134266b5bc600a225261ea8542f9055330751b695d00d48438a2c3c441955"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_ev.json",
+      "sha256": "184664f75a7b6ad3cf0523199875db835d4f0494a0812b6965943301ed073182"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_ev_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_ev_1.json",
+      "sha256": "f5b243f2807c923be9d73f39e222ab4cf3eeae137b1de419667b62d7ca91cd8a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_ev_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_ev_2.json",
+      "sha256": "215b10852f56452112d4d0cfe98a9a1ba0ee28a7951618da49e20673287ecd6e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_box_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_box_ev.json",
+      "sha256": "67b7315ce7347cb5227dfb14f433275ceb745959c609a9f7b03cf689ec79bf2e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_box_iv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_box_iv.json",
+      "sha256": "aa0aa5614db17ff069bc0fa5041bf63a1c6aa779e145ceb0b1e5cf66cfd47a75"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_iv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_iv.json",
+      "sha256": "184664f75a7b6ad3cf0523199875db835d4f0494a0812b6965943301ed073182"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_iv_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_iv_1.json",
+      "sha256": "f5b243f2807c923be9d73f39e222ab4cf3eeae137b1de419667b62d7ca91cd8a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_iv_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_iv_2.json",
+      "sha256": "215b10852f56452112d4d0cfe98a9a1ba0ee28a7951618da49e20673287ecd6e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_box_iv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_box_iv.json",
+      "sha256": "c5deb37d6a3ddba344511631e4a6e75f74c0d0c4eae96725f08ba4e78b81564f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_box_luv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_box_luv.json",
+      "sha256": "c6b47c3dda0b964da58b9220e4fa0a48ca136d1894a1a4025eab9369005a33c7"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_luv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_luv.json",
+      "sha256": "184664f75a7b6ad3cf0523199875db835d4f0494a0812b6965943301ed073182"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_luv_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_luv_1.json",
+      "sha256": "f5b243f2807c923be9d73f39e222ab4cf3eeae137b1de419667b62d7ca91cd8a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_luv_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_luv_2.json",
+      "sha256": "215b10852f56452112d4d0cfe98a9a1ba0ee28a7951618da49e20673287ecd6e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_box_luv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_box_luv.json",
+      "sha256": "1ee94be3ca9dd2bf0c8989156f976475fa271d5239f84beb112ead9c379ec1e1"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_box_zpm.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_box_zpm.json",
+      "sha256": "cc4048906bc41204ea7f04ea1ff37146cf9cfd6fd2ef2a8d05981e3a6099b1c2"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_zpm.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_zpm.json",
+      "sha256": "184664f75a7b6ad3cf0523199875db835d4f0494a0812b6965943301ed073182"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_zpm_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_zpm_1.json",
+      "sha256": "f5b243f2807c923be9d73f39e222ab4cf3eeae137b1de419667b62d7ca91cd8a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_zpm_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_zpm_2.json",
+      "sha256": "215b10852f56452112d4d0cfe98a9a1ba0ee28a7951618da49e20673287ecd6e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_box_zpm.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_box_zpm.json",
+      "sha256": "6879cd650ecf8edd5e4a1f1a9b55979e4b71a08c47ef236522ee2c069525c827"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_box_uv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_box_uv.json",
+      "sha256": "261a2bdcd649861255e1e5d7b507027b2569b0a6c01bf8e8e3ba7ce60efff8e4"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_uv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_uv.json",
+      "sha256": "184664f75a7b6ad3cf0523199875db835d4f0494a0812b6965943301ed073182"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_uv_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_uv_1.json",
+      "sha256": "f5b243f2807c923be9d73f39e222ab4cf3eeae137b1de419667b62d7ca91cd8a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_uv_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_uv_2.json",
+      "sha256": "215b10852f56452112d4d0cfe98a9a1ba0ee28a7951618da49e20673287ecd6e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_box_uv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_box_uv.json",
+      "sha256": "d10707ac9c7de1d3d517dca6f2e30610b137ad80fd089e9bc0f1f2d7aaf48c2f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_box_xv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_box_xv.json",
+      "sha256": "d377a01c0d98b6867a7157e4a01b1b7f26161a3a47140de6dd948309d3ba569a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_xv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_xv.json",
+      "sha256": "184664f75a7b6ad3cf0523199875db835d4f0494a0812b6965943301ed073182"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_xv_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_xv_1.json",
+      "sha256": "f5b243f2807c923be9d73f39e222ab4cf3eeae137b1de419667b62d7ca91cd8a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_xv_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_xv_2.json",
+      "sha256": "215b10852f56452112d4d0cfe98a9a1ba0ee28a7951618da49e20673287ecd6e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_box_xv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_box_xv.json",
+      "sha256": "ed0e5eb24b8e30d5ddefda6932e61a2df5660768ee9bd1be0b2f61e91f46d0ae"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/energy_storage_ulv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/energy_storage_ulv.json",
+      "sha256": "e7a71f5f072bbedf6ed8543cf699220e2f7c192d37df7016b1061c6c0d2670f2"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_ulv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_ulv.json",
+      "sha256": "7cd0f6daeeb30c5ca81be41a519fe7c7f8323e17b0c758a43a5deec85a4ea49f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_ulv_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_ulv_1.json",
+      "sha256": "483ee4399d9f2625a93d1d8bf0ca193c190bcef2ce9ab4aa85de97b910ca95ff"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_ulv_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_ulv_2.json",
+      "sha256": "940ff5993d9e5f4d1c6b1193315dc2bb37acb3dd2fe4a9d90f41482193bd7213"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/energy_storage_ulv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/energy_storage_ulv.json",
+      "sha256": "1072e27453c4153f4fdbf8d68f7fb98bc13244263c1622f6972fd6b8d2b10f40"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/energy_storage_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/energy_storage_lv.json",
+      "sha256": "bb99fed080021923dee5437e103dcac0a1c4e0b4da9390fda2e58e0b8dab0c6c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_lv.json",
+      "sha256": "7cd0f6daeeb30c5ca81be41a519fe7c7f8323e17b0c758a43a5deec85a4ea49f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_lv_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_lv_1.json",
+      "sha256": "483ee4399d9f2625a93d1d8bf0ca193c190bcef2ce9ab4aa85de97b910ca95ff"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_lv_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_lv_2.json",
+      "sha256": "940ff5993d9e5f4d1c6b1193315dc2bb37acb3dd2fe4a9d90f41482193bd7213"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/energy_storage_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/energy_storage_lv.json",
+      "sha256": "a135b618a5b330c74a12f14950a4bc0a13f49bd44233e853f5e53ef4bb828128"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/energy_storage_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/energy_storage_mv.json",
+      "sha256": "482ae2a7b657b5a59ea834cc2b0f26e78fa8f7d1c8576b74f5dc0e033e9a6fff"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_mv.json",
+      "sha256": "7cd0f6daeeb30c5ca81be41a519fe7c7f8323e17b0c758a43a5deec85a4ea49f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_mv_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_mv_1.json",
+      "sha256": "483ee4399d9f2625a93d1d8bf0ca193c190bcef2ce9ab4aa85de97b910ca95ff"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_mv_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_mv_2.json",
+      "sha256": "940ff5993d9e5f4d1c6b1193315dc2bb37acb3dd2fe4a9d90f41482193bd7213"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/energy_storage_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/energy_storage_mv.json",
+      "sha256": "be6f016f5bb69c16dc84538505c2b19dc3afddff5cfa04c7bf7bade5cbda724a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/energy_storage_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/energy_storage_hv.json",
+      "sha256": "87c2c2d739705a30417cda4e7f21d28d281597e689dde55ed05ce2cce5b22ec4"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_hv.json",
+      "sha256": "7cd0f6daeeb30c5ca81be41a519fe7c7f8323e17b0c758a43a5deec85a4ea49f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_hv_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_hv_1.json",
+      "sha256": "483ee4399d9f2625a93d1d8bf0ca193c190bcef2ce9ab4aa85de97b910ca95ff"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_hv_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_hv_2.json",
+      "sha256": "940ff5993d9e5f4d1c6b1193315dc2bb37acb3dd2fe4a9d90f41482193bd7213"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/energy_storage_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/energy_storage_hv.json",
+      "sha256": "fa9554c3456a8ac5706111d017e2aa06df9712ea67ef6e09c3447239b6d514d1"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/energy_storage_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/energy_storage_ev.json",
+      "sha256": "8b6e87729b49c3e4d355a0eabde690db8cf6ef4537031e840af12c071e49d772"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_ev.json",
+      "sha256": "7cd0f6daeeb30c5ca81be41a519fe7c7f8323e17b0c758a43a5deec85a4ea49f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_ev_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_ev_1.json",
+      "sha256": "483ee4399d9f2625a93d1d8bf0ca193c190bcef2ce9ab4aa85de97b910ca95ff"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_ev_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_ev_2.json",
+      "sha256": "940ff5993d9e5f4d1c6b1193315dc2bb37acb3dd2fe4a9d90f41482193bd7213"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/energy_storage_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/energy_storage_ev.json",
+      "sha256": "b1deaabf83fd607934393873d9fbca49e45e2e4b762703ce30404fb2da4ae206"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/energy_storage_iv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/energy_storage_iv.json",
+      "sha256": "ac05b2a238900cc2b06a3cd726e75e6a3a4a6ee42820ef976f9a62f2f5c84efa"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_iv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_iv.json",
+      "sha256": "7cd0f6daeeb30c5ca81be41a519fe7c7f8323e17b0c758a43a5deec85a4ea49f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_iv_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_iv_1.json",
+      "sha256": "483ee4399d9f2625a93d1d8bf0ca193c190bcef2ce9ab4aa85de97b910ca95ff"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_iv_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_iv_2.json",
+      "sha256": "940ff5993d9e5f4d1c6b1193315dc2bb37acb3dd2fe4a9d90f41482193bd7213"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/energy_storage_iv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/energy_storage_iv.json",
+      "sha256": "50c1ca51362b7d29a85666382439a1d71f3c606db4ef606069f1c1051b495b1c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/energy_storage_luv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/energy_storage_luv.json",
+      "sha256": "f121c920159410ad80ce45dd92d8ad7952dbfeab4b0a5a851bb552276f882942"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_luv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_luv.json",
+      "sha256": "7cd0f6daeeb30c5ca81be41a519fe7c7f8323e17b0c758a43a5deec85a4ea49f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_luv_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_luv_1.json",
+      "sha256": "483ee4399d9f2625a93d1d8bf0ca193c190bcef2ce9ab4aa85de97b910ca95ff"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_luv_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_luv_2.json",
+      "sha256": "940ff5993d9e5f4d1c6b1193315dc2bb37acb3dd2fe4a9d90f41482193bd7213"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/energy_storage_luv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/energy_storage_luv.json",
+      "sha256": "9163a8e5dde7031da22c9f4d2bdfcb56c00fc43936336458fdb61cbf50089edc"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/energy_storage_zpm.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/energy_storage_zpm.json",
+      "sha256": "38436e95ebde5c542396093f8b7a923f500fd254904ed873cd7261d10d541528"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_zpm.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_zpm.json",
+      "sha256": "7cd0f6daeeb30c5ca81be41a519fe7c7f8323e17b0c758a43a5deec85a4ea49f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_zpm_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_zpm_1.json",
+      "sha256": "483ee4399d9f2625a93d1d8bf0ca193c190bcef2ce9ab4aa85de97b910ca95ff"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_zpm_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_zpm_2.json",
+      "sha256": "940ff5993d9e5f4d1c6b1193315dc2bb37acb3dd2fe4a9d90f41482193bd7213"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/energy_storage_zpm.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/energy_storage_zpm.json",
+      "sha256": "d1384535143016bcde92e8fc168a8a678f7fdda610661614183417f60fbda767"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/energy_storage_uv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/energy_storage_uv.json",
+      "sha256": "b897aa2362e4e242b948064492de17766e51333a3dfb9ef3d89d4e342b9304c2"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_uv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_uv.json",
+      "sha256": "7cd0f6daeeb30c5ca81be41a519fe7c7f8323e17b0c758a43a5deec85a4ea49f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_uv_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_uv_1.json",
+      "sha256": "483ee4399d9f2625a93d1d8bf0ca193c190bcef2ce9ab4aa85de97b910ca95ff"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_uv_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_uv_2.json",
+      "sha256": "940ff5993d9e5f4d1c6b1193315dc2bb37acb3dd2fe4a9d90f41482193bd7213"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/energy_storage_uv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/energy_storage_uv.json",
+      "sha256": "a4b6f786dabfc4de7c2aad992f6a6568b3b72e3628fe3ca8f35e39a29c54a0fd"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/energy_storage_xv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/energy_storage_xv.json",
+      "sha256": "7005302eed0c62996f4c82ca955aeee2bbd2503359b1fd50cc83b96a7ade721b"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_xv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_xv.json",
+      "sha256": "7cd0f6daeeb30c5ca81be41a519fe7c7f8323e17b0c758a43a5deec85a4ea49f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_xv_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_xv_1.json",
+      "sha256": "483ee4399d9f2625a93d1d8bf0ca193c190bcef2ce9ab4aa85de97b910ca95ff"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_xv_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_xv_2.json",
+      "sha256": "940ff5993d9e5f4d1c6b1193315dc2bb37acb3dd2fe4a9d90f41482193bd7213"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/energy_storage_xv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/energy_storage_xv.json",
+      "sha256": "add0597aaee237ea52adc2a2323addd93bae060fbb6bc918acfe6efb880a6382"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/transformer_ulv_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/transformer_ulv_lv.json",
+      "sha256": "8fcf2cfba5625f9ea5b76b79cbc4ef0ed156ab94b691a518978287e44073a504"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_ulv_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_ulv_lv.json",
+      "sha256": "624d8faec084d2047d7d07c9bcef1b67cf542c933795f9c59d47c79c3ef43a37"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_ulv_lv_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_ulv_lv_1.json",
+      "sha256": "ef0301c9c2f0a8e634437e4bee3eddaeaf554e506f043b41a73ec33b7e313950"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_ulv_lv_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_ulv_lv_2.json",
+      "sha256": "7ee5e5a2abd263de59539abb8b7ca28f6840b13985eae1041d16110b921ba6d7"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/transformer_ulv_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/transformer_ulv_lv.json",
+      "sha256": "87b66182d2c6d8a8fd1b5b390bb0b6776500f92c83695b3d0816a4484c2e7cf8"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/transformer_lv_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/transformer_lv_mv.json",
+      "sha256": "570fe2416e972281848a1397efff35ab410d08a7f031a88b0f45aae5b93f0ea0"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_lv_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_lv_mv.json",
+      "sha256": "624d8faec084d2047d7d07c9bcef1b67cf542c933795f9c59d47c79c3ef43a37"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_lv_mv_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_lv_mv_1.json",
+      "sha256": "ef0301c9c2f0a8e634437e4bee3eddaeaf554e506f043b41a73ec33b7e313950"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_lv_mv_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_lv_mv_2.json",
+      "sha256": "7ee5e5a2abd263de59539abb8b7ca28f6840b13985eae1041d16110b921ba6d7"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/transformer_lv_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/transformer_lv_mv.json",
+      "sha256": "1458621dcef76e64ddc8811f470b3bd5ea0777b4366a8355536f741d20742ae8"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/transformer_mv_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/transformer_mv_hv.json",
+      "sha256": "785b81633adf24bad88317bdcdfda449fc8414f08412df73013ef451182b4afe"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_mv_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_mv_hv.json",
+      "sha256": "624d8faec084d2047d7d07c9bcef1b67cf542c933795f9c59d47c79c3ef43a37"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_mv_hv_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_mv_hv_1.json",
+      "sha256": "ef0301c9c2f0a8e634437e4bee3eddaeaf554e506f043b41a73ec33b7e313950"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_mv_hv_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_mv_hv_2.json",
+      "sha256": "7ee5e5a2abd263de59539abb8b7ca28f6840b13985eae1041d16110b921ba6d7"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/transformer_mv_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/transformer_mv_hv.json",
+      "sha256": "b80becbae6ee79224b8193c40df706a607727a7366c2a6e8c69e3e4711122fe8"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/transformer_hv_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/transformer_hv_ev.json",
+      "sha256": "3160496b4d38b097ae168ab4acb3eb4a621e6fdabaa93bb22c05ed80f4f46e8e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_hv_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_hv_ev.json",
+      "sha256": "624d8faec084d2047d7d07c9bcef1b67cf542c933795f9c59d47c79c3ef43a37"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_hv_ev_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_hv_ev_1.json",
+      "sha256": "ef0301c9c2f0a8e634437e4bee3eddaeaf554e506f043b41a73ec33b7e313950"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_hv_ev_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_hv_ev_2.json",
+      "sha256": "7ee5e5a2abd263de59539abb8b7ca28f6840b13985eae1041d16110b921ba6d7"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/transformer_hv_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/transformer_hv_ev.json",
+      "sha256": "b9c25ef46949760ff8bbbab9c5e5a992630cee5b17e584fa624c3daea9d34a13"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/transformer_ev_iv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/transformer_ev_iv.json",
+      "sha256": "943b1b3517f2bcbabf3e1b8127c752623fec691ff7c31400e3f6fc0b005405ff"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_ev_iv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_ev_iv.json",
+      "sha256": "624d8faec084d2047d7d07c9bcef1b67cf542c933795f9c59d47c79c3ef43a37"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_ev_iv_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_ev_iv_1.json",
+      "sha256": "ef0301c9c2f0a8e634437e4bee3eddaeaf554e506f043b41a73ec33b7e313950"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_ev_iv_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_ev_iv_2.json",
+      "sha256": "7ee5e5a2abd263de59539abb8b7ca28f6840b13985eae1041d16110b921ba6d7"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/transformer_ev_iv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/transformer_ev_iv.json",
+      "sha256": "404eb7ee18de70f2554210966acdbfeec60522008db79c12f5722e36f4f9fb9f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/transformer_iv_luv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/transformer_iv_luv.json",
+      "sha256": "bcb025161c6ef0e0c65fbdcadae26298c7e5218d6402877b91f7c8aceee73792"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_iv_luv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_iv_luv.json",
+      "sha256": "624d8faec084d2047d7d07c9bcef1b67cf542c933795f9c59d47c79c3ef43a37"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_iv_luv_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_iv_luv_1.json",
+      "sha256": "ef0301c9c2f0a8e634437e4bee3eddaeaf554e506f043b41a73ec33b7e313950"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_iv_luv_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_iv_luv_2.json",
+      "sha256": "7ee5e5a2abd263de59539abb8b7ca28f6840b13985eae1041d16110b921ba6d7"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/transformer_iv_luv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/transformer_iv_luv.json",
+      "sha256": "cb92e649327694083c3bb30bc321d5aabb1ffc5b0f30dc4ffd9611bdb7659e94"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/transformer_luv_zpm.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/transformer_luv_zpm.json",
+      "sha256": "4ef60c5db1da8eee4694df84323ee997114b4d7686db0205fdbeb545c7d0d41c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_luv_zpm.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_luv_zpm.json",
+      "sha256": "624d8faec084d2047d7d07c9bcef1b67cf542c933795f9c59d47c79c3ef43a37"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_luv_zpm_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_luv_zpm_1.json",
+      "sha256": "ef0301c9c2f0a8e634437e4bee3eddaeaf554e506f043b41a73ec33b7e313950"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_luv_zpm_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_luv_zpm_2.json",
+      "sha256": "7ee5e5a2abd263de59539abb8b7ca28f6840b13985eae1041d16110b921ba6d7"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/transformer_luv_zpm.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/transformer_luv_zpm.json",
+      "sha256": "46b93a76cca76a37b26f605525ade4e7dd1d3e03b0eabb05b337b17b4f1f8a3d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/transformer_zpm_uv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/transformer_zpm_uv.json",
+      "sha256": "059e0b18662a50241c42da857bb40307011f4240751d8e4a609a497fd631acfc"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_zpm_uv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_zpm_uv.json",
+      "sha256": "624d8faec084d2047d7d07c9bcef1b67cf542c933795f9c59d47c79c3ef43a37"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_zpm_uv_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_zpm_uv_1.json",
+      "sha256": "ef0301c9c2f0a8e634437e4bee3eddaeaf554e506f043b41a73ec33b7e313950"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_zpm_uv_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_zpm_uv_2.json",
+      "sha256": "7ee5e5a2abd263de59539abb8b7ca28f6840b13985eae1041d16110b921ba6d7"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/transformer_zpm_uv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/transformer_zpm_uv.json",
+      "sha256": "56d9d5cdcac83a5392e8425616e0fd284f0bde5a6355b0c8caab06300377ce48"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/transformer_uv_xv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/transformer_uv_xv.json",
+      "sha256": "955888c9ad4836471b7d5f973e1a5d20109cbc4b9244fbe48d8c49638b8c5262"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_uv_xv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_uv_xv.json",
+      "sha256": "624d8faec084d2047d7d07c9bcef1b67cf542c933795f9c59d47c79c3ef43a37"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_uv_xv_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_uv_xv_1.json",
+      "sha256": "ef0301c9c2f0a8e634437e4bee3eddaeaf554e506f043b41a73ec33b7e313950"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_uv_xv_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_uv_xv_2.json",
+      "sha256": "7ee5e5a2abd263de59539abb8b7ca28f6840b13985eae1041d16110b921ba6d7"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/transformer_uv_xv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/transformer_uv_xv.json",
+      "sha256": "2a25303d78de637a9a68eb623b6e945959a1e880dd714e1e77eb55769f26fd17"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/flux_motor_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/flux_motor_lv.json",
+      "sha256": "aaf25215f17feb670f9508a0e118f953a1e183951daa15c467f230b6016620fd"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/flux_motor_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/flux_motor_lv.json",
+      "sha256": "8945767b3cc254aa7105b25385beb99cb35da8742c901c73ce10fb32741a5c99"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/flux_motor_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/flux_motor_lv.json",
+      "sha256": "44d3539e2e388af980a357a64443858f28ea8bc5cdaaaead47ce6f92c5dcb74c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/flux_motor_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/flux_motor_mv.json",
+      "sha256": "a879e29d0c39a58dacd8ff4829daa0f2e5df74ea666ebca3dfbd83e1536d79f3"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/flux_motor_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/flux_motor_mv.json",
+      "sha256": "8945767b3cc254aa7105b25385beb99cb35da8742c901c73ce10fb32741a5c99"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/flux_motor_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/flux_motor_mv.json",
+      "sha256": "5956ebdbbe2620056af87f5c3b5904adceb5f03b5f72e6e5a86f54317557a5e3"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/flux_dynamo_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/flux_dynamo_lv.json",
+      "sha256": "160e7aa854c80b70cf5b29e645f3ac437dd436d45791dfaf91a9a4f7b5b66c44"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/flux_dynamo_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/flux_dynamo_lv.json",
+      "sha256": "8255d9467e070cf8992d98c14d5a770a42207f341d6c3f1ccf1cd1da43906e83"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/flux_dynamo_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/flux_dynamo_lv.json",
+      "sha256": "94160180519a5b7f7da62dda41d50d20ea65888295f6eb64bcc5e88aba56814f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/flux_dynamo_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/flux_dynamo_mv.json",
+      "sha256": "f3041f94a44563b1f126fe81d73e6f1cbefc898eacea0098f295081d17040a4f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/flux_dynamo_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/flux_dynamo_mv.json",
+      "sha256": "8255d9467e070cf8992d98c14d5a770a42207f341d6c3f1ccf1cd1da43906e83"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/flux_dynamo_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/flux_dynamo_mv.json",
+      "sha256": "dd6cd7b5316eb61f0ae80a033aff5587165138f2af079316ebedf94a95c03b71"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/steam_turbine_bronze.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/steam_turbine_bronze.json",
+      "sha256": "33a74c5cffae9843512e9a6e464d8d7d0f18eac189c2c5af7f6103095072c21d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/steam_turbine_bronze.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/steam_turbine_bronze.json",
+      "sha256": "1026487c725424909407ac7134889962008b9892ca82caba3fe87abd8532a0a2"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/steam_turbine_bronze.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/steam_turbine_bronze.json",
+      "sha256": "dbcdc2781cf432c07d731ece841d81d5fe8b81dd67bab37735cc11dff07de0bb"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/steam_turbine_brass.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/steam_turbine_brass.json",
+      "sha256": "66607a44f466b68c9e31ddd6b8da84309ab3530a9136200a95a947143cb8c162"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/steam_turbine_brass.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/steam_turbine_brass.json",
+      "sha256": "1026487c725424909407ac7134889962008b9892ca82caba3fe87abd8532a0a2"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/steam_turbine_brass.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/steam_turbine_brass.json",
+      "sha256": "45665057d882492211539bfee429a9a9f687a6fc11925f35f4a06e75a77ee87a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/steam_turbine_invar.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/steam_turbine_invar.json",
+      "sha256": "48923423ded1d3079dee7a82777ecce80e9d94673577fa68c1c07c8c54beb4dd"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/steam_turbine_invar.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/steam_turbine_invar.json",
+      "sha256": "1026487c725424909407ac7134889962008b9892ca82caba3fe87abd8532a0a2"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/steam_turbine_invar.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/steam_turbine_invar.json",
+      "sha256": "713a5dd869e376f53bf58317cb3c4411278af9b7716d899ff1f50fc818805582"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/steam_turbine_steel.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/steam_turbine_steel.json",
+      "sha256": "3bfe51c9d8ab25f77a790a5fd4851c7bbfe8d9a8d31633a10ccd3640b1d3c86b"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/steam_turbine_steel.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/steam_turbine_steel.json",
+      "sha256": "1026487c725424909407ac7134889962008b9892ca82caba3fe87abd8532a0a2"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/steam_turbine_steel.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/steam_turbine_steel.json",
+      "sha256": "f04338754b6cdbf50841250090477c651f4eadc381c02ea2394c153f80f3b958"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/steam_turbine_chromium.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/steam_turbine_chromium.json",
+      "sha256": "106c670422d82a662b500a577a092ad715b3d2cd473825c57d5dc22caaa1cf14"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/steam_turbine_chromium.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/steam_turbine_chromium.json",
+      "sha256": "1026487c725424909407ac7134889962008b9892ca82caba3fe87abd8532a0a2"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/steam_turbine_chromium.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/steam_turbine_chromium.json",
+      "sha256": "f613f1b248a524951efe43ebaffceccc3af1789fd1b870b4e686886f07fabbc1"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/solar_panel_silicon.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/solar_panel_silicon.json",
+      "sha256": "46a91ace4be41bf52af7da25bad2bed1ec0296edc6f162e63b8cdc8055a93c0b"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/solar_panel_silicon.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/solar_panel_silicon.json",
+      "sha256": "aeab7e2e83614b325670bc11262e9a788f9fa1fdcfdac5573ad07a6d61dd764a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/solar_panel_silicon.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/solar_panel_silicon.json",
+      "sha256": "7527e862234cf76999b9999d2efbb49a316a0729623d69d2f1913ec53c2d4132"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/solar_panel_germanium.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/solar_panel_germanium.json",
+      "sha256": "f28f73afc30bdb90f336ca06be08dcb4ea9f9ae3324fce30f847623b6d1a49f4"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/solar_panel_germanium.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/solar_panel_germanium.json",
+      "sha256": "aeab7e2e83614b325670bc11262e9a788f9fa1fdcfdac5573ad07a6d61dd764a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/solar_panel_germanium.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/solar_panel_germanium.json",
+      "sha256": "fcf58748bcf006d9e6a3caa6f723d13f730946acbb95e23d241551562b9a0089"
+    }
+  ],
+  "verificationReceipt": "docs/integration/verification/p3-energy-nodes-axles-compile.json",
+  "runtimeVerification": "not run for these new node/axle batches; previous wire startup does not cover them",
+  "groupedStartup": "Neo ordinary DedicatedServer loaded recipes/packs, completed 200 ticks and normal save/stop; only startup/registration evidence, not mechanics; docs/integration/verification/p3-neoforge-nodes-gearboxes-startup.json"
+}

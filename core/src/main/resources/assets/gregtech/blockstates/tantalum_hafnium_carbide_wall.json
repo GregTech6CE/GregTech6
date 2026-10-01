@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "gregtech:block/machine/multiblock/tantalum_hafnium_carbide_wall"
+    }
+  }
+}

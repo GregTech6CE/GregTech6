@@ -1,0 +1,74 @@
+{
+  "date": "2026-10-01",
+  "policy": "D011 baseline parity, D010 grouped compile and one existing short dedicated startup, no new fixture.",
+  "authors": [
+    "saltnya",
+    "original GregTech6 contributors",
+    "existing integration contributors"
+  ],
+  "license": "Existing history/notices retained; sources unchanged; no third-party authorization changed.",
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/CrucibleTooltips.java",
+      "sha256": "5fa1b4c02dba977570432bb6c9cdfbb3444247423bf94dbb733f16bfee596580",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/client/CrucibleTooltips.java",
+      "currentForgeReferenceSha256": "fc1d158b372086173d6c8d754b3cd04e4e84c3aeab8244525d675020b61117f0",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\CrucibleTooltips.java",
+      "sourceSha256": "b139537d19b4550210eb0e6ed5ab59f661c52e9ffa91bb60e6f31c8963a807cd"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/machine/SmeltingCrucibleBlockItem.java",
+      "sha256": "7116348ef5409f989d8a9ae9600f710451a16000d2e1b964d3f0ace95e5604ab",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/block/machine/SmeltingCrucibleBlockItem.java",
+      "currentForgeReferenceSha256": "76ea18e7d1d0f67dfcd99316f3c1c54ccfe15c89070d2712339d22e29c4ca2c0",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\SmeltingCrucibleBlockItem.java",
+      "sourceSha256": "76ea18e7d1d0f67dfcd99316f3c1c54ccfe15c89070d2712339d22e29c4ca2c0"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/smeltery/SmelteryRegistries.java",
+      "sha256": "9e9fa750d564830adf575ed30b924cd5423c422715e0d64918f8cd991609cb95",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/registry/GTMachines.java",
+      "currentForgeReferenceSha256": "378d6cba9189d46e7a300f8d796b8c6f7dffcea000b0d24fca2a40e308325df3",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTMachines.java",
+      "sourceSha256": "811bf042807fbb6d1aba0e5141759fac72d4b4dccb9ececad43886321a40df3d",
+      "priorNativeSha256": "6471efcd4dde3634aeae8518525260c8b236a6967a1af7d7f0f78c4b49a45260"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/recipe/CreosoteAxleRecipe.java",
+      "sha256": "530e557bd7e2f7d8bc10eb7339261abd60e405c23f8a180386ae9569cbb5f7e5",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/recipe/CreosoteAxleRecipe.java",
+      "currentForgeReferenceSha256": "95d8cf887186c8fdf63c6068750fa6d5f570cea85514e2fa16b1e6f9ca25a759",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\recipe\\CreosoteAxleRecipe.java",
+      "sourceSha256": "95d8cf887186c8fdf63c6068750fa6d5f570cea85514e2fa16b1e6f9ca25a759"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/recipe/NeoRecipeSerializers.java",
+      "sha256": "9962b92c4759020f18ddd758e83732d265f698d2b61afbb8c850828647d046e5",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/loaders/a/Loader_Tools.java",
+      "currentForgeReferenceSha256": "ad325d504497b4ce6fe888276b970abd0edfb6ebeb18793835dedaa7c6097a22",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\a\\Loader_Tools.java",
+      "sourceSha256": "ad325d504497b4ce6fe888276b970abd0edfb6ebeb18793835dedaa7c6097a22",
+      "priorNativeSha256": "d8bc186861d0e2f3fffd6849626045c7a0f54865cee46b76cd4b70afac2c3e1a"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/data/ManualToolRecipePack.java",
+      "sha256": "df3a724ee73dd0d4042a8576d65ba0559ab9d6c6c2c5919d99d4c54b714e124d",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/loaders/Loader_HandToolCraftingRecipes.java",
+      "currentForgeReferenceSha256": "0d7489a4ad6f3c889280f1b6ca23717c40210ba1479ee2067d36430892a03c02",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\Loader_HandToolCraftingRecipes.java",
+      "sourceSha256": "0d7489a4ad6f3c889280f1b6ca23717c40210ba1479ee2067d36430892a03c02",
+      "priorNativeSha256": "8889ca6ea00493e4171b48951e47438312019f1d943f11b67837639848ca8ad3"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/recipe/ShapelessRecipeTooltipIndexLoader.java",
+      "sha256": "a9628763f2b3b482fdc99d42da10be5f368d8fa28c9a6b2d2f2bb9be92a13ce1",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/recipe/RuntimeRecipeLifecycle.java",
+      "currentForgeReferenceSha256": "cc5506f8fa2d5fd70b35c98bf18f84efd245763694d97dff338e6da215de3145",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\recipe\\RuntimeRecipeLifecycle.java",
+      "sourceSha256": "cc5506f8fa2d5fd70b35c98bf18f84efd245763694d97dff338e6da215de3145",
+      "priorNativeSha256": "dcdbedbcf8406f3bc81fe5fa4f1c66613e06a6d97db271e59c6e06be822d2a3f"
+    }
+  ],
+  "scope": "Full original crucible tooltip/item callbacks on 39 actual registrations; all 52 original axle patterns in existing reloadable Native pack, one finite-creosote custom ingredient/recipe with drained container remainder and tool wear; server tooltip index refresh after global datapack sync.",
+  "architecture": "Keep Native reloadable pack/codecs and data-pack override precedence, no duplicate Forge RuntimeRecipeLifecycle mutation pipeline. No core, assets, Forge or donor edits."
+}

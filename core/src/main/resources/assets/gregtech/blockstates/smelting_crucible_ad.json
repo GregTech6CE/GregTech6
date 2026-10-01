@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "gregtech:block/blocks/smelting_crucible_ad"
+    }
+  }
+}

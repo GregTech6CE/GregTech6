@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column_horizontal",
+  "textures": {
+    "end": "gregtech:block/iconsets/log_top_maple",
+    "side": "gregtech:block/iconsets/log_hole_maple"
+  }
+}

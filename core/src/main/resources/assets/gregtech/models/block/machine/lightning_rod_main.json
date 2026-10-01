@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "gregtech:block/machines/multiblockparts/metalwall/0/colored/side",
+    "side": "gregtech:block/machines/multiblockparts/metalwall/0/colored/side",
+    "top": "gregtech:block/machines/multiblockparts/metalwall/0/colored/side",
+    "bottom": "gregtech:block/machines/multiblockparts/metalwall/0/colored/side"
+  }
+}

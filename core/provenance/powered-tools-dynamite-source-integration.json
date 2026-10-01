@@ -1,0 +1,264 @@
+{
+  "source": "saltnya",
+  "license": "unchanged; local integration; publication authorization unresolved",
+  "records": [
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\tool\\ElectricToolWear.java",
+      "sha256": "3b864d13bb8f675f1f05e3f9d5be5a7b217f87c7883e0f3720cf33b48ab38a88",
+      "baselineSha256": "3b864d13bb8f675f1f05e3f9d5be5a7b217f87c7883e0f3720cf33b48ab38a88"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\tool\\ElectricWrenchHarvest.java",
+      "sha256": "50572c1b4e30fbd97d0bce7b2e9644d95cc6d959cb188003e7d65c8e012fcec6",
+      "baselineSha256": "50572c1b4e30fbd97d0bce7b2e9644d95cc6d959cb188003e7d65c8e012fcec6"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\tool\\ElectricChainsawHarvest.java",
+      "sha256": "f15ac4fb1fedda42a53c3f11b2bd688941d7a5bf6257310fca00fe62b0d0d93a",
+      "baselineSha256": "f15ac4fb1fedda42a53c3f11b2bd688941d7a5bf6257310fca00fe62b0d0d93a"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\item\\ElectricToolItem.java",
+      "sha256": "e3b57470cea17ff51d39197aaf00199420a9772362c1efdc27f0ab04593b7a29",
+      "baselineSha256": "8ecd51bb69a4ccc98b426e0da0e71b5a27ced1c2b9ae0b68bf7c6f18021e207b"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTElectricItems.java",
+      "sha256": "998cddf0a944672df6b768cb781423bb23b722fbdc96d4c1c868b905fb2f214a",
+      "baselineSha256": "acc8822effc425c9ab03bd505f64d1da4b83480989bf257762ac8c79c00479a7"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\item\\behavior\\RemoteActivatable.java",
+      "sha256": "ae403d3d099ff2acc3757192fe201c2f8f637282cf1b720ec8f5de2332a6a067",
+      "baselineSha256": "ae403d3d099ff2acc3757192fe201c2f8f637282cf1b720ec8f5de2332a6a067"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\item\\behavior\\BehaviorRemote.java",
+      "sha256": "c21e0eeb1e78d42f2822f388dec804ceb7358319beda69f5fa4b1dc02538d62e",
+      "baselineSha256": "c21e0eeb1e78d42f2822f388dec804ceb7358319beda69f5fa4b1dc02538d62e"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\tool\\DynamiteBlock.java",
+      "sha256": "0511110577cf0f0bb6b9213387328a53b08c7c57a4275e79d8ce10984347ae3d",
+      "baselineSha256": "0511110577cf0f0bb6b9213387328a53b08c7c57a4275e79d8ce10984347ae3d"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\tool\\DynamiteBlockEntity.java",
+      "sha256": "2d1edfec77664ddc4a38b2887e9cd719c4661bbc16256056e4f2e5eb07caa7f0",
+      "baselineSha256": "2d1edfec77664ddc4a38b2887e9cd719c4661bbc16256056e4f2e5eb07caa7f0"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\tool\\DynamiteSubstrates.java",
+      "sha256": "6ae86707fcad10d8055688ee2b4d34d7004d528ef35f877089c58c3e9c2f4502",
+      "baselineSha256": "6ae86707fcad10d8055688ee2b4d34d7004d528ef35f877089c58c3e9c2f4502"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\tool\\DynamiteExplosion.java",
+      "sha256": "ca43b6880602b86dcdf4208878f47114575bcf7a502c9fb8dda649656b7bdbcd",
+      "baselineSha256": "ca43b6880602b86dcdf4208878f47114575bcf7a502c9fb8dda649656b7bdbcd"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\item\\behavior\\BehaviorPlaceDynamite.java",
+      "sha256": "2d07adfed660d15926bf8635234422203106a8595a5eeb1df783fbefd4a5fc2f",
+      "baselineSha256": "2d07adfed660d15926bf8635234422203106a8595a5eeb1df783fbefd4a5fc2f"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTToolBlocks.java",
+      "sha256": "e97ff44db07868f6289bca7eb0e2883286c4f85edd47dd3785ae74e17435d0d2",
+      "baselineSha256": "e97ff44db07868f6289bca7eb0e2883286c4f85edd47dd3785ae74e17435d0d2"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\tool\\ElectricToolAssembly.java",
+      "sha256": "b1d2c4dcc7cf408a65778e9de51e16019ab8d00f0d9a8d8e295280e8d50dcf11",
+      "baselineSha256": "b1d2c4dcc7cf408a65778e9de51e16019ab8d00f0d9a8d8e295280e8d50dcf11"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\recipe\\ImplosionRecipes.java",
+      "sha256": "bdf318af223e126af66f1724d6188c8bc6217062b10080f85dc071dc4dae195b",
+      "baselineSha256": "c45c4b51e83a690115d1aaaca329f46abec786e18b908468c17a384fd18fb26d"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTMultiItems.java",
+      "sha256": "33c2677480c5cfb07e4f5bcd714580352bbece744713a9c87cd05c4c2a839815",
+      "baselineSha256": "33c2677480c5cfb07e4f5bcd714580352bbece744713a9c87cd05c4c2a839815"
+    }
+  ],
+  "resources": [
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/electric_drill.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/electric_drill.json",
+      "sha256": "e63a14900633d3339e3419f58cfb6b6433a168f5935b140b401b06045d1f94b7"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/handle_electric_drill.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/handle_electric_drill.png",
+      "sha256": "b3557880c82b85d61f08a22d7fdb51fc5b27864e6fecf9a19425f93c7592c578"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/handle_electric_drill_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/handle_electric_drill_overlay.png",
+      "sha256": "958a1a33fd26ad7677abc2edb0314250ea109a244665c311d8c550e692d87f29"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/tip_electric_drill.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/tip_electric_drill.png",
+      "sha256": "0688f2648389445fc311240a3916129a5972ac62c4b481d756d4f8eed879948f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/tip_electric_drill_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/tip_electric_drill_overlay.png",
+      "sha256": "6180267a87a6ab2f96157c0429318019ca825f13f57af6d7e1c5392515979fbb"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/electric_chainsaw.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/electric_chainsaw.json",
+      "sha256": "d52e53730fc59bc4569793bdf29827de629ee6830ddfc78762fe0b87dbe7c7e1"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/power_unit_lv.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/power_unit_lv.png",
+      "sha256": "43d965205ff0417455bc2e350bbc110fce8ee42759115cc4b75f1d5763590930"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/power_unit_lv_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/power_unit_lv_overlay.png",
+      "sha256": "4e450d5e39a39090b8fc5766a46c84616e68fccc04e736ff196c18e72f51de32"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/metallic/toolheadchainsaw.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/metallic/toolheadchainsaw.png",
+      "sha256": "d1452fb9dda15ab2d6c87f26af3e6b8e4bd66f35367b127d5acbf842e7cf98f8"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/metallic/toolheadchainsaw_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/metallic/toolheadchainsaw_overlay.png",
+      "sha256": "6c34b65e82b634baf68ee538e487fbf0753e6f7642963bbe28afc2af589cb510"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/electric_wrench.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/electric_wrench.json",
+      "sha256": "96bf4fc04e4fcff0ca76fe66f83b7859058599f7739f7528916375dac424d490"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/metallic/toolheadwrench.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/metallic/toolheadwrench.png",
+      "sha256": "8d5a94bccbdc5594c9a1b4bc85e276597a4899f3163580c9cb9867c5d8bfced7"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/metallic/toolheadwrench_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/metallic/toolheadwrench_overlay.png",
+      "sha256": "6c34b65e82b634baf68ee538e487fbf0753e6f7642963bbe28afc2af589cb510"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/electric_screwdriver.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/electric_screwdriver.json",
+      "sha256": "8694d350d4d23875542b6f34954690b62585ffd4f020bdb33f72757edb604211"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/handle_electric_screwdriver.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/handle_electric_screwdriver.png",
+      "sha256": "cc07d021634bf9835e9295276510d495212f2578523fbe2817c4418b2fecfb28"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/handle_electric_screwdriver_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/handle_electric_screwdriver_overlay.png",
+      "sha256": "9b02da8d5ded0b4728313fb28146cf80d41e8ad88d78aea0854bed940a44a25b"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/metallic/toolheadscrewdriver.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/metallic/toolheadscrewdriver.png",
+      "sha256": "4dbe6513b63bc6442307d632b288985b0be2d6be3799d4573d0c7b820a32634a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/metallic/toolheadscrewdriver_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/metallic/toolheadscrewdriver_overlay.png",
+      "sha256": "6c34b65e82b634baf68ee538e487fbf0753e6f7642963bbe28afc2af589cb510"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/dynamite.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/dynamite.json",
+      "sha256": "0e0f7e689fe1baec4fd6b7ff73bfc5a563f84e27786de05f8055232d0d7965e8"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/tool/dynamite.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/tool/dynamite.json",
+      "sha256": "74d45ea9634d050ce8da739166fcf3076005aede13026b35d20fb15f68cab60d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/tools/dynamite/colored/side.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/tools/dynamite/colored/side.png",
+      "sha256": "96f4e2814ebe7dc8ce455fb249476f0ce15c18cdc0b2142408e50e80faab5044"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/tool/dynamite_sunk.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/tool/dynamite_sunk.json",
+      "sha256": "79d486d2ac6cbda58a010911043d258b02c6f0fff2479447fdf6d8f4f6e54331"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/tool/dynamite_active.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/tool/dynamite_active.json",
+      "sha256": "079b208dcffcb9a00f336807529e8818c08103db82431d4839c594536097b491"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/tool/dynamite_active_sunk.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/tool/dynamite_active_sunk.json",
+      "sha256": "b8e2fd4325617434a697389c99a98eeee4112876a1d72519dd0eb5f8046c0b2c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/dynamite.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/dynamite.json",
+      "sha256": "5003866c76d80b48c6d7fd03d8eff15c29707e6c32ec75557d9afe95d8f55163"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/boomstick.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/boomstick.json",
+      "sha256": "0e0f7e689fe1baec4fd6b7ff73bfc5a563f84e27786de05f8055232d0d7965e8"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/boomstick.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/boomstick.json",
+      "sha256": "5003866c76d80b48c6d7fd03d8eff15c29707e6c32ec75557d9afe95d8f55163"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/strong_dynamite.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/strong_dynamite.json",
+      "sha256": "0e0f7e689fe1baec4fd6b7ff73bfc5a563f84e27786de05f8055232d0d7965e8"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/strong_dynamite.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/strong_dynamite.json",
+      "sha256": "5003866c76d80b48c6d7fd03d8eff15c29707e6c32ec75557d9afe95d8f55163"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/remote_activator.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/remote_activator.json",
+      "sha256": "f287abdd9f03da180f1ebf82ab829d0d612cc46069dba9d5adbe5d6f76315624"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/randomtools/remote_activator.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/randomtools/remote_activator.png",
+      "sha256": "d173223938207f5fd5ec337e0066c1cb1741497351f5fc75cfba2ddd07dec1d3"
+    }
+  ],
+  "verification": "Grouped core/Neo/Forge Java compile passed; native powered checkpoint and 200-tick normal server save/stop passed after remote factory fix; clients/full world/restart not checked",
+  "shared": [
+    "four LV definitions and assembly patterns/material eligibility",
+    "electric wear maximum/chance/scrap bounds"
+  ],
+  "preserved": [
+    "actual electric energy/tool actions",
+    "three mining charges and fuse save keys",
+    "128 axis range, 64 coordinates per dimension, keep-bound result",
+    "concrete battery capacity/unpowered assembled output, tool wear and no mirror",
+    "original fixed blast/drop/fortune and implosion rows"
+  ],
+  "gaps": [
+    "native item-pipe/Bars target classes and GTGrass/Diggable substrate classes unported; tag targets retained",
+    "Neo IShearable removed fortune argument; override callback uses native components",
+    "spray extinguisher item unported; actual defusing protocol on entity",
+    "client/world action/restart not yet checked",
+    "chainsaw BreakEvent conversion, actual drill placement and fixed explosion runtime pending",
+    "remote full air-use coordinate pruning/range scenarios unverified"
+  ],
+  "nativeBreakHook": "BreakEvent LOWEST listener, respects previously canceled events; removed item callback replaced"
+}

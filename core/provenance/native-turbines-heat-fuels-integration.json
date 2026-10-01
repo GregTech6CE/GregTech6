@@ -1,0 +1,869 @@
+{
+  "stage": "P3 D010 fast source integration",
+  "baseline": "a3cdda7db0fe5a4f819420b24d48154ac60d33df",
+  "authors": [
+    "saltnya",
+    "brokestar233",
+    "Lorbineitte Masson",
+    "original GregTech 6 contributors"
+  ],
+  "license": "Original licenses, notices and obtainable histories remain preserved; no relicensing or publication.",
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/NeoMachineRecipeLoader.java",
+      "sha256": "1bed2c373d17bcceac96586192a2174e72f1bafe8e702d2bbfaa1dd46bc867c3",
+      "sources": [],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": "95174d25abe92f84272b157e1e3ea9c6d0cb343809d910accd4d6b57fe868d19"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/machine/BasicMachineRegistries.java",
+      "sha256": "d708f035ace518c386e9fa7a5cc6327d0c69da861aafe23d1c82bb02fb028522",
+      "sources": [],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": "3eaf587d27876710342bdf0fce21c8c3a027b9c8ea040b9ee1972a45e31a533b"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "sha256": "3e75e1483fd2405a0bf208344975c99c1e8998b5c74456d415fe24920089a1f4",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTBlockEntities.java",
+          "sha256": "027081bae34480826956a74d65a24aa7f4ef29d4be4a4687046793a10d9df62f",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": "98662aba6eeac9bc28e15d56d955d4a8100579913988049555490cbfa76af787"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTMultiblocks.java",
+      "sha256": "aa1e8b785c19ec46b528f51e119f829e7ae865cba6d633abe9ef506b2ddb4007",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTMultiblocks.java",
+          "sha256": "a0f056e6ba6c0b0a9e524795e5eae17e3a9591916770456be13fba10f24e45c8",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": "51e9dae7fecdd1604be125831ea1aa040969416c1de942e826b737fe615f254c"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/api/recipe/FluidFuelBatch.java",
+      "sha256": "09160dbf2656fe107c9295f49c86c29657336866776d043116650ee54a6241e1",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\api\\recipe\\FluidFuelBatch.java",
+          "sha256": "c300c831fa36fe1283c693de105e819ff8a04cd80c3891be80fd364b5e9f7750",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": "c300c831fa36fe1283c693de105e819ff8a04cd80c3891be80fd364b5e9f7750"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/blockentity/machine/AxialGeneratorBlockEntity.java",
+      "sha256": "650f9921def975ac32f20d088ca0dfb8ab2a54b018d2b4f116f5bf8e192ef286",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\AxialGeneratorBlockEntity.java",
+          "sha256": "7c06f3d7f8b370cff049f136d23fab74cf421c0eac5664e3909ab780bba3769b",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": "7c06f3d7f8b370cff049f136d23fab74cf421c0eac5664e3909ab780bba3769b"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/blockentity/machine/LargeHeatExchangerControllerBlockEntity.java",
+      "sha256": "51fd14a1b0d6f45b27c7abadef0246ea2a115c637f288383f5444dcc8f0d1e54",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeHeatExchangerControllerBlockEntity.java",
+          "sha256": "9bde513f7732d91b110b7d9caba96442c863708ce308bca3223083dff09182fc",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": "9bde513f7732d91b110b7d9caba96442c863708ce308bca3223083dff09182fc"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/blockentity/machine/LargeTurbineControllerBlockEntity.java",
+      "sha256": "3b0d443a66b9eec60eb5a3a9b9fef318c0d3c8f29c0f16486a53e7690c73216f",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeTurbineControllerBlockEntity.java",
+          "sha256": "a6f2b099510cfedef0068b478a8e3329d9b220f3e4aff08ac95a98f0f2721530",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": "a6f2b099510cfedef0068b478a8e3329d9b220f3e4aff08ac95a98f0f2721530"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/content/multiblock/AxialGeneratorDefinitions.java",
+      "sha256": "7107862e6dafea4d306fccaad2ed930548e894501755396e0f04f57802fc4b3a",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\AxialGeneratorDefinitions.java",
+          "sha256": "203a19a24fd7d2fa0b509d2511084ea929c6f23e7fa0fba71462f090c875e66e",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": "203a19a24fd7d2fa0b509d2511084ea929c6f23e7fa0fba71462f090c875e66e"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/content/multiblock/GasTurbineDefinitions.java",
+      "sha256": "c8f2606075f38b749e4f403c3150193e55fcdeea6eb42cbc12837e5eece3b216",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\GasTurbineDefinitions.java",
+          "sha256": "711713e5ced3dd9961d753f05ad4aecbf0da676ac43b36c5de39e48a49d13df4",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": "711713e5ced3dd9961d753f05ad4aecbf0da676ac43b36c5de39e48a49d13df4"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/data/FuelRecipeMaps.java",
+      "sha256": "558710bac2ba02ec5445f404ef0b2d14d317e1b8f2224d5f83a43c1c27fda95b",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\data\\FuelRecipeMaps.java",
+          "sha256": "31297a9e9fe91ffc4073e42394c17c497225c5687471077297437babad7b5e69",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": "31297a9e9fe91ffc4073e42394c17c497225c5687471077297437babad7b5e69"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/loaders/c/Loader_Recipes_Fuels.java",
+      "sha256": "9ceed8b911ef76e97c67170ce05bc1eccbeecde592ce881e1caa915a72ad1ace",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\c\\Loader_Recipes_Fuels.java",
+          "sha256": "154021a9a1621cd1d4e0f24e35727b35e09b2e97bd77db7bc796df2882d90fbe",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": "154021a9a1621cd1d4e0f24e35727b35e09b2e97bd77db7bc796df2882d90fbe"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/registry/GTMultiblocks.java",
+      "sha256": "9b3ead0fd019c141d9f5ac2764e535a13a3806d157201754fa39192a2479430c",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTMultiblocks.java",
+          "sha256": "a0f056e6ba6c0b0a9e524795e5eae17e3a9591916770456be13fba10f24e45c8",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": "a0f056e6ba6c0b0a9e524795e5eae17e3a9591916770456be13fba10f24e45c8"
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/api/recipe/FluidFuelChargeMath.java",
+      "sha256": "33683ae98b48ca3729f8e9f14c5d47e163f4c91add5fcc08d516861590e03f92",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\api\\recipe\\FluidFuelBatch.java",
+          "sha256": "c300c831fa36fe1283c693de105e819ff8a04cd80c3891be80fd364b5e9f7750",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalGeneratorParameters.java",
+      "sha256": "c8ed5e80e09ad6005258d227ec3322cbc5c401ed182ad296972ec69a5744f300",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\GasTurbineDefinitions.java",
+          "sha256": "711713e5ced3dd9961d753f05ad4aecbf0da676ac43b36c5de39e48a49d13df4",
+          "authors": "saltnya / original GregTech 6 contributors"
+        },
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\AxialGeneratorDefinitions.java",
+          "sha256": "203a19a24fd7d2fa0b509d2511084ea929c6f23e7fa0fba71462f090c875e66e",
+          "authors": "saltnya / original GregTech 6 contributors"
+        },
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\AxialGeneratorBlockEntity.java",
+          "sha256": "7c06f3d7f8b370cff049f136d23fab74cf421c0eac5664e3909ab780bba3769b",
+          "authors": "saltnya / original GregTech 6 contributors"
+        },
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeTurbineControllerBlockEntity.java",
+          "sha256": "a6f2b099510cfedef0068b478a8e3329d9b220f3e4aff08ac95a98f0f2721530",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalMultiblockTintPolicy.java",
+      "sha256": "ad7b1809fd268e288714f0f30ce0a49ebaf4b2ea3c21a06cc28f0a525404bc36",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTMultiblocks.java",
+          "sha256": "a0f056e6ba6c0b0a9e524795e5eae17e3a9591916770456be13fba10f24e45c8",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/multiblock/SharedHeatExchangerStructure.java",
+      "sha256": "1307fcf31ea1b0cedef63547c39f7201b2cc2b4bc43aadbb638c256b2a001e5a",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeHeatExchangerControllerBlockEntity.java",
+          "sha256": "9bde513f7732d91b110b7d9caba96442c863708ce308bca3223083dff09182fc",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/recipe/OriginalFuelRecipeRows.java",
+      "sha256": "3bf58d5280734f075707e98a68ecfcee706c73e5587b1c7d39d29c57e411425f",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\c\\Loader_Recipes_Fuels.java",
+          "sha256": "154021a9a1621cd1d4e0f24e35727b35e09b2e97bd77db7bc796df2882d90fbe",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/data/FuelRecipeMapDefinitions.java",
+      "sha256": "dc63a30bc4b2023b740d05ddf62254cd4c6dfcc0f3fead4984d6500deb84a84d",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\data\\FuelRecipeMaps.java",
+          "sha256": "31297a9e9fe91ffc4073e42394c17c497225c5687471077297437babad7b5e69",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/api/fluid/NativeMachineTankData.java",
+      "sha256": "727ef78883318ae2ca4a6acbf00ae2e8f4fdd33a09f83bb6efcaf79872383fa5",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeTurbineControllerBlockEntity.java",
+          "sha256": "a6f2b099510cfedef0068b478a8e3329d9b220f3e4aff08ac95a98f0f2721530",
+          "authors": "saltnya / original GregTech 6 contributors"
+        },
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeGasTurbineControllerBlockEntity.java",
+          "sha256": "f9e9da5dd47a9607edf6f0d7090bd3d88cc2c64cdcf8931de1d7802e75bf3d5b",
+          "authors": "saltnya / original GregTech 6 contributors"
+        },
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeHeatExchangerControllerBlockEntity.java",
+          "sha256": "9bde513f7732d91b110b7d9caba96442c863708ce308bca3223083dff09182fc",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/api/machine/MachineControls.java",
+      "sha256": "70dcffeb473d385c3e6163636dc11949be4094bb6081a0c232ccfbb676c87eb5",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\api\\machine\\MachineControls.java",
+          "sha256": "70dcffeb473d385c3e6163636dc11949be4094bb6081a0c232ccfbb676c87eb5",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/api/recipe/FluidFuelBatch.java",
+      "sha256": "c85bbcd4d856d3f674cc55a78fdf2500bec834419c8212cc8dfee78f78495463",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\api\\recipe\\FluidFuelBatch.java",
+          "sha256": "c300c831fa36fe1283c693de105e819ff8a04cd80c3891be80fd364b5e9f7750",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/machine/AxialGeneratorBlock.java",
+      "sha256": "143a2d1e26d61cfc25639cc3574390d4722c633de999b8cb2a12d6f284ee3903",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\AxialGeneratorBlock.java",
+          "sha256": "2b4c9fe84022b7726cc78de622847c2465218242b65c87f5d67a4c0670f0eeca",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/machine/LargeDynamoControllerBlock.java",
+      "sha256": "40b2ae7c916f3db0637de4077335617b1ceb809729151b46319ef81505f8ee04",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\LargeDynamoControllerBlock.java",
+          "sha256": "1ea13bec31008363f8a34616d1a7356812a3ab3bbd2cd756617b838067dd1ce8",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/machine/LargeGasTurbineControllerBlock.java",
+      "sha256": "b06984a73cba851dc6d937eae2135681582d9d4affe040d578183d57926c7c8d",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\LargeGasTurbineControllerBlock.java",
+          "sha256": "29052c2cbc0ad686605bffa48d92203545ceeb4163d4813cd30d7dea3e4c389d",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/machine/LargeHeatExchangerControllerBlock.java",
+      "sha256": "c3122629f44f213c373fe9315545dc4b8310dd92319829d241ffbe8704753aa1",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\LargeHeatExchangerControllerBlock.java",
+          "sha256": "8b76f92ff1c6663a797a9194686c4758292ae91698f400cd65a34470d3c7caa6",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/machine/LargeTurbineControllerBlock.java",
+      "sha256": "6e9c04023f3f82f30de55500ecc121e5b5f78908372b7676b58a0e7fb215feae",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\LargeTurbineControllerBlock.java",
+          "sha256": "1db4c3a67b8fb0f179b8b555689654ce70944c5e09b662c223cc6cedb1cbc8fe",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/AxialGeneratorBlockEntity.java",
+      "sha256": "9c015dbe06bc8070dc6dcaa953a6038cf3b9f48bcf088604cf5766b84b07cf27",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\AxialGeneratorBlockEntity.java",
+          "sha256": "7c06f3d7f8b370cff049f136d23fab74cf421c0eac5664e3909ab780bba3769b",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/LargeDynamoControllerBlockEntity.java",
+      "sha256": "97f3e804f7f4b7d58b05c3eb7687da7e0a375e19cd2a468c9d35e7c4e8dfb773",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeDynamoControllerBlockEntity.java",
+          "sha256": "745f342a2890cd1b026a006572c87366956c3c7b7e1883f9bff0688a1ce8c41c",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/LargeGasTurbineControllerBlockEntity.java",
+      "sha256": "de018f4a731a298bd27008a75992360a88342b1b78176b1ed98562d4594246bf",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeGasTurbineControllerBlockEntity.java",
+          "sha256": "f9e9da5dd47a9607edf6f0d7090bd3d88cc2c64cdcf8931de1d7802e75bf3d5b",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/LargeHeatExchangerControllerBlockEntity.java",
+      "sha256": "08b4731a495418df62a123b511f64d739ae687765ff60b89807173d090dd6b23",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeHeatExchangerControllerBlockEntity.java",
+          "sha256": "9bde513f7732d91b110b7d9caba96442c863708ce308bca3223083dff09182fc",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/LargeTurbineControllerBlockEntity.java",
+      "sha256": "1397eab0df1f28623712199bb28a87ecc553256650c96c74491e5fc32791fc87",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeTurbineControllerBlockEntity.java",
+          "sha256": "a6f2b099510cfedef0068b478a8e3329d9b220f3e4aff08ac95a98f0f2721530",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/LargeTurbineRotorRenderer.java",
+      "sha256": "fc7b130cf20db3f2785546131b154d0471da9f48292861578f546220e19c6dad",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\LargeTurbineRotorRenderer.java",
+          "sha256": "185665c0bcf52bd5fbfc95e6b90a196d9df8d5d2d39ff511084deea78faac48e",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/MultiblockClientSetup.java",
+      "sha256": "7b45402289d75ad41385c59202e7cf6a3ebbc8cba6c06c6a4fe9293bb8b67711",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\LargeTurbineRotorRenderer.java",
+          "sha256": "185665c0bcf52bd5fbfc95e6b90a196d9df8d5d2d39ff511084deea78faac48e",
+          "authors": "saltnya / original GregTech 6 contributors"
+        },
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTMultiblocks.java",
+          "sha256": "a0f056e6ba6c0b0a9e524795e5eae17e3a9591916770456be13fba10f24e45c8",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/multiblock/AxialGeneratorDefinitions.java",
+      "sha256": "3012b90295c5e93c1fe4c03b7c1c2070b63e43dcbcb9bf343b433b99c581be46",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\AxialGeneratorDefinitions.java",
+          "sha256": "203a19a24fd7d2fa0b509d2511084ea929c6f23e7fa0fba71462f090c875e66e",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/multiblock/AxialStructureTransform.java",
+      "sha256": "96fb72a7039a81dce419f2081706b37ccd4f8e330bb1dce95f5f38a0c0b36fa2",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\AxialStructureTransform.java",
+          "sha256": "85da7e2e77bdc2e87cfa7279cd44c0296a38beb30ae82d25d4fe4b4b050f0421",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/multiblock/GasTurbineDefinitions.java",
+      "sha256": "78d91cb2feb80dd3240d89deacaf5442d2dc921be8feb6b430860286e789237a",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\GasTurbineDefinitions.java",
+          "sha256": "711713e5ced3dd9961d753f05ad4aecbf0da676ac43b36c5de39e48a49d13df4",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/multiblock/TurbineStructure.java",
+      "sha256": "e35bd7a1920c433c6a8f413bdeb1e10375156882ba86f8d31d8e758697289226",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\TurbineStructure.java",
+          "sha256": "0894b80edeffece0038e40a90f8463126874134a05964f0a90505c2dbe64eefc",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/data/FuelRecipeMaps.java",
+      "sha256": "e145796c710969c8c1cb6a4059418922a30a61d750e88c6a0d98bff7b6f46f0d",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\data\\FuelRecipeMaps.java",
+          "sha256": "31297a9e9fe91ffc4073e42394c17c497225c5687471077297437babad7b5e69",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/loaders/c/Loader_Recipes_Fuels.java",
+      "sha256": "dafe57b9a36b7afafe3af568169a3903bb0091d28a36bd862ab3ed87b5952027",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\c\\Loader_Recipes_Fuels.java",
+          "sha256": "154021a9a1621cd1d4e0f24e35727b35e09b2e97bd77db7bc796df2882d90fbe",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original domain/rating/row stream or MC/loader/NBT/client boundary",
+      "previousTargetSha256": null
+    }
+  ],
+  "resources": [
+    {
+      "target": "core/src/main/resources/assets/gregtech/blockstates/heat_exchanger_main.json",
+      "sha256": "14aca090da2fd1f90cfb478818708323598eeb59c3e75d13c50b609cff103217",
+      "adaptation": "original bytes shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\heat_exchanger_main.json",
+      "sourceSha256": "14aca090da2fd1f90cfb478818708323598eeb59c3e75d13c50b609cff103217"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/blockstates/heat_exchanger_wall.json",
+      "sha256": "4afbe32eb91da3f7d9f610b84b4b39e92cb02b72d31c416e1b84c53669c5c2c5",
+      "adaptation": "original bytes shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\heat_exchanger_wall.json",
+      "sourceSha256": "4afbe32eb91da3f7d9f610b84b4b39e92cb02b72d31c416e1b84c53669c5c2c5"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/blockstates/large_dynamo_adamantium.json",
+      "sha256": "e728c39534ecf1641bf8ee0f9a2b28f390a4257a4e0db5fa79f0e2b6ee65977e",
+      "adaptation": "original bytes shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\large_dynamo_adamantium.json",
+      "sourceSha256": "e728c39534ecf1641bf8ee0f9a2b28f390a4257a4e0db5fa79f0e2b6ee65977e"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/blockstates/large_dynamo_main.json",
+      "sha256": "e728c39534ecf1641bf8ee0f9a2b28f390a4257a4e0db5fa79f0e2b6ee65977e",
+      "adaptation": "original bytes shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\large_dynamo_main.json",
+      "sourceSha256": "e728c39534ecf1641bf8ee0f9a2b28f390a4257a4e0db5fa79f0e2b6ee65977e"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/blockstates/large_dynamo_titanium.json",
+      "sha256": "e728c39534ecf1641bf8ee0f9a2b28f390a4257a4e0db5fa79f0e2b6ee65977e",
+      "adaptation": "original bytes shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\large_dynamo_titanium.json",
+      "sourceSha256": "e728c39534ecf1641bf8ee0f9a2b28f390a4257a4e0db5fa79f0e2b6ee65977e"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/blockstates/large_dynamo_tungstensteel.json",
+      "sha256": "e728c39534ecf1641bf8ee0f9a2b28f390a4257a4e0db5fa79f0e2b6ee65977e",
+      "adaptation": "original bytes shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\large_dynamo_tungstensteel.json",
+      "sourceSha256": "e728c39534ecf1641bf8ee0f9a2b28f390a4257a4e0db5fa79f0e2b6ee65977e"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/blockstates/large_dynamo_wall.json",
+      "sha256": "4a3268ac1a659b7950230f42bafe28e9854e5de7e704528738cfa0be4c73ef0c",
+      "adaptation": "original bytes shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\large_dynamo_wall.json",
+      "sourceSha256": "4a3268ac1a659b7950230f42bafe28e9854e5de7e704528738cfa0be4c73ef0c"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/blockstates/large_gas_turbine_graphene.json",
+      "sha256": "328c1467dc4f2edba71082df21f524a56e383ebbd696ee5ecc0c8f482968e185",
+      "adaptation": "original bytes shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\large_gas_turbine_graphene.json",
+      "sourceSha256": "328c1467dc4f2edba71082df21f524a56e383ebbd696ee5ecc0c8f482968e185"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/blockstates/large_gas_turbine_main.json",
+      "sha256": "328c1467dc4f2edba71082df21f524a56e383ebbd696ee5ecc0c8f482968e185",
+      "adaptation": "original bytes shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\large_gas_turbine_main.json",
+      "sourceSha256": "328c1467dc4f2edba71082df21f524a56e383ebbd696ee5ecc0c8f482968e185"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/blockstates/large_gas_turbine_trinitanium.json",
+      "sha256": "328c1467dc4f2edba71082df21f524a56e383ebbd696ee5ecc0c8f482968e185",
+      "adaptation": "original bytes shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\large_gas_turbine_trinitanium.json",
+      "sourceSha256": "328c1467dc4f2edba71082df21f524a56e383ebbd696ee5ecc0c8f482968e185"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/blockstates/large_gas_turbine_vibramantium.json",
+      "sha256": "328c1467dc4f2edba71082df21f524a56e383ebbd696ee5ecc0c8f482968e185",
+      "adaptation": "original bytes shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\large_gas_turbine_vibramantium.json",
+      "sourceSha256": "328c1467dc4f2edba71082df21f524a56e383ebbd696ee5ecc0c8f482968e185"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/blockstates/large_gas_turbine_wall.json",
+      "sha256": "57b8b3fc6b54442c37bb49ee7f95fde042ab6521cf745f0f93763874f9caf3bf",
+      "adaptation": "original bytes shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\large_gas_turbine_wall.json",
+      "sourceSha256": "57b8b3fc6b54442c37bb49ee7f95fde042ab6521cf745f0f93763874f9caf3bf"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/blockstates/large_steam_turbine_graphene.json",
+      "sha256": "d35821842089c82fae3e30da921e6abd33d609ef52a937c62c0ea480fc2ae735",
+      "adaptation": "original bytes shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\large_steam_turbine_graphene.json",
+      "sourceSha256": "d35821842089c82fae3e30da921e6abd33d609ef52a937c62c0ea480fc2ae735"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/blockstates/large_steam_turbine_trinitanium.json",
+      "sha256": "d35821842089c82fae3e30da921e6abd33d609ef52a937c62c0ea480fc2ae735",
+      "adaptation": "original bytes shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\large_steam_turbine_trinitanium.json",
+      "sourceSha256": "d35821842089c82fae3e30da921e6abd33d609ef52a937c62c0ea480fc2ae735"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/blockstates/large_steam_turbine_vibramantium.json",
+      "sha256": "d35821842089c82fae3e30da921e6abd33d609ef52a937c62c0ea480fc2ae735",
+      "adaptation": "original bytes shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\large_steam_turbine_vibramantium.json",
+      "sourceSha256": "d35821842089c82fae3e30da921e6abd33d609ef52a937c62c0ea480fc2ae735"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/blockstates/large_turbine_main.json",
+      "sha256": "d35821842089c82fae3e30da921e6abd33d609ef52a937c62c0ea480fc2ae735",
+      "adaptation": "original bytes shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\large_turbine_main.json",
+      "sourceSha256": "d35821842089c82fae3e30da921e6abd33d609ef52a937c62c0ea480fc2ae735"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/blockstates/turbine_wall.json",
+      "sha256": "f5df34a6b98db4e0871fdb92f20b7447536420b3a55b1467042addf9bf4ce7a2",
+      "adaptation": "original bytes shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\turbine_wall.json",
+      "sourceSha256": "f5df34a6b98db4e0871fdb92f20b7447536420b3a55b1467042addf9bf4ce7a2"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/models/item/heat_exchanger_main.json",
+      "sha256": "d922f07457751bdf61c10bcade6216beef1bf2210f91909d763306f597f9a38a",
+      "adaptation": "original bytes shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\heat_exchanger_main.json",
+      "sourceSha256": "d922f07457751bdf61c10bcade6216beef1bf2210f91909d763306f597f9a38a"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/models/item/heat_exchanger_wall.json",
+      "sha256": "1b1027d13a07218022c2c44255834251c21d527d3253d1ddca929befdc713391",
+      "adaptation": "original bytes shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\heat_exchanger_wall.json",
+      "sourceSha256": "1b1027d13a07218022c2c44255834251c21d527d3253d1ddca929befdc713391"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/models/item/large_dynamo_adamantium.json",
+      "sha256": "da19aaf0049eba6145f5d54dced7477f6205824fa4b5f9b8d461b82d39cd69a8",
+      "adaptation": "original bytes shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\large_dynamo_adamantium.json",
+      "sourceSha256": "da19aaf0049eba6145f5d54dced7477f6205824fa4b5f9b8d461b82d39cd69a8"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/models/item/large_dynamo_main.json",
+      "sha256": "da19aaf0049eba6145f5d54dced7477f6205824fa4b5f9b8d461b82d39cd69a8",
+      "adaptation": "original bytes shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\large_dynamo_main.json",
+      "sourceSha256": "da19aaf0049eba6145f5d54dced7477f6205824fa4b5f9b8d461b82d39cd69a8"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/models/item/large_dynamo_titanium.json",
+      "sha256": "da19aaf0049eba6145f5d54dced7477f6205824fa4b5f9b8d461b82d39cd69a8",
+      "adaptation": "original bytes shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\large_dynamo_titanium.json",
+      "sourceSha256": "da19aaf0049eba6145f5d54dced7477f6205824fa4b5f9b8d461b82d39cd69a8"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/models/item/large_dynamo_tungstensteel.json",
+      "sha256": "da19aaf0049eba6145f5d54dced7477f6205824fa4b5f9b8d461b82d39cd69a8",
+      "adaptation": "original bytes shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\large_dynamo_tungstensteel.json",
+      "sourceSha256": "da19aaf0049eba6145f5d54dced7477f6205824fa4b5f9b8d461b82d39cd69a8"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/models/item/large_dynamo_wall.json",
+      "sha256": "f5717a7ced6a2263a01154abbe4cc583020b569ba245f4aa979476d8d9d8890c",
+      "adaptation": "original bytes shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\large_dynamo_wall.json",
+      "sourceSha256": "f5717a7ced6a2263a01154abbe4cc583020b569ba245f4aa979476d8d9d8890c"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/models/item/large_gas_turbine_graphene.json",
+      "sha256": "7986f6bc0fef637b6d26e4c2a9fc8bea86985460823cf5217225bbe19d5905d9",
+      "adaptation": "original bytes shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\large_gas_turbine_graphene.json",
+      "sourceSha256": "7986f6bc0fef637b6d26e4c2a9fc8bea86985460823cf5217225bbe19d5905d9"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/models/item/large_gas_turbine_main.json",
+      "sha256": "7986f6bc0fef637b6d26e4c2a9fc8bea86985460823cf5217225bbe19d5905d9",
+      "adaptation": "original bytes shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\large_gas_turbine_main.json",
+      "sourceSha256": "7986f6bc0fef637b6d26e4c2a9fc8bea86985460823cf5217225bbe19d5905d9"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/models/item/large_gas_turbine_trinitanium.json",
+      "sha256": "7986f6bc0fef637b6d26e4c2a9fc8bea86985460823cf5217225bbe19d5905d9",
+      "adaptation": "original bytes shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\large_gas_turbine_trinitanium.json",
+      "sourceSha256": "7986f6bc0fef637b6d26e4c2a9fc8bea86985460823cf5217225bbe19d5905d9"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/models/item/large_gas_turbine_vibramantium.json",
+      "sha256": "7986f6bc0fef637b6d26e4c2a9fc8bea86985460823cf5217225bbe19d5905d9",
+      "adaptation": "original bytes shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\large_gas_turbine_vibramantium.json",
+      "sourceSha256": "7986f6bc0fef637b6d26e4c2a9fc8bea86985460823cf5217225bbe19d5905d9"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/models/item/large_gas_turbine_wall.json",
+      "sha256": "8dc6c388d66153cd8483fea1faba65713e5bdce90589c6a9648879f92561cceb",
+      "adaptation": "original bytes shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\large_gas_turbine_wall.json",
+      "sourceSha256": "8dc6c388d66153cd8483fea1faba65713e5bdce90589c6a9648879f92561cceb"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/models/item/large_steam_turbine_graphene.json",
+      "sha256": "9f68680f5f4ae7cad9f51e7cc5afc31206cddd8cbad37f2dd29cf69af4fb9dc0",
+      "adaptation": "original bytes shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\large_steam_turbine_graphene.json",
+      "sourceSha256": "9f68680f5f4ae7cad9f51e7cc5afc31206cddd8cbad37f2dd29cf69af4fb9dc0"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/models/item/large_steam_turbine_trinitanium.json",
+      "sha256": "9f68680f5f4ae7cad9f51e7cc5afc31206cddd8cbad37f2dd29cf69af4fb9dc0",
+      "adaptation": "original bytes shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\large_steam_turbine_trinitanium.json",
+      "sourceSha256": "9f68680f5f4ae7cad9f51e7cc5afc31206cddd8cbad37f2dd29cf69af4fb9dc0"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/models/item/large_steam_turbine_vibramantium.json",
+      "sha256": "9f68680f5f4ae7cad9f51e7cc5afc31206cddd8cbad37f2dd29cf69af4fb9dc0",
+      "adaptation": "original bytes shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\large_steam_turbine_vibramantium.json",
+      "sourceSha256": "9f68680f5f4ae7cad9f51e7cc5afc31206cddd8cbad37f2dd29cf69af4fb9dc0"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/models/item/large_turbine_main.json",
+      "sha256": "9f68680f5f4ae7cad9f51e7cc5afc31206cddd8cbad37f2dd29cf69af4fb9dc0",
+      "adaptation": "original bytes shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\large_turbine_main.json",
+      "sourceSha256": "9f68680f5f4ae7cad9f51e7cc5afc31206cddd8cbad37f2dd29cf69af4fb9dc0"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/models/item/turbine_wall.json",
+      "sha256": "7bf8293fde950edf126486c278c396b4b91be5d3028e113be0c33c4d5607fe1f",
+      "adaptation": "original bytes shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\turbine_wall.json",
+      "sourceSha256": "7bf8293fde950edf126486c278c396b4b91be5d3028e113be0c33c4d5607fe1f"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/multiblock/heat_exchanger_main.json",
+      "sha256": "20f929fe92e44015e91811a65be6c9689c44e4cdbdb87171d62a6bdbf4b1b850",
+      "adaptation": "native composite loader namespace",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\multiblock\\heat_exchanger_main.json",
+      "sourceSha256": "525426c1d59bd94a2598df23881f16bced47998c029d85048c4c550d359a8be4"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/multiblock/heat_exchanger_wall.json",
+      "sha256": "a98c1e63ce8aabe16d9d9cc81b8ae071109b29d6537ffa0f0dfcfd49c050cdbd",
+      "adaptation": "native composite loader namespace",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\multiblock\\heat_exchanger_wall.json",
+      "sourceSha256": "97276ad713ac6c654f3ae0833466cbf775c37f1f371e900eac3cc053799883ed"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/multiblock/large_dynamo_main.json",
+      "sha256": "c8ae7b566a0bf76432317c11c47650f1716c360ec790aaef7700a1462ea03efe",
+      "adaptation": "native composite loader namespace",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\multiblock\\large_dynamo_main.json",
+      "sourceSha256": "de43b7878985dbc8504e2f5d59e0ccee75ebe4a9a26e7c3c35c02bcee881496e"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/multiblock/large_dynamo_wall.json",
+      "sha256": "55065ab096090b13ecf274da48abebf74b6e47eb98b80fbf8432c05a42c17dcc",
+      "adaptation": "native composite loader namespace",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\multiblock\\large_dynamo_wall.json",
+      "sourceSha256": "466d111f8902cffb2f71b4d338e4390d0bc3b6d9d9e2e38dcfbdc99e8f78163a"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/multiblock/large_gas_turbine_main.json",
+      "sha256": "bd4938c6d8ef224dbcc9b933a01d1eba090f3643b0fb6f6add082d73bc2232b8",
+      "adaptation": "native composite loader namespace",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\multiblock\\large_gas_turbine_main.json",
+      "sourceSha256": "e75ca62cafd60bee4598f77f7cce0e016e618941287873ca4e6c20e7d63a2a31"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/multiblock/large_gas_turbine_wall.json",
+      "sha256": "d8df735aef9a2de39eeda9ea1c1b3a6511c2998b39b10e08465dc7b030c0c461",
+      "adaptation": "native composite loader namespace",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\multiblock\\large_gas_turbine_wall.json",
+      "sourceSha256": "dfdac2f0bcf850ac063a6fe39fc149cbf8cbc2370976d86a7c953694685fd322"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/multiblock/large_turbine_main.json",
+      "sha256": "e2574d221f48a324e95d84295ca88861b2dd45757e6d8f9218b9aa326f6760e0",
+      "adaptation": "native composite loader namespace",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\multiblock\\large_turbine_main.json",
+      "sourceSha256": "7bb19165fcebb412c8e2234e66e762d8e82612d7cdce565ad2f65f82197303f0"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/multiblock/turbine_wall.json",
+      "sha256": "d8df735aef9a2de39eeda9ea1c1b3a6511c2998b39b10e08465dc7b030c0c461",
+      "adaptation": "native composite loader namespace",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\multiblock\\turbine_wall.json",
+      "sourceSha256": "dfdac2f0bcf850ac063a6fe39fc149cbf8cbc2370976d86a7c953694685fd322"
+    }
+  ],
+  "counts": {
+    "originalSteamHousings": 4,
+    "originalDynamos": 4,
+    "originalGasHousings": 4,
+    "modernAliases": 12,
+    "heatExchanger": 1,
+    "fuelRows": 37,
+    "fuelSchemas": 8,
+    "heatExchangerStructureCells": 17,
+    "axialStructureCells": 35
+  },
+  "choice": "Retain exact source implemented steam/gas/dynamo/heat execution and original atomic port ownership over shared rating/geometry/unit identity; previously adopted brokestar routing and masson loaded/actual-reception policies remain intact. Alternate registries/units and unimplemented generator placeholders are not imported.",
+  "validation": "Grouped core/Neo/Forge compile PASS final19s. Ordinary Neo startup PASS4m46s: 50 structural parts, 76 multiblock crafting rows (8 pending/unresolved), 28 original fuel rows loaded (9 missing-fluid skips), 6406 total crafting, 200 ticks normal save/stop. Covers previous tanks/boilers. Nonblocking Mojang public-key timeout, no retry. No gameplay/client/reload/jar verification.",
+  "knownGaps": [
+    "actual structural assembly, power/fuel/exhaust/condensation/pressure/tool behavior unverified",
+    "source steam exhaust may void excess distilled water and waste-energy converter dissipates unused energy by design",
+    "plasma/magic/fluid-bed/turbine schema existence does not imply fuel rows or their controllers exist",
+    "source Fuel loader skips missing fluid keys; full survival fuel access unverified",
+    "native rotor/color rendering connected but world client behavior unverified",
+    "separate-process saved-world restart/old-save migration/Forge gameplay/fresh jars unverified",
+    "large crucibles/high-tech/logistics and remaining original baseline machines still pending"
+  ]
+}

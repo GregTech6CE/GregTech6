@@ -1,0 +1,74 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "mode": "wall",
+        "facing": "down"
+      },
+      "apply": {
+        "model": "gregtech:block/decoration/spike_wall_down"
+      }
+    },
+    {
+      "when": {
+        "mode": "wall",
+        "facing": "up"
+      },
+      "apply": {
+        "model": "gregtech:block/decoration/spike_wall_up"
+      }
+    },
+    {
+      "when": {
+        "mode": "wall",
+        "facing": "north"
+      },
+      "apply": {
+        "model": "gregtech:block/decoration/spike_wall_north"
+      }
+    },
+    {
+      "when": {
+        "mode": "wall",
+        "facing": "south"
+      },
+      "apply": {
+        "model": "gregtech:block/decoration/spike_wall_south"
+      }
+    },
+    {
+      "when": {
+        "mode": "wall",
+        "facing": "west"
+      },
+      "apply": {
+        "model": "gregtech:block/decoration/spike_wall_west"
+      }
+    },
+    {
+      "when": {
+        "mode": "wall",
+        "facing": "east"
+      },
+      "apply": {
+        "model": "gregtech:block/decoration/spike_wall_east"
+      }
+    },
+    {
+      "when": {
+        "mode": "omni"
+      },
+      "apply": {
+        "model": "gregtech:block/decoration/spike_omni"
+      }
+    },
+    {
+      "when": {
+        "mode": "falling"
+      },
+      "apply": {
+        "model": "gregtech:block/decoration/spike_omni"
+      }
+    }
+  ]
+}

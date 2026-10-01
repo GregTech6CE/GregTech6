@@ -1,0 +1,147 @@
+{
+  "source": "saltnya",
+  "license": "unchanged; publication authorization unresolved",
+  "verification": "core/Neo/Forge Java compile PASS in 36s; Neo startup PASS in 4m37s; behavior/client/restart unverified",
+  "physicalBlocks": 6,
+  "shared": [
+    "SignalWireCatalog families",
+    "WirePacketRules signed loss/saturating counters reused by Forge and Neo"
+  ],
+  "preserved": [
+    "fractional redstone wave solving and no loop latch",
+    "no EU signal wire factory substitution",
+    "45 original graphene nanofabrication rows",
+    "original wiremill/unpacking/loom/lamination with strict duplicate and missing checks"
+  ],
+  "gaps": [
+    "full manual/powered tools and crafting",
+    "runtime signal/recipe/client/reload verification"
+  ],
+  "records": [
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/registry/GTSignalWires.java",
+      "sha256": "c889f0e87668a6ded98a950fedf3b1faa39c55fb76ede86e29cb2808fbf8862b"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/blockentity/energy/SignalWireBlockEntity.java",
+      "sha256": "eb4bd647ee5fa7860da784497b675b8b9e1fac48f1ea0b0851887601564ec47c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/block/energy/SignalWireBlock.java",
+      "sha256": "ac6b72bc6efbe6698caa6983399b2bb9f39005aba495a420ba642ee8f5638091"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/content/recipe/WireProcessingRecipes.java",
+      "sha256": "7a2dd0e18828dcf05f6b3e154c3863ae4d0b84897fee36d07f306056b6c58307"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/content/recipe/GrapheneNanofabricationRecipes.java",
+      "sha256": "1c10a874dcdfa7da4772aaff1f3de8e364830973a3c3b27ff6a702d7e477e067"
+    }
+  ],
+  "resources": [
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/wire_01_redalloy.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/wire_01_redalloy.json",
+      "sha256": "98bbbc7984483338ddd7573e1817d886c3fb66fcb72fb2b46f889834143df696"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/signal_wire/wire_01_redalloy.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/signal_wire/wire_01_redalloy.json",
+      "sha256": "82d81b72d05ffa4c0b345f5aeb9621acd271277a9141ca60f133149f25eba0c8"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/material_icons/metallic/wire.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/material_icons/metallic/wire.png",
+      "sha256": "d9343ea989b6585f8fea8ed6aba7db86f477bc7f63553db1f8d4d06794077bad"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/wire_01_redalloy.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/wire_01_redalloy.json",
+      "sha256": "68dd44b4e229c99dc64d9ac3b3ccdbd8827d1e22299f58bad4db95ac9f032842"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/cable_01_redalloy.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/cable_01_redalloy.json",
+      "sha256": "11df9549d18228148e917ea8f0e80bfb61fadaddeca822d099c8d145fe286ea6"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/signal_wire/cable_01_redalloy.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/signal_wire/cable_01_redalloy.json",
+      "sha256": "3cb8c571068c6ab6e00f6762a6709a28063e46fb630b76d8e1c67efa7434df4c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/iconsets/insulation_full.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/iconsets/insulation_full.png",
+      "sha256": "54a4eb56bf6ce30a93a283e9a14c97dd97d0657bce01da8769d3429b0f631dd0"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/cable_01_redalloy.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/cable_01_redalloy.json",
+      "sha256": "646e97a24408866be37fb45bf1bbcf8e71566d3c83169ab10ce14f9b79e52ee0"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/wire_01_signalum.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/wire_01_signalum.json",
+      "sha256": "af2a424da46400ff1ac6d9a83849c3350ee3234ffb31c7a10bf709c6216448d6"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/signal_wire/wire_01_signalum.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/signal_wire/wire_01_signalum.json",
+      "sha256": "82d81b72d05ffa4c0b345f5aeb9621acd271277a9141ca60f133149f25eba0c8"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/wire_01_signalum.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/wire_01_signalum.json",
+      "sha256": "163995fbe0f3289e20319b9f75806c08940b1506cb32de58c5c9bfe96ea7ecd5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/cable_01_signalum.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/cable_01_signalum.json",
+      "sha256": "d43a6121c30e45ff1a6b22a9b0a82f63a58db9b13e72cae03ab9f4d4731ec724"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/signal_wire/cable_01_signalum.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/signal_wire/cable_01_signalum.json",
+      "sha256": "3cb8c571068c6ab6e00f6762a6709a28063e46fb630b76d8e1c67efa7434df4c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/cable_01_signalum.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/cable_01_signalum.json",
+      "sha256": "0169264807df6aad801d299b908c0c2dddb7287a9a19ed846ac3f1af243f0ede"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/wire_01_lumium.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/wire_01_lumium.json",
+      "sha256": "ea97a1d1ed049a968808e83b6f7c0b1711837463e3609096fd5df82cfc072e79"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/signal_wire/wire_01_lumium.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/signal_wire/wire_01_lumium.json",
+      "sha256": "82d81b72d05ffa4c0b345f5aeb9621acd271277a9141ca60f133149f25eba0c8"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/wire_01_lumium.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/wire_01_lumium.json",
+      "sha256": "6e57acb9456eba5092088860ade3c147409c1adf501afdcccbb38b7a0b324ef5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/cable_01_lumium.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/cable_01_lumium.json",
+      "sha256": "afad809ae04187a918bf63aa39f1eb1ce3e3510d9cbd1b18ac259531616177ab"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/signal_wire/cable_01_lumium.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/signal_wire/cable_01_lumium.json",
+      "sha256": "3cb8c571068c6ab6e00f6762a6709a28063e46fb630b76d8e1c67efa7434df4c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/cable_01_lumium.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/cable_01_lumium.json",
+      "sha256": "fcb944ea6829d969bca8a0ff16e76496e6b81738bb5154e09109ae136d5b6174"
+    }
+  ],
+  "compileReceipt": "docs/integration/verification/p3-wires-compile.json",
+  "startupVerification": "Neo ordinary DedicatedServer startup, source recipes/tags/block loot load, 200 ticks, normal save/stop PASS in 4m37s; no gameplay or restart verdict",
+  "startupReceipt": "docs/integration/verification/p3-neoforge-wires-startup.json"
+}

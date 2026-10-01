@@ -664,8 +664,8 @@ private final String name;
     /** PNG file name inside a material icon set folder (without {@code _overlay}), always lowercase for 1.20.1. */
     public String getTextureFileName() {
         if (textureFileName != null) {
-            return textureFileName;
+            return textureFileName.toLowerCase(java.util.Locale.ROOT);
         }
-        return name.toLowerCase();
+        return name.toLowerCase(java.util.Locale.ROOT);
     }
 }

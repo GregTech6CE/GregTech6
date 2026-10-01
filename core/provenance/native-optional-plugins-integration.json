@@ -1,0 +1,256 @@
+{
+  "date": "2026-10-01",
+  "policy": "D011 existing Forge baseline parity; D010 grouped necessary compile and one existing client title startup. No new gameplay fixtures.",
+  "authors": [
+    "saltnya",
+    "original GregTech6 contributors"
+  ],
+  "license": "Original authors, history and notices retained; no third-party dependency bundled or license reassigned. Local development only.",
+  "counts": {
+    "jadePluginAndProviders": 12,
+    "jeiPluginCategoriesAndPreviewClasses": 11,
+    "newNativeHelpers": 2,
+    "javaRecords": 27
+  },
+  "dependencies": {
+    "jei": "19.57.0.450",
+    "jade": "15.10.6+neoforge",
+    "jadeVersionId": "eYz2YBGT",
+    "jadeFiles": [
+      {
+        "id": "g3H403HC",
+        "hashes": {
+          "sha512": "dad9755dce8d85d914fc4df2baa0211f13e5839a71c1925fdd01f69081a95e30a2934e6273f8b01f0169adebe7a9dae57a8d904de0c4cb36dc17369bb474f0f2",
+          "sha1": "88ee316e68900080b017f60c12162e2731924cf8"
+        },
+        "url": "https://cdn.modrinth.com/data/nvQzSEkH/versions/eYz2YBGT/Jade-1.21.1-NeoForge-15.10.6.jar",
+        "filename": "Jade-1.21.1-NeoForge-15.10.6.jar",
+        "primary": true,
+        "size": 726853,
+        "file_type": null
+      }
+    ],
+    "sources": [
+      "https://maven.blamejared.com/mezz/jei/jei-1.21.1-neoforge-api/maven-metadata.xml",
+      "https://api.modrinth.com/v2/project/jade/version?game_versions=%5B%221.21.1%22%5D&loaders=%5B%22neoforge%22%5D"
+    ]
+  },
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/integration/jade/BasicMachineJadeProvider.java",
+      "sha256": "ffde2deddb4d733d2e131e9133f8c6b07ed717ad164be6e941627944cd9f2e3a",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/integration/jade/BasicMachineJadeProvider.java",
+      "currentForgeReferenceSha256": "69b9c981d87fcc520bcee5791ebfe2597a18e236e3b8615fc2b38d0243de9176",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\integration\\jade\\BasicMachineJadeProvider.java",
+      "sourceSha256": "69b9c981d87fcc520bcee5791ebfe2597a18e236e3b8615fc2b38d0243de9176"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/integration/jade/BoilerJadeProvider.java",
+      "sha256": "74d14611d4d2c6ff8e95c6b581ffc8848ea1e1bf13eb3229550f6a2069ac57f3",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/integration/jade/BoilerJadeProvider.java",
+      "currentForgeReferenceSha256": "74d14611d4d2c6ff8e95c6b581ffc8848ea1e1bf13eb3229550f6a2069ac57f3",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\integration\\jade\\BoilerJadeProvider.java",
+      "sourceSha256": "74d14611d4d2c6ff8e95c6b581ffc8848ea1e1bf13eb3229550f6a2069ac57f3"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/integration/jade/BurningBoxJadeProvider.java",
+      "sha256": "560105157b35dbec7324236790148de7f245788c1eeb9b7d596e453f923a7f60",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/integration/jade/BurningBoxJadeProvider.java",
+      "currentForgeReferenceSha256": "7a486e35cdfab7bba55843f2a8a4d284e43c69a72af621b7f996ae99e3947990",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\integration\\jade\\BurningBoxJadeProvider.java",
+      "sourceSha256": "7a486e35cdfab7bba55843f2a8a4d284e43c69a72af621b7f996ae99e3947990"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/integration/jade/CrucibleJadeProvider.java",
+      "sha256": "5a5f9064033b42766154e3c46eaead8efae01479037487915aa6dc2abf3f0ca3",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/integration/jade/CrucibleJadeProvider.java",
+      "currentForgeReferenceSha256": "69fd79915dc42f22470ab1e5373d4df56efd4c19117d466c18d8280960dff769",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\integration\\jade\\CrucibleJadeProvider.java",
+      "sourceSha256": "69fd79915dc42f22470ab1e5373d4df56efd4c19117d466c18d8280960dff769"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/integration/jade/EnergyBufferJadeProvider.java",
+      "sha256": "bc7139d955c772e72132bc34160037383dd8633921751e3ca344c65f1c5a3e35",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/integration/jade/EnergyBufferJadeProvider.java",
+      "currentForgeReferenceSha256": "bc7139d955c772e72132bc34160037383dd8633921751e3ca344c65f1c5a3e35",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\integration\\jade\\EnergyBufferJadeProvider.java",
+      "sourceSha256": "bc7139d955c772e72132bc34160037383dd8633921751e3ca344c65f1c5a3e35"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/integration/jade/EngineJadeProvider.java",
+      "sha256": "230faab7e2cc1a8019d2e9effe1497b0e1c10f8982486c5056cc704ea60bc3f9",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/integration/jade/EngineJadeProvider.java",
+      "currentForgeReferenceSha256": "8acc8c85f01c88a3f753f8eec62c974bf4772675b4b424c5135db75e52be3acc",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\integration\\jade\\EngineJadeProvider.java",
+      "sourceSha256": "8acc8c85f01c88a3f753f8eec62c974bf4772675b4b424c5135db75e52be3acc"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/integration/jade/ExtenderJadeProvider.java",
+      "sha256": "2ac2e7e8e620e7d4c6fd3a59cdcf670d954bc5d66619678656572e7827db2cdf",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/integration/jade/ExtenderJadeProvider.java",
+      "currentForgeReferenceSha256": "0267e228dc987ba0c57ba04ce63de9e59c5a9fb28de7caa9fb8449523799e911",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\integration\\jade\\ExtenderJadeProvider.java",
+      "sourceSha256": "0267e228dc987ba0c57ba04ce63de9e59c5a9fb28de7caa9fb8449523799e911"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/integration/jade/GTJadePlugin.java",
+      "sha256": "59897a2ad9d68e2b8b62c7531328c4adf28f76a89c7ccd3de08856ec01aaad50",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/integration/jade/GTJadePlugin.java",
+      "currentForgeReferenceSha256": "976f73739f692f66f3afcdf9fd5399f26772dee087c968599d8c9bb2f6140dc9",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\integration\\jade\\GTJadePlugin.java",
+      "sourceSha256": "976f73739f692f66f3afcdf9fd5399f26772dee087c968599d8c9bb2f6140dc9"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/integration/jade/MoldJadeProvider.java",
+      "sha256": "55522ee778900f6b09ca108b3907ad0cf9f7992d9a2b7733c1a1ae4fbbf58b7c",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/integration/jade/MoldJadeProvider.java",
+      "currentForgeReferenceSha256": "25af7d74ef5e09c7f007a870e27c555cc46f65213355da6174e8563c26a781a7",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\integration\\jade\\MoldJadeProvider.java",
+      "sourceSha256": "25af7d74ef5e09c7f007a870e27c555cc46f65213355da6174e8563c26a781a7"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/integration/jade/MultiblockJadeProvider.java",
+      "sha256": "95c42aab314bab6657cfa651cc4514e70f73dc47d9a866cec9cf8813dd9fd1ee",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/integration/jade/MultiblockJadeProvider.java",
+      "currentForgeReferenceSha256": "c92c2ea470476e3c2d58f703f8c2dbfbbc12da7720daf6288bba8e1708299f4e",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\integration\\jade\\MultiblockJadeProvider.java",
+      "sourceSha256": "c92c2ea470476e3c2d58f703f8c2dbfbbc12da7720daf6288bba8e1708299f4e"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/integration/jade/ReactorJadeProvider.java",
+      "sha256": "6f5c3f08f8427f6c2ed68ff4558742c0b1234a002caaf1c793a222b03417fee5",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/integration/jade/ReactorJadeProvider.java",
+      "currentForgeReferenceSha256": "2cce8bf7dfd48fd8579832cd68b346d4bb1f5cb0c9a439d0bdae13c40144d867",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\integration\\jade\\ReactorJadeProvider.java",
+      "sourceSha256": "2cce8bf7dfd48fd8579832cd68b346d4bb1f5cb0c9a439d0bdae13c40144d867"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/integration/jade/RockTwigJadeProvider.java",
+      "sha256": "f7e47ba6bfb0a15b17e912e4a304c6d34e5f71edd12deb9cf1b110e2af9acb5b",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/integration/jade/RockTwigJadeProvider.java",
+      "currentForgeReferenceSha256": "f7e47ba6bfb0a15b17e912e4a304c6d34e5f71edd12deb9cf1b110e2af9acb5b",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\integration\\jade\\RockTwigJadeProvider.java",
+      "sourceSha256": "f7e47ba6bfb0a15b17e912e4a304c6d34e5f71edd12deb9cf1b110e2af9acb5b"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/jei/GregTechJEIPlugin.java",
+      "sha256": "6aea822bc748c876eb3784bfc63e98f17673eee016cb37e028a10a449c4674f5",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/jei/GregTechJEIPlugin.java",
+      "currentForgeReferenceSha256": "5c73f7bbc180d0e8175ada970b5b1e85584626f6e3c724b2abca698ee8480324",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\jei\\GregTechJEIPlugin.java",
+      "sourceSha256": "5c73f7bbc180d0e8175ada970b5b1e85584626f6e3c724b2abca698ee8480324"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/jei/MultiblockInfoCategory.java",
+      "sha256": "e3d29286274f4c426b8f729d0caeeacfe6d3ade3e1c3d494a9faa2f8f8f21e83",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/jei/MultiblockInfoCategory.java",
+      "currentForgeReferenceSha256": "31ddc3eb2fba7372a6c8db92c2cf783d21bfb8f0f5f99eefd197d7f8cf8c0e2c",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\jei\\MultiblockInfoCategory.java",
+      "sourceSha256": "31ddc3eb2fba7372a6c8db92c2cf783d21bfb8f0f5f99eefd197d7f8cf8c0e2c"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/jei/PreviewLayers.java",
+      "sha256": "29f7bb401580c3127cbed2712e781ca12830e8de0804731f736ee67f94520125",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/jei/PreviewLayers.java",
+      "currentForgeReferenceSha256": "29f7bb401580c3127cbed2712e781ca12830e8de0804731f736ee67f94520125",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\jei\\PreviewLayers.java",
+      "sourceSha256": "29f7bb401580c3127cbed2712e781ca12830e8de0804731f736ee67f94520125"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/jei/PreviewLighting.java",
+      "sha256": "f4c0a73c7a465387bf8d700e91c3834243992257707434b0425260edccc1add0",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/jei/PreviewLighting.java",
+      "currentForgeReferenceSha256": "239a024c91a39ba26225c9af137146cda40ef285a4d6ca3327c5c24c95a1cc03",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\jei\\PreviewLighting.java",
+      "sourceSha256": "239a024c91a39ba26225c9af137146cda40ef285a4d6ca3327c5c24c95a1cc03"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/jei/PreviewTransforms.java",
+      "sha256": "a2bcd50b4f58dfb34db042fdf4a4a94ed547403b8392d5f183f77a6580c30e17",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/jei/PreviewTransforms.java",
+      "currentForgeReferenceSha256": "66f3f414fb5e353443633f7011267e7eaa71b36b160dab0cbb10399b31709ed8",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\jei\\PreviewTransforms.java",
+      "sourceSha256": "66f3f414fb5e353443633f7011267e7eaa71b36b160dab0cbb10399b31709ed8"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/jei/PreviewViewport.java",
+      "sha256": "c79c04d6cf1bbca71c2d97873e779a1d087c0fa32beec28305522f3e3bd6def5",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/jei/PreviewViewport.java",
+      "currentForgeReferenceSha256": "cfef08bfd97b7fe1b4b3531afc935ee28186e7653842c6ac6db73ec829755a43",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\jei\\PreviewViewport.java",
+      "sourceSha256": "cfef08bfd97b7fe1b4b3531afc935ee28186e7653842c6ac6db73ec829755a43"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/jei/RecipeMachines.java",
+      "sha256": "e3b549f3b3a62b4b7273b0b1cbe5233a5056171d01df7b766d26466879fdaaaf",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/jei/RecipeMachines.java",
+      "currentForgeReferenceSha256": "39e7a691645d4a4006207f12a378103100672b725f64f136d2dddf5bec289ee0",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\jei\\RecipeMachines.java",
+      "sourceSha256": "39e7a691645d4a4006207f12a378103100672b725f64f136d2dddf5bec289ee0"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/jei/RecipeMapCategory.java",
+      "sha256": "6e56c5eb06c9ee0b5b292217df804f2a8062dc465816c5dc1ed4cb4b3e4e61cd",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/jei/RecipeMapCategory.java",
+      "currentForgeReferenceSha256": "80a4709ce294655b16b3f61d53c9b6b39b1b0138185ff3d856bb782963c6900e",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\jei\\RecipeMapCategory.java",
+      "sourceSha256": "80a4709ce294655b16b3f61d53c9b6b39b1b0138185ff3d856bb782963c6900e"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/jei/StructurePreview.java",
+      "sha256": "fb288e0fc11f297a3d4ae57c43f89e0612b14d2010457f0272eee0a1bba23ec4",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/jei/StructurePreview.java",
+      "currentForgeReferenceSha256": "2f5b98468e9a94c780aa6f2bc378b91d8115cb56f547b31d414fef1ce7026b6f",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\jei\\StructurePreview.java",
+      "sourceSha256": "2f5b98468e9a94c780aa6f2bc378b91d8115cb56f547b31d414fef1ce7026b6f"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/jei/ToolAssemblyCategory.java",
+      "sha256": "a2828caeda76f748acefce89a95a94abf8bd64197fe442f76bdab04aaba5f57e",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/jei/ToolAssemblyCategory.java",
+      "currentForgeReferenceSha256": "dcdee583b296c8356319e276589e623c92d70181a0d88dd91e5287c9d0c90eb9",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\jei\\ToolAssemblyCategory.java",
+      "sourceSha256": "dcdee583b296c8356319e276589e623c92d70181a0d88dd91e5287c9d0c90eb9"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/jei/WorldgenInfoCategories.java",
+      "sha256": "4f30df78d5162cc387ed7ebfb6b1388a156e0802640f9b26079ed3ee4698e21b",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/jei/WorldgenInfoCategories.java",
+      "currentForgeReferenceSha256": "df8ed60d7f831bbb6ab6176a9b658f177209a4de3ecc684a1533a9d544f17eb2",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\jei\\WorldgenInfoCategories.java",
+      "sourceSha256": "df8ed60d7f831bbb6ab6176a9b658f177209a4de3ecc684a1533a9d544f17eb2"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/api/material/MaterialDisplayBinding.java",
+      "sha256": "35998d72e9bec0cf0a715c184d7a13b84ab09be5b0f2156fc53ee29c16109bc2",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/api/material/MaterialDisplayBinding.java",
+      "currentForgeReferenceSha256": "a26bde620bfbd86931d6c4408524c08063723caf70fcf58ef425f2e91dae9b61",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\api\\material\\MaterialDisplayBinding.java",
+      "sourceSha256": "a26bde620bfbd86931d6c4408524c08063723caf70fcf58ef425f2e91dae9b61"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalHighTechControllerLayouts.java",
+      "sha256": "cb15c6c0075824685be3f4bf4744c3150254984f1b167f34253c92806e82834c",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/content/multiblock/OriginalHighTechControllerLayouts.java",
+      "currentForgeReferenceSha256": "cb15c6c0075824685be3f4bf4744c3150254984f1b167f34253c92806e82834c",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\OriginalHighTechControllerLayouts.java",
+      "sourceSha256": "cb15c6c0075824685be3f4bf4744c3150254984f1b167f34253c92806e82834c"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/multiblock/ControllerStructureLayouts.java",
+      "sha256": "8a0e852d2b44821602ff70e99277646d8de2adbfb39feb8302ec487d0c2168a0",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/content/multiblock/ControllerStructureLayouts.java",
+      "currentForgeReferenceSha256": "84caa414eb63c98a8a727ae7a15c5b481a48b07705a63f89746f9a8366db918a",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\ControllerStructureLayouts.java",
+      "sourceSha256": "c6a6624dde40fe1f42931b4387eaa960555f092d319267ee22641986a31fb629"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/smeltery/SmeltingCrucibleEntity.java",
+      "sha256": "31d1c2163bf66a6527288c33e7167fba167c926645d30f3215ffd2fcd89c37a5",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/blockentity/machine/SmeltingCrucibleBlockEntity.java",
+      "currentForgeReferenceSha256": "ef10e9881db398e8d2868f22eb44c3df2eb88228916381e8c4f9459c709faefb",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\SmeltingCrucibleBlockEntity.java",
+      "sourceSha256": "fd41b507bdc97e8032ba94e0a3af95d96f2646c3dc8afc726c3a4db9178ec723"
+    }
+  ]
+}

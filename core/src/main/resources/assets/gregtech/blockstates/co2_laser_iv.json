@@ -1,0 +1,50 @@
+{
+  "variants": {
+    "facing=north,active=false": {
+      "model": "gregtech:block/machine/energy/co2_laser"
+    },
+    "facing=north,active=true": {
+      "model": "gregtech:block/machine/energy/co2_laser_active"
+    },
+    "facing=east,active=false": {
+      "model": "gregtech:block/machine/energy/co2_laser",
+      "y": 90
+    },
+    "facing=east,active=true": {
+      "model": "gregtech:block/machine/energy/co2_laser_active",
+      "y": 90
+    },
+    "facing=south,active=false": {
+      "model": "gregtech:block/machine/energy/co2_laser",
+      "y": 180
+    },
+    "facing=south,active=true": {
+      "model": "gregtech:block/machine/energy/co2_laser_active",
+      "y": 180
+    },
+    "facing=west,active=false": {
+      "model": "gregtech:block/machine/energy/co2_laser",
+      "y": 270
+    },
+    "facing=west,active=true": {
+      "model": "gregtech:block/machine/energy/co2_laser_active",
+      "y": 270
+    },
+    "facing=up,active=false": {
+      "model": "gregtech:block/machine/energy/co2_laser",
+      "x": 270
+    },
+    "facing=up,active=true": {
+      "model": "gregtech:block/machine/energy/co2_laser_active",
+      "x": 270
+    },
+    "facing=down,active=false": {
+      "model": "gregtech:block/machine/energy/co2_laser",
+      "x": 90
+    },
+    "facing=down,active=true": {
+      "model": "gregtech:block/machine/energy/co2_laser_active",
+      "x": 90
+    }
+  }
+}

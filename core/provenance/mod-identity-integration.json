@@ -1,0 +1,816 @@
+{
+  "date": "2026-10-02",
+  "decision": "D012",
+  "origin": "existing integrated repository",
+  "parent_commit": "a4b203f8bb98b62a6baa1966c387dc62bcc2e87f",
+  "requested_by": "human user",
+  "original_authors": [
+    "saltnya",
+    "brokestar233",
+    "Lorbineitte Masson",
+    "GregTech 6 team"
+  ],
+  "license_change": false,
+  "source_snapshots_modified": false,
+  "existing_source_attribution": "core/provenance and docs/integration/SOURCES.md",
+  "scope": "loader identity only; existing registry/resource/save namespace retained",
+  "files": [
+    {
+      "path": "BUILDING.md",
+      "integrated_sha256": "481f8d29cb4891f652f88974023fd3eda9d1e8689a2ea137f6f9c0e03db10647"
+    },
+    {
+      "path": "README.md",
+      "integrated_sha256": "d121897052a7865bfa59612d30dece8170bd2cabeef9c60e29b6c348c1a74d7d"
+    },
+    {
+      "path": "build.gradle",
+      "integrated_sha256": "8690025ea62481d89f14af91d5ec340b07502f860262287dcb1dacf286761be0"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/api/mod/GregTechIdentity.java",
+      "integrated_sha256": "d538b816cd685c5269687e1edd496ef1f47c0f342f5165dc02732e15837d9819"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/data/GregTechConstants.java",
+      "integrated_sha256": "f74b4d6634b40122636c77dae9e77217aab7ffd6440658dcb4ab13a4c570af88"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/data/ModReferences.java",
+      "integrated_sha256": "95e035c7239dd3b3a925d103e107e8a0f05e804b6c767f7a2a5146a9072a09bc"
+    },
+    {
+      "path": "gradle.properties",
+      "integrated_sha256": "30fc0285cda276d981ca73c8c272f90167830ee30da67282f13f3887ecb5ff76"
+    },
+    {
+      "path": "neoforge/build.gradle",
+      "integrated_sha256": "6a2d265a961eab4b5ed25077f48aadd244e3c95f4e4cfbe872752baf90fd3510"
+    },
+    {
+      "path": "neoforge/src/bootstrapGameTest/java/com/gregtech/gregtech/integration/client/NeoForgeClientSmoke.java",
+      "integrated_sha256": "d29d98f2ccc9b8ff8265e76c86452fefe1de7f09f6f810886f70b902a0aa8984"
+    },
+    {
+      "path": "neoforge/src/bootstrapGameTest/java/com/gregtech/gregtech/integration/server/NeoForgeDedicatedSmoke.java",
+      "integrated_sha256": "b7761589fbc00aa433acdfbf493ba85f98b0f9acf496f17bf892fe2c6ba5df28"
+    },
+    {
+      "path": "neoforge/src/bootstrapGameTest/java/com/gregtech/gregtech/integration/server/NeoItemLogisticsCheckpoint.java",
+      "integrated_sha256": "80edbe03c74b377a94f4b9c52b699a71dad2044243abd00620847142b3592661"
+    },
+    {
+      "path": "neoforge/src/bootstrapGameTest/java/com/gregtech/gregtech/integration/server/NeoItemRoutingCheckpoint.java",
+      "integrated_sha256": "66db5975c5963ed9a62ed75619342c719ef14eb8462d99b8945694db21f23f3c"
+    },
+    {
+      "path": "neoforge/src/bootstrapGameTest/java/com/gregtech/gregtech/integration/server/NeoManualToolCheckpoint.java",
+      "integrated_sha256": "2d83fca2fc54b8cba1d285f31b53ae0a4990f0cccde15c56287db6104da5e488"
+    },
+    {
+      "path": "neoforge/src/bootstrapGameTest/java/com/gregtech/gregtech/integration/server/NeoPoweredToolCheckpoint.java",
+      "integrated_sha256": "c808592717e35640f3a114a3ab09a3525ee942615d1e0238dffe3fa707d89271"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/block/misc/CoinItemExpireHandler.java",
+      "integrated_sha256": "926daa60656074fe1d5d01bb6411bed8fe56d9d23575d82f710de8a9d6f6040d"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/block/misc/PileItemExpireHandler.java",
+      "integrated_sha256": "d451912ea6b0f06d9c1b053b920f1bdbff29cbd9682ef7925e37055c729e951b"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/block/misc/PilePlacementHandler.java",
+      "integrated_sha256": "a05531d62c03b53cf9ca5f78477af0dfc07137fe5abbe321a1a0c2b8aad135bb"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/AxleClientSetup.java",
+      "integrated_sha256": "c96669fd51e9272bf6531be7606dd9ad3c12cb0aac0109293e9c9843cb268b20"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/BarsClientSetup.java",
+      "integrated_sha256": "f47f77b13184180dd97aca957aae75a9487c847315bff37c349772f15be74b1e"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/BasicMachineClientSetup.java",
+      "integrated_sha256": "e0a93ba782bdec6e6ae53b80f672aaab3405d3bdbd8ea5ad874bf57de2e3c2e7"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/BedrockFlowerTooltips.java",
+      "integrated_sha256": "48e3a9ca7014fe586ab6e8c01dee4384d5c8a35fabce2e4f73818dfaa01fe0e8"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/BookShelfClientSetup.java",
+      "integrated_sha256": "731b3e7aaa47bb12de3cada042e240567a7d3dc6ad42765d0a2d23528389018d"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/BumbleClientSetup.java",
+      "integrated_sha256": "8028d72851a36eceec5c230bfdd6dd7b808158f8e4e4abd76790d00607d76cb8"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/BurningBoxClientSetup.java",
+      "integrated_sha256": "53f15efa46a2259e784fb5fc56beffcd594d0a41a0ada8c69367f283924b3f48"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/ChemicalBatteryClientSetup.java",
+      "integrated_sha256": "0cf22c44f091bc6534d1a66f615534ea2f738a0d8418bb856693b8e01ef3bc5d"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/CoinClientSetup.java",
+      "integrated_sha256": "38e5667ff4e94dc1e245c2fdcebed530ae2e86e460de600242d0684b283882a8"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/ConstructionClientSetup.java",
+      "integrated_sha256": "e40f8460ede23bfaa4903ce4c8d5f52a71c56701d29c9816d096eb51b301e22a"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/CraftingTableClientSetup.java",
+      "integrated_sha256": "b84a40201de72a02c9c347fc6819ce12d1a3512bc9c6648207a194854d98d158"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/CreativeTabIconClientModels.java",
+      "integrated_sha256": "131d1db5411064eee7b9b51b39651912d23adeaf7da0efee385e6db1748f4f14"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/CrucibleClientModels.java",
+      "integrated_sha256": "4d19f272c9f2f93deab3c5102735ef2689d96925e4ed6cce57127bf0b12f9486"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/ElectricWireClientSetup.java",
+      "integrated_sha256": "1962348001ac05b16781ae4410b3b101b18af6ac7177558a7102b296cf224bc7"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/EnergyNodeClientSetup.java",
+      "integrated_sha256": "0743919277fe8afe59dda6b2c2f8c8b5bbe6a5dbfe155536dd938c13cc088344"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/EngineClientSetup.java",
+      "integrated_sha256": "616d8410e4d8e269cc30d9c90089629c657a06fd8e46a482f61fbad95dcc0c61"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/FluidClientSetup.java",
+      "integrated_sha256": "03b68f247d47ca691a8b731b46a0f0344b601edb88287de674da9db6c2a6ea89"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/FluidItemClientModels.java",
+      "integrated_sha256": "9f49940b7faabb3a0ede65f84077344fffb27903e90316e437ea97e74825dfe2"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/FluidTransportClientSetup.java",
+      "integrated_sha256": "542162071219f054dc8953248a0b8e59232376349e3e826a010d5fb2e5d21581"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/GTToolClient.java",
+      "integrated_sha256": "007672da6b9bb9f56d360a75fc66f414052f5f21318f8b3598dc0b602cdce588"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/GTToolModel.java",
+      "integrated_sha256": "b693674f091c0303b9587e9a9633b944e144282db5130151ffcab110e58961ba"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/GearboxClientSetup.java",
+      "integrated_sha256": "ef0505cb178e75e1a060c821aa0e88de3a6266b3b3d9df23641055ab72d590a6"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/InventoryClientSetup.java",
+      "integrated_sha256": "9bf2e76e67e4d57b581cda2e9848428e563697039d83d597c5a71c31a4a25d4c"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/ItemLogisticsClientSetup.java",
+      "integrated_sha256": "9b86978ebabec2624b2eb91c8f0b5d830a10f07cfa7d4edcd647d2496291ecdd"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/LaserClientSetup.java",
+      "integrated_sha256": "5c33f86754358f7e1ea1f4cf31d4c480786fc3c51a276d982ab8790c75d2b473"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/LogisticsClientSetup.java",
+      "integrated_sha256": "ba337bd84366610a43cd0e0a759ebeecf50711508689f69237167ecbfe1fd488"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/MachineBlockClientModels.java",
+      "integrated_sha256": "aaa279d5d6d8cc1c40365420154914c1e533099682a8aae1c33bf4b151330599"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/MaterialBlockClientColors.java",
+      "integrated_sha256": "eec8162a845cb8ae8668d09de0dd6c77bf7736c948e8d438c38b1f8752682b2c"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/MaterialBlockClientModels.java",
+      "integrated_sha256": "8d4cabe0cba0558597265bcf09ccf88c6b2dc281d0311b873d6f9bfbe2ed2d96"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/MaterialClientModels.java",
+      "integrated_sha256": "e0a620f27d2bcc4dcb6a67bad14c9cc5acb8e7bd760f2dd22328248892f98f39"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/MaterialPileClientSetup.java",
+      "integrated_sha256": "651bf95c50357d952cb8439606bcbcc0506a67315ea04c112a34d9b8e29ebd0c"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/MaterialTooltipHandler.java",
+      "integrated_sha256": "90342bb5ef88691767bfb66b9a80b871c4a40a5918adf0679eec21d57fd086bd"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/MetalChestClientSetup.java",
+      "integrated_sha256": "72b04b16f948a9fd1613ecd8d6c79c0be0e3a32e99db014763dfd40007fcce98"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/MultiblockClientSetup.java",
+      "integrated_sha256": "ea258f6ba4bba59a8a72f7f16997685e816a2fed3c4cc59c3b5c24a5b9741c2a"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/NuclearClientSetup.java",
+      "integrated_sha256": "0f04cc6beaa198546927561aa6aa30f6f20897f4cf63a2a71878b5af55ebd0af"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/OreClientModels.java",
+      "integrated_sha256": "ee189ed11f84673fbb56f830f5b83a6de6d45a62cf648921f5bfb1da94a4f17f"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/PanelClientSetup.java",
+      "integrated_sha256": "cdb82dc96542beeeb8c39eb3c011a0bd56a4a085293b11a2b0a805d09437fddb"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/PoweredToolClient.java",
+      "integrated_sha256": "193ef290e79edf890c3140dc81a21d776f07a8a7f45912ca3dddcc924664abc8"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/RelayFilterClientSetup.java",
+      "integrated_sha256": "1d83af8e0707ab7b61b61d8051442587a45cf522237d600b9ca7e4260203274f"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/SafeClientSetup.java",
+      "integrated_sha256": "1ea8bf575da1e9f434ca2fec3ef0a2603a4409c825d28e707bad1d92980ce9f9"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/SensorClientSetup.java",
+      "integrated_sha256": "44f4331e6389ed62c45dbce7123d8093d8aa0784e101308b14b57de3ec2fc1e3"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/SignalWireClientSetup.java",
+      "integrated_sha256": "06003a3710d828c01fc0826e71389b53dc84686f640b96f2a45488a61d4f5254"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/SlabPlacementOverlayRenderer.java",
+      "integrated_sha256": "20fd01b373b49cd1b95e88d1fbc25d6f0979e3a475fbf1cf8052af4147ce3bf1"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/SmelteryClientModels.java",
+      "integrated_sha256": "08acb13a73cd85e14da19a55ccf23d758c050aaeb843e13b74ffec82e51fede0"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/SmelteryCompanionClientSetup.java",
+      "integrated_sha256": "22b8b1b97250c0953025b2f5fb2e97e5dbd5ebfb8e7b449c3c38ae2f7ff8d3ff"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/SpikesClientSetup.java",
+      "integrated_sha256": "dec8d5e6df416b5a160a2ff447dfef17a32ae26adcb72c7d9a6224e6aaf1a8e0"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/StoneBlockClientModels.java",
+      "integrated_sha256": "68a0e0b2711c7c37c11cd8b98a86c9020d0daf663084d10e5673d6e926932de0"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/StorageClientSetup.java",
+      "integrated_sha256": "ceda517ec4c6d562a1018078afa9d120b388608b7bebd125ca2a5087c3be0bd6"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/StorageContainerClientSetup.java",
+      "integrated_sha256": "96410554e7b879cde8d2eaac20d42826f0f412bea33d86566c88188d878176c9"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/SurfaceLifeClientSetup.java",
+      "integrated_sha256": "7f4ba0f34bd51f7a4dbef967d9f8dbc63e7287cd3aaf5287c3d66c30a1252872"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/content/food/FoodStatEvents.java",
+      "integrated_sha256": "e942fc87c63b162a853076af3817d0f0ab29b3519cc09a924b7d8e124b8081f3"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/content/food/GTFoodItems.java",
+      "integrated_sha256": "f4e22b45efb444878ffc5cb2adb5d653c79049194d93fa3de74f76f55d431769"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/content/hazard/BathingEffectEvents.java",
+      "integrated_sha256": "dc05d23e0103464067833c9a6777942e9dc0a1cd1c252224f13152e1ecc7fec4"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/content/hazard/BreathingGasEvents.java",
+      "integrated_sha256": "d20fcc5f4472ffeb8bc52941de0ebe177572c093636845fdf32deb48ccde1c31"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/content/loot/LootTableInjection.java",
+      "integrated_sha256": "79b96c45791a7b67e234f643a18a030a48bef31c0dedfbd9bf9ed9435ac6f49e"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/content/multiblock/VonDaGraaggSpawnInhibitor.java",
+      "integrated_sha256": "51a1f80b1be097f1110820f948645c28068354f97e68dd872ea139e1046abbfc"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/content/nuclear/PlayerRadiation.java",
+      "integrated_sha256": "5d2a6f710c69b14f226791da47f2c5c457ebab23a1bc6e990086817b7e5134d2"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorNetwork.java",
+      "integrated_sha256": "aa5d251283644fd08c1f6d761ec8e722999745a60dae2fb4ccc2632556975bb4"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/content/tool/PoweredToolHarvestEvents.java",
+      "integrated_sha256": "3b02bbf0cf70f49f77a2300cdc0c12932ecf877c0940a7be32da9eaa21ad9ebe"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/content/transport/fluid/FluidTransportRegistries.java",
+      "integrated_sha256": "098ac550e16581ff159bc331bbefbf4cab615ac98299cec19fd164127ddd44e0"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/data/BasicMachineRecipePack.java",
+      "integrated_sha256": "22a4db9c69cae9ce9ad51df4dec40bf18a2e9c72f3f44b59e7e83a619bbf81cf"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/data/BlockHarvestEvents.java",
+      "integrated_sha256": "5a3242730ff2091bfd3a8d590b62a3cf29bc219463339d90b06b12d5a9751691"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/data/BlockLootPack.java",
+      "integrated_sha256": "b2d2c4f7ebd870a75928dc52c09a423e6421a9587f98266749876327f5386e30"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/data/BottleFillingRecipePack.java",
+      "integrated_sha256": "360fe50ca39554b3802e7562397709d44973c52d4068d4f245b066c817917ad3"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/data/BumbleCraftingRecipePack.java",
+      "integrated_sha256": "12589760cb49556dd11d261f86d2bd951e4d23c8d665e2bd1b830226f9f7b3da"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/data/ManualToolRecipePack.java",
+      "integrated_sha256": "23d657551f9ec1fe45d96d40e80f57f2d4dad98b747b19e2b87be0c75e9b0df2"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/data/MaterialTagPack.java",
+      "integrated_sha256": "380885a9b16703fbcbf6c1c9f7030f85b2a062a812fd914678a99d161ea9e53d"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/data/MultiblockRecipePack.java",
+      "integrated_sha256": "25673277ee9866d9bb6c3615c105c4ff7f0a6504e665708f6f9c8c987d0aea8d"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/data/NuclearCraftingRecipePack.java",
+      "integrated_sha256": "423309fe42225e8e8a0a3bad86815c31621e8beb7bd6668185524e2d86e1b8e5"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/data/PortableCraftingRecipePack.java",
+      "integrated_sha256": "a11fa7d0259bfc35ffd94abbd19b3868f383aa1918cf1284d165df10f8ef108e"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/data/SensorRecipePack.java",
+      "integrated_sha256": "1643e07eb405af93410af62e9ff0b922060aa24e8a9f1b629ee8638715467f34"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/data/ToolBlockConversionEvents.java",
+      "integrated_sha256": "fc0ef7d8ae7d817124ac5324b239f3b75ec13d839a6ff8d07f358d964466e00a"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/data/TrackCraftingRecipePack.java",
+      "integrated_sha256": "daafb39019d72509385431e8499cea60663f40d1696af650575249444663a0bd"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/data/WoodCraftingRecipePack.java",
+      "integrated_sha256": "c5fba0d8874f6208f38ba59f4b305ca8157a2097a13070485a7b08b0d89b5234"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/event/CrucibleInteractionHandler.java",
+      "integrated_sha256": "7995f0158e3bfcb04e1fbdd38b8757d6e7961d516a41ac5a8ceb8abd30f854fd"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/event/SmelteryInteractionHandler.java",
+      "integrated_sha256": "255268ff60fb532ba86bee887ddd1d18179427158bf59e2d87865374d54a13a2"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/loaders/TrackRecipeReplacement.java",
+      "integrated_sha256": "ceb96a3b81e0a8d948fb00977959278d2d664e2bdfdcfc8e3af7bfe512de6765"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/loaders/b/Loader_Creative.java",
+      "integrated_sha256": "821cc9c0ee9ff96b4e640e75857975b2038884d862290ed5abb4062c48701a05"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "integrated_sha256": "2c3e9e7e1e7ea8be190651bd67dd080d2bcccbcd0baf7be07a9d25e3725ec72e"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/energy/EngineCapabilities.java",
+      "integrated_sha256": "4c386ce22e3185728d5880bf64939048b581a9d2e383a6ce5e9d4d8511acf2dd"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/energy/LaserCapabilities.java",
+      "integrated_sha256": "d57963c2b7f695d1d08ff2f5370a48ed162355dc80eb0c16466ecfdff599751d"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/fluid/FluidCapabilities.java",
+      "integrated_sha256": "a41a788af9745d951148e8866767726630f178c0b6886d8779381b1d2191ad89"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/BookShelfCapabilities.java",
+      "integrated_sha256": "583b8e6f817bbc556feef17377abcde646a052bf4fdf5378adb88139fc61e114"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/CraftingTableCapabilities.java",
+      "integrated_sha256": "abdd2a3e08296c9d6bf1fff33522590517f6996e72d18e7343ed1ec24201275f"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/LongDistanceCapabilities.java",
+      "integrated_sha256": "fe2c4f9df255bc53452e9a1dc20264f97b0474eac17d77850f7ba019d70a6f3f"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/MetalChestCapabilities.java",
+      "integrated_sha256": "a8c054670930c2584eb183b4f39010ce21b7be87aae45209a713be7028bee5dd"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/StorageCapabilities.java",
+      "integrated_sha256": "8ab62aa73ef67a7ddc6265024587bed6d7e7dc83222d44de9b3e032e45ff0fe2"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/StorageContainerCapabilities.java",
+      "integrated_sha256": "9b4b95545f6db237986c4e21f6cf8007439b236861b343cd4ae8ad85c4670c16"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/recipe/OvenRecipeLifecycle.java",
+      "integrated_sha256": "8d090156bd532b14c8db1ad66a7c3db942be4a15e8bef71f334909c4646e5f60"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/recipe/ShapelessRecipeTooltipIndexLoader.java",
+      "integrated_sha256": "09c73e8d8025e1a21d40282cf10d3387e806b39e793aabb0daa305571eb73530"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTItems.java",
+      "integrated_sha256": "07c966bbb8df4f63f18547311351967d603e4e4221dea2647b73530eefc6db3a"
+    },
+    {
+      "path": "src/bootstrapGameTest/java/com/gregtech/gregtech/integration/client/ForgeClientSmoke.java",
+      "integrated_sha256": "588258197f68be0ca9e15b795d87436a108c32f6604f289989e0765c24a0f7b4"
+    },
+    {
+      "path": "src/bootstrapGameTest/java/com/gregtech/gregtech/integration/server/ForgeDedicatedSmoke.java",
+      "integrated_sha256": "a3fbdb9f75164c9ec3ea320b57d88d01478d04a636a26980bd69acd13fafe776"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/GregTech.java",
+      "integrated_sha256": "ce61abc80bce9d212b8c464cda6b581a26a1250b266e995feb3e3aa690e24fa3"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/block/MaterialBlock.java",
+      "integrated_sha256": "f87c5a9e7d88a2f792d8db14b3b8526747731e941b33455742ea9f232b27fb9c"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/block/OreBlock.java",
+      "integrated_sha256": "310b3113aae67d98ba6f8814394eb8e79998d57ee37fe0b2d0735603ff1427c3"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/block/stone/GTStoneBlock.java",
+      "integrated_sha256": "f0f8fe37e19da5b3f8284efa81974bbe4030fa03b77c444385ae05fa12911101"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/block/stone/GTStoneSlabBlock.java",
+      "integrated_sha256": "c999321bd51387651d1ba1e5c3613b37757c9dcd1e6ca5f198aed27e539cc1b1"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/BedrockFlowerTooltips.java",
+      "integrated_sha256": "2347dae31b8b34bbf94ada1e1f9001dbf85ffe6b41c10579eec74ac75bd2a037"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/CrucibleClientModels.java",
+      "integrated_sha256": "653176f6166f3d7da894b48075bb641d22ce46781ae984d0e81e05e10e0d3f90"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/CrucibleTooltips.java",
+      "integrated_sha256": "7278c8aa34263f3a85836167eeff9f6426a1c95529fd940711bb485092918682"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/EngineTooltips.java",
+      "integrated_sha256": "db4cb875db14da0ba36ef0d8b32a6544b6878027c4c37b2a297a978b6e7e6b8e"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/GTToolTooltips.java",
+      "integrated_sha256": "c3676634478b7f4db62c47e257ac88a130960c567072367c769853d56b82c7c3"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/GearboxClientModels.java",
+      "integrated_sha256": "8643aab24f243c7ee765f80827356f0a2e855c2e5d4eed0e27ad1ded262c9d77"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/HopperClientModels.java",
+      "integrated_sha256": "1c8b77245de826e31a72fad28cc95cb7c379da1f42041b02f14e97c57d5a9419"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/HopperTooltips.java",
+      "integrated_sha256": "68eec771af80baf78003a06ab76cf1b7e2d90c05727a3fa630ff501cd53f2fcc"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/MachineBlockClientModels.java",
+      "integrated_sha256": "b0a2bd553c59c4a08f7f145717d43723219583147b795867feb25139ccabb1d9"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/MachineTooltips.java",
+      "integrated_sha256": "06423267b4ed3b3bb07ca202042cd79ef0be2eb623cce8ddf3f01e00bf32f9ce"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/MaterialBlockClientModels.java",
+      "integrated_sha256": "3f378b76fbae0a7edfa7a2f2283704d20442283a49078454dc25ad721bc9d1ce"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/MaterialClientModels.java",
+      "integrated_sha256": "44915a3ac6e8140ce4c57784b0127b30f5b560180669257ace63226124606454"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/MaterialTooltips.java",
+      "integrated_sha256": "b9ead39df6704b9793c8016743abea7015b4fa6757714846484cb191b310ecd2"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/OreClientModels.java",
+      "integrated_sha256": "a7edcb01bc6ed6a0a2d7f70bdbdc130de59fbe6401f68f33d509fd4b89669f0e"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/PipeWireClientModels.java",
+      "integrated_sha256": "d21eafc3fba4529ffbc7542af21b50ed2c2d3b305603864dff70274a69a3e377"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/SmelteryClientModels.java",
+      "integrated_sha256": "cbd135b37db6dce36a922729130702f84545ff8cd926d383914dae6c2a3df424"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/SmelteryCompanionTooltips.java",
+      "integrated_sha256": "fde39fecc0ce1c79045304a09398dc8befa06e420ea145076d8ab0a3ebc43651"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/StoneBlockClientModels.java",
+      "integrated_sha256": "1aef889c920e425a3ff218dcc2f259776c2d5517339bcfa8a99d35fb0c6b1262"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/TankTooltips.java",
+      "integrated_sha256": "9cd725882414d8d97add88a265e4a007278ca27a5f2c373dafb61c30daf1e2cc"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/TooltipHelper.java",
+      "integrated_sha256": "df27483b47050cc1325d279177b3262036ef2fef6ce66785f8773233d3b62bf6"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/WireTooltips.java",
+      "integrated_sha256": "524d8b9dd00f674438e5699938ff0ac301d47fd9d55b12b3d36da2dd5e197cc8"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/content/bumble/GTBumbleProducts.java",
+      "integrated_sha256": "7fa7d46dd237d7eaeaa34e9cecc97c405535db8eb2b737299339c65a4bcec00c"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/content/cover/CoverItems.java",
+      "integrated_sha256": "f6d497e278031f3dacd8ad23a8f213b2d7b63b8932e0fdbdc24fcafd9f1b2cf9"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/content/food/FoodStatEvents.java",
+      "integrated_sha256": "a67aa2fff382178ffa77544a4ea61e839ab5b5ffac0bf8292478245901c828ef"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/content/food/GTFoodItems.java",
+      "integrated_sha256": "3a62a45a4d61df032fdbc5a9ae6d794776196ffb11d7f06fd953f8471ab691fb"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/content/hazard/BathingEffectEvents.java",
+      "integrated_sha256": "727e8fe001e78f424e28bd81a39936efcf5caf5ad77af644168db8741814dcbf"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/content/hazard/BreathingGasEvents.java",
+      "integrated_sha256": "de8fdcdef2da2ad41576581112ba7d95314e2f28fcf495ed6dce93161afa8fb4"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/content/nuclear/PlayerRadiation.java",
+      "integrated_sha256": "f7327373086a7d85bde7a8fb35a4ef1f332fb9c7d9475abcd081946c84649130"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/content/recipe/LaserEmitterRecipes.java",
+      "integrated_sha256": "2cf5d00e620c0eb3880e76eec57eed2b8e2c7b48d88c13eee07b9289c7c296ad"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/data/BasicMachineRecipePack.java",
+      "integrated_sha256": "196581239f2040cda84ff6a25bc2a5ee0b51b98b89172c74f361ef8b0f2b6537"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/data/BlockHarvestEvents.java",
+      "integrated_sha256": "c26a8e763bd29276a2955b8339665c3fbad46a4af5b39d263e54e1ba90afdee1"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/data/BlockLootPack.java",
+      "integrated_sha256": "e487c1a07d20f0ec5a5cc128ef764071ac09ffeddcba8e545f7ec7e89415810d"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/data/MaterialTagPack.java",
+      "integrated_sha256": "bf1d25618e378a7479aa7b3119bcd79c24e313392747adf13c17abe365e62aeb"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/data/MultiblockRecipePack.java",
+      "integrated_sha256": "fd1ccd3745c6f710c637387ce6428d53e6e646fc94766475f4143c6b46bbaf41"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/data/SensorRecipePack.java",
+      "integrated_sha256": "b628461cfe53358fb93946eaa621c974733607f51f1c2e450348c47f944f6457"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/data/ToolBlockConversionEvents.java",
+      "integrated_sha256": "2a34aeb01b0f80e61e171b82bb3f51b2e46c78046b70cae59688905d0301ec35"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/gametest/CoinAndPileAssetTests.java",
+      "integrated_sha256": "9ef9f3df1c3db38adc22e45acbd5af28529566feaee0611a6538fbaea4511730"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/gametest/OreAssetCoverageTests.java",
+      "integrated_sha256": "a988cef7faa78abe7b52bbe54383f5b87ab8c5ecf0063a825b60be7cd88bed5a"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/gametest/WaterFluidParityTests.java",
+      "integrated_sha256": "315656b63da43eff115be4a40138a0dd97bc68e7ff6ad49cd8b023da2553ee63"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "integrated_sha256": "f0cf0c61775b3e1fa020647756a41c8edd63e123eaf92a80d464726ccf9d30c1"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/item/MaterialItem.java",
+      "integrated_sha256": "abf89519663d91b92595ab41764422ed7fa33b1d17d85708f2045099a7b9a2f6"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/item/WireBlockItem.java",
+      "integrated_sha256": "8717f57fb0bc88a15c6e6089ea6a45bdd392a2600fb26889a7635cdfabc73916"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/jei/RecipeMapCategory.java",
+      "integrated_sha256": "ad146d2d025fd578402e5cb47d5c171522c2a0d659d296be9a6f5e1876e26a77"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/jei/ToolAssemblyCategory.java",
+      "integrated_sha256": "283faa27d0fb7ab7427cc7c68b32d3ce1f6b0242349737b923f090fb36c870d9"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/jei/WorldgenInfoCategories.java",
+      "integrated_sha256": "5410fd1e921b3ba8472b57e23225003ba95b6497cfe6def38deec85ba3107774"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/loaders/Loader_FormConversionCraftingRecipes.java",
+      "integrated_sha256": "e009fa6683967ad7e8e0965cec95bb06a7b77592697b4e6604c4e1612a9b7018"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/loaders/Loader_HandToolCraftingRecipes.java",
+      "integrated_sha256": "5bd1de814b7aa90fce81380852960f2c329adbeb3bdc53a937c4926d2e24e18e"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/loaders/Loader_OvenRecipes.java",
+      "integrated_sha256": "b0a5ad1c4c3d345548be848c3818e6883321116142d173c87adb60df52a872e2"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/loaders/Loader_StoneCraftingRecipes.java",
+      "integrated_sha256": "0a32b11f165e6fc8cb7f4d5a4607c347bd21954a736d6cec95c89bed10d994e1"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/loaders/Loader_ToolCraftingRecipes.java",
+      "integrated_sha256": "2f168627b0043ebafc99b769ce381c1ecb99a664bbe0dad42abfab94c1bd5cf9"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/loaders/Loader_TrackRecipes.java",
+      "integrated_sha256": "c9045611198586a8d4db99281bbbf2bedfa72a66a703f997411add61bc1b6986"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/loaders/Loader_WoodCraftingRecipes.java",
+      "integrated_sha256": "d0a7778bb821b0e2bc843a97ff864843409ada13827e0a5b50f17a8345bf2c3c"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/loaders/a/Loader_Tools.java",
+      "integrated_sha256": "8059d717edff629d2313ab2029fd5a4d2b20075c6814e9338b11746e8814ae00"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/loaders/b/Loader_Creative.java",
+      "integrated_sha256": "2f4c7a6e2b8f164ceaed47c1bbf8d667e6d8d0f097cc01f14729114918b3dd80"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/loaders/c/GTGeneratedChem.java",
+      "integrated_sha256": "edb6a41d6a8a7a7beb52d0770f5c4b9c42d59cc8eae11794e0fa8110087bee8a"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/loaders/c/Loader_Recipes_OreProcessing.java",
+      "integrated_sha256": "47bead467b8cb779de1241d224474c0a52f97cc9ac55c46ede1dbb3ab23e9000"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "integrated_sha256": "48bffbd1d3124bbff5b07efb41315d4584a6c9835a062bd39f7cde7446c56830"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/registry/GTBlocks.java",
+      "integrated_sha256": "5cd53c9ff8d05deda1c92850e38f94fdaf58f0aec17f7e3594571c5ecf76710e"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/registry/GTCreativeTabIcons.java",
+      "integrated_sha256": "6f53bed5359d9eb77e76dbb1c02b033f07beb3d159cf1d0a608d394ca12a3a52"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/registry/GTCreativeTabs.java",
+      "integrated_sha256": "71450d85c956e985d29d004b0993ef3abc29a0efe83860aaa71db7a759f927ac"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/registry/GTEnchantments.java",
+      "integrated_sha256": "5d81fa8537db605ae9208bade9dd11734e7756b47b0de658251aaeceb07689ef"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/registry/GTFluidItems.java",
+      "integrated_sha256": "09678c69d4aeba9bac89227e29d9f7d7eaed2ff967e74891ddc4838bdc435a9b"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/registry/GTFluidType.java",
+      "integrated_sha256": "1891391fe50ef948bc89c782ee787bdcfbc341755511cab63e36a9f220256036"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/registry/GTFluids.java",
+      "integrated_sha256": "fdb2b9d5cd43594239cf74dd4f6c684fc4cb0df206f5b5027b7be6eb07886eec"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/registry/GTFoodItems.java",
+      "integrated_sha256": "5d3282e1e0d47b120b9431d7799677e058ee0bea48eb5aba08fcaae49024b9b5"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/registry/GTItems.java",
+      "integrated_sha256": "675caeb7e11bed9e013391d785ce5ddf8b0679c88700399a152768984b59e5b2"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/registry/GTMaterialRegistration.java",
+      "integrated_sha256": "b42ff23d445cf672d2b9271cad6ff0cc230edbdc579429fb4a33fffaec577023"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/registry/GTMenuTypes.java",
+      "integrated_sha256": "e342984296934c671dd159c028a9c1887632ad2ca93be87bee21e6f8b0b0b9a0"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "integrated_sha256": "12df378918bbeb809d476c433defe17e3b6d71ce606373e2454ecbe43fba1f90"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/registry/GTSounds.java",
+      "integrated_sha256": "9f7b865c425e1e5b9830d86e7a91179b993a2702b5a518128c114e083dda2a17"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/registry/GTTechnological.java",
+      "integrated_sha256": "d052f121e43c678be23425505198f0ae98ce0175249f251dabb7c6c82037fb5e"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/registry/GTToolItems.java",
+      "integrated_sha256": "0248e5cbc0333298293491e3cf41a60df91d564e4837ec594c45bab60feaa9f6"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/registry/LegacyItemMappings.java",
+      "integrated_sha256": "bd115d567bd490749a642e32e4ce1c1714f2be22e8f66ad673ab32f4f481f44b"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/worldgen/GTBedrockOreFeature.java",
+      "integrated_sha256": "b8d63aa1ba013b4aefebaa5edcec6da82a67b85eefc4e0727b1b310913c18c87"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/worldgen/GTBlackSandFeature.java",
+      "integrated_sha256": "e81b98756f82992d2ed4c8d7f1ec3634e17a3297c98cd7df5e4a03abb5cc1e96"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/worldgen/GTFeatures.java",
+      "integrated_sha256": "2af1c09273c2055e969cee300ec74a8549044b9565cd92ee814dc78ceb7254a0"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/worldgen/GTNetherDepositFeature.java",
+      "integrated_sha256": "6a6ae33314ce844c1e8280b4dfb93e46ad9344cdf8deb13db3123cb8b4db5c63"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/worldgen/GTOreBlockResolver.java",
+      "integrated_sha256": "e4a0f32a49ec6a79327ff45461e03be1fbcf5e3602168127cf1861b63fa279d8"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/worldgen/GTStoneLayerFeature.java",
+      "integrated_sha256": "8971edf3d139c46d27451f0d609b2a3f52c1eca198b1ea7f2c58b98133519ece"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/worldgen/GTStructures.java",
+      "integrated_sha256": "58b7df24054b034575783724fb989d31632b29b7c9639cc12c07229653b82a99"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/worldgen/GTSurfaceDepositFeature.java",
+      "integrated_sha256": "ca1c17e6a4f79dfb2635bdb40865899d41df1d01f1845c56b19cb6efe8902c0b"
+    },
+    {
+      "path": "tools/integration/test_artifact_notices.py",
+      "integrated_sha256": "937d0356937cc19412e91d0a328e308e020dc2cdf81a05adc09a091d43fd6730"
+    },
+    {
+      "path": "tools/integration/test_ci_packaging.py",
+      "integrated_sha256": "178fd1df4b13a42e31e25aa9e99f04e100726b8c5bb3eacaa0244a4762f71c1c"
+    },
+    {
+      "path": "tools/integration/verify_artifacts.py",
+      "integrated_sha256": "6efd7ca5043a99d38f8661f8a0b6d8ec306ce30f6e358688f5044ccf96782678"
+    }
+  ],
+  "verification": "docs/integration/verification/mod-identity-compile-20261002.json"
+}

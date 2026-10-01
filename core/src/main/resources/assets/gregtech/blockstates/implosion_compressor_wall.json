@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "gregtech:block/machine/multiblock/implosion_compressor_wall"
+    }
+  }
+}

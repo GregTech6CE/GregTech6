@@ -1,0 +1,1480 @@
+{
+  "status": "rapid source integration; not built, tested or launched",
+  "sources": [
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverType.java",
+      "sha256": "d69a4c089fc25db27358ead32e377de3590102faf0734504ff4d5bd87c823295"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/content/logistics/LogisticsRoutingPass.java",
+      "sha256": "a83954f5abe0b9a9feeba79bea7a87ca9e3b13c588430e39bc29f5a20762f915"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCpuDisplay.java",
+      "sha256": "a3f67f442b8258d98434cbf623233f688acdebc1d20ba34de70b29ceae9423ab"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/content/logistics/LogisticsHost.java",
+      "sha256": "8045c313a35083f583e4e27f1bbec4731e15f70136a96b709154f8bf27028c3d"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/content/logistics/LogisticsStorageHost.java",
+      "sha256": "4c8e0cd2898f81d409fef45dc8422633a2a1095b9f344d53cbb365476d16e6f2"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverHost.java",
+      "sha256": "413951c6812471684b0e88925fab4f20eb6d762fb0690e198711ae190b8530a2"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/content/logistics/LogisticsSemiFilteredItem.java",
+      "sha256": "5ff70eae235b929b587a3cd493360805b83bef5771e80be4c6d40b35d37ce36f"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/content/logistics/LogisticsItemFilter.java",
+      "sha256": "1dbb6f015976b98c415b03e8ac082c287d1de24ece54fe4d955b7c4fdbffb8b8"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverSignals.java",
+      "sha256": "317eb164a3c654bcfc649c459aae46067b10a65b4eed491745bd5cccc77eda6f"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/content/logistics/LogisticsNetwork.java",
+      "sha256": "106e7b8e5ec17b765b5496439a963230ac38628bb09ca51f5596fc9299d37e5f"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCovers.java",
+      "sha256": "ab6ec6acc23d9bf3583922ec907a24ddc0e078ab125dd7dbc850d89bbba92aaa"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/content/logistics/LogisticsItemRouter.java",
+      "sha256": "7b10a1aab50f0897e61958062b0959f16dc3fda8dbb529ff0d2a23d7b9ec54b8"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/content/logistics/LogisticsFluidRouter.java",
+      "sha256": "3685611f7bed13b87f3a2163be7a90243a0b09eaf951821bfcb114ee5b9f39ea"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverInteraction.java",
+      "sha256": "a8cd160028a370544cb933e6d006a7bce03d4f3bb7f39117750fdef1e83a9604"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/api/inventory/BlockContents.java",
+      "sha256": "cd8e742c1e6cb8c6a87cafe411e6e2070fa3665082b67a90450e1a66305430c0"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/content/cover/CoverItems.java",
+      "sha256": "e3b70001d819682bcbd5ab679bb84e743d485b1c87c469b93611ed5100935176"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/blockentity/inventory/LogisticsMassStorageBlockEntity.java",
+      "sha256": "e1ad334c2ef4b9b5bce29151d5a8b3b31d54b43e434a49dd2618a20f89d6a392"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/block/inventory/LogisticsMassStorageBlock.java",
+      "sha256": "5e2d1b2d16ba030cfb3bdfbce0771645b381d8048d41c28034127fe47a3d947a"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/blockentity/machine/LogisticsWireBlockEntity.java",
+      "sha256": "b7e4ede551914251ce9f4f44f0f22d5c277bea89136966328b14b0c829b87d0d"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/block/machine/LogisticsWireBlock.java",
+      "sha256": "1e585ad4cc836c0cfb0235bae4540508b56ae22c438e6b2d2f906d803dc9f989"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/client/ArmRenderHelper.java",
+      "sha256": "674024c1aae3359eb3df464d9ea270d32b1658c5100abf87cb29944b6120c8ac"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/client/LogisticsCoverRenderer.java",
+      "sha256": "ebe66c885e50255873421f1eddafe44068829e45bfa97ea4f910289964458bba"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/content/cover/CoverFaceCoordinates.java",
+      "sha256": "0284296062b8cde9a961d5fbd5fafb3e53ed4ae198e0d98ca48c21c26cc4574c"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoreStructure.java",
+      "sha256": "30dedb0e6cedf67ca60e01da321dd950de7f3739b8092bc5ec548439279f587a"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/content/logistics/FilterRules.java",
+      "sha256": "bda57f35ffee079aaa1bdd791f6e58e0a632ebd35de0207a267ba3cf83c44ddf"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/block/machine/FluidPipeBlock.java",
+      "sha256": "f1f85165968bd708190280774f7a68f98b4295158f574c33571fdcbe425faae0"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/block/machine/ItemPipeBlock.java",
+      "sha256": "3837cf24379fc27686ba4078817c467daee64a2ec9852924b9b82c67a142f6de"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/item/PortableFluidContainerItem.java",
+      "sha256": "583a56b64894391782f736aa602fd090648a3706fcc1631981b84aa3f15468d0"
+    }
+  ],
+  "shared": "Single original cover table, routing priority/cycle schedule and CPU meter rules. Both platform routing passes invoke the shared rules.",
+  "gaps": [
+    "No builds, tests, game starts or world save/reload checks.",
+    "Neo Logistics Core controller, actual multiblock parts/binding and its powered routing tick still need migration. This batch does not claim playable end-to-end logistics.",
+    "Full manual/electric tools and duct-tape item frontends remain pending; current tool bindings only act on real registered usable stacks.",
+    "Legacy old-world/item NBT migration and full logistics tooltip/UI compatibility remain unverified."
+  ],
+  "resources": [
+    {
+      "file": "models/item/logistics_dump_bus_item.json",
+      "sha256": "3c5035e703cd5e9a7eda0e302dcc9b5b9e86d5ff0549a78c0bcae90d05a2eb2e",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/item/technological/logistics_dump_bus_item.png",
+      "sha256": "8cbeb3651233d87e26efe335a9d83a5c524945c13374c73c2cf1303b38e08b67",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/generic_logistics_storage_bus.json",
+      "sha256": "b1e8f9603a5f0d0cc2b3dff4145d5a66ba380386bba9348ae267dced7d5cab75",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/item/technological/generic_logistics_storage_bus.png",
+      "sha256": "3cab1bd36133ca69f2ca7fc0a068893ada99c9878949f00c2f7e7ff6ee1ba6a2",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/generic_logistics_import_bus.json",
+      "sha256": "0ee765b20c6d739fd311cb0a7bd8dbd8599769135b6d073cd372d3a2fb7dc912",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/item/technological/generic_logistics_import_bus.png",
+      "sha256": "aacb64b37a0f46a0b25876c593f40bf485a7df2e988bccd422df8e92ddec994e",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/generic_logistics_export_bus.json",
+      "sha256": "47a0204db48feae75285ada9448b4e55bd5955fdf83cc6579c00e2dc6f3dac8c",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/item/technological/generic_logistics_export_bus.png",
+      "sha256": "2c86aada1d91d89de71bed815aba2854316b346f57290516cf3e2b99a2d4942c",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/filtered_logistics_storage_bus_item.json",
+      "sha256": "ea8c7cbe89404f62e2e47a8ddc5f87a07afcf1a521760c7b35aa218608e611cb",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/item/technological/filtered_logistics_storage_bus_item.png",
+      "sha256": "6febff9e3b22cd10938e58414c891080e74f13bc6db1d402e68bf6a43038abdf",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/filtered_logistics_import_bus_item.json",
+      "sha256": "a119c9cd059699205907cb9ecc1461cbd6f8407afb4b1b7a6f4a9207bb144640",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/item/technological/filtered_logistics_import_bus_item.png",
+      "sha256": "d1d3bf4112582c6c077a74abf621da2d5cc695f38abc68b70173e29e39cd2002",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/filtered_logistics_export_bus_item.json",
+      "sha256": "5f983a4c97566a7547ceb39f3e21ca3eb61766f3d9e5bde23ee7477b2a82ebb6",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/item/technological/filtered_logistics_export_bus_item.png",
+      "sha256": "d028833dbff3a8f5b6154b2eb1f030fca54dab3f0611f61e43d1ac05d5f2fe0d",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/filtered_logistics_storage_bus_fluid.json",
+      "sha256": "346960cb82fa97df507286a20f9fef8884a37ca4dc573f1cd26c9a9b8b053115",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/item/technological/filtered_logistics_storage_bus_fluid.png",
+      "sha256": "a97cdc5dfb5b95f5a65342da936a3bc1b637e951ae60f4d5563529b6f8b9d13a",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/filtered_logistics_import_bus_fluid.json",
+      "sha256": "ae63939cde5dd026e665fae478c7fa5cdde674c69bed2da17e285aedeb433b41",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/item/technological/filtered_logistics_import_bus_fluid.png",
+      "sha256": "34fef95e3cfeb7bab5235c2787648d3a249583a3d89fb5b81ab31254ef0e42e6",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/filtered_logistics_export_bus_fluid.json",
+      "sha256": "40279a0426b40e1502efd5515ee137ecf541f608c652d8942a0caa5ff68e3a9c",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/item/technological/filtered_logistics_export_bus_fluid.png",
+      "sha256": "f4e40b41987ea2bb13c62069f4ed9464cc49d257c6c5e7f7842e6d3c56a5129a",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_display_cpu_conversion.json",
+      "sha256": "061d6c0097d8d3f76e7738cbe77f67eeac4567e7d0f34857db0eb88781baf5a6",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/item/technological/logistics_display_cpu_conversion.png",
+      "sha256": "d36662e023b9811943d89d5a8058bba558090c81c23ebe42c49a7e4a3e10091a",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_display_cpu_storage.json",
+      "sha256": "af01ed3f2f857687b72a940ff6ad279168bc675d1cf07b81f6995a5766d5f9a9",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/item/technological/logistics_display_cpu_storage.png",
+      "sha256": "b8a007d0f4398dde65e037597ddb962af613f8b6b661d2317909f9f68207b3b0",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_display_cpu_control.json",
+      "sha256": "167a47943e366d4f52749722af6a0d79cf06eee1b79fe768e1ca8f219705129a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/item/technological/logistics_display_cpu_control.png",
+      "sha256": "7d5ba87aa6882cffcd130db26a8936fe64dd0a1274293c60f17ebb6f38719240",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_display_cpu_logic.json",
+      "sha256": "117ff389e76886de78cbdd12c6e9dd55dedc43260b6b2e9032e84413f96dd13e",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/item/technological/logistics_display_cpu_logic.png",
+      "sha256": "665360aca97d5a003b20dfae32ef495862fee6e0c317932ec68ba5313304477e",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_void_metal.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/block/machine/storage/logistics_mass_storage.json",
+      "sha256": "8232d825a1fce8ad38a020c42c5eac37b53df28441c3118f9869edb07e27dec3",
+      "destination": "neoforge",
+      "adaptation": "loader namespace"
+    },
+    {
+      "file": "textures/block/machines/massstorage/logistics/colored/top.png",
+      "sha256": "633b57da65fad5f0f604c48806221479e0eab9512fd514789d3520c513782547",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/massstorage/logistics/colored/bottom.png",
+      "sha256": "07da6fadfd8c42bbeb8dd0f1b07a7b48ec08d76ece9fb49ec793ab55d01e7d23",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/massstorage/logistics/colored/front.png",
+      "sha256": "f378cc9fa9cd07e1ce116a056b730181e7608cf7c660c0282965274b5600d5e6",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/massstorage/logistics/colored/back.png",
+      "sha256": "dc86a74eb29bee4e69170c87fd3682650dc9c9599ce589168c73e7ecea2513b7",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/massstorage/logistics/colored/side.png",
+      "sha256": "f348ace8e2d98ed701a060a87c4c66ec25b708449cd96611b66aa01cc9c595f1",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/massstorage/logistics/overlay/top.png",
+      "sha256": "fa135127ae01fd01a687ae52246c0f402dc0ad1fca6f0c8dee437fdb2e14d849",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/massstorage/logistics/overlay/bottom.png",
+      "sha256": "4878b4c3302a9c9c2225107ba51c3a16b62918d53225bc3dfb1ca8835e49f5d7",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/massstorage/logistics/overlay/front.png",
+      "sha256": "f20ad3f536d930de04377b6dd0bf5413a2088536119a930e99b80d0dc8534370",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/massstorage/logistics/overlay/back.png",
+      "sha256": "8ef20cf21c71da8d43257ca8a051f9c6822bded78000adf3b619f4c3d18943f6",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/massstorage/logistics/overlay/side.png",
+      "sha256": "8177aa67fc7fedb5a8fd2dcbecf1725966701a52827fb675c6a3095a4e2f3152",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_ultimet.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_tungsten_carbide.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_tungsten_alloy.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_tungstensteel.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_tungsten.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_tritanium.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_titanium.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_tin_alloy.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_thaumium.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_terrasteel.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_syrmorite.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_steel_galvanized.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_steel.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_stainless_steel.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_silver.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_platinum.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_palladium.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_osmium.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_octine.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_nickel.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_netherite.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_molybdenum.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_meteorite.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_meteoric_steel.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_manyullyn.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_manganese.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_manasteel.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_lumium.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_lead.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_knightmetal.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_iridium.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_invar.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_infinity.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_hsla.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_gold.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_gilded_iron.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_germanium.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_elven_elementium.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_electrum.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_efrine.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_duranium.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_draconium_awakened.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_draconium.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_desh_alloy.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_desh.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_constantan.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_cobalt.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_chromium.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_bronze.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_brass.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_bismuth_bronze.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_bismuth.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_bedrock_hsla.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_arsenic_copper.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_arsenic_bronze.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_ardite.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_antimony.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_aluminium.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_mass_storage_adamantium.json",
+      "sha256": "462bf7d8ec67d430935d74d39288f32f69dc8e6084bee37c42e5c2175e744fa5",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_void_metal.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_ultimet.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_tungsten_carbide.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_tungsten_alloy.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_tungstensteel.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_tungsten.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_tritanium.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_titanium.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_tin_alloy.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_thaumium.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_terrasteel.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_syrmorite.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_steel_galvanized.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_steel.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_stainless_steel.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_silver.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_platinum.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_palladium.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_osmium.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_octine.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_nickel.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_netherite.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_molybdenum.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_meteorite.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_meteoric_steel.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_manyullyn.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_manganese.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_manasteel.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_lumium.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_lead.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_knightmetal.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_iridium.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_invar.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_infinity.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_hsla.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_gold.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_gilded_iron.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_germanium.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_elven_elementium.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_electrum.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_efrine.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_duranium.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_draconium_awakened.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_draconium.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_desh_alloy.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_desh.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_constantan.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_cobalt.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_chromium.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_bronze.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_brass.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_bismuth_bronze.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_bismuth.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_bedrock_hsla.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_arsenic_copper.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_arsenic_bronze.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_ardite.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_antimony.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_aluminium.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_mass_storage_adamantium.json",
+      "sha256": "0ada5c9645e38c2e15375655a44074478942845208e0adf1cb6b962368d8554a",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/item/logistics_wire.json",
+      "sha256": "5355cacfa3562d28692112c1282150fd15d83901bc8a49b7f597398538ca9190",
+      "destination": "neoforge",
+      "adaptation": "loader namespace"
+    },
+    {
+      "file": "textures/block/iconsets/logistics_wire.png",
+      "sha256": "1b383e640e9882b2cf927dde24cc0a1563c23e025224bb2846946f6a958e731e",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/iconsets/logistics_wire_overlay.png",
+      "sha256": "6a67c828c68a9fc9be55ff7ef53dc837d66413432d5c5a1cc129ffcd3c1ad046",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/block/iconsets/logistics_wire.json",
+      "sha256": "caf56b043f8aba32fe3c8e4b5b61902eb33b819f21ee3030c045ba2279ddbf33",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "blockstates/logistics_wire.json",
+      "sha256": "34575b8c7eee6259711be5e95a4955c1801cae9e20b4cf8c7590fa01a40b32b8",
+      "destination": "neoforge",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "models/block/machine/logistics/logistics_wire_east.json",
+      "sha256": "1d9546487e94497339d4fc70d5089f321e5efb08be612dfcbaa3d5a745d4191d",
+      "destination": "neoforge",
+      "adaptation": "loader namespace"
+    },
+    {
+      "file": "models/block/machine/logistics/logistics_wire_west.json",
+      "sha256": "24acc9ba9104cf84bbad2f4b44149778300380bd199686479f3297d52c36dff8",
+      "destination": "neoforge",
+      "adaptation": "loader namespace"
+    },
+    {
+      "file": "models/block/machine/logistics/logistics_wire_south.json",
+      "sha256": "c98c0b0a61f164ab82ece6aa5b01b384bc72ac43fd3c0881a6c434772f84d3f2",
+      "destination": "neoforge",
+      "adaptation": "loader namespace"
+    },
+    {
+      "file": "models/block/machine/logistics/logistics_wire_north.json",
+      "sha256": "52c1c6edb1d044ee53b8c197da15d63a3799ccdf492df3dfbbb6be787af0fc31",
+      "destination": "neoforge",
+      "adaptation": "loader namespace"
+    },
+    {
+      "file": "models/block/machine/logistics/logistics_wire_up.json",
+      "sha256": "65edaff8e2895042f7af849befb8bd71820d8a912e6b0139ffae9a6f738264e0",
+      "destination": "neoforge",
+      "adaptation": "loader namespace"
+    },
+    {
+      "file": "models/block/machine/logistics/logistics_wire_down.json",
+      "sha256": "7167462fe3c5b8dd18231c0a2a0528a319c577908dfbb36726f536cc211bae5b",
+      "destination": "neoforge",
+      "adaptation": "loader namespace"
+    },
+    {
+      "file": "models/block/machine/logistics/logistics_wire_center.json",
+      "sha256": "7d8c73b5fd7b40f678ca223fce4f1c9d63b06862e0912b99bd36c66f856ed99d",
+      "destination": "neoforge",
+      "adaptation": "loader namespace"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/base.png",
+      "sha256": "4aaeb23df101d2b097687ad1b9bf63ac943ad2d488a83748a2e7e7c379af9c06",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_control/0.png",
+      "sha256": "5101f19546ee1f4f844881329954759fdf947e204698e8c2eb96df27cdaea91c",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_control/1.png",
+      "sha256": "a16713d81a6b87067bad526d481a9273fcb7e7c9d20fabbdbe6e458aae3535f6",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_control/10.png",
+      "sha256": "ea7afd6c88024b50aff91cebe472d6ca711da3bbc187935ff678a3b5b13929b3",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_control/2.png",
+      "sha256": "f964a3af0d7620aada03a039a436d3fc3cce0541c7caffb0e8d95b0cb0239d2c",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_control/3.png",
+      "sha256": "fde08d917ef22126bb082e07ccb2c9c1b4b62ed20d55bf6bf590a00b4292272b",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_control/4.png",
+      "sha256": "dee429be98d910706b2cdb506eec7ef53c1c80df0706a62fd4b729ea58a32d9a",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_control/5.png",
+      "sha256": "4eb0dd5606a00ff10b10e010f1a7a0cd40ec08584921eabe03b15da8d8a8c7b2",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_control/6.png",
+      "sha256": "bfd8714dafcde800775e008b3942e7002d7d89b88b15802230d00263f4c3ba92",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_control/7.png",
+      "sha256": "7353fdf2492d6ff817f39c5c24fa7e7233b70d90270d31100b0a34b9da6f1524",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_control/8.png",
+      "sha256": "0f58f3c49801e7bed53d7c037bcd7fb463444abed5d01c49942f67dccf52cfd9",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_control/9.png",
+      "sha256": "9064d7fe93be93d8729c9930fc978afa85f318417dc6af421f551287208d0b39",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_control/underlay.png",
+      "sha256": "e70cbf443b105ededbe4b8432bd62d406254298a4bf398b35c44f54cf4850a5d",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_conversion/0.png",
+      "sha256": "5101f19546ee1f4f844881329954759fdf947e204698e8c2eb96df27cdaea91c",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_conversion/1.png",
+      "sha256": "58c2f2fef225d31855f5c7b8f8c66fea5021205d0787850ff56590c72b989191",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_conversion/10.png",
+      "sha256": "d4f8e1ac7775e3f3f3d3f5ab7c2710b49551999a8c34f6b19e0e079fffd56b7b",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_conversion/2.png",
+      "sha256": "81135e7b3f91074d37ffe97fe1505732ff40fa84809cfb0f1aa0c1e38dadc618",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_conversion/3.png",
+      "sha256": "1d9209188cfc2c2a878e66e1212ce4ec0cef728e044c21aaafe6d28f432934c6",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_conversion/4.png",
+      "sha256": "488dbf9236a9b5cd6546c3caca288e88d5d4ca40d8ffbb19ed8558e4c8df4237",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_conversion/5.png",
+      "sha256": "de69d9b505ae7b4106f23a5ab52923371af29b8162661d47411e5d3fc7eb1c60",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_conversion/6.png",
+      "sha256": "efab177363dfc2f7db8bcf44ccb3a8cd2ed9c7917ed377430bd0bb83e4d6a1d5",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_conversion/7.png",
+      "sha256": "4f8697cdbc8df107da84eb0da031895c8277ed108960f0d523a64cb0ed17551d",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_conversion/8.png",
+      "sha256": "0d5e7d8fbbb275f389db419c701cc6c6933e7b9dbcd68960086d25482f6630d5",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_conversion/9.png",
+      "sha256": "f222a4f7fc0b8c3e38fd8aed7a17fcd40c5e5e5e1e86441fdd084a54c4118a15",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_conversion/underlay.png",
+      "sha256": "e70cbf443b105ededbe4b8432bd62d406254298a4bf398b35c44f54cf4850a5d",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_logic/0.png",
+      "sha256": "5101f19546ee1f4f844881329954759fdf947e204698e8c2eb96df27cdaea91c",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_logic/1.png",
+      "sha256": "ddb073e9fc3eb1187b55574ed0d798990df17f0bde324bf9b550a3b6f76786f0",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_logic/10.png",
+      "sha256": "c9d63d47b83695d02d7f91de3d3c8f84615e9e4a602583569bb6136251163f6e",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_logic/2.png",
+      "sha256": "91aaf8e599dc2a0091c89fa92f84ebb3b44e61c60e48ae9a886a6c2843e53199",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_logic/3.png",
+      "sha256": "55924eb8dd146e2c0958ada15ed6e9559a2e2033817646dc3112147e4b479eda",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_logic/4.png",
+      "sha256": "0bf9902173b54301bd4b87f953c5550c6820ff3f4d0e77bb8a432aaf8e080c8c",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_logic/5.png",
+      "sha256": "ee7aefbef416b1561409f91b75cede54d5d76e13834a610d304d4a0ad0bddb90",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_logic/6.png",
+      "sha256": "9cdb025ac69fa2cb14fdc93787d7b94a111f54716b384fbcd42c98734326b541",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_logic/7.png",
+      "sha256": "9c88f18f9e89fab118d97e80b4344d51034c25d84cdbfb0492bbb1d920947ccd",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_logic/8.png",
+      "sha256": "79657b308dd56b1859c7f913c684c7943658d6bbc52fe394993145ae123dc3bf",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_logic/9.png",
+      "sha256": "2708353ec8c9b4abee3636069c7168caa2c042afd04c27d6f61f0ba71f78e6e9",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_logic/underlay.png",
+      "sha256": "e70cbf443b105ededbe4b8432bd62d406254298a4bf398b35c44f54cf4850a5d",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_storage/0.png",
+      "sha256": "5101f19546ee1f4f844881329954759fdf947e204698e8c2eb96df27cdaea91c",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_storage/1.png",
+      "sha256": "67b14e87c6cbb928aafff7edcda0f23e3fb5f002ce1c54455b5781e5a2516d14",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_storage/10.png",
+      "sha256": "eff5b1834d08cc13ad75475a3cdef41fe9dd2df6dce7c464be7f3d58c6662575",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_storage/2.png",
+      "sha256": "8496effa784666ec2cbb8854771bdbda475156b77722c36024421c44bfae44c0",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_storage/3.png",
+      "sha256": "488518fc181723fa04f7e507d1d1f5dfc6c6dc522292346521e8fe31b1e68127",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_storage/4.png",
+      "sha256": "7e3d493b8b26647a75f5a7d4d52f2fa7b616bce0786dd14e675458bd9e31627c",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_storage/5.png",
+      "sha256": "68b389d44e92e69e46eb30a90ce16c584e63f54890eda6e0e4f43203eb16d06f",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_storage/6.png",
+      "sha256": "e6365e2eab53d79ba5ea95d54aad02190fffaebe4ac85e9928c76aea39345318",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_storage/7.png",
+      "sha256": "db35b0ecb881f8d31ad272ae90ae773f66ca1422fb118542c989dc4b879e411a",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_storage/8.png",
+      "sha256": "f4e080484df4705d7416c1318fa580e05118791efbc3971c20d44915d35756f3",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_storage/9.png",
+      "sha256": "984cf20743b5c7d97f815ffd989bcc30cf207dae4756ef85a540e92891586c03",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    },
+    {
+      "file": "textures/block/machines/covers/logistics/display/cpu_storage/underlay.png",
+      "sha256": "e70cbf443b105ededbe4b8432bd62d406254298a4bf398b35c44f54cf4850a5d",
+      "destination": "core",
+      "adaptation": "byte-identical"
+    }
+  ],
+  "adaptations": [
+    "Neo actual item/fluid capability endpoints and provider-aware cover persistence. Legacy GT cover NBT keys live in CUSTOM_DATA components.",
+    "Original wire connection names, shape, metal strength and sound; original metal storage IDs, black casing, packing/fraction semantics and sided inventory handler.",
+    "Thin registry/component tool binding only; full manual/electric tool behavior is not claimed as ported.",
+    "Neo cover vertices/model data/atlas UV boundary; shared original CPU sprite directory and real item/cover models."
+  ]
+}

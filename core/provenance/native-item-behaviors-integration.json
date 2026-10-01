@@ -1,0 +1,923 @@
+{
+  "date": "2026-10-01",
+  "authors": [
+    "saltnya",
+    "brokestar233",
+    "Lorbineitte Masson",
+    "original GregTech6 contributors"
+  ],
+  "license": "Original evidence and notices retained; local integration, publication permission unresolved.",
+  "counts": {
+    "originalMultiItemRows": 1278,
+    "handRegisteredOriginalLootItems": 3,
+    "totalMultiItems": 1281,
+    "sharedBehaviorRows": 45,
+    "nonNullBehaviorRows": 44,
+    "newNativeBehaviorClasses": 9,
+    "originalLootBagItems": 7,
+    "newCoreClasses": 2,
+    "javaRecords": 21,
+    "resourceRecords": 139
+  },
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/inventory/MassStorageBlockEntity.java",
+      "sha256": "56c18dee4210a45a64fc4845fc599aa0fc9a4b045c53962e530c924622cd4fe1",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\inventory\\MassStorageBlockEntity.java",
+      "sourceSha256": "1aee59d5c4630db547901cecfa568cd5846b70559b93dedf4f48a8b98ae95174",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "sha256": "81479046d983874d25d13cdf69db8adfe220ec3748e1410e3140814dc698f19b",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTMultiItems.java",
+      "sourceSha256": "33c2677480c5cfb07e4f5bcd714580352bbece744713a9c87cd05c4c2a839815",
+      "derivedFrom": []
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/item/behavior/BehaviorLighter.java",
+      "sha256": "e6618b26268168bf0fdfc2cec204ae2a59f5a30d9bf8db706fc3f57fb6c73b54",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\item\\behavior\\BehaviorLighter.java",
+      "sourceSha256": "6b53d9705b23f67ade540921b0df1cd913a59de0e5a4f647c63175c4edbc87f5",
+      "derivedFrom": []
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/item/behavior/BehaviorScanner.java",
+      "sha256": "8fdfd4392ca9ce9264c1d04df083d9bf86b79a4389c3746b0045105f60ceec2b",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\item\\behavior\\BehaviorScanner.java",
+      "sourceSha256": "fb1f3362ecd94fefca49dac0cf7976ec0385ee33e625c1b9215818a6c061f9f0",
+      "derivedFrom": []
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java",
+      "sha256": "484d9fc4f8fc827a260e7ae3bea2322ba52d653a055db16d40114cc7e25226a0",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\item\\behavior\\ItemBehaviors.java",
+      "sourceSha256": "dd5a025798f6c0082772b078fe3e0cd4618a1cb583006c8aaa003ebd7acc71e2",
+      "derivedFrom": []
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "sha256": "4d6f0f6d2b622d1ad06a3efa2a53043b96f89a6c01cff9b72a49e13b3c070c14",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTMultiItems.java",
+      "sourceSha256": "33c2677480c5cfb07e4f5bcd714580352bbece744713a9c87cd05c4c2a839815",
+      "derivedFrom": []
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/tool/ConsumableRules.java",
+      "sha256": "8add3beb53da7dcf4deb571f7ea8fac9fabf44ab864e8cb3a42eb549a5272c2a",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\item\\behavior\\ItemBehaviors.java",
+          "sha256": "dd5a025798f6c0082772b078fe3e0cd4618a1cb583006c8aaa003ebd7acc71e2"
+        },
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\item\\behavior\\BehaviorLighter.java",
+          "sha256": "6b53d9705b23f67ade540921b0df1cd913a59de0e5a4f647c63175c4edbc87f5"
+        },
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\item\\behavior\\BehaviorScanner.java",
+          "sha256": "fb1f3362ecd94fefca49dac0cf7976ec0385ee33e625c1b9215818a6c061f9f0"
+        }
+      ]
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/tool/ItemBehaviorCatalog.java",
+      "sha256": "10bde6af80e5bf95e1ae41e56331e4d9fa828ac33f08332b6b929a01b1373338",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\item\\behavior\\ItemBehaviors.java",
+          "sha256": "dd5a025798f6c0082772b078fe3e0cd4618a1cb583006c8aaa003ebd7acc71e2"
+        }
+      ]
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/loot/LootBagItem.java",
+      "sha256": "90b9832aa597f3fa999322a408c6a33a54d73e3ee99797630afeff01d22876e5",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\loot\\LootBagItem.java",
+      "sourceSha256": "b8e798adcfd80a5159e02ed5c8b413f094775cb291f29ea246f2375731e7adb4",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/item/MultiBehaviorItem.java",
+      "sha256": "bcae1ea9519b0874c87315e92bff1086f08771045e3051bf392ba0ce8f01acc1",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTMultiItems.java",
+          "sha256": "33c2677480c5cfb07e4f5bcd714580352bbece744713a9c87cd05c4c2a839815"
+        }
+      ]
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/item/RadawayItem.java",
+      "sha256": "cc83cb31d2557a919e948f4bd5a4fe5811bfa08d5fe56784c423a23faf3339db",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\item\\RadawayItem.java",
+      "sourceSha256": "2856c8b774bbcd1f1958cb6166d79ff0b7ff559343f7971a009c2306a2ebc877",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorChunkEraser.java",
+      "sha256": "6f088ab18d180fea49d3fc2fdde0096fac07b674815c5a6d37983f403598162f",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\item\\behavior\\BehaviorChunkEraser.java",
+      "sourceSha256": "be4f9bbfc18181c689cd6743675a5c4ad12235b86fbc9b1da907c27f602c9eb6",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorDuctTape.java",
+      "sha256": "93413ab76a42c7a50d6ae3dedfa1c3f396040da82a2838f33d2fa9bc10e5bcb9",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\item\\behavior\\BehaviorDuctTape.java",
+      "sourceSha256": "46a38e80ecc8885b0e029cc8a3dd9e26a73fff0b0e2702028f8d1c461835997f",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorLighter.java",
+      "sha256": "ed83bf97e580c54c15a57f140e9030f99c0b3b981e7e599b2c34d332323bbb5d",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\item\\behavior\\BehaviorLighter.java",
+      "sourceSha256": "6b53d9705b23f67ade540921b0df1cd913a59de0e5a4f647c63175c4edbc87f5",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorScanner.java",
+      "sha256": "3f6774790576778d36a24aeea136e9b79f4f95538f19d1046bda0c6c600d91b8",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\item\\behavior\\BehaviorScanner.java",
+      "sourceSha256": "fb1f3362ecd94fefca49dac0cf7976ec0385ee33e625c1b9215818a6c061f9f0",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorSprayColorRemover.java",
+      "sha256": "4678ab5966510b1bfc9ef75c12c246caa75bc151a0556092e4304dc647b2df96",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\item\\behavior\\BehaviorSprayColorRemover.java",
+      "sourceSha256": "5ba98fc9a6d9bfb60e020f63b8f7069d3c4b20253ca71bf20074b4e6a1e31a51",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorSprayExtinguisher.java",
+      "sha256": "d662d3d6cb5cc12b062b68b170ec7231e89af7363307eeed19b2c6eaf7dc6d50",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\item\\behavior\\BehaviorSprayExtinguisher.java",
+      "sourceSha256": "dcce6b5d75e3eafa982121c2b37efe43103c9e37b85fb026c68cc7bc5b5ac5c2",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorSprayFoamHardener.java",
+      "sha256": "298859a3dd8c52fe0cb356c69f93c8aa4e262bac3809ce2c3eecc89eccf8fbc1",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\item\\behavior\\BehaviorSprayFoamHardener.java",
+      "sourceSha256": "9a0f656db62cf99a66c2e1937f0df954f9b227eb93ea092fe5d10365964b164c",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorSprayFoamRemover.java",
+      "sha256": "06ff7d794eba3735e54137f1614161ca083c0e675c1678bfd6b1479c6c630d72",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\item\\behavior\\BehaviorSprayFoamRemover.java",
+      "sourceSha256": "40ce3785b1992458dea19084fc6b91e46dc27e6e5e59508152efaca9926a14af",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorWorldgenDebugger.java",
+      "sha256": "db52f890f7d5e6cee2c4c45e77967ddc7cdb3dabf5259a31eb39cfc5b40c989a",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\item\\behavior\\BehaviorWorldgenDebugger.java",
+      "sourceSha256": "5dd96980b97fc9319cfdef970f1f1f995030e4afaa21a3e286ff3cb59bf76d60",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java",
+      "sha256": "1e97437ff4d09a3d9afa72b1339fb945f3a175312e8e15969fd681ffd8654611",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\item\\behavior\\ItemBehaviors.java",
+      "sourceSha256": "dd5a025798f6c0082772b078fe3e0cd4618a1cb583006c8aaa003ebd7acc71e2",
+      "derivedFrom": []
+    }
+  ],
+  "resources": [
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\arsenic_bronze_compound.json",
+      "sha256": "1af62adf4ca083e68e444a2b81c7a334aede14f6f07883dd67a3fb57cd2a50b1",
+      "target": "core/src/main/resources/assets/gregtech/models/item/arsenic_bronze_compound.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\arsenic_copper_compound.json",
+      "sha256": "fc15941b3d89f084c5c6732e01f00b3348df3ec2c088cc23be40356da2f95b4a",
+      "target": "core/src/main/resources/assets/gregtech/models/item/arsenic_copper_compound.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\bagged_sapling.json",
+      "sha256": "2c54acbb59bc5611c19f6e69c2259b349de03151282437f032eda161f27843db",
+      "target": "core/src/main/resources/assets/gregtech/models/item/bagged_sapling.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\basalt_generator_module.json",
+      "sha256": "b3dea7f184664bc2b89573d4d13110c3c45413e5bd4af2e76d290c253c9cf553",
+      "target": "core/src/main/resources/assets/gregtech/models/item/basalt_generator_module.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\bismuth_bronze_compound.json",
+      "sha256": "80701a1a0b0ffea3a3356986a70129e1a3edff968c445db6540e3bb849279619",
+      "target": "core/src/main/resources/assets/gregtech/models/item/bismuth_bronze_compound.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\blackstone_generator_module.json",
+      "sha256": "2958af8dd232814e864c65e97ef1fc4ebf14a43e111e87f336aa30dd60b754f3",
+      "target": "core/src/main/resources/assets/gregtech/models/item/blackstone_generator_module.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\braintech_aerospace_advanced_reinforced_duct_tape_fal_84.json",
+      "sha256": "9c4a9a3d9155b06e6679f734e5e9a74ccd1c80e2361e2f3d7cedcec67711d81f",
+      "target": "core/src/main/resources/assets/gregtech/models/item/braintech_aerospace_advanced_reinforced_duct_tape_fal_84.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\braintech_aerospace_advanced_reinforced_duct_tape_fal_84_2.json",
+      "sha256": "0677c59d1f54566e072179fcba5ead3dc5af53f016111ddc105b0154ff5805e6",
+      "target": "core/src/main/resources/assets/gregtech/models/item/braintech_aerospace_advanced_reinforced_duct_tape_fal_84_2.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\brass_compound.json",
+      "sha256": "076c7ee671779a3b2241ed8ac937cdd2e272e3ace0204a7b1ab68ff4c7ff4aa8",
+      "target": "core/src/main/resources/assets/gregtech/models/item/brass_compound.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\brass_key.json",
+      "sha256": "2d90fafad91fc606bcfec2e0cba20ca22548fc6e49cda482b1f8882a9b2f2627",
+      "target": "core/src/main/resources/assets/gregtech/models/item/brass_key.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\bronze_compound.json",
+      "sha256": "4210a2dfb7a4c1bfdcfb830d3218c1271ecaf9d63df4be1170e647443cb8d511",
+      "target": "core/src/main/resources/assets/gregtech/models/item/bronze_compound.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\bronze_key.json",
+      "sha256": "350855c0c03a5971d5d529a1016f2afb7b1fe4962b875fbe0b1e9992512377f4",
+      "target": "core/src/main/resources/assets/gregtech/models/item/bronze_key.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chunk_eraser.json",
+      "sha256": "758d7ab33c35a6225f4356ea46b9e80852fa3e92ef474cbbec651c68e3069391",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chunk_eraser.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_arrow_mold.json",
+      "sha256": "848af02ffc41f0726b42a60301c3115554c20021f74ca0507618d074625b356b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_arrow_mold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_axe_mold.json",
+      "sha256": "b8564957c55c9ac0b0f533d7e7f76391ce3417e0fe86b06f62515a4b42a1844f",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_axe_mold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_basin.json",
+      "sha256": "e674f7f3df73f60a9d4ff1f15b0c6cd4ae669fad449eb57a7a014d0fcdd7949e",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_basin.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_billet_mold.json",
+      "sha256": "982df8a44842b20e140d95bd3ee5fbca08f80bfed7c31d023d3cd60cd5831822",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_billet_mold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_bolt_mold.json",
+      "sha256": "35edd31b3f6d763ade61247062f2831bcc030ac841a94d62f8b895888638cb8e",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_bolt_mold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_bowl.json",
+      "sha256": "c8edbe99f24a6a137a40f6d4f0f88b551374a13bfa77c179a06cd4905fe64169",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_bowl.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_builders_wand_mold.json",
+      "sha256": "cd7d5aaf0b8a07a34f689ba3bd6d94f050a9dd661efcdcc5ba99ff4b19193344",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_builders_wand_mold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_chisel_mold.json",
+      "sha256": "a3d2369fd531eadc626a7e178fe0a2311ea7c9f74e1cf48823f388d8b4335afc",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_chisel_mold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_chunk_mold.json",
+      "sha256": "404777fdba0d3ef5534bd8139aee1735315fcc13c848501b599becf62beb5f1e",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_chunk_mold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_crossing.json",
+      "sha256": "fe69161a5d818a7ebf4da24d23772fe9a8974de3397b14b1cecbcff730246a9d",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_crossing.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_double_axe_mold.json",
+      "sha256": "57cddc11804a0fe656f29f28586a2d6583949146bea9da4be2edd789f27b6043",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_double_axe_mold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_faucet.json",
+      "sha256": "6125bdc75aede560559cbdfd9bb0ab3cfcee92e4e073221516061c77d1a3a27a",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_faucet.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_file_mold.json",
+      "sha256": "2e4e54be556483f0abeb8bdfbe8040d628446b4c4020dbddf2ec1e38054d4225",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_file_mold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_gear_mold.json",
+      "sha256": "17164f5c27946a3645143609b8aaee88406892d065357edc467e7fb4feb4f45a",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_gear_mold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_hammer_mold.json",
+      "sha256": "2374211a90d9b14ee46c430e06db88d3dc98a413a3da531be7767691090d21cb",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_hammer_mold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_hoe_mold.json",
+      "sha256": "7038414b1532a552484f61df5fba632bc20f3ede3e5d53b8e732510f5f4d23f1",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_hoe_mold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_ingot_mold.json",
+      "sha256": "4e5f8935dd3ef6e3121f4a05a2cfb2480395fa10bc6b56d20f680144453e4c7a",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_ingot_mold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_item_casing_mold.json",
+      "sha256": "e2755069ebe82b3f0963cf5a6f05d597b7677dcd468a5a443e5a4303896463d9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_item_casing_mold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_juicer.json",
+      "sha256": "4d96f47d254ab5e99605b0adebbc38315531d8f35f426b97d83af23a8e14db6c",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_juicer.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_long_rod_mold.json",
+      "sha256": "5521c36ded5c67207be374482c070e2909f00cabe66303252a3d354ec55d9b17",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_long_rod_mold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_mold.json",
+      "sha256": "8269b0302ca4f18f16f19c865d2520db7dfa73a13445473bbe21393c9b27d6cd",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_mold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_nugget_mold.json",
+      "sha256": "163ef302ac529180d54fd7c7bbaa8852d9694055e633cd05890b5141efa6d0e2",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_nugget_mold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_pickaxe_mold.json",
+      "sha256": "e68988d1bf1d0c1e748ba89071bd2ca655ad5a32a5800751636ba57dbbe5f739",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_pickaxe_mold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_plate_mold.json",
+      "sha256": "2bb1526fc2cffc635aedddf5d57a4f5be79566c2d1d2eae690f8c6c1a238e524",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_plate_mold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_plow_mold.json",
+      "sha256": "597e7b5d807f2b3e98b0aa37a908fc922f0c055a61540e2ecbf873d1f0b4999f",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_plow_mold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_ring_mold.json",
+      "sha256": "1f05e23eb70992a9359c25a3063efce5a68793106f40b4dbd147596f0e8d6249",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_ring_mold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_rod_mold.json",
+      "sha256": "adbfc038160ad61b760ed1c8441a2bc5615fe40b1a33694352ba9d6b8a5a4595",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_rod_mold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_saw_mold.json",
+      "sha256": "666ab088f04da3ec19f8fb6b3fbce7aae067f37a68ecc60057b44b154e394931",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_saw_mold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_screwdriver_mold.json",
+      "sha256": "2252e4c814042828bdba0862bc0269afb60f8dafd8a1ccb845c269fafcb84647",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_screwdriver_mold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_sense_mold.json",
+      "sha256": "7564cad2a50d36177c5aea362794557bf6fd91d8ac5063df37925dd711d13dc4",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_sense_mold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_shovel_mold.json",
+      "sha256": "fc615e5f57cfb7bcdc256d11ad2deddc4ac87221697b80f8a27c4eaed1c47db6",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_shovel_mold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_small_gear_mold.json",
+      "sha256": "850b94ac3db850ff2ae1dba6d6237e6cf7d43219439a6fd849f67d9b85dc8ec0",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_small_gear_mold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_spade_mold.json",
+      "sha256": "906675df5cefd3cf531f5ac7bf51f66ce9e745aa29ed7c3ed6b55560cc605f07",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_spade_mold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_sword_mold.json",
+      "sha256": "dd9393eda344f26b5b654ce5231cdcc668257971a6bbc644d65f8b71f73e2a8c",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_sword_mold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_tiny_plate_mold.json",
+      "sha256": "49bd873b5d36b7d60db9c261131bfba62322c240ccc5f418b557357e248259b0",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_tiny_plate_mold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_universal_spade_mold.json",
+      "sha256": "4e369b18111ea51ffe1c0b9c258f10ee3e5ccaf066f9cd2975cb2a8a4bebc7e1",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_universal_spade_mold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clouded_bottle.json",
+      "sha256": "68f27f717ceee2178b8ee88eca243f17fb0973fd8270548d12e12736db5c0be7",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clouded_bottle.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\compass_center.json",
+      "sha256": "21bdef8820aa84924e3e8066f9da8eb2d19898574436b128545b4e96ffd785ee",
+      "target": "core/src/main/resources/assets/gregtech/models/item/compass_center.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\compass_death.json",
+      "sha256": "18765d25a22e3382cd1d4e866797422571fa168bd88af68b0f3625c36e012c25",
+      "target": "core/src/main/resources/assets/gregtech/models/item/compass_death.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\compass_face.json",
+      "sha256": "8afb291349dfc21585eed2ac2c7922227020512d6b48db600b6d43678f299ac4",
+      "target": "core/src/main/resources/assets/gregtech/models/item/compass_face.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\compass_north.json",
+      "sha256": "f030e07e14dd86c26bf9ddb13fdc5df51f3d8b9103f7fba0cbad5dde51a6a4f5",
+      "target": "core/src/main/resources/assets/gregtech/models/item/compass_north.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\compass_spawn.json",
+      "sha256": "05a25efcb01975e4b7dd7c012b07b0322d2bb694e0b3db0cecb86125fac88add",
+      "target": "core/src/main/resources/assets/gregtech/models/item/compass_spawn.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\copper_key.json",
+      "sha256": "0cbf4fbffe447eec0e5149cc761e6bb6de6bb9ea514246da2c69765e61c70aa0",
+      "target": "core/src/main/resources/assets/gregtech/models/item/copper_key.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\c_foam_removal_spray.json",
+      "sha256": "ffe06bec5424c53703a54b0ecbb44102ef97f07ecac970a1b4fd923561fc5bbe",
+      "target": "core/src/main/resources/assets/gregtech/models/item/c_foam_removal_spray.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\c_foam_removal_spray_2.json",
+      "sha256": "6a3340264cb30cabe65cfadd5b2422ad77f158add8bac13d743ae65cfb15d65c",
+      "target": "core/src/main/resources/assets/gregtech/models/item/c_foam_removal_spray_2.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\debug_scanner.json",
+      "sha256": "2a447b8705ba088c3477da8dbc71f77a8c59efe7e61e6a8457d3b65e48d25914",
+      "target": "core/src/main/resources/assets/gregtech/models/item/debug_scanner.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\duct_tape.json",
+      "sha256": "c8369b69d63d86e72499072e2968dba3e12cd6eea74759f6556e05f056798cfc",
+      "target": "core/src/main/resources/assets/gregtech/models/item/duct_tape.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\duct_tape_2.json",
+      "sha256": "a0fe8244d7902c83b8f45ed578995eda8e436f3d7c22b415589811ba5c44431e",
+      "target": "core/src/main/resources/assets/gregtech/models/item/duct_tape_2.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\dusty_guide_book.json",
+      "sha256": "54a8923e03ed7ca52a339377de391405c37308793b1b915b3565662f5546c501",
+      "target": "core/src/main/resources/assets/gregtech/models/item/dusty_guide_book.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\dusty_material_dictionary.json",
+      "sha256": "c0514c370161b3cf3c7cc7e22fd5e13bff57db36a3a1cda9bd2978c2f9e50529",
+      "target": "core/src/main/resources/assets/gregtech/models/item/dusty_material_dictionary.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\electrometer.json",
+      "sha256": "3739d2265fc0f41f9429c7dbfd5a17b6e1d4f60e218432f8e7c4334e85024647",
+      "target": "core/src/main/resources/assets/gregtech/models/item/electrometer.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\empty_food_can.json",
+      "sha256": "8d580de65e358b08a2cb09ba62ee5c3ae19d7152f650c7fa7a1ab64696bf2861",
+      "target": "core/src/main/resources/assets/gregtech/models/item/empty_food_can.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\empty_spray_can.json",
+      "sha256": "1fecdc7318a06220f7216212b6d4b4f4e59d3ab394889ef543be6d8265743b85",
+      "target": "core/src/main/resources/assets/gregtech/models/item/empty_spray_can.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\fire_extinguisher_co2.json",
+      "sha256": "64b05e293236c53484f0daf6d39653bb0a4649be96657953365ef742545be970",
+      "target": "core/src/main/resources/assets/gregtech/models/item/fire_extinguisher_co2.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\fire_extinguisher_co2_2.json",
+      "sha256": "b61d2404177314f54a5a6a6b8c9e105e42b7f27ef9043cb91341a2b31f20210e",
+      "target": "core/src/main/resources/assets/gregtech/models/item/fire_extinguisher_co2_2.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\fire_starter.json",
+      "sha256": "6f012eca101a58607f0b6182cdf5a00fc5195c9619b4cf4179c2bc22702330d5",
+      "target": "core/src/main/resources/assets/gregtech/models/item/fire_starter.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\fire_starter_2.json",
+      "sha256": "a3713bfc7e2cbb4fdc4f593c94b3e7164e7f9b8a91eef1e4783623076c001852",
+      "target": "core/src/main/resources/assets/gregtech/models/item/fire_starter_2.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\gem_pouch.json",
+      "sha256": "f80a155deaa35f06232505b3c022d39418c738276e6cb644fd02435e69ac6ec9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/gem_pouch.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\gold_key.json",
+      "sha256": "a06225a9aab29ea3c3e45bea292eb4cf233711735f9a496c6392b064fc1d9146",
+      "target": "core/src/main/resources/assets/gregtech/models/item/gold_key.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\hardening_spray.json",
+      "sha256": "5469b775f9175e350c7f0bb9bddd6df2657b5e2c227b520df8915712436d7746",
+      "target": "core/src/main/resources/assets/gregtech/models/item/hardening_spray.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\hardening_spray_2.json",
+      "sha256": "37eafdd3c0a55dcf5d1c5d832ef67c419aa129aac2b2ddac9953ac6db9286a27",
+      "target": "core/src/main/resources/assets/gregtech/models/item/hardening_spray_2.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\iron_key.json",
+      "sha256": "12cf33f704d5c97e279122f9b17f553bb64c4b56874010c5d633e178eb3fd160",
+      "target": "core/src/main/resources/assets/gregtech/models/item/iron_key.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\lead_key.json",
+      "sha256": "738ad496178823442cb1a7db7330a876c86cd29ab0b8e53d2b2f582945a344c9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/lead_key.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\lighter.json",
+      "sha256": "781f07be5d420b7fe5bf9ccddb8ed87e8809de28f5ba04f73be6f9b2e631d2e6",
+      "target": "core/src/main/resources/assets/gregtech/models/item/lighter.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\lighter_empty.json",
+      "sha256": "5f24d7f9f882dea1ac93090753a75dbddeb4bc6f41795cfa529c0df04eef603b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/lighter_empty.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\lighter_full.json",
+      "sha256": "56524b24f5b734bc09db6ed3c70d1c8cbdbccbc5d6da79a381d620c7cdf1df35",
+      "target": "core/src/main/resources/assets/gregtech/models/item/lighter_full.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\loot_bottle.json",
+      "sha256": "bd8438eba10c89397a4365ca835442f0b8ead1aeff16d305e878db8e594d6b85",
+      "target": "core/src/main/resources/assets/gregtech/models/item/loot_bottle.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\loot_pouch.json",
+      "sha256": "56249c60cee785a4c29eb3b95e1a9080ff75b9b85d1471cefff9b11cf1ef9d4e",
+      "target": "core/src/main/resources/assets/gregtech/models/item/loot_pouch.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\magic_research_paper_introduction.json",
+      "sha256": "c681fb511681db499c36aa78af09666709a54419f61b742c9ec4f5ce9530618e",
+      "target": "core/src/main/resources/assets/gregtech/models/item/magic_research_paper_introduction.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\magic_research_paper_page_1_8.json",
+      "sha256": "1c15e725b5b61db57afe9876d551c2c76d6f82fc2e9ccf6e52f0df6b3feab18b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/magic_research_paper_page_1_8.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\magic_research_paper_page_2_8.json",
+      "sha256": "6ce7c3f5b197582544ee21098d2a77bd4a98c45aea25c00d9d271569ecc11762",
+      "target": "core/src/main/resources/assets/gregtech/models/item/magic_research_paper_page_2_8.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\magic_research_paper_page_3_8.json",
+      "sha256": "8da1d33ef5dcc98adc0ca92564948f4aa769c32b537b5cb36db9b4852982c2c2",
+      "target": "core/src/main/resources/assets/gregtech/models/item/magic_research_paper_page_3_8.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\magic_research_paper_page_4_8.json",
+      "sha256": "340f75e713859e3768a85db4cdc9411328539b8569440ea921a5fbf8a0b00af5",
+      "target": "core/src/main/resources/assets/gregtech/models/item/magic_research_paper_page_4_8.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\magic_research_paper_page_5_8.json",
+      "sha256": "df5681fec826ee1b8a640b317f0936e5ceeb5e2ac37fc3fa5db3af0886a91d2a",
+      "target": "core/src/main/resources/assets/gregtech/models/item/magic_research_paper_page_5_8.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\magic_research_paper_page_6_8.json",
+      "sha256": "a32fc66b607fc62fd2e98ed098edd59d5542d595308037f235998e9b9f6a1d26",
+      "target": "core/src/main/resources/assets/gregtech/models/item/magic_research_paper_page_6_8.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\magic_research_paper_page_7_8.json",
+      "sha256": "d61fd57c906c0e4f76187e39159c9b617942ed6631ebfe5aebe204d477aa7784",
+      "target": "core/src/main/resources/assets/gregtech/models/item/magic_research_paper_page_7_8.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\magic_research_paper_page_8_8.json",
+      "sha256": "718f6d6ceda855f1c15f74cd40fd6ac80ad5c252f6cdaf26c664a4d31ec8585d",
+      "target": "core/src/main/resources/assets/gregtech/models/item/magic_research_paper_page_8_8.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\many_printed_pages.json",
+      "sha256": "2db9db18b07937b4bca009246f3ed3f65a487890c60f2af794b17ad0f9faef95",
+      "target": "core/src/main/resources/assets/gregtech/models/item/many_printed_pages.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\match.json",
+      "sha256": "680f9df2e1d6c8744409cca815094fa5f81dd3b9354fa35cfbe5bd7860c16c0f",
+      "target": "core/src/main/resources/assets/gregtech/models/item/match.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\match_box.json",
+      "sha256": "a193967caf06d48cdf210944d78085d7b15f613f124130d3b305aa1364232460",
+      "target": "core/src/main/resources/assets/gregtech/models/item/match_box.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\match_box_full.json",
+      "sha256": "87c675572cdbbdb7d5a843a919e223754515fba066256ae33932b0d96af7f299",
+      "target": "core/src/main/resources/assets/gregtech/models/item/match_box_full.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\paint_removal_spray.json",
+      "sha256": "1d68940a5ef89624dbecebe85ad341b1f218a41adfe5a027654e6d7332198f8d",
+      "target": "core/src/main/resources/assets/gregtech/models/item/paint_removal_spray.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\paint_removal_spray_2.json",
+      "sha256": "375519d1f004c11455441dfaf1f83b849ced8089f686691806bcb31084f1b73f",
+      "target": "core/src/main/resources/assets/gregtech/models/item/paint_removal_spray_2.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\plastic_key.json",
+      "sha256": "96c8faa71e084fa54b6ec807a938da185e335cc1c39406350f5e3b8a43ccf066",
+      "target": "core/src/main/resources/assets/gregtech/models/item/plastic_key.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\plastic_lighter.json",
+      "sha256": "18e4a57701f0bf460595f4e74ceb22c540aece20c225b66c7d907fcdcdc228af",
+      "target": "core/src/main/resources/assets/gregtech/models/item/plastic_lighter.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\plastic_lighter_broken.json",
+      "sha256": "0ad37bebd2f85d6696ca7229550ab3b24f006885e1784ee45757f4c4bfd5dc26",
+      "target": "core/src/main/resources/assets/gregtech/models/item/plastic_lighter_broken.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\plastic_lighter_empty.json",
+      "sha256": "94270a33dd72accb9d0bca40926d2dda0d1b5c816eb1113ebbbf4781fcb61d0f",
+      "target": "core/src/main/resources/assets/gregtech/models/item/plastic_lighter_empty.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\plastic_lighter_full.json",
+      "sha256": "a7d79410b13d73d22da29836d5c28ebc0678db522a90eccae9ec0991ef3bbd36",
+      "target": "core/src/main/resources/assets/gregtech/models/item/plastic_lighter_full.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\platinum_key.json",
+      "sha256": "0c4ac38d94c531feabe3606ca49b26b75cd9effd98b5f54375de96cc3fff03c3",
+      "target": "core/src/main/resources/assets/gregtech/models/item/platinum_key.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\portable_cropnalyzer.json",
+      "sha256": "c74e5b5390840b8204cd0bd2aac5f1e10c8c36e4e9e06d9085280c271c1e8da9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/portable_cropnalyzer.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\portable_scanner.json",
+      "sha256": "92e0c548eec3008b7670562ae5579b9e2c4c47dd2e8533258b65e22f2b0898f0",
+      "target": "core/src/main/resources/assets/gregtech/models/item/portable_scanner.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\printed_pages.json",
+      "sha256": "629cfa333210088a017cfe7986bf62a01bde21cf9a6d13210f199d444b15f00f",
+      "target": "core/src/main/resources/assets/gregtech/models/item/printed_pages.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\quicksilver_thermometer.json",
+      "sha256": "f78b92229a86aff90f8a282b4545d01d91a0470a79321349e45c8b47d6c4a540",
+      "target": "core/src/main/resources/assets/gregtech/models/item/quicksilver_thermometer.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\remote_activator.json",
+      "sha256": "f287abdd9f03da180f1ebf82ab829d0d612cc46069dba9d5adbe5d6f76315624",
+      "target": "core/src/main/resources/assets/gregtech/models/item/remote_activator.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\robot_arm_blade_tip.json",
+      "sha256": "ab363550b00c25ad35a481f336cbdb2f3538a2d4474cea2be30efa8d44db77da",
+      "target": "core/src/main/resources/assets/gregtech/models/item/robot_arm_blade_tip.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\robot_arm_chisel_tip.json",
+      "sha256": "ebea2cdad452bc9a0942edbee375b57d22fe9776381232c1b2965971ca6c2355",
+      "target": "core/src/main/resources/assets/gregtech/models/item/robot_arm_chisel_tip.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\robot_arm_cutter_tip.json",
+      "sha256": "45316f463cd75dcacf592c636f00eb4e4dc2710b9092cde5595850fcdcde873d",
+      "target": "core/src/main/resources/assets/gregtech/models/item/robot_arm_cutter_tip.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\robot_arm_drill_tip.json",
+      "sha256": "48c5b70a8aaa1f6352df23c424d0e01bc3cdc8cf353df8d4392d44cbceb054a6",
+      "target": "core/src/main/resources/assets/gregtech/models/item/robot_arm_drill_tip.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\robot_arm_file_tip.json",
+      "sha256": "4db0044024c096c809275d91a98f6e61cd378457cb9a94bb4657aff08948ebac",
+      "target": "core/src/main/resources/assets/gregtech/models/item/robot_arm_file_tip.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\robot_arm_hammer_tip.json",
+      "sha256": "06c849bca50f19236797438ceae74943441ab7a2fc4bf8df3f70e245ffffbf7c",
+      "target": "core/src/main/resources/assets/gregtech/models/item/robot_arm_hammer_tip.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\robot_arm_rubber_hammer_tip.json",
+      "sha256": "a5fe9e346bb7ef7983ab5fce3d02aeea2b10c9f4b224a30b32476e8c507fb75c",
+      "target": "core/src/main/resources/assets/gregtech/models/item/robot_arm_rubber_hammer_tip.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\robot_arm_saw_tip.json",
+      "sha256": "ba992e00cb09e8d941de926e3f689d51f2e3f4e68082884914eddfa6ca78544b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/robot_arm_saw_tip.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\robot_arm_screwdriver_tip.json",
+      "sha256": "ee8c009552b4fc9951c91a4b7255f86bf0e5f60b36f36de7e017e67c87c03eee",
+      "target": "core/src/main/resources/assets/gregtech/models/item/robot_arm_screwdriver_tip.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\robot_arm_wrench_tip.json",
+      "sha256": "e595372d6e64844e36e2f565f9c4bf5cc754c07be0f32366912e5af560b2deef",
+      "target": "core/src/main/resources/assets/gregtech/models/item/robot_arm_wrench_tip.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\seed_pouch.json",
+      "sha256": "fb33ca5d036f3b74e54fdefa0d93e17e9574d92a0af283e2e0d9a7d8e3cfcb9b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/seed_pouch.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\shiny_lighter.json",
+      "sha256": "f3a0fef69d232544145e19620a8271cf1b4806e47e7b38050bd65417c7cb0796",
+      "target": "core/src/main/resources/assets/gregtech/models/item/shiny_lighter.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\shiny_lighter_empty.json",
+      "sha256": "3a86fd1d1460de646c51bebdec552dfdb4dd3a1060f5af54e721828db90c14be",
+      "target": "core/src/main/resources/assets/gregtech/models/item/shiny_lighter_empty.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\shiny_lighter_full.json",
+      "sha256": "e22dcc75218998a61e2e15c0f07ce60f6a97d89864cd32d80645e9dee890d564",
+      "target": "core/src/main/resources/assets/gregtech/models/item/shiny_lighter_full.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\silver_key.json",
+      "sha256": "be5ffb71a2c45156bf2bef0e0aa35cef3103e787477239792b2122f0c13bae46",
+      "target": "core/src/main/resources/assets/gregtech/models/item/silver_key.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\single_use_blade.json",
+      "sha256": "12ce04d111a8974e927daa265c2cd52e3d582fbd2fffaa53743b5046ff7f70a5",
+      "target": "core/src/main/resources/assets/gregtech/models/item/single_use_blade.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\single_use_chisel.json",
+      "sha256": "4a38269c615cf71eeb583f5eed0781193d7ce70f4ccfa649ed4ab840cb6802b1",
+      "target": "core/src/main/resources/assets/gregtech/models/item/single_use_chisel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\single_use_cutter.json",
+      "sha256": "a66c64ee9764959acf90c55478f0aa7bd1b97019dc3d4c775457908f0b26f0ad",
+      "target": "core/src/main/resources/assets/gregtech/models/item/single_use_cutter.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\single_use_drill.json",
+      "sha256": "87d4234ce8554facfe8a51d38c1ca416228e130c110d87e2ca5d3718118bd76c",
+      "target": "core/src/main/resources/assets/gregtech/models/item/single_use_drill.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\single_use_file.json",
+      "sha256": "44ae640aec24544fe29ea2f4a5e32fb0ba3c32315cee1a682ece95bb3721ea7a",
+      "target": "core/src/main/resources/assets/gregtech/models/item/single_use_file.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\single_use_hammer.json",
+      "sha256": "63e02be2613108c0e8321da9463fb612d8f0625c0f9c60ca2a5725365104e1a2",
+      "target": "core/src/main/resources/assets/gregtech/models/item/single_use_hammer.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\single_use_rubber_hammer.json",
+      "sha256": "7ba80501e16dcc3b08bfbcb71f6ffe2cf8bd72c8df3629ebdbdebe114632980b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/single_use_rubber_hammer.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\single_use_saw.json",
+      "sha256": "cd0f0927e2e24c65f807808dfe7227a9bb8c04ad5c3a2ee954ac3a7fe5bef292",
+      "target": "core/src/main/resources/assets/gregtech/models/item/single_use_saw.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\single_use_screwdriver.json",
+      "sha256": "e87b3a3cf5e6c91497245f4c94b5f23adf89f19a79273a662def97e122e50494",
+      "target": "core/src/main/resources/assets/gregtech/models/item/single_use_screwdriver.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\single_use_wrench.json",
+      "sha256": "535a49415c4a756d1729a89e1ce3d1c12d89d3d8895b45152b719576bccf3ef5",
+      "target": "core/src/main/resources/assets/gregtech/models/item/single_use_wrench.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\stone_generator_module.json",
+      "sha256": "d50ddd0c654824e266e9dd8ac03e2f860ce3b2c48c04bb034f04ffd97449b484",
+      "target": "core/src/main/resources/assets/gregtech/models/item/stone_generator_module.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\tachometer.json",
+      "sha256": "1c529cf17191bc2cca9e30d78e3652eff90114d5a999792014801c2aeff0c268",
+      "target": "core/src/main/resources/assets/gregtech/models/item/tachometer.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\tape.json",
+      "sha256": "7d380845c728b0553d00cfd150b34948f9eb1e4afb4ca2d75169fe1a08c7971a",
+      "target": "core/src/main/resources/assets/gregtech/models/item/tape.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\tape_2.json",
+      "sha256": "04df9c647116d77e47348813b32efd4199802eda57606ec5319c535674f5e3a4",
+      "target": "core/src/main/resources/assets/gregtech/models/item/tape_2.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\tin_key.json",
+      "sha256": "444da6cf27fffbf07ff9303f3954990bb3710e11a52548876354d0bee04459b6",
+      "target": "core/src/main/resources/assets/gregtech/models/item/tin_key.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\wood_pellet.json",
+      "sha256": "4003ca4b467915c45818d2c3bf8c114890bbebab55741c9a7b593820bda07300",
+      "target": "core/src/main/resources/assets/gregtech/models/item/wood_pellet.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\worldgen_debug_wand.json",
+      "sha256": "d25f6f332dc1bc1b6b45de3c34c3e5814962b46afb75cb6539ff75bacd5b15ea",
+      "target": "core/src/main/resources/assets/gregtech/models/item/worldgen_debug_wand.json"
+    }
+  ],
+  "comparisonSources": [
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\item\\spraycan\\GTSprayCanItem.java",
+      "sha256": "322c7b4465a3ca7a9a7580a6cb43ae26b78fa000b32e6aaf5893ac4120819bec"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\item\\foamspray\\GT6FoamSprayItem.java",
+      "sha256": "12ad0332f66aa272531e6e3e1e2e7690f83a507238285e0d558e4a7e2ffc4656"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\item\\GT6LootBookItem.java",
+      "sha256": "a98b44e6a2d2619faea84834f09fb3563b5ddb5d3dff7ef0a0026c47f83558c2"
+    }
+  ],
+  "choices": [
+    "Replace the native filtered MultiItem subset with the complete1278 original GTMultiItemsGen rows plus3 hand-registered original loot-book/dictionary/bottle IDs, using the existing ITEMS registry. Reuse GeigerCounterItem, RemoteActivatorItem, original food/cans/bottles and bee identities; all remaining original entries become MultiBehaviorItem over existing TechItem. No parallel metadata/material/recipe registry is introduced.",
+    "Port complete Source1 BehaviorDuctTape, BehaviorLighter, BehaviorScanner, four existing spray effects (foam hardener/remover, paint remover, extinguisher), chunk eraser and worldgen-debugger. One45-row ItemBehaviorCatalog is actually consumed by both platform dispatch tables (44 non-null behavior owners, one empty can). ConsumableRules is actually consumed by both counter spending, ignition-unit conversion and scanner blast text. Existing builder/plunger/flint/data/remote adapters retain their owners; ItemBehaviors delegates reach/permission/ignition to ManualToolBehaviorAccess.",
+    "Use native immutable CUSTOM_DATA through existing CoverStackData for gt.remaining/gt.lighter; transmuteCopy retains additional components when switching original full/used/empty item identities. Connect MassStorageBlockEntity to BehaviorDuctTape.Tapeable so the existing full packing implementation is actually reachable. Keep whole-stack refusal and original tape costs/quality/obstruction/permissions.",
+    "Native lighters preserve complete match/matchbox/invar/platinum/plastic/fire-starter/bark chances, fuel capacity, failed-roll consumption, Creeper ignition and creative behavior. Four sprays preserve complete original permission/stack/count/remaining rules, wet-foam dry/removal, stained glass/pane/terracotta/paintable decolorization, reachable extinguishable targets and budgeted27-position fire/mob query. Reuse existing Extinguishable implemented by dynamite.",
+    "Native full scanner reports original block/name/state/registry/class/harvest/blast/beacon, machine progress/control and energy IO/capacitor and direct IFluidHandler information with original costs. Full debug sweeps retain loaded-chunk/build-height clamps, original1..249 column and ore retention; these are implemented but not executed by this integration run.",
+    "Correct original Source1 MultiItem hand adapter on both platforms: save a returned consumable replacement even when acted=false. Preparing a full can or emptying a depleted one can change its stack without changing the clicked block; the old caller discarded that returned state. Apply same rule to entity clicks. Preserve eating fallback by calling super.use when no air behavior acts.",
+    "Port all7 original loot-bag identities over existing GTLootTables: saplings,seeds,three gem rolls,misc,books,material dictionaries and bottles; retain drops/one-bag spend/creative/sound and source tooltip. Native RadawayItem now uses original always-edible zero food and-50 radiation, empty wax pill retains original always-edible zero food. Both compiler errors were renamed native FoodProperties.alwaysEdible API, no semantic placeholder.",
+    "Compare brokestar GTSprayCanItem: same gt.remaining floor and10 block/50 entity costs, but deliberately collapses the full/used intermediate to a single item, adds16 paint dyes and sheep/tamed-wolf coloring plus grass/paintable routing. Its GT6FoamSprayItem adds owned/unowned colored placement and modes. Retain Source1 full/used/empty identities and existing foam root for this batch; do not pretend the broader colored/owned spray features were absorbed. No analogous masson behavior class was identified by filename inventory; this does not establish absence of every item behavior.",
+    "Move139 original item model records into shared core resources, reusing existing shared texture/model dependencies. Existing native multi_items creative page already iterates GTMultiItems.all and now exposes the full1281 items. No extra page/registry was required. A server startup does not verify client models or creative navigation."
+  ],
+  "knownGaps": [
+    "Actual tape packing/consumable swaps/ignition/scan/spray/loot/food interactions, survival reachability, creative page and models remain unverified. Full original item identity registration does not make every display-only entry functional. Remaining donor colored/owned sprays and other source-unique integrations are pending.",
+    "Inherited scanner charges a reported static lastScanCost rather than actual battery consumption and reads direct IFluidHandler only, not every exposed side capability. It lacks a uniform client-only skip; full scan side effects/cost thread semantics remain unverified. Namespace dispatch is by item path, as in Source1.",
+    "Inherited spray spending can pay a whole10 cost for some harden/remove targets with fewer than10 remaining; external hook cost and area permission semantics are unchanged. Tape packing also retains source minimum100 cost versus stored item count. Budget/conservation/permissions are not newly certified by this compile/startup.",
+    "Source1 lighter entity handler has no broad server-side guard and its single-use match spec has no used item, so Creeper behavior differs from held full lighters. Debug sweeps preserve original lack of player edit gate and1..249 legacy y range, not a blanket full-height modern world wipe; no debug tool is executed during this run.",
+    "Forge runtime, full gameplay/client world/render, independent-process machine save reload, old-world compatibility and current production jars/release remain pending. Original licenses/authors/notices/history preserved, publication authorization unresolved. Full goal active; D010 no new test fixtures or per-item launches."
+  ]
+}

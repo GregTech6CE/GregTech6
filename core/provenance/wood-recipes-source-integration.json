@@ -1,0 +1,129 @@
+{
+  "source": "saltnya original wood dictionary/wood processing; author/notices/licenses/history retained",
+  "files": [
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/content/recipe/VanillaWoodProcessingRecipes.java",
+      "sourceSha256": "4c03b385c0945bc7dee1f28869fa3932c61c8a306c944ee435e49675c760a4dd",
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/VanillaWoodProcessingRecipes.java",
+      "previousTargetSha256": null,
+      "sha256": "d6f66dbd515f63ca6781714ee4ca448c56749ba088ae1b82fb487b7104139bcc"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/content/recipe/RegisteredWoodSurvivalRecipes.java",
+      "sourceSha256": "c7f7e007628da630b9f55fe01668100d215c261156d6de9d245b76a6ed0148fa",
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/RegisteredWoodSurvivalRecipes.java",
+      "previousTargetSha256": null,
+      "sha256": "691030079cb895d4223cd4f494d3e7b069b6b2940308bc259dafc4050d747b87"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/content/recipe/TreatedWoodRecipes.java",
+      "sourceSha256": "507b1c985074a368ffbb1c1b36ddcd8092ade9710338adc310aaf1da4a10bec0",
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/TreatedWoodRecipes.java",
+      "previousTargetSha256": null,
+      "sha256": "507b1c985074a368ffbb1c1b36ddcd8092ade9710338adc310aaf1da4a10bec0"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/block/wood/WoodSaplingBlock.java",
+      "sourceSha256": "a62dd8c6bfa8aeb9bb1752f996628db410244cd16f3e4477a3168e982d5db690",
+      "target": "src/main/java/com/gregtech/gregtech/block/wood/WoodSaplingBlock.java",
+      "previousTargetSha256": "a62dd8c6bfa8aeb9bb1752f996628db410244cd16f3e4477a3168e982d5db690",
+      "sha256": "b4cc755eeffaf63acdf3a07a836bf27675ee9a3e4ca48d139c089d2f3e25ddb8"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/block/wood/WoodSaplingBlock.java",
+      "sourceSha256": "a62dd8c6bfa8aeb9bb1752f996628db410244cd16f3e4477a3168e982d5db690",
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/wood/WoodSaplingBlock.java",
+      "previousTargetSha256": "c3b89d1f41329628a818508fe54165f7583ed24dff8c407451d2f2a5f79937d7",
+      "sha256": "0609c3379ea17b58b5afb2f1ca7ad1244c895d03e3918b5f562a11720d493509"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/loaders/Loader_WoodCraftingRecipes.java",
+      "sourceSha256": "80d9ce96f88941b4e308b0bf4ef41d93b707bceb3aebb5fc63f585ebd92e2366",
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/loaders/Loader_WoodCraftingRecipes.java",
+      "previousTargetSha256": null,
+      "sha256": "d354c91415e0984b424d5e3a03761ba156684d636f58a4ac8f39491bfa22d66a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/loaders/Loader_WoodCraftingRecipes.java",
+      "sourceSha256": "80d9ce96f88941b4e308b0bf4ef41d93b707bceb3aebb5fc63f585ebd92e2366",
+      "target": "core/src/main/java/com/gregtech/gregtech/content/recipe/TreatedWoodCraftingRows.java",
+      "previousTargetSha256": null,
+      "sha256": "e915907092155b6688a88d86067a268165cc5755805576785315dc0c3773ed6f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/loaders/Loader_WoodCraftingRecipes.java",
+      "sourceSha256": "80d9ce96f88941b4e308b0bf4ef41d93b707bceb3aebb5fc63f585ebd92e2366",
+      "target": "src/main/java/com/gregtech/gregtech/loaders/Loader_WoodCraftingRecipes.java",
+      "previousTargetSha256": "80d9ce96f88941b4e308b0bf4ef41d93b707bceb3aebb5fc63f585ebd92e2366",
+      "sha256": "5342eadbc5a7b124aae69750361dff0c12a0abaf565e410d2e9fe9174fb7361d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/loaders/Loader_WoodCraftingRecipes.java",
+      "sourceSha256": "80d9ce96f88941b4e308b0bf4ef41d93b707bceb3aebb5fc63f585ebd92e2366",
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/data/WoodCraftingRecipePack.java",
+      "previousTargetSha256": null,
+      "sha256": "2a74dea0d6f0ee0c3ff056e25d312c1e8d58f9a7b238b05389ded9ab965a8504"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/data/gregtech/recipes/wood/slab_bluespruce.json",
+      "sourceSha256": "0cb6af92b0005a442c19dfbd4ed7a3081183297ca6eca072c10cc8b944bec03f",
+      "target": "neoforge/src/main/resources/data/gregtech/recipe/wood/slab_bluespruce.json",
+      "previousTargetSha256": null,
+      "sha256": "743eda31fcf2aeebb778c2d4495801bdffae462605066ffc2c60be56facd37de"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/data/MaterialTagPack.java",
+      "sourceSha256": "9f9e832f5ffb55c5362396a5898639f8650ef287cc30eca4ea5b073730d7f851",
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/data/MaterialTagPack.java",
+      "previousTargetSha256": "7a69e57da02a8000279a97deb81594f5529e8e5084cb7002049b42d1b3e6dda9",
+      "sha256": "b8ad79e74a3c43342b862b70c134e83ccc5302ce92c47a744b72100f7afa020f",
+      "adoption": "Restore original planks/beam classification now that native wood classes exist"
+    }
+  ],
+  "resources": [
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/data/gregtech/tags/items/saplings.json",
+      "sourceSha256": "ffa5ce5b2eb8af42728d9777513d4e77c016a71f658a3c140f6e634efc8d85ad",
+      "target": "neoforge/src/main/resources/data/gregtech/tags/item/saplings.json",
+      "previousTargetSha256": null,
+      "sha256": "f5d65ba3981d45a1a984494ecb9a3ec53878bc0dd7542581c13790a79113a8b9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/data/minecraft/tags/blocks/leaves.json",
+      "sourceSha256": "a3f462e135fa593f7567fdc2cf36a0247856813d5b4349ae046dc90a60592280",
+      "target": "neoforge/src/main/resources/data/minecraft/tags/block/leaves.json",
+      "previousTargetSha256": null,
+      "sha256": "a3f462e135fa593f7567fdc2cf36a0247856813d5b4349ae046dc90a60592280"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/data/minecraft/tags/blocks/logs.json",
+      "sourceSha256": "8720b43318956c4a3db83f10b54574dd2443737052fb016c3c6932909d816499",
+      "target": "neoforge/src/main/resources/data/minecraft/tags/block/logs.json",
+      "previousTargetSha256": null,
+      "sha256": "8720b43318956c4a3db83f10b54574dd2443737052fb016c3c6932909d816499"
+    }
+  ],
+  "adoption": "Shared original crafting table and treated-wood patterns, with native reloadable codecs and the same material/tool identity. Original vanilla/registered/treated machine processing loaders adapted in baseline relative order. brokestar coconut sand substrate rule adopted via shared TreeSpeciesRules in both versions. No invented cinnamonwood rows.",
+  "validation": "Corrected core/Neo/Forge grouped compilation PASS 28s; necessary native short startup PASS 4m46s with 71 crafting and 844 processing rows. Recorded nonblocking sapling tag gap repaired after startup; follow-up native compilation PASS. Actual wood gameplay/rendering/reload/old saves/jars unverified. See docs/integration/verification/p3-wood-trees-compile.json and p3-neoforge-wood-trees-startup.json. D010: no new subsystem fixture.",
+  "deferredOptionalSaplingReferences": [
+    "gregtech:sapling_large_bluemahoe",
+    "gregtech:sapling_large_bluespruce",
+    "gregtech:sapling_large_cinnamon",
+    "gregtech:sapling_large_coconut",
+    "gregtech:sapling_large_hazel",
+    "gregtech:sapling_large_maple",
+    "gregtech:sapling_large_rainbowood",
+    "gregtech:sapling_large_rubber",
+    "gregtech:sapling_large_willow",
+    "gregtech:sapling_small_bluemahoe",
+    "gregtech:sapling_small_bluespruce",
+    "gregtech:sapling_small_cinnamon",
+    "gregtech:sapling_small_coconut",
+    "gregtech:sapling_small_hazel",
+    "gregtech:sapling_small_maple",
+    "gregtech:sapling_small_rainbowood",
+    "gregtech:sapling_small_rubber",
+    "gregtech:sapling_small_willow"
+  ],
+  "deferredReason": "Unported large/small plant variants stay optional during staged migration; explicitly include all 12 original wood saplings. Missing plant systems remain incomplete."
+}

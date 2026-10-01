@@ -1,0 +1,268 @@
+{
+  "source": "saltnya",
+  "snapshot": "import/saltnya-snapshot",
+  "status": "unverified rapid source integration; no compile/test/client/server",
+  "scope": "Whole MC-free machine/engine/tank/pipe/hopper specifications, piston/steam state, bulk storage, sensors, batteries/magnets, tool geometry, food/book/recipe data. Neo uses same classes. This is shared source availability, not full Neo block/machine registration.",
+  "files": [
+    {
+      "file": "src/main/java/com/gregtech/gregtech/api/fluid/WaterMixinStatus.java",
+      "sha256": "aa0e2892409cdab9a3bfb16b8554a63fcfafeb77720fcdc9f242b6879c130103",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/api/inventory/BulkStorageState.java",
+      "sha256": "01e772c4e64bc9e33d506a2d9fa24279717ce0ad95e82c7c6da8f3fdfa99ec20",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/api/machine/BoilerSpec.java",
+      "sha256": "6e3a285681857361e7a38119a70cf79e01c67424de874f7480ee2ab41d0c9615",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/api/machine/BurningBoxFuelType.java",
+      "sha256": "c47aa27b343b9bb5f96aca8dd4e97931a48a6a0982cd49f73cec90e604961556",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/api/machine/DieselEngineSpec.java",
+      "sha256": "23bba0522b5f6aaddf6faaabf08417e74373226832e9d2fb6891cecaf4a44012",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/api/machine/ElectricEngineSpec.java",
+      "sha256": "4508b03c37b661cb9ebffeac61a3f9f413747f0184a44cd2ec432820467dd58d",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/api/machine/EngineType.java",
+      "sha256": "1dc3f51378370c39ec7d02716002adbbc73652e521703f1639796c235ef1dfab",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/api/machine/FluxEngineSpec.java",
+      "sha256": "88dd12d475aaf798368bf0857e92fbef462e5203eb22a59d50e234f7f814edd5",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/api/machine/HopperSpec.java",
+      "sha256": "5b8aa2898c53c48e3c30395ad0d642cd26271093eed9ae40e1a58e91302f29b8",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/api/machine/ItemPipeSpec.java",
+      "sha256": "578036dd89a7880cfedc9fbe446478870fd75c815d83c765420578ddff4c8450",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/api/machine/PipeSpec.java",
+      "sha256": "5712dd828b9a30cbc91c3b033d1760528da3056f490252131f6adffb9c9a6ab5",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/api/machine/PistonEngineState.java",
+      "sha256": "bd15892eedc1013ed9035e24903f68d8c71a7f93082f7458f9297e78ca7e87ad",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/api/machine/PumpSpec.java",
+      "sha256": "a6d1e0e8eea04fd56fb58febde6c697bf8bd74dd967e4411a49815f8916e6917",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/api/machine/RotationEngineSpec.java",
+      "sha256": "60ce162edb7c8e9369698b5e7a334b0fda5de99efbf3ee62523a184bf127a8e3",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/api/machine/SteamEngineData.java",
+      "sha256": "30ba59a3101fd2f5f35c669c970b824ed9fda86e2a3609cea691dce7504a6971",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/api/machine/SteamEngineSpec.java",
+      "sha256": "7749a10651b2dcdcaa38702ad2857b79479c1d196d6991321ff52b1387862c00",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/api/machine/StrongSteamEngineSpec.java",
+      "sha256": "f24b01ee3401973080a0593ea8ffbafd7a5801818efad2117545dec20645813c",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/api/machine/TankSpec.java",
+      "sha256": "a68082c4a9cd7cb293a517f84144be9728480ac8da7efe480204c1ce947596ee",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/api/multiblock/StructureController.java",
+      "sha256": "f5fd88157da470bc4852c83db2bd741b70380693622324cbff2919b04bf23522",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/api/sensor/SensorAverage.java",
+      "sha256": "a13468696ee6d2578eeec9b53afdaf953b2dc3b65047e26c86a5b396359b0eff",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/api/sensor/SensorControl.java",
+      "sha256": "25e69a1662b39e7817952436a611fe6092bceeef3309b41e1e940b075baf937a",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/api/sensor/SensorMeasurements.java",
+      "sha256": "c98d7214c47161f39922252ba89e2c0ce6fe75172fa404966f3fc31d5ffaad2d",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/api/sensor/SixCellDisplay.java",
+      "sha256": "2249b6924dcf19076859123f1335631ae2173a2347914f843564d5b099e25629",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/client/BoundedCache.java",
+      "sha256": "2e290bbe56a0969bc2451122d14122aef96cad9cc69d3124c8dec387327dbc38",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/content/book/GTBooksGen.java",
+      "sha256": "351eba38a46ff1d49b5cb5ab9888935432b60fea70f7990c7929f92ab2aad723",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/content/bumble/GTBumbleSpecies.java",
+      "sha256": "adc83b74e352fb863c48580113557bb853ed1c2bfcccc59ce55f8b30e3347755",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/content/energy/BatteryBoxDefinitions.java",
+      "sha256": "2b23a695a1896b1e7d1a595811c086de57014bf0e1bd508c1318c500843afcaa",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/content/energy/ChemicalBatterySpec.java",
+      "sha256": "3d7fcf7ccca6b950cdd9132796618b2f9ba654cf6c2d0a8aa6af1f022ab76bc5",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/content/energy/EnergyNodeDefinitions.java",
+      "sha256": "562b6c384bf19108adc37ba2651e1b85591d55e2ce84a47e700846b73945fdce",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/content/energy/LaserSpec.java",
+      "sha256": "748508b7f8bd2e6a9efe08ced4ff54986856200b5d2183445612401be03b4f4d",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/content/energy/MagnetMachineDefinitions.java",
+      "sha256": "e9ac874ca6a59d1808c57ced89f600bcf151e16f2ac968e9ffc8ed0707ed4a97",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/content/food/GTBottles.java",
+      "sha256": "1093540b4d788fa7734d47a44f7f70b1ff904d99c0a836b4d5c20eaa89698621",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/content/logistics/ExtenderSpec.java",
+      "sha256": "1e908fec5b61c94526fea22cedb338df5c613ca32dbc374854a046d949bffbb8",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/content/recipe/SawingCoolants.java",
+      "sha256": "1807efdc3fac8663cad3d3d1a59b8843c109a0907c5b8a94e21dfcf956e207e8",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/content/tool/AnvilMaterialCatalog.java",
+      "sha256": "690478530ad449ba03b8bf79d23da16365f2f43d8bc7980da44950122791d96b",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/content/tool/FluidAttachmentSpec.java",
+      "sha256": "fe62022703b0aeec4af35ac7da8c1a99920f170f6d320843d7300a83399d4284",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/content/tool/OriginalToolShapes.java",
+      "sha256": "486d271846819dff5318f2a2f63eb23df5328641a98fd6decfcb2e9feb412805",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/content/tool/PortableContainerShapes.java",
+      "sha256": "ae07ff8aa9e64065cbea9aa6ccbfeff5fef1ce04aa76a81dc21a7901a9f2b583",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/data/AspectReferences.java",
+      "sha256": "ff4e910685cd8d736d2f0c7a56e8432a21c093e762c2a28925356d2c075bab56",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/data/BasicMachineCraftingRecipes.java",
+      "sha256": "16b14a7b437ac94f2b29c12d329171b4a2ec3263ce5ebf9bcbd8bf209bfd2a77",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/data/BasicMachineOriginalParams.java",
+      "sha256": "9359d0cc3a3c1c0e678a1be2105ad59d3fce51260abe2ff61624453a80b70843",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/data/ItemReferences.java",
+      "sha256": "b0b2b51e157a4a300fb84d17dbc524a01db145377b96df0e399d050b9ba3d92e",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/data/MultiblockCraftingRecipes.java",
+      "sha256": "1a3eb7306538db91a673977efa025702609100705a4710db84cc95bc63b0d726",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/data/OreDictionaryNames.java",
+      "sha256": "277ac788093f25e6b2d5bdf73e15564881a36a4bfcb9f3829cd5ed677dde2b9b",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/data/TranslationKeys.java",
+      "sha256": "900d2a33f9de6bcd79702343b82de199bbfe1d607f8e0662043a1f12da083bda",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/data/generated/GT6MultiblockIds.java",
+      "sha256": "4188aa09ec74423ddd8f9c4b75fdf3786d0d9816436dbbdf6619fb896f6d789a",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/data/generated/GTBottlesGen.java",
+      "sha256": "1eb3286b94c044cfa237350cd7f15332cf917f0c9957feb2756bb6fa7ea10062",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/data/generated/GTSensorRecipesGen.java",
+      "sha256": "1c55037c890720986163f4d3e0bee5545d34eca122c19948d900a4d9434aa006",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/data/generated/MaterialWorkability.java",
+      "sha256": "5d4bbccfff2910d36faba5f199c4bc704d64f83221a796e62b175fa72067f651",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/data/generated/RecyclablePrefixes.java",
+      "sha256": "354652f0b1916ce0b89207efd8c9ba3d9c12e21319e43d4a5d34e55a8b981b0a",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/jei/PreviewCamera.java",
+      "sha256": "b997de6304d2c184adb002ba2ec772c1e9db3a68447adebf836bc40d4ae219c3",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    },
+    {
+      "file": "src/main/java/com/gregtech/gregtech/util/GTCodeFormat.java",
+      "sha256": "b68060db82fc14f08319385e85936922506e5f6cfaef8de4aa1910a05a03e66d",
+      "change": "byte-identical move; existing Forge call sites retain package/class name"
+    }
+  ]
+}

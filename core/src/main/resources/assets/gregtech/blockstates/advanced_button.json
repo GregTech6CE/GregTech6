@@ -1,0 +1,124 @@
+{
+  "variants": {
+    "active=false,facing=south,lit=false": {
+      "model": "gregtech:block/tool/advanced_button_off",
+      "x": 0,
+      "y": 0
+    },
+    "active=false,facing=south,lit=true": {
+      "model": "gregtech:block/tool/advanced_button_on",
+      "x": 0,
+      "y": 0
+    },
+    "active=true,facing=south,lit=false": {
+      "model": "gregtech:block/tool/advanced_button_off",
+      "x": 0,
+      "y": 0
+    },
+    "active=true,facing=south,lit=true": {
+      "model": "gregtech:block/tool/advanced_button_on",
+      "x": 0,
+      "y": 0
+    },
+    "active=false,facing=north,lit=false": {
+      "model": "gregtech:block/tool/advanced_button_off",
+      "x": 0,
+      "y": 180
+    },
+    "active=false,facing=north,lit=true": {
+      "model": "gregtech:block/tool/advanced_button_on",
+      "x": 0,
+      "y": 180
+    },
+    "active=true,facing=north,lit=false": {
+      "model": "gregtech:block/tool/advanced_button_off",
+      "x": 0,
+      "y": 180
+    },
+    "active=true,facing=north,lit=true": {
+      "model": "gregtech:block/tool/advanced_button_on",
+      "x": 0,
+      "y": 180
+    },
+    "active=false,facing=east,lit=false": {
+      "model": "gregtech:block/tool/advanced_button_off",
+      "x": 0,
+      "y": 270
+    },
+    "active=false,facing=east,lit=true": {
+      "model": "gregtech:block/tool/advanced_button_on",
+      "x": 0,
+      "y": 270
+    },
+    "active=true,facing=east,lit=false": {
+      "model": "gregtech:block/tool/advanced_button_off",
+      "x": 0,
+      "y": 270
+    },
+    "active=true,facing=east,lit=true": {
+      "model": "gregtech:block/tool/advanced_button_on",
+      "x": 0,
+      "y": 270
+    },
+    "active=false,facing=west,lit=false": {
+      "model": "gregtech:block/tool/advanced_button_off",
+      "x": 0,
+      "y": 90
+    },
+    "active=false,facing=west,lit=true": {
+      "model": "gregtech:block/tool/advanced_button_on",
+      "x": 0,
+      "y": 90
+    },
+    "active=true,facing=west,lit=false": {
+      "model": "gregtech:block/tool/advanced_button_off",
+      "x": 0,
+      "y": 90
+    },
+    "active=true,facing=west,lit=true": {
+      "model": "gregtech:block/tool/advanced_button_on",
+      "x": 0,
+      "y": 90
+    },
+    "active=false,facing=up,lit=false": {
+      "model": "gregtech:block/tool/advanced_button_off",
+      "x": 90,
+      "y": 0
+    },
+    "active=false,facing=up,lit=true": {
+      "model": "gregtech:block/tool/advanced_button_on",
+      "x": 90,
+      "y": 0
+    },
+    "active=true,facing=up,lit=false": {
+      "model": "gregtech:block/tool/advanced_button_off",
+      "x": 90,
+      "y": 0
+    },
+    "active=true,facing=up,lit=true": {
+      "model": "gregtech:block/tool/advanced_button_on",
+      "x": 90,
+      "y": 0
+    },
+    "active=false,facing=down,lit=false": {
+      "model": "gregtech:block/tool/advanced_button_off",
+      "x": 270,
+      "y": 0
+    },
+    "active=false,facing=down,lit=true": {
+      "model": "gregtech:block/tool/advanced_button_on",
+      "x": 270,
+      "y": 0
+    },
+    "active=true,facing=down,lit=false": {
+      "model": "gregtech:block/tool/advanced_button_off",
+      "x": 270,
+      "y": 0
+    },
+    "active=true,facing=down,lit=true": {
+      "model": "gregtech:block/tool/advanced_button_on",
+      "x": 270,
+      "y": 0
+    }
+  }
+}

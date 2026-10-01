@@ -1,7 +1,9 @@
 {
   "source": "brokestar233",
   "source_directory": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main",
-  "source_original_history": "No .git in provided source snapshot; no original commit authors reconstructed",
+  "source_original_history": "Provided archive has no .git; original public Git history and authors were recovered under upstream-brokestar refs. Exact supplied snapshot is tagged source/brokestar233-snapshot.",
+  "source_repository": "https://github.com/Meow404club/gregtech6.git",
+  "source_commit": "3118acbf83a84d05fa37d57af1705cf00e423ca9",
   "source_file": "src/main/java/gregapi/util/CruciblePhysics.java",
   "source_sha256": "a4ce0a84fd002d4a20cbb4d4ebdd0a59f25a0055b705c6326a237fdebb93afc6",
   "source_lines": {

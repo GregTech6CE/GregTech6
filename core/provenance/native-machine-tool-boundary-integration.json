@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-01",
+  "authors": [
+    "saltnya",
+    "original GregTech6 contributors",
+    "existing integration contributors"
+  ],
+  "license": "Original authors/history/notices/authorization retained; donors read-only.",
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/machine/GTFacingMachineBlock.java",
+      "sha256": "ed33e024bca44b49acdb291a066e4e10722770b6b1985de811640742a020d968",
+      "priorNativeSha256": "2745983a1c9218cc90d3128c3d1fadb712cb390823e0f509c0014ac332b451f0",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/block/machine/GTFacingMachineBlock.java",
+      "currentForgeReferenceSha256": "31b5cc3fea35b20938ee7acac528a20e80a4abce14b6b760bafc6921476dc572",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\GTFacingMachineBlock.java",
+      "sourceSha256": "31b5cc3fea35b20938ee7acac528a20e80a4abce14b6b760bafc6921476dc572"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/machine/BasicMachineBlock.java",
+      "sha256": "dc390aa1a5616ea58bd7d3b6c0541542b80d2bbdbf4bd85ca18e8ad39b075533",
+      "priorNativeSha256": "e743bdf604dbefcc526f8354eab9919ca60cf542c1b2a084a27abeacc968e99d",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/block/machine/BasicMachineBlock.java",
+      "currentForgeReferenceSha256": "e2261d48dc5132e7d0d15e6cfc8b69af23719fffd9f6a4dea0a63af693c355c8",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\BasicMachineBlock.java",
+      "sourceSha256": "e2261d48dc5132e7d0d15e6cfc8b69af23719fffd9f6a4dea0a63af693c355c8"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/inventory/MassStorageBlock.java",
+      "sha256": "9449f4a5116089de2c4a752ca987f99c0ef66eba6569e04412c1a433e459340b",
+      "priorNativeSha256": "0f982dcbb969beedc941fe5cf97d2d0f4cb4ee0185fadb8dd7a2f35bdf60d93f",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/block/inventory/MassStorageBlock.java",
+      "currentForgeReferenceSha256": "5f7982ff3c3093b208047429b85d2dfe416b08f910e354ffb9548e3c49aa4f55",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\inventory\\MassStorageBlock.java",
+      "sourceSha256": "5f7982ff3c3093b208047429b85d2dfe416b08f910e354ffb9548e3c49aa4f55"
+    }
+  ],
+  "policy": "D011 Forge baseline parity; D010 grouped compile/jar only, no new fixture or repeated game startup.",
+  "scope": "Original horizontal machine shell tool operation/harvest policy plus Native strict component identity and complete original mass-storage tool wear/status/pick/tooltip boundary. Core/resources/Forge unchanged.",
+  "nativeApiEvidence": {
+    "artifact": "neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+    "entry": "net/minecraft/core/component/DataComponents.java",
+    "entrySha256": "933a4881379b8bf9a86e42bceda93d846a58d8ce9939e46dc95a70f91cab1998",
+    "observedContract": "BLOCK_ENTITY_DATA persistent codec is CustomData.CODEC_WITH_ID; actual registered entity type id added to Native basic-machine drop data."
+  },
+  "notProven": "Actual tool use/harvest/permissions/overlay, item encoding and placement, mass-storage pick/quantity/fractions/drop conservation, client/reload, production jars and saved-world restart/old saves."
+}

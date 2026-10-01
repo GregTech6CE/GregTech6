@@ -1,0 +1,1134 @@
+{
+  "authors": [
+    "saltnya",
+    "brokestar233",
+    "Lorbineitte Masson",
+    "original GregTech 6 contributors"
+  ],
+  "license": "Original notices/history preserved; local development only, no third-party authorization changed",
+  "counts": {
+    "constructionBlocks": 7,
+    "coloredStates": 64,
+    "bars": 7,
+    "barMaskStates": 112,
+    "spikeFamilies": 5,
+    "resources": 181,
+    "javaRecords": 28
+  },
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "sha256": "9320626d75baaa3f63caa83008788684b04f0bcea7c5f4ad12ac55c4af58be6c",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "sha256": "2059a0fc1b8b934c16fd3f7888fe55786a8d340e0ad10125fea217d38d9da762",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTBlockEntities.java",
+      "sourceSha256": "027081bae34480826956a74d65a24aa7f4ef29d4be4a4687046793a10d9df62f"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/block/misc/AsphaltBlock.java",
+      "sha256": "2001c4269a881c57ba44b70172633a8aeef3edac185a312ea4bae35e71d65c53",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\AsphaltBlock.java",
+      "sourceSha256": "dc1ed5d53c389b2b90fb0da87c81c9613c54c87aacc7b25839d4321b045fc820"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/block/misc/BarsBlock.java",
+      "sha256": "c977cd5938a06c6fd2b72f519fb6c6dd0ca584c9b7e003f0450a0fec21eca8bb",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\BarsBlock.java",
+      "sourceSha256": "56731d7271dfe12d930659c122d7be1e498e54fdfe3557b12fadbaac029cc982"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/block/misc/BarsBlockItem.java",
+      "sha256": "d1877e636143012bc02011551e8d59bd5dc3042352e093d7c63a6cb228c82f84",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\BarsBlockItem.java",
+      "sourceSha256": "52927a5bb10c1fabb549cf3f795b84ba383c95747c9891734ddc484d629165c2"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/block/misc/ConcreteBlock.java",
+      "sha256": "c7c3d25fdfca1a98a941b3926ef9121b2867c25adea1e5d3c448f5bd4aa595a5",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\ConcreteBlock.java",
+      "sourceSha256": "9390327ec9efd2b517069a160efaa9594b91c9036fad9545c7e8698e5df0146f"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/block/misc/SpikeBlock.java",
+      "sha256": "ac39082764e870780f9b6c145144c817a55a079ab040f0fa5f93badd294f6239",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\SpikeBlock.java",
+      "sourceSha256": "43500c1c342a1cb5b3b2768e5b47d99e051287604be8d8cfe8745a5171975c99"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/blockentity/CFoamBlockEntity.java",
+      "sha256": "f3b5d888be7cd6e04593f268be6fbcf0cfad11fcf0563924f8ba6ec6b5a556e7",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\CFoamBlockEntity.java",
+      "sourceSha256": "08ac266f366487fde4f1417b249aa0cc7df19f716c0c968428d709bd224738ab"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/registry/GTDecorBlocks.java",
+      "sha256": "f28f71932dced82d152f3c5adfdd5e487ccf846174151e305350264a2dc6f30c",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTDecorBlocks.java",
+      "sourceSha256": "8e4f81942f572baf26f31b198c4697f398d76cffb9f6272c32d0e87c66c9c68b"
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/block/BarsRules.java",
+      "sha256": "bf4292746b4509c74f16d5498a1b2afd6c34629bc79cfbb72c8fad54df30cd25",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/block/ConstructionRules.java",
+      "sha256": "75890a9f7a2cad3ebb1ed68f0da11f1f1a2ae6b6f20c66fdc6695a9822cf5d44",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/block/SpikeRules.java",
+      "sha256": "873cc6ad0283fd26dac908f145d5022d041a86d6ef8d9dc18b3306f5738b5733",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/misc/AsphaltBlock.java",
+      "sha256": "dbd32b8900b9ebe9b372117ad23d079b0b0ad75a438159cdd231111e447ae263",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\AsphaltBlock.java",
+      "sourceSha256": "dc1ed5d53c389b2b90fb0da87c81c9613c54c87aacc7b25839d4321b045fc820"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/misc/BarsBlock.java",
+      "sha256": "c977cd5938a06c6fd2b72f519fb6c6dd0ca584c9b7e003f0450a0fec21eca8bb",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\BarsBlock.java",
+      "sourceSha256": "56731d7271dfe12d930659c122d7be1e498e54fdfe3557b12fadbaac029cc982"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/misc/BarsBlockItem.java",
+      "sha256": "d1877e636143012bc02011551e8d59bd5dc3042352e093d7c63a6cb228c82f84",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\BarsBlockItem.java",
+      "sourceSha256": "52927a5bb10c1fabb549cf3f795b84ba383c95747c9891734ddc484d629165c2"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/misc/CFoamBlock.java",
+      "sha256": "e93f6413c18837666b0a59d06b997e37932435391da7f84dfddaf6b082ac4b11",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\CFoamBlock.java",
+      "sourceSha256": "c87f76987cccb5b6fdbd3108bb0d0535a56318747294147f1cedf305b049d624"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/misc/ColoredGlassBlock.java",
+      "sha256": "e8bf3ceb23be0819352a910d9feaf7ba5ab59de3e1bebb0ee9e7c5b2270d14b5",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\ColoredGlassBlock.java",
+      "sourceSha256": "155f5dac0ceb342ec8019009f3eff61ba7403dd5cd64e42f33c642a81bddbd4b"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/misc/ColoredGlassBlockItem.java",
+      "sha256": "6a14f0fc7e3bd21d4499cdc10d279c4e2709c5700168173e95ea03fd8013dffb",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\ColoredGlassBlockItem.java",
+      "sourceSha256": "6a14f0fc7e3bd21d4499cdc10d279c4e2709c5700168173e95ea03fd8013dffb"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/misc/ConcreteBlock.java",
+      "sha256": "42d133c552b4cc9528d621c02d157e3fb080a79b377ca0c67e2611e2224bcf23",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\ConcreteBlock.java",
+      "sourceSha256": "9390327ec9efd2b517069a160efaa9594b91c9036fad9545c7e8698e5df0146f"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/misc/ConcreteBlockItem.java",
+      "sha256": "e85e61b9048800b473fa701ca0de7d6d6627733827ec5420a3041d45c6ec6bbd",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\ConcreteBlockItem.java",
+      "sourceSha256": "e85e61b9048800b473fa701ca0de7d6d6627733827ec5420a3041d45c6ec6bbd"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/misc/SpikeBlock.java",
+      "sha256": "cf23c3d9621457b2db4e553cacd7603e7a73790c19f8ae4038a16ef346d3ee25",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\SpikeBlock.java",
+      "sourceSha256": "43500c1c342a1cb5b3b2768e5b47d99e051287604be8d8cfe8745a5171975c99"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/CFoamBlockEntity.java",
+      "sha256": "e5f27ddf8dbfcb9d7c5994a4dde303507667264415f472c36b036c0669c84431",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\CFoamBlockEntity.java",
+      "sourceSha256": "08ac266f366487fde4f1417b249aa0cc7df19f716c0c968428d709bd224738ab"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/BarsClientSetup.java",
+      "sha256": "ce0b6db99eb7f19342d4db561d85ac9d4f6f153205f1adc443901400144a2fd8",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/ConstructionClientSetup.java",
+      "sha256": "d2140c30793f77bdd9a3c35f99fec9b1f95ef789c160925f8bb79429cf8fbc11",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/SpikesClientSetup.java",
+      "sha256": "f2c543a4846f38b5264650d3bb349336b6de40fc63a4d516629a14fae1cb7809",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTBars.java",
+      "sha256": "ae457b33dd3666050213e520bab290dd0feb77a98a8ccad67189a9b66b440481",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTConstructionBlocks.java",
+      "sha256": "dd6a7153604ce70d9e77e93cedad18178ff8c9aa704873a2cf931c40977b762d",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTSpikes.java",
+      "sha256": "3f6bc87304fc48c6c7fd4395418ce87d3d301fc7cec83b9a5e2ebe5cf1bd0bbd",
+      "source": null,
+      "sourceSha256": null
+    }
+  ],
+  "resources": [
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\asphalt.json",
+      "sha256": "542913a16fe58010e8ca5672be6cbe869e89ecacae220ed9ec6d32c183c1b48e",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/asphalt.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\cfoam.json",
+      "sha256": "744af6c4993d5a9eeaa7b2da29dced9b5b2d56a8990cb006f1bc01ac3389eb75",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/cfoam.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\cfoam_fresh.json",
+      "sha256": "22edd80335b33aa6c66104b4ee9dbee2dd25325df9d51623c68c6d191d11136e",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/cfoam_fresh.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\concrete.json",
+      "sha256": "9236971fe883a9c7aa08643a1a7e4d57797c7bf4795eabcb3b2d3ad67396eca3",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/concrete.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\concrete_reinforced.json",
+      "sha256": "0970de868eb48598547a6d1a7a8ca995d15bfee5450267cdfc727968c8cb5662",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/concrete_reinforced.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\glass_clear.json",
+      "sha256": "50c22a28fbf1effad8192361f86fbba29f454cae804016c2209008458772fa52",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/glass_clear.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\glass_glow.json",
+      "sha256": "1894674e2b0fe4ea513c49b44ae8476e72f88e2771ce3443d69c447323dbd6b6",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/glass_glow.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\asphalt.json",
+      "sha256": "ef61f03636977da0bc4dff2017c5152e747a79eedf791268f9c0eca66d208468",
+      "target": "core/src/main/resources/assets/gregtech/models/item/asphalt.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\cfoam.json",
+      "sha256": "7a38b7388bd0b7559dea90c51b6514f9ea89abb2c2c79aa14ccf5b74bbd8613b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/cfoam.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\cfoam_fresh.json",
+      "sha256": "cac6601a2f4e1d0ebf8dd9e6ca06227a37ba8f3a518e55409578232f463d71ff",
+      "target": "core/src/main/resources/assets/gregtech/models/item/cfoam_fresh.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\concrete.json",
+      "sha256": "8ba2644c9cc0bfa2ee4c80169fef264f029c6ec05cfc1b9875516ce28c818997",
+      "target": "core/src/main/resources/assets/gregtech/models/item/concrete.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\concrete_reinforced.json",
+      "sha256": "8a44d17f9a0b0f527fe92fb6132a6e811bf59684b154f6abf1df9dff2bfc2a70",
+      "target": "core/src/main/resources/assets/gregtech/models/item/concrete_reinforced.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\glass_clear.json",
+      "sha256": "40f5b5653d6c378f6356c4e24d0afb9835296f6439689efd45828ec772c6df2b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/glass_clear.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\glass_glow.json",
+      "sha256": "cc2c31a1727199146efc4d6422bc30ae47bbd6639ddb550336ce12d3ab1b83aa",
+      "target": "core/src/main/resources/assets/gregtech/models/item/glass_glow.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\asphalt.json",
+      "sha256": "9cdeebda2742e86ecffeef95c31c5c3fef3318ca180b8e9fa192301f08dd1693",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/asphalt.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\cfoam.json",
+      "sha256": "e0aa815336bdb6743abc01f1148b4c41eea1c2a452b4995ed8e889c62ac2631f",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/cfoam.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\cfoam_fresh.json",
+      "sha256": "4f59811ca77f9445c7fd545fe6ce05c766071acf86cd58eff52dabb3ee3327d5",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/cfoam_fresh.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\concrete.json",
+      "sha256": "10c804358247690b745c714c8c1dd8b780c3ee385db0427984b7ce237edf3638",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/concrete.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\concrete_reinforced.json",
+      "sha256": "303e71dda7d04570ff61a9b421a6a5d3e4db8bb538c101d8723d5ada210e0e74",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/concrete_reinforced.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\glass_clear.json",
+      "sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/glass_clear.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\glass_glow.json",
+      "sha256": "c081e5155940927d04b74b35d885805bace1317fdbf2759caf93095d3a6bd775",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/glass_glow.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\asphalt.json",
+      "sha256": "00407acf67dabd016107846b1a4315bf3c0d83cf78d43447775dfd076c6f53de",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/asphalt.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\cfoam_fresh.json",
+      "sha256": "335d8f081e8405a472941dab9b3c6250496cf873c391c7f618c185fd3b4f2a97",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/cfoam_fresh.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\concrete.json",
+      "sha256": "7d31c039572c7cfa83f0199f6520300ae61ed343d7ae3ec583c1998aab75783e",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/concrete.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\concrete_reinforced.json",
+      "sha256": "cab8da094e22f60f487952b83cc8f84dc9359272a28766366050552b4e2ef744",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/concrete_reinforced.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\glass_clear.json",
+      "sha256": "dae4f86b18df73fb4464203d97d16894b46a157a850f38729403aa3eba5d037a",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/glass_clear.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\bars_brass.json",
+      "sha256": "0b7b7a50a51effdf1058980acd611dcac03b85e21ec4d7f6f8c7b5d435cd68b2",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/bars_brass.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\bars_bronze.json",
+      "sha256": "d9df88609dd8a322210fd05ff50e75a0afcfe62801183cf06605361caaa40611",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/bars_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\bars_iron.json",
+      "sha256": "b0d39ecf7a9cd23c5c6dd0f1012259c9f3dd7c61d73db508f99ea845c02e1d77",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/bars_iron.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\bars_stainless.json",
+      "sha256": "3e063237015c4502bf61d28c2369cfda3f492ce7a345393aad67b8df6cf9ad19",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/bars_stainless.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\bars_steel.json",
+      "sha256": "69a2b69ac02dbda795448abbfeed68fe9271163b88bf256b03410ed95e126ceb",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/bars_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\bars_tungsten_steel.json",
+      "sha256": "2921b5a51e01d7f8ee5622d4ab12a7d1e76218eafbb552e22448de9f7cb16cac",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/bars_tungsten_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\bars_wrought_iron.json",
+      "sha256": "f058e80dc0665d1ecec05fdf7b273a4850a7a8e5ad63016a1d3d6fa753ffb64b",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/bars_wrought_iron.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\bars_brass.json",
+      "sha256": "92930291181f5db555a2f1037cba21b4d052468a53f3d4806379c773f8b4123e",
+      "target": "core/src/main/resources/assets/gregtech/models/item/bars_brass.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\bars_bronze.json",
+      "sha256": "8e33a1830deff90bf60c7cbb55bacc1cee9703d2af8007d673d023dc48710a74",
+      "target": "core/src/main/resources/assets/gregtech/models/item/bars_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\bars_iron.json",
+      "sha256": "cd1142562f07b63f2c620d42a97d5fd3298d474dc01aeb6bda974adc0b4aab2e",
+      "target": "core/src/main/resources/assets/gregtech/models/item/bars_iron.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\bars_stainless.json",
+      "sha256": "04e9ded5fe0c5be81f4c110b0f805ce907c05f653fd552f5c5460b39d8be8115",
+      "target": "core/src/main/resources/assets/gregtech/models/item/bars_stainless.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\bars_steel.json",
+      "sha256": "92ab022c46b783fec3151c025a6f64c7418c8d52d88b3bd78da23d9d3ad66923",
+      "target": "core/src/main/resources/assets/gregtech/models/item/bars_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\bars_tungsten_steel.json",
+      "sha256": "c1bb110ace832749427bb89bda8f623a48f148ba84d2f22a3b0c337e7d70c3d7",
+      "target": "core/src/main/resources/assets/gregtech/models/item/bars_tungsten_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\bars_wrought_iron.json",
+      "sha256": "393447cf4dbf81f735b0157f0dd6385ff8ba0f542a127f87dcd353e93115fc0b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/bars_wrought_iron.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_brass.json",
+      "sha256": "0bb423e5105b70d2ae8def98b82841bc6623a3f49e258e26bfb8148f85816797",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_brass.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_brass_0.json",
+      "sha256": "0bb423e5105b70d2ae8def98b82841bc6623a3f49e258e26bfb8148f85816797",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_brass_0.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_brass_1.json",
+      "sha256": "8dcda0d152aff49c574fd5f4e9e683ce0736ec935f1f24225637c5bf22f509a5",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_brass_1.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_brass_10.json",
+      "sha256": "fa92c53a8f1765f92d3b94ec16b410340135fca39d82d25169a99cad4589e5ee",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_brass_10.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_brass_11.json",
+      "sha256": "59799c5112e0747cdb786c6152a52a08661cd665f8d1b50afa547fa3ef3b9741",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_brass_11.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_brass_12.json",
+      "sha256": "500f56e8b13087cbaf6993549cf646bbe97a9c6ccc90d28665358ee80e05916b",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_brass_12.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_brass_13.json",
+      "sha256": "81505054ad622d527edff6d81e4039ba49a051c8f92b1244b7e75a2a035aa6c2",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_brass_13.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_brass_14.json",
+      "sha256": "1db9c01bff47fd368e5e293b9c65a356016907e43540e358aedf3c355897c286",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_brass_14.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_brass_15.json",
+      "sha256": "0b565324d53ab572083e4fc134245146b718c78778719ebae7f2c2fea327f366",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_brass_15.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_brass_2.json",
+      "sha256": "c613525c230656ce4597b03cf1da2274f8db2aa867458455395ca0363fd83d83",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_brass_2.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_brass_3.json",
+      "sha256": "e896abb4c0519f4a25a2754c158852e3ba4434cbaf78b960b7d20f0422555f53",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_brass_3.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_brass_4.json",
+      "sha256": "1603aa24ce521e3ae9b0cc80837415b823738d75febecf52fc9e83c27de0d4dd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_brass_4.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_brass_5.json",
+      "sha256": "e565db2ff9795674fa8ff8f5c428e81f2a4a22f6accf05d28673249663d43f41",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_brass_5.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_brass_6.json",
+      "sha256": "af2b5032b653b70f7b29231f1a30b4950baed29158150e49f5638163e7a9543a",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_brass_6.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_brass_7.json",
+      "sha256": "5b10f1eb5e27eb95d93cf6ffa291c35010113d4cbb4e0309708c8d8cc42f0643",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_brass_7.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_brass_8.json",
+      "sha256": "26e9778d10f5f9ae464388a63c32e96bb681111065b08217fcaa63da68f8cc9b",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_brass_8.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_brass_9.json",
+      "sha256": "15bba5205357aad39501b3ff5cebfca72e26495821e6acb553604f526d530fe7",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_brass_9.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_bronze.json",
+      "sha256": "0bb423e5105b70d2ae8def98b82841bc6623a3f49e258e26bfb8148f85816797",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_bronze_0.json",
+      "sha256": "0bb423e5105b70d2ae8def98b82841bc6623a3f49e258e26bfb8148f85816797",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_bronze_0.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_bronze_1.json",
+      "sha256": "8dcda0d152aff49c574fd5f4e9e683ce0736ec935f1f24225637c5bf22f509a5",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_bronze_1.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_bronze_10.json",
+      "sha256": "fa92c53a8f1765f92d3b94ec16b410340135fca39d82d25169a99cad4589e5ee",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_bronze_10.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_bronze_11.json",
+      "sha256": "59799c5112e0747cdb786c6152a52a08661cd665f8d1b50afa547fa3ef3b9741",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_bronze_11.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_bronze_12.json",
+      "sha256": "500f56e8b13087cbaf6993549cf646bbe97a9c6ccc90d28665358ee80e05916b",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_bronze_12.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_bronze_13.json",
+      "sha256": "81505054ad622d527edff6d81e4039ba49a051c8f92b1244b7e75a2a035aa6c2",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_bronze_13.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_bronze_14.json",
+      "sha256": "1db9c01bff47fd368e5e293b9c65a356016907e43540e358aedf3c355897c286",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_bronze_14.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_bronze_15.json",
+      "sha256": "0b565324d53ab572083e4fc134245146b718c78778719ebae7f2c2fea327f366",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_bronze_15.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_bronze_2.json",
+      "sha256": "c613525c230656ce4597b03cf1da2274f8db2aa867458455395ca0363fd83d83",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_bronze_2.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_bronze_3.json",
+      "sha256": "e896abb4c0519f4a25a2754c158852e3ba4434cbaf78b960b7d20f0422555f53",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_bronze_3.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_bronze_4.json",
+      "sha256": "1603aa24ce521e3ae9b0cc80837415b823738d75febecf52fc9e83c27de0d4dd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_bronze_4.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_bronze_5.json",
+      "sha256": "e565db2ff9795674fa8ff8f5c428e81f2a4a22f6accf05d28673249663d43f41",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_bronze_5.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_bronze_6.json",
+      "sha256": "af2b5032b653b70f7b29231f1a30b4950baed29158150e49f5638163e7a9543a",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_bronze_6.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_bronze_7.json",
+      "sha256": "5b10f1eb5e27eb95d93cf6ffa291c35010113d4cbb4e0309708c8d8cc42f0643",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_bronze_7.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_bronze_8.json",
+      "sha256": "26e9778d10f5f9ae464388a63c32e96bb681111065b08217fcaa63da68f8cc9b",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_bronze_8.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_bronze_9.json",
+      "sha256": "15bba5205357aad39501b3ff5cebfca72e26495821e6acb553604f526d530fe7",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_bronze_9.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_iron.json",
+      "sha256": "0bb423e5105b70d2ae8def98b82841bc6623a3f49e258e26bfb8148f85816797",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_iron.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_iron_0.json",
+      "sha256": "0bb423e5105b70d2ae8def98b82841bc6623a3f49e258e26bfb8148f85816797",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_iron_0.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_iron_1.json",
+      "sha256": "8dcda0d152aff49c574fd5f4e9e683ce0736ec935f1f24225637c5bf22f509a5",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_iron_1.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_iron_10.json",
+      "sha256": "fa92c53a8f1765f92d3b94ec16b410340135fca39d82d25169a99cad4589e5ee",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_iron_10.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_iron_11.json",
+      "sha256": "59799c5112e0747cdb786c6152a52a08661cd665f8d1b50afa547fa3ef3b9741",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_iron_11.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_iron_12.json",
+      "sha256": "500f56e8b13087cbaf6993549cf646bbe97a9c6ccc90d28665358ee80e05916b",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_iron_12.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_iron_13.json",
+      "sha256": "81505054ad622d527edff6d81e4039ba49a051c8f92b1244b7e75a2a035aa6c2",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_iron_13.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_iron_14.json",
+      "sha256": "1db9c01bff47fd368e5e293b9c65a356016907e43540e358aedf3c355897c286",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_iron_14.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_iron_15.json",
+      "sha256": "0b565324d53ab572083e4fc134245146b718c78778719ebae7f2c2fea327f366",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_iron_15.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_iron_2.json",
+      "sha256": "c613525c230656ce4597b03cf1da2274f8db2aa867458455395ca0363fd83d83",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_iron_2.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_iron_3.json",
+      "sha256": "e896abb4c0519f4a25a2754c158852e3ba4434cbaf78b960b7d20f0422555f53",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_iron_3.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_iron_4.json",
+      "sha256": "1603aa24ce521e3ae9b0cc80837415b823738d75febecf52fc9e83c27de0d4dd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_iron_4.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_iron_5.json",
+      "sha256": "e565db2ff9795674fa8ff8f5c428e81f2a4a22f6accf05d28673249663d43f41",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_iron_5.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_iron_6.json",
+      "sha256": "af2b5032b653b70f7b29231f1a30b4950baed29158150e49f5638163e7a9543a",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_iron_6.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_iron_7.json",
+      "sha256": "5b10f1eb5e27eb95d93cf6ffa291c35010113d4cbb4e0309708c8d8cc42f0643",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_iron_7.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_iron_8.json",
+      "sha256": "26e9778d10f5f9ae464388a63c32e96bb681111065b08217fcaa63da68f8cc9b",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_iron_8.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_iron_9.json",
+      "sha256": "15bba5205357aad39501b3ff5cebfca72e26495821e6acb553604f526d530fe7",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_iron_9.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_stainless.json",
+      "sha256": "0bb423e5105b70d2ae8def98b82841bc6623a3f49e258e26bfb8148f85816797",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_stainless.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_stainless_0.json",
+      "sha256": "0bb423e5105b70d2ae8def98b82841bc6623a3f49e258e26bfb8148f85816797",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_stainless_0.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_stainless_1.json",
+      "sha256": "8dcda0d152aff49c574fd5f4e9e683ce0736ec935f1f24225637c5bf22f509a5",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_stainless_1.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_stainless_10.json",
+      "sha256": "fa92c53a8f1765f92d3b94ec16b410340135fca39d82d25169a99cad4589e5ee",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_stainless_10.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_stainless_11.json",
+      "sha256": "59799c5112e0747cdb786c6152a52a08661cd665f8d1b50afa547fa3ef3b9741",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_stainless_11.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_stainless_12.json",
+      "sha256": "500f56e8b13087cbaf6993549cf646bbe97a9c6ccc90d28665358ee80e05916b",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_stainless_12.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_stainless_13.json",
+      "sha256": "81505054ad622d527edff6d81e4039ba49a051c8f92b1244b7e75a2a035aa6c2",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_stainless_13.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_stainless_14.json",
+      "sha256": "1db9c01bff47fd368e5e293b9c65a356016907e43540e358aedf3c355897c286",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_stainless_14.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_stainless_15.json",
+      "sha256": "0b565324d53ab572083e4fc134245146b718c78778719ebae7f2c2fea327f366",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_stainless_15.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_stainless_2.json",
+      "sha256": "c613525c230656ce4597b03cf1da2274f8db2aa867458455395ca0363fd83d83",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_stainless_2.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_stainless_3.json",
+      "sha256": "e896abb4c0519f4a25a2754c158852e3ba4434cbaf78b960b7d20f0422555f53",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_stainless_3.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_stainless_4.json",
+      "sha256": "1603aa24ce521e3ae9b0cc80837415b823738d75febecf52fc9e83c27de0d4dd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_stainless_4.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_stainless_5.json",
+      "sha256": "e565db2ff9795674fa8ff8f5c428e81f2a4a22f6accf05d28673249663d43f41",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_stainless_5.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_stainless_6.json",
+      "sha256": "af2b5032b653b70f7b29231f1a30b4950baed29158150e49f5638163e7a9543a",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_stainless_6.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_stainless_7.json",
+      "sha256": "5b10f1eb5e27eb95d93cf6ffa291c35010113d4cbb4e0309708c8d8cc42f0643",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_stainless_7.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_stainless_8.json",
+      "sha256": "26e9778d10f5f9ae464388a63c32e96bb681111065b08217fcaa63da68f8cc9b",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_stainless_8.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_stainless_9.json",
+      "sha256": "15bba5205357aad39501b3ff5cebfca72e26495821e6acb553604f526d530fe7",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_stainless_9.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_steel.json",
+      "sha256": "0bb423e5105b70d2ae8def98b82841bc6623a3f49e258e26bfb8148f85816797",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_steel_0.json",
+      "sha256": "0bb423e5105b70d2ae8def98b82841bc6623a3f49e258e26bfb8148f85816797",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_steel_0.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_steel_1.json",
+      "sha256": "8dcda0d152aff49c574fd5f4e9e683ce0736ec935f1f24225637c5bf22f509a5",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_steel_1.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_steel_10.json",
+      "sha256": "fa92c53a8f1765f92d3b94ec16b410340135fca39d82d25169a99cad4589e5ee",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_steel_10.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_steel_11.json",
+      "sha256": "59799c5112e0747cdb786c6152a52a08661cd665f8d1b50afa547fa3ef3b9741",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_steel_11.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_steel_12.json",
+      "sha256": "500f56e8b13087cbaf6993549cf646bbe97a9c6ccc90d28665358ee80e05916b",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_steel_12.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_steel_13.json",
+      "sha256": "81505054ad622d527edff6d81e4039ba49a051c8f92b1244b7e75a2a035aa6c2",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_steel_13.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_steel_14.json",
+      "sha256": "1db9c01bff47fd368e5e293b9c65a356016907e43540e358aedf3c355897c286",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_steel_14.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_steel_15.json",
+      "sha256": "0b565324d53ab572083e4fc134245146b718c78778719ebae7f2c2fea327f366",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_steel_15.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_steel_2.json",
+      "sha256": "c613525c230656ce4597b03cf1da2274f8db2aa867458455395ca0363fd83d83",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_steel_2.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_steel_3.json",
+      "sha256": "e896abb4c0519f4a25a2754c158852e3ba4434cbaf78b960b7d20f0422555f53",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_steel_3.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_steel_4.json",
+      "sha256": "1603aa24ce521e3ae9b0cc80837415b823738d75febecf52fc9e83c27de0d4dd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_steel_4.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_steel_5.json",
+      "sha256": "e565db2ff9795674fa8ff8f5c428e81f2a4a22f6accf05d28673249663d43f41",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_steel_5.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_steel_6.json",
+      "sha256": "af2b5032b653b70f7b29231f1a30b4950baed29158150e49f5638163e7a9543a",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_steel_6.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_steel_7.json",
+      "sha256": "5b10f1eb5e27eb95d93cf6ffa291c35010113d4cbb4e0309708c8d8cc42f0643",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_steel_7.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_steel_8.json",
+      "sha256": "26e9778d10f5f9ae464388a63c32e96bb681111065b08217fcaa63da68f8cc9b",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_steel_8.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_steel_9.json",
+      "sha256": "15bba5205357aad39501b3ff5cebfca72e26495821e6acb553604f526d530fe7",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_steel_9.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_tungsten_steel.json",
+      "sha256": "0bb423e5105b70d2ae8def98b82841bc6623a3f49e258e26bfb8148f85816797",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_tungsten_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_tungsten_steel_0.json",
+      "sha256": "0bb423e5105b70d2ae8def98b82841bc6623a3f49e258e26bfb8148f85816797",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_tungsten_steel_0.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_tungsten_steel_1.json",
+      "sha256": "8dcda0d152aff49c574fd5f4e9e683ce0736ec935f1f24225637c5bf22f509a5",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_tungsten_steel_1.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_tungsten_steel_10.json",
+      "sha256": "fa92c53a8f1765f92d3b94ec16b410340135fca39d82d25169a99cad4589e5ee",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_tungsten_steel_10.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_tungsten_steel_11.json",
+      "sha256": "59799c5112e0747cdb786c6152a52a08661cd665f8d1b50afa547fa3ef3b9741",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_tungsten_steel_11.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_tungsten_steel_12.json",
+      "sha256": "500f56e8b13087cbaf6993549cf646bbe97a9c6ccc90d28665358ee80e05916b",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_tungsten_steel_12.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_tungsten_steel_13.json",
+      "sha256": "81505054ad622d527edff6d81e4039ba49a051c8f92b1244b7e75a2a035aa6c2",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_tungsten_steel_13.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_tungsten_steel_14.json",
+      "sha256": "1db9c01bff47fd368e5e293b9c65a356016907e43540e358aedf3c355897c286",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_tungsten_steel_14.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_tungsten_steel_15.json",
+      "sha256": "0b565324d53ab572083e4fc134245146b718c78778719ebae7f2c2fea327f366",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_tungsten_steel_15.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_tungsten_steel_2.json",
+      "sha256": "c613525c230656ce4597b03cf1da2274f8db2aa867458455395ca0363fd83d83",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_tungsten_steel_2.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_tungsten_steel_3.json",
+      "sha256": "e896abb4c0519f4a25a2754c158852e3ba4434cbaf78b960b7d20f0422555f53",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_tungsten_steel_3.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_tungsten_steel_4.json",
+      "sha256": "1603aa24ce521e3ae9b0cc80837415b823738d75febecf52fc9e83c27de0d4dd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_tungsten_steel_4.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_tungsten_steel_5.json",
+      "sha256": "e565db2ff9795674fa8ff8f5c428e81f2a4a22f6accf05d28673249663d43f41",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_tungsten_steel_5.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_tungsten_steel_6.json",
+      "sha256": "af2b5032b653b70f7b29231f1a30b4950baed29158150e49f5638163e7a9543a",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_tungsten_steel_6.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_tungsten_steel_7.json",
+      "sha256": "5b10f1eb5e27eb95d93cf6ffa291c35010113d4cbb4e0309708c8d8cc42f0643",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_tungsten_steel_7.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_tungsten_steel_8.json",
+      "sha256": "26e9778d10f5f9ae464388a63c32e96bb681111065b08217fcaa63da68f8cc9b",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_tungsten_steel_8.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_tungsten_steel_9.json",
+      "sha256": "15bba5205357aad39501b3ff5cebfca72e26495821e6acb553604f526d530fe7",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_tungsten_steel_9.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_wrought_iron.json",
+      "sha256": "0bb423e5105b70d2ae8def98b82841bc6623a3f49e258e26bfb8148f85816797",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_wrought_iron.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_wrought_iron_0.json",
+      "sha256": "0bb423e5105b70d2ae8def98b82841bc6623a3f49e258e26bfb8148f85816797",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_wrought_iron_0.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_wrought_iron_1.json",
+      "sha256": "8dcda0d152aff49c574fd5f4e9e683ce0736ec935f1f24225637c5bf22f509a5",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_wrought_iron_1.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_wrought_iron_10.json",
+      "sha256": "fa92c53a8f1765f92d3b94ec16b410340135fca39d82d25169a99cad4589e5ee",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_wrought_iron_10.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_wrought_iron_11.json",
+      "sha256": "59799c5112e0747cdb786c6152a52a08661cd665f8d1b50afa547fa3ef3b9741",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_wrought_iron_11.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_wrought_iron_12.json",
+      "sha256": "500f56e8b13087cbaf6993549cf646bbe97a9c6ccc90d28665358ee80e05916b",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_wrought_iron_12.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_wrought_iron_13.json",
+      "sha256": "81505054ad622d527edff6d81e4039ba49a051c8f92b1244b7e75a2a035aa6c2",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_wrought_iron_13.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_wrought_iron_14.json",
+      "sha256": "1db9c01bff47fd368e5e293b9c65a356016907e43540e358aedf3c355897c286",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_wrought_iron_14.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_wrought_iron_15.json",
+      "sha256": "0b565324d53ab572083e4fc134245146b718c78778719ebae7f2c2fea327f366",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_wrought_iron_15.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_wrought_iron_2.json",
+      "sha256": "c613525c230656ce4597b03cf1da2274f8db2aa867458455395ca0363fd83d83",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_wrought_iron_2.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_wrought_iron_3.json",
+      "sha256": "e896abb4c0519f4a25a2754c158852e3ba4434cbaf78b960b7d20f0422555f53",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_wrought_iron_3.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_wrought_iron_4.json",
+      "sha256": "1603aa24ce521e3ae9b0cc80837415b823738d75febecf52fc9e83c27de0d4dd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_wrought_iron_4.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_wrought_iron_5.json",
+      "sha256": "e565db2ff9795674fa8ff8f5c428e81f2a4a22f6accf05d28673249663d43f41",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_wrought_iron_5.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_wrought_iron_6.json",
+      "sha256": "af2b5032b653b70f7b29231f1a30b4950baed29158150e49f5638163e7a9543a",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_wrought_iron_6.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_wrought_iron_7.json",
+      "sha256": "5b10f1eb5e27eb95d93cf6ffa291c35010113d4cbb4e0309708c8d8cc42f0643",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_wrought_iron_7.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_wrought_iron_8.json",
+      "sha256": "26e9778d10f5f9ae464388a63c32e96bb681111065b08217fcaa63da68f8cc9b",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_wrought_iron_8.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\bars_wrought_iron_9.json",
+      "sha256": "15bba5205357aad39501b3ff5cebfca72e26495821e6acb553604f526d530fe7",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/bars_wrought_iron_9.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\spike_fancy.json",
+      "sha256": "f15cc727887c38cb006b74d6b7702d3419bd8f8508278f1c41a729cd9c7752ca",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/spike_fancy.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\spike_metal.json",
+      "sha256": "f15cc727887c38cb006b74d6b7702d3419bd8f8508278f1c41a729cd9c7752ca",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/spike_metal.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\spike_sharp.json",
+      "sha256": "f15cc727887c38cb006b74d6b7702d3419bd8f8508278f1c41a729cd9c7752ca",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/spike_sharp.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\spike_steel.json",
+      "sha256": "f15cc727887c38cb006b74d6b7702d3419bd8f8508278f1c41a729cd9c7752ca",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/spike_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\spike_super.json",
+      "sha256": "f15cc727887c38cb006b74d6b7702d3419bd8f8508278f1c41a729cd9c7752ca",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/spike_super.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\spike_fancy.json",
+      "sha256": "d9cb17273f3dbfdf7c8d9d44fc02662f99b3b47c66fcebccb4c4e72470b2e5f3",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spike_fancy.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\spike_metal.json",
+      "sha256": "d9cb17273f3dbfdf7c8d9d44fc02662f99b3b47c66fcebccb4c4e72470b2e5f3",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spike_metal.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\spike_sharp.json",
+      "sha256": "d9cb17273f3dbfdf7c8d9d44fc02662f99b3b47c66fcebccb4c4e72470b2e5f3",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spike_sharp.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\spike_steel.json",
+      "sha256": "d9cb17273f3dbfdf7c8d9d44fc02662f99b3b47c66fcebccb4c4e72470b2e5f3",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spike_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\spike_super.json",
+      "sha256": "d9cb17273f3dbfdf7c8d9d44fc02662f99b3b47c66fcebccb4c4e72470b2e5f3",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spike_super.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\spike_fancy.json",
+      "sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/spike_fancy.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\spike_metal.json",
+      "sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/spike_metal.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\spike_sharp.json",
+      "sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/spike_sharp.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\spike_steel.json",
+      "sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/spike_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\spike_super.json",
+      "sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/spike_super.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\spike_omni.json",
+      "sha256": "66fc0476afda4b050d53a1d59d5f7b38b5c023e51abfdc1d15c298a60fb53b27",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/spike_omni.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\spike_wall_down.json",
+      "sha256": "e6db45e6e8361085899bb00b51f4c72a09c65300ad580e1a8c9e30f716f6f973",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/spike_wall_down.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\spike_wall_up.json",
+      "sha256": "461aa7e80fd4af097f3c3b90907800881e21aba6502b6de115c3d2749713a99d",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/spike_wall_up.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\spike_wall_north.json",
+      "sha256": "326ce060d3802affcc15f593614fc127c1059cff359cb8a9abfc3b0cd6b4b68a",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/spike_wall_north.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\spike_wall_south.json",
+      "sha256": "c158952ab5f7876e7a265f5312ed852646c18353d66442f819cbdea47859ae48",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/spike_wall_south.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\spike_wall_west.json",
+      "sha256": "0ed29949693e81e4b640591a4233ccafe65c8b7839f2c056cf8e4044849b7de3",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/spike_wall_west.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\spike_wall_east.json",
+      "sha256": "f023d54d6b83f89275af3eeb7a1374aaed34c4ad27d9171fbe3b504c10a4e3b8",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/spike_wall_east.json",
+      "adaptation": "original referenced model dependency"
+    }
+  ],
+  "comparisonSources": [
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\tileentity\\foam\\GT6CFoamBlockEntity.java",
+      "sha256": "1f32e395c9b98f1dfe5ff320f3b927465b0e486fe07aac2875d6e13cd0d47f9c"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\block\\foam\\GT6CFoamFreshBlock.java",
+      "sha256": "10244788c390e53f7fe93d1076eb8a02ac3417b6407400b1fd5348bc2f6bb6b8"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\cruciblecraft\\src\\main\\java\\com\\masson\\cruciblecraft\\content\\block\\GtBlockObjectCFoamFreshBlock.java",
+      "sha256": "286f49a2c1bbb0352a509ab75aa0c07a6d6c629528b798d6467802a6bf50c380"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\cruciblecraft\\src\\main\\java\\com\\masson\\cruciblecraft\\content\\block\\GtBlockObjectBarsBlock.java",
+      "sha256": "2250be719258ca1b78d4bffd5e394b0a13cf9fac09fc7d3f975e9eb3f4262f24"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\cruciblecraft\\src\\main\\java\\com\\masson\\cruciblecraft\\content\\block\\GtBlockObjectSpikeBlock.java",
+      "sha256": "a325b271991f6830e6c4bf4a88238d271eb9939094278edfdbbde36ec9d25328"
+    }
+  ],
+  "choice": "Share exact16-dye palette, iron-rod aliases, road speed and foam drying roll across Forge/Neo. Native uses original real concrete/glass item classes with block-state components, drill reinforcement/material equivalence, glass80-scrap split drop/transparency and foam ticker/gt-independent original timer/dried NBT. Retain7 real bars/112 mask states, original four-segment selection/count/placement/merge permissions in one core executor and exact shared material/tint/resistance specs. Retain5 spike families with original boss gates/falling/mode/tool/target hazard table over one shared damage executor; native arthropod/undead uses1.21 entity tags and drops preserve original mode/secondary. Reuse existing damage/tool/material registries; import no competing core.",
+  "knownGaps": [
+    "All19 blocks are compile-covered; prior ordinary Neo startup predates this batch. Actual construction/drops/rod reinforcement/foam drying/hazards/placement remain unverified.",
+    "Source foam timer advances without marking dirty each tick; source fresh foam properties still form a solid cube despite non-solid comment, and fall cushioning applies to hardened foam too.",
+    "brokestar stronger colored/owned foam, slab/scheduled drying and spray ownership behavior remain a required integration candidate; this wave retains baseline unowned identities and timing.",
+    "masson bars use connected IronBarsBlock and spikes simplified cactus1 damage/geometry; retain baseline four-segment/target damage to preserve gameplay rather than replacing them with those different semantics.",
+    "Native BushBlock soil boundary from prior batch, invalid save data, Forge runtime/client rendering/independent reload/old saves and new production jars pending.",
+    "Source spike falling behavior has not been checked for entity landing, damage and mode persistence; native item components preserve mode/secondary, wall facing is chosen at placement as source."
+  ],
+  "validation": "Grouped dual compile PASS19s after adapting removed GlassBlock to TransparentBlock, followed by three-wave compile PASS18s; no startup/new test fixtures"
+}

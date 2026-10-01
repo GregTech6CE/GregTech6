@@ -1,0 +1,2867 @@
+{
+  "status": "unverified rapid source integration; no build/test/game launched",
+  "sources": [
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/data/RegisteredFluids.java",
+      "sha256": "64cce2dd8e99579ea0c39f98753d7a52441cd03e6c4fb903a2839a06509ac391"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/content/fluid/FluidDefinitions.java",
+      "sha256": "ac8ad5d60cd369b829d5e7c6634d38cca637ccc9d1d851be3cccae6eb752efe7"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/api/fluid/GTWaterParity.java",
+      "sha256": "630daf9fe1d7859b338c18691487d6c13e19a7e1bcac4470a0c116e49de045a4"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/api/fluid/VanillaWaterlogging.java",
+      "sha256": "dad17a18ab35f92fa57623c5b295eefe86e5f1677528526c412dafe998da4585"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/api/fluid/FluidRenderLayers.java",
+      "sha256": "ace104be8c79d1356cdfe7d4b3cb9ef3ed6e1dc378eb4033094d7a070b78633f"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/api/fluid/FluidTexturePolicy.java",
+      "sha256": "6ce7edd43321daa330afedf09816ebe95d33b182d5ccf04df2f5d8d70e349ea3"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/api/fluid/FluidVisualPolicy.java",
+      "sha256": "7006d2b449cf593244814fcb9669094f38cc8825478ace2ce89fb84b5707a44c"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/registry/GTFluidType.java",
+      "sha256": "30170d6bda06b71d66779133f6468373bdd49afe4b5b49559905868e33309d9f"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/client/FluidAppearance.java",
+      "sha256": "75d5288a4adc07aaba465e6596dee660e6576f47b0f4333b9146e239816f808d"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/client/WaterFluidClientExtensions.java",
+      "sha256": "be8512153eb4fcdb31eb7d6405c815c45c3a704bf057e127030f5a27cd6a3272"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/registry/GTWorldWaterFluid.java",
+      "sha256": "d913a5d621bf08583f47a4afe957dbb9457d269064a0b92ecb7435af7884c040"
+    },
+    {
+      "source": "masson",
+      "file": "src\\main\\java\\com\\masson\\cruciblecraft\\fluid\\MoltenTransferMath.java",
+      "sha256": "b3e740abfe59c76a3dc6726e85aefe1e129629d2105cc6a876e0e4301d6e295e",
+      "change": "byte-identical source; invoked through GT6-unit adapters"
+    },
+    {
+      "source": "masson",
+      "file": "LICENSE",
+      "sha256": "2ce8c2ea64669335d6c3be608f91dc8f2974c6399b98ac51dbb34de94c52f060",
+      "change": "original license/author notice, unchanged"
+    },
+    {
+      "source": "masson",
+      "file": "NOTICE",
+      "sha256": "f42a8bc23755b96b777b71f780d20ec9ab320871e452873074e1f76d65b1af3b",
+      "change": "original license/author notice, unchanged"
+    },
+    {
+      "source": "masson",
+      "file": "CREDITS.md",
+      "sha256": "ae781c18d88a882a7d0861e75f2974e433297775409b18e8995f77c226ae9196",
+      "change": "original license/author notice, unchanged"
+    },
+    {
+      "source": "masson",
+      "file": "src/main/java/com/masson/cruciblecraft/registry/ModFluids.java",
+      "sha256": "8627145bbbffe95b37f9b5b1dd635957062c57cbd20f034d709677eb2ba7bf04",
+      "change": "platform/transfer behavior adapted to unified GT material table, units and IDs; no second registry copied"
+    },
+    {
+      "source": "masson",
+      "file": "src/main/java/com/masson/cruciblecraft/registry/ModCapabilities.java",
+      "sha256": "99e14293a30be32915f564ebf7062e2af1e56b39b6b2c65a5bea55666ca0e753",
+      "change": "platform/transfer behavior adapted to unified GT material table, units and IDs; no second registry copied"
+    },
+    {
+      "source": "masson",
+      "file": "src/main/java/com/masson/cruciblecraft/client/ClientSetup.java",
+      "sha256": "cdaefa5eb1dd4d40e2dad51e985b3deaaa7660a1f0117504fd9d6ad9c9f9a919",
+      "change": "platform/transfer behavior adapted to unified GT material table, units and IDs; no second registry copied"
+    },
+    {
+      "source": "masson",
+      "file": "src/main/java/com/masson/cruciblecraft/machine/component/CrucibleProcessCore.java",
+      "sha256": "97b741554e5a4fbe1ac4fac304256ca0c56fbbe14077de8fa87a1edd562ab088",
+      "change": "platform/transfer behavior adapted to unified GT material table, units and IDs; no second registry copied"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/loaders/a/Loader_Fluids.java",
+      "sha256": "cb716d11ec2345668f3ad4f71ad33863847469caf81118e9a90fcfcc5eda4957",
+      "change": "platform/transfer behavior adapted to unified GT material table, units and IDs; no second registry copied"
+    }
+  ],
+  "adaptation": "FluidCatalog is the single original table with only the Minecraft texture seam left in the two RegisteredFluids wrappers; FluidDefinitions shared. Masson transfer math retains 144mB/ingot at boundary; canonical GT materials remain U=648648000, Kelvin.",
+  "resourcesMovedByteIdentical": [
+    {
+      "file": "assets/gregtech/textures/block/fluids/aerotheum.png",
+      "sha256": "d93bbf05e769cd9b667371fd225ee11e6376086752b1cea8919c52ccba794e84"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/aerotheum.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/applesmoothie.png",
+      "sha256": "e5d06afb06309713a0e08c347d2d6f493a6338ec8479dc70b49a83712fdd7399"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/applesmoothie.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/applevinegar.png",
+      "sha256": "3915da133b5520aa239dbafc86867aa3431032eeb862c89d0b6e0ec7c2cb8601"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/applevinegar.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/apricotsmoothie.png",
+      "sha256": "25b463cc37d1b69ecf3e260112fc1e1f3324905c7a116cffa2aab481956b3cf9"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/apricotsmoothie.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/bananasmoothie.png",
+      "sha256": "66552435b667bcf7ba411f1c8885374bff284f53624e8abb0034b81b842e53a1"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/bananasmoothie.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/bawls.png",
+      "sha256": "1a85de5c8ff78602b025936a3d5ad87a54787e586ccda81491bdeaeb5847bcc5"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/bawls.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/bbqsauce.png",
+      "sha256": "c98f6de81d9fadce16280ad794c3169438db3ffc590256720e3422c0857e80ba"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/bbqsauce.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/beer.png",
+      "sha256": "fb742864bd199ff96af00797cfc5468eb9858e79b029ff1bd7841caf1062c2d4"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/beer.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/beetjuice.png",
+      "sha256": "0abdbd1953e1333e25549fe5d73ca9320c60a8f250401b7c8b6c2741bb8289c2"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/beetjuice.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.ciderapple.png",
+      "sha256": "19954a013ed8a335ce454c0c3be1f1f0bf971ee207518a2b9cc9b010a14cb7dd"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.ciderapple.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juiceapple.png",
+      "sha256": "3a24c711ed5b83f82348c1dd3c81e258b000b97299655e69bf138a5f3e95a05d"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juiceapple.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juiceapricot.png",
+      "sha256": "99c20c26eec8386cc15fe57e270dc3036e7c3ffa5dea515664448ea587d0a976"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juiceapricot.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juicebanana.png",
+      "sha256": "76c3121888125a80b8d582a2021b4f7259df8a0c066cbe247efb204eebe58543"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juicebanana.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juicecarrot.png",
+      "sha256": "245ef5c40b870257f3349582c8490d418c58e7511ebe9b73d909584b2518d01a"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juicecarrot.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juicecherry.png",
+      "sha256": "5425e2991ada01eafec4b538a78383b2fd8c907692c0100dafad5ca4d3f712d0"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juicecherry.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juicecranberry.png",
+      "sha256": "df40c045530b17e019452d25702944a8a91fbeb1ef8c4d31e50b4b808eaf870d"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juicecranberry.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juiceelderberry.png",
+      "sha256": "a70e5a4f6cdc0f9d78029dfb407f568e3ab8a5aafe72757e5981c11035e931d6"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juiceelderberry.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juicegrapefruit.png",
+      "sha256": "b91b2db5fdfeee9b7ff92f2efe3bc9dfa64def32683ee2d46674ce57c479ea8e"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juicegrapefruit.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juicelemon.png",
+      "sha256": "fb742864bd199ff96af00797cfc5468eb9858e79b029ff1bd7841caf1062c2d4"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juicelemon.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juicelime.png",
+      "sha256": "b224e1c873852a02fbd4a8625461cb4d4fd4ae91072958191b54fb04315d76ca"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juicelime.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juiceolive.png",
+      "sha256": "0ba444788b82b32d90cd23864d3e23cbdeb2288a25e39cf9bcea7be0b0649329"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juiceolive.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juiceorange.png",
+      "sha256": "050338b9abcd85f51aecb90dd58a180b927fb6dcb7ee1941d16f5c5e46aa93ad"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juiceorange.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juicepeach.png",
+      "sha256": "2d8dbbbce5e2b91b95aaf8ef97f405f789c5f52449fdbb2616c5be89a1420d58"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juicepeach.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juicepear.png",
+      "sha256": "0c291c6bdbce0465bac235f617d4c50c4eccd6cb0d169c7ad9faa57accf91f58"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juicepear.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juicepineapple.png",
+      "sha256": "90f2c08751a3ba790cf1be6e81fef688dcf88f9abb1f3e2d9cc8988eb4f197a4"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juicepineapple.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juiceplum.png",
+      "sha256": "7242edc484a736de235e29aa7599c772af5956ba18118e0f56a9c610379336e4"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juiceplum.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juiceredgrape.png",
+      "sha256": "94c418ab508a6d6bd8637e00d1e17c62d765e5bb08a7d5af6c68d299b16b43a9"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juiceredgrape.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juicetomato.png",
+      "sha256": "afdfb24cce473b8393fa4272aafece1e996ee67e40577c112a6c72050c5aa43b"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juicetomato.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juicewhitegrape.png",
+      "sha256": "5bcc3a0f11d2fc00ad4bd7c33b7ad457874d803b63ad160d5bdf39500812f318"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.juicewhitegrape.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.mashcorn.png",
+      "sha256": "fb742864bd199ff96af00797cfc5468eb9858e79b029ff1bd7841caf1062c2d4"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.mashcorn.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.mashgrain.png",
+      "sha256": "fb742864bd199ff96af00797cfc5468eb9858e79b029ff1bd7841caf1062c2d4"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.mashgrain.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.mashrye.png",
+      "sha256": "fb742864bd199ff96af00797cfc5468eb9858e79b029ff1bd7841caf1062c2d4"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.mashrye.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.mashwheat.png",
+      "sha256": "fb742864bd199ff96af00797cfc5468eb9858e79b029ff1bd7841caf1062c2d4"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.mashwheat.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.rumdark.png",
+      "sha256": "a9e79e6a94b951510bf153a874754c6be5157d5bd721ba181ccd59a21e184fde"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.rumdark.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.rumwhite.png",
+      "sha256": "53b86818bba4ec3b578c25b7b41fbc3584c16ca956c85e655ebaf134afc7ab81"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.rumwhite.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.vodka.png",
+      "sha256": "66445a72c40dc57724bb0d1880b3d84b2e4e515b5ad0634042535db30ead3242"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.vodka.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.whiskeywheat.png",
+      "sha256": "3a24c711ed5b83f82348c1dd3c81e258b000b97299655e69bf138a5f3e95a05d"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.whiskeywheat.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.winepineapple.png",
+      "sha256": "e437971cb5bfc50df3f179572fb3d995fac167a89877baa2a95374f9399d566e"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.winepineapple.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.winered.png",
+      "sha256": "6f431496483475b75ebee407c172ad81dce1c40855096cc1d2ca536bbc732751"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.winered.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.winewhite.png",
+      "sha256": "cd4a10f6ea49e17c576f40275768f1b0685328d6748e06c8e2ccfb24e416e73f"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/binnie.winewhite.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/bioethanol.png",
+      "sha256": "e53f3e0abc644f05c3443fd64eeb8c98c28a7d60393e31dcf7c1f766bee36ec9"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/bioethanol.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/biomass.png",
+      "sha256": "7fcd2c6a001e973c49f77f3814af77234cc078ecefa9ded7cdd45b1d786033af"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/biomass.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/blackberryjuice.png",
+      "sha256": "464ed39a59938d814ce9306ecd3e5f1e95c10460dfce91e209e10264447ca70b"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/blackberryjuice.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/blackberrysmoothie.png",
+      "sha256": "603420362ccdb19f7bf725a6013bd2471c8c02e170480b2bbe7ab3b9cc90f3c2"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/blackberrysmoothie.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/blaze.png",
+      "sha256": "f40511da55cc733134a749a718147c3bedbb1d8d783b0742978a87d76fba6d6b"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/blaze.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/blueberryjuice.png",
+      "sha256": "941ad733ff8b79e3f2fa128f32ec26bc403a34f20fc3deb7fa5039962094afde"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/blueberryjuice.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/blueberrysmoothie.png",
+      "sha256": "1ecbc474ef618f97370760fa17d7555d78466612f07ac1acac0849d4a5d5b807"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/blueberrysmoothie.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/butane.png",
+      "sha256": "6eddf17820fa5f71f8b94fc1ac54d1456715eabed5f9a23f5a154c1edcd518ed"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/cactuswater.png",
+      "sha256": "202de882cf6da9092d88b18e533030327a970d8c06ed5e0f44697ebf2e50e1a4"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/cactuswater.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/canevinegar.png",
+      "sha256": "907fa4f68ac06c0eeb9704508b8432894508d97ab92c2a0c299c5c3a09ab187e"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/canevinegar.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/cfoam.png",
+      "sha256": "05c5eacf3a77dbbc69853fdf528bb39d7ed1fc79116bd959f8d4935590429257"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/cfoam.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/chargedmatter.png",
+      "sha256": "46b0e167345a60e40d36445cae3b3676ee3d491eec1dc1dd487fdafa4eee944a"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/chargedmatter.png.mcmeta",
+      "sha256": "01a4ea56f3505704d42cfa5437d69d4dab7815a3ffbec1761cc4c66e270bfdf4"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/cherrysmoothie.png",
+      "sha256": "d0d7db9e5c90e088aef8900a61d8d818a23e7b961b6d79d9a37f1e18f322fa1d"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/cherrysmoothie.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/chillysauce.png",
+      "sha256": "6f431496483475b75ebee407c172ad81dce1c40855096cc1d2ca536bbc732751"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/chillysauce.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/chocolatecream.png",
+      "sha256": "4cf4a31bad046275a9d4f10137fd1839269d9af4ae6db4574817c52a994b402b"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/chocolatemilk.png",
+      "sha256": "df9bd391c935f6e48c647c5d34681ac62afe47161c527809e171b39e81d4c2dd"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/chocolatemilk.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/coconutcream.png",
+      "sha256": "c70638c484329c6368ec5ef37473178be15478aa0c1c18a9810477968494b708"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/coconutcream.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/coconutmilk.png",
+      "sha256": "5d890d4fec8248ff12c3d832033f6b765601c7adaabb169f8a2f81ee82e9ec3b"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/coconutmilk.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/coconutsmoothie.png",
+      "sha256": "a40e7cad8f798ec84f9305ac43fe795076104d0ba64bfcae3e0dbe434dfa49be"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/coconutsmoothie.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/concrete.png",
+      "sha256": "854016684ea19a10fbf031a547e1a5cc34123c583d121a072ceb7d0be7909f34"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/concrete.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/cranberrysmoothie.png",
+      "sha256": "215e5d632c86f9ee79cb228d55a0abe6059c66c0d5c0c9c203f0d3f82efc2ce0"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/cranberrysmoothie.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/creosote.png",
+      "sha256": "f9602b1de4770720358abc538315a0810345dde87a6ac97df4d7e0b8755dd228"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/creosote.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/cryotheum.png",
+      "sha256": "4ded2b2af49419d18f3d59457aae896daf0cc1b40ac440f16483b5c5e9c51bee"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/cryotheum.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/currantjuice.png",
+      "sha256": "4a91600a44c0922f920edf81ee069189b9ce911a870e55d9c47c0c422d4cdcbb"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/currantjuice.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/currantsmoothie.png",
+      "sha256": "1e4e6896c36f00f084bd7fda7956f8798f57b63dc03b4df7f7eae1ae3f70d957"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/currantsmoothie.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/darkbeer.png",
+      "sha256": "d7663c5d9723b7a44d71a563eea9677334294b1d3432c87d73ed0da5653440a7"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/darkbeer.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/diesel.png",
+      "sha256": "4a508e42b0d67750c65c55e190cdbee054588e4c44b49a95d5c80dec7d79093a"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/diesel.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/dragonbreath.png",
+      "sha256": "b9d33c17f9ced54e9b1e4d4fd1c1650e0ebafe661a4db9cad00cb2f2b12227e2"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/dragonbreath.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/dyes.chemical.png",
+      "sha256": "41deac6c1edb079155918ef549b44203a5c5520b3af2cd4d66c4bc11dd43d1fb"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/dyes.chemical.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/dyes.flower.png",
+      "sha256": "a22a5b3784fe29c6c0959ca754f062fd82ff8fedbe66d9feeaf82d8a065da43f"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/dyes.flower.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/dyes.water.png",
+      "sha256": "a22a5b3784fe29c6c0959ca754f062fd82ff8fedbe66d9feeaf82d8a065da43f"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/dyes.water.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/elderberrysmoothie.png",
+      "sha256": "e8b47b1f50eb6670e64bf814e4adf88c0bfe64cb08e5dcb4c543237d69470905"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/elderberrysmoothie.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/enderair.png",
+      "sha256": "becc5d2aa5fde2a24ad641943c06b283433b650fbc2e0b7f98c04342a84e4114"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/error.png",
+      "sha256": "daf3bbe1e9edac88ee902643de4d4e177920b9562c0cd43631deabbf3ac2988b"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/error.png.mcmeta",
+      "sha256": "612969a91dd94680315b94769cf0d43b416ff1fa56cabb2302b52f448397243a"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/ethanol.png",
+      "sha256": "e53f3e0abc644f05c3443fd64eeb8c98c28a7d60393e31dcf7c1f766bee36ec9"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/ethanol.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/ethylene.png",
+      "sha256": "7954e362bda404e2f66aadbd638f06f2fa005742ae276d1d5b43b4910bc248a4"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/fieryblood.png",
+      "sha256": "4bb1e62a78704320ff5d766801da9f24f653ea345b2a2fc5b9b0480877a6b1d5"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/fieryblood.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/fierytears.png",
+      "sha256": "4bb1e62a78704320ff5d766801da9f24f653ea345b2a2fc5b9b0480877a6b1d5"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/fierytears.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/figjuice.png",
+      "sha256": "763e5220d049fe76f028dfbafbf98d2dd996b376dcb25bd9fcb9197a68b87962"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/figjuice.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/figsmoothie.png",
+      "sha256": "7e5e23257bcab328b0fe72518e7cc38ab27ceeeb6bc035222e6024d527b29412"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/figsmoothie.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/fishoil.png",
+      "sha256": "bcf0d9ce82617f82a3157e545d45e6dea75e4c17b5e976b64b82434bc5f12bf5"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/fishoil.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/for.honey.png",
+      "sha256": "66dffc2916e110fa2cd7c46d26d0be7c9ace6c804f548238390e42f6d01e0923"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/for.honey.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/for.honeydew.png",
+      "sha256": "41fa59830f8d928dcae3384e0ee5d581577fda6236930d9e5e1d800428411160"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/for.honeydew.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/fruitsmoothie.png",
+      "sha256": "830accda12e3deea2248c497b5d2275721a9d517730587911bb9abd762c62074"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/fruitsmoothie.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/fuel.png",
+      "sha256": "ef84032d7247505b3739293b4e8ddf09a8dda6160294c2687459d8ea114dfe56"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/fuel.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/gas_natural_gas.png",
+      "sha256": "ed255aadba06f1aa4eb05f74320bb57f8ef185045cd68a4a37ed99053c514f73"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/glass.png",
+      "sha256": "30a20b3df0b2d7123f2cc0f1cf1dad912f8de35ecf35ff07037d17343463a43b"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/glass.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/glenmckenner.png",
+      "sha256": "797bf78e6b55a77a0cc1fbb4976ec3ee512f553e0e89c56d7172bc1e832701c5"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/glenmckenner.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/glue.png",
+      "sha256": "f335febebcdccedb15e989afb648efc13241a32b905d82f968ab5678a7481b9e"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/glue.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/goldencarrotjuice.png",
+      "sha256": "b6655befe5e1dbf353061d37fa1069681fb545b9af3a7c64cd3dfb30b085468a"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/goldencarrotjuice.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/gooseberryjuice.png",
+      "sha256": "3c3755fe7fc7b4d2eadb398501225177dcb51190cf1bb5c616ff89bf04cb9b6e"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/gooseberryjuice.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/gooseberrysmoothie.png",
+      "sha256": "1675cfd0bc63689238af20b66b6078e9e63227c074ea7e1ebd57d5ee7cee59e7"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/gooseberrysmoothie.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/grapefruitsmoothie.png",
+      "sha256": "55a67fc38a5825f6bd907b5aab1f635f6d811e8645803ecf09e3a35989e86fba"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/grapefruitsmoothie.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/grapejuice.png",
+      "sha256": "727a886c7a9376bf1e87e808298627cb5101ca8df6853ccc04fb7bec0303b069"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/grapejuice.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/grapesmoothie.png",
+      "sha256": "c4e6116f3cf502afbfdf7577418dcda21d557a1a6ad33b400cd3536604d21457"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/grapesmoothie.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/grc.applecider0.png",
+      "sha256": "3a24c711ed5b83f82348c1dd3c81e258b000b97299655e69bf138a5f3e95a05d"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/grc.applecider0.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/grc.grapewine0.png",
+      "sha256": "4d55dc86add03cb50ed4a9ac7a1da67925b88df58f2feccdafe960450e8df152"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/grc.grapewine0.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/grc.honey.png",
+      "sha256": "66dffc2916e110fa2cd7c46d26d0be7c9ace6c804f548238390e42f6d01e0923"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/grc.honey.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/grcmilk.cream.png",
+      "sha256": "df06e452f3a09bb76146e6183379dc91223244e183257f858a2078605ad017cf"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/grcmilk.milk.png",
+      "sha256": "e19a652cd709480233d210b9fd927ffafa2ae8dedd9994a96e34e9eab5a6e170"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/grcmilk.milk.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/helium-3.png",
+      "sha256": "2c9f7222eb7932527aa3c285666d894469b5dd4cacb9d1f8443c161336dc115b"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/heliumplasma.png",
+      "sha256": "6a65f89dc595325a9a34132a1877c7db047e93e0f261f4ed9887202086fd4dfe"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/heliumplasma.png.mcmeta",
+      "sha256": "01a4ea56f3505704d42cfa5437d69d4dab7815a3ffbec1761cc4c66e270bfdf4"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/hellderberryjuice.png",
+      "sha256": "911910bc8440f3196bfacff8fc386537e7f9d835a704cf00f4b8281f8b7c6e26"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/hellderberryjuice.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/hempoil.png",
+      "sha256": "f8775ab0d134ff16f55b01951dcb3c69bba94802bde016ed44447dda3ddbd492"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/hempoil.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/holywater.png",
+      "sha256": "5979bd2c7a9095e136fc4c9b982c4288fca455bfdecfbb08e48b85e1703a7a10"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/holywater.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/honey.png",
+      "sha256": "66dffc2916e110fa2cd7c46d26d0be7c9ace6c804f548238390e42f6d01e0923"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/honey.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/honeydew.png",
+      "sha256": "41fa59830f8d928dcae3384e0ee5d581577fda6236930d9e5e1d800428411160"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/honeydew.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/hopsmash.png",
+      "sha256": "7c39036d21665811fa4d777347a6acb82ac3692563059d9ca5307b430223a804"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/hopsmash.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/hotcarbondioxide.png",
+      "sha256": "7b1a8904c98dea904f5e8afa04dc3751aa0153486ea86034814178a5c4dc5c87"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/hotfryingoil.png",
+      "sha256": "89862fec044bd9c7460d5ef166bd12515002b448f33e131bdb81715623e5255d"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/hotfryingoil.png.mcmeta",
+      "sha256": "01a4ea56f3505704d42cfa5437d69d4dab7815a3ffbec1761cc4c66e270bfdf4"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/hotheavywater.png",
+      "sha256": "7c2c6a539bc543db13946cc0b196d93405c4c64f51602d37bd1a5a7837640135"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/hotheavywater.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/hothelium.png",
+      "sha256": "7af6be79a6c19b87525c573eb03dc399ebff60689d3c375f52d968691502c540"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/hotmoltenlicl.png",
+      "sha256": "0ffba71846817a77c91b75645277cf674bcf5d140616648409c4790af403a861"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/hotmoltenlicl.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/hotmoltensodium.png",
+      "sha256": "cfb99a0ad6ba4df9d6575e98835afaa2b4ad48f2dc976d8d882e281b1af430fa"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/hotmoltensodium.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/hotmoltentin.png",
+      "sha256": "944553b5eb4cbe312ceb195e8a919ed43953f0496f8c19e0a61165d12a4a56fb"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/hotmoltentin.png.mcmeta",
+      "sha256": "6a19bef21d66aac8fdcd8032751057733e321446b304d38f5ee8ba35efe99a1d"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/hotsemiheavywater.png",
+      "sha256": "d93bbf05e769cd9b667371fd225ee11e6376086752b1cea8919c52ccba794e84"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/hotsemiheavywater.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/hottritiatedwater.png",
+      "sha256": "420016930d8ea5ddd0f5eef1033e2148889292eb27b46e435972a11b84ae79e3"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/hottritiatedwater.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/ic2biomass.png",
+      "sha256": "7fcd2c6a001e973c49f77f3814af77234cc078ecefa9ded7cdd45b1d786033af"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/ic2biomass.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/ic2constructionfoam.png",
+      "sha256": "73a1832f8bb3bd4918ed05089da5d78beff10960694e4c53ae5c23094c2b0f97"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/ic2constructionfoam.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/ic2coolant.png",
+      "sha256": "4ded2b2af49419d18f3d59457aae896daf0cc1b40ac440f16483b5c5e9c51bee"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/ic2coolant.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/ic2distilledwater.png",
+      "sha256": "2eeda9e154d1749d63671c8bdce7f362f58e6eb5c6fb635de2b0e636b2d3abd8"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/ic2distilledwater.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/ic2hotcoolant.png",
+      "sha256": "aafa6656bc68c391fc6d20ea33741f5527f7c0d96acee80a66c20005bfd8bd17"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/ic2hotcoolant.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/ic2pahoehoelava.png",
+      "sha256": "3624896dbbdc86ff01f6f3e90f1dffe805ef3084a960726c6f2bb631aed2123f"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/ic2pahoehoelava.png.mcmeta",
+      "sha256": "6a19bef21d66aac8fdcd8032751057733e321446b304d38f5ee8ba35efe99a1d"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/ic2uumatter.png",
+      "sha256": "88c935567f75fd1656837d0dafe666e54b1516eb8e880fe0fcfc17d9d6abaa36"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/ic2uumatter.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/ice.png",
+      "sha256": "2d286a0a5b1226acbabdd795febf750fc03704b1433004c181631e12d2db8e89"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/ice.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/icetea.png",
+      "sha256": "8a3986c9cc02c322d708e1523cf6773173bb2918ba332c9316c3f8b377ece71d"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/icetea.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/indigo.png",
+      "sha256": "b23dab96653e9ba78894ac87b908bd42f398f793d756aab54065429bad6b6cde"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/indigo.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/juice.png",
+      "sha256": "19ef7ba887b2e00b91f737efb08d953e740b2061df9d40f709fd9db732d8cad5"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/juice.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/kerosene.png",
+      "sha256": "bdeeaa7a3bf85119ce95f18c9c5a342c77d53743eb7ce1fe4e789033bd5086ba"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/kerosene.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/kerosine.png",
+      "sha256": "bdeeaa7a3bf85119ce95f18c9c5a342c77d53743eb7ce1fe4e789033bd5086ba"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/kerosine.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/ketchup.png",
+      "sha256": "f67172dd6fe3642347eee8f673b95f12164ed1d805e015a8230b823c9dec5258"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/ketchup.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/kiwijuice.png",
+      "sha256": "17ca4fb68612eb15412da9f51454a06ff41085d36cf5163615376d38f02c6adc"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/kiwijuice.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/kiwismoothie.png",
+      "sha256": "03ce17127c6a4ca3956143abeea58e05b1de26d350d29b79a6e85e67cfa5e704"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/kiwismoothie.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/latex.png",
+      "sha256": "831035d0e8b533f61a1a59b26f51ea78683984c3822de71b1af5294697a1b375"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/latex.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/lemonsmoothie.png",
+      "sha256": "b3291873c84e5fb57216d9b631e8c29912896e3a6f7a805c7916f61ddfcc47a6"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/lemonsmoothie.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/limesmoothie.png",
+      "sha256": "dd32f35e16b7fb3800c6503dc788fd096e1c294eddfaa55659453b67a7afba40"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/limesmoothie.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/limoncello.png",
+      "sha256": "fb742864bd199ff96af00797cfc5468eb9858e79b029ff1bd7841caf1062c2d4"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/limoncello.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/linoil.png",
+      "sha256": "f8775ab0d134ff16f55b01951dcb3c69bba94802bde016ed44447dda3ddbd492"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/linoil.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/liquidoxygen.png",
+      "sha256": "3934371ba13a1ad3bc4718c0df832c98df19e0c205f8e6a31b4628fbe15c5a9c"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/liquidoxygen.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/liquid_extra_heavy_oil.png",
+      "sha256": "34d0f860b6ae1a4c67854f774652fb3715d65e586b09ebaf454e3662665c4668"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/liquid_extra_heavy_oil.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/liquid_heavy_oil.png",
+      "sha256": "34d0f860b6ae1a4c67854f774652fb3715d65e586b09ebaf454e3662665c4668"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/liquid_heavy_oil.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/liquid_light_oil.png",
+      "sha256": "34d0f860b6ae1a4c67854f774652fb3715d65e586b09ebaf454e3662665c4668"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/liquid_light_oil.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/liquid_medium_oil.png",
+      "sha256": "34d0f860b6ae1a4c67854f774652fb3715d65e586b09ebaf454e3662665c4668"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/liquid_medium_oil.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/lithium.png",
+      "sha256": "b3314d624a88bb152e6976ced08f3ce4ed4df2d17ba42da2de5122ffc5dadbdd"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/lithium.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/lubricant.png",
+      "sha256": "6560c1a82123390a29baf596750c02b9b63e0a1d956e7d2cd336a5a51b0d16d4"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/lubricant.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/mangojuice.png",
+      "sha256": "c84d537c40e87ee81abd2b9184e6e9dfffa7443388ad38345c5325455db12eaf"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/mangojuice.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/mangosmoothie.png",
+      "sha256": "9ce9c7005855f07f030a982e9e917fbecb3a6ee3ce6ab76a773d68051855d4bc"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/mangosmoothie.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/maplesap.png",
+      "sha256": "2c21bf38635b9fae7407d0bf463bead27582c2bc96c8f5e99212bafa790a51ed"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/maplesap.png.mcmeta",
+      "sha256": "7ee4fa850b2626f73947fcead1ba9df733bc56c364344870deea3e9227125218"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/maplesyrup.png",
+      "sha256": "d7cfd7b5a96a030757396f0c86188d4f172b0be0c7d7b46e57b71627a21fa1cf"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/maplesyrup.png.mcmeta",
+      "sha256": "7ee4fa850b2626f73947fcead1ba9df733bc56c364344870deea3e9227125218"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/mayo.png",
+      "sha256": "380a1758805072bbfdf9aad1c858b4467a1a0322d8491b5e669af03909580e68"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/mayo.png.mcmeta",
+      "sha256": "7ee4fa850b2626f73947fcead1ba9df733bc56c364344870deea3e9227125218"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/mcguffium.png",
+      "sha256": "0fa3ca19fa251d940e299c3c52528c1d6bf71a5cf3dad82f81b43fbd4af152d6"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/mcguffium.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/mead.png",
+      "sha256": "7874f77a0c6ea826c5a27ce223ad280930884f3b6fbee82c455647234fbfd6e5"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/mead.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/medicine.heal.png",
+      "sha256": "0d14aedf7bd6ba0a8f379f43ea792a342077f02f36d917b77504a27a932bc65a"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/medicine.heal.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/medicine.laxative.png",
+      "sha256": "0d14aedf7bd6ba0a8f379f43ea792a342077f02f36d917b77504a27a932bc65a"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/medicine.laxative.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/melonjuice.png",
+      "sha256": "b52e243dcb8f2b6899ee307f077d18e85b132c191205e600d3665dde5913a82b"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/melonjuice.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/melonsmoothie.png",
+      "sha256": "d15f9b6b017a272d5d4781bd1bbe408f015f6dbc663b034c95e32564f2daa915"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/melonsmoothie.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/mercury.png",
+      "sha256": "2533ba8975323fa4c9dbe59ee648eff8691795fb02e7bc9a98b97dff8c3af25b"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/mercury.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/milk.png",
+      "sha256": "e19a652cd709480233d210b9fd927ffafa2ae8dedd9994a96e34e9eab5a6e170"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/milk.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/mineralsoda.png",
+      "sha256": "a2e7e63917355f9ec4891ea7785267b6057595041d6175497ff884d3a8edc9ed"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/mineralsoda.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/molten hsla.png",
+      "sha256": "cbc5f76b9a9ddca596c6a9e00878487eb35759edc2747db5f39acf739252fbaf"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/molten hsla.png.mcmeta",
+      "sha256": "6a19bef21d66aac8fdcd8032751057733e321446b304d38f5ee8ba35efe99a1d"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/molten.enderpearl.png",
+      "sha256": "25abb59f88eee4f6bf0d962c0d17ce054e724d5de258b12b0e570dea045b1be6"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/molten.enderpearl.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/molten.latex.png",
+      "sha256": "831035d0e8b533f61a1a59b26f51ea78683984c3822de71b1af5294697a1b375"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/molten.latex.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/molten.redstone.png",
+      "sha256": "91b7e7bfd96ba13c5a2e19bb27a8f5178846358c54140270ce48ce50c9b8ec1e"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/molten.redstone.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/mushroomsoup.png",
+      "sha256": "e7cd7a8890311d4fdf309e68ef32f2faa6f5d82015d542aa925c3f92220ca0d2"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/mushroomsoup.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/netherair.png",
+      "sha256": "1ed422ae7be5783525d14c3253307261cf4c83e82076d708cf77ed1e6a990e69"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/neutralmatter.png",
+      "sha256": "ca7c84c28002f75dbd977180474049a1feaa0f9bb8d7ad66594c74d5265b3d59"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/neutralmatter.png.mcmeta",
+      "sha256": "2e45fff3ca9c6104d9303e03e472d802fc4a9bad10a5b79aeb336b5170bc023c"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/nitrofuel.png",
+      "sha256": "3052131d884117e10181b3fca0ad7cd386186095cfc7a5fc634ffec7d574e888"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/nitrofuel.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/nitrogenplasma.png",
+      "sha256": "cdb5c30ddbd2fe7d74151b37666d857cd591b965633bd0a909621e7e068309f5"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/nitrogenplasma.png.mcmeta",
+      "sha256": "01a4ea56f3505704d42cfa5437d69d4dab7815a3ffbec1761cc4c66e270bfdf4"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/nutella.png",
+      "sha256": "4cf4a31bad046275a9d4f10137fd1839269d9af4ae6db4574817c52a994b402b"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/nutoil.png",
+      "sha256": "fd5cb34e760b663a1ae8ca9a2afb5d4d89c146bcbb1e513cf1d914edffc3fbb4"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/nutoil.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/oil.png",
+      "sha256": "34d0f860b6ae1a4c67854f774652fb3715d65e586b09ebaf454e3662665c4668"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/oil.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/orangesmoothie.png",
+      "sha256": "dcb63ce2bac21c414edb6c05a6b278f72d23f5405a3014ceb1d0384935109b27"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/orangesmoothie.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/papayajuice.png",
+      "sha256": "5110a48e656be7d9660ef9f2b4601e7a60e688ba4dfcfb96c17a70d4cbc6478b"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/papayajuice.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/papayasmoothie.png",
+      "sha256": "2a7cdc087dd98282ea2f4b64e13f07178ffcc3f7d1096da4c6f668ce052a4493"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/papayasmoothie.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/peachsmoothie.png",
+      "sha256": "6b1adb21b2384cb646e9d1200e066b218dbfb1046625c7ed57cc563a6f5bb885"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/peachsmoothie.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/peanutbutter.png",
+      "sha256": "759fd68bcd989b7b2c008e6ec08957f5ae6f670d61f5d1859c44920c9fac2cf3"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/pearsmoothie.png",
+      "sha256": "377a18b6fc9bf554857f8352e0fe208ebd7ec9225cca9db841e60cf03f61ec1c"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/pearsmoothie.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/persimmonjuice.png",
+      "sha256": "050338b9abcd85f51aecb90dd58a180b927fb6dcb7ee1941d16f5c5e46aa93ad"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/persimmonjuice.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/persimmonsmoothie.png",
+      "sha256": "dcb63ce2bac21c414edb6c05a6b278f72d23f5405a3014ceb1d0384935109b27"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/persimmonsmoothie.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/petrol.png",
+      "sha256": "8fa1bb654e41b6b54f508a8aeb3091cb727a254a173b2f91aef44f9eca82b528"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/petrol.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/petrotheum.png",
+      "sha256": "049b824287b9e5ef69c61f93de7d4216bc5f691dc2ea99a138775be0a08f3c61"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/petrotheum.png.mcmeta",
+      "sha256": "6a19bef21d66aac8fdcd8032751057733e321446b304d38f5ee8ba35efe99a1d"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/pina.colada.png",
+      "sha256": "99b4e62e944aa50a0d036a7b6d7eded22792b54cc7dd9fdd396fea83430d6b65"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/pina.colada.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/pineapplesmoothie.png",
+      "sha256": "f6336f5bf7568b750e2da85d603b618fdce8f06a5bf715bf5e79e596fedee83a"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/pineapplesmoothie.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/plastic.png",
+      "sha256": "0359c0e1e4df4f0a1ce2b2c27888a4fc3e187cae732ea993efa4c6221104599f"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/plastic.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/plumsmoothie.png",
+      "sha256": "377ca8b6ea460e462e45acb5e3339d42b2297ca307e2ac084ed98f89642953d2"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/plumsmoothie.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/pomegranatejuice.png",
+      "sha256": "ea7c12a6fefbfa995b9baa28f3d77b7c7f1e675dc86f97cd636d3ced3fae9183"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/pomegranatejuice.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/pomegranatesmoothie.png",
+      "sha256": "12174dc9817d20e3257e77f20ab559e7f67335518f3483a8183171ef0246df16"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/pomegranatesmoothie.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potatojuice.png",
+      "sha256": "fb742864bd199ff96af00797cfc5468eb9858e79b029ff1bd7841caf1062c2d4"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potatojuice.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.alcopops.png",
+      "sha256": "fb742864bd199ff96af00797cfc5468eb9858e79b029ff1bd7841caf1062c2d4"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.alcopops.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.ambrosia.png",
+      "sha256": "4cf820c367159577dcb8f3341f2169aa2c75ebffaabb05a1203f1bfce6762203"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.ambrosia.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.awkward.png",
+      "sha256": "8c959ad7af99a3da05b2ad3d6694b5ffad7cebbbbd5edbc9ddab5656b08d3f6c"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.awkward.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.cafeaulait.png",
+      "sha256": "231fa79ff74c85bb911d235dbeae0c98cfc428573330d2fe693594a5e0c4309c"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.cafeaulait.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.cavejohnsonsgrenadejuice.png",
+      "sha256": "fb742864bd199ff96af00797cfc5468eb9858e79b029ff1bd7841caf1062c2d4"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.cavejohnsonsgrenadejuice.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.coffee.png",
+      "sha256": "231fa79ff74c85bb911d235dbeae0c98cfc428573330d2fe693594a5e0c4309c"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.coffee.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.damage.lingering.png",
+      "sha256": "f7c1531d77c33fbdc0f780b2f6df50358fff7cc3566dac542df446868884376d"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.damage.lingering.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.damage.png",
+      "sha256": "a12a9a72fdd6f2d28a5b38818785f39e67a9a108b2e16baf83a1d728b9ca7174"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.damage.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.damage.splash.png",
+      "sha256": "f7c1531d77c33fbdc0f780b2f6df50358fff7cc3566dac542df446868884376d"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.damage.splash.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.damage.strong.lingering.png",
+      "sha256": "dd3016b3a0cd91acb27f3eb0f2704e0526ed67ee78a6297ddc2c4b19e931bd68"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.damage.strong.lingering.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.damage.strong.png",
+      "sha256": "ee1a4aaea44506bb2d93bb02c8617732cb0fcaaf0c48439c775cd8a7539f8d17"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.damage.strong.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.damage.strong.splash.png",
+      "sha256": "dd3016b3a0cd91acb27f3eb0f2704e0526ed67ee78a6297ddc2c4b19e931bd68"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.damage.strong.splash.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.darkcafeaulait.png",
+      "sha256": "df9bd391c935f6e48c647c5d34681ac62afe47161c527809e171b39e81d4c2dd"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.darkcafeaulait.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.darkchocolatemilk.png",
+      "sha256": "df9bd391c935f6e48c647c5d34681ac62afe47161c527809e171b39e81d4c2dd"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.darkchocolatemilk.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.darkcoffee.png",
+      "sha256": "df9bd391c935f6e48c647c5d34681ac62afe47161c527809e171b39e81d4c2dd"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.darkcoffee.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.diablosauce.png",
+      "sha256": "6f431496483475b75ebee407c172ad81dce1c40855096cc1d2ca536bbc732751"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.diablosauce.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.diablosauce.strong.png",
+      "sha256": "6f431496483475b75ebee407c172ad81dce1c40855096cc1d2ca536bbc732751"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.diablosauce.strong.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.diabolosauce.png",
+      "sha256": "6f431496483475b75ebee407c172ad81dce1c40855096cc1d2ca536bbc732751"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.diabolosauce.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.dragonblood.png",
+      "sha256": "c1982bcfabf852a9eb004a46df34c3c9232654d79be1b72713e20fd78b958f54"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.dragonblood.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.dressing.png",
+      "sha256": "1ad6959daf819d63bd6b6fe4e79070986fa8814fb18849cd45b7d6dd3682f3b8"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.dressing.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.fireresistance.lingering.png",
+      "sha256": "d37e55ce9fc67ec885992060e57902a3834b03c4463d49cb14d304d2f2f6855e"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.fireresistance.lingering.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.fireresistance.long.lingering.png",
+      "sha256": "e27e7e434913670803888447fd6231c87335495950b3a0d262cf5445557527ae"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.fireresistance.long.lingering.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.fireresistance.long.png",
+      "sha256": "d5db38bed9c4495d6c31fdf8ea6b36da9b462a4d2d84207c668396f0566c1221"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.fireresistance.long.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.fireresistance.long.splash.png",
+      "sha256": "e27e7e434913670803888447fd6231c87335495950b3a0d262cf5445557527ae"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.fireresistance.long.splash.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.fireresistance.png",
+      "sha256": "5a673bdc6fe1af4f540ef2b4b87e4deb5f30a4ce1e0de95ad68cba651267d8e3"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.fireresistance.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.fireresistance.splash.png",
+      "sha256": "d37e55ce9fc67ec885992060e57902a3834b03c4463d49cb14d304d2f2f6855e"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.fireresistance.splash.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.goldenapplejuice.png",
+      "sha256": "b6655befe5e1dbf353061d37fa1069681fb545b9af3a7c64cd3dfb30b085468a"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.goldenapplejuice.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.goldencider.png",
+      "sha256": "b6655befe5e1dbf353061d37fa1069681fb545b9af3a7c64cd3dfb30b085468a"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.goldencider.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.health.lingering.png",
+      "sha256": "a88ce4d10ffd931143d804af6b27b1059098383ec84db3dc5a361d51090406cb"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.health.lingering.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.health.png",
+      "sha256": "bc730d8e9f12c806a42cbea2ad91a6a77eed38756452332b5e6b1cfa4d665c3f"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.health.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.health.splash.png",
+      "sha256": "a88ce4d10ffd931143d804af6b27b1059098383ec84db3dc5a361d51090406cb"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.health.splash.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.health.strong.lingering.png",
+      "sha256": "ebd1855e2d47c5b940dac8a08f21ddc534cc17241deea1652ba6ecfeb8fe4a10"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.health.strong.lingering.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.health.strong.png",
+      "sha256": "ce2024ed3a983f49f08f9bfc2d6e68e7a28b285591bd2608146b8afe0dd1ae8c"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.health.strong.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.health.strong.splash.png",
+      "sha256": "ebd1855e2d47c5b940dac8a08f21ddc534cc17241deea1652ba6ecfeb8fe4a10"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.health.strong.splash.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.hotsauce.png",
+      "sha256": "6f431496483475b75ebee407c172ad81dce1c40855096cc1d2ca536bbc732751"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.hotsauce.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.idunsapplejuice.png",
+      "sha256": "b6655befe5e1dbf353061d37fa1069681fb545b9af3a7c64cd3dfb30b085468a"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.idunsapplejuice.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.invisibility.lingering.png",
+      "sha256": "b5e249cd9274def83e223eb072c84a29ab3932e56bcf697f4f918d1986b6a28a"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.invisibility.lingering.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.invisibility.long.lingering.png",
+      "sha256": "87413a72cf20ef77a491cee412fb5e749c9b860418cbdae16d883aa7436b0abe"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.invisibility.long.lingering.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.invisibility.long.png",
+      "sha256": "96ebba6068f01044926e78fe5652e5462875b857e1d051d80c6d606123ed5cda"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.invisibility.long.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.invisibility.long.splash.png",
+      "sha256": "87413a72cf20ef77a491cee412fb5e749c9b860418cbdae16d883aa7436b0abe"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.invisibility.long.splash.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.invisibility.png",
+      "sha256": "6bafa7546136d15513cff63f66b4b579489e1342a5bb43d817652938b455e131"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.invisibility.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.invisibility.splash.png",
+      "sha256": "b5e249cd9274def83e223eb072c84a29ab3932e56bcf697f4f918d1986b6a28a"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.invisibility.splash.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.jump.lingering.png",
+      "sha256": "c7edad5a8488eedea8cf1eb2f68eb4c7064815b3742b56e8e19232764224a2eb"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.jump.lingering.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.jump.png",
+      "sha256": "c7edad5a8488eedea8cf1eb2f68eb4c7064815b3742b56e8e19232764224a2eb"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.jump.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.jump.splash.png",
+      "sha256": "c7edad5a8488eedea8cf1eb2f68eb4c7064815b3742b56e8e19232764224a2eb"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.jump.splash.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.jump.strong.lingering.png",
+      "sha256": "c7edad5a8488eedea8cf1eb2f68eb4c7064815b3742b56e8e19232764224a2eb"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.jump.strong.lingering.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.jump.strong.png",
+      "sha256": "c7edad5a8488eedea8cf1eb2f68eb4c7064815b3742b56e8e19232764224a2eb"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.jump.strong.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.jump.strong.splash.png",
+      "sha256": "c7edad5a8488eedea8cf1eb2f68eb4c7064815b3742b56e8e19232764224a2eb"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.jump.strong.splash.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.laitaucafe.png",
+      "sha256": "231fa79ff74c85bb911d235dbeae0c98cfc428573330d2fe693594a5e0c4309c"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.laitaucafe.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.lemonade.png",
+      "sha256": "fb742864bd199ff96af00797cfc5468eb9858e79b029ff1bd7841caf1062c2d4"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.lemonade.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.leninade.png",
+      "sha256": "fb742864bd199ff96af00797cfc5468eb9858e79b029ff1bd7841caf1062c2d4"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.leninade.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.mineralwater.png",
+      "sha256": "a2e7e63917355f9ec4891ea7785267b6057595041d6175497ff884d3a8edc9ed"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.mineralwater.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.mundane.png",
+      "sha256": "8c959ad7af99a3da05b2ad3d6694b5ffad7cebbbbd5edbc9ddab5656b08d3f6c"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.mundane.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.nightvision.lingering.png",
+      "sha256": "def378229580252818f27601a1e9f92a7afab033ac6dcd8cdbfa1db6d9bb92cf"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.nightvision.lingering.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.nightvision.long.lingering.png",
+      "sha256": "f8ca553781e17c0da7cb2e003d97dc2e30e6b7365294ecb795475bfa4ce2ec51"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.nightvision.long.lingering.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.nightvision.long.png",
+      "sha256": "9bbe23e534fb352955d6cf1e6abb30421e70079ce1b7dae87ebf8e99a97700c2"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.nightvision.long.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.nightvision.long.splash.png",
+      "sha256": "f8ca553781e17c0da7cb2e003d97dc2e30e6b7365294ecb795475bfa4ce2ec51"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.nightvision.long.splash.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.nightvision.png",
+      "sha256": "5e7f6c80fd5f73eb7aa10e9a325308bc3e6787d62e5f86e63ee91a3e366408e6"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.nightvision.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.nightvision.splash.png",
+      "sha256": "def378229580252818f27601a1e9f92a7afab033ac6dcd8cdbfa1db6d9bb92cf"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.nightvision.splash.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.notchesbrew.png",
+      "sha256": "b6655befe5e1dbf353061d37fa1069681fb545b9af3a7c64cd3dfb30b085468a"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.notchesbrew.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.png",
+      "sha256": "6faf38b934d006d639d622f4287f4e0ad63013f509e07065ccdbcf0457af9a30"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.poison.lingering.png",
+      "sha256": "b9e29b604d1374e4dc5410d9a845930c49aef29e8856caadc15a6f08ab81f2ab"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.poison.lingering.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.poison.long.lingering.png",
+      "sha256": "3f9c8668665761f53713e555b06735270a37f58bacdf2765660f8459f830bb7d"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.poison.long.lingering.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.poison.long.png",
+      "sha256": "efa0d9c081d5c7702d1e70f8d81c9890e2ea8e92e8062866eeea4247405edf61"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.poison.long.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.poison.long.splash.png",
+      "sha256": "3f9c8668665761f53713e555b06735270a37f58bacdf2765660f8459f830bb7d"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.poison.long.splash.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.poison.png",
+      "sha256": "727891a640e09d2c92160915b222308a6436d52120cf6b1a91faaa58031f7dc4"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.poison.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.poison.splash.png",
+      "sha256": "b9e29b604d1374e4dc5410d9a845930c49aef29e8856caadc15a6f08ab81f2ab"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.poison.splash.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.poison.strong.lingering.png",
+      "sha256": "02aee1f2e602e214e4bd8d3dcf93592873ad1b639a101eb1274732209f143800"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.poison.strong.lingering.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.poison.strong.png",
+      "sha256": "385f2c04fac9684d9a7202b66059bc91dab3ed79a356755b88099b925cae3ebd"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.poison.strong.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.poison.strong.splash.png",
+      "sha256": "02aee1f2e602e214e4bd8d3dcf93592873ad1b639a101eb1274732209f143800"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.poison.strong.splash.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.regen.lingering.png",
+      "sha256": "d4ef381271cc835cb04416937a40715591864082b08290f2fecf8da84f2e555e"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.regen.lingering.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.regen.long.lingering.png",
+      "sha256": "d4ef381271cc835cb04416937a40715591864082b08290f2fecf8da84f2e555e"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.regen.long.lingering.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.regen.long.png",
+      "sha256": "d4ef381271cc835cb04416937a40715591864082b08290f2fecf8da84f2e555e"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.regen.long.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.regen.long.splash.png",
+      "sha256": "d4ef381271cc835cb04416937a40715591864082b08290f2fecf8da84f2e555e"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.regen.long.splash.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.regen.png",
+      "sha256": "d4ef381271cc835cb04416937a40715591864082b08290f2fecf8da84f2e555e"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.regen.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.regen.splash.png",
+      "sha256": "d4ef381271cc835cb04416937a40715591864082b08290f2fecf8da84f2e555e"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.regen.splash.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.regen.strong.lingering.png",
+      "sha256": "d4ef381271cc835cb04416937a40715591864082b08290f2fecf8da84f2e555e"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.regen.strong.lingering.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.regen.strong.png",
+      "sha256": "d4ef381271cc835cb04416937a40715591864082b08290f2fecf8da84f2e555e"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.regen.strong.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.regen.strong.splash.png",
+      "sha256": "d4ef381271cc835cb04416937a40715591864082b08290f2fecf8da84f2e555e"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.regen.strong.splash.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.sake.png",
+      "sha256": "e19a652cd709480233d210b9fd927ffafa2ae8dedd9994a96e34e9eab5a6e170"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.sake.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.saltywater.png",
+      "sha256": "8c959ad7af99a3da05b2ad3d6694b5ffad7cebbbbd5edbc9ddab5656b08d3f6c"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.saltywater.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.slowness.lingering.png",
+      "sha256": "b5e249cd9274def83e223eb072c84a29ab3932e56bcf697f4f918d1986b6a28a"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.slowness.lingering.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.slowness.long.lingering.png",
+      "sha256": "87413a72cf20ef77a491cee412fb5e749c9b860418cbdae16d883aa7436b0abe"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.slowness.long.lingering.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.slowness.long.png",
+      "sha256": "96ebba6068f01044926e78fe5652e5462875b857e1d051d80c6d606123ed5cda"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.slowness.long.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.slowness.long.splash.png",
+      "sha256": "87413a72cf20ef77a491cee412fb5e749c9b860418cbdae16d883aa7436b0abe"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.slowness.long.splash.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.slowness.png",
+      "sha256": "6bafa7546136d15513cff63f66b4b579489e1342a5bb43d817652938b455e131"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.slowness.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.slowness.splash.png",
+      "sha256": "b5e249cd9274def83e223eb072c84a29ab3932e56bcf697f4f918d1986b6a28a"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.slowness.splash.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.speed.lingering.png",
+      "sha256": "652cf09c11b7dc1ef59ae769684bb1b7b95b6548a7232b98038d7c4a837f59d9"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.speed.lingering.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.speed.long.lingering.png",
+      "sha256": "daef86b5c882337d75cfa086675d3e4a176b512cac783da747471f8753e0d94d"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.speed.long.lingering.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.speed.long.png",
+      "sha256": "bdb955c91524fca407c28936d8864a0b84d5ba11dce51e1a8e7af387a98df088"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.speed.long.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.speed.long.splash.png",
+      "sha256": "daef86b5c882337d75cfa086675d3e4a176b512cac783da747471f8753e0d94d"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.speed.long.splash.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.speed.png",
+      "sha256": "44e13328d35c2b37a14d9a8c56273d43b3f7ac03eed97f3c7ea668eee5695a8b"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.speed.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.speed.splash.png",
+      "sha256": "652cf09c11b7dc1ef59ae769684bb1b7b95b6548a7232b98038d7c4a837f59d9"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.speed.splash.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.speed.strong.lingering.png",
+      "sha256": "faf19c13f9aac76e7eac3aa6785a6e286f12069c0f1af64d2a5a722ba7c62a96"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.speed.strong.lingering.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.speed.strong.png",
+      "sha256": "24a033ca9e758177e682cf45d5c63207d237878dbbcedda1905a18d660d67a28"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.speed.strong.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.speed.strong.splash.png",
+      "sha256": "faf19c13f9aac76e7eac3aa6785a6e286f12069c0f1af64d2a5a722ba7c62a96"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.speed.strong.splash.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.strength.lingering.png",
+      "sha256": "40ec56beea0fe820be90a62feb0badb4c69c8334e5f51a8c30361b97f38d987d"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.strength.lingering.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.strength.long.lingering.png",
+      "sha256": "428736355e5c164be16ed1cd0798675ffbfef0cb991604a8ed1c81d0fb1d8c7e"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.strength.long.lingering.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.strength.long.png",
+      "sha256": "e989e88321624b55c524f4c3c546e2bf674dc5d2ed67d32145eb97493006357d"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.strength.long.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.strength.long.splash.png",
+      "sha256": "428736355e5c164be16ed1cd0798675ffbfef0cb991604a8ed1c81d0fb1d8c7e"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.strength.long.splash.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.strength.png",
+      "sha256": "9797e6112962ca13a0bd8db02b397c204199a3509c5797874592aaa4ac3c1751"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.strength.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.strength.splash.png",
+      "sha256": "40ec56beea0fe820be90a62feb0badb4c69c8334e5f51a8c30361b97f38d987d"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.strength.splash.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.strength.strong.lingering.png",
+      "sha256": "05aa9e806b9f768ebee1b3c5f8f38d022c1d65a192eb8f8f941214087a4d033a"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.strength.strong.lingering.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.strength.strong.png",
+      "sha256": "99308e0e58d362f236f08fc54cfbad6d58cfbca1a9a59f74a1e7443da1e65f8c"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.strength.strong.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.strength.strong.splash.png",
+      "sha256": "05aa9e806b9f768ebee1b3c5f8f38d022c1d65a192eb8f8f941214087a4d033a"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.strength.strong.splash.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.tainted.png",
+      "sha256": "6857e67bb0346ce95a1ac9faff6f6505cb7bf3a9f907e89038d96a0353c44b98"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.tainted.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.thick.png",
+      "sha256": "8c959ad7af99a3da05b2ad3d6694b5ffad7cebbbbd5edbc9ddab5656b08d3f6c"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.thick.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.waterbreathing.lingering.png",
+      "sha256": "f63b86ee9673303be6ec58d075e9cbb485a4cfe4f488a252a9d6c30405690ca9"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.waterbreathing.lingering.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.waterbreathing.long.lingering.png",
+      "sha256": "8d16d52317bb994fe509390d386b3dae330d24ba581580b74c4f0244562f914d"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.waterbreathing.long.lingering.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.waterbreathing.long.png",
+      "sha256": "109dde1b5aa2f2992f890f650455a1427dde42b27c1ff0ab4ba3124978df6d11"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.waterbreathing.long.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.waterbreathing.long.splash.png",
+      "sha256": "8d16d52317bb994fe509390d386b3dae330d24ba581580b74c4f0244562f914d"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.waterbreathing.long.splash.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.waterbreathing.png",
+      "sha256": "a54ab50a28e9e03bddb2f8f8dfeb083586e665b33eb1236043ac3912ffd1853b"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.waterbreathing.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.waterbreathing.splash.png",
+      "sha256": "f63b86ee9673303be6ec58d075e9cbb485a4cfe4f488a252a9d6c30405690ca9"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.waterbreathing.splash.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.weakness.lingering.png",
+      "sha256": "b5e249cd9274def83e223eb072c84a29ab3932e56bcf697f4f918d1986b6a28a"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.weakness.lingering.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.weakness.long.lingering.png",
+      "sha256": "87413a72cf20ef77a491cee412fb5e749c9b860418cbdae16d883aa7436b0abe"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.weakness.long.lingering.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.weakness.long.png",
+      "sha256": "96ebba6068f01044926e78fe5652e5462875b857e1d051d80c6d606123ed5cda"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.weakness.long.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.weakness.long.splash.png",
+      "sha256": "87413a72cf20ef77a491cee412fb5e749c9b860418cbdae16d883aa7436b0abe"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.weakness.long.splash.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.weakness.png",
+      "sha256": "6bafa7546136d15513cff63f66b4b579489e1342a5bb43d817652938b455e131"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.weakness.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.weakness.splash.png",
+      "sha256": "b5e249cd9274def83e223eb072c84a29ab3932e56bcf697f4f918d1986b6a28a"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/potion.weakness.splash.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/propane.png",
+      "sha256": "caaed8ca577f61fe34c5b9119d526817eef7b78e605e019afc9db2b72f526449"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/propylene.png",
+      "sha256": "16f7553a2ab6c0be5be1d62893f12c71a36bf4a41a0ba030c6f888dd3624270b"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/pumpkinjuice.png",
+      "sha256": "64a3aeedc34cf306ba6459de48c4b1624b1e80465fc49ecbedc8013e59740713"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/pumpkinjuice.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/purpledrink.png",
+      "sha256": "b2bc94dc9f97b869477d0fcd02832c4424d16233c937e6491089deaf5022aaa1"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/purpledrink.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/purplegrapesmoothie.png",
+      "sha256": "8126577cfa65936b20fa8175f0595cd333844715a32e5b67039054ae500056ed"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/purplegrapesmoothie.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/pyrotheum.png",
+      "sha256": "f40511da55cc733134a749a718147c3bedbb1d8d783b0742978a87d76fba6d6b"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/pyrotheum.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/rainbowsap.png",
+      "sha256": "fe4444a43ab7517d2868bf716300d3ab82b206d770163f7f2d7ecab1ce6de518"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/rainbowsap.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/raspberryjuice.png",
+      "sha256": "815db65c3e9f04fdad7b1087c7f2cbd812ab9793b6fe3f23e5da344af9bf4bbf"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/raspberryjuice.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/raspberrysmoothie.png",
+      "sha256": "fba89f3a8e6066dc9c957e86229d92dbc0d875b3375daf22e7186761cfaac0ac"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/raspberrysmoothie.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/redgrapesmoothie.png",
+      "sha256": "41a047d6285f1b030c76ae8e123a84274bffd3ed8ee7d335e3f2a652efcb040d"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/redgrapesmoothie.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/reedwater.png",
+      "sha256": "8c959ad7af99a3da05b2ad3d6694b5ffad7cebbbbd5edbc9ddab5656b08d3f6c"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/reedwater.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/ricardosanchez.png",
+      "sha256": "e6b138bf03b676034be90d1cac1fbbda3273729288c66f3907078696065a170f"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/ricardosanchez.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/ricevinegar.png",
+      "sha256": "d2e381da413cf8e6dafbb8d7216e8525911f1d3494366c1e430f0ae24b6f22e5"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/ricevinegar.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/ricewater.png",
+      "sha256": "6c5b83f6823a16b4eea2f06b7fe6d663dbc989986eabba5dc26791668b204309"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/ricewater.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/riverwater.png",
+      "sha256": "e536ff5721bd562f5b16749d52a43ad2812ddefd54f6153b09635e1e016d4109"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/riverwater.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/rottendrink.png",
+      "sha256": "6857e67bb0346ce95a1ac9faff6f6505cb7bf3a9f907e89038d96a0353c44b98"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/rottendrink.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/royaljelly.png",
+      "sha256": "dd2f09ce14e0b47b4687b5c208e7a51692e41e2cf15c1d92209556d59765d6da"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/royaljelly.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/seedoil.png",
+      "sha256": "f8775ab0d134ff16f55b01951dcb3c69bba94802bde016ed44447dda3ddbd492"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/seedoil.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/short.mead.png",
+      "sha256": "7874f77a0c6ea826c5a27ce223ad280930884f3b6fbee82c455647234fbfd6e5"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/short.mead.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/slime.png",
+      "sha256": "d4401e8e5607e27638f3aa5acb0faa2f2c7404330c75c7530444a342671b2999"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/slime.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/sluicejuice.png",
+      "sha256": "67152b40ce9305f6d60a9fc08d4a42575fd99b5486a713d2e353fc58fbfa7d02"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/sluicejuice.png.mcmeta",
+      "sha256": "2e45fff3ca9c6104d9303e03e472d802fc4a9bad10a5b79aeb336b5170bc023c"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/soda.png",
+      "sha256": "a2e7e63917355f9ec4891ea7785267b6057595041d6175497ff884d3a8edc9ed"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/soda.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/soulsandoil.png",
+      "sha256": "e31f714c1595b626a723ae39183072f4ae7155b21546bd868ef5fa51cdd6c577"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/soulsandoil.png.mcmeta",
+      "sha256": "2e45fff3ca9c6104d9303e03e472d802fc4a9bad10a5b79aeb336b5170bc023c"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/soymilk.png",
+      "sha256": "3c7dd09cbf4f9fe86ae5f07a21c0cdfe30ebb5a0439617dfd229a93fe0e360bf"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/soymilk.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/spectral_dew.png",
+      "sha256": "f370c745c97cd0cc9ae7d40fb61d5c59905c3e0c923a7dfd77524831f752d527"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/spectral_dew.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/spoiledmilk.png",
+      "sha256": "e19a652cd709480233d210b9fd927ffafa2ae8dedd9994a96e34e9eab5a6e170"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/spoiledmilk.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/squidink.png",
+      "sha256": "34d0f860b6ae1a4c67854f774652fb3715d65e586b09ebaf454e3662665c4668"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/squidink.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/starfruitjuice.png",
+      "sha256": "4cab6967d2c0acd6a419372c528df5ef06f0316e87c72ac363037a9662648563"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/starfruitjuice.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/starfruitsmoothie.png",
+      "sha256": "4a8e7894b4c457b83f3aff3bcf2fd706a7fa91550618ee08454cba9d945e7d8a"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/starfruitsmoothie.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/steam.png",
+      "sha256": "72b9a5a91a50115562e0c47704015d53bc88e0774cbe1da79a1edb86bf1485a4"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/steam.png.mcmeta",
+      "sha256": "6a19bef21d66aac8fdcd8032751057733e321446b304d38f5ee8ba35efe99a1d"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/strawberryjuice.png",
+      "sha256": "d5f4bc5e748192f1142ddc8a9e9bfee69e66796be0d2d324096f8426be1a98b1"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/strawberryjuice.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/strawberrysmoothie.png",
+      "sha256": "0b897fae90740e584726af9984e05f493398ddfe6d42275095e6ce3812e7cc6f"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/strawberrysmoothie.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/sunfloweroil.png",
+      "sha256": "a763ca0e8a63c95a6492c2bfae8e9e6923db0e87c3613cd9e9b587dcd100cbe9"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/sunfloweroil.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/sweettea.png",
+      "sha256": "4901b69eee52f555da88bd48540bab711ea54da5dc44d2de9507815ffdd1ee32"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/sweettea.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/tea.png",
+      "sha256": "4901b69eee52f555da88bd48540bab711ea54da5dc44d2de9507815ffdd1ee32"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/tea.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/thoriumsalt.png",
+      "sha256": "ebbf6c1969a08e0becc438109b0b0d102fe46893cf1cbc9ea1f8aa5959e70c06"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/thoriumsalt.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/uuamplifier.png",
+      "sha256": "d4ef381271cc835cb04416937a40715591864082b08290f2fecf8da84f2e555e"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/uuamplifier.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/vinegar.png",
+      "sha256": "1f9b7823bb3253c90e4ffd613770bb7efe04de4a326081ed004d27cf9f02013c"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/vinegar.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/watergeothermal.png",
+      "sha256": "1428317ead374a435e6a798518d5f4b5bce8043ddd63bfb1dddefa81f68defec"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/watergeothermal.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/whaleoil.png",
+      "sha256": "aadf98a20590fa46da7eb0390c76a677442f170a70987db90057f6fb4c353bf7"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/whaleoil.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/wheathopsmash.png",
+      "sha256": "19954a013ed8a335ce454c0c3be1f1f0bf971ee207518a2b9cc9b010a14cb7dd"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/wheathopsmash.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/whitegrapesmoothie.png",
+      "sha256": "4452357d79bd5955607cbab3cbd19111b048263b2bd58bb429045df7013afb09"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/whitegrapesmoothie.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/wine.png",
+      "sha256": "bc6dc0ce89902f8b3f9b4570cff9088755350814abe04a612966bf36a1ba57e6"
+    },
+    {
+      "file": "assets/gregtech/textures/block/fluids/wine.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    }
+  ],
+  "gaps": [
+    "No build/runtime validation by user request",
+    "Neo fluid display items have metadata only; full payload/drink/container behavior and inventory rendering remain in the container port",
+    "Water family mixins and actual saved-world fluid/pipe transfer not verified",
+    "Binary add-ons referencing the old nested RegisteredFluids record owner need recompilation"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "gregtech:block/stones/gt.stone.rhyolite/bricks_chiseled",
+    "top": "gregtech:block/stones/gt.stone.rhyolite/bricks_chiseled",
+    "side": "gregtech:block/stones/gt.stone.rhyolite/bricks_chiseled"
+  }
+}

@@ -1,0 +1,234 @@
+{
+  "authors": [
+    "saltnya",
+    "original GregTech 6 contributors"
+  ],
+  "license": "Original notices/history retained; local integration only",
+  "counts": {
+    "blocks": 10,
+    "plantSoils": 7,
+    "resourceRecords": 30
+  },
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "sha256": "69df2e3705bf9c8a0040c70963c9c3d3c0823f6be1a0abcc02032015f7654605",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/registry/GTIconSetBlocks.java",
+      "sha256": "e15e608bd33893bf6a123656625ce68b75ecc84eaef8da6d6a65910cd61a8c2f",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTIconSetBlocks.java",
+      "sourceSha256": "efe85ee1d952dceddb949810522bce6a4b5cc01b66cb91b4d236a2c3692c4c12"
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/block/GrassSoilCatalog.java",
+      "sha256": "84d3acb4d12768b53fb16bd4336f1f15bc8966a344a22db1ecebada0e69caa29",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/GTGrassBlock.java",
+      "sha256": "3429187e21ba1ce9e0c50a27c58ac6c35e6b00471ffd5752b0b13a97bd4a097d",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\GTGrassBlock.java",
+      "sourceSha256": "6dbadd0e861535627418710c8b722fc64040ed2e2672aa10da669d3e690b006d"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTGrassSoils.java",
+      "sha256": "23fef70d936d8d09c45fe051791a13b5c07a3036bd9978a8ef217f2b96c9b8c2",
+      "source": null,
+      "sourceSha256": null
+    }
+  ],
+  "resources": [
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\grass.json",
+      "sha256": "b510c1d907ce4a6e0f99c1bbf5f3ed6b126c78c366bdf00a62c8197085dfde45",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/grass.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\grassblock_brown.json",
+      "sha256": "d635c8612c142b52ec1152261c01f70639edadb924e0b41a1ac1a7e63fc79049",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/grassblock_brown.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\grassblock_dark.json",
+      "sha256": "4d870da5c2bb193505094d15ec692b7574a1e46cf188967fa55afaa8c9ee7f1e",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/grassblock_dark.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\grassblock_light.json",
+      "sha256": "ca1dae6e4078e924caef07daad984806ab692d2832d3fcf484cb59ed4ddbb219",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/grassblock_light.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\grassblock_medium.json",
+      "sha256": "736aacdf475467eb16d115877f155b6c8beb239c4f670cf8652b2478b4945730",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/grassblock_medium.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\grassblock_normal.json",
+      "sha256": "e006782913179e04b28839b5c4614256af0eb6009952309d507e854358c4c450",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/grassblock_normal.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\grassblock_yellow.json",
+      "sha256": "ad416ed6507fbb7c5858e2c383d5777360d6ba5487889b405773ff28ccbc4fe3",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/grassblock_yellow.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\grass_dry.json",
+      "sha256": "ec8e3aba596947cc8a38104bc837a52b2b5b6ae5ef88907ba5d54c5a29430ddd",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/grass_dry.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\grass_moldy.json",
+      "sha256": "0e202b4d673aebcad8a7e67b19dfd0f7dbe47a19e75a3c5eb4627d63183edf56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/grass_moldy.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\grass_rotten.json",
+      "sha256": "7d32eef9438cecaf22eceba8ac30262e4e6d85e9711faf3a6c25433891dc7e0b",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/grass_rotten.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\grass.json",
+      "sha256": "7f3b3ca8422e04fab9d4317a289119818f008e9838da5154d3b7c9f356aca7ad",
+      "target": "core/src/main/resources/assets/gregtech/models/item/grass.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\grassblock_brown.json",
+      "sha256": "ee2984b3de45a3fe265be03add30a4593a477840bd0ee18cda0afb9931f53ba4",
+      "target": "core/src/main/resources/assets/gregtech/models/item/grassblock_brown.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\grassblock_dark.json",
+      "sha256": "f5b360424bb44aa55bad414cb6801e627ce9ce679d6731c0b5d0cebe39e0c0e9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/grassblock_dark.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\grassblock_light.json",
+      "sha256": "4f08ee47355d1ddeb337172035045de4413e375929c449b7e6a95fd4aa48c20a",
+      "target": "core/src/main/resources/assets/gregtech/models/item/grassblock_light.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\grassblock_medium.json",
+      "sha256": "726f93be488e5b8dda1431ffd7e95be914aaec8bc7df7f1f341774501f0ddb03",
+      "target": "core/src/main/resources/assets/gregtech/models/item/grassblock_medium.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\grassblock_normal.json",
+      "sha256": "6d7d879fce4875496b17ef707c3db1320120e41e3b81d15e41a69ded691fcbe8",
+      "target": "core/src/main/resources/assets/gregtech/models/item/grassblock_normal.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\grassblock_yellow.json",
+      "sha256": "8b57c54188e266221ac4253b0d48dcbbcfc5231c38166cd73da1707f0dd65440",
+      "target": "core/src/main/resources/assets/gregtech/models/item/grassblock_yellow.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\grass_dry.json",
+      "sha256": "63ebd972e26f4444e6bda12e971227f1c90c48cbaabcfada3f174c8f3bd83dbe",
+      "target": "core/src/main/resources/assets/gregtech/models/item/grass_dry.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\grass_moldy.json",
+      "sha256": "6046a26633e16a485b79dee4e181d862c1f223c6f5d24d8b811211cd495762c4",
+      "target": "core/src/main/resources/assets/gregtech/models/item/grass_moldy.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\grass_rotten.json",
+      "sha256": "1d0a92248c70a6902d6d83301b83cef714949578c940564d94d1f858708b9d50",
+      "target": "core/src/main/resources/assets/gregtech/models/item/grass_rotten.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\grass.json",
+      "sha256": "ac3d408b2ec145bf71214104aecd273aafd66b9e21529d5205bcb68fb86f5975",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/grass.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\grassblock_brown.json",
+      "sha256": "2d432d786071496bf668861e9ba8bd1e9efb06955201828424e174b5d2f707c2",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/grassblock_brown.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\grassblock_dark.json",
+      "sha256": "eef8971fb400cfeaeb2b7635faa8cc01960b6198e13622c13fd2ffc87f30f320",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/grassblock_dark.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\grassblock_light.json",
+      "sha256": "c903ab4bc2838f8fa231089a3618a222b72d4b1e15b365b3cab9f1c0c8bc72d0",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/grassblock_light.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\grassblock_medium.json",
+      "sha256": "5b36c5f24e48846ab83597c0ab9e86b0b352ac8d371ad55c86643e19780bd473",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/grassblock_medium.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\grassblock_normal.json",
+      "sha256": "8f5a3eb55171fec508ab4745f9928fa3da568d88f75663aae43da4d948ec6ca2",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/grassblock_normal.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\grassblock_yellow.json",
+      "sha256": "8567bf7f4263a4bd40efabfea98dd48383e5b679114c892ac453665a3cc5eb5d",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/grassblock_yellow.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\grass_dry.json",
+      "sha256": "a048b63a0eb1752499084d15cb224636d5271c26e2cf1da66fe55d944a37deae",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/grass_dry.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\grass_moldy.json",
+      "sha256": "ddc3a1352c63edc4b8511016c921b55964b7f64df36cc55f083fa74666bc0c71",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/grass_moldy.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\grass_rotten.json",
+      "sha256": "10dd8a98129de2ef15d5d646795e0d4620612264ab0cb30c80b92a0747228d33",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/grass_rotten.json",
+      "adaptation": "shared original bytes"
+    }
+  ],
+  "choice": "Use source1 actual7 non-spreading plant-soil grass variants and3 ordinary aged variants, with exact10-ID/side/top catalog shared by both factories. Native Silk Touch uses existing registry-aware OreHarvest; native soil hook adapts explicit water-adjacent sugar-cane gate. No duplicate grass registry or placeholder substituted for the colored grass class. Source2/3 spring indicator designs remain recorded in native-fluid-springs-integration.json, and their alternate generation policies are deferred.",
+  "knownGaps": [
+    "Native PlantType replacement recognizes BushBlock plains and water-adjacent sugar cane; other-mod custom soil types remain deferred.",
+    "Colored grass has silk-touch self drop/otherwise dirt and no spread, while3 dry/moldy/rotten variants remain ordinary source icon blocks.",
+    "Spring indicator helper now resolves blocks but source worldgen still never calls it.",
+    "These10 registrations/resources are compile-covered only, not covered by preceding server startup; actual drops/soil/client/reload unverified."
+  ],
+  "validation": "Dual compile PASS 19s; no individual startup or new fixtures"
+}

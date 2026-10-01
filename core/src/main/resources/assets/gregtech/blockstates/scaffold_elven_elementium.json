@@ -1,0 +1,68 @@
+{
+  "variants": {
+    "design=0,facing=north": {
+      "model": "gregtech:block/tool/scaffold_elven_elementium",
+      "y": 0
+    },
+    "design=0,facing=east": {
+      "model": "gregtech:block/tool/scaffold_elven_elementium",
+      "y": 90
+    },
+    "design=0,facing=south": {
+      "model": "gregtech:block/tool/scaffold_elven_elementium",
+      "y": 180
+    },
+    "design=0,facing=west": {
+      "model": "gregtech:block/tool/scaffold_elven_elementium",
+      "y": 270
+    },
+    "design=1,facing=north": {
+      "model": "gregtech:block/tool/scaffold_elven_elementium_1",
+      "y": 0
+    },
+    "design=1,facing=east": {
+      "model": "gregtech:block/tool/scaffold_elven_elementium_1",
+      "y": 90
+    },
+    "design=1,facing=south": {
+      "model": "gregtech:block/tool/scaffold_elven_elementium_1",
+      "y": 180
+    },
+    "design=1,facing=west": {
+      "model": "gregtech:block/tool/scaffold_elven_elementium_1",
+      "y": 270
+    },
+    "design=2,facing=north": {
+      "model": "gregtech:block/tool/scaffold_elven_elementium_2",
+      "y": 0
+    },
+    "design=2,facing=east": {
+      "model": "gregtech:block/tool/scaffold_elven_elementium_2",
+      "y": 90
+    },
+    "design=2,facing=south": {
+      "model": "gregtech:block/tool/scaffold_elven_elementium_2",
+      "y": 180
+    },
+    "design=2,facing=west": {
+      "model": "gregtech:block/tool/scaffold_elven_elementium_2",
+      "y": 270
+    },
+    "design=3,facing=north": {
+      "model": "gregtech:block/tool/scaffold_elven_elementium_3",
+      "y": 0
+    },
+    "design=3,facing=east": {
+      "model": "gregtech:block/tool/scaffold_elven_elementium_3",
+      "y": 90
+    },
+    "design=3,facing=south": {
+      "model": "gregtech:block/tool/scaffold_elven_elementium_3",
+      "y": 180
+    },
+    "design=3,facing=west": {
+      "model": "gregtech:block/tool/scaffold_elven_elementium_3",
+      "y": 270
+    }
+  }
+}

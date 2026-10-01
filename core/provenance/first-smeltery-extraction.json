@@ -1,0 +1,109 @@
+{
+  "schema": 1,
+  "date": "2026-09-30",
+  "source": "saltnya",
+  "source_snapshot": "4156178259",
+  "authors": "Original supplied project authors retained in imported snapshot; integration adaptations in local Git history",
+  "license": "Source 1 mod authorization remains unresolved; local integration only, publication gate unchanged",
+  "extractions": [
+    {
+      "destination": "core/src/main/java/com/gregtech/gregtech/api/machine/crucible/CrucibleProcess.java",
+      "sources": [
+        {
+          "path": "src/main/java/com/gregtech/gregtech/blockentity/machine/SmeltingCrucibleBlockEntity.java",
+          "sha256": "fd41b507bdc97e8032ba94e0a3af95d96f2646c3dc8afc726c3a4db9178ec723"
+        }
+      ],
+      "kind": "adapted_domain_extraction"
+    },
+    {
+      "destination": "core/src/main/java/com/gregtech/gregtech/api/machine/InitialSmelteryDefinitions.java",
+      "sources": [
+        {
+          "path": "src/main/java/com/gregtech/gregtech/registry/GTMachines.java",
+          "sha256": "811bf042807fbb6d1aba0e5141759fac72d4b4dccb9ececad43886321a40df3d"
+        },
+        {
+          "path": "src/main/java/com/gregtech/gregtech/api/machine/MachineRegistry.java",
+          "sha256": "8a16d1f713f7341ebd5532171e045b8d2535dd2299f4bcd65b86bccbaebf9595"
+        }
+      ],
+      "kind": "adapted_domain_extraction"
+    },
+    {
+      "destination": "core/src/main/java/com/gregtech/gregtech/api/machine/MaterialFuelRules.java",
+      "sources": [
+        {
+          "path": "src/main/java/com/gregtech/gregtech/api/machine/FurnaceFuelValue.java",
+          "sha256": "a4f1b51a9b1a46bfd5d9b32e0f4320dc6d13ec8740e851521e9546a060708bf3"
+        },
+        {
+          "path": "src/main/java/com/gregtech/gregtech/api/machine/FurnaceFuelHelper.java",
+          "sha256": "61ecdd99f7595601535965181b0fbdf21f725fb4b68aeb1c9f896d31ac30b33c"
+        }
+      ],
+      "kind": "adapted_domain_extraction"
+    },
+    {
+      "destination": "core/src/main/java/com/gregtech/gregtech/api/machine/crucible/MoldCastingRules.java",
+      "sources": [
+        {
+          "path": "src/main/java/com/gregtech/gregtech/blockentity/machine/MoldBlockEntity.java",
+          "sha256": "88df3cda8094e23a37673ee145022034ba8594472110a1e790cf03d19984f059"
+        }
+      ],
+      "kind": "adapted_domain_extraction"
+    },
+    {
+      "destination": "core/src/main/java/com/gregtech/gregtech/api/machine/ManualToolRules.java",
+      "sources": [
+        {
+          "path": "src/main/java/com/gregtech/gregtech/api/tool/GTToolHelper.java",
+          "sha256": "f86d58d34f4415032773fc2f785e037a50e6ed69adfb6536320db5c94d97cbff"
+        }
+      ],
+      "kind": "adapted_domain_extraction"
+    },
+    {
+      "destination": "core/src/main/java/com/gregtech/gregtech/api/machine/crucible/CrucibleInputRules.java",
+      "sources": [
+        {
+          "path": "src/main/java/com/gregtech/gregtech/api/machine/crucible/CrucibleItemInput.java",
+          "sha256": "6b2607cf2a3fe4cc5b3513acde72940e26597445f915733714aba76050bdc01c"
+        }
+      ],
+      "kind": "adapted_domain_extraction"
+    },
+    {
+      "destination": "core/src/main/java/com/gregtech/gregtech/api/material/ItemComposition.java",
+      "sources": [
+        {
+          "path": "src/main/java/com/gregtech/gregtech/api/material/ItemMaterialRegistry.java",
+          "sha256": "64be11d724f26b1d8464a781c864cdb3a7c2ce59196a14b1fa7063680bac49b6"
+        }
+      ],
+      "kind": "adapted_domain_extraction"
+    },
+    {
+      "destination": "core/src/main/java/com/gregtech/gregtech/api/material/VanillaUnificationDefinitions.java",
+      "sources": [
+        {
+          "path": "src/main/java/com/gregtech/gregtech/loader/VanillaUnificationLoader.java",
+          "sha256": "67026c998483242aa4c4050f51b34b436258000a4c6bb851ed1c4d02892a33c2"
+        }
+      ],
+      "kind": "adapted_domain_extraction"
+    },
+    {
+      "destination": "core/src/main/resources/data/gregtech/materials/vanilla_compositions.json",
+      "sources": [
+        {
+          "path": "src/main/resources/data/gregtech/materials/vanilla_compositions.json",
+          "sha256": "f418db78d3c01bea927650e41356c8e7ea60e686f9b81cf9c025e619cdf458c4"
+        }
+      ],
+      "kind": "exact_resource_move"
+    }
+  ],
+  "validation": "Implementation batch pending compilation and actual machine runtime; do not label complete"
+}

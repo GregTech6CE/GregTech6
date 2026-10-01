@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "gregtech:block/stones/gt.stone.rhyolite/cobble",
+    "top": "gregtech:block/stones/gt.stone.rhyolite/cobble",
+    "side": "gregtech:block/stones/gt.stone.rhyolite/cobble"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "gregtech:block/iconsets/log_hole_rainbowood"
+    },
+    "axis=z": {
+      "model": "gregtech:block/iconsets/log_hole_rainbowood_horizontal",
+      "x": 90
+    },
+    "axis=x": {
+      "model": "gregtech:block/iconsets/log_hole_rainbowood_horizontal",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

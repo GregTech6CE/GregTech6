@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "gregtech:block/machine/storage/advanced_crafting_table_north"
+    },
+    "facing=south": {
+      "model": "gregtech:block/machine/storage/advanced_crafting_table_south"
+    },
+    "facing=west": {
+      "model": "gregtech:block/machine/storage/advanced_crafting_table_west"
+    },
+    "facing=east": {
+      "model": "gregtech:block/machine/storage/advanced_crafting_table_east"
+    }
+  }
+}

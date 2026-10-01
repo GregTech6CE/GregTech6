@@ -1,0 +1,1518 @@
+{
+  "stage": "P3 D010 fast source integration",
+  "baseline": "fac8bd79f90e625e1a7088b7e0b2cb47fa3c8789",
+  "authors": [
+    "saltnya",
+    "brokestar233",
+    "Lorbineitte Masson",
+    "original GregTech 6 contributors"
+  ],
+  "license": "Original notices/licenses and obtainable histories retained; no relicensing/publication.",
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/NeoMachineRecipeLoader.java",
+      "sha256": "1c85f44d5fecfc1e2c12c882e900d8b7fe736a2d397cd9eff6fb7361ac02cf8e",
+      "sources": [],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "sha256": "dde405b68459187b4bb384d4cb5ac223e4bb04bb21dfe79fa57300f45d70b23d",
+      "sources": [],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/machine/BasicMachineRegistries.java",
+      "sha256": "01f1af03fd726425aec829549ff9d3303d8ac77d991ac96c13fb8c9f75cfd00c",
+      "sources": [],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "sha256": "cf2241c8f0dff18f3a704d4c99cc6de7805c9c45fe4bb701cc6b0a85c1273404",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTBlockEntities.java",
+          "sha256": "027081bae34480826956a74d65a24aa7f4ef29d4be4a4687046793a10d9df62f",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTEnergyNodes.java",
+      "sha256": "85c37e989e52a7135f4c05e29b626b26784856355669048aa0c035f276bbd500",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTEnergyNodes.java",
+          "sha256": "0216a1fdd398d758cef6c0955de95b9281aed2222463a61175262e37b2be16a2",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "sha256": "381bec35311957c23c690e5f1b6f1bae272b2538b9b3bbe50d2f08be7b78f6df",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTMultiItems.java",
+          "sha256": "33c2677480c5cfb07e4f5bcd714580352bbece744713a9c87cd05c4c2a839815",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/content/nuclear/ReactorCoolants.java",
+      "sha256": "f7b4cf3cacf2a1b40de2e03c31e243e6933181511460a9790b18e1e08fb76b46",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\nuclear\\ReactorCoolants.java",
+          "sha256": "b7095829fb7344c689d5c3c5d2e5757820ae77d2f2a112140951413c8989bb2d",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/content/nuclear/RodPhysics.java",
+      "sha256": "261dba091725d146c7c651e6d89e94debf99915804383d8b4e88707e9332e4ec",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\nuclear\\RodPhysics.java",
+          "sha256": "4d5451224b0c48e573fcb04ae84931fbb5581def5cb6fcde14b16140b3f19e75",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/nuclear/NuclearCraftingCatalog.java",
+      "sha256": "920c2962d08f5f81317c6c501c63838eb16fa405b11594b5909d64f659ac7d03",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\nuclear\\ReactorRodRecipes.java",
+          "sha256": "d473a9f1f2e816bf4fe7f33be6e2f9c1cbb632a36d8a680246d03d38e2b59fb9",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorCoolantRules.java",
+      "sha256": "c889a5753d68f4305b89679a830e9b3188a5d2cd8556f5e2751177c7a5e4ad09",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\nuclear\\ReactorCoolants.java",
+          "sha256": "b7095829fb7344c689d5c3c5d2e5757820ae77d2f2a112140951413c8989bb2d",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/nuclear/RodPhysicsMath.java",
+      "sha256": "d4f94274de5eb88a4cc3617b927b1b897a997e7ec448c1a8565e70f5f8f62165",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\nuclear\\RodPhysics.java",
+          "sha256": "4d5451224b0c48e573fcb04ae84931fbb5581def5cb6fcde14b16140b3f19e75",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/energy/ReactorCasingBlock.java",
+      "sha256": "77386e1cac88da78cbcc4a96072fab8318e8a155c06ea18ce6f18633897d597c",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\energy\\ReactorCasingBlock.java",
+          "sha256": "bbf6b6192f511a97fb7ae9e80b8f8a5c4cc3cfcc9495b8bcaf0b0415bb0f5b93",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/energy/ReactorCore2x2Block.java",
+      "sha256": "807578af2af6ad572bc41c22faf4312cc84a05bf597e2168af86a94573c00ba5",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\energy\\ReactorCore2x2Block.java",
+          "sha256": "d062333235600fba15eb1ab45798b431ded21812b6d3bc736f8d25a954a50fe2",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/energy/ReactorCoreBlock.java",
+      "sha256": "4530e76d3043f5dd1ea970f4a273c840aad36a29ea347243d906424693d1453c",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\energy\\ReactorCoreBlock.java",
+          "sha256": "a395dae760a049643690796219d5714a1ef52001c276943848d2baf69fdf9700",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/energy/ReactorRodBlock.java",
+      "sha256": "b50be06d42678a145690348633c97220ddd4ef259080c3031d782bc652d90d76",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\energy\\ReactorRodBlock.java",
+          "sha256": "9a27c7a8d2fa43e00d5acc923a86cd0ba8c917981247facf805e376f008cfeab",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/energy/PlacedReactorRodBlockEntity.java",
+      "sha256": "880bfb86ff85fb273717387df6fce59162585ee01a26704fea42bf7d80216134",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\energy\\PlacedReactorRodBlockEntity.java",
+          "sha256": "3030f48c2a0fd562f3fe271dea3cfdbdcc369ea1d7592aef8e93dc68ca87496c",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCore2x2BlockEntity.java",
+      "sha256": "52c818458320fad1b06746b0120621f36582df5f16b8d20e65b372d280c254e7",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\energy\\ReactorCore2x2BlockEntity.java",
+          "sha256": "b7e8e91cff9b67672b1c2db4343ac252d3a6ee6b0c2e84cf9257f9d068f62f62",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCoreBlockEntity.java",
+      "sha256": "1045df21aaec4b0ac93ce8b3ee3c31534ae0003dccde49e7d9d43e38e557291a",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\energy\\ReactorCoreBlockEntity.java",
+          "sha256": "a91c7fd0f99693195bb3d19ebf30c64a726dbef486731ab6bfe5da74eb156de7",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/NuclearClientSetup.java",
+      "sha256": "96b5ed5e49759c5bb60cbf6f585d124fe229bfb5d26f98a75d61e27f7512b862",
+      "sources": [],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/ReactorRodRenderer.java",
+      "sha256": "7e302d2d0919437dfa5ac13d08c750d94b537073c3458ab02e095795c25dd367",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\ReactorRodRenderer.java",
+          "sha256": "c46fcf54c54b8643d7ef49c66023906a1d4fca4e7675c5bb23fabad099a8c623",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/nuclear/RadiationMedicineRecipes.java",
+      "sha256": "1dbb475fbd061128fb3e4dc1fc560e313f7a8fad730876739550e10ecfbe9aba",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\nuclear\\RadiationMedicineRecipes.java",
+          "sha256": "5455f8d70bb95bbcbe547acab4e74f785c9d1ed5ad6e634711c8104ba248bd65",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorCoolants.java",
+      "sha256": "25f58a56d1a6b7066d31dc5aeaf978e41f05dd34efb7418d619854760dee8ae0",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\nuclear\\ReactorCoolants.java",
+          "sha256": "b7095829fb7344c689d5c3c5d2e5757820ae77d2f2a112140951413c8989bb2d",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorHazards.java",
+      "sha256": "6d6964d20526be5f279cce6f76364c4cf28002a3b357c6b55b0c5240020b7f41",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\nuclear\\ReactorHazards.java",
+          "sha256": "6d6964d20526be5f279cce6f76364c4cf28002a3b357c6b55b0c5240020b7f41",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorInteraction.java",
+      "sha256": "88443f5f94844244201eb96377ed0e504bd5489fddd00ec7287a4351d703c284",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\nuclear\\ReactorInteraction.java",
+          "sha256": "8a8357c139647660a6f073e4a69cfedaa239049fb4d30048343ed707d474682c",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorNetwork.java",
+      "sha256": "d42bae763fa34ed29892e8d15ff5ac273798956542847c35b214473054bc45b6",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\nuclear\\ReactorNetwork.java",
+          "sha256": "62b8bb7bad61c641e45a6097a6b4709d63c593c182b440e50e7595c48d42de1a",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorPorts.java",
+      "sha256": "ae466907137e447b57a86cc24bb68dd5b1e6235acb3201382a57f28b076f9c7f",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\nuclear\\ReactorPorts.java",
+          "sha256": "618a6c080c7cbebd6fd378d6cbf2ccd4a774fd031edc037d3fa70af6758e18ae",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorRadiation.java",
+      "sha256": "77bcfdd937c77b8cf31ceb675e8b4115c49d49dcf91da3f62a68e28928b4ccdf",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\nuclear\\ReactorRadiation.java",
+          "sha256": "d93947fbe75d4aa523b7e15390adc272c5822794588045717f0b68b015ba640e",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorRodRecipes.java",
+      "sha256": "61a9dd25d4517763c7858c97ee96feaaa8a4187659ab3af3132d50c3fe74e36d",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\nuclear\\ReactorRodRecipes.java",
+          "sha256": "d473a9f1f2e816bf4fe7f33be6e2f9c1cbb632a36d8a680246d03d38e2b59fb9",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/nuclear/RodPhysics.java",
+      "sha256": "18f88067124adde7930989cdc99110aa4df33266f2bde919f4e105055b8ddc74",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\nuclear\\RodPhysics.java",
+          "sha256": "4d5451224b0c48e573fcb04ae84931fbb5581def5cb6fcde14b16140b3f19e75",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/data/NuclearCraftingRecipePack.java",
+      "sha256": "220367f18a62c7bc269d37b4e9e6878aacd1142374b5a893fc911ec784568c8f",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\nuclear\\ReactorRodRecipes.java",
+          "sha256": "d473a9f1f2e816bf4fe7f33be6e2f9c1cbb632a36d8a680246d03d38e2b59fb9",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/item/FuelRodItem.java",
+      "sha256": "5ef4bbe33610062720296b0d96cb431375b2683c03bb92c20dcf42afd32c660f",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\item\\FuelRodItem.java",
+          "sha256": "9adc7b051798b3075c5038a65b5b4a696158b7e7412e0c4f13abb4bd19f63668",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/item/GeigerCounterItem.java",
+      "sha256": "876e19be698e6e9db9b5c943b419c3b6b21c0c0ac6c2a9fd70ff520fe278701c",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\item\\GeigerCounterItem.java",
+          "sha256": "876e19be698e6e9db9b5c943b419c3b6b21c0c0ac6c2a9fd70ff520fe278701c",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/item/RadiationSuitItem.java",
+      "sha256": "5427566232d84054db24e6af1f1eb5d67353749e67005e8b004087ef4b67c6c1",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\item\\RadiationSuitItem.java",
+          "sha256": "daef188c180f3aa43755be29710bbf221c3158482b84b33b16dee3f66a22d9bf",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTFuelRods.java",
+      "sha256": "3e6cdabd0a44785c6bac96216d20a12f3e53d227d32389e014be96eeb3d55a89",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTFuelRods.java",
+          "sha256": "7b42ca3d9061655c813a0663c3dd07c3dd15c589565b520c56d5ac5eb41f8d56",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTRadiationProtection.java",
+      "sha256": "199cbbcfd63f56c76a5a49666de5ecd68bf7bb6ac70f0a01a14b6f0d8b0970f9",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTRadiationProtection.java",
+          "sha256": "8cbab33cbe2eb80fb64fbed0e99c95d10cdf83e43494c9cdf31d0bd5b99b35f8",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "shared original coolant/rod rules or actual native stack/world/scheduling/capability/registry/render boundary"
+    }
+  ],
+  "resources": [
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9232.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9232.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9232.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/container/reactor_rod.json",
+      "sourceSha256": "e7bb7da9a27a476f5eac0454bc2f60454fbbe79743ec27e9cc91253e52b48913",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/container/reactor_rod.json",
+      "sha256": "0614da04bc77db2046292736060545123de26d0bae07b48d0781b510acc03727",
+      "adaptation": "native resource format boundary",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\container\\reactor_rod.json",
+      "originalSnapshotSha256": "e7bb7da9a27a476f5eac0454bc2f60454fbbe79743ec27e9cc91253e52b48913"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9420.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9420.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9420.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9239.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9239.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9239.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9360.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9360.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9360.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_core_2x2.json",
+      "sourceSha256": "42cae312b3a81385e3f6133bb30805c5dc0d1379a6d7408f3758811ffce7ebf4",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_core_2x2.json",
+      "sha256": "42cae312b3a81385e3f6133bb30805c5dc0d1379a6d7408f3758811ffce7ebf4",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_core_2x2.json",
+      "originalSnapshotSha256": "42cae312b3a81385e3f6133bb30805c5dc0d1379a6d7408f3758811ffce7ebf4"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/energy/reactor_core_2x2.json",
+      "sourceSha256": "94cb4e7f47335836bb59011fd65494ea5c6c7254e27bf5df7c94f2c90f02fd84",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/reactor_core_2x2.json",
+      "sha256": "2cb275347fbb44190b816f4b3b8bca6d540fc73bb7cdaea2ecd9e10f059adb03",
+      "adaptation": "native resource format boundary",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\reactor_core_2x2.json",
+      "originalSnapshotSha256": "94cb4e7f47335836bb59011fd65494ea5c6c7254e27bf5df7c94f2c90f02fd84"
+    },
+    {
+      "source": "assets/gregtech/blockstates/fuel_rod_pu_239.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/fuel_rod_pu_239.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\fuel_rod_pu_239.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9219.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9219.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9219.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9320.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9320.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9320.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9331.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9331.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9331.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_core.json",
+      "sourceSha256": "6c7d44abb7326dcb1b8577f5700a1d08331a65db23c21e52fd89930f2efa7493",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_core.json",
+      "sha256": "6c7d44abb7326dcb1b8577f5700a1d08331a65db23c21e52fd89930f2efa7493",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_core.json",
+      "originalSnapshotSha256": "6c7d44abb7326dcb1b8577f5700a1d08331a65db23c21e52fd89930f2efa7493"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/energy/reactor_core.json",
+      "sourceSha256": "87129e6a543214694a42ffff9b6c31342f4e9ba76816124763e41e9acf329214",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/reactor_core.json",
+      "sha256": "50de96be799e8e48e5bdc545c195864b7126120b94e59153d9e1d083e8278246",
+      "adaptation": "native resource format boundary",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\reactor_core.json",
+      "originalSnapshotSha256": "87129e6a543214694a42ffff9b6c31342f4e9ba76816124763e41e9acf329214"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9431.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9431.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9431.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9329.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9329.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9329.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9222.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9222.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9222.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9203.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9203.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9203.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/fuel_rod_mox.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/fuel_rod_mox.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\fuel_rod_mox.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9350.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9350.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9350.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9332.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9332.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9332.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9333.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9333.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9333.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9440.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9440.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9440.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/fuel_rod_co_60.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/fuel_rod_co_60.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\fuel_rod_co_60.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9230.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9230.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9230.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9322.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9322.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9322.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9231.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9231.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9231.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9204.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9204.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9204.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9249.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9249.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9249.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9349.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9349.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9349.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9330.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9330.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9330.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9421.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9421.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9421.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9202.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9202.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9202.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_casing.json",
+      "sourceSha256": "b0e8d365ab45956d7c2d6ad610ccbc5c35158fcaa7753bb2874cc0a1cddf0b47",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_casing.json",
+      "sha256": "b0e8d365ab45956d7c2d6ad610ccbc5c35158fcaa7753bb2874cc0a1cddf0b47",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_casing.json",
+      "originalSnapshotSha256": "b0e8d365ab45956d7c2d6ad610ccbc5c35158fcaa7753bb2874cc0a1cddf0b47"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/energy/reactor_casing.json",
+      "sourceSha256": "5435ac1da7690ffb31e117c67c85a79148e3601a66a35bb6b9e4d0087ae3df1e",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/reactor_casing.json",
+      "sha256": "8099cbdfa17aa41395438ed88be6baa4e37b813ecbabafaf5f7b5840f0863702",
+      "adaptation": "native resource format boundary",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\reactor_casing.json",
+      "originalSnapshotSha256": "5435ac1da7690ffb31e117c67c85a79148e3601a66a35bb6b9e4d0087ae3df1e"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9321.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9321.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9321.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/fuel_rod_naquadah.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/fuel_rod_naquadah.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\fuel_rod_naquadah.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9319.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9319.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9319.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9410.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9410.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9410.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9310.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9310.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9310.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/fuel_rod_u_235.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/fuel_rod_u_235.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\fuel_rod_u_235.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9229.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9229.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9229.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/fuel_rod_u_238.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/fuel_rod_u_238.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\fuel_rod_u_238.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9260.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9260.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9260.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/fuel_rod_th_232.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/fuel_rod_th_232.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\fuel_rod_th_232.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/fuel_rod_am_241.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/fuel_rod_am_241.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\fuel_rod_am_241.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9201.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9201.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9201.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9411.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9411.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9411.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9430.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9430.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9430.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9240.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9240.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9240.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9339.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9339.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9339.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9340.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9340.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9340.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9441.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9441.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9441.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9341.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9341.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9341.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9361.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9361.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9361.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/reactor_rod_9261.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reactor_rod_9261.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reactor_rod_9261.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/blockstates/fuel_rod_am_243.json",
+      "sourceSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/fuel_rod_am_243.json",
+      "sha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\fuel_rod_am_243.json",
+      "originalSnapshotSha256": "34a0350206d286e6bf95ec769ca219787bbee398692e3892cf1cd07839f02301"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9232.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9232.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9232.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9420.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9420.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9420.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9239.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9239.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9239.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9360.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9360.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9360.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_core_2x2.json",
+      "sourceSha256": "cf1646ef88bfa568425cabb340ce34b37d125fecb04a76369a202d6b457b29bd",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_core_2x2.json",
+      "sha256": "cf1646ef88bfa568425cabb340ce34b37d125fecb04a76369a202d6b457b29bd",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_core_2x2.json",
+      "originalSnapshotSha256": "cf1646ef88bfa568425cabb340ce34b37d125fecb04a76369a202d6b457b29bd"
+    },
+    {
+      "source": "assets/gregtech/models/item/fuel_rod_pu_239.json",
+      "sourceSha256": "d85de7bb71debadb9f404a923effb86b71ca2c6550aedcec6c5c58d1e920c86e",
+      "target": "core/src/main/resources/assets/gregtech/models/item/fuel_rod_pu_239.json",
+      "sha256": "d85de7bb71debadb9f404a923effb86b71ca2c6550aedcec6c5c58d1e920c86e",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\fuel_rod_pu_239.json",
+      "originalSnapshotSha256": "d85de7bb71debadb9f404a923effb86b71ca2c6550aedcec6c5c58d1e920c86e"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9219.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9219.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9219.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9320.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9320.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9320.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9331.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9331.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9331.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_core.json",
+      "sourceSha256": "9471dd8df53db0188c3a7717e02821f1115d78adc46509f8043dd042dc4c5ef2",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_core.json",
+      "sha256": "9471dd8df53db0188c3a7717e02821f1115d78adc46509f8043dd042dc4c5ef2",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_core.json",
+      "originalSnapshotSha256": "9471dd8df53db0188c3a7717e02821f1115d78adc46509f8043dd042dc4c5ef2"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9431.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9431.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9431.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9329.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9329.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9329.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9222.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9222.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9222.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/radiation_suit_boots.json",
+      "sourceSha256": "471d8c939e74849d82f7b8a99e77de49fab09a1c4b8279d664a7aab2a137608d",
+      "target": "core/src/main/resources/assets/gregtech/models/item/radiation_suit_boots.json",
+      "sha256": "471d8c939e74849d82f7b8a99e77de49fab09a1c4b8279d664a7aab2a137608d",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\radiation_suit_boots.json",
+      "originalSnapshotSha256": "471d8c939e74849d82f7b8a99e77de49fab09a1c4b8279d664a7aab2a137608d"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9203.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9203.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9203.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/fuel_rod_mox.json",
+      "sourceSha256": "d85de7bb71debadb9f404a923effb86b71ca2c6550aedcec6c5c58d1e920c86e",
+      "target": "core/src/main/resources/assets/gregtech/models/item/fuel_rod_mox.json",
+      "sha256": "d85de7bb71debadb9f404a923effb86b71ca2c6550aedcec6c5c58d1e920c86e",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\fuel_rod_mox.json",
+      "originalSnapshotSha256": "d85de7bb71debadb9f404a923effb86b71ca2c6550aedcec6c5c58d1e920c86e"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9350.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9350.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9350.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/geiger_counter.json",
+      "sourceSha256": "11c452c716e1150f27b290580323ab97d1960c30c766192f45a6debe53e63feb",
+      "target": "core/src/main/resources/assets/gregtech/models/item/geiger_counter.json",
+      "sha256": "11c452c716e1150f27b290580323ab97d1960c30c766192f45a6debe53e63feb",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\geiger_counter.json",
+      "originalSnapshotSha256": "11c452c716e1150f27b290580323ab97d1960c30c766192f45a6debe53e63feb"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9332.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9332.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9332.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9333.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9333.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9333.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9440.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9440.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9440.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/fuel_rod_co_60.json",
+      "sourceSha256": "d85de7bb71debadb9f404a923effb86b71ca2c6550aedcec6c5c58d1e920c86e",
+      "target": "core/src/main/resources/assets/gregtech/models/item/fuel_rod_co_60.json",
+      "sha256": "d85de7bb71debadb9f404a923effb86b71ca2c6550aedcec6c5c58d1e920c86e",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\fuel_rod_co_60.json",
+      "originalSnapshotSha256": "d85de7bb71debadb9f404a923effb86b71ca2c6550aedcec6c5c58d1e920c86e"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9230.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9230.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9230.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9322.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9322.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9322.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9231.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9231.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9231.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9204.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9204.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9204.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9249.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9249.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9249.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9349.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9349.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9349.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9330.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9330.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9330.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9421.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9421.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9421.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9202.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9202.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9202.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_casing.json",
+      "sourceSha256": "954e4500b2b56eccbc4e61a673bc87b5f4a89c5c354e097b5e00a83a593b862a",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_casing.json",
+      "sha256": "954e4500b2b56eccbc4e61a673bc87b5f4a89c5c354e097b5e00a83a593b862a",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_casing.json",
+      "originalSnapshotSha256": "954e4500b2b56eccbc4e61a673bc87b5f4a89c5c354e097b5e00a83a593b862a"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9321.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9321.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9321.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/radiation_suit_chestplate.json",
+      "sourceSha256": "e89e758779793b3055f586f04f20f3f9f569e93607e8f653be8f03ba6cbfabff",
+      "target": "core/src/main/resources/assets/gregtech/models/item/radiation_suit_chestplate.json",
+      "sha256": "e89e758779793b3055f586f04f20f3f9f569e93607e8f653be8f03ba6cbfabff",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\radiation_suit_chestplate.json",
+      "originalSnapshotSha256": "e89e758779793b3055f586f04f20f3f9f569e93607e8f653be8f03ba6cbfabff"
+    },
+    {
+      "source": "assets/gregtech/models/item/fuel_rod_naquadah.json",
+      "sourceSha256": "d85de7bb71debadb9f404a923effb86b71ca2c6550aedcec6c5c58d1e920c86e",
+      "target": "core/src/main/resources/assets/gregtech/models/item/fuel_rod_naquadah.json",
+      "sha256": "d85de7bb71debadb9f404a923effb86b71ca2c6550aedcec6c5c58d1e920c86e",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\fuel_rod_naquadah.json",
+      "originalSnapshotSha256": "d85de7bb71debadb9f404a923effb86b71ca2c6550aedcec6c5c58d1e920c86e"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9319.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9319.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9319.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9410.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9410.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9410.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9310.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9310.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9310.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/fuel_rod_u_235.json",
+      "sourceSha256": "d85de7bb71debadb9f404a923effb86b71ca2c6550aedcec6c5c58d1e920c86e",
+      "target": "core/src/main/resources/assets/gregtech/models/item/fuel_rod_u_235.json",
+      "sha256": "d85de7bb71debadb9f404a923effb86b71ca2c6550aedcec6c5c58d1e920c86e",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\fuel_rod_u_235.json",
+      "originalSnapshotSha256": "d85de7bb71debadb9f404a923effb86b71ca2c6550aedcec6c5c58d1e920c86e"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9229.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9229.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9229.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/fuel_rod_u_238.json",
+      "sourceSha256": "d85de7bb71debadb9f404a923effb86b71ca2c6550aedcec6c5c58d1e920c86e",
+      "target": "core/src/main/resources/assets/gregtech/models/item/fuel_rod_u_238.json",
+      "sha256": "d85de7bb71debadb9f404a923effb86b71ca2c6550aedcec6c5c58d1e920c86e",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\fuel_rod_u_238.json",
+      "originalSnapshotSha256": "d85de7bb71debadb9f404a923effb86b71ca2c6550aedcec6c5c58d1e920c86e"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9260.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9260.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9260.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/fuel_rod_th_232.json",
+      "sourceSha256": "d85de7bb71debadb9f404a923effb86b71ca2c6550aedcec6c5c58d1e920c86e",
+      "target": "core/src/main/resources/assets/gregtech/models/item/fuel_rod_th_232.json",
+      "sha256": "d85de7bb71debadb9f404a923effb86b71ca2c6550aedcec6c5c58d1e920c86e",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\fuel_rod_th_232.json",
+      "originalSnapshotSha256": "d85de7bb71debadb9f404a923effb86b71ca2c6550aedcec6c5c58d1e920c86e"
+    },
+    {
+      "source": "assets/gregtech/models/item/fuel_rod_am_241.json",
+      "sourceSha256": "d85de7bb71debadb9f404a923effb86b71ca2c6550aedcec6c5c58d1e920c86e",
+      "target": "core/src/main/resources/assets/gregtech/models/item/fuel_rod_am_241.json",
+      "sha256": "d85de7bb71debadb9f404a923effb86b71ca2c6550aedcec6c5c58d1e920c86e",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\fuel_rod_am_241.json",
+      "originalSnapshotSha256": "d85de7bb71debadb9f404a923effb86b71ca2c6550aedcec6c5c58d1e920c86e"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9201.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9201.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9201.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9411.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9411.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9411.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9430.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9430.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9430.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9240.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9240.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9240.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9339.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9339.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9339.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9340.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9340.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9340.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/radiation_suit_helmet.json",
+      "sourceSha256": "b8063b876bddba9bf1dbd032227d2b3189c8cbac043101d5889caf3b94a16c9f",
+      "target": "core/src/main/resources/assets/gregtech/models/item/radiation_suit_helmet.json",
+      "sha256": "b8063b876bddba9bf1dbd032227d2b3189c8cbac043101d5889caf3b94a16c9f",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\radiation_suit_helmet.json",
+      "originalSnapshotSha256": "b8063b876bddba9bf1dbd032227d2b3189c8cbac043101d5889caf3b94a16c9f"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9441.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9441.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9441.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9341.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9341.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9341.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/geiger_counter_empty.json",
+      "sourceSha256": "6bb732b2ddccb08a1f3af393775ef03ae39191b605e5d1885181b39bc2a138dc",
+      "target": "core/src/main/resources/assets/gregtech/models/item/geiger_counter_empty.json",
+      "sha256": "6bb732b2ddccb08a1f3af393775ef03ae39191b605e5d1885181b39bc2a138dc",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\geiger_counter_empty.json",
+      "originalSnapshotSha256": "6bb732b2ddccb08a1f3af393775ef03ae39191b605e5d1885181b39bc2a138dc"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9361.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9361.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9361.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/reactor_rod_9261.json",
+      "sourceSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reactor_rod_9261.json",
+      "sha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reactor_rod_9261.json",
+      "originalSnapshotSha256": "55b728d1d1fd6d088f43642df2baf4e29869c1259cce1a499a6c00f7547ec64b"
+    },
+    {
+      "source": "assets/gregtech/models/item/fuel_rod_am_243.json",
+      "sourceSha256": "d85de7bb71debadb9f404a923effb86b71ca2c6550aedcec6c5c58d1e920c86e",
+      "target": "core/src/main/resources/assets/gregtech/models/item/fuel_rod_am_243.json",
+      "sha256": "d85de7bb71debadb9f404a923effb86b71ca2c6550aedcec6c5c58d1e920c86e",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\fuel_rod_am_243.json",
+      "originalSnapshotSha256": "d85de7bb71debadb9f404a923effb86b71ca2c6550aedcec6c5c58d1e920c86e"
+    },
+    {
+      "source": "assets/gregtech/models/item/radiation_suit_leggings.json",
+      "sourceSha256": "c61b5bba64cab909d5c84ee91e1a3716321f2fc5f67fb81a60e7e49c234730a4",
+      "target": "core/src/main/resources/assets/gregtech/models/item/radiation_suit_leggings.json",
+      "sha256": "c61b5bba64cab909d5c84ee91e1a3716321f2fc5f67fb81a60e7e49c234730a4",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\radiation_suit_leggings.json",
+      "originalSnapshotSha256": "c61b5bba64cab909d5c84ee91e1a3716321f2fc5f67fb81a60e7e49c234730a4"
+    },
+    {
+      "source": "data/gregtech/recipes/nuclear/geiger_counter_empty.json",
+      "sourceSha256": "8f47d30bd79e672bebfcd27ccc598e1066058044c253619b5b8a46c8d410d454",
+      "target": "core/src/main/resources/data/gregtech/recipes/nuclear/geiger_counter_empty.json",
+      "sha256": "8f47d30bd79e672bebfcd27ccc598e1066058044c253619b5b8a46c8d410d454",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\recipes\\nuclear\\geiger_counter_empty.json",
+      "originalSnapshotSha256": "8f47d30bd79e672bebfcd27ccc598e1066058044c253619b5b8a46c8d410d454"
+    },
+    {
+      "source": "data/gregtech/recipes/nuclear/radiation_suit_boots.json",
+      "sourceSha256": "f252f1384cf9969d67a34d37de67b4bfe81cd6952de281317ba80da408cc4d47",
+      "target": "core/src/main/resources/data/gregtech/recipes/nuclear/radiation_suit_boots.json",
+      "sha256": "f252f1384cf9969d67a34d37de67b4bfe81cd6952de281317ba80da408cc4d47",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\recipes\\nuclear\\radiation_suit_boots.json",
+      "originalSnapshotSha256": "f252f1384cf9969d67a34d37de67b4bfe81cd6952de281317ba80da408cc4d47"
+    },
+    {
+      "source": "data/gregtech/recipes/nuclear/radiation_suit_chestplate.json",
+      "sourceSha256": "23acebcfe91d4476101edd821606f5129e54edfa147d164e43b270b3cdcb2b96",
+      "target": "core/src/main/resources/data/gregtech/recipes/nuclear/radiation_suit_chestplate.json",
+      "sha256": "23acebcfe91d4476101edd821606f5129e54edfa147d164e43b270b3cdcb2b96",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\recipes\\nuclear\\radiation_suit_chestplate.json",
+      "originalSnapshotSha256": "23acebcfe91d4476101edd821606f5129e54edfa147d164e43b270b3cdcb2b96"
+    },
+    {
+      "source": "data/gregtech/recipes/nuclear/radiation_suit_helmet.json",
+      "sourceSha256": "eeee7f55a0c6350928c5255e968a4dcf70e5f6616e554afdb41ed1984fa3ad57",
+      "target": "core/src/main/resources/data/gregtech/recipes/nuclear/radiation_suit_helmet.json",
+      "sha256": "eeee7f55a0c6350928c5255e968a4dcf70e5f6616e554afdb41ed1984fa3ad57",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\recipes\\nuclear\\radiation_suit_helmet.json",
+      "originalSnapshotSha256": "eeee7f55a0c6350928c5255e968a4dcf70e5f6616e554afdb41ed1984fa3ad57"
+    },
+    {
+      "source": "data/gregtech/recipes/nuclear/radiation_suit_leggings.json",
+      "sourceSha256": "5c678bccf18fb6b2ca415c14b63067b9403fa36470715b44d3cb409e5400499e",
+      "target": "core/src/main/resources/data/gregtech/recipes/nuclear/radiation_suit_leggings.json",
+      "sha256": "5c678bccf18fb6b2ca415c14b63067b9403fa36470715b44d3cb409e5400499e",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\recipes\\nuclear\\radiation_suit_leggings.json",
+      "originalSnapshotSha256": "5c678bccf18fb6b2ca415c14b63067b9403fa36470715b44d3cb409e5400499e"
+    },
+    {
+      "source": "data/gregtech/recipes/nuclear/reactor_core_2x2.json",
+      "sourceSha256": "9bb00420ec7972aede8f399f2bf1bd248904d4f68cc29d5755e674c7671ccb2c",
+      "target": "core/src/main/resources/data/gregtech/recipes/nuclear/reactor_core_2x2.json",
+      "sha256": "9bb00420ec7972aede8f399f2bf1bd248904d4f68cc29d5755e674c7671ccb2c",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\recipes\\nuclear\\reactor_core_2x2.json",
+      "originalSnapshotSha256": "9bb00420ec7972aede8f399f2bf1bd248904d4f68cc29d5755e674c7671ccb2c"
+    },
+    {
+      "source": "data/gregtech/tags/items/radiation_protection.json",
+      "sourceSha256": "bf804480fd62163fb8bf97822ea7884f553a23eb431fcefa8ce12da80ce6cf88",
+      "target": "core/src/main/resources/data/gregtech/tags/items/radiation_protection.json",
+      "sha256": "bf804480fd62163fb8bf97822ea7884f553a23eb431fcefa8ce12da80ce6cf88",
+      "adaptation": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\tags\\items\\radiation_protection.json",
+      "originalSnapshotSha256": "bf804480fd62163fb8bf97822ea7884f553a23eb431fcefa8ce12da80ce6cf88"
+    }
+  ],
+  "counts": {
+    "originalRodDefinitions": 46,
+    "legacyAdditionalRods": 3,
+    "coolantTypes": 11,
+    "coreSizes": 2,
+    "leadSuitPieces": 4,
+    "craftingRows": 6
+  },
+  "choice": "Adopt complete existing saltnya nuclear executor with its shared original catalog and neutron/lifetime/coolant rules. Brokestar/masson do not justify introducing a second reactor/material identity model. Retain two-phase exchange, loaded ticking membership, role controls, cooling preflight and actual acceptance, stateful placed rods, overflow recovery, original hazards, handheld Geiger and original processing/crafting quantities. Native components and typed capabilities implement platform boundaries. Native medicine recipes reuse an exactly identical existing food-processing row to avoid duplicate registration.",
+  "validation": "Grouped core/Neo/Forge compilePASS27s. Necessary ordinary Neo startup initial failed4m24s duplicate Radaway, corrected startupPASS1m 34s, 47 reactor processing rows,6 nuclear crafting rows,6419 total crafting,200ticks normal save/stop. No new gameplay fixture. Previous logistics/legacy boiler/drill/lightning registry/data covered.",
+  "knownGaps": [
+    "real neutron exchange/reflection/moderation/breeding/lifetime/coolant blockage/radiation/suit/Geiger interactions unverified",
+    "source overheat deliberately destroys installed rods without terrain explosion; preserved",
+    "source legacy MOX/Am243/Naquadah aliases have no original catalog definition and are not accepted by original cores; preserved",
+    "source player radiation/food radaway overlap remains documented baseline issue",
+    "world client armor/rod renders, Forge runtime, independent world reload, old saves and fresh jars unverified",
+    "remaining smeltery/crops/bees/interfaces/world systems pending"
+  ]
+}

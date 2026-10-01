@@ -1,0 +1,1811 @@
+{
+  "date": "2026-10-01",
+  "authors": [
+    "saltnya",
+    "brokestar233",
+    "Lorbineitte Masson",
+    "original GregTech6 contributors"
+  ],
+  "license": "Preserved original source notices/history. Local integration; publication permission remains unresolved.",
+  "counts": {
+    "ordinaryTracks": 10,
+    "boosterTracks": 10,
+    "detectorTracks": 10,
+    "roadStripe": 1,
+    "lantern": 1,
+    "panels": 6,
+    "totalBlocks": 38,
+    "trackCraftingRows": 45,
+    "sourceSpecialCreativeFamilies": 19,
+    "resources": 255,
+    "javaRecords": 30,
+    "newCoreClasses": 5
+  },
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "sha256": "fecbb31bf92b7ba6e7185f137182e6ed793bc071cc9117a5e8d8c987fd38b17e",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": []
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/block/misc/PanelBlock.java",
+      "sha256": "5326d02b19e602517021ace216f6f28c2c71c140e6a839538fe426695948cc4b",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\PanelBlock.java",
+      "sourceSha256": "88ddd2771912ed9562f955488290082fab8e6f2af16bf1b7c66a1f0f08fae431",
+      "derivedFrom": []
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/block/misc/RoadStripeRailBlock.java",
+      "sha256": "10d2a5fddc4ca20bc6af285a7e541372b51a7f88aac292ad4be3fa4df24b2879",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\RoadStripeRailBlock.java",
+      "sourceSha256": "adad60873149e880e5b720ab60d93404b87e2fe6e4525ec9a4e9bf15a3fa667b",
+      "derivedFrom": []
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/block/misc/TrackBlock.java",
+      "sha256": "d0f6465cf111a7755ae124e3bd5f4eb476084d9ef739b72bbb410933f6f45859",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\TrackBlock.java",
+      "sourceSha256": "42dae09938a690303a3e9640762c95c151585ffef7db964a32def9a16f293495",
+      "derivedFrom": []
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/loaders/Loader_TrackRecipes.java",
+      "sha256": "3b2f622dceaadb5b676938c2b26340215d7722a5b6b186ec83456d9ab1d62d26",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\Loader_TrackRecipes.java",
+      "sourceSha256": "cb092a15b182b072ec541d6a616869af1c6122dd64ba7969ab1b5a9bbb99362c",
+      "derivedFrom": []
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/mixin/AbstractMinecartSpeedCapMixin.java",
+      "sha256": "0e175d7514e0490c82646a4afce1575d64809535e8cdee4987386cdde7cf0e02",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\mixin\\AbstractMinecartSpeedCapMixin.java",
+      "sourceSha256": "a134411d92fd876f6d13741fdb60ddf7a9a04d8b6039d17cc8bbb2d2d53f3c00",
+      "derivedFrom": []
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/registry/GTCreativeTabs.java",
+      "sha256": "a7c09bf69bdb6f558202591bf4eb696c31c3d22e5e8e5d811e906cd8d7fc9dea",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTCreativeTabs.java",
+      "sourceSha256": "8c57e5a71801d8f8e7e7856fc4648cb17f95758a0b2ba7929a72c85bdf350ba1",
+      "derivedFrom": []
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/registry/GTMiscBlocks.java",
+      "sha256": "6382e879e9a8fc4bb500d61a9b58feb95993369a04d0b6cb243aeb3f7446c4cd",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTMiscBlocks.java",
+      "sourceSha256": "83b664d4b30db11974c09da3aba16d9691a7a0223264aa7b3b36975a5409abd2",
+      "derivedFrom": []
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/registry/GTTrackBlocks.java",
+      "sha256": "f9d392e45db114b5d3a725adaeb1834ef3cf993c647ad7b18a3d8c5ae0d9e940",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTTrackBlocks.java",
+      "sourceSha256": "8c56ff8fab76d5a621fac968797f1c2e10fd49f8722fb269c74d7a679f836f37",
+      "derivedFrom": []
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/creative/CreativeTabCatalog.java",
+      "sha256": "6ba89294baccaa1c014bb8c2add719949ceaef767153497cb73f346482c65fc9",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTCreativeTabs.java",
+          "sha256": "8c57e5a71801d8f8e7e7856fc4648cb17f95758a0b2ba7929a72c85bdf350ba1"
+        }
+      ]
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/transport/PanelCatalog.java",
+      "sha256": "cfaf24b2e84b946a426de8a06c31dd7c4fe6805d0fae675a2b76059273689385",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTMiscBlocks.java",
+          "sha256": "83b664d4b30db11974c09da3aba16d9691a7a0223264aa7b3b36975a5409abd2"
+        },
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\PanelBlock.java",
+          "sha256": "88ddd2771912ed9562f955488290082fab8e6f2af16bf1b7c66a1f0f08fae431"
+        }
+      ]
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/transport/TrackCatalog.java",
+      "sha256": "94a621b54fd2030365c79f63bcbc9f21f4e89f06c01f17becf6cd759f90991e9",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTTrackBlocks.java",
+          "sha256": "8c56ff8fab76d5a621fac968797f1c2e10fd49f8722fb269c74d7a679f836f37"
+        },
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\TrackBlock.java",
+          "sha256": "42dae09938a690303a3e9640762c95c151585ffef7db964a32def9a16f293495"
+        }
+      ]
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/transport/TrackMotionRules.java",
+      "sha256": "1b315be0f3aa1ba7560baf0d8cf34622d5bd4aa0d660325c30d405e78d04f9e7",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\TrackBlock.java",
+          "sha256": "42dae09938a690303a3e9640762c95c151585ffef7db964a32def9a16f293495"
+        },
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\RoadStripeRailBlock.java",
+          "sha256": "adad60873149e880e5b720ab60d93404b87e2fe6e4525ec9a4e9bf15a3fa667b"
+        }
+      ]
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/transport/TrackRecipeCatalog.java",
+      "sha256": "612f3c0b7d89fa036e1367c365f382bbbe50113431b2d6b4701943f4e1d7e8b5",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\Loader_TrackRecipes.java",
+          "sha256": "cb092a15b182b072ec541d6a616869af1c6122dd64ba7969ab1b5a9bbb99362c"
+        }
+      ]
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/misc/GregLanternBlock.java",
+      "sha256": "a7a78e87bfcc98f0fbeac2813c95a3c286de873e588f78b5da5204588dd3d678",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\GregLanternBlock.java",
+      "sourceSha256": "d93e4f2f23e3d0f298b239d74e8306951441f4f0f9bac3febe8c17f44afa64dd",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/misc/PanelBlock.java",
+      "sha256": "5326d02b19e602517021ace216f6f28c2c71c140e6a839538fe426695948cc4b",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\PanelBlock.java",
+      "sourceSha256": "88ddd2771912ed9562f955488290082fab8e6f2af16bf1b7c66a1f0f08fae431",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/misc/RoadStripeRailBlock.java",
+      "sha256": "a2f57e7259a7d55f75015201db17ecac85ec0027f3c3f5b0dd37b520b7952bf4",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\RoadStripeRailBlock.java",
+      "sourceSha256": "adad60873149e880e5b720ab60d93404b87e2fe6e4525ec9a4e9bf15a3fa667b",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/misc/TrackBlock.java",
+      "sha256": "5758f60e317d957cefcebee02206e1613c7b8fa4f62aae5f2dd0e7aa44c4d514",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\TrackBlock.java",
+      "sourceSha256": "42dae09938a690303a3e9640762c95c151585ffef7db964a32def9a16f293495",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/CreativeTabIconClientModels.java",
+      "sha256": "4ff911b4d461bdc300669592d6269047339a5caaf44f773d4ba95811b3962553",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\CreativeTabIconClientModels.java",
+      "sourceSha256": "4ed6e4a9f5556ac790206fcf2d0904243b5fb26f5a44119dd2c29f043da3091a",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/PanelClientSetup.java",
+      "sha256": "33b907dbd3007f033abf685e10b796833846cac5e6f60ddff7b56d23e46d8b52",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/data/TrackCraftingRecipePack.java",
+      "sha256": "59698a46c9be1fd0d86878a07955bf6d2555b14fa724bc09cfa9d16dcb5744f3",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\Loader_TrackRecipes.java",
+          "sha256": "cb092a15b182b072ec541d6a616869af1c6122dd64ba7969ab1b5a9bbb99362c"
+        }
+      ]
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/item/CreativeTabIconItem.java",
+      "sha256": "5cc103b78d24a4fd53e52552cbf9e42464189401c8eb6e7a941169bbce2a0439",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\item\\CreativeTabIconItem.java",
+      "sourceSha256": "5cc103b78d24a4fd53e52552cbf9e42464189401c8eb6e7a941169bbce2a0439",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/loaders/TrackRecipeReplacement.java",
+      "sha256": "f57016314326a8bac1fd2c67fd6b6322498531131cc77307b6faa6bafe474c12",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\Loader_TrackRecipes.java",
+          "sha256": "cb092a15b182b072ec541d6a616869af1c6122dd64ba7969ab1b5a9bbb99362c"
+        }
+      ]
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/loaders/b/Loader_Creative.java",
+      "sha256": "2b0bbaf756d0eed09aeda4029102020d6ccc2e89a8846ed33b621c83a42442b4",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\b\\Loader_Creative.java",
+      "sourceSha256": "bb38e8899047fd1cec4df7ff37e1867b14e28ef9cfe6367e0adc5bf5596a7aa8",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/loaders/b/NeoCreativeContents.java",
+      "sha256": "15fcc3c7ba90adf9468f2128d65fa2e467a8fb6edfe8a5db3cb8b9fab5635438",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\b\\Loader_Creative.java",
+          "sha256": "bb38e8899047fd1cec4df7ff37e1867b14e28ef9cfe6367e0adc5bf5596a7aa8"
+        }
+      ]
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/mixin/AbstractMinecartSpeedCapMixin.java",
+      "sha256": "41f3d805540612b1e542e388ed0c0728df7dbf5c27ffc28f35d70cf812ceab56",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\mixin\\AbstractMinecartSpeedCapMixin.java",
+      "sourceSha256": "a134411d92fd876f6d13741fdb60ddf7a9a04d8b6039d17cc8bbb2d2d53f3c00",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTCreativeTabIcons.java",
+      "sha256": "4a1c619220e182a9d5bf6ee9746f6625e81e568a667420b89e977fb717a57ef6",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTCreativeTabIcons.java",
+      "sourceSha256": "149990f4b4625eec0e55e2fb904b52a9771f8a2756cad6160b2dad3bc6068333",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTCreativeTabs.java",
+      "sha256": "4330287c5c94e4b6294a8a84580d7d24728e8dc4ad9c37e430bc76ca56906561",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTCreativeTabs.java",
+      "sourceSha256": "8c57e5a71801d8f8e7e7856fc4648cb17f95758a0b2ba7929a72c85bdf350ba1",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTRemainingDecor.java",
+      "sha256": "d0b72bdc0572e11550156832387420319ef21917916036e86e171674eedd9785",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTDecorBlocks.java",
+          "sha256": "8e4f81942f572baf26f31b198c4697f398d76cffb9f6272c32d0e87c66c9c68b"
+        },
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTMiscBlocks.java",
+          "sha256": "83b664d4b30db11974c09da3aba16d9691a7a0223264aa7b3b36975a5409abd2"
+        }
+      ]
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTTrackBlocks.java",
+      "sha256": "69f5b2e0c0ba6a82694e9a1d160152b5c49f82405caf3fb6ca36a14749082959",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTTrackBlocks.java",
+      "sourceSha256": "8c56ff8fab76d5a621fac968797f1c2e10fd49f8722fb269c74d7a679f836f37",
+      "derivedFrom": []
+    }
+  ],
+  "resources": [
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\greg_lantern.json",
+      "sha256": "f98d0ef1bab516043cac0c1e071a040d32b6abf75483a3c3f245f7289b67d8ef",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/greg_lantern.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\panel_asphalt.json",
+      "sha256": "dfc7f675291f5bbd476173b33624ef23967a5421187ec1787507b441cbee5d5e",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/panel_asphalt.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\panel_cfoam.json",
+      "sha256": "2365497d229b6bf84ed937d1ecc34eb95a505939983daf6a9bbc36d9612716e2",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/panel_cfoam.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\panel_colored_black.json",
+      "sha256": "3c87e36d5c7af1a9a1ba81f8659696c3b2953491e1f210e37a2eacf44f7bc9ee",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/panel_colored_black.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\panel_colored_gray.json",
+      "sha256": "3263348c5de081832589a778e3c347c655972ad59ee541aa9603bffa56688635",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/panel_colored_gray.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\panel_concrete.json",
+      "sha256": "1f7dc4ca69f5a067f794f652afce880a97b2e607cd47aef30d210672cf49454d",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/panel_concrete.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\panel_wood.json",
+      "sha256": "88d2eb5fbc35dbbdcd1c8c449dc564c3f402b7ff49431e83c86cdd620e586889",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/panel_wood.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\railroad.json",
+      "sha256": "12160e9ff67851344c19d2e13075b17dd4e1451a6ff5404a0e03e781d7880089",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/railroad.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\track_adamantium.json",
+      "sha256": "9ce30380a37c5889b5c087e8ed52abf80db9c888378ba8a5bd02e553dd2eb8a4",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/track_adamantium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\track_aluminium.json",
+      "sha256": "1f07b0e569693e417a60f98b706f6408b71aad84cce8fae79a690fe9422c7a74",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/track_aluminium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\track_booster_adamantium.json",
+      "sha256": "7ada23a8dd16fe0e2d73c590a118f2166e2efdcbd368c137d7b5cc192ef9bd07",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/track_booster_adamantium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\track_booster_aluminium.json",
+      "sha256": "9aef004bdddc114bf8668ed8694b53f479dd06a4483b431c19fac0bd130e6697",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/track_booster_aluminium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\track_booster_bronze.json",
+      "sha256": "b56cbd19ff5788b55f90da22967d128ef90ccd69746c99de60258c8170dc31ae",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/track_booster_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\track_booster_magnalium.json",
+      "sha256": "05f53916471955cb2b1c010aa5212689b4582b3efbb6b8bb9dd8779083e82c39",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/track_booster_magnalium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\track_booster_stainlesssteel.json",
+      "sha256": "86d6031b689b1b04f4313ce968876d30f5543166eacf70689e922f070b1454c5",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/track_booster_stainlesssteel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\track_booster_steel.json",
+      "sha256": "a3b69b556bd3a8319ae00a69fa7afe90a054d58e3d3f2e46fd4fd5c0e2917121",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/track_booster_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\track_booster_titanium.json",
+      "sha256": "ad2d20bf48301d87a947806648eedc0a87c9cff96ae2933a0eaa2ad85e1f295a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/track_booster_titanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\track_booster_tungsten.json",
+      "sha256": "abc2707372e7f6bd8699961d50d7d1166f0269c85a9791281a8e5348d7e6f145",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/track_booster_tungsten.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\track_booster_tungstencarbide.json",
+      "sha256": "cf5e6d181e22a118c6dece2f6028615cf9b23875132b4d4589d9fd18ca45cf23",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/track_booster_tungstencarbide.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\track_booster_tungstensteel.json",
+      "sha256": "795f5e88f98426d6611e89506a9cd7018d486bf6bfa0844388d885c2eddbec00",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/track_booster_tungstensteel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\track_bronze.json",
+      "sha256": "52a495b6ca8d5f50358ddfea3542ee7c62ac713b27fd0d6c0f508093342402ed",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/track_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\track_detector_adamantium.json",
+      "sha256": "8e7cd951776f359feb7f2f2aca90de78249fa604aac74d995b48aa9bc8689bf5",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/track_detector_adamantium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\track_detector_aluminium.json",
+      "sha256": "49d7a5cb7abb5c8e5ee05b1790c6237dcd685c15237171a2fac452a76ce77375",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/track_detector_aluminium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\track_detector_bronze.json",
+      "sha256": "cb265b591ff530f8ae90fb8c3f58d64167d0a38021fcb46ee59ee923edcb8233",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/track_detector_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\track_detector_magnalium.json",
+      "sha256": "13573abaf48ebfc9fd5b0fbce7af4cb6dec3a7ecac9e192a27fba6228473c047",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/track_detector_magnalium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\track_detector_stainlesssteel.json",
+      "sha256": "c700470a463c86eae43d604629a7bfdbf835b66087bf03d2a9dfbd1272c997fc",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/track_detector_stainlesssteel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\track_detector_steel.json",
+      "sha256": "49a82c0034f0027bfce63ad2b87c5f392a08251adaa398609d8b49308750da9e",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/track_detector_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\track_detector_titanium.json",
+      "sha256": "cbc4d9f12628680ff98f8936154765bcf4317b676d95fb05ed365dcc2227cbcf",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/track_detector_titanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\track_detector_tungsten.json",
+      "sha256": "e46cc74ca666dc5561b0c4aaa2e2797365b694ba350a5b00b21fa5c802afca99",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/track_detector_tungsten.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\track_detector_tungstencarbide.json",
+      "sha256": "658e9d9ed622a9253e01bb6ee19e12d41cd8c0bd05086dbd9acb5bef66771717",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/track_detector_tungstencarbide.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\track_detector_tungstensteel.json",
+      "sha256": "2b80c326c380ba5ca4fb77d5fcf59c387dfd4ea7250fd5e8d36c2aff8fbab855",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/track_detector_tungstensteel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\track_magnalium.json",
+      "sha256": "77c54f774c4a5007b2504795e84fcc0377202781d6fb03477ab42ab77ce4b816",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/track_magnalium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\track_stainlesssteel.json",
+      "sha256": "ff784f01ba73e9aac8044f9d085c3348532020e5328b899bb28eb072dfdedc9c",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/track_stainlesssteel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\track_steel.json",
+      "sha256": "345765c3daea68ba8cf320433917ea4e31182ba95d1045c2e0f4b03ec8032b31",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/track_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\track_titanium.json",
+      "sha256": "5451c1e953f8a12c07684e78e239eebcdea0e6e09b52156a3b126e5f3a6c6f63",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/track_titanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\track_tungsten.json",
+      "sha256": "b4e6e4ff925bab801561bdac8f36029bebfb2bcbb1ef1b914029ab628a7c1583",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/track_tungsten.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\track_tungstencarbide.json",
+      "sha256": "69f54aed32526796002683e43e6991ceba531bc094fac42553a2d947b248baa3",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/track_tungstencarbide.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\track_tungstensteel.json",
+      "sha256": "78f41fe02489e8308be98a5653257ce1f90c0e4104cfca40dfd8957a29570450",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/track_tungstensteel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\greg_lantern.json",
+      "sha256": "f8a1ca27c129e51048560e4d43b5cf6ade63ba8b3b86c275788e059d3a223c3f",
+      "target": "core/src/main/resources/assets/gregtech/models/item/greg_lantern.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\panel_asphalt.json",
+      "sha256": "6285ff9f5d07990da6024ca427d443c4a4d145c7be6cc7357e333d18d97cf191",
+      "target": "core/src/main/resources/assets/gregtech/models/item/panel_asphalt.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\panel_cfoam.json",
+      "sha256": "e3c064f4f930fc2563bf1ebdc0f9e7c7d93a583934a0ef5fc78ff08b6c73ea16",
+      "target": "core/src/main/resources/assets/gregtech/models/item/panel_cfoam.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\panel_colored_black.json",
+      "sha256": "b7f700034382444fc296777f28c90d300ce4f37b217523394001ef8bd07a39e6",
+      "target": "core/src/main/resources/assets/gregtech/models/item/panel_colored_black.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\panel_colored_gray.json",
+      "sha256": "703c6a931099a8b613eec4c190bd158158f8fa4a82be53904b59780ca2325533",
+      "target": "core/src/main/resources/assets/gregtech/models/item/panel_colored_gray.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\panel_concrete.json",
+      "sha256": "65d19c6d620e54e80a385e7685c44a733825578bc6f13d39632d12cc58dab747",
+      "target": "core/src/main/resources/assets/gregtech/models/item/panel_concrete.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\panel_wood.json",
+      "sha256": "f10bf1e5a5d619d59aaf51d0d5bd1494af7699db8c9decf39a41de00bf1c8078",
+      "target": "core/src/main/resources/assets/gregtech/models/item/panel_wood.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\railroad.json",
+      "sha256": "57e884976c170416a5b021ca6e7d4d4d8856bd89dcacb60ba8cbf59f7155a8c1",
+      "target": "core/src/main/resources/assets/gregtech/models/item/railroad.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\track_adamantium.json",
+      "sha256": "2b3c4b8f57536b5efad397d2f24437f3269353194da36bc0cf8f8e3cfe649c94",
+      "target": "core/src/main/resources/assets/gregtech/models/item/track_adamantium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\track_aluminium.json",
+      "sha256": "040ec082168d0f9666e411799b3824bddc07ec8f70c49add4339657af234c48d",
+      "target": "core/src/main/resources/assets/gregtech/models/item/track_aluminium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\track_booster_adamantium.json",
+      "sha256": "71516f7803bd0fd644bb8b3355b2952350acf8873c8063e7a3aa5b714a5ee4bd",
+      "target": "core/src/main/resources/assets/gregtech/models/item/track_booster_adamantium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\track_booster_aluminium.json",
+      "sha256": "b2f937664e1bce614fac1694a88d48bd7ec42206c1b7908f9f1e48c173d8aa81",
+      "target": "core/src/main/resources/assets/gregtech/models/item/track_booster_aluminium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\track_booster_bronze.json",
+      "sha256": "f9d1b8f814a9cfec5e30de4e36cd426c9aa60cae646b2612f63b79291ecf5331",
+      "target": "core/src/main/resources/assets/gregtech/models/item/track_booster_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\track_booster_magnalium.json",
+      "sha256": "3f4f473afea07473c0c576e1a1fd6e27682f4111357ca9b9b8b3b795d21e7c0e",
+      "target": "core/src/main/resources/assets/gregtech/models/item/track_booster_magnalium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\track_booster_stainlesssteel.json",
+      "sha256": "d79b659eeb95844c0f96dd6257de96e7bd38b44794fbce90ade2c6c0bad8db9e",
+      "target": "core/src/main/resources/assets/gregtech/models/item/track_booster_stainlesssteel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\track_booster_steel.json",
+      "sha256": "53687e6e7894f9eed378c9069dd9750c6a07c6890277f233508c950fcae8e03b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/track_booster_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\track_booster_titanium.json",
+      "sha256": "bed6a7b788874e81484baff3660d606c8e4cebfa6fc36ac56114a9b3469ce42f",
+      "target": "core/src/main/resources/assets/gregtech/models/item/track_booster_titanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\track_booster_tungsten.json",
+      "sha256": "212aa81757ecdd6acac02bf0aae6b7130c3d19a09fc1f87d7426c1e9b343258e",
+      "target": "core/src/main/resources/assets/gregtech/models/item/track_booster_tungsten.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\track_booster_tungstencarbide.json",
+      "sha256": "7d19aa22efb9668221be48ca036c621bbb516564986817ffd06fd4fe60f5333b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/track_booster_tungstencarbide.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\track_booster_tungstensteel.json",
+      "sha256": "d76b7775d74b10d71e8e73bec5e5da6a1bbdf91c65f2bd571270a6f42c006a3c",
+      "target": "core/src/main/resources/assets/gregtech/models/item/track_booster_tungstensteel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\track_bronze.json",
+      "sha256": "5a14726bb9700397350459d42299318b38bbba127e267cc9c731b76aefda9cfd",
+      "target": "core/src/main/resources/assets/gregtech/models/item/track_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\track_detector_adamantium.json",
+      "sha256": "e00ed6130f303f87be3463c7aaf9041c8aa810386255c0ab5f4dad04456d205c",
+      "target": "core/src/main/resources/assets/gregtech/models/item/track_detector_adamantium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\track_detector_aluminium.json",
+      "sha256": "9be60a34dddd61fb90cfee209533deb6404269184a9d6c28ec0232fb32d85438",
+      "target": "core/src/main/resources/assets/gregtech/models/item/track_detector_aluminium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\track_detector_bronze.json",
+      "sha256": "8d0f5e3c13786e29d3c67da43ec3ee53448b62c752554ef38476287d63543986",
+      "target": "core/src/main/resources/assets/gregtech/models/item/track_detector_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\track_detector_magnalium.json",
+      "sha256": "f0c0a2ee9c18af7879e5445340a6cfc5884babd07e3620bda34f5ca3f5206e18",
+      "target": "core/src/main/resources/assets/gregtech/models/item/track_detector_magnalium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\track_detector_stainlesssteel.json",
+      "sha256": "7660ebd453b9f73c48e228ba43b261f03739e65be171c3e7c8f813b235a80df0",
+      "target": "core/src/main/resources/assets/gregtech/models/item/track_detector_stainlesssteel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\track_detector_steel.json",
+      "sha256": "ba48af350da0391fcd79ec08337b6fa0fc6914eb5e38a161c5b131b577c28260",
+      "target": "core/src/main/resources/assets/gregtech/models/item/track_detector_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\track_detector_titanium.json",
+      "sha256": "b2eabd03ca01bc72f997cac43e00d03275b6078579fef372e1cd62b216383902",
+      "target": "core/src/main/resources/assets/gregtech/models/item/track_detector_titanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\track_detector_tungsten.json",
+      "sha256": "10de2ea0318d60172aaa38173c9f19706492f51497dc9f8cf3fceaef549ef45c",
+      "target": "core/src/main/resources/assets/gregtech/models/item/track_detector_tungsten.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\track_detector_tungstencarbide.json",
+      "sha256": "e7640deb687c9d6b61efbc20c48b00c7bf1b74d2750d7c570ee88bc3e3ba5faf",
+      "target": "core/src/main/resources/assets/gregtech/models/item/track_detector_tungstencarbide.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\track_detector_tungstensteel.json",
+      "sha256": "db5105068beb5b726e034beb976c0ae9af061687411acf75db0bcc95b539bad7",
+      "target": "core/src/main/resources/assets/gregtech/models/item/track_detector_tungstensteel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\track_magnalium.json",
+      "sha256": "f18f23ad568e39e8b31c39fa3d56cd4e4ac8eb349d7e364791df34194f47bdba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/track_magnalium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\track_stainlesssteel.json",
+      "sha256": "a5f1c5c5f39357c393722810141441db50f156efd9a6f2a34014f41540a9d526",
+      "target": "core/src/main/resources/assets/gregtech/models/item/track_stainlesssteel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\track_steel.json",
+      "sha256": "48154998b675c125e928a6270681c56363638bf3f738f0fcd2c1d8f78e65cb89",
+      "target": "core/src/main/resources/assets/gregtech/models/item/track_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\track_titanium.json",
+      "sha256": "9c44724e517f0f85f8dd6b88d35e79cfd0590614ff2b46d604e28158623e9ca2",
+      "target": "core/src/main/resources/assets/gregtech/models/item/track_titanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\track_tungsten.json",
+      "sha256": "959ebd3504d76f139807df5e41cf09eb346adf2460852a0f6c187d60c4f832be",
+      "target": "core/src/main/resources/assets/gregtech/models/item/track_tungsten.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\track_tungstencarbide.json",
+      "sha256": "b4e327d7a060a0255f1d9057e8cc888a10eac9241d26b150749d4dd4d76abf11",
+      "target": "core/src/main/resources/assets/gregtech/models/item/track_tungstencarbide.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\track_tungstensteel.json",
+      "sha256": "baef525359b195cfba226c9433a6367a3cd0276109a3dc687b428a02ad0b50b0",
+      "target": "core/src/main/resources/assets/gregtech/models/item/track_tungstensteel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\blocks\\panel_asphalt.json",
+      "sha256": "12429d0432351d217c86d3d88b9d52225f41dc39cf23ed13d5bda50ce893bb19",
+      "target": "core/src/main/resources/assets/gregtech/models/block/blocks/panel_asphalt.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\blocks\\panel_cfoam.json",
+      "sha256": "12429d0432351d217c86d3d88b9d52225f41dc39cf23ed13d5bda50ce893bb19",
+      "target": "core/src/main/resources/assets/gregtech/models/block/blocks/panel_cfoam.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\blocks\\panel_colored_black.json",
+      "sha256": "12429d0432351d217c86d3d88b9d52225f41dc39cf23ed13d5bda50ce893bb19",
+      "target": "core/src/main/resources/assets/gregtech/models/block/blocks/panel_colored_black.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\blocks\\panel_colored_gray.json",
+      "sha256": "12429d0432351d217c86d3d88b9d52225f41dc39cf23ed13d5bda50ce893bb19",
+      "target": "core/src/main/resources/assets/gregtech/models/block/blocks/panel_colored_gray.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\blocks\\panel_concrete.json",
+      "sha256": "12429d0432351d217c86d3d88b9d52225f41dc39cf23ed13d5bda50ce893bb19",
+      "target": "core/src/main/resources/assets/gregtech/models/block/blocks/panel_concrete.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\blocks\\panel_wood.json",
+      "sha256": "12429d0432351d217c86d3d88b9d52225f41dc39cf23ed13d5bda50ce893bb19",
+      "target": "core/src/main/resources/assets/gregtech/models/block/blocks/panel_wood.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\greg_lantern.json",
+      "sha256": "bfa503be60aa24b4a0805bd729de554e066b917dc8518885062cedb2ee773e30",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/greg_lantern.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\railroad.json",
+      "sha256": "c6071b06c779935f5d3be1e38ee374931547adecf35e6776cda66bc62f353aab",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/railroad.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\misc\\panel_asphalt.json",
+      "sha256": "ca0bcbc2c01b07a7e5ee0cc1dfd954d73e2f54c23465f3492dd522e851afa6b5",
+      "target": "core/src/main/resources/assets/gregtech/models/block/misc/panel_asphalt.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\misc\\panel_cfoam.json",
+      "sha256": "ae00f7160320429e8c663973e0a7dbf1efd5a202290a8d09c090e54ed21eb7f0",
+      "target": "core/src/main/resources/assets/gregtech/models/block/misc/panel_cfoam.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\misc\\panel_colored_black.json",
+      "sha256": "2926e38ac9427b638f0a514ae0681dfc404625199ac216054d2f85fe4d84c96d",
+      "target": "core/src/main/resources/assets/gregtech/models/block/misc/panel_colored_black.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\misc\\panel_colored_gray.json",
+      "sha256": "2926e38ac9427b638f0a514ae0681dfc404625199ac216054d2f85fe4d84c96d",
+      "target": "core/src/main/resources/assets/gregtech/models/block/misc/panel_colored_gray.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\misc\\panel_concrete.json",
+      "sha256": "df9a0514efcbc4e0e5bd782fd39ad70d4fd22c08bc0f5ba951d081549a6112ae",
+      "target": "core/src/main/resources/assets/gregtech/models/block/misc/panel_concrete.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\misc\\panel_wood.json",
+      "sha256": "2926e38ac9427b638f0a514ae0681dfc404625199ac216054d2f85fe4d84c96d",
+      "target": "core/src/main/resources/assets/gregtech/models/block/misc/panel_wood.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_tungstensteel_flat.json",
+      "sha256": "8c0ffc38136d1a76d214bf524801ad89b5da6063b8936cf7066e4f3de4f144cb",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_tungstensteel_flat.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_tungstencarbide_flat.json",
+      "sha256": "8d105f6d0894f3294c8848c86f4950f21230256e09cf64afcd8aab7627ad3729",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_tungstencarbide_flat.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_tungsten_flat.json",
+      "sha256": "34ca93c90d38fb0b900fe9bd2f9a557294fb38857b5fc4ff1d1c4a37c06f3706",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_tungsten_flat.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_titanium_flat.json",
+      "sha256": "ce6a8f1a118a301afa01bb249857ba7728ad5a9be2e473d9b9b8fd4862f66601",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_titanium_flat.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_steel_flat.json",
+      "sha256": "3cb396ab2e2e1d9d7b09edac46e695c5a8ba7841f35dc41eab936ed77ab66eac",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_steel_flat.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_stainlesssteel_flat.json",
+      "sha256": "5147316604e0138234be1543d61f3125fe74102e790ec0500cac227e95a43dda",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_stainlesssteel_flat.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_magnalium_flat.json",
+      "sha256": "a884e22cacef158c16dd9b8b65cb75e482a81b880e1bd19aa85ec4b9307f2f00",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_magnalium_flat.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_tungstensteel_flat.json",
+      "sha256": "76986ba787b2ada40ca02242bf4907e9f9987e9d22d0898478982a2c826d2fe2",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_tungstensteel_flat.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_tungstencarbide_flat.json",
+      "sha256": "d5509d0914840290198280a40f9015c028750a385a3835c6ddf0db396a5dfa5f",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_tungstencarbide_flat.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_tungsten_flat.json",
+      "sha256": "080aeac576335f8a665c83d53cf4c200bb161e49810e6ebb9c68616d957d82ac",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_tungsten_flat.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_titanium_flat.json",
+      "sha256": "c2aebaa7ef382695787d23a459041b45eb15027777d657fb1a2ac5efa8c192d1",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_titanium_flat.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_steel_flat.json",
+      "sha256": "f0fc9a5f6d8a82d01e73ceb95a53c7f6f3d296dd82ba8549adfdf938310ad49e",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_steel_flat.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_stainlesssteel_flat.json",
+      "sha256": "c9e5d82af3106580547dee594c9e4b5735a616c6204eea45bd05a841d33d86c3",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_stainlesssteel_flat.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_magnalium_flat.json",
+      "sha256": "b7e01088e590ebf3931c066419a664fe7305fe7bd26393f629f6e896fefb3190",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_magnalium_flat.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_bronze_flat.json",
+      "sha256": "b552edfa5edafb1faf8381124ed4e6fb913e9880cea9d41613a47548cdebf487",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_bronze_flat.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_aluminium_flat.json",
+      "sha256": "6e923dab9dd2d2c571605c418e8eaad91a803fdbbee269bb4f45680b9c0b5ad8",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_aluminium_flat.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_adamantium_flat.json",
+      "sha256": "8bd6c0f539c0c4593b7e8c6ab56f8e9493431bb3cf8eb33e9de1916e8d8de3c1",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_adamantium_flat.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_bronze_flat.json",
+      "sha256": "4d7de2cceef2df5c766f6e446fa46daebd44557f20fec54fee476264a719f170",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_bronze_flat.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_tungstensteel_flat.json",
+      "sha256": "ea7f50d25a6604bea8b5c8b6443fd81dfe6211d9713df3b2513bbd89077954c0",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_tungstensteel_flat.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_tungstencarbide_flat.json",
+      "sha256": "99d21ecef441d73aa60505c00e0342ed52f3fd0c4c742a4e578fb39ab4c657e2",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_tungstencarbide_flat.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_tungsten_flat.json",
+      "sha256": "120c6214f50bc960d0f1e2bb0fd6442d2dc17563069e02baa6b0a60a7039eec2",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_tungsten_flat.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_titanium_flat.json",
+      "sha256": "158a37f44ed9604a0f3fb72e7c8342348bc311cee268d17e4b6419afdaf8e45a",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_titanium_flat.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_steel_flat.json",
+      "sha256": "94199c4aeb3dec12dbe47d971e78ffaf05c3180b6b125464feda485a0822915d",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_steel_flat.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_stainlesssteel_flat.json",
+      "sha256": "d665f1e2b1bceaca8851aeaf8d21d3f4c98a55efa4b8a18a596cd35b32f74caa",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_stainlesssteel_flat.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_magnalium_flat.json",
+      "sha256": "6c92cebf1b2103c77ea6ecb146592d590170f2366e225641a785d66486f27111",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_magnalium_flat.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_bronze_flat.json",
+      "sha256": "37ecf0564013fb4837d1e43f59dbe1bb6f9c9165825b6e0e3828605300b83e7a",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_bronze_flat.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_aluminium_flat.json",
+      "sha256": "466ed71126d0e86ba0f3d9b3719ce7cf13e4deedcff75461409d819a099b2734",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_aluminium_flat.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_adamantium_flat.json",
+      "sha256": "5f613d05df5e4171b77948ade9c6e005527e44a293e07ca0e6d5b06934a84cff",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_adamantium_flat.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_aluminium_flat.json",
+      "sha256": "462f47d623fc4ec46e7d952ebc478b4ead5b72013476eec55de4bd4fdfa99d87",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_aluminium_flat.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_adamantium_flat.json",
+      "sha256": "4633b52be82c7d568111a731233cec1b47a08a264e3ff1f5512ec86cd9bde332",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_adamantium_flat.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_tungstensteel_raised_ne.json",
+      "sha256": "48baea38087210653615a689bef06702d34fc7d22a70d86bb7f786fb8aa4d36a",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_tungstensteel_raised_ne.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_tungstensteel_raised_sw.json",
+      "sha256": "e62e82496bed7baee68b52767204a1c252de8060bfe271c2a9c9f26391d7eac3",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_tungstensteel_raised_sw.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_tungstensteel_curved.json",
+      "sha256": "ae4474baf7248b6dd9fb1d1660667a0ba47e4abea1465789debcedf861579f4f",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_tungstensteel_curved.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_tungstencarbide_raised_ne.json",
+      "sha256": "e9e6529da217b54b6dfe015f71e21fe0d77b59ca43123c2ba0827af284af7f8f",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_tungstencarbide_raised_ne.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_tungstencarbide_raised_sw.json",
+      "sha256": "513b5eeb1972655329a28b08d0a7a6e76a32f0314ff1830ae677db4be2a8c9f3",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_tungstencarbide_raised_sw.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_tungstencarbide_curved.json",
+      "sha256": "e40007eed98a3f73e73191375c2384769e04f091993686b8007676698ee21ab2",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_tungstencarbide_curved.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_tungsten_raised_ne.json",
+      "sha256": "0afd0c87403c3100d5f067e690aaa49a06b37aeab34f16a6a4cfa24cc04f6085",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_tungsten_raised_ne.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_tungsten_raised_sw.json",
+      "sha256": "c2b3696d0be127685f327458cdb09a4313a80414f52a2ed68637ab721ae8f003",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_tungsten_raised_sw.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_tungsten_curved.json",
+      "sha256": "a355773c8ed34ef8264a7d7bcad0c93f769b4d82565307e5467eb8c192a4d36d",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_tungsten_curved.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_titanium_raised_ne.json",
+      "sha256": "949eb7eb331d56e57b7d3ca3020c4fb0c8de74a6fcd29ba896370578ff8c25a8",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_titanium_raised_ne.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_titanium_raised_sw.json",
+      "sha256": "6dd7a5494ec1592794928e0835e4444d493c859b6cba49013ffd401b714c036e",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_titanium_raised_sw.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_titanium_curved.json",
+      "sha256": "b2eda93a81f8793f75cd710e6dd8534f2cec738582725dc58ccc7bc848242499",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_titanium_curved.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_steel_raised_ne.json",
+      "sha256": "8ba664b55eb5992a61db322ef5acd718756faaab746d2da5fbad0d3554985878",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_steel_raised_ne.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_steel_raised_sw.json",
+      "sha256": "fe4cf6c06668ec2d3667e11a50d902b608af8e9e12e074d2b75f75e44b8cc087",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_steel_raised_sw.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_steel_curved.json",
+      "sha256": "6b7f20d0b2133a8f5e300a6e13a9df9da3e953c5e87a87c04e644a8bef3f1851",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_steel_curved.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_stainlesssteel_raised_ne.json",
+      "sha256": "9a1fd413206151fcef0616bc424c489799887e2e4deda54a25d929fef8eaff3c",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_stainlesssteel_raised_ne.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_stainlesssteel_raised_sw.json",
+      "sha256": "35587b4f6c920b2dd5eba79bff4afd28fed33855548f91d82ae34264e07656c6",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_stainlesssteel_raised_sw.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_stainlesssteel_curved.json",
+      "sha256": "d03c954a58f3320a528940ed1b5a3ec7d30d741d78feb0ffc3d80695c838fcfc",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_stainlesssteel_curved.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_magnalium_raised_ne.json",
+      "sha256": "63a772e9171a44771469022c41ae161f7b429dce5713d1dd70ce540d1078cf52",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_magnalium_raised_ne.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_magnalium_raised_sw.json",
+      "sha256": "3a5b89422b24c7961b6f58d36195f974974146aa3a955cc69c425090534f8c7c",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_magnalium_raised_sw.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_magnalium_curved.json",
+      "sha256": "f5309ed8cb88be798d223187d9be23127fce629da1586a4590d8d91d4023298a",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_magnalium_curved.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_tungstensteel_raised_ne.json",
+      "sha256": "bdf34223ba449f9790f7f3574f53f82292fa7f16a1ba0d38e4d167ba2a2faf08",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_tungstensteel_raised_ne.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_tungstensteel_raised_ne_on.json",
+      "sha256": "f5ef36a039d88a1dd543cca1ad5daf801c20875cec15f4d082001859abc36394",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_tungstensteel_raised_ne_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_tungstensteel_raised_sw.json",
+      "sha256": "f161ea89aa19c2cc9576db56d11a48c2b73113d5185a5c1d914fa5378378e108",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_tungstensteel_raised_sw.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_tungstensteel_raised_sw_on.json",
+      "sha256": "e76865968441c0e13caea0958bc9c38eca9dde427001f2a84377165f0a885a25",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_tungstensteel_raised_sw_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_tungstensteel_flat_on.json",
+      "sha256": "3f799fe57d1c3d140b6d137f5b01873c93aee97627c6decc211d4c9602c95992",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_tungstensteel_flat_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_tungstencarbide_raised_ne.json",
+      "sha256": "af713b8fce9910a2b0a8ef39024aa2660ece2551616c4a4f9ec56a1f1ed49b81",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_tungstencarbide_raised_ne.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_tungstencarbide_raised_ne_on.json",
+      "sha256": "eb392851d47b6847586fb1407a05bbc970113fb194bc94dfa5beb6b3d0930774",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_tungstencarbide_raised_ne_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_tungstencarbide_raised_sw.json",
+      "sha256": "2aa6a3406d58eecf76f1661d748e7ec240df9a465dce68947e4ef3ff804cd10b",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_tungstencarbide_raised_sw.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_tungstencarbide_raised_sw_on.json",
+      "sha256": "5c7c8c7dbf85394f01752614ef4de9a3defae947ba3af4dc98af3abeab148ab1",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_tungstencarbide_raised_sw_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_tungstencarbide_flat_on.json",
+      "sha256": "04b1957c382804b1ee23ac9435196cce3118e142d9e520a436ee59e890a92358",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_tungstencarbide_flat_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_tungsten_raised_ne.json",
+      "sha256": "965ca1fc7523224a3c25b2711d2a397f16eeb53f2ce4d8da48d70871c33cff38",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_tungsten_raised_ne.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_tungsten_raised_ne_on.json",
+      "sha256": "81b3f96c62e3caa55c458192563277c011a71ec62d371c56bf21b9ca4833baf9",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_tungsten_raised_ne_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_tungsten_raised_sw.json",
+      "sha256": "16981c6e1194bafc6f7751d4669cd1f066b245ba29fb25213a50f7906fd3cb30",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_tungsten_raised_sw.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_tungsten_raised_sw_on.json",
+      "sha256": "a25f52eed5572cc5ee4ac409b3d2365ffe127928d86cbe9844ebe268f8802247",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_tungsten_raised_sw_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_tungsten_flat_on.json",
+      "sha256": "40b73e4623f88b8a78810dfc88cc2dae6e7f0c3e92adba1f14404b0531b01336",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_tungsten_flat_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_titanium_raised_ne.json",
+      "sha256": "b3d18bad36cc5e0eab478563086e5bba7bda7ddcd3fde5310d872739320415b4",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_titanium_raised_ne.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_titanium_raised_ne_on.json",
+      "sha256": "0e8e7cb3f9681c555ac128e56e9694e65b344211a63f4960584a5ad112fb0401",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_titanium_raised_ne_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_titanium_raised_sw.json",
+      "sha256": "65a5ef3c93e7466df07f8df71947b50ba6b2759f33a8c978010653555226f078",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_titanium_raised_sw.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_titanium_raised_sw_on.json",
+      "sha256": "1440a51ed20398cdaf07fa42b8366afe49d28d4c59ac56cfe9a904588a0283c6",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_titanium_raised_sw_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_titanium_flat_on.json",
+      "sha256": "22513c32501ca7abb905c1910ad753b7209144c2db5e19f9c3b37a374d640098",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_titanium_flat_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_steel_raised_ne.json",
+      "sha256": "a99966686fd46b8646ff33fc011f7b4c28fccf3f55d679297ff14776ac1ed6fe",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_steel_raised_ne.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_steel_raised_ne_on.json",
+      "sha256": "a726cfee3833c39848c81e91d5185a31ece5173bd255150e9958e25d2c8460f5",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_steel_raised_ne_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_steel_raised_sw.json",
+      "sha256": "afd861f483dd4dd4f6b9a6591bd41b4ab7aaf4f42b747ee58a9d03126e007a0a",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_steel_raised_sw.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_steel_raised_sw_on.json",
+      "sha256": "6dd329bb50bfc1cda45d94189f58b883e0e599ae4ececc5397dec75aa42bb52c",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_steel_raised_sw_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_steel_flat_on.json",
+      "sha256": "f62c196dfdcf9a5ead33a80590310115734baefff5ff6f5c460cf5468b0b8eb2",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_steel_flat_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_stainlesssteel_raised_ne.json",
+      "sha256": "64bd541bc0413af30316ec9a968012725643b7686706f8b7ffd0a42c27598612",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_stainlesssteel_raised_ne.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_stainlesssteel_raised_ne_on.json",
+      "sha256": "288163002b634ee6d8fbd42f29b0e2ff5fadc6ab1b51a40f8160f5ca743388e9",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_stainlesssteel_raised_ne_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_stainlesssteel_raised_sw.json",
+      "sha256": "56241d58fef70eb9d3a033a6964ac274cb00029deaddf4a5be88e10925ed543c",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_stainlesssteel_raised_sw.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_stainlesssteel_raised_sw_on.json",
+      "sha256": "1e2f91c1de54c1515f5c25c58b49908428346cc1b8d500887dc61d0575ec2ae4",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_stainlesssteel_raised_sw_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_stainlesssteel_flat_on.json",
+      "sha256": "9113a3767d90b809daf5905dfb87aa3a438e979fdbca81834b48e3ab3023e71f",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_stainlesssteel_flat_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_magnalium_raised_ne.json",
+      "sha256": "d5a1eede78a5085cf20d85b46d093dd5553d79be6a8ab55cdd1bcd6104972dc5",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_magnalium_raised_ne.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_magnalium_raised_ne_on.json",
+      "sha256": "d9d7fcf3c1b6670f97907181134f5ac5da0d8e0af1c28d94b374cb71d6972296",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_magnalium_raised_ne_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_magnalium_raised_sw.json",
+      "sha256": "92ca260f41a83fc69ff1225c72eaa826137faac13ef129f4d84d07455dc60e89",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_magnalium_raised_sw.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_magnalium_raised_sw_on.json",
+      "sha256": "c70308f2dd905ccd2e22b9875e8d2d82d26c4072fa163a774375127b362260aa",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_magnalium_raised_sw_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_magnalium_flat_on.json",
+      "sha256": "36841e47a0aa4a0ebd96f065d4b1170e45e904d979e8ddaaaa541da8915b4250",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_magnalium_flat_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_bronze_raised_ne.json",
+      "sha256": "041ae38c3e2912310e1803a172b66dac493a949457cd760147223db5452855bd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_bronze_raised_ne.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_bronze_raised_ne_on.json",
+      "sha256": "b9c53bc5054f1e364e537b3f4feb637dfd25bb0d6ac24182f569a2fe666deeab",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_bronze_raised_ne_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_bronze_raised_sw.json",
+      "sha256": "7b2f7cdbecabab4ecc807fa13cc12c764390b2e51dcf72c97f385670abde7265",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_bronze_raised_sw.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_bronze_raised_sw_on.json",
+      "sha256": "eb56ce4d00785f295f08b8920cbbb26c5af873b6fa9dcbee5fdb167d089075cc",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_bronze_raised_sw_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_bronze_flat_on.json",
+      "sha256": "fb285feee08d957d100e5f5426d6c3f8fa4e002c0b952132456eafae9fb07224",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_bronze_flat_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_aluminium_raised_ne.json",
+      "sha256": "e04aed09cc4193077765a5302d9696d8a9c013689cff182a1568910d00d3f701",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_aluminium_raised_ne.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_aluminium_raised_ne_on.json",
+      "sha256": "d19641e2347e3e0701cc256bbe15a5ef7c4790c820b43f93312aa912cdce4879",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_aluminium_raised_ne_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_aluminium_raised_sw.json",
+      "sha256": "1d68dd68bfa7b6395c5bdf2805bd8e9a336c0df8273a6924c28288f541a0b1d9",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_aluminium_raised_sw.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_aluminium_raised_sw_on.json",
+      "sha256": "417247abcd76d616d684fe1a56d12f54341c75a79dbd68983419ec8286105e74",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_aluminium_raised_sw_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_aluminium_flat_on.json",
+      "sha256": "1eed2d916119af63fb05a8b2fdb89f2d40e384b0bd1503319abc2d76f644ca68",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_aluminium_flat_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_adamantium_raised_ne.json",
+      "sha256": "e4dae7497df85f51420ba304893ac08e524f2242ddedd062ee5b2b3f57dee10c",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_adamantium_raised_ne.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_adamantium_raised_ne_on.json",
+      "sha256": "d7d93cf7a6ebd5f4692f90dab6d6f62e2f31c7c94a097a745d7fa926b857bfad",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_adamantium_raised_ne_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_adamantium_raised_sw.json",
+      "sha256": "348fc41fce29f89ac6e0cfd8333594a345190f58288e6240a55678a9e3ff95fa",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_adamantium_raised_sw.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_adamantium_raised_sw_on.json",
+      "sha256": "580308f4cb80cf686e00fd0d89f018a2c05d4a54a9a09adcac70b82a5ecfe743",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_adamantium_raised_sw_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_detector_adamantium_flat_on.json",
+      "sha256": "ed7727159dacae6d5730b1982907aafa04bc03233cc2df7f4c25731c992f6f91",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_detector_adamantium_flat_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_bronze_raised_ne.json",
+      "sha256": "2777339801271c88e5ee31901bd6fc3ce8c1d7716a8e1847425d96a30a3cf694",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_bronze_raised_ne.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_bronze_raised_sw.json",
+      "sha256": "119b079778846d7aae02269d8f90219539e9e2d15c5d933024b6e1e8e73691dc",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_bronze_raised_sw.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_bronze_curved.json",
+      "sha256": "333a4fcae941e2166ccbea67903fd6dbfada747a3b4e5293557799cd09333b3b",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_bronze_curved.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_tungstensteel_raised_ne.json",
+      "sha256": "1551e10a1deb8cc4ac1cacbe3e66e784fc5e66e72de8736fdf7319605febe159",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_tungstensteel_raised_ne.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_tungstensteel_raised_ne_on.json",
+      "sha256": "672235ba3db49916321538a472ddc63d7093e397f447fbc5fc0843a814ed7de3",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_tungstensteel_raised_ne_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_tungstensteel_raised_sw.json",
+      "sha256": "2b25443591f784f93540b024962920186f1785b03581cffba55bc48b9d4425e0",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_tungstensteel_raised_sw.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_tungstensteel_raised_sw_on.json",
+      "sha256": "b33eb3342a2dc3846a632f0311b240b6b7b241c5717b459b191aab70909ce793",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_tungstensteel_raised_sw_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_tungstensteel_flat_on.json",
+      "sha256": "299e3b3350af993f33d092ee309720d026805cb33033786e35b803668311b9ae",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_tungstensteel_flat_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_tungstencarbide_raised_ne.json",
+      "sha256": "42f0f7d3d42a9ca31a334ae95ef32ca3d3bf468f6d766de9ad44f9403984ae49",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_tungstencarbide_raised_ne.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_tungstencarbide_raised_ne_on.json",
+      "sha256": "23036c1f69d075db6c91c2d1af472a687fc3f9da01b492a3c3b03497a243e6d2",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_tungstencarbide_raised_ne_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_tungstencarbide_raised_sw.json",
+      "sha256": "84b3f555af6a90e76d3b3829c6aa4d6368967d291d8de191357bdec12eba472a",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_tungstencarbide_raised_sw.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_tungstencarbide_raised_sw_on.json",
+      "sha256": "2654466389c443eeb3e4847b68a6667c623a40c3d16b4080548ab83c811530d8",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_tungstencarbide_raised_sw_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_tungstencarbide_flat_on.json",
+      "sha256": "6fb0786132ce1de2d5acf69e3a5f27823322fbee0425b4786893e9a31927052a",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_tungstencarbide_flat_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_tungsten_raised_ne.json",
+      "sha256": "a51513ad1e35d00004b364e31e8257549b6839f8a6a613c96bb59936f7da8288",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_tungsten_raised_ne.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_tungsten_raised_ne_on.json",
+      "sha256": "9c8ed3dd36dc595ea91d29a7e4b312e3a3c0f3bc24c981224f3678fab8d6a7bd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_tungsten_raised_ne_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_tungsten_raised_sw.json",
+      "sha256": "f6100a06c2983b8427602258ccf76771e8c4b35ce84f978375fa48036c980c00",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_tungsten_raised_sw.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_tungsten_raised_sw_on.json",
+      "sha256": "22aa1464c9c59568108e4614c12451a346cfcdbf52afcf66cd13bde4afd3fc00",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_tungsten_raised_sw_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_tungsten_flat_on.json",
+      "sha256": "b0a6096f682e0b7070094d1a856e2ffd4405f0401d26e6bc49c8391dfb784f5f",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_tungsten_flat_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_titanium_raised_ne.json",
+      "sha256": "844e64da2a04a95b070bfa37741bee222a913cc639518e96585350a170f5a232",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_titanium_raised_ne.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_titanium_raised_ne_on.json",
+      "sha256": "04c27f4168838c9510338278a245c7b39ab9de93382b1b3354fe1fbb8e68e86e",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_titanium_raised_ne_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_titanium_raised_sw.json",
+      "sha256": "396cf3d64a969161ed5854e581816dad752836aa09a671a34f470b87e4496667",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_titanium_raised_sw.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_titanium_raised_sw_on.json",
+      "sha256": "28bfe8487a842601f8ca415a20dafdcf79bc8ca1f777eee05e3a6e3656c5ca51",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_titanium_raised_sw_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_titanium_flat_on.json",
+      "sha256": "a760a56d2ceb8c7ed34728da5a8484bfab08222c924c5aeb0b781e2d8530fab3",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_titanium_flat_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_steel_raised_ne.json",
+      "sha256": "571b49ade5f7aca8c50d18e8e1fc159e95137b9a16591671ed68f5bfc2ca14c5",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_steel_raised_ne.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_steel_raised_ne_on.json",
+      "sha256": "ce2729e4d41d7869ea27d701cdfd3339c2051035f65db22629938411b9c4e9e2",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_steel_raised_ne_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_steel_raised_sw.json",
+      "sha256": "2b4b0888c1b64b3bc1f9a91832f0fea211bb0c55381123f9cc939102d32368d5",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_steel_raised_sw.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_steel_raised_sw_on.json",
+      "sha256": "9d815dd8d9fe7131d8ac2673abbcd1323cc826cb77ab9129bf03dea88b088b9a",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_steel_raised_sw_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_steel_flat_on.json",
+      "sha256": "0205201dfe235ef87b5b1c97785990fd1a4efe1686d6b8d8dc759990a0fa36bd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_steel_flat_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_stainlesssteel_raised_ne.json",
+      "sha256": "3c455fa5b3aa14d9e76bf3663f0c4e9438ddad16cbddfc245f325cd7b030500f",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_stainlesssteel_raised_ne.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_stainlesssteel_raised_ne_on.json",
+      "sha256": "fb536033f291e722143d880b699b8aaa003e156e6ce83ae9627edabfaab54c42",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_stainlesssteel_raised_ne_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_stainlesssteel_raised_sw.json",
+      "sha256": "21c9b056f02b7bca28c7f1e32d360819c3a95e84652af17ac10ca71e2fc78121",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_stainlesssteel_raised_sw.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_stainlesssteel_raised_sw_on.json",
+      "sha256": "0dfbcdd081a48f23ca2e3afe37798e4a502ed6af58acd352a63be08ec55dbb2e",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_stainlesssteel_raised_sw_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_stainlesssteel_flat_on.json",
+      "sha256": "18cdd9260a966347dbd897332c50225f627e87a52e952a0eb654efd4db40e9b7",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_stainlesssteel_flat_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_magnalium_raised_ne.json",
+      "sha256": "4c0628f67db558ec5a516776b6cb168cc4339222eb0f87db1266ffca7912de98",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_magnalium_raised_ne.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_magnalium_raised_ne_on.json",
+      "sha256": "b37b4866e56b9e37f7a6f638d1feaa31d0ce3d6affcc55c1ea7120e2186c24c8",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_magnalium_raised_ne_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_magnalium_raised_sw.json",
+      "sha256": "4f0fcea72db81ece9a7050ea5e05c4d7c5570daa232a1532251c3ed78f8fd9e4",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_magnalium_raised_sw.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_magnalium_raised_sw_on.json",
+      "sha256": "9a07793c3a5d09c6d176da5239b34e38df9d8295c77eca6331befbe6584609de",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_magnalium_raised_sw_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_magnalium_flat_on.json",
+      "sha256": "3e453efcc79faf692ffa142faa92da8d06368b6f474b9431fa49155e9580606f",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_magnalium_flat_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_bronze_raised_ne.json",
+      "sha256": "f117583230de24352ee3654a955ccc79278126cd86e00f7453cabb1a79f0f45d",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_bronze_raised_ne.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_bronze_raised_ne_on.json",
+      "sha256": "ffb3341de12e318072712c0e4e660721d67a17ab7106bc37b0f1d7a4fc9bb1b3",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_bronze_raised_ne_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_bronze_raised_sw.json",
+      "sha256": "3eee9c55d401fc7f75dfed70d39830f3b5bfd6ff7c5ae1c7958a169b19cdbcc1",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_bronze_raised_sw.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_bronze_raised_sw_on.json",
+      "sha256": "966dd5d7983b6de2cb15c3fccaa0c60c0a5c6ed013dc946a820135d917a8501f",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_bronze_raised_sw_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_bronze_flat_on.json",
+      "sha256": "bc4539c4acb9c9ab97025d3bc241b759229b523386e598b60f9adad0ad1da30e",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_bronze_flat_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_aluminium_raised_ne.json",
+      "sha256": "6e121aa93df91d0979ba8ae3a947d1c4b0df9cb2421119ad7a18e5422cfdda91",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_aluminium_raised_ne.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_aluminium_raised_ne_on.json",
+      "sha256": "099c2d3f76014425435d848a414b26ee6d677f712d8d97594d3306b5a94f90cb",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_aluminium_raised_ne_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_aluminium_raised_sw.json",
+      "sha256": "f26760c0c1e8290a2d3a9a1a56279ce542c6f82c2fa7aab53ab47e39c023fc3b",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_aluminium_raised_sw.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_aluminium_raised_sw_on.json",
+      "sha256": "429ebad266dbcc0ab5c4bb131db7452489c21321806ee76fc6d5d4be4a795164",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_aluminium_raised_sw_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_aluminium_flat_on.json",
+      "sha256": "bbf282bc6f3c61243e35eca4f2b07fbc13b2ae4d260cf624a464ee4dcc600a9b",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_aluminium_flat_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_adamantium_raised_ne.json",
+      "sha256": "fa2e5f5a17ed9d103c525bbd865080987a182471c2530c66cb46617839d70be0",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_adamantium_raised_ne.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_adamantium_raised_ne_on.json",
+      "sha256": "7820c6ffc0a93b1900c990c9612b46f6ea600c69ff6b13773af8e351c112a438",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_adamantium_raised_ne_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_adamantium_raised_sw.json",
+      "sha256": "ef718d92aa52c32775300acf9ce99c2d1f2b25589cc09c5281c6fbca56b0d7f5",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_adamantium_raised_sw.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_adamantium_raised_sw_on.json",
+      "sha256": "32cc0de3b94e4d6f102925a0e88ef96a5f78565c4bebc0ad94c448e234e71174",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_adamantium_raised_sw_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_booster_adamantium_flat_on.json",
+      "sha256": "a068acfa10e41d9d1368e1c089cbbb98bfadf047346a139a284478660177954d",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_booster_adamantium_flat_on.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_aluminium_raised_ne.json",
+      "sha256": "233383004675d2ae19edfe9c4de5b84da4ee777bc63acdeecebee4dd144b63c0",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_aluminium_raised_ne.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_aluminium_raised_sw.json",
+      "sha256": "46f4e004b25fcb4f84cd7f933d4beaf0832ea46a78a9d12a68d9a7d4f13f73a9",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_aluminium_raised_sw.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_aluminium_curved.json",
+      "sha256": "e3baecb14f303e5f711611d450cece1e1fa2a29c65864964c53a668ba1f98f4a",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_aluminium_curved.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_adamantium_raised_ne.json",
+      "sha256": "299c7832ab8372583cf4c093144a89f2c50172e7b9c5b68fa53af7035e17f3ac",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_adamantium_raised_ne.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_adamantium_raised_sw.json",
+      "sha256": "3c2748b12d1c7d9d0d4a095490a5c476c4e71b0aa8e7f2fd563658a71fc7f465",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_adamantium_raised_sw.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tracks\\track_adamantium_curved.json",
+      "sha256": "ee30083b2c9c14794a48f4f1e02488d9bac4a77a713e563261c79b058e8cbb28",
+      "target": "core/src/main/resources/assets/gregtech/models/block/tracks/track_adamantium_curved.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\railroad_raised_ne.json",
+      "sha256": "41af17a0543bc66092b27be50dbc05597595380e828a0221610b7c17dde2690f",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/railroad_raised_ne.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\railroad_raised_sw.json",
+      "sha256": "809b95b3d0e310eb02964addfb6c0d47aa45a1f67a088c23633cc318c2925edc",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/railroad_raised_sw.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\railroad_reflector.json",
+      "sha256": "c7ed1a08abd2605ac356b66f02395508793b81bab74af690a9866ebc0f1488cd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/railroad_reflector.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\railroad_reflector_raised_ne.json",
+      "sha256": "0c84f0c06f38b31db1cf81c27cc734af09be625438a17c5658f505cba34bf683",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/railroad_reflector_raised_ne.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\railroad_reflector_raised_sw.json",
+      "sha256": "d401978a851307826eb6f33327e2edbe98e34f4202b56d62ac460a274689da10",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/railroad_reflector_raised_sw.json",
+      "adaptation": "original referenced model dependency"
+    }
+  ],
+  "comparisonSources": [
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\registry\\GT6Rails.java",
+      "sha256": "bcad01af47a8dd5fdc26d89ebf444fd325eeb661814acaa7dc1b0ca80e67761f"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\block\\rail\\GT6RailBlock.java",
+      "sha256": "ea5f237cc719858dda8b0149756d539f5e18a08304fc5a4ad5359008561d5a1f"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\block\\rail\\GT6BoosterRailBlock.java",
+      "sha256": "e052414af0f8baf96fe5b1f545cb830838cc28350264e1f4611ff7f511142fb1"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\block\\rail\\GT6RoadRailBlock.java",
+      "sha256": "fa523773f480bcee50d9a16d6ae95c9efdecb7de685261cd657d041bb2e45e9f"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\tileentity\\misc\\GT6GregOLanternBlock.java",
+      "sha256": "3a94588842396d645b8cc22aace9234632ca58f83a5086f963b3162a59cefd46"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\cruciblecraft\\src\\main\\java\\com\\masson\\cruciblecraft\\content\\block\\GtBlockObjectRailBlock.java",
+      "sha256": "51aae44ce03bb1debc0911a830a828db472266528bb74a638edfa10701816b00"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\cruciblecraft\\src\\main\\java\\com\\masson\\cruciblecraft\\content\\block\\MteInPlaceBlock.java",
+      "sha256": "79740e9988bc5a00e0e2b19197818053cde24c717ca9da98f28a60c85b610892"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\cruciblecraft\\src\\main\\java\\com\\masson\\cruciblecraft\\registry\\ModCreativeTabs.java",
+      "sha256": "1eb96b488d3f0d2c2ef40e0db16bbb60dcbe2f832403f2e50e6a4de87c98f000"
+    }
+  ],
+  "choices": [
+    "Port all30 source material tracks (ten materials times ordinary/booster/detector), the0.5 road-stripe rail with tool-toggle reflector, the facing/light15 Greg lantern and six one-pixel face-mounted decorative panels. Preserve source IDs, material speed/resistance/booster ingredients, waterlogging, vanilla rail shape/redstone/detector behavior and original assets. Native rail membership is written to minecraft tags/block/rails, alongside the untouched Forge tags/blocks/rails identity list. No rail textures are mistaken for extra placeable blocks.",
+    "TrackCatalog shares all ten material rows and speed ladder with actual Forge and Neo registrations/rail hooks. TrackMotionRules shares complete x2 launch, wall kick and unpowered braking with both boosters and road stripes; adapters query walls only for a stationary powered launch. PanelCatalog shares six actual material/tint/map/hardness rows and six one-pixel bounds; both registrations/shapes consume it. Greg lantern retains the full solid selection, horizontal placement/rotate/mirror and zero light opacity.",
+    "Compare rails: brokestar restricts straight-run neighbors to its own rail family and checks17-block XYZ radius, while source accepts every BaseRailBlock of the same axis and checks16 XZ radius. Preserve this source policy and record the stricter alternative. brokestar uses vanilla additive booster acceleration and omits road reflector toggle; retain source x2 boost and actual reflector controls. The observed masson rail class stores variant identity only and has no speed/boost hook, so it is not selected over either functional implementation. Masson wood panel is a centered two-pixel shape; preserve six source face-mounted one-pixel shapes. bro lantern uses a ticking entity while source is a complete plain directional luminous block; keep the simpler actual source behavior.",
+    "Adopt the concrete brokestar powered-rail constructor flag on both platforms: the one-argument modern PoweredRailBlock constructor makes an activator. To preserve GT x2 boost and single braking rather than stacking vanilla velocity changes, the existing minecart mixin redirects the isActivatorRail check only inside moveAlongTrack for GT boosters. The real booster remains non-activating in tick, so it does not activate TNT/hopper carts. The source positive speed-cap assignment also ports to a required Neo mixin config to allow the1.4/1.6/4.0 material rails. These late booster fixes have grouped compile evidence, not minecart runtime evidence.",
+    "TrackRecipeCatalog shares all45 original crafting rows:30 material tracks and15 vanilla replacement rows including12 material-dependent activator yields. The Forge loader consumes shared patterns/yields; Neo generates native shaped recipes from real resolved material railGt/treated sticks. A native OnDatapackSyncEvent removes conflicting non-GregTech shaped rail recipes before recipe sync, retaining shapeless/machine and protected GregTech rows. Missing source ingredient/output identities are logged and skipped explicitly, never replaced with arbitrary vanilla ingredients.",
+    "Port the full original material-prefix/block-prefix creative pages with hidden/alias/validity checks and all19 source special family identities, titles, search bars and original icons. Native contents use existing typed registrations, actual material/stone bindings, paired hoppers, storage/sensors, wire/axle/gearbox, nuclear/battery, smeltery and multiblock families. Actual manual tool assembly and charged ZPM/chemical battery examples, sixteen concrete/glass colors, original custom material/block icon alias models and single-count output remain connected. Per-family ItemStackLinkedSet de-duplicates item-and-component equality; unseen real non-material contents join tools, so newly registered tracks/keys are reachable. Hidden fluid display and material/icon placeholder items are excluded from that fallback.",
+    "CreativeTabCatalog shares source family IDs/title contract with real Forge/Neo tab builders. Source already has bound sorted material indices; retain them instead of importing masson parallel material catalogs/tab-cache identities or brokestar single machines-tab grouping. Native category display is independently adapted to existing registrations; world inventory navigation, contents/icon correctness and large search-index performance are not proven by the title screen.",
+    "Creative wiring exposed an actual remaining native registration gap: core EngineSpecs exist, but ordinary source EngineBlock/BoilerTank gameplay registrations are still absent on Neo. This is not covered by native large steam/gas turbines or abstract energy nodes. The original engines family stays pending and logs if empty; this next integration batch must supply actual executors, not placeholder blocks. SandwichBlock/its item/entity/rendering and remaining optional integrations are also pending."
+  ],
+  "knownGaps": [
+    "Grouped compile passes:38 blocks/recipes35s; initial creative compile failed with12 generic/type/name errors, fixed20s; late booster classification/motion fix19s; final source state including stationary-only wall reads35s. No new fixture.",
+    "One existing native rendered TitleScreen short startup PASS1m40s,151 frames,1280x720 saved PNG; no new fixture or per-block start. This happened before the late shared booster redirect/Forge constructor fix and stationary-only wall-read adjustment. Those changes require later grouped runtime coverage, and this wave does not repeat the client.",
+    "The title-screen pass covers native mod/creative registry registration and model-loading startup only. Actual creative-page population/search/nav, icons/tints, world rail speed/curve/unload/cart activation/braking/reflector tools, pressure-detector behavior, panel placement, lantern orientation and actual crafting/reload of45 track rows are unverified.",
+    "Original inherited raw assets still produce7 invalid-path client log lines (spaces/uppercase/non-ASCII filenames); main menu completes despite them. This is not a claim of complete visual resources. Existing panel-cover hexadecimal underlay uppercase resource identity requires a subsequent paired resource/consumer normalization.",
+    "Minecart source cap mixin retains its original global positive setter behavior; interactions with third-party cart/rail mixins and high-speed chunk behavior are unverified. Runtime rail hooks transfer current speed after movement, an inherited timing issue requiring gameplay observation.",
+    "Dedicated startup for this exact batch, Forge runtime, both complete survival chains, independent-process world restart, old saves and production jar/release acceptance remain pending. Earlier dedicated startup does not cover this batch. Original source histories/authors/license notices retained, no permission text changed; full goal active."
+  ],
+  "generatedPlatformResources": [
+    {
+      "target": "neoforge/src/main/resources/data/minecraft/tags/block/rails.json",
+      "sha256": "37adaaea79c3e2d51184e72811e0df3f8565a30458d940f6693dd30c357c58ea",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\minecraft\\tags\\blocks\\rails.json",
+      "adaptation": "Native registry tag / mixin lifecycle boundary"
+    },
+    {
+      "target": "neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+      "sha256": "6458ff68ad0939d37a5ea7fc967b64874ea8156f60da12318b9a3077534b22ec",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\gregtech.mixins.json",
+      "adaptation": "Native registry tag / mixin lifecycle boundary"
+    },
+    {
+      "target": "neoforge/src/main/resources/META-INF/neoforge.mods.toml",
+      "sha256": "f7ccd5f018b7b17531b12813f3f2bd0e1dd4041409fba2e402d08f455b7e9843",
+      "source": null,
+      "adaptation": "Native registry tag / mixin lifecycle boundary"
+    }
+  ]
+}

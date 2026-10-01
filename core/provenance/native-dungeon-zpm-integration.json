@@ -1,0 +1,1137 @@
+{
+  "date": "2026-10-01",
+  "authors": [
+    "saltnya",
+    "brokestar233",
+    "Lorbineitte Masson",
+    "original GregTech 6 contributors"
+  ],
+  "license": "Original notices and historical evidence retained; no third-party authorization changed. Local integration only.",
+  "counts": {
+    "coinMold": 1,
+    "zpmAndDischargers": 4,
+    "portals": 2,
+    "pottedIndicators": 17,
+    "totalBlocks": 24,
+    "dungeonAndStructureJavaFiles": 33,
+    "nativePortalJavaFiles": 3,
+    "resources": 124,
+    "javaRecords": 62,
+    "dungeonRoomAndHelperClasses": 28
+  },
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/StorageContainerClientSetup.java",
+      "sha256": "94fe6f0b8fdc009ba17eaf29ef340f0e35304836b0881432f902cdfb7a2aca25",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "sha256": "224fbe1df78fd81cb6b14eac63c7d8d75ad9809a8f219456b303aae102d7e526",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/StorageContainerCapabilities.java",
+      "sha256": "1aa45e4a2283c472e9bb78e53eed8f7969b5fa674e3c34abf1583eafa33d97a0",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "sha256": "ef054b5c1e0572c3c86f055be6bc97d084b9a090fb222c47748fe61002c6c390",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTBlockEntities.java",
+      "sourceSha256": "027081bae34480826956a74d65a24aa7f4ef29d4be4a4687046793a10d9df62f"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTManualStations.java",
+      "sha256": "fa74751c50ef801d1ab94c31e98b28e7ea8f881debeaa54df33328afcc2bb4c9",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTFeatures.java",
+      "sha256": "8b750242c86c378adaea0a7b42c231e4fdba301ad660c5a53a81ba416460ebc1",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTFeatures.java",
+      "sourceSha256": "5333be8dcf08f58be13e311321a2d6c52c3f492c6f83fa08e84a14928f9ecd61"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/blockentity/energy/ZpmDischargerBlockEntity.java",
+      "sha256": "155ca5c644a04bfea1af88d743d90c44ad6b923cafd8ace92ac7b2b7c60e8007",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\energy\\ZpmDischargerBlockEntity.java",
+      "sourceSha256": "230dd4476dd93c66b5bc2d1cd1885392278f28b01196e5579f6c44a79fcbd34b"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/blockentity/energy/ZpmModuleBlockEntity.java",
+      "sha256": "95b324a910da636303b377d65fc8225393cea63a88eef5f7ef6aed7ff9146f84",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\energy\\ZpmModuleBlockEntity.java",
+      "sourceSha256": "70b25b67e698d2bb0889b52170da989dd03be8a7a7143c5a50a7e2fc5929a1c6"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/blockentity/tool/CoinMoldBlockEntity.java",
+      "sha256": "db1b2b05af7ad8473c0de87945ce0a11ca95f959aea56e07b6b0a9d557692a84",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\tool\\CoinMoldBlockEntity.java",
+      "sourceSha256": "10342da45b11db327a44aa7481a573ac7063783269ffbbcbbb1d77058fb18cf4"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/content/energy/ZpmEnergy.java",
+      "sha256": "5e9be9e0505c1873b9415a00e5068bf05db9571d3e2f6e730f1d3daec57c189f",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\energy\\ZpmEnergy.java",
+      "sourceSha256": "47087bc5b7eab59fca5521d3668017b251570fab53402f78dd9dcc653c25674c"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonData.java",
+      "sha256": "b5f5d48fbd61d5c877d1f31a9a270821d7b3caade2e43b9c297862b6136eec35",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\dungeon\\GTDungeonData.java",
+      "sourceSha256": "ca73afcadd712a2e14ae62e900855799ed1b08c5073b2b771afabbc557ea323d"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonLayout.java",
+      "sha256": "5f7b327e3851eff8ce54842e352859a3b211eb9ae555809032d22a46f0573351",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\dungeon\\GTDungeonLayout.java",
+      "sourceSha256": "4d412918260e4dbd1301faadc1d7fba0b1f62de0fdc679fea4e16e0835586d65"
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/energy/ZpmWorkRules.java",
+      "sha256": "db71942d6585502003e45c2026fe2946b5d28efa16ce2bbc6d964f690f6e862a",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/tool/CoinStampPattern.java",
+      "sha256": "b9c16bd55b7c9f32ea6c9098a1095fce5513123677c1f22476da7ba5e7bac8ce",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/worldgen/dungeon/DungeonLayoutRules.java",
+      "sha256": "29a03c1967ebb8822ae8df759f92f4cad0766944bb1e0dbf0d18a849a4891ff8",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/energy/ZpmDischargerBlock.java",
+      "sha256": "2198b2fb637cd87eb01c8b39795f2a4dd23db86caef31909f0ebec61e0dacf2c",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\energy\\ZpmDischargerBlock.java",
+      "sourceSha256": "1414aac79091f35e85048dd1bb1960eb9d1fea38e73afcfcd9ef3650af55e77d"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/energy/ZpmModuleBlock.java",
+      "sha256": "ed9280fbd7d70901d6f08a9e456f2ac076975239f5cedcb43c20535b7edf8236",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\energy\\ZpmModuleBlock.java",
+      "sourceSha256": "84ffbe749a7ade0bc3c76aaf0a7bd0010a7946c3e0949fab6edccfdb78d66e56"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/misc/DungeonPortalBlock.java",
+      "sha256": "127dbe216c3453fa6975a0be241ed69150b584caf225a424e7477f577ae01ce3",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\DungeonPortalBlock.java",
+      "sourceSha256": "95ba24e8b513ba9edfefa5b77bcd771aa75d4e6a4e53f026e8812a6b9c4f06db"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/misc/DungeonPortalBlockEntity.java",
+      "sha256": "3a2f22693e4f1f0b88d04149d69cdb533fa8cc319a03a0ad4b90789f0afd9ab7",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\DungeonPortalBlockEntity.java",
+      "sourceSha256": "e78837389a29a2ea5827d9e920e05c2ffeb86387d8194a09f0c58df100558d4c"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/tool/CoinMoldBlock.java",
+      "sha256": "b809b8f1f6fed18229a7c933178d63664dc9ef0bd95324d4e687de6fb0916a5a",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\tool\\CoinMoldBlock.java",
+      "sourceSha256": "d9de8a47e276cfd2bb16fbe4e8a755368e065e9c836945f46552194744daba6d"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/energy/ZpmDischargerBlockEntity.java",
+      "sha256": "10aabf7168c4076ef8750856edec89a3484e5eb145466eb9bfde2ba7f5abdfee",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\energy\\ZpmDischargerBlockEntity.java",
+      "sourceSha256": "230dd4476dd93c66b5bc2d1cd1885392278f28b01196e5579f6c44a79fcbd34b"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/energy/ZpmModuleBlockEntity.java",
+      "sha256": "42309cb4e0f320610db5177d0c494bac0a9b802de86b537deca6cca7a3e04d23",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\energy\\ZpmModuleBlockEntity.java",
+      "sourceSha256": "70b25b67e698d2bb0889b52170da989dd03be8a7a7143c5a50a7e2fc5929a1c6"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/tool/CoinMoldBlockEntity.java",
+      "sha256": "971530194a0873b8822d78b4d53e4db650b2571bc3e93974adbb67f7c185637e",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\tool\\CoinMoldBlockEntity.java",
+      "sourceSha256": "10342da45b11db327a44aa7481a573ac7063783269ffbbcbbb1d77058fb18cf4"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/CoinMoldRenderer.java",
+      "sha256": "9bd575f490a0e1b313235c4cf74382895e9ff4c63b4a270770916aa2b184bca8",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\CoinMoldRenderer.java",
+      "sourceSha256": "2c22aa910b9a9608ce489634e84724c3fc1c665ae8d1a1e8359a5dc16e7331fc"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/energy/ZpmEnergy.java",
+      "sha256": "eddd4ebff0d2466e37cf2efcbcd7599a86d088e54020a825524b36fedf730188",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\energy\\ZpmEnergy.java",
+      "sourceSha256": "47087bc5b7eab59fca5521d3668017b251570fab53402f78dd9dcc653c25674c"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/tool/CoinMoldGeometry.java",
+      "sha256": "7b157064b7f221c5e33971022dc196339dafbb2ec38920602fc086fc0329cd59",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\tool\\CoinMoldGeometry.java",
+      "sourceSha256": "7b157064b7f221c5e33971022dc196339dafbb2ec38920602fc086fc0329cd59"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTDungeonBlocks.java",
+      "sha256": "40c7b1f6b22b020ac933467ff534f5db72946216a02441ec94e8ba8466283cdb",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTDungeonBlocks.java",
+      "sourceSha256": "387a659f9d499c6ee6558a124939d8fb14c630c9181a83faad880fe0d5512596"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTZpmArtifacts.java",
+      "sha256": "24c1f9c6006476045ab0f9c84a87632f25613154dc36f6a6894c1dcd3e627266",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTDungeonAnchorPiece.java",
+      "sha256": "4e72b4092290bd463131c2764a5dfb791e92d81f2362ed303468d1e64bdd347f",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTDungeonAnchorPiece.java",
+      "sourceSha256": "e181211095212de2c8258517f67c1e5541fbdc8621e00e58f543b883d8e854cb"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTDungeonFeature.java",
+      "sha256": "765319ccb1f49ef728754b03a265b4b5f29b88b367cc84456e98eaf3bb10f7d8",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTDungeonFeature.java",
+      "sourceSha256": "02732aef8b8f58be766af3020d9c64739995241abfeac77420165c2027c50a38"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTDungeonPlacement.java",
+      "sha256": "9cfb908b0fea03702cd8355cacf4515b4d0a9bacc6953ee451635ab5cb44fd07",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTDungeonPlacement.java",
+      "sourceSha256": "2f5e4456d436c188be728d405330641c3330dc881060c1db68d899e8fe8e69af"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTDungeonStructure.java",
+      "sha256": "de05989620bd02a8e667c614439fe5fcc3f69f565c919fbbe8b0ce9e373b1e57",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTDungeonStructure.java",
+      "sourceSha256": "d04ac27f457d30ffe2d8e123ac921bc23be8ab841b22b77131d5aee9cb9090ba"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTStructures.java",
+      "sha256": "5252ece5218ce8fa4434ac7c8f153de4c9b112816d804fdd3d9025799f7f8933",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTStructures.java",
+      "sourceSha256": "1b48550d90cb51bf8f266528340663aa4aba77e1bbef0c200312c36a0f30bedf"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/dungeon/DungeonBindings.java",
+      "sha256": "adde819bbcc028c9bbe730a6a8763817249adb6df9cd56ee6fd94fc13b3bbc8e",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/dungeon/DungeonBottleSupplies.java",
+      "sha256": "5c627eb477e5e73d0a84c20c719933f7f8e0d4eba0565efac0fda7bd69ce9827",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\dungeon\\DungeonBottleSupplies.java",
+      "sourceSha256": "4874b54b58c8359bb1c2501d8717ba17cdedf0dd96cdd9a567210089832b06be"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonChunk.java",
+      "sha256": "7b0b672e8461d4d1fb7e596f930ef4aad3515809da173265725a14d6db37683a",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\dungeon\\GTDungeonChunk.java",
+      "sourceSha256": "74e8fad1ce0d7901b156d73f0fcd09ed1af3332627e6bd319afdc4598fa5920e"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonChunkBarracks.java",
+      "sha256": "e4c95d60d2c7413a2e40d065e63dfc271e414cd4a109a6dcf4c0fa89ebce7bbf",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\dungeon\\GTDungeonChunkBarracks.java",
+      "sourceSha256": "b7faed0110e75528f0ba518a3e2a320fed794b24dfe80e3c685a845ce4a6d583"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonChunkCorridor.java",
+      "sha256": "0638cbf006fa8939190b829c596c7b3d9366dfc89eee46321a4d1304fceee940",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\dungeon\\GTDungeonChunkCorridor.java",
+      "sourceSha256": "f4f8aa2c84df6b9af2c3fa0edfe6a515d11dd1b847e6edaeb83d8c9cbdcb08ee"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonChunkCorridor3.java",
+      "sha256": "8b6d18670124060c49a1192b3f937bbecde10eb5be9094100ba80c1e2a481d86",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\dungeon\\GTDungeonChunkCorridor3.java",
+      "sourceSha256": "1e632ae3f9d6a57cde37a5b558be32c9064e778c2bab5824664ba267281fd42e"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonChunkCorridor4.java",
+      "sha256": "cca2550ea482cad385f985ea55074a53fe7f8760a6c8e6b5fdc6af33e5ef9b68",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\dungeon\\GTDungeonChunkCorridor4.java",
+      "sourceSha256": "575131945a9d5e488e30171c00f3f4c832d330197ecb30efeaeba4bff9e82d4f"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonChunkDoorPiston.java",
+      "sha256": "d415add8813725dbe794f036a63403ce1c914fbf3cc2ca74dfd97470600dabf9",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\dungeon\\GTDungeonChunkDoorPiston.java",
+      "sourceSha256": "6c7f85bb88dbc1f5a33460f24513d47630881b16107445f867d4339bed947fca"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonChunkEntrance.java",
+      "sha256": "0a600fcec6bfcabbcd295727cfa5a6ee4b631c2987efffa678bc5fbe1811848a",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\dungeon\\GTDungeonChunkEntrance.java",
+      "sourceSha256": "c93d62aadf35752823f238215e1bc7205a8af983eda5aaa7b12a4a1c2724929a"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonChunkPillar.java",
+      "sha256": "2346525517c2d94a6efc9f67e50fbb63ed3731181ca97c5a980e9ac58f964380",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\dungeon\\GTDungeonChunkPillar.java",
+      "sourceSha256": "28bb363b5f625c15474d00fe655ababe073d7a3f6708e6d52dbb2462469e3658"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonChunkRoomEmpty.java",
+      "sha256": "76751562c211e03627dcffb0bb9060530aa8ca03d5b84de9458d8c6a470fc996",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\dungeon\\GTDungeonChunkRoomEmpty.java",
+      "sourceSha256": "98fe32521d9c3819ab6de4483211928c122c3bb3da7990b5a2214362d39c3834"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonChunkRoomFarmCrop.java",
+      "sha256": "2f456c0cb8c978f5247f39432783db946602a4b034d21a489b67e91ed85750e0",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\dungeon\\GTDungeonChunkRoomFarmCrop.java",
+      "sourceSha256": "85d35d140c7454426c8b8cceed0dacf52959173b708c3d7c2cf83784aa35cd8a"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonChunkRoomFarmFish.java",
+      "sha256": "436b6ce4bf8304ffed9b3dd903e7da74203a63844df9a2e9b9fcf541188f67b6",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\dungeon\\GTDungeonChunkRoomFarmFish.java",
+      "sourceSha256": "db4b80f08eb36886b71c17b50d87fe77dfcf0aa6b596ea27fdb2c2fd94c32d96"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonChunkRoomFarmMobs.java",
+      "sha256": "2666a2721e2fc3b020ff3efe77763ae1c24e5579dba717fb052166407f7de02c",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\dungeon\\GTDungeonChunkRoomFarmMobs.java",
+      "sourceSha256": "14037125125c5f1bbc86d8589fed1e2f7a30a2c5838e94e12e64d559353bcf9e"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonChunkRoomLibrary.java",
+      "sha256": "97db14c5ee12e9fdf95bce0e3c83b40c4c930b3c8ba5fafa3a0f4ea85f9f34c2",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\dungeon\\GTDungeonChunkRoomLibrary.java",
+      "sourceSha256": "a86949eaf9e3bd89d34569fc19d06501feb7050f13a50fec18d1bdeb6840f6aa"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonChunkRoomLibraryNormal.java",
+      "sha256": "5d0bc24d7228557e773786f229d7e1d9892d4d03a211fe105b7b7b361c5ab339",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\dungeon\\GTDungeonChunkRoomLibraryNormal.java",
+      "sourceSha256": "8b92f2f6cc9a35918553990dfee72063390730b67a65e3f65834c4b219dc018a"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonChunkRoomMiningBedrock.java",
+      "sha256": "da6852895bfd3c1fe311035d1233b1f2f5c770c182b8efb20c92317e91c41e44",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\dungeon\\GTDungeonChunkRoomMiningBedrock.java",
+      "sourceSha256": "45ae1690125646fdf001776ff2b4f3abe846f9c6056119914a7f22da25e10cf0"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonChunkRoomPortal.java",
+      "sha256": "416938a1a8191d571815293c8c660aeed47390558c3473765717832ea7c1036b",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\dungeon\\GTDungeonChunkRoomPortal.java",
+      "sourceSha256": "5050d2f7a95ab0a44bbbf428c3a8c4d7d6689bb590979e4bf7d7b5dcd1e84d56"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonChunkRoomPortalEnd.java",
+      "sha256": "4b1b6ae839e337d2d48c79dc725eb30b549a73fb2f69c2b018a761995a6d74b2",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\dungeon\\GTDungeonChunkRoomPortalEnd.java",
+      "sourceSha256": "fe0294b1b1663281cf3b03e346b271a0d50adc00235dc5772725395b70f9a7b8"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonChunkRoomPortalNether.java",
+      "sha256": "62d8c692c609c9a4f80d15fa172a2a87ea2f0f4188ed5199be9eed3dbf44298d",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\dungeon\\GTDungeonChunkRoomPortalNether.java",
+      "sourceSha256": "08dc438ebad924fa5b81ef6387d554ae0738eeff51cd8bb922869bd66d92989f"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonChunkRoomStorage.java",
+      "sha256": "ef4bdc18f4c878b2285814e225a68deadfe66c900163168a9a46d5db87b7244f",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\dungeon\\GTDungeonChunkRoomStorage.java",
+      "sourceSha256": "72c32ee8d5d98dc5117e36064aab2f2c8d476be943de6ad29f756218fb055b44"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonChunkRoomWorkshop.java",
+      "sha256": "7803ffb05333b9a9e11a31d3561e6904c4b375912e0546de3af5388cb339f8e5",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\dungeon\\GTDungeonChunkRoomWorkshop.java",
+      "sourceSha256": "9c7dbfda24fe2643c338da41c4c39fd8460a59c6153e5ee780e2a9e34531a439"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonCupDrinks.java",
+      "sha256": "2910b51a4b70dd6d941face89caa234d57566ee4f6b0b12511d2cbdd6762efb6",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\dungeon\\GTDungeonCupDrinks.java",
+      "sourceSha256": "bfee9ec58075355d2172395c887eccd8f0664292899d764f977ad24a7bacc136"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonData.java",
+      "sha256": "04474220a0de7db1d750ab69ac39a077214cd9cd72f6926baba8a5d92175ae8a",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\dungeon\\GTDungeonData.java",
+      "sourceSha256": "ca73afcadd712a2e14ae62e900855799ed1b08c5073b2b771afabbc557ea323d"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonLayout.java",
+      "sha256": "760047769e727e386379ab05d68021f6d21c02c3ff91c3abe4341d5a25421de9",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\dungeon\\GTDungeonLayout.java",
+      "sourceSha256": "4d412918260e4dbd1301faadc1d7fba0b1f62de0fdc679fea4e16e0835586d65"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonSharedState.java",
+      "sha256": "ec1b5151099fc346011995e8b022faf9b17887f8b41a1a6a27b7578a81e081e4",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\dungeon\\GTDungeonSharedState.java",
+      "sourceSha256": "aa68ba7b78eaf20a4e4e7c0e5dc19ce6898e07844877b43065c0c881aac14748"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/dungeon/WorkshopCraftingSupplies.java",
+      "sha256": "79b2eac8e1ea45c4adf747e144d32bf895bcc5ca10af00fbaa7b8eed6c624a60",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\dungeon\\WorkshopCraftingSupplies.java",
+      "sourceSha256": "0bc124dd4e7328fd71ec6072d61235b64d0e41c4d8c462a1109e01fe7e4574c1"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/dungeon/WorkshopDrawerSupplies.java",
+      "sha256": "8b5308ea93dcf557e797e3ca6a8a4a41f24bb5528552541cbafbaf1128c3ea99",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\dungeon\\WorkshopDrawerSupplies.java",
+      "sourceSha256": "3474c25275d8900cb991a37836ed4828e2ea56861a55ebbb1b9674cc6299ed15"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/dungeon/WorkshopFluidStation.java",
+      "sha256": "195856e5a87e7e655c7581251ffe79e1fde48551b5dd07db46a9d10f9c973841",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\dungeon\\WorkshopFluidStation.java",
+      "sourceSha256": "012e0781d5edbdcc9757cc90e3e60aa198d952feeba35df56ae01261016e15ed"
+    }
+  ],
+  "resources": [
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\coin_mold.json",
+      "sha256": "7e86e78c95b1c4954c2f73d091fadf178ca48828188d09a574f7f1e5ce84cb8e",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/coin_mold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\coin_mold.json",
+      "sha256": "be6fd9ca9dadc8d485b08a8916006b245e3c705406ec07bbd1dff4c54fae7fb4",
+      "target": "core/src/main/resources/assets/gregtech/models/item/coin_mold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tool\\coin_mold.json",
+      "sha256": "5ced4a3887bbb891903d5d60f8f66943665c92c04c8389a792fad207d54eaf92",
+      "target": "src/main/resources/assets/gregtech/models/block/tool/coin_mold.json",
+      "adaptation": "original Forge loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tool\\coin_mold.json",
+      "sha256": "5ced4a3887bbb891903d5d60f8f66943665c92c04c8389a792fad207d54eaf92",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/tool/coin_mold.json",
+      "adaptation": "native model-loader namespace boundary",
+      "adaptedSha256": "3c2a3872262a427c244aff9323dc924663d0a5e697844bea44edc65e308115c6"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\zpm.json",
+      "sha256": "2986b522522b7d117f439f1a74693e7d047b78415f4a62bdad34f9d26baff177",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/zpm.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\zpm_discharger_advanced.json",
+      "sha256": "b4b81d291590fce92187344a6b94e02eaf328240eff9464187901f1575975967",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/zpm_discharger_advanced.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\zpm_discharger_basic.json",
+      "sha256": "9006221981a97bf63685c47516508f4148dfc8143ae7e9e027e7692c125eacc3",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/zpm_discharger_basic.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\zpm_discharger_elite.json",
+      "sha256": "dbfd1da5386f4c892a777cbe284a4477097e6d0fa1527964f437a1dde14e2a42",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/zpm_discharger_elite.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\zpm.json",
+      "sha256": "70fcd81cae69acd72b02f53f2be5aa9c042d4adf02fc18a6d6cf8e1dc27a8b54",
+      "target": "core/src/main/resources/assets/gregtech/models/item/zpm.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\zpm_discharger_advanced.json",
+      "sha256": "e4560b188bcd724277f6437e183b05294627face513ecc48ec8b9732e052412e",
+      "target": "core/src/main/resources/assets/gregtech/models/item/zpm_discharger_advanced.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\zpm_discharger_basic.json",
+      "sha256": "59387a20aefeb1017e5dbc50b3237228280577d555be596ba24c1f640104cc63",
+      "target": "core/src/main/resources/assets/gregtech/models/item/zpm_discharger_basic.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\zpm_discharger_elite.json",
+      "sha256": "3409b395a67993fae855a3a199aeef64829fdeaf736fc857078d7851e8541ec6",
+      "target": "core/src/main/resources/assets/gregtech/models/item/zpm_discharger_elite.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\zpm.json",
+      "sha256": "788dd881cc007d1ca2400206467ee423ed136b8059be9d0faed3139e69aea303",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/zpm.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\zpm_discharger_advanced.json",
+      "sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/machine/zpm_discharger_advanced.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\zpm_discharger_basic.json",
+      "sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/machine/zpm_discharger_basic.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\zpm_discharger_elite.json",
+      "sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/machine/zpm_discharger_elite.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\zpm.json",
+      "sha256": "ede3e7e076e2bc5c0613b7e2bf34177c13685ea63a9ddd7f893305a223512480",
+      "target": "core/src/main/resources/assets/gregtech/models/block/machine/energy/zpm.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\zpm_discharger_elite_0_0.json",
+      "sha256": "8fdcf278e045ea3abb751e4ecddc33ce8df33da1ddd6ba151ca44a443792c75d",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/energy/zpm_discharger_elite_0_0.json",
+      "adaptation": "original Forge loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\zpm_discharger_basic_0_0.json",
+      "sha256": "8fdcf278e045ea3abb751e4ecddc33ce8df33da1ddd6ba151ca44a443792c75d",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/energy/zpm_discharger_basic_0_0.json",
+      "adaptation": "original Forge loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\zpm_discharger_advanced_0_0.json",
+      "sha256": "c66ae55a817bba95642e1914cdcc0d860f6ed17c6ad688249aa79747d10ccda4",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/energy/zpm_discharger_advanced_0_0.json",
+      "adaptation": "original Forge loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\zpm_discharger_elite_0_1.json",
+      "sha256": "f1add42d6df2bd5c36ae2143dbc7f19ae8e37a74ad4ce938592ca47389cc4036",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/energy/zpm_discharger_elite_0_1.json",
+      "adaptation": "original Forge loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\zpm_discharger_elite_1_0.json",
+      "sha256": "bee381fcf56609c78e2b346e32840734caa23af20412ba40e67e978233480fa2",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/energy/zpm_discharger_elite_1_0.json",
+      "adaptation": "original Forge loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\zpm_discharger_elite_1_1.json",
+      "sha256": "718168bbd7210cfc77a7049f1099c2a72de16b925382d10e0c865e067bc26a26",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/energy/zpm_discharger_elite_1_1.json",
+      "adaptation": "original Forge loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\zpm_discharger_basic_0_1.json",
+      "sha256": "f1add42d6df2bd5c36ae2143dbc7f19ae8e37a74ad4ce938592ca47389cc4036",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/energy/zpm_discharger_basic_0_1.json",
+      "adaptation": "original Forge loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\zpm_discharger_basic_1_0.json",
+      "sha256": "bee381fcf56609c78e2b346e32840734caa23af20412ba40e67e978233480fa2",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/energy/zpm_discharger_basic_1_0.json",
+      "adaptation": "original Forge loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\zpm_discharger_basic_1_1.json",
+      "sha256": "718168bbd7210cfc77a7049f1099c2a72de16b925382d10e0c865e067bc26a26",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/energy/zpm_discharger_basic_1_1.json",
+      "adaptation": "original Forge loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\zpm_discharger_advanced_0_1.json",
+      "sha256": "02a50816b7c7b221e5825454aef8da5f619736f27b930bb93f4e4e6a1190eb16",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/energy/zpm_discharger_advanced_0_1.json",
+      "adaptation": "original Forge loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\zpm_discharger_advanced_1_0.json",
+      "sha256": "325400c9f7b267e4c92ba6a9ba7f9e07d48abbf6f040a8ef492a9948f60b1b32",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/energy/zpm_discharger_advanced_1_0.json",
+      "adaptation": "original Forge loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\zpm_discharger_advanced_1_1.json",
+      "sha256": "4d7736fd96d129d1bec4fee70d5850a28b2df257e87351dc7765151e6998cf81",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/energy/zpm_discharger_advanced_1_1.json",
+      "adaptation": "original Forge loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\zpm_discharger_elite_0_0.json",
+      "sha256": "8fdcf278e045ea3abb751e4ecddc33ce8df33da1ddd6ba151ca44a443792c75d",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/zpm_discharger_elite_0_0.json",
+      "adaptation": "native model-loader namespace boundary",
+      "adaptedSha256": "ab3245ddb2e8c90b430a9aeea2cdb22fb4e3391e52ff27d9d1faa9a083482cc8"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\zpm_discharger_basic_0_0.json",
+      "sha256": "8fdcf278e045ea3abb751e4ecddc33ce8df33da1ddd6ba151ca44a443792c75d",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/zpm_discharger_basic_0_0.json",
+      "adaptation": "native model-loader namespace boundary",
+      "adaptedSha256": "ab3245ddb2e8c90b430a9aeea2cdb22fb4e3391e52ff27d9d1faa9a083482cc8"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\zpm_discharger_advanced_0_0.json",
+      "sha256": "c66ae55a817bba95642e1914cdcc0d860f6ed17c6ad688249aa79747d10ccda4",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/zpm_discharger_advanced_0_0.json",
+      "adaptation": "native model-loader namespace boundary",
+      "adaptedSha256": "e89f1d554f8cbd9566456d204e7dd50671c9a776e7b935e7cca1c35bdc1cba00"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\zpm_discharger_elite_0_1.json",
+      "sha256": "f1add42d6df2bd5c36ae2143dbc7f19ae8e37a74ad4ce938592ca47389cc4036",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/zpm_discharger_elite_0_1.json",
+      "adaptation": "native model-loader namespace boundary",
+      "adaptedSha256": "40e88036682d80d126195b169d7ba20ef8d28e0a98e4e6bb0e3d5e0098168cbe"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\zpm_discharger_elite_1_0.json",
+      "sha256": "bee381fcf56609c78e2b346e32840734caa23af20412ba40e67e978233480fa2",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/zpm_discharger_elite_1_0.json",
+      "adaptation": "native model-loader namespace boundary",
+      "adaptedSha256": "4eda68fef07413b388a2c6e8a29dfc54c38c686004cdf3b3c72583ea7f8c8827"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\zpm_discharger_elite_1_1.json",
+      "sha256": "718168bbd7210cfc77a7049f1099c2a72de16b925382d10e0c865e067bc26a26",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/zpm_discharger_elite_1_1.json",
+      "adaptation": "native model-loader namespace boundary",
+      "adaptedSha256": "2a63c52bc9214134d71ecdc820deedb263f23e84bf3a9d2cd01887ff1f4f0da6"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\zpm_discharger_basic_0_1.json",
+      "sha256": "f1add42d6df2bd5c36ae2143dbc7f19ae8e37a74ad4ce938592ca47389cc4036",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/zpm_discharger_basic_0_1.json",
+      "adaptation": "native model-loader namespace boundary",
+      "adaptedSha256": "40e88036682d80d126195b169d7ba20ef8d28e0a98e4e6bb0e3d5e0098168cbe"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\zpm_discharger_basic_1_0.json",
+      "sha256": "bee381fcf56609c78e2b346e32840734caa23af20412ba40e67e978233480fa2",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/zpm_discharger_basic_1_0.json",
+      "adaptation": "native model-loader namespace boundary",
+      "adaptedSha256": "4eda68fef07413b388a2c6e8a29dfc54c38c686004cdf3b3c72583ea7f8c8827"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\zpm_discharger_basic_1_1.json",
+      "sha256": "718168bbd7210cfc77a7049f1099c2a72de16b925382d10e0c865e067bc26a26",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/zpm_discharger_basic_1_1.json",
+      "adaptation": "native model-loader namespace boundary",
+      "adaptedSha256": "2a63c52bc9214134d71ecdc820deedb263f23e84bf3a9d2cd01887ff1f4f0da6"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\zpm_discharger_advanced_0_1.json",
+      "sha256": "02a50816b7c7b221e5825454aef8da5f619736f27b930bb93f4e4e6a1190eb16",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/zpm_discharger_advanced_0_1.json",
+      "adaptation": "native model-loader namespace boundary",
+      "adaptedSha256": "8ac6aef799d4d3dd9c5fbd81ba9b1199003c7e226f8b531ae3e5e6ff02676aa9"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\zpm_discharger_advanced_1_0.json",
+      "sha256": "325400c9f7b267e4c92ba6a9ba7f9e07d48abbf6f040a8ef492a9948f60b1b32",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/zpm_discharger_advanced_1_0.json",
+      "adaptation": "native model-loader namespace boundary",
+      "adaptedSha256": "667adaf3d1a034edf12d4dec101727c85a40e002b8f16c514b6add7e4b113678"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\zpm_discharger_advanced_1_1.json",
+      "sha256": "4d7736fd96d129d1bec4fee70d5850a28b2df257e87351dc7765151e6998cf81",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/zpm_discharger_advanced_1_1.json",
+      "adaptation": "native model-loader namespace boundary",
+      "adaptedSha256": "3f7ef75b08f134c9536a26c32a267b2c2116b9c0cce5b2901cdd44eba5dfe0d4"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\dungeon_portal_end.json",
+      "sha256": "57a7dc68ab3e5a32ae08b201f9bf6a8407086f3a5cab5f868050771d0229b449",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/dungeon_portal_end.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\dungeon_portal_nether.json",
+      "sha256": "842706668ee7899ebe2fbf8f950708365f29f47f24befe3d5b0fe0dd802f7dd5",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/dungeon_portal_nether.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\potted_flower_alpine_catchfly.json",
+      "sha256": "a2bc4e2dd05e0614812f30bf546c2c0f8c4a12124b393002d3cb479276f4b673",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/potted_flower_alpine_catchfly.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\potted_flower_altered_andesite_buckwheat.json",
+      "sha256": "7b4df18eb022c785bf1b7c4690f7bb096a7ae3c87f22e5efbf9df9699a430e82",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/potted_flower_altered_andesite_buckwheat.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\potted_flower_copper_plant.json",
+      "sha256": "a80fefdf0fc49be4733b774dd9cd725222f131cf856135c94205914bd314a5cc",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/potted_flower_copper_plant.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\potted_flower_crosby_buckwheat.json",
+      "sha256": "ae3ca7c863e1210ee5752a3b51ce670fbb9f218f4a7855547ce069b0689453d0",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/potted_flower_crosby_buckwheat.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\potted_flower_desert_trumpet.json",
+      "sha256": "ed2730894d18654937248d97bcf2f0426c2ea1805650867d9b13d939c0f9bdd6",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/potted_flower_desert_trumpet.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\potted_flower_four_wing_saltbush.json",
+      "sha256": "4a9ef204df768b68b472ff49c63521e750c86fed101a097fcdfd0e2b00ab71c4",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/potted_flower_four_wing_saltbush.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\potted_flower_hexalily.json",
+      "sha256": "168cf9993d599262d2c1b87011cbd5ec14886b43f4c4021946776b050891e7b8",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/potted_flower_hexalily.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\potted_flower_narcissus_sheldonia.json",
+      "sha256": "f1043b1f6cebdd3de03ab3063eb4b2e38c0fc65b1f801646159bff473fe9525c",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/potted_flower_narcissus_sheldonia.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\potted_flower_orechid.json",
+      "sha256": "bf288c5556a35feda731f296de1a1bbcd84bf6e48d8008afd71c70dafafa125e",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/potted_flower_orechid.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\potted_flower_pandanus_candelabrum.json",
+      "sha256": "1862f40444bbd3cd470f2c6f7d1f2b67ea4698bc08d272c09821d723fa3c6c9d",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/potted_flower_pandanus_candelabrum.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\potted_flower_prince_s_plume.json",
+      "sha256": "dbbbf1025ad5d8a81a877867b134c5e98be26598cb22dcc66b223a80aa08ec6a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/potted_flower_prince_s_plume.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\potted_flower_sagebrush.json",
+      "sha256": "8aa64f3c80987f87e99ea3a1c1770ab637bd7fe2f5f61e6656491ec617b2de92",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/potted_flower_sagebrush.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\potted_flower_thlaspi_lereschianum.json",
+      "sha256": "8ffd1b564f51a8c350d1c1d5b41830125f2c156cf1a7f623dcb2e71b9660400b",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/potted_flower_thlaspi_lereschianum.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\potted_flower_thompsons_locoweed.json",
+      "sha256": "f6a1506fa5b4988f7da80d6560574658e443dfa39dc6f0f2d368a134c720b58a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/potted_flower_thompsons_locoweed.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\potted_flower_tufted_evening_primrose.json",
+      "sha256": "14f823cb3cc7de48576e069393efe017add1faac18c2b260ee39739575f7019c",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/potted_flower_tufted_evening_primrose.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\potted_flower_tungstus.json",
+      "sha256": "f89489e87c897deebea1e067296960105a19e22c20890d102f5da194dd080a8c",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/potted_flower_tungstus.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\potted_flower_viola_calaminaria.json",
+      "sha256": "d388b486daa0951025ad692a508e1ac48c4904b0784c69d02a63d4719fcfd292",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/potted_flower_viola_calaminaria.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\potted_flower_alpine_catchfly.json",
+      "sha256": "788fd35b86b7c5ff3efce957b665f686103c086f50773e3a1e1a80ba66388aee",
+      "target": "core/src/main/resources/assets/gregtech/models/block/potted_flower_alpine_catchfly.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\potted_flower_altered_andesite_buckwheat.json",
+      "sha256": "ee27c194f345988a87a001403d0cb7a6ea455b53ca50b1cd4e41e826ec03c264",
+      "target": "core/src/main/resources/assets/gregtech/models/block/potted_flower_altered_andesite_buckwheat.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\potted_flower_copper_plant.json",
+      "sha256": "2a89e7f3a73d7a1c18a3e8e63e2474ad4057e4ff9f5fcfc60ce85cb3865bf1a6",
+      "target": "core/src/main/resources/assets/gregtech/models/block/potted_flower_copper_plant.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\potted_flower_crosby_buckwheat.json",
+      "sha256": "f81559de1736900caa08c83b35eec19568b51f096cefc8fa64a257b9559fbc77",
+      "target": "core/src/main/resources/assets/gregtech/models/block/potted_flower_crosby_buckwheat.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\potted_flower_desert_trumpet.json",
+      "sha256": "5aff52b5e79d1764d5ace8d5b68f7fcf2e1b9975a945fdf15ccc995e0f2f9b27",
+      "target": "core/src/main/resources/assets/gregtech/models/block/potted_flower_desert_trumpet.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\potted_flower_four_wing_saltbush.json",
+      "sha256": "5e6aa51a723b502d775870d68482ff3e3c661a8ff755a8756d14e977033a8c31",
+      "target": "core/src/main/resources/assets/gregtech/models/block/potted_flower_four_wing_saltbush.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\potted_flower_hexalily.json",
+      "sha256": "6f8518d0e8e46f2ec9d719a5cb72ea64667793ff415dc42d7f7555fca4b5be79",
+      "target": "core/src/main/resources/assets/gregtech/models/block/potted_flower_hexalily.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\potted_flower_narcissus_sheldonia.json",
+      "sha256": "1c4d213418d16eb3e3b2315aa4ebdbc2e119ba4cd81686ac8d888912569f41fb",
+      "target": "core/src/main/resources/assets/gregtech/models/block/potted_flower_narcissus_sheldonia.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\potted_flower_orechid.json",
+      "sha256": "64ccbc6601072286dd8613e5facc90b4d486760cc5ff3dd783536a2b2c0f63ab",
+      "target": "core/src/main/resources/assets/gregtech/models/block/potted_flower_orechid.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\potted_flower_pandanus_candelabrum.json",
+      "sha256": "0bb24979649ba7cda59c8ae1d788df719d2d2004499df987f0417a81fdf4beea",
+      "target": "core/src/main/resources/assets/gregtech/models/block/potted_flower_pandanus_candelabrum.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\potted_flower_prince_s_plume.json",
+      "sha256": "115a782fe153226514aeafaef5aa3dd313e54e653261ffa6ca3bb8dc382509a6",
+      "target": "core/src/main/resources/assets/gregtech/models/block/potted_flower_prince_s_plume.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\potted_flower_sagebrush.json",
+      "sha256": "f3ab40bd22513f7afa4908a6c72f62b6c5bae797f41e4720e9d0e7496e25d0bf",
+      "target": "core/src/main/resources/assets/gregtech/models/block/potted_flower_sagebrush.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\potted_flower_thlaspi_lereschianum.json",
+      "sha256": "a341e2dd5cf74585ed1bd3c2bab98cc1aa1215022e78011daeedc82f2950c5b4",
+      "target": "core/src/main/resources/assets/gregtech/models/block/potted_flower_thlaspi_lereschianum.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\potted_flower_thompsons_locoweed.json",
+      "sha256": "0ea7ed87dd3be58e38fe95935242443344ee94a4fa6f9da8431444cb484c44b4",
+      "target": "core/src/main/resources/assets/gregtech/models/block/potted_flower_thompsons_locoweed.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\potted_flower_tufted_evening_primrose.json",
+      "sha256": "10dbf7f8c4e3a37a96caa72031d96ccb78eeaf947bb5ad04f4398a409e415d6b",
+      "target": "core/src/main/resources/assets/gregtech/models/block/potted_flower_tufted_evening_primrose.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\potted_flower_tungstus.json",
+      "sha256": "de32af609a5ece891241f4147e26e2f79be4158c38c7cfab886e893028902a33",
+      "target": "core/src/main/resources/assets/gregtech/models/block/potted_flower_tungstus.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\potted_flower_viola_calaminaria.json",
+      "sha256": "81ef9d443aab095330508a00acfd206c097c84a7fa52215773d83ec47628c2e6",
+      "target": "core/src/main/resources/assets/gregtech/models/block/potted_flower_viola_calaminaria.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\dungeon_portal_end.json",
+      "sha256": "ce990a4b23ad637f9d88b8d6acc1f10346e9b9d8692a8d08ed7eb577907f7767",
+      "target": "core/src/main/resources/assets/gregtech/models/item/dungeon_portal_end.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\dungeon_portal_nether.json",
+      "sha256": "da3c3a815c992d399a93b6c75dd68a8f4d867b20c08858a7dc0373eb32a59091",
+      "target": "core/src/main/resources/assets/gregtech/models/item/dungeon_portal_nether.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\dungeon\\dungeon_portal_end.json",
+      "sha256": "871d5f5fbe76cbbd54e6d3486414bc1c63be8394a2b0f47bca9ca6259ddc32f8",
+      "target": "core/src/main/resources/assets/gregtech/models/block/dungeon/dungeon_portal_end.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\dungeon\\dungeon_portal_end_frame.json",
+      "sha256": "be1a5ba0c957ea70e3ee9c5c7aadaf7e00b0f40d0a08d4179e4facce4a848187",
+      "target": "core/src/main/resources/assets/gregtech/models/block/dungeon/dungeon_portal_end_frame.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\dungeon\\dungeon_portal_nether.json",
+      "sha256": "647969a6ee4634a0d6960be0285c31c913c3f38670b916d15a7f7438f4d5090c",
+      "target": "core/src/main/resources/assets/gregtech/models/block/dungeon/dungeon_portal_nether.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\dungeon\\dungeon_portal_nether_frame.json",
+      "sha256": "8702574ab2e6c4c451801fbe94a28302b28e5b49c928a1c7df13251a2564f484",
+      "target": "core/src/main/resources/assets/gregtech/models/block/dungeon/dungeon_portal_nether_frame.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\forge\\biome_modifier\\gt_dungeon.json",
+      "sha256": "43a97e7c9342b27df63c9eacc14993d971547864cdfa84c3ced5296550264897",
+      "target": "neoforge/src/main/resources/data/gregtech/neoforge/biome_modifier/gt_dungeon.json",
+      "adaptedSha256": "3976ef1ac2f795dd51847c6ce7099f213ecfd7234ee35183dea7644d77c23bd8"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\loot_tables\\blocks\\potted_flower_alpine_catchfly.json",
+      "sha256": "7ce557bf24a8e093ec4582c6b4a28fd15c38f4fb94279e001f26668d342b5a0e",
+      "target": "core/src/main/resources/data/gregtech/loot_tables/blocks/potted_flower_alpine_catchfly.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\loot_tables\\blocks\\potted_flower_altered_andesite_buckwheat.json",
+      "sha256": "0eb58f4d71a3a7d2fbdd54f612abb4c10b21f122cab402083177e5c35e138344",
+      "target": "core/src/main/resources/data/gregtech/loot_tables/blocks/potted_flower_altered_andesite_buckwheat.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\loot_tables\\blocks\\potted_flower_copper_plant.json",
+      "sha256": "c42ca0f6c3c3f9c53a84c2018506455d57d35ce6264578a7b201b6a12489e114",
+      "target": "core/src/main/resources/data/gregtech/loot_tables/blocks/potted_flower_copper_plant.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\loot_tables\\blocks\\potted_flower_crosby_buckwheat.json",
+      "sha256": "149aea95149c5ade0422e21d55a30b72a358a128e386fde8c877bc2e6e996920",
+      "target": "core/src/main/resources/data/gregtech/loot_tables/blocks/potted_flower_crosby_buckwheat.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\loot_tables\\blocks\\potted_flower_desert_trumpet.json",
+      "sha256": "b4f8aabd1ed78200e063a7a3302c20e3f6b5f863ea37b6bc93fa8cee8a1377e9",
+      "target": "core/src/main/resources/data/gregtech/loot_tables/blocks/potted_flower_desert_trumpet.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\loot_tables\\blocks\\potted_flower_four_wing_saltbush.json",
+      "sha256": "a6d0e752fad5bb57895893be206dc99123e4c954313f3a716fa5d961caeb53d9",
+      "target": "core/src/main/resources/data/gregtech/loot_tables/blocks/potted_flower_four_wing_saltbush.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\loot_tables\\blocks\\potted_flower_hexalily.json",
+      "sha256": "97942c8db13635ccc2e7340078a05c94bbf59173e6267e890c06e021cba691fd",
+      "target": "core/src/main/resources/data/gregtech/loot_tables/blocks/potted_flower_hexalily.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\loot_tables\\blocks\\potted_flower_narcissus_sheldonia.json",
+      "sha256": "bdedc0a5dabc9d658b35ae0462a5ebd8ce6160676d29f06d8276737db9d0bce0",
+      "target": "core/src/main/resources/data/gregtech/loot_tables/blocks/potted_flower_narcissus_sheldonia.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\loot_tables\\blocks\\potted_flower_orechid.json",
+      "sha256": "bff2b49ca53917402afe7a32f7abe7d230d20357aaa126b8f98faca6f8fac16f",
+      "target": "core/src/main/resources/data/gregtech/loot_tables/blocks/potted_flower_orechid.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\loot_tables\\blocks\\potted_flower_pandanus_candelabrum.json",
+      "sha256": "87236f5a8294e4283de0ef660647beff8396c19af469519d8231bcba2b0ee4cb",
+      "target": "core/src/main/resources/data/gregtech/loot_tables/blocks/potted_flower_pandanus_candelabrum.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\loot_tables\\blocks\\potted_flower_prince_s_plume.json",
+      "sha256": "a38c5ff9ecf4c0f979f0d8368d61eb49b913aae2a92951b3f62f85756b4c1e69",
+      "target": "core/src/main/resources/data/gregtech/loot_tables/blocks/potted_flower_prince_s_plume.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\loot_tables\\blocks\\potted_flower_sagebrush.json",
+      "sha256": "6a04ae7afefe5935e5d36f8d614571bb51c0a80f8f2a17ab99c4422fe3537319",
+      "target": "core/src/main/resources/data/gregtech/loot_tables/blocks/potted_flower_sagebrush.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\loot_tables\\blocks\\potted_flower_thlaspi_lereschianum.json",
+      "sha256": "884cfd3b728b5cea20b8f7df63a39599a14567a9a5df62d42be42473f18fcc82",
+      "target": "core/src/main/resources/data/gregtech/loot_tables/blocks/potted_flower_thlaspi_lereschianum.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\loot_tables\\blocks\\potted_flower_thompsons_locoweed.json",
+      "sha256": "09bf6da64c744103adccf926bf72e824bbf9dc1ac51fcff4644390ae98369f19",
+      "target": "core/src/main/resources/data/gregtech/loot_tables/blocks/potted_flower_thompsons_locoweed.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\loot_tables\\blocks\\potted_flower_tufted_evening_primrose.json",
+      "sha256": "27d791434633b7110e6eb95547fba8b400fd8302b6c50fe914c837cb683e4723",
+      "target": "core/src/main/resources/data/gregtech/loot_tables/blocks/potted_flower_tufted_evening_primrose.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\loot_tables\\blocks\\potted_flower_tungstus.json",
+      "sha256": "9a0193635f20a5ef4b817603c8b1b7ffc49c356faf4b60f823e7f8fdd9ff9c46",
+      "target": "core/src/main/resources/data/gregtech/loot_tables/blocks/potted_flower_tungstus.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\loot_tables\\blocks\\potted_flower_viola_calaminaria.json",
+      "sha256": "866f8babf35157f34823446f8a8c16fbacab7417b110d30250662d2897cc9ac3",
+      "target": "core/src/main/resources/data/gregtech/loot_tables/blocks/potted_flower_viola_calaminaria.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\tags\\worldgen\\structure\\gt_dungeon.json",
+      "sha256": "47435de31162e3313df011b4d852d1072a2295ee8e78e5abd057c55e36c72f63",
+      "target": "core/src/main/resources/data/gregtech/tags/worldgen/structure/gt_dungeon.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\tags\\worldgen\\biome\\has_structure\\gt_dungeon.json",
+      "sha256": "38da68760b2f030db8423bee9e3eacff294d4ece8bc71bfd98dc939d5423ee85",
+      "target": "core/src/main/resources/data/gregtech/tags/worldgen/biome/has_structure/gt_dungeon.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\worldgen\\configured_feature\\gt_dungeon.json",
+      "sha256": "6ba516ac0a91b345bcc8093244f8458d7a98fe382a48e22ede1cd4ca77d97604",
+      "target": "core/src/main/resources/data/gregtech/worldgen/configured_feature/gt_dungeon.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\worldgen\\placed_feature\\gt_dungeon.json",
+      "sha256": "2329829b570be76c0238068f182efd1edf1cf64b350711f3d29270613a1a658d",
+      "target": "core/src/main/resources/data/gregtech/worldgen/placed_feature/gt_dungeon.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\worldgen\\structure\\gt_dungeon.json",
+      "sha256": "64f758357bcf1c04cf87360e152d7279699a9c9c4c176f765fc544503d16a9ba",
+      "target": "core/src/main/resources/data/gregtech/worldgen/structure/gt_dungeon.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\worldgen\\structure_set\\gt_dungeons.json",
+      "sha256": "c2e4b0858a5ceda2660a3a933925a8485d4597b2ecd93c5808ed823384f72db7",
+      "target": "core/src/main/resources/data/gregtech/worldgen/structure_set/gt_dungeons.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\loot_tables\\blocks\\potted_flower_alpine_catchfly.json",
+      "sha256": "7ce557bf24a8e093ec4582c6b4a28fd15c38f4fb94279e001f26668d342b5a0e",
+      "target": "neoforge/src/main/resources/data/gregtech/loot_table/blocks/potted_flower_alpine_catchfly.json",
+      "adaptation": "Native1.21 singular loot_table registry folder, original loot bytes retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\loot_tables\\blocks\\potted_flower_altered_andesite_buckwheat.json",
+      "sha256": "0eb58f4d71a3a7d2fbdd54f612abb4c10b21f122cab402083177e5c35e138344",
+      "target": "neoforge/src/main/resources/data/gregtech/loot_table/blocks/potted_flower_altered_andesite_buckwheat.json",
+      "adaptation": "Native1.21 singular loot_table registry folder, original loot bytes retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\loot_tables\\blocks\\potted_flower_copper_plant.json",
+      "sha256": "c42ca0f6c3c3f9c53a84c2018506455d57d35ce6264578a7b201b6a12489e114",
+      "target": "neoforge/src/main/resources/data/gregtech/loot_table/blocks/potted_flower_copper_plant.json",
+      "adaptation": "Native1.21 singular loot_table registry folder, original loot bytes retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\loot_tables\\blocks\\potted_flower_crosby_buckwheat.json",
+      "sha256": "149aea95149c5ade0422e21d55a30b72a358a128e386fde8c877bc2e6e996920",
+      "target": "neoforge/src/main/resources/data/gregtech/loot_table/blocks/potted_flower_crosby_buckwheat.json",
+      "adaptation": "Native1.21 singular loot_table registry folder, original loot bytes retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\loot_tables\\blocks\\potted_flower_desert_trumpet.json",
+      "sha256": "b4f8aabd1ed78200e063a7a3302c20e3f6b5f863ea37b6bc93fa8cee8a1377e9",
+      "target": "neoforge/src/main/resources/data/gregtech/loot_table/blocks/potted_flower_desert_trumpet.json",
+      "adaptation": "Native1.21 singular loot_table registry folder, original loot bytes retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\loot_tables\\blocks\\potted_flower_four_wing_saltbush.json",
+      "sha256": "a6d0e752fad5bb57895893be206dc99123e4c954313f3a716fa5d961caeb53d9",
+      "target": "neoforge/src/main/resources/data/gregtech/loot_table/blocks/potted_flower_four_wing_saltbush.json",
+      "adaptation": "Native1.21 singular loot_table registry folder, original loot bytes retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\loot_tables\\blocks\\potted_flower_hexalily.json",
+      "sha256": "97942c8db13635ccc2e7340078a05c94bbf59173e6267e890c06e021cba691fd",
+      "target": "neoforge/src/main/resources/data/gregtech/loot_table/blocks/potted_flower_hexalily.json",
+      "adaptation": "Native1.21 singular loot_table registry folder, original loot bytes retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\loot_tables\\blocks\\potted_flower_narcissus_sheldonia.json",
+      "sha256": "bdedc0a5dabc9d658b35ae0462a5ebd8ce6160676d29f06d8276737db9d0bce0",
+      "target": "neoforge/src/main/resources/data/gregtech/loot_table/blocks/potted_flower_narcissus_sheldonia.json",
+      "adaptation": "Native1.21 singular loot_table registry folder, original loot bytes retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\loot_tables\\blocks\\potted_flower_orechid.json",
+      "sha256": "bff2b49ca53917402afe7a32f7abe7d230d20357aaa126b8f98faca6f8fac16f",
+      "target": "neoforge/src/main/resources/data/gregtech/loot_table/blocks/potted_flower_orechid.json",
+      "adaptation": "Native1.21 singular loot_table registry folder, original loot bytes retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\loot_tables\\blocks\\potted_flower_pandanus_candelabrum.json",
+      "sha256": "87236f5a8294e4283de0ef660647beff8396c19af469519d8231bcba2b0ee4cb",
+      "target": "neoforge/src/main/resources/data/gregtech/loot_table/blocks/potted_flower_pandanus_candelabrum.json",
+      "adaptation": "Native1.21 singular loot_table registry folder, original loot bytes retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\loot_tables\\blocks\\potted_flower_prince_s_plume.json",
+      "sha256": "a38c5ff9ecf4c0f979f0d8368d61eb49b913aae2a92951b3f62f85756b4c1e69",
+      "target": "neoforge/src/main/resources/data/gregtech/loot_table/blocks/potted_flower_prince_s_plume.json",
+      "adaptation": "Native1.21 singular loot_table registry folder, original loot bytes retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\loot_tables\\blocks\\potted_flower_sagebrush.json",
+      "sha256": "6a04ae7afefe5935e5d36f8d614571bb51c0a80f8f2a17ab99c4422fe3537319",
+      "target": "neoforge/src/main/resources/data/gregtech/loot_table/blocks/potted_flower_sagebrush.json",
+      "adaptation": "Native1.21 singular loot_table registry folder, original loot bytes retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\loot_tables\\blocks\\potted_flower_thlaspi_lereschianum.json",
+      "sha256": "884cfd3b728b5cea20b8f7df63a39599a14567a9a5df62d42be42473f18fcc82",
+      "target": "neoforge/src/main/resources/data/gregtech/loot_table/blocks/potted_flower_thlaspi_lereschianum.json",
+      "adaptation": "Native1.21 singular loot_table registry folder, original loot bytes retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\loot_tables\\blocks\\potted_flower_thompsons_locoweed.json",
+      "sha256": "09bf6da64c744103adccf926bf72e824bbf9dc1ac51fcff4644390ae98369f19",
+      "target": "neoforge/src/main/resources/data/gregtech/loot_table/blocks/potted_flower_thompsons_locoweed.json",
+      "adaptation": "Native1.21 singular loot_table registry folder, original loot bytes retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\loot_tables\\blocks\\potted_flower_tufted_evening_primrose.json",
+      "sha256": "27d791434633b7110e6eb95547fba8b400fd8302b6c50fe914c837cb683e4723",
+      "target": "neoforge/src/main/resources/data/gregtech/loot_table/blocks/potted_flower_tufted_evening_primrose.json",
+      "adaptation": "Native1.21 singular loot_table registry folder, original loot bytes retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\loot_tables\\blocks\\potted_flower_tungstus.json",
+      "sha256": "9a0193635f20a5ef4b817603c8b1b7ffc49c356faf4b60f823e7f8fdd9ff9c46",
+      "target": "neoforge/src/main/resources/data/gregtech/loot_table/blocks/potted_flower_tungstus.json",
+      "adaptation": "Native1.21 singular loot_table registry folder, original loot bytes retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\loot_tables\\blocks\\potted_flower_viola_calaminaria.json",
+      "sha256": "866f8babf35157f34823446f8a8c16fbacab7417b110d30250662d2897cc9ac3",
+      "target": "neoforge/src/main/resources/data/gregtech/loot_table/blocks/potted_flower_viola_calaminaria.json",
+      "adaptation": "Native1.21 singular loot_table registry folder, original loot bytes retained"
+    }
+  ],
+  "comparisonSources": [
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\worldgen\\dungeon\\GT6DungeonLayout.java",
+      "sha256": "d16526008c0e58f8e19fd3910b7a13d82e2511dd6fb7e2d9212021a39d3575da"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\worldgen\\dungeon\\GT6DungeonPiece.java",
+      "sha256": "9f35642c070c4adb297eaeb1baf3baf0beb43bb749e1bba4ac055336344c0ec0"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\registry\\GT6ZpmDechargers.java",
+      "sha256": "386eab5d9ba1d19ef6f966b524cb2322c71db5bc8dc7c22093b84bb2d5598b54"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\item\\energy\\GT6ZpmItem.java",
+      "sha256": "b0fc7dde4700273e28c0714787dcc8082103381f89e8aae6d91d3447e1feacd7"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\tileentity\\energy\\GT6ZpmDechargerBlockEntity.java",
+      "sha256": "cf435db5c62010a8a236a81fd703d85a39a36d3e60e08b96b17b882c08080bf3"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\cruciblecraft\\src\\main\\java\\com\\masson\\cruciblecraft\\worldgen\\GtDungeonStructure.java",
+      "sha256": "9b4dda0676d4959d2910b07f448bd1493209dd0c1ab0932abf0a1919ca46170c"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\cruciblecraft\\src\\main\\java\\com\\masson\\cruciblecraft\\worldgen\\GtDungeonPiece.java",
+      "sha256": "619536c7978c16d0f87f811e2004f8eda63567292534a1c103ade47d13b86fd8"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\cruciblecraft\\src\\main\\java\\com\\masson\\cruciblecraft\\energy\\zpm\\ZpmModule.java",
+      "sha256": "e4a15d8b0b5e0b47211905be1e6f6654aae0c54d5349f998d762f35491eb2785"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\cruciblecraft\\src\\main\\java\\com\\masson\\cruciblecraft\\energy\\zpm\\ZpmModuleBlockEntity.java",
+      "sha256": "b869f37f93226d0ae3b7d13ccc1097999795d42ce244db82e11bf3c4fc0b28db"
+    }
+  ],
+  "choices": [
+    "Full coin mold: one tiny plate accepted atomically, hard-hammer top strike stamps one material coin, item extraction and drop/replace preservation, two16x16 face bitmaps with unique flag, original shape/renderer and item configuration. CoinStampPattern owns all32 persisted short keys and actual Forge/Neo serialization/stamping. Native custom data writes commit copied tags, not detached mutation.",
+    "One placed ZPM artifact and all three existing source discharger IDs keep source block/energy/light/1-slot module/drop packing/control behavior. Capacity2e12 QU,131072 packet,15 light levels and20/40 packet buffer refill/clamps live in ZpmWorkRules and are actually consumed on both platforms. The source basic/elite QU and advanced EU mapping is retained, rather than registering a second donor family. brokestar has two QU/EU decharger rows and a richer shared battery-box/cover interface, masson offers explicit discharge-only arbitrary1..262144 packet extraction and a block/item carrier. Those wider interfaces remain candidates; this wave does not claim their complete absorption.",
+    "Fix the concrete ignored-active argument in source dungeon ZPM placement: original zpm(active) merely placed an empty entity, even for the pre-existing next2in3 true roll. Both platforms now initialize/persist full or empty charge from that roll through shared dungeonCharge and setChanged. Donor GT6ZpmItem documents the same two-in-three charged dungeon supply but migrates its trophy to loot; keep the existing full source block seat. This is code-corrected and compile-checked, not yet gameplay-tested.",
+    "Retain the entire source dungeon suite:28 dungeon classes including complete shared room/key/coin plans, normal/three-way/four-way corridors, piston door, entrance/pillars, barracks, storage, workshop, library, crop/fish/mob farms, bedrock mining and two portal rooms. Full DungeonLayoutRules owns lattice, independent dimensions, important room placement, scatter, path carving, both corridor cleanup passes and neighbors, seed/clearance; both platform bridges consume it with their original RandomSource. Forge original RNG consumption and IDs are retained.",
+    "Native rooms resolve existing actual material chests, safes, drawers, book shelves, crafting tables, molds, manual stations, scaffolds, pipes, hoppers, burning boxes, crucibles, tanks, dynamite and ZPM. DungeonBindings performs lookups/typed material selection only, registering no duplicate content. Full36 source dungeon/structure/portal files ported with necessary adapters; the marker structure and fixed-lattice placement codecs keep /locate aligned with the full per-cell feature.2 portal and17 flower pots registered, pot-content map joined in setup. Cross-dimension teleport uses native DimensionTransition, retaining nearest active matching portal, scaled fallback platform, key/igniter and cooldown behavior.",
+    "Compare complete donor layout and structure code: brokestar generates a square layout from one size roll and its piece enum lacks source portal room variants, while preserving many real room contents; masson serializes and clips a whole rectangular structure footprint but its shown room placement currently builds uniform shells. Its origin exclusion permits either distant axis and additionally forces the central cell, differing from source two-axis clearance/no forced-center policy. Keep source complete room gameplay and stable seed policy initially; whole-footprint structure ownership and exact GT6 alignment require generation evidence before replacement, not silent room removal."
+  ],
+  "knownGaps": [
+    "Grouped dual compilation passes28s, then21s after charged-dungeon fix. No new subsystem test fixture; one ordinary Neo short startup is recorded separately.",
+    "Actual naturally generated dungeon completeness, cross-chunk farm ownership, piston doors, keys/loot/reward reachability and two-in-three ZPM discharge require gameplay evidence. Source feature catches room exceptions; server boot alone cannot establish room generation. Original anchor bedrock gate remains deliberately omitted by source per-cell design, and generated regions may differ from both donors/original GT6.",
+    "The source miniature portals teleport entities while original GT6 relays items/fluid/energy/redstone. Original relay delegates, particles and activation sound are absent; do not call the original portal system complete. Loaded-only target list, unload/reload behavior, fallback platform collision safety and player travel remain unverified.",
+    "Coin pattern editing availability, exact stamp display/material rendering, hammer damage, item automation and persistence are not gameplay-verified. Native provider/component migrations preserve existing keys but old-save compatibility has no evidence.",
+    "ZPM decharger elite duplicates basic source QU behavior and has no distinct tier policy. Source default block items use64 stack size; donors use16 or charged-single behavior. General QU item energy interoperability, cover UI, recipes, actual packet delivery and restart/charged items remain pending.",
+    "Both clients, Forge runtime, full survival chain, independent-process world restart, old saves, production jars and final release acceptance are pending. Original notices/author history preserved; third-party authorization unresolved, no publication. Full goal stays active.",
+    "Native17 flower pot loot files were copied to singular1.21 folders after startup, so not runtime-covered in this receipt"
+  ],
+  "derivedCoreSources": [
+    "CoinMoldBlockEntity -> CoinStampPattern",
+    "ZpmEnergy/ZpmModuleBlockEntity/ZpmDischargerBlockEntity -> ZpmWorkRules",
+    "GTDungeonLayout -> DungeonLayoutRules complete algorithm"
+  ],
+  "validation": "Dual compile PASS21s; ordinary native startup PASS1m53s/200ticks/normal save and stop",
+  "startupReceipt": "docs/integration/verification/p3-neoforge-dungeon-zpm-startup.json"
+}

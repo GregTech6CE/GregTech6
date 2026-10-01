@@ -1,0 +1,84 @@
+{
+  "date": "2026-10-01",
+  "policy": "D011 Forge baseline parity using original MD/source; D010 one grouped compile and one existing client startup.",
+  "authors": [
+    "saltnya",
+    "original GregTech6 contributors"
+  ],
+  "license": "Original author/history/notices retained; no donor changes or license reassignment.",
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/BakedModelLookup.java",
+      "sha256": "859efe1d8d0752c4d95f24baf639736ffc489a08ad3d3bc2acea8c3cbfa54c95",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/client/BakedModelLookup.java",
+      "currentForgeReferenceSha256": "64cc7be184e8cf8bd9af67361176eb0b496beb1151439c244498783951e1e5c1",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\BakedModelLookup.java",
+      "sourceSha256": "64cc7be184e8cf8bd9af67361176eb0b496beb1151439c244498783951e1e5c1"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/CrateBlockBakedModel.java",
+      "sha256": "70dfd43c1b7b25fa4e92c94d9aaa7973db191ef2bfd42c7372a8b380caf5fbcd",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/client/CrateBlockBakedModel.java",
+      "currentForgeReferenceSha256": "501f2b241c54e71b4182b4c38d77937153af52ae315ccc0d4c01efedeb6fdf97",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\CrateBlockBakedModel.java",
+      "sourceSha256": "501f2b241c54e71b4182b4c38d77937153af52ae315ccc0d4c01efedeb6fdf97"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/MaterialBlockBakedModel.java",
+      "sha256": "e8f58536b27b83725dc116d6d8f5f9f9e99b405128be479bf6b412080e9584ab",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/client/MaterialBlockBakedModel.java",
+      "currentForgeReferenceSha256": "0ee87efcbdf91df584e584d1d5cb564fa16e1020ab044b2a730668446f07171b",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\MaterialBlockBakedModel.java",
+      "sourceSha256": "0ee87efcbdf91df584e584d1d5cb564fa16e1020ab044b2a730668446f07171b"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/MaterialBlockClientColors.java",
+      "sha256": "f0f0e51545b602eaffce7d2278ca12986be8ba6238cc55dc7e2511fde66f2d1a",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+      "currentForgeReferenceSha256": "4d6e46a4d9c0c35796033a9a1f759d7afc014a0ec078cf2d4604f17fe76e1705",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\GregTechClient.java",
+      "sourceSha256": "4d6e46a4d9c0c35796033a9a1f759d7afc014a0ec078cf2d4604f17fe76e1705"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/MaterialBlockClientModels.java",
+      "sha256": "01dbefa29c6eef87f5f95eddecd8b415c73a160a1a214f7d08c428da34325167",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/client/MaterialBlockClientModels.java",
+      "currentForgeReferenceSha256": "18321b2d39ddb43226faf42c4eda931f49f85c9d68fda94a4bc2b97b9e6dd2b6",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\MaterialBlockClientModels.java",
+      "sourceSha256": "18321b2d39ddb43226faf42c4eda931f49f85c9d68fda94a4bc2b97b9e6dd2b6"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/OreBakedModel.java",
+      "sha256": "92860ccc69d81bf0d5bc5b7a541438d0c768e15874b7f820a4c14c005adf1311",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/client/OreBakedModel.java",
+      "currentForgeReferenceSha256": "620f4e009d7b84cffe188753a7705dc93456f774fec215a5a455aca27ff7cc37",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\OreBakedModel.java",
+      "sourceSha256": "620f4e009d7b84cffe188753a7705dc93456f774fec215a5a455aca27ff7cc37"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/OreClientModels.java",
+      "sha256": "9b57fc11d9a71ed0a351b46617cd3312e40c882e3bdcf3ee24f6000c62b7e552",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/client/OreClientModels.java",
+      "currentForgeReferenceSha256": "785d9d8a2465a957f4fd6e18793cccea0095a75e6f6489e195ef499a713af13a",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\OreClientModels.java",
+      "sourceSha256": "785d9d8a2465a957f4fd6e18793cccea0095a75e6f6489e195ef499a713af13a"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/StoneBlockClientModels.java",
+      "sha256": "2fa97890f54ccb11afa0b306fcd91fb65d7a91860204e9711636454f2c760da0",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/client/StoneBlockClientModels.java",
+      "currentForgeReferenceSha256": "ff823f9c209a4f682fe7384006544e9d58eff306b959d70f63934fdb7444f42a",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\StoneBlockClientModels.java",
+      "sourceSha256": "ff823f9c209a4f682fe7384006544e9d58eff306b959d70f63934fdb7444f42a"
+    }
+  ],
+  "assets": "Existing platform composite models and shared sprites reused unchanged; no resources/core Java changed.",
+  "adaptations": [
+    "Neo typed ModelResourceLocation and standalone additional registration",
+    "Existing OreBlock BLOCK_STATE components supply host and broken item state",
+    "Native BakedQuad ambient occlusion flag retained",
+    "Original material block/item color callbacks isolated behind Dist.CLIENT",
+    "Stone models explicitly side-loaded; slab state geometry remains existing assets",
+    "Do not register unused ore/oresmall material-cube JSON; OreClientModels already owns their actual state/item models."
+  ]
+}

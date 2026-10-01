@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-01",
+  "authors": [
+    "saltnya",
+    "original GregTech6 contributors",
+    "existing integration contributors"
+  ],
+  "license": "Original notices/history/authorization retained; donors read-only.",
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/api/machine/crucible/CrucibleItemInput.java",
+      "sha256": "5a44df89d90c07880698298da665445ce4e4b3472fce39b156992d167dd837c4",
+      "priorNativeSha256": "9387071f79810647a88d2c69a2bb8f0f054a89fb8ce9b80812f6651f6a564691",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/api/machine/crucible/CrucibleItemInput.java",
+      "currentForgeReferenceSha256": "560e827d1c61a45e07b06a758da8254f83a4973b1d5d50876d5edda75c2bec0a",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\api\\machine\\crucible\\CrucibleItemInput.java",
+      "sourceSha256": "6b2607cf2a3fe4cc5b3513acde72940e26597445f915733714aba76050bdc01c"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/recipe/ToolShapedRecipe.java",
+      "sha256": "fc8c210d9fe87c040c8e2ee8c5e31a07ad957a6686e0505e7958ff0c0139012a",
+      "priorNativeSha256": "34b68e9c40f7c3606658b8266b92c97ec9aeadc0071f308a85d64205427e5796",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/recipe/ToolShapedRecipe.java",
+      "currentForgeReferenceSha256": "53aa8126c11f370a991a6ce2e214e54538bdd6508cd647e07664460f52e1cedb",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\recipe\\ToolShapedRecipe.java",
+      "sourceSha256": "53aa8126c11f370a991a6ce2e214e54538bdd6508cd647e07664460f52e1cedb"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/recipe/FiniteBottleFillingRecipe.java",
+      "sha256": "e67e0f94ed0da186d630820b947bd3bc34c5c4fa19bafeae5148fe5de545a772",
+      "priorNativeSha256": "e199d6ec1948b626b1cbac014fd36a295e4b61b970d0767600c0109bc2f23005",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/recipe/FiniteBottleFillingRecipe.java",
+      "currentForgeReferenceSha256": "2beaeaea338114228177e9977d672c66229f0142900cbcb1319c664359951fa7",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\recipe\\FiniteBottleFillingRecipe.java",
+      "sourceSha256": "2beaeaea338114228177e9977d672c66229f0142900cbcb1319c664359951fa7"
+    }
+  ],
+  "policy": "D011 current Forge parity; D010 one grouped compile/jar, no new fixture or game restart.",
+  "scope": "Crucible hull recovery and validity helper; matched shaped finite-fluid vessel remainders; lubricant alias acceptance and display-payload rejection. Core/resources/Forge unchanged.",
+  "retainedNativeSafety": "Stored-content rejection, component-aware finite before/after drain check, existing creosote-specific ingredient/recipe.",
+  "notProven": "Actual crafting/drain/recovery, offset/mirror behavior, tool wear and conservation, client/server gameplay, production jars, world restart/old saves."
+}

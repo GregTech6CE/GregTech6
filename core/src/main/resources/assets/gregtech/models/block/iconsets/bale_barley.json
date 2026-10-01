@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "gregtech:block/iconsets/barley_top",
+    "side": "gregtech:block/iconsets/barley_side"
+  }
+}

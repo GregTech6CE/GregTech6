@@ -1,0 +1,37 @@
+{
+  "source": "saltnya",
+  "authors": "SaltNya; retained source history and notices",
+  "license": "unchanged; distribution authorization unresolved",
+  "verification": "core/NeoForge/Forge Java compile passed; Neo tool factories/serializers beyond two existing tools still pending",
+  "toolKinds": 37,
+  "shared": [
+    "full original tool metadata, material/head gate, attack speed and wear",
+    "all original shaped tool/head/early patterns, fixed vanilla item IDs, mirror/handle/material gates"
+  ],
+  "platform": [
+    "Forge tool factories and crafting recipes retain existing behavior via adapters",
+    "Neo existing chisel/pincers durability consumes same tool definitions",
+    "Neo catalog adapter is preparation, not registration of remaining tool items/serializers"
+  ],
+  "gaps": [
+    "full Neo manual/powered items/actions/rendering and tool recipe registration",
+    "in-game tool/crafting tests"
+  ],
+  "records": [
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/api/tool/GTToolType.java",
+      "baselineSha256": "ce5851deebcebff45f74ea278a22903446d0fb1baca76614c2f290e31474544c",
+      "originalSha256": "095f5a1c39bbe9ce71247569cedeb36ab299b85d26e93a7368ec2021faadd232"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/client/ToolIconSets.java",
+      "baselineSha256": "96ba2be15dafa0edafd45fcd497aecbef14ef915e805c449be6ccbf7af766d0c",
+      "originalSha256": "96ba2be15dafa0edafd45fcd497aecbef14ef915e805c449be6ccbf7af766d0c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/recipe/GTToolRecipes.java",
+      "baselineSha256": "ca278a04cf7d93814e9e96ed6443fd14753e516a7073af48886caa9af37d5845",
+      "originalSha256": "ca278a04cf7d93814e9e96ed6443fd14753e516a7073af48886caa9af37d5845"
+    }
+  ]
+}

@@ -1,0 +1,255 @@
+{
+  "authors": [
+    "saltnya",
+    "original GregTech 6 contributors"
+  ],
+  "stage": "P3 D010 bulk terrain migration",
+  "license": "Original notices/history retained; no publication/relicensing",
+  "counts": {
+    "nativeFeatures": 5,
+    "clayPitRows": 5,
+    "maskSize": 48,
+    "resourceRecords": 15
+  },
+  "choice": "Keep complete source1 overworld resource-generation execution on the existing shared material/fluid/rock registry. Move exact48x48 original pit mask into core, together with5 clay pit identities, pit/peat/seam numeric rules and litter RNG choice; both actual Forge and native executors consume these rules. No separate source2/source3 ore/material/world registry imported. Prior source audits retain other-world implementations as candidates; this wave does not claim a tested replacement or that source1 universally best.",
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTFeatures.java",
+      "sha256": "58871da9b4a48e2236a65b82e826cc007d1f0d5886ef2ee655fd59aa8b944111",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTFeatures.java",
+          "sha256": "5333be8dcf08f58be13e311321a2d6c52c3f492c6f83fa08e84a14928f9ecd61"
+        }
+      ]
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/worldgen/GTPitFeature.java",
+      "sha256": "d637a8f51bd0c317f3efd7249a0d3a90ec217fac450772f60f2ad0d5587b336e",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTPitFeature.java",
+          "sha256": "fece610c24ef1e9d53ce995d82fc934b306a444915fef2015622c5152caee7ca"
+        }
+      ]
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/worldgen/GTRocksFeature.java",
+      "sha256": "7f4e38c61b54c28710d8b47a07ed75caa8504eaa3e48abeb54f7174744ccec43",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTRocksFeature.java",
+          "sha256": "5c6885e59a80cbfc0d3afe78fc8bf636e6d4868cf6b5c4b9843b8275b7137c54"
+        }
+      ]
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/worldgen/GTSurfaceDepositFeature.java",
+      "sha256": "4cbcfb71c9be69de97ff127f998bdd7261b8a92f8413b5c02e124047672e2a90",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTSurfaceDepositFeature.java",
+          "sha256": "9f32d365173fa18f33ba852c9bcf05d603336b919904c70e25bd1d7ebc4d321b"
+        }
+      ]
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/worldgen/GTTurfFeature.java",
+      "sha256": "20a41fef6e9fc9b46bd5393fc4047bf2dd9ba57112b9768b8f3102ac939a72cb",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTTurfFeature.java",
+          "sha256": "7f57ac9579157545d521542864811488d688b61e0714a19b4e40e03e7d6c0651"
+        }
+      ]
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/worldgen/GTPitShape.java",
+      "sha256": "9269587111fb4c343d52123d4da4a911210e5f89b775c6ab1ab64cd2b6a42c60",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTPitShape.java",
+          "sha256": "9269587111fb4c343d52123d4da4a911210e5f89b775c6ab1ab64cd2b6a42c60"
+        }
+      ]
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/worldgen/TerrainWorldgenRules.java",
+      "sha256": "3e193e5a7df14308202df0e3efaf77b341355f185e2163f0df2c65baac07fcad",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTPitFeature.java",
+          "sha256": "fece610c24ef1e9d53ce995d82fc934b306a444915fef2015622c5152caee7ca"
+        },
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTTurfFeature.java",
+          "sha256": "7f57ac9579157545d521542864811488d688b61e0714a19b4e40e03e7d6c0651"
+        },
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTSurfaceDepositFeature.java",
+          "sha256": "9f32d365173fa18f33ba852c9bcf05d603336b919904c70e25bd1d7ebc4d321b"
+        },
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTRocksFeature.java",
+          "sha256": "5c6885e59a80cbfc0d3afe78fc8bf636e6d4868cf6b5c4b9843b8275b7137c54"
+        }
+      ]
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTPitFeature.java",
+      "sha256": "425e77c520a590d21dca2c98ab35f35d92855676cbf707ae5b8b78e26f9ddc7c",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTPitFeature.java",
+          "sha256": "fece610c24ef1e9d53ce995d82fc934b306a444915fef2015622c5152caee7ca"
+        }
+      ]
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTRocksFeature.java",
+      "sha256": "b1a8dddf2aebdeeeb984cc10c8684dde49dac5ab97b5476469c26c8b5fe04ca4",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTRocksFeature.java",
+          "sha256": "5c6885e59a80cbfc0d3afe78fc8bf636e6d4868cf6b5c4b9843b8275b7137c54"
+        }
+      ]
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTSurfaceDepositFeature.java",
+      "sha256": "7aa645c6fa456819cdb9a4d55df0e5710616bd8c4da81187d2106b31c1ef9dad",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTSurfaceDepositFeature.java",
+          "sha256": "9f32d365173fa18f33ba852c9bcf05d603336b919904c70e25bd1d7ebc4d321b"
+        }
+      ]
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTTurfFeature.java",
+      "sha256": "90ef9a898132d2288ef9e84679b39eec5f3fc96cf697885da3fe26ea2bf78346",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTTurfFeature.java",
+          "sha256": "7f57ac9579157545d521542864811488d688b61e0714a19b4e40e03e7d6c0651"
+        }
+      ]
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTWaterBodyFeature.java",
+      "sha256": "aab05bdcda8b3dc4bf8402a9e20e3bd04b2bb1f293de797cf3c64b286eb8a8b4",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTWaterBodyFeature.java",
+          "sha256": "adb5289adba6010a8a72947c62c314169d484f3237a22cee6ecbb90eba3bbb22"
+        }
+      ]
+    }
+  ],
+  "resources": [
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\forge\\biome_modifier\\gt_pits.json",
+      "sha256": "009f15654331a8aa57fb9694f8acf1223ac9b6df3aa315acd5e84bd571625f1a",
+      "target": "neoforge/src/main/resources/data/gregtech/neoforge/biome_modifier/gt_pits.json",
+      "adaptation": "native biome modifier; Forge original retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\forge\\biome_modifier\\gt_rocks.json",
+      "sha256": "3e3642933c8fcf06b51fdab1be2653920e7c534799ccdf2230d063c062b85e34",
+      "target": "neoforge/src/main/resources/data/gregtech/neoforge/biome_modifier/gt_rocks.json",
+      "adaptation": "native biome modifier; Forge original retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\forge\\biome_modifier\\gt_surface_deposits.json",
+      "sha256": "539387257a3d18fef5a1151a984e47a782efb12a6d62ce4591d575570ad4c95b",
+      "target": "neoforge/src/main/resources/data/gregtech/neoforge/biome_modifier/gt_surface_deposits.json",
+      "adaptation": "native biome modifier; Forge original retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\forge\\biome_modifier\\gt_turf.json",
+      "sha256": "47308f071102427466b0e4e5a9caa401bedf48618cb3bad1bf060ff8e0b5b374",
+      "target": "neoforge/src/main/resources/data/gregtech/neoforge/biome_modifier/gt_turf.json",
+      "adaptation": "native biome modifier; Forge original retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\forge\\biome_modifier\\gt_water_bodies.json",
+      "sha256": "60f845e58f18afc6093b8283ffbeba30dad76411f6fa06dc7fb40b7ef0b53c44",
+      "target": "neoforge/src/main/resources/data/gregtech/neoforge/biome_modifier/gt_water_bodies.json",
+      "adaptation": "native biome modifier; Forge original retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\worldgen\\configured_feature\\gt_pits.json",
+      "sha256": "2042f05bd5daf7a79de5914140c8751bd9e34d237072c99be2703bf463defbca",
+      "target": "core/src/main/resources/data/gregtech/worldgen/configured_feature/gt_pits.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\worldgen\\configured_feature\\gt_rocks.json",
+      "sha256": "0c650c7aef933f5e9ce0585fb6768ef813e950b0b7e708047236fbf6a81c3f9c",
+      "target": "core/src/main/resources/data/gregtech/worldgen/configured_feature/gt_rocks.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\worldgen\\configured_feature\\gt_surface_deposits.json",
+      "sha256": "fe006cb07d51b1bffc52e1b675860455c99321330a0020b79a1189f1b8744968",
+      "target": "core/src/main/resources/data/gregtech/worldgen/configured_feature/gt_surface_deposits.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\worldgen\\configured_feature\\gt_turf.json",
+      "sha256": "e56cde6161338c431da72a567f83a8df75c252c09ee71b7977f2b71d33e96632",
+      "target": "core/src/main/resources/data/gregtech/worldgen/configured_feature/gt_turf.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\worldgen\\configured_feature\\gt_water_bodies.json",
+      "sha256": "e0405abe2cc18d2e102f4f4863352aeeea561f71b56d866bf370876bf0a05e4c",
+      "target": "core/src/main/resources/data/gregtech/worldgen/configured_feature/gt_water_bodies.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\worldgen\\placed_feature\\gt_pits.json",
+      "sha256": "32461aa86e83d7bf6791257d57af931410b75dd1a0f99a3339cf47212e15f4d1",
+      "target": "core/src/main/resources/data/gregtech/worldgen/placed_feature/gt_pits.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\worldgen\\placed_feature\\gt_rocks.json",
+      "sha256": "5e9bac4d8d6351e402e44d7ff76ca8c325356e9b785cf8d4bd46149f6ea74854",
+      "target": "core/src/main/resources/data/gregtech/worldgen/placed_feature/gt_rocks.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\worldgen\\placed_feature\\gt_surface_deposits.json",
+      "sha256": "be125fae23612038549115f0d7accc3b53c191ac9ce95263f24b1328ca5c75d5",
+      "target": "core/src/main/resources/data/gregtech/worldgen/placed_feature/gt_surface_deposits.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\worldgen\\placed_feature\\gt_turf.json",
+      "sha256": "dff9dba2d2454b3a04af27118c9eef2bc8fa13fc712efb4af628cf6fabfe35e5",
+      "target": "core/src/main/resources/data/gregtech/worldgen/placed_feature/gt_turf.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\worldgen\\placed_feature\\gt_water_bodies.json",
+      "sha256": "a6979c6a7dc5b6fc948d218391c138a56adb328c7cef7fa409588b42e620344b",
+      "target": "core/src/main/resources/data/gregtech/worldgen/placed_feature/gt_water_bodies.json",
+      "adaptation": "shared original bytes"
+    }
+  ],
+  "validation": "Grouped core/Neo/Forge compile PASS19s; one ordinary Neo startup follows for bee+surface+terrain, no new fixture.",
+  "knownGaps": [
+    "Actual newly generated terrain, pit cross-chunk mask writes, fluid conversion and source survival resource access remain unverified.",
+    "5 clay pit rows exclude original default-disabled red clay and optional PFAA entries; source1 seams intentionally expose top clay unlike original GT6 grass cap.",
+    "Water-body passes use source ocean then river excluding ocean then swamp priority; fluid block availability depends on existing native fluid registration.",
+    "Source pit soil replacement and water conversion can affect chunk contents; no old-world replay/remapping promised.",
+    "Nether deposits/crystal blocks, bedrock/deep-ocean/black-sand/coltan/fluid springs/dungeons and remaining source features are not claimed complete.",
+    "Full gameplay/client/Forge runtime/independent world restart/old saves/new jars pending."
+  ],
+  "startup": {
+    "result": "PASS",
+    "receipt": "docs/integration/verification/p3-neoforge-bumble-surface-terrain-startup.json",
+    "coverage": "Ordinary Neo registration/data load and200tick normal save/stop;960 bee display80 crop2 bee crafting6421total recipe rows. No gameplay/client/restart claim."
+  }
+}

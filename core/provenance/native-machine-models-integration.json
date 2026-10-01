@@ -1,0 +1,483 @@
+{
+  "date": "2026-10-01",
+  "policy": "D011 Forge baseline parity using rendering/material and smeltery MD; D010 grouped compile/one existing title-screen launch.",
+  "authors": [
+    "saltnya",
+    "original GregTech6 contributors"
+  ],
+  "license": "Original author/history/notices retained; donor trees unchanged, no license reassigned.",
+  "counts": {
+    "newNativeClientClasses": 5,
+    "updatedNativeFiles": 6,
+    "platformBowlModelForks": 41
+  },
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/MachineBlockClientModels.java",
+      "sha256": "7b9539983c492b9763a15e35fe987ff77d910042600237dffa50f634c12a5e73",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/client/MachineBlockClientModels.java",
+      "currentForgeReferenceSha256": "b86f4920432146d00c2398842c91666a7dc95a78cf9c3bad3d6d5edefd8ae182",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\MachineBlockClientModels.java",
+      "sourceSha256": "b86f4920432146d00c2398842c91666a7dc95a78cf9c3bad3d6d5edefd8ae182"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/CrucibleClientModels.java",
+      "sha256": "5ba891c05265c618f0e0a885d40d2c96d8e9fc0da3606865ed0986de231b1de8",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/client/CrucibleClientModels.java",
+      "currentForgeReferenceSha256": "e31d6006d675e775a5ac8650b764247231a3ffab8d76498bd9902583ceafbcc3",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\CrucibleClientModels.java",
+      "sourceSha256": "e31d6006d675e775a5ac8650b764247231a3ffab8d76498bd9902583ceafbcc3"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/CrucibleBowlIcons.java",
+      "sha256": "6fdcd4834a9f396451e28ecf2724af7e60f410c45b7b0cffd03161e98cc4c0f8",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/client/CrucibleBowlIcons.java",
+      "currentForgeReferenceSha256": "6fdcd4834a9f396451e28ecf2724af7e60f410c45b7b0cffd03161e98cc4c0f8",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\CrucibleBowlIcons.java",
+      "sourceSha256": "6fdcd4834a9f396451e28ecf2724af7e60f410c45b7b0cffd03161e98cc4c0f8"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/CrucibleClientSync.java",
+      "sha256": "ce7cc3136cd640da89bffe09207c3457115b16cfd7abd79953caeb5d7c5f4a96",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/client/CrucibleClientSync.java",
+      "currentForgeReferenceSha256": "5f5b9e884af5d1926e466c4ce34f18469859c9bdce6e92d849723f1aedd8add6",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\CrucibleClientSync.java",
+      "sourceSha256": "5f5b9e884af5d1926e466c4ce34f18469859c9bdce6e92d849723f1aedd8add6"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/CapsuleCellRenderer.java",
+      "sha256": "4345e5061f7f8360687b04b541889b1a329ed54ac2a04738e1820e6eb11986c5",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/client/CapsuleCellRenderer.java",
+      "currentForgeReferenceSha256": "527b1dbca8ac537255c1452518190b02cb5b56fcebc481c3b9fe04781625a298",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\CapsuleCellRenderer.java",
+      "sourceSha256": "527b1dbca8ac537255c1452518190b02cb5b56fcebc481c3b9fe04781625a298"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/BurningBoxClientSetup.java",
+      "sha256": "c759b4a083772a072e92cf8170d017f7636ae297fc048626902c416ce9bcf28d",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/client/MachineBlockClientModels.java",
+      "currentForgeReferenceSha256": "b86f4920432146d00c2398842c91666a7dc95a78cf9c3bad3d6d5edefd8ae182",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\MachineBlockClientModels.java",
+      "sourceSha256": "b86f4920432146d00c2398842c91666a7dc95a78cf9c3bad3d6d5edefd8ae182",
+      "priorNativeSha256": "4ff8e2581eb95b54104587149c53a50bffadaf738030e625bde066df5167c207"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/EngineClientSetup.java",
+      "sha256": "0e944a503abd891c2507e802ac2597764866c5c59e108db50c214f5e240315db",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/client/MachineBlockClientModels.java",
+      "currentForgeReferenceSha256": "b86f4920432146d00c2398842c91666a7dc95a78cf9c3bad3d6d5edefd8ae182",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\MachineBlockClientModels.java",
+      "sourceSha256": "b86f4920432146d00c2398842c91666a7dc95a78cf9c3bad3d6d5edefd8ae182",
+      "priorNativeSha256": "24dd1ef845abf5b18ee1cefaff05b142a2c0017e96ea52fb803c394a4cf8915f"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/MultiblockClientSetup.java",
+      "sha256": "0a106d23ba5f0eae1ec386f8d7df2b2296e51cc436bdf377cfd9444a853774e2",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+      "currentForgeReferenceSha256": "4d6e46a4d9c0c35796033a9a1f759d7afc014a0ec078cf2d4604f17fe76e1705",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\GregTechClient.java",
+      "sourceSha256": "4d6e46a4d9c0c35796033a9a1f759d7afc014a0ec078cf2d4604f17fe76e1705",
+      "priorNativeSha256": "5cd5fd8d0f91ef5d3ed8b5f2a43a08d712a5be77af50a92cd662b2371bce7f82"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/PoweredToolClient.java",
+      "sha256": "ab944e615db814694b3bd9526a1c484fc9809ed3b30de37bb4c9b297dc9337fe",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+      "currentForgeReferenceSha256": "4d6e46a4d9c0c35796033a9a1f759d7afc014a0ec078cf2d4604f17fe76e1705",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\GregTechClient.java",
+      "sourceSha256": "4d6e46a4d9c0c35796033a9a1f759d7afc014a0ec078cf2d4604f17fe76e1705",
+      "priorNativeSha256": "779c4925b5bd7d26f174b3490f28ec2e2c00edb0b417bf89c147a84951c00ed0"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/CrucibleBlockBakedModel.java",
+      "sha256": "9f31e03ef57618d0bd25362429b0874dd43e90be1d407c3039a256c98cdc96cc",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/client/CrucibleBlockBakedModel.java",
+      "currentForgeReferenceSha256": "5b00f2116eda69b8f510bbf1db354e13e285c2950fc6babe295e13d8f914bd2c",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\CrucibleBlockBakedModel.java",
+      "sourceSha256": "51a366c024e5639af1e956f9b3b5188a3957899f29d90a9b27f6eb742fe88b68",
+      "priorNativeSha256": "a48790ee32053fa87aa4f6fcd9fcb00113b721d5841f78829f039ad3f12a6b25"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/smeltery/SmeltingCrucibleEntity.java",
+      "sha256": "a296134f1ac12aa4e94c6a3a3ca6b39cb7030fae3df500cb4cca96f4b6bee46c",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/blockentity/machine/SmeltingCrucibleBlockEntity.java",
+      "currentForgeReferenceSha256": "ef10e9881db398e8d2868f22eb44c3df2eb88228916381e8c4f9459c709faefb",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\SmeltingCrucibleBlockEntity.java",
+      "sourceSha256": "fd41b507bdc97e8032ba94e0a3af95d96f2646c3dc8afc726c3a4db9178ec723",
+      "priorNativeSha256": "31d1c2163bf66a6527288c33e7167fba167c926645d30f3215ffd2fcd89c37a5"
+    }
+  ],
+  "platformModelForks": [
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/brick/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/brick/blocksolid.json",
+      "forgeSha256": "a965ff16df5e7485e70b0f25887e112b871735e02ee7a75d191c2694460e96c3",
+      "neoforgeSha256": "a6f9c2d0467626a59c3219991b83d607e2d8577019ca36bbd9cf8cd7928ead39",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\brick\\blocksolid.json",
+      "sourceSha256": "a965ff16df5e7485e70b0f25887e112b871735e02ee7a75d191c2694460e96c3"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/copper/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/copper/blocksolid.json",
+      "forgeSha256": "c25bb1882b4dc377e0b89cbe17c75df900952c4030402c8c379637bc366139c3",
+      "neoforgeSha256": "d235e3ed0b1bd5bd876d4e3b870e2e2e0d36b327af1adbc9850c1217ece9f64c",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\copper\\blocksolid.json",
+      "sourceSha256": "c25bb1882b4dc377e0b89cbe17c75df900952c4030402c8c379637bc366139c3"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/cube/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/cube/blocksolid.json",
+      "forgeSha256": "af3a55e217451221134d4813c82cf27947f0f07c945eff2dfff2f62cf288b31c",
+      "neoforgeSha256": "3876f790af78f92fbc955f7888bfc4431ec5c3fd334b6210478091e70b6e090c",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\cube\\blocksolid.json",
+      "sourceSha256": "af3a55e217451221134d4813c82cf27947f0f07c945eff2dfff2f62cf288b31c"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/cube_shiny/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/cube_shiny/blocksolid.json",
+      "forgeSha256": "ef3b89d29caa9ac8574a5942a8a78979a84b0cd58d66e485225dbfb86e809c33",
+      "neoforgeSha256": "da4150da8ea4c82de7bdb94d59141f7c16981b332dc2e7ebfd1b4e52226e3013",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\cube_shiny\\blocksolid.json",
+      "sourceSha256": "ef3b89d29caa9ac8574a5942a8a78979a84b0cd58d66e485225dbfb86e809c33"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/diamond/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/diamond/blocksolid.json",
+      "forgeSha256": "4616017dde854efe43781dd3227a0e95904219c570866f19032fe348e470c37f",
+      "neoforgeSha256": "19c089b3213c74798df4980b2f5f6b8298ddd8b8ba4ab00a8096d7ab42b3dbda",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\diamond\\blocksolid.json",
+      "sourceSha256": "4616017dde854efe43781dd3227a0e95904219c570866f19032fe348e470c37f"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/dull/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/dull/blocksolid.json",
+      "forgeSha256": "7d9a2318ba3427e4ce99281dd25a32705a771adc6e87c4bffed57e6fac8418c7",
+      "neoforgeSha256": "433edc5bce4fb5fcd8257522a06ec92d6ad921e88a1b1229117c9c873435b8a8",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\dull\\blocksolid.json",
+      "sourceSha256": "7d9a2318ba3427e4ce99281dd25a32705a771adc6e87c4bffed57e6fac8418c7"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/emerald/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/emerald/blocksolid.json",
+      "forgeSha256": "a22a87e75355d244342473bb92d62629fc2cb8f8e562ae7d65415a848d1b9891",
+      "neoforgeSha256": "84be0fc1f1faa47425d56c0873a77026764615b09fa673378c865186f9959a1b",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\emerald\\blocksolid.json",
+      "sourceSha256": "a22a87e75355d244342473bb92d62629fc2cb8f8e562ae7d65415a848d1b9891"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/fiery/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/fiery/blocksolid.json",
+      "forgeSha256": "8e209725d5852c488609bc1dc172b37886b7120677d912b5698b82acec026954",
+      "neoforgeSha256": "f8936ccf3c9eb60d9ef79a30ea0adb4962fee3acd630eb79ac8b0cc886a9b77f",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\fiery\\blocksolid.json",
+      "sourceSha256": "8e209725d5852c488609bc1dc172b37886b7120677d912b5698b82acec026954"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/fine/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/fine/blocksolid.json",
+      "forgeSha256": "ef783bb5ab86369a8aaea9b918eacb7cf29e779929feaa95b49ea6592201e2d6",
+      "neoforgeSha256": "600e0827ffffe12a4598da50d910bbfa38c18328e6936284b482736cc61bfea9",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\fine\\blocksolid.json",
+      "sourceSha256": "ef783bb5ab86369a8aaea9b918eacb7cf29e779929feaa95b49ea6592201e2d6"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/flint/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/flint/blocksolid.json",
+      "forgeSha256": "e3819ea3df3ed2d8616e4cc3745a95a0c3b915be3422a02b82a1434b84e6f5ba",
+      "neoforgeSha256": "d02c1ce12b3599dbaa67af016a3b03cfac3604a9b89d8d2bb1eac0f1a6f414df",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\flint\\blocksolid.json",
+      "sourceSha256": "e3819ea3df3ed2d8616e4cc3745a95a0c3b915be3422a02b82a1434b84e6f5ba"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/fluid/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/fluid/blocksolid.json",
+      "forgeSha256": "bd6477dc10b9deae5dc76cd701b6b3acfb2ec06ab5ecd23825f73c2fc26aaa01",
+      "neoforgeSha256": "b12e329161b4aa162a3530022e51fe15f4b8993d859a338380efd76ceec0fe06",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\fluid\\blocksolid.json",
+      "sourceSha256": "bd6477dc10b9deae5dc76cd701b6b3acfb2ec06ab5ecd23825f73c2fc26aaa01"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/food/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/food/blocksolid.json",
+      "forgeSha256": "1b0004700b1d16e5814ea9cbcfc9551b8207a86c4056c8f8484a2aee3b386774",
+      "neoforgeSha256": "8a31cd7216201c519d83d42f3ff18c8aeb2e0f7147ee28d7e71766fe06a21719",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\food\\blocksolid.json",
+      "sourceSha256": "1b0004700b1d16e5814ea9cbcfc9551b8207a86c4056c8f8484a2aee3b386774"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/gas/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/gas/blocksolid.json",
+      "forgeSha256": "c224c334c68adc5e26bb26556ad65b3c89caad8b7f84714345a4baa9896c216c",
+      "neoforgeSha256": "b9da4f0b98b3f856805fc77f33debad67f2854aa3dacd1d6e8c96ea4d3eae65e",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\gas\\blocksolid.json",
+      "sourceSha256": "c224c334c68adc5e26bb26556ad65b3c89caad8b7f84714345a4baa9896c216c"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/gem_horizontal/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/gem_horizontal/blocksolid.json",
+      "forgeSha256": "8644a7547b873569cd79c7af62c84261013236a243e685197a35bdb544e5da94",
+      "neoforgeSha256": "9f5ca823a745c4a80b235ef7417aa05d0f3184d14ea770b4585d74fbafebd600",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\gem_horizontal\\blocksolid.json",
+      "sourceSha256": "8644a7547b873569cd79c7af62c84261013236a243e685197a35bdb544e5da94"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/gem_vertical/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/gem_vertical/blocksolid.json",
+      "forgeSha256": "096c132212233fde048988e163177e0a4ddb7ad2ea5b1cafbf150c82410d1a6b",
+      "neoforgeSha256": "cb3c981b11f6fcb0fc380ac4b5c838e2881f2daf8a5fba213946a84210094c6b",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\gem_vertical\\blocksolid.json",
+      "sourceSha256": "096c132212233fde048988e163177e0a4ddb7ad2ea5b1cafbf150c82410d1a6b"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/glass/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/glass/blocksolid.json",
+      "forgeSha256": "1a59a35e0c540cf73ff4518cfa3cdeec7583917bd88777f58cf6484a55154ae2",
+      "neoforgeSha256": "b08a8afa8f6696060b8ae3c771c459b22b5443344ef5211a1c62e8b62fce020d",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\glass\\blocksolid.json",
+      "sourceSha256": "1a59a35e0c540cf73ff4518cfa3cdeec7583917bd88777f58cf6484a55154ae2"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/hex/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/hex/blocksolid.json",
+      "forgeSha256": "2bae33ec1c0a09f89e8c6e8ccc49953c7e9c6f655af863f29aa5701551371629",
+      "neoforgeSha256": "a48b79fb6d94787488d7c01d9980233939de8cb62507bcd45ae08348eb917e1a",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\hex\\blocksolid.json",
+      "sourceSha256": "2bae33ec1c0a09f89e8c6e8ccc49953c7e9c6f655af863f29aa5701551371629"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/lapis/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/lapis/blocksolid.json",
+      "forgeSha256": "1166416239aa2fee7413cea7fc0127a17ff50682d63a14ea8ce09de295d7331f",
+      "neoforgeSha256": "bed2b95086979aee3cc4c3860ec1816994902ed61592068288f5474d344557fa",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\lapis\\blocksolid.json",
+      "sourceSha256": "1166416239aa2fee7413cea7fc0127a17ff50682d63a14ea8ce09de295d7331f"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/leaf/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/leaf/blocksolid.json",
+      "forgeSha256": "cedf41633d6a951ab6c589db4ab1cf4f0f392fd702921d928ea2db58faaf6a3f",
+      "neoforgeSha256": "6e9634516e865920c299c3e8f741b0da38e087297c408d9e9845b46ec08d7e4f",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\leaf\\blocksolid.json",
+      "sourceSha256": "cedf41633d6a951ab6c589db4ab1cf4f0f392fd702921d928ea2db58faaf6a3f"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/lignite/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/lignite/blocksolid.json",
+      "forgeSha256": "e4e5cff71fc791ac826ab351946ba1560961ff1c3baf014756a6e96fd3b0f634",
+      "neoforgeSha256": "32b7db381ec218526b8e5222e5ed194cad12e93be172d5ab619f3c6821dfaf72",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\lignite\\blocksolid.json",
+      "sourceSha256": "e4e5cff71fc791ac826ab351946ba1560961ff1c3baf014756a6e96fd3b0f634"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/magnetic/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/magnetic/blocksolid.json",
+      "forgeSha256": "cdd6ae255382b6122325e606ac7f9a2aa8dbf2b2bd28ba19b5f5f1b24addaf4d",
+      "neoforgeSha256": "b3a04b67d9ad026049f61ca24cf5a2e7cb117441a60a7eba2ca410b298be60be",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\magnetic\\blocksolid.json",
+      "sourceSha256": "cdd6ae255382b6122325e606ac7f9a2aa8dbf2b2bd28ba19b5f5f1b24addaf4d"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/metallic/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/metallic/blocksolid.json",
+      "forgeSha256": "32e0a5d834cfba51ec639ba0c430ae8c96d4765157aead374abf09879b71012f",
+      "neoforgeSha256": "f352c41dbc01554936d510f0c2fed94a6bf9ba8d20534435678613a14e9939e3",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\metallic\\blocksolid.json",
+      "sourceSha256": "32e0a5d834cfba51ec639ba0c430ae8c96d4765157aead374abf09879b71012f"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/netherstar/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/netherstar/blocksolid.json",
+      "forgeSha256": "0298be6c0ca57dd3342d529e835462c99dc8e0b1d72ab1626f0b877792ab3e2b",
+      "neoforgeSha256": "9456a9a266133817642b2d7c261347596453089b62c69fa59e51050976cf09f9",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\netherstar\\blocksolid.json",
+      "sourceSha256": "0298be6c0ca57dd3342d529e835462c99dc8e0b1d72ab1626f0b877792ab3e2b"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/none/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/none/blocksolid.json",
+      "forgeSha256": "37321e45db0a4095ee7c43ec69b645d6fba9207c973a8da6d9f77e35ec010ea6",
+      "neoforgeSha256": "8ca649d8df3b0e09c1a698cea3b2e9e77059b2b896ff058d92e4f49f4124e463",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\none\\blocksolid.json",
+      "sourceSha256": "37321e45db0a4095ee7c43ec69b645d6fba9207c973a8da6d9f77e35ec010ea6"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/opal/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/opal/blocksolid.json",
+      "forgeSha256": "434910c34a63d6bbee78795eb1c1df795086e225a1dc92459c446598f30c15de",
+      "neoforgeSha256": "a3a6042601394343dfa3207c2d5a695b25c4538c0d642f576d9034469792de41",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\opal\\blocksolid.json",
+      "sourceSha256": "434910c34a63d6bbee78795eb1c1df795086e225a1dc92459c446598f30c15de"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/paper/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/paper/blocksolid.json",
+      "forgeSha256": "781c10c1e56a4504ac38ceeb9b0c8f05825ecc2e985694748fa09f53e7510f0f",
+      "neoforgeSha256": "36f73ecf12ec86805e3b1f698135014199d82539984c2d7fd4cd0e5773943ff7",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\paper\\blocksolid.json",
+      "sourceSha256": "781c10c1e56a4504ac38ceeb9b0c8f05825ecc2e985694748fa09f53e7510f0f"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/plasma/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/plasma/blocksolid.json",
+      "forgeSha256": "4b7b0d2c9e2602daddd3054f20f13e94b3080561684fdcaad5444b9dd263fcc0",
+      "neoforgeSha256": "7b79a576d8e5efef5c029cf606edf0a70556a9f571a793068d17032e31705cb2",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\plasma\\blocksolid.json",
+      "sourceSha256": "4b7b0d2c9e2602daddd3054f20f13e94b3080561684fdcaad5444b9dd263fcc0"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/powder/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/powder/blocksolid.json",
+      "forgeSha256": "b1c60197b2d90b293a1a061289169c3f92ca0baed3883566392847af58a20103",
+      "neoforgeSha256": "53640549db3e908e7c2c14b9ade090b09b17e8ac9dcca9b4022d1709db54a41d",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\powder\\blocksolid.json",
+      "sourceSha256": "b1c60197b2d90b293a1a061289169c3f92ca0baed3883566392847af58a20103"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/prismarine/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/prismarine/blocksolid.json",
+      "forgeSha256": "9d273a7e3cd37fcabaacd49e26b5887b6faf0e29e5ea161c5035b657719528da",
+      "neoforgeSha256": "4fe09ffc176724f6cab1b4c6ebefc4b7c169d4030f8cd339f5b41c88dab3054c",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\prismarine\\blocksolid.json",
+      "sourceSha256": "9d273a7e3cd37fcabaacd49e26b5887b6faf0e29e5ea161c5035b657719528da"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/quartz/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/quartz/blocksolid.json",
+      "forgeSha256": "4aaecd98febc24764b441a1243492051feab3bca58b69f1455239dca7938d5ce",
+      "neoforgeSha256": "7a6c920ac6d46d7a3a0fed702a0840a3c3e60bb9dfc76e1602715387c5d09c66",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\quartz\\blocksolid.json",
+      "sourceSha256": "4aaecd98febc24764b441a1243492051feab3bca58b69f1455239dca7938d5ce"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/rad/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/rad/blocksolid.json",
+      "forgeSha256": "725491b33eb178608f51bc38b31f698d5b807665103b60cb5a4019791de86f78",
+      "neoforgeSha256": "e581c5e595d5024baea22e645affed53092dfe593a0974a166dfffbfaf73709b",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\rad\\blocksolid.json",
+      "sourceSha256": "725491b33eb178608f51bc38b31f698d5b807665103b60cb5a4019791de86f78"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/redstone/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/redstone/blocksolid.json",
+      "forgeSha256": "8e56b470354ab6813723f4abf0a3edc8ef659fe0277d5888b000e61cc9b1911e",
+      "neoforgeSha256": "769820115d592c06a32a03f0e17acce0bb3dccdc4988911716b3847f5bacb6fd",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\redstone\\blocksolid.json",
+      "sourceSha256": "8e56b470354ab6813723f4abf0a3edc8ef659fe0277d5888b000e61cc9b1911e"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/rough/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/rough/blocksolid.json",
+      "forgeSha256": "b2afa738140c2b6b6d14c5a9ed1960169efd9dc18b3bb03798449c3c860a4e45",
+      "neoforgeSha256": "7f41468f3fd702f182bd8d18d70d1743ffe029552719dbaaeed2cb05d301c3e9",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\rough\\blocksolid.json",
+      "sourceSha256": "b2afa738140c2b6b6d14c5a9ed1960169efd9dc18b3bb03798449c3c860a4e45"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/rubber/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/rubber/blocksolid.json",
+      "forgeSha256": "d0606ed92fbbf1a37d42d151d9b19d5b306ba59900782eda7e39ac7984e62832",
+      "neoforgeSha256": "91f4e4fd1d38b6e90e46901b47182d730daa41818ba6c694736c4894768320bb",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\rubber\\blocksolid.json",
+      "sourceSha256": "d0606ed92fbbf1a37d42d151d9b19d5b306ba59900782eda7e39ac7984e62832"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/ruby/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/ruby/blocksolid.json",
+      "forgeSha256": "8711132c999c2996801b031de9bde7e7a24b2e87f4d7271649cd4066d2083a9e",
+      "neoforgeSha256": "0f87c1c7e665de2a8b317ed262797ad814a955c5eb446171e9d572eb46bd22c2",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\ruby\\blocksolid.json",
+      "sourceSha256": "8711132c999c2996801b031de9bde7e7a24b2e87f4d7271649cd4066d2083a9e"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/sand/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/sand/blocksolid.json",
+      "forgeSha256": "57c1e91244a478b747a7e8180056e605c3b94cc4d66e943a3b9208b0dbd708eb",
+      "neoforgeSha256": "ba423111992cb212dfb4c67cea8ee2c250117e360859235f89d15133ff5a964a",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\sand\\blocksolid.json",
+      "sourceSha256": "57c1e91244a478b747a7e8180056e605c3b94cc4d66e943a3b9208b0dbd708eb"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/shards/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/shards/blocksolid.json",
+      "forgeSha256": "c2be78c01327a778ec35bc760f88159d9c8ca2a867f77530f0b740f4c56b5b3e",
+      "neoforgeSha256": "b4046034b3f119aebb8d243a0db0468f8e195c80b1e46e74572b5001f176c4d2",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\shards\\blocksolid.json",
+      "sourceSha256": "c2be78c01327a778ec35bc760f88159d9c8ca2a867f77530f0b740f4c56b5b3e"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/shiny/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/shiny/blocksolid.json",
+      "forgeSha256": "5bc5c3427c2cd31b81033c83fd09718b3c94f0a41476fe307c8b66814f1c969e",
+      "neoforgeSha256": "f2d3e0847746e33fe557b208bb0511640480ef281df2aaf822f858474ca4d52e",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\shiny\\blocksolid.json",
+      "sourceSha256": "5bc5c3427c2cd31b81033c83fd09718b3c94f0a41476fe307c8b66814f1c969e"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/space/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/space/blocksolid.json",
+      "forgeSha256": "28fbdeae2b636e51dce4bce914237db18f35137bad9e35db8a24929786341cb7",
+      "neoforgeSha256": "f6d6de9d00265104048a6019a6c0783ee08e35ff42b7f83ea2aebbdd68915135",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\space\\blocksolid.json",
+      "sourceSha256": "28fbdeae2b636e51dce4bce914237db18f35137bad9e35db8a24929786341cb7"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/stone/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/stone/blocksolid.json",
+      "forgeSha256": "d106c9e1f4e277570d37b2da25b0472f525628f17b161c8b1034f0b1f6da1c86",
+      "neoforgeSha256": "8c0ed8d685dbfe18558e106e0d0bbeac9506cfe2083f9325f4df058f332d8ae6",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\stone\\blocksolid.json",
+      "sourceSha256": "d106c9e1f4e277570d37b2da25b0472f525628f17b161c8b1034f0b1f6da1c86"
+    },
+    {
+      "forge": "src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/wood/blocksolid.json",
+      "neoforge": "neoforge/src/main/resources/assets/gregtech/models/block/machine/crucible_bowl/wood/blocksolid.json",
+      "forgeSha256": "cc54995e9f0d1beac07d1aaf2601fc848b3cf46738773f0a92a185cfb3f708ff",
+      "neoforgeSha256": "79db2d5aef6c3db3fc98fd8146ba907e623d5b7410cb999ca671d16b7df23f86",
+      "adaptation": "loader only, original full bowl geometry/textures/render types retained",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\crucible_bowl\\wood\\blocksolid.json",
+      "sourceSha256": "cc54995e9f0d1beac07d1aaf2601fc848b3cf46738773f0a92a185cfb3f708ff"
+    }
+  ],
+  "scope": "Single machine model event owner replaces duplicate burning/engine model owners. Native base actual registry-aware contents sync retained; added real meltdown ModelData/client hull refresh and tint. Core Java/resources unchanged.",
+  "lateCleanup": "Removed unused non-existent barometer model registration; actual barometer renderers use existing atlas sprites directly, not that model."
+}

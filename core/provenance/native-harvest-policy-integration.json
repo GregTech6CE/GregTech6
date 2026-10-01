@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-01",
+  "authors": [
+    "saltnya",
+    "original GregTech6 contributors",
+    "existing integration contributors"
+  ],
+  "license": "Original source/asset notices and history retained; no donor modification.",
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/data/BlockHarvestPolicy.java",
+      "sha256": "447631da3d71dcc3d16ac75f606828621e6a0cd9ef6d321243e470f7f45b30d4",
+      "priorNativeSha256": "72353269648c5d8bb9e85e58e7e289b3ca7900597b3d40430c81a78c0f23fee1",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/data/BlockHarvestPolicy.java",
+      "currentForgeReferenceSha256": "df9426062bcdd837a6c6898ce2428a09f044710659391c209d03f78b650aa682",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\data\\BlockHarvestPolicy.java",
+      "sourceSha256": "a87f630c4690507429f2f6345d16332f9ba7516d0487dff4b476d16a21ca52aa"
+    }
+  ],
+  "scope": "Complete current Forge class-based tool and quality policy; Native BuiltInRegistries and existing WireMaterialLike interface. Existing BlockLootPack and BlockHarvestEvents consume this single platform policy, no duplicate registries or rules.",
+  "retained": "Original wood-before-machine precedence, material/ore/stone/storage quality rules and shared BlockHarvestNames tag names.",
+  "notProven": "Individual generated tool/tier tag membership, actual block harvest/drop/tool wear and gameplay; production jars, reload and saved-world restart/old saves."
+}

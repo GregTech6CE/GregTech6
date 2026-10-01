@@ -1,0 +1,1350 @@
+{
+  "source": "saltnya original GT6 tree/wood baseline; author/notices/licenses/history unchanged",
+  "files": [
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/block/wood/WoodSpecies.java",
+      "sourceSha256": "cf8b25f46efe321659c3c10b943cd4be44a741be8b30d575e8dd662a80ae6c8d",
+      "target": "core/src/main/java/com/gregtech/gregtech/block/wood/WoodSpecies.java",
+      "sha256": "cf8b25f46efe321659c3c10b943cd4be44a741be8b30d575e8dd662a80ae6c8d",
+      "change": "byte-identical shared domain catalog"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/content/recipe/GTWoodRecipes.java",
+      "sourceSha256": "46d0c5d921634288a46d8686c88790b4ba0fa0eca0849090464b8ab56392983b",
+      "target": "core/src/main/java/com/gregtech/gregtech/content/recipe/GTWoodRecipes.java",
+      "sha256": "46d0c5d921634288a46d8686c88790b4ba0fa0eca0849090464b8ab56392983b",
+      "change": "byte-identical shared domain catalog"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/worldgen/GTTreeShapes.java",
+      "sourceSha256": "bb5706ef5e0d3a7a776c8fca15a73181887c56ddf017463295a0a888ee1225f4",
+      "target": "core/src/main/java/com/gregtech/gregtech/worldgen/TreeShapeRules.java",
+      "previousTargetSha256": null,
+      "sha256": "8907de442c26d0567279b86f5e30a7681886cf701927cbc978df80618794e25c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/worldgen/GTTreeShapes.java",
+      "sourceSha256": "bb5706ef5e0d3a7a776c8fca15a73181887c56ddf017463295a0a888ee1225f4",
+      "target": "src/main/java/com/gregtech/gregtech/worldgen/GTTreeShapes.java",
+      "previousTargetSha256": "bb5706ef5e0d3a7a776c8fca15a73181887c56ddf017463295a0a888ee1225f4",
+      "sha256": "293d7cf416f371d5215483c28b786d43d5b593324d9718f5aa5e7aa3a89b27b8"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/worldgen/GTTreeShapes.java",
+      "sourceSha256": "bb5706ef5e0d3a7a776c8fca15a73181887c56ddf017463295a0a888ee1225f4",
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTTreeShapes.java",
+      "previousTargetSha256": null,
+      "sha256": "293d7cf416f371d5215483c28b786d43d5b593324d9718f5aa5e7aa3a89b27b8"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/block/wood/WoodLeavesBlock.java",
+      "sourceSha256": "69992d0d066dfe9d833949b45c10eec33410c9768ca6b17b492ac979c5e04b11",
+      "target": "core/src/main/java/com/gregtech/gregtech/worldgen/TreeSpeciesRules.java",
+      "previousTargetSha256": null,
+      "sha256": "2a99ef7820db05fd484cb378349d5a25daf610a62f32999a6a6b29cbe716d4a7"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/block/wood/WoodLeavesBlock.java",
+      "sourceSha256": "69992d0d066dfe9d833949b45c10eec33410c9768ca6b17b492ac979c5e04b11",
+      "target": "src/main/java/com/gregtech/gregtech/block/wood/WoodLeavesBlock.java",
+      "previousTargetSha256": "69992d0d066dfe9d833949b45c10eec33410c9768ca6b17b492ac979c5e04b11",
+      "sha256": "66683d330dddf0867f663df482e1b923ce59eac8e42c3644917a3a498425ed1d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/blockentity/TreeHoleBlockEntity.java",
+      "sourceSha256": "b88fb6f5220b518c0066a28f86c1b53cd6e6c4393b524601f96db3d03c91099b",
+      "target": "src/main/java/com/gregtech/gregtech/blockentity/TreeHoleBlockEntity.java",
+      "previousTargetSha256": "b88fb6f5220b518c0066a28f86c1b53cd6e6c4393b524601f96db3d03c91099b",
+      "sha256": "1f66519bf5d6c65fe2a1a611aaee68aa401092466d9f7052db404050b85fd32c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/block/wood/WoodBeamBlock.java",
+      "sourceSha256": "982e572ef058cdc6cb6aea1542669c07aa1392472c15dff83e61ede52467a9dd",
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/wood/WoodBeamBlock.java",
+      "previousTargetSha256": null,
+      "sha256": "f3b0a4cd29506831f50b2bda195b4e64da5d2dac96580183f0c28a7a565cb092"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/block/wood/WoodPlanksBlock.java",
+      "sourceSha256": "174b20d540770f9aa8a9243818f58aa1ec4a022c1ca9c3dc2d88fbeb9f506c6f",
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/wood/WoodPlanksBlock.java",
+      "previousTargetSha256": null,
+      "sha256": "5f4731ac166de2dc8479287b6426018ca586bfac6218d7c790969f5634478d45"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/block/wood/WoodSlabBlock.java",
+      "sourceSha256": "f963d8a4c00b3e3187af2041b3390aac78399f313e3724e492c007cf596f1e06",
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/wood/WoodSlabBlock.java",
+      "previousTargetSha256": null,
+      "sha256": "a124d3de8f09ddfb00ee3b36dd07893476886b9e0a981cd6814b9bd36f2a438b"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/block/wood/WoodLeavesBlock.java",
+      "sourceSha256": "69992d0d066dfe9d833949b45c10eec33410c9768ca6b17b492ac979c5e04b11",
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/wood/WoodLeavesBlock.java",
+      "previousTargetSha256": null,
+      "sha256": "7bd9c3af5ea68ec0043ff7b0a6027a5a2b0864c86f5fe9804bf3f5a0144edbca"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/block/wood/TreeHoleBlock.java",
+      "sourceSha256": "b03e5af16d175e0f38397f1d2630e4fb1d0951fe5370ac5ee67c459038f78a23",
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/wood/TreeHoleBlock.java",
+      "previousTargetSha256": null,
+      "sha256": "627ceb7e01ebcf1ef8028d38a99ec3bb675fda585aaa0e9d62c02c296faf6237"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/block/wood/WoodLogBlock.java",
+      "sourceSha256": "253976cea8511567084f63cad90f5671ec9eefece790fb53ba79e737e759590f",
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/wood/WoodLogBlock.java",
+      "previousTargetSha256": null,
+      "sha256": "3463c62f2bb6f3853dc0d7e26d5705d00bef9302e7e6a73d49fc5914570bd013"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/block/wood/WoodSaplingBlock.java",
+      "sourceSha256": "a62dd8c6bfa8aeb9bb1752f996628db410244cd16f3e4477a3168e982d5db690",
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/wood/WoodSaplingBlock.java",
+      "previousTargetSha256": null,
+      "sha256": "0609c3379ea17b58b5afb2f1ca7ad1244c895d03e3918b5f562a11720d493509"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/worldgen/GTTreeGrower.java",
+      "sourceSha256": "e717b2639c6b06d68c76456f70fe566ea149c53cd52b02087703fcc0d5b353d4",
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTTreeGrower.java",
+      "previousTargetSha256": null,
+      "sha256": "2949b4a9090552e78a3e455e27046f4198f544768919a417736d3f212c1408ff"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/worldgen/GTTreesFeature.java",
+      "sourceSha256": "2e03cc344dd920976283ab74cfc1be25dd9e3e11cd394de7067264bf0af473c1",
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTTreesFeature.java",
+      "previousTargetSha256": null,
+      "sha256": "2e03cc344dd920976283ab74cfc1be25dd9e3e11cd394de7067264bf0af473c1"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/blockentity/TreeHoleBlockEntity.java",
+      "sourceSha256": "b88fb6f5220b518c0066a28f86c1b53cd6e6c4393b524601f96db3d03c91099b",
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/TreeHoleBlockEntity.java",
+      "previousTargetSha256": null,
+      "sha256": "1f66519bf5d6c65fe2a1a611aaee68aa401092466d9f7052db404050b85fd32c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/registry/GTWoods.java",
+      "sourceSha256": "fc8f792859515e47428c8b8a7ad3779c225b7b482cc69741096f4360a03d45c3",
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTWoods.java",
+      "previousTargetSha256": null,
+      "sha256": "b28b141cefecacadfe9d1d25e09973d0e3ae1cd0db75198c23f0f5071cfb882c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/registry/GTTreeHoles.java",
+      "sourceSha256": "4c28d43e6f90e64b932b8d2dc3d0400859a16947dce1c3537efe032c8bee2cc7",
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTTreeHoles.java",
+      "previousTargetSha256": null,
+      "sha256": "9d8c80b5385a794c800aa516c0f4d44002ec530b97d72aa0be30eb8a7bff4fd7"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/data/gregtech/forge/biome_modifier/gt_trees.json",
+      "sourceSha256": "ad0e4f56b00ad9ce3fa4ac91882a8ba46d9dd7e46c12ec0d6a9e2b4bc6361364",
+      "target": "neoforge/src/main/resources/data/gregtech/neoforge/biome_modifier/gt_trees.json",
+      "previousTargetSha256": null,
+      "sha256": "99ccf5e1d5e2e35b8ca38a979dce950a71a72c3c594be2fddebd6feba7cad129"
+    }
+  ],
+  "sharedResources": [
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/beam_blue_mahoe.json",
+      "sourceSha256": "677541fc22ce429fc33f64e7ab5af461a9d1c2d79c8d6afe7481787993f980be",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/beam_blue_mahoe.json",
+      "sha256": "677541fc22ce429fc33f64e7ab5af461a9d1c2d79c8d6afe7481787993f980be"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/beam_bluespruce.json",
+      "sourceSha256": "dabc6ec38aaa2d6087cdad90a645b5acba9f9771633a0e89c78f8913fd82ddbb",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/beam_bluespruce.json",
+      "sha256": "dabc6ec38aaa2d6087cdad90a645b5acba9f9771633a0e89c78f8913fd82ddbb"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/beam_cinnamon.json",
+      "sourceSha256": "800710b9f76963751fee4df0903d227694e8615b6c9a13ef557e13a5b442a036",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/beam_cinnamon.json",
+      "sha256": "800710b9f76963751fee4df0903d227694e8615b6c9a13ef557e13a5b442a036"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/beam_coconut.json",
+      "sourceSha256": "b1d98788c18c94df0a101f5d3d54a02435f4d20cc41a8484fd47a4bab19e449a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/beam_coconut.json",
+      "sha256": "b1d98788c18c94df0a101f5d3d54a02435f4d20cc41a8484fd47a4bab19e449a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/beam_ebony.json",
+      "sourceSha256": "c46e335f0aa25d3377fd8c02ee8376b32d07ae7c73ceb3cd746d65d02927d4ab",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/beam_ebony.json",
+      "sha256": "c46e335f0aa25d3377fd8c02ee8376b32d07ae7c73ceb3cd746d65d02927d4ab"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/beam_hazel.json",
+      "sourceSha256": "a14bbe2c9871e7fc8d4573d4992c3cdd4fe2a949443d91ccc07f0355d5aa61de",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/beam_hazel.json",
+      "sha256": "a14bbe2c9871e7fc8d4573d4992c3cdd4fe2a949443d91ccc07f0355d5aa61de"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/beam_maple.json",
+      "sourceSha256": "1d219a7b613c6cc25a3190ac41ac0ca3a28ba456b8abd7863ee21d5d043c78fc",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/beam_maple.json",
+      "sha256": "1d219a7b613c6cc25a3190ac41ac0ca3a28ba456b8abd7863ee21d5d043c78fc"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/beam_pine.json",
+      "sourceSha256": "fb3b0fecd4bcef276946c7624b548a063cd059d7fac34ede73bc692770239fac",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/beam_pine.json",
+      "sha256": "fb3b0fecd4bcef276946c7624b548a063cd059d7fac34ede73bc692770239fac"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/beam_rainbowood.json",
+      "sourceSha256": "163f199b9e2e3826e260250fdcaed0089f5653507be77d6877dfc0cd6892ae31",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/beam_rainbowood.json",
+      "sha256": "163f199b9e2e3826e260250fdcaed0089f5653507be77d6877dfc0cd6892ae31"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/beam_rubber.json",
+      "sourceSha256": "74f917f01aaa8f0fd5fc1b876b82a8d0dece3c40075ddc93bb902af79bb0b3c5",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/beam_rubber.json",
+      "sha256": "74f917f01aaa8f0fd5fc1b876b82a8d0dece3c40075ddc93bb902af79bb0b3c5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/beam_white_mahoe.json",
+      "sourceSha256": "65f799e79dbcc43f56c0f076546f58cc2174218a19c2393807e8cb77c34530ae",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/beam_white_mahoe.json",
+      "sha256": "65f799e79dbcc43f56c0f076546f58cc2174218a19c2393807e8cb77c34530ae"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/beam_willow.json",
+      "sourceSha256": "cfb722ff5db66746d2ae257534dd33d20591e7f71f04c5529b1f04e53980cacc",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/beam_willow.json",
+      "sha256": "cfb722ff5db66746d2ae257534dd33d20591e7f71f04c5529b1f04e53980cacc"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/leaves_blue_mahoe.json",
+      "sourceSha256": "557bf51a264863360be0b366ccc060269ebb22d0dd3929c4e6cf9f318783dc0e",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/leaves_blue_mahoe.json",
+      "sha256": "557bf51a264863360be0b366ccc060269ebb22d0dd3929c4e6cf9f318783dc0e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/leaves_bluespruce.json",
+      "sourceSha256": "b9fae8fa1bb15f6b1a5a39b276c176fd857091cfb10941a53f6d5e0597dd4321",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/leaves_bluespruce.json",
+      "sha256": "b9fae8fa1bb15f6b1a5a39b276c176fd857091cfb10941a53f6d5e0597dd4321"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/leaves_cinnamon.json",
+      "sourceSha256": "4b47466f231ada3bdbff4bb10d0c9a0652216aedbfb3284f0129b049bf4c77b0",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/leaves_cinnamon.json",
+      "sha256": "4b47466f231ada3bdbff4bb10d0c9a0652216aedbfb3284f0129b049bf4c77b0"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/leaves_coconut.json",
+      "sourceSha256": "1ecfde47c662c4d238e3cd8fb12aa7748c6705bc06ad5a4d79ca23d33e3fb046",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/leaves_coconut.json",
+      "sha256": "1ecfde47c662c4d238e3cd8fb12aa7748c6705bc06ad5a4d79ca23d33e3fb046"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/leaves_ebony.json",
+      "sourceSha256": "d3a5c2c0df13d277733a064b1496851dcc3a970e8fae1fa8f7e8d8cc01b089d5",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/leaves_ebony.json",
+      "sha256": "d3a5c2c0df13d277733a064b1496851dcc3a970e8fae1fa8f7e8d8cc01b089d5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/leaves_hazel.json",
+      "sourceSha256": "62fe117effef5a25a2b5cf63f1e60e22da99aae288caedaa51e3e6dc0b36f9c6",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/leaves_hazel.json",
+      "sha256": "62fe117effef5a25a2b5cf63f1e60e22da99aae288caedaa51e3e6dc0b36f9c6"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/leaves_maple.json",
+      "sourceSha256": "3dfe3fb01d06ebbd0be2aeaa8191dc8f663181bc1678b0506f62383829cd7e0d",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/leaves_maple.json",
+      "sha256": "3dfe3fb01d06ebbd0be2aeaa8191dc8f663181bc1678b0506f62383829cd7e0d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/leaves_pine.json",
+      "sourceSha256": "babc212d4b5eba906b578cd1e2c6d1f8e3b4ff6df99d4e0d6ad92c7f3addb28d",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/leaves_pine.json",
+      "sha256": "babc212d4b5eba906b578cd1e2c6d1f8e3b4ff6df99d4e0d6ad92c7f3addb28d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/leaves_rainbowood.json",
+      "sourceSha256": "13a22bf05e0f8b0d43135174fd73167871e6e5b31459960bc32092668938f8c5",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/leaves_rainbowood.json",
+      "sha256": "13a22bf05e0f8b0d43135174fd73167871e6e5b31459960bc32092668938f8c5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/leaves_rubber.json",
+      "sourceSha256": "d2b20aac86075047537634d8cf1203f6535a1f521871fd8d27d2fc4cf3556e8c",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/leaves_rubber.json",
+      "sha256": "d2b20aac86075047537634d8cf1203f6535a1f521871fd8d27d2fc4cf3556e8c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/leaves_white_mahoe.json",
+      "sourceSha256": "c780b07efd018e222b70812873aeef34328b09facb2c1ec8fd7dc8ddd9d10a7a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/leaves_white_mahoe.json",
+      "sha256": "c780b07efd018e222b70812873aeef34328b09facb2c1ec8fd7dc8ddd9d10a7a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/leaves_willow.json",
+      "sourceSha256": "6a8c92174c297a4140fb7e6c2142f37ae87de1ae2ee0aef44894e691068ead9c",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/leaves_willow.json",
+      "sha256": "6a8c92174c297a4140fb7e6c2142f37ae87de1ae2ee0aef44894e691068ead9c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/log_blue_mahoe.json",
+      "sourceSha256": "2e0e6771c5beb728dc51130393504a95094c297a0ef137b725b4bb1e5b7e3a0f",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/log_blue_mahoe.json",
+      "sha256": "2e0e6771c5beb728dc51130393504a95094c297a0ef137b725b4bb1e5b7e3a0f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/log_bluespruce.json",
+      "sourceSha256": "eb8de342282e4a129e480f24cd0a9a98516e501e201b4f0234383d0a92cc539a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/log_bluespruce.json",
+      "sha256": "eb8de342282e4a129e480f24cd0a9a98516e501e201b4f0234383d0a92cc539a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/log_cinnamon.json",
+      "sourceSha256": "14b0d7a61f533c534a965cb3ce9a4762153c6abc2a3b73bb17894536813ac666",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/log_cinnamon.json",
+      "sha256": "14b0d7a61f533c534a965cb3ce9a4762153c6abc2a3b73bb17894536813ac666"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/log_coconut.json",
+      "sourceSha256": "c223986f669e4bcd402490b44eb199e31afb5dc0d0e7b5a0516788e439ddcc19",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/log_coconut.json",
+      "sha256": "c223986f669e4bcd402490b44eb199e31afb5dc0d0e7b5a0516788e439ddcc19"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/log_ebony.json",
+      "sourceSha256": "eff5f75b5ede64cba1236de645adef3fbcb76099157ac72d0e159b71fd017da8",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/log_ebony.json",
+      "sha256": "eff5f75b5ede64cba1236de645adef3fbcb76099157ac72d0e159b71fd017da8"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/log_hazel.json",
+      "sourceSha256": "040a03f341f6b9c77fbbf2b18719c18d1811767234c610e1292093f359e97322",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/log_hazel.json",
+      "sha256": "040a03f341f6b9c77fbbf2b18719c18d1811767234c610e1292093f359e97322"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/log_maple.json",
+      "sourceSha256": "afe98e66d54c9545e25bd97b52646421e902c0b56584f06ad38fdce432d07993",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/log_maple.json",
+      "sha256": "afe98e66d54c9545e25bd97b52646421e902c0b56584f06ad38fdce432d07993"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/log_pine.json",
+      "sourceSha256": "5f4298935ac1f3c667e8a64b674381aa7bf5995b92fbf91f0df211328ed90e13",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/log_pine.json",
+      "sha256": "5f4298935ac1f3c667e8a64b674381aa7bf5995b92fbf91f0df211328ed90e13"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/log_rainbowood.json",
+      "sourceSha256": "6ad348b2240a13185b7526c4d3ff1ffcb0143d658fe9db628c9d64331458de06",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/log_rainbowood.json",
+      "sha256": "6ad348b2240a13185b7526c4d3ff1ffcb0143d658fe9db628c9d64331458de06"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/log_rubber.json",
+      "sourceSha256": "dfd4ee95a61ff4a8620695401d7150a3517b72f6b93803e38692250eea131c7c",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/log_rubber.json",
+      "sha256": "dfd4ee95a61ff4a8620695401d7150a3517b72f6b93803e38692250eea131c7c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/log_white_mahoe.json",
+      "sourceSha256": "397c2c2e10bf121f961ea57a91ec4fcbbf529c9560859ac5277ea68420202266",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/log_white_mahoe.json",
+      "sha256": "397c2c2e10bf121f961ea57a91ec4fcbbf529c9560859ac5277ea68420202266"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/log_willow.json",
+      "sourceSha256": "5016578af1eeb5e30a3c3c0dad4f57274e8ff368f3eddd18210479f5a956a5d7",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/log_willow.json",
+      "sha256": "5016578af1eeb5e30a3c3c0dad4f57274e8ff368f3eddd18210479f5a956a5d7"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/planks_blue_mahoe.json",
+      "sourceSha256": "14f44e9eec0c5fa1cc5bf46312399599e708a4cbb08252b47bb0864f0d24343d",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/planks_blue_mahoe.json",
+      "sha256": "14f44e9eec0c5fa1cc5bf46312399599e708a4cbb08252b47bb0864f0d24343d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/planks_bluespruce.json",
+      "sourceSha256": "7f3f8a282e981817a3e5eb66b9a64adff42cabe1238b2b78d625f78755d2e181",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/planks_bluespruce.json",
+      "sha256": "7f3f8a282e981817a3e5eb66b9a64adff42cabe1238b2b78d625f78755d2e181"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/planks_cinnamon.json",
+      "sourceSha256": "27a31f1374997904c1e5d5e0b4306da79fd3e01929fb5fe1ef55193c8836a551",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/planks_cinnamon.json",
+      "sha256": "27a31f1374997904c1e5d5e0b4306da79fd3e01929fb5fe1ef55193c8836a551"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/planks_coconut.json",
+      "sourceSha256": "576484fe274295eceb42a8d55470253e861cf6ed988bfc914032ac6673b5730b",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/planks_coconut.json",
+      "sha256": "576484fe274295eceb42a8d55470253e861cf6ed988bfc914032ac6673b5730b"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/planks_ebony.json",
+      "sourceSha256": "55bc52aa4bf0c885388e50e479f74f8d3fde0755025fd6de5d20f6b6c4bba94d",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/planks_ebony.json",
+      "sha256": "55bc52aa4bf0c885388e50e479f74f8d3fde0755025fd6de5d20f6b6c4bba94d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/planks_hazel.json",
+      "sourceSha256": "53a44f9df0bd3b5b8d7f616a247d186fd77fc0301c5dbf195a2808adad0053a9",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/planks_hazel.json",
+      "sha256": "53a44f9df0bd3b5b8d7f616a247d186fd77fc0301c5dbf195a2808adad0053a9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/planks_maple.json",
+      "sourceSha256": "dca39b793be1d1aeff9626561b1e52d936fdeff8a279347318e43e8e80b3b76a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/planks_maple.json",
+      "sha256": "dca39b793be1d1aeff9626561b1e52d936fdeff8a279347318e43e8e80b3b76a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/planks_pine.json",
+      "sourceSha256": "7b0e0e4cf3d2f374dc0fa52a41bd61aca4e5fada7f0b88817ac582778b7385ab",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/planks_pine.json",
+      "sha256": "7b0e0e4cf3d2f374dc0fa52a41bd61aca4e5fada7f0b88817ac582778b7385ab"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/planks_rainbowood.json",
+      "sourceSha256": "cd3739c0340e53270f908f673602b00f3c22f38daf1dcceeae90953ed527ed4f",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/planks_rainbowood.json",
+      "sha256": "cd3739c0340e53270f908f673602b00f3c22f38daf1dcceeae90953ed527ed4f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/planks_rubber.json",
+      "sourceSha256": "bee18887ba33a6ad38f8589d8c8ce052825bcc51f9e84521ce321023d9ddd0b1",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/planks_rubber.json",
+      "sha256": "bee18887ba33a6ad38f8589d8c8ce052825bcc51f9e84521ce321023d9ddd0b1"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/planks_white_mahoe.json",
+      "sourceSha256": "e7fe9dc066908848e2c1075692f7dfe4e6931a6cdbfb12dc53bc4b0321f4e967",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/planks_white_mahoe.json",
+      "sha256": "e7fe9dc066908848e2c1075692f7dfe4e6931a6cdbfb12dc53bc4b0321f4e967"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/planks_willow.json",
+      "sourceSha256": "2f62d25f5501182a2e9bb8e4ab7d59b949456a7e27b0effe0758b5c4760a0b8a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/planks_willow.json",
+      "sha256": "2f62d25f5501182a2e9bb8e4ab7d59b949456a7e27b0effe0758b5c4760a0b8a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/resin_hole_rubber.json",
+      "sourceSha256": "fa0488ed70e34d80e1d0c48d259d92c8baa3fc40178653039ee3e0f7c77dd011",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/resin_hole_rubber.json",
+      "sha256": "fa0488ed70e34d80e1d0c48d259d92c8baa3fc40178653039ee3e0f7c77dd011"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/sapling_blue_mahoe.json",
+      "sourceSha256": "8bbfe3e09a8ea6c318be8f74b624a25f76730234fc152849a124d35e565130c3",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sapling_blue_mahoe.json",
+      "sha256": "8bbfe3e09a8ea6c318be8f74b624a25f76730234fc152849a124d35e565130c3"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/sapling_bluespruce.json",
+      "sourceSha256": "215516f369428a98e836e082aed96dafd17d3330fd07d1feee2f4dbbb49445a0",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sapling_bluespruce.json",
+      "sha256": "215516f369428a98e836e082aed96dafd17d3330fd07d1feee2f4dbbb49445a0"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/sapling_cinnamon.json",
+      "sourceSha256": "13cb1d30cb6ae89c43c18e41b07024ec18c0a8822ef477c008f31fff5894885d",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sapling_cinnamon.json",
+      "sha256": "13cb1d30cb6ae89c43c18e41b07024ec18c0a8822ef477c008f31fff5894885d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/sapling_coconut.json",
+      "sourceSha256": "7f8836b6eaa7280eab19c7d830614651d2d99efef1c423d9713c17034cfe11eb",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sapling_coconut.json",
+      "sha256": "7f8836b6eaa7280eab19c7d830614651d2d99efef1c423d9713c17034cfe11eb"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/sapling_ebony.json",
+      "sourceSha256": "cab72ca9eebe2f3eaed92f9451a3a8b8799c06ba79a43020ed095970c1589669",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sapling_ebony.json",
+      "sha256": "cab72ca9eebe2f3eaed92f9451a3a8b8799c06ba79a43020ed095970c1589669"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/sapling_hazel.json",
+      "sourceSha256": "c8c12bdf4ce0d38e297b314604daafd86a4e3255a313c784533441cd6d18dd0e",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sapling_hazel.json",
+      "sha256": "c8c12bdf4ce0d38e297b314604daafd86a4e3255a313c784533441cd6d18dd0e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/sapling_maple.json",
+      "sourceSha256": "1391e8abf538fc234d24c9f7f94b4f9404d21883cfc2dd6178a3e3ff88ee6b5d",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sapling_maple.json",
+      "sha256": "1391e8abf538fc234d24c9f7f94b4f9404d21883cfc2dd6178a3e3ff88ee6b5d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/sapling_pine.json",
+      "sourceSha256": "e7d74793eeb805227ffaab512e9ff1c45c53afb483a2830ccbe70aa010535bd6",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sapling_pine.json",
+      "sha256": "e7d74793eeb805227ffaab512e9ff1c45c53afb483a2830ccbe70aa010535bd6"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/sapling_rainbowood.json",
+      "sourceSha256": "e4291569041244f04da1fe377fd97fa97bc41daa804a358da9f12cc85bd055c1",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sapling_rainbowood.json",
+      "sha256": "e4291569041244f04da1fe377fd97fa97bc41daa804a358da9f12cc85bd055c1"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/sapling_rubber.json",
+      "sourceSha256": "c04645794b3406c5c5aaf42d6d6325937852c2ab339882acb276549e503e633e",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sapling_rubber.json",
+      "sha256": "c04645794b3406c5c5aaf42d6d6325937852c2ab339882acb276549e503e633e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/sapling_white_mahoe.json",
+      "sourceSha256": "f17be687b4bc403dc9e895212cbb999b55877734ae6fbaea90f97e93163ee7a0",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sapling_white_mahoe.json",
+      "sha256": "f17be687b4bc403dc9e895212cbb999b55877734ae6fbaea90f97e93163ee7a0"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/sapling_willow.json",
+      "sourceSha256": "bb5abdd80c58d01413b0d2d43a649748a984525a14228b3ce35fe7d5c6fb16e1",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sapling_willow.json",
+      "sha256": "bb5abdd80c58d01413b0d2d43a649748a984525a14228b3ce35fe7d5c6fb16e1"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/slab_bluespruce.json",
+      "sourceSha256": "03f8b986047612dbf9b15bed30521e7d1989066bd318f01368fd2abcf0add60d",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/slab_bluespruce.json",
+      "sha256": "03f8b986047612dbf9b15bed30521e7d1989066bd318f01368fd2abcf0add60d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/tapped_maple.json",
+      "sourceSha256": "bb64a81de9da9e35533948bc983cc8b806f91fb64935defffe8dedec27800491",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/tapped_maple.json",
+      "sha256": "bb64a81de9da9e35533948bc983cc8b806f91fb64935defffe8dedec27800491"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/tapped_rainbowood.json",
+      "sourceSha256": "579cb82d5084a8fd138a71b43c971841bc215c0cbb6a2f0ebaa18c0ca5d65132",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/tapped_rainbowood.json",
+      "sha256": "579cb82d5084a8fd138a71b43c971841bc215c0cbb6a2f0ebaa18c0ca5d65132"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/beam_base.json",
+      "sourceSha256": "572e25f8e20163fc249751125576611311f26a7b2210cdd3280545644539d0de",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/beam_base.json",
+      "sha256": "572e25f8e20163fc249751125576611311f26a7b2210cdd3280545644539d0de"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/beam_blue_mahoe_x.json",
+      "sourceSha256": "9156d9e075495f0875f5309592e424d2c4a461dbcf23a4cffd823cf49fa9dce7",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/beam_blue_mahoe_x.json",
+      "sha256": "9156d9e075495f0875f5309592e424d2c4a461dbcf23a4cffd823cf49fa9dce7"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/beam_blue_mahoe_y.json",
+      "sourceSha256": "9156d9e075495f0875f5309592e424d2c4a461dbcf23a4cffd823cf49fa9dce7",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/beam_blue_mahoe_y.json",
+      "sha256": "9156d9e075495f0875f5309592e424d2c4a461dbcf23a4cffd823cf49fa9dce7"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/beam_blue_mahoe_z.json",
+      "sourceSha256": "9156d9e075495f0875f5309592e424d2c4a461dbcf23a4cffd823cf49fa9dce7",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/beam_blue_mahoe_z.json",
+      "sha256": "9156d9e075495f0875f5309592e424d2c4a461dbcf23a4cffd823cf49fa9dce7"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/beam_ebony_x.json",
+      "sourceSha256": "24f17153ac75f20d0d7d252192d6b632860a6045e08f57c2a09cf44d7eb709d2",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/beam_ebony_x.json",
+      "sha256": "24f17153ac75f20d0d7d252192d6b632860a6045e08f57c2a09cf44d7eb709d2"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/beam_ebony_y.json",
+      "sourceSha256": "24f17153ac75f20d0d7d252192d6b632860a6045e08f57c2a09cf44d7eb709d2",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/beam_ebony_y.json",
+      "sha256": "24f17153ac75f20d0d7d252192d6b632860a6045e08f57c2a09cf44d7eb709d2"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/beam_ebony_z.json",
+      "sourceSha256": "24f17153ac75f20d0d7d252192d6b632860a6045e08f57c2a09cf44d7eb709d2",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/beam_ebony_z.json",
+      "sha256": "24f17153ac75f20d0d7d252192d6b632860a6045e08f57c2a09cf44d7eb709d2"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/beam_maple_x.json",
+      "sourceSha256": "a734fd311714e9c3cd93bbb77fd35948579c9e7e2af4267d70653c1184059b80",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/beam_maple_x.json",
+      "sha256": "a734fd311714e9c3cd93bbb77fd35948579c9e7e2af4267d70653c1184059b80"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/beam_maple_y.json",
+      "sourceSha256": "a734fd311714e9c3cd93bbb77fd35948579c9e7e2af4267d70653c1184059b80",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/beam_maple_y.json",
+      "sha256": "a734fd311714e9c3cd93bbb77fd35948579c9e7e2af4267d70653c1184059b80"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/beam_maple_z.json",
+      "sourceSha256": "a734fd311714e9c3cd93bbb77fd35948579c9e7e2af4267d70653c1184059b80",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/beam_maple_z.json",
+      "sha256": "a734fd311714e9c3cd93bbb77fd35948579c9e7e2af4267d70653c1184059b80"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/beam_pine_x.json",
+      "sourceSha256": "7a88a10fc7580b086ffdb65c56c785bc88057bade85ca25405dfccdfcfe524f6",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/beam_pine_x.json",
+      "sha256": "7a88a10fc7580b086ffdb65c56c785bc88057bade85ca25405dfccdfcfe524f6"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/beam_pine_y.json",
+      "sourceSha256": "7a88a10fc7580b086ffdb65c56c785bc88057bade85ca25405dfccdfcfe524f6",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/beam_pine_y.json",
+      "sha256": "7a88a10fc7580b086ffdb65c56c785bc88057bade85ca25405dfccdfcfe524f6"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/beam_pine_z.json",
+      "sourceSha256": "7a88a10fc7580b086ffdb65c56c785bc88057bade85ca25405dfccdfcfe524f6",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/beam_pine_z.json",
+      "sha256": "7a88a10fc7580b086ffdb65c56c785bc88057bade85ca25405dfccdfcfe524f6"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/beam_rainbowood_x.json",
+      "sourceSha256": "6bba3166d482c3f65a2a4ffbcf14aa7294bed7396da1ea6a473986ede30c0273",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/beam_rainbowood_x.json",
+      "sha256": "6bba3166d482c3f65a2a4ffbcf14aa7294bed7396da1ea6a473986ede30c0273"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/beam_rainbowood_y.json",
+      "sourceSha256": "6bba3166d482c3f65a2a4ffbcf14aa7294bed7396da1ea6a473986ede30c0273",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/beam_rainbowood_y.json",
+      "sha256": "6bba3166d482c3f65a2a4ffbcf14aa7294bed7396da1ea6a473986ede30c0273"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/beam_rainbowood_z.json",
+      "sourceSha256": "6bba3166d482c3f65a2a4ffbcf14aa7294bed7396da1ea6a473986ede30c0273",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/beam_rainbowood_z.json",
+      "sha256": "6bba3166d482c3f65a2a4ffbcf14aa7294bed7396da1ea6a473986ede30c0273"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/beam_rubber_x.json",
+      "sourceSha256": "21bd3f8876415d8040ad1f5acf2379a119f3848b624e7a2492c4f9709e6b32a9",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/beam_rubber_x.json",
+      "sha256": "21bd3f8876415d8040ad1f5acf2379a119f3848b624e7a2492c4f9709e6b32a9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/beam_rubber_y.json",
+      "sourceSha256": "21bd3f8876415d8040ad1f5acf2379a119f3848b624e7a2492c4f9709e6b32a9",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/beam_rubber_y.json",
+      "sha256": "21bd3f8876415d8040ad1f5acf2379a119f3848b624e7a2492c4f9709e6b32a9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/beam_rubber_z.json",
+      "sourceSha256": "21bd3f8876415d8040ad1f5acf2379a119f3848b624e7a2492c4f9709e6b32a9",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/beam_rubber_z.json",
+      "sha256": "21bd3f8876415d8040ad1f5acf2379a119f3848b624e7a2492c4f9709e6b32a9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/beam_white_mahoe_x.json",
+      "sourceSha256": "63fb22c671f51ffdc8659dce2bb4296ed238803440af7dbcafd751d651076c21",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/beam_white_mahoe_x.json",
+      "sha256": "63fb22c671f51ffdc8659dce2bb4296ed238803440af7dbcafd751d651076c21"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/beam_white_mahoe_y.json",
+      "sourceSha256": "63fb22c671f51ffdc8659dce2bb4296ed238803440af7dbcafd751d651076c21",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/beam_white_mahoe_y.json",
+      "sha256": "63fb22c671f51ffdc8659dce2bb4296ed238803440af7dbcafd751d651076c21"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/beam_white_mahoe_z.json",
+      "sourceSha256": "63fb22c671f51ffdc8659dce2bb4296ed238803440af7dbcafd751d651076c21",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/beam_white_mahoe_z.json",
+      "sha256": "63fb22c671f51ffdc8659dce2bb4296ed238803440af7dbcafd751d651076c21"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/beam_willow_x.json",
+      "sourceSha256": "2391324cd6d280fd34336fe3800e80e8afead71c84b2e253b52c1c251b906a96",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/beam_willow_x.json",
+      "sha256": "2391324cd6d280fd34336fe3800e80e8afead71c84b2e253b52c1c251b906a96"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/beam_willow_y.json",
+      "sourceSha256": "2391324cd6d280fd34336fe3800e80e8afead71c84b2e253b52c1c251b906a96",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/beam_willow_y.json",
+      "sha256": "2391324cd6d280fd34336fe3800e80e8afead71c84b2e253b52c1c251b906a96"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/beam_willow_z.json",
+      "sourceSha256": "2391324cd6d280fd34336fe3800e80e8afead71c84b2e253b52c1c251b906a96",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/beam_willow_z.json",
+      "sha256": "2391324cd6d280fd34336fe3800e80e8afead71c84b2e253b52c1c251b906a96"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/leaves_blue_mahoe.json",
+      "sourceSha256": "77c4d99c8b4540a32d49ab87fd3418665b920bcb0a3e886fa26dbbbe8a9d0e6a",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/leaves_blue_mahoe.json",
+      "sha256": "77c4d99c8b4540a32d49ab87fd3418665b920bcb0a3e886fa26dbbbe8a9d0e6a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/leaves_ebony.json",
+      "sourceSha256": "418108847fe1e01b0a91dddc553e9095dbc94395adcc8447cdc2bdd5cfbcaf9d",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/leaves_ebony.json",
+      "sha256": "418108847fe1e01b0a91dddc553e9095dbc94395adcc8447cdc2bdd5cfbcaf9d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/leaves_maple.json",
+      "sourceSha256": "48f4697a4f643c7d930312a6d932bd6266f5d6bf60e8db678c9b53d8be8a83a7",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/leaves_maple.json",
+      "sha256": "48f4697a4f643c7d930312a6d932bd6266f5d6bf60e8db678c9b53d8be8a83a7"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/leaves_pine.json",
+      "sourceSha256": "4d4267a483d6df2f5bdfe7e7def7bebf1db7b21ce475d67736defb583e574fed",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/leaves_pine.json",
+      "sha256": "4d4267a483d6df2f5bdfe7e7def7bebf1db7b21ce475d67736defb583e574fed"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/leaves_rainbowood.json",
+      "sourceSha256": "6ea3f2b866a2297980fff855b866c9efcd926c53630a41ccc1b6afbe571b37c5",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/leaves_rainbowood.json",
+      "sha256": "6ea3f2b866a2297980fff855b866c9efcd926c53630a41ccc1b6afbe571b37c5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/leaves_rubber.json",
+      "sourceSha256": "72f044fd00cec5795857aad9e38dbec3a88f824ed768f90b7d89f2e4e9a1efd9",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/leaves_rubber.json",
+      "sha256": "72f044fd00cec5795857aad9e38dbec3a88f824ed768f90b7d89f2e4e9a1efd9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/leaves_white_mahoe.json",
+      "sourceSha256": "a5cbc5289b9df7dc4efcceef3ef9f5ebb3244d999cc8bedb67a4e744b38b431f",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/leaves_white_mahoe.json",
+      "sha256": "a5cbc5289b9df7dc4efcceef3ef9f5ebb3244d999cc8bedb67a4e744b38b431f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/leaves_willow.json",
+      "sourceSha256": "66d342e7e6246f73226a4d32b13872d60722897722c1359181eb836dd2130990",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/leaves_willow.json",
+      "sha256": "66d342e7e6246f73226a4d32b13872d60722897722c1359181eb836dd2130990"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/log_blue_mahoe.json",
+      "sourceSha256": "ab68974e0f4df74f1f66bad05c552a54506d2f9e7ed4c6531a193515fc501638",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/log_blue_mahoe.json",
+      "sha256": "ab68974e0f4df74f1f66bad05c552a54506d2f9e7ed4c6531a193515fc501638"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/log_ebony.json",
+      "sourceSha256": "79e2d66a9f128d6d5ba648214af7febe50457fb148e0bf8f47c5213eca02c8a2",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/log_ebony.json",
+      "sha256": "79e2d66a9f128d6d5ba648214af7febe50457fb148e0bf8f47c5213eca02c8a2"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/log_maple.json",
+      "sourceSha256": "0be8415a720756b1c583341df6534059c04246a41b0876aefd52eb58ac06d8fd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/log_maple.json",
+      "sha256": "0be8415a720756b1c583341df6534059c04246a41b0876aefd52eb58ac06d8fd"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/log_pine.json",
+      "sourceSha256": "68709a3692123d3e68998ce7f99c0b7101be904131485cff137d35cb7809892d",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/log_pine.json",
+      "sha256": "68709a3692123d3e68998ce7f99c0b7101be904131485cff137d35cb7809892d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/log_rainbowood.json",
+      "sourceSha256": "a237285169e5d42c1718e2767e344b6cef3738a5595729c1793e5e6d9c27ad50",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/log_rainbowood.json",
+      "sha256": "a237285169e5d42c1718e2767e344b6cef3738a5595729c1793e5e6d9c27ad50"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/log_rubber.json",
+      "sourceSha256": "24fd7bbb10bfead4618b70393c4ec72f454177507807a862ce6c029a59c0f05e",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/log_rubber.json",
+      "sha256": "24fd7bbb10bfead4618b70393c4ec72f454177507807a862ce6c029a59c0f05e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/log_white_mahoe.json",
+      "sourceSha256": "e1a742443d6f8dfaf6ef5a4fbc021bc18f477b8edf53136c1fda6e5b03c7d59d",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/log_white_mahoe.json",
+      "sha256": "e1a742443d6f8dfaf6ef5a4fbc021bc18f477b8edf53136c1fda6e5b03c7d59d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/log_willow.json",
+      "sourceSha256": "25fc64db8cfbb45da941faa8a9aa0b39a6e566737eb98789a1bcd09900b54b49",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/log_willow.json",
+      "sha256": "25fc64db8cfbb45da941faa8a9aa0b39a6e566737eb98789a1bcd09900b54b49"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/planks_blue_mahoe.json",
+      "sourceSha256": "bda90bfd61ae72a237b14980c6938c711b95bd94e1476e880ab1b07ba5a3e870",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/planks_blue_mahoe.json",
+      "sha256": "bda90bfd61ae72a237b14980c6938c711b95bd94e1476e880ab1b07ba5a3e870"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/planks_ebony.json",
+      "sourceSha256": "4a6501095c199ae7731864c423d11db46cb0148cb8270137b6299e0f9f925e75",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/planks_ebony.json",
+      "sha256": "4a6501095c199ae7731864c423d11db46cb0148cb8270137b6299e0f9f925e75"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/planks_maple.json",
+      "sourceSha256": "428693544161eb08200f45a6ac868a7948260b968b6f1c64714d9ff730921c40",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/planks_maple.json",
+      "sha256": "428693544161eb08200f45a6ac868a7948260b968b6f1c64714d9ff730921c40"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/planks_pine.json",
+      "sourceSha256": "0d6a291b429424c211aec68c7577ab01d032be9190338eade3c758206a6e14b4",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/planks_pine.json",
+      "sha256": "0d6a291b429424c211aec68c7577ab01d032be9190338eade3c758206a6e14b4"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/planks_rainbowood.json",
+      "sourceSha256": "97a0b69ed0fe7454fb7a603d6e9d08587c4ec1bd73d2a1996b8724f6ffd179d7",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/planks_rainbowood.json",
+      "sha256": "97a0b69ed0fe7454fb7a603d6e9d08587c4ec1bd73d2a1996b8724f6ffd179d7"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/planks_rubber.json",
+      "sourceSha256": "9102528bc69ed41465e13e12bc0123dc2a9a6907d0d34e6213a197e8b8b699ba",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/planks_rubber.json",
+      "sha256": "9102528bc69ed41465e13e12bc0123dc2a9a6907d0d34e6213a197e8b8b699ba"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/planks_white_mahoe.json",
+      "sourceSha256": "55591612e46600a874b4dd2157f2262bdc1e2f55190463817b2ae8acddcb0040",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/planks_white_mahoe.json",
+      "sha256": "55591612e46600a874b4dd2157f2262bdc1e2f55190463817b2ae8acddcb0040"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/planks_willow.json",
+      "sourceSha256": "00208dfda6edc95da328337f6686983d9e80dff59315d8bb5f9af8b5e71697b4",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/planks_willow.json",
+      "sha256": "00208dfda6edc95da328337f6686983d9e80dff59315d8bb5f9af8b5e71697b4"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/resin_hole_rubber_hole.json",
+      "sourceSha256": "bac56519704f4cd6fea916ab326d5bd0c8f234e5a478b74479d05e0a9e7b627e",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/resin_hole_rubber_hole.json",
+      "sha256": "bac56519704f4cd6fea916ab326d5bd0c8f234e5a478b74479d05e0a9e7b627e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/resin_hole_rubber_resin.json",
+      "sourceSha256": "f19cd6b59f7408e9000188f3cd4e3ee5f882047f8008a40d813870e980d8b45e",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/resin_hole_rubber_resin.json",
+      "sha256": "f19cd6b59f7408e9000188f3cd4e3ee5f882047f8008a40d813870e980d8b45e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/sapling_blue_mahoe.json",
+      "sourceSha256": "b14e7bdc90547f19e2ac89afe8e6b0c38f7f7e247960b01f9c0bc9ef895bca57",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/sapling_blue_mahoe.json",
+      "sha256": "b14e7bdc90547f19e2ac89afe8e6b0c38f7f7e247960b01f9c0bc9ef895bca57"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/sapling_bluespruce.json",
+      "sourceSha256": "ed79d37789551122050b75aec7c732e526e428a6bb4d2e1b8242e402fdaf8862",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/sapling_bluespruce.json",
+      "sha256": "ed79d37789551122050b75aec7c732e526e428a6bb4d2e1b8242e402fdaf8862"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/sapling_cinnamon.json",
+      "sourceSha256": "81a2bce0a9c26745236bea25809a692bde0a06b3a17241ba39889f412ac49d0f",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/sapling_cinnamon.json",
+      "sha256": "81a2bce0a9c26745236bea25809a692bde0a06b3a17241ba39889f412ac49d0f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/sapling_coconut.json",
+      "sourceSha256": "9e23c3e58a77d5236862946c698c6633be8ab36b27ec2e515e510c326b17ab07",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/sapling_coconut.json",
+      "sha256": "9e23c3e58a77d5236862946c698c6633be8ab36b27ec2e515e510c326b17ab07"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/sapling_ebony.json",
+      "sourceSha256": "44499f9c31927c281181383bcff8cd240ab03b2c01fddf8080c3d9e880989a06",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/sapling_ebony.json",
+      "sha256": "44499f9c31927c281181383bcff8cd240ab03b2c01fddf8080c3d9e880989a06"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/sapling_hazel.json",
+      "sourceSha256": "4d3910a5b87ece480cc7594d670443fc7ec991916542b706db1bb223a183ab02",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/sapling_hazel.json",
+      "sha256": "4d3910a5b87ece480cc7594d670443fc7ec991916542b706db1bb223a183ab02"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/sapling_maple.json",
+      "sourceSha256": "148ba6628be63aed5a6457f1fa4908af62171c6d4ec233a9802d62dbcd9640ed",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/sapling_maple.json",
+      "sha256": "148ba6628be63aed5a6457f1fa4908af62171c6d4ec233a9802d62dbcd9640ed"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/sapling_pine.json",
+      "sourceSha256": "280cc31be5d7750f47e2a465184658a5319c190cbbee6006dbb1e9cca852933d",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/sapling_pine.json",
+      "sha256": "280cc31be5d7750f47e2a465184658a5319c190cbbee6006dbb1e9cca852933d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/sapling_rainbowood.json",
+      "sourceSha256": "051a94ee9c0608404719fb7f7c8968b5dd62a0f9442b696275ce1266effdd487",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/sapling_rainbowood.json",
+      "sha256": "051a94ee9c0608404719fb7f7c8968b5dd62a0f9442b696275ce1266effdd487"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/sapling_rubber.json",
+      "sourceSha256": "bb36e5342c2c674c6cb09455b2d522899232e879c7c417cc380c0e176305ae38",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/sapling_rubber.json",
+      "sha256": "bb36e5342c2c674c6cb09455b2d522899232e879c7c417cc380c0e176305ae38"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/sapling_white_mahoe.json",
+      "sourceSha256": "d70b1d0e8c7b2c40be2026a1177e6173e2a2b54ea2a3fdbb0495cbcea950ad86",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/sapling_white_mahoe.json",
+      "sha256": "d70b1d0e8c7b2c40be2026a1177e6173e2a2b54ea2a3fdbb0495cbcea950ad86"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/sapling_willow.json",
+      "sourceSha256": "29a527512919a90c50a3dcf2aa4b313047f3fa4113dddf69a595ef5a91ff0e4f",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/sapling_willow.json",
+      "sha256": "29a527512919a90c50a3dcf2aa4b313047f3fa4113dddf69a595ef5a91ff0e4f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/slab_bluespruce.json",
+      "sourceSha256": "051ff0d5742fb1274930425cf9a1955f796c3eba17f8541c5c12b6e64b4f0485",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/slab_bluespruce.json",
+      "sha256": "051ff0d5742fb1274930425cf9a1955f796c3eba17f8541c5c12b6e64b4f0485"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/slab_bluespruce_top.json",
+      "sourceSha256": "93c40dee9a95290847c60adbda7cd78c088413d8c26b2f339270b5a4ba1e893d",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/slab_bluespruce_top.json",
+      "sha256": "93c40dee9a95290847c60adbda7cd78c088413d8c26b2f339270b5a4ba1e893d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/tapped_maple_hole.json",
+      "sourceSha256": "869e63078ed0e3d650a4b9928391a41ba13f5e69a5546ca878b557fe29878ce0",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/tapped_maple_hole.json",
+      "sha256": "869e63078ed0e3d650a4b9928391a41ba13f5e69a5546ca878b557fe29878ce0"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/tapped_maple_resin.json",
+      "sourceSha256": "8a1857219dd85a40f2e8a5adeef3e0d4bb9b39aa986a9d93cc8f7fade69f6973",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/tapped_maple_resin.json",
+      "sha256": "8a1857219dd85a40f2e8a5adeef3e0d4bb9b39aa986a9d93cc8f7fade69f6973"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/tapped_rainbowood_hole.json",
+      "sourceSha256": "ba980285616b1b892fd90dd3aa406bc09193313ac5667a29dfacea2711631287",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/tapped_rainbowood_hole.json",
+      "sha256": "ba980285616b1b892fd90dd3aa406bc09193313ac5667a29dfacea2711631287"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/wood/tapped_rainbowood_resin.json",
+      "sourceSha256": "bc825edf7e2038265a069b4f8c33eb3b181f285122d105b09b65dd8f62bee0ba",
+      "target": "core/src/main/resources/assets/gregtech/models/block/wood/tapped_rainbowood_resin.json",
+      "sha256": "bc825edf7e2038265a069b4f8c33eb3b181f285122d105b09b65dd8f62bee0ba"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/beam_blue_mahoe.json",
+      "sourceSha256": "7c5a3fa752c308e54187f3b3204ba8ba690f20d72ec5a1665e98e5d840ab7d58",
+      "target": "core/src/main/resources/assets/gregtech/models/item/beam_blue_mahoe.json",
+      "sha256": "7c5a3fa752c308e54187f3b3204ba8ba690f20d72ec5a1665e98e5d840ab7d58"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/beam_bluespruce.json",
+      "sourceSha256": "8e37d385cd34a9ab9b448407890340ad2ad07452be3f2fd38a2c96b5a314599f",
+      "target": "core/src/main/resources/assets/gregtech/models/item/beam_bluespruce.json",
+      "sha256": "8e37d385cd34a9ab9b448407890340ad2ad07452be3f2fd38a2c96b5a314599f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/beam_cinnamon.json",
+      "sourceSha256": "c777da0555b859c822d41df2060cee3313d888e6e784e8d4d8373d080190e8fd",
+      "target": "core/src/main/resources/assets/gregtech/models/item/beam_cinnamon.json",
+      "sha256": "c777da0555b859c822d41df2060cee3313d888e6e784e8d4d8373d080190e8fd"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/beam_coconut.json",
+      "sourceSha256": "28ce297ec86bf419c59ac0ef798a49cd98c390d3002d6a3a8c4b76622d8cbf69",
+      "target": "core/src/main/resources/assets/gregtech/models/item/beam_coconut.json",
+      "sha256": "28ce297ec86bf419c59ac0ef798a49cd98c390d3002d6a3a8c4b76622d8cbf69"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/beam_ebony.json",
+      "sourceSha256": "12c968ecf4b69f39344da42e8cef472ab966862a9a04b966aaa01dbda15f9a17",
+      "target": "core/src/main/resources/assets/gregtech/models/item/beam_ebony.json",
+      "sha256": "12c968ecf4b69f39344da42e8cef472ab966862a9a04b966aaa01dbda15f9a17"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/beam_hazel.json",
+      "sourceSha256": "cfa84fd31a8f4b881fe62cfbdb1def4776a7cd21fca8d024e7310f0be503c5c5",
+      "target": "core/src/main/resources/assets/gregtech/models/item/beam_hazel.json",
+      "sha256": "cfa84fd31a8f4b881fe62cfbdb1def4776a7cd21fca8d024e7310f0be503c5c5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/beam_maple.json",
+      "sourceSha256": "1a0567d3c7dffb9f4d8badd2445b2b82af43f8a08d27f80e1019f9b03521f23e",
+      "target": "core/src/main/resources/assets/gregtech/models/item/beam_maple.json",
+      "sha256": "1a0567d3c7dffb9f4d8badd2445b2b82af43f8a08d27f80e1019f9b03521f23e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/beam_pine.json",
+      "sourceSha256": "86dc60efc4f766fbed31538c5c6098968fd8b7fbcc28f2d0b68450dce1e453c2",
+      "target": "core/src/main/resources/assets/gregtech/models/item/beam_pine.json",
+      "sha256": "86dc60efc4f766fbed31538c5c6098968fd8b7fbcc28f2d0b68450dce1e453c2"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/beam_rainbowood.json",
+      "sourceSha256": "e57d94d3920a95094e3ba0aab17104a86edf32b6ad3e58f15fc2041733fc58d6",
+      "target": "core/src/main/resources/assets/gregtech/models/item/beam_rainbowood.json",
+      "sha256": "e57d94d3920a95094e3ba0aab17104a86edf32b6ad3e58f15fc2041733fc58d6"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/beam_rubber.json",
+      "sourceSha256": "e24cb137e69ef2c9f019432d642364dc2165eee4807f5a584988f73cba03620e",
+      "target": "core/src/main/resources/assets/gregtech/models/item/beam_rubber.json",
+      "sha256": "e24cb137e69ef2c9f019432d642364dc2165eee4807f5a584988f73cba03620e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/beam_white_mahoe.json",
+      "sourceSha256": "5b81c2228c74eca4cd736b61b5894406571fa53cdce5397d73702a73f06033d2",
+      "target": "core/src/main/resources/assets/gregtech/models/item/beam_white_mahoe.json",
+      "sha256": "5b81c2228c74eca4cd736b61b5894406571fa53cdce5397d73702a73f06033d2"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/beam_willow.json",
+      "sourceSha256": "82f01a0adb2c3a92af2bd88c1962062099b8f13f96a06d2aa88c42d4ef012d1f",
+      "target": "core/src/main/resources/assets/gregtech/models/item/beam_willow.json",
+      "sha256": "82f01a0adb2c3a92af2bd88c1962062099b8f13f96a06d2aa88c42d4ef012d1f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/leaves_blue_mahoe.json",
+      "sourceSha256": "6352fa8f7058a0e07f0217585966c924bcd1322cf297b9c52543d9b1d58f4b4d",
+      "target": "core/src/main/resources/assets/gregtech/models/item/leaves_blue_mahoe.json",
+      "sha256": "6352fa8f7058a0e07f0217585966c924bcd1322cf297b9c52543d9b1d58f4b4d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/leaves_bluespruce.json",
+      "sourceSha256": "92450d01fa9a31bc1706aa877d07f3c4acc700a98c2cfa99ecca4bf385079e35",
+      "target": "core/src/main/resources/assets/gregtech/models/item/leaves_bluespruce.json",
+      "sha256": "92450d01fa9a31bc1706aa877d07f3c4acc700a98c2cfa99ecca4bf385079e35"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/leaves_cinnamon.json",
+      "sourceSha256": "83d63c0499190bc788e0c28d0845aa37aa6120e843a81ef4fc77a6bc4caabe0f",
+      "target": "core/src/main/resources/assets/gregtech/models/item/leaves_cinnamon.json",
+      "sha256": "83d63c0499190bc788e0c28d0845aa37aa6120e843a81ef4fc77a6bc4caabe0f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/leaves_coconut.json",
+      "sourceSha256": "b29582f8a9e9288f7ce44f55a0a4fc888e46fe5bd6368e07c4afa8f8bd77c02b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/leaves_coconut.json",
+      "sha256": "b29582f8a9e9288f7ce44f55a0a4fc888e46fe5bd6368e07c4afa8f8bd77c02b"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/leaves_ebony.json",
+      "sourceSha256": "78480267d1ebc1163c39b784c67bb3e30fe08938bf9de2b611f072ffb1eec564",
+      "target": "core/src/main/resources/assets/gregtech/models/item/leaves_ebony.json",
+      "sha256": "78480267d1ebc1163c39b784c67bb3e30fe08938bf9de2b611f072ffb1eec564"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/leaves_hazel.json",
+      "sourceSha256": "89cea771b09bd2e397caf40b3ab2247198a2b555e6c5a1e39179bbe0013909f3",
+      "target": "core/src/main/resources/assets/gregtech/models/item/leaves_hazel.json",
+      "sha256": "89cea771b09bd2e397caf40b3ab2247198a2b555e6c5a1e39179bbe0013909f3"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/leaves_maple.json",
+      "sourceSha256": "4ad3ad696c05bdbe23cf9bb92e6c9c0fe3916cae7bdd866a53be8b6119d8a5ad",
+      "target": "core/src/main/resources/assets/gregtech/models/item/leaves_maple.json",
+      "sha256": "4ad3ad696c05bdbe23cf9bb92e6c9c0fe3916cae7bdd866a53be8b6119d8a5ad"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/leaves_pine.json",
+      "sourceSha256": "5ebdde34f66b10996d8c6c21c0ba2d35f75f10e11a40bcf233834804957aeea1",
+      "target": "core/src/main/resources/assets/gregtech/models/item/leaves_pine.json",
+      "sha256": "5ebdde34f66b10996d8c6c21c0ba2d35f75f10e11a40bcf233834804957aeea1"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/leaves_rainbowood.json",
+      "sourceSha256": "b5df927bc02f1b44ade88a48ef25df6e21e711751191d44956fefbc33f3ee637",
+      "target": "core/src/main/resources/assets/gregtech/models/item/leaves_rainbowood.json",
+      "sha256": "b5df927bc02f1b44ade88a48ef25df6e21e711751191d44956fefbc33f3ee637"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/leaves_rubber.json",
+      "sourceSha256": "334fc946665a5be2c1942c5d3a114800dbcd4267066f38f13c00e94146859c05",
+      "target": "core/src/main/resources/assets/gregtech/models/item/leaves_rubber.json",
+      "sha256": "334fc946665a5be2c1942c5d3a114800dbcd4267066f38f13c00e94146859c05"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/leaves_white_mahoe.json",
+      "sourceSha256": "1975e467c5db43e3f5c3f2c344956c13dfccfc45b7453cde3777a34cc6a07fe2",
+      "target": "core/src/main/resources/assets/gregtech/models/item/leaves_white_mahoe.json",
+      "sha256": "1975e467c5db43e3f5c3f2c344956c13dfccfc45b7453cde3777a34cc6a07fe2"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/leaves_willow.json",
+      "sourceSha256": "e6e65a04d0a4636187fb7bf3489e653752490934930c79b0b1263e0f8628d90b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/leaves_willow.json",
+      "sha256": "e6e65a04d0a4636187fb7bf3489e653752490934930c79b0b1263e0f8628d90b"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/log_blue_mahoe.json",
+      "sourceSha256": "0a96477adf58bbea7a2616622ad8134c6414100e1b5f0e173d373440ee83aca1",
+      "target": "core/src/main/resources/assets/gregtech/models/item/log_blue_mahoe.json",
+      "sha256": "0a96477adf58bbea7a2616622ad8134c6414100e1b5f0e173d373440ee83aca1"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/log_bluespruce.json",
+      "sourceSha256": "33bd992f6d1b01877fdfe7c71bde17b3a48935076dad8067428edc0d48b79458",
+      "target": "core/src/main/resources/assets/gregtech/models/item/log_bluespruce.json",
+      "sha256": "33bd992f6d1b01877fdfe7c71bde17b3a48935076dad8067428edc0d48b79458"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/log_cinnamon.json",
+      "sourceSha256": "affb6a5a464c662a187267fb7b31aed00ce5c209c7555078349a8331d818274e",
+      "target": "core/src/main/resources/assets/gregtech/models/item/log_cinnamon.json",
+      "sha256": "affb6a5a464c662a187267fb7b31aed00ce5c209c7555078349a8331d818274e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/log_coconut.json",
+      "sourceSha256": "cc78f115c60e8ef7c84990ccf2b4bee0db8c43a099a81ce49e6a429a52fce4ec",
+      "target": "core/src/main/resources/assets/gregtech/models/item/log_coconut.json",
+      "sha256": "cc78f115c60e8ef7c84990ccf2b4bee0db8c43a099a81ce49e6a429a52fce4ec"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/log_ebony.json",
+      "sourceSha256": "7fa3f01eb3b082dacfd265cb354aa15edd0399f613f28b48033b72ea85daef03",
+      "target": "core/src/main/resources/assets/gregtech/models/item/log_ebony.json",
+      "sha256": "7fa3f01eb3b082dacfd265cb354aa15edd0399f613f28b48033b72ea85daef03"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/log_hazel.json",
+      "sourceSha256": "0525bfd051c5114c9a6fcf4f181daa955e1264c56e9397387578f9fb9ccf1f3c",
+      "target": "core/src/main/resources/assets/gregtech/models/item/log_hazel.json",
+      "sha256": "0525bfd051c5114c9a6fcf4f181daa955e1264c56e9397387578f9fb9ccf1f3c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/log_maple.json",
+      "sourceSha256": "f6f5580c00fed3a7ec315f2dbf008f20b78c0b33ae93727efa51e9b1d5f31139",
+      "target": "core/src/main/resources/assets/gregtech/models/item/log_maple.json",
+      "sha256": "f6f5580c00fed3a7ec315f2dbf008f20b78c0b33ae93727efa51e9b1d5f31139"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/log_pine.json",
+      "sourceSha256": "2b221a17206bf897f868f54a600a36146a8a0ee8d34f68d78ceaf2b77bc9c0de",
+      "target": "core/src/main/resources/assets/gregtech/models/item/log_pine.json",
+      "sha256": "2b221a17206bf897f868f54a600a36146a8a0ee8d34f68d78ceaf2b77bc9c0de"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/log_rainbowood.json",
+      "sourceSha256": "c9097ff94a5c833c8d6008927a74c89d638ab62567ebb11ff07f78ea443d9b66",
+      "target": "core/src/main/resources/assets/gregtech/models/item/log_rainbowood.json",
+      "sha256": "c9097ff94a5c833c8d6008927a74c89d638ab62567ebb11ff07f78ea443d9b66"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/log_rubber.json",
+      "sourceSha256": "34aa70f5b5f6f9f2a79547f09f067afb39569668ebf40acf29e8c6b548830f7a",
+      "target": "core/src/main/resources/assets/gregtech/models/item/log_rubber.json",
+      "sha256": "34aa70f5b5f6f9f2a79547f09f067afb39569668ebf40acf29e8c6b548830f7a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/log_white_mahoe.json",
+      "sourceSha256": "135e80151950edb9569b9c989d9376a0f13273c974f54bbdf23b3529b288d693",
+      "target": "core/src/main/resources/assets/gregtech/models/item/log_white_mahoe.json",
+      "sha256": "135e80151950edb9569b9c989d9376a0f13273c974f54bbdf23b3529b288d693"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/log_willow.json",
+      "sourceSha256": "588caf146d2ebb0914c0d5dc1ac102140640563635ebef478c87cac5f9dc1bc9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/log_willow.json",
+      "sha256": "588caf146d2ebb0914c0d5dc1ac102140640563635ebef478c87cac5f9dc1bc9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/planks_blue_mahoe.json",
+      "sourceSha256": "680a4b4a0dd5bd250e82d8c74e8a43e7606f21645f330700d1e8adaebc85d54b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/planks_blue_mahoe.json",
+      "sha256": "680a4b4a0dd5bd250e82d8c74e8a43e7606f21645f330700d1e8adaebc85d54b"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/planks_bluespruce.json",
+      "sourceSha256": "92c7ff5e223ae36d53758de828b602d034ccc9edc053379fced66a38e9d87e98",
+      "target": "core/src/main/resources/assets/gregtech/models/item/planks_bluespruce.json",
+      "sha256": "92c7ff5e223ae36d53758de828b602d034ccc9edc053379fced66a38e9d87e98"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/planks_cinnamon.json",
+      "sourceSha256": "f4df99ea9dfeecc5db27605024c63ee482af75fdf4e5317ead6d6af93a3367d0",
+      "target": "core/src/main/resources/assets/gregtech/models/item/planks_cinnamon.json",
+      "sha256": "f4df99ea9dfeecc5db27605024c63ee482af75fdf4e5317ead6d6af93a3367d0"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/planks_coconut.json",
+      "sourceSha256": "90325fd0aebff04be5679bcc182fb0ad83f4f992952646260e5c14cf5889680e",
+      "target": "core/src/main/resources/assets/gregtech/models/item/planks_coconut.json",
+      "sha256": "90325fd0aebff04be5679bcc182fb0ad83f4f992952646260e5c14cf5889680e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/planks_ebony.json",
+      "sourceSha256": "4c017e7273380e9b3fbe4f07f9a35832f5fb84c618581ebf17e18f42c2b2d2e3",
+      "target": "core/src/main/resources/assets/gregtech/models/item/planks_ebony.json",
+      "sha256": "4c017e7273380e9b3fbe4f07f9a35832f5fb84c618581ebf17e18f42c2b2d2e3"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/planks_hazel.json",
+      "sourceSha256": "1e1922522c4d506eb531a85b051aa57244fa1fdd12d0faec2b619760d0d597e0",
+      "target": "core/src/main/resources/assets/gregtech/models/item/planks_hazel.json",
+      "sha256": "1e1922522c4d506eb531a85b051aa57244fa1fdd12d0faec2b619760d0d597e0"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/planks_maple.json",
+      "sourceSha256": "f99bc7a3793d60788bd4a36d3f97e47c6d94d3b8836d3046b09b9a154f849f46",
+      "target": "core/src/main/resources/assets/gregtech/models/item/planks_maple.json",
+      "sha256": "f99bc7a3793d60788bd4a36d3f97e47c6d94d3b8836d3046b09b9a154f849f46"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/planks_pine.json",
+      "sourceSha256": "444a96c3cdfa218a3d323fe2ad3faddbdad5de5b093b8d6c32e16c5768c15225",
+      "target": "core/src/main/resources/assets/gregtech/models/item/planks_pine.json",
+      "sha256": "444a96c3cdfa218a3d323fe2ad3faddbdad5de5b093b8d6c32e16c5768c15225"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/planks_rainbowood.json",
+      "sourceSha256": "9c455ee907a2423ab749df9bb576c5a41b7da06641bff258c314ed09b05bc013",
+      "target": "core/src/main/resources/assets/gregtech/models/item/planks_rainbowood.json",
+      "sha256": "9c455ee907a2423ab749df9bb576c5a41b7da06641bff258c314ed09b05bc013"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/planks_rubber.json",
+      "sourceSha256": "0f4c02e13517454b4e9b84d886d6cd906262029f425b56166126d9d92736658a",
+      "target": "core/src/main/resources/assets/gregtech/models/item/planks_rubber.json",
+      "sha256": "0f4c02e13517454b4e9b84d886d6cd906262029f425b56166126d9d92736658a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/planks_white_mahoe.json",
+      "sourceSha256": "02b1a1a834b768b82ec5296dcf3690d15d961b66b55ef2a8fee4d1fa4bcedada",
+      "target": "core/src/main/resources/assets/gregtech/models/item/planks_white_mahoe.json",
+      "sha256": "02b1a1a834b768b82ec5296dcf3690d15d961b66b55ef2a8fee4d1fa4bcedada"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/planks_willow.json",
+      "sourceSha256": "10df47ca62030f0c441ba2102076b9ba6790c0461d68f515f74ebb8ed8592a1e",
+      "target": "core/src/main/resources/assets/gregtech/models/item/planks_willow.json",
+      "sha256": "10df47ca62030f0c441ba2102076b9ba6790c0461d68f515f74ebb8ed8592a1e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/sapling_blue_mahoe.json",
+      "sourceSha256": "880dd51196a7333f077b04cfc7c5838c91c400fdfb9a4308f111f2b80a03318f",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sapling_blue_mahoe.json",
+      "sha256": "880dd51196a7333f077b04cfc7c5838c91c400fdfb9a4308f111f2b80a03318f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/sapling_bluespruce.json",
+      "sourceSha256": "59b7e7f57ef6057e6aa34622b88a8af6cb44041952b18ddfa1bd3ea943221c83",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sapling_bluespruce.json",
+      "sha256": "59b7e7f57ef6057e6aa34622b88a8af6cb44041952b18ddfa1bd3ea943221c83"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/sapling_cinnamon.json",
+      "sourceSha256": "bab69e525f6dad553bcb4c0568fc6e847d161477ffd5cbfff3830deefeec38eb",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sapling_cinnamon.json",
+      "sha256": "bab69e525f6dad553bcb4c0568fc6e847d161477ffd5cbfff3830deefeec38eb"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/sapling_coconut.json",
+      "sourceSha256": "9c72c7bbb3ba34b8dc306e8a77b452d75f6a9d9211faf93c76be2eb14821d12a",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sapling_coconut.json",
+      "sha256": "9c72c7bbb3ba34b8dc306e8a77b452d75f6a9d9211faf93c76be2eb14821d12a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/sapling_ebony.json",
+      "sourceSha256": "ebebc22214ec97caf7eb4f5a47315f618910fb596ca8547db746c3b08c7d51db",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sapling_ebony.json",
+      "sha256": "ebebc22214ec97caf7eb4f5a47315f618910fb596ca8547db746c3b08c7d51db"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/sapling_hazel.json",
+      "sourceSha256": "4bd557687f06d322e59edf58090776a6a1348193b152863e2834cec4aa4c9e4e",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sapling_hazel.json",
+      "sha256": "4bd557687f06d322e59edf58090776a6a1348193b152863e2834cec4aa4c9e4e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/sapling_maple.json",
+      "sourceSha256": "cc128ff2b718cbb984e454e2b27076155bafe01a12c8b4ec5081a6f79d62111e",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sapling_maple.json",
+      "sha256": "cc128ff2b718cbb984e454e2b27076155bafe01a12c8b4ec5081a6f79d62111e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/sapling_pine.json",
+      "sourceSha256": "8fab7032323ea0e03725fa54c2d8ac561a820fe3945bc3dde20cfa6cbe6ad507",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sapling_pine.json",
+      "sha256": "8fab7032323ea0e03725fa54c2d8ac561a820fe3945bc3dde20cfa6cbe6ad507"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/sapling_rainbowood.json",
+      "sourceSha256": "e09538a257baa317b9eca2ea36b5d8a31aaa623cdb9418eca561d6fac8936299",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sapling_rainbowood.json",
+      "sha256": "e09538a257baa317b9eca2ea36b5d8a31aaa623cdb9418eca561d6fac8936299"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/sapling_rubber.json",
+      "sourceSha256": "b448937face97ab1787e9f3f10950b2cc77db09714ef4244867c07ee727de819",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sapling_rubber.json",
+      "sha256": "b448937face97ab1787e9f3f10950b2cc77db09714ef4244867c07ee727de819"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/sapling_white_mahoe.json",
+      "sourceSha256": "9ae609248091f2a15d1555077697d2abc4b06560d38b357349fcfed2768aa2a0",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sapling_white_mahoe.json",
+      "sha256": "9ae609248091f2a15d1555077697d2abc4b06560d38b357349fcfed2768aa2a0"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/sapling_willow.json",
+      "sourceSha256": "b1e121a931e8e42dd1f07d343f1d49f3908f0e24d253c7762ccd8bf6cd526bfd",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sapling_willow.json",
+      "sha256": "b1e121a931e8e42dd1f07d343f1d49f3908f0e24d253c7762ccd8bf6cd526bfd"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/slab_bluespruce.json",
+      "sourceSha256": "4fe456aca84470b2a1393ccb1200efbdfcec8b0e3ad57cb81a409bd0272a8b6f",
+      "target": "core/src/main/resources/assets/gregtech/models/item/slab_bluespruce.json",
+      "sha256": "4fe456aca84470b2a1393ccb1200efbdfcec8b0e3ad57cb81a409bd0272a8b6f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/data/gregtech/worldgen/configured_feature/gt_trees.json",
+      "sourceSha256": "4be39c7bf6a0b285b35fabccca3f6f668c2b2d7362fa1c1b3f804c2d3d2cb3e4",
+      "target": "core/src/main/resources/data/gregtech/worldgen/configured_feature/gt_trees.json",
+      "sha256": "4be39c7bf6a0b285b35fabccca3f6f668c2b2d7362fa1c1b3f804c2d3d2cb3e4"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/data/gregtech/worldgen/placed_feature/gt_trees.json",
+      "sourceSha256": "585a7ca7a06af3cac26c62ac1e0a748b5f5e099e3a2195c55555e6be965aee70",
+      "target": "core/src/main/resources/data/gregtech/worldgen/placed_feature/gt_trees.json",
+      "sha256": "585a7ca7a06af3cac26c62ac1e0a748b5f5e099e3a2195c55555e6be965aee70"
+    }
+  ],
+  "comparisons": [
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6-main/mdk/src/main/java/gregtech6/block/tree/GT6TreeSaplingBlock.java",
+      "sha256": "db81515094b3a6b1e7fc412e037d60c4de207100e55699cd4f35f9b594170bef"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6-main/mdk/src/main/java/gregtech6/block/tree/GT6TreeLeavesBlock.java",
+      "sha256": "af4ea30b27b477ae3eb3f2a9e170a2b57554ef3c204c8e428d426e6714bde9dd"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/cruciblecraft/src/main/java/com/masson/cruciblecraft/worldgen/tree/prep/GtTreeWorld.java",
+      "sha256": "5f3d75b303000cd3ee292dfeb2540ddfbbc5a3479672beac886752640c26c39e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/cruciblecraft/src/main/java/com/masson/cruciblecraft/worldgen/tree/prep/GtTreeGrower.java",
+      "sha256": "a13c9bc37046d382406a8e4220646eda3ef21a52c70990e490326f80a08f605a"
+    }
+  ],
+  "adoption": "Complete baseline canopy math shared behind a masson-style world boundary; original 12 wood species/61 blocks and three holes preserved. brokestar native API and coconut sand ground handling assessed; coconut sand support to follow with matching shared rule. Neither alternate material/tree registry imported. Masson 256-block resin-hole tracker not yet adopted; baseline always-one resin hole policy retained.",
+  "validation": "Corrected core/Neo/Forge grouped compilation PASS 28s; necessary native short startup PASS 4m46s with 71 crafting and 844 processing rows. Recorded nonblocking sapling tag gap repaired after startup; follow-up native compilation PASS. Actual wood gameplay/rendering/reload/old saves/jars unverified. See docs/integration/verification/p3-wood-trees-compile.json and p3-neoforge-wood-trees-startup.json. D010: no new subsystem fixture."
+}

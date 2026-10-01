@@ -1,0 +1,1603 @@
+{
+  "stage": "P3 D010 fast integration",
+  "baseline": "5c0728aec55a33e02d2e70b426c797e42541aeed",
+  "authors": [
+    "saltnya",
+    "brokestar233",
+    "Lorbineitte Masson",
+    "original GregTech 6 contributors"
+  ],
+  "license": "Original source notices/licenses and available histories retained; no publication/relicensing.",
+  "counts": {
+    "all": 113,
+    "solidIncludingBrick": 29,
+    "liquidGasFluidizedIncludingDense": 84,
+    "resourceRecords": 266
+  },
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/smeltery/SmelteryRegistries.java",
+      "sha256": "6471efcd4dde3634aeae8518525260c8b236a6967a1af7d7f0f78c4b49a45260",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTMachines.java",
+          "sha256": "811bf042807fbb6d1aba0e5141759fac72d4b4dccb9ececad43886321a40df3d",
+          "authors": "saltnya / original GregTech 6 contributors"
+        },
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\api\\machine\\MachineRegistry.java",
+          "sha256": "8a16d1f713f7341ebd5532171e045b8d2535dd2299f4bcd65b86bccbaebf9595",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "actual shared original113 burning-box specs and heat rules or full native original fuel executor/front/tool/storage/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/smeltery/SolidBurningBoxEntity.java",
+      "sha256": "0d3da708a39bf53e041e17d6a69e5394143024d610fdfdefcc8c177bd50401d6",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\SolidBurningBoxBlockEntity.java",
+          "sha256": "3d5ad6c2fd8bb13795d5c6358c6ded53c42978704a972dd4e288185dd196474e",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "actual shared original113 burning-box specs and heat rules or full native original fuel executor/front/tool/storage/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "sha256": "84b338a2667981d8a73792f819c904d5aa1e531b7c2965c5c2b83f82dc79ef18",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTBlockEntities.java",
+          "sha256": "027081bae34480826956a74d65a24aa7f4ef29d4be4a4687046793a10d9df62f",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "actual shared original113 burning-box specs and heat rules or full native original fuel executor/front/tool/storage/render boundary"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/blockentity/machine/BurningBoxBlockEntity.java",
+      "sha256": "c47a41ab4a9f978d39fa315c825f6b9aa83df4788ea4b214de298d65a55e381c",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\BurningBoxBlockEntity.java",
+          "sha256": "be17f286fff99079c2c357c60f6f54527285814efacec78640c3bff1bcf58f37",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "actual shared original113 burning-box specs and heat rules or full native original fuel executor/front/tool/storage/render boundary"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/registry/GTMachines.java",
+      "sha256": "378d6cba9189d46e7a300f8d796b8c6f7dffcea000b0d24fca2a40e308325df3",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTMachines.java",
+          "sha256": "811bf042807fbb6d1aba0e5141759fac72d4b4dccb9ececad43886321a40df3d",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "actual shared original113 burning-box specs and heat rules or full native original fuel executor/front/tool/storage/render boundary"
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/api/machine/BurningBoxDefinitions.java",
+      "sha256": "e2dcc5a219e0bd3226d7e74e3f2781a098580dd157ab2d4a3bfaa756eed55fa5",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTMachines.java",
+          "sha256": "811bf042807fbb6d1aba0e5141759fac72d4b4dccb9ececad43886321a40df3d",
+          "authors": "saltnya / original GregTech 6 contributors"
+        },
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\api\\machine\\MachineRegistry.java",
+          "sha256": "8a16d1f713f7341ebd5532171e045b8d2535dd2299f4bcd65b86bccbaebf9595",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "actual shared original113 burning-box specs and heat rules or full native original fuel executor/front/tool/storage/render boundary"
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/api/machine/BurningBoxFuelRules.java",
+      "sha256": "1e3591280f8381ce2a3b97f8d03de029f89d140d6c61730498485894a00f9ce7",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\BurningBoxBlockEntity.java",
+          "sha256": "be17f286fff99079c2c357c60f6f54527285814efacec78640c3bff1bcf58f37",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "actual shared original113 burning-box specs and heat rules or full native original fuel executor/front/tool/storage/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/api/machine/FurnaceFuelHelper.java",
+      "sha256": "6693e9a7c65af29e227fae2d02f72e6d53ae3d6ba571497a37ae1f5a6909e6b8",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\api\\machine\\FurnaceFuelHelper.java",
+          "sha256": "61ecdd99f7595601535965181b0fbdf21f725fb4b68aeb1c9f896d31ac30b33c",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "actual shared original113 burning-box specs and heat rules or full native original fuel executor/front/tool/storage/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/api/machine/FurnaceFuelValue.java",
+      "sha256": "f1d995e39b21e94865963a1fd818c716a0303ad60158d7dab45b1e89ff253849",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\api\\machine\\FurnaceFuelValue.java",
+          "sha256": "a4f1b51a9b1a46bfd5d9b32e0f4320dc6d13ec8740e851521e9546a060708bf3",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "actual shared original113 burning-box specs and heat rules or full native original fuel executor/front/tool/storage/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/machine/BurningBoxBlock.java",
+      "sha256": "fe8c123cf4ffdf1f985dd6c618f5e9d44f511fa16ebb156f8e1aea57f4ca345d",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\BurningBoxBlock.java",
+          "sha256": "1ba7789119b6af4bc3dde25653b7f5217222d9ceaa760e1fe6a1d70a21ff6ee8",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "actual shared original113 burning-box specs and heat rules or full native original fuel executor/front/tool/storage/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/machine/BurningBoxBlockItem.java",
+      "sha256": "1a8f1a0d8bf00b00157084ed81e9bb5264d75bc8bd5df1ec8d39ebee4e09b813",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\GTMachineBlockItem.java",
+          "sha256": "e4ab9236bd587d21c1b918fa05baeb2180a6e7590a0a73b4869d4952a7491b44",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "actual shared original113 burning-box specs and heat rules or full native original fuel executor/front/tool/storage/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/machine/SolidBurningBoxBlock.java",
+      "sha256": "1ea40be039d62015129bfbf1e7b72977eb1166adc485525200c99db4f89e1db1",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\SolidBurningBoxBlock.java",
+          "sha256": "1231bb2cd93f6e90c1b580f78cfc0ff244d4045a9f487b7fdc091637e1b50237",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "actual shared original113 burning-box specs and heat rules or full native original fuel executor/front/tool/storage/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/BurningBoxBlockEntity.java",
+      "sha256": "32825dec7afd5cc84a553f771562ed8cafbc281465f3f8e8183ecc36c701d219",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\BurningBoxBlockEntity.java",
+          "sha256": "be17f286fff99079c2c357c60f6f54527285814efacec78640c3bff1bcf58f37",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "actual shared original113 burning-box specs and heat rules or full native original fuel executor/front/tool/storage/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/GTFacingMachineBlockEntity.java",
+      "sha256": "80ae4d26e9a8d0da83b0c7508fe5829d23d46c635507a69ed66d7bbd47e5703c",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\GTFacingMachineBlockEntity.java",
+          "sha256": "82f0aca16ec95020dd032aaa53324c345e68295ba4a5a05de42156dc070f825d",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "actual shared original113 burning-box specs and heat rules or full native original fuel executor/front/tool/storage/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/SolidBurningBoxBlockEntity.java",
+      "sha256": "00a48405b6c1b1dd50aabfebca7026415dd300ef6fd57c8153007be26d095ff9",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\SolidBurningBoxBlockEntity.java",
+          "sha256": "3d5ad6c2fd8bb13795d5c6358c6ded53c42978704a972dd4e288185dd196474e",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "actual shared original113 burning-box specs and heat rules or full native original fuel executor/front/tool/storage/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/BurningBoxBakedModel.java",
+      "sha256": "761c6e88cd31ca28c096589ea8fed2952e2a348a6c7f0e28391b532c94390137",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\BurningBoxBakedModel.java",
+          "sha256": "db35340503d4443e7bd719a7160ebe154258b6afbdc1b59fddb95f490255b7d5",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "actual shared original113 burning-box specs and heat rules or full native original fuel executor/front/tool/storage/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/BurningBoxClientSetup.java",
+      "sha256": "4ff8e2581eb95b54104587149c53a50bffadaf738030e625bde066df5167c207",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\MachineBlockClientModels.java",
+          "sha256": "b86f4920432146d00c2398842c91666a7dc95a78cf9c3bad3d6d5edefd8ae182",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "actual shared original113 burning-box specs and heat rules or full native original fuel executor/front/tool/storage/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/MachineBlockIcons.java",
+      "sha256": "061999256b58e812322d25e2bb7396599a6b433d19658f4302b2d84346300b26",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\MachineBlockIcons.java",
+          "sha256": "bcdacb7502db18bbe6388fda0d956d6c3b822574d2a54c43c04c7e31e48061a6",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "actual shared original113 burning-box specs and heat rules or full native original fuel executor/front/tool/storage/render boundary"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/MachineTooltips.java",
+      "sha256": "8bea4361d9e56261494d352aa87da3a3b7f702a4818629de3adcf4f5aeaaed7e",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\MachineTooltips.java",
+          "sha256": "bbb68fba3d5283b1fbe9812fdf4c97da9ee9898c595a3999ecc027218da3280f",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "actual shared original113 burning-box specs and heat rules or full native original fuel executor/front/tool/storage/render boundary"
+    }
+  ],
+  "resources": [
+    {
+      "source": "assets/gregtech/models/block/machine/burning_box_brick/east_off.json",
+      "sha256": "d06ec8c4671e88718c823986684f5d203a1e50f1fafc0e87d2d50200979a678a",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_brick\\east_off.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_brick\\east_off.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_brick\\east_off.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_box_brick/east_on.json",
+      "sha256": "15c7c2a1d30b627b89fb51fbb378e35eb5b6e22b530427ab6ec8f727edd35fe8",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_brick\\east_on.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_brick\\east_on.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_brick\\east_on.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_box_brick/north_off.json",
+      "sha256": "2a649dd8cb51bbf71b2b78cf86804229728536d140cabfe4239c1aab2055110d",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_brick\\north_off.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_brick\\north_off.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_brick\\north_off.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_box_brick/north_on.json",
+      "sha256": "2905397c5f249273fead6682418049f09d3a5c2ee27463f4122c8ba5d9969af3",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_brick\\north_on.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_brick\\north_on.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_brick\\north_on.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_box_brick/south_off.json",
+      "sha256": "19f092377f3a33f992dc484639be08438e4f0c1d9e50934f862ab635b7471325",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_brick\\south_off.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_brick\\south_off.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_brick\\south_off.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_box_brick/south_on.json",
+      "sha256": "6fe3bee8ecf11a5a42412b86449317e1f0ebda2e3bb2815583531501356b0003",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_brick\\south_on.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_brick\\south_on.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_brick\\south_on.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_box_brick/west_off.json",
+      "sha256": "4e661c87b8a4a6c15d3439df76bac96c73bcde5ac76a9aeb5fd6bcd0e6efdc3c",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_brick\\west_off.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_brick\\west_off.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_brick\\west_off.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_box_brick/west_on.json",
+      "sha256": "958995d75059bb6399dec2658633b90e2036469f9ec74b466ca92ce431903b70",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_brick\\west_on.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_brick\\west_on.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_brick\\west_on.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_box_solid/east_off.json",
+      "sha256": "18f1d1eb5f50614a8e49572bd6ace4a7ad303b37453a3decff543380b1a2d1c8",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_solid\\east_off.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_solid\\east_off.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_solid\\east_off.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_box_solid/east_on.json",
+      "sha256": "4da37089d78a8451935c30af75afb3078115999ae183b1345ede4500f482e073",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_solid\\east_on.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_solid\\east_on.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_solid\\east_on.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_box_solid/north_off.json",
+      "sha256": "52cfdadf545e7c2f4879f987a1d05cd3827558acae68d52f6069fbd0f5e02172",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_solid\\north_off.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_solid\\north_off.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_solid\\north_off.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_box_solid/north_on.json",
+      "sha256": "409a74f971e79db7fcb564049a1de782fa2db801a74642ba87634c676ff1e81d",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_solid\\north_on.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_solid\\north_on.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_solid\\north_on.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_box_solid/south_off.json",
+      "sha256": "bbe09720bd4228df728d58939893a53e3702324453d826b2b4f8cc70aa7082b1",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_solid\\south_off.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_solid\\south_off.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_solid\\south_off.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_box_solid/south_on.json",
+      "sha256": "b2355b26d94e1d31f5751bf175a7c3fd3799297e2cf0bfa1ac93278ce9eb6f88",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_solid\\south_on.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_solid\\south_on.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_solid\\south_on.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_box_solid/west_off.json",
+      "sha256": "6e36020925b24ff39b19651985c76f065d6a9f244786bed535496a5a609fb235",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_solid\\west_off.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_solid\\west_off.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_solid\\west_off.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_box_solid/west_on.json",
+      "sha256": "c63442369480577f77896950f334b76ac66c08c8fa4c47053be44dc80b952a0d",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_solid\\west_on.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_solid\\west_on.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_box_solid\\west_on.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_liquid/east_off.json",
+      "sha256": "b0604ad2ae22c8ad952ba55c395aa73ce9335ca209fab0ccc38fc4e496746a46",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_liquid\\east_off.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_liquid\\east_off.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_liquid\\east_off.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_liquid/east_on.json",
+      "sha256": "cc4e64c6d891a410d768cff9fe5d7cc59db1d9382c133de334e3d4b1279bd3cd",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_liquid\\east_on.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_liquid\\east_on.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_liquid\\east_on.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_liquid/north_off.json",
+      "sha256": "6c4173946d1eaed7bcd10970b286907135dc5f7f0225061b29f745059509059b",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_liquid\\north_off.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_liquid\\north_off.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_liquid\\north_off.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_liquid/north_on.json",
+      "sha256": "c71cabd27623fe5079687538eff97f738bb503be2362137d35eef21ded830427",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_liquid\\north_on.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_liquid\\north_on.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_liquid\\north_on.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_liquid/south_off.json",
+      "sha256": "6dca4cacb69ba0d9586004a5bcd640a04e28be0ab1f5610f108b27b42e6ed6c5",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_liquid\\south_off.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_liquid\\south_off.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_liquid\\south_off.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_liquid/south_on.json",
+      "sha256": "062b0d8eaa02b1aef2768a852081ed54bb86dcbea4c13346db26ed10161cd20e",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_liquid\\south_on.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_liquid\\south_on.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_liquid\\south_on.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_liquid/west_off.json",
+      "sha256": "2a31365280cc14bee5ef1bdd2c16c301609c9c79f19fb72d21ed3e1d6649d820",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_liquid\\west_off.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_liquid\\west_off.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_liquid\\west_off.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_liquid/west_on.json",
+      "sha256": "681bcdb10b14d156540e991643f91b9a764f4619739755b5519e646706f3a441",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_liquid\\west_on.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_liquid\\west_on.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_liquid\\west_on.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_gas/east_off.json",
+      "sha256": "e7d5b21377499a4ed6f0df72aad5a3ccc4a8bea4c3a38de90c54d05cffb82bc4",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_gas\\east_off.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_gas\\east_off.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_gas\\east_off.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_gas/east_on.json",
+      "sha256": "82604aabb45a57d846a436ddf099c26a31de53d4a0290be1cd36e932b2ba4445",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_gas\\east_on.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_gas\\east_on.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_gas\\east_on.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_gas/north_off.json",
+      "sha256": "b27027c3dc0ce561dc7928fc4040ddeefb8ae2437de1f6e09fe99abf20d5ff4b",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_gas\\north_off.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_gas\\north_off.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_gas\\north_off.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_gas/north_on.json",
+      "sha256": "02333dd410127c3436fc7c6a00e2a0a175586395cc1e2246ae248eb49ab89ae6",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_gas\\north_on.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_gas\\north_on.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_gas\\north_on.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_gas/south_off.json",
+      "sha256": "2e26e21bc420eaf9f40fa9a39aadeef5d16a47ca7075bee3dff283ff7511de20",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_gas\\south_off.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_gas\\south_off.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_gas\\south_off.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_gas/south_on.json",
+      "sha256": "518f9cb1375b0fa7557272c9a227466b2015b431a643aeac2b612a4a856377ed",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_gas\\south_on.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_gas\\south_on.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_gas\\south_on.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_gas/west_off.json",
+      "sha256": "0ffca53b19fe4f7096ee0832e59b7e0e835df4073e44c24befde631e961f0fda",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_gas\\west_off.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_gas\\west_off.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_gas\\west_off.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_gas/west_on.json",
+      "sha256": "569bdddef66bbbc3fd497898908c493932a0dde31a020ed8a42a3b2406e97208",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_gas\\west_on.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_gas\\west_on.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_gas\\west_on.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_fluidbed/east_off.json",
+      "sha256": "08a6565b9986f544bbb72b877823fc3d58e009ec1983f558d455a6512b9703e1",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_fluidbed\\east_off.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_fluidbed\\east_off.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_fluidbed\\east_off.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_fluidbed/east_on.json",
+      "sha256": "32a25428fc4b714565e649ef442d9e03918f911907ee5c71819267d94f386c30",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_fluidbed\\east_on.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_fluidbed\\east_on.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_fluidbed\\east_on.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_fluidbed/north_off.json",
+      "sha256": "a4c6ad53b5365a5b56a8f9857b2169c9adf80d1573f30f27e7ca70b4ba97d952",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_fluidbed\\north_off.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_fluidbed\\north_off.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_fluidbed\\north_off.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_fluidbed/north_on.json",
+      "sha256": "14015b09e18806f922a67b7b74b7c15a463ae85bee8a31839532a160791f4e1c",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_fluidbed\\north_on.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_fluidbed\\north_on.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_fluidbed\\north_on.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_fluidbed/south_off.json",
+      "sha256": "03c4362fefa2e64470b1ec543fc7037630d228174ead86d04b5236c80bc671d5",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_fluidbed\\south_off.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_fluidbed\\south_off.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_fluidbed\\south_off.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_fluidbed/south_on.json",
+      "sha256": "3534ffb6698f38611e6e08e3907ebb983c48ef8bf968190dfbca8b7caa3e6aeb",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_fluidbed\\south_on.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_fluidbed\\south_on.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_fluidbed\\south_on.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_fluidbed/west_off.json",
+      "sha256": "64aef424aee9c56bf2b90d2715e9e35e9dcfeb7297278d8b7e6a73f0ea93e59f",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_fluidbed\\west_off.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_fluidbed\\west_off.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_fluidbed\\west_off.json"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/burning_fluidbed/west_on.json",
+      "sha256": "8b697ecf284f78c19dd19f7c0111601e2b51f79c728e8c96def1899c77db934f",
+      "targets": [
+        "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_fluidbed\\west_on.json",
+        "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_fluidbed\\west_on.json"
+      ],
+      "adaptation": "native composite loader only",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\burning_fluidbed\\west_on.json"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_solid_bronze.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_solid_bronze.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_solid_lead.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_solid_lead.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_solid_bismuth.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_solid_bismuth.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_solid_arsenic_copper.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_solid_arsenic_copper.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_solid_arsenic_bronze.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_solid_arsenic_bronze.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_solid_invar.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_solid_invar.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_solid_steel.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_solid_steel.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_solid_chromium.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_solid_chromium.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_solid_titanium.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_solid_titanium.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_solid_netherite.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_solid_netherite.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_solid_tungsten.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_solid_tungsten.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_solid_tungsten_steel.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_solid_tungsten_steel.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_solid_ta4hfc5.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_solid_ta4hfc5.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_solid_ultimet.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_solid_ultimet.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_solid_dense_lead.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_solid_dense_lead.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_solid_dense_bismuth.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_solid_dense_bismuth.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_solid_dense_bronze.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_solid_dense_bronze.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_solid_dense_arsenic_copper.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_solid_dense_arsenic_copper.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_solid_dense_arsenic_bronze.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_solid_dense_arsenic_bronze.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_solid_dense_invar.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_solid_dense_invar.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_solid_dense_steel.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_solid_dense_steel.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_solid_dense_chromium.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_solid_dense_chromium.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_solid_dense_titanium.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_solid_dense_titanium.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_solid_dense_netherite.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_solid_dense_netherite.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_solid_dense_tungsten.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_solid_dense_tungsten.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_solid_dense_tungsten_steel.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_solid_dense_tungsten_steel.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_solid_dense_ta4hfc5.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_solid_dense_ta4hfc5.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_solid_dense_ultimet.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_solid_dense_ultimet.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_liquid_lead.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_liquid_lead.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_liquid_bismuth.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_liquid_bismuth.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_liquid_bronze.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_liquid_bronze.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_liquid_arsenic_copper.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_liquid_arsenic_copper.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_liquid_arsenic_bronze.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_liquid_arsenic_bronze.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_liquid_invar.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_liquid_invar.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_liquid_steel.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_liquid_steel.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_liquid_chromium.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_liquid_chromium.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_liquid_titanium.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_liquid_titanium.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_liquid_netherite.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_liquid_netherite.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_liquid_tungsten.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_liquid_tungsten.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_liquid_tungsten_steel.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_liquid_tungsten_steel.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_liquid_ta4hfc5.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_liquid_ta4hfc5.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_liquid_ultimet.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_liquid_ultimet.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_gas_lead.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_gas_lead.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_gas_bismuth.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_gas_bismuth.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_gas_bronze.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_gas_bronze.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_gas_arsenic_copper.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_gas_arsenic_copper.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_gas_arsenic_bronze.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_gas_arsenic_bronze.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_gas_invar.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_gas_invar.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_gas_steel.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_gas_steel.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_gas_chromium.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_gas_chromium.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_gas_titanium.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_gas_titanium.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_gas_netherite.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_gas_netherite.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_gas_tungsten.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_gas_tungsten.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_gas_tungsten_steel.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_gas_tungsten_steel.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_gas_ta4hfc5.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_gas_ta4hfc5.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_gas_ultimet.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_gas_ultimet.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_fluidbed_lead.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_fluidbed_lead.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_fluidbed_bismuth.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_fluidbed_bismuth.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_fluidbed_bronze.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_fluidbed_bronze.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_fluidbed_arsenic_copper.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_fluidbed_arsenic_copper.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_fluidbed_arsenic_bronze.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_fluidbed_arsenic_bronze.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_fluidbed_invar.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_fluidbed_invar.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_fluidbed_steel.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_fluidbed_steel.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_fluidbed_chromium.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_fluidbed_chromium.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_fluidbed_titanium.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_fluidbed_titanium.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_fluidbed_netherite.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_fluidbed_netherite.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_fluidbed_tungsten.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_fluidbed_tungsten.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_fluidbed_tungsten_steel.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_fluidbed_tungsten_steel.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_fluidbed_ta4hfc5.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_fluidbed_ta4hfc5.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_fluidbed_ultimet.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_fluidbed_ultimet.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_liquid_dense_lead.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_liquid_dense_lead.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_liquid_dense_bismuth.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_liquid_dense_bismuth.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_liquid_dense_bronze.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_liquid_dense_bronze.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_liquid_dense_arsenic_copper.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_liquid_dense_arsenic_copper.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_liquid_dense_arsenic_bronze.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_liquid_dense_arsenic_bronze.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_liquid_dense_invar.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_liquid_dense_invar.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_liquid_dense_steel.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_liquid_dense_steel.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_liquid_dense_chromium.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_liquid_dense_chromium.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_liquid_dense_titanium.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_liquid_dense_titanium.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_liquid_dense_netherite.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_liquid_dense_netherite.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_liquid_dense_tungsten.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_liquid_dense_tungsten.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_liquid_dense_tungsten_steel.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_liquid_dense_tungsten_steel.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_liquid_dense_ta4hfc5.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_liquid_dense_ta4hfc5.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_liquid_dense_ultimet.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_liquid_dense_ultimet.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_gas_dense_lead.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_gas_dense_lead.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_gas_dense_bismuth.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_gas_dense_bismuth.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_gas_dense_bronze.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_gas_dense_bronze.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_gas_dense_arsenic_copper.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_gas_dense_arsenic_copper.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_gas_dense_arsenic_bronze.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_gas_dense_arsenic_bronze.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_gas_dense_invar.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_gas_dense_invar.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_gas_dense_steel.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_gas_dense_steel.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_gas_dense_chromium.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_gas_dense_chromium.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_gas_dense_titanium.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_gas_dense_titanium.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_gas_dense_netherite.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_gas_dense_netherite.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_gas_dense_tungsten.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_gas_dense_tungsten.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_gas_dense_tungsten_steel.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_gas_dense_tungsten_steel.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_gas_dense_ta4hfc5.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_gas_dense_ta4hfc5.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_gas_dense_ultimet.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_gas_dense_ultimet.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_fluidbed_dense_lead.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_fluidbed_dense_lead.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_fluidbed_dense_bismuth.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_fluidbed_dense_bismuth.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_fluidbed_dense_bronze.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_fluidbed_dense_bronze.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_fluidbed_dense_arsenic_copper.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_fluidbed_dense_arsenic_copper.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_fluidbed_dense_arsenic_bronze.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_fluidbed_dense_arsenic_bronze.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_fluidbed_dense_invar.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_fluidbed_dense_invar.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_fluidbed_dense_steel.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_fluidbed_dense_steel.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_fluidbed_dense_chromium.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_fluidbed_dense_chromium.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_fluidbed_dense_titanium.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_fluidbed_dense_titanium.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_fluidbed_dense_netherite.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_fluidbed_dense_netherite.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_fluidbed_dense_tungsten.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_fluidbed_dense_tungsten.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_fluidbed_dense_tungsten_steel.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_fluidbed_dense_tungsten_steel.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_fluidbed_dense_ta4hfc5.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_fluidbed_dense_ta4hfc5.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_fluidbed_dense_ultimet.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_fluidbed_dense_ultimet.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/burning_box_solid_brick.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/burning_box_solid_brick.json",
+      "adaptation": "registry boundary references actual original textured geometry"
+    }
+  ],
+  "comparisonSources": [
+    {
+      "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\tileentity\\energy\\generators\\GTGeneratorSolidBlockEntity.java",
+      "sha256": "315838fd806e434483990e77baaf7ab8d1570f9c5ed2d73f0210cb58ae7c4282"
+    },
+    {
+      "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\tileentity\\energy\\generators\\GTGeneratorFluidBedBlockEntity.java",
+      "sha256": "73760b8fa4484ec25d8db043910cbe597cdabb191740633ade05e7603f044413"
+    },
+    {
+      "path": "F:\\Dev\\GregtTech6New\\Libs\\cruciblecraft\\src\\main\\java\\com\\masson\\cruciblecraft\\energy\\converter\\BurningBoxWorldEffects.java",
+      "sha256": "3ada6c317f5f68788a192e30e3e194b79496bdb97234e61fc11a711d7f1fbddc"
+    },
+    {
+      "path": "F:\\Dev\\GregtTech6New\\Libs\\cruciblecraft\\src\\main\\java\\com\\masson\\cruciblecraft\\energy\\converter\\FurnaceFuelAdapter.java",
+      "sha256": "416a4e2c3c30955af5ad79a7d23ec88b8eee46633dfb04c7618c0846de0dbc3f"
+    },
+    {
+      "path": "F:\\Dev\\GregtTech6New\\Libs\\cruciblecraft\\src\\main\\java\\com\\masson\\cruciblecraft\\energy\\converter\\FurnaceFuelTicks.java",
+      "sha256": "cc33f9552fa870b2d4efd59753c077ab0defcc13b30fc0a48841b7a3533bd954"
+    }
+  ],
+  "choice": "Preserve full saltnya original registry/fuel/front tools/contact heat and current shared material/fuel/energy contracts; native brick is a thin facade over the complete solid executor. Native original113 registrations actually use one shared catalog also wired to Forge factories. Generic recipe heat multiplication is one shared rule used by both platforms. brokestar exposes fuller fire behavior and declared fuel-count consumption but its inspected fluidized map is declared empty; masson exposes collision/fluid front-air and complete world effects but different furnace fallback/efficiency/unit boundary. Do not wholesale import either disconnected material/energy registry; known stronger paths remain explicit candidates instead of claiming source1 universally best.",
+  "validation": "Grouped core/Neo/Forge compile PASS27s. Initial compile23s failed on source-only GregTech entrypoint references and duration int/long mismatch; native namespace factory and shared long duration fixed. One grouped ordinary Neo startup follows, no added fixture.",
+  "knownGaps": [
+    "actual combustion/fuel/byproduct/heat/contact/ignition/rotation/fluidized input conservation and survival paths unverified",
+    "source generic no-argument canStoreAsh always returns true, pending-ash mixing/output saturation and solid independent container/byproduct admission remain source limitations",
+    "source fluidized-bed consumes exactly one fuel item instead of the recipe declared input count; inspected brokestar consumes declared counts and is a candidate for a later recorded correction",
+    "source fluid tank capacity is outputRate*10; full live fluid-bed applicability still depends on fuel map rows and available fluids; previous startup found9 fuel rows unavailable",
+    "source comment claims gas redstone and flame behavior, but shown executor has no actual gas redstone gate or flame spread; brokestar/masson implement more complete fire/front-air paths; no claim they are already absorbed by this executor",
+    "masson furnace fallback chooses max(vanilla,material), nullable/nonpositive efficiency defaults10000 and uses144-unit forms; retain current shared GT6 U/material and baseline semantics rather than introduce a second unit/catalog",
+    "world client baking/rendering, Forge runtime, independent saved-world restart, old saves and fresh jars unverified",
+    "full goal remains active; crop/bee/interfaces/world systems and later acceptance continue"
+  ],
+  "startup": {
+    "result": "PASS",
+    "elapsed": "4m55s",
+    "receipt": "docs/integration/verification/p3-neoforge-burning-and-companions-startup.json",
+    "covered": "actual113 burning boxes and previous156 smeltery companions register/data-load; ordinary200tick dedicated server normal save/stop only"
+  }
+}

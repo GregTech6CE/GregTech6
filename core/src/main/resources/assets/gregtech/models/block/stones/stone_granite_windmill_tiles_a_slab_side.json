@@ -1,0 +1,6 @@
+{
+  "parent": "gregtech:block/stones/slab/side",
+  "textures": {
+    "all": "gregtech:block/stones/gt.stone.granite/windmill_tiles_a"
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "date": "2026-10-01",
+  "authors": [
+    "saltnya",
+    "original GregTech6 contributors",
+    "existing integration contributors"
+  ],
+  "license": "Authors/history/notices/authorization retained; donor trees unchanged.",
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/loaders/Loader_FormConversionCraftingRecipes.java",
+      "sha256": "777e45095ce4fefb1c8aa5bf020ea064e6f68f4411f5027117be9ed1eb03ad69",
+      "references": [
+        {
+          "currentForgeReference": "src/main/java/com/gregtech/gregtech/loaders/Loader_FormConversionCraftingRecipes.java",
+          "currentForgeReferenceSha256": "59e67773119b90dea1bd3ce70d77b069ab3fe415498b32fa0f05a5a6d50c7b73",
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\Loader_FormConversionCraftingRecipes.java",
+          "sourceSha256": "59e67773119b90dea1bd3ce70d77b069ab3fe415498b32fa0f05a5a6d50c7b73"
+        }
+      ]
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/loaders/Loader_StoneCraftingRecipes.java",
+      "sha256": "4283cf514f38794f99769a392ba0b07cfb78837d8b6870a445b21e8e09416c00",
+      "references": [
+        {
+          "currentForgeReference": "src/main/java/com/gregtech/gregtech/loaders/Loader_StoneCraftingRecipes.java",
+          "currentForgeReferenceSha256": "1d600f39061c267d74b17b5c01b0f63f3e8fc93b463642763a851982469c3e37",
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\Loader_StoneCraftingRecipes.java",
+          "sourceSha256": "1d600f39061c267d74b17b5c01b0f63f3e8fc93b463642763a851982469c3e37"
+        }
+      ]
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/loaders/Loader_BedrockFlowerCraftingRecipes.java",
+      "sha256": "fe878a2e65abe24532966d763b106b2bfcda889e7dc0de46d1901618c60f3dbf",
+      "references": [
+        {
+          "currentForgeReference": "src/main/java/com/gregtech/gregtech/loaders/Loader_BedrockFlowerCraftingRecipes.java",
+          "currentForgeReferenceSha256": "1af913cdabc66d0aa73f7840430f4d789f50f054a1b3e8748ef2c09212eb291a",
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\Loader_BedrockFlowerCraftingRecipes.java",
+          "sourceSha256": "1af913cdabc66d0aa73f7840430f4d789f50f054a1b3e8748ef2c09212eb291a"
+        }
+      ]
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/data/OriginalCraftingJson.java",
+      "sha256": "83ed0d91d1385d8802ad720623535ba6d2618599e13e9889f637b2760f93b047",
+      "references": [
+        {
+          "currentForgeReference": "src/main/java/com/gregtech/gregtech/recipe/RuntimeRecipeLifecycle.java",
+          "currentForgeReferenceSha256": "cc5506f8fa2d5fd70b35c98bf18f84efd245763694d97dff338e6da215de3145",
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\recipe\\RuntimeRecipeLifecycle.java",
+          "sourceSha256": "cc5506f8fa2d5fd70b35c98bf18f84efd245763694d97dff338e6da215de3145"
+        },
+        {
+          "currentForgeReference": "src/main/java/com/gregtech/gregtech/loaders/Loader_FormConversionCraftingRecipes.java",
+          "currentForgeReferenceSha256": "59e67773119b90dea1bd3ce70d77b069ab3fe415498b32fa0f05a5a6d50c7b73",
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\Loader_FormConversionCraftingRecipes.java",
+          "sourceSha256": "59e67773119b90dea1bd3ce70d77b069ab3fe415498b32fa0f05a5a6d50c7b73"
+        },
+        {
+          "currentForgeReference": "src/main/java/com/gregtech/gregtech/loaders/Loader_StoneCraftingRecipes.java",
+          "currentForgeReferenceSha256": "1d600f39061c267d74b17b5c01b0f63f3e8fc93b463642763a851982469c3e37",
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\Loader_StoneCraftingRecipes.java",
+          "sourceSha256": "1d600f39061c267d74b17b5c01b0f63f3e8fc93b463642763a851982469c3e37"
+        },
+        {
+          "currentForgeReference": "src/main/java/com/gregtech/gregtech/loaders/Loader_BedrockFlowerCraftingRecipes.java",
+          "currentForgeReferenceSha256": "1af913cdabc66d0aa73f7840430f4d789f50f054a1b3e8748ef2c09212eb291a",
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\Loader_BedrockFlowerCraftingRecipes.java",
+          "sourceSha256": "1af913cdabc66d0aa73f7840430f4d789f50f054a1b3e8748ef2c09212eb291a"
+        }
+      ],
+      "origin": "New Native JSON boundary following current Forge builders and first-id precedence; not claimed as an original donor file."
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/data/ManualToolRecipePack.java",
+      "sha256": "64d1685b60f064571cd751ca4eca4d3ddd997a312bc0cb203106473d16c8c284",
+      "references": [
+        {
+          "currentForgeReference": "src/main/java/com/gregtech/gregtech/recipe/RuntimeRecipeLifecycle.java",
+          "currentForgeReferenceSha256": "cc5506f8fa2d5fd70b35c98bf18f84efd245763694d97dff338e6da215de3145",
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\recipe\\RuntimeRecipeLifecycle.java",
+          "sourceSha256": "cc5506f8fa2d5fd70b35c98bf18f84efd245763694d97dff338e6da215de3145"
+        }
+      ],
+      "priorNativeSha256": "8d6ab4959be2ae9114299e7e0d83d5acd6f94658827ca3367796882e156f18bb"
+    }
+  ],
+  "policy": "D011 Forge baseline parity; D010 grouped compile/jar only, no repeated startup or added fixture.",
+  "scope": "Complete current material conversions (including wire/pipe sizes and dense ores), original masonry recipes/skip rules, original bedrock flower dye/stick recipes. Existing Native pack/serializer/material/stone/tool identity reused. No core/asset/Forge edit.",
+  "platformDifference": "Native vanilla shaped codec trims outer blank rows/columns, following1.21 normalized CraftingInput. Source stone padding positioning is not claimed byte-for-byte match."
+}

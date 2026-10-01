@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "gregtech:block/machine/matter/large_osmium_coil"
+    }
+  }
+}

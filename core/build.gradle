@@ -6,12 +6,21 @@ java {
     toolchain.languageVersion = JavaLanguageVersion.of(17)
 }
 
+// Optional development launch path: these shared resources are static and need no expansion.
+// Keep normal CI/release behavior; local launches can avoid copying the entire asset catalog.
+if (rootProject.findProperty('directCoreResources')?.toString() == 'true') {
+    sourceSets.main.output.resourcesDir = file('src/main/resources')
+    tasks.named('processResources').configure { enabled = false }
+}
+
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
     options.release = 17
 }
 
 tasks.named('jar', Jar).configure {
+    // Shared textures/models now exceed the ZIP 16-bit entry count.
+    zip64 = true
     preserveFileTimestamps = false
     reproducibleFileOrder = true
 }

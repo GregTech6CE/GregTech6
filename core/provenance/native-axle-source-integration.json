@@ -1,0 +1,899 @@
+{
+  "source": "saltnya",
+  "license": "unchanged; publication authorization unresolved",
+  "verification": "Grouped core/Neo/Forge Java compile PASS after one Neo sound holder API repair; final Neo compile also PASS after source legacy BE support correction",
+  "physicalAxles": 52,
+  "shared": [
+    "AxleCatalog original 13 families and four sizes",
+    "AxleConnectionRules original maximum-two straight axis constraint"
+  ],
+  "preserved": [
+    "RU signed speed and packet power, zero rated speed loss",
+    "original runtime rotation and overload behavior",
+    "chunk unload graph release",
+    "animated original texture metadata and dynamic neighbor geometry"
+  ],
+  "gaps": [
+    "13 gearboxes and rotation transformers remain next dependency batch",
+    "full tools/crafting",
+    "runtime traversal/overload/client/restart verification"
+  ],
+  "records": [
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/registry/GTAxles.java",
+      "sha256": "008d3cbf58178e9f28ce719ddbee1b19b0cb642e8a630bdc64097accf65a114f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/block/energy/AxleBlock.java",
+      "sha256": "8b4421c069125a58353665acac391fb4fe6bfb441dd929dcee54ffdad2b5377e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/blockentity/energy/AxleBlockEntity.java",
+      "sha256": "1192093f9dd1d1717e1a605db4c95e0fda1b6702ee8f7f9abf1a306cb338312f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/client/AxleBakedModel.java",
+      "sha256": "40fb2ce1aea33c4c39af598b3451193d3e3556f6410945c5068e8775a8865156"
+    }
+  ],
+  "resources": [
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_wood_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_wood_1.json",
+      "sha256": "f0c27becefa07dd811108f9d329f8767f83f767b430da2e807618123c983d617"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_wood_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_wood_1.json",
+      "sha256": "8930007d47991c6214645fa6633bb05ffc56e002a34020217845002582a11899"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/iconsets/axle.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/iconsets/axle.png",
+      "sha256": "12f95f070c3eb11a04e5a5ae5a8e461e88b1f13bc71bed33fad9f4187474a49b"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/iconsets/axle_horizontal.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/iconsets/axle_horizontal.png",
+      "sha256": "41dc07b6bf863aaf1102d8fdc3e6b78395bdd6c03c5c25826c6981635c82c376"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/iconsets/axle_vertical.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/iconsets/axle_vertical.png",
+      "sha256": "7056ffc872407e619a76da217a40050534cc612f20ff9951e4d908f9c294ef80"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_wood_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_wood_1.json",
+      "sha256": "169d92a8d83315748380e8e8a13d4a2120a051b65293675e883f34c374060e55"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_wood_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_wood_2.json",
+      "sha256": "66b24d4200b4b45c4745b6652c33d2988d263a6e5c0131134634028979e0eed9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_wood_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_wood_2.json",
+      "sha256": "93df9c5fda36743740ae387eb1e526312a9b6b6372a30d38a7ccc9d55aca3e1c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_wood_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_wood_2.json",
+      "sha256": "c7effb54abe94935daa08c16b51402348f19652099b7ad48539795bfd5ed3aa6"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_wood_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_wood_3.json",
+      "sha256": "be51d456d8c0bbc70b3dfa8c3ffefbfe874da339c1161148f1348dd22db82fa2"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_wood_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_wood_3.json",
+      "sha256": "28dfcc5592a842680d644fb76834028954168469a59b3946462c0fbf888f14bc"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_wood_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_wood_3.json",
+      "sha256": "c919cc4a622761e36b63c603f3ab842d0e1aa5adce88244b9a030390d81ff4b5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_wood_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_wood_4.json",
+      "sha256": "f773515003acec4666a42d1af237af4335c9717c647e69cfd6373b55fe011e1e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_wood_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_wood_4.json",
+      "sha256": "c0a072a7b37746f91a195a4c80f18d637de1e27bdea421b1d1f08eeaea33f9b5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_wood_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_wood_4.json",
+      "sha256": "c8fd44afd3fd603d046c3bcbb743a0c9102a3cefd881fe99e951bcecadbdc09f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_bronze_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_bronze_1.json",
+      "sha256": "ff5727bee8c181f6d603bb4a6576a71fc4ada7a9399b9abe81b198e92791ebe3"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_bronze_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_bronze_1.json",
+      "sha256": "8930007d47991c6214645fa6633bb05ffc56e002a34020217845002582a11899"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_bronze_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_bronze_1.json",
+      "sha256": "142145c408f5ef7726aac2b15887b8f4ab2aacb68aa91bdb58fcf0adae30fc00"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_bronze_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_bronze_2.json",
+      "sha256": "9fa78d2b1371b6f061d2efafd015e60f9e4e551b22723188896a90e43ed5f4b9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_bronze_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_bronze_2.json",
+      "sha256": "93df9c5fda36743740ae387eb1e526312a9b6b6372a30d38a7ccc9d55aca3e1c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_bronze_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_bronze_2.json",
+      "sha256": "f0cd4362a9d72381d63d7960af34aac4d1337be194036d78bec2e7a59f7e748f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_bronze_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_bronze_3.json",
+      "sha256": "ad8321d16f625de3183fae06fd19c82014ee6c902b196380532aa7848322c55d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_bronze_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_bronze_3.json",
+      "sha256": "28dfcc5592a842680d644fb76834028954168469a59b3946462c0fbf888f14bc"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_bronze_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_bronze_3.json",
+      "sha256": "1736065d9ef96951c347932dd6eebfe3f27c9c47fd6c8a27d8a7b8d6a8214b25"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_bronze_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_bronze_4.json",
+      "sha256": "db897704dc38831266c9433b80d7a63816cac3af1014e296cab4e63fe8c127ef"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_bronze_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_bronze_4.json",
+      "sha256": "c0a072a7b37746f91a195a4c80f18d637de1e27bdea421b1d1f08eeaea33f9b5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_bronze_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_bronze_4.json",
+      "sha256": "62082ddfee93a37645cdbb9010e3b83e5fbefc9375377c205d20d45c5dc01203"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_brass_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_brass_1.json",
+      "sha256": "907f5fba79e389098e5c54ae56dbcb9706bb21ba26468dc7bb4678dadffb2ceb"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_brass_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_brass_1.json",
+      "sha256": "8930007d47991c6214645fa6633bb05ffc56e002a34020217845002582a11899"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_brass_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_brass_1.json",
+      "sha256": "d934f77fad10044b199f19d08869cb6eb0e09a2ed7e5dd890702618c55a520ce"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_brass_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_brass_2.json",
+      "sha256": "f2aea06feb4fe34f1a55577dbd7e94a597f2d55c59ac761d9e6b42718ec98646"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_brass_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_brass_2.json",
+      "sha256": "93df9c5fda36743740ae387eb1e526312a9b6b6372a30d38a7ccc9d55aca3e1c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_brass_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_brass_2.json",
+      "sha256": "11fbf5b3522662efdde9153804cfbcf31bd7be6a4286bb115b0ff00619080043"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_brass_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_brass_3.json",
+      "sha256": "a367f62d8435b9838bf3e75fa330bfe81a7dcaf8b8b1b2b61497830e25a88ea7"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_brass_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_brass_3.json",
+      "sha256": "28dfcc5592a842680d644fb76834028954168469a59b3946462c0fbf888f14bc"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_brass_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_brass_3.json",
+      "sha256": "c065b1fe4c8cb64ecda8504e08efa484c1332c3f348cc893d25ea13a75c58d6e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_brass_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_brass_4.json",
+      "sha256": "9700e351cb44453b7a6cfea54ebeda6360c67d9338e31eb685dfaf7e2dff93c8"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_brass_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_brass_4.json",
+      "sha256": "c0a072a7b37746f91a195a4c80f18d637de1e27bdea421b1d1f08eeaea33f9b5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_brass_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_brass_4.json",
+      "sha256": "66b0d437b34abcc447b0cf18b3de6f358c184a810bd0129f57d6b52cdd3c0ba1"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_arsenic_copper_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_arsenic_copper_1.json",
+      "sha256": "35c0c0ee3e6702a05b1cf087cbbe61a1d40b2a1f7cb1a13b5c5857293918007e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_arsenic_copper_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_arsenic_copper_1.json",
+      "sha256": "8930007d47991c6214645fa6633bb05ffc56e002a34020217845002582a11899"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_arsenic_copper_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_arsenic_copper_1.json",
+      "sha256": "5c7321a52f99cb7ca262d1c631461f69d42e9b686c85daae8903d478a98d47c5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_arsenic_copper_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_arsenic_copper_2.json",
+      "sha256": "12ce393f6e1598a2c39820567ed326d9b37e90c364884994df1efbea89ff8165"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_arsenic_copper_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_arsenic_copper_2.json",
+      "sha256": "93df9c5fda36743740ae387eb1e526312a9b6b6372a30d38a7ccc9d55aca3e1c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_arsenic_copper_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_arsenic_copper_2.json",
+      "sha256": "d696b4ac12dffd493a48f82cbf955aecef26e2a468577ab861dab68a88b57f97"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_arsenic_copper_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_arsenic_copper_3.json",
+      "sha256": "b7ef38c1e0f660f572064b7dba5a427d5eda14defc0382a24dd4440b779e14d6"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_arsenic_copper_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_arsenic_copper_3.json",
+      "sha256": "28dfcc5592a842680d644fb76834028954168469a59b3946462c0fbf888f14bc"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_arsenic_copper_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_arsenic_copper_3.json",
+      "sha256": "9919fcdeed446973c70f1a8f5a6529a24ac2a021f029f056ffd0c9e5c688ff51"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_arsenic_copper_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_arsenic_copper_4.json",
+      "sha256": "28d677bfce66345d4048ffd2ce9ae4bdd396a45381017027171f44f918897a62"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_arsenic_copper_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_arsenic_copper_4.json",
+      "sha256": "c0a072a7b37746f91a195a4c80f18d637de1e27bdea421b1d1f08eeaea33f9b5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_arsenic_copper_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_arsenic_copper_4.json",
+      "sha256": "b31135ebd08ab3ce8fd321c8c2ede2ee5f034abf38277e767b0112ce9d7d1bab"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_arsenic_bronze_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_arsenic_bronze_1.json",
+      "sha256": "ced8ed81dbc856c4346c7fab82252f83467921c7521134db9a489c89871882a5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_arsenic_bronze_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_arsenic_bronze_1.json",
+      "sha256": "8930007d47991c6214645fa6633bb05ffc56e002a34020217845002582a11899"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_arsenic_bronze_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_arsenic_bronze_1.json",
+      "sha256": "ce61e31d42500064f39e156ebe4e4f737ebffa9c3ec85a646bd631c96d93309d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_arsenic_bronze_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_arsenic_bronze_2.json",
+      "sha256": "0147ec3b1dc508240c94cae3c8ea3795abfbf0af9410d366ebeb5e0a0ee9b0e7"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_arsenic_bronze_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_arsenic_bronze_2.json",
+      "sha256": "93df9c5fda36743740ae387eb1e526312a9b6b6372a30d38a7ccc9d55aca3e1c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_arsenic_bronze_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_arsenic_bronze_2.json",
+      "sha256": "7f4e8ab43e1402465558d7337bb3f5856c0f7a68323c0181d67007e4f0c102c6"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_arsenic_bronze_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_arsenic_bronze_3.json",
+      "sha256": "0e72e7b6cb78decc07cbe07401c5bf5bc719fe74009951cdcf89c18796cac138"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_arsenic_bronze_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_arsenic_bronze_3.json",
+      "sha256": "28dfcc5592a842680d644fb76834028954168469a59b3946462c0fbf888f14bc"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_arsenic_bronze_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_arsenic_bronze_3.json",
+      "sha256": "bef782bc79c5074d0041564ca922a5d50110fdd96b8dd7c9ed6a010f296b8bc5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_arsenic_bronze_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_arsenic_bronze_4.json",
+      "sha256": "f1b64a760836dd9e31b75a6496846d2e71ec79d881c29379273504c8e823fade"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_arsenic_bronze_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_arsenic_bronze_4.json",
+      "sha256": "c0a072a7b37746f91a195a4c80f18d637de1e27bdea421b1d1f08eeaea33f9b5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_arsenic_bronze_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_arsenic_bronze_4.json",
+      "sha256": "f76ab87d8c7250cac023e53c616255330582c57efa79acb0a2ee240263fab338"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_steel_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_steel_1.json",
+      "sha256": "2b985738d9f334e8ffbb3c7f0c622ec29eb87e3e1692760e4ae2b471b934880c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_steel_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_steel_1.json",
+      "sha256": "8930007d47991c6214645fa6633bb05ffc56e002a34020217845002582a11899"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_steel_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_steel_1.json",
+      "sha256": "14c63255da5890807e1fe2e43b82ec5964a32553e477c5b1f4f8192a46598657"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_steel_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_steel_2.json",
+      "sha256": "65baf3c991124120d6b7577ddc473ff2264425ec43cabf089df53b6e75b5ef9f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_steel_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_steel_2.json",
+      "sha256": "93df9c5fda36743740ae387eb1e526312a9b6b6372a30d38a7ccc9d55aca3e1c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_steel_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_steel_2.json",
+      "sha256": "526b3d2738905e2b10e68f719662fe4c7d3f7d473320448ae75dd5ec071bf6fb"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_steel_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_steel_3.json",
+      "sha256": "060080e710a81cc4cd1bcb89491878a4b9d26f1d99a3a8e13df240af36a6ba99"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_steel_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_steel_3.json",
+      "sha256": "28dfcc5592a842680d644fb76834028954168469a59b3946462c0fbf888f14bc"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_steel_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_steel_3.json",
+      "sha256": "3777e6b8528bba1f557061c774a0bdabb01932b70e3daa57b154ec81a16ec48e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_steel_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_steel_4.json",
+      "sha256": "66c3568b8875d5763d7809ff598318d1c8f34249b5dd2a0aa4dfe81314ad3576"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_steel_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_steel_4.json",
+      "sha256": "c0a072a7b37746f91a195a4c80f18d637de1e27bdea421b1d1f08eeaea33f9b5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_steel_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_steel_4.json",
+      "sha256": "55206860ffe970012ed9a0150f95a68ae49846c835be8753e39323260a36464f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_titanium_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_titanium_1.json",
+      "sha256": "1a315d7ee7dbecc22839a57d8559d052ef81841868687bfbe67486b8e81cc460"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_titanium_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_titanium_1.json",
+      "sha256": "8930007d47991c6214645fa6633bb05ffc56e002a34020217845002582a11899"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_titanium_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_titanium_1.json",
+      "sha256": "f545699c18115e0d62755b41178a28bb711e22782f60c896cb16667bd917bcfb"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_titanium_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_titanium_2.json",
+      "sha256": "ed7efb2106abc15a525aea315b81c58c3a5e098e434382bd3791aa7134b94de6"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_titanium_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_titanium_2.json",
+      "sha256": "93df9c5fda36743740ae387eb1e526312a9b6b6372a30d38a7ccc9d55aca3e1c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_titanium_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_titanium_2.json",
+      "sha256": "8d9b63330f146aa0cf248b85910154e6c1d9f9d29685f1c2c87ea0aec084757d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_titanium_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_titanium_3.json",
+      "sha256": "39849d732a8c052695d56233e46b4f06c82db5ecbe66821226e5eee0a425a7df"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_titanium_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_titanium_3.json",
+      "sha256": "28dfcc5592a842680d644fb76834028954168469a59b3946462c0fbf888f14bc"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_titanium_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_titanium_3.json",
+      "sha256": "218cd9247e040e0d3d0a63e8f82688fa7562d81982b366d62bb06069353b159b"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_titanium_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_titanium_4.json",
+      "sha256": "2dfd95741dfa21b839f0bec3c6242ca4bc49762dc1a7e9498bb85dd5f0c9c54e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_titanium_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_titanium_4.json",
+      "sha256": "c0a072a7b37746f91a195a4c80f18d637de1e27bdea421b1d1f08eeaea33f9b5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_titanium_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_titanium_4.json",
+      "sha256": "3670f54b646e086f30a88fa96096159931b61352bbdf043f750e83937d612d3d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_tungstensteel_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_tungstensteel_1.json",
+      "sha256": "cb9e41612c641e631b872f0d815a794771bbe6af2c263b75284f9bd591934534"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_tungstensteel_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_tungstensteel_1.json",
+      "sha256": "8930007d47991c6214645fa6633bb05ffc56e002a34020217845002582a11899"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_tungstensteel_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_tungstensteel_1.json",
+      "sha256": "78cc9307142d94602bf63fd45301e7c6ee7d20c3a4d0a52c715bc15882e3df5f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_tungstensteel_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_tungstensteel_2.json",
+      "sha256": "d7fde625cab43778cb3f6bbd8e6d6a6c83d73a48a617103400f39e31c560d313"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_tungstensteel_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_tungstensteel_2.json",
+      "sha256": "93df9c5fda36743740ae387eb1e526312a9b6b6372a30d38a7ccc9d55aca3e1c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_tungstensteel_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_tungstensteel_2.json",
+      "sha256": "9a287f4b0a22b6a938e99a17eabe5145e54f0cfdc24fa33c0a35d4dc5071d75e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_tungstensteel_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_tungstensteel_3.json",
+      "sha256": "8cc8969cd15f4d0d3719bea1302e4932445fc159d02f0c4ef9e23fd2218ced22"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_tungstensteel_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_tungstensteel_3.json",
+      "sha256": "28dfcc5592a842680d644fb76834028954168469a59b3946462c0fbf888f14bc"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_tungstensteel_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_tungstensteel_3.json",
+      "sha256": "0d9b62824585c131c911afbbaed582c36ce8ec2ff4d266f6bb10436f0f272b06"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_tungstensteel_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_tungstensteel_4.json",
+      "sha256": "4ff7c584255d6bd852bde5f625dc454e31ddcfb4a40d31f9a23af732380e11bf"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_tungstensteel_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_tungstensteel_4.json",
+      "sha256": "c0a072a7b37746f91a195a4c80f18d637de1e27bdea421b1d1f08eeaea33f9b5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_tungstensteel_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_tungstensteel_4.json",
+      "sha256": "feea3903455c7c999cedfd97fe175f3367f7f803349b4e8683092f7e69c804b0"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_iridium_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_iridium_1.json",
+      "sha256": "619b8b22db1e39ceb552b3fc9584d1ad23c8b824d0ce03f46e215f51f5f99d37"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_iridium_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_iridium_1.json",
+      "sha256": "8930007d47991c6214645fa6633bb05ffc56e002a34020217845002582a11899"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_iridium_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_iridium_1.json",
+      "sha256": "dd8abe848897883966984e0836571c89eff5cbd463b8726e82dfc262de9ff041"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_iridium_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_iridium_2.json",
+      "sha256": "a0e6ce274117306adcdc45c2f5d402cbab1f6c2e038d69418b85d05370a8716d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_iridium_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_iridium_2.json",
+      "sha256": "93df9c5fda36743740ae387eb1e526312a9b6b6372a30d38a7ccc9d55aca3e1c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_iridium_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_iridium_2.json",
+      "sha256": "e7133ba64c62c3e85a784ea87adfefa13e429a0079f90c2965896f9874e7a7c5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_iridium_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_iridium_3.json",
+      "sha256": "d9cdb6855b19f22df9f3d96d0d8ff24d3c631f5574247296126a03b0ac542514"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_iridium_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_iridium_3.json",
+      "sha256": "28dfcc5592a842680d644fb76834028954168469a59b3946462c0fbf888f14bc"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_iridium_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_iridium_3.json",
+      "sha256": "848518773de70d297f070137b50402277b3ac306416f983ee25890a2823af90b"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_iridium_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_iridium_4.json",
+      "sha256": "a5b1d8a14c24e9ffaf207245df35d4f9dc4dc42c7a4e30a7aa1900561f89857c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_iridium_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_iridium_4.json",
+      "sha256": "c0a072a7b37746f91a195a4c80f18d637de1e27bdea421b1d1f08eeaea33f9b5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_iridium_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_iridium_4.json",
+      "sha256": "e96f739f9df2da307bb74f657d07ddf8aa16b0fa6522b142caf7b479aa618007"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_iritanium_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_iritanium_1.json",
+      "sha256": "043417084d55e6f7dec94aec87c2c99d99ef8160ea269a93b90851c2a7528951"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_iritanium_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_iritanium_1.json",
+      "sha256": "8930007d47991c6214645fa6633bb05ffc56e002a34020217845002582a11899"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_iritanium_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_iritanium_1.json",
+      "sha256": "a8e7db14986e212c59c81b137ddd8c756a3fb7f71532604c6f088d8b9dcba3d1"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_iritanium_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_iritanium_2.json",
+      "sha256": "023d10a65571820b648fe5c7560442c95ddc2a32712c5125f7db62b36bac695f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_iritanium_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_iritanium_2.json",
+      "sha256": "93df9c5fda36743740ae387eb1e526312a9b6b6372a30d38a7ccc9d55aca3e1c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_iritanium_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_iritanium_2.json",
+      "sha256": "fa43ac6c28cf4bed0d94491c824baa4ab0171a544724acddff9000b7cc5b46eb"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_iritanium_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_iritanium_3.json",
+      "sha256": "e9636658c59210ec80ba7cf0a627c857776f955bcbcbc40a86d298af30a1fd9d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_iritanium_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_iritanium_3.json",
+      "sha256": "28dfcc5592a842680d644fb76834028954168469a59b3946462c0fbf888f14bc"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_iritanium_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_iritanium_3.json",
+      "sha256": "7a9847830f07a504e82b8e82698150cddf38bf5c04299ad3b2095030e6e68f4f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_iritanium_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_iritanium_4.json",
+      "sha256": "55c502a148609277ed4488d97db2b001eed1ceffdef5c063a0467764acec79e5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_iritanium_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_iritanium_4.json",
+      "sha256": "c0a072a7b37746f91a195a4c80f18d637de1e27bdea421b1d1f08eeaea33f9b5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_iritanium_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_iritanium_4.json",
+      "sha256": "821dce1ea37b5a2136d756c69166957a7e975ec87fc2668cc238e60a8150ec5f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_trinitanium_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_trinitanium_1.json",
+      "sha256": "25a52cc4f757f7204e7412798d934e1d4f089b141ad666dd344c13a4f85c6f1d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_trinitanium_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_trinitanium_1.json",
+      "sha256": "8930007d47991c6214645fa6633bb05ffc56e002a34020217845002582a11899"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_trinitanium_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_trinitanium_1.json",
+      "sha256": "02f7ad730f501ac6a30d98ecfd970024138d99fdcee1be9ab6e08f3ff3abc8d5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_trinitanium_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_trinitanium_2.json",
+      "sha256": "586fcdf1b7ffab2ad52de25e24af4cdc54aec9a3e3651a348256768484d5a22d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_trinitanium_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_trinitanium_2.json",
+      "sha256": "93df9c5fda36743740ae387eb1e526312a9b6b6372a30d38a7ccc9d55aca3e1c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_trinitanium_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_trinitanium_2.json",
+      "sha256": "028aa2d87d5f21f249994534caf4163355ce9ae71b0ebbbe9a2b8cd2734dc20b"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_trinitanium_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_trinitanium_3.json",
+      "sha256": "c5cee96fa6d88538b0477e76ea088f6fe8f18f6e5708b091d4391d4654532576"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_trinitanium_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_trinitanium_3.json",
+      "sha256": "28dfcc5592a842680d644fb76834028954168469a59b3946462c0fbf888f14bc"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_trinitanium_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_trinitanium_3.json",
+      "sha256": "3b5f3aba129663e17074d26949fde44dbef5b6b0e72082e308d8ff006cf68492"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_trinitanium_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_trinitanium_4.json",
+      "sha256": "8c50fd021261e403393ec64d4e8da19ef0ff12ade9da0494ff86689b65769303"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_trinitanium_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_trinitanium_4.json",
+      "sha256": "c0a072a7b37746f91a195a4c80f18d637de1e27bdea421b1d1f08eeaea33f9b5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_trinitanium_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_trinitanium_4.json",
+      "sha256": "f17afc7674e9d1f39d412124c158c1b7428e13e3bdbff7b19a7e4ce88ab3dacc"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_trinaquadalloy_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_trinaquadalloy_1.json",
+      "sha256": "1cb860d683ca2fb6245ed906bd34e7b5f36d995c0c6e9a8dfbf771345ab08c69"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_trinaquadalloy_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_trinaquadalloy_1.json",
+      "sha256": "8930007d47991c6214645fa6633bb05ffc56e002a34020217845002582a11899"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_trinaquadalloy_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_trinaquadalloy_1.json",
+      "sha256": "b7297b6f1d3a2581cffd0c99ac9b1c5dce80fb24fdfd9660f6dc6dc318d414d7"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_trinaquadalloy_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_trinaquadalloy_2.json",
+      "sha256": "40cf0aba770a3162b38331ca17a4fa140b9b6bef94df4d974586e859171f7cfa"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_trinaquadalloy_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_trinaquadalloy_2.json",
+      "sha256": "93df9c5fda36743740ae387eb1e526312a9b6b6372a30d38a7ccc9d55aca3e1c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_trinaquadalloy_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_trinaquadalloy_2.json",
+      "sha256": "7b1ca6a71184cb3a7dbfeab55b040dcfbb35a605f0194f46c3354826d07ac0bd"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_trinaquadalloy_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_trinaquadalloy_3.json",
+      "sha256": "7488d0a5688de75796dae53a1e00c9ce653af48d007615991d57abcc4f28dffe"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_trinaquadalloy_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_trinaquadalloy_3.json",
+      "sha256": "28dfcc5592a842680d644fb76834028954168469a59b3946462c0fbf888f14bc"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_trinaquadalloy_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_trinaquadalloy_3.json",
+      "sha256": "b2cfd782fc95ccb7e0abd99079dc9e7aaf623f1dc1d7b518f7facefc67ed7439"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_trinaquadalloy_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_trinaquadalloy_4.json",
+      "sha256": "a7729e9236f29714fe74b3c4c3ee9d6e753837e7c2937d563279a2ea5be74161"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_trinaquadalloy_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_trinaquadalloy_4.json",
+      "sha256": "c0a072a7b37746f91a195a4c80f18d637de1e27bdea421b1d1f08eeaea33f9b5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_trinaquadalloy_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_trinaquadalloy_4.json",
+      "sha256": "cd0f628024feee4d7c1829f669edf9fa865d17346b1d0d6fda5c447041aa584e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_adamantium_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_adamantium_1.json",
+      "sha256": "892fe28f67e93837cb2c640e911f62f75291619fb739fe3c55a53feceee4db49"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_adamantium_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_adamantium_1.json",
+      "sha256": "8930007d47991c6214645fa6633bb05ffc56e002a34020217845002582a11899"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_adamantium_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_adamantium_1.json",
+      "sha256": "2e597405420242300825ad33659dfc7023e443a755d36150deab4fbbf741ff53"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_adamantium_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_adamantium_2.json",
+      "sha256": "0643de50b748bc5a39ad2ebd8ab37a40dda6e8fd543119d2c95b0fd24baaa154"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_adamantium_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_adamantium_2.json",
+      "sha256": "93df9c5fda36743740ae387eb1e526312a9b6b6372a30d38a7ccc9d55aca3e1c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_adamantium_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_adamantium_2.json",
+      "sha256": "a9e60ddbc6c0dd06cf06abd491a6e4ab41cec6de6a3356761dc72aa08446c8fa"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_adamantium_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_adamantium_3.json",
+      "sha256": "a15abe4e424ac2ed7615e12794770e3847caf2b427e0519b2bb3df7da2a15b17"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_adamantium_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_adamantium_3.json",
+      "sha256": "28dfcc5592a842680d644fb76834028954168469a59b3946462c0fbf888f14bc"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_adamantium_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_adamantium_3.json",
+      "sha256": "86a1ec136c092e0615226239751ac6d8dc7c291e8679f038dc6a740a5207ee3a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/axle_adamantium_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/axle_adamantium_4.json",
+      "sha256": "c8a32d907c44671d63134dcd060a26ca7da0b30fc53e14471ee40d1e991fbf71"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/axle_adamantium_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/axle_adamantium_4.json",
+      "sha256": "c0a072a7b37746f91a195a4c80f18d637de1e27bdea421b1d1f08eeaea33f9b5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/axle_adamantium_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/axle_adamantium_4.json",
+      "sha256": "fde248b2bfb68816d45bb3ce27d3f663a615f0e59c0737f5e5e7a0db8792113f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/iconsets/axle_horizontal.png.mcmeta/assets/gregtech/textures/block/iconsets/axle_right.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/iconsets/axle_right.png",
+      "sha256": "60d3400d3c163f01b4ebc26bd4548879a8b4af8d91e706c10b63d6adbe12356b"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/iconsets/axle_right.png.mcmeta",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/iconsets/axle_right.png.mcmeta",
+      "sha256": "b4297339c84c86a52c920f0314557de6d9fca46beac3940817c5185387f7cd73"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/src/main/resources/assets/gregtech/textures/block/iconsets/axle_right.png.mcmeta/assets/gregtech/textures/block/iconsets/axle_left.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/iconsets/axle_left.png",
+      "sha256": "cf928a0c921a6acc8daf0c9c94b88640ee5aa0db9de1efac7bbb320f1db46c61"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/iconsets/axle_left.png.mcmeta",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/iconsets/axle_left.png.mcmeta",
+      "sha256": "b4297339c84c86a52c920f0314557de6d9fca46beac3940817c5185387f7cd73"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/src/main/resources/assets/gregtech/textures/block/iconsets/axle_left.png.mcmeta/assets/gregtech/textures/block/iconsets/axle_clockwise.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/iconsets/axle_clockwise.png",
+      "sha256": "af94c4ded720e4df909fdf5c9af77bc2ff565651d824e0d8fb2747292497b1aa"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/iconsets/axle_clockwise.png.mcmeta",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/iconsets/axle_clockwise.png.mcmeta",
+      "sha256": "b4297339c84c86a52c920f0314557de6d9fca46beac3940817c5185387f7cd73"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/src/main/resources/assets/gregtech/textures/block/iconsets/axle_clockwise.png.mcmeta/assets/gregtech/textures/block/iconsets/axle_counterclockwise.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/iconsets/axle_counterclockwise.png",
+      "sha256": "cbcd72192e9e47b6ddef78cbaad96c89bf4f3096f6f7e2315b4e458e6fac9f1e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/iconsets/axle_counterclockwise.png.mcmeta",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/iconsets/axle_counterclockwise.png.mcmeta",
+      "sha256": "b4297339c84c86a52c920f0314557de6d9fca46beac3940817c5185387f7cd73"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/iconsets/axle_vertical.png.mcmeta/assets/gregtech/textures/block/iconsets/axle_down.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/iconsets/axle_down.png",
+      "sha256": "a9393039fdb4f77c7d50bdbeb751ab35915fbfa9a08d4406cfda1be8fccc86a1"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/iconsets/axle_down.png.mcmeta",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/iconsets/axle_down.png.mcmeta",
+      "sha256": "b4297339c84c86a52c920f0314557de6d9fca46beac3940817c5185387f7cd73"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/src/main/resources/assets/gregtech/textures/block/iconsets/axle_down.png.mcmeta/assets/gregtech/textures/block/iconsets/axle_up.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/iconsets/axle_up.png",
+      "sha256": "c1cc3b3ae9d1946a769edee4f46928f5e740dc29979b3921401c516cbb392eac"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/iconsets/axle_up.png.mcmeta",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/iconsets/axle_up.png.mcmeta",
+      "sha256": "b4297339c84c86a52c920f0314557de6d9fca46beac3940817c5185387f7cd73"
+    }
+  ],
+  "verificationReceipt": "docs/integration/verification/p3-energy-nodes-axles-compile.json",
+  "runtimeVerification": "not run for these new node/axle batches; previous wire startup does not cover them",
+  "groupedStartup": "Neo ordinary DedicatedServer loaded recipes/packs, completed 200 ticks and normal save/stop; only startup/registration evidence, not mechanics; docs/integration/verification/p3-neoforge-nodes-gearboxes-startup.json"
+}

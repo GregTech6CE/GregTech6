@@ -1,0 +1,131 @@
+{
+  "source": "saltnya",
+  "license": "unchanged; publication authorization unresolved",
+  "verification": "Grouped core/Neo/Forge Java compile PASS after one Neo sound holder API repair; final Neo compile also PASS after source legacy BE support correction",
+  "shared": [
+    "BatteryBoxState: exact original independent buffer/battery stores and transfer bands",
+    "TransformerControlState: exact mode/history/dual direction state",
+    "InventorySlotLayout: original coordinates for 17 layouts"
+  ],
+  "native": [
+    "two platform battery item/world/NBT wrappers",
+    "two transformer control/NBT wrappers",
+    "original Neo 17 menu registrations and source screen"
+  ],
+  "records": [
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/content/energy/BatteryBoxEnergy.java",
+      "sha256": "6a8170749c73f0153e2bb12f607518bd9193c0a259b8f54df85bbceaa68b4e88"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/content/energy/ElectricTransformerControl.java",
+      "sha256": "a93a8049efb8947dc2acbb655e1a5cb5ab14f68e38067f74d95749b6b766d995"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/client/gui/HopperContainerMenu.java",
+      "sha256": "36e0423b664f5f775f3bf7aecddf4925c3a1c0d1b94959dc9283e4e0afcf4357"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/registry/GTMenuTypes.java",
+      "sha256": "b40bfe5d63871cae556fec98fe95332088932dda2f45398d31b9c15b305eedd3"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/client/gui/HopperScreen.java",
+      "sha256": "7513d2880fac5409adadadfb7233c9f014c2dfba73a506faa58f05e5da41bf14"
+    }
+  ],
+  "resources": [
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/gui/chests/0.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/gui/chests/0.png",
+      "sha256": "6af60210af71e5739f3a5873f6bd95640b89729917d2a6f3529431c4984d3440"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/gui/chests/1.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/gui/chests/1.png",
+      "sha256": "af2d8d3ba528ea18ecb94111e9dba58f1b0774cd0469fbffb8b9e3d257a0abb4"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/gui/chests/2.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/gui/chests/2.png",
+      "sha256": "e6cde5d2cf6b4bc329024fed9c9461bddaa6d43351bd60fb3176b89527db893e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/gui/chests/3.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/gui/chests/3.png",
+      "sha256": "0acb7c24edea24e2aab0e81a635fa671733c36c12786eda12723d2f084b345cf"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/gui/chests/4.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/gui/chests/4.png",
+      "sha256": "7586045e67ba3cdf548ccc41d641fb099522bd96fed53878a6c073d8c7f97cfd"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/gui/chests/5.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/gui/chests/5.png",
+      "sha256": "b73434dea4ec89b529b2099dc80f3ae92398c3735b15d0035291367ecf10f724"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/gui/chests/6.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/gui/chests/6.png",
+      "sha256": "918c5defa62af22e51a304544cec65650a7827d3eb0203de8f56967faff60dfb"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/gui/chests/7.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/gui/chests/7.png",
+      "sha256": "e5bdc260a9b3d0ceab0025587fed900df4e3c5bffb238b8f41eb0c2204d137db"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/gui/chests/8.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/gui/chests/8.png",
+      "sha256": "896010dcbca3edf55f6901acfff5f9a1054cb272c41d6c5f5124996df5279dad"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/gui/chests/9.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/gui/chests/9.png",
+      "sha256": "0bbecaeb02d168df7f1c01d00d8cc9895f35e9ee53f1eb70d5cc2eedff58cc2c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/gui/chests/12.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/gui/chests/12.png",
+      "sha256": "91b9bb46e4e07bc62407cdd0c205a09e587a8068f531a81c269625c52c800177"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/gui/chests/14.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/gui/chests/14.png",
+      "sha256": "63a3877d03241371ffc6fb857327faafb11f23a919e224f112e55ef867df6a38"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/gui/chests/15.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/gui/chests/15.png",
+      "sha256": "ebc623e4f68eaf411cc9e280bdba3d5343704a220ca717b5a09020a4a082553e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/gui/chests/16.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/gui/chests/16.png",
+      "sha256": "90a3d1b5f52a53d9864c96cb2c801a0283fade8f7f35676d32f2acea5286dc20"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/gui/chests/18.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/gui/chests/18.png",
+      "sha256": "eff1419fcdd546008fbbf41829626dc6219e43bca3eed47dda92457450841e68"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/gui/chests/27.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/gui/chests/27.png",
+      "sha256": "291c5fdd543e9e3bf9b42b4321be9af4f7f30a024702f398d32745c7cbfc835c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/gui/chests/36.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/gui/chests/36.png",
+      "sha256": "024de4fc52a91dc85d39b22438a1c9385e08d45290f89af40a577fa0d430718d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/gui/chests/54.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/gui/chests/54.png",
+      "sha256": "4165bd20755c33e9b52061aaf3f0157a771e973a164b31cc843d19745cc95f89"
+    }
+  ],
+  "verificationReceipt": "docs/integration/verification/p3-energy-nodes-axles-compile.json",
+  "runtimeVerification": "not run for these new node/axle batches; previous wire startup does not cover them"
+}

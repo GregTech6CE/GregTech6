@@ -1,0 +1,202 @@
+{
+  "authors": [
+    "saltnya",
+    "brokestar233",
+    "original GregTech 6 contributors"
+  ],
+  "license": "Original notices/history preserved; local integration only",
+  "counts": {
+    "features": 2,
+    "newSands": 3,
+    "existingCrystalsReused": 12,
+    "resources": 15
+  },
+  "choice": "Keep source1 full falling sand/material/dust identity and river-only48x48 pit-mask host rules, on the existing shared three-sand catalog. Native SandBlock removal is adapted to concrete FallingBlock with original dust-color/own-block drop behavior. Reuse already registered12 actual crystal ores and original dense rock/quartz ores, without duplicate registrations. Both platforms now use one exact12-crystal catalog/quartz noise layer data and complete1500-step one-neighbor crystal grow executor. brokestar offers air-below-ceiling seed and explicit dimension-seeded bounds but different seed/anchor behavior; keep source1 baseline pending recorded comparison, rather than pretend source1 universally best. No matching masson filename implementation is claimed adopted in this wave.",
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "sha256": "b4e09776c0688e57f22280e797562e7f2f0b6b9696d4ef7608b7aedb7eca0c54",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTFeatures.java",
+      "sha256": "f269f781cf828183b80c6433cca0ebda534f76f1232d65da6b97059dc81def1c",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTFeatures.java",
+      "sourceSha256": "5333be8dcf08f58be13e311321a2d6c52c3f492c6f83fa08e84a14928f9ecd61"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/block/BlackSandBlock.java",
+      "sha256": "a5fddfaa3ae5b77db330ec7353f38a1888daecc5cc4e4f5711f2d93cfec50ea3",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\BlackSandBlock.java",
+      "sourceSha256": "aa74e45c6f64c147168a4b6d48fbe8625da14142d12f5bc89e7ac632c0e548d8"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/worldgen/GTBlackSandFeature.java",
+      "sha256": "ec3cb3bab2f1eaeb849f78cf884a64533598e55cd40ff2e3d694154a72d88b1e",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTBlackSandFeature.java",
+      "sourceSha256": "ca5d9d6b486ba8f75edb5a106db51f2cee8324a706fea1da344dcf8a909d00c9"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/worldgen/GTNetherDepositFeature.java",
+      "sha256": "a6353193529e7e051b54877e85f5a76992090bf1718bf097d37faf0bcec10228",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTNetherDepositFeature.java",
+      "sourceSha256": "6370f53e20284e0e22618b9d0cb9322af727dfd1bb745920808ad8b3f1830314"
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/block/BlackSandDefinitions.java",
+      "sha256": "9d34833140570d40aa499f06813703bd7e8dc0493894cf655ad8efa9b87665ba",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\BlackSandBlock.java",
+      "sourceSha256": "aa74e45c6f64c147168a4b6d48fbe8625da14142d12f5bc89e7ac632c0e548d8"
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/worldgen/NetherDepositRules.java",
+      "sha256": "4e0eca0102444971777a36f1e40f99978223509c617b8d2adc8f2abdc1e3052b",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTNetherDepositFeature.java",
+      "sourceSha256": "6370f53e20284e0e22618b9d0cb9322af727dfd1bb745920808ad8b3f1830314"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/BlackSandBlock.java",
+      "sha256": "ef5cb12bf674e90beba63676041c68d879394b92135c6dcee743f7386b564d86",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\BlackSandBlock.java",
+      "sourceSha256": "aa74e45c6f64c147168a4b6d48fbe8625da14142d12f5bc89e7ac632c0e548d8"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTBlackSands.java",
+      "sha256": "1a86d3bc8e7672747fbc0eedade5f4b01c2c0979e00aa0f0f18b8cf5675da928",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTIconSetBlocks.java",
+      "sourceSha256": "efe85ee1d952dceddb949810522bce6a4b5cc01b66cb91b4d236a2c3692c4c12"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTBlackSandFeature.java",
+      "sha256": "df88b6f2568d3dcdc1fa18c4b624158662332681f72611b81dd55203565f5450",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTBlackSandFeature.java",
+      "sourceSha256": "ca5d9d6b486ba8f75edb5a106db51f2cee8324a706fea1da344dcf8a909d00c9"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTNetherDepositFeature.java",
+      "sha256": "9b6b333e3f64348f3e3e52e80b88337dd0ff8f5ea050604d89a960c612960429",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTNetherDepositFeature.java",
+      "sourceSha256": "6370f53e20284e0e22618b9d0cb9322af727dfd1bb745920808ad8b3f1830314"
+    }
+  ],
+  "resources": [
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\sand_basalt_magnetite.json",
+      "sha256": "21543097463d59bd51a952800bd26bb152ca34089ee4c24d6e8ac278d01f0d6d",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sand_basalt_magnetite.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\sand_granite_magnetite.json",
+      "sha256": "930049dfe62c9f44aca0173b4bbb51584545a57554757bcd6046acf3ae41d3ab",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sand_granite_magnetite.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\sand_magnetite.json",
+      "sha256": "cf0455d494f478d551287b9ae9b2859ef00e9c283177b0dec7e3fdadc7631e6f",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sand_magnetite.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\sand_basalt_magnetite.json",
+      "sha256": "7ea052e0cabb3700a67148017ea03b51a501ca3696f8e34119340304ff309365",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sand_basalt_magnetite.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\sand_granite_magnetite.json",
+      "sha256": "bfafdc4dc5411f7ee08c89697e931122b208e0f52747342800fbf7c4eb36f53e",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sand_granite_magnetite.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\sand_magnetite.json",
+      "sha256": "a1d9f9186a481e8ac0d0f7fbaede3bfab54c5caae628b0a9d1c70c25a3d33638",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sand_magnetite.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\sand_basalt_magnetite.json",
+      "sha256": "027363d96fbe463619f593ef84bda01f1e739c49131876da3e43d2e314668698",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/sand_basalt_magnetite.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\sand_granite_magnetite.json",
+      "sha256": "57b5d029d20cf28126e6cd4d606d7095b572b3a1801ca2aaf4492f05066a6966",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/sand_granite_magnetite.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\sand_magnetite.json",
+      "sha256": "df5d490e7229bff4d51088418266ebe911afd5e33c9112aff86d3497089abe29",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/sand_magnetite.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\forge\\biome_modifier\\gt_black_sand.json",
+      "sha256": "a95957c9016a8108f43f861d5000fac60533aad8a3af74e7a5381fea09746cac",
+      "target": "neoforge/src/main/resources/data/gregtech/neoforge/biome_modifier/gt_black_sand.json",
+      "adaptation": "native modifier; Forge original retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\forge\\biome_modifier\\gt_nether_ores.json",
+      "sha256": "b9178c9ef5da62b3b41ca61f3a1a1d91ff5d9214d2063ba491c7234ad973a570",
+      "target": "neoforge/src/main/resources/data/gregtech/neoforge/biome_modifier/gt_nether_ores.json",
+      "adaptation": "native modifier; Forge original retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\worldgen\\configured_feature\\gt_black_sand.json",
+      "sha256": "2f18138b2eb09f544ba51aa29bd5f544e72dd61672efcf6cb318ef896bde266b",
+      "target": "core/src/main/resources/data/gregtech/worldgen/configured_feature/gt_black_sand.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\worldgen\\configured_feature\\gt_nether_deposits.json",
+      "sha256": "683c6af40ba0cee9e12964c8319175a9578b3f134722516166ae366d739a1caa",
+      "target": "core/src/main/resources/data/gregtech/worldgen/configured_feature/gt_nether_deposits.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\worldgen\\placed_feature\\gt_black_sand.json",
+      "sha256": "270f945fe4b5c3b949060269dfc7af73b89606e887d95e1981da52871ff5cd1a",
+      "target": "core/src/main/resources/data/gregtech/worldgen/placed_feature/gt_black_sand.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\worldgen\\placed_feature\\gt_nether_deposits.json",
+      "sha256": "22ceac1ff09277b909eb0a6418e452c30d1a0806739f882f815e2800fd11beaa",
+      "target": "core/src/main/resources/data/gregtech/worldgen/placed_feature/gt_nether_deposits.json",
+      "adaptation": "shared original bytes"
+    }
+  ],
+  "nativeTags": [
+    "data/minecraft/tags/block/sand.json",
+    "data/minecraft/tags/block/mineable/shovel.json"
+  ],
+  "comparisonSources": [
+    {
+      "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\worldgen\\GT6NetherCrystalFeature.java",
+      "sha256": "fab23796b2393b26b74bfca6e48388495a3242f70c43b83eae25740ce4030b89"
+    },
+    {
+      "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\worldgen\\GT6NetherClayFeature.java",
+      "sha256": "6e0edfbbafcfcbcb3fcf89687b09f3776c5592f54493bf57a2a60a74f47baa3e"
+    },
+    {
+      "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\block\\surface\\GT6BlackSandBlock.java",
+      "sha256": "e91d1ff70f6e1091b6bca0d3c74393bed15baa8aa1fc49e173db218bc56adb88"
+    }
+  ],
+  "validation": "Grouped core/Neo/Forge compile PASS19s; no new fixture or startup",
+  "knownGaps": [
+    "New sand registrations/datapack rows not yet runtime-covered; the previous bee startup predates this batch.",
+    "Actual river deposits/gravity/shovel drops/material composition and Nether clay/quartz/crystal generation unverified.",
+    "Source1 crystal seed replaces ceiling itself; brokestar seeds air below ceiling, and uses coordinate/dimension seeded stream with explicit bounds. Source1 kept pending source-fidelity/runtime comparison.",
+    "Source1 crystal walk has no explicit vertical-bound guard and noise cache is static unbounded by world lifetime.",
+    "Source1 Nether feature relies on native biome modifier for dimension gating; direct invocation has no dimension check.",
+    "Full survival/client rendering/Forge runtime/reload/old saves/fresh jars pending."
+  ]
+}

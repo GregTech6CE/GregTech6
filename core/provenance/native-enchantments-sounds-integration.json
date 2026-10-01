@@ -1,0 +1,130 @@
+{
+  "date": "2026-10-01",
+  "authors": [
+    "saltnya",
+    "original GregTech6 contributors",
+    "existing integration contributors"
+  ],
+  "license": "Authors/history/notices/authorization unchanged; donors read-only.",
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTSounds.java",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/registry/GTSounds.java",
+      "currentForgeReferenceSha256": "d75d84afff7e12f9d3fa18cbb0b24ee3ae1007b372dc36e89237e7cd82fcbb19",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTSounds.java",
+      "sourceSha256": "d75d84afff7e12f9d3fa18cbb0b24ee3ae1007b372dc36e89237e7cd82fcbb19",
+      "sha256": "701f8e5a0017a3694a3045f92a1585e252d78eb656c85315f9ad044be85a848c"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/registry/GTSounds.java",
+      "currentForgeReferenceSha256": "d75d84afff7e12f9d3fa18cbb0b24ee3ae1007b372dc36e89237e7cd82fcbb19",
+      "priorNativeSha256": "86a27ed2219988a9ef5afb8386be18c9c9a228529166962f338f9cd03688d363",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTSounds.java",
+      "sourceSha256": "d75d84afff7e12f9d3fa18cbb0b24ee3ae1007b372dc36e89237e7cd82fcbb19",
+      "sha256": "245f83686d35cb3550410e5912757768bb1cfebdab82784b404f0acf9450c3ad"
+    },
+    {
+      "target": "neoforge/src/main/resources/data/gregtech/enchantment/disjunction.json",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/registry/GTEnchantments.java",
+      "currentForgeReferenceSha256": "ecb692976048581ae0bf8dedd06f5ba5e0911ac02e2f8a0908329082f72f5350",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTEnchantments.java",
+      "sourceSha256": "ecb692976048581ae0bf8dedd06f5ba5e0911ac02e2f8a0908329082f72f5350",
+      "sha256": "1099ebcff609b1ff5d9e457a23b1899a039d04acf48bdc7de8e7754ad8bc1f4b",
+      "origin": "New Native data-registry/tag boundary derived from the actual original empty anonymous enchantment registrations and fixed Minecraft default cost/category/eligibility API; not claimed as original donor JSON."
+    },
+    {
+      "target": "neoforge/src/main/resources/data/gregtech/enchantment/butchery.json",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/registry/GTEnchantments.java",
+      "currentForgeReferenceSha256": "ecb692976048581ae0bf8dedd06f5ba5e0911ac02e2f8a0908329082f72f5350",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTEnchantments.java",
+      "sourceSha256": "ecb692976048581ae0bf8dedd06f5ba5e0911ac02e2f8a0908329082f72f5350",
+      "sha256": "7603c2e11a44e849f66695fa49e2ad0d3d27da717cce9db6198e44a5f643b25b",
+      "origin": "New Native data-registry/tag boundary derived from the actual original empty anonymous enchantment registrations and fixed Minecraft default cost/category/eligibility API; not claimed as original donor JSON."
+    },
+    {
+      "target": "neoforge/src/main/resources/data/gregtech/enchantment/gt_haste.json",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/registry/GTEnchantments.java",
+      "currentForgeReferenceSha256": "ecb692976048581ae0bf8dedd06f5ba5e0911ac02e2f8a0908329082f72f5350",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTEnchantments.java",
+      "sourceSha256": "ecb692976048581ae0bf8dedd06f5ba5e0911ac02e2f8a0908329082f72f5350",
+      "sha256": "a2ee16e99799155d968737683170b4e52c9c523bae62e60bade7ba250b7485a6",
+      "origin": "New Native data-registry/tag boundary derived from the actual original empty anonymous enchantment registrations and fixed Minecraft default cost/category/eligibility API; not claimed as original donor JSON."
+    },
+    {
+      "target": "neoforge/src/main/resources/data/gregtech/enchantment/sharpness_multi.json",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/registry/GTEnchantments.java",
+      "currentForgeReferenceSha256": "ecb692976048581ae0bf8dedd06f5ba5e0911ac02e2f8a0908329082f72f5350",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTEnchantments.java",
+      "sourceSha256": "ecb692976048581ae0bf8dedd06f5ba5e0911ac02e2f8a0908329082f72f5350",
+      "sha256": "cb704b3c627dfb91ff79906eb98ecc0620274d975d163d8a9c0a9b73e9d4ef37",
+      "origin": "New Native data-registry/tag boundary derived from the actual original empty anonymous enchantment registrations and fixed Minecraft default cost/category/eligibility API; not claimed as original donor JSON."
+    },
+    {
+      "target": "neoforge/src/main/resources/data/gregtech/enchantment/smite_multi.json",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/registry/GTEnchantments.java",
+      "currentForgeReferenceSha256": "ecb692976048581ae0bf8dedd06f5ba5e0911ac02e2f8a0908329082f72f5350",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTEnchantments.java",
+      "sourceSha256": "ecb692976048581ae0bf8dedd06f5ba5e0911ac02e2f8a0908329082f72f5350",
+      "sha256": "0126a908e4d94b57029b732dd6252e9a4385234d245d743b75e130d6b3116186",
+      "origin": "New Native data-registry/tag boundary derived from the actual original empty anonymous enchantment registrations and fixed Minecraft default cost/category/eligibility API; not claimed as original donor JSON."
+    },
+    {
+      "target": "neoforge/src/main/resources/data/gregtech/tags/item/enchantable/digger.json",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/registry/GTEnchantments.java",
+      "currentForgeReferenceSha256": "ecb692976048581ae0bf8dedd06f5ba5e0911ac02e2f8a0908329082f72f5350",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTEnchantments.java",
+      "sourceSha256": "ecb692976048581ae0bf8dedd06f5ba5e0911ac02e2f8a0908329082f72f5350",
+      "sha256": "e0ec63f54d966dae2261ef3cbac748b874c321b1e02351ebb2c16f740fc93a39",
+      "origin": "New Native data-registry/tag boundary derived from the actual original empty anonymous enchantment registrations and fixed Minecraft default cost/category/eligibility API; not claimed as original donor JSON."
+    },
+    {
+      "target": "neoforge/src/main/resources/data/minecraft/tags/enchantment/non_treasure.json",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/registry/GTEnchantments.java",
+      "currentForgeReferenceSha256": "ecb692976048581ae0bf8dedd06f5ba5e0911ac02e2f8a0908329082f72f5350",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTEnchantments.java",
+      "sourceSha256": "ecb692976048581ae0bf8dedd06f5ba5e0911ac02e2f8a0908329082f72f5350",
+      "sha256": "746249f6ca7acd55331ebd6386aa43eb0d601bfe0a69630549b7c6e34e7cd309",
+      "origin": "New Native data-registry/tag boundary derived from the actual original empty anonymous enchantment registrations and fixed Minecraft default cost/category/eligibility API; not claimed as original donor JSON."
+    },
+    {
+      "target": "neoforge/src/main/resources/data/minecraft/tags/enchantment/tooltip_order.json",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/registry/GTEnchantments.java",
+      "currentForgeReferenceSha256": "ecb692976048581ae0bf8dedd06f5ba5e0911ac02e2f8a0908329082f72f5350",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTEnchantments.java",
+      "sourceSha256": "ecb692976048581ae0bf8dedd06f5ba5e0911ac02e2f8a0908329082f72f5350",
+      "sha256": "746249f6ca7acd55331ebd6386aa43eb0d601bfe0a69630549b7c6e34e7cd309",
+      "origin": "New Native data-registry/tag boundary derived from the actual original empty anonymous enchantment registrations and fixed Minecraft default cost/category/eligibility API; not claimed as original donor JSON."
+    }
+  ],
+  "fixedApiEvidence": [
+    {
+      "artifact": "C:\\Users\\Asus\\.gradle\\caches\\forge_gradle\\minecraft_user_repo\\net\\minecraftforge\\forge\\1.20.1-47.4.20_mapped_official_1.20.1\\forge-1.20.1-47.4.20_mapped_official_1.20.1-sources.jar",
+      "entry": "net/minecraft/world/item/enchantment/Enchantment.java",
+      "entrySha256": "d69524bbac56d90bcd0474d5d73f8d9ad74730c820be12a76cd32206de11c5f5"
+    },
+    {
+      "artifact": "C:\\Users\\Asus\\.gradle\\caches\\forge_gradle\\minecraft_user_repo\\net\\minecraftforge\\forge\\1.20.1-47.4.20_mapped_official_1.20.1\\forge-1.20.1-47.4.20_mapped_official_1.20.1-sources.jar",
+      "entry": "net/minecraft/world/item/enchantment/EnchantmentCategory.java",
+      "entrySha256": "38a4ba1ff57561d3ce662b6be4171a0d1615ca4ce39cf4b4a59a86a607888325"
+    },
+    {
+      "artifact": "F:\\Dev\\GregtTech6New\\gregtech6\\neoforge\\build\\moddev\\artifacts\\neoforge-21.1.243-sources.jar",
+      "entry": "net/minecraft/world/item/enchantment/Enchantment.java",
+      "entrySha256": "34f27c278b7b57734cbbbac3af90d8b42f44904f33631d175a1223ed290715a5"
+    },
+    {
+      "artifact": "F:\\Dev\\GregtTech6New\\gregtech6\\neoforge\\build\\moddev\\artifacts\\neoforge-21.1.243-sources.jar",
+      "entry": "net/minecraft/data/tags/VanillaEnchantmentTagsProvider.java",
+      "entrySha256": "312eea63720c5d6fb2da0dcb1e92a127db711dfc2ff7224d8d2cd80599f4bc67"
+    }
+  ],
+  "policy": "D011 baseline parity; D010 one compile and one existing short Neo dedicated startup covering three waves. No new fixture.",
+  "scope": "Five original enchantment identities with actual baseline defaults, eligibility/tooltip tags; all three source sound identities in the existing Native sound register. Wrench not registered twice. Core/Forge unchanged.",
+  "knownBaselineGapsAndNotProven": [
+    "Source custom enchantments are empty anonymous subclasses: no disjunction/butchery/extra damage/mining effects implemented. Native empty effects preserve that baseline; functional mechanics remain a source gap.",
+    "Source custom enchantment display translations absent in current shared en_us; raw description keys retained.",
+    "Original SwordItem/DiggerItem class categories become Native tags (swords / four digger tag families). Other mods must participate in tags; exact third-party subclass eligibility not proven.",
+    "Actual enchanting/table/books/anvil/loot/trade, client sound playback, tool/dismantle/storage/component behaviors, reload, production jars, full gameplay and saved-world restart/old saves remain unverified."
+  ]
+}

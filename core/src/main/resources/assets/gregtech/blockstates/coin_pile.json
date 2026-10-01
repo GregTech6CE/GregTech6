@@ -1,0 +1,208 @@
+{
+  "variants": {
+    "coins=0,fill=1": {
+      "model": "gregtech:block/decoration/pile/coin_0"
+    },
+    "coins=0,fill=2": {
+      "model": "gregtech:block/decoration/pile/coin_0"
+    },
+    "coins=0,fill=3": {
+      "model": "gregtech:block/decoration/pile/coin_0"
+    },
+    "coins=0,fill=4": {
+      "model": "gregtech:block/decoration/pile/coin_0"
+    },
+    "coins=1,fill=1": {
+      "model": "gregtech:block/decoration/pile/coin_1_1"
+    },
+    "coins=1,fill=2": {
+      "model": "gregtech:block/decoration/pile/coin_1_2"
+    },
+    "coins=1,fill=3": {
+      "model": "gregtech:block/decoration/pile/coin_1_3"
+    },
+    "coins=1,fill=4": {
+      "model": "gregtech:block/decoration/pile/coin_1_4"
+    },
+    "coins=2,fill=1": {
+      "model": "gregtech:block/decoration/pile/coin_2_1"
+    },
+    "coins=2,fill=2": {
+      "model": "gregtech:block/decoration/pile/coin_2_2"
+    },
+    "coins=2,fill=3": {
+      "model": "gregtech:block/decoration/pile/coin_2_3"
+    },
+    "coins=2,fill=4": {
+      "model": "gregtech:block/decoration/pile/coin_2_4"
+    },
+    "coins=3,fill=1": {
+      "model": "gregtech:block/decoration/pile/coin_3_1"
+    },
+    "coins=3,fill=2": {
+      "model": "gregtech:block/decoration/pile/coin_3_2"
+    },
+    "coins=3,fill=3": {
+      "model": "gregtech:block/decoration/pile/coin_3_3"
+    },
+    "coins=3,fill=4": {
+      "model": "gregtech:block/decoration/pile/coin_3_4"
+    },
+    "coins=4,fill=1": {
+      "model": "gregtech:block/decoration/pile/coin_4_1"
+    },
+    "coins=4,fill=2": {
+      "model": "gregtech:block/decoration/pile/coin_4_2"
+    },
+    "coins=4,fill=3": {
+      "model": "gregtech:block/decoration/pile/coin_4_3"
+    },
+    "coins=4,fill=4": {
+      "model": "gregtech:block/decoration/pile/coin_4_4"
+    },
+    "coins=5,fill=1": {
+      "model": "gregtech:block/decoration/pile/coin_5_1"
+    },
+    "coins=5,fill=2": {
+      "model": "gregtech:block/decoration/pile/coin_5_2"
+    },
+    "coins=5,fill=3": {
+      "model": "gregtech:block/decoration/pile/coin_5_3"
+    },
+    "coins=5,fill=4": {
+      "model": "gregtech:block/decoration/pile/coin_5_4"
+    },
+    "coins=6,fill=1": {
+      "model": "gregtech:block/decoration/pile/coin_6_1"
+    },
+    "coins=6,fill=2": {
+      "model": "gregtech:block/decoration/pile/coin_6_2"
+    },
+    "coins=6,fill=3": {
+      "model": "gregtech:block/decoration/pile/coin_6_3"
+    },
+    "coins=6,fill=4": {
+      "model": "gregtech:block/decoration/pile/coin_6_4"
+    },
+    "coins=7,fill=1": {
+      "model": "gregtech:block/decoration/pile/coin_7_1"
+    },
+    "coins=7,fill=2": {
+      "model": "gregtech:block/decoration/pile/coin_7_2"
+    },
+    "coins=7,fill=3": {
+      "model": "gregtech:block/decoration/pile/coin_7_3"
+    },
+    "coins=7,fill=4": {
+      "model": "gregtech:block/decoration/pile/coin_7_4"
+    },
+    "coins=8,fill=1": {
+      "model": "gregtech:block/decoration/pile/coin_8_1"
+    },
+    "coins=8,fill=2": {
+      "model": "gregtech:block/decoration/pile/coin_8_2"
+    },
+    "coins=8,fill=3": {
+      "model": "gregtech:block/decoration/pile/coin_8_3"
+    },
+    "coins=8,fill=4": {
+      "model": "gregtech:block/decoration/pile/coin_8_4"
+    },
+    "coins=9,fill=1": {
+      "model": "gregtech:block/decoration/pile/coin_9_1"
+    },
+    "coins=9,fill=2": {
+      "model": "gregtech:block/decoration/pile/coin_9_2"
+    },
+    "coins=9,fill=3": {
+      "model": "gregtech:block/decoration/pile/coin_9_3"
+    },
+    "coins=9,fill=4": {
+      "model": "gregtech:block/decoration/pile/coin_9_4"
+    },
+    "coins=10,fill=1": {
+      "model": "gregtech:block/decoration/pile/coin_10_1"
+    },
+    "coins=10,fill=2": {
+      "model": "gregtech:block/decoration/pile/coin_10_2"
+    },
+    "coins=10,fill=3": {
+      "model": "gregtech:block/decoration/pile/coin_10_3"
+    },
+    "coins=10,fill=4": {
+      "model": "gregtech:block/decoration/pile/coin_10_4"
+    },
+    "coins=11,fill=1": {
+      "model": "gregtech:block/decoration/pile/coin_11_1"
+    },
+    "coins=11,fill=2": {
+      "model": "gregtech:block/decoration/pile/coin_11_2"
+    },
+    "coins=11,fill=3": {
+      "model": "gregtech:block/decoration/pile/coin_11_3"
+    },
+    "coins=11,fill=4": {
+      "model": "gregtech:block/decoration/pile/coin_11_4"
+    },
+    "coins=12,fill=1": {
+      "model": "gregtech:block/decoration/pile/coin_12_1"
+    },
+    "coins=12,fill=2": {
+      "model": "gregtech:block/decoration/pile/coin_12_2"
+    },
+    "coins=12,fill=3": {
+      "model": "gregtech:block/decoration/pile/coin_12_3"
+    },
+    "coins=12,fill=4": {
+      "model": "gregtech:block/decoration/pile/coin_12_4"
+    },
+    "coins=13,fill=1": {
+      "model": "gregtech:block/decoration/pile/coin_13_1"
+    },
+    "coins=13,fill=2": {
+      "model": "gregtech:block/decoration/pile/coin_13_2"
+    },
+    "coins=13,fill=3": {
+      "model": "gregtech:block/decoration/pile/coin_13_3"
+    },
+    "coins=13,fill=4": {
+      "model": "gregtech:block/decoration/pile/coin_13_4"
+    },
+    "coins=14,fill=1": {
+      "model": "gregtech:block/decoration/pile/coin_14_1"
+    },
+    "coins=14,fill=2": {
+      "model": "gregtech:block/decoration/pile/coin_14_2"
+    },
+    "coins=14,fill=3": {
+      "model": "gregtech:block/decoration/pile/coin_14_3"
+    },
+    "coins=14,fill=4": {
+      "model": "gregtech:block/decoration/pile/coin_14_4"
+    },
+    "coins=15,fill=1": {
+      "model": "gregtech:block/decoration/pile/coin_15_1"
+    },
+    "coins=15,fill=2": {
+      "model": "gregtech:block/decoration/pile/coin_15_2"
+    },
+    "coins=15,fill=3": {
+      "model": "gregtech:block/decoration/pile/coin_15_3"
+    },
+    "coins=15,fill=4": {
+      "model": "gregtech:block/decoration/pile/coin_15_4"
+    },
+    "coins=16,fill=1": {
+      "model": "gregtech:block/decoration/pile/coin_16_1"
+    },
+    "coins=16,fill=2": {
+      "model": "gregtech:block/decoration/pile/coin_16_2"
+    },
+    "coins=16,fill=3": {
+      "model": "gregtech:block/decoration/pile/coin_16_3"
+    },
+    "coins=16,fill=4": {
+      "model": "gregtech:block/decoration/pile/coin_16_4"
+    }
+  }
+}

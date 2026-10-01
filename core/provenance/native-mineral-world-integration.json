@@ -1,0 +1,246 @@
+{
+  "authors": [
+    "saltnya",
+    "brokestar233",
+    "Lorbineitte Masson",
+    "original GregTech 6 contributors"
+  ],
+  "license": "Original notices/history retained; local development, no publication/relicensing",
+  "counts": {
+    "features": 4,
+    "bedrockRows": 35,
+    "scatterRows": 24,
+    "pylonTiers": 4,
+    "resources": 13
+  },
+  "choice": "Keep source1 full mineral/existing material identity baseline while actual Forge and Neo world mutations call one shared bedrock vein RNG/shape algorithm, coltan Gaussian region/count/material math, inverse rarity weighting, four pylon tiers and24 Nether litter rows. Existing core GTBedrockOres28 overworld+7 Nether rows feed native dimension boundary. brokestar has independent per-chunk row draws and original shape callback core; masson additionally preserves first-success shell fill and correct floor-to-water mapping. These are stronger original-fidelity candidates requiring recorded behavior replacement; do not import their disconnected material/ore registries or silently change current world generation policy.",
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTFeatures.java",
+      "sha256": "d96685bd176827029cafca3773988ef7385ee42235641113d885369327086ef6",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTFeatures.java",
+          "sha256": "5333be8dcf08f58be13e311321a2d6c52c3f492c6f83fa08e84a14928f9ecd61"
+        }
+      ]
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/worldgen/GTBedrockOreFeature.java",
+      "sha256": "ed8c22cc00ea567850f5d3e02ad7383e406ee713aba1039eed9a736bb76c69b3",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTBedrockOreFeature.java",
+          "sha256": "319ea693fa1286ac818c6886602e90ae0758dde33a667518e88fbe4888843d9d"
+        }
+      ]
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/worldgen/GTColtanFeature.java",
+      "sha256": "355e223a1b6cdad76c3bca2a9d3eee1f357b917d360bbbdc12f098fda5103c5a",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTColtanFeature.java",
+          "sha256": "b7155b2f28d4ee410ae032aed86aaad1b37e07a2520cccaa459814fa5f268935"
+        }
+      ]
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/worldgen/GTDeepOceanFeature.java",
+      "sha256": "097dbc831272869c50cc10ab968a7c100f7a4f6f1dd04308c978d4b7a116f5f7",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTDeepOceanFeature.java",
+          "sha256": "cfebe5da01222092c73545222c069107dc02af3b457d640074b2b7a4e9f2ce61"
+        }
+      ]
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/worldgen/GTNetherScatterFeature.java",
+      "sha256": "a8a22c40afa2cd0db9b1e1da8b722ccce171cb291cf17eb3498c830d4971467f",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTNetherScatterFeature.java",
+          "sha256": "06f4adb713c864044ac9feaa8fde92a689accda68b1f58fe75f0f2c252420cd6"
+        }
+      ]
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/worldgen/MineralWorldgenRules.java",
+      "sha256": "d53bc96e864377a67b26e35ebf4ebf29f894063bdf630b9f1e8f8295f28c8f22",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTBedrockOreFeature.java",
+          "sha256": "319ea693fa1286ac818c6886602e90ae0758dde33a667518e88fbe4888843d9d"
+        },
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTColtanFeature.java",
+          "sha256": "b7155b2f28d4ee410ae032aed86aaad1b37e07a2520cccaa459814fa5f268935"
+        },
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTDeepOceanFeature.java",
+          "sha256": "cfebe5da01222092c73545222c069107dc02af3b457d640074b2b7a4e9f2ce61"
+        }
+      ]
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/worldgen/NetherScatterCatalog.java",
+      "sha256": "3a8fdd258ac46917f807e9fdf840011e9b2e7161e36317d56c70694dd650d756",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTNetherScatterFeature.java",
+          "sha256": "06f4adb713c864044ac9feaa8fde92a689accda68b1f58fe75f0f2c252420cd6"
+        }
+      ]
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTBedrockOreDimensions.java",
+      "sha256": "e7a17a140efaf4ddde23785dd14077a7b7106d234a93b55163e04539f0b753c6",
+      "sources": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTBedrockOreFeature.java",
+      "sha256": "34bf19c72d092e3111de16ba9575c8f8c40925e7a82ab8868c7c191f5f4652b9",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTBedrockOreFeature.java",
+          "sha256": "319ea693fa1286ac818c6886602e90ae0758dde33a667518e88fbe4888843d9d"
+        }
+      ]
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTColtanFeature.java",
+      "sha256": "355e223a1b6cdad76c3bca2a9d3eee1f357b917d360bbbdc12f098fda5103c5a",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTColtanFeature.java",
+          "sha256": "b7155b2f28d4ee410ae032aed86aaad1b37e07a2520cccaa459814fa5f268935"
+        }
+      ]
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTDeepOceanFeature.java",
+      "sha256": "bacb94c65303ac23f77b3cbbd364b2eaa2c939519cc3cf447baca6e2d23586b0",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTDeepOceanFeature.java",
+          "sha256": "cfebe5da01222092c73545222c069107dc02af3b457d640074b2b7a4e9f2ce61"
+        }
+      ]
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTNetherScatterFeature.java",
+      "sha256": "19012222212d920d20c270012933f48cc716c933ad2f18e03f4cccd526f792c5",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTNetherScatterFeature.java",
+          "sha256": "06f4adb713c864044ac9feaa8fde92a689accda68b1f58fe75f0f2c252420cd6"
+        }
+      ]
+    }
+  ],
+  "resources": [
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\forge\\biome_modifier\\gt_coltan.json",
+      "sha256": "4f2f1536c343080cb17060176576b8110c71968b002e6bffef032f7d9a1610cf",
+      "target": "neoforge/src/main/resources/data/gregtech/neoforge/biome_modifier/gt_coltan.json",
+      "adaptation": "native biome modifier; Forge original retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\forge\\biome_modifier\\gt_deep_ocean.json",
+      "sha256": "5d699b0b7d5ba29dcf8b8fdc416f0cdc86f2af5bc478453562755a7f4e0d73a2",
+      "target": "neoforge/src/main/resources/data/gregtech/neoforge/biome_modifier/gt_deep_ocean.json",
+      "adaptation": "native biome modifier; Forge original retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\forge\\biome_modifier\\gt_nether_bedrock_ores.json",
+      "sha256": "c92cc0a79ff3990ad647c3f3899432341e1d8db522888f15dda32076c6a403eb",
+      "target": "neoforge/src/main/resources/data/gregtech/neoforge/biome_modifier/gt_nether_bedrock_ores.json",
+      "adaptation": "native biome modifier; Forge original retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\forge\\biome_modifier\\gt_nether_scatter.json",
+      "sha256": "782f00dba9f3fbcc31b13c790649f803a041d8361b470186d9448dafbf148c2c",
+      "target": "neoforge/src/main/resources/data/gregtech/neoforge/biome_modifier/gt_nether_scatter.json",
+      "adaptation": "native biome modifier; Forge original retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\forge\\biome_modifier\\gt_overworld_ores.json",
+      "sha256": "c8060a5e87f404bf4c01da7d5535649d7684e169889eee91e21e108167d7198d",
+      "target": "neoforge/src/main/resources/data/gregtech/neoforge/biome_modifier/gt_overworld_ores.json",
+      "adaptation": "native biome modifier; Forge original retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\worldgen\\configured_feature\\gt_bedrock_ores.json",
+      "sha256": "8e3d4d8b62cbdd5082120187008a24e0d9531ccc64b91c1cdb60f93552171896",
+      "target": "core/src/main/resources/data/gregtech/worldgen/configured_feature/gt_bedrock_ores.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\worldgen\\configured_feature\\gt_coltan.json",
+      "sha256": "e61dadcbc26f588a8da76bdd5736c761463afee2aafdf48ed74478bd2a2f0166",
+      "target": "core/src/main/resources/data/gregtech/worldgen/configured_feature/gt_coltan.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\worldgen\\configured_feature\\gt_deep_ocean.json",
+      "sha256": "dba9f119c1c71bf2736637f008c5ecf41a84434901dc4ab846830aedad7f124d",
+      "target": "core/src/main/resources/data/gregtech/worldgen/configured_feature/gt_deep_ocean.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\worldgen\\configured_feature\\gt_nether_scatter.json",
+      "sha256": "619f1dfe6f8afeaf5fe1c0b9de02f4c6ba897fdd43f6080ead620a24351d2f3d",
+      "target": "core/src/main/resources/data/gregtech/worldgen/configured_feature/gt_nether_scatter.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\worldgen\\placed_feature\\gt_bedrock_ores.json",
+      "sha256": "ae91e7ac995987533d1f0f4450a8b81cb704aae8986a885f2e58c05f07cc3a9f",
+      "target": "core/src/main/resources/data/gregtech/worldgen/placed_feature/gt_bedrock_ores.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\worldgen\\placed_feature\\gt_coltan.json",
+      "sha256": "853dc58e560b28fa2cb4a2d96aa0ed52a5d78329a1336c30ef2d6cdf7bae822c",
+      "target": "core/src/main/resources/data/gregtech/worldgen/placed_feature/gt_coltan.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\worldgen\\placed_feature\\gt_deep_ocean.json",
+      "sha256": "02d31d899a9c93aee94ac26e930946a54941b51bd1dd742b7db8623bd70060ae",
+      "target": "core/src/main/resources/data/gregtech/worldgen/placed_feature/gt_deep_ocean.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\worldgen\\placed_feature\\gt_nether_scatter.json",
+      "sha256": "50f17b0d6a8852b889919129149fd132855cccf313b2f5105ae96ce1e1d2cfbd",
+      "target": "core/src/main/resources/data/gregtech/worldgen/placed_feature/gt_nether_scatter.json",
+      "adaptation": "shared original bytes"
+    }
+  ],
+  "comparisonSources": [
+    {
+      "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\worldgen\\GT6BedrockOreGenerator.java",
+      "sha256": "909fbf0e0435ce0c46495a0a57949f21e3f65e68907e2a2834276efdcf91b4e8"
+    },
+    {
+      "path": "F:\\Dev\\GregtTech6New\\Libs\\cruciblecraft\\src\\main\\java\\com\\masson\\cruciblecraft\\worldgen\\BedrockOreVeins.java",
+      "sha256": "7c63d049cc59e856424790a2672b36d268c2f38f779cabe596b0d60ca1995b61"
+    },
+    {
+      "path": "F:\\Dev\\GregtTech6New\\Libs\\cruciblecraft\\src\\main\\java\\com\\masson\\cruciblecraft\\worldgen\\BedrockOreVeinFeature.java",
+      "sha256": "98275f533c691b52c04374cbbe753197f08030d25be81dc9b859a24ecf84f773"
+    }
+  ],
+  "validation": "Grouped core/Neo/Forge compile PASS19s. No new fixture or startup.",
+  "knownGaps": [
+    "Native registration/datapack startup of this batch and real newly generated terrain unverified; preceding bee startup does not cover this wave.",
+    "Source1 picks one weighted row on16x16chunk grid, whereas brokestar/masson roll each catalog row independently per chunk. Source1 baseline retained, original-fidelity alternative recorded rather than declaring it best.",
+    "Source1 small bedrock ore uses same large ore placement; muffin host shell is not explicitly filled and forced-center placement is not included in return flag.",
+    "Source1 tail upper bound is seaLevel used as relative height to minBuildHeight, unlike masson absolute water-level conversion; negative-floor reach can stop below actual sea level.",
+    "Source1 coltan distance uses int-square arithmetic; extreme coordinates can overflow; exactly one gaussian center is baseline.",
+    "Deep ocean biome gate is only vanilla deep_ocean; newer deep ocean variants and mod dimensions absent.",
+    "Actual resource conservation/survival/drops/client rendering/Forge runtime/independent world reload/old saves/fresh jars pending."
+  ]
+}

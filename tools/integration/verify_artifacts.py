@@ -19,6 +19,16 @@ PLATFORMS = {
     'neoforge': {'metadata': 'META-INF/neoforge.mods.toml', 'minecraft': '1.21.1', 'loader': 'neoforge'},
 }
 
+# Both production platforms must retain the restored gameplay implementations.
+# Shared-core agreement alone also accepts a material-only NeoForge skeleton.
+GAMEPLAY_CLASSES = (
+    'com/gregtech/gregtech/registry/GTBlocks.class',
+    'com/gregtech/gregtech/registry/GTBlockEntities.class',
+    'com/gregtech/gregtech/registry/GTMachines.class',
+    'com/gregtech/gregtech/worldgen/GTFeatures.class',
+    'com/gregtech/gregtech/blockentity/machine/SmeltingCrucibleBlockEntity.class',
+)
+
 
 def read_properties(path):
     """Read the literal key=value properties used by this build's metadata."""
@@ -85,7 +95,8 @@ def check_metadata(raw, platform, properties):
     if not isinstance(mods, list) or len(mods) != 1 or not isinstance(mods[0], dict):
         raise ValueError('Descriptor must declare exactly one integration mod')
     mod = mods[0]
-    for key, expected in (('modId', properties['mod_id']), ('version', properties['mod_version'])):
+    for key, expected in (('modId', properties['mod_id']), ('version', properties['mod_version']),
+                          ('displayName', properties['mod_name'])):
         if mod.get(key) != expected:
             raise ValueError(f'{key} must be {expected!r}, found {mod.get(key)!r}')
     all_dependencies = metadata.get('dependencies', {})
@@ -130,6 +141,9 @@ def inspect(path, platform, required_core, properties, forbidden_tests):
         duplicates = [name for name, count in counts.items() if count > 1]
         if duplicates:
             raise ValueError(f'{path}: duplicate ZIP entries: {duplicates[:10]}')
+        missing_gameplay = [name for name in GAMEPLAY_CLASSES if counts.get(name) != 1]
+        if missing_gameplay:
+            raise ValueError(f'{path}: incomplete platform gameplay content: {missing_gameplay}')
         if metadata_path not in counts:
             raise ValueError(f'{path}: missing {metadata_path}')
         other_descriptors = {spec['metadata'] for spec in PLATFORMS.values()} - {metadata_path}

@@ -1,0 +1,146 @@
+{
+  "date": "2026-10-01",
+  "authors": [
+    "saltnya",
+    "original GregTech6 contributors",
+    "existing integration contributors"
+  ],
+  "license": "Original notices/authorship/history retained; source snapshots read-only.",
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/energy/ReactorCoreBlock.java",
+      "sha256": "2899a31ea2fef8bb16fda74f1358ba75858a2f68a0d3f32e92f9752bd708b585",
+      "priorNativeSha256": "4530e76d3043f5dd1ea970f4a273c840aad36a29ea347243d906424693d1453c",
+      "affectedSavePaths": 1,
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/block/energy/ReactorCoreBlock.java",
+      "currentForgeReferenceSha256": "a395dae760a049643690796219d5714a1ef52001c276943848d2baf69fdf9700",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\energy\\ReactorCoreBlock.java",
+      "sourceSha256": "a395dae760a049643690796219d5714a1ef52001c276943848d2baf69fdf9700"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/energy/ReactorCore2x2Block.java",
+      "sha256": "342d0339684ec3af96a732ecc2cae571f8db2e0e6ad499218ae4cc4c3086a811",
+      "priorNativeSha256": "807578af2af6ad572bc41c22faf4312cc84a05bf597e2168af86a94573c00ba5",
+      "affectedSavePaths": 1,
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/block/energy/ReactorCore2x2Block.java",
+      "currentForgeReferenceSha256": "d062333235600fba15eb1ab45798b431ded21812b6d3bc736f8d25a954a50fe2",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\energy\\ReactorCore2x2Block.java",
+      "sourceSha256": "d062333235600fba15eb1ab45798b431ded21812b6d3bc736f8d25a954a50fe2"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/machine/AxialGeneratorBlock.java",
+      "sha256": "13c938d4ab25c345a317b6286b6b3dcdaae5bc71df8b5d1a378fbabb75586114",
+      "priorNativeSha256": "143a2d1e26d61cfc25639cc3574390d4722c633de999b8cb2a12d6f284ee3903",
+      "affectedSavePaths": 1,
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/block/machine/AxialGeneratorBlock.java",
+      "currentForgeReferenceSha256": "2b4c9fe84022b7726cc78de622847c2465218242b65c87f5d67a4c0670f0eeca",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\AxialGeneratorBlock.java",
+      "sourceSha256": "2b4c9fe84022b7726cc78de622847c2465218242b65c87f5d67a4c0670f0eeca"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/machine/BedrockDrillControllerBlock.java",
+      "sha256": "9ffa342015ca80d82fbc106ab318491a2d334f9406d35c9b741c691319f481fd",
+      "priorNativeSha256": "b941533a1707b913980d510b1eb2c1398536d022e9fa6684d8739f69dc276c87",
+      "affectedSavePaths": 1,
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/block/machine/BedrockDrillControllerBlock.java",
+      "currentForgeReferenceSha256": "d3426f96f25b6a07701722df6d219de69e17944728d0a6a5bdbac0e64c23c4c8",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\BedrockDrillControllerBlock.java",
+      "sourceSha256": "d3426f96f25b6a07701722df6d219de69e17944728d0a6a5bdbac0e64c23c4c8"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/machine/LargeGasTurbineControllerBlock.java",
+      "sha256": "6299ef3f81aac908bcf246d4ce5f9a8c997e975d12c4b930e72e88cf16e94540",
+      "priorNativeSha256": "b06984a73cba851dc6d937eae2135681582d9d4affe040d578183d57926c7c8d",
+      "affectedSavePaths": 1,
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/block/machine/LargeGasTurbineControllerBlock.java",
+      "currentForgeReferenceSha256": "29052c2cbc0ad686605bffa48d92203545ceeb4163d4813cd30d7dea3e4c389d",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\LargeGasTurbineControllerBlock.java",
+      "sourceSha256": "29052c2cbc0ad686605bffa48d92203545ceeb4163d4813cd30d7dea3e4c389d"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/machine/LargeHeatExchangerControllerBlock.java",
+      "sha256": "d191c6e9157368896d96cd60edfcb3292fb09df180eb87eb8d6bf855c3f23ec5",
+      "priorNativeSha256": "c3122629f44f213c373fe9315545dc4b8310dd92319829d241ffbe8704753aa1",
+      "affectedSavePaths": 1,
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/block/machine/LargeHeatExchangerControllerBlock.java",
+      "currentForgeReferenceSha256": "8b76f92ff1c6663a797a9194686c4758292ae91698f400cd65a34470d3c7caa6",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\LargeHeatExchangerControllerBlock.java",
+      "sourceSha256": "8b76f92ff1c6663a797a9194686c4758292ae91698f400cd65a34470d3c7caa6"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/machine/OriginalBedrockDrillControllerBlock.java",
+      "sha256": "aaccdf21e13e3a38dae0c8e2deef345bd44512db1b1762c67f04699cb2e2de75",
+      "priorNativeSha256": "5e697d4e7a8a9e916c51106ffd91dcf9387ad4640865d10a01ac1e4c2eb42d78",
+      "affectedSavePaths": 2,
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/block/machine/OriginalBedrockDrillControllerBlock.java",
+      "currentForgeReferenceSha256": "1625091a757cf6de55df9c0aacf69537b501059969ebc62f623cd0311578db6a",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\OriginalBedrockDrillControllerBlock.java",
+      "sourceSha256": "1625091a757cf6de55df9c0aacf69537b501059969ebc62f623cd0311578db6a"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/machine/OriginalLargeBoilerControllerBlock.java",
+      "sha256": "9712cf674e4441268bc8ce029e89500c177d5f6690b3177ef5029d69ed688285",
+      "priorNativeSha256": "8f1ddc616463aebeafbba24ac9d35af7234da19bb68481b5ad75b8e528c2d286",
+      "affectedSavePaths": 2,
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/block/machine/OriginalLargeBoilerControllerBlock.java",
+      "currentForgeReferenceSha256": "bc8bce1ed9a8bacfd575fe2158fcf09448cce5c710ed095cd644e835a9d0e648",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\OriginalLargeBoilerControllerBlock.java",
+      "sourceSha256": "bc8bce1ed9a8bacfd575fe2158fcf09448cce5c710ed095cd644e835a9d0e648"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/machine/OriginalLightningRodControllerBlock.java",
+      "sha256": "aab928452368d2523b94158b9cced85eea2b1b656902ffa40eeccef1501120d7",
+      "priorNativeSha256": "8e6bd056ad9bbb98706c50b0250688586784d94b41463bb62f1f2f7b0f097d90",
+      "affectedSavePaths": 2,
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/block/machine/OriginalLightningRodControllerBlock.java",
+      "currentForgeReferenceSha256": "5a68e1860042f102596fd83474103a028f170470e7daaf1a19230c8773e883ce",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\OriginalLightningRodControllerBlock.java",
+      "sourceSha256": "5a68e1860042f102596fd83474103a028f170470e7daaf1a19230c8773e883ce"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/machine/TankControllerBlock.java",
+      "sha256": "a17260a973e34061eeb4d7627f5f57158653bfe3d8a4b2ea7475d1ccca53a794",
+      "priorNativeSha256": "adf114ff88c748811d59b952e7914394b529341ec3af94d5506e945bddee9da7",
+      "affectedSavePaths": 2,
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/block/machine/TankControllerBlock.java",
+      "currentForgeReferenceSha256": "4ca170831e85ee70743a8fa53534a99966f25bf82541f9e8b2dfb553f3bea905",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\TankControllerBlock.java",
+      "sourceSha256": "4ca170831e85ee70743a8fa53534a99966f25bf82541f9e8b2dfb553f3bea905"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/FluidSpringBlock.java",
+      "sha256": "26c4154d2134929e850e67548b10f187d271337ea6c326030ebab921db254480",
+      "priorNativeSha256": "900c0e10888bb6312e1bdbe4296f803bd0fa38ea8c3335c255a3bf7696aeaa7a",
+      "affectedSavePaths": 1,
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/block/FluidSpringBlock.java",
+      "currentForgeReferenceSha256": "6e15f62eeca0e72123c5ddc1e5d4935e5b538be3bfb9731bf0ff8da5b0869240",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\FluidSpringBlock.java",
+      "sourceSha256": "6e15f62eeca0e72123c5ddc1e5d4935e5b538be3bfb9731bf0ff8da5b0869240"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/plant/BushBlock.java",
+      "sha256": "425bd0a82a537de4c9bef9499a88a7a093a9fab4433a092071cb25a46e952b37",
+      "priorNativeSha256": "3c0a22739aafaa551723ef2f213b0d122263fb95aac527f90a59eaeb1689e45f",
+      "affectedSavePaths": 1,
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/block/plant/BushBlock.java",
+      "currentForgeReferenceSha256": "694af241ea38f3cc3a8e61ee46b5e624e5c675a85acd07f63b945d08ab18e96b",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\plant\\BushBlock.java",
+      "sourceSha256": "694af241ea38f3cc3a8e61ee46b5e624e5c675a85acd07f63b945d08ab18e96b"
+    }
+  ],
+  "nativeApiEvidence": [
+    {
+      "artifact": "neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "entry": "net/minecraft/core/component/DataComponents.java",
+      "sha256": "933a4881379b8bf9a86e42bceda93d846a58d8ce9939e46dc95a70f91cab1998"
+    },
+    {
+      "artifact": "neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "entry": "net/minecraft/world/level/block/entity/BlockEntity.java",
+      "sha256": "c278b134769eefd1033c7952a2a5d461efd4e3e7fbe2c2f7d864182a9aeece6d"
+    }
+  ],
+  "policy": "D011 platform parity; D010 one grouped compile, no new fixture, jar archive or game startup.",
+  "scope": "Native persistent block entity item components require id. saveWithId preserves saveWithoutMetadata fields and appends actual registered type; springs/bushes keep narrow source fields and append actual type id. Existing inventory/rod/cover removals unchanged.",
+  "notProven": "Actual item component encoding/placement/drop conservation, gameplay, reload, production jar run and world restart/old saves. Latest previously delivered jar does not contain this wave."
+}

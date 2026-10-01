@@ -1,0 +1,1577 @@
+{
+  "date": "2026-10-01",
+  "authors": [
+    "saltnya",
+    "brokestar233",
+    "Lorbineitte Masson",
+    "original GregTech6 contributors"
+  ],
+  "license": "Original notices/history preserved. No third-party authorization changed. Local development only.",
+  "counts": {
+    "laserConverters": 15,
+    "quantumEnergizers": 5,
+    "opticalFiber": 1,
+    "sensors": 20,
+    "longDistance": 16,
+    "totalBlocks": 57,
+    "resources": 225,
+    "javaRecords": 37
+  },
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "sha256": "0c0c054ba515a0bc68a30f806a7f617f605f2e78d9e761f5a3f705f3aeb94866",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "sha256": "b2cd812ebd06866f2cb42249c5e8ead1e39193a31159b09df97be571570b8305",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTBlockEntities.java",
+      "sourceSha256": "027081bae34480826956a74d65a24aa7f4ef29d4be4a4687046793a10d9df62f"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/api/sensor/SensorPanelGeometry.java",
+      "sha256": "fe4d512c76b86b08a974916377f3430df2e10a342188ec4a36527f94ffb7955f",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\api\\sensor\\SensorPanelGeometry.java",
+      "sourceSha256": "96f3522254209b19e38c49357007aad43db12eae65eef801e78030e5ca22fba9"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/block/misc/LongDistEndpointBlockEntity.java",
+      "sha256": "c62c402010e123ac9ce48bc2c986604585fd1b176866313b39ef59fce80a81ac",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\LongDistEndpointBlockEntity.java",
+      "sourceSha256": "288d072676520579fec8678f6a0994e544394f5958371be480aa13e2d840bfec"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/block/misc/LongDistanceTransformerBlockEntity.java",
+      "sha256": "fd53da0b43673d114cecb76cc69941398b521c1a254d9b6500ba7f8b093a67bb",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\LongDistanceTransformerBlockEntity.java",
+      "sourceSha256": "78682cd7935a65c49fa2a1762f0143ff7143c07f97ec2a6a4073bf6e6d185f1d"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/blockentity/energy/LaserConverterBlockEntity.java",
+      "sha256": "17ef31eba643fd9ef770e816e9b189668530ae07c21e05e99079efb65fddb61b",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\energy\\LaserConverterBlockEntity.java",
+      "sourceSha256": "8c18124acfb682324bca3cbc81f884b4d8ef49da665d47568b55e60de0c7022d"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/blockentity/energy/LaserFiberBlockEntity.java",
+      "sha256": "a7eb627be040efd085b4a39455e877e7adeb40c0fba2bbaa59b99ff0ce99ceef",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\energy\\LaserFiberBlockEntity.java",
+      "sourceSha256": "7f2e3ad1d4f2345e5cf396f7311424a93ec8db1420720ddedad51307d87c6fb9"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/blockentity/sensor/SensorBlockEntity.java",
+      "sha256": "890bfc2b3d543933145079bbd02556ca0a2faace802ddb36f14d84409e516c34",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\sensor\\SensorBlockEntity.java",
+      "sourceSha256": "f0928f45eaf94d0d15a8c8b7c76c03c24f1025e80372ba6f2efb3c2ca8fb651e"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/registry/GTIconSetBlocks.java",
+      "sha256": "ac4e61723db8340a67943689bb32e83a521e6d20ba80a39adb89ce494eb06167",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTIconSetBlocks.java",
+      "sourceSha256": "efe85ee1d952dceddb949810522bce6a4b5cc01b66cb91b4d236a2c3692c4c12"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/registry/GTMiscBlocks.java",
+      "sha256": "9319d5171ec055378b5ff1208566d3582fa66d7af9e9a11c27491b716da04d3a",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTMiscBlocks.java",
+      "sourceSha256": "83b664d4b30db11974c09da3aba16d9691a7a0223264aa7b3b36975a5409abd2"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/registry/GTSensors.java",
+      "sha256": "3cf8fb20c5ef75f5262f5616c5d63f826e24fc1098d58c872d6cc9eaaa522723",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTSensors.java",
+      "sourceSha256": "62b158d21e2085199b1ceb9974a289300665187283ca8bedffba9afdee0731a1"
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/api/sensor/SensorCatalog.java",
+      "sha256": "13a9cce6bd54d57c1ea094f8b26b9a1ab3f9920655a4d44221a0b3a75fdad5ac",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/api/sensor/SensorPanelRules.java",
+      "sha256": "1e1d6e2fbbe38aef4bb43a6858ee8014034cf89a7d61779ba272af355fbaa513",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/energy/LaserPacketRouter.java",
+      "sha256": "0ee06ffe5cd5efcbe0de586c61850664bb5500b9567d94f884d52bb9d2ec30b5",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/energy/LaserWorkRules.java",
+      "sha256": "253a53cef245c10fd0123647d2930ac884a1bb17e8d15ef16e7ea524e8521950",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/logistics/LongDistanceCatalog.java",
+      "sha256": "455546fdca918eb6f8fc28a1fdc91428ffb063349d1ba43fe58c3cd3c1db56cd",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/logistics/LongDistanceRules.java",
+      "sha256": "b84907d444ed467cfdd799125909ea5abe34427854d98860b43066b0604824c5",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/api/sensor/SensorPanelGeometry.java",
+      "sha256": "e55069377d709d216f8eb446f4ea19a1e8f6f6cc89b0b80b2b021ef4364995b2",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\api\\sensor\\SensorPanelGeometry.java",
+      "sourceSha256": "96f3522254209b19e38c49357007aad43db12eae65eef801e78030e5ca22fba9"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/energy/LaserConverterBlock.java",
+      "sha256": "6a700e5bcb7fbf281aeb357419aff24432841f9fc296feebbddcb310dac1f4fe",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\energy\\LaserConverterBlock.java",
+      "sourceSha256": "c9f8937feda39019b9e64227a2856b6a4241247f492184b1aff502e2f94ff3c3"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/energy/LaserFiberBlock.java",
+      "sha256": "e57556a33d16c44f11e09a4f74cec7ad9c69183e59f5c9d0a1b511c89e553023",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\energy\\LaserFiberBlock.java",
+      "sourceSha256": "caeb75657e31a3fb7834f0762ee0350e171a50458308b064a89485439556f53f"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/misc/LongDistEndpointBlock.java",
+      "sha256": "2f0bf70701c4a47831b9df6c78985ab3bd408eff79e267f3da978c8b32eb4565",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\LongDistEndpointBlock.java",
+      "sourceSha256": "ab1073f21933d795e01130366502b5c06b51c7c21f2e5cb87998022dfe01ebe5"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/misc/LongDistEndpointBlockEntity.java",
+      "sha256": "f8594cb3d6bcd8de9747482cf3b2c6a8443b60bfee19bb7120020660b2060cda",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\LongDistEndpointBlockEntity.java",
+      "sourceSha256": "288d072676520579fec8678f6a0994e544394f5958371be480aa13e2d840bfec"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/misc/LongDistPipeBlock.java",
+      "sha256": "0a3ecc961810b9bf54402f0ee8abc12a7ab28ecb6f96a817d4192a1dfaadc4ea",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\LongDistPipeBlock.java",
+      "sourceSha256": "0aeb6514850d2e05139ae5ab60f2bd310bda0c489c44847a408101c8a5dc90ea"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/misc/LongDistanceTransformerBlock.java",
+      "sha256": "97a23f44e1e0c7b12e0bd407110b5cad25f6700b5ea2330a4dba66993d6cd732",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\LongDistanceTransformerBlock.java",
+      "sourceSha256": "e0ab21721360ef9a3e69357e7dc10694d761a96da3fe40b117894c42c94480d2"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/misc/LongDistanceTransformerBlockEntity.java",
+      "sha256": "272ebc823c199c62b4fa5c8be5f2380eae7ef9f031f5a20814620bb63bb24354",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\LongDistanceTransformerBlockEntity.java",
+      "sourceSha256": "78682cd7935a65c49fa2a1762f0143ff7143c07f97ec2a6a4073bf6e6d185f1d"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/sensor/SensorBlock.java",
+      "sha256": "f7a9cc22b715e25fad54d531a3d9040231a8b6510e4c1f309592b3b4338723fa",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\sensor\\SensorBlock.java",
+      "sourceSha256": "e46004372d327dc6cbeaecda1e9cdad510abb87a5077188cfa1ceecb193a0505"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/energy/LaserConverterBlockEntity.java",
+      "sha256": "a3e1cd24074cbf7f229499f60607675d8fa5213e6ec0c1a05f2f7d5058a49f58",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\energy\\LaserConverterBlockEntity.java",
+      "sourceSha256": "8c18124acfb682324bca3cbc81f884b4d8ef49da665d47568b55e60de0c7022d"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/energy/LaserFiberBlockEntity.java",
+      "sha256": "c731a5bfcdb3b2e8e615f5c835090dcec0e4e7c2d9bfed39b367565cf10756cd",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\energy\\LaserFiberBlockEntity.java",
+      "sourceSha256": "7f2e3ad1d4f2345e5cf396f7311424a93ec8db1420720ddedad51307d87c6fb9"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/sensor/SensorBlockEntity.java",
+      "sha256": "7d3d67812d7d8762370eda53e943627a68594328cd1f2e6bffa33bebdba2ce1c",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\sensor\\SensorBlockEntity.java",
+      "sourceSha256": "f0928f45eaf94d0d15a8c8b7c76c03c24f1025e80372ba6f2efb3c2ca8fb651e"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/LaserClientSetup.java",
+      "sha256": "42d0126e207839dafdabb398964b8c03ad6778675614e224f6dbdc627922c822",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/SensorClientSetup.java",
+      "sha256": "8e0c1ac117d4b76375010d8dc19ccc8bee08128c61116cdd9396f7ea39d289e6",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/SensorRenderer.java",
+      "sha256": "fe51a5433e2e3f03b909b341e43429c414a5f2d495f04869189296df29f306e3",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\SensorRenderer.java",
+      "sourceSha256": "fe51a5433e2e3f03b909b341e43429c414a5f2d495f04869189296df29f306e3"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/energy/LaserCapabilities.java",
+      "sha256": "a041019bf3393bb51f65da79889e0020f09308453ae9676570655f9fc0f6f18b",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/LongDistanceCapabilities.java",
+      "sha256": "4a7e0973eb184ef7a9596e8ca39f1d275a49dc3bed46b7dd217c3bae00997b48",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTLasers.java",
+      "sha256": "96e033d8d5cead1dda8982264661e3263e26659e72aa6dab906c957fa55e0d91",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTLasers.java",
+      "sourceSha256": "7147ee131546c33bd7f319786501faa22c815654d1b075e7e8ce93a86d13295f"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTLongDistance.java",
+      "sha256": "0e260f2ea3158b9f72f1fb60016446eb922dc5123d8b3ec04be210959233d9b1",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTSensors.java",
+      "sha256": "d2f3592a5bfe3369cbd1520a6ac3d675370968eda491a71af5ad3158df5da906",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTSensors.java",
+      "sourceSha256": "62b158d21e2085199b1ceb9974a289300665187283ca8bedffba9afdee0731a1"
+    }
+  ],
+  "resources": [
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\co2_laser_ev.json",
+      "sha256": "97dbd840fce64615c3cf5254382443253d20da7b77eb6a81833609cebb5ba9a1",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/co2_laser_ev.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\co2_laser_hv.json",
+      "sha256": "97dbd840fce64615c3cf5254382443253d20da7b77eb6a81833609cebb5ba9a1",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/co2_laser_hv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\co2_laser_iv.json",
+      "sha256": "97dbd840fce64615c3cf5254382443253d20da7b77eb6a81833609cebb5ba9a1",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/co2_laser_iv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\co2_laser_lv.json",
+      "sha256": "97dbd840fce64615c3cf5254382443253d20da7b77eb6a81833609cebb5ba9a1",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/co2_laser_lv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\co2_laser_mv.json",
+      "sha256": "97dbd840fce64615c3cf5254382443253d20da7b77eb6a81833609cebb5ba9a1",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/co2_laser_mv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\flux_laser_ev.json",
+      "sha256": "a5affa175351baf4b2777f6fb0c1a0a5a2ebc415b8668c806247cdcaa07914f8",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/flux_laser_ev.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\flux_laser_hv.json",
+      "sha256": "a5affa175351baf4b2777f6fb0c1a0a5a2ebc415b8668c806247cdcaa07914f8",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/flux_laser_hv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\flux_laser_iv.json",
+      "sha256": "a5affa175351baf4b2777f6fb0c1a0a5a2ebc415b8668c806247cdcaa07914f8",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/flux_laser_iv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\flux_laser_lv.json",
+      "sha256": "a5affa175351baf4b2777f6fb0c1a0a5a2ebc415b8668c806247cdcaa07914f8",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/flux_laser_lv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\flux_laser_mv.json",
+      "sha256": "a5affa175351baf4b2777f6fb0c1a0a5a2ebc415b8668c806247cdcaa07914f8",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/flux_laser_mv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\laser_absorber_ev.json",
+      "sha256": "94ba52cfe180d6ae2df0579dda5960ccf3cc3137d4ba5bc174fb16f30c9dd3ce",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/laser_absorber_ev.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\laser_absorber_hv.json",
+      "sha256": "94ba52cfe180d6ae2df0579dda5960ccf3cc3137d4ba5bc174fb16f30c9dd3ce",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/laser_absorber_hv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\laser_absorber_iv.json",
+      "sha256": "94ba52cfe180d6ae2df0579dda5960ccf3cc3137d4ba5bc174fb16f30c9dd3ce",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/laser_absorber_iv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\laser_absorber_lv.json",
+      "sha256": "94ba52cfe180d6ae2df0579dda5960ccf3cc3137d4ba5bc174fb16f30c9dd3ce",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/laser_absorber_lv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\laser_absorber_mv.json",
+      "sha256": "94ba52cfe180d6ae2df0579dda5960ccf3cc3137d4ba5bc174fb16f30c9dd3ce",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/laser_absorber_mv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\laser_fiber_wire.json",
+      "sha256": "1624dc7e05dc61ec35ed332f6a6911f4aef94facf7bcd0a49863a92803b16f3e",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/laser_fiber_wire.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\quantum_energizer_ev.json",
+      "sha256": "596226f781b5ab2ab269c4d8f9377c39eb474203d7e4ebdd9d6c612149d1536d",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/quantum_energizer_ev.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\quantum_energizer_iv.json",
+      "sha256": "596226f781b5ab2ab269c4d8f9377c39eb474203d7e4ebdd9d6c612149d1536d",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/quantum_energizer_iv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\quantum_energizer_luv.json",
+      "sha256": "596226f781b5ab2ab269c4d8f9377c39eb474203d7e4ebdd9d6c612149d1536d",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/quantum_energizer_luv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\quantum_energizer_uv.json",
+      "sha256": "596226f781b5ab2ab269c4d8f9377c39eb474203d7e4ebdd9d6c612149d1536d",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/quantum_energizer_uv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\quantum_energizer_zpm.json",
+      "sha256": "596226f781b5ab2ab269c4d8f9377c39eb474203d7e4ebdd9d6c612149d1536d",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/quantum_energizer_zpm.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\co2_laser_ev.json",
+      "sha256": "843c67797ac8a4488a906d3961d14d01bf903b44b81adf11526ad30ea63da585",
+      "target": "core/src/main/resources/assets/gregtech/models/item/co2_laser_ev.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\co2_laser_hv.json",
+      "sha256": "843c67797ac8a4488a906d3961d14d01bf903b44b81adf11526ad30ea63da585",
+      "target": "core/src/main/resources/assets/gregtech/models/item/co2_laser_hv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\co2_laser_iv.json",
+      "sha256": "843c67797ac8a4488a906d3961d14d01bf903b44b81adf11526ad30ea63da585",
+      "target": "core/src/main/resources/assets/gregtech/models/item/co2_laser_iv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\co2_laser_lv.json",
+      "sha256": "843c67797ac8a4488a906d3961d14d01bf903b44b81adf11526ad30ea63da585",
+      "target": "core/src/main/resources/assets/gregtech/models/item/co2_laser_lv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\co2_laser_mv.json",
+      "sha256": "843c67797ac8a4488a906d3961d14d01bf903b44b81adf11526ad30ea63da585",
+      "target": "core/src/main/resources/assets/gregtech/models/item/co2_laser_mv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\flux_laser_ev.json",
+      "sha256": "327f26c9a242eba0ddfd0dae928a063891ef9eac2afc8583581daa1a2291a2e6",
+      "target": "core/src/main/resources/assets/gregtech/models/item/flux_laser_ev.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\flux_laser_hv.json",
+      "sha256": "327f26c9a242eba0ddfd0dae928a063891ef9eac2afc8583581daa1a2291a2e6",
+      "target": "core/src/main/resources/assets/gregtech/models/item/flux_laser_hv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\flux_laser_iv.json",
+      "sha256": "327f26c9a242eba0ddfd0dae928a063891ef9eac2afc8583581daa1a2291a2e6",
+      "target": "core/src/main/resources/assets/gregtech/models/item/flux_laser_iv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\flux_laser_lv.json",
+      "sha256": "327f26c9a242eba0ddfd0dae928a063891ef9eac2afc8583581daa1a2291a2e6",
+      "target": "core/src/main/resources/assets/gregtech/models/item/flux_laser_lv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\flux_laser_mv.json",
+      "sha256": "327f26c9a242eba0ddfd0dae928a063891ef9eac2afc8583581daa1a2291a2e6",
+      "target": "core/src/main/resources/assets/gregtech/models/item/flux_laser_mv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\laser_absorber_ev.json",
+      "sha256": "b97dd6b99adade8b9cf29586edb7fba733d4a5f388d0154d8d3f88718b4ff53d",
+      "target": "core/src/main/resources/assets/gregtech/models/item/laser_absorber_ev.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\laser_absorber_hv.json",
+      "sha256": "b97dd6b99adade8b9cf29586edb7fba733d4a5f388d0154d8d3f88718b4ff53d",
+      "target": "core/src/main/resources/assets/gregtech/models/item/laser_absorber_hv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\laser_absorber_iv.json",
+      "sha256": "b97dd6b99adade8b9cf29586edb7fba733d4a5f388d0154d8d3f88718b4ff53d",
+      "target": "core/src/main/resources/assets/gregtech/models/item/laser_absorber_iv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\laser_absorber_lv.json",
+      "sha256": "b97dd6b99adade8b9cf29586edb7fba733d4a5f388d0154d8d3f88718b4ff53d",
+      "target": "core/src/main/resources/assets/gregtech/models/item/laser_absorber_lv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\laser_absorber_mv.json",
+      "sha256": "b97dd6b99adade8b9cf29586edb7fba733d4a5f388d0154d8d3f88718b4ff53d",
+      "target": "core/src/main/resources/assets/gregtech/models/item/laser_absorber_mv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\laser_fiber_wire.json",
+      "sha256": "9d20cb6d69fed02e43cb62678c6701d7387cd5f457faac3ab1c10394e6e965de",
+      "target": "src/main/resources/assets/gregtech/models/item/laser_fiber_wire.json",
+      "adaptation": "Original Forge loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\quantum_energizer_ev.json",
+      "sha256": "e1e788dceddde299f6dc94345eafee9b139a28609b7d67f5526d3fefe5adc78f",
+      "target": "core/src/main/resources/assets/gregtech/models/item/quantum_energizer_ev.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\quantum_energizer_iv.json",
+      "sha256": "e1e788dceddde299f6dc94345eafee9b139a28609b7d67f5526d3fefe5adc78f",
+      "target": "core/src/main/resources/assets/gregtech/models/item/quantum_energizer_iv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\quantum_energizer_luv.json",
+      "sha256": "e1e788dceddde299f6dc94345eafee9b139a28609b7d67f5526d3fefe5adc78f",
+      "target": "core/src/main/resources/assets/gregtech/models/item/quantum_energizer_luv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\quantum_energizer_uv.json",
+      "sha256": "e1e788dceddde299f6dc94345eafee9b139a28609b7d67f5526d3fefe5adc78f",
+      "target": "core/src/main/resources/assets/gregtech/models/item/quantum_energizer_uv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\quantum_energizer_zpm.json",
+      "sha256": "e1e788dceddde299f6dc94345eafee9b139a28609b7d67f5526d3fefe5adc78f",
+      "target": "core/src/main/resources/assets/gregtech/models/item/quantum_energizer_zpm.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\co2_laser_ev.json",
+      "sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/machine/co2_laser_ev.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\co2_laser_hv.json",
+      "sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/machine/co2_laser_hv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\co2_laser_iv.json",
+      "sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/machine/co2_laser_iv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\co2_laser_lv.json",
+      "sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/machine/co2_laser_lv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\co2_laser_mv.json",
+      "sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/machine/co2_laser_mv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\flux_laser_ev.json",
+      "sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/machine/flux_laser_ev.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\flux_laser_hv.json",
+      "sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/machine/flux_laser_hv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\flux_laser_iv.json",
+      "sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/machine/flux_laser_iv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\flux_laser_lv.json",
+      "sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/machine/flux_laser_lv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\flux_laser_mv.json",
+      "sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/machine/flux_laser_mv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\laser_absorber_ev.json",
+      "sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/machine/laser_absorber_ev.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\laser_absorber_hv.json",
+      "sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/machine/laser_absorber_hv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\laser_absorber_iv.json",
+      "sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/machine/laser_absorber_iv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\laser_absorber_lv.json",
+      "sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/machine/laser_absorber_lv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\laser_absorber_mv.json",
+      "sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/machine/laser_absorber_mv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\laser_fiber_wire.json",
+      "sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/machine/laser_fiber_wire.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\quantum_energizer_ev.json",
+      "sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/machine/quantum_energizer_ev.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\quantum_energizer_iv.json",
+      "sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/machine/quantum_energizer_iv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\quantum_energizer_luv.json",
+      "sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/machine/quantum_energizer_luv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\quantum_energizer_uv.json",
+      "sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/machine/quantum_energizer_uv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\quantum_energizer_zpm.json",
+      "sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/machine/quantum_energizer_zpm.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\quantum_energizer.json",
+      "sha256": "0280eeec4099db9dbbf8482f26df909f7f46119f5013efa374d795c9da4f0492",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/energy/quantum_energizer.json",
+      "adaptation": "Original Forge loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\laser_absorber.json",
+      "sha256": "36b8220a8500cce23408a554ca69c34515cf0014f152aa146ef30b5fc3ca3954",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/energy/laser_absorber.json",
+      "adaptation": "Original Forge loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_laser.json",
+      "sha256": "455228f82cdb8fc718f5bd0593ec1065f235bb714e7b1d7df95421ec3a012c5c",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/energy/flux_laser.json",
+      "adaptation": "Original Forge loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\co2_laser.json",
+      "sha256": "e2a407f8b2a6c5f3caab307f4237f0d98fdbfa5a18eeb7bac35633450034a638",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/energy/co2_laser.json",
+      "adaptation": "Original Forge loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\quantum_energizer_active.json",
+      "sha256": "2bd35233e19484cdfca43ce103dad9e9eb539f7e645266d0f41e5b4e6e3ece30",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/energy/quantum_energizer_active.json",
+      "adaptation": "Original Forge loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\laser_fiber_center.json",
+      "sha256": "9c49199f94bc3bcdc7ef71f87e4672fba172330fc2d1331bec7b06193197450f",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/energy/laser_fiber_center.json",
+      "adaptation": "Original Forge loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\laser_fiber_down.json",
+      "sha256": "c948c596df71e4a1f98f02dab8e954341f0c4637d020d00c5f6e078ee522fb54",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/energy/laser_fiber_down.json",
+      "adaptation": "Original Forge loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\laser_fiber_up.json",
+      "sha256": "f8152458c81a70f343f44346b19629983ce9ec44f42d19f0c824bec78ffe3c92",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/energy/laser_fiber_up.json",
+      "adaptation": "Original Forge loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\laser_fiber_north.json",
+      "sha256": "626cc81f2b11a4601b300df39eb87c998c734af73545373c00ea6fc330ee43c3",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/energy/laser_fiber_north.json",
+      "adaptation": "Original Forge loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\laser_fiber_south.json",
+      "sha256": "531647d0f6323ee1fdbf43fdea2096b851b86f8cdbca32dadca4db17640e8e1f",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/energy/laser_fiber_south.json",
+      "adaptation": "Original Forge loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\laser_fiber_west.json",
+      "sha256": "54748ed1469e55d47cd586705f94b5f0541a0d30c1d7ec9e336fe58285a7bbdf",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/energy/laser_fiber_west.json",
+      "adaptation": "Original Forge loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\laser_fiber_east.json",
+      "sha256": "bc5864ded94748f5b576a9fb282d83e2e7bbc3a8d3886911a08154d380d60af5",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/energy/laser_fiber_east.json",
+      "adaptation": "Original Forge loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\laser_absorber_active.json",
+      "sha256": "182177eb8ad1d9e824bbcbd34e5df1cdaba251accb2cbedd5b8ef6215faaa478",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/energy/laser_absorber_active.json",
+      "adaptation": "Original Forge loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_laser_active.json",
+      "sha256": "3520396074712d21b2bdd55ebe5c2185d33bd3ff16efb365c95085bba351f119",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/energy/flux_laser_active.json",
+      "adaptation": "Original Forge loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\co2_laser_active.json",
+      "sha256": "155ab5662543b9ee3bc554418e353b2c53139908b5439b098a87f69de1955247",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/energy/co2_laser_active.json",
+      "adaptation": "Original Forge loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\laser_fiber_wire.json",
+      "sha256": "9d20cb6d69fed02e43cb62678c6701d7387cd5f457faac3ab1c10394e6e965de",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/laser_fiber_wire.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "1175e7754d670ce20eac683a08e8ea6d4e7efda6760524b66b81cd50e8e8c3f3"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\quantum_energizer.json",
+      "sha256": "0280eeec4099db9dbbf8482f26df909f7f46119f5013efa374d795c9da4f0492",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/quantum_energizer.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "11fd540ea32bacd552ac1d5c60144785a621fed13767b3b0e56b9f7dee385f8b"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\laser_absorber.json",
+      "sha256": "36b8220a8500cce23408a554ca69c34515cf0014f152aa146ef30b5fc3ca3954",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/laser_absorber.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "3fa1c5b2bc4c0f9472a41db3169d3d7c24a7e9b45dcb6cbe88442056484c2ba1"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_laser.json",
+      "sha256": "455228f82cdb8fc718f5bd0593ec1065f235bb714e7b1d7df95421ec3a012c5c",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/flux_laser.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "cfe5289fe2ef9916893507455b055bf1780a47f1206b31b6fd2b6d8f3fe67377"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\co2_laser.json",
+      "sha256": "e2a407f8b2a6c5f3caab307f4237f0d98fdbfa5a18eeb7bac35633450034a638",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/co2_laser.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "19ed7956d04155a587a32d7241005899180ab40712170d49bbb43ae796419f35"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\quantum_energizer_active.json",
+      "sha256": "2bd35233e19484cdfca43ce103dad9e9eb539f7e645266d0f41e5b4e6e3ece30",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/quantum_energizer_active.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "8cd0f09adcd3d149480bd3b7ef052504357b9c89032be90627f67b5a12e620ba"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\laser_fiber_center.json",
+      "sha256": "9c49199f94bc3bcdc7ef71f87e4672fba172330fc2d1331bec7b06193197450f",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/laser_fiber_center.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "ebbc5cdcc9319a9bb04ae92ca59f04362f1342a3049a763a173bbbf562bd8820"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\laser_fiber_down.json",
+      "sha256": "c948c596df71e4a1f98f02dab8e954341f0c4637d020d00c5f6e078ee522fb54",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/laser_fiber_down.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "22157b60b5320baf2d9163fc6afc12245e80cc69065e68e96f4f6387dca90f82"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\laser_fiber_up.json",
+      "sha256": "f8152458c81a70f343f44346b19629983ce9ec44f42d19f0c824bec78ffe3c92",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/laser_fiber_up.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "8b26138b2ca9741cae670453e9af730a70ae43a6e20cf88620fc5a4e3f4ed6ba"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\laser_fiber_north.json",
+      "sha256": "626cc81f2b11a4601b300df39eb87c998c734af73545373c00ea6fc330ee43c3",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/laser_fiber_north.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "2ba5fe83398f242f4ad3c4ab8b19a493b97846d036f10daf4f3504053eb6addf"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\laser_fiber_south.json",
+      "sha256": "531647d0f6323ee1fdbf43fdea2096b851b86f8cdbca32dadca4db17640e8e1f",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/laser_fiber_south.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "2b1853bc4e87829df8a0985a56ab754b44cc6f99e5f142290ce5b06f2aec7f49"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\laser_fiber_west.json",
+      "sha256": "54748ed1469e55d47cd586705f94b5f0541a0d30c1d7ec9e336fe58285a7bbdf",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/laser_fiber_west.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "e63c438c39a4d42a067ab3318210a821ece5bdef5147a20e4fb8d0224a37a579"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\laser_fiber_east.json",
+      "sha256": "bc5864ded94748f5b576a9fb282d83e2e7bbc3a8d3886911a08154d380d60af5",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/laser_fiber_east.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "783f7ab5573e5d670fd6919da429db9b63b473790ff5438e2816d58e9988e57e"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\laser_absorber_active.json",
+      "sha256": "182177eb8ad1d9e824bbcbd34e5df1cdaba251accb2cbedd5b8ef6215faaa478",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/laser_absorber_active.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "975672280b2f39191fa17112defe30fbb329969a4059cd9d449524446aed40e0"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_laser_active.json",
+      "sha256": "3520396074712d21b2bdd55ebe5c2185d33bd3ff16efb365c95085bba351f119",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/flux_laser_active.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "d50c5c0f9f97b985c2eb4614ced62036bace00efd54b1e721d516b16c919a031"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\co2_laser_active.json",
+      "sha256": "155ab5662543b9ee3bc554418e353b2c53139908b5439b098a87f69de1955247",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/co2_laser_active.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "3b3ac2b0ea1f77d366b769230a7069d59940025baf720fc7fb874c4fc33ac45a"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\sensor_bucketometer.json",
+      "sha256": "6296a3e623d60949edfbc4dd3c7b3698aa0374b645371bac056f116e981d41de",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sensor_bucketometer.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\sensor_chronometer.json",
+      "sha256": "54b5e820aa9750a2ce0a31be9f77731ad716d6836a6246dffc725b6d5ef3d63d",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sensor_chronometer.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\sensor_electrometer.json",
+      "sha256": "67d39539e590b1b4f82eca7c6432567f4baa9410094cbc6c14119be1843bc942",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sensor_electrometer.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\sensor_fluidometer.json",
+      "sha256": "d88aad2dc51014876665d434fe4f8b29eecea1b1fddba8bc5383fdb94c291dbe",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sensor_fluidometer.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\sensor_geiger.json",
+      "sha256": "274cf1f9babc2209f207095d20f67d90461c78e623d1cf92e9687485e64b3dfd",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sensor_geiger.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\sensor_gibblometer.json",
+      "sha256": "d24e64f3a616bbd63d53bfbf91052a1081f8fcbc6878fafaf6fd84b38668c21b",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sensor_gibblometer.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\sensor_itemometer.json",
+      "sha256": "ac8190f7cd564196091b7ebbe29654a13c1257dfd982a3bfce5fdb6ccd76d960",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sensor_itemometer.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\sensor_kilobucketometer.json",
+      "sha256": "e7a0cdbdd748fbf1393e351b5f365f83588fd63b80e1254a38afc9421f0b9fa1",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sensor_kilobucketometer.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\sensor_laserometer.json",
+      "sha256": "af82ab4cf8fc587a0539c49c2b3ee0315a99684b041a6bdd3b6114a591fb21c4",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sensor_laserometer.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\sensor_luminometer.json",
+      "sha256": "10c670fb2d459ee8ccf88a9d1ef107a2396baceb5fbb7bb1aa3297fc5f974194",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sensor_luminometer.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\sensor_playercounter.json",
+      "sha256": "6a4ce03594471350828350b379b9ecca76499ed1f9c3495a49b61dcd58d2db55",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sensor_playercounter.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\sensor_progressmeter.json",
+      "sha256": "435f29367506d957caf4bb562bb129b6507f7a155b72ef195eae0a814208eefd",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sensor_progressmeter.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\sensor_stackometer.json",
+      "sha256": "33969b04c54e11314c259937dc3d0a58af436db38dda9cbf1e7d526f43dc95d6",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sensor_stackometer.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\sensor_tachometer.json",
+      "sha256": "ba3c164633acb965228f51251b38876ef926c5de1c20d813fe43a115b3db9528",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sensor_tachometer.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\sensor_thermometer.json",
+      "sha256": "257b6dc6e8bda1833de1a47f620767c34d4e040270b25791db2c76e7f6926bdc",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sensor_thermometer.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\sensor_tpsmeter.json",
+      "sha256": "e7422d9265ff937ac600ab1c3f9bff9eb0d5364c256a7185d2b7ac6a85e0eee0",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sensor_tpsmeter.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\sensor_weightometer_light.json",
+      "sha256": "d43c8006cf83448f78457bef7619de6a184e4e0cef20fe279a433bcbb44698ba",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sensor_weightometer_light.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\sensor_weightometer_medium.json",
+      "sha256": "382c5e731c369dfe15ad259f5a06bf6ed5348648ec479a6fd5023736c6a16e4a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sensor_weightometer_medium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\sensor_weightometer_super_heavy.json",
+      "sha256": "e4356aeee9e42f539e9ce9f4dfa18745af41be18b62108d022848c67aa1e3db9",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sensor_weightometer_super_heavy.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\sensor_weightometric.json",
+      "sha256": "e58b3938964572fa45138e17619771c020502369efdbfb6219a35ee4e08aa4bd",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sensor_weightometric.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\sensor_bucketometer.json",
+      "sha256": "a220e8cc19cb8d4df8f3b171ee8f83959a74746be4f2768569b4be779d630f86",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sensor_bucketometer.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\sensor_chronometer.json",
+      "sha256": "0699962710e5efaa43b1e36f563cd98ad70280e1dd17fd6e65414f82eebbfb8a",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sensor_chronometer.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\sensor_electrometer.json",
+      "sha256": "99253e97a3dfeae5bbe823212fba6681f4d16c98cf61186cd82d955a6d76d2bf",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sensor_electrometer.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\sensor_fluidometer.json",
+      "sha256": "b76f292adf7acc68933e8ab8fcf78072091aa7aafce871955b7adc747e481a43",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sensor_fluidometer.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\sensor_geiger.json",
+      "sha256": "1b4c26b3e51406b7402d4b562395a173e671040a08fd62e521cce472d3ee316e",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sensor_geiger.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\sensor_gibblometer.json",
+      "sha256": "eef06a3536b3e07e967d0e4f7d875839ebbd9f6e5355ee89819c6da9fb12c2b2",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sensor_gibblometer.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\sensor_itemometer.json",
+      "sha256": "f5b11ca7f381ea2ee9a7a49538a70fd455688578e4785105a8894dfa5a8a7620",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sensor_itemometer.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\sensor_kilobucketometer.json",
+      "sha256": "0e067dd0c1af7a129d87ea20a7ebe1da03a0725a049b20306f1c4106a2990561",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sensor_kilobucketometer.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\sensor_laserometer.json",
+      "sha256": "aaaa62d349d6cc51f2fefdb10668d111d7659f60f0f62cc57a3ee9eb474e9b6c",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sensor_laserometer.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\sensor_luminometer.json",
+      "sha256": "d3b3346299dd6e891a6b4e19160b0685587a113518f42e570c11a51bed370ea5",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sensor_luminometer.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\sensor_playercounter.json",
+      "sha256": "97ceed55aa4b9c28da9e4a486fb5c791035c31d0888f7157fab27172e95411a6",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sensor_playercounter.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\sensor_progressmeter.json",
+      "sha256": "6315184f01a67ac5bcbcb2faf004be3128baf9551b09b283542bc65d3069956c",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sensor_progressmeter.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\sensor_stackometer.json",
+      "sha256": "99cac233bbd8a50683d3ee4d0442d8ccaffb441e3d5baa29eaa9d1519a08a8d4",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sensor_stackometer.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\sensor_tachometer.json",
+      "sha256": "5f76ae493f933bf89e2ddc2f6ac0330982742ac4463564eb2bd5abe090d24ff7",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sensor_tachometer.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\sensor_thermometer.json",
+      "sha256": "b095f118c25d46f00a2ed2456d629566da66198766978377141ba95f40d093b2",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sensor_thermometer.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\sensor_tpsmeter.json",
+      "sha256": "409cea9057a84c0cb045db9eca0110f3faa00f6d6d71d04cb42a8b3be724b392",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sensor_tpsmeter.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\sensor_weightometer_light.json",
+      "sha256": "817e1f3e19817cb3d4b1a73a51355f83e634c0c33a529f0c778b96c39f1543c7",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sensor_weightometer_light.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\sensor_weightometer_medium.json",
+      "sha256": "f899db9ce91a6370f307938a8a07d91f9fc01e2dc3b5d99975de2b87ef894d49",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sensor_weightometer_medium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\sensor_weightometer_super_heavy.json",
+      "sha256": "f585f789798a5f4f4c8f787996d3c146abd577a2b23f4ebe9b01793aeace29d9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sensor_weightometer_super_heavy.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\sensor_weightometric.json",
+      "sha256": "6f8a4e890d98eb96ef8388c53d8354f2e1ced12cdbb5c9a47b5c054cb648a59f",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sensor_weightometric.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\weightometric.json",
+      "sha256": "57a6d838631717170c0937de5e81d0becf67a101b1e9f70f562cdfbcb6cfc893",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/sensor/weightometric.json",
+      "adaptation": "Original Forge model-loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\superheavyweightometer.json",
+      "sha256": "8b5b3adca72d03c42283cfed24fc544441c869d7939d02671b4ed070a3fb330b",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/sensor/superheavyweightometer.json",
+      "adaptation": "Original Forge model-loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\mediumweightometer.json",
+      "sha256": "a73492988ffa3e49b8ca28e897e7f3c18569869d4e4114becff87baf156e4f08",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/sensor/mediumweightometer.json",
+      "adaptation": "Original Forge model-loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\lightweightometer.json",
+      "sha256": "1bf0d532fac5c3f166563f81245dfd4ae468477f8f927133ac65cf285ed6e670",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/sensor/lightweightometer.json",
+      "adaptation": "Original Forge model-loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\tpsmeter.json",
+      "sha256": "5301605e08cff4e261ea43d4596ac934c0b016681d6a4fe33ebf2813ac0b9746",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/sensor/tpsmeter.json",
+      "adaptation": "Original Forge model-loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\thermometer.json",
+      "sha256": "74b4f402767a5f1bb75525d6572b066f1a8a00781e4ceda6f6c0a22754de059a",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/sensor/thermometer.json",
+      "adaptation": "Original Forge model-loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\tachometer.json",
+      "sha256": "1623668e5c3a74f078c1d542db99469004cbc281e39a83833c53825ac06a3192",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/sensor/tachometer.json",
+      "adaptation": "Original Forge model-loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\stackometer.json",
+      "sha256": "34fa251b9c44915d8f28cecae19c66bc2ed01cbecce3fc5848d9b79134b5c4da",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/sensor/stackometer.json",
+      "adaptation": "Original Forge model-loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\progressmeter.json",
+      "sha256": "9ea6a7ef161c72ff3cc6031e1840234987eb801e0e90dfda2430d4749523b9b5",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/sensor/progressmeter.json",
+      "adaptation": "Original Forge model-loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\playercounter.json",
+      "sha256": "cd454e5f4ea1985b2df7a7407e2a1b8063d973543a1af2b8ecbceaede0334c51",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/sensor/playercounter.json",
+      "adaptation": "Original Forge model-loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\luminometer.json",
+      "sha256": "5c52108b4cee35ddf01693de86967f84e639961310cf3b157e8f4af924733e21",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/sensor/luminometer.json",
+      "adaptation": "Original Forge model-loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\laserometer.json",
+      "sha256": "84df0a738bff867d87f4b936ac1ae916eb614189458ab33db85163c3b8d2197b",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/sensor/laserometer.json",
+      "adaptation": "Original Forge model-loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\kilobucketometer.json",
+      "sha256": "30b71028be3eb478fb03f828dc12181ae01d95731b68b0ad1bcefdfb12a38eb3",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/sensor/kilobucketometer.json",
+      "adaptation": "Original Forge model-loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\itemometer.json",
+      "sha256": "df73c2e6340221c5fb77d758b65d9709e3b09c4e17db8fba42a6c4ab43b2e958",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/sensor/itemometer.json",
+      "adaptation": "Original Forge model-loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\gibblometer.json",
+      "sha256": "a550109e057a9481febd04b2eda9dc46c1bd1f5f0634d51332a8599e727def33",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/sensor/gibblometer.json",
+      "adaptation": "Original Forge model-loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\geiger.json",
+      "sha256": "10ee88ee6b0ae231ca6dd9846367086f267156803be971612f178190c45c42d2",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/sensor/geiger.json",
+      "adaptation": "Original Forge model-loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\fluidometer.json",
+      "sha256": "24ca43a6e8cb9f92112764a77c8caac1011b3ae265778fa84e08785194e2b48c",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/sensor/fluidometer.json",
+      "adaptation": "Original Forge model-loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\electrometer.json",
+      "sha256": "f2935bfe57119bdb9c48fecdda8850572b056b3f4a71ffd64a04ca899d12d751",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/sensor/electrometer.json",
+      "adaptation": "Original Forge model-loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\chronometer.json",
+      "sha256": "d3a3e151ae4bc5a1e804232cc4fbec8610ff6e7f0c5d45eb8093f33fb8fd402f",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/sensor/chronometer.json",
+      "adaptation": "Original Forge model-loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\bucketometer.json",
+      "sha256": "42b0e136cdfd6537aa3eee027579be28d0084136ffb3b78364ed8b0daed4e717",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/sensor/bucketometer.json",
+      "adaptation": "Original Forge model-loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\weightometric.json",
+      "sha256": "57a6d838631717170c0937de5e81d0becf67a101b1e9f70f562cdfbcb6cfc893",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/sensor/weightometric.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "2274bd720656020f9dc5e53f1738dd104541c6f893e3028d207a77a36942a7cc"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\superheavyweightometer.json",
+      "sha256": "8b5b3adca72d03c42283cfed24fc544441c869d7939d02671b4ed070a3fb330b",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/sensor/superheavyweightometer.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "c574fdd0eb33e7c643b4da65ff9cd184ab4d0ec6466bf24eee1042064cea2260"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\mediumweightometer.json",
+      "sha256": "a73492988ffa3e49b8ca28e897e7f3c18569869d4e4114becff87baf156e4f08",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/sensor/mediumweightometer.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "71f6ab01dd7b5af6e8d0100ce40073b3c4dd618ddb872422775155b63bff17d0"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\lightweightometer.json",
+      "sha256": "1bf0d532fac5c3f166563f81245dfd4ae468477f8f927133ac65cf285ed6e670",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/sensor/lightweightometer.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "93134773d462a6839eb3f3978c9900137441f9173d35daecf4572efd52e3be98"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\tpsmeter.json",
+      "sha256": "5301605e08cff4e261ea43d4596ac934c0b016681d6a4fe33ebf2813ac0b9746",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/sensor/tpsmeter.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "4517669b1432c2e1fb82f1a9f72898ef363d407310e1dcf49663e0384ccc43bd"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\thermometer.json",
+      "sha256": "74b4f402767a5f1bb75525d6572b066f1a8a00781e4ceda6f6c0a22754de059a",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/sensor/thermometer.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "04b73a4ebc77dbe23dac9aae1a707a2eab13edcd32231eea2559be099d262647"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\tachometer.json",
+      "sha256": "1623668e5c3a74f078c1d542db99469004cbc281e39a83833c53825ac06a3192",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/sensor/tachometer.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "69d27832b21df267dd3d1af2cbdcf3c110f12850337a05d98438f41ad978e3dc"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\stackometer.json",
+      "sha256": "34fa251b9c44915d8f28cecae19c66bc2ed01cbecce3fc5848d9b79134b5c4da",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/sensor/stackometer.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "b985c252bd29e63776d712a0c088c96ec7d99b1461c39945304b28fb6a51bb0b"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\progressmeter.json",
+      "sha256": "9ea6a7ef161c72ff3cc6031e1840234987eb801e0e90dfda2430d4749523b9b5",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/sensor/progressmeter.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "edc50ee163926e87969de77d674b18707bb2041214c5d8e0b1eccf354d67c195"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\playercounter.json",
+      "sha256": "cd454e5f4ea1985b2df7a7407e2a1b8063d973543a1af2b8ecbceaede0334c51",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/sensor/playercounter.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "53f1ba0cff7d6cea5595c71c44647a71252ba2a40755121dec16687d59f25604"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\luminometer.json",
+      "sha256": "5c52108b4cee35ddf01693de86967f84e639961310cf3b157e8f4af924733e21",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/sensor/luminometer.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "3fd668abd4c79837480f13a1a2522ef51601288394463922e218ee25d8916cc1"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\laserometer.json",
+      "sha256": "84df0a738bff867d87f4b936ac1ae916eb614189458ab33db85163c3b8d2197b",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/sensor/laserometer.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "8537a8b4e33a69ce7660badb4a9b17a5223e0dc2bec95f3caf46f2613a0eba48"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\kilobucketometer.json",
+      "sha256": "30b71028be3eb478fb03f828dc12181ae01d95731b68b0ad1bcefdfb12a38eb3",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/sensor/kilobucketometer.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "eb62dc48f5de41590544a4e07736d5835c328db7e39462d12045b1572b39111f"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\itemometer.json",
+      "sha256": "df73c2e6340221c5fb77d758b65d9709e3b09c4e17db8fba42a6c4ab43b2e958",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/sensor/itemometer.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "c77ae4dfe2a665d1e297cf9361de6d1345a75e5c1f6fc289a4b40d36d6a81fdc"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\gibblometer.json",
+      "sha256": "a550109e057a9481febd04b2eda9dc46c1bd1f5f0634d51332a8599e727def33",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/sensor/gibblometer.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "429be6a3d6729aeca68790c812f9c4ecc0a7835bf274c65f2be0a5e5efa1a51e"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\geiger.json",
+      "sha256": "10ee88ee6b0ae231ca6dd9846367086f267156803be971612f178190c45c42d2",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/sensor/geiger.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "c8f8aa932a079858c47fd4eb1e194d125cfa866d69a32c6d630a5a570b1f6dc7"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\fluidometer.json",
+      "sha256": "24ca43a6e8cb9f92112764a77c8caac1011b3ae265778fa84e08785194e2b48c",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/sensor/fluidometer.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "801d21b42aa14d23d3038050c7387c0c2ea836d4d6beda6c475934d9f1ca531b"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\electrometer.json",
+      "sha256": "f2935bfe57119bdb9c48fecdda8850572b056b3f4a71ffd64a04ca899d12d751",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/sensor/electrometer.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "ddfd7a2824e2610b69e0eeff7469f23542d7cb825eaf4ad886a1039a999c80f5"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\chronometer.json",
+      "sha256": "d3a3e151ae4bc5a1e804232cc4fbec8610ff6e7f0c5d45eb8093f33fb8fd402f",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/sensor/chronometer.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "2bd6345bb8aaa65fcf97e38d7c373773097cf1612d82ff3eb15722f7c6161603"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\bucketometer.json",
+      "sha256": "42b0e136cdfd6537aa3eee027579be28d0084136ffb3b78364ed8b0daed4e717",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/sensor/bucketometer.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "214bba0e38ec47965f2b92b1c8b207ba6f32620f627dc2cb3c4634787afa6def"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\long_dist_endpoint_fluid.json",
+      "sha256": "46f7575c2761584df275c061614f10e4caab19318ce7943ecd606afa15752018",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/long_dist_endpoint_fluid.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\long_dist_endpoint_item.json",
+      "sha256": "2d510c96b8152dd3d6637ccb3c6a2e4235f9818762147fc6252308b23f7a563e",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/long_dist_endpoint_item.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\long_dist_pipe.json",
+      "sha256": "42ed2828fe5d7439eab3a044704e42d016880bbb7c14432cbbde64743d0a0ba7",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/long_dist_pipe.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\long_dist_pipe_fluid.json",
+      "sha256": "1ef5023c32e72c2f9318243d577e617f2f3f449a9757bf93cd701ab6bdbdf72f",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/long_dist_pipe_fluid.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\long_dist_pipe_item.json",
+      "sha256": "33000303b27506ccd1f0f55d0892cdc64a2b53f1168ae3a95dfad7b67f794b7b",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/long_dist_pipe_item.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\long_dist_transformer_lv.json",
+      "sha256": "38d5ca0ac4264659675cc13ace940bba883162427e5efce38424087da9241bb9",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/long_dist_transformer_lv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\long_dist_transformer_mv.json",
+      "sha256": "38d5ca0ac4264659675cc13ace940bba883162427e5efce38424087da9241bb9",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/long_dist_transformer_mv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\long_dist_transformer_ulv.json",
+      "sha256": "38d5ca0ac4264659675cc13ace940bba883162427e5efce38424087da9241bb9",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/long_dist_transformer_ulv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\long_dist_transformer_uv.json",
+      "sha256": "38d5ca0ac4264659675cc13ace940bba883162427e5efce38424087da9241bb9",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/long_dist_transformer_uv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\long_dist_transformer_zpm.json",
+      "sha256": "38d5ca0ac4264659675cc13ace940bba883162427e5efce38424087da9241bb9",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/long_dist_transformer_zpm.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\long_dist_wire.json",
+      "sha256": "b158543e06b11e397705f471ec5b8e0c9a55b41a505b5d69e7f18da935eca124",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/long_dist_wire.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\long_dist_wire_ev.json",
+      "sha256": "fc2477d367d8dcbd6ede7c99a816671c13bdbc83727597b5a830e1365f15d214",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/long_dist_wire_ev.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\long_dist_wire_iv.json",
+      "sha256": "a143da24108bb0da544fddf93c3f324ff838d6bc2ff618a4733e460695ade7fb",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/long_dist_wire_iv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\long_dist_wire_luv.json",
+      "sha256": "f9aa0c1f0d6468d0fe63a6864c2b1f15595f6c5dd36000643d56e055b77f2bbd",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/long_dist_wire_luv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\long_dist_wire_uv.json",
+      "sha256": "0912bd29f91d95338ff872374aebf816e3da2668bd1b64c68d324dbb88d79f7a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/long_dist_wire_uv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\long_dist_wire_zpm.json",
+      "sha256": "3225de5c75e2f02adb70bc654b83e41acb11783da0ae14efab58a6227629ef78",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/long_dist_wire_zpm.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\long_dist_endpoint_fluid.json",
+      "sha256": "ce1a7d6cccbbcb51becb953076c785923943eaa3444fe5a7bcc81d3ef4af4305",
+      "target": "core/src/main/resources/assets/gregtech/models/item/long_dist_endpoint_fluid.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\long_dist_endpoint_item.json",
+      "sha256": "b2dfdf91b9a12b78d1f0eb09b80bec038ce05b5bdbfeb6c15b0587a58f55466b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/long_dist_endpoint_item.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\long_dist_pipe.json",
+      "sha256": "382c6d76bf132890bc53939beda33ddd70ecfba27d073b3b313acf558d846c4b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/long_dist_pipe.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\long_dist_pipe_fluid.json",
+      "sha256": "76f5471e465e786dfc7a8a3276d9336fe2436652e4d08e51f6b205c1dbb64842",
+      "target": "core/src/main/resources/assets/gregtech/models/item/long_dist_pipe_fluid.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\long_dist_pipe_item.json",
+      "sha256": "79ce3cccaef00a8d46b446bfab4d23f02c92ce3b7c1539e27a3f28f1e842ed3c",
+      "target": "core/src/main/resources/assets/gregtech/models/item/long_dist_pipe_item.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\long_dist_transformer_lv.json",
+      "sha256": "cfbfce9db7d9725ecfdea923e34d6426149a5e092a8810b9916ac12c7c0d255f",
+      "target": "core/src/main/resources/assets/gregtech/models/item/long_dist_transformer_lv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\long_dist_transformer_mv.json",
+      "sha256": "cfbfce9db7d9725ecfdea923e34d6426149a5e092a8810b9916ac12c7c0d255f",
+      "target": "core/src/main/resources/assets/gregtech/models/item/long_dist_transformer_mv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\long_dist_transformer_ulv.json",
+      "sha256": "cfbfce9db7d9725ecfdea923e34d6426149a5e092a8810b9916ac12c7c0d255f",
+      "target": "core/src/main/resources/assets/gregtech/models/item/long_dist_transformer_ulv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\long_dist_transformer_uv.json",
+      "sha256": "cfbfce9db7d9725ecfdea923e34d6426149a5e092a8810b9916ac12c7c0d255f",
+      "target": "core/src/main/resources/assets/gregtech/models/item/long_dist_transformer_uv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\long_dist_transformer_zpm.json",
+      "sha256": "cfbfce9db7d9725ecfdea923e34d6426149a5e092a8810b9916ac12c7c0d255f",
+      "target": "core/src/main/resources/assets/gregtech/models/item/long_dist_transformer_zpm.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\long_dist_wire.json",
+      "sha256": "cca4cf76c8656f8d16f675ef594965fd88bd65c776dc4c603d13a6072e158b7e",
+      "target": "core/src/main/resources/assets/gregtech/models/item/long_dist_wire.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\long_dist_wire_ev.json",
+      "sha256": "40be3098441795f4b4c9305a676a0e0aa681a75aa7227746de79b64c1cf2b4ca",
+      "target": "core/src/main/resources/assets/gregtech/models/item/long_dist_wire_ev.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\long_dist_wire_iv.json",
+      "sha256": "7a496d02160ff4f10335886a8867d8cebad6ef93b9713b18947b931b031b3ada",
+      "target": "core/src/main/resources/assets/gregtech/models/item/long_dist_wire_iv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\long_dist_wire_luv.json",
+      "sha256": "e60cb3a820780e8a215e16e678fba0e381aa9a2dee09e3c3164d2b0d2e35d03a",
+      "target": "core/src/main/resources/assets/gregtech/models/item/long_dist_wire_luv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\long_dist_wire_uv.json",
+      "sha256": "aa47276afaf05fa31e9cb221d56eac30f4b3b85d9a53da5d430444f27210514f",
+      "target": "core/src/main/resources/assets/gregtech/models/item/long_dist_wire_uv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\long_dist_wire_zpm.json",
+      "sha256": "802f999aecebffd93f2ce7cad579c45e95a24aa7c7a1494cc94b2349e25e09a1",
+      "target": "core/src/main/resources/assets/gregtech/models/item/long_dist_wire_zpm.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\long_dist_pipe_fluid.json",
+      "sha256": "bdda2c05e2e888729de3392b6a03e3ed2ffdf60941c8283566af26954ebcb30f",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/long_dist_pipe_fluid.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\long_dist_pipe_item.json",
+      "sha256": "3caf6784428a856a43c861948f4bba12a6f511f449f5d320802cf5c6a0a883ee",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/long_dist_pipe_item.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\long_dist_wire.json",
+      "sha256": "cd69533896e82cc89677ff9c053588cb2aa5426a43e6c2338fd56f1de2796c9a",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/long_dist_wire.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\long_dist_wire_ev.json",
+      "sha256": "cd5d5d71574be87bc2e4b0655434aae3c7faad322ed74ebe5cf484f640820c73",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/long_dist_wire_ev.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\long_dist_wire_iv.json",
+      "sha256": "4ae0f466cc0014f3537528c9755754d469a21aa330f26faf8e427b9695637b16",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/long_dist_wire_iv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\long_dist_wire_luv.json",
+      "sha256": "f75e7cbdd6ec080e8eb336e4c1a886b04e5688f139cd794c95aa91e3405bebeb",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/long_dist_wire_luv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\long_dist_wire_uv.json",
+      "sha256": "e0c3da7d971636304f3ffe28827cfa3a5fe2484207eaae9ea3f892005c9908ce",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/long_dist_wire_uv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\long_dist_wire_zpm.json",
+      "sha256": "4b95e2c053faadfe8e98a047997656367d4f25a52ecb96d4c582a2c97a2493fc",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/long_dist_wire_zpm.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\misc\\long_dist_endpoint_fluid.json",
+      "sha256": "0516f442dd43e2e6c2e4dec37d3522dbafadfe6460487ad0603b337e54d4e315",
+      "target": "src/main/resources/assets/gregtech/models/block/misc/long_dist_endpoint_fluid.json",
+      "adaptation": "Original Forge model-loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\misc\\long_dist_endpoint_item.json",
+      "sha256": "da640a684381c11e45f81fa4de729c0b51817ca406758fb8200b8b406e6e0ae9",
+      "target": "src/main/resources/assets/gregtech/models/block/misc/long_dist_endpoint_item.json",
+      "adaptation": "Original Forge model-loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\misc\\long_dist_pipe.json",
+      "sha256": "0a716f4c687d28b80214c46bfb1bf1879acb873d70f0927c2a0764c9a973fd36",
+      "target": "core/src/main/resources/assets/gregtech/models/block/misc/long_dist_pipe.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\misc\\long_dist_transformer_lv.json",
+      "sha256": "9ce662506827cdf72c4ca9a4ae8bee12f241bcaef9cc2b58eac9d6cacd6e900b",
+      "target": "core/src/main/resources/assets/gregtech/models/block/misc/long_dist_transformer_lv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\misc\\long_dist_transformer_mv.json",
+      "sha256": "9ce662506827cdf72c4ca9a4ae8bee12f241bcaef9cc2b58eac9d6cacd6e900b",
+      "target": "core/src/main/resources/assets/gregtech/models/block/misc/long_dist_transformer_mv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\misc\\long_dist_transformer_ulv.json",
+      "sha256": "9ce662506827cdf72c4ca9a4ae8bee12f241bcaef9cc2b58eac9d6cacd6e900b",
+      "target": "core/src/main/resources/assets/gregtech/models/block/misc/long_dist_transformer_ulv.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\misc\\long_dist_wire.json",
+      "sha256": "0a716f4c687d28b80214c46bfb1bf1879acb873d70f0927c2a0764c9a973fd36",
+      "target": "core/src/main/resources/assets/gregtech/models/block/misc/long_dist_wire.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\misc\\long_distance_power_endpoint.json",
+      "sha256": "cb62c05db4cf669d4bbc68da14b255da1c5de4dbbf3a0e9093d3166250d8a10d",
+      "target": "src/main/resources/assets/gregtech/models/block/misc/long_distance_power_endpoint.json",
+      "adaptation": "Original Forge model-loader boundary retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\misc\\long_dist_endpoint_fluid.json",
+      "sha256": "0516f442dd43e2e6c2e4dec37d3522dbafadfe6460487ad0603b337e54d4e315",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/misc/long_dist_endpoint_fluid.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "a1785c11191b154f114906750d0c47b367905b9fe2d974802bf1660dc6b1993f"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\misc\\long_dist_endpoint_item.json",
+      "sha256": "da640a684381c11e45f81fa4de729c0b51817ca406758fb8200b8b406e6e0ae9",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/misc/long_dist_endpoint_item.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "b2b7ce25c34be04372945ddb2a92b9e895883291f1319eab8d7f07419c15051d"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\misc\\long_distance_power_endpoint.json",
+      "sha256": "cb62c05db4cf669d4bbc68da14b255da1c5de4dbbf3a0e9093d3166250d8a10d",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/misc/long_distance_power_endpoint.json",
+      "adaptation": "Native model-loader namespace boundary",
+      "adaptedSha256": "6f1b7076c30fee29b372596ba2488044b9f8b219b7ff112f0bfb7470617b6eb8"
+    }
+  ],
+  "comparisonSources": [
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\registry\\GT6Lasers.java",
+      "sha256": "893258ef5454fa9a1a1ffd77b34ddb1947e6a2b6156c9676a8c19a5b06c7d5ce"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\registry\\GT6QuantumEnergizers.java",
+      "sha256": "a617d4fc6b3ca7fd2612b917415c10b06367e1a5fdda16260d4f319f04106ee9"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\tileentity\\energy\\converters\\GT6LaserConverterBlockEntity.java",
+      "sha256": "61b7ed459d53f13231fe0e23e405b11a6856439cce12970467fcf4803b94115f"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\tileentity\\sensors\\GTSensorLogic.java",
+      "sha256": "6cd28d325810c063f3f2bcc036ecb3d59feab59bc3b826397fde4997afc7e5b6"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\tileentity\\sensors\\GT6TachometerBlockEntity.java",
+      "sha256": "d3215cb00153a676228073969f8f898727d41b8adb8e9c1ad1cd55058f59f9dc"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\tileentity\\sensors\\GT6GibblometerBlockEntity.java",
+      "sha256": "a91ca0f3c9198f6017a30db21e1b8464f029471ba625635e3ab26ffa8156d98f"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\tileentity\\energy\\GT6LongDistanceTransformerBlockEntity.java",
+      "sha256": "bec4fd12834ca92a6277d75f2b092389116e54e582fe18b5ccdd59d88cf6aff4"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\registry\\GT6LongDistPipes.java",
+      "sha256": "6d08e9aaf827a1d18b64cbd2de3603e8161af4dba27b91896e8e92d13dd86d9b"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\cruciblecraft\\src\\main\\java\\com\\masson\\cruciblecraft\\energy\\quantum\\QuantumEnergizerProfile.java",
+      "sha256": "7223b226946b18396466c8b4e3ceedda4be7c44751398085a468e8e529fcd610"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\cruciblecraft\\src\\main\\java\\com\\masson\\cruciblecraft\\energy\\quantum\\QuantumEnergizerBlockEntity.java",
+      "sha256": "5e2fe910742824b826358db5b31bfae8fb8d67741167e5e3c9b0246f58bb05be"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\cruciblecraft\\src\\main\\java\\com\\masson\\cruciblecraft\\content\\sensor\\SensorKind.java",
+      "sha256": "0cb3457f8ec492a4b5cc30e893ba1e31044b2c527dbb6bfc2c65523f912c23ed"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\cruciblecraft\\src\\main\\java\\com\\masson\\cruciblecraft\\content\\sensor\\SensorMode.java",
+      "sha256": "636bb9258ba0e6f07619453174b92e9dcf0a75f463c00ac8a3382a8490794ebe"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\cruciblecraft\\src\\main\\java\\com\\masson\\cruciblecraft\\content\\sensor\\SensorReading.java",
+      "sha256": "b7df08a152f6f7028c09e7d2496170abaa613a24cd67ef5eb527785478eb03ec"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\cruciblecraft\\src\\main\\java\\com\\masson\\cruciblecraft\\content\\blockentity\\SensorBlockEntity.java",
+      "sha256": "99b20b31b7983b7673a019d81a75ffb4d7a398d4c337f979efe6438522beaea5"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\cruciblecraft\\src\\main\\java\\com\\masson\\cruciblecraft\\energy\\longdistance\\LongDistanceTransformerProfile.java",
+      "sha256": "7063f0df0f2fdc751f7d3b769ef30247136b8ac7918bdbea98c514d115feb4fd"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\cruciblecraft\\src\\main\\java\\com\\masson\\cruciblecraft\\energy\\longdistance\\LongDistanceTransformerBlockEntity.java",
+      "sha256": "b9702f8e2ac58f04e0bde9ea59add646b35d41d6073dfe2d6ed997da7657f689"
+    }
+  ],
+  "choices": [
+    "Full21 laser-domain blocks:5 EU->LU electric lasers,5 FE/RF->LU flux lasers,5 LU->EU absorbers,5 LU->QU energizers and1 actual optical fiber. Existing LaserSpec material identities/tier ratios are shared; LaserWorkRules now owns conversion, intake capacity, active gate, packet acceptance, saved bounds and side rules used by both actual platforms. Preserve source1/brokestar waste-per-tick behavior instead of silently switching to masson dual4x buffered non-waste energizer; the masson buffer profile is a different gameplay policy. Native FE capability is registered only on flux converter input sides. Source switchable controls, actual GT packet emission and preserved packed component NBT remain connected.",
+    "LaserPacketRouter shares the complete original iterative loaded-only traversal: signed whole LU packets,4096 visited bound, reciprocal fiber connections, parent paths, actual confirmed packet counts, no simulation metering, saturating previous-tick traffic. Both MC adapters call it with actual block entities/loaded neighborhoods. Fiber shape/cutter connectivity and ticker are native, not a decorative block. Native material tint handlers also join the prior ZPM charge/state tints that had not yet been adapted; client render behavior is still unverified.",
+    "Full20 source sensor identities retain eight control modes, threshold keypad, hexadecimal mode, bounded32767 averaging history, saved readings/configuration, redstone and six original character sprite cells. Existing core SensorControl/Average/Measurements/SixCellDisplay are actually consumed; SensorCatalog and SensorPanelRules share the entire registration list, units/colors/face bounds and TPS arithmetic on both platforms. Native item/fluid reads use sided capabilities, temperature reads the existing native crucible, bulk storage reads full count, radiation the actual reactor, laserometer the actual fiber previous-tick counter. No second sensor registry namespace is imported.",
+    "Adopt brokestar tachometer reading of the actual previous-tick axle/gearbox transmission on both platforms. Source baseline queried a capacitor-style RU capacity that these conductors did not expose; that made running conductors read zero. Maximum uses source axle speed*power and corresponding source gearbox spec product, with shared saturating multiplication, rather than guessing that source fields equal the donor mMaxThroughPut*16. Masson TemperatureHost/world environment probes, occupied-stack counting, additional kilo-gibbl identity and richer synchronized threshold/configuration interfaces remain candidates; original source bucket/count/average semantics are preserved and differences explicit.",
+    "Full16 long-distance blocks:legacy shared pipeline/wire, separate item/fluid pipelines,5 tiered wires,2 actual item/fluid endpoints and5 EU transformers. Native endpoints reuse the existing guarded capability forwarding substrate to actual destination handlers. Keep full loaded-only topology scans, orientation source/receiver sets, homogeneous wire identity/voltage, ambiguity rejection, watched-state cache invalidation, recursion guard, packet distance loss, overload wire fire/destruction and stop controls. LongDistanceCatalog voltages and LongDistanceRules loss/scan bound/cache cadence/unique-endpoint validation are actually shared with Forge; no duplicate registration of ZPM or logistics core.",
+    "Compare donor long-distance designs: brokestar chooses the first matching target in a same-wire blob, covers extra source pressure-temperature pipeline restrictions and16 original pipeline meta rows. masson uses a256-node scan, buffers4*voltage, same-voltage peer enforcement and persisted sender/target state. Source rejects ambiguous networks and validates all loaded watched states and uses a4096 cap; retain this real runtime policy initially rather than importing a competing network identity. Donor thermal pipeline limits/original meta rows/buffered alternates require one integrated extension design and runtime evidence."
+  ],
+  "knownGaps": [
+    "Grouped dual compilation:lasers20s, lasers+20 sensors20s, all57 blocks20s. One ordinary Neo dedicated short startup follows three batches; no new fixture or per-subsystem startup.",
+    "Actual EU/LU/QU/FE packet delivery, signed optical routing, simulation, cycles/recursive non-fiber relays, disconnected supply waste, stopped-state reload, client fiber cutter hitboxes/material colors/laser models and production jars remain unverified. brokestar/source original laser4.0 hardness/stack16 versus baseline6.0/default64 and quantum IDs labeled voltage words while tiers1..5 retained are explicit source differences, not claimed GT6 exact parity. No animated beam rendering added.",
+    "Sensor readings/control/redstone/display/orientation and persisted average restart are not gameplay-verified. Source GIBBLOMETER currently reads fluid amount/capacity rather than a pressure interface; brokestar pressure sensor explicitly returns zero without its missing gibbl host, masson reads dedicated hosts but is a differing policy. Original kilo-gibbl and broader temperature/pressure probes remain pending. Source stackometer measures total items/64 while masson counts occupied slots; this wave preserves baseline and records the difference.",
+    "Long-distance real inventory/fluid/EU transport, route edits/unload behavior, topology branches, signed losses, overcharge and fire/permissions remain unverified. Source pipelines accept fluids without donor temperature ratings; legacy pipe joins both item/fluid variants, no original16 meta complete-family claim. Source server scans require every examined neighbor loaded and route caching uses watched block states; block-entity replacement without state change requires gameplay review. Source bare endpoint/transformer blocks do not pack stop/configuration on break; no migration claim.",
+    "Forge runtime, both clients, full survival chain, independent-process saved-world restart, old saves and production jars/release remain pending. Original authors/history/license notices retained; no third-party authorization changed. Full goal remains active."
+  ],
+  "derivedCoreSources": [
+    "LaserConverterBlockEntity -> LaserWorkRules",
+    "LaserFiberBlockEntity -> complete LaserPacketRouter",
+    "GTSensors/SensorBlockEntity/SensorPanelGeometry -> SensorCatalog/SensorPanelRules + actual bro tachometer reading",
+    "GTMiscBlocks/GTIconSetBlocks/LongDistEndpoint/Transformer -> LongDistanceCatalog/Rules"
+  ],
+  "validation": "Grouped dual compile PASS20s; native ordinary startup PASS2m1s/200ticks/normal save and stop",
+  "startupReceipt": "docs/integration/verification/p3-neoforge-laser-sensor-longdistance-startup.json"
+}

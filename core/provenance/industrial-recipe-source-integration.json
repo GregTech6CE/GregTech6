@@ -1,0 +1,179 @@
+{
+  "source": "saltnya",
+  "author": "saltnya / preserved original GT6 source attribution",
+  "license": "unchanged; publication authorization unresolved",
+  "verification": "Grouped core/NeoForge/Forge compileJava PASS in 27s after two Neo API fixes; runtime behavior unverified",
+  "sharedRowCatalogs": 9,
+  "nativeAdapters": 12,
+  "pending": [
+    "Graphene native recipes require actual graphene wire block registration",
+    "Implosion native recipes require actual dynamite block registration",
+    "Remaining food/wood/structural/fuel/fusion/matter/USB loaders",
+    "Dedicated/client gameplay and saved-world restart not checked for this batch"
+  ],
+  "records": [
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/content/recipe/LaserEmitterRecipes.java",
+      "sha256": "aca5e40f4a3b8dd1f4b2d2ddfee3e8fb39d76a44253d0a77b94e0181a7eaa575",
+      "shared": "core/src/main/java/com/gregtech/gregtech/content/recipe/LaserEmitterRecipeRows.java",
+      "fields": [
+        "GASES"
+      ],
+      "nativeBehavior": "unchanged except shared catalog reference"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/content/recipe/BatteryCellRecipes.java",
+      "sha256": "3321b4b7539fec682a2fb684d068080868f43c15280b6c5053e8cf6350d41558",
+      "shared": "core/src/main/java/com/gregtech/gregtech/content/recipe/BatteryCellRecipeRows.java",
+      "fields": [
+        "FILLS"
+      ],
+      "nativeBehavior": "unchanged except shared catalog reference"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/content/recipe/GrapheneNanofabricationRecipes.java",
+      "sha256": "1c10a874dcdfa7da4772aaff1f3de8e364830973a3c3b27ff6a702d7e477e067",
+      "shared": "core/src/main/java/com/gregtech/gregtech/content/recipe/GrapheneNanofabricationRecipeRows.java",
+      "fields": [
+        "DEFINITIONS"
+      ],
+      "nativeBehavior": "unchanged except shared catalog reference"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/content/recipe/PolymerFormingRecipes.java",
+      "sha256": "374dfb2f62d1a4ac462829f6a5d5bf9736d921a1424e41de24b46e014e7bc808",
+      "shared": "core/src/main/java/com/gregtech/gregtech/content/recipe/PolymerFormingRecipeRows.java",
+      "fields": [
+        "FORMS"
+      ],
+      "nativeBehavior": "unchanged except shared catalog reference"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/content/recipe/PressAmmunitionRecipes.java",
+      "sha256": "cfd133f80c9dbb95998a8dd5aa2b0e85445d7d9fff9d2118574ed34903b5d9c0",
+      "shared": "core/src/main/java/com/gregtech/gregtech/content/recipe/PressAmmunitionRecipeRows.java",
+      "fields": [
+        "PRESS_ROWS",
+        "UNBOX_ROWS"
+      ],
+      "nativeBehavior": "unchanged except shared catalog reference"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/content/recipe/AutoclaveRecipes.java",
+      "sha256": "93f9ae7721f431df4807f2bce25325f08192d69ef64992d1dcda79ed2a7ff7bd",
+      "shared": "core/src/main/java/com/gregtech/gregtech/content/recipe/AutoclaveRecipeRows.java",
+      "fields": [
+        "ROWS"
+      ],
+      "nativeBehavior": "unchanged except shared catalog reference"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/content/recipe/CrusherFamilyRecipes.java",
+      "sha256": "d78734aee16d988430854ad5c0de8b33e57c7dcab7d8e30a496795265ab8cd46",
+      "shared": "core/src/main/java/com/gregtech/gregtech/content/recipe/CrusherFamilyRecipeRows.java",
+      "fields": [
+        "ROWS"
+      ],
+      "nativeBehavior": "unchanged except shared catalog reference"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/content/recipe/WelderFamilyRecipes.java",
+      "sha256": "d79c813f1ab16a3ced7f47299f46004f250f0071244dbb491946929ee2d51462",
+      "shared": "core/src/main/java/com/gregtech/gregtech/content/recipe/WelderFamilyRecipeRows.java",
+      "fields": [
+        "ROWS"
+      ],
+      "nativeBehavior": "unchanged except shared catalog reference"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/content/recipe/ImplosionRecipes.java",
+      "sha256": "bdf318af223e126af66f1724d6188c8bc6217062b10080f85dc071dc4dae195b",
+      "shared": "core/src/main/java/com/gregtech/gregtech/content/recipe/ImplosionRecipeRows.java",
+      "fields": [
+        "GEMS"
+      ],
+      "nativeBehavior": "unchanged except shared catalog reference"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/content/recipe/LaserEmitterRecipes.java",
+      "sha256": "aca5e40f4a3b8dd1f4b2d2ddfee3e8fb39d76a44253d0a77b94e0181a7eaa575",
+      "native": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/LaserEmitterRecipes.java",
+      "change": "native Neo fluid/component/registry API; strict original source row checks retained"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/content/recipe/BatteryCellRecipes.java",
+      "sha256": "3321b4b7539fec682a2fb684d068080868f43c15280b6c5053e8cf6350d41558",
+      "native": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/BatteryCellRecipes.java",
+      "change": "native Neo fluid/component/registry API; strict original source row checks retained"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/content/recipe/ElectronicsRecipes.java",
+      "sha256": "f183751c6cfb2b4a76bf7f6122abb89f6a9ff6524ba154ce8491f8f2d173f83f",
+      "native": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/ElectronicsRecipes.java",
+      "change": "native Neo fluid/component/registry API; strict original source row checks retained"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/content/recipe/PolymerFormingRecipes.java",
+      "sha256": "374dfb2f62d1a4ac462829f6a5d5bf9736d921a1424e41de24b46e014e7bc808",
+      "native": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/PolymerFormingRecipes.java",
+      "change": "native Neo fluid/component/registry API; strict original source row checks retained"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/content/recipe/PressAmmunitionRecipes.java",
+      "sha256": "cfd133f80c9dbb95998a8dd5aa2b0e85445d7d9fff9d2118574ed34903b5d9c0",
+      "native": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/PressAmmunitionRecipes.java",
+      "change": "native Neo fluid/component/registry API; strict original source row checks retained"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/content/recipe/AutoclaveRecipes.java",
+      "sha256": "93f9ae7721f431df4807f2bce25325f08192d69ef64992d1dcda79ed2a7ff7bd",
+      "native": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/AutoclaveRecipes.java",
+      "change": "native Neo fluid/component/registry API; strict original source row checks retained"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/content/recipe/CrusherFamilyRecipes.java",
+      "sha256": "d78734aee16d988430854ad5c0de8b33e57c7dcab7d8e30a496795265ab8cd46",
+      "native": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/CrusherFamilyRecipes.java",
+      "change": "native Neo fluid/component/registry API; strict original source row checks retained"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/content/recipe/WelderFamilyRecipes.java",
+      "sha256": "d79c813f1ab16a3ced7f47299f46004f250f0071244dbb491946929ee2d51462",
+      "native": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/WelderFamilyRecipes.java",
+      "change": "native Neo fluid/component/registry API; strict original source row checks retained"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/content/recipe/VanillaRecoveryRecipes.java",
+      "sha256": "79a3dc0982be61af1b0453416c341202c82c324ff62ecd1ce7c9f75735c123bd",
+      "native": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/VanillaRecoveryRecipes.java",
+      "change": "native Neo fluid/component/registry API; strict original source row checks retained"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/content/recipe/VanillaBlockProcessingRecipes.java",
+      "sha256": "304032511f82bb461afe9d90586465c678472920da3837f8a4d5ce7591213f41",
+      "native": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/VanillaBlockProcessingRecipes.java",
+      "change": "native Neo fluid/component/registry API; strict original source row checks retained"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/content/recipe/TextileFinishingRecipes.java",
+      "sha256": "1b07162982070e6c9200c037c13d7d9c15e4d1b05d60bb9743642f72fe229b77",
+      "native": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/TextileFinishingRecipes.java",
+      "change": "native Neo fluid/component/registry API; strict original source row checks retained"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/content/recipe/OriginalRecipeBatch.java",
+      "sha256": "f42d2a362ec0a2d4b0c54658d96e594377a209eadb9c8b839a37b287e551cd94",
+      "native": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/OriginalRecipeBatch.java",
+      "change": "native Neo fluid/component/registry API; strict original source row checks retained"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/content/recipe/VanillaRecoveryRecipes.java",
+      "sha256": "79a3dc0982be61af1b0453416c341202c82c324ff62ecd1ce7c9f75735c123bd",
+      "shared": "core/src/main/java/com/gregtech/gregtech/content/recipe/MaterialRecoveryRules.java",
+      "change": "Original BigInteger target conversion, work multipliers and capped dust pile selection; floor behavior unchanged"
+    }
+  ],
+  "verificationReceipt": "docs/integration/verification/p3-industrial-batteries-compile.json",
+  "startupVerification": "Neo ordinary DedicatedServer startup, source recipes/tags/block loot load, 200 ticks, normal save/stop PASS in 4m37s; no gameplay or restart verdict",
+  "startupReceipt": "docs/integration/verification/p3-neoforge-wires-startup.json"
+}

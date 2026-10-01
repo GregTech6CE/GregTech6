@@ -1,0 +1,1436 @@
+{
+  "authors": [
+    "saltnya",
+    "brokestar233",
+    "Lorbineitte Masson",
+    "original GregTech 6 contributors"
+  ],
+  "license": "Original notices/history preserved; local development only; no authorization changed",
+  "counts": {
+    "materialPiles": 3,
+    "pileSizeStates": 195,
+    "coinPile": 1,
+    "coinCells": 16,
+    "coinsPerCell": 16,
+    "resources": 205,
+    "javaRecords": 27
+  },
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/MaterialClientModels.java",
+      "sha256": "c1e977684bbdd66d4fdbf2c07c6bad7ef1310e38f427cfe42ecc71c1fcffd3df",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\MaterialClientModels.java",
+      "sourceSha256": "6bfd56ab789a897a6cce9561b3cba68d8888f71ba5ac82eba6dd47c4d34ec9c7"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "sha256": "fcd4d9561a1d174c76b3177adb2d262157e002cff4c6df1925fc9d339c81741c",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "sha256": "b831045df28f5fce69e5dc783da232c282ab2a923c8eb021dbc6b84728ddda34",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTBlockEntities.java",
+      "sourceSha256": "027081bae34480826956a74d65a24aa7f4ef29d4be4a4687046793a10d9df62f"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTItems.java",
+      "sha256": "b2d4f10f36f97c0333b931beb34114faf906293fb0f139b3f1403fc5f36da3a4",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTItems.java",
+      "sourceSha256": "372d7804a95be4c63e88f02bb6b32ea3fc93c02b677461775032f6ed2797dc83"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/block/misc/PileBlock.java",
+      "sha256": "065ab78e70a74a1709865c3cf3ca84ddd8b5f5ed7b77d661bad32e280713f65b",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\PileBlock.java",
+      "sourceSha256": "ae3171d513a00668167da8abff95004d7de41a0da6f3b2dc14f6d01ef5be5a09"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/block/misc/PileItemExpireHandler.java",
+      "sha256": "c03b0a49052eb31d1ef331fa0c3ea14525fa084752228e545b2d8c29701a4b78",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\PileItemExpireHandler.java",
+      "sourceSha256": "dc61bea3f2fd9bdc517db91b88ed2f1aa6e1d449e3b1cb6eabe55697944c6aa0"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/blockentity/misc/CoinPileBlockEntity.java",
+      "sha256": "995cde53299633b550c724a54eae9f2ef58a0ee72414559207a205ca5a0a79bb",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\misc\\CoinPileBlockEntity.java",
+      "sourceSha256": "22cc703cf28684433dd8d0c3f1ee7fb57bcc150706d654c1cbbd901822d98c0d"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/blockentity/misc/PileBlockEntity.java",
+      "sha256": "9ba4971f702c843ba8c0e6acb2480345638a94ad14a4eb7605fcc0b5430620b6",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\misc\\PileBlockEntity.java",
+      "sourceSha256": "70832b591c0af3f4ed8f4175ed3f30fd178b02ba6f9845a048ad0abd0fb1610c"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/content/tool/CoinGeometry.java",
+      "sha256": "3fccc725971b6c94af145e32726f25d2c635ed84019b70df8caf8ae47c1352cd",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\tool\\CoinGeometry.java",
+      "sourceSha256": "bcf967e6895b72e1feb32c4c739aa4f0711a22ae32a4f04eb8a29ce1c1ffceec"
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/block/CoinPileRules.java",
+      "sha256": "b9ee90933a46131cc9cbc90d5500bb14aa60bb1b251cd11714b7de65d38120e3",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/block/MaterialPileRules.java",
+      "sha256": "199c4e1c0927c09a5603708970e6f7f81a055e2dccd6fab92c02de43070788d7",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/misc/CoinItemExpireHandler.java",
+      "sha256": "820c056b101e3e0f9f2b0ee73f4407c55f62541c884bd43a2d74a14ac860e89f",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\CoinItemExpireHandler.java",
+      "sourceSha256": "6b4766bda645b300bc4a2dcb459dcb6a60cbe422ce304ab12ec943bdfe4de3f0"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/misc/CoinPileBlock.java",
+      "sha256": "577e76b81c6b21dd4dbc83fb73ce4b361300a7db2ec06a80df7a21a35d0f5bec",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\CoinPileBlock.java",
+      "sourceSha256": "1ebdc9b963486db0aa5242792659f64fe5f6a4030ca053410916d488264f5e64"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/misc/PileBlock.java",
+      "sha256": "8e08a2358d35877eb8ed8aba538406e952a13b7d5fd35d8cd03424e05478fdb8",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\PileBlock.java",
+      "sourceSha256": "ae3171d513a00668167da8abff95004d7de41a0da6f3b2dc14f6d01ef5be5a09"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/misc/PileItemExpireHandler.java",
+      "sha256": "5a2ddf4a12214f9769e76a96359d548e7336eacb0034535dabc682b08b75a642",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\PileItemExpireHandler.java",
+      "sourceSha256": "dc61bea3f2fd9bdc517db91b88ed2f1aa6e1d449e3b1cb6eabe55697944c6aa0"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/misc/PilePlacementHandler.java",
+      "sha256": "aa16ca89789fd087bfb0f2ae400d5313dbff902c19ce3a72eac6cc92be80d8b6",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\PilePlacementHandler.java",
+      "sourceSha256": "a3d5bf4a0ccc7cc85dbb241fed41c189e7241c85c4e9d0911c6b0d4be8eddb12"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/misc/CoinPileBlockEntity.java",
+      "sha256": "306c0d0aa31eae7fdff3d76a8262985a417c2d0e1821260cbbb8054babb4d834",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\misc\\CoinPileBlockEntity.java",
+      "sourceSha256": "22cc703cf28684433dd8d0c3f1ee7fb57bcc150706d654c1cbbd901822d98c0d"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/misc/PileBlockEntity.java",
+      "sha256": "d1de604a2ec21e8234614345d052431945cfe947f2c4eb26f43111c9caad4460",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\misc\\PileBlockEntity.java",
+      "sourceSha256": "70832b591c0af3f4ed8f4175ed3f30fd178b02ba6f9845a048ad0abd0fb1610c"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/CoinClientSetup.java",
+      "sha256": "6d2d5bcb4d9e65d38be27403667c6e87133cdf92ebbf91a948a106552ca12738",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/CoinItemBakedModel.java",
+      "sha256": "f7a2e61bb9ef0dcf4320a1a2b83c77aab29a14db253e6c9f4f84d7a8270a6327",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\CoinItemBakedModel.java",
+      "sourceSha256": "cf814bb72b593dab553ddc3af8ac736549c307561c34e923913d816cc37fdae3"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/CoinItemRenderer.java",
+      "sha256": "3c2f494855435184a25217bb05596560a8745691345dbb30c48bc750cc79aa63",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\CoinItemRenderer.java",
+      "sourceSha256": "3c2f494855435184a25217bb05596560a8745691345dbb30c48bc750cc79aa63"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/CoinPileRenderer.java",
+      "sha256": "f6247c41c661f8e6b46c7348f54182c66c27d328cb9f856ac08a6f0258b521c3",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\CoinPileRenderer.java",
+      "sourceSha256": "9db339cc2ce6c158c024146ee1636750e70bafe21f01a66775222504173a0446"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/MaterialPileClientSetup.java",
+      "sha256": "52e0a8263f0b6300e7231b1027e9a94436aa4a7e81f3ba7ed35daa6284897cf0",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/tool/CoinGeometry.java",
+      "sha256": "0dbea208a60e39a6d5d541a9af877a1d94cc0595f8dc767b7bc68513a4c1a180",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\tool\\CoinGeometry.java",
+      "sourceSha256": "bcf967e6895b72e1feb32c4c739aa4f0711a22ae32a4f04eb8a29ce1c1ffceec"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/item/CoinItem.java",
+      "sha256": "a6ead2549c66a6542d9966807e5178d0edfd6090ae9435d202bd860c9952331b",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\item\\CoinItem.java",
+      "sourceSha256": "a09a94eb44a82f5aafa1d346ea7dd9d6102738373ea44075fb90c0f680fb9627"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTCoinPiles.java",
+      "sha256": "3345264eea5c6d4ff2e4cadce9c2d795a323681e57de83b1349bd1d63455744e",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTMaterialPiles.java",
+      "sha256": "f83bf0fd22e6a80541983018be19e572e8c289f33daa8e26fb4375ca80fd42b0",
+      "source": null,
+      "sourceSha256": null
+    }
+  ],
+  "resources": [
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\ingot_pile.json",
+      "sha256": "5aae95aa1a113447252086ea0a9bdad5a38438090facb4b4095e812d8577e201",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/ingot_pile.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\plate_gem_pile.json",
+      "sha256": "6ebdea78060897aa78a54a7703d5339a2e48884e57400b18fb86fc9c14227a3a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/plate_gem_pile.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\plate_pile.json",
+      "sha256": "ee74473e1a8ac5cae204ab7243e2673442e062fc9f972a9aaef0a11150d22983",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/plate_pile.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\ingot_pile.json",
+      "sha256": "3209ed6e27281197c4ff6865d9bdfab0b825ab5f2cab3da7a618abc35849a54a",
+      "target": "core/src/main/resources/assets/gregtech/models/item/ingot_pile.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\plate_gem_pile.json",
+      "sha256": "c4e95f7ae33717dd6e7cc31eca13dfd15287bc89730d21fa031b864fbed643c9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/plate_gem_pile.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\plate_pile.json",
+      "sha256": "2ab62b4186a355f013367a20a7c9069be0453de73cdddca6342d1a884621d132",
+      "target": "core/src/main/resources/assets/gregtech/models/item/plate_pile.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_8.json",
+      "sha256": "a939559fa74c4b2a3484822d84d32b81e394f2b42145a0e8e4f171787189ca93",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_8.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_8.json",
+      "sha256": "3161c9740f18c3c6d9f3cfdedaaee55ff6fe4a9e98d9fa7e63c90758f16ca128",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_8.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_8.json",
+      "sha256": "f13ea5b654488e30392660f2a3bc13479a5a6ed2fe89bef1b35b7781718b2e92",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_8.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_0.json",
+      "sha256": "54123b79106d406cf45799e41e39438bc35a9408d009c3c3f7b5995085183825",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_0.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_1.json",
+      "sha256": "86185566fff218557757d9dd6e607be4636ab485f4b03b8038186447975d0f17",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_1.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_2.json",
+      "sha256": "fc3a35dc041d0496cdf631b76905f3f20345b809645d135559b6ef7c9171bfff",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_2.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_3.json",
+      "sha256": "2cf7b8a75da54c56cf0fdbf007874193b2f8941d5f887ecce21b4228068f9687",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_3.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_4.json",
+      "sha256": "9b53e9e59d08c95837fd9389a2eaac28f944a45e10bb81a73445eae147a1f3bc",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_4.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_5.json",
+      "sha256": "bf9f4d703c8c12ae0912f13379ceba512e1d60beb686e7bed39812c4a772a09f",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_5.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_6.json",
+      "sha256": "caf2cb5f9fb8d7d704f3458f5d46dd2b848c8f713dfb9be073f269610d2b1f0e",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_6.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_7.json",
+      "sha256": "981933376be460bd7d8f3ef8a09f2fa58f5547ee42af210bef41645492feaf1a",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_7.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_9.json",
+      "sha256": "afc86c2e3829cb8b98c86a55e9e18ce005eba4dcb5c93b8f3956f1c5f0269295",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_9.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_10.json",
+      "sha256": "94d257f796e96b8f9538d6083793a866b8ab947d223e500f43af3207b27dd4ed",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_10.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_11.json",
+      "sha256": "09e4c955996352a30c7406786631b7c286ad6cefe4a89ff932ce5148348be4fa",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_11.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_12.json",
+      "sha256": "019ee5470a14f0ce73190251631109f58018e08a22ec4f33f90147dd990da528",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_12.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_13.json",
+      "sha256": "fba14cecffcb5a17b5aa12db785dd72f4e850d17ffc5d7c0dc8fee05c3654099",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_13.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_14.json",
+      "sha256": "78dcc4cbc64501f7240bd0077e0026f621c341b0e8bf55cf405f995cdce59276",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_14.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_15.json",
+      "sha256": "a414d4dc1e71607b616b8b84b2a41d8a5ca56759c9e1133d1b9fc0bcbedb473a",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_15.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_16.json",
+      "sha256": "6487c6e55c04b7ab4e0095695f6637bfa58fc4a49106039bede9acfb71a01cc9",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_16.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_17.json",
+      "sha256": "6af464bd87673b8199422d6b07dcd7fb813f2a5131fdce6cc3e84e0fb7d7f82c",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_17.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_18.json",
+      "sha256": "72f8b4e4e7eed798d2a23a563a92454150c062952c701bb1455fc4515bb56ab3",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_18.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_19.json",
+      "sha256": "d9710b79f19150bf36a124cc9a7cddb52be72b23f267f711b9742805755dbc72",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_19.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_20.json",
+      "sha256": "e7c882bce83c7b2792266ee80674ff6ae47c9369d938c57f49166e101a1be4f4",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_20.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_21.json",
+      "sha256": "8af7c302ba287e7ed111e11bc3037bf916da15d8e9928d72180d6adf22ef840e",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_21.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_22.json",
+      "sha256": "fe5bf852c70e6448658436bf41981a70e4144e32adfb4ccbf5391e64977e60db",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_22.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_23.json",
+      "sha256": "f453685d0a413ebfca2e83d3769a304e0637997373ce4818de2d6c5c2496f201",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_23.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_24.json",
+      "sha256": "cbd6d9c70ff701c8bc03b54bb8f23bd31bc7e0126be3dbb493f8464e0f81dc88",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_24.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_25.json",
+      "sha256": "54f2d308cac579fbd900f449b87f248ab056e02afd576d65d2968862196c1e09",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_25.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_26.json",
+      "sha256": "650d49e7f061d814b6e2579d7abe20ec52884be2f92e1c5af10db1c78bd17de0",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_26.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_27.json",
+      "sha256": "d85a680400ad8f246fb163e49ecf0a97c0dab01964112b7adc7d900e61c556cd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_27.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_28.json",
+      "sha256": "605e03c713acd546bcaf2b1456ff7e7e978b39f890965ea1c8504dfea35c21d4",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_28.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_29.json",
+      "sha256": "9d567aec5ade4b639a52eb833efd246fb0f5e4caaa651af2f92cf0505a32f4d7",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_29.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_30.json",
+      "sha256": "a243d8e78b2deb874fb4e43603edafab318164b7ab21f62354a656058a9955ce",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_30.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_31.json",
+      "sha256": "c856ffae0a959110ac633c49d7f97f6840e16be57e67ca17e149399465a7575a",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_31.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_32.json",
+      "sha256": "6ee5578fec7324b2cbea1135c4ab26610db84d01ea2b91272ce8745d110c01d9",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_32.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_33.json",
+      "sha256": "2861986e76045abaa6ca20d30412d9214c0bd6fed08aaabfd7e0650df09ef64d",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_33.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_34.json",
+      "sha256": "9723b3dce03ffb63cc3e4dc0948fe2e15d04a68283bd1e059593e8cb85b25eab",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_34.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_35.json",
+      "sha256": "20a140dac4eb71c3a365a12d4d90618e13685d9e02e8e87eb192743dba62b1f3",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_35.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_36.json",
+      "sha256": "6511575ec07167bde46ce50bea0eb48c7d6b6afe297f571c7608b4d932754a8c",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_36.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_37.json",
+      "sha256": "6f405b38ab96a1b838fc529bf833f61f5bb7b8daed4e8bbec780e96ca9c4c1d8",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_37.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_38.json",
+      "sha256": "bedf0f121c4b9b509c7625f6411358c50171d4cdf4f11190026883f1c9bf80eb",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_38.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_39.json",
+      "sha256": "178cd585f088830728fba56a136efc4f1b01c5b03ee8e19f115499670e051f79",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_39.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_40.json",
+      "sha256": "74cfbe0d169309aa7610039edf200582d873e2de5503d55723ecf37070c05617",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_40.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_41.json",
+      "sha256": "049d1c28a860033b1a77c93871635357d39ebf4789d5423443015aec05b96bf3",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_41.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_42.json",
+      "sha256": "b8722c9027198654674f739a84bc69730c0932638b4c02f5c37a7a781d6aa1ce",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_42.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_43.json",
+      "sha256": "effc14dad7ba011693ea4d55af80a02b1b1cdfa4516400fc5b3f79484e697dc7",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_43.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_44.json",
+      "sha256": "be1341fcc2807f4a4bb2401de8a01b37c354ba9051cae940e265554efc9c47c2",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_44.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_45.json",
+      "sha256": "307965c5225d209533253b04cc5f86d4e28391cebd7ef77fbd9ecaf08ff5ca14",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_45.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_46.json",
+      "sha256": "5956538719fb112564983eb2b493a479a77eaf44e29dfad2b795250481c79aed",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_46.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_47.json",
+      "sha256": "ad478ddd1b787c1d2daafa9089b93962d3ab0b2bcc909e93f622ae0c42892e23",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_47.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_48.json",
+      "sha256": "68358e7acc89a6e94897ee75162c4a24ff2d9653fe0b22f7a20bb229117d01d0",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_48.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_49.json",
+      "sha256": "7b25af7452dbc8e29b8c054984c84df90f02f2bf267ad1118a4f6671380a39a8",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_49.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_50.json",
+      "sha256": "d5e39a6cc79266ac49f7e03ad35e5b37235ac1fedb479d37ac5c7afb63b3dbc3",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_50.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_51.json",
+      "sha256": "b7b95e14c56ccee3326b4bcae5b1510abe8d85a5c923b557f43b3233ff6ba5d1",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_51.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_52.json",
+      "sha256": "a54be2804273748140458a2a0301bb2d008591ecad928ab159e07295c6a22cf5",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_52.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_53.json",
+      "sha256": "93dd9407378d7d51164c5d4a537ea986e0355e25192aed81a0a566e81ff0adba",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_53.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_54.json",
+      "sha256": "7f6d650952d5c2e02b11d7fc302b43c468929fe48bcff94445959c1c590148ff",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_54.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_55.json",
+      "sha256": "fab308d00d80906544b5e62ba31e82c854d766cea2a99f28ff032a4eb355971c",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_55.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_56.json",
+      "sha256": "410757fc83df7e8e82f441dbc79d24da925c4bb3ac4947e74367ed1b3a5a8201",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_56.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_57.json",
+      "sha256": "c115839c4e0bce56fe9fd4114baf38ad542b56c3312a103046710fd7f97fa4fd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_57.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_58.json",
+      "sha256": "c452970b30b74ccfd5b2839cd4b1190e268c3c73471c56041008725bd7894779",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_58.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_59.json",
+      "sha256": "846ac6610bc038b19e58ba5e86f0de89957a875d1a3faa0f943f375e8dfaf3ef",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_59.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_60.json",
+      "sha256": "16748a8f0fb53a607d39c97ca2be104bb6e7b7b50682d1fe64bfca372fe10320",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_60.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_61.json",
+      "sha256": "2c7c641aa3c2d15605fb66ec914e14ebdf58943ece97b039a623d162149b2d94",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_61.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_62.json",
+      "sha256": "80efcd3672042ede2f8024e63b71f7fce246c43c527da0245b85f8fb8cbfdb71",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_62.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_63.json",
+      "sha256": "06d37748cf73a389cbc57b7cde58e611a44a22425634223c288d89d914b170a7",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_63.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\plate_64.json",
+      "sha256": "37adc8338a65d2352f425412087800e3f206fc620472fa9c6cc7057e2a03f7d1",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/plate_64.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_0.json",
+      "sha256": "0d82855d1be977685a1619c0c3be8f69998c35b90e5e4982c16874ab453d9c95",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_0.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_1.json",
+      "sha256": "0762aa4016b9e60f0c6c26ce4d3bb679cb5e796ffd37cd0195f0924d049e29c5",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_1.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_2.json",
+      "sha256": "fd45129d6d1a5c737fe04af1b23eed379a802785dbfd64568cadef4982777fdf",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_2.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_3.json",
+      "sha256": "d5df7b06681bc3a83daa0ddbd5b9089ce26ea57fd9b26a8e77de33003e7d76e8",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_3.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_4.json",
+      "sha256": "f285e0ab4124da803899b21b7190ecd1517b2a09996ebe3d3f98e99701626524",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_4.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_5.json",
+      "sha256": "1cd83a0bab6206f750048375e0a0d1e446e33f053393bdc52b2b6f54c65b7414",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_5.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_6.json",
+      "sha256": "d5af60803729c6612629d86c76f8c9d1991669338c5c9b33ec9988d34eff1ec1",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_6.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_7.json",
+      "sha256": "2e6ad32910554213d1b578b84fb252e7f67b5817b9987d43ae2a49b09a62cb5b",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_7.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_9.json",
+      "sha256": "bb17cf8531b3da8a7ef99cb9213e67e35bbc21755161af85fe971437bce7b467",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_9.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_10.json",
+      "sha256": "97963d78e8b62869b11807315bd380929b73ac51a2e0500fb49dc97ca21b6cd4",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_10.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_11.json",
+      "sha256": "db71fb9f41addc972f4c1f8e82113e8f3d4f28442eaf3906bb99f6e3ecd9e053",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_11.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_12.json",
+      "sha256": "316a289676fb342513ae586fedd741b73025321beac3b91ce4b36855a77c7a1a",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_12.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_13.json",
+      "sha256": "6454daf59cbc40f962c0b8a56e0f8192ff859ef9157c116de109f7ca5a15a661",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_13.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_14.json",
+      "sha256": "9d032d8e9291f191aecdd922019c75cc2e144ab75725f9d8457131a2eea88a86",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_14.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_15.json",
+      "sha256": "35ab5ee9a08dd6d62b947824669b7b12edb2eda7cc6657d2e65cb615aaf1d3ec",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_15.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_16.json",
+      "sha256": "6062f2aada0ddaafb7ae8583061f07de404001c9e2211267f43c96bce3fcb0db",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_16.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_17.json",
+      "sha256": "a695401601f97398d9543e8fcc67931a31a23d0bf96ccc5b0a7a8fc12772f3f5",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_17.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_18.json",
+      "sha256": "7b67fc9b1e8ff8900f744e4dbd821a478a86d0d12c859920a80a198890041fe0",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_18.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_19.json",
+      "sha256": "62ca02032d44e8d1f7d7aa3ae2d06ed8ab6c76f3726e4e634830012f9bfe6620",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_19.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_20.json",
+      "sha256": "60f20418bee6d95dc67d84031724186311ac23eca9565a9125b8f4856ffa9f24",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_20.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_21.json",
+      "sha256": "ac890dc432c6dd3e6a83bf72e54cd70bb22c0292f948c8837722abd9091e59fa",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_21.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_22.json",
+      "sha256": "1f67f16c33026de3a5047dd1e0d4849c73d54d60d91f9d2992ae0eadbaffec81",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_22.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_23.json",
+      "sha256": "7f455b91e5c5c643200fb54a33d382725f876ac3868c57966b2a8cedb15ad787",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_23.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_24.json",
+      "sha256": "22f97942ec1a07651230348f659682a6555b851f492e493777cef84714c83c8b",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_24.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_25.json",
+      "sha256": "643b58e2174fd647a7f6afd6299d786423a7a21d953265b5d5103435b97f1c1a",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_25.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_26.json",
+      "sha256": "e90a5a507427b9d5442aae724b86d50cdec65f888f01fd248126c4f4c4dcd260",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_26.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_27.json",
+      "sha256": "53a6cc2626e50119513eb665dcd56d66ed4660aabdf42ced3445dc87f5b6c8bc",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_27.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_28.json",
+      "sha256": "9db8ac8d7c4f142a8ce1e80ad1db531cf7b043d32dcae329781a5b0b0c7abcd3",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_28.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_29.json",
+      "sha256": "ff53c0c35c2774205ad89f8bc70bce6189f926420f7b99cab56285f05b092057",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_29.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_30.json",
+      "sha256": "25033f335419738463db86a2ab352c669157102de689468d3c5227c3db7c91cc",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_30.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_31.json",
+      "sha256": "560b7d5f8b347efc4d1ccb5793e607d0d00d954d9e9d80be9a46e36563d2162d",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_31.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_32.json",
+      "sha256": "22defed50ee2e022cf6738a3dad3c7e9a2f849d73a75624c8860dcaafbe537b6",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_32.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_33.json",
+      "sha256": "1e97a471e69d5ccc80075f79a4df04d3059b3c27cfb380cab68ff8d97cc63a22",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_33.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_34.json",
+      "sha256": "bee14f089480af29478a4d67b6f7e463a380855c4c8f173f3b232173d3362bf0",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_34.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_35.json",
+      "sha256": "a3e0a1077ad84b1c835ab00955137986819ebbe88adee467bbb01d64f78e63a8",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_35.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_36.json",
+      "sha256": "a5b31d21288056632348fae9cd963b970f265b84e7664375e2a46ccdb5cf7e9c",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_36.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_37.json",
+      "sha256": "5557e8ee26285738abae2d1e1097647c0cb60465676fc58dccceb220e09c6a62",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_37.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_38.json",
+      "sha256": "709a5edcfe29f87e02cfc134b8b43dbb266f6515aab3ee6824a1506d3f1021aa",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_38.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_39.json",
+      "sha256": "301b6bf86083cbd68727bcc08a4b442d5e10f3188bd6acac5e550c6335c2b491",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_39.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_40.json",
+      "sha256": "2a37b300562278a49da7e8eef7760b90bae4f3ed06bf962811450bd5a3544a15",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_40.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_41.json",
+      "sha256": "eb334d404c4f2048a56a62a20ebed209d1f11b82ee7d6c46070edb2791732276",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_41.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_42.json",
+      "sha256": "33d66bfe5d4e5ff0010c2180b827a57d4f3a6c50fa80dc558878d85252d8357b",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_42.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_43.json",
+      "sha256": "b2aa899253b5768d7a9c5ab89f2fa17f6fd11f654f9a2a302a1152a5d0f26aed",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_43.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_44.json",
+      "sha256": "c6ec55bfffe417ea8481468523703ac6e12f62194a896e61fbda08586daccf6c",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_44.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_45.json",
+      "sha256": "7d31df08238a86f93eebd44fef11f66ea8066fe51d9fd14e5e9ecd166ccf494e",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_45.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_46.json",
+      "sha256": "826a9b1e2eb9833c5cf7d7472bb830ec07f616809335b0f9f81cf0512e42e6d1",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_46.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_47.json",
+      "sha256": "35d95e043db6db5f7f6c9a185b0e79067e2acabc578d32e3f308e4a7530658bb",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_47.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_48.json",
+      "sha256": "ef0060a4fb4f9ceacc97e62ae4472b1d45fa27807bd6048cd9671f761079a7f6",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_48.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_49.json",
+      "sha256": "6092c41e877541990d7d3c3465894572faebf140010375990273fec2bdafa68b",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_49.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_50.json",
+      "sha256": "96462920b5603749fc9dc5bbf15553e18cdba313ae8e8b0335b6d6e6d34bf1fe",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_50.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_51.json",
+      "sha256": "afab627d326cce73310c5df6625f1ca9320d59533d3613f6789a597bdca0b247",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_51.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_52.json",
+      "sha256": "da930023cd332bdb6e57038be07e829fa3f0d03a0aea2d341726eb85b064946d",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_52.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_53.json",
+      "sha256": "05b95ac4feffa82fe699ac21aa182b4f3b438a73953771298c7b998ee8bbd33e",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_53.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_54.json",
+      "sha256": "83fca7a42ca5b3bbbd59220fa3b70b0d4756102f7451276ffc16ffe1a9b096ab",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_54.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_55.json",
+      "sha256": "aee4dc39b85ca563f7949432aa2a3b3f0a41d9d0e1f60fd0f01ab2ccacfc15ea",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_55.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_56.json",
+      "sha256": "91726ebfb724f8d03d8d8ee023f5f3c1fa49c04ca0add02aa90461430b3a88d2",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_56.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_57.json",
+      "sha256": "760f12aa202054ad01e5dde1b7d868e032cf58008f9e6894ee001d66e73bdf5f",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_57.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_58.json",
+      "sha256": "a93d038097a1dba88adb886663449c48e48e0061643d089b2ce954ab1dbcc490",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_58.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_59.json",
+      "sha256": "aa44aabec53a7627b714c9dc2df4fb293cb623d5126ba1b975cebe1937bacee2",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_59.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_60.json",
+      "sha256": "0950273e925929a2efc7c596c79b659fd830f666a5019e140df48006522fd81b",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_60.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_61.json",
+      "sha256": "8cedf6ac6acd6e2cf1b5e6d7e5b6fd78446915d2e522b391d185619bf29f30ad",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_61.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_62.json",
+      "sha256": "7fdda5f41845723cfed5d4f050f5c8e65f5d2a56a1a5f6b7021a925e0b026595",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_62.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_63.json",
+      "sha256": "07d3c6b1efa50fa757f785ff5d3c4e622c93b62678f1683305b2d95ab5859e79",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_63.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\gem_plate_64.json",
+      "sha256": "cdffd65df823dbc0d9e7fe477328b4d7be2789aa6095465348840a44d8625632",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/gem_plate_64.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_0.json",
+      "sha256": "a8fdfe25c091ad1b6a3731956ccbfd25101496123e9d59d52211b4f85311d899",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_0.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_1.json",
+      "sha256": "72156fe0cfb24751bb34722a47ece8cb19b2d52d0622d29e55049959759925bc",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_1.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_2.json",
+      "sha256": "0d3909b6ae5b9c9c9eea0f1eb05c7601f85dd52024b2bb49afda5b03c1238d4e",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_2.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_3.json",
+      "sha256": "02f6f86c7ef7170db44994c33afa9b25eec386ab8f20699c232d12c202d69be4",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_3.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_4.json",
+      "sha256": "7a74c113e37000cf7e4c5fc79e352db5a56062e1983815dd1d2537034c46f443",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_4.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_5.json",
+      "sha256": "1a5a3fa90343f6ce5c683b33c22cafee520783caa2251d179ff046c76f91feff",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_5.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_6.json",
+      "sha256": "2601ea10744459bcaa660f2795fe3a5f841cab95730c48d5637e4561456ca53a",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_6.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_7.json",
+      "sha256": "4251ede9164abf98dca09a51ae8184481031b340792dbe8e833067a661332f4b",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_7.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_9.json",
+      "sha256": "c25b88f781bbde070c305e43b3640cbcfd5f3343466ab5abab293824d4b1009e",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_9.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_10.json",
+      "sha256": "e23eaf60e69028e273a8610bd9d393fec7cb2583de3975483decc2e51ebd06e8",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_10.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_11.json",
+      "sha256": "37ad21ee4394fdeddd4dcaee2b86c37185550f1720af25a7015d9aa0570ff599",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_11.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_12.json",
+      "sha256": "f3bc7158d903fdc06e45528e19a6cda7e781c78525b3ee9609f3b3b5d3d20dc6",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_12.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_13.json",
+      "sha256": "41bf102ca0765cc9976339a20aca85ebab7b0fa58a5c7fc523a6314b0e089a61",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_13.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_14.json",
+      "sha256": "7365b43a91be31d1fb84ef7721ed0b8c927d1602a6a00702f3faedb74f00c8f6",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_14.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_15.json",
+      "sha256": "ca412038a5ebdd33e2588f4c334481127f8ebcf21c8bfd3fb0ecf0f868b2a3a5",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_15.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_16.json",
+      "sha256": "03ab1d545e4adc6d13c3fc63eba64f94096bacae89ae9e1444445082498ed7a1",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_16.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_17.json",
+      "sha256": "ec160f16442b5514ce49af54934dc8e34ab8cce1dab9d31442c670f881248f28",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_17.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_18.json",
+      "sha256": "b3c0d78a349068830e1c8637d4df86232defa19e749f870cf5d1780000739b63",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_18.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_19.json",
+      "sha256": "742f74ed9a4fc6f17c061fbdc579e4e80aedae3e59dbf1937bd5adaf8cdcf9ea",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_19.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_20.json",
+      "sha256": "93e46427ce7491738ec2d940a70c41129120ef8ac425892e37a04e677974c18c",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_20.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_21.json",
+      "sha256": "c7e5ca21d1e395efe6d0d102bf433344c8edd6af728c5a347caf7dbd684b077d",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_21.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_22.json",
+      "sha256": "5dddef0a9c02ccc121045735872f1ffc27dfde8b31e3d466cb1861888d225515",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_22.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_23.json",
+      "sha256": "32981e86d31fadb639247645799c1363e61417936108fc3f800f7a69164663c2",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_23.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_24.json",
+      "sha256": "91ca1932f3ececf58cbf37b98ba1eea6bed2a2406cdb4a1ead17ec14a11fab9c",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_24.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_25.json",
+      "sha256": "636274e6946c5b23ec32f41a2dacf89a4b03b066687dd52ec6de3fb6562c7f08",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_25.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_26.json",
+      "sha256": "c80a36746d4443f43a1784781b71e7c32cd84050f143bb6c368d314044e1e9b9",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_26.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_27.json",
+      "sha256": "33a55347130c0d597274b510b9c6f640991b9070f9877ee46891cbd3ce893ac1",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_27.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_28.json",
+      "sha256": "e4a8c629b9f1f20c12083ba3ae2c7b76ea36538a1552f7a1fc24d0f1b3d0d251",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_28.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_29.json",
+      "sha256": "bd7041260055e7c82423a3a3b706fef8a199fec5e5cd638a0b95d945591faac2",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_29.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_30.json",
+      "sha256": "2758a2778386e9bc0235eea5cc001e4755bf1810a5d9f4210e79e791cae2cd59",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_30.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_31.json",
+      "sha256": "3c799693d94351ac41c0843cdbd8c8a6720fc5cf47b70db1e7128409125821a5",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_31.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_32.json",
+      "sha256": "00d9dbc50b0c0a4240823909ac5744caaeb42a344c7e2f7640a83d7fb042d296",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_32.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_33.json",
+      "sha256": "893925edf2fcad4f96025efc51c08d85e16d2ccb6b5466565735ba6902762099",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_33.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_34.json",
+      "sha256": "add2e850e170aaf6cfe53e12ed0ed0693823c07d5c1a45907727a59de3fc0afd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_34.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_35.json",
+      "sha256": "6acd8258c0a66a788c32abef4eb542fb9a213b46cab729542ca62a05baeb4ef3",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_35.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_36.json",
+      "sha256": "f07aa333eac9aeda2e1113905c207fa0c1b9f5d2427e83bd5a8ec95cf03dc769",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_36.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_37.json",
+      "sha256": "56162d99e030d761f13bd6fc6aea4ab23cb1afc6da8e391f72c2dfb13f915aba",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_37.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_38.json",
+      "sha256": "fae1a3c32a2b78da2f0e6041a5ff3ef48f13c3eea29b0c4208d701fef113ce6e",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_38.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_39.json",
+      "sha256": "e51a8cc6f9ea763004b87d938f1bc08d74da7419a1f6e09bdfc2c5022d2bc5b9",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_39.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_40.json",
+      "sha256": "848f937110bccc71d9ea85fa44d301b4c61845bd878c735fb101f15b9c25a42f",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_40.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_41.json",
+      "sha256": "62a300b3a14d42bd54756345b7da51ba6e3052273eb0c0f14baacba9f8a7a5d4",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_41.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_42.json",
+      "sha256": "d20207667b67be8d7dcfeec6d052fcb9174bda4a88fc98ef80d7e19f4e8e166c",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_42.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_43.json",
+      "sha256": "7e6422ac6b083101bf59b69b4f87575f8f3010903a891fc599d3f7c40500cf23",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_43.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_44.json",
+      "sha256": "058ce16bbd5eb91e0e041efab72a49194ba4cde346377b257ddb8c4c77158557",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_44.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_45.json",
+      "sha256": "0fa5d7b277d14fb7b3c3b06a84bb777ecf5991f58ff2b1bdeda2ae1c6bd7015b",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_45.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_46.json",
+      "sha256": "4c8b6854bb290bb0936f4a563de82487c8e818d5c476bde8f22bc070d4bb0250",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_46.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_47.json",
+      "sha256": "b67539d3fe3d4cdd9801a7e43652a00a43d6e560e3c560a09c373a45a26f5f83",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_47.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_48.json",
+      "sha256": "192a4aa4acb84944fbec7ec2e014c6140f20f7533776ee1dd6f58b93feadf7a7",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_48.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_49.json",
+      "sha256": "57d096b6da6615290cb223bc7cd81e77a6bcd52a84ef43fe73f3601e25b2e424",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_49.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_50.json",
+      "sha256": "2d62a87cc3e3fa00c53bd0521db4fe337d5a7dca2236b0b7d499279abd1e367b",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_50.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_51.json",
+      "sha256": "b672b2dca15f0e2ab9d9caa68b35d18068f763ee3ee95305843776b2885a61c8",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_51.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_52.json",
+      "sha256": "06ba3d2746f2ecbbf5e3d8c740317bb1333227024792ba9b61bb8b9ee96d990f",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_52.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_53.json",
+      "sha256": "ab5217fdd4605846e6d757855f5a43838301024ce18ec7a59d6c14ef8bd57d4f",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_53.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_54.json",
+      "sha256": "8f590f4ce43c5c78063751e78a122e32f1a077dc44d64e03ded52cff4469c025",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_54.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_55.json",
+      "sha256": "8239fa1ecc6d668df090651bbbc8c7f46d94878ad4b9d463eab241de292b6f99",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_55.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_56.json",
+      "sha256": "395a13399fa4a0e187d2fa278a3fd93aac77539f2c63378b8e29312856ac4191",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_56.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_57.json",
+      "sha256": "c1df54ff245696f8ffb3980eadf816e9b16837105a2be9bac520d5f6819a1ab2",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_57.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_58.json",
+      "sha256": "7448591b387aae551eefd8335099d30e7b26c477b38e19928bc23734446616fd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_58.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_59.json",
+      "sha256": "5418eb9ce40a60200433d671af85f2e55edd5721a17a4da714f957745d9dee8d",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_59.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_60.json",
+      "sha256": "b61d4ac83fa1f852ca48bd90f4006ea199090011b5300b12ae134be447395047",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_60.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_61.json",
+      "sha256": "0d0c312152124cc71b01bc31735cb932df237b0b5662ec564877b015bc0179ee",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_61.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_62.json",
+      "sha256": "2a6227ca9a905d859d58d417daae98631d31b108ba1ef9c5b4913c3205d9fb3e",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_62.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_63.json",
+      "sha256": "c4d5891a1b2f4622bccd250761eeb8877dc1d3c034c1d0e0d6a28c92e84598f9",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_63.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\pile\\ingot_64.json",
+      "sha256": "e77c19f576205c00140a4250f08fb55b3964c451e7a1cb54d783b10b1bc2d3eb",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/pile/ingot_64.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\coin_pile.json",
+      "sha256": "9ea0e13b65424de99c76ce42e92e0bd584e63b849cbf01d452c4dd5001d1831a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/coin_pile.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\geometry\\coin_shape.json",
+      "sha256": "4d34f91c2bb6c72223d030592adb8eecadebdec06946e6a97f672d68830c5c4c",
+      "target": "core/src/main/resources/assets/gregtech/geometry/coin_shape.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\coin_pile.json",
+      "sha256": "f84dfafc919eafa7458578f3a20e8b0c8fba6f5d9f8339929b1c1ff78d790b5c",
+      "target": "core/src/main/resources/assets/gregtech/models/item/coin_pile.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\geometry\\coin_shape.json",
+      "target": "core\\src\\main\\resources\\assets\\gregtech\\geometry\\coin_shape.json",
+      "sha256": "4d34f91c2bb6c72223d030592adb8eecadebdec06946e6a97f672d68830c5c4c",
+      "adaptation": "reuse existing shared original mint data"
+    }
+  ],
+  "comparisonSources": [
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\tileentity\\misc\\GT6PlaceableBlock.java",
+      "sha256": "c6fab138d617fb3538605fac42bb9e7233c3036bbfad4dc2d182fc2305c27e9f"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\tileentity\\misc\\GT6PlaceableBlockEntity.java",
+      "sha256": "e6e378c16c127bd9b1c036fdfc631ec6829c62808159675696efcd8559057869"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\items\\behaviors\\GT6PlaceablePlacement.java",
+      "sha256": "84fdd9ae37a4eae4f95866a1d5b37884bf48b60df17299a3b8ae6d9900892cf6"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\cruciblecraft\\src\\main\\java\\com\\masson\\cruciblecraft\\content\\blockentity\\CoinageMoldBlockEntity.java",
+      "sha256": "ab69881ee170c9ac831895ef82a16f44088e4fcd23cfbc8b59ab43f077f03885"
+    }
+  ],
+  "choice": "Use source1 complete3 single-material piles and4x4 coin pile, real slot merging/taking/top-column/removal/world placement and stockpile/coin expiry handlers. Share pile capacity/height/27 ordered offsets plus coin grid selection/repack and mint pixel depth/cell bounds in core, consumed by both platform implementations. Adopt brokestar metadata equality guard for stockpiles to retain distinct item payloads while preserving original cross-item canonical material identity. Native parses/saves full stack components under original gt.value/gt.coin.item and16 stacksize keys, synchronizes real sizes/material/custom die, and upgrades existing registered material coin items in place to source CoinItem rather than registering duplicate coins. Port original block/entity and stamped-item renderers; source core mint data reused. masson mold boundary is compared, not substituted for coin piles.",
+  "knownGaps": [
+    "The preceding ordinary Neo server startup predates all construction/bars/spikes/piles/coins from this turn; these batches are compile-covered only.",
+    "Stocked pile previews/getDrops clear contents as source; drop/removal conservation and event ordering are not runtime-proven. Source load allows count above64 and onLoad then invalid STACK state; malicious/noncanonical save still an unresolved source gap.",
+    "Source stockpile merge used only prefix/material and could lose differing tags. Adopt brokestar full-tag merge guard while retaining baseline canonical material equivalence: Forge tag equality and Neo component-patch equality. Cross-item vanilla material defaults/components remain unverified.",
+    "Source stockpiles allow auxiliary empty blocks and column walk stops at255; these differences remain documented.",
+    "Coin 200-tick settle/repack, custom32-row die, creative handling, full inventory rejection, collision and renderer/texture UV have not been exercised in game. Inventory aliases retain existing baked material model and stamped-die wrapper; material model resource gaps still apply.",
+    "masson coinage mold has explicit stamped/blank automation boundary but lacks this pile feature in inspected file; no unrelated second material/coin registry imported. Full coinage mold/play chain integration remains pending.",
+    "Native expiry extends life rather than cancellation; source expiry collision with other handlers or world protection remains unverified.",
+    "Forge runtime/client/server of these batches/independent reload/old saves/new production jars are not proven."
+  ],
+  "validation": "Grouped dual compile PASS20s following stockpile expiry API repair (first PASS19s); no new test fixture or game startup",
+  "postCompileAdjustment": "Coin block properties aligned with source factory strength3/resistance3/requiresCorrectToolForDrops; uses already compiled API calls, runtime still pending"
+}

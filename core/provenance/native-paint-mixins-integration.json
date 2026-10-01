@@ -1,0 +1,648 @@
+{
+  "date": "2026-10-01",
+  "authors": [
+    "saltnya",
+    "brokestar233",
+    "Lorbineitte Masson",
+    "original GregTech6 contributors"
+  ],
+  "license": "Original author/license/history evidence retained; local integration, no new third-party license or publication.",
+  "counts": {
+    "paintDyes": 16,
+    "newPaintFullUsedItems": 32,
+    "totalMultiItems": 1313,
+    "sharedCoreClasses": 3,
+    "resourceRecords": 51,
+    "exactDonorPaintTextures": 16,
+    "newPaintModelAliases": 32,
+    "commonPaintMixinsPerPlatform": 2,
+    "clientPaintMixinsPerPlatform": 2,
+    "originalNativeHooksRestored": 2,
+    "nativeCompositeModelForks": 1,
+    "javaRecords": 23
+  },
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/PanelCoverRenderer.java",
+      "sha256": "c9124f8ec2449e9977d70eb8d61a33c39abdabafc94df1badf9cc72bf5c6a4e2",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\PanelCoverRenderer.java",
+      "sourceSha256": "3ca116f760030bb904eb187fd7a485ac8de05452fee972ff8f071ea306a289d4",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorSprayColorRemover.java",
+      "sha256": "0961762c27a5122205dabeacc90174352f744d5bf9a411df57fa30d95cb1c604",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\item\\behavior\\BehaviorSprayColorRemover.java",
+      "sourceSha256": "5ba98fc9a6d9bfb60e020f63b8f7069d3c4b20253ca71bf20074b4e6a1e31a51",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "sha256": "6c794b492f8c005e79114737e30e38230d5faad45f9afde07eb48710c0c50858",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTMultiItems.java",
+      "sourceSha256": "33c2677480c5cfb07e4f5bcd714580352bbece744713a9c87cd05c4c2a839815",
+      "derivedFrom": []
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/client/PanelCoverRenderer.java",
+      "sha256": "ee575cd4716cd86ca9506821dedf2b8d56b1ce00752443b176e484f20e51a96b",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\PanelCoverRenderer.java",
+      "sourceSha256": "3ca116f760030bb904eb187fd7a485ac8de05452fee972ff8f071ea306a289d4",
+      "derivedFrom": []
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/item/behavior/BehaviorSprayColorRemover.java",
+      "sha256": "73cb4d328a0d36d8a81407d9e03593040dfe96958d566f46b2323cb70c46eb79",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\item\\behavior\\BehaviorSprayColorRemover.java",
+      "sourceSha256": "5ba98fc9a6d9bfb60e020f63b8f7069d3c4b20253ca71bf20074b4e6a1e31a51",
+      "derivedFrom": []
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "sha256": "8e4d266e75e7b3c5ae071a565597a717a7d3e2a80c6959f6f322cc6184445377",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTMultiItems.java",
+      "sourceSha256": "33c2677480c5cfb07e4f5bcd714580352bbece744713a9c87cd05c4c2a839815",
+      "derivedFrom": []
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/api/tool/Paintable.java",
+      "sha256": "a574276279b53ded2809332d57ba81586a28b646196703421904f9defa081481",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\tileentity\\IPaintableTE.java",
+          "sha256": "18a807294b89bfd86aed757412abe49c14dd6980b0bbbf75c6776c38c7cdb8f9"
+        }
+      ]
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/tool/PaintState.java",
+      "sha256": "6339cac400d6bdc0b1401bf536362ff5d042c8fb0150a7b78c08701c9af126dc",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\tileentity\\TileEntityBase03TicksAndSync.java",
+          "sha256": "1ce498bcd08962908838986752f84f3a88cf7130d986f4a9012ac41a50564453"
+        }
+      ]
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/tool/PaintingRules.java",
+      "sha256": "addc170c7f32b18d85785d0dca8b9daacbfc8b80a9caaac18f9240f997e1c9ed",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\item\\spraycan\\GTSprayCanItem.java",
+          "sha256": "322c7b4465a3ca7a9a7580a6cb43ae26b78fa000b32e6aaf5893ac4120819bec"
+        },
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\tileentity\\TileEntityBase03TicksAndSync.java",
+          "sha256": "1ce498bcd08962908838986752f84f3a88cf7130d986f4a9012ac41a50564453"
+        },
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\registry\\GTGrassBlocks.java",
+          "sha256": "6b61b6ffa32b2dd882d1acc7f061bbb0c7fb0ba9c4bd7c21ffbf77698a6f4542"
+        }
+      ]
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/tool/PaintTargets.java",
+      "sha256": "8f22079547a0725fa604d9bcd69718cd17816adc9e558e6adf50e8d4c03b340f",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\item\\spraycan\\GTSprayCanItem.java",
+          "sha256": "322c7b4465a3ca7a9a7580a6cb43ae26b78fa000b32e6aaf5893ac4120819bec"
+        },
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\registry\\GTGrassBlocks.java",
+          "sha256": "6b61b6ffa32b2dd882d1acc7f061bbb0c7fb0ba9c4bd7c21ffbf77698a6f4542"
+        }
+      ]
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/item/PaintSprayItem.java",
+      "sha256": "b7c4bea19ea55447e620f8f7df4360e701cca7d6e8df2940d76fceba739b7084",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\item\\spraycan\\GTSprayCanItem.java",
+          "sha256": "322c7b4465a3ca7a9a7580a6cb43ae26b78fa000b32e6aaf5893ac4120819bec"
+        },
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\registry\\GT6SprayCans.java",
+          "sha256": "e9ec067a4fb48cdde27fe9a68b66e3ee71d2501af8ab83805075938ea6c030e5"
+        }
+      ]
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/mixin/BlockEntityPaintMixin.java",
+      "sha256": "913cb3788f9a51042f09af66c450536ce18fe17a9cc0b06412a5574fc8592d29",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\tileentity\\TileEntityBase03TicksAndSync.java",
+          "sha256": "1ce498bcd08962908838986752f84f3a88cf7130d986f4a9012ac41a50564453"
+        },
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\tileentity\\IPaintableTE.java",
+          "sha256": "18a807294b89bfd86aed757412abe49c14dd6980b0bbbf75c6776c38c7cdb8f9"
+        }
+      ]
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/mixin/BlockPaintColorMixin.java",
+      "sha256": "9630f7d69f092c9ce75e040860550ff5041b73644c79c7efb987b24f05759729",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\tileentity\\TileEntityBase03TicksAndSync.java",
+          "sha256": "1ce498bcd08962908838986752f84f3a88cf7130d986f4a9012ac41a50564453"
+        }
+      ]
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/mixin/EntityFallingOreDropMixin.java",
+      "sha256": "236284b51eec4f8a1a17a1e689e66afdb0bede63c51f5b30d322d7eb3f5dccc1",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\mixin\\EntityFallingOreDropMixin.java",
+      "sourceSha256": "6dc38b12dc36f686c182e3f4345bd51163ddf504e4a47fbe21750841d9e31a88",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/mixin/ItemPaintColorMixin.java",
+      "sha256": "e85c5502726380179a2f2c4992c458c8cc26e4eec133e18fde5c9cd5edccf618",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\tileentity\\TileEntityBase03TicksAndSync.java",
+          "sha256": "1ce498bcd08962908838986752f84f3a88cf7130d986f4a9012ac41a50564453"
+        }
+      ]
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/mixin/WaterFluidMixin.java",
+      "sha256": "9715c14d02fd2dd6dbde7955fcbef915b0d69c11bc3f68e62894ae6f5e5f4faf",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\mixin\\WaterFluidMixin.java",
+      "sourceSha256": "90f317f7b24527cb0254dc084355935cd09fdca4f2f27003bc3070a15c722ad1",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/mixin/WolfCollarAccessor.java",
+      "sha256": "3f4c9318ab1945db563474e75b069a583a2753b7dc47743288ef6e7fdce28540",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\item\\spraycan\\GTSprayCanItem.java",
+          "sha256": "322c7b4465a3ca7a9a7580a6cb43ae26b78fa000b32e6aaf5893ac4120819bec"
+        }
+      ]
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/content/tool/PaintTargets.java",
+      "sha256": "8f22079547a0725fa604d9bcd69718cd17816adc9e558e6adf50e8d4c03b340f",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\item\\spraycan\\GTSprayCanItem.java",
+          "sha256": "322c7b4465a3ca7a9a7580a6cb43ae26b78fa000b32e6aaf5893ac4120819bec"
+        },
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\registry\\GTGrassBlocks.java",
+          "sha256": "6b61b6ffa32b2dd882d1acc7f061bbb0c7fb0ba9c4bd7c21ffbf77698a6f4542"
+        }
+      ]
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/item/PaintSprayItem.java",
+      "sha256": "192bd0f06b368274140b5dda5ff81c4aa0c6b881400eed0bfa435ff3fe10f29b",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\item\\spraycan\\GTSprayCanItem.java",
+          "sha256": "322c7b4465a3ca7a9a7580a6cb43ae26b78fa000b32e6aaf5893ac4120819bec"
+        },
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\registry\\GT6SprayCans.java",
+          "sha256": "e9ec067a4fb48cdde27fe9a68b66e3ee71d2501af8ab83805075938ea6c030e5"
+        }
+      ]
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/mixin/BlockEntityPaintMixin.java",
+      "sha256": "325a33a26c5e47bef47230df2366e1f6ba3f4a47b294e233ff6c433d265f4911",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\tileentity\\TileEntityBase03TicksAndSync.java",
+          "sha256": "1ce498bcd08962908838986752f84f3a88cf7130d986f4a9012ac41a50564453"
+        },
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\tileentity\\IPaintableTE.java",
+          "sha256": "18a807294b89bfd86aed757412abe49c14dd6980b0bbbf75c6776c38c7cdb8f9"
+        }
+      ]
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/mixin/BlockPaintColorMixin.java",
+      "sha256": "9630f7d69f092c9ce75e040860550ff5041b73644c79c7efb987b24f05759729",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\tileentity\\TileEntityBase03TicksAndSync.java",
+          "sha256": "1ce498bcd08962908838986752f84f3a88cf7130d986f4a9012ac41a50564453"
+        }
+      ]
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/mixin/ItemPaintColorMixin.java",
+      "sha256": "633acfc9c509874553e8b22c0a1d4907842a70db7624d28e32cb7d48597cd35a",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\tileentity\\TileEntityBase03TicksAndSync.java",
+          "sha256": "1ce498bcd08962908838986752f84f3a88cf7130d986f4a9012ac41a50564453"
+        }
+      ]
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/mixin/WolfCollarAccessor.java",
+      "sha256": "3f4c9318ab1945db563474e75b069a583a2753b7dc47743288ef6e7fdce28540",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\item\\spraycan\\GTSprayCanItem.java",
+          "sha256": "322c7b4465a3ca7a9a7580a6cb43ae26b78fa000b32e6aaf5893ac4120819bec"
+        }
+      ]
+    }
+  ],
+  "resources": [
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\resources\\assets\\gt6\\textures\\item\\spray\\paint_black.png",
+      "sha256": "288fb7cac6003aa9a9ba089d904799d294bdc19c940dce7f2e4d60975ff5e641",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/spray/paint_black.png",
+      "adaptation": "exact donor texture bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\generated\\resources\\assets\\gt6\\models\\item\\spray_paint_black.json",
+      "sha256": "65e3c9de6343e73f3e32faf1472d98d0ce36f16f052963557b6d39afc98b67dd",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spray_paint_black.json",
+      "adaptation": "gregtech namespace; source full/used identity aliases share donor sprite"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\generated\\resources\\assets\\gt6\\models\\item\\spray_paint_black.json",
+      "sha256": "65e3c9de6343e73f3e32faf1472d98d0ce36f16f052963557b6d39afc98b67dd",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spray_paint_black_2.json",
+      "adaptation": "gregtech namespace; source full/used identity aliases share donor sprite"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\resources\\assets\\gt6\\textures\\item\\spray\\paint_red.png",
+      "sha256": "7e66ca032500cfecc7ce3218b61653bca824b8fa1669a3aa2a3413dd4d823d84",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/spray/paint_red.png",
+      "adaptation": "exact donor texture bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\generated\\resources\\assets\\gt6\\models\\item\\spray_paint_red.json",
+      "sha256": "b4265454ab2ce30c1dfcd26b485948936116b95b37f285241a072ce7fb2fdeeb",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spray_paint_red.json",
+      "adaptation": "gregtech namespace; source full/used identity aliases share donor sprite"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\generated\\resources\\assets\\gt6\\models\\item\\spray_paint_red.json",
+      "sha256": "b4265454ab2ce30c1dfcd26b485948936116b95b37f285241a072ce7fb2fdeeb",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spray_paint_red_2.json",
+      "adaptation": "gregtech namespace; source full/used identity aliases share donor sprite"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\resources\\assets\\gt6\\textures\\item\\spray\\paint_green.png",
+      "sha256": "733f04e4eacd196ee863bb8842bbe9bb04df3801abe8831c3f862b58449d0cc5",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/spray/paint_green.png",
+      "adaptation": "exact donor texture bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\generated\\resources\\assets\\gt6\\models\\item\\spray_paint_green.json",
+      "sha256": "6913be14cae46af293c8b37236e0e12dcca6a367b2d133ed534ae0c82f752f99",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spray_paint_green.json",
+      "adaptation": "gregtech namespace; source full/used identity aliases share donor sprite"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\generated\\resources\\assets\\gt6\\models\\item\\spray_paint_green.json",
+      "sha256": "6913be14cae46af293c8b37236e0e12dcca6a367b2d133ed534ae0c82f752f99",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spray_paint_green_2.json",
+      "adaptation": "gregtech namespace; source full/used identity aliases share donor sprite"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\resources\\assets\\gt6\\textures\\item\\spray\\paint_brown.png",
+      "sha256": "235677b37d420ed909f35add97ff5689a91750430150d612ab805b5dbd0f841d",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/spray/paint_brown.png",
+      "adaptation": "exact donor texture bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\generated\\resources\\assets\\gt6\\models\\item\\spray_paint_brown.json",
+      "sha256": "84f5f351e9e3b60cd0ebb99baa5866a169ae12e922f7cf0351a5e91721e514e0",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spray_paint_brown.json",
+      "adaptation": "gregtech namespace; source full/used identity aliases share donor sprite"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\generated\\resources\\assets\\gt6\\models\\item\\spray_paint_brown.json",
+      "sha256": "84f5f351e9e3b60cd0ebb99baa5866a169ae12e922f7cf0351a5e91721e514e0",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spray_paint_brown_2.json",
+      "adaptation": "gregtech namespace; source full/used identity aliases share donor sprite"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\resources\\assets\\gt6\\textures\\item\\spray\\paint_blue.png",
+      "sha256": "e95bbc146c1ab03968155c1e095e991909933f378f97e093c7e13da874b23243",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/spray/paint_blue.png",
+      "adaptation": "exact donor texture bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\generated\\resources\\assets\\gt6\\models\\item\\spray_paint_blue.json",
+      "sha256": "2794c746cc6a0c5c9c77de3d927434520d3ca9f918eb08f701a98ee666133161",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spray_paint_blue.json",
+      "adaptation": "gregtech namespace; source full/used identity aliases share donor sprite"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\generated\\resources\\assets\\gt6\\models\\item\\spray_paint_blue.json",
+      "sha256": "2794c746cc6a0c5c9c77de3d927434520d3ca9f918eb08f701a98ee666133161",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spray_paint_blue_2.json",
+      "adaptation": "gregtech namespace; source full/used identity aliases share donor sprite"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\resources\\assets\\gt6\\textures\\item\\spray\\paint_purple.png",
+      "sha256": "6e5a2c001370abe1a8ac618cba835f55a1bf70e9e2ea3ee49c0515a36fdb645b",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/spray/paint_purple.png",
+      "adaptation": "exact donor texture bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\generated\\resources\\assets\\gt6\\models\\item\\spray_paint_purple.json",
+      "sha256": "6544939e26872784eca435779e293b8c3d820850eb3d60425a09269222d1adb6",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spray_paint_purple.json",
+      "adaptation": "gregtech namespace; source full/used identity aliases share donor sprite"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\generated\\resources\\assets\\gt6\\models\\item\\spray_paint_purple.json",
+      "sha256": "6544939e26872784eca435779e293b8c3d820850eb3d60425a09269222d1adb6",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spray_paint_purple_2.json",
+      "adaptation": "gregtech namespace; source full/used identity aliases share donor sprite"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\resources\\assets\\gt6\\textures\\item\\spray\\paint_cyan.png",
+      "sha256": "1a4fa0663f77ab26f11f408b25df0d7409b26bb5c9237107115c6d96e709352d",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/spray/paint_cyan.png",
+      "adaptation": "exact donor texture bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\generated\\resources\\assets\\gt6\\models\\item\\spray_paint_cyan.json",
+      "sha256": "0b68a2fcd13e26216b5d5d23df1af239048c421e363434cb6b54a01dd855d43a",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spray_paint_cyan.json",
+      "adaptation": "gregtech namespace; source full/used identity aliases share donor sprite"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\generated\\resources\\assets\\gt6\\models\\item\\spray_paint_cyan.json",
+      "sha256": "0b68a2fcd13e26216b5d5d23df1af239048c421e363434cb6b54a01dd855d43a",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spray_paint_cyan_2.json",
+      "adaptation": "gregtech namespace; source full/used identity aliases share donor sprite"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\resources\\assets\\gt6\\textures\\item\\spray\\paint_light_gray.png",
+      "sha256": "145308c38d63ffb2ec30edda782f5caac5de2e26579ffca5bcdee25899fab979",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/spray/paint_light_gray.png",
+      "adaptation": "exact donor texture bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\generated\\resources\\assets\\gt6\\models\\item\\spray_paint_light_gray.json",
+      "sha256": "56bda837c0dbd723fc3d32d697ac550371123a6db91b4ffbf1cbead445e62dd2",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spray_paint_light_gray.json",
+      "adaptation": "gregtech namespace; source full/used identity aliases share donor sprite"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\generated\\resources\\assets\\gt6\\models\\item\\spray_paint_light_gray.json",
+      "sha256": "56bda837c0dbd723fc3d32d697ac550371123a6db91b4ffbf1cbead445e62dd2",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spray_paint_light_gray_2.json",
+      "adaptation": "gregtech namespace; source full/used identity aliases share donor sprite"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\resources\\assets\\gt6\\textures\\item\\spray\\paint_gray.png",
+      "sha256": "1b3c0c8800e102655fa08ffb1d05a4976a226fca9d515ba379a89e3a87ed94d5",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/spray/paint_gray.png",
+      "adaptation": "exact donor texture bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\generated\\resources\\assets\\gt6\\models\\item\\spray_paint_gray.json",
+      "sha256": "ff373af2a1aa187d2b95e150dd1ddae577c0177e82e6d54cb20f58ee365c9dc9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spray_paint_gray.json",
+      "adaptation": "gregtech namespace; source full/used identity aliases share donor sprite"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\generated\\resources\\assets\\gt6\\models\\item\\spray_paint_gray.json",
+      "sha256": "ff373af2a1aa187d2b95e150dd1ddae577c0177e82e6d54cb20f58ee365c9dc9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spray_paint_gray_2.json",
+      "adaptation": "gregtech namespace; source full/used identity aliases share donor sprite"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\resources\\assets\\gt6\\textures\\item\\spray\\paint_pink.png",
+      "sha256": "4a661d2f8dcf8b34a349e56106aa45e4d3fa8f86b791e38915f5e6c759f56e97",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/spray/paint_pink.png",
+      "adaptation": "exact donor texture bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\generated\\resources\\assets\\gt6\\models\\item\\spray_paint_pink.json",
+      "sha256": "cf3ad740de51b465b32b7883edef595bd4bfd76e3ade2f1fdca7e272cbe7ac19",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spray_paint_pink.json",
+      "adaptation": "gregtech namespace; source full/used identity aliases share donor sprite"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\generated\\resources\\assets\\gt6\\models\\item\\spray_paint_pink.json",
+      "sha256": "cf3ad740de51b465b32b7883edef595bd4bfd76e3ade2f1fdca7e272cbe7ac19",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spray_paint_pink_2.json",
+      "adaptation": "gregtech namespace; source full/used identity aliases share donor sprite"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\resources\\assets\\gt6\\textures\\item\\spray\\paint_lime.png",
+      "sha256": "f554198029fb201e9b4ad9d844c9427fcb005a5911111d1f48d3884518e516b0",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/spray/paint_lime.png",
+      "adaptation": "exact donor texture bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\generated\\resources\\assets\\gt6\\models\\item\\spray_paint_lime.json",
+      "sha256": "762dc58a208b83ff0ecc8b222a48b596243bb5fe4b1de65dd4285d4ea280ddbf",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spray_paint_lime.json",
+      "adaptation": "gregtech namespace; source full/used identity aliases share donor sprite"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\generated\\resources\\assets\\gt6\\models\\item\\spray_paint_lime.json",
+      "sha256": "762dc58a208b83ff0ecc8b222a48b596243bb5fe4b1de65dd4285d4ea280ddbf",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spray_paint_lime_2.json",
+      "adaptation": "gregtech namespace; source full/used identity aliases share donor sprite"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\resources\\assets\\gt6\\textures\\item\\spray\\paint_yellow.png",
+      "sha256": "f032f8f9d0d143bd6fd69830bc9469f32b70178112af3354d713d7f783969183",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/spray/paint_yellow.png",
+      "adaptation": "exact donor texture bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\generated\\resources\\assets\\gt6\\models\\item\\spray_paint_yellow.json",
+      "sha256": "8ca9d6ea1cf0e3e2d1e89f39d73d98c6d19ce49a6ef3e4fd7474db5ba0c3cea2",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spray_paint_yellow.json",
+      "adaptation": "gregtech namespace; source full/used identity aliases share donor sprite"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\generated\\resources\\assets\\gt6\\models\\item\\spray_paint_yellow.json",
+      "sha256": "8ca9d6ea1cf0e3e2d1e89f39d73d98c6d19ce49a6ef3e4fd7474db5ba0c3cea2",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spray_paint_yellow_2.json",
+      "adaptation": "gregtech namespace; source full/used identity aliases share donor sprite"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\resources\\assets\\gt6\\textures\\item\\spray\\paint_light_blue.png",
+      "sha256": "19596f95b110f1da3bf98f85efcaa0e89b764f1088c72c918182d67f9235716e",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/spray/paint_light_blue.png",
+      "adaptation": "exact donor texture bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\generated\\resources\\assets\\gt6\\models\\item\\spray_paint_light_blue.json",
+      "sha256": "79026b2a45466a4625fb86a7976e3ef5e270402f66297abb4c15b033dc81be0c",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spray_paint_light_blue.json",
+      "adaptation": "gregtech namespace; source full/used identity aliases share donor sprite"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\generated\\resources\\assets\\gt6\\models\\item\\spray_paint_light_blue.json",
+      "sha256": "79026b2a45466a4625fb86a7976e3ef5e270402f66297abb4c15b033dc81be0c",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spray_paint_light_blue_2.json",
+      "adaptation": "gregtech namespace; source full/used identity aliases share donor sprite"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\resources\\assets\\gt6\\textures\\item\\spray\\paint_magenta.png",
+      "sha256": "5a11c6b9f294863336ea1849c6db2ec7148a3c08334faf55fb7a398d324976c1",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/spray/paint_magenta.png",
+      "adaptation": "exact donor texture bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\generated\\resources\\assets\\gt6\\models\\item\\spray_paint_magenta.json",
+      "sha256": "b16c0c8e0753f4ffcd2a098c38356f9b0b6df4c678161b2a9ff81c1a36498893",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spray_paint_magenta.json",
+      "adaptation": "gregtech namespace; source full/used identity aliases share donor sprite"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\generated\\resources\\assets\\gt6\\models\\item\\spray_paint_magenta.json",
+      "sha256": "b16c0c8e0753f4ffcd2a098c38356f9b0b6df4c678161b2a9ff81c1a36498893",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spray_paint_magenta_2.json",
+      "adaptation": "gregtech namespace; source full/used identity aliases share donor sprite"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\resources\\assets\\gt6\\textures\\item\\spray\\paint_orange.png",
+      "sha256": "9dd0a74dd85fb6d29dfea91dcf2d8a7cf58682592a7109d2c52bebb69fb390e4",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/spray/paint_orange.png",
+      "adaptation": "exact donor texture bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\generated\\resources\\assets\\gt6\\models\\item\\spray_paint_orange.json",
+      "sha256": "0b5c22b069c39f4be0d911c8ac66ef0b2182006b80e3650f7962468fdc56a01b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spray_paint_orange.json",
+      "adaptation": "gregtech namespace; source full/used identity aliases share donor sprite"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\generated\\resources\\assets\\gt6\\models\\item\\spray_paint_orange.json",
+      "sha256": "0b5c22b069c39f4be0d911c8ac66ef0b2182006b80e3650f7962468fdc56a01b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spray_paint_orange_2.json",
+      "adaptation": "gregtech namespace; source full/used identity aliases share donor sprite"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\resources\\assets\\gt6\\textures\\item\\spray\\paint_white.png",
+      "sha256": "679dc1a016ca7d9aed9c31e30035f6ac8d1162e54aeda566c25467cd98814a8a",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/spray/paint_white.png",
+      "adaptation": "exact donor texture bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\generated\\resources\\assets\\gt6\\models\\item\\spray_paint_white.json",
+      "sha256": "c9d7799654f90b59a4b07ac0362bdf6a741fbde867960f5f26359982c789e931",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spray_paint_white.json",
+      "adaptation": "gregtech namespace; source full/used identity aliases share donor sprite"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\generated\\resources\\assets\\gt6\\models\\item\\spray_paint_white.json",
+      "sha256": "c9d7799654f90b59a4b07ac0362bdf6a741fbde867960f5f26359982c789e931",
+      "target": "core/src/main/resources/assets/gregtech/models/item/spray_paint_white_2.json",
+      "adaptation": "gregtech namespace; source full/used identity aliases share donor sprite"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\covers\\buttonselector\\underlay_0_to_F.png",
+      "sha256": "44690216eff7b18848ce55cce6b8723656acb80c18e67589e67df8ac095dc5e4",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/covers/buttonselector/underlay_0_to_f.png",
+      "adaptation": "lowercase resource identity, exact original PNG bytes; both consumers normalized"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\tool\\cap_nozzle.json",
+      "sha256": "bfd15312db0196ec86fc7eacda5df637582b7927d3cba772b3dfb8f032d717b8",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/tool/cap_nozzle.json",
+      "forgeTarget": "src/main/resources/assets/gregtech/models/block/tool/cap_nozzle.json",
+      "adaptation": "client log confirmed unresolved forge:composite; isolate loader namespaces outside core after the one startup"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\textures\\block\\iconsets\\void.png",
+      "sha256": "0940268eecf5efbfa5d2ead4e701af85aad1c77849d06850003add66e433b5d4",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/void.png",
+      "adaptation": "exact original void sprite alias for existing gregtech:block/void references observed missing at client startup"
+    }
+  ],
+  "comparisonSources": [
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\item\\spraycan\\GTSprayCanItem.java",
+      "sha256": "322c7b4465a3ca7a9a7580a6cb43ae26b78fa000b32e6aaf5893ac4120819bec"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\tileentity\\TileEntityBase03TicksAndSync.java",
+      "sha256": "1ce498bcd08962908838986752f84f3a88cf7130d986f4a9012ac41a50564453"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\tileentity\\IPaintableTE.java",
+      "sha256": "18a807294b89bfd86aed757412abe49c14dd6980b0bbbf75c6776c38c7cdb8f9"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\registry\\GTGrassBlocks.java",
+      "sha256": "6b61b6ffa32b2dd882d1acc7f061bbb0c7fb0ba9c4bd7c21ffbf77698a6f4542"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\registry\\GT6SprayCans.java",
+      "sha256": "e9ec067a4fb48cdde27fe9a68b66e3ee71d2501af8ab83805075938ea6c030e5"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\item\\foamspray\\GT6FoamSprayItem.java",
+      "sha256": "12ad0332f66aa272531e6e3e1e2e7690f83a507238285e0d558e4a7e2ffc4656"
+    }
+  ],
+  "choices": [
+    "Adopt brokestar complete16-dye paint policy and original GT6 color order/RGBs into shared PaintingRules, PaintState and primitive Paintable contract. Both versions actually consume dye conversion, per-channel average mixing, sheep/tamed-wolf entity facts and six-dye grass mappings. Register32 new gregtech:spray_paint_<color> and _2 full/used identities through existing GTMultiItems registries; reuse Source1 empty_spray_can and paint_removal_spray/_2. Original1281 multi-items remain, total1313. Retain the coherent Source1 full/used/empty ledger rather than importing brokestar separate gt6 empty/remover or another consumable root.",
+    "Native and Forge PaintSprayItem use existing ItemBehaviors.Consumable with gt.remaining,5120 internal capacity,10 block cost/50 entity cost, actual full→used→empty swaps, creative exemption and13-pixel color/remaining bar. Full brokestar block whitelist: plain/stained glass and panes, plain/stained terracotta, wool,carpet, same-target no-op. Paintable entity first, then vanilla whitelist; existing remover adds paintable and six-GT-grass unpaint routes before its complete original reverse vanilla table. Hiss uses brokestar fire-extinguish placeholder, no nonexistent IC2 sound.",
+    "Map brokestar six dyed grass variants to actual Source1 texture identities: Green→grassblock_medium,Lime→light,Black→dark,LightGray→normal,Yellow→yellow,Brown→brown. Brokestar GTGrassBlocks documents the medium/normal texture trap and exact dye indexes; preserve all existing Source1 ecology/grass/bale IDs, register no duplicate grass blocks. Ten other dyes decline grass color changes and any dyed variant removes to vanilla grass, exactly as donor routing.",
+    "Adopt complete alive/non-sheared sheep and alive/tamed-wolf dyeing policy with different-color no-op and50 internal-unit payment. Preserve donor no owner requirement for a tamed wolf. Native private Wolf.setCollarColor uses a mapped Mixin invoker; Forge uses the same invoker contract rather than a reflective bridge. Entity painting happens on server, client returns success without writing color/ledger.",
+    "One BlockEntityPaintMixin implements the shared state/contract on existing entities and restricts writes to gregtech namespace, avoiding another machine hierarchy. gt.color/gt.painted are saved through original superclass NBT, sent in vanilla update tags and immediate entity packets, chunk-dirty and model refresh triggered. Loader signatures stay in each platform. Non-GT entities cannot acquire paint. This extends paint ownership to existing GT block entities; it is a recorded integration policy, broader than importing only brokestar inherited machine base.",
+    "Client-only BlockPaintColorMixin applies paint only to primary tint0; tint1 engine core and other overlays keep existing handlers. Unpainted surfaces use their original material handlers. ItemPaintColorMixin reads preserved BLOCK_ENTITY_DATA/native or BlockEntityTag/Forge on packed block items. Ordinary drops that already discard entity data are not silently changed into inventory-preserving drops. Existing container pack/clone NBT automatically includes paint where their serializer calls the superclass.",
+    "Complete two original missing native vanilla hooks: WaterFluid.isSame now recognizes GT water family symmetrically using existing GTWorldWaterFluid and shared WaterMixinStatus; broken falling ore drops preserve original host stone and broken state/components through the full original EntityFallingOreDropMixin. Both native injections require their target and reuse existing water/ore registries; no new fluid/ore roots.",
+    "Retain16 exact original brokestar texture PNGs and32 namespace-adapted original model aliases in shared core; add2 shared locale keys with vanilla translated dye names. Normalize original uppercase button hexadecimal underlay to lowercase resource identity on both consumers, preserving PNG bytes and source path/hash. One client-observed remaining forge:composite cap_nozzle model is subsequently isolated into original Forge/native loader boundary; alias exact original iconsets/void PNG to the existing missing block/void identity.51 resource records plus locale/mixin configuration boundaries are recorded."
+  ],
+  "knownGaps": [
+    "One grouped dual compilation passed41s, no initial errors. One existing Neo TitleScreen short startup passed1m47s, actual149 frames and1280x720 screenshot visually inspected. That run also compiled final lowercase-panel consumers for both versions and loaded new common/client Mixin configuration and paint item models. Main menu startup is not painting/entity/NBT/water/falling-ore gameplay proof.",
+    "Late cap_nozzle loader split and void sprite alias correct concrete client-log errors after that single startup. Those resource-only changes were not started again; their runtime/render outcome remains pending. No new fixture, individual-system run or retry of the successful menu.",
+    "Actual paint/mix/unpaint, packet/client world tint rebuild, packed item paint, sheep/wolf coloring, grass switches, water merging/swimming/waterlogging, broken falling ore drops and real saved-world restart remain unverified. No dedicated server was started for this exact batch; prior batch ordinary server evidence is not extended to it.",
+    "The shared paint state starts/clears white. Unpainted visual tint returns to the existing material renderer; getPaint on an unpainted entity reports white rather than every brokestar machine material default. As in donor paint() color equality, a first white spray on default-white state declines. Existing superclass serializer/update paths are used; custom entities bypassing superclass serialization or update handling need runtime checks. Packed drops preserve paint only when their existing code saves entity data; generic ordinary drops still lose paint.",
+    "Bro colored/owned construction foam, placement modes, pipe coating and broader foam models/owner behavior remain pending and are not claimed absorbed. Canner refill/crafting and survival acquisition are pending; donor spray registry explicitly used creative acquisition for its initial implementation, and no invented vanilla recipe is added. Remaining masson/donor systems and optional integrations are not hidden.",
+    "Client logs still report6 inherited invalid-path lines from molten hsla and non-ASCII backup ingot sprites, plus many unresolved blockstate variants/texture references. TitleScreen success does not establish complete world rendering; these gaps are retained for subsequent resource integration. Uppercase underlay invalid-path line is no longer present in this run.",
+    "Forge runtime/client world gameplay, production jars, full survival chains, independent process world restart, old-save and release acceptance remain pending. Original histories/authors/licenses retained; Source1 publication authorization unresolved, no remote/publication. Full goal active under D010."
+  ]
+}

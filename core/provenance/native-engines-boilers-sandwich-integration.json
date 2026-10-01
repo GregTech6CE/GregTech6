@@ -1,0 +1,1341 @@
+{
+  "date": "2026-10-01",
+  "authors": [
+    "saltnya",
+    "brokestar233",
+    "Lorbineitte Masson",
+    "original GregTech6 contributors"
+  ],
+  "license": "Original author/license/history evidence retained; local integration, publication permission unresolved.",
+  "counts": {
+    "ordinaryEngineVariants": 59,
+    "electric": 5,
+    "flux": 5,
+    "steam": 14,
+    "strongSteam": 14,
+    "rotation": 13,
+    "diesel": 8,
+    "ordinaryBoilers": 26,
+    "sandwichBlocks": 1,
+    "totalBlocks": 86,
+    "newCoreClasses": 4,
+    "javaRecords": 37,
+    "resourceRecords": 181,
+    "nativeModelLoaderForks": 7
+  },
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/loaders/b/NeoCreativeContents.java",
+      "sha256": "47656799f02d23b7556f02df3c043d5aa9fb75d41b5602b9e91984a65da796a3",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "sha256": "0cfeb15d571309f4179db92124d617cfb595d504c850860633fb74e017e2c555",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "sha256": "7de4c6285e4c2c575bf65e46c36318d938ddf82fb34d30177484e3961cd69229",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTBlockEntities.java",
+      "sourceSha256": "027081bae34480826956a74d65a24aa7f4ef29d4be4a4687046793a10d9df62f",
+      "derivedFrom": []
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/blockentity/misc/SandwichBlockEntity.java",
+      "sha256": "5f99e800c103af2d7ee1d6084cda651aacb99bc11abb6b9fefa5eb018d46e825",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\misc\\SandwichBlockEntity.java",
+      "sourceSha256": "4818c1cd2eb2de297af01b9ea95afed77a3aebebcbbf4bc8ab4ed86534e2e921",
+      "derivedFrom": []
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/content/food/SandwichIngredients.java",
+      "sha256": "5b2bf7342c749f979c7da6c055a481e87450b8d150807916883e03893876bca3",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\food\\SandwichIngredients.java",
+      "sourceSha256": "523c6e8d85e8254350d788fe742f81614a3e15651e88c0a4acc45f51356ee103",
+      "derivedFrom": []
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/item/SandwichBlockItem.java",
+      "sha256": "897676c1db12c17668724374bad819c226a0dca398b00b1d0b1b872dd9fb31d8",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\item\\SandwichBlockItem.java",
+      "sourceSha256": "d83ff7aaaa49284954b0728070f2f534724ce40de0438cfc61cc8452928a8cce",
+      "derivedFrom": []
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/registry/GTBoilers.java",
+      "sha256": "345f029920cb1a15b0d6922d5732a71e4af9286c2b84e2208d29223d5f586616",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTBoilers.java",
+      "sourceSha256": "ca944f8be1baea6ace703d0f509e11c6b77d72372abedf6f219e068fbe661260",
+      "derivedFrom": []
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/registry/GTEngines.java",
+      "sha256": "2171eaf54fac6c42d6db5f0bc0e8dbfb4c7ec52bcc60d3e4160c37420f10f754",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTEngines.java",
+      "sourceSha256": "dc934208672b042c9b48132600ae77c0e4cb6b3ca7543fe66438270972a447bc",
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTEngines.java",
+          "sha256": "dc934208672b042c9b48132600ae77c0e4cb6b3ca7543fe66438270972a447bc"
+        },
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\api\\machine\\MachineRegistry.java",
+          "sha256": "8a16d1f713f7341ebd5532171e045b8d2535dd2299f4bcd65b86bccbaebf9595"
+        },
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\GTMachineBlockItem.java",
+          "sha256": "e4ab9236bd587d21c1b918fa05baeb2180a6e7590a0a73b4869d4952a7491b44"
+        }
+      ]
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/energy/BoilerCatalog.java",
+      "sha256": "afa1f71311e6a1b8cfafa91df3c314415229065f827183956287b6aee7d82280",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTBoilers.java",
+          "sha256": "ca944f8be1baea6ace703d0f509e11c6b77d72372abedf6f219e068fbe661260"
+        }
+      ]
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/energy/EngineCatalog.java",
+      "sha256": "d8367c8e87d2a3fe1010246134206f7ef1c24fc7195a89f554c5271e4dc75fc6",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTEngines.java",
+          "sha256": "dc934208672b042c9b48132600ae77c0e4cb6b3ca7543fe66438270972a447bc"
+        }
+      ]
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/food/SandwichLayerCatalog.java",
+      "sha256": "425b1bd06f876db6823b8ed3b4aa0ca2264e552c0a1b8d88410523cec4049b22",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\food\\SandwichIngredients.java",
+          "sha256": "523c6e8d85e8254350d788fe742f81614a3e15651e88c0a4acc45f51356ee103"
+        }
+      ]
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/food/SandwichRules.java",
+      "sha256": "1c455f8a281c1b82c3654b5b5b0630801c900e95796b59937623f62317af3cfe",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\misc\\SandwichBlockEntity.java",
+          "sha256": "4818c1cd2eb2de297af01b9ea95afed77a3aebebcbbf4bc8ab4ed86534e2e921"
+        },
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\item\\SandwichBlockItem.java",
+          "sha256": "d83ff7aaaa49284954b0728070f2f534724ce40de0438cfc61cc8452928a8cce"
+        }
+      ]
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/machine/BoilerTankBlock.java",
+      "sha256": "10eb6b5bf2c0e1d4e39ef3f79d16b20ed3079dbf73b318db3e7b9633cff150af",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\BoilerTankBlock.java",
+      "sourceSha256": "cb4f01d4c074cb6085a3c76d5e74e4719fb3b5ee6f50cdbed77893a5ab565b56",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/machine/EngineBlock.java",
+      "sha256": "cbdcabe1296b34b98658fe76c9ce9c42f3c2062c4441eb756b050bad3b44c958",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\EngineBlock.java",
+      "sourceSha256": "52e45a9318ede13c4889e8f178e1f2da31341d33fcf446861472c8845f91b771",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/misc/SandwichBlock.java",
+      "sha256": "351c3d637bb2749f1eb6d249f499b70a132bd8cd8ed2ea54742f8bf547e6f781",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\SandwichBlock.java",
+      "sourceSha256": "e3ad880a3c759fbe39425cc506648e9548fa0255b11830a45d2afa7c46ab006f",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/BoilerTankBlockEntity.java",
+      "sha256": "5e0591f8353a962ed84158a172f65144697e6e729be8327e5422ba45073575a3",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\BoilerTankBlockEntity.java",
+      "sourceSha256": "1622ea6765d1f3cfe0997070abe258fee839e93e6fc5e00bf8b48d3a4ec2c0e6",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/EngineBaseBlockEntity.java",
+      "sha256": "d99436876de8d808b152cd3b8b707b1d9f8d8024a1a2ee7ba18c6b26606f6a25",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\EngineBaseBlockEntity.java",
+      "sourceSha256": "30e4d19bfebcf1efe69f3d822e1fb2c54667322f8baf85d9524f0aefc049ecf0",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/KineticDieselEngineBlockEntity.java",
+      "sha256": "fa18d1bdb77445c4a9059a4e5e33f2e329f618a86b2a8a420a06a96210e0098d",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\KineticDieselEngineBlockEntity.java",
+      "sourceSha256": "c7557f47f56ff2371633a462779feb38da6a67f5178c9d1a039b924f4b208366",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/KineticElectricEngineBlockEntity.java",
+      "sha256": "df71ce0d5e54b97cba7d65c8acf48eb76dd4f02450415dec0ad38ccee4476121",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\KineticElectricEngineBlockEntity.java",
+      "sourceSha256": "df71ce0d5e54b97cba7d65c8acf48eb76dd4f02450415dec0ad38ccee4476121",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/KineticFluxEngineBlockEntity.java",
+      "sha256": "7c2a99da8fd40726d26c0e0ca6468bf5046794a97894cfab5173a8fa9c99178a",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\KineticFluxEngineBlockEntity.java",
+      "sourceSha256": "7c2a99da8fd40726d26c0e0ca6468bf5046794a97894cfab5173a8fa9c99178a",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/KineticRotationEngineBlockEntity.java",
+      "sha256": "9860b04c67faca24e8e0927428017040d9973d2eecf927799dde2c730c9fcd4d",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\KineticRotationEngineBlockEntity.java",
+      "sourceSha256": "ca5675c7e9d080719040f3459e36dd073a119dfb37d8bd671eda93f1ce0558a6",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/KineticSteamEngineBlockEntity.java",
+      "sha256": "7392eedc29e5b920c16cdba00c27e8ff3e1cb19ef5421908d6bdd8fbcd05a3a7",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\KineticSteamEngineBlockEntity.java",
+      "sourceSha256": "9f6d8879efb2f0b9d06edf078e544f51fca4d65cd48844a74955a9e10ddeb229",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/PistonEngineBlockEntity.java",
+      "sha256": "6d4f126fc3139cd05dce2ffc73f0bec458f883928be534d0bd313b885ff03715",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\PistonEngineBlockEntity.java",
+      "sourceSha256": "b57f3fda38b0709f7dd567a55257c288269721a453d5fb997ac40260e7eb88cc",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/misc/SandwichBlockEntity.java",
+      "sha256": "9e0819541b6525a7c515a84b71ca62999dfbdf726ea79b0b7a689cbf11db0efc",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\misc\\SandwichBlockEntity.java",
+      "sourceSha256": "4818c1cd2eb2de297af01b9ea95afed77a3aebebcbbf4bc8ab4ed86534e2e921",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/BoilerBarometerRenderer.java",
+      "sha256": "19ad72bb530bf36346082a4a9b258e019d44d1e1733bcf1e5524caa20d087072",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\BoilerBarometerRenderer.java",
+      "sourceSha256": "4b9e25a952b668cb0c2e2d1e3dc2644a38393096a52493c638da91620e04ea20",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/EngineClientSetup.java",
+      "sha256": "b7218a4f18b3da74445e45b0f80adae5b64e3d5df1eb44a69114bb16f21c1079",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\GregTechClient.java",
+          "sha256": "4d6e46a4d9c0c35796033a9a1f759d7afc014a0ec078cf2d4604f17fe76e1705"
+        },
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\MachineBlockClientModels.java",
+          "sha256": "b86f4920432146d00c2398842c91666a7dc95a78cf9c3bad3d6d5edefd8ae182"
+        }
+      ]
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/EngineMaterialTooltips.java",
+      "sha256": "1fcb3c2ec6cdfa138118ea8cfd86e85418f450202b38ddfddf7911dfdd7e8895",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\MaterialTooltips.java",
+          "sha256": "a2075c78eaeebe8e0cd769a0b55f35f82bd6897fdaba548288108d9cfafb2fc5"
+        }
+      ]
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/EngineTooltips.java",
+      "sha256": "d2a18dfca5559f5680a345eabdb35f621dc730eb87cc1db495f55d95f687b047",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\EngineTooltips.java",
+      "sourceSha256": "2897243e1d5dc3f40512d3d7a5ca0e1731015be0f2e7d8011a7e78af040c8b05",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/SandwichRenderer.java",
+      "sha256": "9fec21b0a31a19bd63f5b52a896715c566cdba1013d72d7b39a8fbc36a67ec30",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\SandwichRenderer.java",
+      "sourceSha256": "e502d03d6622e5fbaa0573d4fe67472807a6645da5012276751ca984e4494a58",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/SteamEngineRenderer.java",
+      "sha256": "4a62f86e1d8ec6d951c4ed8b4e2b90c31d7f5f4842d6c197de216a38ce356e66",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\SteamEngineRenderer.java",
+      "sourceSha256": "bed5bac8aa0c1cab14e70ad7e63e0261a0be699220f2b6ac51bce8604be172f8",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/food/SandwichIngredients.java",
+      "sha256": "0b51cb0ac04557366303e48668424f9824684b2b888216737c18669518342821",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\food\\SandwichIngredients.java",
+      "sourceSha256": "523c6e8d85e8254350d788fe742f81614a3e15651e88c0a4acc45f51356ee103",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/item/SandwichBlockItem.java",
+      "sha256": "7785365a60df2c71a43937a363aa03ce1e979f17f41dda21112b2eee66e123e9",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\item\\SandwichBlockItem.java",
+      "sourceSha256": "d83ff7aaaa49284954b0728070f2f534724ce40de0438cfc61cc8452928a8cce",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/energy/EngineCapabilities.java",
+      "sha256": "84eeea68b317472bab0be5156148792f336b50f196160b17a4455b268b727ee3",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\PistonEngineBlockEntity.java",
+          "sha256": "b57f3fda38b0709f7dd567a55257c288269721a453d5fb997ac40260e7eb88cc"
+        },
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\KineticSteamEngineBlockEntity.java",
+          "sha256": "9f6d8879efb2f0b9d06edf078e544f51fca4d65cd48844a74955a9e10ddeb229"
+        },
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\KineticDieselEngineBlockEntity.java",
+          "sha256": "c7557f47f56ff2371633a462779feb38da6a67f5178c9d1a039b924f4b208366"
+        },
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\BoilerTankBlockEntity.java",
+          "sha256": "1622ea6765d1f3cfe0997070abe258fee839e93e6fc5e00bf8b48d3a4ec2c0e6"
+        }
+      ]
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTBoilers.java",
+      "sha256": "d42c5c63b451567efaddcbd95e7c42bc2a37542f71395253dbcbf8127c09a761",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTBoilers.java",
+      "sourceSha256": "ca944f8be1baea6ace703d0f509e11c6b77d72372abedf6f219e068fbe661260",
+      "derivedFrom": []
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTEngines.java",
+      "sha256": "2521e7b874907fcec8377a2c746db082382f687011f9c22b34e1d826b63b65f0",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTEngines.java",
+      "sourceSha256": "dc934208672b042c9b48132600ae77c0e4cb6b3ca7543fe66438270972a447bc",
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTEngines.java",
+          "sha256": "dc934208672b042c9b48132600ae77c0e4cb6b3ca7543fe66438270972a447bc"
+        },
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\api\\machine\\MachineRegistry.java",
+          "sha256": "8a16d1f713f7341ebd5532171e045b8d2535dd2299f4bcd65b86bccbaebf9595"
+        },
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\GTMachineBlockItem.java",
+          "sha256": "e4ab9236bd587d21c1b918fa05baeb2180a6e7590a0a73b4869d4952a7491b44"
+        }
+      ]
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTSandwich.java",
+      "sha256": "edefd838f3a98a675d948811bbbf7d9c82f054659ef25cbac2f4eea49051af9f",
+      "source": null,
+      "sourceSha256": null,
+      "derivedFrom": [
+        {
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTDecorBlocks.java",
+          "sha256": "8e4f81942f572baf26f31b198c4697f398d76cffb9f6272c32d0e87c66c9c68b"
+        }
+      ]
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/blockentity/machine/KineticDieselEngineBlockEntity.java",
+      "sha256": "6f97899ab0faad1f2230e42355d63f0127e32f020d135b7804627aa4ba5b30c4",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\KineticDieselEngineBlockEntity.java",
+      "sourceSha256": "c7557f47f56ff2371633a462779feb38da6a67f5178c9d1a039b924f4b208366",
+      "derivedFrom": []
+    }
+  ],
+  "resources": [
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_diesel_arsenic_bronze.json",
+      "sha256": "54c4454a725dad888357b3a0501e5f75523ede2a7698a6df8d36c7cb1dfebd5f",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_diesel_arsenic_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_diesel_arsenic_copper.json",
+      "sha256": "54c4454a725dad888357b3a0501e5f75523ede2a7698a6df8d36c7cb1dfebd5f",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_diesel_arsenic_copper.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_diesel_bronze.json",
+      "sha256": "54c4454a725dad888357b3a0501e5f75523ede2a7698a6df8d36c7cb1dfebd5f",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_diesel_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_diesel_invar.json",
+      "sha256": "54c4454a725dad888357b3a0501e5f75523ede2a7698a6df8d36c7cb1dfebd5f",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_diesel_invar.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_diesel_iridium.json",
+      "sha256": "54c4454a725dad888357b3a0501e5f75523ede2a7698a6df8d36c7cb1dfebd5f",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_diesel_iridium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_diesel_steel.json",
+      "sha256": "54c4454a725dad888357b3a0501e5f75523ede2a7698a6df8d36c7cb1dfebd5f",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_diesel_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_diesel_titanium.json",
+      "sha256": "54c4454a725dad888357b3a0501e5f75523ede2a7698a6df8d36c7cb1dfebd5f",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_diesel_titanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_diesel_tungsten_steel.json",
+      "sha256": "54c4454a725dad888357b3a0501e5f75523ede2a7698a6df8d36c7cb1dfebd5f",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_diesel_tungsten_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_electric_aluminium.json",
+      "sha256": "d683eef463e35c99b3b203a223c7a8513b736750278b35c54b95956c2460b8cb",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_electric_aluminium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_electric_chromium.json",
+      "sha256": "d683eef463e35c99b3b203a223c7a8513b736750278b35c54b95956c2460b8cb",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_electric_chromium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_electric_galvanized_steel.json",
+      "sha256": "d683eef463e35c99b3b203a223c7a8513b736750278b35c54b95956c2460b8cb",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_electric_galvanized_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_electric_stainless_steel.json",
+      "sha256": "d683eef463e35c99b3b203a223c7a8513b736750278b35c54b95956c2460b8cb",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_electric_stainless_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_electric_titanium.json",
+      "sha256": "d683eef463e35c99b3b203a223c7a8513b736750278b35c54b95956c2460b8cb",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_electric_titanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_flux_electrum.json",
+      "sha256": "48c2529d3dbcd684b6145e66571e4e43cceea7765c27fcf1f5601be04718c1f0",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_flux_electrum.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_flux_enderium.json",
+      "sha256": "48c2529d3dbcd684b6145e66571e4e43cceea7765c27fcf1f5601be04718c1f0",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_flux_enderium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_flux_enderium_base.json",
+      "sha256": "48c2529d3dbcd684b6145e66571e4e43cceea7765c27fcf1f5601be04718c1f0",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_flux_enderium_base.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_flux_invar.json",
+      "sha256": "48c2529d3dbcd684b6145e66571e4e43cceea7765c27fcf1f5601be04718c1f0",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_flux_invar.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_flux_lead.json",
+      "sha256": "48c2529d3dbcd684b6145e66571e4e43cceea7765c27fcf1f5601be04718c1f0",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_flux_lead.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_rotation_adamantium.json",
+      "sha256": "14accd1c2ecad35dc3900bc428f3d0bcc86a4a4c5ccc51fbf2fd0dc4d1413452",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_rotation_adamantium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_rotation_arsenic_bronze.json",
+      "sha256": "14accd1c2ecad35dc3900bc428f3d0bcc86a4a4c5ccc51fbf2fd0dc4d1413452",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_rotation_arsenic_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_rotation_arsenic_copper.json",
+      "sha256": "14accd1c2ecad35dc3900bc428f3d0bcc86a4a4c5ccc51fbf2fd0dc4d1413452",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_rotation_arsenic_copper.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_rotation_brass.json",
+      "sha256": "14accd1c2ecad35dc3900bc428f3d0bcc86a4a4c5ccc51fbf2fd0dc4d1413452",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_rotation_brass.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_rotation_bronze.json",
+      "sha256": "14accd1c2ecad35dc3900bc428f3d0bcc86a4a4c5ccc51fbf2fd0dc4d1413452",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_rotation_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_rotation_iridium.json",
+      "sha256": "14accd1c2ecad35dc3900bc428f3d0bcc86a4a4c5ccc51fbf2fd0dc4d1413452",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_rotation_iridium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_rotation_iritanium.json",
+      "sha256": "14accd1c2ecad35dc3900bc428f3d0bcc86a4a4c5ccc51fbf2fd0dc4d1413452",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_rotation_iritanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_rotation_steel.json",
+      "sha256": "14accd1c2ecad35dc3900bc428f3d0bcc86a4a4c5ccc51fbf2fd0dc4d1413452",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_rotation_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_rotation_titanium.json",
+      "sha256": "14accd1c2ecad35dc3900bc428f3d0bcc86a4a4c5ccc51fbf2fd0dc4d1413452",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_rotation_titanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_rotation_trinaquadalloy.json",
+      "sha256": "14accd1c2ecad35dc3900bc428f3d0bcc86a4a4c5ccc51fbf2fd0dc4d1413452",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_rotation_trinaquadalloy.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_rotation_trinitanium.json",
+      "sha256": "14accd1c2ecad35dc3900bc428f3d0bcc86a4a4c5ccc51fbf2fd0dc4d1413452",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_rotation_trinitanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_rotation_tungsten_steel.json",
+      "sha256": "14accd1c2ecad35dc3900bc428f3d0bcc86a4a4c5ccc51fbf2fd0dc4d1413452",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_rotation_tungsten_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_rotation_wood.json",
+      "sha256": "14accd1c2ecad35dc3900bc428f3d0bcc86a4a4c5ccc51fbf2fd0dc4d1413452",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_rotation_wood.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_steam_arsenic_bronze.json",
+      "sha256": "465407bc8a4aa92252f5ab4855c9aa28cc75cc086168e81602e42125c5449a82",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_steam_arsenic_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_steam_arsenic_copper.json",
+      "sha256": "465407bc8a4aa92252f5ab4855c9aa28cc75cc086168e81602e42125c5449a82",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_steam_arsenic_copper.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_steam_brass.json",
+      "sha256": "465407bc8a4aa92252f5ab4855c9aa28cc75cc086168e81602e42125c5449a82",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_steam_brass.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_steam_bronze.json",
+      "sha256": "78c0fdfb455abb335cb795b4b26c880f17fc2f8c6b6cee994a9a6071b13ea9e4",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_steam_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_steam_chromium.json",
+      "sha256": "78c0fdfb455abb335cb795b4b26c880f17fc2f8c6b6cee994a9a6071b13ea9e4",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_steam_chromium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_steam_fiery_steel.json",
+      "sha256": "465407bc8a4aa92252f5ab4855c9aa28cc75cc086168e81602e42125c5449a82",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_steam_fiery_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_steam_invar.json",
+      "sha256": "465407bc8a4aa92252f5ab4855c9aa28cc75cc086168e81602e42125c5449a82",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_steam_invar.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_steam_ironwood.json",
+      "sha256": "465407bc8a4aa92252f5ab4855c9aa28cc75cc086168e81602e42125c5449a82",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_steam_ironwood.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_steam_lead.json",
+      "sha256": "465407bc8a4aa92252f5ab4855c9aa28cc75cc086168e81602e42125c5449a82",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_steam_lead.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_steam_steel.json",
+      "sha256": "78c0fdfb455abb335cb795b4b26c880f17fc2f8c6b6cee994a9a6071b13ea9e4",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_steam_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_steam_strong_arsenic_bronze.json",
+      "sha256": "465407bc8a4aa92252f5ab4855c9aa28cc75cc086168e81602e42125c5449a82",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_steam_strong_arsenic_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_steam_strong_arsenic_copper.json",
+      "sha256": "465407bc8a4aa92252f5ab4855c9aa28cc75cc086168e81602e42125c5449a82",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_steam_strong_arsenic_copper.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_steam_strong_brass.json",
+      "sha256": "465407bc8a4aa92252f5ab4855c9aa28cc75cc086168e81602e42125c5449a82",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_steam_strong_brass.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_steam_strong_bronze.json",
+      "sha256": "465407bc8a4aa92252f5ab4855c9aa28cc75cc086168e81602e42125c5449a82",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_steam_strong_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_steam_strong_chromium.json",
+      "sha256": "465407bc8a4aa92252f5ab4855c9aa28cc75cc086168e81602e42125c5449a82",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_steam_strong_chromium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_steam_strong_fiery_steel.json",
+      "sha256": "465407bc8a4aa92252f5ab4855c9aa28cc75cc086168e81602e42125c5449a82",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_steam_strong_fiery_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_steam_strong_invar.json",
+      "sha256": "465407bc8a4aa92252f5ab4855c9aa28cc75cc086168e81602e42125c5449a82",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_steam_strong_invar.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_steam_strong_ironwood.json",
+      "sha256": "465407bc8a4aa92252f5ab4855c9aa28cc75cc086168e81602e42125c5449a82",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_steam_strong_ironwood.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_steam_strong_lead.json",
+      "sha256": "465407bc8a4aa92252f5ab4855c9aa28cc75cc086168e81602e42125c5449a82",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_steam_strong_lead.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_steam_strong_steel.json",
+      "sha256": "465407bc8a4aa92252f5ab4855c9aa28cc75cc086168e81602e42125c5449a82",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_steam_strong_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_steam_strong_tin_alloy.json",
+      "sha256": "465407bc8a4aa92252f5ab4855c9aa28cc75cc086168e81602e42125c5449a82",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_steam_strong_tin_alloy.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_steam_strong_titanium.json",
+      "sha256": "465407bc8a4aa92252f5ab4855c9aa28cc75cc086168e81602e42125c5449a82",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_steam_strong_titanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_steam_strong_tungsten.json",
+      "sha256": "465407bc8a4aa92252f5ab4855c9aa28cc75cc086168e81602e42125c5449a82",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_steam_strong_tungsten.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_steam_strong_tungsten_steel.json",
+      "sha256": "465407bc8a4aa92252f5ab4855c9aa28cc75cc086168e81602e42125c5449a82",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_steam_strong_tungsten_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_steam_tin_alloy.json",
+      "sha256": "465407bc8a4aa92252f5ab4855c9aa28cc75cc086168e81602e42125c5449a82",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_steam_tin_alloy.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_steam_titanium.json",
+      "sha256": "465407bc8a4aa92252f5ab4855c9aa28cc75cc086168e81602e42125c5449a82",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_steam_titanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_steam_tungsten.json",
+      "sha256": "465407bc8a4aa92252f5ab4855c9aa28cc75cc086168e81602e42125c5449a82",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_steam_tungsten.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\engine_steam_tungsten_steel.json",
+      "sha256": "465407bc8a4aa92252f5ab4855c9aa28cc75cc086168e81602e42125c5449a82",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/engine_steam_tungsten_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\steam_boiler_arsenic_bronze.json",
+      "sha256": "d6d3c6fdd0178be4785913bd56c498b0bc41364b15b0b686f25051ef9d548269",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/steam_boiler_arsenic_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\steam_boiler_arsenic_copper.json",
+      "sha256": "d6d3c6fdd0178be4785913bd56c498b0bc41364b15b0b686f25051ef9d548269",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/steam_boiler_arsenic_copper.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\steam_boiler_bismuth.json",
+      "sha256": "d6d3c6fdd0178be4785913bd56c498b0bc41364b15b0b686f25051ef9d548269",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/steam_boiler_bismuth.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\steam_boiler_bronze.json",
+      "sha256": "d6d3c6fdd0178be4785913bd56c498b0bc41364b15b0b686f25051ef9d548269",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/steam_boiler_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\steam_boiler_chromium.json",
+      "sha256": "d6d3c6fdd0178be4785913bd56c498b0bc41364b15b0b686f25051ef9d548269",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/steam_boiler_chromium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\steam_boiler_invar.json",
+      "sha256": "d6d3c6fdd0178be4785913bd56c498b0bc41364b15b0b686f25051ef9d548269",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/steam_boiler_invar.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\steam_boiler_lead.json",
+      "sha256": "d6d3c6fdd0178be4785913bd56c498b0bc41364b15b0b686f25051ef9d548269",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/steam_boiler_lead.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\steam_boiler_netherite.json",
+      "sha256": "d6d3c6fdd0178be4785913bd56c498b0bc41364b15b0b686f25051ef9d548269",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/steam_boiler_netherite.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\steam_boiler_steel.json",
+      "sha256": "d6d3c6fdd0178be4785913bd56c498b0bc41364b15b0b686f25051ef9d548269",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/steam_boiler_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\steam_boiler_titanium.json",
+      "sha256": "d6d3c6fdd0178be4785913bd56c498b0bc41364b15b0b686f25051ef9d548269",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/steam_boiler_titanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\steam_boiler_tungsten.json",
+      "sha256": "d6d3c6fdd0178be4785913bd56c498b0bc41364b15b0b686f25051ef9d548269",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/steam_boiler_tungsten.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\steam_boiler_tungsten_steel.json",
+      "sha256": "d6d3c6fdd0178be4785913bd56c498b0bc41364b15b0b686f25051ef9d548269",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/steam_boiler_tungsten_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\steam_boiler_ultimet.json",
+      "sha256": "d6d3c6fdd0178be4785913bd56c498b0bc41364b15b0b686f25051ef9d548269",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/steam_boiler_ultimet.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\strong_steam_boiler_arsenic_bronze.json",
+      "sha256": "d6d3c6fdd0178be4785913bd56c498b0bc41364b15b0b686f25051ef9d548269",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/strong_steam_boiler_arsenic_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\strong_steam_boiler_arsenic_copper.json",
+      "sha256": "d6d3c6fdd0178be4785913bd56c498b0bc41364b15b0b686f25051ef9d548269",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/strong_steam_boiler_arsenic_copper.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\strong_steam_boiler_bismuth.json",
+      "sha256": "d6d3c6fdd0178be4785913bd56c498b0bc41364b15b0b686f25051ef9d548269",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/strong_steam_boiler_bismuth.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\strong_steam_boiler_bronze.json",
+      "sha256": "d6d3c6fdd0178be4785913bd56c498b0bc41364b15b0b686f25051ef9d548269",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/strong_steam_boiler_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\strong_steam_boiler_chromium.json",
+      "sha256": "d6d3c6fdd0178be4785913bd56c498b0bc41364b15b0b686f25051ef9d548269",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/strong_steam_boiler_chromium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\strong_steam_boiler_invar.json",
+      "sha256": "d6d3c6fdd0178be4785913bd56c498b0bc41364b15b0b686f25051ef9d548269",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/strong_steam_boiler_invar.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\strong_steam_boiler_lead.json",
+      "sha256": "d6d3c6fdd0178be4785913bd56c498b0bc41364b15b0b686f25051ef9d548269",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/strong_steam_boiler_lead.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\strong_steam_boiler_netherite.json",
+      "sha256": "d6d3c6fdd0178be4785913bd56c498b0bc41364b15b0b686f25051ef9d548269",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/strong_steam_boiler_netherite.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\strong_steam_boiler_steel.json",
+      "sha256": "d6d3c6fdd0178be4785913bd56c498b0bc41364b15b0b686f25051ef9d548269",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/strong_steam_boiler_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\strong_steam_boiler_titanium.json",
+      "sha256": "d6d3c6fdd0178be4785913bd56c498b0bc41364b15b0b686f25051ef9d548269",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/strong_steam_boiler_titanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\strong_steam_boiler_tungsten.json",
+      "sha256": "d6d3c6fdd0178be4785913bd56c498b0bc41364b15b0b686f25051ef9d548269",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/strong_steam_boiler_tungsten.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\strong_steam_boiler_tungsten_steel.json",
+      "sha256": "d6d3c6fdd0178be4785913bd56c498b0bc41364b15b0b686f25051ef9d548269",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/strong_steam_boiler_tungsten_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\strong_steam_boiler_ultimet.json",
+      "sha256": "d6d3c6fdd0178be4785913bd56c498b0bc41364b15b0b686f25051ef9d548269",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/strong_steam_boiler_ultimet.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_diesel_arsenic_bronze.json",
+      "sha256": "0bdd9074665e498c909f4ebac7e5c14925d0b13e0036f67fcb5260c167dc4bed",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_diesel_arsenic_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_diesel_arsenic_copper.json",
+      "sha256": "0bdd9074665e498c909f4ebac7e5c14925d0b13e0036f67fcb5260c167dc4bed",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_diesel_arsenic_copper.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_diesel_bronze.json",
+      "sha256": "0bdd9074665e498c909f4ebac7e5c14925d0b13e0036f67fcb5260c167dc4bed",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_diesel_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_diesel_invar.json",
+      "sha256": "0bdd9074665e498c909f4ebac7e5c14925d0b13e0036f67fcb5260c167dc4bed",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_diesel_invar.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_diesel_iridium.json",
+      "sha256": "0bdd9074665e498c909f4ebac7e5c14925d0b13e0036f67fcb5260c167dc4bed",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_diesel_iridium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_diesel_steel.json",
+      "sha256": "0bdd9074665e498c909f4ebac7e5c14925d0b13e0036f67fcb5260c167dc4bed",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_diesel_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_diesel_titanium.json",
+      "sha256": "0bdd9074665e498c909f4ebac7e5c14925d0b13e0036f67fcb5260c167dc4bed",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_diesel_titanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_diesel_tungsten_steel.json",
+      "sha256": "0bdd9074665e498c909f4ebac7e5c14925d0b13e0036f67fcb5260c167dc4bed",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_diesel_tungsten_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_electric_aluminium.json",
+      "sha256": "dfa8b0770eaef98855b92db248587cf40a1c1e2dcfddcd80de9eefeada7cd038",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_electric_aluminium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_electric_chromium.json",
+      "sha256": "dfa8b0770eaef98855b92db248587cf40a1c1e2dcfddcd80de9eefeada7cd038",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_electric_chromium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_electric_galvanized_steel.json",
+      "sha256": "dfa8b0770eaef98855b92db248587cf40a1c1e2dcfddcd80de9eefeada7cd038",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_electric_galvanized_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_electric_stainless_steel.json",
+      "sha256": "dfa8b0770eaef98855b92db248587cf40a1c1e2dcfddcd80de9eefeada7cd038",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_electric_stainless_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_electric_titanium.json",
+      "sha256": "dfa8b0770eaef98855b92db248587cf40a1c1e2dcfddcd80de9eefeada7cd038",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_electric_titanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_flux_electrum.json",
+      "sha256": "c71de2fa9e457ed71ce2bb9e09a52f65d39f0c7edfd177b556c6a0a6c721bc76",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_flux_electrum.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_flux_enderium.json",
+      "sha256": "c71de2fa9e457ed71ce2bb9e09a52f65d39f0c7edfd177b556c6a0a6c721bc76",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_flux_enderium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_flux_enderium_base.json",
+      "sha256": "c71de2fa9e457ed71ce2bb9e09a52f65d39f0c7edfd177b556c6a0a6c721bc76",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_flux_enderium_base.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_flux_invar.json",
+      "sha256": "c71de2fa9e457ed71ce2bb9e09a52f65d39f0c7edfd177b556c6a0a6c721bc76",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_flux_invar.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_flux_lead.json",
+      "sha256": "c71de2fa9e457ed71ce2bb9e09a52f65d39f0c7edfd177b556c6a0a6c721bc76",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_flux_lead.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_rotation_adamantium.json",
+      "sha256": "13ccc0c602a4469c30e57fb30c4c4ed67e1297f174e661c013929a755d6106cd",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_rotation_adamantium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_rotation_arsenic_bronze.json",
+      "sha256": "13ccc0c602a4469c30e57fb30c4c4ed67e1297f174e661c013929a755d6106cd",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_rotation_arsenic_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_rotation_arsenic_copper.json",
+      "sha256": "13ccc0c602a4469c30e57fb30c4c4ed67e1297f174e661c013929a755d6106cd",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_rotation_arsenic_copper.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_rotation_brass.json",
+      "sha256": "13ccc0c602a4469c30e57fb30c4c4ed67e1297f174e661c013929a755d6106cd",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_rotation_brass.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_rotation_bronze.json",
+      "sha256": "13ccc0c602a4469c30e57fb30c4c4ed67e1297f174e661c013929a755d6106cd",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_rotation_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_rotation_iridium.json",
+      "sha256": "13ccc0c602a4469c30e57fb30c4c4ed67e1297f174e661c013929a755d6106cd",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_rotation_iridium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_rotation_iritanium.json",
+      "sha256": "13ccc0c602a4469c30e57fb30c4c4ed67e1297f174e661c013929a755d6106cd",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_rotation_iritanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_rotation_steel.json",
+      "sha256": "13ccc0c602a4469c30e57fb30c4c4ed67e1297f174e661c013929a755d6106cd",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_rotation_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_rotation_titanium.json",
+      "sha256": "13ccc0c602a4469c30e57fb30c4c4ed67e1297f174e661c013929a755d6106cd",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_rotation_titanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_rotation_trinaquadalloy.json",
+      "sha256": "13ccc0c602a4469c30e57fb30c4c4ed67e1297f174e661c013929a755d6106cd",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_rotation_trinaquadalloy.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_rotation_trinitanium.json",
+      "sha256": "13ccc0c602a4469c30e57fb30c4c4ed67e1297f174e661c013929a755d6106cd",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_rotation_trinitanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_rotation_tungsten_steel.json",
+      "sha256": "13ccc0c602a4469c30e57fb30c4c4ed67e1297f174e661c013929a755d6106cd",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_rotation_tungsten_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_rotation_wood.json",
+      "sha256": "13ccc0c602a4469c30e57fb30c4c4ed67e1297f174e661c013929a755d6106cd",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_rotation_wood.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_steam_arsenic_bronze.json",
+      "sha256": "1cb78e6a66385f26f321057d4165fb01c5200ed4c85223e3f345417a65abdc15",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_steam_arsenic_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_steam_arsenic_copper.json",
+      "sha256": "1cb78e6a66385f26f321057d4165fb01c5200ed4c85223e3f345417a65abdc15",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_steam_arsenic_copper.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_steam_brass.json",
+      "sha256": "1cb78e6a66385f26f321057d4165fb01c5200ed4c85223e3f345417a65abdc15",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_steam_brass.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_steam_bronze.json",
+      "sha256": "1cb78e6a66385f26f321057d4165fb01c5200ed4c85223e3f345417a65abdc15",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_steam_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_steam_chromium.json",
+      "sha256": "1cb78e6a66385f26f321057d4165fb01c5200ed4c85223e3f345417a65abdc15",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_steam_chromium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_steam_fiery_steel.json",
+      "sha256": "1cb78e6a66385f26f321057d4165fb01c5200ed4c85223e3f345417a65abdc15",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_steam_fiery_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_steam_invar.json",
+      "sha256": "1cb78e6a66385f26f321057d4165fb01c5200ed4c85223e3f345417a65abdc15",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_steam_invar.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_steam_ironwood.json",
+      "sha256": "1cb78e6a66385f26f321057d4165fb01c5200ed4c85223e3f345417a65abdc15",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_steam_ironwood.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_steam_lead.json",
+      "sha256": "1cb78e6a66385f26f321057d4165fb01c5200ed4c85223e3f345417a65abdc15",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_steam_lead.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_steam_steel.json",
+      "sha256": "1cb78e6a66385f26f321057d4165fb01c5200ed4c85223e3f345417a65abdc15",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_steam_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_steam_strong_arsenic_bronze.json",
+      "sha256": "1cb78e6a66385f26f321057d4165fb01c5200ed4c85223e3f345417a65abdc15",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_steam_strong_arsenic_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_steam_strong_arsenic_copper.json",
+      "sha256": "1cb78e6a66385f26f321057d4165fb01c5200ed4c85223e3f345417a65abdc15",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_steam_strong_arsenic_copper.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_steam_strong_brass.json",
+      "sha256": "1cb78e6a66385f26f321057d4165fb01c5200ed4c85223e3f345417a65abdc15",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_steam_strong_brass.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_steam_strong_bronze.json",
+      "sha256": "1cb78e6a66385f26f321057d4165fb01c5200ed4c85223e3f345417a65abdc15",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_steam_strong_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_steam_strong_chromium.json",
+      "sha256": "1cb78e6a66385f26f321057d4165fb01c5200ed4c85223e3f345417a65abdc15",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_steam_strong_chromium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_steam_strong_fiery_steel.json",
+      "sha256": "1cb78e6a66385f26f321057d4165fb01c5200ed4c85223e3f345417a65abdc15",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_steam_strong_fiery_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_steam_strong_invar.json",
+      "sha256": "1cb78e6a66385f26f321057d4165fb01c5200ed4c85223e3f345417a65abdc15",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_steam_strong_invar.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_steam_strong_ironwood.json",
+      "sha256": "1cb78e6a66385f26f321057d4165fb01c5200ed4c85223e3f345417a65abdc15",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_steam_strong_ironwood.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_steam_strong_lead.json",
+      "sha256": "1cb78e6a66385f26f321057d4165fb01c5200ed4c85223e3f345417a65abdc15",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_steam_strong_lead.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_steam_strong_steel.json",
+      "sha256": "1cb78e6a66385f26f321057d4165fb01c5200ed4c85223e3f345417a65abdc15",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_steam_strong_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_steam_strong_tin_alloy.json",
+      "sha256": "1cb78e6a66385f26f321057d4165fb01c5200ed4c85223e3f345417a65abdc15",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_steam_strong_tin_alloy.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_steam_strong_titanium.json",
+      "sha256": "1cb78e6a66385f26f321057d4165fb01c5200ed4c85223e3f345417a65abdc15",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_steam_strong_titanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_steam_strong_tungsten.json",
+      "sha256": "1cb78e6a66385f26f321057d4165fb01c5200ed4c85223e3f345417a65abdc15",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_steam_strong_tungsten.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_steam_strong_tungsten_steel.json",
+      "sha256": "1cb78e6a66385f26f321057d4165fb01c5200ed4c85223e3f345417a65abdc15",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_steam_strong_tungsten_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_steam_tin_alloy.json",
+      "sha256": "1cb78e6a66385f26f321057d4165fb01c5200ed4c85223e3f345417a65abdc15",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_steam_tin_alloy.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_steam_titanium.json",
+      "sha256": "1cb78e6a66385f26f321057d4165fb01c5200ed4c85223e3f345417a65abdc15",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_steam_titanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_steam_tungsten.json",
+      "sha256": "1cb78e6a66385f26f321057d4165fb01c5200ed4c85223e3f345417a65abdc15",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_steam_tungsten.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\engine_steam_tungsten_steel.json",
+      "sha256": "1cb78e6a66385f26f321057d4165fb01c5200ed4c85223e3f345417a65abdc15",
+      "target": "core/src/main/resources/assets/gregtech/models/item/engine_steam_tungsten_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\steam_boiler_arsenic_bronze.json",
+      "sha256": "ee0de734afd12f1d64b73b6aafe5b6030efcc6d903aabbfde992c00e1d52ea29",
+      "target": "core/src/main/resources/assets/gregtech/models/item/steam_boiler_arsenic_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\steam_boiler_arsenic_copper.json",
+      "sha256": "ee0de734afd12f1d64b73b6aafe5b6030efcc6d903aabbfde992c00e1d52ea29",
+      "target": "core/src/main/resources/assets/gregtech/models/item/steam_boiler_arsenic_copper.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\steam_boiler_bismuth.json",
+      "sha256": "ee0de734afd12f1d64b73b6aafe5b6030efcc6d903aabbfde992c00e1d52ea29",
+      "target": "core/src/main/resources/assets/gregtech/models/item/steam_boiler_bismuth.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\steam_boiler_bronze.json",
+      "sha256": "ee0de734afd12f1d64b73b6aafe5b6030efcc6d903aabbfde992c00e1d52ea29",
+      "target": "core/src/main/resources/assets/gregtech/models/item/steam_boiler_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\steam_boiler_chromium.json",
+      "sha256": "ee0de734afd12f1d64b73b6aafe5b6030efcc6d903aabbfde992c00e1d52ea29",
+      "target": "core/src/main/resources/assets/gregtech/models/item/steam_boiler_chromium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\steam_boiler_invar.json",
+      "sha256": "ee0de734afd12f1d64b73b6aafe5b6030efcc6d903aabbfde992c00e1d52ea29",
+      "target": "core/src/main/resources/assets/gregtech/models/item/steam_boiler_invar.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\steam_boiler_lead.json",
+      "sha256": "ee0de734afd12f1d64b73b6aafe5b6030efcc6d903aabbfde992c00e1d52ea29",
+      "target": "core/src/main/resources/assets/gregtech/models/item/steam_boiler_lead.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\steam_boiler_netherite.json",
+      "sha256": "ee0de734afd12f1d64b73b6aafe5b6030efcc6d903aabbfde992c00e1d52ea29",
+      "target": "core/src/main/resources/assets/gregtech/models/item/steam_boiler_netherite.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\steam_boiler_steel.json",
+      "sha256": "ee0de734afd12f1d64b73b6aafe5b6030efcc6d903aabbfde992c00e1d52ea29",
+      "target": "core/src/main/resources/assets/gregtech/models/item/steam_boiler_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\steam_boiler_titanium.json",
+      "sha256": "ee0de734afd12f1d64b73b6aafe5b6030efcc6d903aabbfde992c00e1d52ea29",
+      "target": "core/src/main/resources/assets/gregtech/models/item/steam_boiler_titanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\steam_boiler_tungsten.json",
+      "sha256": "ee0de734afd12f1d64b73b6aafe5b6030efcc6d903aabbfde992c00e1d52ea29",
+      "target": "core/src/main/resources/assets/gregtech/models/item/steam_boiler_tungsten.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\steam_boiler_tungsten_steel.json",
+      "sha256": "ee0de734afd12f1d64b73b6aafe5b6030efcc6d903aabbfde992c00e1d52ea29",
+      "target": "core/src/main/resources/assets/gregtech/models/item/steam_boiler_tungsten_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\steam_boiler_ultimet.json",
+      "sha256": "ee0de734afd12f1d64b73b6aafe5b6030efcc6d903aabbfde992c00e1d52ea29",
+      "target": "core/src/main/resources/assets/gregtech/models/item/steam_boiler_ultimet.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\strong_steam_boiler_arsenic_bronze.json",
+      "sha256": "ee0de734afd12f1d64b73b6aafe5b6030efcc6d903aabbfde992c00e1d52ea29",
+      "target": "core/src/main/resources/assets/gregtech/models/item/strong_steam_boiler_arsenic_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\strong_steam_boiler_arsenic_copper.json",
+      "sha256": "ee0de734afd12f1d64b73b6aafe5b6030efcc6d903aabbfde992c00e1d52ea29",
+      "target": "core/src/main/resources/assets/gregtech/models/item/strong_steam_boiler_arsenic_copper.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\strong_steam_boiler_bismuth.json",
+      "sha256": "ee0de734afd12f1d64b73b6aafe5b6030efcc6d903aabbfde992c00e1d52ea29",
+      "target": "core/src/main/resources/assets/gregtech/models/item/strong_steam_boiler_bismuth.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\strong_steam_boiler_bronze.json",
+      "sha256": "ee0de734afd12f1d64b73b6aafe5b6030efcc6d903aabbfde992c00e1d52ea29",
+      "target": "core/src/main/resources/assets/gregtech/models/item/strong_steam_boiler_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\strong_steam_boiler_chromium.json",
+      "sha256": "ee0de734afd12f1d64b73b6aafe5b6030efcc6d903aabbfde992c00e1d52ea29",
+      "target": "core/src/main/resources/assets/gregtech/models/item/strong_steam_boiler_chromium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\strong_steam_boiler_invar.json",
+      "sha256": "ee0de734afd12f1d64b73b6aafe5b6030efcc6d903aabbfde992c00e1d52ea29",
+      "target": "core/src/main/resources/assets/gregtech/models/item/strong_steam_boiler_invar.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\strong_steam_boiler_lead.json",
+      "sha256": "ee0de734afd12f1d64b73b6aafe5b6030efcc6d903aabbfde992c00e1d52ea29",
+      "target": "core/src/main/resources/assets/gregtech/models/item/strong_steam_boiler_lead.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\strong_steam_boiler_netherite.json",
+      "sha256": "ee0de734afd12f1d64b73b6aafe5b6030efcc6d903aabbfde992c00e1d52ea29",
+      "target": "core/src/main/resources/assets/gregtech/models/item/strong_steam_boiler_netherite.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\strong_steam_boiler_steel.json",
+      "sha256": "ee0de734afd12f1d64b73b6aafe5b6030efcc6d903aabbfde992c00e1d52ea29",
+      "target": "core/src/main/resources/assets/gregtech/models/item/strong_steam_boiler_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\strong_steam_boiler_titanium.json",
+      "sha256": "ee0de734afd12f1d64b73b6aafe5b6030efcc6d903aabbfde992c00e1d52ea29",
+      "target": "core/src/main/resources/assets/gregtech/models/item/strong_steam_boiler_titanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\strong_steam_boiler_tungsten.json",
+      "sha256": "ee0de734afd12f1d64b73b6aafe5b6030efcc6d903aabbfde992c00e1d52ea29",
+      "target": "core/src/main/resources/assets/gregtech/models/item/strong_steam_boiler_tungsten.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\strong_steam_boiler_tungsten_steel.json",
+      "sha256": "ee0de734afd12f1d64b73b6aafe5b6030efcc6d903aabbfde992c00e1d52ea29",
+      "target": "core/src/main/resources/assets/gregtech/models/item/strong_steam_boiler_tungsten_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\strong_steam_boiler_ultimet.json",
+      "sha256": "ee0de734afd12f1d64b73b6aafe5b6030efcc6d903aabbfde992c00e1d52ea29",
+      "target": "core/src/main/resources/assets/gregtech/models/item/strong_steam_boiler_ultimet.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\engine\\engine_diesel.json",
+      "sha256": "1524e17c0b8ac9f00ae44c0c23da2e15f7e52dd05e237417e803e5f69915135e",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/engine/engine_diesel.json",
+      "adaptation": "Native composite loader; Forge original bytes retained",
+      "forgeTarget": "src/main/resources/assets/gregtech/models/block/machine/engine/engine_diesel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\engine\\engine_electric.json",
+      "sha256": "5034422671443ab363af558063fe6e382c3976ced30eddd1f9a37fae07c5cdb9",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/engine/engine_electric.json",
+      "adaptation": "Native composite loader; Forge original bytes retained",
+      "forgeTarget": "src/main/resources/assets/gregtech/models/block/machine/engine/engine_electric.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\engine\\engine_flux.json",
+      "sha256": "96b7510b3b1f0719ba08f533c5790d5b16eb1887f7c55eda44363065196e2e86",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/engine/engine_flux.json",
+      "adaptation": "Native composite loader; Forge original bytes retained",
+      "forgeTarget": "src/main/resources/assets/gregtech/models/block/machine/engine/engine_flux.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\engine\\engine_rotation.json",
+      "sha256": "de7b66a397cac976d96d388164abcd7e7473bb09f1bcd98996e0b95f6ec65823",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/engine/engine_rotation.json",
+      "adaptation": "Native composite loader; Forge original bytes retained",
+      "forgeTarget": "src/main/resources/assets/gregtech/models/block/machine/engine/engine_rotation.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\engine\\engine_rotation_active.json",
+      "sha256": "5cefcf40f2bd2a0fe1bf0f5ca7ae344808e8e8f8363cc43e303d450d8ecbd478",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/engine/engine_rotation_active.json",
+      "adaptation": "Native composite loader; Forge original bytes retained",
+      "forgeTarget": "src/main/resources/assets/gregtech/models/block/machine/engine/engine_rotation_active.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\engine\\engine_steam.json",
+      "sha256": "ef924b2e64d9157e63f16c0d44104b8de220ba205986e5ccd34d88526e169f97",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/engine/engine_steam.json",
+      "adaptation": "Native composite loader; Forge original bytes retained",
+      "forgeTarget": "src/main/resources/assets/gregtech/models/block/machine/engine/engine_steam.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\boiler\\steam_boiler.json",
+      "sha256": "dc99a83f95c1bb731394653bf74a2aac828980bbc3957fe9e6acd9eeb52ef834",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/boiler/steam_boiler.json",
+      "adaptation": "Native composite loader; Forge original bytes retained",
+      "forgeTarget": "src/main/resources/assets/gregtech/models/block/machine/boiler/steam_boiler.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\minecraft\\atlases\\blocks.json",
+      "sha256": "2618c292768f41aad667af3d2bed691dacbf7f86ebf4c96b42150ab94db129f8",
+      "target": "core/src/main/resources/assets/minecraft/atlases/blocks.json",
+      "adaptation": "Shared complete original atlas sources plus actual boiler-gauge/steam-core sprite directories"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\sandwich_block.json",
+      "sha256": "4936dcf3706ecc6a120833d43c1b6c5e7962352020a8ac9fbe77793b3225aff2",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/sandwich_block.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\sandwich_block.json",
+      "sha256": "3b3574fb7699254e5c963e7b28a5b5346a69041769e7d3f2feaeb6af4dfc81f8",
+      "target": "core/src/main/resources/assets/gregtech/models/item/sandwich_block.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\sandwich_block.json",
+      "sha256": "e47413298953d27abf240931ef58002962e4d39aca9736d2c86c596cb4a8c5d9",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/sandwich_block.json"
+    }
+  ],
+  "comparisonSources": [
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\tileentity\\energy\\GTSteamEngineBlockEntity.java",
+      "sha256": "8be9c308ecaafc3d186dbf65a5517a5815537eab38e2a6b78e329f785837df2c"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\tileentity\\energy\\converters\\GTBoilerTankBlockEntity.java",
+      "sha256": "6fd50d64e136348c53bdd2ea163543c3097fa41daf3e0eb715c75813ead8da1f"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\tileentity\\misc\\GT6SandwichBlockEntity.java",
+      "sha256": "f0572f57055b4b0a659653ba72b133bf5c94993b85cebe30fe4dde25f6875bf0"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\cruciblecraft\\src\\main\\java\\com\\masson\\cruciblecraft\\steam\\SteamEngineKuCurve.java",
+      "sha256": "9ccac7f9e34c51d45b23d3ce1ba7e99e75bf61651cce67f09631296e2629e6f5"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\cruciblecraft\\src\\main\\java\\com\\masson\\cruciblecraft\\content\\blockentity\\SteamEngineBlockEntity.java",
+      "sha256": "e88333c9f796d1576a3ac1508d7635165a80b175055e0a490a206d34c30acf58"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\cruciblecraft\\src\\main\\java\\com\\masson\\cruciblecraft\\content\\blockentity\\BoilerBlockEntity.java",
+      "sha256": "e1699a3d81727fcba7f545ab4b1b787c3359a89c4f8f35fb97f564ffd09561f4"
+    }
+  ],
+  "choices": [
+    "Close the actual native ordinary-engine gap with59 complete original variants:5 electric,5 flux,14 normal steam,14 strong steam,13 rotation and8 diesel. Large steam/gas turbines and energy nodes are separate existing systems and are not substitutes. EngineCatalog is now consumed by both actual platform factories with the original materials, IDs, ratings and physical properties; retain the actual steam constructor capacity/output expressions, not its unused old arrays.",
+    "Native executors retain complete piston32-power/stopped/phase state from shared PistonEngineState; signed KU strokes and oversize packet explosion behavior; bipolar rotation with four perpendicular RU inputs, two alternating signed KU outputs, overload prevention/decay; steam2000x KU buffer,20-tick pressure samples, warmup/shutdown, perpendicular distilled exhaust; and diesel actual Engine fuel recipes/exhaust/control. Bind every engine to its original be_engine_* block entity ID using the existing block/item/entity registries. Native FE and fluid typed capability adapters replace Forge LazyOptional. Original fc_* and piston.*, rotation*, steamTank/waterTank/fuelTank/exhaustTank NBT are retained with registry-aware components.",
+    "Close the ordinary boiler gap with26 original single-block boiler tanks (13 materials x normal/strong). BoilerCatalog is consumed by both registrations. Native full HU injection, water/steam conversion80HU+1L to160L at full efficiency, cooldown, calcification, upward pressure-buffer output, overpressure/overheat explosion, gauge, wrench/chisel/magnifier/plunger and gt.* persistence are connected. One native steam_boiler entity type supports all26 real blocks. Top fluid capability exposes tank information but disallows filling/draining, as in Source1.",
+    "Compare brokestar boiler: same2560 divisor, cooldown/scale floor, water removal before calcification and half-pressure buffer; masson adds a fluid-space conversion plan and exact simulate/execute checks with calcification before water drain. Keep Source1 full output/burst semantics for this fast baseline rather than importing another tank/material framework or changing explosion policy without gameplay evidence. Source1 and brokestar can skip scale on the last water batch; this difference remains explicit.",
+    "Compare masson SteamEngineKuCurve: identical nominal*(state+1)/16 output and strict warmup gate, but its nonempty visual state uses1+stored*31/cap versus Source1 floor(stored*32/cap). Brokestar includes back-face pull in addition to push; Source1 remains push-fed. All three discard unrecovered distilled exhaust and spend an emitted stroke even when rejected. Do not silently switch those gameplay policies or claim conservation.",
+    "Port the full16-slot Source1 sandwich entity, variable layer thickness/height, consecutive-identical-ingredient rejection, bottle quantities/remainders, additive food/max modifier+0.5 saturation, redstone/comparator outputs, preserved item drop with exactly-once flag, sneak placement, edible item timing and complete layered renderer. SandwichLayerCatalog is the same complete layer/tint/equivalent-item registration table used by both platforms; SandwichRules shares limit/container/timing/saturation rules. Brokestar observed GT6SandwichBlockEntity instead uses a size-only placed-bite model with fixed bite food. Retain full Source1 ingredient persistence rather than collapsing it to a scalar size. No masson sandwich implementation was found by filename inventory; that is not a claim about all its food features.",
+    "Adapt sandwich item/block data to native BLOCK_ENTITY_DATA and registry-aware ingredient ItemStack parse/save; preserve block entity ID for placement. Native FoodProperties stores saturation points, unlike Forge saturation modifier: recover the modifier by dividing by2*nutrition before the original maximum+0.5 calculation. The local1.21 FoodData/FoodProperties sources confirm eat(int,float) still takes a modifier. Zero-nutrition food cannot reconstruct an arbitrary old modifier from points and falls back to0; unusual externally modified food values remain unverified.",
+    "Native engine/boiler family contents are explicitly added to the existing19 creative families. Source engine tint/core mode colors, ordinary boiler material colors/gauge and native item display model wrapper are connected.181 resource records include7 native composite-loader forks with original Forge bytes retained, complete original shared atlas sources plus actual gauge/steam-core sprite directories, and sandwich block/item models. A short dedicated-server boot does not prove these new client visuals.",
+    "After the grouped startup, fix a directly demonstrated Source1 diesel wiring omission on both platforms: defaultFaceConfig configured fluid faces but no energyOutputs, while emitKu and isEnergyEmittingTo require that mask. Add FRONT KU output so a newly placed diesel engine can send its generated energy. Final dual-platform compilation passes19s. This late change is not covered by the earlier ordinary server boot; next grouped run/actual transfer must cover it. Previously saved explicit fc_energyOut=0 masks are retained, not silently rewritten; old-save behavior remains unverified."
+  ],
+  "knownGaps": [
+    "Grouped compilation: initial engine/boiler native compile failed with8 adapter errors, fixed; engines+boilers+sandwich dual-platform compile passed28s. The ordinary server run subsequently compiled the native saturation boundary correction. Line-ending preservation changes bytes only, not code. Final dual compilation19s covers the late default diesel FRONT output fix.",
+    "One existing Neo ordinary DedicatedServer short startup passed1m53s: fresh specimen/session,200ticks,10.519s observation, normal save/stop and overworld/nether/end chunk saves. No new fixtures or individual-system/client launches. This loads new registrations/data and includes previous late rail/mixin changes in the application; it does not test actual cart behavior or prove an injection path was exercised.",
+    "Actual engine EU/FE/RU/KU transfer, overload destruction, steam cycle/boiler explosion/gauge/tools, diesel fuel/exhaust and sandwich preparation/food/redstone/drop/render remain unverified. Creative-page contents/navigation and new client models/renderers were not started in this wave.",
+    "The Source1 diesel default energyOut omission is corrected on both platforms after the startup; actual transfer and previously stored face masks remain unverified. Base injection arithmetic lacks size/overflow validation but public accepting paths reject KU. Source1 also drains1L per fuel cycle regardless recipe fluid quantity, clamps excess cycle energy, empties invalid fuel, sends exhaust to FRONT despite BOTTOM mask and drains exhaust before target execute. These inherited gaps are not fixed or called complete.",
+    "Source1 rotation discards its consumed packet if KU is rejected; some piston/rotation phase/overload timers are transient. Source1 steam output drops unrecovered water and uses latched pressure; steam tooltip capacity/directions and rotation tooltip buffer do not exactly match runtime. Diesel has only common footer/material/tool tooltip. These are documented rather than represented as verified equivalence.",
+    "An engine/boiler/sandwich crafting definition was not found in Source1 recipe loaders/data by the relevant IDs/specs/holder references. No invented recipe or arbitrary vanilla ingredient fallback is added. Full survival reachability and remaining donor crafting definitions still need integration; this wave is runnable registration/executor coverage, not a survival-complete release.",
+    "Complete two-version survival chains, Forge runtime for this batch, independent-process world restart, old saves, production jars/release checks and remaining optional/source-unique systems remain pending. Source1 publication authorization remains unresolved; local integration proceeds with original history/authors/notices, no remote or publication action. Full goal remains active."
+  ]
+}

@@ -1,0 +1,162 @@
+{
+  "source": "saltnya",
+  "verification": "Grouped Neo compile and ordinary dedicated startup/recipe load/200 ticks/save-stop passed after repairs; no Forge recompile, client/full playflow/world restart verification",
+  "shared_generated_sets": [
+    "GTChemGen",
+    "GTOtherGen",
+    "GTPotionGen",
+    "GTFoodGen",
+    "GTExtruderGen",
+    "GTVanillaGen",
+    "GTTemporaryGen",
+    "GTOresGen",
+    "GTCombGen"
+  ],
+  "records": [
+    {
+      "source": "loaders/c/GTChemGen.java",
+      "sha256": "817aa69af57cba4b77696782501ceaf1a80b12c4de681b94b7c175a7224b5feb",
+      "target": "core/src/main/java/com/gregtech/gregtech/loaders/c/GTChemGen.java",
+      "change": "replace native resolver call with shared sink"
+    },
+    {
+      "source": "loaders/c/GTOtherGen.java",
+      "sha256": "16be951c1e58d9ba632bde2040b0b5b6d8504a1bcf56cf6cd38fa87e8ce51516",
+      "target": "core/src/main/java/com/gregtech/gregtech/loaders/c/GTOtherGen.java",
+      "change": "replace native resolver call with shared sink"
+    },
+    {
+      "source": "loaders/c/GTPotionGen.java",
+      "sha256": "3492562a95856afae39cc7b5c9a16f80b95773a31d7aeb584897812489b30c18",
+      "target": "core/src/main/java/com/gregtech/gregtech/loaders/c/GTPotionGen.java",
+      "change": "replace native resolver call with shared sink"
+    },
+    {
+      "source": "loaders/c/GTFoodGen.java",
+      "sha256": "3cead4ca2e832d4fef568d723f6a998a33a4222454ad803f9f07037b37143c1e",
+      "target": "core/src/main/java/com/gregtech/gregtech/loaders/c/GTFoodGen.java",
+      "change": "replace native resolver call with shared sink"
+    },
+    {
+      "source": "loaders/c/GTExtruderGen.java",
+      "sha256": "6bbe294494f814b9ce11f1b9e7290d5fd6dcc54876623d678e3a4dd317081509",
+      "target": "core/src/main/java/com/gregtech/gregtech/loaders/c/GTExtruderGen.java",
+      "change": "replace native resolver call with shared sink"
+    },
+    {
+      "source": "loaders/c/GTVanillaGen.java",
+      "sha256": "923c413639b912b8e1d585181dddcfc904ab724d7ede44b4c87f3c46b9dc4c36",
+      "target": "core/src/main/java/com/gregtech/gregtech/loaders/c/GTVanillaGen.java",
+      "change": "replace native resolver call with shared sink"
+    },
+    {
+      "source": "loaders/c/GTTemporaryGen.java",
+      "sha256": "7070b2e7aba3283e62febd1cbfd235a45fe2511c38d36083975994d71c7c5dd2",
+      "target": "core/src/main/java/com/gregtech/gregtech/loaders/c/GTTemporaryGen.java",
+      "change": "replace native resolver call with shared sink"
+    },
+    {
+      "source": "loaders/c/GTOresGen.java",
+      "sha256": "83398f42a5e4f0295922d0554f4085a4981c62588d89b19e1afe9146eef9f1f5",
+      "target": "core/src/main/java/com/gregtech/gregtech/loaders/c/GTOresGen.java",
+      "change": "replace native resolver call with shared sink"
+    },
+    {
+      "source": "loaders/c/GTCombGen.java",
+      "sha256": "0ab74e08a2a4db6e153d608ade5f0d8854a191f63aebc75ac76516057ff67334",
+      "target": "core/src/main/java/com/gregtech/gregtech/loaders/c/GTCombGen.java",
+      "change": "replace native resolver call with shared sink"
+    },
+    {
+      "source": "loaders/c/GTMaterialFields.java",
+      "sha256": "ccac61fba449f0834b7849ec820051b5d57004321ff482f207ce7f31bd5d2fd1",
+      "target": "core/src/main/java/com/gregtech/gregtech/loaders/c/GTMaterialFields.java",
+      "change": "byte-identical"
+    },
+    {
+      "source": "loaders/c/GTAlloyTable.java",
+      "sha256": "24472f126ad34087fe004fd32cfbc7897a74be9bb3bd12d8893d5a86bd0c407b",
+      "target": "core/src/main/java/com/gregtech/gregtech/loaders/c/GTAlloyTable.java",
+      "change": "byte-identical"
+    },
+    {
+      "source": "loaders/c/GTEnchantmentTable.java",
+      "sha256": "c209779c1e8b408bda4e26d1efbfc798b0dad576eecb0ab4018dcc2eb7b2a4ae",
+      "target": "core/src/main/java/com/gregtech/gregtech/loaders/c/GTEnchantmentTable.java",
+      "change": "byte-identical"
+    },
+    {
+      "source": "loaders/c/GTLootGen.java",
+      "sha256": "3946c642c55ad346fe38209ade67b54aa03d8a2d63f7bbbfc58fc9fbe30c3703",
+      "target": "core/src/main/java/com/gregtech/gregtech/loaders/c/GTLootGen.java",
+      "change": "byte-identical"
+    },
+    {
+      "source": "loaders/c/Loader_Recipes_Parts.java",
+      "sha256": "07c8154cafd4669a691d28507e46dcdd362eab975e948d3c265c176946c9f0bd",
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/loaders/c/Loader_Recipes_Parts.java",
+      "change": "native platform registry/fluid/component boundary"
+    },
+    {
+      "source": "loaders/c/Loader_Recipes_Alloys.java",
+      "sha256": "0676bdcd69fdb579fea7286015aa31d80ed5510dfa35178d410916fec725611b",
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/loaders/c/Loader_Recipes_Alloys.java",
+      "change": "native platform registry/fluid/component boundary"
+    },
+    {
+      "source": "loaders/c/Loader_Recipes_Chem.java",
+      "sha256": "cfbd562d517d367eb7f62ee247e4527ba0dad276a90801507cbb0ea0e334d2e9",
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/loaders/c/Loader_Recipes_Chem.java",
+      "change": "native platform registry/fluid/component boundary"
+    },
+    {
+      "source": "loaders/c/Loader_Recipes_Decomp.java",
+      "sha256": "1735c2e25bd0ccc22312c602db9c1178a1d2d828e2be3c49e69e8eac94235b31",
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/loaders/c/Loader_Recipes_Decomp.java",
+      "change": "native platform registry/fluid/component boundary"
+    },
+    {
+      "source": "content/recipe/VanillaProcessingRecipes.java",
+      "sha256": "787e6963b794a777f3a810624eb454f33e09e7eb516f4e1b3faec27b0ac93ca1",
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/VanillaProcessingRecipes.java",
+      "change": "native platform registry/fluid/component boundary"
+    },
+    {
+      "source": "content/recipe/DyeProcessingRecipes.java",
+      "sha256": "7ccecbad58d1014b4f964a8c7e8e69cce3abfcd661f0df9e5a6aedc89ef849b8",
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/DyeProcessingRecipes.java",
+      "change": "native platform registry/fluid/component boundary"
+    },
+    {
+      "source": "content/recipe/MaterialFormConversionRecipes.java",
+      "sha256": "97c01fdb861eed85f335e29b379340314abb80e2def2b5222b359d5623ff9b74",
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/MaterialFormConversionRecipes.java",
+      "change": "native platform registry/fluid/component boundary"
+    },
+    {
+      "source": "content/recipe/MortarGrindingRecipes.java",
+      "sha256": "cca0ac48694b7095a7ddae75dbd3ccbe30e596462a6f70be68ca2fe017be2268",
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/MortarGrindingRecipes.java",
+      "change": "native platform registry/fluid/component boundary"
+    },
+    {
+      "source": "content/recipe/SharpeningRecipes.java",
+      "sha256": "71c47551ec0e377d47229f881637458d62cc59a36a7819f552ff5ff05a265f24",
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/SharpeningRecipes.java",
+      "change": "native platform registry/fluid/component boundary"
+    },
+    {
+      "source": "content/recipe/GTMainRecipes.java",
+      "sha256": "4d5bd08aa374241ac6ee695eb69b78c09d8ec19e4df074c04f4f7be15bed7f12",
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/GTMainRecipes.java",
+      "change": "native platform registry/fluid/component boundary"
+    },
+    {
+      "source": "content/recipe/CapsuleCellRecipes.java",
+      "sha256": "dd344a0ae4737286a61e729beadf9b0c2c89b2a9db3dee4f9735816f20dc8123",
+      "target": "core/src/main/java/com/gregtech/gregtech/content/recipe/ExtrusionWorkRules.java",
+      "change": "share original hot extrusion timing; original Forge wrapper retained"
+    }
+  ],
+  "receipt": "docs/integration/verification/p3-neoforge-recipe-startup.json"
+}

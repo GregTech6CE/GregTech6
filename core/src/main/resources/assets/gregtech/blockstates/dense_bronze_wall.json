@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "gregtech:block/machine/multiblock/dense_bronze_wall"
+    }
+  }
+}

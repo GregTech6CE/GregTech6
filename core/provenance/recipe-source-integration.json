@@ -1,0 +1,3361 @@
+{
+  "status": "rapid source integration; no build, test or game startup",
+  "sources": [
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/data/MachineRecipeMaps.java",
+      "sha256": "c61d2c952b9e049c512999be46bdffa0af77dea0645b9c8d12544319a1492495"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/api/recipe/RecipeMap.java",
+      "sha256": "71fb41f2c4fecd102386991cd17eab4f649db91fc5ddb1efaf404337eeea94dd"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/api/recipe/Recipe.java",
+      "sha256": "56f3643bf96ae01475298652cdb7f0213667e44652278f81f6998c0475a7fc87"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/api/recipe/RecipeInputs.java",
+      "sha256": "336790ab1a8675bf54a9712eea24ea5faea5b7ebc070eb5decb5fc8ebea786ba"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/api/recipe/RecipePowerStats.java",
+      "sha256": "199cc115e525d5d607cf1eb6e9d078b871c922fad50c2ee03db4d304933c1fcf"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/api/material/MaterialUnification.java",
+      "sha256": "c8b69c07e4f22aaa68a1418ff1cd46a735d1a3745b8415b6ae76919a078146a1"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/registry/GTTechnological.java",
+      "sha256": "0378b982d7c00fb5b08ad8c67d463516bcbe487a36fad186a0815b757a8e5fed"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/item/TechItem.java",
+      "sha256": "5c251d8cefc35be2847169da9f4ecfc35c294d4b663e0161763abb05de737930"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/content/recipe/FermenterFoodRecipes.java",
+      "sha256": "f8da198a03144e8d26cd72c0ee166156013a1f751c14b19a02978da012bd8e19"
+    }
+  ],
+  "machine_maps": 85,
+  "shared": "Complete original map metadata and flags, technological IDs/aliases/names and named food fermentation rows. Forge and Neo share those definitions; platform recipe lookup/consume objects use their native stack APIs. Original independent per-output chance rules are also shared.",
+  "gaps": [
+    "Most actual machine recipe-loader rows and machine tick/control modules still need Neo migration.",
+    "Neo USB/data behavior tooltips and full technological item behaviors not ported.",
+    "Old-world/item component migration and runtime recipe conservation remain unverified.",
+    "Sealed-barrel fermentation will bind to these actual maps after the parallel tank branch is connected."
+  ],
+  "technological_items": 326,
+  "resources": [
+    {
+      "file": "models/item/integrated_circuit_24.json",
+      "sha256": "d04e6bdf7ae8969fa350c63b19debf13abb7cd7e8d7f8b0d5a6db69739a0e706",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/integrated_circuit/24.png",
+      "sha256": "024bc31fa2864664eeac7fa306e1ea55b6970fdf691c571d3c1c0b96adf3dcad",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/integrated_circuit_23.json",
+      "sha256": "f4ad8e49421afb1b889d5771ea147a6d90bf6f6438822a580d4ecde9e5515587",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/integrated_circuit/23.png",
+      "sha256": "a8b7851ab969f9905b14e19387a4f80db65c0e7ebbbb631424129621a835faa2",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/integrated_circuit_22.json",
+      "sha256": "e3428161524ad71002c804975adedf71a9bd06afd738c9109887d336f166cc92",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/integrated_circuit/22.png",
+      "sha256": "8eb4c56a2910858378ca8dc679e7101442f26205794fcd9d3455e693741cd9ac",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/integrated_circuit_21.json",
+      "sha256": "6c43aa53a211f4038e5bcaaef01b39c5d0536a3570fb6df7763caa3367d24504",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/integrated_circuit/21.png",
+      "sha256": "c9d1bcd3410545bbba8d9b29cce3c86348553fe933294ba0c23cb9a881d06dbf",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/integrated_circuit_20.json",
+      "sha256": "3f1e9b37cbc61198c60ab235fe153d093db6280cb02f585bb380f845e782e773",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/integrated_circuit/20.png",
+      "sha256": "ec6a0b02c57799d646c2a5a036d33f58347c499a604159b3b6f54cf77b107a23",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/integrated_circuit_19.json",
+      "sha256": "17606197a94cd9da082d76a1a4941d1fe635319607618cdfd321015b7a5cf6bc",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/integrated_circuit/19.png",
+      "sha256": "303c319c4e22bba49a28f15e1877d03ba98e599d135b5f234d74c3935e61beb7",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/integrated_circuit_18.json",
+      "sha256": "3d3adcf63f072f81e73b44062b6fb0d9a8a48c53900e9b3b99f3a939bc175faa",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/integrated_circuit/18.png",
+      "sha256": "89bb665c5189f326a9da87556c57a9d770a0aefcc87262df266a117b75751eba",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/integrated_circuit_17.json",
+      "sha256": "c718a95f7c7a1e654914b940bd181252c6ed4c616191cff20e38324ccc46aed6",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/integrated_circuit/17.png",
+      "sha256": "79380bcdcc584b9f664f2bb98a296763a50062fb8d4fcad734e8d8f081be8ebe",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/integrated_circuit_16.json",
+      "sha256": "f6a2ef3ac07f377293d35cb760b0f4946d0fa1f7bdf352a4c0b6aca4229a8330",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/integrated_circuit/16.png",
+      "sha256": "beffb8601ee31f61e475679764d45e2a3f1838a984904a948a8344e5d097ec37",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/integrated_circuit_15.json",
+      "sha256": "d98d95acd32f8f889192290ca49ed92132f5daff1b46a5493f1a2c508b71cf0e",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/integrated_circuit/15.png",
+      "sha256": "44c814176d7691e28a81a7b8328dc2d889c9e7b0df12597890b42d754ef09587",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/integrated_circuit_14.json",
+      "sha256": "c5e9479557fc72aef5fff7b88aeb2d35f0a4551c1fde49c86b20f538b408f32b",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/integrated_circuit/14.png",
+      "sha256": "8b49d3b8286b9e61fbf6fb01bc02d9c9b3fcea6adba1e5532efe3189d1f1d50b",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/integrated_circuit_13.json",
+      "sha256": "a7e99a3049d8e0749c9eb9fb8d714e20354680f08664865c304e4921edacd94c",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/integrated_circuit/13.png",
+      "sha256": "04a64971ad8fd228857fd11573b610f1ea8a696da7df1ca4315992f72934a45f",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/integrated_circuit_12.json",
+      "sha256": "6df51e9137d763b6fa643568b47444cf22c2eb71c3fa620531310ff48157314c",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/integrated_circuit/12.png",
+      "sha256": "5a4845d37a16411c695b6a946bec13e82d32b3e77f2f842ecc40b48ade0f146b",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/integrated_circuit_11.json",
+      "sha256": "9c18e627e63687b1d30dd02cc896002674007c80ffd88234fd619ffcb4291522",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/integrated_circuit/11.png",
+      "sha256": "b3075a79d2a2b0db3198343fd4cb54d1fc00f4de4e68fbc4a0fe616dd06f487d",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/integrated_circuit_10.json",
+      "sha256": "7bc49e50289913f9c56ebc4e099fae190a5e681c7fdfa34a4448cbba2403ce55",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/integrated_circuit/10.png",
+      "sha256": "c49747da1f6c4f6fe83934071b84bf0a8df041b01c6d2bb125e6cc27afc3a354",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/integrated_circuit_9.json",
+      "sha256": "28fe5049cebc2ea8ced623755341d41d81a69f94447621a7cc87c58073640a2b",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/integrated_circuit/9.png",
+      "sha256": "8bad35bb6726aa5c5bc8c38e001d847f836f7745f03eb6cea9aefbad11a47939",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/integrated_circuit_8.json",
+      "sha256": "ad500ecf1ec23d339d304b98d82b0f8f917ec16f04a7814beaed88950c58c075",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/integrated_circuit/8.png",
+      "sha256": "6bc8c7a76c296db48788cc848665bd8cb03314bf19cf19eb8fae25f6561f601e",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/integrated_circuit_7.json",
+      "sha256": "cce1eb6f6f5135763d207f34dbd2d7ff554d7ba31392c1831c5410681f446f5a",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/integrated_circuit/7.png",
+      "sha256": "0cfa533fa5ff4e30ad69a8677452c823cd24ecf66f1e7a82d9ce5b6ae20c25ab",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/integrated_circuit_6.json",
+      "sha256": "2109c46c58fa711850321ab044fb3a903d69187cf6ca6c79ede6d1e3c43aedac",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/integrated_circuit/6.png",
+      "sha256": "20fda0bf438d84d04e19cf2cc008c65fa3d8dc9363f6b83f63384878081ec42b",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/integrated_circuit_5.json",
+      "sha256": "213d2a3b93d41e54ebcd5e89a07177d425e01b62da6308769603c6ec68ed4197",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/integrated_circuit/5.png",
+      "sha256": "71c016474b196dd82bd06b3c94cd86b2162f566942c63b29fbe6a19b2ba7c268",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/integrated_circuit_4.json",
+      "sha256": "5f7ba0f4020487f33ed80f7d43ee38ee094967df167046eb1b5df0ac3c5f0b6a",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/integrated_circuit/4.png",
+      "sha256": "112c89c54455a30b62ac730f5c3f554001588ae7efe4cc56ebd3c31cde802537",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/integrated_circuit_3.json",
+      "sha256": "03033b0873ee92d56a76c7b5250748d97be455205c06564991223c91fa1f03b5",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/integrated_circuit/3.png",
+      "sha256": "852b4dfafda99cf0c3c212d52dad684a1cfb160e963babe86bbb26c7c525dd5e",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/integrated_circuit_2.json",
+      "sha256": "42ad5a2ed45f615c8596e1c033e3402f9ec9df8c66481e9003f3c387ec7daba1",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/integrated_circuit/2.png",
+      "sha256": "300b5f03cd068660c7ca12110ee09f85636357b0d79f79477354094d51c5764a",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/integrated_circuit_1.json",
+      "sha256": "93120830b9e6f8cf6b517ba334d4423ce1bf285d4705f5f1e979b37baf61d52a",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/integrated_circuit/1.png",
+      "sha256": "574c8324ee1b39ae6f313557a68429afb84f96b65331c6a38dac4105a7f3345d",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/integrated_circuit_0.json",
+      "sha256": "4f0c661763e31027a3f454cc4ee705c59269b6053bd3a3a0a071f1b9389e8e78",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/integrated_circuit/0.png",
+      "sha256": "ce72e7832572432152196b3f3a96bc0efd5ed9da41878b436e9022d0090837f2",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/slicer_shape_quaters_hollow.json",
+      "sha256": "705d04f58e0134769734b702d9cfee9da99048c0728f9f32dbdb7a74cd2a017b",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/slicer_shape_quaters_hollow.png",
+      "sha256": "058eb08ddebf78d27bcf63255d0e2d30aa325420c0d3c0d663005f5790097478",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/slicer_shape_quaters.json",
+      "sha256": "e835b94f3260c35d3231aac60cb16f328fc376842cf7cd25081a0f274880636c",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/slicer_shape_quaters.png",
+      "sha256": "f135d93d10c6ce670829708466336968b602ac7a047273007c4cb78b42175010",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/slicer_shape_split.json",
+      "sha256": "7b0a58f8423282962ce398ed8c47ace2fdebf8bff10f6dec6020e77c7d2bf78b",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/slicer_shape_split.png",
+      "sha256": "96067a88fcce9699bff2c585ac5c871cb142707298fee1a870e33b2f05e728eb",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/slicer_shape_eights_hollow.json",
+      "sha256": "00ec30c8b4bf8c20240b2aeb892226638002d16300298850b9df7aae1f9fabf8",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/slicer_shape_eights_hollow.png",
+      "sha256": "98c38d402c6119704069125a89aca0f6196f9ab1d1004acf71e2de0038149f9a",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/slicer_shape_eights.json",
+      "sha256": "b1b9bb361a8a3465420a34c00174ec6775936256b9a3241279883935b6d672dd",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/slicer_shape_eights.png",
+      "sha256": "d9f9662e06c8698b057c5d48a0ba82f553a1337ba998b4a3eb01a03bc4faaea4",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/slicer_shape_grid.json",
+      "sha256": "bd79b504d4ec2002896bd14e3c71c142da0f08a44cd4f4aa7fa12ec15edfb63d",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/slicer_shape_grid.png",
+      "sha256": "4ba27e96731f712fad39072c43020c125429e2be3edeb290ed6cbc3e9f0f4669",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/slicer_shape_flat.json",
+      "sha256": "0c2337c937a51bc26c2cb5622cb0173f2fa0c62fc343cf5916257ce6ea9c98b6",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/slicer_shape_flat.png",
+      "sha256": "0e03bcc710cbadb267174627fafcc4931baa2db46f52145a797bad6b145f84b9",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/slicer_shape_empty.json",
+      "sha256": "3e08eb521b14fdf1479fc038184769f9c748f0ba8a62791349c5a2a66aea5e75",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/slicer_shape_empty.png",
+      "sha256": "ab1149cafe26660e6beb7ea4c4e72d9136920f7c17ec1b340ef5c65a1b7957a3",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/press_bullet_casing_shape_large.json",
+      "sha256": "297663f800d85412aafc4aca098ef042f589fad171a26fe3d31691fc3cf5784c",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/press_bullet_casing_shape_large.png",
+      "sha256": "32b9b6cde83110d7971ec12bdaf4dffd705cf634d25863c56965e3e08c97951d",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/press_bullet_casing_shape_medium.json",
+      "sha256": "b97e1fd16c8c54d7090a3a2da602811bf3093a6ee3b33a05cb71f983ddf0bea3",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/press_bullet_casing_shape_medium.png",
+      "sha256": "08d925a7373d23b00b452293b07dda8db1ddbba8b37d890e312f15193e35f4bf",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/press_bullet_casing_shape_small.json",
+      "sha256": "693c6ccc7483e48830094c4f15a0f63044e0eec55f6aa0619bec11de4c381342",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/press_bullet_casing_shape_small.png",
+      "sha256": "0440d4b15c64242cf21ecd8657e013df2d62a27f4f75e0c8ba8ce701f20162e3",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/foodmold_shape_toast.json",
+      "sha256": "eea5381c1bd6283d9e603577b706c29728120325626cb296366ae2648925ffa4",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/foodmold_shape_toast.png",
+      "sha256": "8e0eb8c82f63edc6d486ea3091e962e8010554cb1b62f452c81a3c33ce0d8475",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/foodmold_shape_cylinder.json",
+      "sha256": "16196debf91fd24b002380b5ac8ceb8105d57694c355c443863d566f28bc4946",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/foodmold_shape_cylinder.png",
+      "sha256": "fb1714e66d41ce53f34304f628b96242b69bad5b9bafae66520764dcf50e95e3",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/foodmold_shape_baguette.json",
+      "sha256": "54bef5acbab14cd9801cac2749b387520ff01e75ceb51d367b100deebb845213",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/foodmold_shape_baguette.png",
+      "sha256": "bd25ccdfb986a733421986a24283a5555735fe4ec764f17e36316143f8640272",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/foodmold_shape_bread.json",
+      "sha256": "917407859f65bc5c7cfe9a1d0210b228f75ad94284cfd2d71c3d8b6db73931ba",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/foodmold_shape_bread.png",
+      "sha256": "ee6c03f1793023ef4e3c0bb8ffb5423412002a8f1fe211c27c6e21afaac92904",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/foodmold_shape_bun.json",
+      "sha256": "9b7f16d9cab9713e9a60164e413b2a4ba6e93e938a65d9f70fb40ee00d94b521",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/foodmold_shape_bun.png",
+      "sha256": "fe1c97f96219c891758c38d34d6113beb845e31b694b781354645cf6f0a84727",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/foodmold_shape_empty.json",
+      "sha256": "c410f7ddc2d69abd5cd666805bfe50925627f58794f7461999fd35bc04098481",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/foodmold_shape_empty.png",
+      "sha256": "4031fc4cf9aa4c348c9fdd8457bd3473da4dbfa26d60c7e90b66138bc5a65997",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/low_heat_extruder_shape_finewire.json",
+      "sha256": "8ec2e5a141bdbd477eb032cd80625598d2ecff0fbcbfc5aa29ec74143a2911ab",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/low_heat_extruder_shape_finewire.png",
+      "sha256": "2e51307d058b2caf61cd471259a505e3196d72f5c0f2ec4811ac5890e380a85d",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/low_heat_extruder_shape_tinyplate.json",
+      "sha256": "e06ac7acd9eb0b3071629411bab62f733ea790a47960aceb812e25fb4896e1d6",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/low_heat_extruder_shape_tinyplate.png",
+      "sha256": "e8a0819d04444112b0f0fcd7049ec676b9977f50fde9be073a6d9c07264bd51c",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/low_heat_extruder_shape_foil.json",
+      "sha256": "bceab95d5f4e932cb4d7cb96947eff123f2289e9652eeb7f2a88a46cf7f15768",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/low_heat_extruder_shape_foil.png",
+      "sha256": "fa6d2ff3c05b75477722eed57306f5ebe7cd8d9f7ed2009d268f2b09973fd280",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/low_heat_extruder_shape_capsulecellcontainer.json",
+      "sha256": "ed9848499d0e9ba90eeed24683da5322d4ffb5bb9783dcb582005c0756c94a0c",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/low_heat_extruder_shape_capsulecellcontainer.png",
+      "sha256": "fa19e058f96d137091bcb7fcafa7b7a4e618d72d59ad37dc6b87789f7bb670e5",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/low_heat_extruder_shape_rod.json",
+      "sha256": "0a23633452c515fc7c822149cd79e89851a6fb594792713b252f120a515d5b61",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/low_heat_extruder_shape_rod.png",
+      "sha256": "75e04ba4b01e7469a7249428ab2fb1e4300aa7ee356da00db0a7c723c24d3645",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/low_heat_extruder_shape_smallgear.json",
+      "sha256": "8064194c06ee88f8cd4c9adcd41d2b6ef4dbf5a47458f467d2c0de9b635ce5a1",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/low_heat_extruder_shape_smallgear.png",
+      "sha256": "8b6c808ee942475f042b07aec2afe4b509b88148036451a6b4232a02ca0ab6d2",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/low_heat_extruder_shape_curvedplate.json",
+      "sha256": "0b4dff25ca8633c11064e722c805ae6e0e4411a591b198b9438dbaa5a89e28ce",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/low_heat_extruder_shape_curvedplate.png",
+      "sha256": "621a1dc97d4e2675d45c41d3796d033d875af80c9117f1a2c628affc47e07006",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/low_heat_extruder_shape_bottle.json",
+      "sha256": "54ecdeea5c1ee385feb53dacc8b7be6b4caf1b753218b1a6197f0a5ef318532d",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/low_heat_extruder_shape_bottle.png",
+      "sha256": "a69fe79da6b1cc226c46088d218f7a2afe90c474aebc946f3ec4ecea0ea0f11c",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/low_heat_extruder_shape_gear.json",
+      "sha256": "aac996490c42dca62762b8d4ed008baa445962c9a61badccdbc18b1f228ed876",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/low_heat_extruder_shape_gear.png",
+      "sha256": "e7b4b4144710529f3925001d1df63e9d667032ce5822070cd1a7047466f59f1b",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/low_heat_extruder_shape_sawblade.json",
+      "sha256": "bf72ed1954b26d54f5aec94545ed5f2b4cb68743c868f942e1b114ffc8e46f02",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/low_heat_extruder_shape_sawblade.png",
+      "sha256": "1bbbbc87113b718549778c0b80a85bef7d94cae46faab1e0af6a1afd1c76e7e4",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/low_heat_extruder_shape_filehead.json",
+      "sha256": "eba2a47473d7a167c220d0c127126bf132b7d9dc3f70e20c32d6656f42f836e3",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/low_heat_extruder_shape_filehead.png",
+      "sha256": "f64e36e2947e8f9d3c5b200228500e37bd1b0d60b3a9c49c5276be80594c9ee8",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/low_heat_extruder_shape_hammerhead.json",
+      "sha256": "8b2ec695d1e81f7dbad1c6a059f189f62d161a0549fc971495ab098d06b4f6c4",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/low_heat_extruder_shape_hammerhead.png",
+      "sha256": "c2aa74066305e73c22a50c6ec7c43f70678ae80c8136f08fd70870507cde4b3f",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/low_heat_extruder_shape_hoehead.json",
+      "sha256": "f8a7614862c8400daa9b2096e7c8cc5ff60609bf3ddd50868af2e9abd55e140e",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/low_heat_extruder_shape_hoehead.png",
+      "sha256": "3cc8e0163ff3328002d10ecf2eb53c3a2d7f3e2345923210690a1ccc90686ee3",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/low_heat_extruder_shape_axehead.json",
+      "sha256": "fcfb6b0ddef9ebef548da35ca47d4711d17366104cf050b6e7597e67f060bf29",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/low_heat_extruder_shape_axehead.png",
+      "sha256": "47c0f8c7c9873bdfd4fbe15b106b7bb2e07a101ad8dd8341f3ad93850ee863a3",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/low_heat_extruder_shape_shovelhead.json",
+      "sha256": "256f66fb259345b787bbaa515f2e627cb0141c3f3252ead1fd7ef14fd8a2192c",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/low_heat_extruder_shape_shovelhead.png",
+      "sha256": "42f05a68f9f5063bb3641adcf4c3c05a9fa0607d3023214a0828912b73a08694",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/low_heat_extruder_shape_pickaxehead.json",
+      "sha256": "a6d83c40fc5390633774d47fa19e3b2c99623242a96712b0d9df3bb15f407cb1",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/low_heat_extruder_shape_pickaxehead.png",
+      "sha256": "22eafa51a53168db3fd3baf25fef5e0a65f0e416a634b31bcbca9956fee50eef",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/low_heat_extruder_shape_swordblade.json",
+      "sha256": "9591bd14036c47ce70a5e2bef30e94e61a3ff09d77b973cd64c6b8e37eea259a",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/low_heat_extruder_shape_swordblade.png",
+      "sha256": "f13cb60d97bcfafadd31cb02222d14bcb6004b719141d643d3899011dbb0b222",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/low_heat_extruder_shape_block.json",
+      "sha256": "383a281a93db320b6669fe4ecc54b9facbf41f6d07845c31a9c4cd0a1162f54a",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/low_heat_extruder_shape_block.png",
+      "sha256": "5056c97cf108c12bc8eca50a832f65e01eead4522b308fbe9d6af9ea9f3a03b6",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/low_heat_extruder_shape_hugepipe.json",
+      "sha256": "3cd20fee9730e84e7f52b5e4932fdd6c511da9444a48525c4151fbe84f0a423f",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/low_heat_extruder_shape_hugepipe.png",
+      "sha256": "7543b6a93ca647075e135694b47ca913a9732be3b6349b3d3d56a4d6c510125e",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/low_heat_extruder_shape_largepipe.json",
+      "sha256": "c1a46260006f0b4ffdcb0eac76932520fa994fa82b63396b2b133260ad76a5d6",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/low_heat_extruder_shape_largepipe.png",
+      "sha256": "668337348f654ed37abd1359bf7dd247822eae3ecf0ff2546621eab43f164b07",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/low_heat_extruder_shape_mediumpipe.json",
+      "sha256": "655b271cbbac8c80fc836ed195c2beb6be1bc360ce99b35bf5aceb6dfe832cba",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/low_heat_extruder_shape_mediumpipe.png",
+      "sha256": "52adfbe13c5686763a54b99eb204f95909054ed39bc38a568a9f897d4fe71e0b",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/low_heat_extruder_shape_smallpipe.json",
+      "sha256": "db7f32b6d23bc117bc19700e0eef7658856c79a706a605d08cf1db561b103234",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/low_heat_extruder_shape_smallpipe.png",
+      "sha256": "bf16a729f0c73e177153ac458369d6e1eceec414b06373120ffd37c0a3b6f63f",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/low_heat_extruder_shape_tinypipe.json",
+      "sha256": "d889a8bac8cacd3bea5b79131fbb32001f440b342ebc86712ceacfaa63a655c3",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/low_heat_extruder_shape_tinypipe.png",
+      "sha256": "9a8c75b9701c74f59c46e6f5fa19a32ec38d36f7ae336eb74db8f65599be755c",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/low_heat_extruder_shape_casing.json",
+      "sha256": "81f6074af245de22be4ea21a209cef6d28c00830c1dffbe78186cc2d92d3c93e",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/low_heat_extruder_shape_casing.png",
+      "sha256": "b5e77033214c099afb75c8ea2b17fb68735436ed1e046d4ea659290155c7cfeb",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/low_heat_extruder_shape_wire.json",
+      "sha256": "6e64eab03b624b7fc7630d8724279dfd8c516325c2320cc0ff8cdac3b3342271",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/low_heat_extruder_shape_wire.png",
+      "sha256": "590c464b78497ea00d136bdc62e81861a410f6c17692b8c4c0a4e91396d5abbd",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/low_heat_extruder_shape_ingot.json",
+      "sha256": "91ed6513b3e3a3e2858581de90d6516422ffcd64c3f2e8eba0cd0aee2dbb175a",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/low_heat_extruder_shape_ingot.png",
+      "sha256": "71f42d270b4f9db402d7a899e6f17099a7b67ace31d39d65fce93070e94285d2",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/low_heat_extruder_shape_cell.json",
+      "sha256": "268690818c5e06acd45dbc5a73d74189115555e3805191cc681fd6457698df6f",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/low_heat_extruder_shape_cell.png",
+      "sha256": "d7f745abf5aee3b82ffa4c908c4676e9a13307669da5e5e5c423ab13b4b3d3e2",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/low_heat_extruder_shape_ring.json",
+      "sha256": "da2bd970a4a30475ff341dfdaa0ce808fed2b0c34e76e72c50c845c7dbe662b9",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/low_heat_extruder_shape_ring.png",
+      "sha256": "77db61098055f2ff721c563a45ba8698138e2457ceffa925a4f943b03a4e26ae",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/low_heat_extruder_shape_bolt.json",
+      "sha256": "5c6450d50f8a3f341918d9742ff9d98a9bec8c23723e617f71e137004aa1aeaf",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/low_heat_extruder_shape_bolt.png",
+      "sha256": "a9ec5c1519ecfac6fb49e9620a1277eb390cbf2114d93f11f0af4b2549eb0b7c",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/low_heat_extruder_shape_longrod.json",
+      "sha256": "759cca575069dd88349a2b787178f142316cbba9c4ea0a7069ca95fd1645e9ca",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/low_heat_extruder_shape_longrod.png",
+      "sha256": "dea56dad53df9585202551f7f7c757e8179323a293a34787c37c3e80272711eb",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/low_heat_extruder_shape_plate.json",
+      "sha256": "db45d41e0b25bca23ba1cc957ba8801c360e35ae6e7dfb7e0c38cd14385a9d8e",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/low_heat_extruder_shape_plate.png",
+      "sha256": "4e982bc5ffc66437d7334e147229438f8b182f0fee449fccbc9a6e71e678fb9e",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/low_heat_extruder_shape_empty.json",
+      "sha256": "985e0f9ed1fb107ecb71b4868ec0dbd7391f3a3d93aca84a15ad2da6a5d35bcf",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/low_heat_extruder_shape_empty.png",
+      "sha256": "e72491229d4d5ea7d5a083d6ed776ed0f4cc528331c52ef135282ac0fb99ab4c",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/extruder_shape_finewire.json",
+      "sha256": "abb79477344fed15066ec686acd9a5cd71cbf21995f8864a00eeddc652573c40",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/extruder_shape_finewire.png",
+      "sha256": "6876d631b224a74e2cd39cccf65459b9b273ddf6aa15fdc9bd1dfc1c45cde8ad",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/extruder_shape_tinyplate.json",
+      "sha256": "816bc777689b0e6c515c19738879e28020313746a8062a82705e036d0e431ecc",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/extruder_shape_tinyplate.png",
+      "sha256": "85c932c4f27066c483f59a27dca3f3863a43ddf65ab2fbc0ac36058822571b79",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/extruder_shape_foil.json",
+      "sha256": "2baeda9b09c9750f0cbf3d5ded0191c206c8a7b04800a35e7bd6aae6449567f6",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/extruder_shape_foil.png",
+      "sha256": "709a0c3a799a22b7768bef336db52afb167dcdb579c204e659e8cd65f8969e6e",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/extruder_shape_capsulecellcontainer.json",
+      "sha256": "8616d92185a6a40f33705e856e71b12a43224bcda015d61f88e16dffd171413e",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/extruder_shape_capsulecellcontainer.png",
+      "sha256": "cd15ba46c49e37a4cae86f0d768524130e9d4c4a9d0e3e070517368c11148037",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/extruder_shape_rod.json",
+      "sha256": "ec9fa819bb661f8fa847542a0905e10d34e26bbd14b6e8c3756e47b96a03c5ad",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/extruder_shape_rod.png",
+      "sha256": "7db43f0bd313577866574ccbd376c0b7ae1290917d1478255f7813d410cbeb0e",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/extruder_shape_smallgear.json",
+      "sha256": "14a40de694d2f782fceb8f717df7c11f3e8b618f8975e40db2a1fd1bd40be844",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/extruder_shape_smallgear.png",
+      "sha256": "8dd63e8afec52cf920697cda87bd3a2765dd76b1d52a1d2071bd9430a2103d84",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/extruder_shape_curvedplate.json",
+      "sha256": "a160182a29cf912a579595106bd7e5791f620ddcf8cfcc2829217c122b16c0dc",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/extruder_shape_curvedplate.png",
+      "sha256": "cec4f91ab0feb539f81db12f6918a485f944bac9a2a126c322f5c2af64828f02",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/extruder_shape_bottle.json",
+      "sha256": "d3a692a6f513dc7648d621cf3640adeae401b40eea309a83afb0ac501036f0a7",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/extruder_shape_bottle.png",
+      "sha256": "722c48d120eb0bf49366d78ba04e57af8727bc70ac555ba27d34f185f3a71f7e",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/extruder_shape_gear.json",
+      "sha256": "dfd6803e48d4a1fe1c633aaf2a5ddc73bba968281435e8613e277f02e156b172",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/extruder_shape_gear.png",
+      "sha256": "6188087c3f0b5652449de32b586fdb231b4c7bab25448a569e087d344e5fae38",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/extruder_shape_sawblade.json",
+      "sha256": "fc8050ec4a771e50b64f0e60a5204bfcc6cb9cd9b20caa1677cbdc9125d17527",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/extruder_shape_sawblade.png",
+      "sha256": "96df559099165bc2a8bb8b85ad31314b70ad75cae9d872e85dcd96572f518eb9",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/extruder_shape_filehead.json",
+      "sha256": "64d26d988c14ccb894ebca12182ae9fbcd411dee7508e6b7e3f389b7a7f47a39",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/extruder_shape_filehead.png",
+      "sha256": "291f040306ab21f2d46c6040b49887aba3bd14c93d238563fd0e1dd74a6c5273",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/extruder_shape_hammerhead.json",
+      "sha256": "cb66bcd98fe6133331e6a87049fcbe4a904b3ea12824b2f41b0d0f83cd54162a",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/extruder_shape_hammerhead.png",
+      "sha256": "85f78f67cad71e223c26aa1f9c78e4d03b430788773caf7c2a2915fcb9466521",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/extruder_shape_hoehead.json",
+      "sha256": "f781fb69e4a92f6ad4a3a9c462f63767a1260d332a041fdee626a04ad5477bd3",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/extruder_shape_hoehead.png",
+      "sha256": "35228d7bea410c9e5baced12c330a9cdec2a5c7f0816a6ef77ce16ead4fe309b",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/extruder_shape_axehead.json",
+      "sha256": "b4b598517456bbe2d2263a84bddf63531629ec4b17ec32299729eb06cdbb167f",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/extruder_shape_axehead.png",
+      "sha256": "fc45f32bea6511d4ac6f94b88842fef9184235db24ceaac7cf15c551f3f77f23",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/extruder_shape_shovelhead.json",
+      "sha256": "b800d9e9332a9819815729a81866aaaf343a59f9b687de593c58a8ed083c74de",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/extruder_shape_shovelhead.png",
+      "sha256": "ab4772450917c8e6ee57183e59a29a92df94a68d9aaf9d6e4bf58d4c6e1e9b8d",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/extruder_shape_pickaxehead.json",
+      "sha256": "bb85c235783a2a714791385cb1fe6baa033e06d61a25cae24f8b5c18e3c980da",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/extruder_shape_pickaxehead.png",
+      "sha256": "9b4af16d6bd419ecaf4126b2e15675612f82d4fbfe4351c275c423116110d0d2",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/extruder_shape_swordblade.json",
+      "sha256": "c037b5954926b8fce6ddd01d21ec79258ed008bc4dff2d819d8425361e86d57d",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/extruder_shape_swordblade.png",
+      "sha256": "fc8b5ff2372161b99d40d2aa19039c03954c2199a2afeae1cb3f6987eddec1dc",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/extruder_shape_block.json",
+      "sha256": "b6134e6932da9d2df54ab7691ec6ff0b70fdd85294a264d34f8709f92172f2ed",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/extruder_shape_block.png",
+      "sha256": "ef7f2d5a70b937b30216d4ba66b551db76b1b7fd4c107cb49daf4fc102e45df8",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/extruder_shape_hugepipe.json",
+      "sha256": "30853c12983ec933880612538424c962730bd3b1ec4c9c23978ea925cf6e9dd2",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/extruder_shape_hugepipe.png",
+      "sha256": "0f842757309473ca7a9d53b39ce1feb8bd548118e2690dd4d290d8e5a2e52458",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/extruder_shape_largepipe.json",
+      "sha256": "7ec8a0355d601b53021b9226302e369fffad5b3619624b5d2be04fef5bd5451e",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/extruder_shape_largepipe.png",
+      "sha256": "d64767d37ca393c2d8b6f76cfb072e0ee928e4d22775462cee003bef3f133880",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/extruder_shape_mediumpipe.json",
+      "sha256": "06c0ee0831bb8ad595364b5fcc330f676acba85a1c2b91aa842ab700b43a3c44",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/extruder_shape_mediumpipe.png",
+      "sha256": "0079dde2cf3576e00155d3b1284ab661241c51fadb19ca4e080131764a15872e",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/extruder_shape_smallpipe.json",
+      "sha256": "4c2a9355c645bc674b85de7d23094929bdcf6a8e8f34933b7068f31987928471",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/extruder_shape_smallpipe.png",
+      "sha256": "ed6f848afd89194efa438e2843191c7845742c04c1b7c644756c38c6ee37d369",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/extruder_shape_tinypipe.json",
+      "sha256": "7e78ca086f361261dfb467705a47e8694144d5dbc6d0bdf659ef40e18247b323",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/extruder_shape_tinypipe.png",
+      "sha256": "96fffd8e9787e06e8599356f2513ba35213bb2b44f434f599f527bbe9d4bb3eb",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/extruder_shape_casing.json",
+      "sha256": "9081f74110509899fb4d77b4bf893735a1314b4fe0ec7a59c7c98baaa43e3618",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/extruder_shape_casing.png",
+      "sha256": "6f6f93a6428722c2726dc036bd4872969264e12bda929354e76383f8e466802b",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/extruder_shape_wire.json",
+      "sha256": "7d9878d998b137f9e921efc1c618b511169ff3948e2b8d8427b2e773c696d6b5",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/extruder_shape_wire.png",
+      "sha256": "7479002eabd965a428d5b95628df8a2a1335946d99f57e19deb171ed383b59d6",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/extruder_shape_ingot.json",
+      "sha256": "e206299dd4d6b67aecb062e74f1ebad5ea2c44c61f67fb1ea0803595245d9d7d",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/extruder_shape_ingot.png",
+      "sha256": "43c316f0997e9293cdff8bdb47d9bc1f8754fdbacbe8d256bd2ad3bddf70c271",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/extruder_shape_cell.json",
+      "sha256": "c8d1ca4afe8a6afa369ffcf0a58f2f3750ff3aba9ae615cc845bdbf6e06a9f99",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/extruder_shape_cell.png",
+      "sha256": "9925ded2f1b923dc316f08a736914fd7282b9499db92a019aa2faa40ccae1b4c",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/extruder_shape_ring.json",
+      "sha256": "8fd5330492e85298e54bfd2906e3c6493db6271f013f7c570b5161ae999d996c",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/extruder_shape_ring.png",
+      "sha256": "b9e801dede98b55dae2d5c93cb66bdc26e252b4442e50348f71f547d16e96aa0",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/extruder_shape_bolt.json",
+      "sha256": "b739f58f805992d65f357583b9663e8114bd8e50fb6fbae07e04b6e0df25062e",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/extruder_shape_bolt.png",
+      "sha256": "c23d2751eb50b4c9f6661c348ffafac90445ea8bc0dd46bad8c527d3993e39cb",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/extruder_shape_longrod.json",
+      "sha256": "56ae39401ad2d63180df129247a900ddf67d06d5b82e69398a4c9aed90ffa8ae",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/extruder_shape_longrod.png",
+      "sha256": "7db43f0bd313577866574ccbd376c0b7ae1290917d1478255f7813d410cbeb0e",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/extruder_shape_plate.json",
+      "sha256": "b73c1a80f4c585b6c7d85a20e6b266028a73e082934250ecbcaf267fd1145c3b",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/extruder_shape_plate.png",
+      "sha256": "96b2de9fa1702e329a4bfeccbbba0d683e7a9b751f930277d166220d925e430e",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/extruder_shape_empty.json",
+      "sha256": "9fee40884d3506eb4bbd850baee9913f191861baca5f134909bdeec322975131",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/extruder_shape_empty.png",
+      "sha256": "ef4436d19a27827a7b6b2c601399ce6f5df30b84e7fe1fc94820f5587cdfffce",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/laser_emitter_carbondioxide.json",
+      "sha256": "a87c7b7586969e66827125d6c23c978a94306c4f7b43479b6689448a5782cb38",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/laser_emitter_carbondioxide.png",
+      "sha256": "29280d669152b8d3b4bd955a75f6bc9919e8afcc8eb655d5171564f91bb03fad",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/laser_emitter_carbonmonoxide.json",
+      "sha256": "8d282257ac590aa83165b72c60d97bf2f7ad2c2895ef883f345c8c065a2e6d64",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/laser_emitter_carbonmonoxide.png",
+      "sha256": "87ee050835d91c29e6d920c576c46c85e8fe994bcb5fc27752b71ae4544226a3",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/laser_emitter_heliumneon.json",
+      "sha256": "58bd47d49e9f4d298f1a32d3e8058132e78eb16bcc31713a7e1090a2ea28b6ee",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/laser_emitter_heliumneon.png",
+      "sha256": "4e88371cc64a2efbd05c2d97730c4444fb8c220162d8ea315686bd0a11acf928",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/laser_emitter_xenon.json",
+      "sha256": "f2d655146e2432c97f7424cb312cceac14123e1a83dfabc6ca11b9b72db56b89",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/laser_emitter_xenon.png",
+      "sha256": "800af1978caf6f0901bad6a05a40ec79e059b74a6336c39bad2b399a2c002fe9",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/laser_emitter_krypton.json",
+      "sha256": "ccef200ddf0e66573f19edf40faff7de8b6db5cffc61cb9fb52df590700b18c2",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/laser_emitter_krypton.png",
+      "sha256": "5f82c554a2e231859455f60e9d7cc09cd4a62892ae88779d76e7e0f4fc17005c",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/laser_emitter_argon.json",
+      "sha256": "a099d501a8ce01bd89f503a5c55ae16b46c4cb4f775a18f12a93546cfc985b63",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/laser_emitter_argon.png",
+      "sha256": "742986cef1e6628713d4400b3295adc13ba7ad8f02ed399cd1163738a14d3449",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/laser_emitter_neon.json",
+      "sha256": "13e0310032e6788b0f799800f1798087c880d296f65026f7a91585ebd3aea66e",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/laser_emitter_neon.png",
+      "sha256": "269e68334d55a1a026b5335b809e7c6e3634b8a5b47181fa25cd5ab328bb8076",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/laser_emitter_helium.json",
+      "sha256": "9c04a40a2446e1099772246c98497eab3d72cb0c5c5b679f156df3d62d47a5c8",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/laser_emitter_helium.png",
+      "sha256": "096f6c689de0afd0e79a6223e9c33d20ad333f4659fe67cc3b1e7776a3660d45",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/laser_emitter_emptygas.json",
+      "sha256": "c9009308ade36464ecef064ce486fb1567fd76fcded725db0cba2e58033c1100",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/laser_emitter_emptygas.png",
+      "sha256": "027d334701463e1452c2ac835bde864848b505fe5d8bd43284685f636929620c",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/lithium_manganese_cell_filled.json",
+      "sha256": "89b8971abb22ccc32a233edf9b1959c826b2daa0b4d120aadf5d5096f20dc9c2",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/lithium_manganese_cell_filled.png",
+      "sha256": "fbce6db479ed0dc4b0c9c307192c40d23440a5e104ebb562ae86051f945b85fd",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/lithium_manganese_cell_empty.json",
+      "sha256": "868524a1cf1b218b6d683a90decd6311709903de5a899e0f983af157a426be85",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/lithium_manganese_cell_empty.png",
+      "sha256": "473000d5e054f8d9a9d31077a2081d373b491178e26ed228bc4edb9374898253",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/lithium_cobalt_cell_filled.json",
+      "sha256": "071a42b5347b559088ff731c02dbdd60be69dad474c3f73be77759e1ec27e1e5",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/lithium_cobalt_cell_filled.png",
+      "sha256": "f6df0a97193231dd49a787784adea8bea315b58933e33556c09c8aca36a70270",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/lithium_cobalt_cell_empty.json",
+      "sha256": "f8c9bae568cb83e21621749b1b9063341977cec9636fc58e78af38128cb88a68",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/lithium_cobalt_cell_empty.png",
+      "sha256": "608e067fbf2760df5012e9736e3139c6c74bc373e393c96dbeef948165890c89",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/nickel_cadmium_cell_filled.json",
+      "sha256": "872699c730afda922a00700b2c88c263d0067f97804ce0ba2448af2b0c063ac1",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/nickel_cadmium_cell_filled.png",
+      "sha256": "aa6167f88fbd0131e63fa8c8e66b56cb7476974a7caa98be90898aebf6f3fc82",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/nickel_cadmium_cell_empty.json",
+      "sha256": "ba4d4caaa73a53a85c4b83967779cd38a6f2b0ed01919032bedef702756bf4a9",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/nickel_cadmium_cell_empty.png",
+      "sha256": "fe175474a621af6bd059435d927fa16716792c85f75da015a49640a0d65891c4",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/alkaline_button_cell_filled.json",
+      "sha256": "ac05c77c63d664d658a73ea6533203351874416916b8c7875ee65d93f141c70a",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/alkaline_button_cell_filled.png",
+      "sha256": "6aecaf0b5bd310ab1873a20da1e271dbf43065d620c52a8f2d79f2fd6923c213",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/alkaline_button_cell_empty.json",
+      "sha256": "bf034976c18268d0387c483a4d2d04dba07cf8d4308f18279791baad5e92b5b9",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/alkaline_button_cell_empty.png",
+      "sha256": "bf0006ceb81f4ca42f54aa6df17a6fc5fc57a3dcfe84977ba3cb19310377c294",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/lead_acid_cell_filled.json",
+      "sha256": "650451d20aa96b3d0173033d16e1837fcb871f07b2f459b17850970c2b737621",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/lead_acid_cell_filled.png",
+      "sha256": "4311fec4a97196009eb7def814911e102d84f46dfbcd342501234e622fbfb421",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/lead_acid_cell_empty.json",
+      "sha256": "e08b96ed526dfd6ae2c3d81015b3f85bfdebc2316c564440c691b13e9df9b90d",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/lead_acid_cell_empty.png",
+      "sha256": "e27767fd229069dea9e3d260f1ceee0b56231f89b29355fd7337425a60436efa",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/usb4_hdd.json",
+      "sha256": "cba4a7109e3a645b4d86382fbbe73c62d6833f612cfb74372b8967d7dbc05320",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/usb4_hdd.png",
+      "sha256": "d147b2e1bc473fdc92d79e21c013a40665b1095608820af3b4a93537967012ac",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/usb3_hdd.json",
+      "sha256": "ffaad0a6a54382f85c6386b990df80e15ce8d8de858f438f85f372f4297402d8",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/usb3_hdd.png",
+      "sha256": "a1b84ccc1778aeb5134855e5fcb1cbac12dbbf8a9a33a43a7dced9c71678a4d7",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/usb2_hdd.json",
+      "sha256": "5784ea5984dcf2329bb51a6a8825596d167a59299bf1aa221339713190afa6a5",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/usb2_hdd.png",
+      "sha256": "4dc4145ea939daa58f57f69e1f36d089c5052aaab83000dc469ff6f251dc0704",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/usb1_hdd.json",
+      "sha256": "75404427d095c6ef95a7fd015e7743884dae6a157d7861479ba88925dbd87e9a",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/usb1_hdd.png",
+      "sha256": "242ceb16d4a35f80169743b70e94b0ddd8d40dec54ce87cb872e390669df5164",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/usb4_cable.json",
+      "sha256": "3f45ab8c48ef2ed2eb1cd36c9aa73226bf5fd5187e3c4117ccf6c539e46adc0f",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/usb4_cable.png",
+      "sha256": "349f508f59a9b6e2b92f3d26781115a3ef63c2d4b614f03742e79010fdd2fbea",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/usb3_cable.json",
+      "sha256": "82ca816bdee6e30370eaefa89abbe04a38ce1a8faaa1ba008f4baec06cf338de",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/usb3_cable.png",
+      "sha256": "da4c04d84121b4e38f3bd940e293971cb21acfb593b3bf27f184eea3f18b7f4f",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/usb2_cable.json",
+      "sha256": "e77f71e65a457741f0cc4e42143d29e4a8ea74f9ca63bc5f6bbf7bbeece5873c",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/usb2_cable.png",
+      "sha256": "06a01ae696c665a6f1a042e07629750f0eb6b5f77ff0248613ca70aa4d032c25",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/usb1_cable.json",
+      "sha256": "75449a64b6b6dd46ab2cc45dfc375aae77907be47fb986a753251fba70c81bbb",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/usb1_cable.png",
+      "sha256": "3d6d616b3c865101619bc2c33b4eb5dd849e93f2946f70ede2e18dc138b56ac4",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/usb4_stick.json",
+      "sha256": "3215edee0518a9c595f5b2a3c8796a73a236c8987aa6f3311584aeebfe8a0f8d",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/usb4_stick.png",
+      "sha256": "c08a8b8789e8e48b93e0cec5a8f49fb419c968d5fb918f52e3db48ece69180eb",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/usb3_stick.json",
+      "sha256": "a54f9b075c6b1a15cb69961869c51734c135108e864651d5dca8ed2c3adac186",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/usb3_stick.png",
+      "sha256": "795405d6c96c7a91cc1ed70c38413bab64d7b459051461d97ca93c437302d446",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/usb2_stick.json",
+      "sha256": "94ae472849bc3738723b0864066136cafb06533da0eecc2b2b295b8e66cf3dd1",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/usb2_stick.png",
+      "sha256": "4ec7896cca8accb80512d1dee55b3021cb491c15cd598e73f97a1c4dd287691b",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/usb1_stick.json",
+      "sha256": "36d6bde49e17170247899feff7184e6f58316a73febf3ac1345d94c691c83174",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/usb1_stick.png",
+      "sha256": "07f868d00725f1c738752ca84831b82b939f1a30d667ad29482209e830022cbe",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/crystal_processor_sapphire.json",
+      "sha256": "a305087ba0a3d195b3f29c42a217951ff472853b60939bbb8810974e695688c5",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/crystal_processor_sapphire.png",
+      "sha256": "98f4970ff8900b87a442fdda47f13952563cca31cf77c02b00ab9874db0d0ab3",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/crystal_processor_emerald.json",
+      "sha256": "c9376a74829d365662d967d9413b01d6e422c502d09afc0bb15f2fd8d5ed8870",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/crystal_processor_emerald.png",
+      "sha256": "59db668797917971172bb17dacedca19d446cc7388d5b1bdc48e079d5608516d",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/crystal_processor_ruby.json",
+      "sha256": "f342f8232be2b4851ba0fe88df2f1002d4969b46dc949bec59fdda62fd39b185",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/crystal_processor_ruby.png",
+      "sha256": "4dccc3a2b7a0f83edcf41cb20194176af3986a82cf6770688fb529598c2c7b26",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/crystal_processor_diamond.json",
+      "sha256": "2802f5ae0ade48a09f3ba9711f74ad25616eb5c0806d95f4cf68b8150d777d2b",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/crystal_processor_diamond.png",
+      "sha256": "daefd3b9a227229de4c44deda4f7edd6f79a62e5cb041d0eb160a8860bee9cc6",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/crystal_processor_socket.json",
+      "sha256": "f0951d019ae817e3b2c328dc13f7b0283f3b1dd3aa480571e172d89fe747ee93",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/crystal_processor_socket.png",
+      "sha256": "989b6b0a7121bdd3026bf4643122eabd83372f6edf0e9f4fa4257d5f525247b6",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/crystal_circuit_sapphire.json",
+      "sha256": "7881d22e97b43b049ec2fad6834b9a6fed078c0774b6881412d0c3fe08ebe270",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/crystal_circuit_sapphire.png",
+      "sha256": "928dd291c654fbc9d15b7aac156333cc64e2d0da2d362d884419972e07dca83a",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/crystal_circuit_emerald.json",
+      "sha256": "55630dc8e5c0a07025cd9a3889f507f737165dbfbe0c1ee41781a5fb8639e7d1",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/crystal_circuit_emerald.png",
+      "sha256": "50b636fdca6487554b87e079ab4ed22bbd9b2c8e7ddde83bbcc8dc073c89137e",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/crystal_circuit_ruby.json",
+      "sha256": "45b31c40cd3bfa042c4cec947c32ddd88afaa9779db1444fd37ef54fec2f9cae",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/crystal_circuit_ruby.png",
+      "sha256": "4ee0a3927b01822c929ae4fee28282abdafb07341b53101b69acc649435da34f",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/crystal_circuit_diamond.json",
+      "sha256": "054c4cc56a41bbc7c52a17ca1ba55ddde5ffd28b0df3ea9a3ebc79027128c88c",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/crystal_circuit_diamond.png",
+      "sha256": "bfb588a46ae5c911ae2c76d6ec7d1a79c75c4bd05697bfdd664e8c21b00e7457",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_signalum.json",
+      "sha256": "56289a5565a4b339b9b3d6a9e9a6a905e7c800160aeef3b5bc3fc9374c6356a0",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_signalum.png",
+      "sha256": "ee59f5f15cbaa40f6776fa81fc100ba140b179aedf74b6b6889453294f62cdd4",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_enderium.json",
+      "sha256": "a0786096cbb1bfdc486e9c170ddb92290eb9a5602c964c825a2ea723db27c759",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_enderium.png",
+      "sha256": "643d47f3db898ca77520256c7a04a5f764bb2a9258c2313c199db16b4c9d2430",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_magic.json",
+      "sha256": "f6e7a1c64b577511f9f00362352ddaa5ce6cd3f8723cf6f06f20651fbe24509d",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_magic.png",
+      "sha256": "be6cdb3809242c0a6facb92a8052a69539622a29aebf83032c2ce5a4f8c7dbf4",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_ultimate.json",
+      "sha256": "fcfa94211be6f9bb5450f47c6f5eba755e9da030dd2b0e05a68e966bbaf2dfce",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_ultimate.png",
+      "sha256": "9e6986071e38698b7226aa7e64d0c27e70e532a2fed0cfedbedd0a1ffdbec7c9",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_master.json",
+      "sha256": "5b8fb022a5eadc39aba0637a0aea166fa86d98918281d2b04f8aac6bb42e38b1",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_master.png",
+      "sha256": "b06850446db17761966dccf1f3d44729b201a890be515ad39ef3c7f03d2a58f3",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_elite.json",
+      "sha256": "170f3293e4969404b973c02f8cbb2ad7b85c56432819840d58f910f4507718b0",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_elite.png",
+      "sha256": "612fb8b0599c44b2d713bfa6982ad01ccc784e73d24c00a7d368774af062732b",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_advanced.json",
+      "sha256": "c4f943054c865291f2cc46e46d62e1c0df691839e4a838b03b9c016a39c799ac",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_advanced.png",
+      "sha256": "6bbd7e90beb8a6dd80be5bcaa5322c0d50525e70e618d7fdac50f9f89103eafe",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_good.json",
+      "sha256": "33a38d14655ba62bf852cc824e2279a35ccf2b8dc2fcc615460c61bed83e230d",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_good.png",
+      "sha256": "0cacca0562f14152435f5e0a5c6c21ad26a8b20827541772d2b521230e1cd590",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_basic.json",
+      "sha256": "01552002431b4e5794e3ba8737f7364c82e673dd0dbf0a932b3bba043c455878",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_basic.png",
+      "sha256": "0d5f644597f3f6d89b45a9c271edac5a18aa0054b2acb14cb3b38c352968f4a9",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_part_endereye.json",
+      "sha256": "908af98fe5111ed6280e2e60b059dea39a873fb5958c4a9509b31f0bd9fdd971",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_part_endereye.png",
+      "sha256": "834e63a1674c9b93dee79650388d1f116bc64acf40a65cdecd8287a3b7b0c978",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_part_enderpearl.json",
+      "sha256": "b74813880b4b0380bf934a8dd48c1cce3af69afe7ac159b057aa5a54c7df6f4c",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_part_enderpearl.png",
+      "sha256": "d416b058db03f00e74ac63a982ce48c967c71fe5feab8fe6f658041397d455d5",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_part_signalum.json",
+      "sha256": "9fde5a2301012e32d2872b10aba04e3773167e6f76ec38774a077c1ab985eb15",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_part_signalum.png",
+      "sha256": "1dbaf8678d4c43a5de334a3c38783dc864ee852b3d8979eaed855bfcb39dc653",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_part_enderium.json",
+      "sha256": "d5e7fc0e952af1cdebca501299d7b2467fae98324d69fdad8a6021070dab5c09",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_part_enderium.png",
+      "sha256": "7ba197a488f174dda5b5377da873a8fa29a05e14f046b4da88c945b1bbf368e4",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_part_magic.json",
+      "sha256": "918de8ab51bd219418cb85c0cd3b87e0314a089a733477e668b0f978b54e3a36",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_part_magic.png",
+      "sha256": "02f6b1ccb69d97818ad7f266c25752408ca81f220c0d6497bf6a690a07c9e7c0",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_part_ultimate.json",
+      "sha256": "7e8322457b797e356acb24aca2e4fb8f904ae5cb1e8b44de31dd7585db9b05a2",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_part_ultimate.png",
+      "sha256": "9939f11d477bc9072d0820322c282c924703d14094beac0f2c305edcb95616de",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_part_master.json",
+      "sha256": "070e6429b3b817a4496632a4007bc7f5ee2c6ba30d773001c229b221276aba96",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_part_master.png",
+      "sha256": "caff1ce582743d77f09dad2a271907ffe292480f131fe02ccefdeb0ed7cff66b",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_part_elite.json",
+      "sha256": "10de915930ed46cec529691f0a3b12334249ffaa329fe4e776f828fa94eca2a6",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_part_elite.png",
+      "sha256": "704913bd70e3ee0e37a28ce2a35b110f761b6dfbbfc9987876e77671be0941ff",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_part_advanced.json",
+      "sha256": "f2bcae9c92e381e3ac07b567f1feab62a4fbd8341f18bd6e7b4bc12daa8d9061",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_part_advanced.png",
+      "sha256": "8d8d04dbf1fc47794023ca5f3f7fd07ba6cf87d214ae431c42914f9a0a95130f",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_part_good.json",
+      "sha256": "c30f37123cf99c2faba819dd12b2989c9166fe2273f660b7b854e7cad7a0b997",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_part_good.png",
+      "sha256": "42275fbbd09456eeea80efc75d0e36f9fc8ddaa4b7c2758b5b9b30a128d7abbf",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_part_basic.json",
+      "sha256": "817fc0321cb555ef6c5fba685f9d716ee3e2899044d3ecef55bf118f738ad22d",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_part_basic.png",
+      "sha256": "c53afd1e09f9e7f2a0a25d3c3b193fb7d0054533e459f5bd084a09d8f759e60a",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_board_power_module.json",
+      "sha256": "b587588d3bbd9d6b218e3482de1a6bb7abcd0db64bb404db99bd6399a8540afe",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_board_power_module.png",
+      "sha256": "07d3ab3256d8a074e95148fe9c20b85f1295320af2d5a7172f16d2b076258235",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_board_hsla_circuit.json",
+      "sha256": "d675f260e6ec6877add94901897c5d72e1ccb406a4be86d8296e24acb651b166",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_board_hsla_circuit.png",
+      "sha256": "d4eeb3b652cb3442649818e6978b2cda6f0e2395db24292cb51dd8843261425c",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_board_signalum.json",
+      "sha256": "c2895fcea3fe0fd51c41c5674d149b0e9505d5c484c52fa994302a89c269b011",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_board_signalum.png",
+      "sha256": "64460de64f0c8e18f33df58c4296929a1411ab84b6675d240828f26bd05df6c0",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_board_enderium.json",
+      "sha256": "7502ad8226584648165b660e59891e7c1066aad5a2bdfe9d84eeb821b232a108",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_board_enderium.png",
+      "sha256": "4c32329ad54ed0b0d3510319bf8f910701676c432e73ac8d0a425b3b8e0a03d5",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_board_magic.json",
+      "sha256": "b3353188bae26908f0f59d1b55ebfdf221c8c5cba5882ce08015a7ec3809e100",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_board_magic.png",
+      "sha256": "fb4c052e47aa22970abc5ce0d14e7b4d3d191c7de78985f6d59fe7d19de1a67f",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_board_ultimate.json",
+      "sha256": "6b82e5aad4f7a967c88c507a80bca1e449147ed3de04f335f7223831fac90ace",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_board_ultimate.png",
+      "sha256": "d117b2119b5c9cb0e78e63261fe037fc38e65c31133eca9988abc8fc0224d145",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_board_master.json",
+      "sha256": "9c273e7b01e3f024101e1e238ed5b3ae837f76c0d96413ae19cb410f7a23e934",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_board_master.png",
+      "sha256": "b48b643394d726c2638ed30d95705424259159715d51e29365781245dedbd7cd",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_board_elite.json",
+      "sha256": "b333e6ef4f6774f47ff2f52f1f0cdb413942e075966181248038b6f5006d8bab",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_board_elite.png",
+      "sha256": "0a8f8a489d16cd9b908349a506c255f151b33f5d0c823c0793f9efa5071cf419",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_board_advanced.json",
+      "sha256": "e659d9e564eb820efb46abadbfe77109b15344e72f2d734a3d2039597167a09c",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_board_advanced.png",
+      "sha256": "f4970d938a6ea224c12fa1158644f6ba06a58528ea1d238a38a05078936bae74",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_board_good.json",
+      "sha256": "28d8f77f52ba2e648525b193173af768d0822f5dc53deab964ab56f670e3df8c",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_board_good.png",
+      "sha256": "36e31c03d1e78f5ccc735093861c4d05edc66d481cae25692d00b933984173d2",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_board_basic.json",
+      "sha256": "8b9e58451914e43c9f812b323482ff23d32c6731715eebfa368027b159c4c407",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_board_basic.png",
+      "sha256": "5644572d2a5dc5da2bca4534ea2853c9d46e60ad3f09cf75655bc1ef9d48c2b3",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_plate_hsla.json",
+      "sha256": "dff30499503526d50ca3d37d8e7ec76aa143388f38f19aafde0ab78e9dc3972e",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_plate_hsla.png",
+      "sha256": "5388d97132af525392e5dfed96127b9784198f6c28778ed30910742c029d96b3",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_plate_signalum.json",
+      "sha256": "d34a20fb0c5d5cd6772956cb76f1efb72f5e967b8bc458eebb4611108b8dde52",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_plate_signalum.png",
+      "sha256": "29f1a269b615088b2ba7747bd05f3ae65a1ac6be9f2373c5f31c4a948ec3b079",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_wire_signalum.json",
+      "sha256": "b8f2bccdcb64ed08384090dff2f7ec0f68f3305ffcabb6f6d549c6253951127a",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_wire_signalum.png",
+      "sha256": "79938e601e0abf439f2f27cca522b2489ccd57a2a6b9c638660c3da2ab4ef3f5",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_plate_enderium.json",
+      "sha256": "d860aac2e786c21471919fb29e33490da2ac412fc992a27d16bac99583a4a5fb",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_plate_enderium.png",
+      "sha256": "2d17520d9ee4cf46be03891ef0a792a713a208fc21efc986371f721aa8f283a0",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_wire_enderium.json",
+      "sha256": "a97e1c3cba04a6a0317bc3b59543bbbd22beda5c6399a745a08b0b191fbf2a18",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_wire_enderium.png",
+      "sha256": "c596c9e7111b55fae664b69d839d99cc196b00abeff75ea4fc7e05fbccaadfea",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_plate_magic.json",
+      "sha256": "14dedffb3c92ebf2129c1700577134872a75c2f1744f666fdf1f755a40ee6645",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_plate_magic.png",
+      "sha256": "6c9b9a37e1218a153a8655b08cd9c4fad4996f1a01785fa7d2aa817219f00778",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_wire_magic.json",
+      "sha256": "7b193f3db65b03288c19bccaf9a17d4d90b7d4880089e10178adc874c0de69a4",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_wire_magic.png",
+      "sha256": "230ae03b01bc7c57ce4beb114c8e0487b1d35b7fe2f3c0dab954af0cbdd50b78",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_plate_platinum.json",
+      "sha256": "ab0ef6d10ad85ce5f30c78829de00a97d67e9b7b98f970e847c84ed3ad0336bd",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_plate_platinum.png",
+      "sha256": "6da2bd390540082fe763d3b21a33c3d7cbe1d35bb552a03f9c4eaacdc99f0356",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_wire_platinum.json",
+      "sha256": "aee567a4282a65a8f4a62bd872b078c2afc5b4b39d098a70e4b8cd8cb63e76df",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_wire_platinum.png",
+      "sha256": "910a338ca1ab1a91a8b4adec0d21870bd232af8fab64e8e54283532e9990cd4b",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_plate_gold.json",
+      "sha256": "214badc63a61aef508abcc485eab55f169f0eccb6eac4ef72c895664baf413e6",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_plate_gold.png",
+      "sha256": "142f901c1c9597a9958aa3c878beff336172e6f030c1d4e0e72e392664ce0377",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_wire_gold.json",
+      "sha256": "cabb1abeda1cc611fc4bfbaddd52e618a57c4da9cfa2c5c671ff1ad27b75164e",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_wire_gold.png",
+      "sha256": "3c3bf03c368e6e992261b3cdfe19800a87e7459b0da7f1d1ad1bb772edd85237",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_plate_copper.json",
+      "sha256": "ef3dcd76cbdb5a6660d804104e60c5ef840ded0583593046e94b622852caba31",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_plate_copper.png",
+      "sha256": "3ea060c15c5ada3af91e7e0e2b586bc37c63c97ea8abdb0c222bdeb2c1a066ab",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_wiring_copper.json",
+      "sha256": "ad218f744628901139c1be8f0e060cd00bccbb63ba95a6e6f68abb4ed4e00fa6",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_wiring_copper.png",
+      "sha256": "24d5628375e0309df9ce89a2d3f932e3a75b7be6c95097ab140bd72ea42c6bf1",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/circuit_plate.json",
+      "sha256": "dc4c86b2218ad51bb9982057019a339cd58829851e13ec10ce914dc3ba59298c",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/circuit_plate.png",
+      "sha256": "2549febf982a1fdacdae3f7a6b9953ab911cdfcce2f35d4e1528cfddbbd6ea02",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/logistics_dump_bus_item.json",
+      "sha256": "3c5035e703cd5e9a7eda0e302dcc9b5b9e86d5ff0549a78c0bcae90d05a2eb2e",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/logistics_dump_bus_item.png",
+      "sha256": "8cbeb3651233d87e26efe335a9d83a5c524945c13374c73c2cf1303b38e08b67",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/generic_logistics_storage_bus.json",
+      "sha256": "b1e8f9603a5f0d0cc2b3dff4145d5a66ba380386bba9348ae267dced7d5cab75",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/generic_logistics_storage_bus.png",
+      "sha256": "3cab1bd36133ca69f2ca7fc0a068893ada99c9878949f00c2f7e7ff6ee1ba6a2",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/generic_logistics_import_bus.json",
+      "sha256": "0ee765b20c6d739fd311cb0a7bd8dbd8599769135b6d073cd372d3a2fb7dc912",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/generic_logistics_import_bus.png",
+      "sha256": "aacb64b37a0f46a0b25876c593f40bf485a7df2e988bccd422df8e92ddec994e",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/generic_logistics_export_bus.json",
+      "sha256": "47a0204db48feae75285ada9448b4e55bd5955fdf83cc6579c00e2dc6f3dac8c",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/generic_logistics_export_bus.png",
+      "sha256": "2c86aada1d91d89de71bed815aba2854316b346f57290516cf3e2b99a2d4942c",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/filtered_logistics_storage_bus_item.json",
+      "sha256": "ea8c7cbe89404f62e2e47a8ddc5f87a07afcf1a521760c7b35aa218608e611cb",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/filtered_logistics_storage_bus_item.png",
+      "sha256": "6febff9e3b22cd10938e58414c891080e74f13bc6db1d402e68bf6a43038abdf",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/filtered_logistics_import_bus_item.json",
+      "sha256": "a119c9cd059699205907cb9ecc1461cbd6f8407afb4b1b7a6f4a9207bb144640",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/filtered_logistics_import_bus_item.png",
+      "sha256": "d1d3bf4112582c6c077a74abf621da2d5cc695f38abc68b70173e29e39cd2002",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/filtered_logistics_export_bus_item.json",
+      "sha256": "5f983a4c97566a7547ceb39f3e21ca3eb61766f3d9e5bde23ee7477b2a82ebb6",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/filtered_logistics_export_bus_item.png",
+      "sha256": "d028833dbff3a8f5b6154b2eb1f030fca54dab3f0611f61e43d1ac05d5f2fe0d",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/filtered_logistics_storage_bus_fluid.json",
+      "sha256": "346960cb82fa97df507286a20f9fef8884a37ca4dc573f1cd26c9a9b8b053115",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/filtered_logistics_storage_bus_fluid.png",
+      "sha256": "a97cdc5dfb5b95f5a65342da936a3bc1b637e951ae60f4d5563529b6f8b9d13a",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/filtered_logistics_import_bus_fluid.json",
+      "sha256": "ae63939cde5dd026e665fae478c7fa5cdde674c69bed2da17e285aedeb433b41",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/filtered_logistics_import_bus_fluid.png",
+      "sha256": "34fef95e3cfeb7bab5235c2787648d3a249583a3d89fb5b81ab31254ef0e42e6",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/filtered_logistics_export_bus_fluid.json",
+      "sha256": "40279a0426b40e1502efd5515ee137ecf541f608c652d8942a0caa5ff68e3a9c",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/filtered_logistics_export_bus_fluid.png",
+      "sha256": "f4e40b41987ea2bb13c62069f4ed9464cc49d257c6c5e7f7842e6d3c56a5129a",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/logistics_display_cpu_conversion.json",
+      "sha256": "061d6c0097d8d3f76e7738cbe77f67eeac4567e7d0f34857db0eb88781baf5a6",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/logistics_display_cpu_conversion.png",
+      "sha256": "d36662e023b9811943d89d5a8058bba558090c81c23ebe42c49a7e4a3e10091a",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/logistics_display_cpu_storage.json",
+      "sha256": "af01ed3f2f857687b72a940ff6ad279168bc675d1cf07b81f6995a5766d5f9a9",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/logistics_display_cpu_storage.png",
+      "sha256": "b8a007d0f4398dde65e037597ddb962af613f8b6b661d2317909f9f68207b3b0",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/logistics_display_cpu_control.json",
+      "sha256": "167a47943e366d4f52749722af6a0d79cf06eee1b79fe768e1ca8f219705129a",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/logistics_display_cpu_control.png",
+      "sha256": "7d5ba87aa6882cffcd130db26a8936fe64dd0a1274293c60f17ebb6f38719240",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/logistics_display_cpu_logic.json",
+      "sha256": "117ff389e76886de78cbdd12c6e9dd55dedc43260b6b2e9032e84413f96dd13e",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/logistics_display_cpu_logic.png",
+      "sha256": "665360aca97d5a003b20dfae32ef495862fee6e0c317932ec68ba5313304477e",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/pressure_value.json",
+      "sha256": "8fe76edfe6150e0cdc7dbf8bfb162bae1e7f4f5e6c81af34c0c858c258f06782",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/pressure_value.png",
+      "sha256": "05ff5b14fe0040d9b4be9e06912e7cbc4e94710ebdb076c4125ff697cf4c0db1",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/item_retriever_cover.json",
+      "sha256": "faf429d0e8ac675ab1ee3117895d08dd1a45f6a755384dd74e0647d398b02a2d",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/item_retriever_cover.png",
+      "sha256": "3b9344dfad13602a4eebd785804fb5bed51822abbcbcc3ff5eebddf51e0d42d5",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/redstone_conductor_cover_emit.json",
+      "sha256": "af2eae2356009339bff05e927f1cc2d755c3a8fdc69c30efe8b87c81c24e3d21",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/block/machines/covers/base.png",
+      "sha256": "1e69e5b9205f64da1f3f24b6f717ce5e95d9b11394769cbccc820852789f8bdc",
+      "destination": "core"
+    },
+    {
+      "file": "textures/block/machines/covers/redstoneconductor/out.png",
+      "sha256": "ba5343909a38a13761d5942b1fef5983cdb6be22627c5519803b4114ec9e7ca6",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/redstone_conductor_cover_accept.json",
+      "sha256": "5b0655d91a287d66afdeecd29d09b17fff72370f13ded9be16975cd8a8baeb1c",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/block/machines/covers/redstoneconductor/in.png",
+      "sha256": "161950d47ab5c59cecab653dff1b39dba7bf762bdeba34bccd39bf8530a47435",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/warning_cover.json",
+      "sha256": "f6f4c0fdfa27a669f23e657009113183832afdc0a9920e9006b2c8ec21703837",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/warning_cover.png",
+      "sha256": "1d0f0243004ab6c13a4df5f648c37481d1fa8729c6f819abfada534e8e4e7ac5",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/button_panel_selector.json",
+      "sha256": "3f8881023a1dee66ad713eabaa0034cac36e00e43ae7c807d9dbac2d5081a38f",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/block/machines/covers/buttonselector/underlay.png",
+      "sha256": "c7065bb521544526dfecf53d5719699542f35ff18a8d09bae39e71ff5c3df706",
+      "destination": "core"
+    },
+    {
+      "file": "textures/block/machines/covers/buttonselector/0.png",
+      "sha256": "45fc112e8e63e5dfea646d6843549d10e8c18e66e2094e98bb452f9d2bf072ec",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/shutter_cover.json",
+      "sha256": "a2b7c3614680b34cbf8f6272ca881c0d080d9459adf792f44b3f474a455640c1",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/block/machines/covers/shutter/normal.png",
+      "sha256": "ba4629fca0823fc13e82ae33ecf3fded2fa23ec27f6b9ff8b47fecd8df9caadd",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/cover_controller.json",
+      "sha256": "1b6fbc994482c29d2635cc39b28587251e74795f704cfc483bcadf2b23d8af89",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/block/machines/covers/coverswitch/base.png",
+      "sha256": "29775ad9a45b231e3725fe4336a2f00b35b6ecf1568cf9f66b15b6d646a58db7",
+      "destination": "core"
+    },
+    {
+      "file": "textures/block/machines/covers/coverswitch/circuit.png",
+      "sha256": "c7a5e3ba9a69ee6c43146d098dec8d582be88aff2bc9d6222775bfc050e46bf6",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/fluid_filter.json",
+      "sha256": "8c336f651c79afc4cb852c5cdf8cd5eb8bbfe31a11e7334c4aee88511139a757",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/fluid_filter.png",
+      "sha256": "46eaf8bbd7af97f44fec13c490425cf2b741dac7d11630d32ce7137147afdcde",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/item_filter.json",
+      "sha256": "42956c2d07460474a2a214c38a68aeb143af0b461d4be04de507a7627fb23bb0",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/item_filter.png",
+      "sha256": "9cdba56ac64441e1da9bad03b98b1e12977ccf5952a1fca5648b718fc274dcb3",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/air_vent.json",
+      "sha256": "3e7381da936adca710ec23ed030a477fbcff1591f04f5afae8a086ff631c852a",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/air_vent.png",
+      "sha256": "1a900f4d7210e53c4dd9cfd396937112d2030b3e597bca909dda8260cb9eb921",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/redstone_emitter.json",
+      "sha256": "8a84daf8e412eb8d0c0704b708295731bf6aa522aa85266855a9a8f2c582e978",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/block/machines/covers/redstoneemitter/underlay.png",
+      "sha256": "5951db3704bfc3346837196c66207e99e58a26e9079abfaa2376fb3e87962c37",
+      "destination": "core"
+    },
+    {
+      "file": "textures/block/machines/covers/redstoneemitter/0.png",
+      "sha256": "da225602274cd7769c7ce7c74e23d29f84cd6e08d77f3a6cedf5cc8f7efa1cc7",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/drain.json",
+      "sha256": "ba6f8da6cea29598c6d23db8620ce0f175079621354c833582d9d76f73ba1590",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/drain.png",
+      "sha256": "de32b74f72aee720b2eee2c0078986ab5f020044978bf77431d34a417d824edf",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/activity_detector_success.json",
+      "sha256": "d30abe94f6ed05cac87ffc5e296dd89545e9440715685b25b00f83785ea114f0",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/block/machines/covers/detectorrunningsuccessfully/circuit.png",
+      "sha256": "861e7b749950596398c4f63f8b801dab67eb90a9c4b74b514adadbd2c37fe578",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/progress_sensor.json",
+      "sha256": "b402fbdc53a0e9d5615f5fa0205a5a3141d43f046cf3f50e41a4bfd4dd75a820",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/block/machines/covers/progressredstone/circuit.png",
+      "sha256": "c920850ee52e694dbe82cdfc64e6404af00f15f1e82b9dd66d51fcd3eb460259",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/activity_detector_processing.json",
+      "sha256": "33cb1c469489e65f5f913efc9fca2ac25864254e9ea0971adc0c395927d1e317",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/block/machines/covers/detectorrunningactively/circuit.png",
+      "sha256": "06a8ba811a301740e8925a301520ca182879f617ba0b30cb2b20c332275eac57",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/activity_detector_running.json",
+      "sha256": "f615b543a3a9a08f919b5cfd5323d6df383d9ed252d786f9d53b7f5fb3113554",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/block/machines/covers/detectorrunningpassively/circuit.png",
+      "sha256": "9110121e49601b9f7286bc6a058d9521a381ba85f31a35cae5bda7693ea39f47",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/activity_detector_possible.json",
+      "sha256": "d5e1e36e9272be190aefdbdd6639fd7818c20bb480dec8b4f1ea0ecb2881a250",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/block/machines/covers/detectorrunningpossible/circuit.png",
+      "sha256": "84f164a5d2ddeed67e6930c0d3b62c45cbddb43a94787b35a1f81fcaae776413",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/energy_sensor.json",
+      "sha256": "087b9b9d2652e3b2b0ab985b9d590d429802522c58fe052dbc855fd36b9d9fbb",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/block/machines/covers/energyredstone/circuit.png",
+      "sha256": "8e281fde79aafbecf29b2a70b4f37046fbdcd2aeb1a6567ca2ace05d3f6b0086",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/auto_reboot_switch_30m.json",
+      "sha256": "ca1ed5a98a0c98fce38623076faf2edb2ac2bd76efd30f1872ae831726c34182",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/block/machines/covers/autotimerswitch/36000/circuit.png",
+      "sha256": "85291f1199c52ce4b5e0ed4b6f8bdb94b122e60960d1cd2d1e5069199d2de559",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/auto_reboot_switch_20m.json",
+      "sha256": "5b3e4fdb1d78612f3fd4e96aeae46acca21f05e75361fe4512f4d2cd45ec68b2",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/block/machines/covers/autotimerswitch/24000/circuit.png",
+      "sha256": "85291f1199c52ce4b5e0ed4b6f8bdb94b122e60960d1cd2d1e5069199d2de559",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/auto_reboot_switch_10m.json",
+      "sha256": "156a784d5b08789f2267c6fb3ca445c2561efcd3885924c00256d01ec94be2d7",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/block/machines/covers/autotimerswitch/12000/circuit.png",
+      "sha256": "85291f1199c52ce4b5e0ed4b6f8bdb94b122e60960d1cd2d1e5069199d2de559",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/auto_reboot_switch_5m.json",
+      "sha256": "51e0886cc0397fbcecbbb510b750c4483c1be0c2f7c7170acf64bb49f11a809d",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/block/machines/covers/autotimerswitch/6000/circuit.png",
+      "sha256": "85291f1199c52ce4b5e0ed4b6f8bdb94b122e60960d1cd2d1e5069199d2de559",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/auto_reboot_switch_1m.json",
+      "sha256": "a37fa1c0afa1b40b8ba250ee32f9668c7061d95b376929e4bbd7ae53b62a7b7a",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/block/machines/covers/autotimerswitch/1200/circuit.png",
+      "sha256": "85291f1199c52ce4b5e0ed4b6f8bdb94b122e60960d1cd2d1e5069199d2de559",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/manual_selector.json",
+      "sha256": "1b74f669cf0641f78a653e84f7914a53ee38d02d8bed3d36ba0bb0dd13a0e232",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/block/machines/covers/manualselector/underlay.png",
+      "sha256": "7b1a296d75df5038f74bf46bb19c100de4feaf12c9ac129d15812b4e1b9e248b",
+      "destination": "core"
+    },
+    {
+      "file": "textures/block/machines/covers/manualselector/0.png",
+      "sha256": "da225602274cd7769c7ce7c74e23d29f84cd6e08d77f3a6cedf5cc8f7efa1cc7",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/redstone_selector.json",
+      "sha256": "9fffeed1804c6c89c5be32debe74df7d4bd6f3a0ad0256c807408a6878cbefdf",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/block/machines/covers/redstoneselector/underlay.png",
+      "sha256": "9cb2c7ab73f20dc64c4994c927007d7f874301962826034aae5476fa1e4f0b73",
+      "destination": "core"
+    },
+    {
+      "file": "textures/block/machines/covers/redstoneselector/0.png",
+      "sha256": "da225602274cd7769c7ce7c74e23d29f84cd6e08d77f3a6cedf5cc8f7efa1cc7",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/auto_redstone_machine_switch.json",
+      "sha256": "ca37de643b730b1ecdb415340d171addee9c353f21f8e134670c75ca8b7ac2de",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/block/machines/covers/autoredstoneswitch/circuit.png",
+      "sha256": "637b71f4547bf42f2778c08e1072158d4dfa7c10b68d133fe6a39ea262a40fb0",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/redstone_machine_switch.json",
+      "sha256": "3095dcd8b2d3c2051deec6cf9118dd6c937e423b650bf2d8f7ffd48bb35c402f",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/block/machines/covers/redstoneswitch/circuit.png",
+      "sha256": "08926925e9654c93de87fab5dbeeeb1f456ade5cfd414a10c3dfd34ada46d1a6",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/energy_display_cover.json",
+      "sha256": "c0ed4bb96706246f605cbb27ada490e46a7f2a006b3e4a9042e4484c536b026c",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/block/machines/covers/energydisplay/underlay.png",
+      "sha256": "431034b08bc52a5842201474720cc8e9890faa4631410f4fa8b6fdbd72873103",
+      "destination": "core"
+    },
+    {
+      "file": "textures/block/machines/covers/energydisplay/0.png",
+      "sha256": "5101f19546ee1f4f844881329954759fdf947e204698e8c2eb96df27cdaea91c",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/automatic_machine_switch.json",
+      "sha256": "838cfe819abdb09f93c314fc91e5985a6fd7fb44773bd89ddad6b9e0d0796e2c",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/block/machines/covers/autoswitch/circuit.png",
+      "sha256": "cfcac4c474506318d20d4b5b17eb4d89079301f534911018ff4cc46f115926c3",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/machine_status_display_cover.json",
+      "sha256": "ba673290e2b56742faa4bb6cedc3975eba4d716731f295e83f89346043b75903",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/block/machines/covers/statusdisplay/bottom/base.png",
+      "sha256": "2a1e4c8c5b49f4535283e0f8b4db25a3eabafee9c4f1c4d7e5f48f3e03d05ba9",
+      "destination": "core"
+    },
+    {
+      "file": "textures/block/machines/covers/statusdisplay/bottom/4_on.png",
+      "sha256": "f8674dacc1b4a249d655a89e2d6a6925706a6c03fde57320e867cd3351391d2c",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/crafting_table_cover.json",
+      "sha256": "fd08ad0c07ee1febb1118216e89b530b4b9ba0b095f23f312b9a777baf73c5e3",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/crafting_table_cover.png",
+      "sha256": "37febcf980232ad0ebc5a7ec0d150979b7c5e15b1335eb8396d0b684a126b815",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/blank_cover.json",
+      "sha256": "31657bac2ae6289b33d6492ce32158631be7695262f92ded828d74f800139300",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/blank_cover.png",
+      "sha256": "61f4c88c3333d5e7a47bee04e312d64ab8235a85603ad9c3624d9f34310abd55",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_sensor_xv.json",
+      "sha256": "01b305d63d4cfcaf61c875778b25ff430fa4972bdfaa9b00164d127b0d429d8f",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_sensor_xv.png",
+      "sha256": "74595ac34960109946acd038cb5bbc912b4024260f935e6f36387a4e494fbebf",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_sensor_puv1.json",
+      "sha256": "f004ee27779ed43b46950f1be1e77726fd4649126c4d81e38d99df38c5e85aba",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_sensor_puv1.png",
+      "sha256": "ccd9e4f180c1ef006f680aad7554fa8c18df9307c5d3125a6fa7366e5cc630a4",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_sensor_uv.json",
+      "sha256": "77b060e3f80d4e85e0a6278a425ed0162c187eb8def22081dfe835597b79a339",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_sensor_uv.png",
+      "sha256": "da0607bf872fa710cd06a88a083637f8f6b07b424ccdb9029bdc8f2c114fd588",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_sensor_zpm.json",
+      "sha256": "fa6f0f73ef7105f1cc7fda7336b54b3bd1ef15afb150bd3640c3c7ce1a5bf16c",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_sensor_zpm.png",
+      "sha256": "e9048ae829d00bfb4b05fc6b4b571f31506677629fa8cebfcdfb4900a7782b62",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_sensor_luv.json",
+      "sha256": "ccc1d57e6cd5949eb0f43ec2ec1ece30b243fdd580f548089b1574db882d9318",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_sensor_luv.png",
+      "sha256": "74595ac34960109946acd038cb5bbc912b4024260f935e6f36387a4e494fbebf",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_sensor_iv.json",
+      "sha256": "6756015fbb4b73b1c8b0ceab0a529e3cba4007a6bfa948a0dd619095a4f66834",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_sensor_iv.png",
+      "sha256": "93f7801e3006e59226c31b45547725b6f209a50e0b9730de2738f2e5e728c612",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_sensor_ev.json",
+      "sha256": "fe0fb977bf953d925b958acb8891598857e8dd99bc898483b3499b293a5c9c0d",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_sensor_ev.png",
+      "sha256": "a1082948e30985184ce097fe802fe15a13d8d8a9b6182a8ae3f34affa48cf96f",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_sensor_hv.json",
+      "sha256": "8d9ff79a52fd478c091008cc26b3975e205a5885ff52c765a6060ce94eb719d4",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_sensor_hv.png",
+      "sha256": "1a6579d46379ebd8d12e694a4d3e87f6419d12edaabad5602cc089c8f4b6c846",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_sensor_mv.json",
+      "sha256": "79e6f62633929e1a1e373bcd34b17db1304af6bb2faecc5340630688fb9b34b5",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_sensor_mv.png",
+      "sha256": "514803545b2cdea62db48f17e0d1065ec454e7d8988ed2ca92f0f9bb6fa397a8",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_sensor_lv.json",
+      "sha256": "c8a09e31697d64ba6c4bd6b2a115c735b234b9744e2c1c2f94efd4c1a9b2e0e6",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_sensor_lv.png",
+      "sha256": "3789f00afa1e1d1d325876a92a01472256dfa8f1832299cc40ec381eb04441fe",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_sensor_ulv.json",
+      "sha256": "1f5196a5b3808335baeb23889766bc56e76b13d8b11b9f611bc4fceb0aaf1046",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_sensor_ulv.png",
+      "sha256": "60ddfe180907e5c4b392ded2b7411cdfa17b747d814cdaafb77db1c33539dd07",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_signal_emitter_xv.json",
+      "sha256": "02c2086b7eaec767a820f87d4b1c12e5a0c4dccf6e9ace991850b12c6f3a0d2c",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_signal_emitter_xv.png",
+      "sha256": "181f11516fedd542ab4dae93abf7a216551740e6c02309614a56380dc0faa821",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_signal_emitter_puv1.json",
+      "sha256": "205504bf44eccf82c0df6be66a56b91a03a4bea61c24cb7bba31f8612855048d",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_signal_emitter_puv1.png",
+      "sha256": "db8e98c231da81678620bbdf445dd622cff0b7618c79f644607617586d93f019",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_signal_emitter_uv.json",
+      "sha256": "0978462a3394d018c3674f8ecb9e94304bf4e10686d0b0053921da90cea89c6b",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_signal_emitter_uv.png",
+      "sha256": "0bb32268f77945d3af4bd77466b4cde1d7fcb646643e58255f52cbe7f906d79b",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_signal_emitter_zpm.json",
+      "sha256": "80d06e604b04d09518f714bb5dd6e5f5bd06c805298393d5ab3901767c4dfe6b",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_signal_emitter_zpm.png",
+      "sha256": "ed793b77f7f789b45f08ea1785e27a75b874fa26c93537275a71cd64397ad4f5",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_signal_emitter_luv.json",
+      "sha256": "033e968017483b8d5bf0d47385c5744bb23f7f3b9f3de3567deeed1d54eca176",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_signal_emitter_luv.png",
+      "sha256": "181f11516fedd542ab4dae93abf7a216551740e6c02309614a56380dc0faa821",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_signal_emitter_iv.json",
+      "sha256": "972298ef4710fb6ae279646acdbe4d39574be434c49ca8bed97fb4ca2a34fcd5",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_signal_emitter_iv.png",
+      "sha256": "fcb50ff8e763c8e4497c68c8b4858ef85dc0344923410d39e5476f5ba0c36c65",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_signal_emitter_ev.json",
+      "sha256": "876139217bf1dfaee7195f19e9deec8d932f89c5f3d2b03b41f37dafdaad6fcc",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_signal_emitter_ev.png",
+      "sha256": "532ec506f01a29454d1a63eb3faad382b3657170f8035b8c4c4f014f9f60718a",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_signal_emitter_hv.json",
+      "sha256": "2329c1174809559531383cb473c8f20c172c8463df42a0518a678a4fade1dd41",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_signal_emitter_hv.png",
+      "sha256": "3add60d50b77715cab0a4c3560975cd6b359d84d8013ee66710bec5d40214efb",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_signal_emitter_mv.json",
+      "sha256": "30c56b5f5dfa44998d97626e7bf672c21bea4dde4bf77239ba0dbad78b939fc6",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_signal_emitter_mv.png",
+      "sha256": "ddeccf81f06c4c38d9ae415a803573c63dc380c2b9e8a42c3be6e73b9b79a87e",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_signal_emitter_lv.json",
+      "sha256": "e9787bcfa4a6550d879fb776850493aaad44e63001c7260daa34dd0b42806ad5",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_signal_emitter_lv.png",
+      "sha256": "f6dd3710f748262c48193750753f75c6c3c371c300dd3861afe2256ed9ffc41b",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_signal_emitter_ulv.json",
+      "sha256": "b09b48e285f7b22aace89c80ce0341c308366893756204f28dd19d39f61feefe",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_signal_emitter_ulv.png",
+      "sha256": "b169245926c2931bf512fba9fc20a0a21d36192c72f8c9d420ae4b492301de9b",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_force_field_emitter_xv.json",
+      "sha256": "20791ff6012b37298373073085a287ec8b24199c1112c8b7187747e7060f32dd",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_force_field_emitter_xv.png",
+      "sha256": "1a162828eeba3d01f58428b9f257744852acf5e8348553411d3757e844a58cb4",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_force_field_emitter_puv1.json",
+      "sha256": "850d2548eee463db33b27900d6c4e623da25e492384ccbca19a12f6aa6f58d08",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_force_field_emitter_puv1.png",
+      "sha256": "1ded6074b3773c8721401008d8331983d1be01c29069255a2b15cff18a83a1a7",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_force_field_emitter_uv.json",
+      "sha256": "bb3b93ded385348edcb39bcb99939ce738742dd0d568a7b8706834819cd00831",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_force_field_emitter_uv.png",
+      "sha256": "9319d4296e34753e687ad72eb39241daf613f81621b275492a47cf8f491b09a1",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_force_field_emitter_zpm.json",
+      "sha256": "6b8d5429d88a1bc912e34ba72ee78e20506d0232a224d3dd83351497394c1132",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_force_field_emitter_zpm.png",
+      "sha256": "1726314ce53f3419dccbbf96a545004c14d45baf6b885f7fc092bf9b75e43df4",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_force_field_emitter_luv.json",
+      "sha256": "d00c4da4d15a23ca00f9bd96ce48981f8a81c81b8dfe76442b97dc95927b922f",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_force_field_emitter_luv.png",
+      "sha256": "1a162828eeba3d01f58428b9f257744852acf5e8348553411d3757e844a58cb4",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_force_field_emitter_iv.json",
+      "sha256": "4473b1f621fb726d5375c987200c2fb2e62e57ca23c7b1bc8a9484bef54c80b4",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_force_field_emitter_iv.png",
+      "sha256": "9c292c8946755cebb16d32b9aeac59d42969f66e44a981ad9e22c26f6d24e072",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_force_field_emitter_ev.json",
+      "sha256": "a58d6dc3558d66c0ca699d732cb40360789c5879c34acd85139462754287de33",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_force_field_emitter_ev.png",
+      "sha256": "44c323b44ee35a3136f88cb3cf2a2f24ca28f9f53ce44c69a7a061b9af1dc326",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_force_field_emitter_hv.json",
+      "sha256": "8597630d9f2fd567c681406e3f3c35d990ae0c4a55d48d691fec1118bc8685e9",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_force_field_emitter_hv.png",
+      "sha256": "3a2df72ba40f75f80904cd8862ad79b08da4efec3eedf3c310159c7a52de6301",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_force_field_emitter_mv.json",
+      "sha256": "f4c01d94253901aa97a3969e9f5b31fd46fc7fe1af245e582cd835bb08e0c945",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_force_field_emitter_mv.png",
+      "sha256": "3ee41ac419de43ea2aa378158ff78c2f396a85b159e3e177fef17169fe7d830f",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_force_field_emitter_lv.json",
+      "sha256": "3a3450b5b93f95784ce497815976616f9700dea757634998a6c9b4ab1e161aa1",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_force_field_emitter_lv.png",
+      "sha256": "0f4328efb8cc25a83712efba82165783c3273edb0a85df961932216f25b02928",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_force_field_emitter_ulv.json",
+      "sha256": "5f2851495a1654415d196f0a7e57aeb1aab00b4a0f72e7cf5a462f0863015bbd",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_force_field_emitter_ulv.png",
+      "sha256": "6a875a512c69efb34ec8c546ce648c088c0e5214994f1d902524f1b784f1ec23",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_robot_arm_xv.json",
+      "sha256": "c68024bb02170bf4a26fd943e7c11ed84dc9354ad7ba59a07ff64d9f19a0f842",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_robot_arm_xv.png",
+      "sha256": "1b1faa85db66dc20a67afa8cd9f0e29c5aeef53576f5c5da2f1a367942a7fe4c",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_robot_arm_puv1.json",
+      "sha256": "15cfc91bca7013294fc8eba1ebbd4e72f22e3ef7d35f66e512186de259b4969e",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_robot_arm_puv1.png",
+      "sha256": "6d2162aa2e4182927f583a793a224e83f63f8927e7a4af8d04ed50c973452664",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_robot_arm_uv.json",
+      "sha256": "7453cdcb9d24274f6de3d0545d46f18deeb60eded499c12027209cee89bb1765",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_robot_arm_uv.png",
+      "sha256": "12282e9a818e6a43eae521bf905ef2e1fb1825a9c7dfbf4bc98060271b1d8639",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_robot_arm_zpm.json",
+      "sha256": "aebbd25bb5a6ed0f42596b002aacb0ea6bcf777c7c918ae793ff7397982e3561",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_robot_arm_zpm.png",
+      "sha256": "b3c1d66a74eb90aa461a034c3bf0d96330c4996de5588a38558f290daf6beef2",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_robot_arm_luv.json",
+      "sha256": "90d1320fbcfe9283c0df73026561e9a22d7428b6089732c22c7e2da5d2c23ff9",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_robot_arm_luv.png",
+      "sha256": "1b1faa85db66dc20a67afa8cd9f0e29c5aeef53576f5c5da2f1a367942a7fe4c",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_robot_arm_iv.json",
+      "sha256": "2e63620c900079def9aa00436cceac25a7c30d711f55251365e1c8702e9d74b5",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_robot_arm_iv.png",
+      "sha256": "aaf4a604520c70c400f79f2161e1f2e6c41da4928a6f34bfa46644a4db54de9e",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_robot_arm_ev.json",
+      "sha256": "daa51f276c12033c3a924b1e0722eb77ba18f24e92490e98a2445a96c29554c2",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_robot_arm_ev.png",
+      "sha256": "9bdc60bc8af1cd71b790e9bf33ee526e7f28a14b1f0418e7d8715f422acdb2a0",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_robot_arm_hv.json",
+      "sha256": "92cb5a5b3534551734ecee8319e048c3cbedbafe258546544ed3c429ad97dcf8",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_robot_arm_hv.png",
+      "sha256": "3f31e6ee7123b679d2f39cc77ba3d7e52f1e5878269a3a6699a9dcf5e8153e8e",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_robot_arm_mv.json",
+      "sha256": "35e7cf01fd54180cfa0bc198e01ae07ba91357b2dfb7fa87c525dee85ecf7b66",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_robot_arm_mv.png",
+      "sha256": "e474626bfa1d4b15437f5b96f9bc586fc7642df50bee4bfdedbfc8dff81e8cff",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_robot_arm_lv.json",
+      "sha256": "3bd29ca7a9eff180c18ba36a49092ef60e355fa0fe282460e0ea778642a2d195",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_robot_arm_lv.png",
+      "sha256": "20ffabd4054defa1b5c4f6eb4cc018f85425c9b38e25aea679d75185d8b44552",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_robot_arm_ulv.json",
+      "sha256": "8cb327ab26fa501ecfefdd09daaa5e75abd12d7f1217d86d29ad9d192012dbb1",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_robot_arm_ulv.png",
+      "sha256": "3655fc76ffbd640443e01bf49a6cf5c2c0be6bd240c6ebf72b9e337cb4071150",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_piston_xv.json",
+      "sha256": "0faa659af95a48e820d84c8e206b7375163f7df0698f0c4b4a119e2cc7610248",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_electric_piston_xv.png",
+      "sha256": "aa1e3641a61d22a1534e41ba36b32cba46985eae97d7b61c5a1889b9158841f8",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_piston_puv1.json",
+      "sha256": "2819bdc9ac59bcce64731f31412cf3ecb7018528eda67c84165bbe7de433fae5",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_electric_piston_puv1.png",
+      "sha256": "0bd1e2a92f1a6bf3c21fc2d46c2e3db1fd6b5fb82f4fa0d5c175e9915999cec1",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_piston_uv.json",
+      "sha256": "7bde191640807e8d909cba8a50bc318d59b4c43c26d5c52991840178810edc41",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_electric_piston_uv.png",
+      "sha256": "d1dc0f362b1a9d456ef9c6140ed8c4aba3c58d9eb7931b2cf9fbad5961ed0ff5",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_piston_zpm.json",
+      "sha256": "df777d937f6d929cd5a4170c7dc5b46f7f1a4bee5abb67374593a0d8fc8b6f48",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_electric_piston_zpm.png",
+      "sha256": "b7190463737b4a273e072bc5d2d7a27f31722612ef26f43a1a2eb37248192f56",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_piston_luv.json",
+      "sha256": "ec9f527e1fed8cf0904cef552e25e37e5fe909d4d0954885e97eb7828f9daa00",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_electric_piston_luv.png",
+      "sha256": "aa1e3641a61d22a1534e41ba36b32cba46985eae97d7b61c5a1889b9158841f8",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_piston_iv.json",
+      "sha256": "3a7027d3a046adbdaac71ad7d88520a072dc1a6b37bee3d7f36e7947df911532",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_electric_piston_iv.png",
+      "sha256": "92e172c424eb9ed1456c63c79e11ea8fa1aa5e04313ea8fad52ccc43aa6a4e12",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_piston_ev.json",
+      "sha256": "26ba683589443079bb8737d38e7a766b62328b53c3735da65e808aab1b3820c8",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_electric_piston_ev.png",
+      "sha256": "f91f2c72bc12152ee7ef4175ba4cab758a91aca6026f97e32aeff9ba491bccea",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_piston_hv.json",
+      "sha256": "dbf884aabe8039996121235e57af4c493a6388a17c92c7a9112e8f73ec87efbe",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_electric_piston_hv.png",
+      "sha256": "27b5227f7a717715f08d6df971700fb6a95783286e893f22443d0a4412ce2373",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_piston_mv.json",
+      "sha256": "de62c2b557289b8d2124b96ae08a48474b299e47a58228c00a6cc86d0eaef6e7",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_electric_piston_mv.png",
+      "sha256": "636314f6351a2f523b4acb5e3139a32665f9f8f23e3e58f3f441a9ce08fcb883",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_piston_lv.json",
+      "sha256": "0e0bffb9bb33ab01b534cfa9800ad25d93997d648f18b748bc940752e38409cf",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_electric_piston_lv.png",
+      "sha256": "b17ed7e8e00985561caa37ea330608e7834b5a8becb5447544808c632b5bfb04",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_piston_ulv.json",
+      "sha256": "bc6239ac67752f4019cd5e98491a4e03ae95654e47eff124f4b0383f483118c1",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_electric_piston_ulv.png",
+      "sha256": "34670bc8a31025521f089d24ac22e9fc2f174010062719a1e5c04d27eca26a8f",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_conveyor_xv.json",
+      "sha256": "a66045775e1d7aeef5ec5e5c8bf83f547c04251382da521f90a5de153cb46865",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact__electric_conveyor_xv.png",
+      "sha256": "7eeacdd0a4f40ffaf8397acf906c51b04ec382d6a189013245ea1a5b9e8ab09c",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_conveyor_puv1.json",
+      "sha256": "c692c6d63f8c08f64fa2dead77dcd3f240f08dedc4d285918ae98a75db505e41",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact__electric_conveyor_puv1.png",
+      "sha256": "740fea29f87508ea73221ed288f394579766a1ce8a697d8d6b70a8ceb0ebdf4e",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_conveyor_uv.json",
+      "sha256": "8ff209c8ff8ff4bb0097fb323a5e50b5fb9f31df8266057bc91825f339605f5e",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact__electric_conveyor_uv.png",
+      "sha256": "77001ccba0f32cfa18750a7e6eddca717f778505f177f4b956817d62fc2c8b80",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_conveyor_zpm.json",
+      "sha256": "85f68ca70fe7b7c0a43cbab285320206c5ef66b4bf6254184506ce21af46ffa3",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact__electric_conveyor_zpm.png",
+      "sha256": "5eb9f5eb0bd30b1ca40b7737521835e4fbe8c7e877cd1f46475e4dc6fb4ae09f",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_conveyor_luv.json",
+      "sha256": "82b6ee0dfbb3624682ecc6d2114944be244e07615d602abace2cc65011b66ad1",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact__electric_conveyor_luv.png",
+      "sha256": "7eeacdd0a4f40ffaf8397acf906c51b04ec382d6a189013245ea1a5b9e8ab09c",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_conveyor_iv.json",
+      "sha256": "9406776bbfc80b2a62cbc67425386bf800c9503edcd85fe1d4c073ca4dbdf6bc",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact__electric_conveyor_iv.png",
+      "sha256": "6cd734e3a45239cf4c88ba9c74527cc1f3963c787bca9941e17600f86e98dcac",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_conveyor_ev.json",
+      "sha256": "d67a6c01054eabddc5546726ecac6a0aef752a9926f7c00feb565ff9d8f3949e",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact__electric_conveyor_ev.png",
+      "sha256": "a8f40341c0920c579dd3952382e385e64818cefc2fa80176167e724e0ece035f",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_conveyor_hv.json",
+      "sha256": "4b6f4f59e371919283ebb7ebe7bc1f5eccd52489d10d88ac22ade34ab145e778",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact__electric_conveyor_hv.png",
+      "sha256": "ea07bf9859da92be6d6d69822d8dfe8f619c8c6f88c198a1a7eab2b2f226ef07",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_conveyor_mv.json",
+      "sha256": "b426b0eaae3635763e41234b69827bb4f8b0111617d099beecac99be2fb35530",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact__electric_conveyor_mv.png",
+      "sha256": "815a6a858fd4cf04aec6ee0644d1c0cfb62c7f5e956096e7ab1d5fad0b60daeb",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_conveyor_lv.json",
+      "sha256": "b4148b26bb125176032a7605903d80b2ac3f8d382359efb63d9c00abd1e0ba29",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact__electric_conveyor_lv.png",
+      "sha256": "48e7979ec6ca5dda7fd4ffe155420084cfff19b27b202acfed8265d7e3f09125",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_conveyor_ulv.json",
+      "sha256": "bee6e499f024e1123da6500f30904a2d6a3e6c536579a2cf5fb575a71f437808",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact__electric_conveyor_ulv.png",
+      "sha256": "42f120ea55568a11aec255250210c15bdd0ce2743d9d45fb644f26ef27a45891",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_pump_xv.json",
+      "sha256": "3ce3f029ae45cd9b65e4022d2f8b515bbac392e6250c20378bbbd06b8cf451f7",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_electric_pump_xv.png",
+      "sha256": "5daa2d871b82c3c3953236fe345e14b683e83b2e4e09835f4a5983ceff80492c",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_pump_puv1.json",
+      "sha256": "f8a0c4789641833b734350e420073d2a3eed0f9fb0a0bbab3dc5ad0210a57364",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_electric_pump_puv1.png",
+      "sha256": "4c967344053c695c2473cf95c850c0f2ea17700e3c67f8ffd22a8f5e0184f787",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_pump_uv.json",
+      "sha256": "3c501fd042fdfed6ae28863fde46d13461aa54b0245f6d51b5d9e40a81d9e133",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_electric_pump_uv.png",
+      "sha256": "5f2ae2d348a76064c2cbfdc4a8a1dfbd992dade90a27c75167a5ba04c17ff321",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_pump_zpm.json",
+      "sha256": "8a7058362fe21c0fe003b3d83c0e22898ddd0e740723906fb4e22b7fd8cfa2e2",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_electric_pump_zpm.png",
+      "sha256": "5dc4ed6796e1fb47f559e3fc880376b87b03f77aa00ad31f962cabce4571cb4f",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_pump_luv.json",
+      "sha256": "f020924f0ffc4164784fb98a491c79b2f6cdb5c99bd9111774f6246b9754a373",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_electric_pump_luv.png",
+      "sha256": "5daa2d871b82c3c3953236fe345e14b683e83b2e4e09835f4a5983ceff80492c",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_pump_iv.json",
+      "sha256": "8117dd18baabc4be5e4999af3349f95234d9899a3237e7aa4985a347def0415d",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_electric_pump_iv.png",
+      "sha256": "d4f5659009e1843c5f35e333656982699805087c373d9db61774a138bf641c56",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_pump_ev.json",
+      "sha256": "6dc0bab5bd7f8073b194b0437c4dad8f8497949c2e6f47fbb31bb4d6c2889c4f",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_electric_pump_ev.png",
+      "sha256": "a261ca5525ae0843a3af1b0820e97f0716ccb30e8c95333ee7a4805e26199859",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_pump_hv.json",
+      "sha256": "23d5c22a543720281288b484e8326bd9160a30097056759d8305ed6db5d64d6d",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_electric_pump_hv.png",
+      "sha256": "fd0eb330e907b5e7ea478751b85656abff39614bebe2377f273ad7b9fce8f204",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_pump_mv.json",
+      "sha256": "39fda77a7c986896c7d5f6238e0d744d127956a38dad679934fe7629ce4b0426",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_electric_pump_mv.png",
+      "sha256": "71f00a1126ebf32d357b8a7098e6ae421a080b3874ed4467f0ee4f8d9b6c363b",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_pump_lv.json",
+      "sha256": "10bd73a9aaccc2734b672a4c58f100f95d024863675b1634b042e722c22db62f",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_electric_pump_lv.png",
+      "sha256": "6bba315517adf02875e74152e150177a153ad54e33662bd4d032d0a6d34391da",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_pump_ulv.json",
+      "sha256": "62cc89843219f3331160386f3d0413ebe786e424559ccf0f2f9c1a9a7857bd92",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_electric_pump_ulv.png",
+      "sha256": "bfce9706265a724c6121db8a06c1bc40bb5ac9431e59cb129288a0966156d7a6",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_motor_xv.json",
+      "sha256": "806db57ad598669a06240e374f86a62f930320fbd62602e78f3571e47bc34f55",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_electric_motor_xv.png",
+      "sha256": "46b6bfaad3d5d73357ebe2de3a8d36f25d3c15f4dcb4474c9b1acdc934e58c87",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_motor_puv1.json",
+      "sha256": "9497a97895c92353804e92e1eb415670fb40115640c95db6d0e3e4453c1dfc62",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_electric_motor_puv1.png",
+      "sha256": "90d7516cce43797499a3ff51aa209abba19bc10ec3f104681abe38a5c0231c41",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_motor_uv.json",
+      "sha256": "3171ce02513dcdacea5da6c04df3c441fbed8fde09b62d6beae34d2aa4147b04",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_electric_motor_uv.png",
+      "sha256": "22646aa87ef624924043a8242a002df5433e94a8052120a24e9de7048b8cd8b5",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_motor_zpm.json",
+      "sha256": "af62fc4478664df19c907981b53c2c4f18eee4f2d95e5b7d8b9e83347c29b736",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_electric_motor_zpm.png",
+      "sha256": "454785d9cf3cc06aa08e77b2e21957ccf6afe6e7030af65aa7e74137f1bdfe2b",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_motor_luv.json",
+      "sha256": "2942c8ac86627e4ab9da5064083f425897303df04033a64d780785a54e8879ef",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_electric_motor_luv.png",
+      "sha256": "46b6bfaad3d5d73357ebe2de3a8d36f25d3c15f4dcb4474c9b1acdc934e58c87",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_motor_iv.json",
+      "sha256": "3ae06068ff34d60e810dff88f1b6afa23453e4b8ae377374297f7c921c7b4b1a",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_electric_motor_iv.png",
+      "sha256": "81e99444c5b666de33e6ee8282e2b7445aa50ed12f7ea7d4e961d10f05f39749",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_motor_ev.json",
+      "sha256": "cd5e71c8f76a55db2a63d7eeafc216eb7068b3ccfbc2252d09863fbc1a6611d3",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_electric_motor_ev.png",
+      "sha256": "796c1a9947d9c8b74f59d3514e69aae040db609f1d34c40a09b01fb5e336e21e",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_motor_hv.json",
+      "sha256": "8124ee14e56fd3facf18a3e3d49680ac6cb88c97c283fced4d8fbdba37559156",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_electric_motor_hv.png",
+      "sha256": "0f8343876610e6506f5b76f6dd2d9dc67e8b50e977db441f8afc9936b8d3c629",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_motor_mv.json",
+      "sha256": "75defce902e51226fc6fc1fe9f802f7158c65670d2ad7123702af4a96d7d09cf",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_electric_motor_mv.png",
+      "sha256": "b0625839ac660a62e6da11a209c06035c21c558e1be2f6add5dd8a33a8a369b6",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_motor_lv.json",
+      "sha256": "c490023914661bd778b73f82bf8927e44e1a163546c8375e5c9e7a99b605dd28",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_electric_motor_lv.png",
+      "sha256": "a4c93d82e8728115ff8ccc589a51e44babc487d7149743a85d3e78caa440c0df",
+      "destination": "core"
+    },
+    {
+      "file": "models/item/compact_electric_motor_ulv.json",
+      "sha256": "533caa498ccf165c84e39ea17216ef94fda865442dddd91ec995819679477b18",
+      "destination": "neoforge"
+    },
+    {
+      "file": "textures/item/technological/compact_electric_motor_ulv.png",
+      "sha256": "a12635de572a9bb9644256455cb6b3b647a26e463ba945520515f5d2922e82f3",
+      "destination": "core"
+    }
+  ]
+}

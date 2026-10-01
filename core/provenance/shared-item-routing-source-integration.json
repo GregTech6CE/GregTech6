@@ -1,0 +1,68 @@
+{
+  "sources": [
+    {
+      "author": "brokestar",
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6-main/mdk/src/main/java/gregtech6/tileentity/connectors/GTItemPipeBlockEntity.java",
+      "sha256": "f717dff72c63f9542a5a396908aa5b0d30edde51c7d262df7876f4823747797f"
+    },
+    {
+      "author": "masson",
+      "source": "F:/Dev/GregtTech6New/Libs/cruciblecraft/src/main/java/com/masson/cruciblecraft/logistics/pipe/item/ItemPipeNetworkTraversal.java",
+      "sha256": "20337fc574f83d1319e96f0e62ef54b631f32ed5b21a74df27d5e2974e3c2803"
+    },
+    {
+      "author": "masson",
+      "source": "F:/Dev/GregtTech6New/Libs/cruciblecraft/src/main/java/com/masson/cruciblecraft/logistics/pipe/item/ItemPipeTransferPlan.java",
+      "sha256": "3809ed2cdb9a966d06029d04737b592bdacbd77f974b867275dbf0be23d2d119"
+    }
+  ],
+  "platformAdapters": [
+    {
+      "target": "src/main/java/com/gregtech/gregtech/blockentity/machine/ItemPipeBlockEntity.java",
+      "baselineSha256": "81d9dd29243cb4f4fcd8029dbabb2cc7b503161e8e140d5c171cb600cfae03bf",
+      "sha256": "7a0a68d20ca9af9051610009be56c302da6763fcc7e863bc097c6928c0e788bd"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/ItemPipeBlockEntity.java",
+      "baselineSha256": "adbcd1c8b27980feb2d30ddd1fda8f557ea3297e436d3e0c55b54fae42775bbb",
+      "sha256": "7a8993d1876eb3c9325bd9df251a9ef4c2a84660c92b54fbea706410ae63493d"
+    }
+  ],
+  "adoption": "Shared stable minimum-step relaxation from brokestar, loaded-only bound and target acceptance checks from masson; saltnya registry/cover/state lifecycle retained. No duplicate material or registry runtime. Original licenses/history preserved.",
+  "validation": "Grouped core/Forge/Neo compile PASS; scoped actual Neo weighted route/remainder/side masks PASS; native TitleScreen rendering PASS with explicit resource gaps. See docs/integration/verification/p3-shared-item-routing-compile.json, p3-neoforge-shared-item-routing-checkpoint.json, p3-neoforge-shared-item-routing-client.json. Full runtime parity/reload/production jar pending.",
+  "transferAdapters": [
+    {
+      "target": "src/main/java/com/gregtech/gregtech/blockentity/machine/ItemPipeBlockEntity.java",
+      "baselineSha256": "9153b119456e2d8256b8f15a8a0730c69b36a7fd64fe290c9d265db185f080a1",
+      "sha256": "7a0a68d20ca9af9051610009be56c302da6763fcc7e863bc097c6928c0e788bd"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/ItemPipeBlockEntity.java",
+      "baselineSha256": "c9646ab219dc00e0608f9ead2c0963a627a44338284b4b42d5ac96bec8fbf116",
+      "sha256": "7a8993d1876eb3c9325bd9df251a9ef4c2a84660c92b54fbea706410ae63493d"
+    }
+  ],
+  "transferAdoption": "masson valid-remainder/partial-commit contract, refreshed destination capability between simulation and actual execution, baseline merge-before-empty order and original side masks. Only actual validated acceptance consumes source; receiver cover views are used.",
+  "sharedAndBoundaryImplementations": [
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/transport/ItemPipeTransfer.java",
+      "sha256": "f6bf5065fa6a62ae1477ceae4a8b00ab5a964d8fa3009f02efa93d660509804f"
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/transport/ItemTransferAmounts.java",
+      "sha256": "968d4fb10864dd5af2b5cce4ea1efe93a90fbb545c955c24a4d8b36df6a781dc"
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/transport/WeightedItemPipeRoutes.java",
+      "sha256": "3a672f8e0694d1d93cbf29039728e054d0221ee6b874a07a238dd23b8400576b"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/content/transport/ItemPipeTransferAdapter.java",
+      "sha256": "07758ad405f43a4abdf822f8703910cebfc227b18dbf32b72f5872d07e16c88c"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/transport/ItemPipeTransferAdapter.java",
+      "sha256": "6768274b3a17788740c2497ddf6c8930ef24b27953046a7cb6f99e4d98ab0b83"
+    }
+  ]
+}

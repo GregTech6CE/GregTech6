@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "gregtech:block/tool/anvil",
+      "y": 0
+    },
+    "facing=east": {
+      "model": "gregtech:block/tool/anvil",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "gregtech:block/tool/anvil",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "gregtech:block/tool/anvil",
+      "y": 270
+    }
+  }
+}

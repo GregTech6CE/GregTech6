@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-02",
+  "authors": [
+    "saltnya",
+    "original GregTech6 contributors",
+    "existing integration contributors"
+  ],
+  "license": "Original notices/source hashes/authorship/history retained; donors unchanged.",
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/data/MaterialTagPack.java",
+      "sha256": "d71d30b033cb5a66ee85dbb1afb03c398ba1dadca458ed29f1f560491ed7e5b7",
+      "priorNativeSha256": "b8ad79e74a3c43342b862b70c134e83ccc5302ce92c47a744b72100f7afa020f",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/data/MaterialTagPack.java",
+      "currentForgeReferenceSha256": "9f9e832f5ffb55c5362396a5898639f8650ef287cc30eca4ea5b073730d7f851",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\data\\MaterialTagPack.java",
+      "sourceSha256": "9f9e832f5ffb55c5362396a5898639f8650ef287cc30eca4ea5b073730d7f851"
+    }
+  ],
+  "nativeApiEvidence": {
+    "artifact": "neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+    "entry": "net/neoforged/neoforge/common/Tags.java",
+    "sha256": "09aed02ca6a6610dd2c38b513c92624dbd5694e8fb9ea39a936e07d33e54c705",
+    "contract": "Installed NeoForge common item/block tag declarations use c namespace; INGOTS_IRON is c:ingots/iron."
+  },
+  "scope": "Existing Forge-shaped recipe item/block tags accept native c additions and current material spelling aliases. Domain IDs/rules and c direct GT entries unchanged; optional one-way references added only during Forge JSON serialization after c values are copied.",
+  "policy": "D011 native tag namespace adaptation, D010 one grouped compile; no new fixture, repeated game or jar.",
+  "notProven": "Actual external-mod crafting/tag resolution or data reload; external packs introducing reverse links may have their own cycles. Current change not covered by prior startup; production jars/gameplay/world restart/old saves still pending."
+}

@@ -1,0 +1,56 @@
+{
+  "date": "2026-10-01",
+  "authors": [
+    "saltnya",
+    "original GregTech6 contributors",
+    "existing integration contributors"
+  ],
+  "license": "Original history/notices/authorization retained; donors unchanged.",
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/data/SensorRecipePack.java",
+      "references": [
+        {
+          "currentForgeReference": "src/main/java/com/gregtech/gregtech/data/SensorRecipePack.java",
+          "currentForgeReferenceSha256": "150ef1c21241b070aa442d639a894449fd66299647a49846780814cea743a854",
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\data\\SensorRecipePack.java",
+          "sourceSha256": "150ef1c21241b070aa442d639a894449fd66299647a49846780814cea743a854"
+        }
+      ],
+      "sha256": "680ce6c9c848b0a2bfb00b1db210f4cc21603805ac8418181524814b4f686269"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/MachineTooltips.java",
+      "references": [
+        {
+          "currentForgeReference": "src/main/java/com/gregtech/gregtech/client/MachineTooltips.java",
+          "currentForgeReferenceSha256": "bbb68fba3d5283b1fbe9812fdf4c97da9ee9898c595a3999ecc027218da3280f",
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\MachineTooltips.java",
+          "sourceSha256": "bbb68fba3d5283b1fbe9812fdf4c97da9ee9898c595a3999ecc027218da3280f"
+        }
+      ],
+      "priorNativeSha256": "8bea4361d9e56261494d352aa87da3a3b7f702a4818629de3adcf4f5aeaaed7e",
+      "sha256": "6ebcceb157f35f30821b2695064f9669a6943bda253cc25a4ba198ff04faf2bd"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/machine/BasicMachineItem.java",
+      "references": [
+        {
+          "currentForgeReference": "src/main/java/com/gregtech/gregtech/block/machine/GTMachineBlockItem.java",
+          "currentForgeReferenceSha256": "e4ab9236bd587d21c1b918fa05baeb2180a6e7590a0a73b4869d4952a7491b44",
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\GTMachineBlockItem.java",
+          "sourceSha256": "e4ab9236bd587d21c1b918fa05baeb2180a6e7590a0a73b4869d4952a7491b44"
+        }
+      ],
+      "priorNativeSha256": "b8ce6589096aaebaa97a7ef0fda82ef9c7c39874320e66f35d35f97c8b83879b",
+      "sha256": "d4c8cf831c1de60bd20cbdbe70058f1c34520936c2085607ec0a92b0e4448688"
+    }
+  ],
+  "policy": "D011 current Forge baseline parity; D010 grouped compile/native jar only this wave. No new fixture or repeated startup.",
+  "scope": "Complete original SensorRecipePack over existing shared 20-row table/live Native blocks and ingredient resolver. Original basic-machine tooltip over actual existing Native BasicMachineItem registrations. Core/resources/Forge unchanged.",
+  "adaptations": [
+    "Native PackLocationInfo/ResourcesSupplier/pack-format48 boundary",
+    "Native recipe/ path and result.id schema; original identities/group/mirror/material/tier1/used-key filter retained",
+    "Native item TooltipContext calls source appendBasicMachine; existing burning-box helpers retained"
+  ]
+}

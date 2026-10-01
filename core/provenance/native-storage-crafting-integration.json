@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-01",
+  "authors": [
+    "saltnya",
+    "original GregTech6 contributors",
+    "existing integration contributors"
+  ],
+  "license": "History/notices/authorization preserved; donors read-only.",
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/data/OriginalHandCraftingRows.java",
+      "sha256": "336376822d673bf51493204816d3d71f93493ce52bf463b08095eb249dcec86c",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/loaders/Loader_HandToolCraftingRecipes.java",
+      "currentForgeReferenceSha256": "0d7489a4ad6f3c889280f1b6ca23717c40210ba1479ee2067d36430892a03c02",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\Loader_HandToolCraftingRecipes.java",
+      "sourceSha256": "0d7489a4ad6f3c889280f1b6ca23717c40210ba1479ee2067d36430892a03c02",
+      "priorNativeSha256": "40f4cb9c5e3b1ac2ac881aa3d3af72e75946aa109593684d95214d7236c89ea6"
+    },
+    {
+      "target": "neoforge/src/main/resources/data/forge/tags/item/glue.json",
+      "sha256": "7c9da5cb8effeac84b01d54d7a9bbb487f89d6181cf40ca0b5165df57272bc11",
+      "currentForgeReference": "src/main/resources/data/forge/tags/items/glue.json",
+      "currentForgeReferenceSha256": "7c9da5cb8effeac84b01d54d7a9bbb487f89d6181cf40ca0b5165df57272bc11",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\forge\\tags\\items\\glue.json",
+      "sourceSha256": "7c9da5cb8effeac84b01d54d7a9bbb487f89d6181cf40ca0b5165df57272bc11"
+    }
+  ],
+  "scope": "Complete original storage hand patterns plus actual Native registry adapters. Exact original glue tag content under 1.21 tags/item path. Existing tier-four circuit tag retained. One shared material catalog and existing recipe pack/tool serializer; no new registrations/storage system.",
+  "policy": "D011 baseline parity, D010 one grouped compile and one existing short dedicated startup for several hand-crafting batches."
+}

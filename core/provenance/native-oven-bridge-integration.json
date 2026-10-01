@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-01",
+  "authors": [
+    "saltnya",
+    "original GregTech6 contributors",
+    "existing integration contributors"
+  ],
+  "license": "Original history/notices/authorization retained; donor trees unchanged.",
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/loaders/Loader_OvenRecipes.java",
+      "sha256": "c8dea7fbd8ec90ce79958fee3132acf470cad5e1b0cdc0301137eaaa03296a4d",
+      "references": [
+        {
+          "currentForgeReference": "src/main/java/com/gregtech/gregtech/loaders/Loader_OvenRecipes.java",
+          "currentForgeReferenceSha256": "b56b7dcfec200242ac050e2c922849953a3ec6d69ee104b5d2fff5ea6432b137",
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\Loader_OvenRecipes.java",
+          "sourceSha256": "b56b7dcfec200242ac050e2c922849953a3ec6d69ee104b5d2fff5ea6432b137"
+        }
+      ]
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/recipe/OvenRecipeLifecycle.java",
+      "sha256": "becf61fb833002cf775fa65fc3d7560a693c32bbe1946e4cc2eedc8b28d5a39d",
+      "references": [
+        {
+          "currentForgeReference": "src/main/java/com/gregtech/gregtech/recipe/RuntimeRecipeLifecycle.java",
+          "currentForgeReferenceSha256": "cc5506f8fa2d5fd70b35c98bf18f84efd245763694d97dff338e6da215de3145",
+          "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\recipe\\RuntimeRecipeLifecycle.java",
+          "sourceSha256": "cc5506f8fa2d5fd70b35c98bf18f84efd245763694d97dff338e6da215de3145"
+        }
+      ],
+      "origin": "New Native event boundary, preserving furnace bridge ownership and adapting actual RecipeHolder identity on reload; no duplicate crafting runtime injection."
+    }
+  ],
+  "policy": "D011 current Forge baseline parity; D010 one grouped compile and one short existing dedicated startup covering multiple recipe waves. No new fixtures.",
+  "scope": "Complete current furnace/GT oven runtime bridge using Native RecipeHolder and registry-aware stack sorting; server-start/global datapack sync/stop lifecycle. Core/Forge/resources unchanged.",
+  "knownBaselineGaps": [
+    "NEVER_FURNACE detection currently accepts MaterialItem only on both platforms; vanilla iron ingots are not rewritten by this gate. Startup observed zero rewritten rows.",
+    "Source firstStack normalizes input AND output count to one for GT-to-vanilla mirrors. This parity port does not repair multi-output quantities.",
+    "Source firstInput mirrors only the first ingredient variant into the GT map. All tag variants are not proven supported.",
+    "Actual datapack reload/idempotency, crafting/smelting behavior, tool remainders, client/world rendering, production jar startup and separate-process saved-world restart/old saves remain unverified."
+  ]
+}

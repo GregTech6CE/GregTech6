@@ -1,0 +1,6 @@
+{
+  "parent": "gregtech:block/stones/slab/down",
+  "textures": {
+    "all": "gregtech:block/stones/gt.stone.slate/bricks_mossy"
+  }
+}

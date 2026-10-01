@@ -1,0 +1,220 @@
+{
+  "stage": "P3 D010 fast source merge",
+  "baseline": "6054d601081c226e902e89a228fe0f471fed3332",
+  "license": "Existing histories, authors, notices and license inventory preserved; no relicensing/publication.",
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/machine/BasicMachineRegistries.java",
+      "sha256": "3eaf587d27876710342bdf0fce21c8c3a027b9c8ea040b9ee1972a45e31a533b",
+      "authors": "saltnya / original GregTech 6 contributors; integration platform adaptations",
+      "previousTargetSha256": "95a38434e3f6d5694727299a32aa203c21cdb82bc31231280187828b6ce397a6"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "sha256": "98662aba6eeac9bc28e15d56d955d4a8100579913988049555490cbfa76af787",
+      "authors": "saltnya / original GregTech 6 contributors; integration platform adaptations",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTBlockEntities.java",
+      "sourceSha256": "027081bae34480826956a74d65a24aa7f4ef29d4be4a4687046793a10d9df62f",
+      "previousTargetSha256": "89dc9335664083b275c3d61c9c6acd147650d5f0bdf118d1fbfff9a6106477cc"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTMultiblocks.java",
+      "sha256": "51e9dae7fecdd1604be125831ea1aa040969416c1de942e826b737fe615f254c",
+      "authors": "saltnya / original GregTech 6 contributors; integration platform adaptations",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTMultiblocks.java",
+      "sourceSha256": "a0f056e6ba6c0b0a9e524795e5eae17e3a9591916770456be13fba10f24e45c8",
+      "previousTargetSha256": "eedf67a205ac151a23a2a2a2d85ef8576a32dc6307edd1a9379ff21487f142cf"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/blockentity/machine/OriginalLargeBoilerControllerBlockEntity.java",
+      "sha256": "067565951e195b00edba77a368883b9443ab53187fd1728ea38f08ca1a289264",
+      "authors": "saltnya / original GregTech 6 contributors; integration platform adaptations",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\OriginalLargeBoilerControllerBlockEntity.java",
+      "sourceSha256": "910f9f4e3320f89f307af73fb68d71f8c87f5bc9b60ac023bf64d0ad3205665f",
+      "previousTargetSha256": "910f9f4e3320f89f307af73fb68d71f8c87f5bc9b60ac023bf64d0ad3205665f"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/content/multiblock/OriginalLargeBoilerSpecs.java",
+      "sha256": "2ec682bf639d541a1a1ff023ff75239edb196825704dd5cf69d129cc40d3bf7c",
+      "authors": "saltnya / original GregTech 6 contributors; integration platform adaptations",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\OriginalLargeBoilerSpecs.java",
+      "sourceSha256": "7e996b74f36faa4ea1413241b13f4006b47751167be8f86094d0d839fcd46d4e",
+      "previousTargetSha256": "7e996b74f36faa4ea1413241b13f4006b47751167be8f86094d0d839fcd46d4e"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/content/multiblock/TankValveSpec.java",
+      "sha256": "e2725d91d564e235a5edefcd0e4c08aa6f61158497831faccc7266e065c8b919",
+      "authors": "saltnya / original GregTech 6 contributors; integration platform adaptations",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\TankValveSpec.java",
+      "sourceSha256": "edd97684ae9cc103125c4d44af4eb44955812e47908338fb7b5009d27df285ca",
+      "previousTargetSha256": "edd97684ae9cc103125c4d44af4eb44955812e47908338fb7b5009d27df285ca"
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalLargeBoilerParameters.java",
+      "sha256": "abaf446209e1eeeb7dfdf8e740aa72d65fb808a21fccdb0e288e6c4c531660dd",
+      "authors": "saltnya / original GregTech 6 contributors; integration platform adaptations",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\OriginalLargeBoilerSpecs.java",
+      "sourceSha256": "7e996b74f36faa4ea1413241b13f4006b47751167be8f86094d0d839fcd46d4e",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/multiblock/TankValveParameters.java",
+      "sha256": "f4af2ea80a749f10656e5f55b7eb3e17354672cf7d1602d175e014792c9ff3dd",
+      "authors": "saltnya / original GregTech 6 contributors; integration platform adaptations",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\TankValveSpec.java",
+      "sourceSha256": "edd97684ae9cc103125c4d44af4eb44955812e47908338fb7b5009d27df285ca",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/api/multiblock/HollowTankStructure.java",
+      "sha256": "2782281fb6879e6f0d9a2ad9c123b24fbd57e560294ee8727a1251cdeca50969",
+      "authors": "saltnya / original GregTech 6 contributors; integration platform adaptations",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\api\\multiblock\\HollowTankStructure.java",
+      "sourceSha256": "5d317b97528cc4313c4bbf2bff000aabb202f45c0a90d8a0966770378d15a889",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/machine/OriginalLargeBoilerControllerBlock.java",
+      "sha256": "8f1ddc616463aebeafbba24ac9d35af7234da19bb68481b5ad75b8e528c2d286",
+      "authors": "saltnya / original GregTech 6 contributors; integration platform adaptations",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\OriginalLargeBoilerControllerBlock.java",
+      "sourceSha256": "bc8bce1ed9a8bacfd575fe2158fcf09448cce5c710ed095cd644e835a9d0e648",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/machine/TankControllerBlock.java",
+      "sha256": "adf114ff88c748811d59b952e7914394b529341ec3af94d5506e945bddee9da7",
+      "authors": "saltnya / original GregTech 6 contributors; integration platform adaptations",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\TankControllerBlock.java",
+      "sourceSha256": "4ca170831e85ee70743a8fa53534a99966f25bf82541f9e8b2dfb553f3bea905",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockTankControllerBlockEntity.java",
+      "sha256": "288d1bf5e62cd3b30acb8cc60627c1756223f5e462e477b8b820ab2d561dbba6",
+      "authors": "saltnya / original GregTech 6 contributors; integration platform adaptations",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\MultiblockTankControllerBlockEntity.java",
+      "sourceSha256": "61e233302bc1cf528bfddfccc6cbf9f251e0f55392b868ca7e47780a63849653",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/OriginalLargeBoilerControllerBlockEntity.java",
+      "sha256": "b8561c22af7d5272aaebcf9c4883b27adbb16f50dad5d90f482eda5ba7decd5c",
+      "authors": "saltnya / original GregTech 6 contributors; integration platform adaptations",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\OriginalLargeBoilerControllerBlockEntity.java",
+      "sourceSha256": "910f9f4e3320f89f307af73fb68d71f8c87f5bc9b60ac023bf64d0ad3205665f",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalLargeBoilerSpecs.java",
+      "sha256": "2ec682bf639d541a1a1ff023ff75239edb196825704dd5cf69d129cc40d3bf7c",
+      "authors": "saltnya / original GregTech 6 contributors; integration platform adaptations",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\OriginalLargeBoilerSpecs.java",
+      "sourceSha256": "7e996b74f36faa4ea1413241b13f4006b47751167be8f86094d0d839fcd46d4e",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/multiblock/TankFlowRules.java",
+      "sha256": "0a64c108fcc2db90eb551e86690a4612526e63c2b5eba862f16e943836d746e7",
+      "authors": "saltnya / original GregTech 6 contributors; integration platform adaptations",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\TankFlowRules.java",
+      "sourceSha256": "4d17291641b85eebe8ff82843d5256d1d8e1dead09e60e0f843ec26b57a3a33e",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/multiblock/TankValveSpec.java",
+      "sha256": "e2725d91d564e235a5edefcd0e4c08aa6f61158497831faccc7266e065c8b919",
+      "authors": "saltnya / original GregTech 6 contributors; integration platform adaptations",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\TankValveSpec.java",
+      "sourceSha256": "edd97684ae9cc103125c4d44af4eb44955812e47908338fb7b5009d27df285ca",
+      "previousTargetSha256": null
+    }
+  ],
+  "resources": [
+    {
+      "target": "core/src/main/resources/assets/gregtech/blockstates/tank_3x3.json",
+      "sha256": "1d9412d6599f9ce924adb9fa961441e59732282ab805e0e6a72fdc716c553b35",
+      "adaptation": "unchanged source shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\tank_3x3.json",
+      "sourceSha256": "1d9412d6599f9ce924adb9fa961441e59732282ab805e0e6a72fdc716c553b35"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/blockstates/tank_5x5.json",
+      "sha256": "796b61baf40ef338a00b22465c8987bc6b1f0825a9da40b05e7ba4cac9b2306d",
+      "adaptation": "unchanged source shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\tank_5x5.json",
+      "sourceSha256": "796b61baf40ef338a00b22465c8987bc6b1f0825a9da40b05e7ba4cac9b2306d"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/models/item/tank_3x3.json",
+      "sha256": "5422342aa99e3d8d449666910192b2e89166262d299db0693d455aabb2e17c20",
+      "adaptation": "unchanged source shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\tank_3x3.json",
+      "sourceSha256": "5422342aa99e3d8d449666910192b2e89166262d299db0693d455aabb2e17c20"
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/models/item/tank_5x5.json",
+      "sha256": "6c8dcd1d6fabcbc686674eb3361f8d362210c73d75295807f69ade54ef638ff8",
+      "adaptation": "unchanged source shared",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\tank_5x5.json",
+      "sourceSha256": "6c8dcd1d6fabcbc686674eb3361f8d362210c73d75295807f69ade54ef638ff8"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/multiblock/tank_3x3.json",
+      "sha256": "fcbc04b3dd90b118915ebd6dc08c618936af59292c246c11dc20ece6665bc1dd",
+      "adaptation": "native composite loader namespace",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\multiblock\\tank_3x3.json",
+      "sourceSha256": "3ce6f077c6899e74216f1763b50e37d1c15b413fc611a31c13494c31fe531219"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/multiblock/tank_3x3_down.json",
+      "sha256": "383561764018011d331bcd6f278b613421a363c275c6ef30dfe17a26470d53f2",
+      "adaptation": "native composite loader namespace",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\multiblock\\tank_3x3_down.json",
+      "sourceSha256": "7e70d293c9032f5675583dced6b0c15a7764817be5a50b375101c02250487ebb"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/multiblock/tank_3x3_up.json",
+      "sha256": "a3070edbf0ec9662045b6ad33d43ddec36003de93b7104726b308b31c13d7fa3",
+      "adaptation": "native composite loader namespace",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\multiblock\\tank_3x3_up.json",
+      "sourceSha256": "305887380aedb01871d9c26b8adcb997d146cebb47f2b66e8d74d56132b05ec8"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/multiblock/tank_5x5.json",
+      "sha256": "fcbc04b3dd90b118915ebd6dc08c618936af59292c246c11dc20ece6665bc1dd",
+      "adaptation": "native composite loader namespace",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\multiblock\\tank_5x5.json",
+      "sourceSha256": "3ce6f077c6899e74216f1763b50e37d1c15b413fc611a31c13494c31fe531219"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/multiblock/tank_5x5_down.json",
+      "sha256": "383561764018011d331bcd6f278b613421a363c275c6ef30dfe17a26470d53f2",
+      "adaptation": "native composite loader namespace",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\multiblock\\tank_5x5_down.json",
+      "sourceSha256": "7e70d293c9032f5675583dced6b0c15a7764817be5a50b375101c02250487ebb"
+    },
+    {
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/multiblock/tank_5x5_up.json",
+      "sha256": "a3070edbf0ec9662045b6ad33d43ddec36003de93b7104726b308b31c13d7fa3",
+      "adaptation": "native composite loader namespace",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\multiblock\\tank_5x5_up.json",
+      "sourceSha256": "305887380aedb01871d9c26b8adcb997d146cebb47f2b66e8d74d56132b05ec8"
+    }
+  ],
+  "counts": {
+    "originalValves": 25,
+    "legacyTankAliases": 2,
+    "originalBoilers": 5
+  },
+  "choice": "Retain saltnya exact original valve material/proof/capacity semantics and five boiler executors; reuse shared loaded-only hollow structure and atomic ownership. brokestar/masson multiblock comparison already recorded in native-multiblock-controllers-integration.json; no second registry or unit framework.",
+  "validation": "Grouped core/Neo/Forge compile PASS: tanks 25s, final tanks/boilers 19s after four API errors. No new startup or gameplay fixture; runtime deferred to later grouped ordinary startup.",
+  "knownGaps": [
+    "new valve/boiler registration and manufacturing rows not yet runtime loaded",
+    "full survival construction and pressure/steam/hazard/tool interactions unverified",
+    "legacy large_boiler_main controller alias not ported in this wave; five exact original variants are connected",
+    "tank/fusion/part tint and world rendering unverified",
+    "real world restart/old saves/Forge gameplay/fresh jars unverified"
+  ],
+  "registrationRuntimeCoveredBy": "docs/integration/verification/p3-neoforge-turbines-tanks-boilers-startup.json; registry/recipe data/startup only, not actual tank or boiler gameplay"
+}

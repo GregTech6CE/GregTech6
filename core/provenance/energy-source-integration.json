@@ -1,0 +1,96 @@
+{
+  "status": "source integration, unverified; no build/test/client/server executed for this batch",
+  "sources": [
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/data/GregTechTags.java",
+      "sha256": "fd3b8c009b316ab98c798f247713ec070be4b3fc98505b863316a4d7fd1d7f7f",
+      "change": "byte-identical move to core"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/api/energy/AxleSpec.java",
+      "sha256": "cc007be556df67b50a5ace1c0b1ffdf5bc667ded7e8edaee5b5cbebefe47c19b",
+      "change": "byte-identical move to core"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/api/energy/EnergyNodeSpec.java",
+      "sha256": "8a4cf7f2fe2878de103ee9e7a7ed6e28f3056be06a93f46a83eb39e2995fc6c5",
+      "change": "byte-identical move to core"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/api/energy/GearboxSpec.java",
+      "sha256": "5c2e650178559496dd4166d1e6be3ab44ce62fa631c56af82b71b43cd665fc11",
+      "change": "byte-identical move to core"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/api/energy/WireSpec.java",
+      "sha256": "07e4b4f6c0864228ba4065a27b332290b0d51367c6b31f0080d72373229846bd",
+      "change": "byte-identical move to core"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/api/energy/IEnergyConductor.java",
+      "sha256": "1aa9fa8446d9e69a6d7840d326413c82e47dc9be922db68e8271c5271ff4b040",
+      "change": "byte-identical move to core"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/api/energy/IEnergyBlock.java",
+      "sha256": "e7f2791ff28d25494423726c0ddf921762ceca974f8576f89ef9757452babe0f",
+      "change": "Neo platform API adapter"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/api/energy/EnergyNet.java",
+      "sha256": "31301f68ec9ebfff88c459389ce06d5ad6627a7baea49d03d8ce1dbebe6fa3ca",
+      "change": "Neo platform API adapter"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/api/energy/FaceConfig.java",
+      "sha256": "12233e1baa3eaa1062c2349eacd077635311bdf2eadb7b9040d1dc687926501d",
+      "change": "Neo platform API adapter"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/api/energy/EnergyTransfer.java",
+      "sha256": "0c87ea50931c883889bc45953da2aa7aca5c15a7ac9f4e0b1c2df78c6eeca0a8",
+      "change": "Neo platform API adapter"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockDefaults.java",
+      "sha256": "5fb4131f13e73cd9260fcedfada0a67496bb242af15096175379ad60467b260f",
+      "change": "Neo platform API adapter"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/util/GTEnergySides.java",
+      "sha256": "865ba18e061136cf03d911966806e44da8ff7dcbca6becc63216bfa599706fef",
+      "change": "Neo platform API adapter"
+    },
+    {
+      "source": "brokestar233",
+      "file": "src\\main\\java\\gregapi\\tileentity\\energy\\EnergyGate.java",
+      "sha256": "349b222cf9acd5724b831d431bbfc5a5bc3771b3ef935918ace0435f6a843cb3",
+      "change": "shared tags/package adapter; original gate branches retained"
+    },
+    {
+      "source": "brokestar233",
+      "file": "src\\main\\java\\gregapi\\tileentity\\energy\\EnergyBridge.java",
+      "sha256": "56c4e65af3f487ce7066ebf01358935c188ce54814c58b86abf85b1540c93f9a",
+      "change": "FE packet primitive; removed CS/UT coupling, checked request multiplication and MIN_VALUE; new dispatch is integration policy, not copied bro outbound EU policy"
+    },
+    {
+      "source": "saltnya",
+      "file": "src/main/java/com/gregtech/gregtech/api/energy/GTEnergyStore.java",
+      "sha256": "69d308c385ad87569a29d1a11edb286b51b8f7e5f8e39075bac5811feebe630d",
+      "change": "long-buffer implementation moved to core; loader wrappers retain old methods and numerical semantics"
+    }
+  ],
+  "scope": "One shared tag/catalog/spec/gate/buffer/FE arithmetic with Forge and Neo capability adapters. EU=4 FE, MJ=10 FE; HU not convertible to FE. Complete wire/converter/machine registration remains pending."
+}

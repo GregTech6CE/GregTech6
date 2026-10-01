@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "gregtech:block/blocks/block_ingot_bluesteel"
+    }
+  }
+}

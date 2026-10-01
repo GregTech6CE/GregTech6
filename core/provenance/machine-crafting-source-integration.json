@@ -1,0 +1,145 @@
+{
+  "source": "saltnya original machine recipe and material tag packs",
+  "author": "saltnya / preserved GregTech 6 attribution",
+  "license": "unchanged; public distribution authorization remains unresolved",
+  "nativeAdaptations": [
+    "Neo PackLocationInfo/ResourcesSupplier",
+    "singular recipe and tag directories",
+    "ShapedRecipe codec and ItemStack components",
+    "original tool crafting wear costs shared in core",
+    "forge tag IDs retained with c aliases"
+  ],
+  "gaps": [
+    "Full tool item behavior and powered tool energy",
+    "Finite fluid ingredient draining",
+    "Black sand and wood species native factories/tags",
+    "Rechargeable battery items/tags pending native energy item registration",
+    "Multiblock ingredient factories and recipes"
+  ],
+  "resourceFiles": [
+    {
+      "source": "src/main/resources/data/gregtech/tags/items/circuits_tier_0_plus.json",
+      "destination": "neoforge/src/main/resources/data/gregtech/tags/item/circuits_tier_0_plus.json",
+      "sha256": "1e7a769e72c4a1de0072ddd41e68e632aeae9b3ef7dba90fef11df8c7bac87bf"
+    },
+    {
+      "source": "src/main/resources/data/gregtech/tags/items/circuits_tier_1_plus.json",
+      "destination": "neoforge/src/main/resources/data/gregtech/tags/item/circuits_tier_1_plus.json",
+      "sha256": "ed3e0ff9301497a10988e10a6dfef06e3c49e023b7b43ddbee8144b5c798ecde"
+    },
+    {
+      "source": "src/main/resources/data/gregtech/tags/items/circuits_tier_2_plus.json",
+      "destination": "neoforge/src/main/resources/data/gregtech/tags/item/circuits_tier_2_plus.json",
+      "sha256": "df5252f2b3149dc5671d32fab2045da9137b52ab4cf2a7efc8066547c4deb3e0"
+    },
+    {
+      "source": "src/main/resources/data/gregtech/tags/items/circuits_tier_3_plus.json",
+      "destination": "neoforge/src/main/resources/data/gregtech/tags/item/circuits_tier_3_plus.json",
+      "sha256": "b1761521a668301724b4e75cdd56edc2f754511d564ed72fc66c8c6170c4f7df"
+    },
+    {
+      "source": "src/main/resources/data/gregtech/tags/items/circuits_tier_4_plus.json",
+      "destination": "neoforge/src/main/resources/data/gregtech/tags/item/circuits_tier_4_plus.json",
+      "sha256": "1b1f72453d019522a58cba96c7aa046dae27b4effe8769a2134646cc92e1c274"
+    },
+    {
+      "source": "src/main/resources/data/gregtech/tags/items/circuits_tier_5_plus.json",
+      "destination": "neoforge/src/main/resources/data/gregtech/tags/item/circuits_tier_5_plus.json",
+      "sha256": "1453e4699f858e7c5af3b14d8ff22f1f654de2de3d60a7b3c4697c825577f84c"
+    },
+    {
+      "source": "src/main/resources/data/gregtech/tags/items/circuits_tier_6_plus.json",
+      "destination": "neoforge/src/main/resources/data/gregtech/tags/item/circuits_tier_6_plus.json",
+      "sha256": "e4e2073c2a0d9316f8d392a8f32039ee0ad0f2b9284eb40531c4b821d7c4b4dd"
+    },
+    {
+      "source": "src/main/resources/data/gregtech/tags/items/integrated_circuits.json",
+      "destination": "neoforge/src/main/resources/data/gregtech/tags/item/integrated_circuits.json",
+      "sha256": "4abc72793fcf6134c0b3a427a5328d6fbca004449b2b729dba757e78ec090431"
+    }
+  ],
+  "sourceFiles": [
+    {
+      "path": "src/main/java/com/gregtech/gregtech/data/BasicMachineRecipePack.java",
+      "sourceSnapshot": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/data/BasicMachineRecipePack.java",
+      "sha256": "9aaade46e9604110c7cd39190037b246ff44c4d19a1af40df3b9a5951577011d"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/data/MachineRecipeIngredients.java",
+      "sourceSnapshot": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/data/MachineRecipeIngredients.java",
+      "sha256": "35127dba322ed248827e08edc2369dbb6ea2f7a47b876bdfad3fa6f60f6489cb"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/data/MaterialTagPack.java",
+      "sourceSnapshot": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/data/MaterialTagPack.java",
+      "sha256": "9f9e832f5ffb55c5362396a5898639f8650ef287cc30eca4ea5b073730d7f851"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/recipe/ToolShapedRecipe.java",
+      "sourceSnapshot": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/recipe/ToolShapedRecipe.java",
+      "sha256": "53aa8126c11f370a991a6ce2e214e54538bdd6508cd647e07664460f52e1cedb"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/api/tool/GTToolType.java",
+      "sourceSnapshot": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/api/tool/GTToolType.java",
+      "sha256": "095f5a1c39bbe9ce71247569cedeb36ab299b85d26e93a7368ec2021faadd232"
+    }
+  ],
+  "runtimeDependencyRepair": {
+    "cause": "Missing dye ingredient gregtech:plant_remains in first startup; Gradle returned success but game failed",
+    "originalCatalog": "registry/GTMultiItemsGen.java",
+    "catalogSHA256": "c902a8281f0e9e46275ed437b4902b7db0070a8dbc7e0ef617cb96817f24c085",
+    "adoptedSubset": [
+      "plant_remains",
+      "fruit_remains",
+      "vegetable_remains",
+      "nut_remains"
+    ],
+    "behaviorEvidence": "All four GTFoodItemsGen rows have hasFoodStat=false; no dedicated branch in ItemBehaviors; same source default TechItem behavior",
+    "foodTableSHA256": "9523d6cd369a8b261ab81668504688952b30585328f1148d0b04c1e0d6e1b707",
+    "resources": [
+      {
+        "source": "src/main/resources/assets/gregtech/models/item/plant_remains.json",
+        "target": "neoforge/src/main/resources/assets/gregtech/models/item/plant_remains.json",
+        "sha256": "3d3a6a36d2dff3e58db61347486a6c76273d765f38e4a10b069c9fccbb148524"
+      },
+      {
+        "source": "src/main/resources/assets/gregtech/textures/item/food/plant_remains.png",
+        "target": "core/src/main/resources/assets/gregtech/textures/item/food/plant_remains.png",
+        "sha256": "94e526aeb9f9da4d2cbb2e3cc4eee561ab4d65d87028534d343df9ec30ebfe0a"
+      },
+      {
+        "source": "src/main/resources/assets/gregtech/models/item/fruit_remains.json",
+        "target": "neoforge/src/main/resources/assets/gregtech/models/item/fruit_remains.json",
+        "sha256": "a8823d57cf5539ab27aa3b22341b256bb5ac7bd893176ee859f56ec2c7d8a49a"
+      },
+      {
+        "source": "src/main/resources/assets/gregtech/textures/item/food/fruit_remains.png",
+        "target": "core/src/main/resources/assets/gregtech/textures/item/food/fruit_remains.png",
+        "sha256": "b5d1b45194d8210fb82f18a2e016a86bcd7c2d837c53a75c32a0d51590f8ed1b"
+      },
+      {
+        "source": "src/main/resources/assets/gregtech/models/item/vegetable_remains.json",
+        "target": "neoforge/src/main/resources/assets/gregtech/models/item/vegetable_remains.json",
+        "sha256": "afe356b579926003cd706dc8477a8a8c6c9297e9659e648e7853e1c12fb6b3a1"
+      },
+      {
+        "source": "src/main/resources/assets/gregtech/textures/item/food/vegetable_remains.png",
+        "target": "core/src/main/resources/assets/gregtech/textures/item/food/vegetable_remains.png",
+        "sha256": "8defbe061f15f0005b205698cfcf66b3de55bbd5091f9f18354df0d9ca436fac"
+      },
+      {
+        "source": "src/main/resources/assets/gregtech/models/item/nut_remains.json",
+        "target": "neoforge/src/main/resources/assets/gregtech/models/item/nut_remains.json",
+        "sha256": "849fc6d0d003a352d42cd05aa7e1ef4f6ec2758b7e58d3ebc800de1ff38ba32a"
+      },
+      {
+        "source": "src/main/resources/assets/gregtech/textures/item/food/nut_remains.png",
+        "target": "core/src/main/resources/assets/gregtech/textures/item/food/nut_remains.png",
+        "sha256": "c068598ebac9008b361a6fbc25cdb63b3ef47cdc5f079a9873e5ae9eeba15a45"
+      }
+    ]
+  },
+  "verification": "Grouped Neo compile and ordinary dedicated startup/recipe load/200 ticks/save-stop passed after repairs; no Forge recompile, client/full playflow/world restart verification",
+  "receipt": "docs/integration/verification/p3-neoforge-recipe-startup.json"
+}

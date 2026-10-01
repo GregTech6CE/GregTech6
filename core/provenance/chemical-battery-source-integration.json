@@ -1,0 +1,997 @@
+{
+  "source": "saltnya",
+  "license": "unchanged; public distribution authorization unresolved",
+  "verification": "Grouped core/NeoForge/Forge compileJava PASS in 27s after two Neo API fixes; runtime behavior unverified",
+  "chemicalBlocks": 25,
+  "retainedPlacedIds": 5,
+  "behavior": [
+    "Passive placed charge; no network emission",
+    "Sneak placement; charge preserved on placement/drop/pick",
+    "HolderLookup save/load and update tags; MAX_STACK_SIZE components on charged item",
+    "Original integer indicator/chemistry colors and original model property",
+    "Shared original item battery packet arithmetic"
+  ],
+  "gaps": [
+    "Full magnifying glass/tool behaviors",
+    "Charging infrastructure/battery boxes/FE item bridge",
+    "Battery crafting depends on actual wires and tools; original recipes not falsely enabled",
+    "Client/charge/simulation/gameplay/world reload validation",
+    "Harvest predicates for still-unported block factories; live loot/harvest behavior unverified"
+  ],
+  "records": [
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/item/ChemicalBatteryItem.java",
+      "sha256": "7b363546569964f40dd80cbb808215de76b1a0b237ae3ddc170ec5f14f53edf0",
+      "native": "neoforge/src/main/java/com/gregtech/gregtech/item/ChemicalBatteryItem.java"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/blockentity/energy/ChemicalBatteryBlockEntity.java",
+      "sha256": "d0d636314515ac58fdf17187a8921a383a541d522c1864b9edb25a6675933673",
+      "native": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/energy/ChemicalBatteryBlockEntity.java"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/block/energy/ChemicalBatteryBlock.java",
+      "sha256": "9082a4268bab703ad00c1b4b96cdeb5b3520da6d7c0484be5ac568c4480cadab",
+      "native": "neoforge/src/main/java/com/gregtech/gregtech/block/energy/ChemicalBatteryBlock.java"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/registry/GTChemicalBatteries.java",
+      "sha256": "583359ed8a9b1fa9b0882abde3a99847b06be8e2c645214133d658cff2a30f3f",
+      "native": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTChemicalBatteries.java"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/client/ArmRenderHelper.java",
+      "sha256": "674024c1aae3359eb3df464d9ea270d32b1658c5100abf87cb29944b6120c8ac",
+      "native": "neoforge/src/main/java/com/gregtech/gregtech/client/ArmRenderHelper.java"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/client/ChemicalBatteryRenderer.java",
+      "sha256": "f0368db06e2fcadc4b98cd8d38a02b22dcdfe5b153a9658de9087348619dc02a",
+      "native": "neoforge/src/main/java/com/gregtech/gregtech/client/ChemicalBatteryRenderer.java"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/data/BlockLootPack.java",
+      "sha256": "221775012b22f5f91b6b229fd22811494a0549dbbb1bd9ce8cee7af5c534e67c",
+      "nativeOrShared": "neoforge/src/main/java/com/gregtech/gregtech/data/BlockLootPack.java",
+      "change": "retain original loot/harvest/property rules at native Minecraft boundaries"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/data/BlockHarvestPolicy.java",
+      "sha256": "a87f630c4690507429f2f6345d16332f9ba7516d0487dff4b476d16a21ca52aa",
+      "nativeOrShared": "core/src/main/java/com/gregtech/gregtech/data/BlockHarvestNames.java + native harvest policy",
+      "change": "retain original loot/harvest/property rules at native Minecraft boundaries"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/block/misc/SpikeBlock.java",
+      "sha256": "43500c1c342a1cb5b3b2768e5b47d99e051287604be8d8cfe8745a5171975c99",
+      "nativeOrShared": "core/src/main/java/com/gregtech/gregtech/api/block/StatefulBlockLoot.java",
+      "change": "retain original loot/harvest/property rules at native Minecraft boundaries"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+      "sha256": "4d6e46a4d9c0c35796033a9a1f759d7afc014a0ec078cf2d4604f17fe76e1705",
+      "nativeOrShared": "neoforge/src/main/java/com/gregtech/gregtech/client/ChemicalBatteryClientSetup.java",
+      "change": "retain original loot/harvest/property rules at native Minecraft boundaries"
+    }
+  ],
+  "resources": [
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_lead_acid_ulv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_lead_acid_ulv.json",
+      "sha256": "036086904d5aa8a0eefbc64aa7835da1f289b5229246ea1ba454597c5a51e587"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_8_0.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_8_0.json",
+      "sha256": "e0cb959cc1951261616b945d451caaa2a64d235c6553c87bcacbf9da8c14008a"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/8/bottom.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/8/bottom.png",
+      "sha256": "455d8eec2d5b699cf9e6030d7761d2a68d44937a5809f23712d1b1a7f9d4fb90"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/8/top.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/8/top.png",
+      "sha256": "5f659e6526434b95f678bc5ec0027980eb08afda97a33079f7be59abec6ce6a3"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/8/sides.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/8/sides.png",
+      "sha256": "11cad1231606c1935b12fd1a4c309553e2653ef46b5094c6443588e950dff01d"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/8/bar.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/8/bar.png",
+      "sha256": "f7a8e9cac419dc09bef0d6c608f876a3281b63c4c491fd9ae3b5db5ee7f7fbc1"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_lead_acid_ulv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_lead_acid_ulv.json",
+      "sha256": "57658c973448d33c9c83295a16a0bb52f41c0b5aaf70dd6680548bd785e9b6f4"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_8_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_8_1.json",
+      "sha256": "a1c2d9b5417a52de7dd529d725e1084e08d6d9b38f6544281bdcc8791b058b42"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_8_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_8_2.json",
+      "sha256": "d7421aa186cb5b7132ca0bf87e8ec8f748421e96d24f8a8efe92fec6f0d6c40d"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_8_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_8_3.json",
+      "sha256": "220ef566180cd64ea4d190bb5d719a6c20c27a840198537e59a1f1447703df19"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_8_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_8_4.json",
+      "sha256": "8d373b454800cad5d59daa2566efa3ba5ec9298417c95ae98df9cef0eed15064"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_lead_acid_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_lead_acid_lv.json",
+      "sha256": "044b1839ef6b386b7a04b4998ff4f76317c2b2b5df5faeaa1c5592b213b83f93"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_32_0.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_32_0.json",
+      "sha256": "275a124086dd3209bf226087b7a320940618185ed148475ced4048848119fbb4"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/32/bottom.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/32/bottom.png",
+      "sha256": "455d8eec2d5b699cf9e6030d7761d2a68d44937a5809f23712d1b1a7f9d4fb90"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/32/top.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/32/top.png",
+      "sha256": "5f659e6526434b95f678bc5ec0027980eb08afda97a33079f7be59abec6ce6a3"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/32/sides.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/32/sides.png",
+      "sha256": "8e48a67483c44a5416d9f42a303a7b6bfad1adc9b3e6ff195bb894d00e55561f"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/32/bar.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/32/bar.png",
+      "sha256": "117aa15c57f9fd3890c722bfd9899218e7fd052e4e3bb9aec489903374170c41"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_lead_acid_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_lead_acid_lv.json",
+      "sha256": "fbc1fba38aa53c7a40a3800acc31f30e989876e8eced3c2b864f920482db17cc"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_32_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_32_1.json",
+      "sha256": "4f6708658d6a2cc773b6fb1526671e3a28de4081c4815dd194c5cb2530a06526"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_32_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_32_2.json",
+      "sha256": "94efb5e58e16754cf8fad0a82b11d9d7fdb8df4c1c36d091ead95e6272bfc802"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_32_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_32_3.json",
+      "sha256": "20c869953838b2b500280b5cddde6e9488ed379c6b4d53efe8c99380c5881c6c"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_32_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_32_4.json",
+      "sha256": "b95a151a4c3082b700b764e838bc2fd89e75e60c43948d540baf2c6f1293d77b"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_32_5.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_32_5.json",
+      "sha256": "d4be123e7a1a538aaf667519cdb0b5b69b69fc901ab04a2903dbef4ce2b404a4"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_32_6.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_32_6.json",
+      "sha256": "2d398ee504447acaccbb3b2caf59fa4d8d8bf52ff135bffae3f2df7ed39470bb"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_32_7.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_32_7.json",
+      "sha256": "f3a984dc2a9c0cf750f9d9e3c17c47f9dcdf479c570718b73a5d5bd6a160fad2"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_lead_acid_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_lead_acid_mv.json",
+      "sha256": "096709d8bbaf6a0d257c2854f32d407c539e9b1a8f0936c7644c911e0b484799"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_128_0.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_128_0.json",
+      "sha256": "b25a26c063ec6edad62532cb25a190510ab9a2ff42912949d61f35d95923ed90"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/128/bottom.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/128/bottom.png",
+      "sha256": "e979287eb0bea46cf03b925962582a11e913da8407211095355cf3251f7aa7b0"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/128/top.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/128/top.png",
+      "sha256": "9033fa6cf994deef663d1cbd67c7931fa84ee8a2f3f95268e94ef5d5930fb619"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/128/sides.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/128/sides.png",
+      "sha256": "433b279dc8312441b229ca02f45c638663623b7f5fc46b7d8493314d9a941bd9"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/128/bar.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/128/bar.png",
+      "sha256": "9186d5ef564d54e68f6ca1fb5363ebe98b9f45714873bd464c83fcdf54a0c93a"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_lead_acid_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_lead_acid_mv.json",
+      "sha256": "37e1d809b5425d77ddefb1d368ac66a69fbf6748a5a808768a0cf103781206b3"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_128_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_128_1.json",
+      "sha256": "f68a017fa1e59e6e78a0552e4c23adf2c1ff2363c46ed60b7043ad000e43397f"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_128_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_128_2.json",
+      "sha256": "23216b9fc8fea0c6523c4bd38bb41f5241f4986bdb9dba5d3a181334c3e1d544"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_128_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_128_3.json",
+      "sha256": "ff2f316ec4ef69499f1425442b0577b0317fb89068d1914f472b8da751faaeed"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_128_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_128_4.json",
+      "sha256": "6d7d7c856fdcd1a8aa91eacf097308ccd0cb62440646293000d2ba328387077f"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_128_5.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_128_5.json",
+      "sha256": "e37109b9868b2502e50dc6a3d1a66e7921bdf65ffc7dd11994f3d4e96142dddf"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_128_6.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_128_6.json",
+      "sha256": "86e7c0e69da7ae83dac244dd1397ec5bf222c71ab639adfa173ff36c3cbc0dff"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_128_7.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_128_7.json",
+      "sha256": "40d633893dd0ff81f8fd29cb2f00048f37d9e24c1a2c00ee9fdfed393ebe4282"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_lead_acid_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_lead_acid_hv.json",
+      "sha256": "955632be546c7a5d9a3f47ff80827e3a31e758c86e338995e264dd9294ffde85"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_512_0.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_512_0.json",
+      "sha256": "e841a7cf24c308534b96631b0e8a78543ffa4e2d50170e581ff35cec48658638"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/512/bottom.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/512/bottom.png",
+      "sha256": "2460c53125d210ce9f632d883b71a8bfc676d337fa93c72a3918e013caaca78a"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/512/top.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/512/top.png",
+      "sha256": "702fd2534cae1970fc981357efa748fad83c8c3024b4c371ea4ddff0f69ac857"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/512/sides.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/512/sides.png",
+      "sha256": "72f689f4129e0bed601f949680751bd96ae0e04f77723f0e2e5c51bd97e89aa9"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/512/bar.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/512/bar.png",
+      "sha256": "e9cb1dbd5c3afa6aef50c7b10b71bcb9cb2bbfb5c7e98fae30159a6882303549"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_lead_acid_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_lead_acid_hv.json",
+      "sha256": "09c04d8f02fe704c9210bf8f2a50425889ee75c4abfb0de031075d9457f43c34"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_512_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_512_1.json",
+      "sha256": "428e2e87df2c694f0c1049f5f6010bf665028e58379fe883fc683c9c79b60c67"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_512_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_512_2.json",
+      "sha256": "097b0b439ecb2864ee95eb3352d5ec87a62c27c150e1272b5e0abad890c5132d"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_512_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_512_3.json",
+      "sha256": "1323fce304bdd8f6eff788e6a5b28c72447d4546be141aae073fa47288ccbb62"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_512_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_512_4.json",
+      "sha256": "6b31a86bc894e5c78b6515d94c2770b137d03a5e52cfcfcbe9fefe5d2b08f499"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_512_5.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_512_5.json",
+      "sha256": "9dd027d70ff02ee5dfdfa573292c09c9786779f58ef88b53f383e0991835757c"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_512_6.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_512_6.json",
+      "sha256": "2bf61f14d635042200331f5e3c11b6ba6fb8661127a5918f861b22fa4876b41c"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_512_7.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_512_7.json",
+      "sha256": "6fafc7ca12ed665f91a4c0482b5664cefe1dadcbd2e5e66352f92a45bc1851b7"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_lead_acid_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_lead_acid_ev.json",
+      "sha256": "38a50bf869fd70c51313a45b1dae0ef0e8f15ef6a84fbf1e9a7faf7f3418e2a3"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_2048_0.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_2048_0.json",
+      "sha256": "a4a22ff47a77bb694eba3cd1a8a2191e0486b68fb12aa8c7ddafc7474c7205bb"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/2048/bottom.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/2048/bottom.png",
+      "sha256": "ac821c4360402fc3ace6d27d2ad8e2f8971772705cb7fbb37176828957f9ef39"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/2048/top.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/2048/top.png",
+      "sha256": "84ccce9bb2c08101b3ce399ee1d3a7b040a7cd8e8fd9f07f0c952ead2ea3be9d"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/2048/sides.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/2048/sides.png",
+      "sha256": "453f146fb47a6b490a994ffeeb1c55c4e184d2ebbd7f49806171616b6f5cc8ca"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/2048/bar.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/2048/bar.png",
+      "sha256": "464fda3e2b8d832d08cee187760752bd81f2a2894bc2a4c7dff0aa36e2ad67ff"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_lead_acid_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_lead_acid_ev.json",
+      "sha256": "6e391f347416d518dc58ada0bd21fec3c0447cd3e3d8130129618a71dcd9ad96"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_2048_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_2048_1.json",
+      "sha256": "f23c7624b8958f5e5af67fcee25249fa024e6e5bcb2daff388aa6d38e34841fb"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_2048_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_2048_2.json",
+      "sha256": "519da85f56b8d58be1e8a858b49ab1a1831b39436ed200ee9ee3ac9327258108"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_2048_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_2048_3.json",
+      "sha256": "1ff96b7eaa31f1f4dec31edc32554f85be87a67eb7f492ced4c990c07b8ca13f"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_2048_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_2048_4.json",
+      "sha256": "6f31106dac1e5e81fe20bcb156e1c62b0608f58e9e9f726c78762ed79343ea7a"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_2048_5.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_2048_5.json",
+      "sha256": "60377fbf057cf8055841126fccefa3599b5a31ceecefa348a7a7743fc18c3010"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_2048_6.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_2048_6.json",
+      "sha256": "b1355120e0bcc257c3236a4ea55166f73cdc0a48f9f801282c94480579b9219c"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_2048_7.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_2048_7.json",
+      "sha256": "168e02988ec1aed7308ae980a9c5423fc0419ba8b41999dc5e55675f4b523ad1"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_2048_8.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_2048_8.json",
+      "sha256": "e50325ae892ad4f2534bbaf53318139a1972dafde4aeecc9731ebadc29691781"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_2048_9.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/standard_2048_9.json",
+      "sha256": "7505129a78964a4479a92f09b2078eb0747baa54739c7935b3e798c48f90af81"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_alkaline_ulv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_alkaline_ulv.json",
+      "sha256": "036086904d5aa8a0eefbc64aa7835da1f289b5229246ea1ba454597c5a51e587"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_alkaline_ulv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_alkaline_ulv.json",
+      "sha256": "57658c973448d33c9c83295a16a0bb52f41c0b5aaf70dd6680548bd785e9b6f4"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_alkaline_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_alkaline_lv.json",
+      "sha256": "044b1839ef6b386b7a04b4998ff4f76317c2b2b5df5faeaa1c5592b213b83f93"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_alkaline_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_alkaline_lv.json",
+      "sha256": "fbc1fba38aa53c7a40a3800acc31f30e989876e8eced3c2b864f920482db17cc"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_alkaline_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_alkaline_mv.json",
+      "sha256": "096709d8bbaf6a0d257c2854f32d407c539e9b1a8f0936c7644c911e0b484799"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_alkaline_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_alkaline_mv.json",
+      "sha256": "37e1d809b5425d77ddefb1d368ac66a69fbf6748a5a808768a0cf103781206b3"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_alkaline_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_alkaline_hv.json",
+      "sha256": "955632be546c7a5d9a3f47ff80827e3a31e758c86e338995e264dd9294ffde85"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_alkaline_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_alkaline_hv.json",
+      "sha256": "09c04d8f02fe704c9210bf8f2a50425889ee75c4abfb0de031075d9457f43c34"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_alkaline_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_alkaline_ev.json",
+      "sha256": "38a50bf869fd70c51313a45b1dae0ef0e8f15ef6a84fbf1e9a7faf7f3418e2a3"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_alkaline_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_alkaline_ev.json",
+      "sha256": "6e391f347416d518dc58ada0bd21fec3c0447cd3e3d8130129618a71dcd9ad96"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_nickel_cadmium_ulv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_nickel_cadmium_ulv.json",
+      "sha256": "036086904d5aa8a0eefbc64aa7835da1f289b5229246ea1ba454597c5a51e587"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_nickel_cadmium_ulv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_nickel_cadmium_ulv.json",
+      "sha256": "57658c973448d33c9c83295a16a0bb52f41c0b5aaf70dd6680548bd785e9b6f4"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_nickel_cadmium_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_nickel_cadmium_lv.json",
+      "sha256": "044b1839ef6b386b7a04b4998ff4f76317c2b2b5df5faeaa1c5592b213b83f93"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_nickel_cadmium_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_nickel_cadmium_lv.json",
+      "sha256": "fbc1fba38aa53c7a40a3800acc31f30e989876e8eced3c2b864f920482db17cc"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_nickel_cadmium_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_nickel_cadmium_mv.json",
+      "sha256": "096709d8bbaf6a0d257c2854f32d407c539e9b1a8f0936c7644c911e0b484799"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_nickel_cadmium_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_nickel_cadmium_mv.json",
+      "sha256": "37e1d809b5425d77ddefb1d368ac66a69fbf6748a5a808768a0cf103781206b3"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_nickel_cadmium_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_nickel_cadmium_hv.json",
+      "sha256": "955632be546c7a5d9a3f47ff80827e3a31e758c86e338995e264dd9294ffde85"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_nickel_cadmium_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_nickel_cadmium_hv.json",
+      "sha256": "09c04d8f02fe704c9210bf8f2a50425889ee75c4abfb0de031075d9457f43c34"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_nickel_cadmium_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_nickel_cadmium_ev.json",
+      "sha256": "38a50bf869fd70c51313a45b1dae0ef0e8f15ef6a84fbf1e9a7faf7f3418e2a3"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_nickel_cadmium_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_nickel_cadmium_ev.json",
+      "sha256": "6e391f347416d518dc58ada0bd21fec3c0447cd3e3d8130129618a71dcd9ad96"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_lithium_cobalt_ulv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_lithium_cobalt_ulv.json",
+      "sha256": "7967ecaa9b5e26d7e418760e9941f3ff92fd89f98ef646407589f2d868c6b3e7"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_8_0.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_8_0.json",
+      "sha256": "c7ef3229312becb2106fb4313055ec3185f2d526d64e5243d92cd92a6ff4f13e"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/8/bottom.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/8/bottom.png",
+      "sha256": "455d8eec2d5b699cf9e6030d7761d2a68d44937a5809f23712d1b1a7f9d4fb90"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/8/top.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/8/top.png",
+      "sha256": "5f659e6526434b95f678bc5ec0027980eb08afda97a33079f7be59abec6ce6a3"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/8/sides.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/8/sides.png",
+      "sha256": "d9b7e796b6a2cb2fd527a661be1fe256a2efca4fc13bddb8f046d7b9efbb6924"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/8/bar.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/8/bar.png",
+      "sha256": "f7a8e9cac419dc09bef0d6c608f876a3281b63c4c491fd9ae3b5db5ee7f7fbc1"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_lithium_cobalt_ulv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_lithium_cobalt_ulv.json",
+      "sha256": "8083da535cda40376eb4efcc4ea10f7db5c3755af665752984fcf5e3c3fb2374"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_8_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_8_1.json",
+      "sha256": "9907d194ce5a966b70fb3c8ae9d146393f45f7364ce5505904c30d7ff59e9f7a"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_8_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_8_2.json",
+      "sha256": "bf9be7264294cc824f602600050b4cead7edf5afa2441a44aa75b4e9c96b4531"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_8_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_8_3.json",
+      "sha256": "20d80ace500c8a4e090480e7fda51bb2d17cbfd722a4507aeeaa7639d94596ef"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_8_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_8_4.json",
+      "sha256": "036b8162201d7e97dd2bcaa6cc219df66ee511d658e794d6a2d40166bcca0502"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_lithium_cobalt_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_lithium_cobalt_lv.json",
+      "sha256": "46c2047433175b7f027ae9b4208489e0569289ba6cb2d9635c82c4fcd32ab9b9"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_32_0.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_32_0.json",
+      "sha256": "820d741b807693630a537fb2d0b712913bde1a8d46109cec1e8e6a54ed2b3eb1"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/32/bottom.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/32/bottom.png",
+      "sha256": "455d8eec2d5b699cf9e6030d7761d2a68d44937a5809f23712d1b1a7f9d4fb90"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/32/top.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/32/top.png",
+      "sha256": "5f659e6526434b95f678bc5ec0027980eb08afda97a33079f7be59abec6ce6a3"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/32/sides.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/32/sides.png",
+      "sha256": "eced91190f80eacbf0eb57c517e4d80a487a35cacce6c7481e376a3ec23844df"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/32/bar.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/32/bar.png",
+      "sha256": "117aa15c57f9fd3890c722bfd9899218e7fd052e4e3bb9aec489903374170c41"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_lithium_cobalt_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_lithium_cobalt_lv.json",
+      "sha256": "ba6e790ec252c278f27112f6fad5c3ede6abd85d2fe5b70ddc896f6668a44f8a"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_32_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_32_1.json",
+      "sha256": "fda132bef6bf9f816fcc6a9642f13514f49f658b7d4822e32a2417ec0020d4e1"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_32_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_32_2.json",
+      "sha256": "8d9276e34ee1133a334131893191103560bfcf5ecd227407179d7a6a88cb1ff0"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_32_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_32_3.json",
+      "sha256": "90ff7e1c7b47601202d4892d32620a4f747651452f14fe533ddfad29b433f7c0"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_32_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_32_4.json",
+      "sha256": "47cf260c2e3d3aed9683ff6228821e46ee9adf74ee92a5a4450d70e239f0bd85"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_32_5.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_32_5.json",
+      "sha256": "d186b03d87a94794d027b8489661b784ecfed9bc84cdc3e36d8503f59be457de"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_32_6.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_32_6.json",
+      "sha256": "2de8b855dd03aefda0492db0768d48066c19499245607e662a1fbfe0bb6af94d"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_32_7.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_32_7.json",
+      "sha256": "2b8c564888fd217728f140f52cb0fbd13f84a991662fb9c792f8777107da04b8"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_lithium_cobalt_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_lithium_cobalt_mv.json",
+      "sha256": "7fe40f18290a9857866363f3538ae2ae041021351ed11d740d9f40c8f43e46a0"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_128_0.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_128_0.json",
+      "sha256": "f43fa11bff9c5be6f0162daf8bb813d1de0503cd64b03831e6d8f157da28ca9f"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/128/bottom.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/128/bottom.png",
+      "sha256": "e979287eb0bea46cf03b925962582a11e913da8407211095355cf3251f7aa7b0"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/128/top.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/128/top.png",
+      "sha256": "9033fa6cf994deef663d1cbd67c7931fa84ee8a2f3f95268e94ef5d5930fb619"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/128/sides.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/128/sides.png",
+      "sha256": "85efbdeeddbe1c0fa3766933b0202b1ca8d43eef7f5055835a8890217d46b1f5"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/128/bar.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/128/bar.png",
+      "sha256": "9186d5ef564d54e68f6ca1fb5363ebe98b9f45714873bd464c83fcdf54a0c93a"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_lithium_cobalt_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_lithium_cobalt_mv.json",
+      "sha256": "97e93a267afabf4b9bb0bd6a9439dd268d6a4ea88c8601d6ea1fe2e3033f57d5"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_128_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_128_1.json",
+      "sha256": "788ac1b002e852656775e82aabf6bb00747a4ea9405098bdf113d8214e476293"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_128_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_128_2.json",
+      "sha256": "2ec1bdd1baf310da4a7bebe8fb4aa163abfbffc271bc30e14613fbfe3b68dfb1"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_128_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_128_3.json",
+      "sha256": "63b949442848fb72f12318e5a25caf7705936e8b25cd33a45cc00cb0e0466b64"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_128_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_128_4.json",
+      "sha256": "8d023c34ab1f60618addf1cc6add0861634093c86cb8d07d57d7c7ded309f033"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_128_5.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_128_5.json",
+      "sha256": "1fa856c06497bfda3b5b1607fbaf0392cbd3db5d11593f514a50c8af8dfc5184"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_128_6.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_128_6.json",
+      "sha256": "7d5622bb3f0d0806d6d339980b8812b2709ce59e1e0adf87499c7e134fde02bf"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_128_7.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_128_7.json",
+      "sha256": "cf6d2b030536ff7f853f0afe9663e30ffe6127a0483e8d094df8b0467f73524c"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_lithium_cobalt_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_lithium_cobalt_hv.json",
+      "sha256": "3f917972f5b097e4eb1ce122d96075baac10df5256527af3cfa916001f43161f"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_512_0.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_512_0.json",
+      "sha256": "0304bd599eb0c00753e0ea0257c0e4c804cb60ea9c360f27a2113d85f046288d"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/512/bottom.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/512/bottom.png",
+      "sha256": "12c925e14d116fa5a8f9288a32c8cf842a6a686b3274c43cbb2ecbe5d346ae3f"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/512/top.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/512/top.png",
+      "sha256": "702fd2534cae1970fc981357efa748fad83c8c3024b4c371ea4ddff0f69ac857"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/512/sides.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/512/sides.png",
+      "sha256": "1b72e72deff6650dd04021cc595385b610936ebc1411c91dc9a3cb79d49d12f6"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/512/bar.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/512/bar.png",
+      "sha256": "e9cb1dbd5c3afa6aef50c7b10b71bcb9cb2bbfb5c7e98fae30159a6882303549"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_lithium_cobalt_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_lithium_cobalt_hv.json",
+      "sha256": "cda70fc0426b7adca1b07ad33aa3d09a9cd583701bfed00982469521ef0c2757"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_512_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_512_1.json",
+      "sha256": "7f2333d699f7808f78af6d1529c5fada48debb83fd2264dd4795fb85e30e2504"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_512_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_512_2.json",
+      "sha256": "86f4d94963c4e9dac402614acfdb7b2efc8fc0ad53f6e9466f1570649a1a6771"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_512_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_512_3.json",
+      "sha256": "9861d5d8582f25846b86a51bb4df6922a6249806a7766fa33e1b208353a126d3"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_512_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_512_4.json",
+      "sha256": "cb65db92b248732863498ee5da8ebb75eb973e90fe8d4e3dcc44d51a7a088cb4"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_512_5.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_512_5.json",
+      "sha256": "8d774ca2c7effaea4a5bcec4266f5b32276e259cdabedef8299d7438e4f920e0"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_512_6.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_512_6.json",
+      "sha256": "018f7d1f93433bac772262caa08254feee766bc6eb163ec97dd1b68d1a9e332f"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_512_7.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_512_7.json",
+      "sha256": "a162f9ac7c35a228a2dc4970fc7cbecbdc3e4f75707e27a30a56bf315400fca8"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_lithium_cobalt_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_lithium_cobalt_ev.json",
+      "sha256": "d6233e1b6464c6b5ee79dd5ac7151ed180a6db363cb64373ad0c43eef8b94cf0"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_2048_0.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_2048_0.json",
+      "sha256": "538d60e7a0b418c2117cbf3317e9777e59e9cde3b7e71267acc5185a0ffa919e"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/2048/bottom.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/2048/bottom.png",
+      "sha256": "7828c6d51e5a79df1b2d2d498a4e2988eec5795c9bd88eec73d0a352a879a100"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/2048/top.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/2048/top.png",
+      "sha256": "84ccce9bb2c08101b3ce399ee1d3a7b040a7cd8e8fd9f07f0c952ead2ea3be9d"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/2048/sides.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/2048/sides.png",
+      "sha256": "b84f616064d19e19cc7f4d86b274fcd31a7b6883e861a90a8e7ae8ae8a22f63c"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/2048/bar.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/advanced/2048/bar.png",
+      "sha256": "464fda3e2b8d832d08cee187760752bd81f2a2894bc2a4c7dff0aa36e2ad67ff"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_lithium_cobalt_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_lithium_cobalt_ev.json",
+      "sha256": "3ca6eaa6dd8e2947543e858da951bf4ff08b1e8cbc70d867d2abbed5728b62f7"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_2048_1.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_2048_1.json",
+      "sha256": "e6b9c2caa88c312d0cb921dc0c1d92ac9b0a01c422d797e4f9e753506aa4d45e"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_2048_2.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_2048_2.json",
+      "sha256": "031dc2c307a096bbde9a54300c010bb7da505bddef301003426768978048c8ad"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_2048_3.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_2048_3.json",
+      "sha256": "c2c0beec8c6947b58fb1d08cb7bf99c4693e7b0fc41b6217e4f098efd1acd42d"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_2048_4.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_2048_4.json",
+      "sha256": "bc60989f9a93cc7f47694ad8b6e734f6d16d0561203d6aee048b5b4f6d9c9600"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_2048_5.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_2048_5.json",
+      "sha256": "f69d1f00bfbaab9d933cec0cb6d26811cb6eee7e70767ea6243d2ac96e1780b6"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_2048_6.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_2048_6.json",
+      "sha256": "fcc561b78dde7f675a904d43bc681f8477ce1f18cf23a93ee4666a42df1ece49"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_2048_7.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_2048_7.json",
+      "sha256": "a3a26314d10a108dd5b352533b20cba397bf9a1933d937e65b5baf2f5aaa5ad2"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_2048_8.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_2048_8.json",
+      "sha256": "a69283f04cfba350527cc00a5650aed50bacee450d3a7d5f9993d40efd9cd8a1"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_2048_9.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/chemical_battery/advanced_2048_9.json",
+      "sha256": "c084b9cddc65e7d718297775c2272ab2800c10f5bd8ae86425adedda6fa24c33"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_lithium_manganese_ulv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_lithium_manganese_ulv.json",
+      "sha256": "7967ecaa9b5e26d7e418760e9941f3ff92fd89f98ef646407589f2d868c6b3e7"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_lithium_manganese_ulv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_lithium_manganese_ulv.json",
+      "sha256": "8083da535cda40376eb4efcc4ea10f7db5c3755af665752984fcf5e3c3fb2374"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_lithium_manganese_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_lithium_manganese_lv.json",
+      "sha256": "46c2047433175b7f027ae9b4208489e0569289ba6cb2d9635c82c4fcd32ab9b9"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_lithium_manganese_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_lithium_manganese_lv.json",
+      "sha256": "ba6e790ec252c278f27112f6fad5c3ede6abd85d2fe5b70ddc896f6668a44f8a"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_lithium_manganese_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_lithium_manganese_mv.json",
+      "sha256": "7fe40f18290a9857866363f3538ae2ae041021351ed11d740d9f40c8f43e46a0"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_lithium_manganese_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_lithium_manganese_mv.json",
+      "sha256": "97e93a267afabf4b9bb0bd6a9439dd268d6a4ea88c8601d6ea1fe2e3033f57d5"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_lithium_manganese_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_lithium_manganese_hv.json",
+      "sha256": "3f917972f5b097e4eb1ce122d96075baac10df5256527af3cfa916001f43161f"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_lithium_manganese_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_lithium_manganese_hv.json",
+      "sha256": "cda70fc0426b7adca1b07ad33aa3d09a9cd583701bfed00982469521ef0c2757"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_lithium_manganese_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_lithium_manganese_ev.json",
+      "sha256": "d6233e1b6464c6b5ee79dd5ac7151ed180a6db363cb64373ad0c43eef8b94cf0"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_lithium_manganese_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_lithium_manganese_ev.json",
+      "sha256": "3ca6eaa6dd8e2947543e858da951bf4ff08b1e8cbc70d867d2abbed5728b62f7"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_eu_8.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_eu_8.json",
+      "sha256": "7967ecaa9b5e26d7e418760e9941f3ff92fd89f98ef646407589f2d868c6b3e7"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_eu_8.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_eu_8.json",
+      "sha256": "8083da535cda40376eb4efcc4ea10f7db5c3755af665752984fcf5e3c3fb2374"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_eu_32.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_eu_32.json",
+      "sha256": "46c2047433175b7f027ae9b4208489e0569289ba6cb2d9635c82c4fcd32ab9b9"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_eu_32.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_eu_32.json",
+      "sha256": "ba6e790ec252c278f27112f6fad5c3ede6abd85d2fe5b70ddc896f6668a44f8a"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_eu_128.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_eu_128.json",
+      "sha256": "7fe40f18290a9857866363f3538ae2ae041021351ed11d740d9f40c8f43e46a0"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_eu_128.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_eu_128.json",
+      "sha256": "97e93a267afabf4b9bb0bd6a9439dd268d6a4ea88c8601d6ea1fe2e3033f57d5"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_eu_512.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_eu_512.json",
+      "sha256": "3f917972f5b097e4eb1ce122d96075baac10df5256527af3cfa916001f43161f"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_eu_512.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_eu_512.json",
+      "sha256": "cda70fc0426b7adca1b07ad33aa3d09a9cd583701bfed00982469521ef0c2757"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/battery_eu_2048.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/battery_eu_2048.json",
+      "sha256": "d6233e1b6464c6b5ee79dd5ac7151ed180a6db363cb64373ad0c43eef8b94cf0"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/battery_eu_2048.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_eu_2048.json",
+      "sha256": "3ca6eaa6dd8e2947543e858da951bf4ff08b1e8cbc70d867d2abbed5728b62f7"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/data/gregtech/tags/items/rechargeable_batteries/ulv.json",
+      "target": "neoforge/src/main/resources/data/gregtech/tags/item/rechargeable_batteries/ulv.json",
+      "sha256": "bba6d376c923776b209476c02602ab22b013e3bdbf889bc329280b25271bd01e"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/data/gregtech/tags/items/rechargeable_batteries/lv.json",
+      "target": "neoforge/src/main/resources/data/gregtech/tags/item/rechargeable_batteries/lv.json",
+      "sha256": "09aaf3c24358ddd60be02a2491ab09837ae6d74cd30bbf7de2917d1c21031249"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/data/gregtech/tags/items/rechargeable_batteries/mv.json",
+      "target": "neoforge/src/main/resources/data/gregtech/tags/item/rechargeable_batteries/mv.json",
+      "sha256": "dab93503dcac0c419ac077f2e4724b36502d043362d3cc476e35ccc58783578d"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/data/gregtech/tags/items/rechargeable_batteries/hv.json",
+      "target": "neoforge/src/main/resources/data/gregtech/tags/item/rechargeable_batteries/hv.json",
+      "sha256": "120f693c23b00c124d0dc9cb565457b213cb2b208da01bee4d8048d420e0c3f5"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/resources/data/gregtech/tags/items/rechargeable_batteries/ev.json",
+      "target": "neoforge/src/main/resources/data/gregtech/tags/item/rechargeable_batteries/ev.json",
+      "sha256": "eed9a929e399fc3fc73d6e8b2071d29bc313f1b9fc4c25c507a3e456275667b0"
+    }
+  ],
+  "verificationReceipt": "docs/integration/verification/p3-industrial-batteries-compile.json",
+  "startupVerification": "Neo ordinary DedicatedServer startup, source recipes/tags/block loot load, 200 ticks, normal save/stop PASS in 4m37s; no gameplay or restart verdict",
+  "startupReceipt": "docs/integration/verification/p3-neoforge-wires-startup.json"
+}

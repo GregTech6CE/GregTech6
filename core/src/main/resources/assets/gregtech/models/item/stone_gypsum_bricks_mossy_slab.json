@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "gregtech:block/stones/gt.stone.gypsum/bricks_mossy",
+    "top": "gregtech:block/stones/gt.stone.gypsum/bricks_mossy",
+    "side": "gregtech:block/stones/gt.stone.gypsum/bricks_mossy"
+  }
+}

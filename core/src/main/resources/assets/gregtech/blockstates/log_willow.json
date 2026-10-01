@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "gregtech:block/iconsets/log_willow"
+    },
+    "axis=z": {
+      "model": "gregtech:block/iconsets/log_willow_horizontal",
+      "x": 90
+    },
+    "axis=x": {
+      "model": "gregtech:block/iconsets/log_willow_horizontal",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

@@ -1,0 +1,1159 @@
+{
+  "models": [
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_ev.json",
+      "sourceSha256": "184664f75a7b6ad3cf0523199875db835d4f0494a0812b6965943301ed073182",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_ev.json",
+      "previousTargetSha256": "184664f75a7b6ad3cf0523199875db835d4f0494a0812b6965943301ed073182",
+      "sha256": "56fb34d5c249cd0d5d8b8c488dff52cedbe0ae57f5aa255c947b74a34c2316af",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_ev_1.json",
+      "sourceSha256": "f5b243f2807c923be9d73f39e222ab4cf3eeae137b1de419667b62d7ca91cd8a",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_ev_1.json",
+      "previousTargetSha256": "f5b243f2807c923be9d73f39e222ab4cf3eeae137b1de419667b62d7ca91cd8a",
+      "sha256": "274a0433490ade820e42be60b2ca392ede99407831477bb77eabcab378241e9a",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_ev_2.json",
+      "sourceSha256": "215b10852f56452112d4d0cfe98a9a1ba0ee28a7951618da49e20673287ecd6e",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_ev_2.json",
+      "previousTargetSha256": "215b10852f56452112d4d0cfe98a9a1ba0ee28a7951618da49e20673287ecd6e",
+      "sha256": "9e5722467b975377bdcc84d0f91c6090d98a14f83e954a8c1bea0f69e589dd39",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_hv.json",
+      "sourceSha256": "184664f75a7b6ad3cf0523199875db835d4f0494a0812b6965943301ed073182",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_hv.json",
+      "previousTargetSha256": "184664f75a7b6ad3cf0523199875db835d4f0494a0812b6965943301ed073182",
+      "sha256": "56fb34d5c249cd0d5d8b8c488dff52cedbe0ae57f5aa255c947b74a34c2316af",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_hv_1.json",
+      "sourceSha256": "f5b243f2807c923be9d73f39e222ab4cf3eeae137b1de419667b62d7ca91cd8a",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_hv_1.json",
+      "previousTargetSha256": "f5b243f2807c923be9d73f39e222ab4cf3eeae137b1de419667b62d7ca91cd8a",
+      "sha256": "274a0433490ade820e42be60b2ca392ede99407831477bb77eabcab378241e9a",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_hv_2.json",
+      "sourceSha256": "215b10852f56452112d4d0cfe98a9a1ba0ee28a7951618da49e20673287ecd6e",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_hv_2.json",
+      "previousTargetSha256": "215b10852f56452112d4d0cfe98a9a1ba0ee28a7951618da49e20673287ecd6e",
+      "sha256": "9e5722467b975377bdcc84d0f91c6090d98a14f83e954a8c1bea0f69e589dd39",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_iv.json",
+      "sourceSha256": "184664f75a7b6ad3cf0523199875db835d4f0494a0812b6965943301ed073182",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_iv.json",
+      "previousTargetSha256": "184664f75a7b6ad3cf0523199875db835d4f0494a0812b6965943301ed073182",
+      "sha256": "56fb34d5c249cd0d5d8b8c488dff52cedbe0ae57f5aa255c947b74a34c2316af",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_iv_1.json",
+      "sourceSha256": "f5b243f2807c923be9d73f39e222ab4cf3eeae137b1de419667b62d7ca91cd8a",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_iv_1.json",
+      "previousTargetSha256": "f5b243f2807c923be9d73f39e222ab4cf3eeae137b1de419667b62d7ca91cd8a",
+      "sha256": "274a0433490ade820e42be60b2ca392ede99407831477bb77eabcab378241e9a",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_iv_2.json",
+      "sourceSha256": "215b10852f56452112d4d0cfe98a9a1ba0ee28a7951618da49e20673287ecd6e",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_iv_2.json",
+      "previousTargetSha256": "215b10852f56452112d4d0cfe98a9a1ba0ee28a7951618da49e20673287ecd6e",
+      "sha256": "9e5722467b975377bdcc84d0f91c6090d98a14f83e954a8c1bea0f69e589dd39",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_luv.json",
+      "sourceSha256": "184664f75a7b6ad3cf0523199875db835d4f0494a0812b6965943301ed073182",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_luv.json",
+      "previousTargetSha256": "184664f75a7b6ad3cf0523199875db835d4f0494a0812b6965943301ed073182",
+      "sha256": "56fb34d5c249cd0d5d8b8c488dff52cedbe0ae57f5aa255c947b74a34c2316af",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_luv_1.json",
+      "sourceSha256": "f5b243f2807c923be9d73f39e222ab4cf3eeae137b1de419667b62d7ca91cd8a",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_luv_1.json",
+      "previousTargetSha256": "f5b243f2807c923be9d73f39e222ab4cf3eeae137b1de419667b62d7ca91cd8a",
+      "sha256": "274a0433490ade820e42be60b2ca392ede99407831477bb77eabcab378241e9a",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_luv_2.json",
+      "sourceSha256": "215b10852f56452112d4d0cfe98a9a1ba0ee28a7951618da49e20673287ecd6e",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_luv_2.json",
+      "previousTargetSha256": "215b10852f56452112d4d0cfe98a9a1ba0ee28a7951618da49e20673287ecd6e",
+      "sha256": "9e5722467b975377bdcc84d0f91c6090d98a14f83e954a8c1bea0f69e589dd39",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_lv.json",
+      "sourceSha256": "184664f75a7b6ad3cf0523199875db835d4f0494a0812b6965943301ed073182",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_lv.json",
+      "previousTargetSha256": "184664f75a7b6ad3cf0523199875db835d4f0494a0812b6965943301ed073182",
+      "sha256": "56fb34d5c249cd0d5d8b8c488dff52cedbe0ae57f5aa255c947b74a34c2316af",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_lv_1.json",
+      "sourceSha256": "f5b243f2807c923be9d73f39e222ab4cf3eeae137b1de419667b62d7ca91cd8a",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_lv_1.json",
+      "previousTargetSha256": "f5b243f2807c923be9d73f39e222ab4cf3eeae137b1de419667b62d7ca91cd8a",
+      "sha256": "274a0433490ade820e42be60b2ca392ede99407831477bb77eabcab378241e9a",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_lv_2.json",
+      "sourceSha256": "215b10852f56452112d4d0cfe98a9a1ba0ee28a7951618da49e20673287ecd6e",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_lv_2.json",
+      "previousTargetSha256": "215b10852f56452112d4d0cfe98a9a1ba0ee28a7951618da49e20673287ecd6e",
+      "sha256": "9e5722467b975377bdcc84d0f91c6090d98a14f83e954a8c1bea0f69e589dd39",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_mv.json",
+      "sourceSha256": "184664f75a7b6ad3cf0523199875db835d4f0494a0812b6965943301ed073182",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_mv.json",
+      "previousTargetSha256": "184664f75a7b6ad3cf0523199875db835d4f0494a0812b6965943301ed073182",
+      "sha256": "56fb34d5c249cd0d5d8b8c488dff52cedbe0ae57f5aa255c947b74a34c2316af",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_mv_1.json",
+      "sourceSha256": "f5b243f2807c923be9d73f39e222ab4cf3eeae137b1de419667b62d7ca91cd8a",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_mv_1.json",
+      "previousTargetSha256": "f5b243f2807c923be9d73f39e222ab4cf3eeae137b1de419667b62d7ca91cd8a",
+      "sha256": "274a0433490ade820e42be60b2ca392ede99407831477bb77eabcab378241e9a",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_mv_2.json",
+      "sourceSha256": "215b10852f56452112d4d0cfe98a9a1ba0ee28a7951618da49e20673287ecd6e",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_mv_2.json",
+      "previousTargetSha256": "215b10852f56452112d4d0cfe98a9a1ba0ee28a7951618da49e20673287ecd6e",
+      "sha256": "9e5722467b975377bdcc84d0f91c6090d98a14f83e954a8c1bea0f69e589dd39",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_ulv.json",
+      "sourceSha256": "184664f75a7b6ad3cf0523199875db835d4f0494a0812b6965943301ed073182",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_ulv.json",
+      "previousTargetSha256": "184664f75a7b6ad3cf0523199875db835d4f0494a0812b6965943301ed073182",
+      "sha256": "56fb34d5c249cd0d5d8b8c488dff52cedbe0ae57f5aa255c947b74a34c2316af",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_ulv_1.json",
+      "sourceSha256": "f5b243f2807c923be9d73f39e222ab4cf3eeae137b1de419667b62d7ca91cd8a",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_ulv_1.json",
+      "previousTargetSha256": "f5b243f2807c923be9d73f39e222ab4cf3eeae137b1de419667b62d7ca91cd8a",
+      "sha256": "274a0433490ade820e42be60b2ca392ede99407831477bb77eabcab378241e9a",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_ulv_2.json",
+      "sourceSha256": "215b10852f56452112d4d0cfe98a9a1ba0ee28a7951618da49e20673287ecd6e",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_ulv_2.json",
+      "previousTargetSha256": "215b10852f56452112d4d0cfe98a9a1ba0ee28a7951618da49e20673287ecd6e",
+      "sha256": "9e5722467b975377bdcc84d0f91c6090d98a14f83e954a8c1bea0f69e589dd39",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_uv.json",
+      "sourceSha256": "184664f75a7b6ad3cf0523199875db835d4f0494a0812b6965943301ed073182",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_uv.json",
+      "previousTargetSha256": "184664f75a7b6ad3cf0523199875db835d4f0494a0812b6965943301ed073182",
+      "sha256": "56fb34d5c249cd0d5d8b8c488dff52cedbe0ae57f5aa255c947b74a34c2316af",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_uv_1.json",
+      "sourceSha256": "f5b243f2807c923be9d73f39e222ab4cf3eeae137b1de419667b62d7ca91cd8a",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_uv_1.json",
+      "previousTargetSha256": "f5b243f2807c923be9d73f39e222ab4cf3eeae137b1de419667b62d7ca91cd8a",
+      "sha256": "274a0433490ade820e42be60b2ca392ede99407831477bb77eabcab378241e9a",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_uv_2.json",
+      "sourceSha256": "215b10852f56452112d4d0cfe98a9a1ba0ee28a7951618da49e20673287ecd6e",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_uv_2.json",
+      "previousTargetSha256": "215b10852f56452112d4d0cfe98a9a1ba0ee28a7951618da49e20673287ecd6e",
+      "sha256": "9e5722467b975377bdcc84d0f91c6090d98a14f83e954a8c1bea0f69e589dd39",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_xv.json",
+      "sourceSha256": "184664f75a7b6ad3cf0523199875db835d4f0494a0812b6965943301ed073182",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_xv.json",
+      "previousTargetSha256": "184664f75a7b6ad3cf0523199875db835d4f0494a0812b6965943301ed073182",
+      "sha256": "56fb34d5c249cd0d5d8b8c488dff52cedbe0ae57f5aa255c947b74a34c2316af",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_xv_1.json",
+      "sourceSha256": "f5b243f2807c923be9d73f39e222ab4cf3eeae137b1de419667b62d7ca91cd8a",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_xv_1.json",
+      "previousTargetSha256": "f5b243f2807c923be9d73f39e222ab4cf3eeae137b1de419667b62d7ca91cd8a",
+      "sha256": "274a0433490ade820e42be60b2ca392ede99407831477bb77eabcab378241e9a",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_xv_2.json",
+      "sourceSha256": "215b10852f56452112d4d0cfe98a9a1ba0ee28a7951618da49e20673287ecd6e",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_xv_2.json",
+      "previousTargetSha256": "215b10852f56452112d4d0cfe98a9a1ba0ee28a7951618da49e20673287ecd6e",
+      "sha256": "9e5722467b975377bdcc84d0f91c6090d98a14f83e954a8c1bea0f69e589dd39",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_zpm.json",
+      "sourceSha256": "184664f75a7b6ad3cf0523199875db835d4f0494a0812b6965943301ed073182",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_zpm.json",
+      "previousTargetSha256": "184664f75a7b6ad3cf0523199875db835d4f0494a0812b6965943301ed073182",
+      "sha256": "56fb34d5c249cd0d5d8b8c488dff52cedbe0ae57f5aa255c947b74a34c2316af",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_zpm_1.json",
+      "sourceSha256": "f5b243f2807c923be9d73f39e222ab4cf3eeae137b1de419667b62d7ca91cd8a",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_zpm_1.json",
+      "previousTargetSha256": "f5b243f2807c923be9d73f39e222ab4cf3eeae137b1de419667b62d7ca91cd8a",
+      "sha256": "274a0433490ade820e42be60b2ca392ede99407831477bb77eabcab378241e9a",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_zpm_2.json",
+      "sourceSha256": "215b10852f56452112d4d0cfe98a9a1ba0ee28a7951618da49e20673287ecd6e",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/battery_box_zpm_2.json",
+      "previousTargetSha256": "215b10852f56452112d4d0cfe98a9a1ba0ee28a7951618da49e20673287ecd6e",
+      "sha256": "9e5722467b975377bdcc84d0f91c6090d98a14f83e954a8c1bea0f69e589dd39",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_cooler_ev.json",
+      "sourceSha256": "358a371402f2bda9c5f8fe2f7dad399132a72e98da9d843a00f2cecc0f870300",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_cooler_ev.json",
+      "previousTargetSha256": "358a371402f2bda9c5f8fe2f7dad399132a72e98da9d843a00f2cecc0f870300",
+      "sha256": "a30de30fe8828eb386bfc91d5da424aa5db3924d23c3a8dcc04f4dc0b68300db",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_cooler_hv.json",
+      "sourceSha256": "358a371402f2bda9c5f8fe2f7dad399132a72e98da9d843a00f2cecc0f870300",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_cooler_hv.json",
+      "previousTargetSha256": "358a371402f2bda9c5f8fe2f7dad399132a72e98da9d843a00f2cecc0f870300",
+      "sha256": "a30de30fe8828eb386bfc91d5da424aa5db3924d23c3a8dcc04f4dc0b68300db",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_cooler_iv.json",
+      "sourceSha256": "358a371402f2bda9c5f8fe2f7dad399132a72e98da9d843a00f2cecc0f870300",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_cooler_iv.json",
+      "previousTargetSha256": "358a371402f2bda9c5f8fe2f7dad399132a72e98da9d843a00f2cecc0f870300",
+      "sha256": "a30de30fe8828eb386bfc91d5da424aa5db3924d23c3a8dcc04f4dc0b68300db",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_cooler_lv.json",
+      "sourceSha256": "358a371402f2bda9c5f8fe2f7dad399132a72e98da9d843a00f2cecc0f870300",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_cooler_lv.json",
+      "previousTargetSha256": "358a371402f2bda9c5f8fe2f7dad399132a72e98da9d843a00f2cecc0f870300",
+      "sha256": "a30de30fe8828eb386bfc91d5da424aa5db3924d23c3a8dcc04f4dc0b68300db",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_cooler_mv.json",
+      "sourceSha256": "358a371402f2bda9c5f8fe2f7dad399132a72e98da9d843a00f2cecc0f870300",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_cooler_mv.json",
+      "previousTargetSha256": "358a371402f2bda9c5f8fe2f7dad399132a72e98da9d843a00f2cecc0f870300",
+      "sha256": "a30de30fe8828eb386bfc91d5da424aa5db3924d23c3a8dcc04f4dc0b68300db",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_dynamo_ev.json",
+      "sourceSha256": "c73b4e16f9c66abec04b8e7b44977beff0593baba3b3737270068fff82673483",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_dynamo_ev.json",
+      "previousTargetSha256": "c73b4e16f9c66abec04b8e7b44977beff0593baba3b3737270068fff82673483",
+      "sha256": "14a25793ce1a38b0533937b96758180fc6a39cb980f67529ac596e3817896836",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_dynamo_hv.json",
+      "sourceSha256": "c73b4e16f9c66abec04b8e7b44977beff0593baba3b3737270068fff82673483",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_dynamo_hv.json",
+      "previousTargetSha256": "c73b4e16f9c66abec04b8e7b44977beff0593baba3b3737270068fff82673483",
+      "sha256": "14a25793ce1a38b0533937b96758180fc6a39cb980f67529ac596e3817896836",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_dynamo_iv.json",
+      "sourceSha256": "c73b4e16f9c66abec04b8e7b44977beff0593baba3b3737270068fff82673483",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_dynamo_iv.json",
+      "previousTargetSha256": "c73b4e16f9c66abec04b8e7b44977beff0593baba3b3737270068fff82673483",
+      "sha256": "14a25793ce1a38b0533937b96758180fc6a39cb980f67529ac596e3817896836",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_dynamo_lv.json",
+      "sourceSha256": "c73b4e16f9c66abec04b8e7b44977beff0593baba3b3737270068fff82673483",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_dynamo_lv.json",
+      "previousTargetSha256": "c73b4e16f9c66abec04b8e7b44977beff0593baba3b3737270068fff82673483",
+      "sha256": "14a25793ce1a38b0533937b96758180fc6a39cb980f67529ac596e3817896836",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_dynamo_mv.json",
+      "sourceSha256": "c73b4e16f9c66abec04b8e7b44977beff0593baba3b3737270068fff82673483",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_dynamo_mv.json",
+      "previousTargetSha256": "c73b4e16f9c66abec04b8e7b44977beff0593baba3b3737270068fff82673483",
+      "sha256": "14a25793ce1a38b0533937b96758180fc6a39cb980f67529ac596e3817896836",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_heater_ev.json",
+      "sourceSha256": "4d696507e32a6945508babcd9f382b0aa562c8b4e6b36a7541cf73ed487d3bcf",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_heater_ev.json",
+      "previousTargetSha256": "4d696507e32a6945508babcd9f382b0aa562c8b4e6b36a7541cf73ed487d3bcf",
+      "sha256": "ff86f8ceba4329bcd808bb1d4a7a14fa2bbec186f6f471ff2754704c766261a5",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_heater_hv.json",
+      "sourceSha256": "4d696507e32a6945508babcd9f382b0aa562c8b4e6b36a7541cf73ed487d3bcf",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_heater_hv.json",
+      "previousTargetSha256": "4d696507e32a6945508babcd9f382b0aa562c8b4e6b36a7541cf73ed487d3bcf",
+      "sha256": "ff86f8ceba4329bcd808bb1d4a7a14fa2bbec186f6f471ff2754704c766261a5",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_heater_iv.json",
+      "sourceSha256": "4d696507e32a6945508babcd9f382b0aa562c8b4e6b36a7541cf73ed487d3bcf",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_heater_iv.json",
+      "previousTargetSha256": "4d696507e32a6945508babcd9f382b0aa562c8b4e6b36a7541cf73ed487d3bcf",
+      "sha256": "ff86f8ceba4329bcd808bb1d4a7a14fa2bbec186f6f471ff2754704c766261a5",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_heater_lv.json",
+      "sourceSha256": "4d696507e32a6945508babcd9f382b0aa562c8b4e6b36a7541cf73ed487d3bcf",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_heater_lv.json",
+      "previousTargetSha256": "4d696507e32a6945508babcd9f382b0aa562c8b4e6b36a7541cf73ed487d3bcf",
+      "sha256": "ff86f8ceba4329bcd808bb1d4a7a14fa2bbec186f6f471ff2754704c766261a5",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_heater_mv.json",
+      "sourceSha256": "4d696507e32a6945508babcd9f382b0aa562c8b4e6b36a7541cf73ed487d3bcf",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_heater_mv.json",
+      "previousTargetSha256": "4d696507e32a6945508babcd9f382b0aa562c8b4e6b36a7541cf73ed487d3bcf",
+      "sha256": "ff86f8ceba4329bcd808bb1d4a7a14fa2bbec186f6f471ff2754704c766261a5",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_motor_ev.json",
+      "sourceSha256": "a3d58977f344dfb39ee161875c0c5f3313be4d3b801f49d4c90a76dd61c43201",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_motor_ev.json",
+      "previousTargetSha256": "a3d58977f344dfb39ee161875c0c5f3313be4d3b801f49d4c90a76dd61c43201",
+      "sha256": "859bdc2ad6f4201b89a49bcfbcba9a48fb5b304995f81103146c632e763c517a",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_motor_hv.json",
+      "sourceSha256": "a3d58977f344dfb39ee161875c0c5f3313be4d3b801f49d4c90a76dd61c43201",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_motor_hv.json",
+      "previousTargetSha256": "a3d58977f344dfb39ee161875c0c5f3313be4d3b801f49d4c90a76dd61c43201",
+      "sha256": "859bdc2ad6f4201b89a49bcfbcba9a48fb5b304995f81103146c632e763c517a",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_motor_iv.json",
+      "sourceSha256": "a3d58977f344dfb39ee161875c0c5f3313be4d3b801f49d4c90a76dd61c43201",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_motor_iv.json",
+      "previousTargetSha256": "a3d58977f344dfb39ee161875c0c5f3313be4d3b801f49d4c90a76dd61c43201",
+      "sha256": "859bdc2ad6f4201b89a49bcfbcba9a48fb5b304995f81103146c632e763c517a",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_motor_lv.json",
+      "sourceSha256": "a3d58977f344dfb39ee161875c0c5f3313be4d3b801f49d4c90a76dd61c43201",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_motor_lv.json",
+      "previousTargetSha256": "a3d58977f344dfb39ee161875c0c5f3313be4d3b801f49d4c90a76dd61c43201",
+      "sha256": "859bdc2ad6f4201b89a49bcfbcba9a48fb5b304995f81103146c632e763c517a",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electric_motor_mv.json",
+      "sourceSha256": "a3d58977f344dfb39ee161875c0c5f3313be4d3b801f49d4c90a76dd61c43201",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electric_motor_mv.json",
+      "previousTargetSha256": "a3d58977f344dfb39ee161875c0c5f3313be4d3b801f49d4c90a76dd61c43201",
+      "sha256": "859bdc2ad6f4201b89a49bcfbcba9a48fb5b304995f81103146c632e763c517a",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_ev.json",
+      "sourceSha256": "fa500cb2d507bf1c7eb2b42bf780fefc1d0a45ff490c5c83267d3820efaddb7a",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_ev.json",
+      "previousTargetSha256": "fa500cb2d507bf1c7eb2b42bf780fefc1d0a45ff490c5c83267d3820efaddb7a",
+      "sha256": "68dec537755de16436608d7e9c366b50257625baba4492b11ea277b0d5803a0f",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_ev_active.json",
+      "sourceSha256": "902fb07a60bcd2ec6e01df0a2673f324c9c8dcc9a0a82dd630300f1f8c355fb9",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_ev_active.json",
+      "previousTargetSha256": "902fb07a60bcd2ec6e01df0a2673f324c9c8dcc9a0a82dd630300f1f8c355fb9",
+      "sha256": "9c9c719c039b3c4dc8f2682db6adda6d3f2304b1c7b9271848ee1ba5878fdea0",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_hv.json",
+      "sourceSha256": "fa500cb2d507bf1c7eb2b42bf780fefc1d0a45ff490c5c83267d3820efaddb7a",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_hv.json",
+      "previousTargetSha256": "fa500cb2d507bf1c7eb2b42bf780fefc1d0a45ff490c5c83267d3820efaddb7a",
+      "sha256": "68dec537755de16436608d7e9c366b50257625baba4492b11ea277b0d5803a0f",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_hv_active.json",
+      "sourceSha256": "902fb07a60bcd2ec6e01df0a2673f324c9c8dcc9a0a82dd630300f1f8c355fb9",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_hv_active.json",
+      "previousTargetSha256": "902fb07a60bcd2ec6e01df0a2673f324c9c8dcc9a0a82dd630300f1f8c355fb9",
+      "sha256": "9c9c719c039b3c4dc8f2682db6adda6d3f2304b1c7b9271848ee1ba5878fdea0",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_iv.json",
+      "sourceSha256": "fa500cb2d507bf1c7eb2b42bf780fefc1d0a45ff490c5c83267d3820efaddb7a",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_iv.json",
+      "previousTargetSha256": "fa500cb2d507bf1c7eb2b42bf780fefc1d0a45ff490c5c83267d3820efaddb7a",
+      "sha256": "68dec537755de16436608d7e9c366b50257625baba4492b11ea277b0d5803a0f",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_iv_active.json",
+      "sourceSha256": "902fb07a60bcd2ec6e01df0a2673f324c9c8dcc9a0a82dd630300f1f8c355fb9",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_iv_active.json",
+      "previousTargetSha256": "902fb07a60bcd2ec6e01df0a2673f324c9c8dcc9a0a82dd630300f1f8c355fb9",
+      "sha256": "9c9c719c039b3c4dc8f2682db6adda6d3f2304b1c7b9271848ee1ba5878fdea0",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_lv.json",
+      "sourceSha256": "fa500cb2d507bf1c7eb2b42bf780fefc1d0a45ff490c5c83267d3820efaddb7a",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_lv.json",
+      "previousTargetSha256": "fa500cb2d507bf1c7eb2b42bf780fefc1d0a45ff490c5c83267d3820efaddb7a",
+      "sha256": "68dec537755de16436608d7e9c366b50257625baba4492b11ea277b0d5803a0f",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_lv_active.json",
+      "sourceSha256": "902fb07a60bcd2ec6e01df0a2673f324c9c8dcc9a0a82dd630300f1f8c355fb9",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_lv_active.json",
+      "previousTargetSha256": "902fb07a60bcd2ec6e01df0a2673f324c9c8dcc9a0a82dd630300f1f8c355fb9",
+      "sha256": "9c9c719c039b3c4dc8f2682db6adda6d3f2304b1c7b9271848ee1ba5878fdea0",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_mv.json",
+      "sourceSha256": "fa500cb2d507bf1c7eb2b42bf780fefc1d0a45ff490c5c83267d3820efaddb7a",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_mv.json",
+      "previousTargetSha256": "fa500cb2d507bf1c7eb2b42bf780fefc1d0a45ff490c5c83267d3820efaddb7a",
+      "sha256": "68dec537755de16436608d7e9c366b50257625baba4492b11ea277b0d5803a0f",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_mv_active.json",
+      "sourceSha256": "902fb07a60bcd2ec6e01df0a2673f324c9c8dcc9a0a82dd630300f1f8c355fb9",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/electromagnet_mv_active.json",
+      "previousTargetSha256": "902fb07a60bcd2ec6e01df0a2673f324c9c8dcc9a0a82dd630300f1f8c355fb9",
+      "sha256": "9c9c719c039b3c4dc8f2682db6adda6d3f2304b1c7b9271848ee1ba5878fdea0",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_ev.json",
+      "sourceSha256": "7cd0f6daeeb30c5ca81be41a519fe7c7f8323e17b0c758a43a5deec85a4ea49f",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_ev.json",
+      "previousTargetSha256": "7cd0f6daeeb30c5ca81be41a519fe7c7f8323e17b0c758a43a5deec85a4ea49f",
+      "sha256": "671eda2baf25967116fb03fa744149ca656d19b50bad8bbb4ef2359f2b2cb987",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_ev_1.json",
+      "sourceSha256": "483ee4399d9f2625a93d1d8bf0ca193c190bcef2ce9ab4aa85de97b910ca95ff",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_ev_1.json",
+      "previousTargetSha256": "483ee4399d9f2625a93d1d8bf0ca193c190bcef2ce9ab4aa85de97b910ca95ff",
+      "sha256": "bb770479128c45310a07bd39d086b9385aaa183936b28950cb4f1922dc43853c",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_ev_2.json",
+      "sourceSha256": "940ff5993d9e5f4d1c6b1193315dc2bb37acb3dd2fe4a9d90f41482193bd7213",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_ev_2.json",
+      "previousTargetSha256": "940ff5993d9e5f4d1c6b1193315dc2bb37acb3dd2fe4a9d90f41482193bd7213",
+      "sha256": "a2cfdf0e35faf4906d6b1c7fc53100de9a04c9e6af6123cfc7bb559dc8188a68",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_hv.json",
+      "sourceSha256": "7cd0f6daeeb30c5ca81be41a519fe7c7f8323e17b0c758a43a5deec85a4ea49f",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_hv.json",
+      "previousTargetSha256": "7cd0f6daeeb30c5ca81be41a519fe7c7f8323e17b0c758a43a5deec85a4ea49f",
+      "sha256": "671eda2baf25967116fb03fa744149ca656d19b50bad8bbb4ef2359f2b2cb987",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_hv_1.json",
+      "sourceSha256": "483ee4399d9f2625a93d1d8bf0ca193c190bcef2ce9ab4aa85de97b910ca95ff",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_hv_1.json",
+      "previousTargetSha256": "483ee4399d9f2625a93d1d8bf0ca193c190bcef2ce9ab4aa85de97b910ca95ff",
+      "sha256": "bb770479128c45310a07bd39d086b9385aaa183936b28950cb4f1922dc43853c",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_hv_2.json",
+      "sourceSha256": "940ff5993d9e5f4d1c6b1193315dc2bb37acb3dd2fe4a9d90f41482193bd7213",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_hv_2.json",
+      "previousTargetSha256": "940ff5993d9e5f4d1c6b1193315dc2bb37acb3dd2fe4a9d90f41482193bd7213",
+      "sha256": "a2cfdf0e35faf4906d6b1c7fc53100de9a04c9e6af6123cfc7bb559dc8188a68",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_iv.json",
+      "sourceSha256": "7cd0f6daeeb30c5ca81be41a519fe7c7f8323e17b0c758a43a5deec85a4ea49f",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_iv.json",
+      "previousTargetSha256": "7cd0f6daeeb30c5ca81be41a519fe7c7f8323e17b0c758a43a5deec85a4ea49f",
+      "sha256": "671eda2baf25967116fb03fa744149ca656d19b50bad8bbb4ef2359f2b2cb987",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_iv_1.json",
+      "sourceSha256": "483ee4399d9f2625a93d1d8bf0ca193c190bcef2ce9ab4aa85de97b910ca95ff",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_iv_1.json",
+      "previousTargetSha256": "483ee4399d9f2625a93d1d8bf0ca193c190bcef2ce9ab4aa85de97b910ca95ff",
+      "sha256": "bb770479128c45310a07bd39d086b9385aaa183936b28950cb4f1922dc43853c",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_iv_2.json",
+      "sourceSha256": "940ff5993d9e5f4d1c6b1193315dc2bb37acb3dd2fe4a9d90f41482193bd7213",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_iv_2.json",
+      "previousTargetSha256": "940ff5993d9e5f4d1c6b1193315dc2bb37acb3dd2fe4a9d90f41482193bd7213",
+      "sha256": "a2cfdf0e35faf4906d6b1c7fc53100de9a04c9e6af6123cfc7bb559dc8188a68",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_luv.json",
+      "sourceSha256": "7cd0f6daeeb30c5ca81be41a519fe7c7f8323e17b0c758a43a5deec85a4ea49f",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_luv.json",
+      "previousTargetSha256": "7cd0f6daeeb30c5ca81be41a519fe7c7f8323e17b0c758a43a5deec85a4ea49f",
+      "sha256": "671eda2baf25967116fb03fa744149ca656d19b50bad8bbb4ef2359f2b2cb987",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_luv_1.json",
+      "sourceSha256": "483ee4399d9f2625a93d1d8bf0ca193c190bcef2ce9ab4aa85de97b910ca95ff",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_luv_1.json",
+      "previousTargetSha256": "483ee4399d9f2625a93d1d8bf0ca193c190bcef2ce9ab4aa85de97b910ca95ff",
+      "sha256": "bb770479128c45310a07bd39d086b9385aaa183936b28950cb4f1922dc43853c",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_luv_2.json",
+      "sourceSha256": "940ff5993d9e5f4d1c6b1193315dc2bb37acb3dd2fe4a9d90f41482193bd7213",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_luv_2.json",
+      "previousTargetSha256": "940ff5993d9e5f4d1c6b1193315dc2bb37acb3dd2fe4a9d90f41482193bd7213",
+      "sha256": "a2cfdf0e35faf4906d6b1c7fc53100de9a04c9e6af6123cfc7bb559dc8188a68",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_lv.json",
+      "sourceSha256": "7cd0f6daeeb30c5ca81be41a519fe7c7f8323e17b0c758a43a5deec85a4ea49f",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_lv.json",
+      "previousTargetSha256": "7cd0f6daeeb30c5ca81be41a519fe7c7f8323e17b0c758a43a5deec85a4ea49f",
+      "sha256": "671eda2baf25967116fb03fa744149ca656d19b50bad8bbb4ef2359f2b2cb987",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_lv_1.json",
+      "sourceSha256": "483ee4399d9f2625a93d1d8bf0ca193c190bcef2ce9ab4aa85de97b910ca95ff",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_lv_1.json",
+      "previousTargetSha256": "483ee4399d9f2625a93d1d8bf0ca193c190bcef2ce9ab4aa85de97b910ca95ff",
+      "sha256": "bb770479128c45310a07bd39d086b9385aaa183936b28950cb4f1922dc43853c",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_lv_2.json",
+      "sourceSha256": "940ff5993d9e5f4d1c6b1193315dc2bb37acb3dd2fe4a9d90f41482193bd7213",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_lv_2.json",
+      "previousTargetSha256": "940ff5993d9e5f4d1c6b1193315dc2bb37acb3dd2fe4a9d90f41482193bd7213",
+      "sha256": "a2cfdf0e35faf4906d6b1c7fc53100de9a04c9e6af6123cfc7bb559dc8188a68",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_mv.json",
+      "sourceSha256": "7cd0f6daeeb30c5ca81be41a519fe7c7f8323e17b0c758a43a5deec85a4ea49f",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_mv.json",
+      "previousTargetSha256": "7cd0f6daeeb30c5ca81be41a519fe7c7f8323e17b0c758a43a5deec85a4ea49f",
+      "sha256": "671eda2baf25967116fb03fa744149ca656d19b50bad8bbb4ef2359f2b2cb987",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_mv_1.json",
+      "sourceSha256": "483ee4399d9f2625a93d1d8bf0ca193c190bcef2ce9ab4aa85de97b910ca95ff",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_mv_1.json",
+      "previousTargetSha256": "483ee4399d9f2625a93d1d8bf0ca193c190bcef2ce9ab4aa85de97b910ca95ff",
+      "sha256": "bb770479128c45310a07bd39d086b9385aaa183936b28950cb4f1922dc43853c",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_mv_2.json",
+      "sourceSha256": "940ff5993d9e5f4d1c6b1193315dc2bb37acb3dd2fe4a9d90f41482193bd7213",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_mv_2.json",
+      "previousTargetSha256": "940ff5993d9e5f4d1c6b1193315dc2bb37acb3dd2fe4a9d90f41482193bd7213",
+      "sha256": "a2cfdf0e35faf4906d6b1c7fc53100de9a04c9e6af6123cfc7bb559dc8188a68",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_ulv.json",
+      "sourceSha256": "7cd0f6daeeb30c5ca81be41a519fe7c7f8323e17b0c758a43a5deec85a4ea49f",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_ulv.json",
+      "previousTargetSha256": "7cd0f6daeeb30c5ca81be41a519fe7c7f8323e17b0c758a43a5deec85a4ea49f",
+      "sha256": "671eda2baf25967116fb03fa744149ca656d19b50bad8bbb4ef2359f2b2cb987",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_ulv_1.json",
+      "sourceSha256": "483ee4399d9f2625a93d1d8bf0ca193c190bcef2ce9ab4aa85de97b910ca95ff",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_ulv_1.json",
+      "previousTargetSha256": "483ee4399d9f2625a93d1d8bf0ca193c190bcef2ce9ab4aa85de97b910ca95ff",
+      "sha256": "bb770479128c45310a07bd39d086b9385aaa183936b28950cb4f1922dc43853c",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_ulv_2.json",
+      "sourceSha256": "940ff5993d9e5f4d1c6b1193315dc2bb37acb3dd2fe4a9d90f41482193bd7213",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_ulv_2.json",
+      "previousTargetSha256": "940ff5993d9e5f4d1c6b1193315dc2bb37acb3dd2fe4a9d90f41482193bd7213",
+      "sha256": "a2cfdf0e35faf4906d6b1c7fc53100de9a04c9e6af6123cfc7bb559dc8188a68",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_uv.json",
+      "sourceSha256": "7cd0f6daeeb30c5ca81be41a519fe7c7f8323e17b0c758a43a5deec85a4ea49f",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_uv.json",
+      "previousTargetSha256": "7cd0f6daeeb30c5ca81be41a519fe7c7f8323e17b0c758a43a5deec85a4ea49f",
+      "sha256": "671eda2baf25967116fb03fa744149ca656d19b50bad8bbb4ef2359f2b2cb987",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_uv_1.json",
+      "sourceSha256": "483ee4399d9f2625a93d1d8bf0ca193c190bcef2ce9ab4aa85de97b910ca95ff",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_uv_1.json",
+      "previousTargetSha256": "483ee4399d9f2625a93d1d8bf0ca193c190bcef2ce9ab4aa85de97b910ca95ff",
+      "sha256": "bb770479128c45310a07bd39d086b9385aaa183936b28950cb4f1922dc43853c",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_uv_2.json",
+      "sourceSha256": "940ff5993d9e5f4d1c6b1193315dc2bb37acb3dd2fe4a9d90f41482193bd7213",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_uv_2.json",
+      "previousTargetSha256": "940ff5993d9e5f4d1c6b1193315dc2bb37acb3dd2fe4a9d90f41482193bd7213",
+      "sha256": "a2cfdf0e35faf4906d6b1c7fc53100de9a04c9e6af6123cfc7bb559dc8188a68",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_xv.json",
+      "sourceSha256": "7cd0f6daeeb30c5ca81be41a519fe7c7f8323e17b0c758a43a5deec85a4ea49f",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_xv.json",
+      "previousTargetSha256": "7cd0f6daeeb30c5ca81be41a519fe7c7f8323e17b0c758a43a5deec85a4ea49f",
+      "sha256": "671eda2baf25967116fb03fa744149ca656d19b50bad8bbb4ef2359f2b2cb987",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_xv_1.json",
+      "sourceSha256": "483ee4399d9f2625a93d1d8bf0ca193c190bcef2ce9ab4aa85de97b910ca95ff",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_xv_1.json",
+      "previousTargetSha256": "483ee4399d9f2625a93d1d8bf0ca193c190bcef2ce9ab4aa85de97b910ca95ff",
+      "sha256": "bb770479128c45310a07bd39d086b9385aaa183936b28950cb4f1922dc43853c",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_xv_2.json",
+      "sourceSha256": "940ff5993d9e5f4d1c6b1193315dc2bb37acb3dd2fe4a9d90f41482193bd7213",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_xv_2.json",
+      "previousTargetSha256": "940ff5993d9e5f4d1c6b1193315dc2bb37acb3dd2fe4a9d90f41482193bd7213",
+      "sha256": "a2cfdf0e35faf4906d6b1c7fc53100de9a04c9e6af6123cfc7bb559dc8188a68",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_zpm.json",
+      "sourceSha256": "7cd0f6daeeb30c5ca81be41a519fe7c7f8323e17b0c758a43a5deec85a4ea49f",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_zpm.json",
+      "previousTargetSha256": "7cd0f6daeeb30c5ca81be41a519fe7c7f8323e17b0c758a43a5deec85a4ea49f",
+      "sha256": "671eda2baf25967116fb03fa744149ca656d19b50bad8bbb4ef2359f2b2cb987",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_zpm_1.json",
+      "sourceSha256": "483ee4399d9f2625a93d1d8bf0ca193c190bcef2ce9ab4aa85de97b910ca95ff",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_zpm_1.json",
+      "previousTargetSha256": "483ee4399d9f2625a93d1d8bf0ca193c190bcef2ce9ab4aa85de97b910ca95ff",
+      "sha256": "bb770479128c45310a07bd39d086b9385aaa183936b28950cb4f1922dc43853c",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_zpm_2.json",
+      "sourceSha256": "940ff5993d9e5f4d1c6b1193315dc2bb37acb3dd2fe4a9d90f41482193bd7213",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/energy_storage_zpm_2.json",
+      "previousTargetSha256": "940ff5993d9e5f4d1c6b1193315dc2bb37acb3dd2fe4a9d90f41482193bd7213",
+      "sha256": "a2cfdf0e35faf4906d6b1c7fc53100de9a04c9e6af6123cfc7bb559dc8188a68",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/flux_dynamo_lv.json",
+      "sourceSha256": "8255d9467e070cf8992d98c14d5a770a42207f341d6c3f1ccf1cd1da43906e83",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/flux_dynamo_lv.json",
+      "previousTargetSha256": "8255d9467e070cf8992d98c14d5a770a42207f341d6c3f1ccf1cd1da43906e83",
+      "sha256": "53a9097e30a8a59c09172ea43a47ca8de1deb0e2aef797da850f5ccc994c37c1",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/flux_dynamo_mv.json",
+      "sourceSha256": "8255d9467e070cf8992d98c14d5a770a42207f341d6c3f1ccf1cd1da43906e83",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/flux_dynamo_mv.json",
+      "previousTargetSha256": "8255d9467e070cf8992d98c14d5a770a42207f341d6c3f1ccf1cd1da43906e83",
+      "sha256": "53a9097e30a8a59c09172ea43a47ca8de1deb0e2aef797da850f5ccc994c37c1",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_ev.json",
+      "sourceSha256": "4d559262ac3321a08e2718cae739a0ef437fb1b1abac821dae6f2af68d6194ff",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_ev.json",
+      "previousTargetSha256": "4d559262ac3321a08e2718cae739a0ef437fb1b1abac821dae6f2af68d6194ff",
+      "sha256": "da26cc14aa117ed705bf96cb178bd536ea76d15f652bc18c13771ed5201fd36f",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_ev_active.json",
+      "sourceSha256": "f186fd60978a72ea4ecfef3b9f2f4386d70d19c51c0a635dbee554fb6282f456",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_ev_active.json",
+      "previousTargetSha256": "f186fd60978a72ea4ecfef3b9f2f4386d70d19c51c0a635dbee554fb6282f456",
+      "sha256": "d90891f94fbdc395423d9ced5330b5c203924bffb8d513b41cc1778555f5ff78",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_hv.json",
+      "sourceSha256": "4d559262ac3321a08e2718cae739a0ef437fb1b1abac821dae6f2af68d6194ff",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_hv.json",
+      "previousTargetSha256": "4d559262ac3321a08e2718cae739a0ef437fb1b1abac821dae6f2af68d6194ff",
+      "sha256": "da26cc14aa117ed705bf96cb178bd536ea76d15f652bc18c13771ed5201fd36f",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_hv_active.json",
+      "sourceSha256": "f186fd60978a72ea4ecfef3b9f2f4386d70d19c51c0a635dbee554fb6282f456",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_hv_active.json",
+      "previousTargetSha256": "f186fd60978a72ea4ecfef3b9f2f4386d70d19c51c0a635dbee554fb6282f456",
+      "sha256": "d90891f94fbdc395423d9ced5330b5c203924bffb8d513b41cc1778555f5ff78",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_iv.json",
+      "sourceSha256": "4d559262ac3321a08e2718cae739a0ef437fb1b1abac821dae6f2af68d6194ff",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_iv.json",
+      "previousTargetSha256": "4d559262ac3321a08e2718cae739a0ef437fb1b1abac821dae6f2af68d6194ff",
+      "sha256": "da26cc14aa117ed705bf96cb178bd536ea76d15f652bc18c13771ed5201fd36f",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_iv_active.json",
+      "sourceSha256": "f186fd60978a72ea4ecfef3b9f2f4386d70d19c51c0a635dbee554fb6282f456",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_iv_active.json",
+      "previousTargetSha256": "f186fd60978a72ea4ecfef3b9f2f4386d70d19c51c0a635dbee554fb6282f456",
+      "sha256": "d90891f94fbdc395423d9ced5330b5c203924bffb8d513b41cc1778555f5ff78",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_lv.json",
+      "sourceSha256": "4d559262ac3321a08e2718cae739a0ef437fb1b1abac821dae6f2af68d6194ff",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_lv.json",
+      "previousTargetSha256": "4d559262ac3321a08e2718cae739a0ef437fb1b1abac821dae6f2af68d6194ff",
+      "sha256": "da26cc14aa117ed705bf96cb178bd536ea76d15f652bc18c13771ed5201fd36f",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_lv_active.json",
+      "sourceSha256": "f186fd60978a72ea4ecfef3b9f2f4386d70d19c51c0a635dbee554fb6282f456",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_lv_active.json",
+      "previousTargetSha256": "f186fd60978a72ea4ecfef3b9f2f4386d70d19c51c0a635dbee554fb6282f456",
+      "sha256": "d90891f94fbdc395423d9ced5330b5c203924bffb8d513b41cc1778555f5ff78",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_mv.json",
+      "sourceSha256": "4d559262ac3321a08e2718cae739a0ef437fb1b1abac821dae6f2af68d6194ff",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_mv.json",
+      "previousTargetSha256": "4d559262ac3321a08e2718cae739a0ef437fb1b1abac821dae6f2af68d6194ff",
+      "sha256": "da26cc14aa117ed705bf96cb178bd536ea76d15f652bc18c13771ed5201fd36f",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_mv_active.json",
+      "sourceSha256": "f186fd60978a72ea4ecfef3b9f2f4386d70d19c51c0a635dbee554fb6282f456",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/flux_magnet_mv_active.json",
+      "previousTargetSha256": "f186fd60978a72ea4ecfef3b9f2f4386d70d19c51c0a635dbee554fb6282f456",
+      "sha256": "d90891f94fbdc395423d9ced5330b5c203924bffb8d513b41cc1778555f5ff78",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/flux_motor_lv.json",
+      "sourceSha256": "8945767b3cc254aa7105b25385beb99cb35da8742c901c73ce10fb32741a5c99",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/flux_motor_lv.json",
+      "previousTargetSha256": "8945767b3cc254aa7105b25385beb99cb35da8742c901c73ce10fb32741a5c99",
+      "sha256": "da68a1110a6f54258df5d2334c25314808396ce38dfcbafd8c24ed831da7059e",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/flux_motor_mv.json",
+      "sourceSha256": "8945767b3cc254aa7105b25385beb99cb35da8742c901c73ce10fb32741a5c99",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/flux_motor_mv.json",
+      "previousTargetSha256": "8945767b3cc254aa7105b25385beb99cb35da8742c901c73ce10fb32741a5c99",
+      "sha256": "da68a1110a6f54258df5d2334c25314808396ce38dfcbafd8c24ed831da7059e",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/solar_panel_germanium.json",
+      "sourceSha256": "aeab7e2e83614b325670bc11262e9a788f9fa1fdcfdac5573ad07a6d61dd764a",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/solar_panel_germanium.json",
+      "previousTargetSha256": "aeab7e2e83614b325670bc11262e9a788f9fa1fdcfdac5573ad07a6d61dd764a",
+      "sha256": "19b24d6e0d8cca8f92f0bde183a61388d9d905e37420dbf930a256bf152c0b64",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/solar_panel_silicon.json",
+      "sourceSha256": "aeab7e2e83614b325670bc11262e9a788f9fa1fdcfdac5573ad07a6d61dd764a",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/solar_panel_silicon.json",
+      "previousTargetSha256": "aeab7e2e83614b325670bc11262e9a788f9fa1fdcfdac5573ad07a6d61dd764a",
+      "sha256": "19b24d6e0d8cca8f92f0bde183a61388d9d905e37420dbf930a256bf152c0b64",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/steam_turbine_brass.json",
+      "sourceSha256": "1026487c725424909407ac7134889962008b9892ca82caba3fe87abd8532a0a2",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/steam_turbine_brass.json",
+      "previousTargetSha256": "1026487c725424909407ac7134889962008b9892ca82caba3fe87abd8532a0a2",
+      "sha256": "2542f82bb002db4d5ca8e61cbc7ea70a6b7ee66353b20526b4e1c1f210b8633f",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/steam_turbine_bronze.json",
+      "sourceSha256": "1026487c725424909407ac7134889962008b9892ca82caba3fe87abd8532a0a2",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/steam_turbine_bronze.json",
+      "previousTargetSha256": "1026487c725424909407ac7134889962008b9892ca82caba3fe87abd8532a0a2",
+      "sha256": "2542f82bb002db4d5ca8e61cbc7ea70a6b7ee66353b20526b4e1c1f210b8633f",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/steam_turbine_chromium.json",
+      "sourceSha256": "1026487c725424909407ac7134889962008b9892ca82caba3fe87abd8532a0a2",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/steam_turbine_chromium.json",
+      "previousTargetSha256": "1026487c725424909407ac7134889962008b9892ca82caba3fe87abd8532a0a2",
+      "sha256": "2542f82bb002db4d5ca8e61cbc7ea70a6b7ee66353b20526b4e1c1f210b8633f",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/steam_turbine_invar.json",
+      "sourceSha256": "1026487c725424909407ac7134889962008b9892ca82caba3fe87abd8532a0a2",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/steam_turbine_invar.json",
+      "previousTargetSha256": "1026487c725424909407ac7134889962008b9892ca82caba3fe87abd8532a0a2",
+      "sha256": "2542f82bb002db4d5ca8e61cbc7ea70a6b7ee66353b20526b4e1c1f210b8633f",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/steam_turbine_steel.json",
+      "sourceSha256": "1026487c725424909407ac7134889962008b9892ca82caba3fe87abd8532a0a2",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/steam_turbine_steel.json",
+      "previousTargetSha256": "1026487c725424909407ac7134889962008b9892ca82caba3fe87abd8532a0a2",
+      "sha256": "2542f82bb002db4d5ca8e61cbc7ea70a6b7ee66353b20526b4e1c1f210b8633f",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_ev_iv.json",
+      "sourceSha256": "624d8faec084d2047d7d07c9bcef1b67cf542c933795f9c59d47c79c3ef43a37",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_ev_iv.json",
+      "previousTargetSha256": "624d8faec084d2047d7d07c9bcef1b67cf542c933795f9c59d47c79c3ef43a37",
+      "sha256": "7f7681ceee89addaadcbe61e1ea04e655df99fb008282646b3b79dc19021b1e5",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_ev_iv_1.json",
+      "sourceSha256": "ef0301c9c2f0a8e634437e4bee3eddaeaf554e506f043b41a73ec33b7e313950",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_ev_iv_1.json",
+      "previousTargetSha256": "ef0301c9c2f0a8e634437e4bee3eddaeaf554e506f043b41a73ec33b7e313950",
+      "sha256": "b4a00c1d987d862630e0607fc5b8ee5ab50a80cb6f7493a4b049596f844c51a5",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_ev_iv_2.json",
+      "sourceSha256": "7ee5e5a2abd263de59539abb8b7ca28f6840b13985eae1041d16110b921ba6d7",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_ev_iv_2.json",
+      "previousTargetSha256": "7ee5e5a2abd263de59539abb8b7ca28f6840b13985eae1041d16110b921ba6d7",
+      "sha256": "8b01c301841421228ac74e664e46a1b5b8eabf044569dc102b57d6405bbefeef",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_hv_ev.json",
+      "sourceSha256": "624d8faec084d2047d7d07c9bcef1b67cf542c933795f9c59d47c79c3ef43a37",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_hv_ev.json",
+      "previousTargetSha256": "624d8faec084d2047d7d07c9bcef1b67cf542c933795f9c59d47c79c3ef43a37",
+      "sha256": "7f7681ceee89addaadcbe61e1ea04e655df99fb008282646b3b79dc19021b1e5",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_hv_ev_1.json",
+      "sourceSha256": "ef0301c9c2f0a8e634437e4bee3eddaeaf554e506f043b41a73ec33b7e313950",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_hv_ev_1.json",
+      "previousTargetSha256": "ef0301c9c2f0a8e634437e4bee3eddaeaf554e506f043b41a73ec33b7e313950",
+      "sha256": "b4a00c1d987d862630e0607fc5b8ee5ab50a80cb6f7493a4b049596f844c51a5",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_hv_ev_2.json",
+      "sourceSha256": "7ee5e5a2abd263de59539abb8b7ca28f6840b13985eae1041d16110b921ba6d7",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_hv_ev_2.json",
+      "previousTargetSha256": "7ee5e5a2abd263de59539abb8b7ca28f6840b13985eae1041d16110b921ba6d7",
+      "sha256": "8b01c301841421228ac74e664e46a1b5b8eabf044569dc102b57d6405bbefeef",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_iv_luv.json",
+      "sourceSha256": "624d8faec084d2047d7d07c9bcef1b67cf542c933795f9c59d47c79c3ef43a37",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_iv_luv.json",
+      "previousTargetSha256": "624d8faec084d2047d7d07c9bcef1b67cf542c933795f9c59d47c79c3ef43a37",
+      "sha256": "7f7681ceee89addaadcbe61e1ea04e655df99fb008282646b3b79dc19021b1e5",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_iv_luv_1.json",
+      "sourceSha256": "ef0301c9c2f0a8e634437e4bee3eddaeaf554e506f043b41a73ec33b7e313950",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_iv_luv_1.json",
+      "previousTargetSha256": "ef0301c9c2f0a8e634437e4bee3eddaeaf554e506f043b41a73ec33b7e313950",
+      "sha256": "b4a00c1d987d862630e0607fc5b8ee5ab50a80cb6f7493a4b049596f844c51a5",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_iv_luv_2.json",
+      "sourceSha256": "7ee5e5a2abd263de59539abb8b7ca28f6840b13985eae1041d16110b921ba6d7",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_iv_luv_2.json",
+      "previousTargetSha256": "7ee5e5a2abd263de59539abb8b7ca28f6840b13985eae1041d16110b921ba6d7",
+      "sha256": "8b01c301841421228ac74e664e46a1b5b8eabf044569dc102b57d6405bbefeef",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_luv_zpm.json",
+      "sourceSha256": "624d8faec084d2047d7d07c9bcef1b67cf542c933795f9c59d47c79c3ef43a37",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_luv_zpm.json",
+      "previousTargetSha256": "624d8faec084d2047d7d07c9bcef1b67cf542c933795f9c59d47c79c3ef43a37",
+      "sha256": "7f7681ceee89addaadcbe61e1ea04e655df99fb008282646b3b79dc19021b1e5",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_luv_zpm_1.json",
+      "sourceSha256": "ef0301c9c2f0a8e634437e4bee3eddaeaf554e506f043b41a73ec33b7e313950",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_luv_zpm_1.json",
+      "previousTargetSha256": "ef0301c9c2f0a8e634437e4bee3eddaeaf554e506f043b41a73ec33b7e313950",
+      "sha256": "b4a00c1d987d862630e0607fc5b8ee5ab50a80cb6f7493a4b049596f844c51a5",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_luv_zpm_2.json",
+      "sourceSha256": "7ee5e5a2abd263de59539abb8b7ca28f6840b13985eae1041d16110b921ba6d7",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_luv_zpm_2.json",
+      "previousTargetSha256": "7ee5e5a2abd263de59539abb8b7ca28f6840b13985eae1041d16110b921ba6d7",
+      "sha256": "8b01c301841421228ac74e664e46a1b5b8eabf044569dc102b57d6405bbefeef",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_lv_mv.json",
+      "sourceSha256": "624d8faec084d2047d7d07c9bcef1b67cf542c933795f9c59d47c79c3ef43a37",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_lv_mv.json",
+      "previousTargetSha256": "624d8faec084d2047d7d07c9bcef1b67cf542c933795f9c59d47c79c3ef43a37",
+      "sha256": "7f7681ceee89addaadcbe61e1ea04e655df99fb008282646b3b79dc19021b1e5",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_lv_mv_1.json",
+      "sourceSha256": "ef0301c9c2f0a8e634437e4bee3eddaeaf554e506f043b41a73ec33b7e313950",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_lv_mv_1.json",
+      "previousTargetSha256": "ef0301c9c2f0a8e634437e4bee3eddaeaf554e506f043b41a73ec33b7e313950",
+      "sha256": "b4a00c1d987d862630e0607fc5b8ee5ab50a80cb6f7493a4b049596f844c51a5",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_lv_mv_2.json",
+      "sourceSha256": "7ee5e5a2abd263de59539abb8b7ca28f6840b13985eae1041d16110b921ba6d7",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_lv_mv_2.json",
+      "previousTargetSha256": "7ee5e5a2abd263de59539abb8b7ca28f6840b13985eae1041d16110b921ba6d7",
+      "sha256": "8b01c301841421228ac74e664e46a1b5b8eabf044569dc102b57d6405bbefeef",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_mv_hv.json",
+      "sourceSha256": "624d8faec084d2047d7d07c9bcef1b67cf542c933795f9c59d47c79c3ef43a37",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_mv_hv.json",
+      "previousTargetSha256": "624d8faec084d2047d7d07c9bcef1b67cf542c933795f9c59d47c79c3ef43a37",
+      "sha256": "7f7681ceee89addaadcbe61e1ea04e655df99fb008282646b3b79dc19021b1e5",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_mv_hv_1.json",
+      "sourceSha256": "ef0301c9c2f0a8e634437e4bee3eddaeaf554e506f043b41a73ec33b7e313950",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_mv_hv_1.json",
+      "previousTargetSha256": "ef0301c9c2f0a8e634437e4bee3eddaeaf554e506f043b41a73ec33b7e313950",
+      "sha256": "b4a00c1d987d862630e0607fc5b8ee5ab50a80cb6f7493a4b049596f844c51a5",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_mv_hv_2.json",
+      "sourceSha256": "7ee5e5a2abd263de59539abb8b7ca28f6840b13985eae1041d16110b921ba6d7",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_mv_hv_2.json",
+      "previousTargetSha256": "7ee5e5a2abd263de59539abb8b7ca28f6840b13985eae1041d16110b921ba6d7",
+      "sha256": "8b01c301841421228ac74e664e46a1b5b8eabf044569dc102b57d6405bbefeef",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_ulv_lv.json",
+      "sourceSha256": "624d8faec084d2047d7d07c9bcef1b67cf542c933795f9c59d47c79c3ef43a37",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_ulv_lv.json",
+      "previousTargetSha256": "624d8faec084d2047d7d07c9bcef1b67cf542c933795f9c59d47c79c3ef43a37",
+      "sha256": "7f7681ceee89addaadcbe61e1ea04e655df99fb008282646b3b79dc19021b1e5",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_ulv_lv_1.json",
+      "sourceSha256": "ef0301c9c2f0a8e634437e4bee3eddaeaf554e506f043b41a73ec33b7e313950",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_ulv_lv_1.json",
+      "previousTargetSha256": "ef0301c9c2f0a8e634437e4bee3eddaeaf554e506f043b41a73ec33b7e313950",
+      "sha256": "b4a00c1d987d862630e0607fc5b8ee5ab50a80cb6f7493a4b049596f844c51a5",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_ulv_lv_2.json",
+      "sourceSha256": "7ee5e5a2abd263de59539abb8b7ca28f6840b13985eae1041d16110b921ba6d7",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_ulv_lv_2.json",
+      "previousTargetSha256": "7ee5e5a2abd263de59539abb8b7ca28f6840b13985eae1041d16110b921ba6d7",
+      "sha256": "8b01c301841421228ac74e664e46a1b5b8eabf044569dc102b57d6405bbefeef",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_uv_xv.json",
+      "sourceSha256": "624d8faec084d2047d7d07c9bcef1b67cf542c933795f9c59d47c79c3ef43a37",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_uv_xv.json",
+      "previousTargetSha256": "624d8faec084d2047d7d07c9bcef1b67cf542c933795f9c59d47c79c3ef43a37",
+      "sha256": "7f7681ceee89addaadcbe61e1ea04e655df99fb008282646b3b79dc19021b1e5",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_uv_xv_1.json",
+      "sourceSha256": "ef0301c9c2f0a8e634437e4bee3eddaeaf554e506f043b41a73ec33b7e313950",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_uv_xv_1.json",
+      "previousTargetSha256": "ef0301c9c2f0a8e634437e4bee3eddaeaf554e506f043b41a73ec33b7e313950",
+      "sha256": "b4a00c1d987d862630e0607fc5b8ee5ab50a80cb6f7493a4b049596f844c51a5",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_uv_xv_2.json",
+      "sourceSha256": "7ee5e5a2abd263de59539abb8b7ca28f6840b13985eae1041d16110b921ba6d7",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_uv_xv_2.json",
+      "previousTargetSha256": "7ee5e5a2abd263de59539abb8b7ca28f6840b13985eae1041d16110b921ba6d7",
+      "sha256": "8b01c301841421228ac74e664e46a1b5b8eabf044569dc102b57d6405bbefeef",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_zpm_uv.json",
+      "sourceSha256": "624d8faec084d2047d7d07c9bcef1b67cf542c933795f9c59d47c79c3ef43a37",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_zpm_uv.json",
+      "previousTargetSha256": "624d8faec084d2047d7d07c9bcef1b67cf542c933795f9c59d47c79c3ef43a37",
+      "sha256": "7f7681ceee89addaadcbe61e1ea04e655df99fb008282646b3b79dc19021b1e5",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_zpm_uv_1.json",
+      "sourceSha256": "ef0301c9c2f0a8e634437e4bee3eddaeaf554e506f043b41a73ec33b7e313950",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_zpm_uv_1.json",
+      "previousTargetSha256": "ef0301c9c2f0a8e634437e4bee3eddaeaf554e506f043b41a73ec33b7e313950",
+      "sha256": "b4a00c1d987d862630e0607fc5b8ee5ab50a80cb6f7493a4b049596f844c51a5",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_zpm_uv_2.json",
+      "sourceSha256": "7ee5e5a2abd263de59539abb8b7ca28f6840b13985eae1041d16110b921ba6d7",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/energy/transformer_zpm_uv_2.json",
+      "previousTargetSha256": "7ee5e5a2abd263de59539abb8b7ca28f6840b13985eae1041d16110b921ba6d7",
+      "sha256": "8b01c301841421228ac74e664e46a1b5b8eabf044569dc102b57d6405bbefeef",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/gearbox/gearbox.json",
+      "sourceSha256": "f2b89031f7c501aa6503638a00869d4795841aa9f20fec90f55d9627bc758dde",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/gearbox/gearbox.json",
+      "previousTargetSha256": "f2b89031f7c501aa6503638a00869d4795841aa9f20fec90f55d9627bc758dde",
+      "sha256": "151cefca09a43835447f650ec3d2644e39e3f1a11f7a865702908ca4f458feba",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/tool/dynamite.json",
+      "sourceSha256": "74d45ea9634d050ce8da739166fcf3076005aede13026b35d20fb15f68cab60d",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/tool/dynamite.json",
+      "previousTargetSha256": "74d45ea9634d050ce8da739166fcf3076005aede13026b35d20fb15f68cab60d",
+      "sha256": "ccb298049d3a2d71625de354f30802d86f9e6d1ce4cb3df031182bfd1e170b2a",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/tool/dynamite_active.json",
+      "sourceSha256": "079b208dcffcb9a00f336807529e8818c08103db82431d4839c594536097b491",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/tool/dynamite_active.json",
+      "previousTargetSha256": "079b208dcffcb9a00f336807529e8818c08103db82431d4839c594536097b491",
+      "sha256": "f7250df14b35ee7ae196773dda60ed02b0ab4f863d51ebd0f5913734dc1d9cbe",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/tool/dynamite_active_sunk.json",
+      "sourceSha256": "b8e2fd4325617434a697389c99a98eeee4112876a1d72519dd0eb5f8046c0b2c",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/tool/dynamite_active_sunk.json",
+      "previousTargetSha256": "b8e2fd4325617434a697389c99a98eeee4112876a1d72519dd0eb5f8046c0b2c",
+      "sha256": "5fdf60715038d70dee7b9d100fabdc448ac06a99e1c043816ab69e86f1004840",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/tool/dynamite_sunk.json",
+      "sourceSha256": "79d486d2ac6cbda58a010911043d258b02c6f0fff2479447fdf6d8f4f6e54331",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/tool/dynamite_sunk.json",
+      "previousTargetSha256": "79d486d2ac6cbda58a010911043d258b02c6f0fff2479447fdf6d8f4f6e54331",
+      "sha256": "05466aeea029b0275300258f60dde8b0983ce25cf0be41a842c603f20165003b",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/transformer/rotation_transformer.json",
+      "sourceSha256": "74f9beb964d700a3aa05635da75c15d1e3a7e86eb81d0f0514585708647d8f82",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/transformer/rotation_transformer.json",
+      "previousTargetSha256": "74f9beb964d700a3aa05635da75c15d1e3a7e86eb81d0f0514585708647d8f82",
+      "sha256": "c8ff603bd1dc2b047a719c241162a8b8eade7e0a010d47ffaeb36a6ee655213f",
+      "adaptation": "only geometry-loader namespace changed to neoforge:composite; original layers/elements unchanged"
+    }
+  ],
+  "reason": "1.21.1 native GeometryLoaderManager registers neoforge:composite, not forge:composite",
+  "license": "original source authors/notices/licenses unchanged",
+  "validation": "Grouped core/Forge/Neo compile PASS; scoped actual Neo weighted route/remainder/side masks PASS; native TitleScreen rendering PASS with explicit resource gaps. See docs/integration/verification/p3-shared-item-routing-compile.json, p3-neoforge-shared-item-routing-checkpoint.json, p3-neoforge-shared-item-routing-client.json. Full runtime parity/reload/production jar pending."
+}

@@ -1,0 +1,68 @@
+{
+  "variants": {
+    "facing=north,lit=false,running=false": {
+      "model": "gregtech:block/machine/fusion/controller_0_0",
+      "y": 0
+    },
+    "facing=east,lit=false,running=false": {
+      "model": "gregtech:block/machine/fusion/controller_0_0",
+      "y": 90
+    },
+    "facing=south,lit=false,running=false": {
+      "model": "gregtech:block/machine/fusion/controller_0_0",
+      "y": 180
+    },
+    "facing=west,lit=false,running=false": {
+      "model": "gregtech:block/machine/fusion/controller_0_0",
+      "y": 270
+    },
+    "facing=north,lit=false,running=true": {
+      "model": "gregtech:block/machine/fusion/controller_0_1",
+      "y": 0
+    },
+    "facing=east,lit=false,running=true": {
+      "model": "gregtech:block/machine/fusion/controller_0_1",
+      "y": 90
+    },
+    "facing=south,lit=false,running=true": {
+      "model": "gregtech:block/machine/fusion/controller_0_1",
+      "y": 180
+    },
+    "facing=west,lit=false,running=true": {
+      "model": "gregtech:block/machine/fusion/controller_0_1",
+      "y": 270
+    },
+    "facing=north,lit=true,running=false": {
+      "model": "gregtech:block/machine/fusion/controller_1_0",
+      "y": 0
+    },
+    "facing=east,lit=true,running=false": {
+      "model": "gregtech:block/machine/fusion/controller_1_0",
+      "y": 90
+    },
+    "facing=south,lit=true,running=false": {
+      "model": "gregtech:block/machine/fusion/controller_1_0",
+      "y": 180
+    },
+    "facing=west,lit=true,running=false": {
+      "model": "gregtech:block/machine/fusion/controller_1_0",
+      "y": 270
+    },
+    "facing=north,lit=true,running=true": {
+      "model": "gregtech:block/machine/fusion/controller_1_1",
+      "y": 0
+    },
+    "facing=east,lit=true,running=true": {
+      "model": "gregtech:block/machine/fusion/controller_1_1",
+      "y": 90
+    },
+    "facing=south,lit=true,running=true": {
+      "model": "gregtech:block/machine/fusion/controller_1_1",
+      "y": 180
+    },
+    "facing=west,lit=true,running=true": {
+      "model": "gregtech:block/machine/fusion/controller_1_1",
+      "y": 270
+    }
+  }
+}

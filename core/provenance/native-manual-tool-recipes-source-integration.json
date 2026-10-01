@@ -1,0 +1,62 @@
+{
+  "source": "saltnya",
+  "license": "unchanged; distribution authorization unresolved",
+  "verification": "Both-platform Java compile passed; Neo server/data and selected crafting/component/network checkpoint passed; client/world tool actions/restart still unverified",
+  "sharedTable": "core ManualToolRecipeCatalog",
+  "preserved": [
+    "full original material classification/same-material/head/handle gates",
+    "mirror and offset matching, early flint/bone/stone patterns",
+    "full tool wear via ToolShapedRecipe",
+    "original tool_assembly/tool_crafting/tool_head serializer IDs",
+    "real builtin datapack loaded by vanilla RecipeManager and synced/reloaded normally",
+    "ToolAssemblyCatalog full material options and representative alignment"
+  ],
+  "gaps": [
+    "LV powered tool assembly remains in subsequent powered tool batch",
+    "tool-dependent hand recipes for blocks/storage/pipes/gearboxes remain subsequent batch",
+    "runtime crafting/network/reload/client verification"
+  ],
+  "records": [
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/recipe/GTToolPatternRecipe.java",
+      "sourceSha256": "010024c8b040567a7ea5701ebd44686e7a542c6829810655f56ee5ca8e50320c",
+      "baselineSha256": "010024c8b040567a7ea5701ebd44686e7a542c6829810655f56ee5ca8e50320c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/recipe/GTToolHeadRecipe.java",
+      "sourceSha256": "7a584753acb595cb5fef03b93c260fb08bba45eb99ad415c9ae9233afff040e7",
+      "baselineSha256": "7a584753acb595cb5fef03b93c260fb08bba45eb99ad415c9ae9233afff040e7"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/recipe/GTToolCraftingRecipe.java",
+      "sourceSha256": "ead06ab05dde6c9037d1ed69ccec0146b4e54eac0e4f19d173abcc8364c8885b",
+      "baselineSha256": "ead06ab05dde6c9037d1ed69ccec0146b4e54eac0e4f19d173abcc8364c8885b"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/recipe/GTFlintAndTinderRecipe.java",
+      "sourceSha256": "16f1596ce8583626219311614bc1e47b12b817e8693e6160ffb36456075b9897",
+      "baselineSha256": "16f1596ce8583626219311614bc1e47b12b817e8693e6160ffb36456075b9897"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/recipe/GTToolAssemblyRecipe.java",
+      "sourceSha256": "8ffe6c2cfff32a4013c7f065b2994b03fd0db07abd6899bb14e2ad59d025ea10",
+      "baselineSha256": "8ffe6c2cfff32a4013c7f065b2994b03fd0db07abd6899bb14e2ad59d025ea10"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/recipe/ToolAssemblyCatalog.java",
+      "sourceSha256": "abf30a0ceae0af6e2b2546f7d6d1587f38c35b24211e2c6ffa257525cdf5a94a",
+      "baselineSha256": "abf30a0ceae0af6e2b2546f7d6d1587f38c35b24211e2c6ffa257525cdf5a94a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/recipe/GTToolRecipeSerializers.java",
+      "sourceSha256": "538f5fe99692b5759de00e8e5004d8d12fcfac31ca4d11983425cf3846b36654",
+      "baselineSha256": "538f5fe99692b5759de00e8e5004d8d12fcfac31ca4d11983425cf3846b36654"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/loaders/Loader_ToolCraftingRecipes.java",
+      "sourceSha256": "0163d8bde776292a00c7daecdbe874f20b7bb2b454e967f3cbe007a09e09ab40",
+      "baselineSha256": "0163d8bde776292a00c7daecdbe874f20b7bb2b454e967f3cbe007a09e09ab40"
+    }
+  ],
+  "runtimeReceipt": "docs/integration/verification/p3-neoforge-manual-tools-checkpoint.json"
+}

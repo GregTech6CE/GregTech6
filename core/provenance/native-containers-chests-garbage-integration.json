@@ -1,0 +1,2598 @@
+{
+  "authors": [
+    "saltnya",
+    "brokestar233",
+    "Lorbineitte Masson",
+    "original GregTech 6 contributors"
+  ],
+  "license": "Original notices/history preserved; no third-party authorization changed; local development only",
+  "counts": {
+    "drawers": 60,
+    "drawerSlots": 144,
+    "bottleCrate": 1,
+    "bottleSlots": 9,
+    "locker": 1,
+    "metalChests": 60,
+    "woodChests": 60,
+    "lootChests": 18,
+    "chestSlots": 54,
+    "garbageBlocks": 2,
+    "originalGeneratedLootRows": 223,
+    "resources": 432,
+    "platformLoaders": 12,
+    "javaRecords": 52
+  },
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "sha256": "696c0efc915294263fa8b63f5c082764db4408354e33572e6f251f226ff41b56",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "sha256": "d15bfaade70bf3bdd36325448090d8efb1753ed7c8824ad9571d462c2b343c80",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTBlockEntities.java",
+      "sourceSha256": "027081bae34480826956a74d65a24aa7f4ef29d4be4a4687046793a10d9df62f"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTMenuTypes.java",
+      "sha256": "21eaeaf02510fe17b10ee9cb9ed6c89133e299c80fc6d26749a4f041d7457d68",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTMenuTypes.java",
+      "sourceSha256": "b40bfe5d63871cae556fec98fe95332088932dda2f45398d31b9c15b305eedd3"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/block/inventory/BottleCrateBlock.java",
+      "sha256": "b1e64fa4e1a0a7be93f9d1f3d63d0b87cb611a4801d44981709147580aafb38f",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\inventory\\BottleCrateBlock.java",
+      "sourceSha256": "426906853d2471ab0cd4fbc3df2638ecb935b594f3b0507bc56ae363f0b90c5c"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/block/inventory/DrawerQuadBlock.java",
+      "sha256": "53959f6102a0bcd4ea0b730627852425eb09890a5d05946360c1720a6c6f5b75",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\inventory\\DrawerQuadBlock.java",
+      "sourceSha256": "7ea41c6ca24731f8b39c6e187fae00893ca529fc789e1e56cf93fbacca2e3edf"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/blockentity/inventory/DrawerQuadBlockEntity.java",
+      "sha256": "23f35465138b43668e9d14bd28b0c36f3a5fa757012644975b8541197449eb8f",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\inventory\\DrawerQuadBlockEntity.java",
+      "sourceSha256": "8b85fa1cb0cdb4a16183a67f09f2b7d7bfee79cd676ba8dd7e0417c8229ab207"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/blockentity/inventory/EnderGarbageBlockEntity.java",
+      "sha256": "7fe58fec185359a696510a36bf42fffbb69fed5e81e12ee585dafeacf84d8adc",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\inventory\\EnderGarbageBlockEntity.java",
+      "sourceSha256": "4421a77c4362b15cb10c0a92d68c4642f12fd67d93f54ba1f830cb0d8934a009"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/blockentity/inventory/EnderGarbageDumpBlockEntity.java",
+      "sha256": "8bd60652b2543617a985b8d7aed26260233aa50ea93be14e667cc56a554d5b7e",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\inventory\\EnderGarbageDumpBlockEntity.java",
+      "sourceSha256": "71764ab227f0436b1f6c1fee7f119940584e1ca1fd63e23f2f99463c9c9bda6e"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/blockentity/inventory/LockerBlockEntity.java",
+      "sha256": "df5e729a0e3078e9500cd206319d933875b08d9871d6247e7c5530cf3a32c136",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\inventory\\LockerBlockEntity.java",
+      "sourceSha256": "5c0346b2392f2019da23f6e7b883401eba66819cd5dfab7b7fea8a96ccbb3c6a"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/content/book/GTMaterialDictionary.java",
+      "sha256": "196586c4e9fca1ded5c7babb3a2b0cbce7495527b57f3f45baf621967f4214c5",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\book\\GTMaterialDictionary.java",
+      "sourceSha256": "d089090c5f6b2d7a4336a0e7694acd5c80d0016b13fe6b2f000ec05e36275164"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/content/loot/GTLootTables.java",
+      "sha256": "4586a017f6a119d58ede1642054fca4163d29339648bb5f34d7ad8bbe39b42d6",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\loot\\GTLootTables.java",
+      "sourceSha256": "00d81af32abbb6e490bf9d58c7f5accb3d46d90a2ccb56007b10809cf98023f7"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/content/tool/BottleCrateGeometry.java",
+      "sha256": "c7026c0c575af1f20e798d5b60e2001ad88eef96d7889411191ac8bdbec1e1dc",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\tool\\BottleCrateGeometry.java",
+      "sourceSha256": "9965aefe6f8f9a67bad151ad6bc7bbb957a8780049d3d0322fc80959457a8d39"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/registry/GTLootChests.java",
+      "sha256": "cf0a506aea6314c1ebe6ef3b7c9080f50cfdd050ddeec5f6f674d594556ea1cc",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTLootChests.java",
+      "sourceSha256": "91cce25f13da50393bfd82dbe3b16ce1bd1797858aa1ccea20c3631d9f68b8c7"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/world/GarbageData.java",
+      "sha256": "00fc4884f0423b128d5b041bd5d2ff78c6c27db12d9150e3ce14852905d0476d",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\world\\GarbageData.java",
+      "sourceSha256": "a0ef435e0f05833cddea8f4babe553f163da9d40f8a884bcbd9ea5de1bae5dbf"
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/book/GTMaterialDictionaryPages.java",
+      "sha256": "47b18e1373fb22b0a80754ffd0457913fc3904096ecd1f3512a650815e7862ec",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/book/GTMaterialEnchants.java",
+      "sha256": "5d8bd219428c4e9524f97723bd0f6f13e53f0659c49aea279b5ec30ead7b434b",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\book\\GTMaterialEnchants.java",
+      "sourceSha256": "5f12b6ce755c2f1708b1dddd19286df0659218b4efa8f771676c6cd13aa1fea4"
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/book/GTMaterialRecipes.java",
+      "sha256": "5d0bc9f01b9dc68420b1725239989835ca7e4e9af97c479f803390deb09ad14b",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\book\\GTMaterialRecipes.java",
+      "sourceSha256": "4f586329437463180a1228c14f8d718716a978c4bf3aebe4a1603e650318fbae"
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/loot/LootChestCatalog.java",
+      "sha256": "b547c632725c6268974463857a391c42801fcdf0e2557c0e0cf2f2bdaac0735f",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/loot/LootRollRules.java",
+      "sha256": "186669afe556e38b2a4f8708e24bc36c3f96c0d78afb8a8553997d692e31483a",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/storage/ContainerStorageRules.java",
+      "sha256": "2fc1bedb04961d0fb3a6e9b135e2a05dc79eb7b70341e108da8213df164af0ad",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/storage/GarbageStorageRules.java",
+      "sha256": "f3076206460af470192eb4a4e221d450f32b8854fa16f6ae65849ea65009054a",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/data/generated/MaterialProcessingTargets.java",
+      "sha256": "81d575abee9f5c47d881b3e23a9e63a579b5f6f97c37e8b1f3a6b996f3858b3e",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\data\\generated\\MaterialProcessingTargets.java",
+      "sourceSha256": "81d575abee9f5c47d881b3e23a9e63a579b5f6f97c37e8b1f3a6b996f3858b3e"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/inventory/BottleCrateBlock.java",
+      "sha256": "f3970156705e02f7480bd6dd3cd91f33cce081b32e8281b6df6de364a39c69d1",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\inventory\\BottleCrateBlock.java",
+      "sourceSha256": "426906853d2471ab0cd4fbc3df2638ecb935b594f3b0507bc56ae363f0b90c5c"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/inventory/DrawerQuadBlock.java",
+      "sha256": "bd700293222f684564e2623ac94be3c945427c440e0a415449de8492c81a6ccd",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\inventory\\DrawerQuadBlock.java",
+      "sourceSha256": "7ea41c6ca24731f8b39c6e187fae00893ca529fc789e1e56cf93fbacca2e3edf"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/inventory/EnderGarbageBlock.java",
+      "sha256": "44f1a1e812a4bae5af2cf61c7044b0a3257db6e84c6e9e17c23906a47d3c78e0",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\inventory\\EnderGarbageBlock.java",
+      "sourceSha256": "cb5b1d16f3f1020f7ed7403ab78da3104fb2400ef617f40b93c317b2172ea05b"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/inventory/EnderGarbageDumpBlock.java",
+      "sha256": "57523b4bfba5222fa35f55d2910a9924eff2da0719cbfd01627478e620654f06",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\inventory\\EnderGarbageDumpBlock.java",
+      "sourceSha256": "fb752288ad233880ae3bc44cddaaa8d73e476e7c9787ba52f365be88b2fe6596"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/inventory/LockerBlock.java",
+      "sha256": "660ee1393a07dc52a51b4fdbb41bf3de91bff0097281a6f0aa232da3031474a9",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\inventory\\LockerBlock.java",
+      "sourceSha256": "2acf36af934da9794007c9b45932b42a61224258a542a065ee2a0b74c65aa644"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/inventory/LootChestBlock.java",
+      "sha256": "1829c10e964578f5c6e54ce8e4b309e42bbb40ac1ab70bc2d50fa5b9e0d6ad29",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\inventory\\LootChestBlock.java",
+      "sourceSha256": "bb8e0419ccc869d9d096b3e5ef0df2072c1906db5d962d6d1299f25591ad0c1d"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/inventory/MetalChestBlock.java",
+      "sha256": "42523138822dfd9904dc09cc06aab671b7b71bd9cd54f96dd176ef0254d7f181",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\inventory\\MetalChestBlock.java",
+      "sourceSha256": "f6c62d8012081d99b41490cadb416f0d2658db524a1a675c21aa8651c8a5125a"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/inventory/MetalChestBlockItem.java",
+      "sha256": "4eb82fd7c88287922c1c8a511f16d2923f136409bba771afa88e0f9cc347dfe0",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\inventory\\MetalChestBlockItem.java",
+      "sourceSha256": "c06e0f2dd084f9c5ee93464dd4da64e6df8eb6b02d034a0657de9ec6e2a3fce3"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/inventory/BottleCrateBlockEntity.java",
+      "sha256": "5b38a764fb051e7dc71b8c8b26eb9da710ad270a32f95a012e84db4490241a9e",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\inventory\\BottleCrateBlockEntity.java",
+      "sourceSha256": "c16f8ec573d5063c21a1e2c32598dc113329c2b9b1097db90a349e3605740d6c"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/inventory/DrawerQuadBlockEntity.java",
+      "sha256": "2eefeb87db71efa78ae59af8d8125683e20f1f40c0cb2d48db6de99229fd0ed2",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\inventory\\DrawerQuadBlockEntity.java",
+      "sourceSha256": "8b85fa1cb0cdb4a16183a67f09f2b7d7bfee79cd676ba8dd7e0417c8229ab207"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/inventory/EnderGarbageBlockEntity.java",
+      "sha256": "9cfde694658c333cdb2cd55fbb87b8437a6170db7808eb909333617f76c61cb8",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\inventory\\EnderGarbageBlockEntity.java",
+      "sourceSha256": "4421a77c4362b15cb10c0a92d68c4642f12fd67d93f54ba1f830cb0d8934a009"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/inventory/EnderGarbageDumpBlockEntity.java",
+      "sha256": "2fec86e6e322da86df0bcac58ea6162125fcb4479f81271bad843bcd11218b83",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\inventory\\EnderGarbageDumpBlockEntity.java",
+      "sourceSha256": "71764ab227f0436b1f6c1fee7f119940584e1ca1fd63e23f2f99463c9c9bda6e"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/inventory/LockerBlockEntity.java",
+      "sha256": "b0546884d697fe1dd48567e827a545bb0ba6d75a74d4f4dc72480a2fd7cac781",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\inventory\\LockerBlockEntity.java",
+      "sourceSha256": "5c0346b2392f2019da23f6e7b883401eba66819cd5dfab7b7fea8a96ccbb3c6a"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/inventory/MetalChestBlockEntity.java",
+      "sha256": "3ed238ab2a2a0af0968857e51cfba2db98273d8cf4d31a1fdfa4208e7c25265e",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\inventory\\MetalChestBlockEntity.java",
+      "sourceSha256": "31708ad7c0d78691be5eae821aacc6754438347905471225ab552a406ae8e613"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/BottleCrateRenderer.java",
+      "sha256": "ff89af3f6c42adce9aadd921fee219f6649487dd16e579f459e3cb094ba8a16d",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\BottleCrateRenderer.java",
+      "sourceSha256": "4469b5da262bd4b672ceb5f23ddd712b7c6ef5a816868b6993849fe38c18b6e1"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/MetalChestClientSetup.java",
+      "sha256": "a3352397d4915fc36c72b86ee78e10372a6c6f99f83ee63e1c482d16ca31ff80",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/MetalChestItemRenderer.java",
+      "sha256": "19b2a9d910f4a605611e3ea8ba2b687701302cab45af4177b26bca53b8b00a61",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\MetalChestItemRenderer.java",
+      "sourceSha256": "55f0a8e996bc9d93300674931632fe72b163a63b8beadeae5613e5286391e6b7"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/MetalChestRenderer.java",
+      "sha256": "462087f5a9fda071d161bad28a5de3578f3e5ee28ec8aa1a218b563b0bea54f3",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\MetalChestRenderer.java",
+      "sourceSha256": "b71bc946301e0552768632fa2f4c66a8653c4b1803595f0bbc944735f6a9e62a"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/MetalChestVisuals.java",
+      "sha256": "04422f6a4202530386ebb01e8cc7d5d9fda9149f0ec02e8bc4a9be69c339fdaf",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\MetalChestVisuals.java",
+      "sourceSha256": "af848962628be5f36f31a2f514d3be8a015fb24e955c23910a17c97191ee4d87"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/StorageContainerClientSetup.java",
+      "sha256": "bd09f92c39d8fc26ed9fdd02236dad5075dd6d95144f94e93b124189fce9d44a",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/gui/GarbageDumpContainerMenu.java",
+      "sha256": "6147091a61172eef9ba5159f9de4a1eebb38921a4d8cdb21ef1b5717266ef638",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\gui\\GarbageDumpContainerMenu.java",
+      "sourceSha256": "4d385f76c691b431b743736ee039043f3d73c73783d0170cc511c576dea96f43"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/book/GTMaterialDictionary.java",
+      "sha256": "74480aa22b943fc06d8e376c5553d894092dbe24e1d9f6ee418625b44f615649",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\book\\GTMaterialDictionary.java",
+      "sourceSha256": "d089090c5f6b2d7a4336a0e7694acd5c80d0016b13fe6b2f000ec05e36275164"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/loot/GTLootTables.java",
+      "sha256": "79e483395e5122ef16e8ecc5122bb1668f20e020c656203c2c089f13107fe781",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\loot\\GTLootTables.java",
+      "sourceSha256": "00d81af32abbb6e490bf9d58c7f5accb3d46d90a2ccb56007b10809cf98023f7"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/tool/BottleCrateGeometry.java",
+      "sha256": "451b01929883620ee870250361e69e1fedef57b7ba2f2c056a047951324492b0",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\tool\\BottleCrateGeometry.java",
+      "sourceSha256": "9965aefe6f8f9a67bad151ad6bc7bbb957a8780049d3d0322fc80959457a8d39"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/MetalChestCapabilities.java",
+      "sha256": "68535b691e853788df7807f6432cef2cdd786c706b35f914eb928ed43540d79a",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/StorageContainerCapabilities.java",
+      "sha256": "0cacc31459e3ccb5bb34e572d12c39b14dada8e46f6a35c5b7d938433b1ccd71",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTLootChests.java",
+      "sha256": "1edf35fa19d49389e7e600c41b89113c4947ca3212621881cec11cca17359dfd",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTLootChests.java",
+      "sourceSha256": "91cce25f13da50393bfd82dbe3b16ce1bd1797858aa1ccea20c3631d9f68b8c7"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTMetalChests.java",
+      "sha256": "d34e3f5c9aa7c289582a9fd20bd3792947962f7c4dd4f1e03acf22ee4fe457b4",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTStorageContainers.java",
+      "sha256": "bd2c8e1e5aab64d23f9b44fe4a8df091eb90a87c828a1bf81be0fb6a7b88955e",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/world/GarbageData.java",
+      "sha256": "b22b0cb56ebec10ef8cdeb363ae387aef5c210c4c86cfa99aafcb388e043d33f",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\world\\GarbageData.java",
+      "sourceSha256": "a0ef435e0f05833cddea8f4babe553f163da9d40f8a884bcbd9ea5de1bae5dbf"
+    }
+  ],
+  "resources": [
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\bottle_crate.json",
+      "sha256": "238d865e56aa098e94ed36c525f02a68d10f87f402aa5e30ac93a9dc2d85a77a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/bottle_crate.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_adamantium.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_adamantium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_aluminium.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_aluminium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_antimony.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_antimony.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_ardite.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_ardite.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_arsenic_bronze.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_arsenic_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_arsenic_copper.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_arsenic_copper.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_bedrock_hsla.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_bedrock_hsla.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_bismuth.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_bismuth.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_bismuth_bronze.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_bismuth_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_brass.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_brass.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_bronze.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_chromium.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_chromium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_cobalt.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_cobalt.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_constantan.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_constantan.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_desh.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_desh.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_desh_alloy.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_desh_alloy.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_draconium.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_draconium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_draconium_awakened.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_draconium_awakened.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_duranium.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_duranium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_efrine.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_efrine.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_electrum.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_electrum.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_elven_elementium.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_elven_elementium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_germanium.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_germanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_gilded_iron.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_gilded_iron.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_gold.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_gold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_hsla.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_hsla.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_infinity.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_infinity.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_invar.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_invar.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_iridium.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_iridium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_knightmetal.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_knightmetal.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_lead.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_lead.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_lumium.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_lumium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_manasteel.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_manasteel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_manganese.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_manganese.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_manyullyn.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_manyullyn.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_meteoric_steel.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_meteoric_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_meteorite.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_meteorite.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_molybdenum.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_molybdenum.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_netherite.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_netherite.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_nickel.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_nickel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_octine.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_octine.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_osmium.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_osmium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_palladium.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_palladium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_platinum.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_platinum.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_silver.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_silver.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_steel.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_steel_galvanized.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_steel_galvanized.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_syrmorite.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_syrmorite.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_terrasteel.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_terrasteel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_thaumium.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_thaumium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_tin_alloy.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_tin_alloy.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_titanium.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_titanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_tritanium.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_tritanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_tungsten.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_tungsten.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_tungstensteel.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_tungstensteel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_tungsten_alloy.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_tungsten_alloy.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_tungsten_carbide.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_tungsten_carbide.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_ultimet.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_ultimet.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\drawer_quad_void_metal.json",
+      "sha256": "708861de9154bce2b8aa0bc9fea7472356225807f1cf5779889290c752efa68a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/drawer_quad_void_metal.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\locker.json",
+      "sha256": "4b6ec5c92d44310d3e5e141324d6b6f3572ecae471c63c727990103cdb9c99aa",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/locker.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\bottle_crate.json",
+      "sha256": "6a014273f0013232caf09a6ec180647986601e212762e9b1e6b94075faea3713",
+      "target": "core/src/main/resources/assets/gregtech/models/item/bottle_crate.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_adamantium.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_adamantium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_aluminium.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_aluminium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_antimony.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_antimony.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_ardite.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_ardite.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_arsenic_bronze.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_arsenic_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_arsenic_copper.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_arsenic_copper.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_bedrock_hsla.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_bedrock_hsla.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_bismuth.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_bismuth.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_bismuth_bronze.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_bismuth_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_brass.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_brass.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_bronze.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_chromium.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_chromium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_cobalt.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_cobalt.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_constantan.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_constantan.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_desh.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_desh.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_desh_alloy.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_desh_alloy.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_draconium.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_draconium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_draconium_awakened.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_draconium_awakened.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_duranium.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_duranium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_efrine.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_efrine.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_electrum.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_electrum.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_elven_elementium.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_elven_elementium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_germanium.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_germanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_gilded_iron.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_gilded_iron.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_gold.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_gold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_hsla.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_hsla.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_infinity.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_infinity.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_invar.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_invar.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_iridium.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_iridium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_knightmetal.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_knightmetal.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_lead.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_lead.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_lumium.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_lumium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_manasteel.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_manasteel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_manganese.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_manganese.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_manyullyn.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_manyullyn.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_meteoric_steel.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_meteoric_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_meteorite.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_meteorite.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_molybdenum.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_molybdenum.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_netherite.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_netherite.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_nickel.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_nickel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_octine.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_octine.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_osmium.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_osmium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_palladium.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_palladium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_platinum.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_platinum.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_silver.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_silver.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_steel.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_steel_galvanized.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_steel_galvanized.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_syrmorite.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_syrmorite.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_terrasteel.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_terrasteel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_thaumium.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_thaumium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_tin_alloy.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_tin_alloy.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_titanium.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_titanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_tritanium.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_tritanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_tungsten.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_tungsten.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_tungstensteel.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_tungstensteel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_tungsten_alloy.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_tungsten_alloy.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_tungsten_carbide.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_tungsten_carbide.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_ultimet.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_ultimet.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\drawer_quad_void_metal.json",
+      "sha256": "68277fdf80553fafb95b3bd4425842c0d7b9cd45dd1233f42c73a306e2b4aeba",
+      "target": "core/src/main/resources/assets/gregtech/models/item/drawer_quad_void_metal.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\locker.json",
+      "sha256": "b10e41dce29bb4a456aa16c92475231c84d35ef156018669c94afee2ced341ea",
+      "target": "core/src/main/resources/assets/gregtech/models/item/locker.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\inventory\\bottle_crate.json",
+      "sha256": "b2af39cdcf892f91dea2e8b3e378f672a528743823a859c904ec3f5b8eaa2a26",
+      "target": "core/src/main/resources/assets/gregtech/models/block/inventory/bottle_crate.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\storage\\drawer_quad.json",
+      "sha256": "03c0ae1988c276d8992c4ac7f9d3acd9f01bc6069d5e3e22c2429078793333a7",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/storage/drawer_quad.json",
+      "adaptation": "original Forge composite loader preserved at platform boundary"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\storage\\drawer_quad_down.json",
+      "sha256": "9f4aa395add21cbdfa3956c59a1ce7f948c142ade6c36046847c6964450a7939",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/storage/drawer_quad_down.json",
+      "adaptation": "original Forge composite loader preserved at platform boundary"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\storage\\drawer_quad_east.json",
+      "sha256": "53ce48572d5e1d34f0584bdad3fb9e2070cb7a6d5f8822ae7fdcc03898d8243d",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/storage/drawer_quad_east.json",
+      "adaptation": "original Forge composite loader preserved at platform boundary"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\storage\\drawer_quad_north.json",
+      "sha256": "c191442f67aaf6dce378c1f78dda852bd8464c8833842b7b9ea5755aff009a4c",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/storage/drawer_quad_north.json",
+      "adaptation": "original Forge composite loader preserved at platform boundary"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\storage\\drawer_quad_south.json",
+      "sha256": "273a5a7b8f73ae444dd7c7a3e10eba105c201bb2d5d3d44454ed6ecd8bd65d30",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/storage/drawer_quad_south.json",
+      "adaptation": "original Forge composite loader preserved at platform boundary"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\storage\\drawer_quad_up.json",
+      "sha256": "27a78fe3831a83346d0668246449dce5805abf628d73683fe40e79aa693264b4",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/storage/drawer_quad_up.json",
+      "adaptation": "original Forge composite loader preserved at platform boundary"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\storage\\drawer_quad_west.json",
+      "sha256": "e4aa4bbbb5bbdfc801a604aa8b50e64657775fd6c66a65151ea63ee04914d110",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/storage/drawer_quad_west.json",
+      "adaptation": "original Forge composite loader preserved at platform boundary"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\storage\\locker.json",
+      "sha256": "de051fa2796909afed953001feff32a17dbfdd744657d480dc761ba5aaebf4f1",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/storage/locker.json",
+      "adaptation": "original Forge composite loader preserved at platform boundary"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_adamantium.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_adamantium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_aluminium.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_aluminium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_antimony.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_antimony.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_ardite.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_ardite.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_arsenic_bronze.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_arsenic_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_arsenic_copper.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_arsenic_copper.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_bedrock_hsla.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_bedrock_hsla.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_bismuth.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_bismuth.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_bismuth_bronze.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_bismuth_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_brass.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_brass.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_bronze.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_chromium.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_chromium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_cobalt.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_cobalt.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_constantan.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_constantan.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_desh.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_desh.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_desh_alloy.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_desh_alloy.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_draconium.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_draconium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_draconium_awakened.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_draconium_awakened.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_duranium.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_duranium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_efrine.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_efrine.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_electrum.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_electrum.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_elven_elementium.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_elven_elementium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_germanium.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_germanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_gilded_iron.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_gilded_iron.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_gold.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_gold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_hsla.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_hsla.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_infinity.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_infinity.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_invar.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_invar.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_iridium.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_iridium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_knightmetal.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_knightmetal.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_lead.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_lead.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_lumium.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_lumium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_manasteel.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_manasteel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_manganese.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_manganese.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_manyullyn.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_manyullyn.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_meteoric_steel.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_meteoric_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_meteorite.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_meteorite.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_molybdenum.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_molybdenum.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_netherite.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_netherite.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_nickel.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_nickel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_octine.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_octine.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_osmium.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_osmium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_palladium.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_palladium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_platinum.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_platinum.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_silver.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_silver.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_stainless_steel.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_stainless_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_steel.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_steel_galvanized.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_steel_galvanized.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_syrmorite.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_syrmorite.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_terrasteel.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_terrasteel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_thaumium.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_thaumium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_tin_alloy.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_tin_alloy.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_titanium.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_titanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_tritanium.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_tritanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_tungsten.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_tungsten.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_tungstensteel.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_tungstensteel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_tungsten_alloy.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_tungsten_alloy.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_tungsten_carbide.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_tungsten_carbide.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_ultimet.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_ultimet.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\chest_void_metal.json",
+      "sha256": "452ec5d9168b9444aee5e9ccd5ef37edd3baa6e8aee8268abada741017d49599",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/chest_void_metal.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\loot_chest_blacksmith.json",
+      "sha256": "290794b7b145246dfb9ef9a42eb0c92e881e7b5e19ba81f779f2a73685db481d",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/loot_chest_blacksmith.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\loot_chest_bonus.json",
+      "sha256": "290794b7b145246dfb9ef9a42eb0c92e881e7b5e19ba81f779f2a73685db481d",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/loot_chest_bonus.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\loot_chest_books.json",
+      "sha256": "290794b7b145246dfb9ef9a42eb0c92e881e7b5e19ba81f779f2a73685db481d",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/loot_chest_books.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\loot_chest_bottles.json",
+      "sha256": "290794b7b145246dfb9ef9a42eb0c92e881e7b5e19ba81f779f2a73685db481d",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/loot_chest_bottles.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\loot_chest_desert_pyramid.json",
+      "sha256": "290794b7b145246dfb9ef9a42eb0c92e881e7b5e19ba81f779f2a73685db481d",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/loot_chest_desert_pyramid.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\loot_chest_dungeon.json",
+      "sha256": "290794b7b145246dfb9ef9a42eb0c92e881e7b5e19ba81f779f2a73685db481d",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/loot_chest_dungeon.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\loot_chest_flawless.json",
+      "sha256": "290794b7b145246dfb9ef9a42eb0c92e881e7b5e19ba81f779f2a73685db481d",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/loot_chest_flawless.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\loot_chest_gems.json",
+      "sha256": "290794b7b145246dfb9ef9a42eb0c92e881e7b5e19ba81f779f2a73685db481d",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/loot_chest_gems.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\loot_chest_jungle_dispenser.json",
+      "sha256": "290794b7b145246dfb9ef9a42eb0c92e881e7b5e19ba81f779f2a73685db481d",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/loot_chest_jungle_dispenser.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\loot_chest_jungle_temple.json",
+      "sha256": "290794b7b145246dfb9ef9a42eb0c92e881e7b5e19ba81f779f2a73685db481d",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/loot_chest_jungle_temple.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\loot_chest_library.json",
+      "sha256": "290794b7b145246dfb9ef9a42eb0c92e881e7b5e19ba81f779f2a73685db481d",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/loot_chest_library.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\loot_chest_matdicts.json",
+      "sha256": "290794b7b145246dfb9ef9a42eb0c92e881e7b5e19ba81f779f2a73685db481d",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/loot_chest_matdicts.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\loot_chest_mineshaft.json",
+      "sha256": "290794b7b145246dfb9ef9a42eb0c92e881e7b5e19ba81f779f2a73685db481d",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/loot_chest_mineshaft.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\loot_chest_misc.json",
+      "sha256": "290794b7b145246dfb9ef9a42eb0c92e881e7b5e19ba81f779f2a73685db481d",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/loot_chest_misc.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\loot_chest_saplings.json",
+      "sha256": "290794b7b145246dfb9ef9a42eb0c92e881e7b5e19ba81f779f2a73685db481d",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/loot_chest_saplings.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\loot_chest_seeds.json",
+      "sha256": "290794b7b145246dfb9ef9a42eb0c92e881e7b5e19ba81f779f2a73685db481d",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/loot_chest_seeds.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\loot_chest_stronghold_corridor.json",
+      "sha256": "290794b7b145246dfb9ef9a42eb0c92e881e7b5e19ba81f779f2a73685db481d",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/loot_chest_stronghold_corridor.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\loot_chest_stronghold_storage.json",
+      "sha256": "290794b7b145246dfb9ef9a42eb0c92e881e7b5e19ba81f779f2a73685db481d",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/loot_chest_stronghold_storage.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_adamantium.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_adamantium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_aluminium.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_aluminium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_antimony.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_antimony.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_ardite.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_ardite.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_arsenic_bronze.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_arsenic_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_arsenic_copper.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_arsenic_copper.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_bedrock_hsla.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_bedrock_hsla.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_bismuth.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_bismuth.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_bismuth_bronze.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_bismuth_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_brass.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_brass.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_bronze.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_chromium.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_chromium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_cobalt.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_cobalt.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_constantan.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_constantan.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_desh.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_desh.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_desh_alloy.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_desh_alloy.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_draconium.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_draconium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_draconium_awakened.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_draconium_awakened.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_duranium.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_duranium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_efrine.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_efrine.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_electrum.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_electrum.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_elven_elementium.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_elven_elementium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_germanium.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_germanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_gilded_iron.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_gilded_iron.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_gold.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_gold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_hsla.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_hsla.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_infinity.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_infinity.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_invar.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_invar.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_iridium.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_iridium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_knightmetal.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_knightmetal.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_lead.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_lead.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_lumium.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_lumium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_manasteel.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_manasteel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_manganese.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_manganese.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_manyullyn.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_manyullyn.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_meteoric_steel.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_meteoric_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_meteorite.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_meteorite.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_molybdenum.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_molybdenum.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_netherite.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_netherite.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_nickel.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_nickel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_octine.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_octine.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_osmium.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_osmium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_palladium.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_palladium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_platinum.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_platinum.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_silver.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_silver.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_stainless_steel.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_stainless_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_steel.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_steel_galvanized.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_steel_galvanized.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_syrmorite.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_syrmorite.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_terrasteel.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_terrasteel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_thaumium.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_thaumium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_tin_alloy.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_tin_alloy.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_titanium.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_titanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_tritanium.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_tritanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_tungsten.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_tungsten.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_tungstensteel.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_tungstensteel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_tungsten_alloy.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_tungsten_alloy.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_tungsten_carbide.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_tungsten_carbide.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_ultimet.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_ultimet.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\reinforced_wood_chest_void_metal.json",
+      "sha256": "d84a4751fd9370b480ac8bb1f6910d267f47d1bd008fb67b6bb191aaf4864b56",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/reinforced_wood_chest_void_metal.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_adamantium.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_adamantium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_aluminium.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_aluminium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_antimony.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_antimony.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_ardite.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_ardite.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_arsenic_bronze.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_arsenic_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_arsenic_copper.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_arsenic_copper.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_bedrock_hsla.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_bedrock_hsla.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_bismuth.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_bismuth.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_bismuth_bronze.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_bismuth_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_brass.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_brass.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_bronze.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_chromium.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_chromium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_cobalt.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_cobalt.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_constantan.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_constantan.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_desh.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_desh.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_desh_alloy.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_desh_alloy.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_draconium.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_draconium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_draconium_awakened.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_draconium_awakened.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_duranium.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_duranium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_efrine.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_efrine.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_electrum.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_electrum.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_elven_elementium.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_elven_elementium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_germanium.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_germanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_gilded_iron.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_gilded_iron.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_gold.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_gold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_hsla.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_hsla.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_infinity.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_infinity.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_invar.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_invar.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_iridium.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_iridium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_knightmetal.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_knightmetal.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_lead.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_lead.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_lumium.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_lumium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_manasteel.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_manasteel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_manganese.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_manganese.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_manyullyn.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_manyullyn.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_meteoric_steel.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_meteoric_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_meteorite.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_meteorite.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_molybdenum.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_molybdenum.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_netherite.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_netherite.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_nickel.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_nickel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_octine.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_octine.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_osmium.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_osmium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_palladium.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_palladium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_platinum.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_platinum.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_silver.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_silver.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_stainless_steel.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_stainless_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_steel.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_steel_galvanized.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_steel_galvanized.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_syrmorite.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_syrmorite.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_terrasteel.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_terrasteel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_thaumium.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_thaumium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_tin_alloy.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_tin_alloy.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_titanium.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_titanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_tritanium.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_tritanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_tungsten.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_tungsten.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_tungstensteel.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_tungstensteel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_tungsten_alloy.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_tungsten_alloy.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_tungsten_carbide.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_tungsten_carbide.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_ultimet.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_ultimet.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\chest_void_metal.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/chest_void_metal.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\loot_chest_blacksmith.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/loot_chest_blacksmith.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\loot_chest_bonus.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/loot_chest_bonus.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\loot_chest_books.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/loot_chest_books.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\loot_chest_bottles.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/loot_chest_bottles.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\loot_chest_desert_pyramid.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/loot_chest_desert_pyramid.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\loot_chest_dungeon.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/loot_chest_dungeon.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\loot_chest_flawless.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/loot_chest_flawless.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\loot_chest_gems.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/loot_chest_gems.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\loot_chest_jungle_dispenser.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/loot_chest_jungle_dispenser.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\loot_chest_jungle_temple.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/loot_chest_jungle_temple.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\loot_chest_library.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/loot_chest_library.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\loot_chest_matdicts.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/loot_chest_matdicts.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\loot_chest_mineshaft.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/loot_chest_mineshaft.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\loot_chest_misc.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/loot_chest_misc.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\loot_chest_saplings.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/loot_chest_saplings.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\loot_chest_seeds.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/loot_chest_seeds.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\loot_chest_stronghold_corridor.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/loot_chest_stronghold_corridor.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\loot_chest_stronghold_storage.json",
+      "sha256": "2d4c9bd18b2bc8406e6a8598274ee05e0e23de73084ab9b2256948a5c10c324b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/loot_chest_stronghold_storage.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_adamantium.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_adamantium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_aluminium.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_aluminium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_antimony.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_antimony.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_ardite.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_ardite.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_arsenic_bronze.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_arsenic_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_arsenic_copper.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_arsenic_copper.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_bedrock_hsla.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_bedrock_hsla.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_bismuth.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_bismuth.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_bismuth_bronze.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_bismuth_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_brass.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_brass.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_bronze.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_bronze.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_chromium.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_chromium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_cobalt.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_cobalt.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_constantan.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_constantan.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_desh.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_desh.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_desh_alloy.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_desh_alloy.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_draconium.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_draconium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_draconium_awakened.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_draconium_awakened.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_duranium.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_duranium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_efrine.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_efrine.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_electrum.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_electrum.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_elven_elementium.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_elven_elementium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_germanium.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_germanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_gilded_iron.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_gilded_iron.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_gold.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_gold.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_hsla.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_hsla.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_infinity.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_infinity.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_invar.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_invar.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_iridium.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_iridium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_knightmetal.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_knightmetal.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_lead.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_lead.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_lumium.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_lumium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_manasteel.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_manasteel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_manganese.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_manganese.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_manyullyn.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_manyullyn.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_meteoric_steel.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_meteoric_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_meteorite.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_meteorite.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_molybdenum.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_molybdenum.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_netherite.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_netherite.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_nickel.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_nickel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_octine.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_octine.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_osmium.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_osmium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_palladium.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_palladium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_platinum.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_platinum.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_silver.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_silver.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_stainless_steel.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_stainless_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_steel.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_steel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_steel_galvanized.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_steel_galvanized.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_syrmorite.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_syrmorite.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_terrasteel.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_terrasteel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_thaumium.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_thaumium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_tin_alloy.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_tin_alloy.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_titanium.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_titanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_tritanium.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_tritanium.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_tungsten.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_tungsten.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_tungstensteel.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_tungstensteel.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_tungsten_alloy.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_tungsten_alloy.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_tungsten_carbide.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_tungsten_carbide.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_ultimet.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_ultimet.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest_void_metal.json",
+      "sha256": "16f46cb24c0f587ab47d96c824f4e133a529f3dee160676330f8f87b5ab749a9",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest_void_metal.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\reinforced_wood_chest.json",
+      "sha256": "fc7f9362a1cac5e3ba285fb7f384e8ba3009abfcefd4361c8946fedfd59906a1",
+      "target": "core/src/main/resources/assets/gregtech/models/item/reinforced_wood_chest.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\metal_chest.json",
+      "sha256": "f087b23f7f83c4ae536d249440316c7a7eaf4cb99c09fa7e68cd4e188d046ae2",
+      "target": "core/src/main/resources/assets/gregtech/models/item/metal_chest.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\storage\\reinforced_wood_chest.json",
+      "sha256": "96e5a00ce53351d48621e5afa26d203842a2360c82b7a71a20cef06949952df4",
+      "target": "core/src/main/resources/assets/gregtech/models/block/machine/storage/reinforced_wood_chest.json",
+      "adaptation": "original referenced model dependency"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\storage\\loot_chest.json",
+      "sha256": "dd9e7d82ae31dfe6a45fc44d0de572ba1829d44974bd6891b091cc70a3fa9726",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/storage/loot_chest.json",
+      "adaptation": "original Forge composite loader preserved at platform boundary"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\storage\\metal_chest.json",
+      "sha256": "266a981be3033117eec269737d605c8672f60a665e93545c6b12f3e8352b2d68",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/storage/metal_chest.json",
+      "adaptation": "original Forge composite loader preserved at platform boundary"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\ender_garbage_bin.json",
+      "sha256": "a5e13ab9de0d255cfd6461800f34ac60fa00fbe7a95728dd26c3002cbdc427a5",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/ender_garbage_bin.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\ender_garbage_dump.json",
+      "sha256": "62666ba45c8a2fb9b66380fa2ff2b57a729a92e42037fd26fddc53a0e74e36a9",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/ender_garbage_dump.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\ender_garbage_bin.json",
+      "sha256": "acd4e48b81af7e32b88fc963f057660ba3330212904f58e7319ebf0464056610",
+      "target": "core/src/main/resources/assets/gregtech/models/item/ender_garbage_bin.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\ender_garbage_dump.json",
+      "sha256": "e0f425dfa2f880ee02c4acb33e475ccf766911ac5fec6885d8dd2003ea868564",
+      "target": "core/src/main/resources/assets/gregtech/models/item/ender_garbage_dump.json"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\storage\\ender_garbage_bin.json",
+      "sha256": "c0a3aa6def38cae6a7e75d8da251611ea1bf33735971ad36c5922ac7e6544e6d",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/storage/ender_garbage_bin.json",
+      "adaptation": "original Forge composite loader preserved at platform boundary"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\storage\\ender_garbage_dump.json",
+      "sha256": "0bd1e7e02b02d35bded7e077b384eca82342f59e643695f0da294d782fc8ed2e",
+      "target": "src/main/resources/assets/gregtech/models/block/machine/storage/ender_garbage_dump.json",
+      "adaptation": "original Forge composite loader preserved at platform boundary"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\storage\\drawer_quad.json",
+      "sourceSha256": "03c0ae1988c276d8992c4ac7f9d3acd9f01bc6069d5e3e22c2429078793333a7",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/storage/drawer_quad.json",
+      "sha256": "a2f83b750f23e9139a11b47ebc6538053976769494817463b86660635421e18b",
+      "adaptation": "corresponding native composite loader; original geometry/textures unchanged"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\storage\\drawer_quad_down.json",
+      "sourceSha256": "9f4aa395add21cbdfa3956c59a1ce7f948c142ade6c36046847c6964450a7939",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/storage/drawer_quad_down.json",
+      "sha256": "18fa7cb58d956b4c3fbadd9d2ac77e907f52ef6c3227c4a4fe497e43f6e33ce4",
+      "adaptation": "corresponding native composite loader; original geometry/textures unchanged"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\storage\\drawer_quad_east.json",
+      "sourceSha256": "53ce48572d5e1d34f0584bdad3fb9e2070cb7a6d5f8822ae7fdcc03898d8243d",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/storage/drawer_quad_east.json",
+      "sha256": "a845fc5fd832aba28bdb644e5328984b7bcb9d086804da2766d8844d6b32f1cd",
+      "adaptation": "corresponding native composite loader; original geometry/textures unchanged"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\storage\\drawer_quad_north.json",
+      "sourceSha256": "c191442f67aaf6dce378c1f78dda852bd8464c8833842b7b9ea5755aff009a4c",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/storage/drawer_quad_north.json",
+      "sha256": "c62dac3f071d1663eb02bdff652bd12f4009612dddfdb5c9992352b94cf73c1a",
+      "adaptation": "corresponding native composite loader; original geometry/textures unchanged"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\storage\\drawer_quad_south.json",
+      "sourceSha256": "273a5a7b8f73ae444dd7c7a3e10eba105c201bb2d5d3d44454ed6ecd8bd65d30",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/storage/drawer_quad_south.json",
+      "sha256": "3f00f17f46ca7651148a1d3b6e3d012ec4eb471278e794112b63d26da28b84d5",
+      "adaptation": "corresponding native composite loader; original geometry/textures unchanged"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\storage\\drawer_quad_up.json",
+      "sourceSha256": "27a78fe3831a83346d0668246449dce5805abf628d73683fe40e79aa693264b4",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/storage/drawer_quad_up.json",
+      "sha256": "a891258cc59b747d963ac165213d506c9609783299ecd9b4ef39f63165c9f184",
+      "adaptation": "corresponding native composite loader; original geometry/textures unchanged"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\storage\\drawer_quad_west.json",
+      "sourceSha256": "e4aa4bbbb5bbdfc801a604aa8b50e64657775fd6c66a65151ea63ee04914d110",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/storage/drawer_quad_west.json",
+      "sha256": "9a5b24b97b25bc7cace47284a5bbfeb92067e0a52412eb8bae10e6f3e8c74120",
+      "adaptation": "corresponding native composite loader; original geometry/textures unchanged"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\storage\\locker.json",
+      "sourceSha256": "de051fa2796909afed953001feff32a17dbfdd744657d480dc761ba5aaebf4f1",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/storage/locker.json",
+      "sha256": "db31ed73a93019c267d4e5dd8d7ceb785c5162a21ed128c81c083fd5fd345815",
+      "adaptation": "corresponding native composite loader; original geometry/textures unchanged"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\storage\\loot_chest.json",
+      "sourceSha256": "dd9e7d82ae31dfe6a45fc44d0de572ba1829d44974bd6891b091cc70a3fa9726",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/storage/loot_chest.json",
+      "sha256": "57615bdab9552a61fca9f6929359045892bdd683a14e80874b3fb096f669938d",
+      "adaptation": "corresponding native composite loader; original geometry/textures unchanged"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\storage\\metal_chest.json",
+      "sourceSha256": "266a981be3033117eec269737d605c8672f60a665e93545c6b12f3e8352b2d68",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/storage/metal_chest.json",
+      "sha256": "17e56b46ab8a58d64aa51d35c15264c0c0fc745bc4ee28bb84ad7f1ad58611b6",
+      "adaptation": "corresponding native composite loader; original geometry/textures unchanged"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\storage\\ender_garbage_bin.json",
+      "sourceSha256": "c0a3aa6def38cae6a7e75d8da251611ea1bf33735971ad36c5922ac7e6544e6d",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/storage/ender_garbage_bin.json",
+      "sha256": "633c92513637d2da23966e05f7f7c189d9b3b53303b9f203437715545fa43109",
+      "adaptation": "corresponding native composite loader; original geometry/textures unchanged"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\storage\\ender_garbage_dump.json",
+      "sourceSha256": "0bd1e7e02b02d35bded7e077b384eca82342f59e643695f0da294d782fc8ed2e",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/storage/ender_garbage_dump.json",
+      "sha256": "5d033bb845165653598a71e109cd41d74c84f943ec359aa7ebfbd9a20916af45",
+      "adaptation": "corresponding native composite loader; original geometry/textures unchanged"
+    }
+  ],
+  "comparisonSources": [
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\tileentity\\inventories\\GT6DrawerQuadBlockEntity.java",
+      "sha256": "9eecea67a12030e2b8e5d3b7a28ce8ff260159a97be07e241827992be7bbc42b"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\tileentity\\inventories\\GT6LockerBlockEntity.java",
+      "sha256": "0789210a20264b71234df5b2cb4959584d43396422a67547eb72aeaedb6539f0"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\tileentity\\inventories\\GT6BottleCrateBlockEntity.java",
+      "sha256": "fa617388f6fac338b2ceb041b3fae3349beb36ff204db1c388373b0483232b68"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\tileentity\\example\\GTExampleChestBlockEntity.java",
+      "sha256": "fe440f6ae0cc9b6765c33aa05bdd0384691c7ac847b14cdf4863c634eace476e"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\cruciblecraft\\src\\main\\java\\com\\masson\\cruciblecraft\\content\\blockentity\\LockerBlockEntity.java",
+      "sha256": "abf5423993f0bec9b17bc88ab8356d5d479d56b503e9fae3b52404f892bf8c30"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\cruciblecraft\\src\\main\\java\\com\\masson\\cruciblecraft\\content\\blockentity\\BottleCrateBlockEntity.java",
+      "sha256": "f264c0d12b3cdcc8939b4eee822d7d5417a3043dff2f73846dac566c1ccf9800"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\cruciblecraft\\src\\main\\java\\com\\masson\\cruciblecraft\\client\\render\\GtChestRenderer.java",
+      "sha256": "cd9fff3d88aede959f31ddebb2051191b6b01c48527746b92f8b00b882d77b02"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\cruciblecraft\\src\\main\\java\\com\\masson\\cruciblecraft\\content\\blockentity\\MteInPlaceBlockEntity.java",
+      "sha256": "0bf4da5315b8825cd40317c2ac6b6ca48f698fe1b3bc0516bb690670d6cd463a"
+    }
+  ],
+  "choices": [
+    "Retain source1 complete60 material quad drawers with4x36 addressed slots, front quadrant menus, full6-facing sided mapping, monkey-wrench toggle, native capability invalidation and legacy bulk overflow. Both platforms consume shared layout, rotation table and exact middle-line selection. brokestar has144-slot single-page MUI and independently derived orientation; preserve baseline four-page interaction and exact mapping while broader MUI/sided comparison remains pending.",
+    "Retain source1 nine-cell bottle crate with original world-axis slot picker, whole-stack inventory destination/insert policy (including creative consumption), synchronized real inventory, packed block-item drops and full36-pass bottle/fluid/potion renderer. Native block entity components/provider serialization preserves gt_bottles. Both versions use shared addressing and bottle geometry. brokestar explicitly folds pixel/render and shares bottle-remainder gate; masson uses storage menu/filter/sync variants. Keep richer baseline pixel interaction/packed behavior, evaluate wider filters/variants later.",
+    "Retain source1 singleton four-piece armor locker and original head/chest/legs/feet gt.armor serialization order, swap and drops. Shared order is actually consumed by both. brokestar typed armor automation and masson4 armor slots with10000 charge capacity/energy support are identified additions; they are pending implementation, not claimed merged here.",
+    "Port full60 metal+60 reinforced wood+18 configurable loot chests using existing60 material identity. Preserve54 slots, blocked-lid access, openers/lid animation, real shell/item renderers, burned-shell behavior, vanilla table or original weighted loot, retained GtLootGenerated marker/experience/no reroll and delayed table seed. Native menu/capability/provider/component APIs and actual client extension event ported. brokestar example chest explicitly omits loot/TESR/comparator/paint. masson original64x64 shell/lid renderer agrees on geometry; its compass yaw uses a different transform order (rotation after Z flip versus source1 before flip), so the raw angle table cannot be substituted without the corresponding transform. No second chest material/registry framework imported.",
+    "Both platforms now consume shared18 loot chest catalog, weighted selection/count rules and full material-dictionary prose/processing/alloy/enchantment pages. Existing GTLootGen rows and GTBookContent text are reused, with native frozen-registry item resolution, WrittenBookContent and full custom material mapping. Pure alloy/enchantment lookups and7 processing-target table moved to core; platform boundaries still determine actually registered item/ore forms.",
+    "Port complete2 Ender garbage blocks:9-slot/redstone-gated insert-only buffer/100tick phase50 dump, direct fluid trash, shared256-entry global item/fluid SavedData,54-slot extract-only menu and10tick retrieval into lower inventory/tank without feeding bins. Native global saved-data factory/provider/components and actual item/fluid capabilities adapted. Both platforms consume shared bounds/counts/fluid cap/timers; original saved-data name/keys retained."
+  ],
+  "knownGaps": [
+    "All202 block variants are compile-covered only; the previous ordinary Neo dedicated startup predates these batches. No new fixture or startup was added under D010.",
+    "Source locker lacks automation/charging and many material variants compared to other implementations. Those additions remain part of full integration work.",
+    "Drawer arbitrary-facing orientation, legacy4096-count migration/overflow, full inventory transfers, bottle packed drop conservation/creative policies and actual fluid renderer remain unverified.",
+    "Source chest loot ticks generate on the first tick (not actual first-player proximity); preplaced contents/vanilla fill and generated experience/reroll retention remain unverified. Custom paint, trapped redstone/comparator support and full replacement/dungeon world hooks remain pending.",
+    "Native loot rows can remain unresolved where optional/source plain items are not yet registered. A compiled resolver/catalog does not prove all tables populated. Dictionary and book rendering/crafting pages remain unverified.",
+    "Source garbage discards oldest distinct piles after256 entries, caps fluid amounts to int, and stores item counts as long without overflow protection. Recovery menu validity/partial destination insertion/reentrant inventory hooks and actual SavedData restart have not been verified.",
+    "Only existing original assets are moved; complete per-variant item/model availability is not claimed. Forge and Neo loader files are separate; resource changes were not rendered or launched.",
+    "Forge runtime, real core survival chain, independent world restart/old-save migration and production jar/client acceptance remain pending. Optional directCoreResources speed path remains awaiting next grouped startup. Full goal remains active."
+  ],
+  "validation": "Grouped dual compile PASS32s; no new test fixture, no startup",
+  "repairs": [
+    "Shared dictionary pages required pure MaterialProcessingTargets moved to core",
+    "Native client extension event package corrected",
+    "Native fluid copyWithAmount and existing HopperScreen names used"
+  ]
+}

@@ -1,0 +1,506 @@
+{
+  "stage": "P3 D010 rapid integration",
+  "authors": [
+    "saltnya",
+    "brokestar233",
+    "Lorbineitte Masson",
+    "original GregTech 6 contributors"
+  ],
+  "license": "Original licenses/notices/history retained; no publication or relicensing",
+  "counts": {
+    "surfaceBlocks": 14,
+    "berryTypes": 8,
+    "worldFeatures": 2,
+    "resourceRecords": 55
+  },
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "sha256": "8968f591f3b2fcc1d53d6e7d2d512533612c01b801bb8ee284f4d7bac734d100",
+      "source": null,
+      "sourceSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "sha256": "ee3e5ba87ece37979207ef9900bf1f4795176eca12eeac9bccc9dbf5b7590893",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTBlockEntities.java",
+      "sourceSha256": "027081bae34480826956a74d65a24aa7f4ef29d4be4a4687046793a10d9df62f"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTFeatures.java",
+      "sha256": "f884c50890912f15ab1207d14543ed30e9e644c628d8d947c84f7a6fe88dbe78",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTFeatures.java",
+      "sourceSha256": "5333be8dcf08f58be13e311321a2d6c52c3f492c6f83fa08e84a14928f9ecd61"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/blockentity/BushBlockEntity.java",
+      "sha256": "10b0142334f8a5ea1e6413ff21757bf5aaaeb833ff09720a24cf24885b2eff20",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\BushBlockEntity.java",
+      "sourceSha256": "d49b09c4eb4c2e40c065b4f844d29982af5bc76b09ef2a2f333ed4f5765c8a29"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/content/plant/GTBerryBushes.java",
+      "sha256": "a00596a6f1aab88bec3989c8fd217dd56c85f4e71df00cbe4bf7267e1a69dea5",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\plant\\GTBerryBushes.java",
+      "sourceSha256": "6b62345c117dcf59c6c95e56f3820a0428bc9a148b31227ef3ec4a4c2a4a14eb"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/worldgen/GTSurfaceFlora.java",
+      "sha256": "d483a17e5615d559b05989811a9c625098c80fb7f6e9746bcb27d033d718c08e",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTSurfaceFlora.java",
+      "sourceSha256": "6d6168b82765d41c1ad65e53b67d614d9ecd18e3aad5f78aa883aabf6c308ad1"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/worldgen/GTSurfaceFloraFeature.java",
+      "sha256": "223f1645570caa9d59160c4731a53b17ae804e7db63dd289e93fe89f651dec80",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTSurfaceFloraFeature.java",
+      "sourceSha256": "655ca4634662f76831fad13a4f63d658fbebdc761b1f265e64e993477d31244d"
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/plant/BerryBushCatalog.java",
+      "sha256": "cfa981e8c03c86bc4fbd1305b1e70b70c619342ab5bc84e14cb843a9b874f351",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\plant\\GTBerryBushes.java",
+      "sourceSha256": "6b62345c117dcf59c6c95e56f3820a0428bc9a148b31227ef3ec4a4c2a4a14eb"
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/plant/BushGrowthRules.java",
+      "sha256": "6c2d7e0a5b51451625edbb924271cb9b04f2f0bd4d33cee0d54be0692a246b75",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\BushBlockEntity.java",
+      "sourceSha256": "d49b09c4eb4c2e40c065b4f844d29982af5bc76b09ef2a2f333ed4f5765c8a29"
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/worldgen/SurfaceFloraRules.java",
+      "sha256": "753d1574b051127d569a8e62d596c802db278f73ec116ebe972fbdd7324de540",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTSurfaceFlora.java",
+      "sourceSha256": "6d6168b82765d41c1ad65e53b67d614d9ecd18e3aad5f78aa883aabf6c308ad1"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/misc/DiggableBlock.java",
+      "sha256": "f59bfca54b8dae9fa5246b3424816301cc6260eb818d9ae740fe1c44f8360ab6",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\DiggableBlock.java",
+      "sourceSha256": "9eaa94ed04eefff11a6adb3c4afdfae407971f028590f10ee40801fcadf4d012"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/plant/BushBlock.java",
+      "sha256": "3c0a22739aafaa551723ef2f213b0d122263fb95aac527f90a59eaeb1689e45f",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\plant\\BushBlock.java",
+      "sourceSha256": "694af241ea38f3cc3a8e61ee46b5e624e5c675a85acd07f63b945d08ab18e96b"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/wood/FallenLogBlock.java",
+      "sha256": "ba347be28ff447e2ed761436f3a101ccd3cf5c4208d420a649a19182273e8129",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\wood\\FallenLogBlock.java",
+      "sourceSha256": "d01bc879f35306cb7be9f8283a7a505d8dda3665fa882c0fcc27be2cea90da84"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/BushBlockEntity.java",
+      "sha256": "d55a90200ebfd93a9431c8707698a54397b1f2ad33ab4425a4cf3e652de23711",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\BushBlockEntity.java",
+      "sourceSha256": "d49b09c4eb4c2e40c065b4f844d29982af5bc76b09ef2a2f333ed4f5765c8a29"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/SurfaceLifeClientSetup.java",
+      "sha256": "9ef3e3f59fe0693c8532e02190754a8e437c27dfe2e57cd307370a5434e9a7e6",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\GregTechClient.java",
+      "sourceSha256": "4d6e46a4d9c0c35796033a9a1f759d7afc014a0ec078cf2d4604f17fe76e1705"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/plant/GTBerryBushes.java",
+      "sha256": "83bc8f80f284b06c07d366c28ed0087e1b7928281baf91ce3cf14e6174aa3e2f",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\plant\\GTBerryBushes.java",
+      "sourceSha256": "6b62345c117dcf59c6c95e56f3820a0428bc9a148b31227ef3ec4a4c2a4a14eb"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTBushes.java",
+      "sha256": "ddb2b20b0d039ec1f41a95afa3bb00b584f1631556cb4be2f33e9ecdabc54c30",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTBushes.java",
+      "sourceSha256": "52a1102b55135a29301d1fd13d94b80cd79b17f7e25671887f5d959304b7901f"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTSurfaceBlocks.java",
+      "sha256": "ba275e389dc864ef82b9b4b8350df6bfdadb975e114db82a9a3bd39c742f1954",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTIconSetBlocks.java",
+      "sourceSha256": "efe85ee1d952dceddb949810522bce6a4b5cc01b66cb91b4d236a2c3692c4c12"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTBushesFeature.java",
+      "sha256": "1613bf9f5feb958a6f252429b51622a37caa76bb3a9b1aaf95720d79bd1b61cc",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTBushesFeature.java",
+      "sourceSha256": "1613bf9f5feb958a6f252429b51622a37caa76bb3a9b1aaf95720d79bd1b61cc"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTSurfaceFlora.java",
+      "sha256": "9295d99396565278da24000bc293e27c63619a7a696466d8bbd4846e8aa1e121",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTSurfaceFlora.java",
+      "sourceSha256": "6d6168b82765d41c1ad65e53b67d614d9ecd18e3aad5f78aa883aabf6c308ad1"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTSurfaceFloraFeature.java",
+      "sha256": "223f1645570caa9d59160c4731a53b17ae804e7db63dd289e93fe89f651dec80",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\worldgen\\GTSurfaceFloraFeature.java",
+      "sourceSha256": "655ca4634662f76831fad13a4f63d658fbebdc761b1f265e64e993477d31244d"
+    }
+  ],
+  "resources": [
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\bush.json",
+      "sha256": "400afe29c7570aca0d3909c70e30f5eb18b5ac7cfe111dba1cc2d971368eb47c",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/bush.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\clay_blue.json",
+      "sha256": "811d5897faa4351c8830436100074bd472a4a9ef7b701fdf7d45e25811bb1648",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/clay_blue.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\clay_brown.json",
+      "sha256": "f0eb43015ed805a24ae3dbeadf84e62742d39a3816c9d5784fab42ab55f82032",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/clay_brown.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\clay_red.json",
+      "sha256": "554d81a5cdb827ba2671ac9810adcb0b167b353b413926537cbcf7ccf73d49ab",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/clay_red.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\clay_white.json",
+      "sha256": "69227d1e2e782981f7f82e27f578474df060bc1fed4c1cc6846399d83f332b60",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/clay_white.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\clay_yellow.json",
+      "sha256": "d8ed69b59ed700885081621cf2bda9e98af0fb0213d46cf8d8962e93dcc09b85",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/clay_yellow.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\diggable_clay.json",
+      "sha256": "6396406dad275b69a8e7ec52d8d29b21c2cebd3aa8a3408c2cbdadf3bc2d756f",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/diggable_clay.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\diggable_peat.json",
+      "sha256": "9149ccd3615fe4f4f0cf1df348f09d0ec1f9e785157dfa198c9ae0df0e9a7286",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/diggable_peat.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\log_dry.json",
+      "sha256": "9da2a1031293d784687ba195738169c801bfa512d8fdf4bc1467a2c6cb7497c7",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/log_dry.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\log_frozen.json",
+      "sha256": "674bfb71503a0f08a269175f9702a764283dd822dbc084e7c92b1c550f304751",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/log_frozen.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\log_mossy.json",
+      "sha256": "2afb5190a8e42887d5b61593fc77eee7045f22321daabe5ccaca9bc6157598c4",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/log_mossy.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\log_rotten.json",
+      "sha256": "b5ae8b71c8c2b49a40ef9f43407d3e9093d2cceb2b46f4ccae696601415f4841",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/log_rotten.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\mud.json",
+      "sha256": "cd25fce160275cce88233176bef6f458c4f35cf5bad1aa9aba0e27d64587c9ce",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/mud.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\turf.json",
+      "sha256": "2fe6dfd363d19e425ffc3a885a3263b0bab80a99db17b9efd7bb6d8beeca9d51",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/turf.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\bush.json",
+      "sha256": "b3cc31d3a4f41dd9e86efbea217fcec332f402d751085527ccc0d05e817f71ed",
+      "target": "core/src/main/resources/assets/gregtech/models/item/bush.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_blue.json",
+      "sha256": "0d1806e38b251608a951a0b410c4952a6e29a1d08c24e021b6012bcd68fe5601",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_blue.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_brown.json",
+      "sha256": "5cd79fb9c446c6fb462c3e5279de30775f986631316af3f33fceebb108feceaa",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_brown.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_red.json",
+      "sha256": "59ebf2bdc10ba1b6fcd89b10f6f424789106cd168202ed67ed00f13a33ff9b9c",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_red.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_white.json",
+      "sha256": "0f7d008e2782474ced3d19385418f702e18edffa227a520847db9ba95e4e80b1",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_white.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\clay_yellow.json",
+      "sha256": "62d90f201e4558a69b19cfdea63d340aa99543ac6a2967f35cfbca9c7489f748",
+      "target": "core/src/main/resources/assets/gregtech/models/item/clay_yellow.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\diggable_clay.json",
+      "sha256": "2036cefe065785bbd9ea924021033ec419da09af8ef9382322bbd39761d0dec1",
+      "target": "core/src/main/resources/assets/gregtech/models/item/diggable_clay.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\diggable_peat.json",
+      "sha256": "89cae96761f33c0ef81d9e2b8fef1b9ff0957530091965a3ae957d0e8617c46b",
+      "target": "core/src/main/resources/assets/gregtech/models/item/diggable_peat.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\log_dry.json",
+      "sha256": "948e0ff3ea99b70339d5fd7b94160c751e9fb164bc4cf95888188470c297c913",
+      "target": "core/src/main/resources/assets/gregtech/models/item/log_dry.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\log_frozen.json",
+      "sha256": "3ec5ae0015b98f2bfba2aa260556127f6fb46802e973b001ace67ae2fbb71174",
+      "target": "core/src/main/resources/assets/gregtech/models/item/log_frozen.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\log_mossy.json",
+      "sha256": "439669dee09bc0e28489acc9e81ba722564ac7a458a158571044dedba8f6923c",
+      "target": "core/src/main/resources/assets/gregtech/models/item/log_mossy.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\log_rotten.json",
+      "sha256": "e893a270b29b521da3cf5584c8a164075e40a288bc056584de4a96b8ce018ad3",
+      "target": "core/src/main/resources/assets/gregtech/models/item/log_rotten.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\mud.json",
+      "sha256": "f766b684c381a6b304ce944c545daa053296f73ac6e0c64f03c17ad641c0916d",
+      "target": "core/src/main/resources/assets/gregtech/models/item/mud.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\turf.json",
+      "sha256": "087668739439b0297fcc97e7032aeaafa98aad4e3b18abbaa6821d002c8af479",
+      "target": "core/src/main/resources/assets/gregtech/models/item/turf.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\diggable_clay.json",
+      "sha256": "f36ed65717ef7ee70147c22121d5aad3e312b7f3f6b70a0f9b520c6ecf89f2b4",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/diggable_clay.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\diggable_peat.json",
+      "sha256": "4d3d48eb572a237d860cb05127c1d257d185216104ce525bb1150bf3c32c4639",
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/diggable_peat.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\clay_blue.json",
+      "sha256": "3c673067ffc366b4a60ecec1e4aaebf0820236d265eb5b9bd5c4f0c2f5cd42f5",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/clay_blue.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\clay_brown.json",
+      "sha256": "ef20bccdf2806e0762eeabcc7ff2dd8daf56b593bd7867a38de905c423ce0d30",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/clay_brown.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\clay_red.json",
+      "sha256": "e13d0154c070eeb4a5b4900eaac5415d4c31118a55160c1a72fc4607d3e0aa50",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/clay_red.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\clay_white.json",
+      "sha256": "2d19dda3e547705771fbe9c87bda1ba2267201f494e6fa59b9fec44b9378309c",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/clay_white.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\clay_yellow.json",
+      "sha256": "8b2dafc94f5fabdca36e9fd8ea1d97fff5629100cc0ef9a26548efe4806f1211",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/clay_yellow.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\log_dry.json",
+      "sha256": "853f9e0812a6f8522d112a72000dd1a24b53a02d4b5d80415f5b6038182772d7",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/log_dry.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\log_dry_horizontal.json",
+      "sha256": "1368ccfebdc3429977d9991644696810d0769917e8c39b2af4f4f9bcdd8227fc",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/log_dry_horizontal.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\log_frozen.json",
+      "sha256": "cda8714656a1c317a599a7425f86a43cbb24cc2c534a901eb75d73abe7deddcc",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/log_frozen.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\log_frozen_horizontal.json",
+      "sha256": "a25723fd6dc5dcaa37fd678eb7b22f965e908abd5a1c0faf98230c7e0790d855",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/log_frozen_horizontal.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\log_mossy.json",
+      "sha256": "11f339bff34933c5c787d78b43bbf506d7d18b7af2fe54ffbb19bbd4da451f96",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/log_mossy.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\log_mossy_horizontal.json",
+      "sha256": "5ee071ed41e443a594096b89fbe638974cfbd30a9f965758d809e3a045323edf",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/log_mossy_horizontal.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\log_rotten.json",
+      "sha256": "8e0489f633c5d922c23f1651c6a6af1b6150215f6a2d099bb1d7d020fc1a3716",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/log_rotten.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\log_rotten_horizontal.json",
+      "sha256": "8ebd268f21cae6a9586bca84e843efd83f8d4d697ce3ecd575f8645dc59a96f5",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/log_rotten_horizontal.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\mud.json",
+      "sha256": "0d2803728baa382a52130ad15f2dda42ed3126d16c4bf5dda8815bac041e24f0",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/mud.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\iconsets\\turf.json",
+      "sha256": "ba32d6a645832ee97f958ed7c6227025461e57625daf1e59fce902c7e80656e2",
+      "target": "core/src/main/resources/assets/gregtech/models/block/iconsets/turf.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\plants\\bush_stage0.json",
+      "sha256": "f4d28ca442e4dcce02f985d37f1824f926b04c52e393de48212e90368c7949a3",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/plants/bush_stage0.json",
+      "adaptation": "native composite loader; Forge original retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\plants\\bush_stage1.json",
+      "sha256": "cba6ab9ce91d881b3500a75e814c4f6d7630334c128c2d60b9290557e32c0db4",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/plants/bush_stage1.json",
+      "adaptation": "native composite loader; Forge original retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\plants\\bush_stage2.json",
+      "sha256": "42554ff985164c3c02e7678c1d62398125617c1ea105e3ccf85280c91c121c53",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/plants/bush_stage2.json",
+      "adaptation": "native composite loader; Forge original retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\plants\\bush_stage3.json",
+      "sha256": "42554ff985164c3c02e7678c1d62398125617c1ea105e3ccf85280c91c121c53",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/plants/bush_stage3.json",
+      "adaptation": "native composite loader; Forge original retained"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\forge\\biome_modifier\\gt_bushes.json",
+      "sha256": "771345904625cb431a10f3cebbb5c9268a43a08eeeb5fd89bd3a6531455c25ce",
+      "target": "neoforge/src/main/resources/data/gregtech/neoforge/biome_modifier/gt_bushes.json",
+      "adaptation": "native biome modifier type"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\forge\\biome_modifier\\gt_surface_flora.json",
+      "sha256": "e96094168afd49ed798852bf029343f5f8f43a3d556b578c9aabf44ba7adcb9d",
+      "target": "neoforge/src/main/resources/data/gregtech/neoforge/biome_modifier/gt_surface_flora.json",
+      "adaptation": "native biome modifier type"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\worldgen\\configured_feature\\gt_bushes.json",
+      "sha256": "34e3d3987dc0ac96cf159b3651aafa66d474f3c0d675af78123d3d3fa3ab3b69",
+      "target": "core/src/main/resources/data/gregtech/worldgen/configured_feature/gt_bushes.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\worldgen\\configured_feature\\gt_surface_flora.json",
+      "sha256": "d785eb221f0a9a343109b6f5444da7da01455d807b6361eb1f39f929e5f53457",
+      "target": "core/src/main/resources/data/gregtech/worldgen/configured_feature/gt_surface_flora.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\worldgen\\placed_feature\\gt_bushes.json",
+      "sha256": "4cd04a912da2b0f76c637b4f52b824fdc5563dcaba563cf464e1c90ce5e9dbb6",
+      "target": "core/src/main/resources/data/gregtech/worldgen/placed_feature/gt_bushes.json",
+      "adaptation": "shared original bytes"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\data\\gregtech\\worldgen\\placed_feature\\gt_surface_flora.json",
+      "sha256": "dbb0f6f8e4472292faa4f7065acab527358878b1de840d4829c838470a4c9547",
+      "target": "core/src/main/resources/data/gregtech/worldgen/placed_feature/gt_surface_flora.json",
+      "adaptation": "shared original bytes"
+    }
+  ],
+  "comparisonSources": [
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\block\\surface\\GT6WildBushBlock.java",
+      "sha256": "509b7bc471b3ac0b9474d9bbc8c694d7a0712bcde9f0e47b3c68481dd847b478"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\cruciblecraft\\src\\main\\java\\com\\masson\\cruciblecraft\\content\\blockentity\\GtBushBlockEntity.java",
+      "sha256": "9817378cb3e274475d75748d54d6d0fd90450d77827f00c00384a9f630d43e08"
+    },
+    {
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\cruciblecraft\\src\\main\\java\\com\\masson\\cruciblecraft\\worldgen\\crop\\GtCropPlacement.java",
+      "sha256": "9364d60b6fe600e9fa5d6632b8e4fc94775397ea142698b4c9c6d615732b377f"
+    }
+  ],
+  "choice": "Use source1 complete8-berry table/growth/harvest/packing and exact9 diggable identities plus4 fallen-log tools, keeping current material IDs and units. brokestar wild bush explicitly cuts berry NBT/growth/harvest and is decorative, so it cannot replace the complete controller. masson stores full berry ItemStack, accepts tags/vanilla berries and resets growth on harvest, but shown tick increments without source1 rainfall/light bonuses and its placement biome set differs. Keep baseline behavior and document stronger compatibility candidates. Share exact growth math and source flora biome/count/probability/color catalog across both versions; Minecraft items/block resolution remains at platform boundary.",
+  "validation": "Grouped core/Neo/Forge compile PASS20s; native ResourceLocation import repaired after14s/13s compile failures. No fixture/startup.",
+  "knownGaps": [
+    "Actual harvest/growth/berry placement/packing and worldgen/client rendering not yet verified.",
+    "Native plant sustain hook rejects clay, accepts vanilla bush/sugarcane and otherwise delegates DEFAULT; old Forge PlantType categories have no direct native equivalent.",
+    "Source8 specific berry identities preserved; masson broader tag/vanilla berry setters and resetting growth on harvest are candidates, not silently adopted.",
+    "Source bush4-side scatter is a single-block adaptation, no original connected cluster sides; enhanced aether ground growth absent.",
+    "Shared source glowtus gate includes swamps; masson only jungle, neither blanket-preferred.",
+    "Original source log-shape placement can overwrite neighboring blocks; generated-source chunks and compatibility still unverified.",
+    "Dedicated-server startup for these two batches deferred to one grouped startup; Forge runtime, full survival, independent reload, old saves and fresh jars pending."
+  ],
+  "startup": {
+    "result": "PASS",
+    "receipt": "docs/integration/verification/p3-neoforge-bumble-surface-terrain-startup.json",
+    "coverage": "Ordinary Neo registration/data load and200tick normal save/stop;960 bee display80 crop2 bee crafting6421total recipe rows. No gameplay/client/restart claim."
+  }
+}

@@ -1,0 +1,130 @@
+{
+  "source": "saltnya",
+  "license": "unchanged; publication authorization unresolved",
+  "verification": "Grouped core/NeoForge/Forge compileJava PASS in 27s after two Neo API fixes; runtime behavior unverified",
+  "shared": [
+    "LegacyBatteryDefinitions",
+    "ItemBatteryRules"
+  ],
+  "native": [
+    "IItemEnergy",
+    "BatteryItem",
+    "LegacyBatteryRegistries"
+  ],
+  "storedKey": "gt.charge in native CUSTOM_DATA; original Forge NBT key unchanged",
+  "gaps": [
+    "Placed chemical battery factory/client renderer/loot",
+    "ULV..EV chemistry-inclusive battery tags",
+    "Battery boxes, charging block/item bridge and full powered tools",
+    "Native simple/chemical battery crafting datapacks",
+    "Actual charge, simulation, persistence and client display checks"
+  ],
+  "records": [
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/item/BatteryItem.java",
+      "sha256": "322add5e65ee5c90d79df965edfe17f5b8a108e2353e5479f796773f9f2af7d4"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/item/ChemicalBatteryItem.java",
+      "sha256": "7b363546569964f40dd80cbb808215de76b1a0b237ae3ddc170ec5f14f53edf0"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/registry/GTElectricItems.java",
+      "sha256": "998cddf0a944672df6b768cb781423bb23b722fbdc96d4c1c868b905fb2f214a"
+    },
+    {
+      "source": "../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/api/energy/item/IItemEnergy.java",
+      "sha256": "160f1862ae5a715472fac8874b89d39cc8b325558ab06638f6a125fbc4911266"
+    }
+  ],
+  "resources": [
+    {
+      "source": "src/main/resources/assets/gregtech/models/item/battery_lv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_lv.json",
+      "sha256": "c2c4b35319f721e5d587434165792e096f56154ce35e3e11ba5b83baaa721345"
+    },
+    {
+      "source": "src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/32/top.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/32/top.png",
+      "sha256": "5f659e6526434b95f678bc5ec0027980eb08afda97a33079f7be59abec6ce6a3"
+    },
+    {
+      "source": "src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/32/bottom.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/32/bottom.png",
+      "sha256": "455d8eec2d5b699cf9e6030d7761d2a68d44937a5809f23712d1b1a7f9d4fb90"
+    },
+    {
+      "source": "src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/32/sides.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/32/sides.png",
+      "sha256": "8e48a67483c44a5416d9f42a303a7b6bfad1adc9b3e6ff195bb894d00e55561f"
+    },
+    {
+      "source": "src/main/resources/assets/gregtech/models/item/battery_mv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_mv.json",
+      "sha256": "59a94461ce24b40068612d1f79aa4c5b13c873d8ee8b62ad6e169e6616f3aab6"
+    },
+    {
+      "source": "src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/128/top.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/128/top.png",
+      "sha256": "9033fa6cf994deef663d1cbd67c7931fa84ee8a2f3f95268e94ef5d5930fb619"
+    },
+    {
+      "source": "src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/128/bottom.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/128/bottom.png",
+      "sha256": "e979287eb0bea46cf03b925962582a11e913da8407211095355cf3251f7aa7b0"
+    },
+    {
+      "source": "src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/128/sides.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/128/sides.png",
+      "sha256": "433b279dc8312441b229ca02f45c638663623b7f5fc46b7d8493314d9a941bd9"
+    },
+    {
+      "source": "src/main/resources/assets/gregtech/models/item/battery_hv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_hv.json",
+      "sha256": "7854aed32004ac84f43c27d23d37bc71a9f32f5c9e6ebb228f1727970cfa79e6"
+    },
+    {
+      "source": "src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/512/top.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/512/top.png",
+      "sha256": "702fd2534cae1970fc981357efa748fad83c8c3024b4c371ea4ddff0f69ac857"
+    },
+    {
+      "source": "src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/512/bottom.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/512/bottom.png",
+      "sha256": "2460c53125d210ce9f632d883b71a8bfc676d337fa93c72a3918e013caaca78a"
+    },
+    {
+      "source": "src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/512/sides.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/512/sides.png",
+      "sha256": "72f689f4129e0bed601f949680751bd96ae0e04f77723f0e2e5c51bd97e89aa9"
+    },
+    {
+      "source": "src/main/resources/assets/gregtech/models/item/battery_ev.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_ev.json",
+      "sha256": "04d1d50e41845d80d8f3e3ee0767b86460333d27cd994394029ff2e48c3900a0"
+    },
+    {
+      "source": "src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/2048/top.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/2048/top.png",
+      "sha256": "84ccce9bb2c08101b3ce399ee1d3a7b040a7cd8e8fd9f07f0c952ead2ea3be9d"
+    },
+    {
+      "source": "src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/2048/bottom.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/2048/bottom.png",
+      "sha256": "ac821c4360402fc3ace6d27d2ad8e2f8971772705cb7fbb37176828957f9ef39"
+    },
+    {
+      "source": "src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/2048/sides.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/batteries/eu/standard/2048/sides.png",
+      "sha256": "453f146fb47a6b490a994ffeeb1c55c4e184d2ebbd7f49806171616b6f5cc8ca"
+    },
+    {
+      "source": "src/main/resources/assets/gregtech/models/item/battery_iv.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/battery_iv.json",
+      "sha256": "04d1d50e41845d80d8f3e3ee0767b86460333d27cd994394029ff2e48c3900a0"
+    }
+  ],
+  "verificationReceipt": "docs/integration/verification/p3-industrial-batteries-compile.json",
+  "startupVerification": "Neo ordinary DedicatedServer startup, source recipes/tags/block loot load, 200 ticks, normal save/stop PASS in 4m37s; no gameplay or restart verdict",
+  "startupReceipt": "docs/integration/verification/p3-neoforge-wires-startup.json"
+}

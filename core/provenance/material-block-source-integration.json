@@ -1,0 +1,434 @@
+{
+  "source_revision": "246d8c3ad8 (integration baseline; original saltnya import retained in Git)",
+  "license": "Original author authorization unresolved; original third-party authorization unchanged.",
+  "validation": "No build, test or game run, per user direction.",
+  "sources": [
+    {
+      "source": "src/main/java/com/gregtech/gregtech/api/prefix/BlockMaterialPrefix.java",
+      "destination": "core/src/main/java/com/gregtech/gregtech/api/prefix/BlockMaterialPrefix.java",
+      "mode": "move original definition; Minecraft display constants become shared enum tokens where necessary",
+      "source_blob": "0f9b784def7dd63a660ebdf3b8b223f3e8a489d8",
+      "source_sha256": "6f15fa47401ee03211e245df047bb8f2c7a9e39b8fdc88d3a66c2acaa23f1ee3",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "7f422fdcc327884f2bccbf4813c04eafcb5cc7c134eaa640f836d397d8253684"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/api/prefix/BlockPrefixRegistry.java",
+      "destination": "core/src/main/java/com/gregtech/gregtech/api/prefix/BlockPrefixRegistry.java",
+      "mode": "move original definition; Minecraft display constants become shared enum tokens where necessary",
+      "source_blob": "6d703bbd2ba5a198866a4dab6e488d0f6706e5a7",
+      "source_sha256": "d5338710c4fe3410c812cea1dbe87f76b3d0ec7e51c031ae116597a28e0a94e3",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "d5338710c4fe3410c812cea1dbe87f76b3d0ec7e51c031ae116597a28e0a94e3"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/data/MaterialPrefixes.java",
+      "destination": "core/src/main/java/com/gregtech/gregtech/data/MaterialPrefixes.java",
+      "mode": "move original definition; Minecraft display constants become shared enum tokens where necessary",
+      "source_blob": "633a7da755050a5fff4740d4552b2859dbca6b99",
+      "source_sha256": "027f4aaa2a25ed7ead1d11a97949be849d05345a9365d1c74ebb2f51413f38e4",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "55486aa67fcc3cbe037a3c14ce356b0b0eebfd3aba157cfe2bb80efb6ab538c7"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/block/MaterialBlockLike.java",
+      "destination": "core/src/main/java/com/gregtech/gregtech/block/MaterialBlockLike.java",
+      "mode": "move original definition; Minecraft display constants become shared enum tokens where necessary",
+      "source_blob": "c2fa1dca8971c0044b423c323e39a31df90b5a90",
+      "source_sha256": "1fb7a624fa83c9e9fc06d8bf0d33dcee40e241183458de34d2a6a2a9ae1aa498",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "1fb7a624fa83c9e9fc06d8bf0d33dcee40e241183458de34d2a6a2a9ae1aa498"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/block/BlockMaterialWeights.java",
+      "destination": "core/src/main/java/com/gregtech/gregtech/block/BlockMaterialWeights.java",
+      "mode": "move original definition; Minecraft display constants become shared enum tokens where necessary",
+      "source_blob": "3c4ca627ee0159aba056123863572461c39705d4",
+      "source_sha256": "afcdb627aa76a3dc8710a459d4532494abafba871c644fcdcb707b783f2c5f9b",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "afcdb627aa76a3dc8710a459d4532494abafba871c644fcdcb707b783f2c5f9b"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/block/stone/StoneVariant.java",
+      "destination": "core/src/main/java/com/gregtech/gregtech/block/stone/StoneVariant.java",
+      "mode": "move original definition; Minecraft display constants become shared enum tokens where necessary",
+      "source_blob": "98b41627f40a40939840be6f42428221cf10cba5",
+      "source_sha256": "de4c108fd123441896cfd8904bb9b10ce014dadb24010c0173d8c92c3aee9fa0",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "de4c108fd123441896cfd8904bb9b10ce014dadb24010c0173d8c92c3aee9fa0"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/block/stone/StoneVariantFlags.java",
+      "destination": "core/src/main/java/com/gregtech/gregtech/block/stone/StoneVariantFlags.java",
+      "mode": "move original definition; Minecraft display constants become shared enum tokens where necessary",
+      "source_blob": "1cf8482183ca66e006bb0e7f3a731265360cf70f",
+      "source_sha256": "3dffc17ffdc58efa7fc8b474ec130e641304668b12e8d9e2634787f36c5e8335",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "3dffc17ffdc58efa7fc8b474ec130e641304668b12e8d9e2634787f36c5e8335"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/block/stone/StoneMaterialWeights.java",
+      "destination": "core/src/main/java/com/gregtech/gregtech/block/stone/StoneMaterialWeights.java",
+      "mode": "move original definition; Minecraft display constants become shared enum tokens where necessary",
+      "source_blob": "99ffc198c1f973abfa3ddb1f32e5f9afea3ab982",
+      "source_sha256": "a21ec2398c6ccb0b61f2a7e4fe200a244d15cab80c0251902378c3906d2231cd",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "a21ec2398c6ccb0b61f2a7e4fe200a244d15cab80c0251902378c3906d2231cd"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/worldgen/GTCellNoise.java",
+      "destination": "core/src/main/java/com/gregtech/gregtech/worldgen/GTCellNoise.java",
+      "mode": "move original definition; Minecraft display constants become shared enum tokens where necessary",
+      "source_blob": "374d25911b1452016da508793705bae35c153dc7",
+      "source_sha256": "7c8cbc9836110cefce8c11a52130f49e6a015edb2ee54d05c7be5321aed9c46d",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "7c8cbc9836110cefce8c11a52130f49e6a015edb2ee54d05c7be5321aed9c46d"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/block/MaterialBlock.java",
+      "destination": "neoforge/src/main/java/com/gregtech/gregtech/block/MaterialBlock.java",
+      "mode": "Neo Minecraft/platform adaptation; original algorithm retained",
+      "source_blob": "58a66c7add2ccf85443ee9812a2000306cf9cf68",
+      "source_sha256": "de7f4e7c6803f7d722830cb867a6a13649dca2a8b9d4569fba0b76161504036f",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "407ba9c002dff08d457bc35f805076eef607a915dc9b2022aba24eef973d3993"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/block/OreBlock.java",
+      "destination": "neoforge/src/main/java/com/gregtech/gregtech/block/OreBlock.java",
+      "mode": "Neo Minecraft/platform adaptation; original algorithm retained",
+      "source_blob": "9fe796105e5bc4453d1c5ecd89d0753578ff2bed",
+      "source_sha256": "9d3e3d8f49c972ae5b3714669827987f1ca9f16018027ac81b6caf7e8e587604",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "cb4b5014b51b2bb8ab67c667ac7b47845663856736fad5d3e52c0942d509ec9f"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/block/OreHostStone.java",
+      "destination": "neoforge/src/main/java/com/gregtech/gregtech/block/OreHostStone.java",
+      "mode": "Neo Minecraft/platform adaptation; original algorithm retained",
+      "source_blob": "1eb05c26d9d8fc6012ebd35a50363ffb05b8c6a7",
+      "source_sha256": "e635cddb44fede5e3cb0f893e62b758a8983f032a9ce6fe319dcb988dc17bd79",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "e635cddb44fede5e3cb0f893e62b758a8983f032a9ce6fe319dcb988dc17bd79"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/block/SmallOreDrops.java",
+      "destination": "neoforge/src/main/java/com/gregtech/gregtech/block/SmallOreDrops.java",
+      "mode": "Neo Minecraft/platform adaptation; original algorithm retained",
+      "source_blob": "c8a901d0218e3deeb24686e84d1428f5ccaeb080",
+      "source_sha256": "dcd1bf2bcaa18858715030696e31ff54479a3bf3fe8f5756a9526f896d356b68",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "3fa3a1c368e7ea2ba053bd2db915bb0225ee4d921646c9653bb6330863ec5507"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/block/stone/GTStoneBlock.java",
+      "destination": "neoforge/src/main/java/com/gregtech/gregtech/block/stone/GTStoneBlock.java",
+      "mode": "Neo Minecraft/platform adaptation; original algorithm retained",
+      "source_blob": "6472aa7c494c7710b708c85ab506104c3c76a294",
+      "source_sha256": "c85b66f8cb070ee8eb9b68e1787eba79ae9e28ca1dcfc13c183423940eebe724",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "b90f5f331e5d5f77a10637abcbadc69c76a71f72a939b0dada71d9f056c578a3"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/block/stone/GTStoneSlabBlock.java",
+      "destination": "neoforge/src/main/java/com/gregtech/gregtech/block/stone/GTStoneSlabBlock.java",
+      "mode": "Neo Minecraft/platform adaptation; original algorithm retained",
+      "source_blob": "6ffa0c6f82c3e7b9f10234308ad3f5d63e1bf2a3",
+      "source_sha256": "5d9eed24edd1fb5408fb78b7fb071b94a824bcd083fe779d73fdbf30af196631",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "45b46fcedc40bf9dc2e058e9b0d4e965f2c3212946c5fe803898cd6deb40ecbc"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/block/stone/GTStoneSlabBlockItem.java",
+      "destination": "neoforge/src/main/java/com/gregtech/gregtech/block/stone/GTStoneSlabBlockItem.java",
+      "mode": "Neo Minecraft/platform adaptation; original algorithm retained",
+      "source_blob": "3e9ed918f04150bca1ee5fc0bfb2bdc0954d35a7",
+      "source_sha256": "ab39de5ecd369b518b140e7776ddbc069cbf492f647c3c26af5c1ee7008805c1",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "d1727f644ce66fc5d24627e0ec6caa48a7a9ace71382dc45939c77329eaad5b4"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/block/stone/StoneBlockProperties.java",
+      "destination": "neoforge/src/main/java/com/gregtech/gregtech/block/stone/StoneBlockProperties.java",
+      "mode": "Neo Minecraft/platform adaptation; original algorithm retained",
+      "source_blob": "ca865535bc4338f14837946fc6d7d932ba28429a",
+      "source_sha256": "9b8d31b4e3d127dd546688d4dc099514ad55f1d0974be22ca9b2a8488d1128eb",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "9b8d31b4e3d127dd546688d4dc099514ad55f1d0974be22ca9b2a8488d1128eb"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/block/stone/SlabPlacementHelper.java",
+      "destination": "neoforge/src/main/java/com/gregtech/gregtech/block/stone/SlabPlacementHelper.java",
+      "mode": "Neo Minecraft/platform adaptation; original algorithm retained",
+      "source_blob": "432f0a3def0dcb87c9d6b15119ada84fdb6f2685",
+      "source_sha256": "0fde0848b04c57334edf78e451fd6a987d5c0c3414b83ce597c00ef6acd58f5f",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "fd4d3db04af2b79cfeb7083c02ddd3596df2b5e142bb976857fae7423dfd078d"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/block/RockBlock.java",
+      "destination": "neoforge/src/main/java/com/gregtech/gregtech/block/RockBlock.java",
+      "mode": "Neo Minecraft/platform adaptation; original algorithm retained",
+      "source_blob": "7d6670163c28f04ed1d0b01fc61888695cf0bd79",
+      "source_sha256": "2332f19efa4cc25468398e3e3e122a20badd4f25d05b2037a0b3577d1d612f18",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "561dff91a19e200db6ceeb86fa06348dd76ee8f2402c31773c4b619835bf74b3"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/block/TwigBlock.java",
+      "destination": "neoforge/src/main/java/com/gregtech/gregtech/block/TwigBlock.java",
+      "mode": "Neo Minecraft/platform adaptation; original algorithm retained",
+      "source_blob": "d15eb9906e0d4fdea6cbf3298c523005c17b417a",
+      "source_sha256": "359176b4baaa6d49204ed8f02295d41bf4374c19044b295b2a2178aec3507354",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "ca67048125b4570e25519fe21dcbbee3e3e801b384b040f78f636262cc839e9d"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/blockentity/RockBlockEntity.java",
+      "destination": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/RockBlockEntity.java",
+      "mode": "Neo Minecraft/platform adaptation; original algorithm retained",
+      "source_blob": "80a1605b244f9f4fe5615121107bae1ae7d50f94",
+      "source_sha256": "ab07d3ca02f39d56e9cbda5f419296b1f78778c98648b6587544176606058957",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "91dc910262f86cd437802220acff202526e2f33510232b46371c725002897fe9"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/api/GTWaterloggable.java",
+      "destination": "neoforge/src/main/java/com/gregtech/gregtech/api/GTWaterloggable.java",
+      "mode": "Neo Minecraft/platform adaptation; original algorithm retained",
+      "source_blob": "22d6fcced7b2f86ae6ae7754743965e3db364851",
+      "source_sha256": "bf3b559ef1fcb6b5f86192fc5a2d889464380b59922844309c0ee990c19e398c",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "e870fa2017da5ac76c659ba736e816404a5651f188720ccd738d5038d0612cce"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/util/GTPlacementCode.java",
+      "destination": "neoforge/src/main/java/com/gregtech/gregtech/util/GTPlacementCode.java",
+      "mode": "Neo Minecraft/platform adaptation; original algorithm retained",
+      "source_blob": "c8d6c3924c25cbe426b6cb496be8e0418dad5186",
+      "source_sha256": "9f87f4e44c2b489fea8af1b6f88c26187a510b073fb77b18328cbe5d000fc7f8",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "ac6703cb375cee5d4cdc607502b119b6dd77f807d4093228cf53dfd7181e14b1"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/api/material/MaterialStackItemHelper.java",
+      "destination": "neoforge/src/main/java/com/gregtech/gregtech/api/material/MaterialStackItemHelper.java",
+      "mode": "Neo Minecraft/platform adaptation; original algorithm retained",
+      "source_blob": "f5a906ab1548b77011c6bf346010aadac4b94d9e",
+      "source_sha256": "bc7fb087141eea3b0679def9eb9c937218d2fa3382dd54305fd023fe02c9a0a8",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "6a453305cb5a12cba2ed70b55fcc71cd1e2e23f04dc7f0461b79ac4cce978932"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/worldgen/GTOreVeinFeature.java",
+      "destination": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTOreVeinFeature.java",
+      "mode": "Neo Minecraft/platform adaptation; original algorithm retained",
+      "source_blob": "d9a79993574e477fa4080588af8dc4cd4e729d5b",
+      "source_sha256": "261edc90e3f49874e57945b7239128c482bf8d569c2ce847093ddecc16b81d44",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "1e21f85320a7c57867ab1b9df7ee9c1319fc0f0e6e5df4e4d23f36ea228ad2d6"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/worldgen/GTSmallOreFeature.java",
+      "destination": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTSmallOreFeature.java",
+      "mode": "Neo Minecraft/platform adaptation; original algorithm retained",
+      "source_blob": "ce0b561f42999d445d318dd2db3ee5cd5a866e6a",
+      "source_sha256": "0e5368549ba197537bc9eeb97598e2208357a92c4c96b7c0b415b1d5c64a96ba",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "5ebe3945126e397e27b9d6b86a349c045a467fb00a36d4b8e727d9938bf3847f"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/worldgen/GTStoneLayerFeature.java",
+      "destination": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTStoneLayerFeature.java",
+      "mode": "Neo Minecraft/platform adaptation; original algorithm retained",
+      "source_blob": "f48ca8de7a6434df93770d8b812ff4432c7eec91",
+      "source_sha256": "9e2d7a5b7f0443973a732cb3c7b28693f4b71a624acd397552a316be69f0ec10",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "7db0b624d1a3a0198d72e63de522a95c363dc22427a56b2e38172c754d6b9238"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/worldgen/GTWorldgenScale.java",
+      "destination": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTWorldgenScale.java",
+      "mode": "Neo Minecraft/platform adaptation; original algorithm retained",
+      "source_blob": "44d69b8d3d135a6be08aa86f0d7b35431de1a8bf",
+      "source_sha256": "4a60e0227076a6cadb7e3f71776e7006300e1333fe5a6c254065c3271671d433",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "4e6640bdeb5f1f5be273863aab953ab3e7ae571f36d56beb356100185e36a4b3"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/worldgen/GTWorldgenBiomes.java",
+      "destination": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTWorldgenBiomes.java",
+      "mode": "Neo Minecraft/platform adaptation; original algorithm retained",
+      "source_blob": "e0216d897cce1c8318ebb83dcbdb853f949567ac",
+      "source_sha256": "65149cfffc22d9a6916e1a15c9e13efbba1e0bdb18cd6f3baa8a5742a93af174",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "65149cfffc22d9a6916e1a15c9e13efbba1e0bdb18cd6f3baa8a5742a93af174"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/worldgen/GTRockPlacement.java",
+      "destination": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTRockPlacement.java",
+      "mode": "Neo Minecraft/platform adaptation; original algorithm retained",
+      "source_blob": "60625b6a934d7c0be5f970d732f71da403d1085b",
+      "source_sha256": "f2d14fe0561454ce73d597d31e088535dd507bd05f467425e848e14a62e856a4",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "17950288a478956f48315078f05850b7042562fcc5998ec1c9d639c16514795a"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/worldgen/GTOreBlockResolver.java",
+      "destination": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTOreBlockResolver.java",
+      "mode": "Neo Minecraft/platform adaptation; original algorithm retained",
+      "source_blob": "baf4d006373f54ed41a40d632473305ace4f9751",
+      "source_sha256": "b0e365076b6b8ca5937b8266c4755b470d79aeb2c14671001e705bb3b83e14e9",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "064054577ec2a1910153c4e55ea215dc32a59c1ab3c329f24749b0f417e24bbe"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/loaders/a/Loader_Blocks.java",
+      "destination": "core/src/main/java/com/gregtech/gregtech/api/material/MaterialBlockDefinitions.java",
+      "mode": "extract deterministic definition/filter/unique-id stream",
+      "source_blob": "66de5acf8278ea71a2d922936e61b266b884df51",
+      "source_sha256": "39aa6fa71d3174137d6d06efee1f0beb23bec7f175d96c29c500c3460c0ae7fe",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "ccef8a1b2c23007e76454b0912d5ba0b89328208d95b1af4ddba877c7440bded"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/registry/GTBlocks.java",
+      "destination": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTBlocks.java",
+      "mode": "Neo DeferredHolder registry boundary",
+      "source_blob": "b5ea3fcb17ce40fde933895aa0534c19622e960c",
+      "source_sha256": "6614000fff0651fdad121f49a93a5f33f465972c0475c611cbc98240e0fa6487",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "e3438e15cb40428aa525e28a403db891b9ca67b08dfc3f288fb5399d33c6aad3"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/loaders/a/Loader_Blocks.java",
+      "destination": "neoforge/src/main/java/com/gregtech/gregtech/loaders/a/Loader_Blocks.java",
+      "mode": "Neo platform block construction over shared definitions",
+      "source_blob": "66de5acf8278ea71a2d922936e61b266b884df51",
+      "source_sha256": "39aa6fa71d3174137d6d06efee1f0beb23bec7f175d96c29c500c3460c0ae7fe",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "09330c93dfa1ab7e3774c31a726e1ac81bd0f912a054faa82563377807455fdf"
+    },
+    {
+      "source_project": "masson/cruciblecraft",
+      "source": "src/main/java/com/masson/cruciblecraft/worldgen/OreHarvest.java",
+      "destination": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/OreHarvest.java",
+      "mode": "package adaptation only",
+      "source_blob": "fb045a4bab814e0b8d5778eff459e6f36ed56bd9",
+      "source_sha256": "2ad0b80904a04a119e63837dc498615cff6fd322aa59a3ba79e63c0254224ce3",
+      "destination_sha256": "fa1b1df0c644f0002b3346f1d447844133a3126340fbfce18c4c65a04b015068"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/block/RockOreBlock.java",
+      "destination": "core/src/main/java/com/gregtech/gregtech/block/SpecialOreDefinitions.java",
+      "mode": "shared original rock-ore Spec table",
+      "source_blob": "26e94c1379356f27363605fe4fa94f6ca4e15dd5",
+      "source_sha256": "1708f4678c96e66fb0991691f4d00419111fbcaf80461178feb51039a2ba6591",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "5c07e88976e1629990ca32067a59ca68f221986349003de00f21f0e2d58fee3a"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/block/VanillaOreBlock.java",
+      "destination": "core/src/main/java/com/gregtech/gregtech/block/SpecialOreDefinitions.java",
+      "mode": "shared original vanilla-ore Spec table",
+      "source_blob": "e1cc19ba9f9eba74362af67de3ab75edd887c76a",
+      "source_sha256": "f0ae79ab6ea8f1aa2c6b5cd68d75f2259cccd9a9f017187ad8209af02ac417f7",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "5c07e88976e1629990ca32067a59ca68f221986349003de00f21f0e2d58fee3a"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/registry/GTIconSetBlocks.java",
+      "destination": "core/src/main/java/com/gregtech/gregtech/block/SpecialOreDefinitions.java",
+      "mode": "original special-ore icon registration order and crystal IDs",
+      "source_blob": "451b11546e3f2e719e5e88af87dab79ac8d138e4",
+      "source_sha256": "efe85ee1d952dceddb949810522bce6a4b5cc01b66cb91b4d236a2c3692c4c12",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "5c07e88976e1629990ca32067a59ca68f221986349003de00f21f0e2d58fee3a"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/block/RockOreBlock.java",
+      "destination": "neoforge/src/main/java/com/gregtech/gregtech/block/RockOreBlock.java",
+      "mode": "Neo block API adaptation; shared specs and original yield/XP formulas",
+      "source_blob": "26e94c1379356f27363605fe4fa94f6ca4e15dd5",
+      "source_sha256": "1708f4678c96e66fb0991691f4d00419111fbcaf80461178feb51039a2ba6591",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "6804d5afdb11b1d3d6cf7ca198a73e77cb75940530aedde966f70d06c18a0c52"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/block/VanillaOreBlock.java",
+      "destination": "neoforge/src/main/java/com/gregtech/gregtech/block/VanillaOreBlock.java",
+      "mode": "Neo block API adaptation; shared specs and original yield/XP formulas",
+      "source_blob": "e1cc19ba9f9eba74362af67de3ab75edd887c76a",
+      "source_sha256": "f0ae79ab6ea8f1aa2c6b5cd68d75f2259cccd9a9f017187ad8209af02ac417f7",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "87e310071dae1ffc404c65b4c6393801b2c2062b90364b74e1cf093eded7c5a2"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/block/CrystalOreBlock.java",
+      "destination": "neoforge/src/main/java/com/gregtech/gregtech/block/CrystalOreBlock.java",
+      "mode": "Neo block API adaptation; shared specs and original yield/XP formulas",
+      "source_blob": "d4c5ec0a81f7e451f16c43ce74654578e74eacc6",
+      "source_sha256": "9c835942f9bb54b03394c7f7a79a6513933bc7ca8f61c6fdfef08790bc0533e1",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "b3e6959cee55f85976d0011145ec1ada7cf86cdfffe683b3582aec15b17e388e"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/block/IconSetBlock.java",
+      "destination": "neoforge/src/main/java/com/gregtech/gregtech/block/IconSetBlock.java",
+      "mode": "Neo block API adaptation; shared specs and original yield/XP formulas",
+      "source_blob": "4162f6f0728368dfd78290979185b2a7f49c3553",
+      "source_sha256": "e6878b2a3950d93d4796d006bc5e9fe1e4da40e51493774176572c01750908be",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "e41d2d6f2f247be332e6fbbd7c7303cc32b373071d585c7eb9ba0f0bb7b2d0f5"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/block/DenseOreBlock.java",
+      "destination": "core/src/main/java/com/gregtech/gregtech/block/DenseOreBlock.java",
+      "mode": "move unchanged pure material interface",
+      "source_blob": "aaa70b26240ce2d2bfb5548d8b817e231fc3f09d",
+      "source_sha256": "2dca6b83a38268e84d9c63f0e1faba1980a4814bccf35ebf975c6fe04278e61d",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "destination_sha256": "2dca6b83a38268e84d9c63f0e1faba1980a4814bccf35ebf975c6fe04278e61d"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/block/MaterialBlockItem.java",
+      "destination": "neoforge/src/main/java/com/gregtech/gregtech/block/MaterialBlockItem.java",
+      "mode": "Neo name/material/tint identity; original complete tooltip pending",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "source_blob": "d28df4749861a52d8f0018b552af35abae864347",
+      "source_sha256": "675e62c7e83ee3f36f6f7b4be0b9cc6bcb5da297550e9650fa76079e5497f90f",
+      "destination_sha256": "c069a0a5632f69183be39ccdcdd762aeb56aa6907b7dec09c79e8fda14fbebd3"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "destination": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "mode": "ROCK ID/storage registration closure only",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "source_blob": "99a28dcff2f2dc188e93a88e4b3b4b77b990b337",
+      "source_sha256": "027081bae34480826956a74d65a24aa7f4ef29d4be4a4687046793a10d9df62f",
+      "destination_sha256": "76d6b37a7002e59cf96efabe845f3f3716b492ae8c54db514a57b723d603df83"
+    },
+    {
+      "source": "src/main/java/com/gregtech/gregtech/worldgen/GTFeatures.java",
+      "destination": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/GTFeatures.java",
+      "mode": "only original ore-vein/small-ore/stone-layer feature registrations; other modules pending",
+      "source_revision": "246d8c3ad8e0c42188c791c58b7c9a01b851789a",
+      "source_blob": "eec9bb8593936da0e400b138673566ace149b40f",
+      "source_sha256": "5333be8dcf08f58be13e311321a2d6c52c3f492c6f83fa08e84a14928f9ecd61",
+      "destination_sha256": "9935b743a54bbe01e9e0f76973ad025490810c1415814427ec8701ea6dc2b785"
+    },
+    {
+      "source_project": "masson/cruciblecraft",
+      "source": "src/main/java/com/masson/cruciblecraft/worldgen/OreHostStateAdapter.java",
+      "destination": "neoforge/src/main/java/com/gregtech/gregtech/worldgen/OreHostStateAdapter.java",
+      "mode": "adopt host eligibility rejection/property preservation, bind original GT state-based host IDs; no CC paired-ID catalog",
+      "source_blob": "12612a8bce2c33539f2791404af9988dbbbc107f",
+      "source_sha256": "33ae0bbeca8b8ac6627904e64a411d59dfddef7c97a85a04548e1b3ba4a2c18e"
+    }
+  ],
+  "api_changes": [
+    "BlockMaterialPrefix MapColor/SoundType are pure enums, mapped by BlockPrefixPresentation in each platform.",
+    "Neo GTItems BY_PREFIX holder type permits actual BlockItem identities; ALL remains only MaterialItem.",
+    "Neo ore item host/broken uses BLOCK_STATE components; legacy item host tags read, legacy world ore entity migration pending."
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "gregtech:block/machine/matter/conversion_processor_unit"
+    }
+  }
+}

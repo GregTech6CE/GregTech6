@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "gregtech:block/machine/fusion/dense_galvanized_steel_wall"
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-01",
+  "policy": "D011 original Forge hand patterns; D010 grouped compilation/jar only, no new fixture or exact-wave repeated startup.",
+  "authors": [
+    "saltnya",
+    "original GregTech6 contributors",
+    "existing integration contributors"
+  ],
+  "license": "Original author/history/notices retained. Donors unchanged; no authorization changed.",
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/data/OriginalHandCraftingRows.java",
+      "sha256": "40f4cb9c5e3b1ac2ac881aa3d3af72e75946aa109593684d95214d7236c89ea6",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/loaders/Loader_HandToolCraftingRecipes.java",
+      "currentForgeReferenceSha256": "0d7489a4ad6f3c889280f1b6ca23717c40210ba1479ee2067d36430892a03c02",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\Loader_HandToolCraftingRecipes.java",
+      "sourceSha256": "0d7489a4ad6f3c889280f1b6ca23717c40210ba1479ee2067d36430892a03c02"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/data/ManualToolRecipePack.java",
+      "sha256": "8d6ab4959be2ae9114299e7e0d83d5acd6f94658827ca3367796882e156f18bb",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/loaders/Loader_HandToolCraftingRecipes.java",
+      "currentForgeReferenceSha256": "0d7489a4ad6f3c889280f1b6ca23717c40210ba1479ee2067d36430892a03c02",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\Loader_HandToolCraftingRecipes.java",
+      "sourceSha256": "0d7489a4ad6f3c889280f1b6ca23717c40210ba1479ee2067d36430892a03c02",
+      "priorNativeSha256": "df3a724ee73dd0d4042a8576d65ba0559ab9d6c6c2c5919d99d4c54b714e124d"
+    }
+  ],
+  "adoptedFamilies": [
+    "customGearboxes",
+    "transformerGearboxes",
+    "rotationEngines",
+    "rotationalPumps",
+    "wires",
+    "pipes",
+    "anvils",
+    "bars",
+    "circuits",
+    "cells"
+  ],
+  "scope": "Full current Forge pattern functions and prerequisite helpers, Native actual registries and JSON boundary. Existing tool_shaped serializer owns tool wear/mirror behavior; existing ManualToolRecipePack owns data-pack reload and overrides. No second registration/domain/container system.",
+  "remaining": "storage hand family still requires Native registry/tag adaptation; runtime counts, crafting/remainders and reload not verified this wave."
+}

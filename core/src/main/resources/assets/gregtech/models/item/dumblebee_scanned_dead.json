@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "gregtech:item/bumblebee/dumblebee",
+    "layer1": "gregtech:item/bumblebee/overlay_dead"
+  }
+}

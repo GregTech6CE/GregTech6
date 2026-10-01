@@ -1,0 +1,928 @@
+{
+  "source": "saltnya",
+  "license": "unchanged; publication permission unresolved",
+  "verification": "Both-platform Java compile passed; Neo server/data and selected crafting/component/network checkpoint passed; client/world tool actions/restart still unverified",
+  "registeredManualKinds": 37,
+  "preserved": [
+    "actual manual tool item actions, mining, attributes, damage, metadata",
+    "single native item register with chisel/pincers aliases",
+    "all four original manual action behaviors; native fluid capability lookup",
+    "original full solid crucible scrape/hand/cache extraction",
+    "original client model composition and material tint"
+  ],
+  "gaps": [
+    "full powered tool item implementation",
+    "native hopper/queue-hopper concrete screwdriver protocol target",
+    "client/gameplay/world restart validation"
+  ],
+  "records": [
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/api/tool/GTToolHelper.java",
+      "sha256": "f86d58d34f4415032773fc2f785e037a50e6ed69adfb6536320db5c94d97cbff",
+      "baselineSha256": "09af173da99195a12d14d784afb7a3ecad9d2732e67c8e38f1d619caae60c99f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java",
+      "sha256": "dd5a025798f6c0082772b078fe3e0cd4618a1cb583006c8aaa003ebd7acc71e2",
+      "baselineSha256": "dd5a025798f6c0082772b078fe3e0cd4618a1cb583006c8aaa003ebd7acc71e2"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorFlintAndTinder.java",
+      "sha256": "0cc61e6a24a90360deed1097ee9c50e9835435ce4ce7cd3798265ce856af19f8",
+      "baselineSha256": "0cc61e6a24a90360deed1097ee9c50e9835435ce4ce7cd3798265ce856af19f8"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorBuilderWand.java",
+      "sha256": "0a59733f726fe20a1a264afad8eb5d930977895bba9d60e61ad7df892d7e7c08",
+      "baselineSha256": "0a59733f726fe20a1a264afad8eb5d930977895bba9d60e61ad7df892d7e7c08"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorPlaceWoodworkingSupplies.java",
+      "sha256": "a42b62b6c9b578436d8fab82d6e4e9de511df7bb587143512ff92c29a97b937a",
+      "baselineSha256": "a42b62b6c9b578436d8fab82d6e4e9de511df7bb587143512ff92c29a97b937a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorPlungerFluid.java",
+      "sha256": "571aaa0e5e83c7b7015dc5c341b7123331a599020ff8f22e1803266e32826541",
+      "baselineSha256": "571aaa0e5e83c7b7015dc5c341b7123331a599020ff8f22e1803266e32826541"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "sha256": "9f05f2c5f15d8b32658c768e1a16ab555b0313cef4aff9780f7ad33a7bb4da86",
+      "baselineSha256": "54198cfefe18a4033181d50e3b383df6e747f772bc7d0c85bbdfd1dd0e21bbfb"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/registry/GTToolItems.java",
+      "sha256": "bdb18f5bc9cab276c64fdeee48de6784c0fd53e52208f33091ec04eb64dcdd9f",
+      "baselineSha256": "bdb18f5bc9cab276c64fdeee48de6784c0fd53e52208f33091ec04eb64dcdd9f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/blockentity/machine/SmeltingCrucibleBlockEntity.java",
+      "sha256": "fd41b507bdc97e8032ba94e0a3af95d96f2646c3dc8afc726c3a4db9178ec723",
+      "baselineSha256": "ef10e9881db398e8d2868f22eb44c3df2eb88228916381e8c4f9459c709faefb"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/client/ToolIconSets.java",
+      "sha256": "96ba2be15dafa0edafd45fcd497aecbef14ef915e805c449be6ccbf7af766d0c",
+      "baselineSha256": "96ba2be15dafa0edafd45fcd497aecbef14ef915e805c449be6ccbf7af766d0c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/client/GTToolTooltips.java",
+      "sha256": "857ae453d36de243ec69a7c7edc4d057d2daaf0727b4e6a03b455e9e6eedcb2a",
+      "baselineSha256": "b1df85090ea5ada62ac13b0c917043c7651a9b56966dbd9a8bfdd7da887f8b37"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/client/GTToolClient.java",
+      "sha256": "76af602823f75aed920a21095dd5f994c2fbd2cc8511cef1662c00b35e27b75d",
+      "baselineSha256": "76af602823f75aed920a21095dd5f994c2fbd2cc8511cef1662c00b35e27b75d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/client/GTToolModel.java",
+      "sha256": "29cff350b529759da6ae66a49425a8c6ff38dcbd6f613798b9b12e6a165b6eff",
+      "baselineSha256": "29cff350b529759da6ae66a49425a8c6ff38dcbd6f613798b9b12e6a165b6eff"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/client/GTToolBakedModel.java",
+      "sha256": "1ef17b508eb0585f147b3190311118e811268a4f9634149b90e0374269ff0782",
+      "baselineSha256": "1ef17b508eb0585f147b3190311118e811268a4f9634149b90e0374269ff0782"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/client/GTToolModelResolver.java",
+      "sha256": "88dcbb2cce0580d9034b10e9e84f81def0d2f06c9a1e7eab1e744ccee80cfd8b",
+      "baselineSha256": "88dcbb2cce0580d9034b10e9e84f81def0d2f06c9a1e7eab1e744ccee80cfd8b"
+    }
+  ],
+  "resources": [
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_sword.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_sword.json",
+      "sha256": "c42b771e9a22d01d4d70ec406ed83c63c41ab2c7473533300b0b7e098f0b7946"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadsword.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadsword.png",
+      "sha256": "8c6e5a55e11f06aa354bbd5514d23565bfde45193bad836254b8b03f0695f81b"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadsword_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadsword_overlay.png",
+      "sha256": "6c34b65e82b634baf68ee538e487fbf0753e6f7642963bbe28afc2af589cb510"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/handle_sword.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/handle_sword.png",
+      "sha256": "f678c93377fcd7799c37429c06182f18e20563125f285bbfe437e3956dfb74e5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/handle_sword_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/handle_sword_overlay.png",
+      "sha256": "6c34b65e82b634baf68ee538e487fbf0753e6f7642963bbe28afc2af589cb510"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_pickaxe.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_pickaxe.json",
+      "sha256": "8c8f3ae697da443dac62709f31d118897e8e3f0df415e74f9be63f0ab713757a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/stick.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/stick.png",
+      "sha256": "63345f9324d024e6ba7463f5f31af8ebd78c06a8f8e3bee8280e98c0a4bf3c2c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadpickaxe.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadpickaxe.png",
+      "sha256": "055819046fa2a7b05f5adace72149d688ba0f4731dab3a65396565158aef453b"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadpickaxe_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadpickaxe_overlay.png",
+      "sha256": "6c34b65e82b634baf68ee538e487fbf0753e6f7642963bbe28afc2af589cb510"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_shovel.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_shovel.json",
+      "sha256": "676190d1b9a01138e531e35d3751465f2e819870cf84667ba72a29e0504d8fc5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadshovel.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadshovel.png",
+      "sha256": "3084d27881c6661c0e53e7dea99886347c3040b7cdec79ba1288db70cc077c39"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadshovel_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadshovel_overlay.png",
+      "sha256": "6c34b65e82b634baf68ee538e487fbf0753e6f7642963bbe28afc2af589cb510"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_axe.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_axe.json",
+      "sha256": "480d67d3f4e67dd27bfa5eca2ebc8fa5ddc552b8ea2167b9301a8ad2ee7ceaa9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadaxe.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadaxe.png",
+      "sha256": "99e56967c6cd7d1fa85f8a0bed3bc84beebb9ce625b645fb0b259d7171b49609"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadaxe_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadaxe_overlay.png",
+      "sha256": "6c34b65e82b634baf68ee538e487fbf0753e6f7642963bbe28afc2af589cb510"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_hoe.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_hoe.json",
+      "sha256": "25a5835257335b3306dd1d233a1a289f1e5ff3a57e859e3f62b86b2fcc529ac0"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadhoe.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadhoe.png",
+      "sha256": "c69a257a61301d60bb78712f8ad9757bd80f2acf5394047b048f29ec1ee30264"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadhoe_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadhoe_overlay.png",
+      "sha256": "6c34b65e82b634baf68ee538e487fbf0753e6f7642963bbe28afc2af589cb510"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_saw.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_saw.json",
+      "sha256": "4752890ed9b446d5d539402f269fdff148df81e11c516256af922f82d4f237aa"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadsaw.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadsaw.png",
+      "sha256": "8b940b68be8492d5e32831d7bcfdbb041d35f4dfa66df8de151cc6dc4cdda76f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadsaw_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadsaw_overlay.png",
+      "sha256": "6c34b65e82b634baf68ee538e487fbf0753e6f7642963bbe28afc2af589cb510"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/handle_saw.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/handle_saw.png",
+      "sha256": "3ab930729112f139863462767c026f4e327a62b23e81bf3ae7b60d57e6dbe952"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/handle_saw_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/handle_saw_overlay.png",
+      "sha256": "6c34b65e82b634baf68ee538e487fbf0753e6f7642963bbe28afc2af589cb510"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_hammer.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_hammer.json",
+      "sha256": "ad7d587d57dbb53fccdc7ac043ffea5c8d3f2a783d9e33d42b6aa5f874d4ac42"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadhammer.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadhammer.png",
+      "sha256": "94da2a0305f36b5bcad45b9662739a3e98884196d335362e29bc56598fe5a2f7"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadhammer_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadhammer_overlay.png",
+      "sha256": "6c34b65e82b634baf68ee538e487fbf0753e6f7642963bbe28afc2af589cb510"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_soft_hammer.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_soft_hammer.json",
+      "sha256": "ad7d587d57dbb53fccdc7ac043ffea5c8d3f2a783d9e33d42b6aa5f874d4ac42"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_wrench.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_wrench.json",
+      "sha256": "31425a0e8fb4a29cc4f32a65ba7655f8c8250a62ca8f5f9d6bc2e038fb2a0049"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/wrench.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/wrench.png",
+      "sha256": "7c5b36f19b5607c9cc122f72b5796512db091e5baa2d815ef649d1761d9351cc"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/wrench_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/wrench_overlay.png",
+      "sha256": "6c34b65e82b634baf68ee538e487fbf0753e6f7642963bbe28afc2af589cb510"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_file.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_file.json",
+      "sha256": "802876a777593d614521c33026a2311c2b452e8e530884374bf3a9e16e0e20a5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadfile.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadfile.png",
+      "sha256": "cae4602dd96749d326a003279047d23f7f0aa5d55db5b17a46049dbf7fec3d7f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadfile_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadfile_overlay.png",
+      "sha256": "6c34b65e82b634baf68ee538e487fbf0753e6f7642963bbe28afc2af589cb510"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/handle_file.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/handle_file.png",
+      "sha256": "fef0d79fe8722697dae9175426db103b29478be033ed06a186f65fddc6e5bd2e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/handle_file_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/handle_file_overlay.png",
+      "sha256": "6c34b65e82b634baf68ee538e487fbf0753e6f7642963bbe28afc2af589cb510"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_crowbar.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_crowbar.json",
+      "sha256": "0c0e28fe61b368c024b9d315d7f99470d586a8064aba6a965bab70ddb58c019a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/crowbar.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/crowbar.png",
+      "sha256": "4190549e7662b5fe4657face4097818eb1a4745f16b1740de11e619f8f046894"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/crowbar_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/crowbar_overlay.png",
+      "sha256": "07620fc4098e31d7236eba60a09bb9b53de01e25b361627a9845449fbf19f131"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_screwdriver.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_screwdriver.json",
+      "sha256": "63925adfd04c4496100e99490b704fc06c3c7613260c6e98ffe5e6106a8d508b"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadscrewdriver.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadscrewdriver.png",
+      "sha256": "4dbe6513b63bc6442307d632b288985b0be2d6be3799d4573d0c7b820a32634a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadscrewdriver_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadscrewdriver_overlay.png",
+      "sha256": "6c34b65e82b634baf68ee538e487fbf0753e6f7642963bbe28afc2af589cb510"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/handle_screwdriver.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/handle_screwdriver.png",
+      "sha256": "fef0d79fe8722697dae9175426db103b29478be033ed06a186f65fddc6e5bd2e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/handle_screwdriver_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/handle_screwdriver_overlay.png",
+      "sha256": "6c34b65e82b634baf68ee538e487fbf0753e6f7642963bbe28afc2af589cb510"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_club.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_club.json",
+      "sha256": "6f0e3f08d9308d2b6a045123f8b41a8cad521bc32e01578c9d2842aa35a291b1"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/club.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/club.png",
+      "sha256": "b8ed2f3b2170421783419e88981018d4fe5ed3692ff5b3039a54b457f1e576d8"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/club_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/club_overlay.png",
+      "sha256": "fb794e795db31e63a00a8722a5a5cc2e4c7d2b05e45623097061c107e026379f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_wire_cutter.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_wire_cutter.json",
+      "sha256": "68af6627cbaf6b0f806394b13fc604d54b4cf6971ed7f7c7ecef774089624f85"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/wire_cutter.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/wire_cutter.png",
+      "sha256": "3ccb7a752f1b51f6ed7940462098523826491ea595f27cedae8882efa66167c0"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/wire_cutter_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/wire_cutter_overlay.png",
+      "sha256": "f1d3662d511714a9954b42c1b2d2d7d0fc4f669abd16a7ab407c8a8ef0dd48be"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_scoop.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_scoop.json",
+      "sha256": "de5509c7facd0e4d3cf0d7f841b7a4c2e5cacba140fe51caa2395be2a74610d2"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/scoop.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/scoop.png",
+      "sha256": "7fe747cd488395e6d44ee5b52d27f71f043f6485466a019788c08ea6924b983e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/scoop_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/scoop_overlay.png",
+      "sha256": "6187cd210f0a329734e1f30f312389bb7bb1df08a804023dc0f791f1212c065e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_branch_cutter.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_branch_cutter.json",
+      "sha256": "79d67bf2404e93a89e70a506cf259c228dfe3a17257cde6ec8384994e868959e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/grafter.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/grafter.png",
+      "sha256": "3637bb94c22cc4162b2f50359635a3698af8d2a32fbe771aa2238aa8cab27567"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/grafter_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/grafter_overlay.png",
+      "sha256": "85429942b0e37d8ad3bc854666c978ff93352a695096f57f136540ae31c8d1d9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_universal_spade.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_universal_spade.json",
+      "sha256": "655ae0b85775ba154aa28bc5951d6cf6f3332d85502a2dcd9d4c555835fbef06"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheaduniversalspade.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheaduniversalspade.png",
+      "sha256": "e6ba243503560723f026c846555f000d7341419a2e0bc175d38e918458f72724"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheaduniversalspade_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheaduniversalspade_overlay.png",
+      "sha256": "6c34b65e82b634baf68ee538e487fbf0753e6f7642963bbe28afc2af589cb510"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_knife.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_knife.json",
+      "sha256": "3799855e5e741af5c8cbc9525914ce6563e43cbb52a19bb6baab68be71f81e7e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/knife.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/knife.png",
+      "sha256": "e0a3ac8791620ccf66e17e319914e4105b8578c58bae43d3a4d0048da84e227b"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/knife_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/knife_overlay.png",
+      "sha256": "f93968b05ffd9793f2aeed3f8bfbb7a63fcbffad49c4f4041d63498b7ae85980"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_butchery_knife.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_butchery_knife.json",
+      "sha256": "84090421ffbf48928f2a0943a216439d03a317551b9562bdd3fe20b1b76c7e11"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/butcheryknife.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/butcheryknife.png",
+      "sha256": "8d69d7ea6ac203a5b550aede86362656252678ba30c19c39aadbd9db358623f3"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/butcheryknife_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/butcheryknife_overlay.png",
+      "sha256": "18ec433f3d218dff40cfb1fd6786ae0497376258b4547a4240d55112427eba77"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_sense.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_sense.json",
+      "sha256": "a73dee5ee5bdea7e67e2e3e9ac3796026fb46311d622d3029d216c1460763f5d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadsense.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadsense.png",
+      "sha256": "648f0c302713e00436a875b395c2e8b16aae6afb571b6f7a1dce0962e11e825e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadsense_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadsense_overlay.png",
+      "sha256": "6c34b65e82b634baf68ee538e487fbf0753e6f7642963bbe28afc2af589cb510"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_plow.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_plow.json",
+      "sha256": "95e3cc9f6a33b39acb3a7699e8774000eeb2c1c65b7fcfce6f8e95a3d6d7253b"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadplow.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadplow.png",
+      "sha256": "634d08e03b578cae60749935bbca52fd228e2f39154ac5fae11fe8536866041a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadplow_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadplow_overlay.png",
+      "sha256": "6c34b65e82b634baf68ee538e487fbf0753e6f7642963bbe28afc2af589cb510"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_plunger.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_plunger.json",
+      "sha256": "e28bd174597fd0bf155dcae3ac61cc6c1d761d911c563dadb3ad50acfa6d8e20"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/plunger.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/plunger.png",
+      "sha256": "39e8d99b127e6d7c2b67aeacd99ed912668679c532e0facf7366a1804fb2f5ff"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/plunger_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/plunger_overlay.png",
+      "sha256": "17351f21b7108976f71485c0e4bf2f0b84279e2692bf8f175afe552ac018891b"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_rolling_pin.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_rolling_pin.json",
+      "sha256": "4fa984c85531c4a3ecdc3a34c2dd4bff6a1b334f676d5356c85169f7bc82942a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/rolling_pin.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/rolling_pin.png",
+      "sha256": "dc17057249cad05863bc72caa6d04fd46be0c250ced189bb1bbf4a379faa4f77"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/rolling_pin_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/rolling_pin_overlay.png",
+      "sha256": "f138a491eb7b6e4572a64075d57276a36470724c0b57e6f3c42da424ee31398f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_chisel.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_chisel.json",
+      "sha256": "5f2b42a0dab352eb2bb8292c2ed720a81caedc0dafbbc2f1fd7e0364e686eb6d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadchisel.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadchisel.png",
+      "sha256": "0b46d47994d97976427a379b66d7f179a6be13ab44cd6d54e1e646851ec6873d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadchisel_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadchisel_overlay.png",
+      "sha256": "6c34b65e82b634baf68ee538e487fbf0753e6f7642963bbe28afc2af589cb510"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/handle_chisel.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/handle_chisel.png",
+      "sha256": "fef0d79fe8722697dae9175426db103b29478be033ed06a186f65fddc6e5bd2e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/handle_chisel_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/handle_chisel_overlay.png",
+      "sha256": "6c34b65e82b634baf68ee538e487fbf0753e6f7642963bbe28afc2af589cb510"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_flint_and_tinder.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_flint_and_tinder.json",
+      "sha256": "b58d2293d287aaba7cfe899d5fe542148fcdb93f86e347a6189b572f20986e38"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/flint_tinder.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/flint_tinder.png",
+      "sha256": "9c5bef3c9c4e6e4742c4f4bb65260c479d7892f2c2cbaa6e09042385ea8ad044"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/flint_tinder_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/flint_tinder_overlay.png",
+      "sha256": "2ae5a9be9b152b6a72820a8b990e4d79a536c82b65f41a78276dead22114742f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_monkey_wrench.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_monkey_wrench.json",
+      "sha256": "a3963cb39403b2f04522954270bd9747b9872cb7b400a8754b4c249e96b9259c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/monkeywrench.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/monkeywrench.png",
+      "sha256": "b2af45906b31298a42fda1feea8ddb47837528544c90da722b0bf1f8a5949139"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/monkeywrench_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/monkeywrench_overlay.png",
+      "sha256": "e47ec502696a45cbaeb67d81bd4ad252f481d5e1447c922d8de13444003a5bf4"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_bending_cylinder.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_bending_cylinder.json",
+      "sha256": "1dde710882ecd7d6733feefdb57d97585508ead3eee8d0eeb14aee8534d81652"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/bending_cylinder.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/bending_cylinder.png",
+      "sha256": "173e914c8435f2027209b3ebe9a4f93b3b73a0e843d3f562df96e822dc4801c5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/bending_cylinder_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/bending_cylinder_overlay.png",
+      "sha256": "f138a491eb7b6e4572a64075d57276a36470724c0b57e6f3c42da424ee31398f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_small_bending_cylinder.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_small_bending_cylinder.json",
+      "sha256": "00e896857d81b0a5b00d20e793bff1bec5be25590a8ef305a699a6644349e5bc"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/bending_cylinder_small.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/bending_cylinder_small.png",
+      "sha256": "686b961d1477d133a1a16abc8c292f9648f3c3d92e3fa1b32ae725b7132ea570"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/bending_cylinder_small_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/bending_cylinder_small_overlay.png",
+      "sha256": "f138a491eb7b6e4572a64075d57276a36470724c0b57e6f3c42da424ee31398f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_double_axe.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_double_axe.json",
+      "sha256": "b6699356ce22bdc46a8a34c433051e231c3cea951e54ac5f8375c08f22206e56"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadaxedouble.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadaxedouble.png",
+      "sha256": "445e3fe192471304766d72e86ae1c68251efa97b9a056eeb2f2b9fc0dd5599c3"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadaxedouble_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadaxedouble_overlay.png",
+      "sha256": "6c34b65e82b634baf68ee538e487fbf0753e6f7642963bbe28afc2af589cb510"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_construction_pick.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_construction_pick.json",
+      "sha256": "38cf4912d8760a80977b4aa634e9cd9084a933450af29ae7531e572a6a1e02d9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadconstructionpickaxe.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadconstructionpickaxe.png",
+      "sha256": "b60e5c108580077c026973e9012f73dfd1b2c2a945dbc4b26289c8ff4fcdcf1b"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadconstructionpickaxe_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadconstructionpickaxe_overlay.png",
+      "sha256": "6c34b65e82b634baf68ee538e487fbf0753e6f7642963bbe28afc2af589cb510"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_magnifying_glass.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_magnifying_glass.json",
+      "sha256": "5756eeac38e310540571f8b6e0dd20238579764f7e3d1bf798eda0645fe5daa2"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/magnifying_glass.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/magnifying_glass.png",
+      "sha256": "9f2740c052ffdbcb97217ef0674014a06ea663eb7919f3d96072cc350a88c9a9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/magnifying_glass_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/magnifying_glass_overlay.png",
+      "sha256": "e9fbbc625794a477431fcdfbcf388962185567e302caa4889048e09626a5108a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_scissors.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_scissors.json",
+      "sha256": "1864408abb25f778935600ef3bc20ac9333e50d04daa671b81d82ebd2dab8dac"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/scissors.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/scissors.png",
+      "sha256": "e03dde3e0ac705ff7006384ecb5b7c0ad71cf0335b254e9e21712ba44f0141a1"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/scissors_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/scissors_overlay.png",
+      "sha256": "7babe0c29bda2c4553cc70801bfb62c857f594a26d0e238c2013ec6424f7b69f"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_pincers.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_pincers.json",
+      "sha256": "23bc0ef429769c0b34ee25ea1cf0804f0fa52db234357d0322bc6bf2dbce7bea"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/pincers.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/pincers.png",
+      "sha256": "ce00e8f67b962ba21385ee1b04650075b38ef822061669d3e055965a2bd0ab70"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/pincers_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/pincers_overlay.png",
+      "sha256": "a87b1277fd6847f39c0b09a2a2c90b18423721246eb512351a510dbf04020708"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_spade.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_spade.json",
+      "sha256": "b6c065340ad481f98bd99103de89a084e8b07d4717de9554dd4c1b3e7b387043"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadspade.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadspade.png",
+      "sha256": "f26b3c80c74ca10a09d2c69e468ad18b913f61448374a7d9cd364711cd58501d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadspade_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadspade_overlay.png",
+      "sha256": "6c34b65e82b634baf68ee538e487fbf0753e6f7642963bbe28afc2af589cb510"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_gem_tipped_pickaxe.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_gem_tipped_pickaxe.json",
+      "sha256": "551324bd41f988ec3ea197e54385f82239cd0ab0701d4a147851fca459571a9e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadpickaxegem.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadpickaxegem.png",
+      "sha256": "fd096fba72eb2408321ba9b714390e383153cf5f356a8c38441656da5c2ab321"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadpickaxegem_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadpickaxegem_overlay.png",
+      "sha256": "89d2c38f10b44ae730ed2b7dfb46a9c5fa975f8d2aa441b990eea124ea1da4e3"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_hand_drill.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_hand_drill.json",
+      "sha256": "af4f2f3c3ada0b164bde8cb62699ad648484cda55daebf983a006d9f7ae8809e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/hand_drill.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/hand_drill.png",
+      "sha256": "a856f481060a41855851b4955e48913f3ef2c02f2c80608549aa010846775e8d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/iconsets/hand_drill_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/iconsets/hand_drill_overlay.png",
+      "sha256": "e8a5d757f0bf4ac82d33157de9a984da1f1f3c328a4f0a7189207e4316061e00"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_builder_wand.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_builder_wand.json",
+      "sha256": "40a2b129a9b499c8a6f24d633225331094df142afcbdf19234e7186e0f316f8e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadbuilderwand.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadbuilderwand.png",
+      "sha256": "4f3d7f68653d508e974da81beb1bd499d5c3ba0f0a588c4e4ddcddcdf6181c18"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadbuilderwand_overlay.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/item/material_icons/dull/toolheadbuilderwand_overlay.png",
+      "sha256": "6c34b65e82b634baf68ee538e487fbf0753e6f7642963bbe28afc2af589cb510"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/wrench.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/wrench.json",
+      "sha256": "6f98bffa0b90d7fa069c53c879169eda2a58645dd7f18069cf9608d3ad45131a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/wrench_overlay.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/wrench_overlay.json",
+      "sha256": "55ed8904be60272821768ee856db94ca0264214fe608282b3879ddd21a925c1a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/crowbar.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/crowbar.json",
+      "sha256": "47ae2f2fc759b92ef12115be8ca8a4f4ad0bbcd299c0448378fe526b90d288b0"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/crowbar_overlay.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/crowbar_overlay.json",
+      "sha256": "c134dd5afe63b0ef0654705af3c2302efdf35c1320155fad7f711f7b5f686462"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/wire_cutter.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/wire_cutter.json",
+      "sha256": "32fd7177a340188e2e5e6fdbbd06e9096c50fa8c74a99362cd4acfad38edbcc8"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/wire_cutter_overlay.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/wire_cutter_overlay.json",
+      "sha256": "2789af9e6e70da07f05a1505ecc2419728a770e6ecb1450f52c567e71483c6d5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/scoop.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/scoop.json",
+      "sha256": "1acefc4ca141f99dc7307ebb49ad52c2c992fea068bfc51681f3d7fba552655c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/scoop_overlay.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/scoop_overlay.json",
+      "sha256": "fbde97a9b04c4528d89081a42386fa92570bf2d349aa295914d9e3eb4ec52ef0"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/grafter.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/grafter.json",
+      "sha256": "4c103b05400370f6fe6e6d8d311cfe05fc407b978bdca4f723eb7b4c5471be9b"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/grafter_overlay.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/grafter_overlay.json",
+      "sha256": "317990cffa9716898e9c4a7f725b2fcbc7a4b1492835b60f04d14748113dd3f4"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/plunger.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/plunger.json",
+      "sha256": "bcb8206eb82a812637741fde809658085452affb576ad7056c85c2e00fe2eee4"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/plunger_overlay.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/plunger_overlay.json",
+      "sha256": "694d2981ac23b0d21c08e7e6886b7d568095718f24cc0191c9a2c86df32abd34"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/knife.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/knife.json",
+      "sha256": "bd5b6fdc294e9468eeaec1a10ebd767452c8f1d24f790f23e9b8f67ae36977d8"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/knife_overlay.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/knife_overlay.json",
+      "sha256": "64f7d68e36b800e1fbfb8ee539c057b31d661f02989dcc3d4f37066257603d6a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/butcheryknife.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/butcheryknife.json",
+      "sha256": "ae17f9796e27ec2ba87699996fc94ad372db8ee5aa050325e85f75b720810b74"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/butcheryknife_overlay.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/butcheryknife_overlay.json",
+      "sha256": "dfffa371cdfc85a43783b29ddf1be9d7b8564909819fedf53ef70f8c9bf25505"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/club.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/club.json",
+      "sha256": "9d89e3df9cf22e8f9ea5bd1d51685196818d1bbca9d1b24f2faf4c04b63ea490"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/club_overlay.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/club_overlay.json",
+      "sha256": "9467fc6528cfe5fece7a01327339a46d6cfd350790559f0f63398341ad14aa55"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/handle_sword.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/handle_sword.json",
+      "sha256": "19051908c600980b441b8ba7ce067566fc6a4d5d99348b645489e4e3f3b69306"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/handle_sword_overlay.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/handle_sword_overlay.json",
+      "sha256": "0fdad5a5e0963f8af0666c13444462270612b3931d4bc6727d37248c4f4474bb"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/handle_saw.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/handle_saw.json",
+      "sha256": "da77a07e512f392255e2d22005c58d235a1b1b584a45b7c9d7b3e7dd69bc47e8"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/handle_saw_overlay.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/handle_saw_overlay.json",
+      "sha256": "e95ae816c2eb7ee1c2185fdbf29007cc34da4e56fbf757acb8496cad33316b2e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/handle_file.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/handle_file.json",
+      "sha256": "b5281722754e1def794a861a61993cf6772e3906590ef1be0af6c5aaf7efa201"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/handle_file_overlay.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/handle_file_overlay.json",
+      "sha256": "af88d4e2a0d2c8232d7a754bd14855c1937d1920a3c016e70fc2f74ce8046a60"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/handle_chisel.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/handle_chisel.json",
+      "sha256": "5f12f521fe77fb2098695e7faf23ce20835a8dffaff3cb9f8524984defbcc0d7"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/handle_chisel_overlay.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/handle_chisel_overlay.json",
+      "sha256": "26964c50c2bf063f79234162132b5992453873be26e24eeb5984c71ca96af587"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/handle_screwdriver.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/handle_screwdriver.json",
+      "sha256": "928cc99ce129bba43872b05fdb417c61eab18b4fdea4839367c47f9bfc01cd39"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/handle_screwdriver_overlay.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/handle_screwdriver_overlay.json",
+      "sha256": "f3bbd961ec6d78780de24e751e67838275044e22eeea08a2b85b9e4ab3c14f69"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/rolling_pin.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/rolling_pin.json",
+      "sha256": "1c4e9176c589679530f90030bfa618af2c40bec1f550bcb84c8b05b0414a27ec"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/rolling_pin_overlay.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/rolling_pin_overlay.json",
+      "sha256": "9f7747a4a1abeb6f71be9e9ad1aa2e5554dbb894c6f92bc4c3dead0e512867c5"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/flint_tinder.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/flint_tinder.json",
+      "sha256": "461a12b814f0005539d19b31e6217bfb6acd0a5d37e5f817ec10a77ac7bf4b08"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/flint_tinder_overlay.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/flint_tinder_overlay.json",
+      "sha256": "6bc811ec3cc6e6b8268e289999647fa28c524a85c0761c4885e9228da492d35e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/monkeywrench.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/monkeywrench.json",
+      "sha256": "6823d7becabb120a1ea38405e7286a6c43be0513fbb828361c647d66662184c4"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/monkeywrench_overlay.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/monkeywrench_overlay.json",
+      "sha256": "9f71e3582821f83497644d0e8a4c224cb566fe249fa83f2bccc958d9de88b539"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/bending_cylinder.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/bending_cylinder.json",
+      "sha256": "575ef0fd379ac1e6e7d29da41702177f53cdceaac4e71859cd8d669857f8313a"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/bending_cylinder_overlay.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/bending_cylinder_overlay.json",
+      "sha256": "394e17cd30c77b528a5a530eb9ce4c47ab1e094a9397ca4dc97c7e122327125b"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/bending_cylinder_small.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/bending_cylinder_small.json",
+      "sha256": "0143b060848c66c8bb6a50ab5c4108d9d9ab1add1d10b584d70dc47ec2864b6b"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/bending_cylinder_small_overlay.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/bending_cylinder_small_overlay.json",
+      "sha256": "b6598ba3c54db6bc7df376725e0f68a2d0e9c2a211b75b2d37e2b6d20559efe6"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/magnifying_glass.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/magnifying_glass.json",
+      "sha256": "b6717323a2cf6d55d1d0b0674b01ccf66587a01575abfb712719fd0bfbd3b5a7"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/magnifying_glass_overlay.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/magnifying_glass_overlay.json",
+      "sha256": "608fe39b65dee9deb1fe48ce23057bb7eedf87c7c42810ecc527c009407ebfd1"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/scissors.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/scissors.json",
+      "sha256": "afb6e5a9a2b8a66c61384ee6658aba3d0f26e0d201f7f25eb239a9d48c662c1e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/scissors_overlay.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/scissors_overlay.json",
+      "sha256": "409da360eef6c94abde95de79401780a7d9ce99b4be8bcbb5f5983255054e123"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/pincers.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/pincers.json",
+      "sha256": "54a4c7cc1a3b4a769aa4fea655d0d329f165e29713ab8d00072f3781f1d85c51"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/pincers_overlay.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/pincers_overlay.json",
+      "sha256": "13cc90f782ea057398d0cbb2a85614519c25a4db3f66c25b6aaf1837a3392a43"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/hand_drill.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/hand_drill.json",
+      "sha256": "6639f8f322d1c1e5323341152fecfc38f5bf6a3650028006fb6b9d6319857aa8"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/tool_iconset/hand_drill_overlay.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/tool_iconset/hand_drill_overlay.json",
+      "sha256": "283473e88d79aef42eafd3aea7d5c13f2ee035ca69b6af26fb90745bc281f396"
+    }
+  ],
+  "runtimeReceipt": "docs/integration/verification/p3-neoforge-manual-tools-checkpoint.json"
+}

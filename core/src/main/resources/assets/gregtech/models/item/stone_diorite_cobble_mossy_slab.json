@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "gregtech:block/stones/gt.stone.diorite/cobble_mossy",
+    "top": "gregtech:block/stones/gt.stone.diorite/cobble_mossy",
+    "side": "gregtech:block/stones/gt.stone.diorite/cobble_mossy"
+  }
+}

@@ -60,7 +60,7 @@ public class GregTechConstants {
             "Gray", "Pink", "Lime", "Yellow", "Light Blue", "Magenta", "Orange", "White"
     };
 
-    /** GregTech mod id  - use {@link com.gregtech.gregtech.GregTech#MODID} in new code. */
+    /** Legacy registry namespace; loader identity is GregTechIdentity.MOD_ID. */
     public static final String MODID = "gregtech";
 
     public static void bootstrap() {

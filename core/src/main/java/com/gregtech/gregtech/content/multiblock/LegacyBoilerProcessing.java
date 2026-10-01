@@ -1,0 +1,3 @@
+package com.gregtech.gregtech.content.multiblock;
+/** Exact existing legacy boiler ratio; original rated boilers use their own shared specification. */
+public final class LegacyBoilerProcessing{private LegacyBoilerProcessing(){}public static final long STEAM_PER_HU=2,STEAM_PER_WATER=200,HEAT_CAPACITY=65536;public record Plan(long water,long steam,long heat){}public static Plan plan(long heat,long water,long space){long steam=Math.min(Math.min(heat*STEAM_PER_HU,water*STEAM_PER_WATER),space);long consumed=steam/STEAM_PER_WATER;if(consumed<=0)return new Plan(0,0,0);steam=consumed*STEAM_PER_WATER;return new Plan(consumed,steam,steam/STEAM_PER_HU);}}

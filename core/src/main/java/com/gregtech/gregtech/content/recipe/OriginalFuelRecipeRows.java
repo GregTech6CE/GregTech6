@@ -1,0 +1,43 @@
+package com.gregtech.gregtech.content.recipe;
+import java.util.List;
+/** Original Loader_Recipes_Fuels charge rows; missing fluids retain source skip semantics. */
+public final class OriginalFuelRecipeRows {private OriginalFuelRecipeRows(){}public record Row(String kind,long eut,long duration,String input,int amount,String output,int outputAmount,String output2,int output2Amount){}
+ public static final List<Row> ROWS=List.of(
+new Row("engine",128,12,"Nitrofuel",1,"CarbonDioxide",1,null,0),
+new Row("engine",64,12,"Fuel",1,"CarbonDioxide",1,null,0),
+new Row("engine",64,8,"Diesel",1,"CarbonDioxide",1,null,0),
+new Row("engine",64,7,"Petrol",1,"CarbonDioxide",1,null,0),
+new Row("engine",64,5,"Rocket_Fuel",1,"CarbonDioxide",1,null,0),
+new Row("engine",32,10,"Fire_Water",1,"CarbonDioxide",1,null,0),
+new Row("engine",16,9,"Ethanol",1,"CarbonDioxide",1,null,0),
+new Row("engine",16,9,"Methanol",1,"CarbonDioxide",1,null,0),
+new Row("engine",16,6,"Hootch",1,"CarbonDioxide",1,null,0),
+new Row("gas",16,2,"Hydrogen",2,"water",3,null,0),
+new Row("gas",64,30,"Methane",5,"water",6,"CarbonDioxide",3),
+new Row("gas",64,30,"NaturalGas",5,"water",6,"CarbonDioxide",3),
+new Row("gas",64,56,"Butane",7,"water",7,"CarbonDioxide",6),
+new Row("gas",64,40,"Propane",5,"water",5,"CarbonDioxide",4),
+new Row("gas",64,5,"Ethylene",1,"water",1,"CarbonDioxide",1),
+new Row("gas",64,4,"Propylene",1,"water",1,"CarbonDioxide",1),
+new Row("burn",16,48,"Oil_ExtraHeavy",1,"CarbonDioxide",1,null,0),
+new Row("burn",16,36,"Oil_Heavy",1,"CarbonDioxide",1,null,0),
+new Row("burn",16,24,"Oil_Medium",1,"CarbonDioxide",1,null,0),
+new Row("burn",16,24,"Oil_Normal",1,"CarbonDioxide",1,null,0),
+new Row("burn",16,18,"Oil_Light",1,"CarbonDioxide",1,null,0),
+new Row("burn",16,18,"Oil_Soulsand",1,"CarbonDioxide",1,null,0),
+new Row("burn",16,2,"Oil_Creosote",1,"CarbonDioxide",1,null,0),
+new Row("burn",16,2,"Biomass",1,"CarbonDioxide",1,null,0),
+new Row("burn",16,2,"BiomassIC2",1,"CarbonDioxide",1,null,0),
+new Row("burn",16,4,"Oil_Nut",1,"CarbonDioxide",1,null,0),
+new Row("burn",16,4,"Oil_Olive",1,"CarbonDioxide",1,null,0),
+new Row("burn",16,2,"Oil_Lin",1,"CarbonDioxide",1,null,0),
+new Row("burn",16,2,"Oil_Hemp",1,"CarbonDioxide",1,null,0),
+new Row("burn",16,2,"Oil_Sunflower",1,"CarbonDioxide",1,null,0),
+new Row("burn",16,2,"Oil_Seed",1,"CarbonDioxide",1,null,0),
+new Row("burn",16,4,"Oil_Fish",1,"CarbonDioxide",1,null,0),
+new Row("burn",16,8,"Oil_Whale",1,"CarbonDioxide",1,null,0),
+new Row("hot",16,1250,"Lava",1,"Lava_Pahoehoe",1,null,0),
+new Row("hot",16,20000,"Lava_Volcanic",1,"Lava_Pahoehoe",1,null,0),
+new Row("hot",2,1,"Hot_Water",1,"water",1,null,0),
+new Row("hot",16,6,"Blaze",1,null,0,null,0));
+}

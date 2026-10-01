@@ -1,0 +1,457 @@
+{
+  "date": "2026-10-01",
+  "policy": "D011: initial Forge1.20.1/NeoForge1.21.1 parity first; D010 grouped necessary checks. No pending colored-owned foam donor script was executed.",
+  "authors": [
+    "saltnya",
+    "original GregTech6 contributors"
+  ],
+  "license": "Original notices and source-history evidence retained; local integration only, no third-party license reassigned.",
+  "counts": {
+    "newNativeNamedRecipeFamilies": 14,
+    "newOriginalNativeLoaders": 2,
+    "newNativeJavaFiles": 24,
+    "javaRecords": 28,
+    "sharedOriginalResourceRecords": 3,
+    "vanillaLootCategories": 10,
+    "removedExactResourceDuplicates": 27
+  },
+  "reportedNamedRecipeRowsAtStartup": {
+    "DiggableRecipes": 56,
+    "BiologicalMaterialRecipes": 21,
+    "GlowtusProcessingRecipes": 1136,
+    "BedrockFlowerProcessingRecipes": 1209,
+    "SurvivalUtilityRecipes": 78,
+    "CrucibleSmeltingRecipes": 1911,
+    "StructuralPartRecipes": 15,
+    "MachineCasingRecipes": 2408,
+    "StoneAndToolSurvivalRecipes": 8701,
+    "StoneVariantRecipes": 1296,
+    "VehiclePackagingRecipes": 26,
+    "AnvilShreddingRecipes": 832,
+    "ShredderRecyclingRecipes": 38044,
+    "FurnaceSmeltingRecipes": 231
+  },
+  "reportedNamedRowsSum": 55964,
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/AnvilShreddingRecipes.java",
+      "sha256": "65524562f88f547b2aa8e2216c5aab5ec718509dbc58a97e8dc0277a400370d5",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\recipe\\AnvilShreddingRecipes.java",
+      "sourceSha256": "8bbde7adfbe86f25ef8b616c2007d0a2585799f8d6a8fa758602ab997828dd54",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/content/recipe/AnvilShreddingRecipes.java",
+      "currentForgeReferenceSha256": "8bbde7adfbe86f25ef8b616c2007d0a2585799f8d6a8fa758602ab997828dd54"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/BedrockFlowerProcessingRecipes.java",
+      "sha256": "544b584b9d1ad2015b43c9e8dc1b1dd0cfacddc3de8006eb74c543c6c84839ed",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\recipe\\BedrockFlowerProcessingRecipes.java",
+      "sourceSha256": "5b974444ba2e6621c9893598827cf5ec19b67a64367aa7da22869dcc08d125a5",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/content/recipe/BedrockFlowerProcessingRecipes.java",
+      "currentForgeReferenceSha256": "5b974444ba2e6621c9893598827cf5ec19b67a64367aa7da22869dcc08d125a5"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/BiologicalMaterialRecipes.java",
+      "sha256": "87c2b032aa5498731d14e0c6b3ef451de86b97bf43d429599b494a6bf063682b",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\recipe\\BiologicalMaterialRecipes.java",
+      "sourceSha256": "87c2b032aa5498731d14e0c6b3ef451de86b97bf43d429599b494a6bf063682b",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/content/recipe/BiologicalMaterialRecipes.java",
+      "currentForgeReferenceSha256": "87c2b032aa5498731d14e0c6b3ef451de86b97bf43d429599b494a6bf063682b"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/CrucibleSmeltingRecipes.java",
+      "sha256": "b4405c0227c5db388cfca87d75be93fa16b3e5bc8c8ee7c5e68c8b42bb1aa737",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\recipe\\CrucibleSmeltingRecipes.java",
+      "sourceSha256": "7a697169dd4ba523eacafc49d48f4b2c018fc0a50f5c3e01d816ded68675164d",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/content/recipe/CrucibleSmeltingRecipes.java",
+      "currentForgeReferenceSha256": "7a697169dd4ba523eacafc49d48f4b2c018fc0a50f5c3e01d816ded68675164d"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/DiggableRecipes.java",
+      "sha256": "0e1bb6df3420c0f3fe046b2b00beb6398943dba7202fda5acb03a3865b9329ee",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\recipe\\DiggableRecipes.java",
+      "sourceSha256": "c86fe7944558ce96e0423f51302831bfc0a6d43463f3ba4479d2a0cdcfc4db2c",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/content/recipe/DiggableRecipes.java",
+      "currentForgeReferenceSha256": "c86fe7944558ce96e0423f51302831bfc0a6d43463f3ba4479d2a0cdcfc4db2c"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/FurnaceSmeltingRecipes.java",
+      "sha256": "dc8aa655d329e3f3350cf0738544531fc332747a9e950a7694df1404e7eb86b1",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\recipe\\FurnaceSmeltingRecipes.java",
+      "sourceSha256": "f07625a8c143f77294a7109d5527f08211c8efa297729ffb06a7b392c5f7530f",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/content/recipe/FurnaceSmeltingRecipes.java",
+      "currentForgeReferenceSha256": "f07625a8c143f77294a7109d5527f08211c8efa297729ffb06a7b392c5f7530f"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/GlowtusProcessingRecipes.java",
+      "sha256": "0ef2454a742d01f83ec4b415070c2dae76da2d1b534ce4adc2549be7516a62d4",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\recipe\\GlowtusProcessingRecipes.java",
+      "sourceSha256": "84bd9efe464799b6e6c3cbd48b63ea35018c014cea271178c750d7e0d098913b",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/content/recipe/GlowtusProcessingRecipes.java",
+      "currentForgeReferenceSha256": "84bd9efe464799b6e6c3cbd48b63ea35018c014cea271178c750d7e0d098913b"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/MachineCasingRecipes.java",
+      "sha256": "229d749f08cb65c2ad183c4cfc56e1afa457895fcf7711c9b5e7a4c0b63d773f",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\recipe\\MachineCasingRecipes.java",
+      "sourceSha256": "9a9466ca030c2c82ae2729686e4e076f16649dac9f83799b9b9d8e5a6b45d5b5",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/content/recipe/MachineCasingRecipes.java",
+      "currentForgeReferenceSha256": "9a9466ca030c2c82ae2729686e4e076f16649dac9f83799b9b9d8e5a6b45d5b5"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/ShredderRecyclingRecipes.java",
+      "sha256": "0f811973dc9efa268e71eedfbfa79f8140b8a296bd6cf8db5996ab5f4038e32a",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\recipe\\ShredderRecyclingRecipes.java",
+      "sourceSha256": "3a0d99ebd9b35c40506796f0d6ac678e26891ca1cb7f255d9700439895263a11",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/content/recipe/ShredderRecyclingRecipes.java",
+      "currentForgeReferenceSha256": "3a0d99ebd9b35c40506796f0d6ac678e26891ca1cb7f255d9700439895263a11"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/StoneAndToolSurvivalRecipes.java",
+      "sha256": "0854e15473f05d4e1ac9d2f95bccb0594169b3c10ca6bc13f92cf95d6e07dab5",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\recipe\\StoneAndToolSurvivalRecipes.java",
+      "sourceSha256": "05b569d658e6133422e6f7e5d65758f306e4f856e3d24d775ce1f4850ee5e0fc",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/content/recipe/StoneAndToolSurvivalRecipes.java",
+      "currentForgeReferenceSha256": "05b569d658e6133422e6f7e5d65758f306e4f856e3d24d775ce1f4850ee5e0fc"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/StoneVariantRecipes.java",
+      "sha256": "0f88b94e874c0b9d7b82a0d80cb5433b84c147c07c6ef17aba1a7339bd1f26a5",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\recipe\\StoneVariantRecipes.java",
+      "sourceSha256": "380c11dc1c5071a428de99b0e69d4986d4cfca2687d4962653589dc6f888d2a7",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/content/recipe/StoneVariantRecipes.java",
+      "currentForgeReferenceSha256": "380c11dc1c5071a428de99b0e69d4986d4cfca2687d4962653589dc6f888d2a7"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/StructuralPartRecipes.java",
+      "sha256": "63741549417bd8d7fe3dac58af799358078883a8f54400d69bdae92f9a135efc",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\recipe\\StructuralPartRecipes.java",
+      "sourceSha256": "93050f20ff133b999ec311b9a73a0ed983b2ae571bd0fb9bddb6275d509dbcf1",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/content/recipe/StructuralPartRecipes.java",
+      "currentForgeReferenceSha256": "93050f20ff133b999ec311b9a73a0ed983b2ae571bd0fb9bddb6275d509dbcf1"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/SurvivalUtilityRecipes.java",
+      "sha256": "053695a56e23a07ec145f750e4fadac64df78291ee3cd058bec2aa8ee0da54fb",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\recipe\\SurvivalUtilityRecipes.java",
+      "sourceSha256": "e71d88c7dd361d50b0b836a7e3e5b430dbba6451d6bd157313c0c00cc3e85762",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/content/recipe/SurvivalUtilityRecipes.java",
+      "currentForgeReferenceSha256": "e71d88c7dd361d50b0b836a7e3e5b430dbba6451d6bd157313c0c00cc3e85762"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/VehiclePackagingRecipes.java",
+      "sha256": "c1b657b53f27f0dc38f394cca880792c9499684db1689e16755fd88d9a206c97",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\recipe\\VehiclePackagingRecipes.java",
+      "sourceSha256": "c1b657b53f27f0dc38f394cca880792c9499684db1689e16755fd88d9a206c97",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/content/recipe/VehiclePackagingRecipes.java",
+      "currentForgeReferenceSha256": "c1b657b53f27f0dc38f394cca880792c9499684db1689e16755fd88d9a206c97"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/loaders/c/Loader_Recipes_Fusion.java",
+      "sha256": "10554f8480a066d470c3c4e99ea4857ea72e61b2cf0c2969dcb028a336abc1b1",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\c\\Loader_Recipes_Fusion.java",
+      "sourceSha256": "5d17d6b4b207a389073de81a1076c95d2585c75c819e3edd77fe9dabf36972d7",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/loaders/c/Loader_Recipes_Fusion.java",
+      "currentForgeReferenceSha256": "5d17d6b4b207a389073de81a1076c95d2585c75c819e3edd77fe9dabf36972d7"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/loaders/c/Loader_Recipes_Matter.java",
+      "sha256": "90f72dad5b1d863955de550d27e021dd60c38b5a8eadf0cdb89c6399f34377ad",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\c\\Loader_Recipes_Matter.java",
+      "sourceSha256": "b02aabc20cd8dddfa1e4f5b6a98a25700bf7be810311f77478b1a3d28daea2e9",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/loaders/c/Loader_Recipes_Matter.java",
+      "currentForgeReferenceSha256": "b02aabc20cd8dddfa1e4f5b6a98a25700bf7be810311f77478b1a3d28daea2e9"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/hazard/BathingEffectEvents.java",
+      "sha256": "0cb1e8b995c1ac81c618cb9953e167df38313d90b0d5919dee95618f17ab770c",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\hazard\\BathingEffectEvents.java",
+      "sourceSha256": "3e403ef023f80ab4f03a146696a02e27d8c961407e2619a8eda0c3759fd3ba55",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/content/hazard/BathingEffectEvents.java",
+      "currentForgeReferenceSha256": "3e403ef023f80ab4f03a146696a02e27d8c961407e2619a8eda0c3759fd3ba55"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/hazard/BreathingGasEvents.java",
+      "sha256": "880874aac32cec959e0dec3d4f68138109f523edd9d9d3c4297c5077129f4836",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\hazard\\BreathingGasEvents.java",
+      "sourceSha256": "a89d1e55aeb319b217d24431f107f1e9f809fc8fb5af9c5ac694e6a68eb0787d",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/content/hazard/BreathingGasEvents.java",
+      "currentForgeReferenceSha256": "a89d1e55aeb319b217d24431f107f1e9f809fc8fb5af9c5ac694e6a68eb0787d"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/hazard/WorldFluidEffects.java",
+      "sha256": "260f7dcdad16637c45bb669b7bd7364e04c0e4b46a1a34add5a928448518ed36",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\hazard\\WorldFluidEffects.java",
+      "sourceSha256": "8740653ec5229212a24c6209b203a1c3b6570633fc719b61b1051c5718121829",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/content/hazard/WorldFluidEffects.java",
+      "currentForgeReferenceSha256": "8740653ec5229212a24c6209b203a1c3b6570633fc719b61b1051c5718121829"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/GTWorldFluidBlock.java",
+      "sha256": "2ce43bbe6fd009552c361b30ad01c41e2a928d59148db6b264f13e97020a418a",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\GTWorldFluidBlock.java",
+      "sourceSha256": "485a1fdf1c2507c49e8436f628c1d126f698ea8dc4c970777a61a5b8c06634fe",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/block/GTWorldFluidBlock.java",
+      "currentForgeReferenceSha256": "485a1fdf1c2507c49e8436f628c1d126f698ea8dc4c970777a61a5b8c06634fe"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/loot/LootTableInjection.java",
+      "sha256": "64bd758c6bf25320094e95be81e2eb9537336d8524db62d663e0cbf6232f2a61",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\loot\\LootTableInjection.java",
+      "sourceSha256": "91d5df7077f36695cf8fb116c8ead7c71ec801c4db03b07a7898f046af21acdf",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/content/loot/LootTableInjection.java",
+      "currentForgeReferenceSha256": "91d5df7077f36695cf8fb116c8ead7c71ec801c4db03b07a7898f046af21acdf"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/data/BlockHarvestEvents.java",
+      "sha256": "ea9f3d28c8371168e25020d06735209d96e44fca772f5c0b00b5b384f40ed0b4",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\data\\BlockHarvestEvents.java",
+      "sourceSha256": "2bda589fa424493039f051b99e7b0069ad8704bc2652396284ff83ee7f44a82b",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/data/BlockHarvestEvents.java",
+      "currentForgeReferenceSha256": "2bda589fa424493039f051b99e7b0069ad8704bc2652396284ff83ee7f44a82b"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/data/ToolBlockConversionEvents.java",
+      "sha256": "40db690856836ce2915e77c21f04b7ab8294d20012ab9adc04b3a49bb827fdbd",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\data\\ToolBlockConversionEvents.java",
+      "sourceSha256": "e73f75491d7132026c5830546cac5388ee969ec2c46a2b002805b1446366bfd1",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/data/ToolBlockConversionEvents.java",
+      "currentForgeReferenceSha256": "e73f75491d7132026c5830546cac5388ee969ec2c46a2b002805b1446366bfd1"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/LootCrateBlock.java",
+      "sha256": "ee0c139fde1c8062db855b9b397de454776e35f0aadecfe6a5c2c78c1ce0be88",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\LootCrateBlock.java",
+      "sourceSha256": "2b1350a760452d4d6a5a378f89bad98bd4c4f13d4f10fff9dc20456b7a618f10",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/block/LootCrateBlock.java",
+      "currentForgeReferenceSha256": "2b1350a760452d4d6a5a378f89bad98bd4c4f13d4f10fff9dc20456b7a618f10"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/NeoMachineRecipeLoader.java",
+      "sha256": "2321ce5bba418a27f6bbfde02efa297d47066724b1d07538b0fc86b61e97646f",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\GregTech.java",
+      "sourceSha256": "ca85869e5277ee128ac3c142688dc414098dd53445449aa9af37a6c14edc6071",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/GregTech.java",
+      "currentForgeReferenceSha256": "defafcbfb1fc8d923f47b9c496e073c54cd722af6e952f8603161231ef34f32b"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "sha256": "86a27ed2219988a9ef5afb8386be18c9c9a228529166962f338f9cd03688d363",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\GregTech.java",
+      "sourceSha256": "ca85869e5277ee128ac3c142688dc414098dd53445449aa9af37a6c14edc6071",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/GregTech.java",
+      "currentForgeReferenceSha256": "defafcbfb1fc8d923f47b9c496e073c54cd722af6e952f8603161231ef34f32b"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/fluid/FluidRegistries.java",
+      "sha256": "b08c5807998ac9903b629f95f46ab2084ac98647cca880ce615ccef3b32f1c9e",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\a\\Loader_Fluids.java",
+      "sourceSha256": "cb716d11ec2345668f3ad4f71ad33863847469caf81118e9a90fcfcc5eda4957",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/loaders/a/Loader_Fluids.java",
+      "currentForgeReferenceSha256": "cb716d11ec2345668f3ad4f71ad33863847469caf81118e9a90fcfcc5eda4957"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTRemainingDecor.java",
+      "sha256": "17b5d6a2324612767505b3b2231d1f60f161a0897502fd0e063c3e10c393013f",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTDecorBlocks.java",
+      "sourceSha256": "8e4f81942f572baf26f31b198c4697f398d76cffb9f6272c32d0e87c66c9c68b",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/registry/GTDecorBlocks.java",
+      "currentForgeReferenceSha256": "f28f71932dced82d152f3c5adfdd5e487ccf846174151e305350264a2dc6f30c"
+    }
+  ],
+  "resources": [
+    {
+      "target": "core/src/main/resources/assets/gregtech/blockstates/loot_crate.json",
+      "sha256": "8555d09edbd70b6c4a43c0adb1ef4b1ab8e8ffb6fcdaddaf8468479b1d9aa32a",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\loot_crate.json",
+      "sourceSha256": "8555d09edbd70b6c4a43c0adb1ef4b1ab8e8ffb6fcdaddaf8468479b1d9aa32a",
+      "exactBytes": true
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/models/item/loot_crate.json",
+      "sha256": "6df5aa2a7217b200dfcc9b9f6e6bd1d5a0fbbe9c87d4fa15940c2144a5a924e9",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\loot_crate.json",
+      "sourceSha256": "6df5aa2a7217b200dfcc9b9f6e6bd1d5a0fbbe9c87d4fa15940c2144a5a924e9",
+      "exactBytes": true
+    },
+    {
+      "target": "core/src/main/resources/assets/gregtech/models/block/decoration/loot_crate.json",
+      "sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\decoration\\loot_crate.json",
+      "sourceSha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "exactBytes": true
+    }
+  ],
+  "notProven": [
+    "Named recipe registration counts and short boot are not actual smelting/crafting/plant processing or survival proof. No new gameplay fixtures were added.",
+    "The 18-reaction Fusion loader, elemental/special Matter loader and loot crate were added after the single dedicated startup; their Java compilation passed, their runtime/loot interactions remain unverified.",
+    "Loot chest injection now preserves native components rather than legacy SetNbtFunction; ten table hooks are implemented but random chest content/books have not been exercised.",
+    "Bathing/breathing, oil web movement, utility-tool harvesting and hammer/chisel/unpacking conversion hooks compile and are subscribed, but no actual entity/block gameplay has been tested.",
+    "Native vanilla tier fallback uses the six known Tiers because Tier.getLevel was removed; external custom tiers without GT metadata remain unverified.",
+    "Current native JEI/Jade plugins and inherited client resource/model gaps remain pending. Their Forge documentation does not establish native parity.",
+    "Full client world/gameplay, Forge runtime for this wave, independent-process machine reload, old-world compatibility and final three-donor differences remain pending. D011 prioritizes Forge-to-Neo alignment, not a completion claim. Original authors/licenses/history remain unchanged and publication unresolved."
+  ],
+  "removedExactNativeResourceDuplicates": [
+    {
+      "removedDuplicate": "neoforge/src/main/resources/assets/gregtech/blockstates/centrifuge_part.json",
+      "canonicalSharedResource": "core/src/main/resources/assets/gregtech/blockstates/centrifuge_part.json",
+      "sha256": "783c29f7a9b02b4d526fc5183df57d3a8aab7e829a9273bac9f4ed0fb7b1acc7",
+      "exactBytes": true
+    },
+    {
+      "removedDuplicate": "neoforge/src/main/resources/assets/gregtech/blockstates/crusher_wheels.json",
+      "canonicalSharedResource": "core/src/main/resources/assets/gregtech/blockstates/crusher_wheels.json",
+      "sha256": "0a97310f2a989720086481343cd352e297db862b39145b006ac676e7180f34dd",
+      "exactBytes": true
+    },
+    {
+      "removedDuplicate": "neoforge/src/main/resources/assets/gregtech/blockstates/crystallisationcrucible_invar.json",
+      "canonicalSharedResource": "core/src/main/resources/assets/gregtech/blockstates/crystallisationcrucible_invar.json",
+      "sha256": "f5949073f405f4ed22e7177e6d0c0090472f20ab00e4193ebca5a099cc3e3a3d",
+      "exactBytes": true
+    },
+    {
+      "removedDuplicate": "neoforge/src/main/resources/assets/gregtech/blockstates/crystallisationcrucible_steel.json",
+      "canonicalSharedResource": "core/src/main/resources/assets/gregtech/blockstates/crystallisationcrucible_steel.json",
+      "sha256": "f5949073f405f4ed22e7177e6d0c0090472f20ab00e4193ebca5a099cc3e3a3d",
+      "exactBytes": true
+    },
+    {
+      "removedDuplicate": "neoforge/src/main/resources/assets/gregtech/blockstates/crystallisationcrucible_titanium.json",
+      "canonicalSharedResource": "core/src/main/resources/assets/gregtech/blockstates/crystallisationcrucible_titanium.json",
+      "sha256": "f5949073f405f4ed22e7177e6d0c0090472f20ab00e4193ebca5a099cc3e3a3d",
+      "exactBytes": true
+    },
+    {
+      "removedDuplicate": "neoforge/src/main/resources/assets/gregtech/blockstates/crystallisationcrucible_tungsten_carbide.json",
+      "canonicalSharedResource": "core/src/main/resources/assets/gregtech/blockstates/crystallisationcrucible_tungsten_carbide.json",
+      "sha256": "f5949073f405f4ed22e7177e6d0c0090472f20ab00e4193ebca5a099cc3e3a3d",
+      "exactBytes": true
+    },
+    {
+      "removedDuplicate": "neoforge/src/main/resources/assets/gregtech/blockstates/electrolyzer_part.json",
+      "canonicalSharedResource": "core/src/main/resources/assets/gregtech/blockstates/electrolyzer_part.json",
+      "sha256": "c64a75caf7110f43da3fe08fdc8ef0e6f82bfccccc5557b1866d7ed1c1c663c5",
+      "exactBytes": true
+    },
+    {
+      "removedDuplicate": "neoforge/src/main/resources/assets/gregtech/blockstates/lightning_rod.json",
+      "canonicalSharedResource": "core/src/main/resources/assets/gregtech/blockstates/lightning_rod.json",
+      "sha256": "fb0b09abcc328cf835f879e2c060d04f4ac17cb19651c4dc78b95e831843d6d9",
+      "exactBytes": true
+    },
+    {
+      "removedDuplicate": "neoforge/src/main/resources/assets/gregtech/blockstates/lightning_rod_electric_output.json",
+      "canonicalSharedResource": "core/src/main/resources/assets/gregtech/blockstates/lightning_rod_electric_output.json",
+      "sha256": "3cd0af1a83b3cdc1bf8f1fee662553da528489dd06bd05d79d61a22d5c69564f",
+      "exactBytes": true
+    },
+    {
+      "removedDuplicate": "neoforge/src/main/resources/assets/gregtech/blockstates/lightning_rod_main.json",
+      "canonicalSharedResource": "core/src/main/resources/assets/gregtech/blockstates/lightning_rod_main.json",
+      "sha256": "f3f58514f49759c939e72ad3647fa6b56f47774c17b954657b2492b824bc60f2",
+      "exactBytes": true
+    },
+    {
+      "removedDuplicate": "neoforge/src/main/resources/assets/gregtech/blockstates/lightning_rod_pillar.json",
+      "canonicalSharedResource": "core/src/main/resources/assets/gregtech/blockstates/lightning_rod_pillar.json",
+      "sha256": "500cc88a7ced21a3091f12d226ba1417b521e5705d915fcb3c0fb90bc6cf32b1",
+      "exactBytes": true
+    },
+    {
+      "removedDuplicate": "neoforge/src/main/resources/assets/gregtech/blockstates/lightning_rod_wall.json",
+      "canonicalSharedResource": "core/src/main/resources/assets/gregtech/blockstates/lightning_rod_wall.json",
+      "sha256": "9454560b12d96de00906fdf50469763a1e0760e8cc132bba3b9a1c880027c12a",
+      "exactBytes": true
+    },
+    {
+      "removedDuplicate": "neoforge/src/main/resources/assets/gregtech/blockstates/logistics_wire.json",
+      "canonicalSharedResource": "core/src/main/resources/assets/gregtech/blockstates/logistics_wire.json",
+      "sha256": "34575b8c7eee6259711be5e95a4955c1801cae9e20b4cf8c7590fa01a40b32b8",
+      "exactBytes": true
+    },
+    {
+      "removedDuplicate": "neoforge/src/main/resources/assets/gregtech/blockstates/shredder_blades.json",
+      "canonicalSharedResource": "core/src/main/resources/assets/gregtech/blockstates/shredder_blades.json",
+      "sha256": "d9ff4090b47eb5d01b5ceb83585d4383d7e545cb1e320e153737ff4e5478fd97",
+      "exactBytes": true
+    },
+    {
+      "removedDuplicate": "neoforge/src/main/resources/assets/gregtech/blockstates/sluice_part.json",
+      "canonicalSharedResource": "core/src/main/resources/assets/gregtech/blockstates/sluice_part.json",
+      "sha256": "71d57ccb1d67e4f1d0fdf47cd0c4e4dc6a869fd8b1fe943dc6a957185c5b5a70",
+      "exactBytes": true
+    },
+    {
+      "removedDuplicate": "neoforge/src/main/resources/assets/gregtech/models/item/foodmold_shape_baguette.json",
+      "canonicalSharedResource": "core/src/main/resources/assets/gregtech/models/item/foodmold_shape_baguette.json",
+      "sha256": "54bef5acbab14cd9801cac2749b387520ff01e75ceb51d367b100deebb845213",
+      "exactBytes": true
+    },
+    {
+      "removedDuplicate": "neoforge/src/main/resources/assets/gregtech/models/item/foodmold_shape_bread.json",
+      "canonicalSharedResource": "core/src/main/resources/assets/gregtech/models/item/foodmold_shape_bread.json",
+      "sha256": "917407859f65bc5c7cfe9a1d0210b228f75ad94284cfd2d71c3d8b6db73931ba",
+      "exactBytes": true
+    },
+    {
+      "removedDuplicate": "neoforge/src/main/resources/assets/gregtech/models/item/foodmold_shape_bun.json",
+      "canonicalSharedResource": "core/src/main/resources/assets/gregtech/models/item/foodmold_shape_bun.json",
+      "sha256": "9b7f16d9cab9713e9a60164e413b2a4ba6e93e938a65d9f70fb40ee00d94b521",
+      "exactBytes": true
+    },
+    {
+      "removedDuplicate": "neoforge/src/main/resources/assets/gregtech/models/item/foodmold_shape_cylinder.json",
+      "canonicalSharedResource": "core/src/main/resources/assets/gregtech/models/item/foodmold_shape_cylinder.json",
+      "sha256": "16196debf91fd24b002380b5ac8ceb8105d57694c355c443863d566f28bc4946",
+      "exactBytes": true
+    },
+    {
+      "removedDuplicate": "neoforge/src/main/resources/assets/gregtech/models/item/foodmold_shape_empty.json",
+      "canonicalSharedResource": "core/src/main/resources/assets/gregtech/models/item/foodmold_shape_empty.json",
+      "sha256": "c410f7ddc2d69abd5cd666805bfe50925627f58794f7461999fd35bc04098481",
+      "exactBytes": true
+    },
+    {
+      "removedDuplicate": "neoforge/src/main/resources/assets/gregtech/models/item/foodmold_shape_toast.json",
+      "canonicalSharedResource": "core/src/main/resources/assets/gregtech/models/item/foodmold_shape_toast.json",
+      "sha256": "eea5381c1bd6283d9e603577b706c29728120325626cb296366ae2648925ffa4",
+      "exactBytes": true
+    },
+    {
+      "removedDuplicate": "neoforge/src/main/resources/assets/gregtech/models/item/fruit_remains.json",
+      "canonicalSharedResource": "core/src/main/resources/assets/gregtech/models/item/fruit_remains.json",
+      "sha256": "a8823d57cf5539ab27aa3b22341b256bb5ac7bd893176ee859f56ec2c7d8a49a",
+      "exactBytes": true
+    },
+    {
+      "removedDuplicate": "neoforge/src/main/resources/assets/gregtech/models/item/nut_remains.json",
+      "canonicalSharedResource": "core/src/main/resources/assets/gregtech/models/item/nut_remains.json",
+      "sha256": "849fc6d0d003a352d42cd05aa7e1ef4f6ec2758b7e58d3ebc800de1ff38ba32a",
+      "exactBytes": true
+    },
+    {
+      "removedDuplicate": "neoforge/src/main/resources/assets/gregtech/models/item/plant_remains.json",
+      "canonicalSharedResource": "core/src/main/resources/assets/gregtech/models/item/plant_remains.json",
+      "sha256": "3d3a6a36d2dff3e58db61347486a6c76273d765f38e4a10b069c9fccbb148524",
+      "exactBytes": true
+    },
+    {
+      "removedDuplicate": "neoforge/src/main/resources/assets/gregtech/models/item/remote_activator.json",
+      "canonicalSharedResource": "core/src/main/resources/assets/gregtech/models/item/remote_activator.json",
+      "sha256": "f287abdd9f03da180f1ebf82ab829d0d612cc46069dba9d5adbe5d6f76315624",
+      "exactBytes": true
+    },
+    {
+      "removedDuplicate": "neoforge/src/main/resources/assets/gregtech/models/item/vegetable_remains.json",
+      "canonicalSharedResource": "core/src/main/resources/assets/gregtech/models/item/vegetable_remains.json",
+      "sha256": "afe356b579926003cd706dc8477a8a8c6c9297e9659e648e7853e1c12fb6b3a1",
+      "exactBytes": true
+    },
+    {
+      "removedDuplicate": "neoforge/src/main/resources/assets/gregtech/models/block/iconsets/logistics_wire.json",
+      "canonicalSharedResource": "core/src/main/resources/assets/gregtech/models/block/iconsets/logistics_wire.json",
+      "sha256": "caf56b043f8aba32fe3c8e4b5b61902eb33b819f21ee3030c045ba2279ddbf33",
+      "exactBytes": true
+    }
+  ]
+}

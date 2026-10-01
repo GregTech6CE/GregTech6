@@ -1,0 +1,638 @@
+{
+  "stage": "P3 D010 fast source integration",
+  "baseline": "d10ac0115a5860da03a577af568977e3f34bfc94",
+  "authors": [
+    "saltnya",
+    "brokestar233",
+    "Lorbineitte Masson",
+    "original GregTech 6 contributors"
+  ],
+  "license": "Original notices/licenses and obtainable histories preserved; no relicensing/publication.",
+  "files": [
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoreLayout.java",
+      "sha256": "c482e1a1dcbbdf7d7221f93b7f7734b6eeee154420501b82b0ea4d4d4d039524",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\logistics\\LogisticsCoreStructure.java",
+          "sha256": "30dedb0e6cedf67ca60e01da321dd950de7f3739b8092bc5ec548439279f587a",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "full original actual controller, shared domain primitive or native world/registry/NBT/capability/component boundary",
+      "previousTargetSha256": "5ec2e387237d7b1168a1d0d9c1281aed99622ce25533e9ec612944bcd0bfa348"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/machine/BasicMachineRegistries.java",
+      "sha256": "167db33ee5281559fc8bbbd72a9e30a6be6a5b25f47bde3d3d0fdde0da719014",
+      "sources": [],
+      "adaptation": "full original actual controller, shared domain primitive or native world/registry/NBT/capability/component boundary",
+      "previousTargetSha256": "1ea184dd78d11085e6e30b43e718bf60e70b6e8bb4602ea9989be18c3d76955e"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "sha256": "1c6326495271848f102aefd7bd54d4b991e3cf07c63735b5cf03b527757a6661",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTBlockEntities.java",
+          "sha256": "027081bae34480826956a74d65a24aa7f4ef29d4be4a4687046793a10d9df62f",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "full original actual controller, shared domain primitive or native world/registry/NBT/capability/component boundary",
+      "previousTargetSha256": "8db419611a86dfd1842732c8b65682656781179705af54ae3b9bc62631bdb3b8"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTMultiblocks.java",
+      "sha256": "a9dbb251f3282db28cd957dea67c534ba12707725a08a6b07c62011056fd4c98",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTMultiblocks.java",
+          "sha256": "a0f056e6ba6c0b0a9e524795e5eae17e3a9591916770456be13fba10f24e45c8",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "full original actual controller, shared domain primitive or native world/registry/NBT/capability/component boundary",
+      "previousTargetSha256": "ded1a725a2cef40d052dccef3df915a7b19e21e4f784ce87338f567c448e188f"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/blockentity/machine/BedrockDrillControllerBlockEntity.java",
+      "sha256": "694bf7add72dbef99fc249459fd5bf0b739602d50d8cc5a8037963decd68916a",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\BedrockDrillControllerBlockEntity.java",
+          "sha256": "2695a8ad9e9cf057a6aad350c76f5122693902a0affa0fdd6dcc3cc8b8dea217",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "full original actual controller, shared domain primitive or native world/registry/NBT/capability/component boundary",
+      "previousTargetSha256": "2695a8ad9e9cf057a6aad350c76f5122693902a0affa0fdd6dcc3cc8b8dea217"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/blockentity/machine/LargeBoilerControllerBlockEntity.java",
+      "sha256": "b5ae37e7b2875e9360cc36a1e3ab36ebb68b0086b3487780887a0dd03b8033ce",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeBoilerControllerBlockEntity.java",
+          "sha256": "53246e010c35460708d153bdc3915db8e16b4b48dd7e61da264481aa8b246b35",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "full original actual controller, shared domain primitive or native world/registry/NBT/capability/component boundary",
+      "previousTargetSha256": "53246e010c35460708d153bdc3915db8e16b4b48dd7e61da264481aa8b246b35"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/blockentity/machine/LightningRodControllerBlockEntity.java",
+      "sha256": "3339076572d31a49cbb647925e7ea34195682b5a34447b42479446b12a0bc3b9",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LightningRodControllerBlockEntity.java",
+          "sha256": "0c1cf0a339ef06bf7d1e8ec1079e82bbeb40fcd65599973a93cdc82bdba77518",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "full original actual controller, shared domain primitive or native world/registry/NBT/capability/component boundary",
+      "previousTargetSha256": "0c1cf0a339ef06bf7d1e8ec1079e82bbeb40fcd65599973a93cdc82bdba77518"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/blockentity/machine/LogisticsCoreControllerBlockEntity.java",
+      "sha256": "824bf30bc9ea381e12dada2034c68f92d8ee846ff2c68364ffc8c51c70b96e6a",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LogisticsCoreControllerBlockEntity.java",
+          "sha256": "1ba2cd183682f2f905f7cdddd894dfc38b7b59b8640a309873638714faca5562",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "full original actual controller, shared domain primitive or native world/registry/NBT/capability/component boundary",
+      "previousTargetSha256": "1ba2cd183682f2f905f7cdddd894dfc38b7b59b8640a309873638714faca5562"
+    },
+    {
+      "target": "src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoreStructure.java",
+      "sha256": "e8e5bbd8d502184ba5d93a485562f30b3230cfe7586b8ba382988bb680da80ff",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\logistics\\LogisticsCoreStructure.java",
+          "sha256": "30dedb0e6cedf67ca60e01da321dd950de7f3739b8092bc5ec548439279f587a",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "full original actual controller, shared domain primitive or native world/registry/NBT/capability/component boundary",
+      "previousTargetSha256": "5a7408c44ebca7263e751c8e372f8df7220e0cedc66f52f8b8f9ac46084301b2"
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCorePowerRules.java",
+      "sha256": "092465042f50c32024c715e95fed48e16abd1347e0a96a8bbe388543a1f8e749",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LogisticsCoreControllerBlockEntity.java",
+          "sha256": "1ba2cd183682f2f905f7cdddd894dfc38b7b59b8640a309873638714faca5562",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "full original actual controller, shared domain primitive or native world/registry/NBT/capability/component boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/multiblock/AdvancedControllerRules.java",
+      "sha256": "5bccebaf263d5f508e8de24ba9d06930bb98586593886397d1bdb35a99b7eee6",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\BedrockDrillControllerBlockEntity.java",
+          "sha256": "2695a8ad9e9cf057a6aad350c76f5122693902a0affa0fdd6dcc3cc8b8dea217",
+          "authors": "saltnya / original GregTech 6 contributors"
+        },
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LightningRodControllerBlockEntity.java",
+          "sha256": "0c1cf0a339ef06bf7d1e8ec1079e82bbeb40fcd65599973a93cdc82bdba77518",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "full original actual controller, shared domain primitive or native world/registry/NBT/capability/component boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "core/src/main/java/com/gregtech/gregtech/content/multiblock/LegacyBoilerProcessing.java",
+      "sha256": "15915d8e4be1dbef103d82b581543b67e0f06be6637a6cca930e4297d621ff93",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeBoilerControllerBlockEntity.java",
+          "sha256": "53246e010c35460708d153bdc3915db8e16b4b48dd7e61da264481aa8b246b35",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "full original actual controller, shared domain primitive or native world/registry/NBT/capability/component boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/machine/BedrockDrillControllerBlock.java",
+      "sha256": "b941533a1707b913980d510b1eb2c1398536d022e9fa6684d8739f69dc276c87",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\BedrockDrillControllerBlock.java",
+          "sha256": "d3426f96f25b6a07701722df6d219de69e17944728d0a6a5bdbac0e64c23c4c8",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "full original actual controller, shared domain primitive or native world/registry/NBT/capability/component boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/machine/LargeBoilerControllerBlock.java",
+      "sha256": "f7c0a25e8b5dca4b06eef1685ad037aa82407b102adc0a182c914e3434d195f1",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\LargeBoilerControllerBlock.java",
+          "sha256": "d5d2c503f3e31cd0c118d8db9436c3e531e526caa55f07523690afd3034bfbb9",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "full original actual controller, shared domain primitive or native world/registry/NBT/capability/component boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/machine/LightningRodControllerBlock.java",
+      "sha256": "50019323e2ed58cfb8081b4c2e19067dfbafeab38fffe4fcb75765a42755e2b9",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\LightningRodControllerBlock.java",
+          "sha256": "c6915d220dcc4d38b5d3f013137b67fa29724f00d2545d3ce91af116cc6c26f5",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "full original actual controller, shared domain primitive or native world/registry/NBT/capability/component boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/machine/LogisticsCoreControllerBlock.java",
+      "sha256": "cf809665b5383738122b8747fb2001b5ae5a171b2c2b402f85b86733f7bf51e7",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\LogisticsCoreControllerBlock.java",
+          "sha256": "4b608d2a7c01f486f0d9511ff581b292726450eb30977ed36ffa267e50aaa587",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "full original actual controller, shared domain primitive or native world/registry/NBT/capability/component boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/machine/OriginalBedrockDrillControllerBlock.java",
+      "sha256": "5e697d4e7a8a9e916c51106ffd91dcf9387ad4640865d10a01ac1e4c2eb42d78",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\OriginalBedrockDrillControllerBlock.java",
+          "sha256": "1625091a757cf6de55df9c0aacf69537b501059969ebc62f623cd0311578db6a",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "full original actual controller, shared domain primitive or native world/registry/NBT/capability/component boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/machine/OriginalLightningRodControllerBlock.java",
+      "sha256": "8e6bd056ad9bbb98706c50b0250688586784d94b41463bb62f1f2f7b0f097d90",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\OriginalLightningRodControllerBlock.java",
+          "sha256": "5a68e1860042f102596fd83474103a028f170470e7daaf1a19230c8773e883ce",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "full original actual controller, shared domain primitive or native world/registry/NBT/capability/component boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/BedrockDrillControllerBlockEntity.java",
+      "sha256": "66e536686e403cd2373a6da2766bee983c3a7b59fd41d3ef44d76327f6006339",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\BedrockDrillControllerBlockEntity.java",
+          "sha256": "2695a8ad9e9cf057a6aad350c76f5122693902a0affa0fdd6dcc3cc8b8dea217",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "full original actual controller, shared domain primitive or native world/registry/NBT/capability/component boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/LargeBoilerControllerBlockEntity.java",
+      "sha256": "6e17754b8d044cf7b6c1f1866186101a1ab048206eaead68e75fc2a42b959823",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeBoilerControllerBlockEntity.java",
+          "sha256": "53246e010c35460708d153bdc3915db8e16b4b48dd7e61da264481aa8b246b35",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "full original actual controller, shared domain primitive or native world/registry/NBT/capability/component boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/LightningRodControllerBlockEntity.java",
+      "sha256": "7d69e9056fa4c2dc74b3316c0f3ad8ca679bb56f645b87de7567a2066a8930b3",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LightningRodControllerBlockEntity.java",
+          "sha256": "0c1cf0a339ef06bf7d1e8ec1079e82bbeb40fcd65599973a93cdc82bdba77518",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "full original actual controller, shared domain primitive or native world/registry/NBT/capability/component boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/LogisticsCoreControllerBlockEntity.java",
+      "sha256": "3558873cd8dee78431b0dc5f348868b36aaa15339ba6fce4f0966667f2e39e13",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LogisticsCoreControllerBlockEntity.java",
+          "sha256": "1ba2cd183682f2f905f7cdddd894dfc38b7b59b8640a309873638714faca5562",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "full original actual controller, shared domain primitive or native world/registry/NBT/capability/component boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoreStructure.java",
+      "sha256": "e8e5bbd8d502184ba5d93a485562f30b3230cfe7586b8ba382988bb680da80ff",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\logistics\\LogisticsCoreStructure.java",
+          "sha256": "30dedb0e6cedf67ca60e01da321dd950de7f3739b8092bc5ec548439279f587a",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "full original actual controller, shared domain primitive or native world/registry/NBT/capability/component boundary",
+      "previousTargetSha256": null
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/content/multiblock/BoilerStructure.java",
+      "sha256": "2c3208c4d0a00e7e0f976e6c3efb0e3c5f1862cb919137ec688f4ba6965a4b19",
+      "sources": [
+        {
+          "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\BoilerStructure.java",
+          "sha256": "b85b94fa4b6871adc1570d926d2734fbbe91e92103aaf718d1d54ef8b374e759",
+          "authors": "saltnya / original GregTech 6 contributors"
+        }
+      ],
+      "adaptation": "full original actual controller, shared domain primitive or native world/registry/NBT/capability/component boundary",
+      "previousTargetSha256": null
+    }
+  ],
+  "resources": [
+    {
+      "source": "assets/gregtech/blockstates/bedrock_drill_main.json",
+      "source_sha256": "aa6058491acea729a8fcc1ccd7d5e83a7e59ce008db8317815d127d46c2ea08b",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/bedrock_drill_main.json",
+      "target_sha256": "aa6058491acea729a8fcc1ccd7d5e83a7e59ce008db8317815d127d46c2ea08b",
+      "kind": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\bedrock_drill_main.json",
+      "originalSnapshotSha256": "aa6058491acea729a8fcc1ccd7d5e83a7e59ce008db8317815d127d46c2ea08b"
+    },
+    {
+      "source": "assets/gregtech/blockstates/bedrock_drill_wall.json",
+      "source_sha256": "8e0567be255c2d8e788fd60df84988533849c3234707d04172fc129bf7a156dc",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/bedrock_drill_wall.json",
+      "target_sha256": "8e0567be255c2d8e788fd60df84988533849c3234707d04172fc129bf7a156dc",
+      "kind": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\bedrock_drill_wall.json",
+      "originalSnapshotSha256": "8e0567be255c2d8e788fd60df84988533849c3234707d04172fc129bf7a156dc"
+    },
+    {
+      "source": "assets/gregtech/blockstates/boiler_wall.json",
+      "source_sha256": "8668bfff8b48f507fda3952f557c89767b04e1985e78476b85811a0cdad7d1a2",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/boiler_wall.json",
+      "target_sha256": "8668bfff8b48f507fda3952f557c89767b04e1985e78476b85811a0cdad7d1a2",
+      "kind": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\boiler_wall.json",
+      "originalSnapshotSha256": "8668bfff8b48f507fda3952f557c89767b04e1985e78476b85811a0cdad7d1a2"
+    },
+    {
+      "source": "assets/gregtech/blockstates/large_boiler_main.json",
+      "source_sha256": "9212b91707f46071ae8452dd9185507faed232b64d830283493f64f8db3c1e33",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/large_boiler_main.json",
+      "target_sha256": "9212b91707f46071ae8452dd9185507faed232b64d830283493f64f8db3c1e33",
+      "kind": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\large_boiler_main.json",
+      "originalSnapshotSha256": "9212b91707f46071ae8452dd9185507faed232b64d830283493f64f8db3c1e33"
+    },
+    {
+      "source": "assets/gregtech/blockstates/lightning_rod_main.json",
+      "source_sha256": "f3f58514f49759c939e72ad3647fa6b56f47774c17b954657b2492b824bc60f2",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/lightning_rod_main.json",
+      "target_sha256": "f3f58514f49759c939e72ad3647fa6b56f47774c17b954657b2492b824bc60f2",
+      "kind": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\lightning_rod_main.json",
+      "originalSnapshotSha256": "f3f58514f49759c939e72ad3647fa6b56f47774c17b954657b2492b824bc60f2"
+    },
+    {
+      "source": "assets/gregtech/blockstates/lightning_rod_pillar.json",
+      "source_sha256": "500cc88a7ced21a3091f12d226ba1417b521e5705d915fcb3c0fb90bc6cf32b1",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/lightning_rod_pillar.json",
+      "target_sha256": "500cc88a7ced21a3091f12d226ba1417b521e5705d915fcb3c0fb90bc6cf32b1",
+      "kind": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\lightning_rod_pillar.json",
+      "originalSnapshotSha256": "500cc88a7ced21a3091f12d226ba1417b521e5705d915fcb3c0fb90bc6cf32b1"
+    },
+    {
+      "source": "assets/gregtech/blockstates/lightning_rod_wall.json",
+      "source_sha256": "9454560b12d96de00906fdf50469763a1e0760e8cc132bba3b9a1c880027c12a",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/lightning_rod_wall.json",
+      "target_sha256": "9454560b12d96de00906fdf50469763a1e0760e8cc132bba3b9a1c880027c12a",
+      "kind": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\lightning_rod_wall.json",
+      "originalSnapshotSha256": "9454560b12d96de00906fdf50469763a1e0760e8cc132bba3b9a1c880027c12a"
+    },
+    {
+      "source": "assets/gregtech/blockstates/logistics_core.json",
+      "source_sha256": "c63ee7753a0e907794df4dca6266791e40725e21aa34aa14c35066760da36507",
+      "target": "core/src/main/resources/assets/gregtech/blockstates/logistics_core.json",
+      "target_sha256": "c63ee7753a0e907794df4dca6266791e40725e21aa34aa14c35066760da36507",
+      "kind": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\blockstates\\logistics_core.json",
+      "originalSnapshotSha256": "c63ee7753a0e907794df4dca6266791e40725e21aa34aa14c35066760da36507"
+    },
+    {
+      "source": "assets/gregtech/models/item/bedrock_drill_main.json",
+      "source_sha256": "64f1c6cc065789787404c3c66e56048eb0237cdacf29b0416f3bc4e22ce27fa2",
+      "target": "core/src/main/resources/assets/gregtech/models/item/bedrock_drill_main.json",
+      "target_sha256": "64f1c6cc065789787404c3c66e56048eb0237cdacf29b0416f3bc4e22ce27fa2",
+      "kind": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\bedrock_drill_main.json",
+      "originalSnapshotSha256": "64f1c6cc065789787404c3c66e56048eb0237cdacf29b0416f3bc4e22ce27fa2"
+    },
+    {
+      "source": "assets/gregtech/models/item/bedrock_drill_wall.json",
+      "source_sha256": "d8368a206fe2a9a1c3191ea78ca6c737e81663b19458b82ea660891648996213",
+      "target": "core/src/main/resources/assets/gregtech/models/item/bedrock_drill_wall.json",
+      "target_sha256": "d8368a206fe2a9a1c3191ea78ca6c737e81663b19458b82ea660891648996213",
+      "kind": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\bedrock_drill_wall.json",
+      "originalSnapshotSha256": "d8368a206fe2a9a1c3191ea78ca6c737e81663b19458b82ea660891648996213"
+    },
+    {
+      "source": "assets/gregtech/models/item/boiler_wall.json",
+      "source_sha256": "a73454e9179b4656bca92529886c5aff9225385019e95c65296ca19dcb1d409d",
+      "target": "core/src/main/resources/assets/gregtech/models/item/boiler_wall.json",
+      "target_sha256": "a73454e9179b4656bca92529886c5aff9225385019e95c65296ca19dcb1d409d",
+      "kind": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\boiler_wall.json",
+      "originalSnapshotSha256": "a73454e9179b4656bca92529886c5aff9225385019e95c65296ca19dcb1d409d"
+    },
+    {
+      "source": "assets/gregtech/models/item/large_boiler_main.json",
+      "source_sha256": "fb5612eb8f08cb63164adcce5598b2cc8612c05f9bd1565fd6ad1e3491e7445d",
+      "target": "core/src/main/resources/assets/gregtech/models/item/large_boiler_main.json",
+      "target_sha256": "fb5612eb8f08cb63164adcce5598b2cc8612c05f9bd1565fd6ad1e3491e7445d",
+      "kind": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\large_boiler_main.json",
+      "originalSnapshotSha256": "fb5612eb8f08cb63164adcce5598b2cc8612c05f9bd1565fd6ad1e3491e7445d"
+    },
+    {
+      "source": "assets/gregtech/models/item/lightning_rod_main.json",
+      "source_sha256": "925ee11f08072a4c7f57e033d90209f95e9a0a700f4b0013f648fd0be473755c",
+      "target": "core/src/main/resources/assets/gregtech/models/item/lightning_rod_main.json",
+      "target_sha256": "925ee11f08072a4c7f57e033d90209f95e9a0a700f4b0013f648fd0be473755c",
+      "kind": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\lightning_rod_main.json",
+      "originalSnapshotSha256": "925ee11f08072a4c7f57e033d90209f95e9a0a700f4b0013f648fd0be473755c"
+    },
+    {
+      "source": "assets/gregtech/models/item/lightning_rod_pillar.json",
+      "source_sha256": "f1a91fae03fab4cf2b87303f3d777b0cdd032a64369dedf188c3397ba4c1cbb2",
+      "target": "core/src/main/resources/assets/gregtech/models/item/lightning_rod_pillar.json",
+      "target_sha256": "f1a91fae03fab4cf2b87303f3d777b0cdd032a64369dedf188c3397ba4c1cbb2",
+      "kind": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\lightning_rod_pillar.json",
+      "originalSnapshotSha256": "f1a91fae03fab4cf2b87303f3d777b0cdd032a64369dedf188c3397ba4c1cbb2"
+    },
+    {
+      "source": "assets/gregtech/models/item/lightning_rod_wall.json",
+      "source_sha256": "87efc365175adbd3e6490b84dec59e23fc91a37a559bccef073fb17fdc24d201",
+      "target": "core/src/main/resources/assets/gregtech/models/item/lightning_rod_wall.json",
+      "target_sha256": "87efc365175adbd3e6490b84dec59e23fc91a37a559bccef073fb17fdc24d201",
+      "kind": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\lightning_rod_wall.json",
+      "originalSnapshotSha256": "87efc365175adbd3e6490b84dec59e23fc91a37a559bccef073fb17fdc24d201"
+    },
+    {
+      "source": "assets/gregtech/models/item/logistics_core.json",
+      "source_sha256": "945452bc4476d8dff386ffb6af29e905321011af4b132f0a5c044fcb8f9559b7",
+      "target": "core/src/main/resources/assets/gregtech/models/item/logistics_core.json",
+      "target_sha256": "945452bc4476d8dff386ffb6af29e905321011af4b132f0a5c044fcb8f9559b7",
+      "kind": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\item\\logistics_core.json",
+      "originalSnapshotSha256": "945452bc4476d8dff386ffb6af29e905321011af4b132f0a5c044fcb8f9559b7"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/bedrock_drill_main.json",
+      "source_sha256": "d173d7b12d0d484c98d3ecb9b0ba1d60b1ba98e09aa1e831d8a435ee16df9be2",
+      "target": "core/src/main/resources/assets/gregtech/models/block/machine/bedrock_drill_main.json",
+      "target_sha256": "d173d7b12d0d484c98d3ecb9b0ba1d60b1ba98e09aa1e831d8a435ee16df9be2",
+      "kind": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\bedrock_drill_main.json",
+      "originalSnapshotSha256": "d173d7b12d0d484c98d3ecb9b0ba1d60b1ba98e09aa1e831d8a435ee16df9be2"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/bedrock_drill_wall.json",
+      "source_sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/machine/bedrock_drill_wall.json",
+      "target_sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "kind": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\bedrock_drill_wall.json",
+      "originalSnapshotSha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/lightning_rod_main.json",
+      "source_sha256": "d173d7b12d0d484c98d3ecb9b0ba1d60b1ba98e09aa1e831d8a435ee16df9be2",
+      "target": "core/src/main/resources/assets/gregtech/models/block/machine/lightning_rod_main.json",
+      "target_sha256": "d173d7b12d0d484c98d3ecb9b0ba1d60b1ba98e09aa1e831d8a435ee16df9be2",
+      "kind": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\lightning_rod_main.json",
+      "originalSnapshotSha256": "d173d7b12d0d484c98d3ecb9b0ba1d60b1ba98e09aa1e831d8a435ee16df9be2"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/lightning_rod_wall.json",
+      "source_sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "target": "core/src/main/resources/assets/gregtech/models/block/machine/lightning_rod_wall.json",
+      "target_sha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd",
+      "kind": "shared original bytes",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\lightning_rod_wall.json",
+      "originalSnapshotSha256": "65a5f2161033f26cb4cc4e4502a402651650a1209a8f65e41458984ba14acefd"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/logistics_core.json",
+      "source_sha256": "72c2da1f6a944d7788400b270fb06d9e14715895fae9b50022404cbd8a00bee5",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/logistics_core.json",
+      "target_sha256": "921805d6fb21ff0e0b1d70147be996bde95a96eda331fad3fd26a69e91518b76",
+      "kind": "native composite loader boundary",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\logistics_core.json",
+      "originalSnapshotSha256": "72c2da1f6a944d7788400b270fb06d9e14715895fae9b50022404cbd8a00bee5"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/multiblock/bedrock_drill_main.json",
+      "source_sha256": "1aea95b1e66dbfec5a9e2da891f54a1e3acb04bcca92bd3092f96b39991c5402",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/multiblock/bedrock_drill_main.json",
+      "target_sha256": "163e423403971f1ca27b28aceb064615dab00bd2b7a61133733d4cc1d6f2e620",
+      "kind": "native composite loader boundary",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\multiblock\\bedrock_drill_main.json",
+      "originalSnapshotSha256": "1aea95b1e66dbfec5a9e2da891f54a1e3acb04bcca92bd3092f96b39991c5402"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/multiblock/bedrock_drill_wall.json",
+      "source_sha256": "eb6dfca2e9ea2d840efe915d7fd10639f01c1792fffa6a4c6af54ce5e7f1010c",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/multiblock/bedrock_drill_wall.json",
+      "target_sha256": "4b38300d20cb6bf10f06339fcf011340cfa3132a6bcc55c264a1bbe2912d29e2",
+      "kind": "native composite loader boundary",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\multiblock\\bedrock_drill_wall.json",
+      "originalSnapshotSha256": "eb6dfca2e9ea2d840efe915d7fd10639f01c1792fffa6a4c6af54ce5e7f1010c"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/multiblock/bedrock_mining_drill_controller.json",
+      "source_sha256": "e5c230353304f4195e018d96583e4f210c91c033b015d3b61bbbd904a4088c71",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/multiblock/bedrock_mining_drill_controller.json",
+      "target_sha256": "632cbb793a4999551a28c62739062fe9656f10b92a21d39b7ce347ab270f78a1",
+      "kind": "native composite loader boundary",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\multiblock\\bedrock_mining_drill_controller.json",
+      "originalSnapshotSha256": "e5c230353304f4195e018d96583e4f210c91c033b015d3b61bbbd904a4088c71"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/multiblock/bedrock_mining_drill_head.json",
+      "source_sha256": "e5c230353304f4195e018d96583e4f210c91c033b015d3b61bbbd904a4088c71",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/multiblock/bedrock_mining_drill_head.json",
+      "target_sha256": "632cbb793a4999551a28c62739062fe9656f10b92a21d39b7ce347ab270f78a1",
+      "kind": "native composite loader boundary",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\multiblock\\bedrock_mining_drill_head.json",
+      "originalSnapshotSha256": "e5c230353304f4195e018d96583e4f210c91c033b015d3b61bbbd904a4088c71"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/multiblock/boiler_wall.json",
+      "source_sha256": "c66451256f4da2e3245dac06b3e253253c4d89f970f37222dc4447864a54bc96",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/multiblock/boiler_wall.json",
+      "target_sha256": "8aed5e45328c8a6ccc7397ae595072e03a0d0ee632165f24146601961154219e",
+      "kind": "native composite loader boundary",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\multiblock\\boiler_wall.json",
+      "originalSnapshotSha256": "c66451256f4da2e3245dac06b3e253253c4d89f970f37222dc4447864a54bc96"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/multiblock/large_boiler_main.json",
+      "source_sha256": "62a6b948c1203e6ac80a8e0d45b7d20c29b869dc47af3789cf99d74404a24dba",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/multiblock/large_boiler_main.json",
+      "target_sha256": "92f42a2cc9c88358ebf525c9c06881d44a27606c14e9db62b0fce61c1ff95bbd",
+      "kind": "native composite loader boundary",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\multiblock\\large_boiler_main.json",
+      "originalSnapshotSha256": "62a6b948c1203e6ac80a8e0d45b7d20c29b869dc47af3789cf99d74404a24dba"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/multiblock/lightning_rod.json",
+      "source_sha256": "3471245f2d4c92a0d61f95f4fe49b9bbcc512a3469bb1a0ce81efec3f9b99e1b",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/multiblock/lightning_rod.json",
+      "target_sha256": "a6a81f9d08845038cadc143ee1820ac7cb606c25829808ddd7c5b2a114148a8e",
+      "kind": "native composite loader boundary",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\multiblock\\lightning_rod.json",
+      "originalSnapshotSha256": "3471245f2d4c92a0d61f95f4fe49b9bbcc512a3469bb1a0ce81efec3f9b99e1b"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/multiblock/lightning_rod_electric_output.json",
+      "source_sha256": "3471245f2d4c92a0d61f95f4fe49b9bbcc512a3469bb1a0ce81efec3f9b99e1b",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/multiblock/lightning_rod_electric_output.json",
+      "target_sha256": "a6a81f9d08845038cadc143ee1820ac7cb606c25829808ddd7c5b2a114148a8e",
+      "kind": "native composite loader boundary",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\multiblock\\lightning_rod_electric_output.json",
+      "originalSnapshotSha256": "3471245f2d4c92a0d61f95f4fe49b9bbcc512a3469bb1a0ce81efec3f9b99e1b"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/multiblock/lightning_rod_main.json",
+      "source_sha256": "3471245f2d4c92a0d61f95f4fe49b9bbcc512a3469bb1a0ce81efec3f9b99e1b",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/multiblock/lightning_rod_main.json",
+      "target_sha256": "a6a81f9d08845038cadc143ee1820ac7cb606c25829808ddd7c5b2a114148a8e",
+      "kind": "native composite loader boundary",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\multiblock\\lightning_rod_main.json",
+      "originalSnapshotSha256": "3471245f2d4c92a0d61f95f4fe49b9bbcc512a3469bb1a0ce81efec3f9b99e1b"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/multiblock/lightning_rod_pillar.json",
+      "source_sha256": "16c99a033d653e81aa62f63938630a13b48d610049bef865beddecc93b8b69e6",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/multiblock/lightning_rod_pillar.json",
+      "target_sha256": "510c028b50d9adb2e81cae9937590f9694e12db3d90e44fa4a080be5f8ef6b8d",
+      "kind": "native composite loader boundary",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\multiblock\\lightning_rod_pillar.json",
+      "originalSnapshotSha256": "16c99a033d653e81aa62f63938630a13b48d610049bef865beddecc93b8b69e6"
+    },
+    {
+      "source": "assets/gregtech/models/block/machine/multiblock/lightning_rod_wall.json",
+      "source_sha256": "c66451256f4da2e3245dac06b3e253253c4d89f970f37222dc4447864a54bc96",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/multiblock/lightning_rod_wall.json",
+      "target_sha256": "8aed5e45328c8a6ccc7397ae595072e03a0d0ee632165f24146601961154219e",
+      "kind": "native composite loader boundary",
+      "originalSnapshotPath": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\multiblock\\lightning_rod_wall.json",
+      "originalSnapshotSha256": "c66451256f4da2e3245dac06b3e253253c4d89f970f37222dc4447864a54bc96"
+    }
+  ],
+  "counts": {
+    "logisticsCoreController": 1,
+    "logisticsCubeCellsExcludingController": 124,
+    "logisticsBufferSlots": 108,
+    "logisticsBufferTanks": 108,
+    "logisticsBufferTankCapacity": 16000,
+    "legacyLargeBoiler": 1,
+    "bedrockDrillOriginalAndAlias": 2,
+    "lightningRodOriginalAndAlias": 2,
+    "newStructuralAliases": 4
+  },
+  "choice": "Retain full original logistics core, legacy boiler and original drilling/lightning execution using the existing shared material/recipe/precision/energy contracts, native capabilities and actual original parts. Share CPU contribution/power injection, legacy boil plan, drill role/work and lightning discharge rules. Prior brokestar weighted routing and masson loaded/actual-reception integration remain intact; no additional routing/material registry.",
+  "validation": "Necessary grouped core/Neo/Forge compile PASS20s on first invocation. No startup/new fixture this wave; previous ordinary crucible startup does not cover these controllers.",
+  "knownGaps": [
+    "actual registrations and manufacturing load await next grouped ordinary Neo startup",
+    "logistics full geometry/atomic binding/network routes/CPU displays/over-voltage/buffer persistence gameplay unverified",
+    "baseline source allocates private buffers but its shown routing path does not consume them; storage CPU usage remains zero by source policy, not claimed as completed buffering gameplay",
+    "legacy boiler uses source 200 steam/water ratio; original rated boilers use distinct source160 ratio and retained IDs",
+    "legacy steam output follows source actual fill return; dynamic-handler exception/conservation behavior unverified",
+    "source lightning drains at least one packet with no receiver and resets on incomplete structure; intentional baseline preserved, unverified",
+    "drilling deposited ore weights/byproducts/hosted broken ores/RU/lubricant/above-slot transfer/components and hazards unverified",
+    "world client renders/Forge runtime/independent restart/old saves/fresh jars unverified",
+    "remaining smeltery/fuel/nuclear/crops/bees/interfaces and original systems pending"
+  ]
+}

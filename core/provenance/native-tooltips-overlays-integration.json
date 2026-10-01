@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-01",
+  "policy": "D011 existing Forge baseline parity; D010 grouped compile/one existing ordinary dedicated startup, no new fixture and no repeated client.",
+  "authors": [
+    "saltnya",
+    "original GregTech6 contributors"
+  ],
+  "license": "Original authors/history/notices retained. Donor trees unchanged and no license reassigned.",
+  "counts": {
+    "javaRecords": 13,
+    "newNativeClasses": 10,
+    "materialAndBlockCallbacks": 2,
+    "pressureSpritesReused": 33
+  },
+  "files": [
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/MaterialTooltips.java",
+      "sha256": "5b7037cc15747c245759f23386398c0138a4c875b3171ee83647d471f0d5918a",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/client/MaterialTooltips.java",
+      "currentForgeReferenceSha256": "53c21dfa3e5991b74543c3ed38ad5caa0b54da64a39f240c98768513eb5762af",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\MaterialTooltips.java",
+      "sourceSha256": "a2075c78eaeebe8e0cd769a0b55f35f82bd6897fdaba548288108d9cfafb2fc5"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/MaterialTooltipHandler.java",
+      "sha256": "9d0a3ef0e293b0f472dc19c000ca06da1b450c97c6bf8e4c2ffd2f40ec2d4d7b",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/client/MaterialTooltipHandler.java",
+      "currentForgeReferenceSha256": "40abe26f0782a57bfc6b88d2a8c515ca9db5e1ed8110e3549bfdcbcc0fda665d",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\MaterialTooltipHandler.java",
+      "sourceSha256": "40abe26f0782a57bfc6b88d2a8c515ca9db5e1ed8110e3549bfdcbcc0fda665d"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/GTRenderHelper.java",
+      "sha256": "aec2e818f1c7e2738348914425fe04608a4fbefc8a2915293f0da828d8778728",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/client/GTRenderHelper.java",
+      "currentForgeReferenceSha256": "0223a5caadb65d982d736c330d747a69803ce063ab81df11ccac3918223800cc",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\GTRenderHelper.java",
+      "sourceSha256": "0223a5caadb65d982d736c330d747a69803ce063ab81df11ccac3918223800cc"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/GTWrenchOverlay.java",
+      "sha256": "a67e53d4c6ef87446142b4f34da910a6766934ae09d12215d12496c5a4d25071",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/client/GTWrenchOverlay.java",
+      "currentForgeReferenceSha256": "a67e53d4c6ef87446142b4f34da910a6766934ae09d12215d12496c5a4d25071",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\GTWrenchOverlay.java",
+      "sourceSha256": "a67e53d4c6ef87446142b4f34da910a6766934ae09d12215d12496c5a4d25071"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/ToolFaceOverlay.java",
+      "sha256": "60add39efe67dd849f5fff33540837a10960cb7a986a3d612ac26611ba52ad65",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/client/ToolFaceOverlay.java",
+      "currentForgeReferenceSha256": "60add39efe67dd849f5fff33540837a10960cb7a986a3d612ac26611ba52ad65",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\ToolFaceOverlay.java",
+      "sourceSha256": "60add39efe67dd849f5fff33540837a10960cb7a986a3d612ac26611ba52ad65"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/SlabPlacementOverlayRenderer.java",
+      "sha256": "50596b452f28228f152e5e6e048d8423050e6d97ed001e8e0bd58096a119f59e",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/client/SlabPlacementOverlayRenderer.java",
+      "currentForgeReferenceSha256": "5001c383a8950f80d717a60b64c517ac32ac27a35ebfef3d15b2586080a093b6",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\SlabPlacementOverlayRenderer.java",
+      "sourceSha256": "5001c383a8950f80d717a60b64c517ac32ac27a35ebfef3d15b2586080a093b6"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/recipe/ShapelessRecipeTooltipIndex.java",
+      "sha256": "b85f08dec58aab1e7fe1af4ec257ec7de5f2c2ec67546022bae8032d38588d6a",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/recipe/ShapelessRecipeTooltipIndex.java",
+      "currentForgeReferenceSha256": "f0106a233a5ceb2a451cbb73d580f4f9b7aed143f402b928932fbbe809145077",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\recipe\\ShapelessRecipeTooltipIndex.java",
+      "sourceSha256": "f0106a233a5ceb2a451cbb73d580f4f9b7aed143f402b928932fbbe809145077"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/recipe/ShapelessRecipeTooltipIndexLoader.java",
+      "sha256": "dcdbedbcf8406f3bc81fe5fa4f1c66613e06a6d97db271e59c6e06be822d2a3f",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/recipe/ShapelessRecipeTooltipIndexLoader.java",
+      "currentForgeReferenceSha256": "0873a3b8ef13a1821ddfc43f1c4d40f3e38013a7f10dbd566b120a8fecf51b66",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\recipe\\ShapelessRecipeTooltipIndexLoader.java",
+      "sourceSha256": "0873a3b8ef13a1821ddfc43f1c4d40f3e38013a7f10dbd566b120a8fecf51b66"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/OriginalLargeBoilerBarometerRenderer.java",
+      "sha256": "e6fb5cf5380611eaba6651ab6634c2e8454997c81eeb7db1e7f9f92cf338e6b4",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/client/OriginalLargeBoilerBarometerRenderer.java",
+      "currentForgeReferenceSha256": "33cd4d74e081eef2c159aa10c22c404d7c0e73d3dc674be1204725a1190c1bbe",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\OriginalLargeBoilerBarometerRenderer.java",
+      "sourceSha256": "33cd4d74e081eef2c159aa10c22c404d7c0e73d3dc674be1204725a1190c1bbe"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/BedrockFlowerTooltips.java",
+      "sha256": "ee2ae7ebdf15b52afeb9d58b632f4e9546680ff0e626cd9f2b1f138e1e666974",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/client/BedrockFlowerTooltips.java",
+      "currentForgeReferenceSha256": "d136bb2ac903a5b3d382f7f60a67ef309cd11917dee61a4821a8317e997996c9",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\BedrockFlowerTooltips.java",
+      "sourceSha256": "d136bb2ac903a5b3d382f7f60a67ef309cd11917dee61a4821a8317e997996c9"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/client/MultiblockClientSetup.java",
+      "sha256": "5cd5fd8d0f91ef5d3ed8b5f2a43a08d712a5be77af50a92cd662b2371bce7f82",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+      "currentForgeReferenceSha256": "4d6e46a4d9c0c35796033a9a1f759d7afc014a0ec078cf2d4604f17fe76e1705",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\client\\GregTechClient.java",
+      "sourceSha256": "4d6e46a4d9c0c35796033a9a1f759d7afc014a0ec078cf2d4604f17fe76e1705"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/item/MaterialItem.java",
+      "sha256": "6e28c50407879429810949419ae93f85b09ec0d95c2406e93182d69ec0b0e23a",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/item/MaterialItem.java",
+      "currentForgeReferenceSha256": "81fe759745965952d28500739c0c7b762f263ce14598cfaa94e4abf8ac2e92ba",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\item\\MaterialItem.java",
+      "sourceSha256": "87e1a1c834aeeebf7293cffe99eaf7f86c83a7812d6377ea7b4d8da00ac29db1"
+    },
+    {
+      "target": "neoforge/src/main/java/com/gregtech/gregtech/block/MaterialBlockItem.java",
+      "sha256": "e2f35abcd85d8c409727b49a92f5fb1a4fd90288c45ba36dfdc80a8fbdb68ed8",
+      "currentForgeReference": "src/main/java/com/gregtech/gregtech/block/MaterialBlockItem.java",
+      "currentForgeReferenceSha256": "675e62c7e83ee3f36f6f7b4be0b9cc6bcb5da297550e9650fa76079e5497f90f",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\block\\MaterialBlockItem.java",
+      "sourceSha256": "0557a21253bd02f094140323037c7fa74f84e0ff4bf828710902a91691051e25"
+    }
+  ],
+  "assets": "Existing 33 shared pressure sprites reused unchanged; no resource copies or new assets this wave."
+}

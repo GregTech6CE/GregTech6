@@ -1,0 +1,361 @@
+{
+  "source": "saltnya",
+  "license": "unchanged; public distribution authorization unresolved",
+  "verification": "core/NeoForge/Forge Java compile passed; runtime/behavior pending; see docs/integration/verification/p3-gearboxes-tool-catalogs-compile.json",
+  "gearboxes": 13,
+  "rotationTransformers": 13,
+  "shared": [
+    "GearboxCatalog original specifications",
+    "GearboxRotationRules original checkGears and per-face signed rotation consistency"
+  ],
+  "preserved": [
+    "full original mounted gear/axis/jam/transfer logic",
+    "gear/axis item drop persisted with native BLOCK_ENTITY_DATA including id",
+    "original dynamic face textures/rotation and source animation metadata",
+    "one native energy_node BE supports all real rotation transformer blocks"
+  ],
+  "gaps": [
+    "manual/powered tool integration and crafting",
+    "runtime transfer/mounted gear drop/reload/client verification"
+  ],
+  "records": [
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/registry/GTGearboxes.java",
+      "sha256": "96c5d9ffa1c94d67dd30405bfb37a638d8db78c3339ec66c01682b5aed9734fa"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/blockentity/energy/GearboxBlockEntity.java",
+      "sha256": "b6d19930967b13d7be35f9cf3681b29f340e9235d63237006d1a0603327a3bc3"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/block/energy/GearboxBlock.java",
+      "sha256": "4e76e5c0e557b4139950eac1d26f2b04cf826dedf811ef738166a628c86cb492"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/client/GearboxBakedModel.java",
+      "sha256": "5fe42b3214d61bc23d60800d58e601d4b10522666de8821ffe7933d1a9a5d4a9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/client/GearboxClientModels.java",
+      "sha256": "9f787a705e6556051983b7a3ce43c608fdbb1c6d175737b643b9d26fd1ebe54e"
+    }
+  ],
+  "resources": [
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/gearbox_wood.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/gearbox_wood.json",
+      "sha256": "c00178ebaddb9e4173397ffbe2dfade0dce75a27c9971a6f30f2d2f086f4462e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/gearbox/gearbox.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/gearbox/gearbox.json",
+      "sha256": "f2b89031f7c501aa6503638a00869d4795841aa9f20fec90f55d9627bc758dde"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/gearbox/colored/side.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/gearbox/colored/side.png",
+      "sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/gearbox_wood.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/gearbox_wood.json",
+      "sha256": "ada18c9dc29a18b7e91e90189a46f77b1f7ac69b8d910899d12565d6d2d090e9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/rotation_transformer_wood.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/rotation_transformer_wood.json",
+      "sha256": "37303326bb38e54a900a97b82052b6ef0c653f60d81aea1010d3f724859e887c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/block/machine/transformer/rotation_transformer.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/block/machine/transformer/rotation_transformer.json",
+      "sha256": "74f9beb964d700a3aa05635da75c15d1e3a7e86eb81d0f0514585708647d8f82"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/machines/transformers/transformer_rotation/colored/front.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/machines/transformers/transformer_rotation/colored/front.png",
+      "sha256": "fd2ac7adc0f7aa8ab2d0434a17847fe747f6b50ec3b16d8499da945f3b7db766"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/rotation_transformer_wood.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/rotation_transformer_wood.json",
+      "sha256": "64903359f9ff7c6d0980c28b76e9a77bc61cec6d36cc7e6a3171e8e58c84888c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/gearbox_bronze.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/gearbox_bronze.json",
+      "sha256": "c00178ebaddb9e4173397ffbe2dfade0dce75a27c9971a6f30f2d2f086f4462e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/gearbox_bronze.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/gearbox_bronze.json",
+      "sha256": "ada18c9dc29a18b7e91e90189a46f77b1f7ac69b8d910899d12565d6d2d090e9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/rotation_transformer_bronze.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/rotation_transformer_bronze.json",
+      "sha256": "37303326bb38e54a900a97b82052b6ef0c653f60d81aea1010d3f724859e887c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/rotation_transformer_bronze.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/rotation_transformer_bronze.json",
+      "sha256": "64903359f9ff7c6d0980c28b76e9a77bc61cec6d36cc7e6a3171e8e58c84888c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/gearbox_brass.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/gearbox_brass.json",
+      "sha256": "c00178ebaddb9e4173397ffbe2dfade0dce75a27c9971a6f30f2d2f086f4462e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/gearbox_brass.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/gearbox_brass.json",
+      "sha256": "ada18c9dc29a18b7e91e90189a46f77b1f7ac69b8d910899d12565d6d2d090e9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/rotation_transformer_brass.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/rotation_transformer_brass.json",
+      "sha256": "37303326bb38e54a900a97b82052b6ef0c653f60d81aea1010d3f724859e887c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/rotation_transformer_brass.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/rotation_transformer_brass.json",
+      "sha256": "64903359f9ff7c6d0980c28b76e9a77bc61cec6d36cc7e6a3171e8e58c84888c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/gearbox_arsenic_copper.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/gearbox_arsenic_copper.json",
+      "sha256": "c00178ebaddb9e4173397ffbe2dfade0dce75a27c9971a6f30f2d2f086f4462e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/gearbox_arsenic_copper.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/gearbox_arsenic_copper.json",
+      "sha256": "ada18c9dc29a18b7e91e90189a46f77b1f7ac69b8d910899d12565d6d2d090e9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/rotation_transformer_arsenic_copper.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/rotation_transformer_arsenic_copper.json",
+      "sha256": "37303326bb38e54a900a97b82052b6ef0c653f60d81aea1010d3f724859e887c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/rotation_transformer_arsenic_copper.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/rotation_transformer_arsenic_copper.json",
+      "sha256": "64903359f9ff7c6d0980c28b76e9a77bc61cec6d36cc7e6a3171e8e58c84888c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/gearbox_arsenic_bronze.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/gearbox_arsenic_bronze.json",
+      "sha256": "c00178ebaddb9e4173397ffbe2dfade0dce75a27c9971a6f30f2d2f086f4462e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/gearbox_arsenic_bronze.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/gearbox_arsenic_bronze.json",
+      "sha256": "ada18c9dc29a18b7e91e90189a46f77b1f7ac69b8d910899d12565d6d2d090e9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/rotation_transformer_arsenic_bronze.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/rotation_transformer_arsenic_bronze.json",
+      "sha256": "37303326bb38e54a900a97b82052b6ef0c653f60d81aea1010d3f724859e887c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/rotation_transformer_arsenic_bronze.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/rotation_transformer_arsenic_bronze.json",
+      "sha256": "64903359f9ff7c6d0980c28b76e9a77bc61cec6d36cc7e6a3171e8e58c84888c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/gearbox_steel.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/gearbox_steel.json",
+      "sha256": "c00178ebaddb9e4173397ffbe2dfade0dce75a27c9971a6f30f2d2f086f4462e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/gearbox_steel.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/gearbox_steel.json",
+      "sha256": "ada18c9dc29a18b7e91e90189a46f77b1f7ac69b8d910899d12565d6d2d090e9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/rotation_transformer_steel.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/rotation_transformer_steel.json",
+      "sha256": "37303326bb38e54a900a97b82052b6ef0c653f60d81aea1010d3f724859e887c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/rotation_transformer_steel.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/rotation_transformer_steel.json",
+      "sha256": "64903359f9ff7c6d0980c28b76e9a77bc61cec6d36cc7e6a3171e8e58c84888c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/gearbox_titanium.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/gearbox_titanium.json",
+      "sha256": "c00178ebaddb9e4173397ffbe2dfade0dce75a27c9971a6f30f2d2f086f4462e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/gearbox_titanium.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/gearbox_titanium.json",
+      "sha256": "ada18c9dc29a18b7e91e90189a46f77b1f7ac69b8d910899d12565d6d2d090e9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/rotation_transformer_titanium.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/rotation_transformer_titanium.json",
+      "sha256": "37303326bb38e54a900a97b82052b6ef0c653f60d81aea1010d3f724859e887c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/rotation_transformer_titanium.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/rotation_transformer_titanium.json",
+      "sha256": "64903359f9ff7c6d0980c28b76e9a77bc61cec6d36cc7e6a3171e8e58c84888c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/gearbox_tungstensteel.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/gearbox_tungstensteel.json",
+      "sha256": "c00178ebaddb9e4173397ffbe2dfade0dce75a27c9971a6f30f2d2f086f4462e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/gearbox_tungstensteel.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/gearbox_tungstensteel.json",
+      "sha256": "ada18c9dc29a18b7e91e90189a46f77b1f7ac69b8d910899d12565d6d2d090e9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/rotation_transformer_tungstensteel.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/rotation_transformer_tungstensteel.json",
+      "sha256": "37303326bb38e54a900a97b82052b6ef0c653f60d81aea1010d3f724859e887c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/rotation_transformer_tungstensteel.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/rotation_transformer_tungstensteel.json",
+      "sha256": "64903359f9ff7c6d0980c28b76e9a77bc61cec6d36cc7e6a3171e8e58c84888c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/gearbox_iridium.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/gearbox_iridium.json",
+      "sha256": "c00178ebaddb9e4173397ffbe2dfade0dce75a27c9971a6f30f2d2f086f4462e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/gearbox_iridium.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/gearbox_iridium.json",
+      "sha256": "ada18c9dc29a18b7e91e90189a46f77b1f7ac69b8d910899d12565d6d2d090e9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/rotation_transformer_iridium.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/rotation_transformer_iridium.json",
+      "sha256": "37303326bb38e54a900a97b82052b6ef0c653f60d81aea1010d3f724859e887c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/rotation_transformer_iridium.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/rotation_transformer_iridium.json",
+      "sha256": "64903359f9ff7c6d0980c28b76e9a77bc61cec6d36cc7e6a3171e8e58c84888c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/gearbox_iritanium.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/gearbox_iritanium.json",
+      "sha256": "c00178ebaddb9e4173397ffbe2dfade0dce75a27c9971a6f30f2d2f086f4462e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/gearbox_iritanium.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/gearbox_iritanium.json",
+      "sha256": "ada18c9dc29a18b7e91e90189a46f77b1f7ac69b8d910899d12565d6d2d090e9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/rotation_transformer_iritanium.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/rotation_transformer_iritanium.json",
+      "sha256": "37303326bb38e54a900a97b82052b6ef0c653f60d81aea1010d3f724859e887c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/rotation_transformer_iritanium.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/rotation_transformer_iritanium.json",
+      "sha256": "64903359f9ff7c6d0980c28b76e9a77bc61cec6d36cc7e6a3171e8e58c84888c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/gearbox_trinitanium.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/gearbox_trinitanium.json",
+      "sha256": "c00178ebaddb9e4173397ffbe2dfade0dce75a27c9971a6f30f2d2f086f4462e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/gearbox_trinitanium.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/gearbox_trinitanium.json",
+      "sha256": "ada18c9dc29a18b7e91e90189a46f77b1f7ac69b8d910899d12565d6d2d090e9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/rotation_transformer_trinitanium.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/rotation_transformer_trinitanium.json",
+      "sha256": "37303326bb38e54a900a97b82052b6ef0c653f60d81aea1010d3f724859e887c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/rotation_transformer_trinitanium.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/rotation_transformer_trinitanium.json",
+      "sha256": "64903359f9ff7c6d0980c28b76e9a77bc61cec6d36cc7e6a3171e8e58c84888c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/gearbox_trinaquadalloy.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/gearbox_trinaquadalloy.json",
+      "sha256": "c00178ebaddb9e4173397ffbe2dfade0dce75a27c9971a6f30f2d2f086f4462e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/gearbox_trinaquadalloy.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/gearbox_trinaquadalloy.json",
+      "sha256": "ada18c9dc29a18b7e91e90189a46f77b1f7ac69b8d910899d12565d6d2d090e9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/rotation_transformer_trinaquadalloy.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/rotation_transformer_trinaquadalloy.json",
+      "sha256": "37303326bb38e54a900a97b82052b6ef0c653f60d81aea1010d3f724859e887c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/rotation_transformer_trinaquadalloy.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/rotation_transformer_trinaquadalloy.json",
+      "sha256": "64903359f9ff7c6d0980c28b76e9a77bc61cec6d36cc7e6a3171e8e58c84888c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/gearbox_adamantium.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/gearbox_adamantium.json",
+      "sha256": "c00178ebaddb9e4173397ffbe2dfade0dce75a27c9971a6f30f2d2f086f4462e"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/gearbox_adamantium.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/gearbox_adamantium.json",
+      "sha256": "ada18c9dc29a18b7e91e90189a46f77b1f7ac69b8d910899d12565d6d2d090e9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/blockstates/rotation_transformer_adamantium.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/blockstates/rotation_transformer_adamantium.json",
+      "sha256": "37303326bb38e54a900a97b82052b6ef0c653f60d81aea1010d3f724859e887c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/models/item/rotation_transformer_adamantium.json",
+      "target": "neoforge/src/main/resources/assets/gregtech/models/item/rotation_transformer_adamantium.json",
+      "sha256": "64903359f9ff7c6d0980c28b76e9a77bc61cec6d36cc7e6a3171e8e58c84888c"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/iconsets/gearbox.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/iconsets/gearbox.png",
+      "sha256": "6f36d27836e0ee13fc54515e58fac44b75347d7b00d0ead792e24c846f4853f8"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/iconsets/gearbox_axle.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/iconsets/gearbox_axle.png",
+      "sha256": "fc371914834fefc47d2e8f9d99cbe8a2fddb8b1e6e65cdd061675bcaf19812f9"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/iconsets/gear.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/iconsets/gear.png",
+      "sha256": "92d0ef64d1d8ba362452a6edc9dda236c6749d2ce18db7b72c81c45c87706db2"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/iconsets/gear_clockwise.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/iconsets/gear_clockwise.png",
+      "sha256": "0f21211109241a93f6e8a69c4a0e3c63f1d4f60351f6ca298998b8c7281b9a2d"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/iconsets/gear_counterclockwise.png",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/iconsets/gear_counterclockwise.png",
+      "sha256": "95354cb9ba21dba5dabcef52166a8e90e3fc7dc14b61067ee356ab131b569594"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/iconsets/gear_clockwise.png.mcmeta",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/iconsets/gear_clockwise.png.mcmeta",
+      "sha256": "0bd43575154509602b758f82f1332e6528cf6d143a62d1a1cc83a80d335beb12"
+    },
+    {
+      "source": "F:/Dev/GregtTech6New/gregtech6/../Libs/gregtech6reborn/src/main/resources/assets/gregtech/textures/block/iconsets/gear_counterclockwise.png.mcmeta",
+      "target": "core/src/main/resources/assets/gregtech/textures/block/iconsets/gear_counterclockwise.png.mcmeta",
+      "sha256": "0bd43575154509602b758f82f1332e6528cf6d143a62d1a1cc83a80d335beb12"
+    }
+  ],
+  "groupedStartup": "Neo ordinary DedicatedServer loaded recipes/packs, completed 200 ticks and normal save/stop; only startup/registration evidence, not mechanics; docs/integration/verification/p3-neoforge-nodes-gearboxes-startup.json"
+}
