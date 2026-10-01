@@ -116,7 +116,12 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         this.recipeMap = spec.recipeMap();
         this.faceConfig = spec.faceConfig();
         int totalSlots = recipeMap.mInputItemsCount + recipeMap.mOutputItemsCount;
-        this.itemHandler = new MachineItemHandler(totalSlots, recipeMap.mInputItemsCount);
+        this.itemHandler = new MachineItemHandler(totalSlots, recipeMap.mInputItemsCount) {
+            @Override protected void onContentsChanged(int slot) {
+                BasicMachineBlockEntity.this.setChanged();
+                mInventoryChanged = true;
+            }
+        };
         this.tanksInput  = new FluidTankGT[recipeMap.mInputFluidCount];
         this.tanksOutput = new FluidTankGT[recipeMap.mOutputFluidCount];
         for (int i = 0; i < tanksInput.length; i++) {
@@ -393,7 +398,8 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         if (drained.isEmpty()) return;
         int filled = fill(drained, IFluidHandler.FluidAction.SIMULATE);
         if (filled <= 0) return;
-        FluidStack toDrain = new FluidStack(drained.getFluid(), Math.min(filled, throughput));
+        FluidStack toDrain = drained.copy();
+        toDrain.setAmount(Math.min(filled, throughput));
         FluidStack actuallyDrained = source.drain(toDrain, IFluidHandler.FluidAction.EXECUTE);
         if (!actuallyDrained.isEmpty()) {
             fill(actuallyDrained, IFluidHandler.FluidAction.EXECUTE);
@@ -427,7 +433,8 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
                 if (toTake <= 0) continue;
                 ItemStack extracted = source.extractItem(srcSlot, toTake, false);
                 if (!extracted.isEmpty()) {
-                    itemHandler.insertItem(i, extracted, false);
+                    ItemStack leftover = itemHandler.insertItem(i, extracted, false);
+                    returnOrDrop(leftover, source);
                     if (source.getStackInSlot(srcSlot).isEmpty()) break;
                     stack = source.getStackInSlot(srcSlot);
                 }
@@ -450,23 +457,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         if (be == null) return;
         IItemHandler target = be.getCapability(ForgeCapabilities.ITEM_HANDLER, side.getOpposite()).resolve().orElse(null);
         if (target == null) return;
-        int firstOutput = itemHandler.inputCount();
-        int total = itemHandler.getSlots();
-        for (int i = firstOutput; i < total; i++) {
-            ItemStack stack = itemHandler.getStackInSlot(i);
-            if (stack.isEmpty()) continue;
-            for (int t = 0; t < target.getSlots(); t++) {
-                ItemStack remainder = target.insertItem(t, stack, true);
-                int accepted = stack.getCount() - remainder.getCount();
-                if (accepted <= 0) continue;
-                ItemStack extracted = itemHandler.extractItem(i, accepted, false);
-                if (!extracted.isEmpty()) {
-                    target.insertItem(t, extracted, false);
-                    if (itemHandler.getStackInSlot(i).isEmpty()) break;
-                    stack = itemHandler.getStackInSlot(i);
-                }
-            }
-        }
+        pushOutputItems(target);
     }
 
     /**
@@ -813,6 +804,26 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         return java.util.Arrays.asList(list);
     }
 
+    /** Deduct only deliveries confirmed by the shared transfer engine. */
+    private void pushOutputItems(IItemHandler target) {
+        for (int slot = itemHandler.inputCount(); slot < itemHandler.getSlots(); slot++) {
+            ItemStack offered = itemHandler.getStackInSlot(slot);
+            if (offered.isEmpty()) continue;
+            var result = com.gregtech.gregtech.content.transport.ItemPipeTransferAdapter.transfer(
+                    offered.copy(), () -> target);
+            if (result.accepted() > 0) itemHandler.extractItem(slot, result.accepted(), false);
+        }
+    }
+
+    /** A changed source/target must not make an already extracted item disappear. */
+    private void returnOrDrop(ItemStack leftover, IItemHandler origin) {
+        if (leftover.isEmpty()) return;
+        var returned = com.gregtech.gregtech.content.transport.ItemPipeTransferAdapter.transfer(
+                leftover.copy(), () -> origin);
+        ItemStack remainder = leftover.copyWithCount(leftover.getCount() - returned.accepted());
+        if (!remainder.isEmpty()) net.minecraft.world.level.block.Block.popResource(level, worldPosition, remainder);
+    }
+
     // ── Auto I/O ─────────────────────────────────────────────────────────
 
     private void autoIO(Level level, BlockPos pos) {
@@ -859,7 +870,8 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
                 if (toTake <= 0) continue;
                 ItemStack extracted = source.extractItem(srcSlot, toTake, false);
                 if (!extracted.isEmpty()) {
-                    itemHandler.insertItem(i, extracted, false);
+                    ItemStack leftover = itemHandler.insertItem(i, extracted, false);
+                    returnOrDrop(leftover, source);
                     if (source.getStackInSlot(srcSlot).isEmpty()) break;
                     stack = source.getStackInSlot(srcSlot);
                 }
@@ -879,22 +891,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         int totalSlots = itemHandler.getSlots();
 
         if (target != null) {
-            // Output to adjacent inventory
-            for (int i = firstOutputSlot; i < totalSlots; i++) {
-                ItemStack stack = itemHandler.getStackInSlot(i);
-                if (stack.isEmpty()) continue;
-                for (int tgtSlot = 0; tgtSlot < target.getSlots(); tgtSlot++) {
-                    ItemStack remainder = target.insertItem(tgtSlot, stack, true);
-                    int accepted = stack.getCount() - remainder.getCount();
-                    if (accepted <= 0) continue;
-                    ItemStack extracted = itemHandler.extractItem(i, accepted, false);
-                    if (!extracted.isEmpty()) {
-                        target.insertItem(tgtSlot, extracted, false);
-                        if (itemHandler.getStackInSlot(i).isEmpty()) break;
-                        stack = itemHandler.getStackInSlot(i);
-                    }
-                }
-            }
+            pushOutputItems(target);
         } else if (level.isEmptyBlock(adj)) {
             // Drop into air like a hopper
             for (int i = firstOutputSlot; i < totalSlots; i++) {
@@ -927,7 +924,8 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         if (drained.isEmpty()) return;
         int filled = fill(drained, IFluidHandler.FluidAction.SIMULATE);
         if (filled <= 0) return;
-        FluidStack toDrain = new FluidStack(drained.getFluid(), filled);
+        FluidStack toDrain = drained.copy();
+        toDrain.setAmount(filled);
         FluidStack actuallyDrained = source.drain(toDrain, IFluidHandler.FluidAction.EXECUTE);
         if (!actuallyDrained.isEmpty()) {
             fill(actuallyDrained, IFluidHandler.FluidAction.EXECUTE);
@@ -947,9 +945,14 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         if (drained.isEmpty()) return;
         int filled = target.fill(drained, IFluidHandler.FluidAction.SIMULATE);
         if (filled <= 0) return;
-        FluidStack toDrain = drain(filled, IFluidHandler.FluidAction.EXECUTE);
-        if (!toDrain.isEmpty()) {
-            target.fill(toDrain, IFluidHandler.FluidAction.EXECUTE);
+        FluidStack offered = drained.copy();
+        offered.setAmount(Math.min(filled, drained.getAmount()));
+        int accepted = target.fill(offered.copy(), IFluidHandler.FluidAction.EXECUTE);
+        if (accepted < 0 || accepted > offered.getAmount())
+            throw new IllegalStateException("Fluid handler returned an invalid accepted amount: " + accepted);
+        if (accepted > 0) {
+            offered.setAmount(accepted);
+            drain(offered, IFluidHandler.FluidAction.EXECUTE);
         }
     }
 

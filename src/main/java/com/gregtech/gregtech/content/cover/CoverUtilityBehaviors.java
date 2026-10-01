@@ -302,11 +302,17 @@ public final class CoverUtilityBehaviors {
             if (accepted <= 0) continue;
             ItemStack reallyTaken = source.extractItem(slot, accepted, false);
             if (reallyTaken.isEmpty()) continue;
-            // The insert was simulated against the same target, so the remainder here is empty
-            // unless a second retriever cover ran in between; either way the items are not lost.
-            insert(target, reallyTaken, false);
-            budget -= accepted;
-            moved = true;
+            var delivered = com.gregtech.gregtech.content.transport.ItemPipeTransferAdapter.transfer(
+                    reallyTaken.copy(), () -> target);
+            ItemStack leftover = reallyTaken.copyWithCount(reallyTaken.getCount() - delivered.accepted());
+            if (!leftover.isEmpty()) {
+                var returned = com.gregtech.gregtech.content.transport.ItemPipeTransferAdapter.transfer(
+                        leftover.copy(), () -> source);
+                leftover.shrink(returned.accepted());
+                if (!leftover.isEmpty()) net.minecraft.world.level.block.Block.popResource(level, machinePos, leftover);
+            }
+            budget -= delivered.accepted();
+            moved |= delivered.accepted() > 0;
         }
         return moved;
     }
@@ -571,9 +577,13 @@ public final class CoverUtilityBehaviors {
         if (offered.isEmpty()) return false;
         int accepted = frontTank.fill(offered, IFluidHandler.FluidAction.SIMULATE);
         if (accepted <= 0) return false;
-        FluidStack moved = tank.drain(accepted, IFluidHandler.FluidAction.EXECUTE);
-        if (moved.isEmpty()) return false;
-        frontTank.fill(moved, IFluidHandler.FluidAction.EXECUTE);
+        offered.setAmount(Math.min(accepted, offered.getAmount()));
+        int delivered = frontTank.fill(offered.copy(), IFluidHandler.FluidAction.EXECUTE);
+        if (delivered < 0 || delivered > offered.getAmount())
+            throw new IllegalStateException("Fluid handler returned an invalid accepted amount: " + delivered);
+        if (delivered <= 0) return false;
+        offered.setAmount(delivered);
+        tank.drain(offered, IFluidHandler.FluidAction.EXECUTE);
         return true;
     }
 

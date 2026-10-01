@@ -46,6 +46,7 @@ public final class NeoForgeDedicatedSmoke {
     private static final String PHASE = System.getProperty("gregtech.integration.serverSmokePhase", "");
     private static final boolean ENABLED = !PHASE.isEmpty();
     private static final boolean SMELTERY_WORLD = Boolean.getBoolean("gregtech.integration.smelteryWorldSmoke");
+    private static final boolean MACHINE_WORLD = Boolean.getBoolean("gregtech.integration.machineWorldSmoke");
     private static final String SESSION_ID = UUID.randomUUID().toString();
     private static final int REQUIRED_TICKS = 200;
     private static final AtomicBoolean TERMINAL = new AtomicBoolean();
@@ -149,6 +150,7 @@ public final class NeoForgeDedicatedSmoke {
         chest.setItem(1, new ItemStack(Items.IRON_INGOT, 1));
         chest.setChanged();
         if (SMELTERY_WORLD) prepareSmeltery(level);
+        if (MACHINE_WORLD) prepareMachines(level);
     }
 
     private static void verifyWorld(ServerLevel level) {
@@ -172,6 +174,7 @@ public final class NeoForgeDedicatedSmoke {
             }
         }
         if (SMELTERY_WORLD) verifySmeltery(level);
+        if (MACHINE_WORLD) verifyMachines(level);
     }
 
     private static void prepareSmeltery(ServerLevel level) {
@@ -213,6 +216,121 @@ public final class NeoForgeDedicatedSmoke {
                 || basin.getMoldContentAmount() != 8L * unit || !basin.getSolidOutput().isEmpty())
             throw new IllegalStateException("Real-world eight-U bronze basin changed or created a full block");
     }
+
+    private static com.gregtech.gregtech.blockentity.machine.BasicMachineBlockEntity machine(ServerLevel level, int offset) {
+        BlockPos pos = specimenPos.south(offset);
+        level.getChunk(pos);
+        if (level.getBlockEntity(pos) instanceof com.gregtech.gregtech.blockentity.machine.BasicMachineBlockEntity machine)
+            return machine;
+        throw new IllegalStateException("Missing real basic machine at " + pos);
+    }
+
+    private static ItemStack machineFeed() {
+        return com.gregtech.gregtech.registry.GTItems.getStack(com.gregtech.gregtech.data.MaterialPrefix.gemChipped,
+                com.gregtech.gregtech.content.material.Materials.Diamond);
+    }
+
+    private static net.neoforged.neoforge.fluids.FluidStack markedWater() {
+        var fluid = new net.neoforged.neoforge.fluids.FluidStack(net.minecraft.world.level.material.Fluids.WATER, 1000);
+        fluid.set(DataComponents.CUSTOM_NAME, Component.literal("machine-water/" + specimenId));
+        return fluid;
+    }
+
+    private static void prepareMachines(ServerLevel level) {
+        for (int offset : new int[]{6, 8}) {
+            BlockPos pos = specimenPos.south(offset);
+            if (!level.getBlockState(pos).isAir() || !level.getBlockState(pos.below()).isAir())
+                throw new IllegalStateException("Machine prepare refuses to overwrite " + pos);
+            String id = offset == 6 ? "crusher_bronze" : "mixer_bronze";
+            var block = net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(
+                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech", id));
+            if (!(block instanceof com.gregtech.gregtech.block.machine.BasicMachineBlock))
+                throw new IllegalStateException("Missing registered machine " + id);
+            level.setBlockAndUpdate(pos.below(), Blocks.STONE.defaultBlockState());
+            level.setBlockAndUpdate(pos, block.defaultBlockState());
+        }
+        var crusher = machine(level, 6);
+        crusher.inventory().setStackInSlot(0, machineFeed());
+        for (int tick = 0; tick < 2; tick++) {
+            if (crusher.doInject(com.gregtech.gregtech.data.GregTechTags.Energy.KU, net.minecraft.core.Direction.SOUTH, 32, 1, true) != 1)
+                throw new IllegalStateException("Actual crusher back face refused a valid KU packet");
+            com.gregtech.gregtech.blockentity.machine.BasicMachineBlockEntity.serverTick(level,
+                    crusher.getBlockPos(), crusher.getBlockState(), crusher);
+        }
+        crusher.machineControl(null).setEnabled(false);
+        var mixer = machine(level, 8);
+        mixer.machineControl(null).setEnabled(false);
+        ItemStack marker = new ItemStack(Items.COPPER_INGOT, 3);
+        marker.set(DataComponents.CUSTOM_NAME, Component.literal("machine-stock/" + specimenId));
+        mixer.inventory().setStackInSlot(0, marker);
+        if (mixer.getTanksInput().length == 0 || mixer.getTanksInput()[0].fill(markedWater(),
+                net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE) != 1000)
+            throw new IllegalStateException("Actual mixer did not accept marked water");
+    }
+
+    private static void verifyMachines(ServerLevel level) {
+        var crusher = machine(level, 6);
+        var saved = crusher.saveWithoutMetadata(level.registryAccess());
+        if (!crusher.spec().id().equals("crusher_bronze") || !saved.getBoolean("gt.control_stopped")
+                || !crusher.inventory().getStackInSlot(0).isEmpty()
+                || (!machineJobCompleted && (saved.getLong("gt.progress") != 64
+                    || saved.getLong("gt.max_progress") <= 64 || !saved.contains("gt.pending_outputs")))
+                || (machineJobCompleted && (saved.getLong("gt.progress") != 0
+                    || saved.getLong("gt.max_progress") != 0 || saved.contains("gt.pending_outputs"))))
+            throw new IllegalStateException("Saved crusher job/progress/consumed input did not survive");
+        var mixer = machine(level, 8);
+        ItemStack stock = mixer.inventory().getStackInSlot(0);
+        if (!mixer.spec().id().equals("mixer_bronze") || mixer.machineControl(null).enabled()
+                || !stock.is(Items.COPPER_INGOT) || stock.getCount() != 3
+                || !Component.literal("machine-stock/" + specimenId).equals(stock.get(DataComponents.CUSTOM_NAME)))
+            throw new IllegalStateException("Stopped mixer inventory/components did not survive");
+        var water = mixer.getTanksInput()[0].getFluid();
+        if (water.getAmount() != 1000 || !net.neoforged.neoforge.fluids.FluidStack.isSameFluidSameComponents(water, markedWater()))
+            throw new IllegalStateException("Mixer input fluid/components did not survive");
+        var different = markedWater();
+        different.set(DataComponents.CUSTOM_NAME, Component.literal("different-water"));
+        var tank = mixer.getTanksInput()[0];
+        if (tank.fill(different, net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.SIMULATE) != 0
+                || !tank.drain(different, net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.SIMULATE).isEmpty()
+                || tank.getAmount() != 1000)
+            throw new IllegalStateException("Tank merged or drained different fluid components");
+        if ("verify".equals(PHASE) && !worldReadVerified) {
+            // Called only on the first disk read, before the ordinary server tick resumes.
+            resumeMachineJob(level, crusher);
+        }
+    }
+
+    private static void resumeMachineJob(ServerLevel level, com.gregtech.gregtech.blockentity.machine.BasicMachineBlockEntity crusher) {
+        var recipe = crusher.recipeMap().findRecipe(java.util.List.of(machineFeed()), java.util.List.of(),
+                false, crusher.inputSlots(), crusher.outputSlots());
+        if (recipe == null || recipe.mFluidInputs.length != 0 || recipe.mFluidOutputs.length != 0)
+            throw new IllegalStateException("Missing actual registered diamond crushing recipe");
+        crusher.machineControl(null).setEnabled(true);
+        for (int tick = 0; tick < 5000 && crusher.machineControl(null).progressMax() > 0; tick++) {
+            crusher.doInject(com.gregtech.gregtech.data.GregTechTags.Energy.KU, net.minecraft.core.Direction.SOUTH, 32, 1, true);
+            com.gregtech.gregtech.blockentity.machine.BasicMachineBlockEntity.serverTick(level,
+                    crusher.getBlockPos(), crusher.getBlockState(), crusher);
+        }
+        if (crusher.machineControl(null).progressMax() != 0)
+            throw new IllegalStateException("Reloaded job did not complete under valid KU supply");
+        for (int i = 0; i < recipe.mOutputs.length; i++) {
+            var expected = recipe.mOutputs[i];
+            if (expected == null || expected.isEmpty()) continue;
+            if (recipe.getOutputChance(i) != 10000) throw new IllegalStateException("Checkpoint requires deterministic real output");
+            int found = 0;
+            for (int slot = crusher.inputSlots(); slot < crusher.inventory().getSlots(); slot++) {
+                var output = crusher.inventory().getStackInSlot(slot);
+                if (ItemStack.isSameItemSameComponents(expected, output)) found += output.getCount();
+            }
+            if (found != expected.getCount()) throw new IllegalStateException("Reloaded real job lost or duplicated output");
+        }
+        // Later ordinary ticks check the completed state; never recreate the job.
+        machineJobCompleted = true;
+        crusher.machineControl(null).setEnabled(false);
+        LOGGER.info("MACHINE_WORLD_JOB_COMPLETED persistedProgress=64 consumedInputEmpty=true registeredRecipe=true");
+    }
+
+    private static boolean machineJobCompleted;
 
     @SubscribeEvent
     public static void serverTick(ServerTickEvent.Post event) {
@@ -333,6 +451,8 @@ public final class NeoForgeDedicatedSmoke {
                 : TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startedAt));
         result.addProperty("restartWorldReadVerified", worldReadVerified);
         result.addProperty("smelteryWorldChecked", SMELTERY_WORLD);
+        result.addProperty("machineWorldChecked", MACHINE_WORLD);
+        result.addProperty("machineJobCompleted", machineJobCompleted);
         return result;
     }
 }

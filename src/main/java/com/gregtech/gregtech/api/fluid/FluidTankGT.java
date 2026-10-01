@@ -72,14 +72,14 @@ public class FluidTankGT implements IFluidHandler {
             if(action.execute()){fluid=resource.copy();fluid.setAmount(1);storage.setAmount(accepted);onChanged.run();}
             return accepted;
         }
-        if(fluid.getFluid()!=resource.getFluid())return 0;
+        if(!fluid.isFluidEqual(resource))return 0;
         int accepted=bindInt(Math.min(resource.getAmount(),capacity()-getAmount()));
         if(accepted<=0)return 0;
         if(action.execute()){storage.setAmount(getAmount()+accepted);onChanged.run();}
         return accepted;
     }
     @Override public FluidStack drain(FluidStack resource,FluidAction action){
-        if(resource.isEmpty()||fluid.isEmpty()||storage.preventsDraining()||fluid.getFluid()!=resource.getFluid())return FluidStack.EMPTY;
+        if(resource.isEmpty()||fluid.isEmpty()||storage.preventsDraining()||!fluid.isFluidEqual(resource))return FluidStack.EMPTY;
         return drain(resource.getAmount(),action);
     }
     @Override public FluidStack drain(int requested,FluidAction action){

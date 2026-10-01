@@ -1,0 +1,81 @@
+{
+  "date": "2026-10-02",
+  "integration_base": "dfd16e227d6107d44a78b83b4725f6e6e87467fa",
+  "scope": "Paired basic-machine dirty tracking, confirmed transfer remainder accounting, full fluid identity; reuse existing shared transfer rules, no new donor subsystem",
+  "attribution": "Saltnya machine/inventory/cover lifecycle retained. Previously adopted masson acceptance contract reused unchanged; fixes are integration changes.",
+  "license_evidence": "basic-machine-source-integration.json; native-cover-registration-integration.json; shared-item-routing-source-integration.json; ../../../docs/integration/LICENSE_REVIEW.md; no relicensing",
+  "existing_shared_transfer_sources": [
+    {
+      "author": "brokestar",
+      "source": "F:/Dev/GregtTech6New/Libs/gregtech6-main/mdk/src/main/java/gregtech6/tileentity/connectors/GTItemPipeBlockEntity.java",
+      "sha256": "f717dff72c63f9542a5a396908aa5b0d30edde51c7d262df7876f4823747797f"
+    },
+    {
+      "author": "masson",
+      "source": "F:/Dev/GregtTech6New/Libs/cruciblecraft/src/main/java/com/masson/cruciblecraft/logistics/pipe/item/ItemPipeNetworkTraversal.java",
+      "sha256": "20337fc574f83d1319e96f0e62ef54b631f32ed5b21a74df27d5e2974e3c2803"
+    },
+    {
+      "author": "masson",
+      "source": "F:/Dev/GregtTech6New/Libs/cruciblecraft/src/main/java/com/masson/cruciblecraft/logistics/pipe/item/ItemPipeTransferPlan.java",
+      "sha256": "3809ed2cdb9a966d06029d04737b592bdacbd77f974b867275dbf0be23d2d119"
+    }
+  ],
+  "files": [
+    {
+      "source": "retained saltnya implementation and integration adaptations; original contributor notices retained",
+      "source_path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\BasicMachineBlockEntity.java",
+      "source_available": true,
+      "targets": [
+        {
+          "path": "src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java",
+          "base_git_blob_sha256": "0502dc944594ef1f0c5feffcf15b77aabb76e444176c1ba8131601bedff43411",
+          "current_file_sha256": "b24850c0e87b117bf4ee097a71657ce0245114a8ffe24fb3584115be58a72afc"
+        },
+        {
+          "path": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java",
+          "base_git_blob_sha256": "2367a1ea96464b5bddf6903a5bb865cdf2fb6aba70e298eef1b212d2c3099211",
+          "current_file_sha256": "3b4e0982f38823a6681311be88fe8254929194350846e0fa965a45c2e10981e4"
+        }
+      ],
+      "source_sha256": "47d974c8e009b66d21ff5096504996e8990038fed3604b37fd2c9cc8d0c2d808"
+    },
+    {
+      "source": "retained saltnya implementation and integration adaptations; original contributor notices retained",
+      "source_path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\api\\fluid\\FluidTankGT.java",
+      "source_available": true,
+      "targets": [
+        {
+          "path": "src/main/java/com/gregtech/gregtech/api/fluid/FluidTankGT.java",
+          "base_git_blob_sha256": "e5e53f1e2796739e4068bd4021a7f0e4c5cf46c81d0190248cdedacb5eb0f094",
+          "current_file_sha256": "c9523171ba78591eae2490be7e4fbe705271ccb5d1065a554c20bbbed57143a3"
+        },
+        {
+          "path": "neoforge/src/main/java/com/gregtech/gregtech/api/fluid/FluidTankGT.java",
+          "base_git_blob_sha256": "e5c5a9e6679802fc644d1d2a4707ca7f6d8d90df17755bb4e192ddbf53e7d451",
+          "current_file_sha256": "a235116919ca4dc13ef9dd7936deaaa9ccf86f2dcb6e16e75610c954f33dc91f"
+        }
+      ],
+      "source_sha256": "9161bf06b86a731231e3cfa7ed25064c7390764a9b341bf86f30420f4a2771cb"
+    },
+    {
+      "source": "retained saltnya implementation and integration adaptations; original contributor notices retained",
+      "source_path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\content\\cover\\CoverUtilityBehaviors.java",
+      "source_available": true,
+      "targets": [
+        {
+          "path": "src/main/java/com/gregtech/gregtech/content/cover/CoverUtilityBehaviors.java",
+          "base_git_blob_sha256": "348453eea4bb1c2d1725bf5b060275eea09c19f324297597100d54174b3941ef",
+          "current_file_sha256": "61f6ef45a308b8f649e9c22b8bfb3647ee9c66d8300e70762846d03b2778aaa8"
+        },
+        {
+          "path": "neoforge/src/main/java/com/gregtech/gregtech/content/cover/CoverUtilityBehaviors.java",
+          "base_git_blob_sha256": "8c5a3cd354bbde9bd0dc092024e95d74cd1264a75531623b5589b01a0aaa4d77",
+          "current_file_sha256": "39701eaefa417803b15fe7d78be16dfcc5acb2a77097ca8f1793921bba180431"
+        }
+      ],
+      "source_sha256": "348453eea4bb1c2d1725bf5b060275eea09c19f324297597100d54174b3941ef"
+    }
+  ],
+  "validation": "See ../../../docs/integration/verification/machine-io-parity-20261002.md and JSON. Cover transfer paths compiled, not covered by the machine restart run."
+}
