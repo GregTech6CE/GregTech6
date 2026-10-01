@@ -167,7 +167,7 @@ public class CrucibleFaucetBlockEntity extends BlockEntity implements ITileEntit
 
         BlockPos below = worldPosition.below();
         int iterations = 0;
-        while (below.getY() > 0 && iterations < 16) {
+        while (below.getY() >= level.getMinBuildHeight() && iterations < 16) {
             BlockEntity be = level.getBlockEntity(below);
             if (be instanceof CrucibleFaucetBlockEntity) {
                 below = below.below();

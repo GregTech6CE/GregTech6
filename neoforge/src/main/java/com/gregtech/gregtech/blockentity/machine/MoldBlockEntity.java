@@ -141,7 +141,7 @@ public class MoldBlockEntity extends BlockEntity implements ITileEntityMold {
         if (basin != null && effectiveMat == null) {
             effectiveMat = basin.getMoldContentMaterial();
             effectiveAmt = basin.getMoldContentAmount();
-            effectiveTemp = environmentTemperature();
+            effectiveTemp = basin.getTemperature();
         }
         if (effectiveMat != null && effectiveTemp > getMoldMaxTemperature()) {
             meltdown();
@@ -157,7 +157,7 @@ public class MoldBlockEntity extends BlockEntity implements ITileEntityMold {
         } else if (contentMaterial == null && basin != null) {
             GTMaterial basinMat = basin.getMoldContentMaterial();
             if (basinMat != null && basin.getMoldContentAmount() > 0
-                    && environmentTemperature() < basinMat.getMeltingPoint()) {
+                    && basin.getTemperature() < basinMat.getMeltingPoint()) {
                 solidifyFromBasin(basin);
             }
         }
@@ -220,15 +220,17 @@ public class MoldBlockEntity extends BlockEntity implements ITileEntityMold {
     private void solidifyFromBasin(MoldBasinBlockEntity basin) {
         if (basin == null) return;
         GTMaterial basinMat = basin.getMoldContentMaterial();
-        if (basinMat == null || basin.getMoldContentAmount() <= 0) return;
+        long required = getMoldRequiredMaterialUnits();
+        if (basinMat == null || com.gregtech.gregtech.api.machine.crucible.MoldCastingRules.castingAmount(
+                basin.getMoldContentAmount(), required) == 0) return;
 
         // Produce shaped output from basin content + mold shape — cools gradually
         if (contentMaterial == null) {
             contentMaterial = basinMat;
-            contentAmount = getMoldRequiredMaterialUnits();
+            contentAmount = required;
             contentSolidified = true;
             temperature = basin.getTemperature();
-            basin.clearContent();
+            basin.consumeContent(required);
             syncToClient();
         }
     }
@@ -421,8 +423,10 @@ public class MoldBlockEntity extends BlockEntity implements ITileEntityMold {
 
     private boolean tryPickupFromBasin(Player player, MoldBasinBlockEntity basin, boolean usingPincers) {
         GTMaterial basinMat = basin.getMoldContentMaterial();
-        if (basinMat == null || basin.getMoldContentAmount() <= 0) return false;
-        if (environmentTemperature() >= basinMat.getMeltingPoint()) return false;
+        long required = getMoldRequiredMaterialUnits();
+        if (basinMat == null || com.gregtech.gregtech.api.machine.crucible.MoldCastingRules.castingAmount(
+                basin.getMoldContentAmount(), required) == 0) return false;
+        if (basin.getTemperature() >= basinMat.getMeltingPoint()) return false;
 
         GTMaterial solidMaterial = getSolidifyingMaterial(basinMat);
         Object prefix = getMoldRecipePrefix();
@@ -445,7 +449,7 @@ public class MoldBlockEntity extends BlockEntity implements ITileEntityMold {
         if (!usingPincers) {
             SmelteryBlockEntityHelper.applyHeatDamage(player, basin.getTemperature());
         }
-        basin.clearContent();
+        if (basin.consumeContent(required) != required) return false;
         if (!player.getInventory().add(output)) {
             spawnOutputItem(output);
         }

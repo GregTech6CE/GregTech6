@@ -139,18 +139,16 @@ public class MoldBasinBlockEntity extends BlockEntity implements ITileEntityMold
     }
 
     private void solidify() {
-        if (contentMaterial == null || contentAmount <= 0) return;
+        if (contentMaterial == null || contentAmount < getMoldRequiredMaterialUnits()) return;
 
         // Basin always produces OP.blockSolid (full block) — cools gradually
         GTMaterial solidMaterial = getSolidifyingMaterial(contentMaterial);
         ItemStack output = GTBlocks.getStack(BlockMaterialPrefix.blockSolid, solidMaterial);
-        // Clear content BEFORE storeOutputItem sync so client receives consistent state
-        contentMaterial = null;
-        contentAmount = 0;
-        if (!output.isEmpty()) {
-            solidOutputTint = solidMaterial.getColor() | 0xFF000000;
-            storeOutputItem(output);
-        }
+        // An unavailable output must never erase the stored material.
+        if (output.isEmpty()) return;
+        consumeContent(getMoldRequiredMaterialUnits());
+        solidOutputTint = solidMaterial.getColor() | 0xFF000000;
+        storeOutputItem(output);
     }
 
     /** Store solidified output in container instead of auto-popping. */
@@ -232,7 +230,7 @@ public class MoldBasinBlockEntity extends BlockEntity implements ITileEntityMold
             return true;
         }
 
-        if (contentMaterial == null || contentAmount <= 0) return false;
+        if (contentMaterial == null || contentAmount < getMoldRequiredMaterialUnits()) return false;
         if (temperature >= contentMaterial.getMeltingPoint()) return false;
 
         GTMaterial solidMaterial = getSolidifyingMaterial(contentMaterial);
@@ -242,9 +240,7 @@ public class MoldBasinBlockEntity extends BlockEntity implements ITileEntityMold
         if (!usingPincers) {
             SmelteryBlockEntityHelper.applyHeatDamage(player, temperature);
         }
-        contentMaterial = null;
-        contentAmount = 0;
-        temperature = environmentTemperature();
+        consumeContent(getMoldRequiredMaterialUnits());
 
         if (!player.getInventory().add(output)) {
             spawnOutputItem(output);
@@ -263,8 +259,25 @@ public class MoldBasinBlockEntity extends BlockEntity implements ITileEntityMold
         if (level == null || contentMaterial == null || contentAmount <= 0) return;
         GTMaterial solidMaterial = getSolidifyingMaterial(contentMaterial);
         ItemStack output = GTBlocks.getStack(BlockMaterialPrefix.blockSolid, solidMaterial);
-        if (!output.isEmpty()) {
+        if (!output.isEmpty() && contentAmount >= getMoldRequiredMaterialUnits()) {
             spawnOutputItem(output);
+            contentAmount -= getMoldRequiredMaterialUnits();
+        }
+        // Use registered smaller forms for the remainder, never round up to a block.
+        for (var prefix : new com.gregtech.gregtech.data.MaterialPrefix[]{
+                com.gregtech.gregtech.data.MaterialPrefix.ingot,
+                com.gregtech.gregtech.data.MaterialPrefix.dust,
+                com.gregtech.gregtech.data.MaterialPrefix.dustSmall,
+                com.gregtech.gregtech.data.MaterialPrefix.dustTiny,
+                com.gregtech.gregtech.data.MaterialPrefix.dustDiv72}) {
+            long unit = prefix.getMaterialWeight();
+            ItemStack remainder = com.gregtech.gregtech.registry.GTItems.getStack(prefix, solidMaterial);
+            if (unit <= 0 || remainder.isEmpty()) continue;
+            while (contentAmount >= unit) {
+                int count = (int) Math.min(contentAmount / unit, remainder.getMaxStackSize());
+                spawnOutputItem(remainder.copyWithCount(count));
+                contentAmount -= unit * count;
+            }
         }
         contentMaterial = null;
         contentAmount = 0;
@@ -289,7 +302,20 @@ public class MoldBasinBlockEntity extends BlockEntity implements ITileEntityMold
         return InteractionResult.PASS;
     }
 
-    /** Clear content after mold above consumes it for shaped output. */
+    /** Consume exactly one casting charge; preserve the remainder and its temperature. */
+    public long consumeContent(long required) {
+        long consumed = com.gregtech.gregtech.api.machine.crucible.MoldCastingRules.castingAmount(contentAmount, required);
+        if (contentMaterial == null || consumed == 0) return 0;
+        contentAmount -= consumed;
+        if (contentAmount == 0) {
+            contentMaterial = null;
+            temperature = environmentTemperature();
+        }
+        syncToClient();
+        return consumed;
+    }
+
+    /** Clear content after meltdown or an explicit reset. */
     public void clearContent() {
         contentMaterial = null;
         contentAmount = 0;

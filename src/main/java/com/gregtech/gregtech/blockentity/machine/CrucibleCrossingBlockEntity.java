@@ -92,28 +92,29 @@ public class CrucibleCrossingBlockEntity extends BlockEntity implements ITileEnt
             sLockCounter++;
         }
 
-        // Prevent revisiting this crossing in the same routing wave
-        if (lockId == sLockCounter) return false;
-        lockId = sLockCounter;
+        try {
+            // Prevent revisiting this crossing in the same routing wave
+            if (lockId == sLockCounter) return false;
+            lockId = sLockCounter;
 
-        // Route to all other horizontal directions except the source
-        boolean result = false;
-        for (Direction dir : Direction.values()) {
-            if (dir == Direction.UP || dir == Direction.DOWN) continue;
-            if (dir.ordinal() == crucibleSide) continue;
+            // Route to all other horizontal directions except the source
+            boolean result = false;
+            for (Direction dir : Direction.values()) {
+                if (dir == Direction.UP || dir == Direction.DOWN) continue;
+                if (dir.ordinal() == crucibleSide) continue;
 
-            BlockEntity be = level.getBlockEntity(worldPosition.relative(dir));
-            if (be instanceof ITileEntityCrucible crucible) {
-                if (crucible.fillMoldAtSide(mold, dir.getOpposite().ordinal(), moldSide)) {
-                    result = true;
+                BlockEntity be = level.getBlockEntity(worldPosition.relative(dir));
+                if (be instanceof ITileEntityCrucible crucible) {
+                    if (crucible.fillMoldAtSide(mold, dir.getOpposite().ordinal(), moldSide)) {
+                        result = true;
+                    }
                 }
             }
-        }
 
-        if (startedRouting) {
-            sLockActive = false;
+            return result;
+        } finally {
+            if (startedRouting) sLockActive = false;
         }
-        return result;
     }
 
     @Override

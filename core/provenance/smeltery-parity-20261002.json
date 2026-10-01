@@ -1,0 +1,83 @@
+{
+  "date": "2026-10-02",
+  "integration_base": "499150156795d2ea97c6730bcd247007e68ee433",
+  "scope": "Paired fixes to retained mold, basin, faucet and crossing implementations; no new donor subsystem imports.",
+  "attribution": "Original authorship and license evidence retained; conservation/temperature/build-height/lock fixes are integration changes.",
+  "license_evidence": "native-smeltery-companions-integration.json; ../../../docs/integration/LICENSE_REVIEW.md; no relicensing",
+  "shared_rule": {
+    "path": "core/src/main/java/com/gregtech/gregtech/api/machine/crucible/MoldCastingRules.java",
+    "sha256": "fe28dd5d4cf2f246e2ddd2ef14ab014c33a5185a84efdad7fafa6aa216c16576"
+  },
+  "files": [
+    {
+      "source": "saltnya / original GregTech 6 contributors",
+      "source_path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\MoldBlockEntity.java",
+      "source_sha256": "88df3cda8094e23a37673ee145022034ba8594472110a1e790cf03d19984f059",
+      "targets": [
+        {
+          "path": "src/main/java/com/gregtech/gregtech/blockentity/machine/MoldBlockEntity.java",
+          "base_git_blob_sha256": "246a71fe11c1a1a266a72e5e17e4fb48e13a4bf2f41effce2e9de9ac698694a8",
+          "current_file_sha256": "28c5cc5cda00ec5864b80ed99b6ccff9d688a02ef8a45bdce053c8487489084f"
+        },
+        {
+          "path": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/MoldBlockEntity.java",
+          "base_git_blob_sha256": "1767e7597dc8c51cdc6e4fae222d845c8e21065856088e7574dd7f9c47c1b675",
+          "current_file_sha256": "77d27f8d59a77f4533fff970affa7f6d02a2dc4071e8f5802513f0b0e2adc327"
+        }
+      ]
+    },
+    {
+      "source": "saltnya / original GregTech 6 contributors",
+      "source_path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\MoldBasinBlockEntity.java",
+      "source_sha256": "d7fac3ca75786fef20a797632b49ab3ebcaa4fdba23d84c41788c2ee8f92bba2",
+      "targets": [
+        {
+          "path": "src/main/java/com/gregtech/gregtech/blockentity/machine/MoldBasinBlockEntity.java",
+          "base_git_blob_sha256": "eddad7659738753943e305ea414c5bee5c9ec0645dd253d467119922b70791df",
+          "current_file_sha256": "86f42dfdddc09574bd95e4f5aff28488c70bf844955e985c41cbe58b4c296673"
+        },
+        {
+          "path": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/MoldBasinBlockEntity.java",
+          "base_git_blob_sha256": "4bd45690b29c0929077c653ddcc80158c53edd9c9faebe8254ce473a84f77a33",
+          "current_file_sha256": "10033f1a97dafc0942e54d2b317ecb057b42eba2773532a6939651ae05bc2e3b"
+        }
+      ]
+    },
+    {
+      "source": "saltnya / original GregTech 6 contributors",
+      "source_path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\CrucibleFaucetBlockEntity.java",
+      "source_sha256": "2bceaf777f572d030d6029ca76c473ded859c8ca8d14f1b7ff262f5352e3fdea",
+      "targets": [
+        {
+          "path": "src/main/java/com/gregtech/gregtech/blockentity/machine/CrucibleFaucetBlockEntity.java",
+          "base_git_blob_sha256": "6611d007433d7d81fe132974a3b8a8bc662977e6a3435dcb43724d2aec3adc76",
+          "current_file_sha256": "d3d92cdb35d6e0304ea8fbca349326f7bc15eae377987fa92655cb4a97c89bd7"
+        },
+        {
+          "path": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/CrucibleFaucetBlockEntity.java",
+          "base_git_blob_sha256": "a14984bd02a2e3e0d5d561059e338b595ca918e408aafd772b3b73dd013d46a0",
+          "current_file_sha256": "4ea323123fc32b3a932824a04cf8f630ab1a9ee97a8fc1e5c35e94b05a5d0a51"
+        }
+      ]
+    },
+    {
+      "source": "saltnya / original GregTech 6 contributors",
+      "source_path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\CrucibleCrossingBlockEntity.java",
+      "source_sha256": "d29a992de0649165a544f47522ac88ba16fc870fccf89aced3e1c8529f6c68ec",
+      "targets": [
+        {
+          "path": "src/main/java/com/gregtech/gregtech/blockentity/machine/CrucibleCrossingBlockEntity.java",
+          "base_git_blob_sha256": "85caa20802d8711b4d3838d7dbe56bf506aa8599e8a881a64ced280136aed890",
+          "current_file_sha256": "53ed88e2c18f8898eef42f76f4d823492cffdb9ee0029a3cfc772d482017431f"
+        },
+        {
+          "path": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/CrucibleCrossingBlockEntity.java",
+          "base_git_blob_sha256": "15a0e7446dcbc7f9c6ccdc4b457b62be0522d1d10fb8baf72d6f663539fa2d81",
+          "current_file_sha256": "1d382f6be451a286ad6b6cea49e7aed06c4a7e60c3f04b883c09a923c368a04f"
+        }
+      ]
+    }
+  ],
+  "verification": "../../../docs/integration/verification/smeltery-parity-20261002.md",
+  "known_gap": "Breaking materials with no representable registered small form or arbitrary legacy fractional NBT remainder remains incomplete."
+}

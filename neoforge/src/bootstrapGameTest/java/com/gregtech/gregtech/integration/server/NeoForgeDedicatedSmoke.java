@@ -45,6 +45,7 @@ public final class NeoForgeDedicatedSmoke {
     private static final String MINECRAFT_VERSION = "1.21.1";
     private static final String PHASE = System.getProperty("gregtech.integration.serverSmokePhase", "");
     private static final boolean ENABLED = !PHASE.isEmpty();
+    private static final boolean SMELTERY_WORLD = Boolean.getBoolean("gregtech.integration.smelteryWorldSmoke");
     private static final String SESSION_ID = UUID.randomUUID().toString();
     private static final int REQUIRED_TICKS = 200;
     private static final AtomicBoolean TERMINAL = new AtomicBoolean();
@@ -147,6 +148,7 @@ public final class NeoForgeDedicatedSmoke {
         chest.setItem(0, new ItemStack(Items.COPPER_INGOT, 3));
         chest.setItem(1, new ItemStack(Items.IRON_INGOT, 1));
         chest.setChanged();
+        if (SMELTERY_WORLD) prepareSmeltery(level);
     }
 
     private static void verifyWorld(ServerLevel level) {
@@ -169,6 +171,47 @@ public final class NeoForgeDedicatedSmoke {
                 throw new IllegalStateException("Unexpected item in specimen chest slot " + slot);
             }
         }
+        if (SMELTERY_WORLD) verifySmeltery(level);
+    }
+
+    private static void prepareSmeltery(ServerLevel level) {
+        BlockPos moldPos = specimenPos.south(2), basinPos = specimenPos.south(4);
+        for (BlockPos pos : new BlockPos[]{moldPos, basinPos, basinPos.above()}) {
+            if (!level.getBlockState(pos).isAir())
+                throw new IllegalStateException("Smeltery prepare refuses to overwrite " + pos);
+        }
+        var ceramic = com.gregtech.gregtech.content.material.Materials.Ceramic;
+        var basinBlock = com.gregtech.gregtech.platform.neoforge.smeltery.SmelteryRegistries.basins().stream()
+                .filter(holder -> holder.get().spec().material().equals(ceramic)).findFirst().orElseThrow().get();
+        level.setBlockAndUpdate(moldPos, com.gregtech.gregtech.platform.neoforge.smeltery.SmelteryRegistries.CERAMIC_MOLD.get().defaultBlockState());
+        level.setBlockAndUpdate(basinPos, basinBlock.defaultBlockState());
+        var mold = (com.gregtech.gregtech.blockentity.machine.MoldBlockEntity) level.getBlockEntity(moldPos);
+        // Initialize through the public carving/filling API; verify never seeds this state.
+        for (int z = 0; z < 5; z++) for (int x = 0; x < 3; x++)
+            mold.trySelectShape(null, net.minecraft.world.InteractionHand.MAIN_HAND,
+                    0.125 + (x + 0.5) * 0.15, 0.125 + (z + 0.5) * 0.15);
+        long unit = com.gregtech.gregtech.api.material.GTValues.U;
+        if (mold.fillMold(com.gregtech.gregtech.content.material.Materials.Copper, unit, 300,
+                net.minecraft.core.Direction.UP.ordinal()) != unit)
+            throw new IllegalStateException("Could not prepare filled one-U copper mold");
+        var basin = (com.gregtech.gregtech.blockentity.machine.MoldBasinBlockEntity) level.getBlockEntity(basinPos);
+        if (basin.fillMold(com.gregtech.gregtech.content.material.Materials.Bronze, 9L * unit, 300,
+                net.minecraft.core.Direction.UP.ordinal()) != 9L * unit || basin.consumeContent(unit) != unit)
+            throw new IllegalStateException("Could not prepare partly drained eight-U bronze basin");
+    }
+
+    private static void verifySmeltery(ServerLevel level) {
+        level.getChunk(specimenPos.south(2));
+        level.getChunk(specimenPos.south(4));
+        long unit = com.gregtech.gregtech.api.material.GTValues.U;
+        if (!(level.getBlockEntity(specimenPos.south(2)) instanceof com.gregtech.gregtech.blockentity.machine.MoldBlockEntity mold)
+                || mold.getMoldContentMaterial() != com.gregtech.gregtech.content.material.Materials.Copper
+                || mold.getMoldContentAmount() != unit || mold.getMoldRequiredMaterialUnits() != unit)
+            throw new IllegalStateException("Real-world copper mold shape/material/amount did not survive");
+        if (!(level.getBlockEntity(specimenPos.south(4)) instanceof com.gregtech.gregtech.blockentity.machine.MoldBasinBlockEntity basin)
+                || basin.getMoldContentMaterial() != com.gregtech.gregtech.content.material.Materials.Bronze
+                || basin.getMoldContentAmount() != 8L * unit || !basin.getSolidOutput().isEmpty())
+            throw new IllegalStateException("Real-world eight-U bronze basin changed or created a full block");
     }
 
     @SubscribeEvent
@@ -289,6 +332,7 @@ public final class NeoForgeDedicatedSmoke {
         result.addProperty("elapsedMs", startedAt == 0 ? 0
                 : TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startedAt));
         result.addProperty("restartWorldReadVerified", worldReadVerified);
+        result.addProperty("smelteryWorldChecked", SMELTERY_WORLD);
         return result;
     }
 }

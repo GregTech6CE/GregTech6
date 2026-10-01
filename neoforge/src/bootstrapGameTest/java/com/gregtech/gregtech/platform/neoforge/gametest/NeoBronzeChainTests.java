@@ -97,13 +97,46 @@ public final class NeoBronzeChainTests {
                 helper.assertTrue(bronzeCount(player) == 4 && mold.getMoldContentAmount() == 0, "Repeated empty interaction must not mint a fifth ingot");
                 finished[0] = true;
                 LogUtils.getLogger().info("GT6_NEO_PLAYFLOW_COMPLETE tick={} ingots=4 chiselWear=15 pincersWear=4", helper.getTick());
+                verifyStackedBasin(helper, player, mold);
                 helper.succeed();
             }
         });
     }
+    private static void verifyStackedBasin(GameTestHelper helper, Player player, MoldEntity mold) {
+        var basinBlock = SmelteryRegistries.basins().stream()
+                .filter(holder -> holder.get().spec().material().equals(Materials.Ceramic))
+                .findFirst().orElseThrow().get();
+        BlockPos basinPos = mold.getBlockPos().below();
+        helper.getLevel().setBlockAndUpdate(basinPos, basinBlock.defaultBlockState());
+        var basin = (com.gregtech.gregtech.blockentity.machine.MoldBasinBlockEntity)
+                helper.getLevel().getBlockEntity(basinPos);
+        helper.assertTrue(basin.fillMold(Materials.Bronze, 9L * GTValues.U, 1400, Direction.UP.ordinal())
+                == 9L * GTValues.U, "Stacked basin accepts exactly nine U");
+        mold.serverTick();
+        helper.assertTrue(!mold.tryPickupWithPincers(player, true)
+                && basin.getMoldContentAmount() == 9L * GTValues.U,
+                "Ambient air must not make a hot basin immediately castable");
+        for (int tick = 0; tick < 250; tick++)
+            com.gregtech.gregtech.blockentity.machine.MoldBasinBlockEntity.serverTick(
+                    helper.getLevel(), basinPos, basin.getBlockState(), basin);
+        for (int cast = 1; cast <= 9; cast++) {
+            click(helper, player, mold.getBlockPos(), Direction.UP, 0.5, 0.1875, 0.5);
+            helper.assertTrue(bronzeCount(player) == 4 + cast
+                    && basin.getMoldContentAmount() == (9L - cast) * GTValues.U,
+                    "Each shaped output consumes exactly one U and retains every unused unit");
+        }
+        click(helper, player, mold.getBlockPos(), Direction.UP, 0.5, 0.1875, 0.5);
+        helper.assertTrue(bronzeCount(player) == 13 && basin.getMoldContentAmount() == 0,
+                "Empty basin must not produce a tenth ingot");
+        LogUtils.getLogger().info("GT6_NEO_STACKED_BASIN_COMPLETE ingots=9 remaining=0 hotPickupRejected=true");
+    }
     private static void click(GameTestHelper helper, Player player, BlockPos pos, Direction side, double x, double y, double z) {
         var hit = new BlockHitResult(new Vec3(pos.getX() + x, pos.getY() + y, pos.getZ() + z), side, pos, false);
         var state = helper.getLevel().getBlockState(pos);
+        var event = new net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.RightClickBlock(
+                player, InteractionHand.MAIN_HAND, pos, hit);
+        net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(event);
+        if (event.isCanceled()) return;
         state.useItemOn(player.getMainHandItem(), helper.getLevel(), player, InteractionHand.MAIN_HAND, hit);
     }
     private static ItemEntity drop(GameTestHelper helper, SmeltingCrucibleEntity crucible, ItemStack stack, double x) {

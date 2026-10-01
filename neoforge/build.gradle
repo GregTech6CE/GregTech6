@@ -64,6 +64,7 @@ neoForge {
             sourceSet = sourceSets.bootstrapGameTest
             systemProperty 'gregtech.integration.serverSmokePhase', (rootProject.findProperty('serverSmokePhase') ?: '').toString()
             systemProperty 'gregtech.integration.serverSmokeId', (rootProject.findProperty('serverSmokeId') ?: '').toString()
+            systemProperty 'gregtech.integration.smelteryWorldSmoke', (rootProject.findProperty('smelteryWorldSmoke') ?: 'false').toString()
             systemProperty 'gregtech.integration.manualToolSmoke', (rootProject.findProperty('manualToolSmoke') ?: 'false').toString()
             systemProperty 'gregtech.integration.poweredToolSmoke', (rootProject.findProperty('poweredToolSmoke') ?: 'false').toString()
             systemProperty 'gregtech.integration.itemLogisticsSmoke', (rootProject.findProperty('itemLogisticsSmoke') ?: 'false').toString()

@@ -13,6 +13,11 @@ public final class MoldCastingRules {
         return temperature;
     }
 
+    /** Withdraw one complete casting charge, retaining every unused unit. */
+    public static long castingAmount(long available, long required) {
+        return required > 0 && available >= required ? required : 0;
+    }
+
     public static long acceptedAmount(GTMaterial material, long offered, long required,
                                       boolean acidProof, boolean occupied) {
         if (material == null || occupied || required <= 0 || offered < required) return 0;
