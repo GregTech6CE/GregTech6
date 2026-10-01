@@ -14,10 +14,12 @@ import java.util.*;
 
 /** Full imported domain bootstrap and original numeric fixtures, with no game dependencies. */
 public final class MaterialBehaviorContracts {
-    // Captured from the unmodified import with inert display/NBT/registry boundary stubs;
-    // scope, source hashes and stub limitations are recorded in provenance/material-baseline.json.
-    private static final String DEFINITIONS_SHA256 = "ad70436da65c6d58e9a9ed26f2819579a7002e0df7ca1f298c9cd385435797a5";
-    private static final String POST_INIT_SHA256 = "59a5c25de59260aa8361121870528a091d0a4846729174e4ef3bd4f2fbc35136";
+    // Original scope/source hashes remain in provenance/material-baseline.json.
+    // These fingerprints retain every observed field and include the authorized
+    // Community Edition display name; the name-only differential against the
+    // original fingerprints is recorded in provenance/community-material-baseline.json.
+    private static final String DEFINITIONS_SHA256 = "e342834d614505a21e2786340caaaec8052d54d01263e98adffeb8628d8b2b61";
+    private static final String POST_INIT_SHA256 = "1c5e74b25b3b020d53a65e1b995ad38e284fe82198a5dccdd7c4f9d41c485826";
     private static int assertions;
     private MaterialBehaviorContracts() {}
 
@@ -40,11 +42,11 @@ public final class MaterialBehaviorContracts {
         check(GTMaterialRegistry.allMaterials().size() == 1156, "All 1156 original material objects must remain");
         check(MaterialCatalogSnapshot.aliases().size() == 1519, "All 1519 original name entries must remain");
         check(PrefixRegistry.all().size() == 109, "All 109 original item prefixes must remain");
-        check(DEFINITIONS_SHA256.equals(MaterialCatalogSnapshot.sha256()), "Full definitions/aliases/forms must match the original snapshot");
+        check(DEFINITIONS_SHA256.equals(MaterialCatalogSnapshot.sha256()), "Full definitions/aliases/forms must match the Community Edition snapshot");
         GTMaterialRegistry.init();
         check(DEFINITIONS_SHA256.equals(MaterialCatalogSnapshot.sha256()), "Repeated init must not mutate or duplicate definitions");
         GTMaterialRegistry.postInit();
-        check(POST_INIT_SHA256.equals(MaterialCatalogSnapshot.sha256()), "Full domain post-init must match the original snapshot");
+        check(POST_INIT_SHA256.equals(MaterialCatalogSnapshot.sha256()), "Full domain post-init must match the Community Edition snapshot");
         validateIdentityGraph();
         validateMetadata();
         validateCopperTinBronze();

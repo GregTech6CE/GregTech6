@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-02",
+  "reason": "User-authorized rename to GregTech 6 Community Edition changes ModReferences.GT.name, a field included in the full material catalog snapshot.",
+  "original_baseline": "material-baseline.json",
+  "original_definitions_sha256": "ad70436da65c6d58e9a9ed26f2819579a7002e0df7ca1f298c9cd385435797a5",
+  "original_post_init_sha256": "59a5c25de59260aa8361121870528a091d0a4846729174e4ef3bd4f2fbc35136",
+  "community_definitions_sha256": "e342834d614505a21e2786340caaaec8052d54d01263e98adffeb8628d8b2b61",
+  "community_post_init_sha256": "1c5e74b25b3b020d53a65e1b995ad38e284fe82198a5dccdd7c4f9d41c485826",
+  "differential_verification": "Executed the existing MaterialBaselineProbe against current compiled core twice. The second run placed a temporary ModReferences class first on the classpath with ONLY GT.name restored to GregTech. Both fingerprints then exactly matched the original baseline. No production source or material data was changed for the probe.",
+  "counts": {"materials": 1156, "positive_ids": 1101, "aliases": 1519, "prefixes": 109, "reactions": 173},
+  "snapshot_fields": "Unchanged; no fields or assertions were removed.",
+  "scope": "Pure Java material-domain verification; no client, server, gameplay or saved-world claim."
+}

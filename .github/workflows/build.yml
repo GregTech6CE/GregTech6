@@ -27,7 +27,7 @@ jobs:
         include:
           - minecraft: '1.20.1'
             loader: forge
-            task: build
+            task: ':build'
             libs: build/libs
           - minecraft: '1.21.1'
             loader: neoforge

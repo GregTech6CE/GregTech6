@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-02",
+  "destination": "core/src/main/java/com/gregtech/gregtech/api/machine/crucible/MoldCastingRules.java",
+  "reason": "The current reinitialized tree retained Forge MoldBlockEntity calls to the shared class but omitted the class itself. Restore the previously implemented extraction without changing its rules.",
+  "recovery_commit": "84be9ccb2ec2db43e15efe3d4f03c9098d9828c5",
+  "recovery_provenance": "core/provenance/first-smeltery-extraction.json in the preserved Git history bundle",
+  "original_source": "saltnya/src/main/java/com/gregtech/gregtech/blockentity/machine/MoldBlockEntity.java",
+  "original_source_sha256": "88df3cda8094e23a37673ee145022034ba8594472110a1e790cf03d19984f059",
+  "authors": "Original supplied project authors retained; prior local integration extraction restored verbatim.",
+  "license": "No third-party license or notice changed."
+}
