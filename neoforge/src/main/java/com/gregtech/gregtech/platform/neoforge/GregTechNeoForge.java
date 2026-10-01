@@ -18,12 +18,13 @@ import org.slf4j.Logger;
 /** NeoForge lifecycle adapter. Gameplay registrations are added by subsystem ports. */
 @Mod(GregTechNeoForge.MOD_ID)
 public final class GregTechNeoForge {
-    public static final String MOD_ID = "gregtech";
+    public static final String MOD_ID = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID;
+    public static final String NAMESPACE = com.gregtech.gregtech.api.mod.GregTechIdentity.REGISTRY_NAMESPACE;
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public GregTechNeoForge(IEventBus modEventBus) {
         // No material/metadata holder may initialize before this platform binding.
-        ModData.bindPresence(ModList.get()::isLoaded);
+        ModData.bindPresence(id -> ModList.get().isLoaded(NAMESPACE.equals(id) ? MOD_ID : id));
         GTMaterialRegistry.setLogSink((warning, message) -> {
             if (warning) LOGGER.warn(message);
             else LOGGER.info(message);

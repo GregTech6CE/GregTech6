@@ -19,7 +19,7 @@ import org.slf4j.Logger;
 import java.util.Map;
 
 /** Material inventory models and tint; this subscriber is never loaded on a dedicated server. */
-@EventBusSubscriber(modid = "gregtech", bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class MaterialClientModels {
     private static final Logger LOGGER = LogUtils.getLogger();
 

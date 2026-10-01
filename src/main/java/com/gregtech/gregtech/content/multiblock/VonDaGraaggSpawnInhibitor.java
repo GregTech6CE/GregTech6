@@ -17,7 +17,7 @@ import java.util.Set;
 import java.util.WeakHashMap;
 
 /** Forge 1.20 equivalent of GT6's MOB_SPAWN_INHIBITORS list. */
-@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(modid = GregTech.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public final class VonDaGraaggSpawnInhibitor {
     private static final WeakHashMap<ServerLevel, Set<BlockPos>> ACTIVE = new WeakHashMap<>();
 

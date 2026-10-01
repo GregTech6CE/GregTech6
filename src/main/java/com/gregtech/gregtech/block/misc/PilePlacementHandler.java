@@ -26,7 +26,7 @@ import net.minecraftforge.fml.common.Mod;
  * the whole held stack as multi-tile 32084, 32085 or 32086. The same ore-prefix lookup also covers
  * unified vanilla ingots; their {@code Item} classes cannot implement a GT-specific {@code useOn}.
  */
-@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(modid = GregTech.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public final class PilePlacementHandler {
     private PilePlacementHandler() {}
 

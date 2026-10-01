@@ -33,7 +33,7 @@ import java.util.Map;
  * {@link PipeWireBakedModel} (GT6 thin-into-thick connection rendering).
  * Items use the same geometry with two opposite connection arms.
  */
-@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = GregTech.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class PipeWireClientModels {
     private static final Logger LOGGER = LogUtils.getLogger();
 

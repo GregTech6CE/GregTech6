@@ -24,7 +24,7 @@ import java.util.TreeMap;
 
 /** Actual Neo item holders over the single shared material definition stream. */
 public final class GTItems {
-    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(GregTechNeoForge.MOD_ID);
+    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(GregTechNeoForge.NAMESPACE);
     private static final Logger LOGGER = LogUtils.getLogger();
     public record CreativeEntry(GTMaterial material, DeferredItem<MaterialItem> item) {}
     private static final Map<String, NavigableMap<String, CreativeEntry>> BY_PREFIX = new HashMap<>();

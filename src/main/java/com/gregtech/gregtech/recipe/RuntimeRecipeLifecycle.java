@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.*;
 
 /** Runtime recipes are rebuilt after tags bind and before PlayerList sends the recipe packet. */
-@Mod.EventBusSubscriber(modid=GregTech.MODID)
+@Mod.EventBusSubscriber(modid=GregTech.MOD_ID)
 public final class RuntimeRecipeLifecycle {
     private static final Set<RecipeManager> APPLIED=Collections.newSetFromMap(new WeakHashMap<>());
     private RuntimeRecipeLifecycle() {}

@@ -16,7 +16,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 /** GT6 coin items settle into a nearby matching pile or form a new pile every 200 ticks. */
-@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(modid = GregTech.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public final class CoinItemExpireHandler {
     /** GT6's ALL_SIDES_MIDDLE_DOWN: own position, below, north, south, west, east, above. */
     private static final BlockPos[] OFFSETS = {

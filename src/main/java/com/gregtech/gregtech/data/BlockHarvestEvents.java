@@ -6,7 +6,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 /** Forge hook for GT utility tools, which have no vanilla TieredItem equivalent. */
-@Mod.EventBusSubscriber(modid="gregtech")
+@Mod.EventBusSubscriber(modid = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID)
 public final class BlockHarvestEvents {
  @SubscribeEvent public static void harvest(PlayerEvent.HarvestCheck event) {
   var stack=event.getEntity().getMainHandItem();

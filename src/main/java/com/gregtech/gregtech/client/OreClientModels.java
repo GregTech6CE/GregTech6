@@ -32,7 +32,7 @@ import java.util.Map;
  * stone-pinned {@link OreBakedModel#stoneModel} view. The blockstate JSON still only needs its one
  * {@code ""} variant.
  */
-@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = GregTech.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class OreClientModels {
     private static final Logger LOGGER = LogUtils.getLogger();
 

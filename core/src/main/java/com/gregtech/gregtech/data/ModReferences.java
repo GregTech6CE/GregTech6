@@ -16,7 +16,7 @@ public class ModReferences {
 
     public static final ModData
             MC = new ModData("minecraft", "Minecraft"),
-            GT = new ModData("gregtech", "GregTech"),
+            GT = new ModData("gregtech", com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_NAME),
             GAPI = new ModData("gregapi", "Greg-API"),
             GAPI_POST = new ModData("gregapi_post", "Greg-API-Post"),
             GT5U = new ModData("gregtech", "GregTech 5 Unofficial"),

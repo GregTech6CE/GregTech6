@@ -47,7 +47,7 @@ import java.util.Map;
  * <p>Not carried over, and recorded in {@link GTFoodItemsGen#SKIPPED} rather than invented: GT6's
  * {@code PotionsGT} potion effects and the ENVM body-temperature/hydration numbers.
  */
-@Mod.EventBusSubscriber(modid = "gregtech")
+@Mod.EventBusSubscriber(modid = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID)
 public final class GTFoodItems {
     /**
      * GT6 {@code FoodStat}'s food numbers: {@code aFoodLevel}/{@code aSaturation} (vanilla food data),

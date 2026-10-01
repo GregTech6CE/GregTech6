@@ -20,7 +20,7 @@ import net.minecraftforge.fml.common.Mod;
  * used, which is what eating a piece of food does), and the priority is kept so another mod can still
  * replace the item before the statistics are read.
  */
-@Mod.EventBusSubscriber(modid = "gregtech")
+@Mod.EventBusSubscriber(modid = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID)
 public final class FoodStatEvents {
     private FoodStatEvents() {}
 

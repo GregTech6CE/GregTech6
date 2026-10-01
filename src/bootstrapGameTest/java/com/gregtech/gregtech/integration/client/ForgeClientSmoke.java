@@ -29,7 +29,7 @@ import net.minecraftforge.fml.common.Mod;
  * Opt-in development smoke only: an actual rendered title screen and saved screenshot.
  * This bootstrap source set is excluded from the production mod jar.
  */
-@Mod.EventBusSubscriber(modid = "gregtech", value = Dist.CLIENT,
+@Mod.EventBusSubscriber(modid = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID, value = Dist.CLIENT,
         bus = Mod.EventBusSubscriber.Bus.FORGE)
 public final class ForgeClientSmoke {
     private static final Logger LOGGER = LogUtils.getLogger();

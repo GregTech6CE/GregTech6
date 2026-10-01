@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** Registers creative tabs and populates them — combined from Loader_Creative and CreativeTabHandler. */
-@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = GregTech.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Loader_Creative implements IGTLoader {
     private final IEventBus bus;
 

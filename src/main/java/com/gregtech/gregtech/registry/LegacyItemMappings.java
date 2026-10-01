@@ -4,7 +4,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Item;
-@Mod.EventBusSubscriber(modid="gregtech")
+@Mod.EventBusSubscriber(modid = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID)
 public final class LegacyItemMappings {
  @SubscribeEvent public static void missing(MissingMappingsEvent event) {
   for(var mapping:event.<Item>getMappings(Registries.ITEM,"gregtech")) {

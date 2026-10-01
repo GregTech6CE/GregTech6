@@ -29,7 +29,7 @@ import net.neoforged.neoforge.client.event.ScreenEvent;
  * Opt-in development smoke only: an actual rendered title screen and saved screenshot.
  * This bootstrap source set is excluded from the production mod jar.
  */
-@EventBusSubscriber(modid = "gregtech", value = Dist.CLIENT,
+@EventBusSubscriber(modid = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID, value = Dist.CLIENT,
         bus = EventBusSubscriber.Bus.GAME)
 public final class NeoForgeClientSmoke {
     private static final Logger LOGGER = LogUtils.getLogger();

@@ -43,7 +43,7 @@ import net.minecraftforge.fml.common.Mod;
  * {@link #breatheIn(LivingEntity, Fluid)}) so it can be driven without a world, following
  * {@code FoodStatEvents}, the other event class of this kind.
  */
-@Mod.EventBusSubscriber(modid = "gregtech")
+@Mod.EventBusSubscriber(modid = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID)
 public final class BreathingGasEvents {
     /** GT6 {@code BlockBaseFluid:414} / {@code BlockWaterlike:229}: {@code SERVER_TIME % 20 == 0}. */
     public static final int DROWN_INTERVAL = WorldFluidEffects.DROWN_INTERVAL;

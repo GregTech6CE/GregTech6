@@ -19,13 +19,16 @@ import net.minecraftforge.eventbus.api.IEventBus;
 
 import java.util.List;
 
-@Mod(GregTech.MODID)
+@Mod(GregTech.MOD_ID)
 public class GregTech {
-    public static final String MODID = "gregtech";
+    public static final String MOD_ID = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID;
+    /** Existing registry/resource namespace, distinct from the loader mod ID. */
+    public static final String MODID = com.gregtech.gregtech.api.mod.GregTechIdentity.REGISTRY_NAMESPACE;
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public GregTech(FMLJavaModLoadingContext context) {
-        com.gregtech.gregtech.api.mod.ModData.bindPresence(net.minecraftforge.fml.ModList.get()::isLoaded);
+        com.gregtech.gregtech.api.mod.ModData.bindPresence(id -> net.minecraftforge.fml.ModList.get().isLoaded(
+                MODID.equals(id) ? MOD_ID : id));
         GTMaterialRegistry.setLogSink((warning, message) -> {
             if (warning) LOGGER.warn(message); else LOGGER.info(message);
         });

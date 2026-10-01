@@ -37,7 +37,7 @@ import java.util.Set;
  * handled by {@link MachineRecipeIngredients}.
  * </p>
  */
-@Mod.EventBusSubscriber(modid = "gregtech", bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public final class BasicMachineRecipePack extends AbstractPackResources {
     /** Machines whose crafting recipe comes from the multiblock table instead. */
     public static final Set<String> MULTIBLOCK_CONTROLLERS = Set.of(

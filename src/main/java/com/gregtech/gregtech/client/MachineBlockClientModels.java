@@ -23,7 +23,7 @@ import org.slf4j.Logger;
 import java.util.EnumMap;
 import java.util.Map;
 
-@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = GregTech.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class MachineBlockClientModels {
     private static final Logger LOGGER = LogUtils.getLogger();
 

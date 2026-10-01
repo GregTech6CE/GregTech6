@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 import java.util.Map;
 
 /** Ensures GT stone blocks, slabs, and block items resolve to {@code models/block/stones/...}. */
-@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = GregTech.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class StoneBlockClientModels {
     private static final Logger LOGGER = LogUtils.getLogger();
 

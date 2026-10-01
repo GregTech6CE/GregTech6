@@ -18,7 +18,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /** Registry-driven built-in datapack: avoids thousands of tiny processResources files. */
-@Mod.EventBusSubscriber(modid="gregtech",bus=Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID,bus=Mod.EventBusSubscriber.Bus.MOD)
 public final class BlockLootPack extends AbstractPackResources {
     private Map<ResourceLocation,byte[]> resources;
     public BlockLootPack(String id) { super(id,true); }

@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /** GT6 BlockFlowersA/B tells the player which bedrock deposit each plant indicates. */
-@Mod.EventBusSubscriber(modid = GregTech.MODID, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = GregTech.MOD_ID, value = Dist.CLIENT)
 public final class BedrockFlowerTooltips {
     private BedrockFlowerTooltips() {}
 

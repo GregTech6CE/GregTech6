@@ -7,7 +7,7 @@ group = rootProject.property('mod_group_id')
 version = rootProject.property('mod_version')
 
 base {
-    archivesName = 'gregtech-neoforge-1.21.1'
+    archivesName = "${rootProject.property('mod_id')}-neoforge-1.21.1"
 }
 
 java {
@@ -65,7 +65,7 @@ neoForge {
     }
 
     mods {
-        gregtech {
+        "${rootProject.property('mod_id')}" {
             sourceSet sourceSets.main
             sourceSet project(':core').sourceSets.main
             sourceSet sourceSets.bootstrapGameTest
@@ -74,8 +74,8 @@ neoForge {
 }
 
 def modProperties = [
-        mod_id: 'gregtech',
-        mod_name: 'GregTech 6 Integrated',
+        mod_id: rootProject.property('mod_id'),
+        mod_name: rootProject.property('mod_name'),
         mod_version: project.version.toString(),
         mod_license: rootProject.property('mod_license'),
         mod_authors: 'saltnya, brokestar233, Lorbineitte Masson, GregTech 6 team'

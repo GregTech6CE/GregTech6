@@ -23,7 +23,7 @@ import java.util.Map;
  * Hopper / queuehopper shared model registration and bake-time aliasing.
  * Follows the same pattern as {@link MachineBlockClientModels} for burning boxes.
  */
-@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = GregTech.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class HopperClientModels {
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final String[] HOPPER_TYPES = {"hopper", "queuehopper"};

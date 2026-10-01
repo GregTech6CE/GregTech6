@@ -33,7 +33,7 @@ import java.util.Map;
  * {@link FluidItemOverrideList}. That list lazily resolves the correct fluid
  * sprite at <em>render time</em> (not bake time), so the atlas is always ready.
  */
-@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = GregTech.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class FluidItemClientModels {
     private static final ResourceLocation SHARED_MODEL = GregTech.id("item/fluid_item");
 

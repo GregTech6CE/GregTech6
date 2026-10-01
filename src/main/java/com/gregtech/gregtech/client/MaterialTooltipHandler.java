@@ -9,7 +9,7 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = GregTech.MODID, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = GregTech.MOD_ID, value = Dist.CLIENT)
 public final class MaterialTooltipHandler {
     private MaterialTooltipHandler() {}
 

@@ -33,8 +33,8 @@ def read_properties(path):
     missing = [key for key in required if not properties.get(key)]
     if missing:
         raise ValueError(f'{path}: missing metadata properties: {missing}')
-    if properties['mod_id'] != 'gregtech':
-        raise ValueError('The integration namespace must remain gregtech')
+    if properties['mod_id'] != 'gregtech6':
+        raise ValueError('The loader mod ID must be gregtech6')
     if properties['minecraft_version'] != PLATFORMS['forge']['minecraft']:
         raise ValueError('The Forge target must remain Minecraft 1.20.1')
     if properties['minecraft_version_range'] != '[1.20.1]':
@@ -90,7 +90,7 @@ def check_metadata(raw, platform, properties):
             raise ValueError(f'{key} must be {expected!r}, found {mod.get(key)!r}')
     all_dependencies = metadata.get('dependencies', {})
     if not isinstance(all_dependencies, dict) or set(all_dependencies) != {properties['mod_id']}:
-        raise ValueError('Dependencies must belong to the single gregtech mod')
+        raise ValueError('Dependencies must belong to the configured integration mod')
     dependencies = all_dependencies[properties['mod_id']]
     if not isinstance(dependencies, list) or any(not isinstance(dep, dict) for dep in dependencies):
         raise ValueError('Dependencies must be an array of tables')

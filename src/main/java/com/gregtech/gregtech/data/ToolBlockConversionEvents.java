@@ -29,7 +29,7 @@ import java.util.List;
  * the converted drops are spawned in its place.
  * </p>
  */
-@Mod.EventBusSubscriber(modid = "gregtech")
+@Mod.EventBusSubscriber(modid = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID)
 public final class ToolBlockConversionEvents {
     /** GT6 {@code getToolDamagePerBlockBreak} per tool. */
     private static final int HAMMER_BLOCK_BREAK = 25;

@@ -44,7 +44,7 @@ import java.util.Set;
  * <p>The web flag ({@code BlockBaseFluid:405} {@code setInWeb()}) is not here: it is a property of the
  * fluid <em>block</em>, so {@code GTWorldFluidBlock#entityInside} applies it.
  */
-@Mod.EventBusSubscriber(modid = "gregtech")
+@Mod.EventBusSubscriber(modid = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID)
 public final class BathingEffectEvents {
 
     private BathingEffectEvents() {}

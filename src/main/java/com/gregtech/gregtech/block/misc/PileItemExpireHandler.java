@@ -19,7 +19,7 @@ import net.minecraftforge.fml.common.Mod;
  * becomes its corresponding placeable pile when it would despawn. The original searches its
  * {@code CUBE_3} positions in this exact order and places only in an irrelevant block.
  */
-@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(modid = GregTech.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public final class PileItemExpireHandler {
     private static final BlockPos[] CUBE_3 = {
             new BlockPos(0, 0, 0), new BlockPos(0, -1, 0), new BlockPos(0, 1, 0),

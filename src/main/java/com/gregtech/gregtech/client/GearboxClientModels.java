@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 import java.util.Map;
 
 /** Replaces static six-sided gearbox cubes with GT6's per-face axle/gear textures. */
-@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = GregTech.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class GearboxClientModels {
     private static final Logger LOGGER = LogUtils.getLogger();
 

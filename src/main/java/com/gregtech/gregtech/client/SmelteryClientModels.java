@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 /** Mold basin / mold / crossing / faucet hull models (same texture-set sharing as smelting crucibles). */
-@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = GregTech.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class SmelteryClientModels {
     private static final Logger LOGGER = LogUtils.getLogger();
 

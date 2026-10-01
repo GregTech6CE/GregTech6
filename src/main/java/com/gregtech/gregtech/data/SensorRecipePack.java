@@ -80,7 +80,7 @@ import java.util.TreeMap;
  * <em>after</em> filtering so an unused key cannot log a substitution it never needed.
  * </p>
  */
-@Mod.EventBusSubscriber(modid = "gregtech", bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public final class SensorRecipePack extends AbstractPackResources {
     private static final Gson GSON = new Gson();
     /** GT6's twenty sensor rows are registered against {@code aUtilMetal} with a null material. */

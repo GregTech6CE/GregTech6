@@ -40,7 +40,7 @@ import java.util.Set;
  * blocks, so every one of them was unobtainable in survival.
  * </p>
  */
-@Mod.EventBusSubscriber(modid = "gregtech", bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public final class MultiblockRecipePack extends AbstractPackResources {
     private static final Gson GSON = new Gson();
     /** Material used when a recipe is not bound to a machine spec. */
