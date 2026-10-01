@@ -1,0 +1,26 @@
+{
+  "type": "gregtech:tool_shaped",
+  "_comment": "GT6 Loader_MultiTileEntities:147 (8441)",
+  "pattern": [
+    "TPT",
+    "SdS"
+  ],
+  "key": {
+    "T": {
+      "tag": "forge:screws/elven_elementium"
+    },
+    "P": {
+      "tag": "forge:plates/elven_elementium"
+    },
+    "S": {
+      "tag": "forge:rods/elven_elementium"
+    },
+    "d": {
+      "item": "gregtech:tool_screwdriver"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gregtech:scaffold_elven_elementium"
+  }
+}

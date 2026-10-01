@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "P Q",
+    "PS ",
+    "CPP"
+  ],
+  "key": {
+    "P": {
+      "item": "gregtech:plate_curved_titanium"
+    },
+    "Q": {
+      "item": "minecraft:ender_eye"
+    },
+    "S": {
+      "item": "gregtech:wire_01_platinum"
+    },
+    "C": {
+      "item": "gregtech:circuit_master"
+    }
+  },
+  "result": {
+    "item": "gregtech:compact_sensor_iv",
+    "count": 1
+  }
+}

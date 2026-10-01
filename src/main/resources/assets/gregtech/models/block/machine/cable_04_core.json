@@ -1,0 +1,85 @@
+{
+  "parent": "block/block",
+  "textures": {
+    "wire": "gregtech:block/material_icons/metallic/wire",
+    "overlay": "gregtech:block/material_icons/rubber/pipeside"
+  },
+  "elements": [
+    {
+      "from": [
+        4,
+        4,
+        4
+      ],
+      "to": [
+        12,
+        12,
+        12
+      ],
+      "faces": {
+        "down": {
+          "texture": "#wire",
+          "tintindex": 0
+        },
+        "up": {
+          "texture": "#wire",
+          "tintindex": 0
+        },
+        "north": {
+          "texture": "#wire",
+          "tintindex": 0
+        },
+        "south": {
+          "texture": "#wire",
+          "tintindex": 0
+        },
+        "west": {
+          "texture": "#wire",
+          "tintindex": 0
+        },
+        "east": {
+          "texture": "#wire",
+          "tintindex": 0
+        }
+      }
+    },
+    {
+      "from": [
+        4,
+        4,
+        4
+      ],
+      "to": [
+        12,
+        12,
+        12
+      ],
+      "faces": {
+        "down": {
+          "texture": "#overlay",
+          "tintindex": 1
+        },
+        "up": {
+          "texture": "#overlay",
+          "tintindex": 1
+        },
+        "north": {
+          "texture": "#overlay",
+          "tintindex": 1
+        },
+        "south": {
+          "texture": "#overlay",
+          "tintindex": 1
+        },
+        "west": {
+          "texture": "#overlay",
+          "tintindex": 1
+        },
+        "east": {
+          "texture": "#overlay",
+          "tintindex": 1
+        }
+      }
+    }
+  ]
+}

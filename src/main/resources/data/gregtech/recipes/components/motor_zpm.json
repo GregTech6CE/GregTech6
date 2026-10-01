@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CWR",
+    "WIW",
+    "PWC"
+  ],
+  "key": {
+    "C": {
+      "item": "gregtech:wire_01_graphene"
+    },
+    "W": {
+      "item": "gregtech:wire_07_annealed_copper"
+    },
+    "R": {
+      "tag": "forge:rods/osmium_elemental"
+    },
+    "P": {
+      "item": "gregtech:plate_curved_osmiumelemental"
+    },
+    "I": {
+      "tag": "forge:long_rods/neodymium_magnetic"
+    }
+  },
+  "result": {
+    "item": "gregtech:compact_electric_motor_zpm",
+    "count": 1
+  }
+}

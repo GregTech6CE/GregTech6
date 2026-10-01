@@ -1,0 +1,29 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "WQW",
+    "BCX"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:comparator"
+    },
+    "C": {
+      "item": "gregtech:circuit_good"
+    },
+    "Q": {
+      "item": "gregtech:blank_cover"
+    },
+    "W": {
+      "item": "gregtech:cable_01_tin"
+    },
+    "X": {
+      "item": "minecraft:repeater"
+    }
+  },
+  "result": {
+    "item": "gregtech:activity_detector_processing"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

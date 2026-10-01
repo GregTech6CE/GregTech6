@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "shape=north_south,reflector=false": {"model":"gregtech:block/decoration/railroad"},
+    "shape=east_west,reflector=false": {"model":"gregtech:block/decoration/railroad","y":90},
+    "shape=ascending_north,reflector=false": {"model":"gregtech:block/decoration/railroad_raised_ne"},
+    "shape=ascending_east,reflector=false": {"model":"gregtech:block/decoration/railroad_raised_ne","y":90},
+    "shape=ascending_south,reflector=false": {"model":"gregtech:block/decoration/railroad_raised_sw"},
+    "shape=ascending_west,reflector=false": {"model":"gregtech:block/decoration/railroad_raised_sw","y":90},
+    "shape=north_south,reflector=true": {"model":"gregtech:block/decoration/railroad_reflector"},
+    "shape=east_west,reflector=true": {"model":"gregtech:block/decoration/railroad_reflector","y":90},
+    "shape=ascending_north,reflector=true": {"model":"gregtech:block/decoration/railroad_reflector_raised_ne"},
+    "shape=ascending_east,reflector=true": {"model":"gregtech:block/decoration/railroad_reflector_raised_ne","y":90},
+    "shape=ascending_south,reflector=true": {"model":"gregtech:block/decoration/railroad_reflector_raised_sw"},
+    "shape=ascending_west,reflector=true": {"model":"gregtech:block/decoration/railroad_reflector_raised_sw","y":90}
+  }
+}

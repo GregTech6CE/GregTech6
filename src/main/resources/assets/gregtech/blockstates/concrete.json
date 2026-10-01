@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "color=white": {
+      "model": "gregtech:block/iconsets/concrete"
+    },
+    "color=orange": {
+      "model": "gregtech:block/iconsets/concrete"
+    },
+    "color=magenta": {
+      "model": "gregtech:block/iconsets/concrete"
+    },
+    "color=light_blue": {
+      "model": "gregtech:block/iconsets/concrete"
+    },
+    "color=yellow": {
+      "model": "gregtech:block/iconsets/concrete"
+    },
+    "color=lime": {
+      "model": "gregtech:block/iconsets/concrete"
+    },
+    "color=pink": {
+      "model": "gregtech:block/iconsets/concrete"
+    },
+    "color=gray": {
+      "model": "gregtech:block/iconsets/concrete"
+    },
+    "color=light_gray": {
+      "model": "gregtech:block/iconsets/concrete"
+    },
+    "color=cyan": {
+      "model": "gregtech:block/iconsets/concrete"
+    },
+    "color=purple": {
+      "model": "gregtech:block/iconsets/concrete"
+    },
+    "color=blue": {
+      "model": "gregtech:block/iconsets/concrete"
+    },
+    "color=brown": {
+      "model": "gregtech:block/iconsets/concrete"
+    },
+    "color=green": {
+      "model": "gregtech:block/iconsets/concrete"
+    },
+    "color=red": {
+      "model": "gregtech:block/iconsets/concrete"
+    },
+    "color=black": {
+      "model": "gregtech:block/iconsets/concrete"
+    }
+  }
+}

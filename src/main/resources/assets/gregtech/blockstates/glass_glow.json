@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "color=white": {
+      "model": "gregtech:block/decoration/glass_glow"
+    },
+    "color=orange": {
+      "model": "gregtech:block/decoration/glass_glow"
+    },
+    "color=magenta": {
+      "model": "gregtech:block/decoration/glass_glow"
+    },
+    "color=light_blue": {
+      "model": "gregtech:block/decoration/glass_glow"
+    },
+    "color=yellow": {
+      "model": "gregtech:block/decoration/glass_glow"
+    },
+    "color=lime": {
+      "model": "gregtech:block/decoration/glass_glow"
+    },
+    "color=pink": {
+      "model": "gregtech:block/decoration/glass_glow"
+    },
+    "color=gray": {
+      "model": "gregtech:block/decoration/glass_glow"
+    },
+    "color=light_gray": {
+      "model": "gregtech:block/decoration/glass_glow"
+    },
+    "color=cyan": {
+      "model": "gregtech:block/decoration/glass_glow"
+    },
+    "color=purple": {
+      "model": "gregtech:block/decoration/glass_glow"
+    },
+    "color=blue": {
+      "model": "gregtech:block/decoration/glass_glow"
+    },
+    "color=brown": {
+      "model": "gregtech:block/decoration/glass_glow"
+    },
+    "color=green": {
+      "model": "gregtech:block/decoration/glass_glow"
+    },
+    "color=red": {
+      "model": "gregtech:block/decoration/glass_glow"
+    },
+    "color=black": {
+      "model": "gregtech:block/decoration/glass_glow"
+    }
+  }
+}

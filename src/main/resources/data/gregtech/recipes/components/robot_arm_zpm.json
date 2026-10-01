@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CCC",
+    "MSM",
+    "PES"
+  ],
+  "key": {
+    "C": {
+      "item": "gregtech:wire_01_graphene"
+    },
+    "M": {
+      "item": "gregtech:compact_electric_motor_zpm"
+    },
+    "S": {
+      "tag": "forge:rods/osmium_elemental"
+    },
+    "P": {
+      "item": "gregtech:compact_electric_piston_zpm"
+    },
+    "E": {
+      "item": "gregtech:integrated_circuit_7"
+    }
+  },
+  "result": {
+    "item": "gregtech:compact_robot_arm_zpm",
+    "count": 1
+  }
+}

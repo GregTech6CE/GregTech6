@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:clay_measuring_pot"
+    }
+  ],
+  "result": {
+    "item": "minecraft:clay_ball",
+    "count": 4
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "type": "gregtech:tool_shaped",
+  "_comment": "GT6 Loader_MultiTileEntities:147 (8427)",
+  "pattern": [
+    "TPT",
+    "SdS"
+  ],
+  "key": {
+    "T": {
+      "tag": "forge:screws/thaumium"
+    },
+    "P": {
+      "tag": "forge:plates/thaumium"
+    },
+    "S": {
+      "tag": "forge:rods/thaumium"
+    },
+    "d": {
+      "item": "gregtech:tool_screwdriver"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gregtech:scaffold_thaumium"
+  }
+}

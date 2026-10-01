@@ -1,0 +1,48 @@
+{
+  "parent": "block/block",
+  "textures": {
+    "rod": "gregtech:block/iconsets/axle",
+    "horizontal": "gregtech:block/iconsets/axle_horizontal",
+    "vertical": "gregtech:block/iconsets/axle_vertical"
+  },
+  "elements": [
+    {
+      "from": [
+        2.0,
+        2.0,
+        0
+      ],
+      "to": [
+        14.0,
+        14.0,
+        16
+      ],
+      "faces": {
+        "down": {
+          "texture": "#horizontal",
+          "tintindex": 0
+        },
+        "up": {
+          "texture": "#horizontal",
+          "tintindex": 0
+        },
+        "north": {
+          "texture": "#rod",
+          "tintindex": 0
+        },
+        "south": {
+          "texture": "#rod",
+          "tintindex": 0
+        },
+        "west": {
+          "texture": "#vertical",
+          "tintindex": 0
+        },
+        "east": {
+          "texture": "#vertical",
+          "tintindex": 0
+        }
+      }
+    }
+  ]
+}

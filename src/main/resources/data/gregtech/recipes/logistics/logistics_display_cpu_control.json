@@ -1,0 +1,32 @@
+{
+  "type": "gregtech:tool_shaped",
+  "_comment": "GT6 MultiItemTechnological:774",
+  "pattern": [
+    " Ld",
+    " Q ",
+    " C "
+  ],
+  "key": {
+    "d": {
+      "item": "gregtech:tool_screwdriver"
+    },
+    "L": {
+      "item": "gregtech:wire_01_lumium"
+    },
+    "Q": {
+      "item": "gregtech:blank_cover"
+    },
+    "C": [
+      {
+        "item": "gregtech:circuit_basic"
+      },
+      {
+        "item": "gregtech:circuit_good"
+      }
+    ]
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gregtech:logistics_display_cpu_control"
+  }
+}

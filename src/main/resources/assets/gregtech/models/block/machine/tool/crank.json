@@ -1,0 +1,136 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "forge:composite",
+  "textures": {
+    "particle": "gregtech:block/machines/tools/crank/colored/front"
+  },
+  "children": {
+    "colored": {
+      "textures": {
+        "front": "gregtech:block/machines/tools/crank/colored/front",
+        "axle": "gregtech:block/iconsets/axle"
+      },
+      "elements": [
+        {
+          "from": [
+            2,
+            2,
+            13
+          ],
+          "to": [
+            14,
+            14,
+            15
+          ],
+          "faces": {
+            "down": {
+              "texture": "#axle",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#axle",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#front",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#axle",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#axle",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#axle",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            5,
+            5,
+            15
+          ],
+          "to": [
+            11,
+            11,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#axle",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#axle",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#front",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#axle",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#axle",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#axle",
+              "tintindex": 0
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    },
+    "overlay": {
+      "textures": {
+        "front": "gregtech:block/machines/tools/crank/overlay/front"
+      },
+      "elements": [
+        {
+          "from": [
+            2,
+            2,
+            13
+          ],
+          "to": [
+            14,
+            14,
+            15
+          ],
+          "faces": {
+            "north": {
+              "texture": "#front"
+            }
+          }
+        },
+        {
+          "from": [
+            5,
+            5,
+            15
+          ],
+          "to": [
+            11,
+            11,
+            16
+          ],
+          "faces": {
+            "north": {
+              "texture": "#front"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    }
+  }
+}

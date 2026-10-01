@@ -1,0 +1,27 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "LLL",
+    "LGL",
+    "x l"
+  ],
+  "key": {
+    "L": {
+      "tag": "forge:plates/lead"
+    },
+    "x": {
+      "item": "gregtech:tool_wire_cutter"
+    },
+    "l": {
+      "item": "gregtech:tool_file"
+    },
+    "G": {
+      "item": "minecraft:glass_pane"
+    }
+  },
+  "result": {
+    "item": "gregtech:radiation_suit_helmet"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

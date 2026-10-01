@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CCC",
+    "MSM",
+    "PES"
+  ],
+  "key": {
+    "C": {
+      "item": "gregtech:cable_01_aluminium"
+    },
+    "M": {
+      "item": "gregtech:compact_electric_motor_ev"
+    },
+    "S": {
+      "tag": "forge:rods/chromium"
+    },
+    "P": {
+      "item": "gregtech:compact_electric_piston_ev"
+    },
+    "E": {
+      "item": "gregtech:circuit_elite"
+    }
+  },
+  "result": {
+    "item": "gregtech:compact_robot_arm_ev",
+    "count": 1
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {"item": "gregtech:flower_tungstus"},
+  "result": "minecraft:green_dye",
+  "experience": 0.0,
+  "cookingtime": 200
+}

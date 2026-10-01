@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CWR",
+    "WIW",
+    "PWC"
+  ],
+  "key": {
+    "C": {
+      "item": "gregtech:cable_01_copper"
+    },
+    "W": {
+      "item": "gregtech:wire_02_copper"
+    },
+    "R": {
+      "tag": "forge:rods/aluminium"
+    },
+    "P": {
+      "item": "gregtech:plate_curved_aluminium"
+    },
+    "I": {
+      "tag": "forge:rods/steel_magnetic"
+    }
+  },
+  "result": {
+    "item": "gregtech:compact_electric_motor_mv",
+    "count": 1
+  }
+}

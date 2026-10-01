@@ -1,0 +1,27 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "PCP",
+    "PwP",
+    "BBB"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:plates/tungsten_steel"
+    },
+    "C": {
+      "tag": "gregtech:plate_double/copper"
+    },
+    "B": {
+      "item": "minecraft:bricks"
+    },
+    "w": {
+      "item": "gregtech:tool_wrench"
+    }
+  },
+  "result": {
+    "item": "gregtech:burning_box_solid_tungsten_steel"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

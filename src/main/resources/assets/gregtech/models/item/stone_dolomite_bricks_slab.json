@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "gregtech:block/stones/gt.stone.dolomite/bricks",
+    "top": "gregtech:block/stones/gt.stone.dolomite/bricks",
+    "side": "gregtech:block/stones/gt.stone.dolomite/bricks"
+  }
+}

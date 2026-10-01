@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:wire_07_naquadah"
+    },
+    {
+      "item": "gregtech:wire_07_naquadah"
+    }
+  ],
+  "result": {
+    "item": "gregtech:wire_14_naquadah",
+    "count": 1
+  }
+}

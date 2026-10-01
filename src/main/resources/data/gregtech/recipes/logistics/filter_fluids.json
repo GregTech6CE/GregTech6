@@ -1,0 +1,30 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "Xh ",
+    "ZMZ",
+    " wX"
+  ],
+  "key": {
+    "M": {
+      "item": "gregtech:casing_machine_steelgalvanized"
+    },
+    "X": {
+      "item": "gregtech:pipe_medium_galvanized_steel"
+    },
+    "Z": {
+      "item": "gregtech:fluid_filter"
+    },
+    "h": {
+      "item": "gregtech:tool_hammer"
+    },
+    "w": {
+      "item": "gregtech:tool_wrench"
+    }
+  },
+  "result": {
+    "item": "gregtech:filter_fluids"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

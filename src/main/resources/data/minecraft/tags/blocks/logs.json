@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "gregtech:log_blue_mahoe",
+    "gregtech:log_bluespruce",
+    "gregtech:log_cinnamon",
+    "gregtech:log_coconut",
+    "gregtech:log_ebony",
+    "gregtech:log_hazel",
+    "gregtech:log_maple",
+    "gregtech:log_pine",
+    "gregtech:log_rainbowood",
+    "gregtech:log_rubber",
+    "gregtech:log_white_mahoe",
+    "gregtech:log_willow"
+  ]
+}

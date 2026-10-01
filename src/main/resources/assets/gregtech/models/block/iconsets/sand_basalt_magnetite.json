@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "gregtech:block/iconsets/sand_basalt_magnetite"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "gregtech:stone_komatiite_stone"
+  },
+  "result": "gregtech:stone_komatiite_smooth",
+  "experience": 0.0,
+  "cookingtime": 200
+}

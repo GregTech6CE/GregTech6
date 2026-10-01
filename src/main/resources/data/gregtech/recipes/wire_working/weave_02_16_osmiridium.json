@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:wire_02_osmiridium"
+    },
+    {
+      "item": "gregtech:wire_02_osmiridium"
+    },
+    {
+      "item": "gregtech:wire_02_osmiridium"
+    },
+    {
+      "item": "gregtech:wire_02_osmiridium"
+    },
+    {
+      "item": "gregtech:wire_02_osmiridium"
+    },
+    {
+      "item": "gregtech:wire_02_osmiridium"
+    },
+    {
+      "item": "gregtech:wire_02_osmiridium"
+    },
+    {
+      "item": "gregtech:wire_02_osmiridium"
+    }
+  ],
+  "result": {
+    "item": "gregtech:wire_16_osmiridium",
+    "count": 1
+  }
+}

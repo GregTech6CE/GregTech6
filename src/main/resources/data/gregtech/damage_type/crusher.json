@@ -1,0 +1,6 @@
+{
+  "message_id": "gregtech.crusher",
+  "exhaustion": 0.1,
+  "scaling": "never",
+  "effects": "hurt"
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "gregtech:block/iconsets/planks_bluespruce",
+    "top": "gregtech:block/iconsets/planks_bluespruce",
+    "side": "gregtech:block/iconsets/planks_bluespruce"
+  }
+}

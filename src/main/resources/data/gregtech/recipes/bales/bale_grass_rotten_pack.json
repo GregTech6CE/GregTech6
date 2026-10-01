@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "XXX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "gregtech:rotten_grass"
+    }
+  },
+  "result": {
+    "item": "gregtech:bale_grass_rotten"
+  }
+}

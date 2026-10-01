@@ -1,0 +1,26 @@
+{
+  "type": "gregtech:tool_shaped",
+  "_comment": "GT6 Loader_MultiTileEntities:147 (8411)",
+  "pattern": [
+    "TPT",
+    "SdS"
+  ],
+  "key": {
+    "T": {
+      "tag": "forge:screws/stainless_steel"
+    },
+    "P": {
+      "tag": "forge:plates/stainless_steel"
+    },
+    "S": {
+      "tag": "forge:rods/stainless_steel"
+    },
+    "d": {
+      "item": "gregtech:tool_screwdriver"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gregtech:scaffold_stainless_steel"
+  }
+}

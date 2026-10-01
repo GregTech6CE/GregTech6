@@ -1,0 +1,11 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": ["hMy"],
+  "key": {
+    "h": {"item": "gregtech:tool_hammer"},
+    "M": {"item": "gregtech:titanium_wall"},
+    "y": {"item": "gregtech:tool_chisel"}
+  },
+  "result": {"item": "gregtech:large_titanium_crucible"},
+  "allow_mirror": false
+}

@@ -1,0 +1,117 @@
+{
+  "loader": "forge:composite",
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "gregtech:block/machines/extenders/inv/colored/side"
+  },
+  "children": {
+    "colored": {
+      "textures": {
+        "north": "gregtech:block/machines/extenders/inv/colored/in",
+        "south": "gregtech:block/machines/extenders/inv/colored/out",
+        "up": "gregtech:block/machines/extenders/inv/colored/side",
+        "down": "gregtech:block/machines/extenders/inv/colored/side",
+        "east": "gregtech:block/machines/extenders/inv/colored/side",
+        "west": "gregtech:block/machines/extenders/inv/colored/side"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "north": {
+              "texture": "#north",
+              "cullface": "north",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#south",
+              "cullface": "south",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#up",
+              "cullface": "up",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#down",
+              "cullface": "down",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#east",
+              "cullface": "east",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#west",
+              "cullface": "west",
+              "tintindex": 0
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    },
+    "overlay": {
+      "textures": {
+        "north": "gregtech:block/machines/extenders/inv/overlay/in",
+        "south": "gregtech:block/machines/extenders/inv/overlay/out",
+        "up": "gregtech:block/machines/extenders/inv/overlay/side",
+        "down": "gregtech:block/machines/extenders/inv/overlay/side",
+        "east": "gregtech:block/machines/extenders/inv/overlay/side",
+        "west": "gregtech:block/machines/extenders/inv/overlay/side"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "north": {
+              "texture": "#north",
+              "cullface": "north"
+            },
+            "south": {
+              "texture": "#south",
+              "cullface": "south"
+            },
+            "up": {
+              "texture": "#up",
+              "cullface": "up"
+            },
+            "down": {
+              "texture": "#down",
+              "cullface": "down"
+            },
+            "east": {
+              "texture": "#east",
+              "cullface": "east"
+            },
+            "west": {
+              "texture": "#west",
+              "cullface": "west"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "type": "gregtech:tool_shaped",
+  "_comment": "GT6 Loader_MultiTileEntities:147 (8407)",
+  "pattern": [
+    "TPT",
+    "SdS"
+  ],
+  "key": {
+    "T": {
+      "tag": "forge:screws/electrum"
+    },
+    "P": {
+      "tag": "forge:plates/electrum"
+    },
+    "S": {
+      "tag": "forge:rods/electrum"
+    },
+    "d": {
+      "item": "gregtech:tool_screwdriver"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gregtech:scaffold_electrum"
+  }
+}

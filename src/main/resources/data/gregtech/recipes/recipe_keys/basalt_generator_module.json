@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "_comment": "GT6 MultiItemRandomTools:425",
+  "pattern": [
+    "S",
+    "M",
+    "I"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:soul_sand"
+    },
+    "M": {
+      "item": "gregtech:stone_generator_module"
+    },
+    "I": {
+      "item": "minecraft:packed_ice"
+    }
+  },
+  "result": {
+    "item": "gregtech:basalt_generator_module"
+  }
+}

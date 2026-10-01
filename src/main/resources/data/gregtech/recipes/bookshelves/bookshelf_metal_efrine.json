@@ -1,0 +1,31 @@
+{
+  "type": "gregtech:tool_shaped",
+  "_comment": "GT6 Loader_MultiTileEntities:143, multi-tile 7153",
+  "pattern": [
+    "PTP",
+    "sdh",
+    "PTP"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:plates/efrine"
+    },
+    "T": {
+      "tag": "forge:screws/efrine"
+    },
+    "s": {
+      "item": "gregtech:tool_saw"
+    },
+    "d": {
+      "item": "gregtech:tool_screwdriver"
+    },
+    "h": {
+      "item": "gregtech:tool_hammer"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gregtech:bookshelf_metal_efrine",
+    "count": 1
+  }
+}

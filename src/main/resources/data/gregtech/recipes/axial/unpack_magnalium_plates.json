@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:block_plate_magnalium"
+    }
+  ],
+  "result": {
+    "item": "gregtech:plate_magnalium",
+    "count": 9
+  }
+}

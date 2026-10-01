@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "F F",
+    "CMC",
+    "E E"
+  ],
+  "key": {
+    "F": {
+      "item": "gregtech:air_vent"
+    },
+    "C": {
+      "item": "gregtech:circuit_advanced"
+    },
+    "M": {
+      "item": "gregtech:casing_machine_steelgalvanized"
+    },
+    "E": {
+      "item": "gregtech:compact_electric_motor_lv"
+    }
+  },
+  "result": {
+    "item": "gregtech:fusion_ventilation_unit"
+  }
+}

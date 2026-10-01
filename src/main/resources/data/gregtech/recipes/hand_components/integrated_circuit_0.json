@@ -1,0 +1,27 @@
+{
+  "type": "gregtech:tool_shaped",
+  "_comment": "GT6 ItemIntegratedCircuit:58",
+  "pattern": [
+    "GhG",
+    "SSS",
+    "GwG"
+  ],
+  "key": {
+    "G": {
+      "item": "gregtech:gear_gt_small_iron"
+    },
+    "S": {
+      "tag": "forge:rods/iron"
+    },
+    "h": {
+      "item": "gregtech:tool_hammer"
+    },
+    "w": {
+      "item": "gregtech:tool_wrench"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gregtech:integrated_circuit_0"
+  }
+}

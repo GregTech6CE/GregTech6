@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "gregtech:item/material_icons/prismarine/plategemtiny",
+    "layer1": "gregtech:item/material_icons/prismarine/plategemtiny_overlay"
+  }
+}

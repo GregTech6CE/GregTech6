@@ -1,0 +1,37 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "CWM",
+    "WGx",
+    "MTd"
+  ],
+  "key": {
+    "C": {
+      "item": "gregtech:circuit_advanced"
+    },
+    "W": {
+      "item": "gregtech:cable_01_copper"
+    },
+    "M": {
+      "tag": "forge:plates/silver"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "x": {
+      "item": "gregtech:tool_wire_cutter"
+    },
+    "T": {
+      "tag": "forge:screws/stainless_steel"
+    },
+    "d": {
+      "item": "gregtech:tool_screwdriver"
+    }
+  },
+  "result": {
+    "item": "gregtech:laser_emitter_emptygas",
+    "count": 1
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

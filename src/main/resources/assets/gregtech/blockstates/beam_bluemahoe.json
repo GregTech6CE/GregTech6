@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "gregtech:block/iconsets/beam_bluemahoe"
+    },
+    "axis=z": {
+      "model": "gregtech:block/iconsets/beam_bluemahoe_horizontal",
+      "x": 90
+    },
+    "axis=x": {
+      "model": "gregtech:block/iconsets/beam_bluemahoe_horizontal",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

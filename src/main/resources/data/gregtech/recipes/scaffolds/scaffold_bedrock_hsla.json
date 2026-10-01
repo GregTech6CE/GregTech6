@@ -1,0 +1,26 @@
+{
+  "type": "gregtech:tool_shaped",
+  "_comment": "GT6 Loader_MultiTileEntities:147 (8434)",
+  "pattern": [
+    "TPT",
+    "SdS"
+  ],
+  "key": {
+    "T": {
+      "tag": "forge:screws/bedrock_hslaalloy"
+    },
+    "P": {
+      "tag": "forge:plates/bedrock_hslaalloy"
+    },
+    "S": {
+      "tag": "forge:rods/bedrock_hslaalloy"
+    },
+    "d": {
+      "item": "gregtech:tool_screwdriver"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gregtech:scaffold_bedrock_hsla"
+  }
+}

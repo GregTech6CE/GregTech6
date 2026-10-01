@@ -1,0 +1,92 @@
+{
+  "loader": "forge:composite",
+  "children": {
+    "layer0": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "all": "gregtech:block/machines/tools/rope/colored",
+        "particle": "gregtech:block/machines/tools/rope/colored"
+      },
+      "elements": [
+        {
+          "from": [
+            6,
+            0,
+            12
+          ],
+          "to": [
+            10,
+            16,
+            16
+          ],
+          "faces": {
+            "north": {
+              "texture": "#all"
+            },
+            "south": {
+              "texture": "#all"
+            },
+            "west": {
+              "texture": "#all"
+            },
+            "east": {
+              "texture": "#all"
+            },
+            "up": {
+              "texture": "#all"
+            },
+            "down": {
+              "texture": "#all"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:solid"
+    },
+    "layer1": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "all": "gregtech:block/machines/tools/rope/overlay"
+      },
+      "elements": [
+        {
+          "from": [
+            6,
+            0,
+            12
+          ],
+          "to": [
+            10,
+            16,
+            16
+          ],
+          "faces": {
+            "north": {
+              "texture": "#all"
+            },
+            "south": {
+              "texture": "#all"
+            },
+            "west": {
+              "texture": "#all"
+            },
+            "east": {
+              "texture": "#all"
+            },
+            "up": {
+              "texture": "#all"
+            },
+            "down": {
+              "texture": "#all"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    }
+  },
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "gregtech:block/machines/tools/rope/colored"
+  }
+}

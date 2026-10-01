@@ -1,0 +1,34 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "TPP",
+    "dSS",
+    "TMG"
+  ],
+  "key": {
+    "T": {
+      "tag": "forge:screws/aluminium"
+    },
+    "P": {
+      "tag": "forge:plates/aluminium"
+    },
+    "d": {
+      "item": "gregtech:tool_screwdriver"
+    },
+    "S": {
+      "tag": "forge:rods/aluminium"
+    },
+    "M": {
+      "item": "gregtech:compact_electric_motor_mv"
+    },
+    "G": {
+      "item": "gregtech:gear_gt_small_aluminium"
+    }
+  },
+  "result": {
+    "item": "gregtech:compact_electric_piston_mv",
+    "count": 1
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

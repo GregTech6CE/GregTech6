@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:wire_01_tin"
+    },
+    {
+      "item": "gregtech:wire_01_tin"
+    },
+    {
+      "item": "gregtech:wire_01_tin"
+    },
+    {
+      "item": "gregtech:wire_01_tin"
+    },
+    {
+      "item": "gregtech:wire_01_tin"
+    }
+  ],
+  "result": {
+    "item": "gregtech:wire_05_tin",
+    "count": 1
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "type": "gregtech:tool_shaped",
+  "_comment": "GT6 MultiItemTechnological:178",
+  "pattern": [
+    "TCT",
+    "wPd"
+  ],
+  "key": {
+    "T": {
+      "tag": "forge:screws/brass"
+    },
+    "C": {
+      "item": "gregtech:plate_curved_brass"
+    },
+    "P": {
+      "item": "gregtech:plate_brass"
+    },
+    "w": {
+      "item": "gregtech:tool_wrench"
+    },
+    "d": {
+      "item": "gregtech:tool_screwdriver"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gregtech:pressure_value"
+  }
+}

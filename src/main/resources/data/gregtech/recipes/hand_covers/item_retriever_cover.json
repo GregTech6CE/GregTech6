@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "_comment": "GT6 MultiItemTechnological:170",
+  "pattern": [
+    "RPR",
+    "CQC"
+  ],
+  "key": {
+    "R": {
+      "item": "gregtech:plate_curved_electrum"
+    },
+    "P": {
+      "item": "gregtech:compact_electric_piston_lv"
+    },
+    "C": [
+      {
+        "item": "gregtech:circuit_basic"
+      },
+      {
+        "item": "gregtech:circuit_good"
+      },
+      {
+        "item": "gregtech:circuit_advanced"
+      }
+    ],
+    "Q": {
+      "item": "gregtech:item_filter"
+    }
+  },
+  "result": {
+    "item": "gregtech:item_retriever_cover"
+  }
+}

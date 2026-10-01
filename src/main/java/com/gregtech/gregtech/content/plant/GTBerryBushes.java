@@ -1,0 +1,89 @@
+package com.gregtech.gregtech.content.plant;
+
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+/**
+ * GT6's berry bush colour table ({@code gregapi.data.CS.BushesGT}) — one entry per berry that grows
+ * on a GT6 bush, with GT6's own four colours {@code {bush, bloom, immature, berry}}:
+ * {@code MultiItemFood} line-for-line ({@code BushesGT.put(IL.Food_Blueberry.get(1), 0x22ff22, ...)}).
+ *
+ * <p>The colours tint GT6's greyscale bush textures per stage — stage 0 shows only the bush,
+ * stage 1 the immature berries ({@code bloom}), stage 2 the berries in {@code immature} and
+ * stage 3 the ripe berries in {@code berry}. A bush without a berry renders in GT6's placeholder
+ * magenta ({@code 0xff00ff}), and an unknown berry falls back to GT6's {@code DEFAULT} entry.
+ */
+public final class GTBerryBushes {
+    private GTBerryBushes() {}
+
+    /** GT6 {@code BushesGT} colours of one berry type. */
+    public record BerryType(String id, int bush, int bloom, int immature, int berry) {}
+
+    /** GT6's registration order — the worldgen noise picks its index in exactly this list. */
+    private static final Map<String, BerryType> TYPES = new LinkedHashMap<>();
+
+    /** GT6 {@code BushesGT.DEFAULT} (the string/cotton entry). */
+    public static final BerryType DEFAULT = new BerryType("default", 0x22cc22, 0x33cc33, 0x44cc44, 0xeeeeee);
+    /** GT6 renders a bush that has no berry yet in this colour. */
+    public static final int NO_BERRY_COLOUR = 0xff00ff;
+
+    static {
+        entry("blueberry", 0x22ff22, 0xffcccc, 0x6666dd, 0x0000ff);
+        entry("candleberry", 0x44ff44, 0xccffcc, 0xaaffaa, 0xccffcc);
+        entry("cranberry", 0x00dd00, 0xffcccc, 0x66ff66, 0xff0000);
+        entry("black_currants", 0x33ff33, 0xaaaaaa, 0x66ff66, 0x111111);
+        entry("white_currants", 0x33ff33, 0xaaaaaa, 0x66ff66, 0xeeeedd);
+        entry("red_currants", 0x33ff33, 0xaaaaaa, 0x66ff66, 0xee0000);
+        entry("blackberry", 0x11ff11, 0xffcccc, 0x663333, 0x331111);
+        entry("raspberry", 0x11ff11, 0xffcccc, 0x664444, 0xffaaaa);
+    }
+
+    private static void entry(String id, int bush, int bloom, int immature, int berry) {
+        TYPES.put(id, new BerryType(id, bush, bloom, immature, berry));
+    }
+
+    /** The berry types in GT6's order (the worldgen noise indexes into this list). */
+    public static java.util.List<BerryType> types() {
+        return java.util.List.copyOf(TYPES.values());
+    }
+
+    public static int size() { return TYPES.size(); }
+
+    public static BerryType byIndex(int index) {
+        var list = types();
+        return list.get(Math.floorMod(index, list.size()));
+    }
+
+    /** The type of a berry stack, or {@code null} when it is not a GT6 bush berry. */
+    public static BerryType of(ItemStack stack) {
+        if (stack == null || stack.isEmpty()) return null;
+        ResourceLocation id = ForgeRegistries.ITEMS.getKey(stack.getItem());
+        if (id == null || !id.getNamespace().equals("gregtech")) return null;
+        return TYPES.get(id.getPath());
+    }
+
+    public static BerryType byId(String id) {
+        return TYPES.get(id);
+    }
+
+    /** GT6 {@code BushesGT.get}: the type of a berry, GT6's DEFAULT for anything else. */
+    public static BerryType ofOrDefault(ItemStack stack) {
+        BerryType type = of(stack);
+        return type == null ? DEFAULT : type;
+    }
+
+    /** The tint colour of a stage's render layer, exactly as GT6's {@code getRenderPasses2} picks it. */
+    public static int stageColour(BerryType type, int stage) {
+        BerryType resolved = type == null ? DEFAULT : type;
+        return switch (stage) {
+            case 1 -> resolved.bloom();
+            case 2 -> resolved.immature();
+            case 3 -> resolved.berry();
+            default -> resolved.bush();
+        };
+    }
+}

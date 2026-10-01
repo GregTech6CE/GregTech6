@@ -1,0 +1,26 @@
+{
+  "type": "gregtech:tool_shaped",
+  "_comment": "GT6 Loader_MultiTileEntities:147 (8424)",
+  "pattern": [
+    "TPT",
+    "SdS"
+  ],
+  "key": {
+    "T": {
+      "tag": "forge:screws/meteoric_steel"
+    },
+    "P": {
+      "tag": "forge:plates/meteoric_steel"
+    },
+    "S": {
+      "tag": "forge:rods/meteoric_steel"
+    },
+    "d": {
+      "item": "gregtech:tool_screwdriver"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gregtech:scaffold_meteoric_steel"
+  }
+}

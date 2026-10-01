@@ -1,0 +1,26 @@
+{
+  "type": "gregtech:tool_shaped",
+  "_comment": "GT6 Loader_MultiTileEntities:147 (8436)",
+  "pattern": [
+    "TPT",
+    "SdS"
+  ],
+  "key": {
+    "T": {
+      "tag": "forge:screws/draconium_awakened"
+    },
+    "P": {
+      "tag": "forge:plates/draconium_awakened"
+    },
+    "S": {
+      "tag": "forge:rods/draconium_awakened"
+    },
+    "d": {
+      "item": "gregtech:tool_screwdriver"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gregtech:scaffold_draconium_awakened"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "CxC",
+    "CMC",
+    "CwC"
+  ],
+  "key": {
+    "C": {
+      "item": "gregtech:wire_02_copper"
+    },
+    "M": {
+      "item": "gregtech:casing_machine_aluminium"
+    },
+    "x": {
+      "item": "gregtech:tool_wire_cutter"
+    },
+    "w": {
+      "item": "gregtech:tool_wrench"
+    }
+  },
+  "result": {
+    "item": "gregtech:electromagnet_mv"
+  },
+  "allow_mirror": false,
+  "_comment": "GT6 Loader_MultiTileEntities: 866"
+}

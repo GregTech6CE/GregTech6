@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "_comment": "GT6 MultiItemTechnological:119",
+  "ingredients": [
+    {
+      "item": "gregtech:logistics_display_cpu_control"
+    }
+  ],
+  "result": {
+    "item": "gregtech:logistics_display_cpu_storage"
+  }
+}

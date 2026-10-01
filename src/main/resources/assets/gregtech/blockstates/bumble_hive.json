@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "color=white": {
+      "model": "gregtech:block/bumble_hive_white"
+    },
+    "color=orange": {
+      "model": "gregtech:block/bumble_hive_orange"
+    },
+    "color=magenta": {
+      "model": "gregtech:block/bumble_hive_magenta"
+    },
+    "color=light_blue": {
+      "model": "gregtech:block/bumble_hive_light_blue"
+    },
+    "color=yellow": {
+      "model": "gregtech:block/bumble_hive_yellow"
+    },
+    "color=lime": {
+      "model": "gregtech:block/bumble_hive_lime"
+    },
+    "color=pink": {
+      "model": "gregtech:block/bumble_hive_pink"
+    },
+    "color=gray": {
+      "model": "gregtech:block/bumble_hive_gray"
+    },
+    "color=light_gray": {
+      "model": "gregtech:block/bumble_hive_light_gray"
+    },
+    "color=cyan": {
+      "model": "gregtech:block/bumble_hive_cyan"
+    },
+    "color=purple": {
+      "model": "gregtech:block/bumble_hive_purple"
+    },
+    "color=blue": {
+      "model": "gregtech:block/bumble_hive_blue"
+    },
+    "color=brown": {
+      "model": "gregtech:block/bumble_hive_brown"
+    },
+    "color=green": {
+      "model": "gregtech:block/bumble_hive_green"
+    },
+    "color=red": {
+      "model": "gregtech:block/bumble_hive_red"
+    },
+    "color=black": {
+      "model": "gregtech:block/bumble_hive_black"
+    }
+  }
+}

@@ -1,0 +1,342 @@
+{
+  "source": "saltnya",
+  "source_credit": "saltnya (project author identifier supplied by the user; original commit authors unavailable)",
+  "source_snapshot": "import/saltnya-snapshot",
+  "source_commit": "41561782",
+  "integration_base": "31b827601e",
+  "source_directory": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn",
+  "extracted_at": "2026-09-30",
+  "license_resolution": "Pending; source notices and original authorization metadata retained without relicensing",
+  "scope": "39 actual material, prefix, catalog and crucible domain source files; no parallel runtime catalog",
+  "files": [
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/api/material/GTMaterial.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/api/material/GTMaterial.java",
+      "source_sha256": "a3fa2dff397343401ca63f1de5c2c2afb8e9f5754029cdba45f2a02985da511d",
+      "integrated_sha256": "e9a4298ee51662c81a6e52747b7e345fea1096230a646523a4e26c3d8c3732c2",
+      "change": "Removed Minecraft Component display method and compile-only Nullable; pure data getters and all numeric/domain methods retained",
+      "byte_identical": false
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/api/material/GTMaterialRegistry.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/api/material/GTMaterialRegistry.java",
+      "source_sha256": "7209aa78500647c33d6740674d090bc1f93b2c80f6f82852ab73c4565935ac52",
+      "integrated_sha256": "6a3f945280efecaa5ff896601eea220537ba7ac09591b2a4f50a97a16ee8292e",
+      "change": "Replaced Minecraft/SLF4J logging with a java.base sink; moved the last two vanilla item composition hooks to Forge Loader_MaterialPost without changing domain postInit",
+      "byte_identical": false
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/api/material/MaterialDefinition.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/api/material/MaterialDefinition.java",
+      "source_sha256": "ee76ea17cef0f22490e26228118702efabc21abd736c783a55008cfd90bdffba",
+      "integrated_sha256": "ee76ea17cef0f22490e26228118702efabc21abd736c783a55008cfd90bdffba",
+      "change": "exact byte-preserving relocation",
+      "byte_identical": true
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/api/material/MaterialProperty.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/api/material/MaterialProperty.java",
+      "source_sha256": "1404879fd290899a0c622ae91390df701d2eee771bd63019665eb2ba0cdb7f3c",
+      "integrated_sha256": "1404879fd290899a0c622ae91390df701d2eee771bd63019665eb2ba0cdb7f3c",
+      "change": "exact byte-preserving relocation",
+      "byte_identical": true
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/api/material/MaterialTextureSet.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/api/material/MaterialTextureSet.java",
+      "source_sha256": "dc4a37fa9bfbc8c8c62e3e7e8c83e94e8d2176ecd6135815bd337578d09f6a01",
+      "integrated_sha256": "dc4a37fa9bfbc8c8c62e3e7e8c83e94e8d2176ecd6135815bd337578d09f6a01",
+      "change": "exact byte-preserving relocation",
+      "byte_identical": true
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/api/material/MaterialComponent.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/api/material/MaterialComponent.java",
+      "source_sha256": "26298d90f31b8d6cf46d4fd191c03b752a615d4989173cc4b0ce9fbd5ed87591",
+      "integrated_sha256": "26298d90f31b8d6cf46d4fd191c03b752a615d4989173cc4b0ce9fbd5ed87591",
+      "change": "exact byte-preserving relocation",
+      "byte_identical": true
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/api/material/MaterialSentinels.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/api/material/MaterialSentinels.java",
+      "source_sha256": "638494af6d39a073067c4a7ce884a28955c544435c3aaf39c200f11537117cb4",
+      "integrated_sha256": "638494af6d39a073067c4a7ce884a28955c544435c3aaf39c200f11537117cb4",
+      "change": "exact byte-preserving relocation",
+      "byte_identical": true
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/api/material/MaterialFactories.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/api/material/MaterialFactories.java",
+      "source_sha256": "ddb208dccedf8ecb359adecf2f0344f0d6af8808bb8e3cafed274a533a509e0c",
+      "integrated_sha256": "ddb208dccedf8ecb359adecf2f0344f0d6af8808bb8e3cafed274a533a509e0c",
+      "change": "exact byte-preserving relocation",
+      "byte_identical": true
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/api/material/MaterialChemistry.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/api/material/MaterialChemistry.java",
+      "source_sha256": "a70271ca355249d5b73e6dff5fadc5905bbfa761696e9226c9a6166928eba212",
+      "integrated_sha256": "a70271ca355249d5b73e6dff5fadc5905bbfa761696e9226c9a6166928eba212",
+      "change": "exact byte-preserving relocation",
+      "byte_identical": true
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/api/material/MaterialMass.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/api/material/MaterialMass.java",
+      "source_sha256": "7537f1be2be2fdf6da488b794b7b05b20b312fa76aea8ea74717638e4956403b",
+      "integrated_sha256": "7537f1be2be2fdf6da488b794b7b05b20b312fa76aea8ea74717638e4956403b",
+      "change": "exact byte-preserving relocation",
+      "byte_identical": true
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/api/mod/ModData.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/api/mod/ModData.java",
+      "source_sha256": "d745ea10dd1bdb688eb940c7492b6b7d1c156007d711ff1717fa1820e3e0af14",
+      "integrated_sha256": "7be338cda708a6e0d11dfc88b4907d74fa04d8cda547f3e33f5868f4621e4a2e",
+      "change": "Explicit loader presence binding replaces Forge ModList; Item/Block overloads moved to Forge ModOwnership; string ownership and metadata semantics retained",
+      "byte_identical": false
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/data/GregTechConstants.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/data/GregTechConstants.java",
+      "source_sha256": "ff4025e6d846883e797b955304c2e7d88dd569b544bd4b4d174f21fd84d4a9ca",
+      "integrated_sha256": "ff4025e6d846883e797b955304c2e7d88dd569b544bd4b4d174f21fd84d4a9ca",
+      "change": "exact byte-preserving relocation",
+      "byte_identical": true
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/data/ModReferences.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/data/ModReferences.java",
+      "source_sha256": "eda7e594789b2b844709c855b2d4244954342e71d8defa30452d6309f398c483",
+      "integrated_sha256": "6c2339d8882c737107416b713f9375a0cf9052165354d1892aececde35ef2b1b",
+      "change": "Removed unused import of the Forge entrypoint",
+      "byte_identical": false
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/data/ImportedMaterialData.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/data/ImportedMaterialData.java",
+      "source_sha256": "dd87a661cb741292af83f20b470aec0a86eaa200a62da8ebb4fa3e6ee901383a",
+      "integrated_sha256": "dd87a661cb741292af83f20b470aec0a86eaa200a62da8ebb4fa3e6ee901383a",
+      "change": "exact byte-preserving relocation",
+      "byte_identical": true
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/data/AntimatterMaterials.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/data/AntimatterMaterials.java",
+      "source_sha256": "ce39de64fd1a359856e89d5e6d9003aa6c56512f492f9f431e1f6abcf5c3940e",
+      "integrated_sha256": "ce39de64fd1a359856e89d5e6d9003aa6c56512f492f9f431e1f6abcf5c3940e",
+      "change": "exact byte-preserving relocation",
+      "byte_identical": true
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/data/MaterialGroups.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/data/MaterialGroups.java",
+      "source_sha256": "81d477942343e75c91a34fdbcf9df324599ddc7f01ab7d93ecb10a01fd84617e",
+      "integrated_sha256": "81d477942343e75c91a34fdbcf9df324599ddc7f01ab7d93ecb10a01fd84617e",
+      "change": "exact byte-preserving relocation",
+      "byte_identical": true
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/content/material/Materials.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/content/material/Materials.java",
+      "source_sha256": "2ff59a2993752db82753862bec765397ee473ce05a8e338ed32313332b4a4e37",
+      "integrated_sha256": "2ff59a2993752db82753862bec765397ee473ce05a8e338ed32313332b4a4e37",
+      "change": "exact byte-preserving relocation",
+      "byte_identical": true
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/content/material/MaterialDefinitions.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/content/material/MaterialDefinitions.java",
+      "source_sha256": "6b813225997129b5396e76c7631ebf811b1f2d9689db91bc6b819761323b00a8",
+      "integrated_sha256": "6b813225997129b5396e76c7631ebf811b1f2d9689db91bc6b819761323b00a8",
+      "change": "exact byte-preserving relocation",
+      "byte_identical": true
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/content/material/MaterialFormCorrections.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/content/material/MaterialFormCorrections.java",
+      "source_sha256": "bd656d76b14f1cc1ae5a723d266bc216b23d3705622289c5e4962403cae4c305",
+      "integrated_sha256": "bd656d76b14f1cc1ae5a723d266bc216b23d3705622289c5e4962403cae4c305",
+      "change": "exact byte-preserving relocation",
+      "byte_identical": true
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/content/material/ParticleMaterials.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/content/material/ParticleMaterials.java",
+      "source_sha256": "e116c21243c606bfc1ef075e3e0605c965bc2f59a77861a29c880aeaccb5a12e",
+      "integrated_sha256": "e116c21243c606bfc1ef075e3e0605c965bc2f59a77861a29c880aeaccb5a12e",
+      "change": "exact byte-preserving relocation",
+      "byte_identical": true
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/content/material/SupplementalMaterials.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/content/material/SupplementalMaterials.java",
+      "source_sha256": "f09f296eea6b10c2b0d8d39292ae348c5fa8db02803c581bd9ab4f8182c1af01",
+      "integrated_sha256": "f09f296eea6b10c2b0d8d39292ae348c5fa8db02803c581bd9ab4f8182c1af01",
+      "change": "exact byte-preserving relocation",
+      "byte_identical": true
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/content/material/VanillaMatterMaterials.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/content/material/VanillaMatterMaterials.java",
+      "source_sha256": "ed12b5458248b4a574a569d423471b7bf274a2d99834541dd479ae24f5a27c38",
+      "integrated_sha256": "ed12b5458248b4a574a569d423471b7bf274a2d99834541dd479ae24f5a27c38",
+      "change": "exact byte-preserving relocation",
+      "byte_identical": true
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/content/material/generated/ElementMaterials.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/ElementMaterials.java",
+      "source_sha256": "063e8b6b0a0bdc220669f2b48c682872c0a4e81af133d974d66149e976ff07f0",
+      "integrated_sha256": "063e8b6b0a0bdc220669f2b48c682872c0a4e81af133d974d66149e976ff07f0",
+      "change": "exact byte-preserving relocation",
+      "byte_identical": true
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java",
+      "source_sha256": "9d44aaa5900aba096fca38949c337d6c2ee282028f1c049f80a6a16aaa326e6e",
+      "integrated_sha256": "9d44aaa5900aba096fca38949c337d6c2ee282028f1c049f80a6a16aaa326e6e",
+      "change": "exact byte-preserving relocation",
+      "byte_identical": true
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/content/material/generated/OreMaterials.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/OreMaterials.java",
+      "source_sha256": "451bc9532733a77d0186c5cd6adb7d8f96ef18232122366beede4b2a8316ba08",
+      "integrated_sha256": "451bc9532733a77d0186c5cd6adb7d8f96ef18232122366beede4b2a8316ba08",
+      "change": "exact byte-preserving relocation",
+      "byte_identical": true
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/content/material/generated/StoneMaterials.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/StoneMaterials.java",
+      "source_sha256": "4fd3fe70bd4954ca1820ef5e2d889b3ae4c8bc6e4e1b8a402595cec088040b38",
+      "integrated_sha256": "4fd3fe70bd4954ca1820ef5e2d889b3ae4c8bc6e4e1b8a402595cec088040b38",
+      "change": "exact byte-preserving relocation",
+      "byte_identical": true
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java",
+      "source_sha256": "1976e8bd84df6ac871704eb9b448ebf212b3a394f716b177b583edcc0d9d25bb",
+      "integrated_sha256": "1976e8bd84df6ac871704eb9b448ebf212b3a394f716b177b583edcc0d9d25bb",
+      "change": "exact byte-preserving relocation",
+      "byte_identical": true
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/data/generated/GT6Materials.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/data/generated/GT6Materials.java",
+      "source_sha256": "3cdfd7e1d34622992746dcb9e0ba95dd85c297103e0def3c5132d5aff8dd1370",
+      "integrated_sha256": "3cdfd7e1d34622992746dcb9e0ba95dd85c297103e0def3c5132d5aff8dd1370",
+      "change": "exact byte-preserving relocation",
+      "byte_identical": true
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/data/generated/MaterialModTags.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/data/generated/MaterialModTags.java",
+      "source_sha256": "56e6caf5c3a2d584a4b71375f42de7bdc31fc977f5557ccccd1b029a96009567",
+      "integrated_sha256": "56e6caf5c3a2d584a4b71375f42de7bdc31fc977f5557ccccd1b029a96009567",
+      "change": "exact byte-preserving relocation",
+      "byte_identical": true
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/data/generated/MaterialRegistryExtras.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/data/generated/MaterialRegistryExtras.java",
+      "source_sha256": "13c12c47e5bfbefe348e8e6279fc065a89183fb45bf93a9595f0a2d1a5749f30",
+      "integrated_sha256": "13c12c47e5bfbefe348e8e6279fc065a89183fb45bf93a9595f0a2d1a5749f30",
+      "change": "exact byte-preserving relocation",
+      "byte_identical": true
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/data/generated/MaterialCompositionData.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/data/generated/MaterialCompositionData.java",
+      "source_sha256": "b36c4cada58cbd2f8e7ae5f4c2efa0389d04033481012ecb1e659b61d9204808",
+      "integrated_sha256": "b36c4cada58cbd2f8e7ae5f4c2efa0389d04033481012ecb1e659b61d9204808",
+      "change": "exact byte-preserving relocation",
+      "byte_identical": true
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/data/generated/MaterialForms.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/data/generated/MaterialForms.java",
+      "source_sha256": "ef0fd403d4aadc2c7c6ff4b4426ae7d2a912a5e040e0d7c1310b224d2410b3d5",
+      "integrated_sha256": "ef0fd403d4aadc2c7c6ff4b4426ae7d2a912a5e040e0d7c1310b224d2410b3d5",
+      "change": "exact byte-preserving relocation",
+      "byte_identical": true
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/data/MaterialPrefix.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/data/MaterialPrefix.java",
+      "source_sha256": "21a4703a5c18f5cae30dbc0a9b0f3f3a7f230075e5d2d245eb3e4c98818667f7",
+      "integrated_sha256": "21a4703a5c18f5cae30dbc0a9b0f3f3a7f230075e5d2d245eb3e4c98818667f7",
+      "change": "exact byte-preserving relocation",
+      "byte_identical": true
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/api/prefix/PrefixRegistry.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/api/prefix/PrefixRegistry.java",
+      "source_sha256": "643dcbe8395d0f64a024267bc06ea7b78d3cb109cf140cfce7880c0997d73dc3",
+      "integrated_sha256": "643dcbe8395d0f64a024267bc06ea7b78d3cb109cf140cfce7880c0997d73dc3",
+      "change": "exact byte-preserving relocation",
+      "byte_identical": true
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/api/machine/crucible/CrucibleMaterialStack.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/api/machine/crucible/CrucibleMaterialStack.java",
+      "source_sha256": "9eec6738395973e057b011d8427af7f185ea68d391f276ce0b3ee17237317ce6",
+      "integrated_sha256": "ca4fe8cf3d2fe7ee0391b88b2c59dcf7acea9b0b8ceaf6cb2d3309dc1dc31a60",
+      "change": "NBT imports and unchanged saveList/loadList bodies moved to Forge CrucibleContentsNbt; all domain list/math behavior retained",
+      "byte_identical": false
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/api/machine/crucible/CrucibleReactions.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/api/machine/crucible/CrucibleReactions.java",
+      "source_sha256": "657005dad3992321ef1b9a4221d0644ad2c793bcefe5e04a7a2f14f28bf6b7bf",
+      "integrated_sha256": "657005dad3992321ef1b9a4221d0644ad2c793bcefe5e04a7a2f14f28bf6b7bf",
+      "change": "exact byte-preserving relocation",
+      "byte_identical": true
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/data/generated/MaterialOreProcessing.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/data/generated/MaterialOreProcessing.java",
+      "source_sha256": "d545cbd66556b41f8275f4eaa34b2f49452016d3bdbe278437d9100e88dace6c",
+      "integrated_sha256": "d545cbd66556b41f8275f4eaa34b2f49452016d3bdbe278437d9100e88dace6c",
+      "change": "exact byte-preserving relocation",
+      "byte_identical": true
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/api/fluid/PortableFluidContainerSpec.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/api/fluid/PortableFluidContainerSpec.java",
+      "source_sha256": "9d94df2a1d9c034bdbc9ce41da7923940a86af9f72646a9a93d15c947a5a9f2b",
+      "integrated_sha256": "9d94df2a1d9c034bdbc9ce41da7923940a86af9f72646a9a93d15c947a5a9f2b",
+      "change": "exact byte-preserving relocation",
+      "byte_identical": true
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/content/nuclear/ReactorRodCatalog.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorRodCatalog.java",
+      "source_sha256": "130658e93689651a4fe590aeb3f9941d2ade7b703d05646ce99f220dc200f668",
+      "integrated_sha256": "130658e93689651a4fe590aeb3f9941d2ade7b703d05646ce99f220dc200f668",
+      "change": "exact byte-preserving relocation",
+      "byte_identical": true
+    }
+  ],
+  "platform_extractions": [
+    {
+      "path": "src/main/java/com/gregtech/gregtech/api/material/MaterialPresentation.java",
+      "from": "GTMaterial.java:423-424",
+      "behavior": "Original Component.translatable(key,fallback)"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/api/mod/ModOwnership.java",
+      "from": "ModData.java:40-53",
+      "behavior": "Original Forge Item/Block key and loaded/prefix checks"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/api/machine/crucible/CrucibleContentsNbt.java",
+      "from": "CrucibleMaterialStack.java:94-122",
+      "behavior": "Unchanged saveList/loadList bodies and NBT field types"
+    }
+  ]
+}

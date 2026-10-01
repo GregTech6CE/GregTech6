@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:wire_01_yttrium_barium_cuprate"
+    },
+    {
+      "item": "gregtech:wire_01_yttrium_barium_cuprate"
+    },
+    {
+      "item": "gregtech:wire_01_yttrium_barium_cuprate"
+    },
+    {
+      "item": "gregtech:wire_01_yttrium_barium_cuprate"
+    },
+    {
+      "item": "gregtech:wire_01_yttrium_barium_cuprate"
+    },
+    {
+      "item": "gregtech:wire_01_yttrium_barium_cuprate"
+    }
+  ],
+  "result": {
+    "item": "gregtech:wire_06_yttrium_barium_cuprate",
+    "count": 1
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "gregtech:stone_gabbro_stone"
+  },
+  "result": "gregtech:stone_gabbro_smooth",
+  "experience": 0.0,
+  "cookingtime": 200
+}

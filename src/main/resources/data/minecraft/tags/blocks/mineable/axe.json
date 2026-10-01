@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "gregtech:log_dry",
+    "gregtech:log_rotten",
+    "gregtech:log_mossy",
+    "gregtech:log_frozen",
+    "gregtech:slab_bluespruce",
+    "gregtech:wood_tank_main_valve",
+    "gregtech:wood_wall"
+  ]
+}

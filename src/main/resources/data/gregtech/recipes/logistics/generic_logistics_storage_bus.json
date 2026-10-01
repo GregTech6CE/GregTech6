@@ -1,0 +1,41 @@
+{
+  "type": "gregtech:tool_shaped",
+  "_comment": "GT6 MultiItemTechnological:786",
+  "pattern": [
+    "d  ",
+    "WQW",
+    "CPC"
+  ],
+  "key": {
+    "Q": {
+      "item": "gregtech:blank_cover"
+    },
+    "P": {
+      "item": "gregtech:crystal_processor_emerald"
+    },
+    "C": [
+      {
+        "item": "gregtech:circuit_basic"
+      },
+      {
+        "item": "gregtech:circuit_good"
+      },
+      {
+        "item": "gregtech:circuit_advanced"
+      },
+      {
+        "item": "gregtech:circuit_elite"
+      }
+    ],
+    "W": {
+      "item": "gregtech:wire_fine_osmiumelemental"
+    },
+    "d": {
+      "item": "gregtech:tool_screwdriver"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gregtech:generic_logistics_storage_bus"
+  }
+}

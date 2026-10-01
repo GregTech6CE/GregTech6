@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "gregtech:item/material_icons/sand/minecartwheels",
+    "layer1": "gregtech:item/material_icons/sand/minecartwheels_overlay"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP",
+    "PMP",
+    "PPP"
+  ],
+  "key": {
+    "M": {
+      "item": "gregtech:co2_laser_hv"
+    },
+    "P": {
+      "tag": "forge:plates/electrum"
+    }
+  },
+  "result": {
+    "item": "gregtech:flux_laser_hv"
+  }
+}

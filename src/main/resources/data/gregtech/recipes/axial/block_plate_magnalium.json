@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP",
+    "PPP",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:plates/magnalium"
+    }
+  },
+  "result": {
+    "item": "gregtech:block_plate_magnalium",
+    "count": 1
+  }
+}

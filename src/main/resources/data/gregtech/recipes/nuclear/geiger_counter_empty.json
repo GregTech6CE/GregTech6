@@ -1,0 +1,31 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "TXT",
+    "PCP",
+    "TdT"
+  ],
+  "key": {
+    "T": {
+      "tag": "forge:screws/aluminium"
+    },
+    "X": {
+      "item": "gregtech:fluid_cell_aluminium"
+    },
+    "P": {
+      "tag": "forge:plates/aluminium"
+    },
+    "C": {
+      "item": "gregtech:circuit_basic"
+    },
+    "d": {
+      "item": "gregtech:tool_screwdriver"
+    }
+  },
+  "result": {
+    "item": "gregtech:geiger_counter_empty"
+  },
+  "require_empty_fluid_containers": true,
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

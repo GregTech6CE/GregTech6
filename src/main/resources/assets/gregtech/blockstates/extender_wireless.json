@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "gregtech:block/misc/extender_wireless" },
+    "facing=east":  { "model": "gregtech:block/misc/extender_wireless", "y": 90 },
+    "facing=south": { "model": "gregtech:block/misc/extender_wireless", "y": 180 },
+    "facing=west":  { "model": "gregtech:block/misc/extender_wireless", "y": 270 }
+  }
+}

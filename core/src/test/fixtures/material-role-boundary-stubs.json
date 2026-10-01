@@ -1,0 +1,13 @@
+{
+  "net/minecraft/resources/ResourceKey.java": "package net.minecraft.resources; public class ResourceKey<T> {}",
+  "net/minecraft/world/level/Level.java": "package net.minecraft.world.level; public class Level { public static final net.minecraft.resources.ResourceKey<Level> OVERWORLD=new net.minecraft.resources.ResourceKey<>(),NETHER=new net.minecraft.resources.ResourceKey<>(); }",
+  "net/minecraft/world/level/block/Block.java": "package net.minecraft.world.level.block; public class Block { public float defaultDestroyTime(){return 1.5F;} }",
+  "net/minecraft/world/level/block/Blocks.java": "package net.minecraft.world.level.block; public class Blocks { public static final Block STONE=new Block(); }",
+  "net/minecraft/world/level/block/SoundType.java": "package net.minecraft.world.level.block; public class SoundType { public static final SoundType STONE=new SoundType(); }",
+  "net/minecraft/world/level/material/MapColor.java": "package net.minecraft.world.level.material; public class MapColor { public static final MapColor STONE=new MapColor(); }",
+  "net/minecraft/world/level/block/state/BlockBehaviour.java": "package net.minecraft.world.level.block.state; public class BlockBehaviour { public static class Properties { public static Properties of(){return new Properties();} public Properties mapColor(Object o){return this;} public Properties strength(float a,float b){return this;} public Properties requiresCorrectToolForDrops(){return this;} public Properties sound(Object o){return this;} } }",
+  "net/minecraft/gametest/framework/GameTest.java": "package net.minecraft.gametest.framework; public @interface GameTest { String template(); int timeoutTicks(); }",
+  "net/minecraft/gametest/framework/GameTestHelper.java": "package net.minecraft.gametest.framework; public class GameTestHelper { public void assertTrue(boolean value,String message){if(!value)throw new AssertionError(message);} public void succeed(){} }",
+  "net/neoforged/neoforge/gametest/GameTestHolder.java": "package net.neoforged.neoforge.gametest; public @interface GameTestHolder { String value(); }",
+  "net/neoforged/neoforge/gametest/PrefixGameTestTemplate.java": "package net.neoforged.neoforge.gametest; public @interface PrefixGameTestTemplate { boolean value(); }"
+}

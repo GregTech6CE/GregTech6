@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "gregtech:block/machine/multiblock/large_gas_turbine_main"
+    },
+    "facing=east": {
+      "model": "gregtech:block/machine/multiblock/large_gas_turbine_main",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "gregtech:block/machine/multiblock/large_gas_turbine_main",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "gregtech:block/machine/multiblock/large_gas_turbine_main",
+      "y": 270
+    },
+    "facing=up": {
+      "model": "gregtech:block/machine/multiblock/large_gas_turbine_main",
+      "x": 270
+    },
+    "facing=down": {
+      "model": "gregtech:block/machine/multiblock/large_gas_turbine_main",
+      "x": 90
+    }
+  }
+}

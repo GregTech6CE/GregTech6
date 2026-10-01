@@ -1,0 +1,46 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "sides": "gregtech:block/material_icons/magnetic/blocksolid"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "west": {
+          "texture": "#sides",
+          "tintindex": 0
+        },
+        "east": {
+          "texture": "#sides",
+          "tintindex": 0
+        },
+        "north": {
+          "texture": "#sides",
+          "tintindex": 0
+        },
+        "south": {
+          "texture": "#sides",
+          "tintindex": 0
+        },
+        "up": {
+          "texture": "#sides",
+          "tintindex": 0
+        },
+        "down": {
+          "texture": "#sides",
+          "tintindex": 0
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:wire_02_superconductor"
+    },
+    {
+      "item": "gregtech:wire_02_superconductor"
+    },
+    {
+      "item": "gregtech:wire_02_superconductor"
+    },
+    {
+      "item": "gregtech:wire_02_superconductor"
+    },
+    {
+      "item": "gregtech:wire_02_superconductor"
+    },
+    {
+      "item": "gregtech:wire_02_superconductor"
+    },
+    {
+      "item": "gregtech:wire_02_superconductor"
+    }
+  ],
+  "result": {
+    "item": "gregtech:wire_14_superconductor",
+    "count": 1
+  }
+}

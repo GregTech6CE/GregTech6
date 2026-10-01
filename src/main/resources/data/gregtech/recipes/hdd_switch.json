@@ -1,0 +1,15 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": ["CPC", "TMT", "UdU"],
+  "key": {
+    "C": {"item": "gregtech:circuit_advanced"},
+    "P": {"item": "gregtech:crystal_processor_emerald"},
+    "T": {"tag": "forge:screws/steel_galvanized"},
+    "M": {"item": "gregtech:casing_machine_steelgalvanized"},
+    "U": {"item": "gregtech:usb3_cable"},
+    "d": {"item": "gregtech:tool_screwdriver"}
+  },
+  "result": {"item": "gregtech:hdd_switch"},
+  "allow_mirror": false,
+  "_comment": "GT6 Loader_MultiTileEntities:1133"
+}

@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "gregtech:block/blocks/crucible_faucet_meteoric_iron"
+    },
+    "facing=south": {
+      "model": "gregtech:block/blocks/crucible_faucet_meteoric_iron"
+    },
+    "facing=east": {
+      "model": "gregtech:block/blocks/crucible_faucet_meteoric_iron"
+    },
+    "facing=west": {
+      "model": "gregtech:block/blocks/crucible_faucet_meteoric_iron"
+    }
+  }
+}

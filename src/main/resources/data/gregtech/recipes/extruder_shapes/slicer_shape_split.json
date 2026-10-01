@@ -1,0 +1,27 @@
+{
+  "type": "gregtech:tool_shaped",
+  "allow_mirror": false,
+  "pattern": [
+    " Of",
+    "BBB",
+    "  s"
+  ],
+  "key": {
+    "O": {
+      "item": "gregtech:slicer_shape_empty"
+    },
+    "B": {
+      "item": "gregtech:plate_tiny_stainlesssteel"
+    },
+    "f": {
+      "item": "gregtech:tool_file"
+    },
+    "s": {
+      "item": "gregtech:tool_saw"
+    }
+  },
+  "result": {
+    "item": "gregtech:slicer_shape_split",
+    "count": 1
+  }
+}

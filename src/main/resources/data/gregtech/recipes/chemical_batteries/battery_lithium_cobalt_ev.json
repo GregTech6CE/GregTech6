@@ -1,0 +1,26 @@
+{
+  "type": "gregtech:tool_shaped",
+  "allow_mirror": false,
+  "pattern": [
+    "WPW",
+    "BCB",
+    "BBB"
+  ],
+  "key": {
+    "P": {
+      "item": "gregtech:plate_batteryalloy"
+    },
+    "B": {
+      "item": "gregtech:lithium_cobalt_cell_filled"
+    },
+    "W": {
+      "item": "gregtech:cable_01_aluminium"
+    },
+    "C": {
+      "tag": "gregtech:circuits_tier_6_plus"
+    }
+  },
+  "result": {
+    "item": "gregtech:battery_lithium_cobalt_ev"
+  }
+}

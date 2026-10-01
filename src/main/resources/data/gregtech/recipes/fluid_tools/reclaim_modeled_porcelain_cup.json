@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:modeled_porcelain_cup"
+    }
+  ],
+  "result": {
+    "item": "gregtech:dust_porcelain",
+    "count": 1
+  }
+}

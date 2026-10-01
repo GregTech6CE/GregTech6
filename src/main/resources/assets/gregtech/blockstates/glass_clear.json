@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "color=white": {
+      "model": "gregtech:block/iconsets/glass_clear"
+    },
+    "color=orange": {
+      "model": "gregtech:block/iconsets/glass_clear"
+    },
+    "color=magenta": {
+      "model": "gregtech:block/iconsets/glass_clear"
+    },
+    "color=light_blue": {
+      "model": "gregtech:block/iconsets/glass_clear"
+    },
+    "color=yellow": {
+      "model": "gregtech:block/iconsets/glass_clear"
+    },
+    "color=lime": {
+      "model": "gregtech:block/iconsets/glass_clear"
+    },
+    "color=pink": {
+      "model": "gregtech:block/iconsets/glass_clear"
+    },
+    "color=gray": {
+      "model": "gregtech:block/iconsets/glass_clear"
+    },
+    "color=light_gray": {
+      "model": "gregtech:block/iconsets/glass_clear"
+    },
+    "color=cyan": {
+      "model": "gregtech:block/iconsets/glass_clear"
+    },
+    "color=purple": {
+      "model": "gregtech:block/iconsets/glass_clear"
+    },
+    "color=blue": {
+      "model": "gregtech:block/iconsets/glass_clear"
+    },
+    "color=brown": {
+      "model": "gregtech:block/iconsets/glass_clear"
+    },
+    "color=green": {
+      "model": "gregtech:block/iconsets/glass_clear"
+    },
+    "color=red": {
+      "model": "gregtech:block/iconsets/glass_clear"
+    },
+    "color=black": {
+      "model": "gregtech:block/iconsets/glass_clear"
+    }
+  }
+}

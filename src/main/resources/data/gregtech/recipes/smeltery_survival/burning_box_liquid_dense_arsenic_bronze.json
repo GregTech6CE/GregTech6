@@ -1,0 +1,30 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "PCP",
+    "IwI",
+    "BBB"
+  ],
+  "key": {
+    "P": {
+      "tag": "gregtech:plate_quintuple/arsenic_bronze"
+    },
+    "I": {
+      "tag": "gregtech:pipe_large/arsenic_bronze"
+    },
+    "C": {
+      "tag": "gregtech:plate_dense/copper"
+    },
+    "B": {
+      "item": "minecraft:bricks"
+    },
+    "w": {
+      "item": "gregtech:tool_wrench"
+    }
+  },
+  "result": {
+    "item": "gregtech:burning_box_liquid_dense_arsenic_bronze"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

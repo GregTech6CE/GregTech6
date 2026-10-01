@@ -1,0 +1,13 @@
+{
+  "type": "gregtech:tool_shaped",
+  "allow_mirror": false,
+  "pattern": ["sGh", "PLP", "PPP"],
+  "key": {
+    "s": {"item": "gregtech:tool_saw"},
+    "G": {"tag": "forge:glue"},
+    "h": {"item": "gregtech:tool_hammer"},
+    "P": {"tag": "minecraft:planks"},
+    "L": {"tag": "forge:long_rods/lead"}
+  },
+  "result": {"item": "gregtech:bathing_pot_wood"}
+}

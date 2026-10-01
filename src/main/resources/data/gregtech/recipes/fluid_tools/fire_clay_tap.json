@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "gregtech:clay_tap"
+  },
+  "result": "gregtech:tap",
+  "experience": 0,
+  "cookingtime": 200
+}

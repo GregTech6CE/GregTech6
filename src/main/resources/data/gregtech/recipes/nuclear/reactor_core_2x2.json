@@ -1,0 +1,24 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "PCP",
+    "CMC",
+    "PCP"
+  ],
+  "key": {
+    "P": {
+      "item": "gregtech:compact_electric_piston_ev"
+    },
+    "C": {
+      "item": "gregtech:circuit_master"
+    },
+    "M": {
+      "item": "gregtech:casing_machine_dense_lead"
+    }
+  },
+  "result": {
+    "item": "gregtech:reactor_core_2x2"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

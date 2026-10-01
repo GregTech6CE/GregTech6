@@ -1,0 +1,134 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "forge:composite",
+  "textures": {
+    "particle": "gregtech:block/machines/energystorages/zpm_quantum/colored/side"
+  },
+  "children": {
+    "colored": {
+      "parent": "minecraft:block/block",
+      "render_type": "minecraft:cutout",
+      "textures": {
+        "north": "gregtech:block/machines/energystorages/zpm_quantum/colored/front",
+        "east": "gregtech:block/machines/energystorages/zpm_quantum/colored/side",
+        "south": "gregtech:block/machines/energystorages/zpm_quantum/colored/back",
+        "west": "gregtech:block/machines/energystorages/zpm_quantum/colored/side",
+        "up": "gregtech:block/machines/energystorages/zpm_quantum/colored/side",
+        "down": "gregtech:block/machines/energystorages/zpm_quantum/colored/side"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "up": {
+              "texture": "#up",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#down",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#north",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#south",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#east",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#west",
+              "tintindex": 0
+            }
+          }
+        }
+      ]
+    },
+    "overlay": {
+      "parent": "minecraft:block/block",
+      "render_type": "minecraft:cutout",
+      "textures": {
+        "north": "gregtech:block/machines/energystorages/zpm_quantum/overlay/front",
+        "east": "gregtech:block/machines/energystorages/zpm_quantum/overlay/side",
+        "south": "gregtech:block/machines/energystorages/zpm_quantum/overlay/back",
+        "west": "gregtech:block/machines/energystorages/zpm_quantum/overlay/side",
+        "up": "gregtech:block/machines/energystorages/zpm_quantum/overlay/side",
+        "down": "gregtech:block/machines/energystorages/zpm_quantum/overlay/side"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "up": {
+              "texture": "#up"
+            },
+            "down": {
+              "texture": "#down"
+            },
+            "north": {
+              "texture": "#north"
+            },
+            "south": {
+              "texture": "#south"
+            },
+            "east": {
+              "texture": "#east"
+            },
+            "west": {
+              "texture": "#west"
+            }
+          }
+        }
+      ]
+    },
+    "module": {
+      "parent": "minecraft:block/block",
+      "render_type": "minecraft:cutout",
+      "textures": {
+        "module": "gregtech:block/iconsets/zpm_top"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            16.01
+          ],
+          "to": [
+            16,
+            16,
+            16.01
+          ],
+          "faces": {
+            "south": {
+              "texture": "#module",
+              "tintindex": 1
+            }
+          }
+        }
+      ]
+    }
+  }
+}

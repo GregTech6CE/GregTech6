@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WCW",
+    "WCW",
+    "XMX"
+  ],
+  "key": {
+    "W": {
+      "tag": "gregtech:wire_04/any_copper"
+    },
+    "C": {
+      "tag": "gregtech:cable_04/any_copper"
+    },
+    "X": {
+      "tag": "gregtech:circuits_tier_2_plus"
+    },
+    "M": {
+      "item": "gregtech:transformer_mv_hv"
+    }
+  },
+  "result": {
+    "item": "gregtech:energy_storage_mv"
+  }
+}

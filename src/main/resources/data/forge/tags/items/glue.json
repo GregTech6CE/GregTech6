@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "gregtech:glue_bottle",
+    "gregtech:tar_bottle",
+    "gregtech:green_slime_bottle",
+    "gregtech:pink_slime_bottle",
+    "gregtech:blue_slime_bottle",
+    { "id": "#forge:ingots/tar_pitch", "required": false },
+    { "id": "#forge:nuggets/tar_pitch", "required": false }
+  ]
+}

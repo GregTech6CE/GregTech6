@@ -1,0 +1,37 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "TXO",
+    "dPw",
+    "OMT"
+  ],
+  "key": {
+    "T": {
+      "tag": "forge:screws/aluminium"
+    },
+    "X": {
+      "item": "gregtech:rotor_aluminium"
+    },
+    "O": {
+      "tag": "forge:rings/rubber"
+    },
+    "d": {
+      "item": "gregtech:tool_screwdriver"
+    },
+    "w": {
+      "item": "gregtech:tool_wrench"
+    },
+    "P": {
+      "item": "gregtech:plate_curved_aluminium"
+    },
+    "M": {
+      "item": "gregtech:compact_electric_motor_mv"
+    }
+  },
+  "result": {
+    "item": "gregtech:compact_electric_pump_mv",
+    "count": 1
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

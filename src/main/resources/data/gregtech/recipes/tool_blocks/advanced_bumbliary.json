@@ -1,0 +1,31 @@
+{
+  "type": "gregtech:tool_shaped",
+  "_comment": "GT6 Loader_MultiTileEntities:2222, 32007; each honey container consumes 1000 mB",
+  "pattern": [
+    "PRP",
+    "HBH",
+    "PCP"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:plates/stainless_steel"
+    },
+    "R": {
+      "tag": "gregtech:bee_combs/crossbred"
+    },
+    "H": {
+      "type": "gregtech:finite_fluid_container_1000",
+      "fluid": "Honey"
+    },
+    "B": {
+      "item": "gregtech:bumbliary"
+    },
+    "C": {
+      "tag": "forge:chests/wooden"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gregtech:advanced_bumbliary"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "BQB",
+    "WXW"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:stone_button"
+    },
+    "Q": {
+      "item": "gregtech:blank_cover"
+    },
+    "W": {
+      "item": "gregtech:cable_01_tin"
+    },
+    "X": {
+      "item": "minecraft:comparator"
+    }
+  },
+  "result": {
+    "item": "gregtech:redstone_emitter"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

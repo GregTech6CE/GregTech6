@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/plastic"
+    },
+    {
+      "tag": "forge:nuggets/plastic"
+    },
+    {
+      "tag": "forge:nuggets/plastic"
+    },
+    {
+      "tag": "forge:nuggets/plastic"
+    },
+    {
+      "tag": "forge:nuggets/plastic"
+    },
+    {
+      "tag": "forge:nuggets/plastic"
+    },
+    {
+      "tag": "forge:nuggets/plastic"
+    },
+    {
+      "tag": "forge:nuggets/plastic"
+    },
+    {
+      "tag": "forge:nuggets/plastic"
+    }
+  ],
+  "result": {
+    "item": "gregtech:ingot_plastic",
+    "count": 1
+  }
+}

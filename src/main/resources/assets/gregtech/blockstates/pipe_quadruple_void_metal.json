@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "gregtech:block/machine/pipe_quadruple_void_metal_core"
+    }
+  }
+}

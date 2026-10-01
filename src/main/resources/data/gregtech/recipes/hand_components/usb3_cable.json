@@ -1,0 +1,33 @@
+{
+  "type": "gregtech:tool_shaped",
+  "_comment": "GT6 MultiItemTechnological:810",
+  "pattern": [
+    "xWd",
+    "PCP",
+    "TCT"
+  ],
+  "key": {
+    "x": {
+      "item": "gregtech:tool_wire_cutter"
+    },
+    "d": {
+      "item": "gregtech:tool_screwdriver"
+    },
+    "W": {
+      "item": "gregtech:wire_01_platinum"
+    },
+    "C": {
+      "item": "gregtech:cable_01_platinum"
+    },
+    "P": {
+      "tag": "forge:plates/chromium"
+    },
+    "T": {
+      "tag": "forge:screws/chromium"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gregtech:usb3_cable"
+  }
+}

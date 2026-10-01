@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "gregtech:block/machine/multiblock/graphene_gas_turbine_main_housing"
+    },
+    "facing=east": {
+      "model": "gregtech:block/machine/multiblock/graphene_gas_turbine_main_housing",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "gregtech:block/machine/multiblock/graphene_gas_turbine_main_housing",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "gregtech:block/machine/multiblock/graphene_gas_turbine_main_housing",
+      "y": 270
+    },
+    "facing=up": {
+      "model": "gregtech:block/machine/multiblock/graphene_gas_turbine_main_housing",
+      "x": 270
+    },
+    "facing=down": {
+      "model": "gregtech:block/machine/multiblock/graphene_gas_turbine_main_housing",
+      "x": 90
+    }
+  }
+}

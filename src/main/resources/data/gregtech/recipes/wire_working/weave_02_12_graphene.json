@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:wire_02_graphene"
+    },
+    {
+      "item": "gregtech:wire_02_graphene"
+    },
+    {
+      "item": "gregtech:wire_02_graphene"
+    },
+    {
+      "item": "gregtech:wire_02_graphene"
+    },
+    {
+      "item": "gregtech:wire_02_graphene"
+    },
+    {
+      "item": "gregtech:wire_02_graphene"
+    }
+  ],
+  "result": {
+    "item": "gregtech:wire_12_graphene",
+    "count": 1
+  }
+}

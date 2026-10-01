@@ -1,0 +1,27 @@
+{
+  "type": "gregtech:tool_shaped",
+  "_comment": "GT6 Loader_MultiTileEntities:2221 (32741)",
+  "pattern": [
+    "PPP",
+    "PBP",
+    "TdT"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:plates/wood_treated"
+    },
+    "B": {
+      "item": "gregtech:bumble_hive"
+    },
+    "T": {
+      "tag": "gregtech:screws/any_iron_or_steel"
+    },
+    "d": {
+      "item": "gregtech:tool_screwdriver"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gregtech:bumbliary"
+  }
+}

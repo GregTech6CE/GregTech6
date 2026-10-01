@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "gregtech:block/decoration/diggable_peat" }
+  }
+}

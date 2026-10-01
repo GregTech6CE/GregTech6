@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:bale_grass_dry"
+    }
+  ],
+  "result": {
+    "item": "gregtech:dry_grass",
+    "count": 9
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "gregtech:block/machine/logistics/logistics_wire_center"
+      }
+    },
+    {
+      "when": {
+        "down": "true"
+      },
+      "apply": {
+        "model": "gregtech:block/machine/logistics/logistics_wire_down"
+      }
+    },
+    {
+      "when": {
+        "up": "true"
+      },
+      "apply": {
+        "model": "gregtech:block/machine/logistics/logistics_wire_up"
+      }
+    },
+    {
+      "when": {
+        "north": "true"
+      },
+      "apply": {
+        "model": "gregtech:block/machine/logistics/logistics_wire_north"
+      }
+    },
+    {
+      "when": {
+        "south": "true"
+      },
+      "apply": {
+        "model": "gregtech:block/machine/logistics/logistics_wire_south"
+      }
+    },
+    {
+      "when": {
+        "west": "true"
+      },
+      "apply": {
+        "model": "gregtech:block/machine/logistics/logistics_wire_west"
+      }
+    },
+    {
+      "when": {
+        "east": "true"
+      },
+      "apply": {
+        "model": "gregtech:block/machine/logistics/logistics_wire_east"
+      }
+    }
+  ]
+}

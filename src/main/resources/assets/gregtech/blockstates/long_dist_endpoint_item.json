@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "gregtech:block/misc/long_dist_endpoint_item" },
+    "facing=east":  { "model": "gregtech:block/misc/long_dist_endpoint_item", "y": 90 },
+    "facing=south": { "model": "gregtech:block/misc/long_dist_endpoint_item", "y": 180 },
+    "facing=west":  { "model": "gregtech:block/misc/long_dist_endpoint_item", "y": 270 }
+  }
+}

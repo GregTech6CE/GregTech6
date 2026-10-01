@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "gregtech:clay_measuring_pot"
+  },
+  "result": "gregtech:fluid_measuring_pot",
+  "experience": 0,
+  "cookingtime": 200
+}

@@ -1,0 +1,30 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    " C ",
+    "WQX",
+    " B "
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:comparator"
+    },
+    "C": {
+      "item": "gregtech:circuit_basic"
+    },
+    "Q": {
+      "item": "gregtech:blank_cover"
+    },
+    "W": {
+      "item": "gregtech:cable_01_copper"
+    },
+    "X": {
+      "item": "gregtech:integrated_circuit_0"
+    }
+  },
+  "result": {
+    "item": "gregtech:redstone_selector"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

@@ -1,0 +1,223 @@
+{
+  "loader": "forge:composite",
+  "display": {
+    "gui": {
+      "rotation": [
+        30,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.625,
+        0.625,
+        0.625
+      ]
+    },
+    "ground": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        3,
+        0
+      ],
+      "scale": [
+        0.25,
+        0.25,
+        0.25
+      ]
+    },
+    "fixed": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        75,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        2.5,
+        0
+      ],
+      "scale": [
+        0.375,
+        0.375,
+        0.375
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    },
+    "firstperson_lefthand": {
+      "rotation": [
+        0,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    }
+  },
+  "children": {
+    "layer0": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "down": "gregtech:block/machines/basicmachines/largecentrifuge/colored/bottom",
+        "up": "gregtech:block/machines/basicmachines/largecentrifuge/colored/top",
+        "north": "gregtech:block/machines/basicmachines/largecentrifuge/colored/front",
+        "south": "gregtech:block/machines/basicmachines/largecentrifuge/colored/back",
+        "west": "gregtech:block/machines/basicmachines/largecentrifuge/colored/right",
+        "east": "gregtech:block/machines/basicmachines/largecentrifuge/colored/left"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#down",
+              "cullface": "down",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#up",
+              "cullface": "up",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#north",
+              "cullface": "north",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#south",
+              "cullface": "south",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#west",
+              "cullface": "west",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#east",
+              "cullface": "east",
+              "tintindex": 0
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:solid"
+    },
+    "layer1": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "down": "gregtech:block/machines/basicmachines/largecentrifuge/overlay_running/bottom",
+        "up": "gregtech:block/machines/basicmachines/largecentrifuge/overlay_running/top",
+        "north": "gregtech:block/machines/basicmachines/largecentrifuge/overlay_running/front",
+        "south": "gregtech:block/machines/basicmachines/largecentrifuge/overlay_running/back",
+        "west": "gregtech:block/machines/basicmachines/largecentrifuge/overlay_running/right",
+        "east": "gregtech:block/machines/basicmachines/largecentrifuge/overlay_running/left"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#down",
+              "cullface": "down"
+            },
+            "up": {
+              "texture": "#up",
+              "cullface": "up"
+            },
+            "north": {
+              "texture": "#north",
+              "cullface": "north"
+            },
+            "south": {
+              "texture": "#south",
+              "cullface": "south"
+            },
+            "west": {
+              "texture": "#west",
+              "cullface": "west"
+            },
+            "east": {
+              "texture": "#east",
+              "cullface": "east"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    }
+  },
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "gregtech:block/machines/basicmachines/largecentrifuge/colored/bottom"
+  }
+}

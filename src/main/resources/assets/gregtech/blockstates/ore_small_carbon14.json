@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "gregtech:block/ores/ore_small_carbon14"
+    }
+  }
+}

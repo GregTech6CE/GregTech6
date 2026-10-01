@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP",
+    "PMP",
+    "PPP"
+  ],
+  "key": {
+    "M": {
+      "item": "gregtech:co2_laser_ev"
+    },
+    "P": {
+      "tag": "forge:plates/enderium_base"
+    }
+  },
+  "result": {
+    "item": "gregtech:flux_laser_ev"
+  }
+}

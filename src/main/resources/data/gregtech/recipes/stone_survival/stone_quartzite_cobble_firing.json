@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "gregtech:stone_quartzite_cobble"
+  },
+  "result": "gregtech:stone_quartzite_stone",
+  "experience": 0.0,
+  "cookingtime": 200
+}

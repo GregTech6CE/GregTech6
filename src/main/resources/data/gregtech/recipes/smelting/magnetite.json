@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "tag": "forge:raw_materials/magnetite"
+  },
+  "result": "gregtech:ingot_iron",
+  "experience": 0.7,
+  "cookingtime": 200
+}

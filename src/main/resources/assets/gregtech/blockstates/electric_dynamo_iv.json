@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "gregtech:block/machine/energy/electric_dynamo_iv"
+    },
+    "facing=east": {
+      "model": "gregtech:block/machine/energy/electric_dynamo_iv",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "gregtech:block/machine/energy/electric_dynamo_iv",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "gregtech:block/machine/energy/electric_dynamo_iv",
+      "y": 270
+    },
+    "facing=up": {
+      "model": "gregtech:block/machine/energy/electric_dynamo_iv",
+      "x": 270
+    },
+    "facing=down": {
+      "model": "gregtech:block/machine/energy/electric_dynamo_iv",
+      "x": 90
+    }
+  }
+}

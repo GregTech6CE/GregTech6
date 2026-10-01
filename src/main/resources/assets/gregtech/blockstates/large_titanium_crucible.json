@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": {"model": "gregtech:block/machine/multiblock/large_titanium_crucible"},
+    "facing=east": {"model": "gregtech:block/machine/multiblock/large_titanium_crucible", "y": 90},
+    "facing=south": {"model": "gregtech:block/machine/multiblock/large_titanium_crucible", "y": 180},
+    "facing=west": {"model": "gregtech:block/machine/multiblock/large_titanium_crucible", "y": 270}
+  }
+}

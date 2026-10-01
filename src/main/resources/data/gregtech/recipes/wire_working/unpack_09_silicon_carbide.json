@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:wire_09_silicon_carbide"
+    }
+  ],
+  "result": {
+    "item": "gregtech:wire_01_silicon_carbide",
+    "count": 9
+  }
+}

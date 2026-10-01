@@ -1,0 +1,26 @@
+{
+  "type": "gregtech:tool_shaped",
+  "allow_mirror": false,
+  "pattern": [
+    " Wx",
+    "PBP",
+    " B "
+  ],
+  "key": {
+    "x": {
+      "item": "gregtech:tool_wire_cutter"
+    },
+    "P": {
+      "item": "gregtech:plate_batteryalloy"
+    },
+    "B": {
+      "item": "gregtech:nickel_cadmium_cell_filled"
+    },
+    "W": {
+      "item": "gregtech:cable_01_tin"
+    }
+  },
+  "result": {
+    "item": "gregtech:battery_nickel_cadmium_lv"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "gregtech:item/material_icons/food/crushedcentrifuged",
+    "layer1": "gregtech:item/material_icons/food/crushedcentrifuged_overlay"
+  }
+}

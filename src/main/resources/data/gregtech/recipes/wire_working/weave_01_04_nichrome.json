@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:wire_01_nichrome"
+    },
+    {
+      "item": "gregtech:wire_01_nichrome"
+    },
+    {
+      "item": "gregtech:wire_01_nichrome"
+    },
+    {
+      "item": "gregtech:wire_01_nichrome"
+    }
+  ],
+  "result": {
+    "item": "gregtech:wire_04_nichrome",
+    "count": 1
+  }
+}

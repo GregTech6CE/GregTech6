@@ -1,0 +1,6 @@
+{
+  "message_id": "gregtech.heat",
+  "exhaustion": 0.1,
+  "scaling": "never",
+  "effects": "burning"
+}

@@ -1,0 +1,119 @@
+{
+  "loader": "forge:composite",
+  "children": {
+    "layer0": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "down": "gregtech:block/machines/tanks/drum/colored/bottom",
+        "up": "gregtech:block/machines/tanks/drum/colored/top",
+        "north": "gregtech:block/machines/tanks/drum/colored/side",
+        "south": "gregtech:block/machines/tanks/drum/colored/side",
+        "west": "gregtech:block/machines/tanks/drum/colored/side",
+        "east": "gregtech:block/machines/tanks/drum/colored/side"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#down",
+              "cullface": "down",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#up",
+              "cullface": "up",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#north",
+              "cullface": "north",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#south",
+              "cullface": "south",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#west",
+              "cullface": "west",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#east",
+              "cullface": "east",
+              "tintindex": 0
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:solid"
+    },
+    "layer1": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "down": "gregtech:block/machines/tanks/drum/overlay/bottom",
+        "up": "gregtech:block/machines/tanks/drum/overlay/top",
+        "north": "gregtech:block/machines/tanks/drum/overlay/side",
+        "south": "gregtech:block/machines/tanks/drum/overlay/side",
+        "west": "gregtech:block/machines/tanks/drum/overlay/side",
+        "east": "gregtech:block/machines/tanks/drum/overlay/side"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#down",
+              "cullface": "down"
+            },
+            "up": {
+              "texture": "#up",
+              "cullface": "up"
+            },
+            "north": {
+              "texture": "#north",
+              "cullface": "north"
+            },
+            "south": {
+              "texture": "#south",
+              "cullface": "south"
+            },
+            "west": {
+              "texture": "#west",
+              "cullface": "west"
+            },
+            "east": {
+              "texture": "#east",
+              "cullface": "east"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    }
+  },
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "gregtech:block/machines/tanks/drum/colored/bottom"
+  }
+}

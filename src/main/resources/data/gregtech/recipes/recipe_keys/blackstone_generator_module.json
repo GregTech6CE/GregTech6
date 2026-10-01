@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "_comment": "GT6 MultiItemRandomTools:426",
+  "pattern": [
+    "S",
+    "M",
+    "O"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:soul_sand"
+    },
+    "M": {
+      "item": "gregtech:stone_generator_module"
+    },
+    "O": {
+      "item": "minecraft:obsidian"
+    }
+  },
+  "result": {
+    "item": "gregtech:blackstone_generator_module"
+  }
+}

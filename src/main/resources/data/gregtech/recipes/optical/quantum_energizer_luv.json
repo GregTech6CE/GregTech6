@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CFC",
+    "SME",
+    "CFC"
+  ],
+  "key": {
+    "C": {
+      "item": "gregtech:crystal_processor_sapphire"
+    },
+    "M": {
+      "item": "gregtech:casing_machine_osmiridium"
+    },
+    "F": {
+      "item": "gregtech:compact_force_field_emitter_hv"
+    },
+    "S": {
+      "item": "gregtech:compact_sensor_hv"
+    },
+    "E": {
+      "item": "gregtech:compact_signal_emitter_hv"
+    }
+  },
+  "result": {
+    "item": "gregtech:quantum_energizer_luv"
+  }
+}

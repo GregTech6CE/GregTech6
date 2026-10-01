@@ -1,0 +1,21 @@
+{
+  "type": "gregtech:tool_shaped",
+  "allow_mirror": false,
+  "pattern": [
+    " R ",
+    "RhR",
+    " R "
+  ],
+  "key": {
+    "R": {
+      "tag": "forge:rods/stainless_steel"
+    },
+    "h": {
+      "item": "gregtech:tool_hammer"
+    }
+  },
+  "result": {
+    "item": "gregtech:slicer_shape_empty",
+    "count": 1
+  }
+}

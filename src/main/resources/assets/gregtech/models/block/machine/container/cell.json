@@ -1,0 +1,424 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "forge:composite",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "particle": "gregtech:block/machines/tanks/cell/colored/bottom"
+  },
+  "children": {
+    "colored": {
+      "textures": {
+        "bottom": "gregtech:block/machines/tanks/cell/colored/bottom",
+        "sides": "gregtech:block/machines/tanks/cell/colored/sides",
+        "top": "gregtech:block/machines/tanks/cell/colored/top"
+      },
+      "elements": [
+        {
+          "from": [
+            5,
+            1,
+            6
+          ],
+          "to": [
+            11,
+            11,
+            10
+          ],
+          "faces": {
+            "west": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#top",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#bottom",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            6,
+            1,
+            5
+          ],
+          "to": [
+            10,
+            11,
+            11
+          ],
+          "faces": {
+            "west": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#top",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#bottom",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            6,
+            0,
+            6
+          ],
+          "to": [
+            10,
+            12,
+            10
+          ],
+          "faces": {
+            "west": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#top",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#bottom",
+              "tintindex": 0
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    },
+    "overlay": {
+      "textures": {
+        "bottom": "gregtech:block/machines/tanks/cell/overlay/bottom",
+        "sides": "gregtech:block/machines/tanks/cell/overlay/sides",
+        "top": "gregtech:block/machines/tanks/cell/overlay/top"
+      },
+      "elements": [
+        {
+          "from": [
+            5,
+            1,
+            6
+          ],
+          "to": [
+            11,
+            11,
+            10
+          ],
+          "faces": {
+            "west": {
+              "texture": "#sides"
+            },
+            "east": {
+              "texture": "#sides"
+            },
+            "north": {
+              "texture": "#sides"
+            },
+            "south": {
+              "texture": "#sides"
+            },
+            "up": {
+              "texture": "#top"
+            },
+            "down": {
+              "texture": "#bottom"
+            }
+          }
+        },
+        {
+          "from": [
+            6,
+            1,
+            5
+          ],
+          "to": [
+            10,
+            11,
+            11
+          ],
+          "faces": {
+            "west": {
+              "texture": "#sides"
+            },
+            "east": {
+              "texture": "#sides"
+            },
+            "north": {
+              "texture": "#sides"
+            },
+            "south": {
+              "texture": "#sides"
+            },
+            "up": {
+              "texture": "#top"
+            },
+            "down": {
+              "texture": "#bottom"
+            }
+          }
+        },
+        {
+          "from": [
+            6,
+            0,
+            6
+          ],
+          "to": [
+            10,
+            12,
+            10
+          ],
+          "faces": {
+            "west": {
+              "texture": "#sides"
+            },
+            "east": {
+              "texture": "#sides"
+            },
+            "north": {
+              "texture": "#sides"
+            },
+            "south": {
+              "texture": "#sides"
+            },
+            "up": {
+              "texture": "#top"
+            },
+            "down": {
+              "texture": "#bottom"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    },
+    "inside_colored": {
+      "textures": {
+        "insides": "gregtech:block/machines/tanks/cell/colored/insides"
+      },
+      "elements": [
+        {
+          "from": [
+            5.032,
+            1,
+            6.032
+          ],
+          "to": [
+            10.968,
+            11,
+            9.968
+          ],
+          "faces": {
+            "west": {
+              "texture": "#insides",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#insides",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#insides",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#insides",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            6.032,
+            1,
+            5.032
+          ],
+          "to": [
+            9.968,
+            11,
+            10.968
+          ],
+          "faces": {
+            "west": {
+              "texture": "#insides",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#insides",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#insides",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#insides",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            6.032,
+            0,
+            6.032
+          ],
+          "to": [
+            9.968,
+            12,
+            9.968
+          ],
+          "faces": {
+            "west": {
+              "texture": "#insides",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#insides",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#insides",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#insides",
+              "tintindex": 0
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    },
+    "inside_overlay": {
+      "textures": {
+        "insides": "gregtech:block/machines/tanks/cell/overlay/insides"
+      },
+      "elements": [
+        {
+          "from": [
+            5.032,
+            1,
+            6.032
+          ],
+          "to": [
+            10.968,
+            11,
+            9.968
+          ],
+          "faces": {
+            "west": {
+              "texture": "#insides"
+            },
+            "east": {
+              "texture": "#insides"
+            },
+            "north": {
+              "texture": "#insides"
+            },
+            "south": {
+              "texture": "#insides"
+            }
+          }
+        },
+        {
+          "from": [
+            6.032,
+            1,
+            5.032
+          ],
+          "to": [
+            9.968,
+            11,
+            10.968
+          ],
+          "faces": {
+            "west": {
+              "texture": "#insides"
+            },
+            "east": {
+              "texture": "#insides"
+            },
+            "north": {
+              "texture": "#insides"
+            },
+            "south": {
+              "texture": "#insides"
+            }
+          }
+        },
+        {
+          "from": [
+            6.032,
+            0,
+            6.032
+          ],
+          "to": [
+            9.968,
+            12,
+            9.968
+          ],
+          "faces": {
+            "west": {
+              "texture": "#insides"
+            },
+            "east": {
+              "texture": "#insides"
+            },
+            "north": {
+              "texture": "#insides"
+            },
+            "south": {
+              "texture": "#insides"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    }
+  }
+}

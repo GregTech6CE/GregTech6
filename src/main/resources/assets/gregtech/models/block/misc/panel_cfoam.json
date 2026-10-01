@@ -1,0 +1,49 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "top": "gregtech:block/iconsets/cfoam_hardened",
+    "front": "gregtech:block/iconsets/cfoam_hardened",
+    "side": "gregtech:block/iconsets/cfoam_hardened",
+    "particle": "gregtech:block/iconsets/cfoam_hardened"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        1
+      ],
+      "faces": {
+        "north": {
+          "texture": "#front",
+          "tintindex": 0
+        },
+        "south": {
+          "texture": "#front",
+          "tintindex": 0
+        },
+        "east": {
+          "texture": "#side",
+          "tintindex": 0
+        },
+        "west": {
+          "texture": "#side",
+          "tintindex": 0
+        },
+        "up": {
+          "texture": "#top",
+          "tintindex": 0
+        },
+        "down": {
+          "texture": "#top",
+          "tintindex": 0
+        }
+      }
+    }
+  ]
+}

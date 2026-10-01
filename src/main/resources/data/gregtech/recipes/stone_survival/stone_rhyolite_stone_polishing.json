@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "gregtech:stone_rhyolite_stone"
+  },
+  "result": "gregtech:stone_rhyolite_smooth",
+  "experience": 0.0,
+  "cookingtime": 200
+}

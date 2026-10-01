@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "gregtech:item/material_icons/dull/toolheadscrewdriver",
+    "layer1": "gregtech:item/material_icons/dull/toolheadscrewdriver_overlay",
+    "layer2": "gregtech:item/iconsets/handle_screwdriver",
+    "layer3": "gregtech:item/iconsets/handle_screwdriver_overlay"
+  }
+}

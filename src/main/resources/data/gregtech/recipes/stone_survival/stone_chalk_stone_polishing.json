@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "gregtech:stone_chalk_stone"
+  },
+  "result": "gregtech:stone_chalk_smooth",
+  "experience": 0.0,
+  "cookingtime": 200
+}

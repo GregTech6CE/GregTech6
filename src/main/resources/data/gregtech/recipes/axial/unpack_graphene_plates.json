@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:block_plate_graphene"
+    }
+  ],
+  "result": {
+    "item": "gregtech:plate_graphene",
+    "count": 9
+  }
+}

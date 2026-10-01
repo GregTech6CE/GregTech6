@@ -1,0 +1,26 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "gregtech:block/stones/stone_granite_black_stone_slab"
+    },
+    "facing=up": {
+      "model": "gregtech:block/stones/stone_granite_black_stone_slab",
+      "x": 180
+    },
+    "facing=north": {
+      "model": "gregtech:block/stones/stone_granite_black_stone_slab_side"
+    },
+    "facing=south": {
+      "model": "gregtech:block/stones/stone_granite_black_stone_slab_side",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "gregtech:block/stones/stone_granite_black_stone_slab_side",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "gregtech:block/stones/stone_granite_black_stone_slab_side",
+      "y": 270
+    }
+  }
+}

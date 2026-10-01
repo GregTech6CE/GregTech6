@@ -1,0 +1,382 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "forge:composite",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "particle": "gregtech:block/machines/tanks/barometer_gas_cylinder/colored/barometer"
+  },
+  "children": {
+    "colored": {
+      "textures": {
+        "barometer": "gregtech:block/machines/tanks/barometer_gas_cylinder/colored/barometer",
+        "bottom": "gregtech:block/machines/tanks/barometer_gas_cylinder/colored/bottom",
+        "sides": "gregtech:block/machines/tanks/barometer_gas_cylinder/colored/sides",
+        "top": "gregtech:block/machines/tanks/barometer_gas_cylinder/colored/top"
+      },
+      "elements": [
+        {
+          "from": [
+            4,
+            0,
+            5
+          ],
+          "to": [
+            12,
+            8,
+            11
+          ],
+          "faces": {
+            "west": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#top",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#bottom",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            5,
+            0,
+            4
+          ],
+          "to": [
+            11,
+            8,
+            12
+          ],
+          "faces": {
+            "west": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#top",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#bottom",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            5,
+            8,
+            5
+          ],
+          "to": [
+            11,
+            9,
+            11
+          ],
+          "faces": {
+            "west": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#top",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#bottom",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            7,
+            9,
+            7
+          ],
+          "to": [
+            9,
+            16,
+            9
+          ],
+          "faces": {
+            "west": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#top",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#bottom",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            6,
+            10,
+            6
+          ],
+          "to": [
+            10,
+            14,
+            10
+          ],
+          "faces": {
+            "west": {
+              "texture": "#barometer",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#barometer",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#barometer",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#barometer",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#barometer",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#barometer",
+              "tintindex": 0
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    },
+    "overlay": {
+      "textures": {
+        "barometer": "gregtech:block/machines/tanks/barometer_gas_cylinder/overlay/barometer",
+        "bottom": "gregtech:block/machines/tanks/barometer_gas_cylinder/overlay/bottom",
+        "sides": "gregtech:block/machines/tanks/barometer_gas_cylinder/overlay/sides",
+        "top": "gregtech:block/machines/tanks/barometer_gas_cylinder/overlay/top"
+      },
+      "elements": [
+        {
+          "from": [
+            4,
+            0,
+            5
+          ],
+          "to": [
+            12,
+            8,
+            11
+          ],
+          "faces": {
+            "west": {
+              "texture": "#sides"
+            },
+            "east": {
+              "texture": "#sides"
+            },
+            "north": {
+              "texture": "#sides"
+            },
+            "south": {
+              "texture": "#sides"
+            },
+            "up": {
+              "texture": "#top"
+            },
+            "down": {
+              "texture": "#bottom"
+            }
+          }
+        },
+        {
+          "from": [
+            5,
+            0,
+            4
+          ],
+          "to": [
+            11,
+            8,
+            12
+          ],
+          "faces": {
+            "west": {
+              "texture": "#sides"
+            },
+            "east": {
+              "texture": "#sides"
+            },
+            "north": {
+              "texture": "#sides"
+            },
+            "south": {
+              "texture": "#sides"
+            },
+            "up": {
+              "texture": "#top"
+            },
+            "down": {
+              "texture": "#bottom"
+            }
+          }
+        },
+        {
+          "from": [
+            5,
+            8,
+            5
+          ],
+          "to": [
+            11,
+            9,
+            11
+          ],
+          "faces": {
+            "west": {
+              "texture": "#sides"
+            },
+            "east": {
+              "texture": "#sides"
+            },
+            "north": {
+              "texture": "#sides"
+            },
+            "south": {
+              "texture": "#sides"
+            },
+            "up": {
+              "texture": "#top"
+            },
+            "down": {
+              "texture": "#bottom"
+            }
+          }
+        },
+        {
+          "from": [
+            7,
+            9,
+            7
+          ],
+          "to": [
+            9,
+            16,
+            9
+          ],
+          "faces": {
+            "west": {
+              "texture": "#sides"
+            },
+            "east": {
+              "texture": "#sides"
+            },
+            "north": {
+              "texture": "#sides"
+            },
+            "south": {
+              "texture": "#sides"
+            },
+            "up": {
+              "texture": "#top"
+            },
+            "down": {
+              "texture": "#bottom"
+            }
+          }
+        },
+        {
+          "from": [
+            6,
+            10,
+            6
+          ],
+          "to": [
+            10,
+            14,
+            10
+          ],
+          "faces": {
+            "west": {
+              "texture": "#barometer"
+            },
+            "east": {
+              "texture": "#barometer"
+            },
+            "north": {
+              "texture": "#barometer"
+            },
+            "south": {
+              "texture": "#barometer"
+            },
+            "up": {
+              "texture": "#barometer"
+            },
+            "down": {
+              "texture": "#barometer"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    }
+  }
+}

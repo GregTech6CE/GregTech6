@@ -1,0 +1,96 @@
+{
+  "variants": {
+    "facing=down,lit=false,waterlogged=false": {
+      "model": "gregtech:block/machine/engine/engine_diesel",
+      "x": 90
+    },
+    "facing=down,lit=false,waterlogged=true": {
+      "model": "gregtech:block/machine/engine/engine_diesel",
+      "x": 90
+    },
+    "facing=down,lit=true,waterlogged=false": {
+      "model": "gregtech:block/machine/engine/engine_diesel",
+      "x": 90
+    },
+    "facing=down,lit=true,waterlogged=true": {
+      "model": "gregtech:block/machine/engine/engine_diesel",
+      "x": 90
+    },
+    "facing=up,lit=false,waterlogged=false": {
+      "model": "gregtech:block/machine/engine/engine_diesel",
+      "x": 270
+    },
+    "facing=up,lit=false,waterlogged=true": {
+      "model": "gregtech:block/machine/engine/engine_diesel",
+      "x": 270
+    },
+    "facing=up,lit=true,waterlogged=false": {
+      "model": "gregtech:block/machine/engine/engine_diesel",
+      "x": 270
+    },
+    "facing=up,lit=true,waterlogged=true": {
+      "model": "gregtech:block/machine/engine/engine_diesel",
+      "x": 270
+    },
+    "facing=north,lit=false,waterlogged=false": {
+      "model": "gregtech:block/machine/engine/engine_diesel"
+    },
+    "facing=north,lit=false,waterlogged=true": {
+      "model": "gregtech:block/machine/engine/engine_diesel"
+    },
+    "facing=north,lit=true,waterlogged=false": {
+      "model": "gregtech:block/machine/engine/engine_diesel"
+    },
+    "facing=north,lit=true,waterlogged=true": {
+      "model": "gregtech:block/machine/engine/engine_diesel"
+    },
+    "facing=south,lit=false,waterlogged=false": {
+      "model": "gregtech:block/machine/engine/engine_diesel",
+      "y": 180
+    },
+    "facing=south,lit=false,waterlogged=true": {
+      "model": "gregtech:block/machine/engine/engine_diesel",
+      "y": 180
+    },
+    "facing=south,lit=true,waterlogged=false": {
+      "model": "gregtech:block/machine/engine/engine_diesel",
+      "y": 180
+    },
+    "facing=south,lit=true,waterlogged=true": {
+      "model": "gregtech:block/machine/engine/engine_diesel",
+      "y": 180
+    },
+    "facing=west,lit=false,waterlogged=false": {
+      "model": "gregtech:block/machine/engine/engine_diesel",
+      "y": 270
+    },
+    "facing=west,lit=false,waterlogged=true": {
+      "model": "gregtech:block/machine/engine/engine_diesel",
+      "y": 270
+    },
+    "facing=west,lit=true,waterlogged=false": {
+      "model": "gregtech:block/machine/engine/engine_diesel",
+      "y": 270
+    },
+    "facing=west,lit=true,waterlogged=true": {
+      "model": "gregtech:block/machine/engine/engine_diesel",
+      "y": 270
+    },
+    "facing=east,lit=false,waterlogged=false": {
+      "model": "gregtech:block/machine/engine/engine_diesel",
+      "y": 90
+    },
+    "facing=east,lit=false,waterlogged=true": {
+      "model": "gregtech:block/machine/engine/engine_diesel",
+      "y": 90
+    },
+    "facing=east,lit=true,waterlogged=false": {
+      "model": "gregtech:block/machine/engine/engine_diesel",
+      "y": 90
+    },
+    "facing=east,lit=true,waterlogged=true": {
+      "model": "gregtech:block/machine/engine/engine_diesel",
+      "y": 90
+    }
+  }
+}

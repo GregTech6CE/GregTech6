@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#gregtech:circuits_tier_1_plus",
+    {
+      "id": "#forge:circuits/primitive",
+      "required": false
+    }
+  ]
+}

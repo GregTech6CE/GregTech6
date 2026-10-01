@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WCW",
+    "WCW",
+    "XMX"
+  ],
+  "key": {
+    "W": {
+      "item": "gregtech:wire_04_graphene"
+    },
+    "C": {
+      "item": "gregtech:wire_04_graphene"
+    },
+    "X": {
+      "tag": "gregtech:circuits_tier_6_plus"
+    },
+    "M": {
+      "item": "gregtech:transformer_luv_zpm"
+    }
+  },
+  "result": {
+    "item": "gregtech:energy_storage_luv"
+  }
+}

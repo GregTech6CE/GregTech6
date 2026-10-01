@@ -1,0 +1,50 @@
+{
+  "type": "gregtech:tool_shaped",
+  "_comment": "GT6 MultiItemTechnological:821",
+  "pattern": [
+    "PLT",
+    "dRW",
+    "TCP"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:plates/chromium"
+    },
+    "L": {
+      "item": "gregtech:laser_emitter_helium"
+    },
+    "T": {
+      "tag": "forge:screws/chromium"
+    },
+    "d": {
+      "item": "gregtech:tool_screwdriver"
+    },
+    "R": {
+      "tag": "minecraft:music_discs"
+    },
+    "W": {
+      "item": "gregtech:usb3_cable"
+    },
+    "C": [
+      {
+        "item": "gregtech:circuit_basic"
+      },
+      {
+        "item": "gregtech:circuit_good"
+      },
+      {
+        "item": "gregtech:circuit_advanced"
+      },
+      {
+        "item": "gregtech:circuit_elite"
+      },
+      {
+        "item": "gregtech:circuit_master"
+      }
+    ]
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gregtech:usb3_hdd"
+  }
+}

@@ -1,0 +1,659 @@
+{
+  "loader": "forge:composite",
+  "display": {
+    "gui": {
+      "rotation": [
+        30,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.625,
+        0.625,
+        0.625
+      ]
+    },
+    "ground": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        3,
+        0
+      ],
+      "scale": [
+        0.25,
+        0.25,
+        0.25
+      ]
+    },
+    "fixed": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        75,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        2.5,
+        0
+      ],
+      "scale": [
+        0.375,
+        0.375,
+        0.375
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    },
+    "firstperson_lefthand": {
+      "rotation": [
+        0,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    }
+  },
+  "children": {
+    "back_plate_colored": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "front": "gregtech:block/machines/engines/kinetic_diesel/colored/front",
+        "back": "gregtech:block/machines/engines/kinetic_diesel/colored/back",
+        "side": "gregtech:block/machines/engines/kinetic_diesel/colored/side"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            2
+          ],
+          "faces": {
+            "south": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#side",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            12,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            2
+          ],
+          "faces": {
+            "north": {
+              "texture": "#front",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            4,
+            2
+          ],
+          "faces": {
+            "north": {
+              "texture": "#front",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            4,
+            0
+          ],
+          "to": [
+            4,
+            12,
+            2
+          ],
+          "faces": {
+            "north": {
+              "texture": "#front",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            12,
+            4,
+            0
+          ],
+          "to": [
+            16,
+            12,
+            2
+          ],
+          "faces": {
+            "north": {
+              "texture": "#front",
+              "tintindex": 0
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:solid"
+    },
+    "back_plate_overlay": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "front": "gregtech:block/machines/engines/kinetic_diesel/overlay/front",
+        "back": "gregtech:block/machines/engines/kinetic_diesel/overlay/back",
+        "side": "gregtech:block/machines/engines/kinetic_diesel/overlay/side"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            2
+          ],
+          "faces": {
+            "south": {
+              "texture": "#front"
+            },
+            "east": {
+              "texture": "#side"
+            },
+            "west": {
+              "texture": "#side"
+            },
+            "up": {
+              "texture": "#front"
+            },
+            "down": {
+              "texture": "#front"
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            12,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            2
+          ],
+          "faces": {
+            "north": {
+              "texture": "#front"
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            4,
+            2
+          ],
+          "faces": {
+            "north": {
+              "texture": "#front"
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            4,
+            0
+          ],
+          "to": [
+            4,
+            12,
+            2
+          ],
+          "faces": {
+            "north": {
+              "texture": "#front"
+            }
+          }
+        },
+        {
+          "from": [
+            12,
+            4,
+            0
+          ],
+          "to": [
+            16,
+            12,
+            2
+          ],
+          "faces": {
+            "north": {
+              "texture": "#front"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    },
+    "engine_hull_colored": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "hull": "gregtech:block/machines/engines/kinetic_diesel/colored/engine_hull"
+      },
+      "elements": [
+        {
+          "from": [
+            3,
+            3,
+            0
+          ],
+          "to": [
+            13,
+            13,
+            16
+          ],
+          "faces": {
+            "east": {
+              "texture": "#hull",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#hull",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#hull",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#hull",
+              "tintindex": 0
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    },
+    "engine_hull_overlay": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "hull": "gregtech:block/machines/engines/kinetic_diesel/overlay/engine_hull"
+      },
+      "elements": [
+        {
+          "from": [
+            3,
+            3,
+            0
+          ],
+          "to": [
+            13,
+            13,
+            16
+          ],
+          "faces": {
+            "east": {
+              "texture": "#hull"
+            },
+            "west": {
+              "texture": "#hull"
+            },
+            "up": {
+              "texture": "#hull"
+            },
+            "down": {
+              "texture": "#hull"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    },
+    "engine_core_colored": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "engine": "gregtech:block/machines/engines/kinetic_diesel/colored/engine"
+      },
+      "elements": [
+        {
+          "from": [
+            4,
+            4,
+            0
+          ],
+          "to": [
+            12,
+            12,
+            16
+          ],
+          "faces": {
+            "north": {
+              "texture": "#engine",
+              "tintindex": 1
+            },
+            "east": {
+              "texture": "#engine",
+              "tintindex": 1
+            },
+            "west": {
+              "texture": "#engine",
+              "tintindex": 1
+            },
+            "up": {
+              "texture": "#engine",
+              "tintindex": 1
+            },
+            "down": {
+              "texture": "#engine",
+              "tintindex": 1
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    },
+    "engine_core_overlay": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "engine": "gregtech:block/machines/engines/kinetic_diesel/overlay/engine"
+      },
+      "elements": [
+        {
+          "from": [
+            4,
+            4,
+            0
+          ],
+          "to": [
+            12,
+            12,
+            16
+          ],
+          "faces": {
+            "north": {
+              "texture": "#engine"
+            },
+            "east": {
+              "texture": "#engine"
+            },
+            "west": {
+              "texture": "#engine"
+            },
+            "up": {
+              "texture": "#engine"
+            },
+            "down": {
+              "texture": "#engine"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    },
+    "front_plate_colored": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "front": "gregtech:block/machines/engines/kinetic_diesel/colored/front",
+        "back": "gregtech:block/machines/engines/kinetic_diesel/colored/back",
+        "side": "gregtech:block/machines/engines/kinetic_diesel/colored/side"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            14
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "north": {
+              "texture": "#back",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#back",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#back",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#back",
+              "tintindex": 0
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:solid"
+    },
+    "front_plate_overlay": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "front": "gregtech:block/machines/engines/kinetic_diesel/overlay/front",
+        "back": "gregtech:block/machines/engines/kinetic_diesel/overlay/back",
+        "side": "gregtech:block/machines/engines/kinetic_diesel/overlay/side"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            14
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "north": {
+              "texture": "#back"
+            },
+            "south": {
+              "texture": "#back"
+            },
+            "east": {
+              "texture": "#side"
+            },
+            "west": {
+              "texture": "#side"
+            },
+            "up": {
+              "texture": "#back"
+            },
+            "down": {
+              "texture": "#back"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    },
+    "cage_colored": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "cage": "gregtech:block/machines/engines/kinetic_diesel/colored/cage"
+      },
+      "elements": [
+        {
+          "from": [
+            1,
+            1,
+            1
+          ],
+          "to": [
+            15,
+            15,
+            15
+          ],
+          "faces": {
+            "east": {
+              "texture": "#cage",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#cage",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#cage",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#cage",
+              "tintindex": 0
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    },
+    "cage_overlay": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "cage": "gregtech:block/machines/engines/kinetic_diesel/overlay/cage"
+      },
+      "elements": [
+        {
+          "from": [
+            1,
+            1,
+            1
+          ],
+          "to": [
+            15,
+            15,
+            15
+          ],
+          "faces": {
+            "east": {
+              "texture": "#cage"
+            },
+            "west": {
+              "texture": "#cage"
+            },
+            "up": {
+              "texture": "#cage"
+            },
+            "down": {
+              "texture": "#cage"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    }
+  },
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "gregtech:block/machines/engines/kinetic_diesel/colored/front"
+  }
+}

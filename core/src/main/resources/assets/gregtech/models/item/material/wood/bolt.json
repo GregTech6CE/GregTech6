@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "gregtech:item/material_icons/wood/bolt",
+    "layer1": "gregtech:item/material_icons/wood/bolt_overlay"
+  }
+}

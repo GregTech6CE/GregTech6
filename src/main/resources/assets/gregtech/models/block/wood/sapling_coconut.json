@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "gregtech:block/iconsets/sapling_small_coconut"
+  }
+}

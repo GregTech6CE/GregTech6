@@ -1,0 +1,21 @@
+{
+  "type": "gregtech:tool_shaped",
+  "allow_mirror": false,
+  "pattern": [
+    "   ",
+    " P ",
+    " x "
+  ],
+  "key": {
+    "P": {
+      "item": "gregtech:extruder_shape_empty"
+    },
+    "x": {
+      "item": "gregtech:tool_wire_cutter"
+    }
+  },
+  "result": {
+    "item": "gregtech:extruder_shape_ring",
+    "count": 1
+  }
+}

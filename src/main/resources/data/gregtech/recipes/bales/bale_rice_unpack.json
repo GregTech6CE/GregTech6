@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:bale_rice"
+    }
+  ],
+  "result": {
+    "item": "gregtech:rice",
+    "count": 9
+  }
+}

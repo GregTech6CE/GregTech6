@@ -1,0 +1,96 @@
+{
+  "loader": "forge:composite",
+  "children": {
+    "layer0": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "top": "gregtech:block/machines/tools/tap/colored/top",
+        "side": "gregtech:block/machines/tools/tap/colored/side",
+        "bottom": "gregtech:block/machines/tools/tap/colored/bottom",
+        "particle": "gregtech:block/machines/tools/tap/colored/top"
+      },
+      "elements": [
+        {
+          "from": [
+            6,
+            4,
+            10
+          ],
+          "to": [
+            10,
+            9,
+            16
+          ],
+          "faces": {
+            "north": {
+              "texture": "#side"
+            },
+            "south": {
+              "texture": "#side"
+            },
+            "west": {
+              "texture": "#side"
+            },
+            "east": {
+              "texture": "#side"
+            },
+            "up": {
+              "texture": "#top"
+            },
+            "down": {
+              "texture": "#bottom"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:solid"
+    },
+    "layer1": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "top": "gregtech:block/machines/tools/tap/overlay/top",
+        "side": "gregtech:block/machines/tools/tap/overlay/side",
+        "bottom": "gregtech:block/machines/tools/tap/overlay/bottom"
+      },
+      "elements": [
+        {
+          "from": [
+            6,
+            4,
+            10
+          ],
+          "to": [
+            10,
+            9,
+            16
+          ],
+          "faces": {
+            "north": {
+              "texture": "#side"
+            },
+            "south": {
+              "texture": "#side"
+            },
+            "west": {
+              "texture": "#side"
+            },
+            "east": {
+              "texture": "#side"
+            },
+            "up": {
+              "texture": "#top"
+            },
+            "down": {
+              "texture": "#bottom"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    }
+  },
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "gregtech:block/machines/tools/tap/colored/top"
+  }
+}

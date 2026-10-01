@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/plastic"
+    }
+  ],
+  "result": {
+    "item": "gregtech:nugget_plastic",
+    "count": 9
+  }
+}

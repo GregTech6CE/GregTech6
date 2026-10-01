@@ -1,0 +1,33 @@
+{
+  "type": "gregtech:tool_shaped",
+  "_comment": "GT6 MultiItemTechnological:811",
+  "pattern": [
+    "xWd",
+    "PCP",
+    "TCT"
+  ],
+  "key": {
+    "x": {
+      "item": "gregtech:tool_wire_cutter"
+    },
+    "d": {
+      "item": "gregtech:tool_screwdriver"
+    },
+    "W": {
+      "item": "gregtech:wire_01_graphene"
+    },
+    "C": {
+      "item": "gregtech:wire_01_graphene"
+    },
+    "P": {
+      "tag": "forge:plates/titanium"
+    },
+    "T": {
+      "tag": "forge:screws/titanium"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gregtech:usb4_cable"
+  }
+}

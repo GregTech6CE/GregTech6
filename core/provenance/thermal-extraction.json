@@ -1,0 +1,79 @@
+{
+  "source": "brokestar233",
+  "source_directory": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6-main",
+  "source_original_history": "No .git in provided source snapshot; no original commit authors reconstructed",
+  "source_file": "src/main/java/gregapi/util/CruciblePhysics.java",
+  "source_sha256": "a4ce0a84fd002d4a20cbb4d4ebdd0a59f25a0055b705c6326a237fdebb93afc6",
+  "source_lines": {
+    "mixing": "118-127 (thermal arithmetic only; phase conversions not adopted)",
+    "thermal_step": "155-199"
+  },
+  "source_license": "LGPL-3.0-or-later (source header and original LICENSE/NOTICE retained)",
+  "upstream": {
+    "repository": "GregTech6/gregtech6",
+    "revision": "3703e40308c8c030763fd6297dea8b210d2a77b1",
+    "path": "src/main/java/gregtech/tileentity/tools/MultiTileEntitySmeltery.java",
+    "raw_sha256": "eaf9b833c4c439a102bb346c6c4e032d88b6d97b823003232f45d185f23597f1",
+    "physical_utf8_lines": 703,
+    "thermal_step_lines": "301-313",
+    "mixing_line": 333,
+    "energy_injection_line": 693,
+    "authors": [
+      "Gregorius Techneticies",
+      "GregTech-6 Team"
+    ],
+    "copyright_notice": "Copyright (c) 2026 GregTech-6 Team"
+  },
+  "adopted": "Signed whole-Kelvin thermal conversions, exact remainder, 100/10 cooldown, min(200K,ambientK) floor; long-cast weighted mixing via existing CrucibleMath",
+  "excluded": [
+    "CruciblePhysics.applyAlloy and alternative-recipe identity loss",
+    "phase conversion and alloy/hazard/world scheduling",
+    "MC/loader/registry/NBT",
+    "Celsius float authoritative state and CC144 material units"
+  ],
+  "new_policy": [
+    "Nonnegative absolute Kelvin; finite nonnegative mass",
+    "Positive mixing total below1kg rejected; zero total preserves existing temperature",
+    "Unrepresentable long mass/requiredEnergy, mixing scale product, packet magnitude/product, buffer or temperature addition rejected",
+    "Signed energy including Long.MIN_VALUE is preserved; energy kind determines HU/CU sign; negative legacy cooldown treated as expired"
+  ],
+  "platform_status": "No Forge BE, energy acceptance, entrypoint, NBT or Neo code change; candidate for later explicit integration",
+  "tests": {
+    "fixture_source": "Original CruciblePhysicsTest numeric expectations plus P2_THERMAL_COMPARISON seven thermal/two mixing groups",
+    "assertions": 53,
+    "compiler": "Java17 --release17",
+    "dependencies": "java.base only",
+    "Gradle": "core:check wiring added; full platform/runtime work remains with main"
+  },
+  "files": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/api/machine/crucible/ThermalState.java",
+      "integrated_sha256": "1bc8de6fed2d2b61820b9d16fb054622aa392157bf02d82cf961ed16e8687bc9",
+      "change": "New immutable API adapting the sourced algorithm; no exact-file relocation claim"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/api/machine/crucible/ThermalStep.java",
+      "integrated_sha256": "af0c24d922ea51d426160139d8c1ca0f6d9d24d704db27e8f276db12d271945a",
+      "change": "New immutable API adapting the sourced algorithm; no exact-file relocation claim"
+    },
+    {
+      "path": "core/src/test/java/com/gregtech/gregtech/core/ThermalBehaviorContracts.java",
+      "integrated_sha256": "6f884c6b0dc98ed8193c23d74074117f0dfff10c15177edb462c6cd598942023",
+      "change": "New immutable API adapting the sourced algorithm; no exact-file relocation claim"
+    }
+  ],
+  "license_copies": [
+    {
+      "original_path": "LICENSE",
+      "path": "core/provenance/licenses/brokestar/LICENSE",
+      "sha256": "da7eabb7bafdf7d3ae5e9f223aa5bdc1eece45ac569dc21b3b037520b4464768",
+      "change": "exact original bytes, without relicensing other project content"
+    },
+    {
+      "original_path": "NOTICE.md",
+      "path": "core/provenance/licenses/brokestar/NOTICE.md",
+      "sha256": "863b679c6ff38120f5258ef76bc90124d8e1e0749a57fadd783282800be1e1e1",
+      "change": "exact original bytes, without relicensing other project content"
+    }
+  ]
+}

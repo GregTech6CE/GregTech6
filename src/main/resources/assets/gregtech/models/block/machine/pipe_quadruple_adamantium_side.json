@@ -1,0 +1,105 @@
+{
+  "loader": "forge:composite",
+  "children": {
+    "layer0": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "side": "gregtech:block/material_icons/shiny/pipeside",
+        "end": "gregtech:block/material_icons/shiny/pipequadruple",
+        "up": "gregtech:block/material_icons/shiny/pipeside",
+        "down": "gregtech:block/material_icons/shiny/pipeside"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            0
+          ],
+          "faces": {
+            "down": {
+              "texture": "#down",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#up",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#end",
+              "cullface": "north",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#side",
+              "tintindex": 0
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:solid"
+    },
+    "layer1": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "side_ov": "gregtech:block/material_icons/shiny/pipeside_overlay",
+        "end_ov": "gregtech:block/material_icons/shiny/pipequadruple_overlay",
+        "up_ov": "gregtech:block/material_icons/shiny/pipeside_overlay",
+        "down_ov": "gregtech:block/material_icons/shiny/pipeside_overlay"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            0
+          ],
+          "faces": {
+            "down": {
+              "texture": "#down_ov"
+            },
+            "up": {
+              "texture": "#up_ov"
+            },
+            "north": {
+              "texture": "#end_ov",
+              "cullface": "north"
+            },
+            "south": {
+              "texture": "#side_ov"
+            },
+            "west": {
+              "texture": "#side_ov"
+            },
+            "east": {
+              "texture": "#side_ov"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    }
+  },
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "gregtech:block/material_icons/shiny/pipeside"
+  }
+}

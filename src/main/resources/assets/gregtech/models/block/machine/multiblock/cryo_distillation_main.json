@@ -1,0 +1,119 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "forge:composite",
+  "textures": {
+    "particle": "gregtech:block/machines/basicmachines/cryodistillationtower/colored/top"
+  },
+  "children": {
+    "colored": {
+      "parent": "minecraft:block/block",
+      "render_type": "minecraft:cutout",
+      "textures": {
+        "up": "gregtech:block/machines/basicmachines/cryodistillationtower/colored/top",
+        "down": "gregtech:block/machines/basicmachines/cryodistillationtower/colored/bottom",
+        "north": "gregtech:block/machines/basicmachines/cryodistillationtower/colored/front",
+        "south": "gregtech:block/machines/basicmachines/cryodistillationtower/colored/back",
+        "west": "gregtech:block/machines/basicmachines/cryodistillationtower/colored/left",
+        "east": "gregtech:block/machines/basicmachines/cryodistillationtower/colored/right"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "up": {
+              "texture": "#up",
+              "cullface": "up",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#down",
+              "cullface": "down",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#north",
+              "cullface": "north",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#south",
+              "cullface": "south",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#west",
+              "cullface": "west",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#east",
+              "cullface": "east",
+              "tintindex": 0
+            }
+          }
+        }
+      ]
+    },
+    "overlay": {
+      "parent": "minecraft:block/block",
+      "render_type": "minecraft:cutout",
+      "textures": {
+        "up": "gregtech:block/machines/basicmachines/cryodistillationtower/overlay/top",
+        "down": "gregtech:block/machines/basicmachines/cryodistillationtower/overlay/bottom",
+        "north": "gregtech:block/machines/basicmachines/cryodistillationtower/overlay/front",
+        "south": "gregtech:block/machines/basicmachines/cryodistillationtower/overlay/back",
+        "west": "gregtech:block/machines/basicmachines/cryodistillationtower/overlay/left",
+        "east": "gregtech:block/machines/basicmachines/cryodistillationtower/overlay/right"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "up": {
+              "texture": "#up",
+              "cullface": "up"
+            },
+            "down": {
+              "texture": "#down",
+              "cullface": "down"
+            },
+            "north": {
+              "texture": "#north",
+              "cullface": "north"
+            },
+            "south": {
+              "texture": "#south",
+              "cullface": "south"
+            },
+            "west": {
+              "texture": "#west",
+              "cullface": "west"
+            },
+            "east": {
+              "texture": "#east",
+              "cullface": "east"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

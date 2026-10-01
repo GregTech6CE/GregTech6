@@ -1,0 +1,56 @@
+plugins {
+    id 'java-library'
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(17)
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 17
+}
+
+tasks.named('jar', Jar).configure {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}
+
+tasks.register('coreBehaviorContracts', JavaExec) {
+    description = 'Runs fixed GT6 behavior fixtures without Minecraft, Forge, or NeoForge.'
+    group = 'verification'
+    dependsOn tasks.named('testClasses')
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'com.gregtech.gregtech.core.CoreBehaviorContracts'
+}
+
+tasks.named('check').configure {
+    dependsOn tasks.named('coreBehaviorContracts')
+    dependsOn tasks.named('materialBehaviorContracts')
+    dependsOn tasks.named('thermalBehaviorContracts')
+    dependsOn tasks.named('machineSpecBehaviorContracts')
+}
+
+tasks.register('materialBehaviorContracts', JavaExec) {
+    description = 'Checks the full original material graph, exact units and reaction fixtures without a game.'
+    group = 'verification'
+    dependsOn tasks.named('testClasses')
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'com.gregtech.gregtech.core.MaterialBehaviorContracts'
+}
+
+tasks.register('thermalBehaviorContracts', JavaExec) {
+    description = 'Runs pinned signed thermal-step, Kelvin-floor and integer mixing fixtures.'
+    group = 'verification'
+    dependsOn tasks.named('testClasses')
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'com.gregtech.gregtech.core.ThermalBehaviorContracts'
+}
+
+tasks.register('machineSpecBehaviorContracts', JavaExec) {
+    description = 'Checks pinned original brick and ceramic hull parameters without Minecraft.'
+    group = 'verification'
+    dependsOn tasks.named('testClasses')
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'com.gregtech.gregtech.core.MachineSpecBehaviorContracts'
+}

@@ -1,0 +1,119 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "forge:composite",
+  "textures": {
+    "particle": "gregtech:block/machines/multiblockmains/bedrockdrill/colored/top"
+  },
+  "children": {
+    "colored": {
+      "parent": "minecraft:block/block",
+      "render_type": "minecraft:cutout",
+      "textures": {
+        "up": "gregtech:block/machines/multiblockmains/bedrockdrill/colored/top",
+        "down": "gregtech:block/machines/multiblockmains/bedrockdrill/colored/bottom",
+        "north": "gregtech:block/machines/multiblockmains/bedrockdrill/colored_front/side",
+        "south": "gregtech:block/machines/multiblockmains/bedrockdrill/colored/side",
+        "west": "gregtech:block/machines/multiblockmains/bedrockdrill/colored/side",
+        "east": "gregtech:block/machines/multiblockmains/bedrockdrill/colored/side"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "up": {
+              "texture": "#north",
+              "cullface": "up",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#down",
+              "cullface": "down",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#up",
+              "cullface": "north",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#south",
+              "cullface": "south",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#west",
+              "cullface": "west",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#east",
+              "cullface": "east",
+              "tintindex": 0
+            }
+          }
+        }
+      ]
+    },
+    "overlay": {
+      "parent": "minecraft:block/block",
+      "render_type": "minecraft:cutout",
+      "textures": {
+        "up": "gregtech:block/machines/multiblockmains/bedrockdrill/overlay/top",
+        "down": "gregtech:block/machines/multiblockmains/bedrockdrill/overlay/bottom",
+        "north": "gregtech:block/machines/multiblockmains/bedrockdrill/overlay_front/side",
+        "south": "gregtech:block/machines/multiblockmains/bedrockdrill/overlay/side",
+        "west": "gregtech:block/machines/multiblockmains/bedrockdrill/overlay/side",
+        "east": "gregtech:block/machines/multiblockmains/bedrockdrill/overlay/side"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "up": {
+              "texture": "#north",
+              "cullface": "up"
+            },
+            "down": {
+              "texture": "#down",
+              "cullface": "down"
+            },
+            "north": {
+              "texture": "#up",
+              "cullface": "north"
+            },
+            "south": {
+              "texture": "#south",
+              "cullface": "south"
+            },
+            "west": {
+              "texture": "#west",
+              "cullface": "west"
+            },
+            "east": {
+              "texture": "#east",
+              "cullface": "east"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

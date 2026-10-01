@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "P",
+    "B"
+  ],
+  "key": {
+    "P": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "B": {
+      "item": "gregtech:mixing_bowl"
+    }
+  },
+  "result": {
+    "item": "gregtech:mortar_amethyst"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "TXO",
+    "dPw",
+    "OMT"
+  ],
+  "key": {
+    "T": {
+      "tag": "forge:screws/stainless_steel"
+    },
+    "X": {
+      "item": "gregtech:rotor_stainlesssteel"
+    },
+    "O": {
+      "tag": "forge:rings/rubber"
+    },
+    "d": {
+      "item": "gregtech:tool_screwdriver"
+    },
+    "w": {
+      "item": "gregtech:tool_wrench"
+    },
+    "P": {
+      "item": "gregtech:plate_curved_stainlesssteel"
+    },
+    "M": {
+      "item": "gregtech:compact_electric_motor_hv"
+    }
+  },
+  "result": {
+    "item": "gregtech:compact_electric_pump_hv",
+    "count": 1
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

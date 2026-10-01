@@ -1,0 +1,21 @@
+{
+  "type": "gregtech:tool_shaped",
+  "_comment": "GT6 ItemIntegratedCircuit:73",
+  "pattern": [
+    "  P",
+    "   ",
+    " d "
+  ],
+  "key": {
+    "P": {
+      "tag": "gregtech:integrated_circuits"
+    },
+    "d": {
+      "item": "gregtech:tool_screwdriver"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gregtech:integrated_circuit_14"
+  }
+}

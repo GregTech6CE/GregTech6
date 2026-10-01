@@ -1,0 +1,31 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "SwS",
+    "CMC",
+    "SBS"
+  ],
+  "key": {
+    "S": {
+      "tag": "forge:long_rods/tungsten_steel"
+    },
+    "w": {
+      "item": "gregtech:tool_wrench"
+    },
+    "C": {
+      "tag": "gregtech:circuits_tier_6_plus"
+    },
+    "M": {
+      "item": "gregtech:implosion_compressor_wall"
+    },
+    "B": {
+      "tag": "gregtech:rechargeable_batteries/lv"
+    }
+  },
+  "result": {
+    "item": "gregtech:tungstensteel_dynamo_main_housing",
+    "count": 1
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

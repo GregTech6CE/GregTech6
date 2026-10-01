@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "gregtech:clay_red"
+    }
+  ],
+  "result": {
+    "item": "gregtech:red_clay",
+    "count": 4
+  }
+}

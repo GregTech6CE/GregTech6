@@ -1,0 +1,30 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "XhY",
+    " M ",
+    "YwX"
+  ],
+  "key": {
+    "M": {
+      "item": "gregtech:casing_machine_double_steel"
+    },
+    "X": {
+      "item": "gregtech:pipe_medium_steel"
+    },
+    "Y": {
+      "item": "gregtech:item_pipe_medium_electrum"
+    },
+    "h": {
+      "item": "gregtech:tool_hammer"
+    },
+    "w": {
+      "item": "gregtech:tool_wrench"
+    }
+  },
+  "result": {
+    "item": "gregtech:inventory_tank_extender"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

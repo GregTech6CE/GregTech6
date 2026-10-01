@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "gregtech:item/randomtools/magic_research_paper_page_1_8"
+  }
+}

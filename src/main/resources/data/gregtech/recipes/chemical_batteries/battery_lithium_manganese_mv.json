@@ -1,0 +1,29 @@
+{
+  "type": "gregtech:tool_shaped",
+  "allow_mirror": false,
+  "pattern": [
+    "WxW",
+    "BCB",
+    "PBP"
+  ],
+  "key": {
+    "x": {
+      "item": "gregtech:tool_wire_cutter"
+    },
+    "P": {
+      "item": "gregtech:plate_batteryalloy"
+    },
+    "B": {
+      "item": "gregtech:lithium_manganese_cell_filled"
+    },
+    "W": {
+      "item": "gregtech:cable_01_copper"
+    },
+    "C": {
+      "tag": "gregtech:circuits_tier_4_plus"
+    }
+  },
+  "result": {
+    "item": "gregtech:battery_lithium_manganese_mv"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "Z Z",
+    " Q ",
+    "Z Z"
+  ],
+  "key": {
+    "Q": {
+      "item": "gregtech:blank_cover"
+    },
+    "Z": {
+      "tag": "forge:foils/zinc"
+    }
+  },
+  "result": {
+    "item": "gregtech:fluid_filter"
+  }
+}

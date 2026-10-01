@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "gregtech:item/material_icons/metallic/screw",
+    "layer1": "gregtech:item/material_icons/metallic/screw_overlay"
+  }
+}

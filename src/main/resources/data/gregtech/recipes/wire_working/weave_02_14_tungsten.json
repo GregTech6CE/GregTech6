@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:wire_02_tungsten"
+    },
+    {
+      "item": "gregtech:wire_02_tungsten"
+    },
+    {
+      "item": "gregtech:wire_02_tungsten"
+    },
+    {
+      "item": "gregtech:wire_02_tungsten"
+    },
+    {
+      "item": "gregtech:wire_02_tungsten"
+    },
+    {
+      "item": "gregtech:wire_02_tungsten"
+    },
+    {
+      "item": "gregtech:wire_02_tungsten"
+    }
+  ],
+  "result": {
+    "item": "gregtech:wire_14_tungsten",
+    "count": 1
+  }
+}

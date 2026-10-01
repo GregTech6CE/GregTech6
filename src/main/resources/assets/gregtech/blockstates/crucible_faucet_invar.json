@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "gregtech:block/blocks/crucible_faucet_invar"
+    },
+    "facing=south": {
+      "model": "gregtech:block/blocks/crucible_faucet_invar"
+    },
+    "facing=east": {
+      "model": "gregtech:block/blocks/crucible_faucet_invar"
+    },
+    "facing=west": {
+      "model": "gregtech:block/blocks/crucible_faucet_invar"
+    }
+  }
+}

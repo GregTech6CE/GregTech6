@@ -1,0 +1,21 @@
+{
+  "type": "gregtech:tool_shaped",
+  "_comment": "GT6 MultiItemTechnological:159",
+  "pattern": [
+    "RRR",
+    "RwR",
+    "RRR"
+  ],
+  "key": {
+    "R": {
+      "tag": "forge:rods/iron"
+    },
+    "w": {
+      "item": "gregtech:tool_wrench"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gregtech:drain"
+  }
+}

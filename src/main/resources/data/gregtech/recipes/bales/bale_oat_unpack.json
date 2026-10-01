@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:bale_oat"
+    }
+  ],
+  "result": {
+    "item": "gregtech:oats",
+    "count": 9
+  }
+}

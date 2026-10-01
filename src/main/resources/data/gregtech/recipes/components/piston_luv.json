@@ -1,0 +1,34 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "TPP",
+    "dSS",
+    "TMG"
+  ],
+  "key": {
+    "T": {
+      "tag": "forge:screws/iridium"
+    },
+    "P": {
+      "tag": "forge:plates/iridium"
+    },
+    "d": {
+      "item": "gregtech:tool_screwdriver"
+    },
+    "S": {
+      "tag": "forge:rods/iridium"
+    },
+    "M": {
+      "item": "gregtech:compact_electric_motor_luv"
+    },
+    "G": {
+      "item": "gregtech:gear_gt_small_iridium"
+    }
+  },
+  "result": {
+    "item": "gregtech:compact_electric_piston_luv",
+    "count": 1
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

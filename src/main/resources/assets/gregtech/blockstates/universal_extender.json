@@ -1,0 +1,112 @@
+{
+  "variants": {
+    "facing=down,secondary=down": {
+      "model": "gregtech:block/logistics/universal_extender/down_down"
+    },
+    "facing=down,secondary=up": {
+      "model": "gregtech:block/logistics/universal_extender/down_up"
+    },
+    "facing=down,secondary=north": {
+      "model": "gregtech:block/logistics/universal_extender/down_north"
+    },
+    "facing=down,secondary=south": {
+      "model": "gregtech:block/logistics/universal_extender/down_south"
+    },
+    "facing=down,secondary=west": {
+      "model": "gregtech:block/logistics/universal_extender/down_west"
+    },
+    "facing=down,secondary=east": {
+      "model": "gregtech:block/logistics/universal_extender/down_east"
+    },
+    "facing=up,secondary=down": {
+      "model": "gregtech:block/logistics/universal_extender/up_down"
+    },
+    "facing=up,secondary=up": {
+      "model": "gregtech:block/logistics/universal_extender/up_up"
+    },
+    "facing=up,secondary=north": {
+      "model": "gregtech:block/logistics/universal_extender/up_north"
+    },
+    "facing=up,secondary=south": {
+      "model": "gregtech:block/logistics/universal_extender/up_south"
+    },
+    "facing=up,secondary=west": {
+      "model": "gregtech:block/logistics/universal_extender/up_west"
+    },
+    "facing=up,secondary=east": {
+      "model": "gregtech:block/logistics/universal_extender/up_east"
+    },
+    "facing=north,secondary=down": {
+      "model": "gregtech:block/logistics/universal_extender/north_down"
+    },
+    "facing=north,secondary=up": {
+      "model": "gregtech:block/logistics/universal_extender/north_up"
+    },
+    "facing=north,secondary=north": {
+      "model": "gregtech:block/logistics/universal_extender/north_north"
+    },
+    "facing=north,secondary=south": {
+      "model": "gregtech:block/logistics/universal_extender/north_south"
+    },
+    "facing=north,secondary=west": {
+      "model": "gregtech:block/logistics/universal_extender/north_west"
+    },
+    "facing=north,secondary=east": {
+      "model": "gregtech:block/logistics/universal_extender/north_east"
+    },
+    "facing=south,secondary=down": {
+      "model": "gregtech:block/logistics/universal_extender/south_down"
+    },
+    "facing=south,secondary=up": {
+      "model": "gregtech:block/logistics/universal_extender/south_up"
+    },
+    "facing=south,secondary=north": {
+      "model": "gregtech:block/logistics/universal_extender/south_north"
+    },
+    "facing=south,secondary=south": {
+      "model": "gregtech:block/logistics/universal_extender/south_south"
+    },
+    "facing=south,secondary=west": {
+      "model": "gregtech:block/logistics/universal_extender/south_west"
+    },
+    "facing=south,secondary=east": {
+      "model": "gregtech:block/logistics/universal_extender/south_east"
+    },
+    "facing=west,secondary=down": {
+      "model": "gregtech:block/logistics/universal_extender/west_down"
+    },
+    "facing=west,secondary=up": {
+      "model": "gregtech:block/logistics/universal_extender/west_up"
+    },
+    "facing=west,secondary=north": {
+      "model": "gregtech:block/logistics/universal_extender/west_north"
+    },
+    "facing=west,secondary=south": {
+      "model": "gregtech:block/logistics/universal_extender/west_south"
+    },
+    "facing=west,secondary=west": {
+      "model": "gregtech:block/logistics/universal_extender/west_west"
+    },
+    "facing=west,secondary=east": {
+      "model": "gregtech:block/logistics/universal_extender/west_east"
+    },
+    "facing=east,secondary=down": {
+      "model": "gregtech:block/logistics/universal_extender/east_down"
+    },
+    "facing=east,secondary=up": {
+      "model": "gregtech:block/logistics/universal_extender/east_up"
+    },
+    "facing=east,secondary=north": {
+      "model": "gregtech:block/logistics/universal_extender/east_north"
+    },
+    "facing=east,secondary=south": {
+      "model": "gregtech:block/logistics/universal_extender/east_south"
+    },
+    "facing=east,secondary=west": {
+      "model": "gregtech:block/logistics/universal_extender/east_west"
+    },
+    "facing=east,secondary=east": {
+      "model": "gregtech:block/logistics/universal_extender/east_east"
+    }
+  }
+}

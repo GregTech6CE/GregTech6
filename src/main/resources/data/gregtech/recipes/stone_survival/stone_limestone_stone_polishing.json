@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "gregtech:stone_limestone_stone"
+  },
+  "result": "gregtech:stone_limestone_smooth",
+  "experience": 0.0,
+  "cookingtime": 200
+}

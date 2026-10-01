@@ -1,0 +1,33 @@
+{
+  "type": "gregtech:tool_shaped",
+  "_comment": "GT6 MultiItemTechnological:809",
+  "pattern": [
+    "xWd",
+    "PCP",
+    "TCT"
+  ],
+  "key": {
+    "x": {
+      "item": "gregtech:tool_wire_cutter"
+    },
+    "d": {
+      "item": "gregtech:tool_screwdriver"
+    },
+    "W": {
+      "item": "gregtech:wire_01_aluminium"
+    },
+    "C": {
+      "item": "gregtech:cable_01_aluminium"
+    },
+    "P": {
+      "tag": "forge:plates/stainless_steel"
+    },
+    "T": {
+      "tag": "forge:screws/stainless_steel"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gregtech:usb2_cable"
+  }
+}

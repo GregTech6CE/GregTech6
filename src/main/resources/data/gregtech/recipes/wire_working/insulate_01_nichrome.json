@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:wire_01_nichrome"
+    },
+    {
+      "tag": "forge:plates/rubber"
+    }
+  ],
+  "result": {
+    "item": "gregtech:cable_01_nichrome",
+    "count": 1
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#gregtech:stone_blocks",
+      "required": false
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "gregtech:block/iconsets/grass_top_dry",
+    "side": "gregtech:block/iconsets/grass_side_dry",
+    "bottom": "minecraft:block/dirt"
+  }
+}

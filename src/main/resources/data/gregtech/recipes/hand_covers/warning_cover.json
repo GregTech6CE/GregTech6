@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "_comment": "GT6 MultiItemTechnological:167",
+  "pattern": [
+    "G ",
+    "YQ"
+  ],
+  "key": {
+    "G": {
+      "tag": "forge:slimeballs"
+    },
+    "Y": {
+      "tag": "forge:dyes/yellow"
+    },
+    "Q": {
+      "item": "gregtech:blank_cover"
+    }
+  },
+  "result": {
+    "item": "gregtech:warning_cover"
+  }
+}

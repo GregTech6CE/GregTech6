@@ -1,0 +1,25 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "  s",
+    "W W",
+    "r  "
+  ],
+  "key": {
+    "s": {
+      "item": "gregtech:tool_saw"
+    },
+    "r": {
+      "item": "gregtech:tool_soft_hammer"
+    },
+    "W": {
+      "tag": "gregtech:wooden_beams"
+    }
+  },
+  "result": {
+    "item": "gregtech:pipe_huge_wood",
+    "count": 1
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

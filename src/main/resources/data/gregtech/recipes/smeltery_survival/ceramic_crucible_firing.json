@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "gregtech:clay_crucible"
+  },
+  "result": "gregtech:smelting_crucible_ceramic",
+  "experience": 0.0,
+  "cookingtime": 200
+}

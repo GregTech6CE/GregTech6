@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "RRR",
+    "MCM",
+    "RRR"
+  ],
+  "key": {
+    "R": {
+      "tag": "forge:plates/rubber"
+    },
+    "M": {
+      "item": "gregtech:compact_electric_motor_lv"
+    },
+    "C": {
+      "item": "gregtech:cable_01_tin"
+    }
+  },
+  "result": {
+    "item": "gregtech:compact_electric_conveyor_lv",
+    "count": 1
+  }
+}

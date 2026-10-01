@@ -1,0 +1,115 @@
+{
+  "loader": "forge:composite",
+  "parent": "minecraft:block/block",
+  "children": {
+    "colored": {
+      "render_type": "minecraft:cutout",
+      "textures": {
+        "bottom": "gregtech:block/machines/craftingtables/advanced/colored/bottom",
+        "top": "gregtech:block/machines/craftingtables/advanced/colored/top",
+        "front": "gregtech:block/machines/craftingtables/advanced/colored/front",
+        "back": "gregtech:block/machines/craftingtables/advanced/colored/back",
+        "side": "gregtech:block/machines/craftingtables/advanced/colored/side"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#bottom",
+              "cullface": "down",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#top",
+              "cullface": "up",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#front",
+              "cullface": "north",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#back",
+              "cullface": "south",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#side",
+              "cullface": "west",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#side",
+              "cullface": "east",
+              "tintindex": 0
+            }
+          }
+        }
+      ]
+    },
+    "overlay": {
+      "render_type": "minecraft:cutout",
+      "textures": {
+        "bottom": "gregtech:block/machines/craftingtables/advanced/overlay/bottom",
+        "top": "gregtech:block/machines/craftingtables/advanced/overlay/top",
+        "front": "gregtech:block/machines/craftingtables/advanced/overlay/front",
+        "back": "gregtech:block/machines/craftingtables/advanced/overlay/back",
+        "side": "gregtech:block/machines/craftingtables/advanced/overlay/side"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#bottom",
+              "cullface": "down"
+            },
+            "up": {
+              "texture": "#top",
+              "cullface": "up"
+            },
+            "north": {
+              "texture": "#front",
+              "cullface": "north"
+            },
+            "south": {
+              "texture": "#back",
+              "cullface": "south"
+            },
+            "west": {
+              "texture": "#side",
+              "cullface": "west"
+            },
+            "east": {
+              "texture": "#side",
+              "cullface": "east"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "textures": {
+    "particle": "gregtech:block/machines/craftingtables/advanced/colored/side"
+  }
+}

@@ -1,0 +1,363 @@
+plugins {
+    id 'eclipse'
+    id 'idea'
+    id 'maven-publish'
+    id 'net.minecraftforge.gradle' version '6.0.54'
+    // §105: the port's first own mixin (vanilla WaterFluid.isSame must know GT6's world water,
+    // see mixin/WaterFluidMixin). MixinGradle wires the annotation processor, the generated refmap
+    // and the reobf contribution; Forge 47.4.20 has no mods.toml `[[mixins]]` block (checked against
+    // fmlloader's ModInfo), so this plugin is the dev-side discovery path.
+    id 'org.spongepowered.mixin' version '0.7.38'
+}
+
+// Forge development runs access the shared source set while this project is configuring.
+evaluationDependsOn(':core')
+
+version = mod_version
+group = mod_group_id
+
+base {
+    archivesName = "${mod_id}-${minecraft_version}-forge"
+}
+
+// Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
+sourceSets {
+    bootstrapGameTest {
+        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+        runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
+    }
+}
+minecraft {
+    // The mappings can be changed at any time and must be in the following format.
+    // Channel:   Version:
+    // official   MCVersion             Official field/method names from Mojang mapping files
+    // parchment  YYYY.MM.DD-MCVersion  Open community-sourced parameter names and javadocs layered on top of official
+    //
+    // You must be aware of the Mojang license when using the 'official' or 'parchment' mappings.
+    // See more information here: https://github.com/MinecraftForge/MCPConfig/blob/master/Mojang.md
+    //
+    // Parchment is an unofficial project maintained by ParchmentMC, separate from MinecraftForge
+    // Additional setup is needed to use their mappings: https://parchmentmc.org/docs/getting-started
+    //
+    // Use non-default mappings at your own risk. They may not always work.
+    // Simply re-run your setup task after changing the mappings to update your workspace.
+    mappings channel: mapping_channel, version: mapping_version
+
+    // When true, this property will have all Eclipse/IntelliJ IDEA run configurations run the "prepareX" task for the given run configuration before launching the game.
+    // In most cases, it is not necessary to enable.
+    // enableEclipsePrepareRuns = true
+    // enableIdeaPrepareRuns = true
+
+    // This property allows configuring Gradle's ProcessResources task(s) to run on IDE output locations before launching the game.
+    // It is REQUIRED to be set to true for this template to function.
+    // See https://docs.gradle.org/current/dsl/org.gradle.language.jvm.tasks.ProcessResources.html
+    copyIdeResources = true
+
+    // When true, this property will add the folder name of all declared run configurations to generated IDE run configurations.
+    // The folder name can be set on a run configuration using the "folderName" property.
+    // By default, the folder name of a run configuration is the name of the Gradle project containing it.
+    // generateRunFolders = true
+
+    // This property enables access transformers for use in development.
+    // They will be applied to the Minecraft artifact.
+    // The access transformer file can be anywhere in the project.
+    // However, it must be at "META-INF/accesstransformer.cfg" in the final mod jar to be loaded by Forge.
+    // This default location is a best practice to automatically put the file in the right place in the final jar.
+    // See https://docs.minecraftforge.net/en/latest/advanced/accesstransformers/ for more information.
+    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+
+    // Default run configurations.
+    // These can be tweaked, removed, or duplicated as needed.
+    runs {
+        // applies to all the run configs below
+        configureEach {
+            workingDirectory project.file('run')
+
+            // Recommended logging data for a userdev environment
+            // The markers can be added/remove as needed separated by commas.
+            // "SCAN": For mods scan.
+            // "REGISTRIES": For firing of registry events.
+            // "REGISTRYDUMP": For getting the contents of all registries.
+            property 'forge.logging.markers', 'REGISTRIES'
+
+            // Recommended logging level for the console
+            // You can set various levels here.
+            // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                "${mod_id}" {
+                    source sourceSets.main
+                    source project(':core').sourceSets.main
+                    source sourceSets.bootstrapGameTest
+                }
+            }
+        }
+
+        client {
+            property 'gregtech.integration.clientSmoke', (project.findProperty('clientSmoke') ?: 'false').toString()
+            property 'gregtech.integration.clientSmokeTimeoutSeconds', (project.findProperty('clientSmokeTimeout') ?: '120').toString()
+            if (project.findProperty('clientSmoke') == 'true') {
+                workingDirectory project.file('build/client-smoke-run')
+                jvmArgs '-Xmx6g', '-XX:+UseSerialGC'
+                args '--width', '1280', '--height', '720'
+            }
+            // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
+            property 'forge.enabledGameTestNamespaces', 'gregtech'
+            // Jade dev: remap mixin refmaps (https://jademc.readthedocs.io/en/latest/plugins22/getting-started/)
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+        }
+
+        server {
+            property 'gregtech.integration.serverSmokePhase', (project.findProperty('serverSmokePhase') ?: '').toString()
+            property 'gregtech.integration.serverSmokeId', (project.findProperty('serverSmokeId') ?: '').toString()
+            ['X', 'Y', 'Z'].each { axis ->
+                def coordinate = project.findProperty('serverSmoke' + axis)
+                if (coordinate != null) property 'gregtech.integration.serverSmoke' + axis, coordinate.toString()
+            }
+            if (project.findProperty('serverDirectory')) {
+                workingDirectory project.file(project.property('serverDirectory'))
+            }
+            jvmArgs '-Xmx4g', '-XX:+UseSerialGC'
+            property 'forge.enabledGameTestNamespaces', 'gregtech'
+            args '--nogui'
+        }
+
+        // This run config launches GameTestServer and runs all registered gametests, then exits.
+        // By default, the server will crash when no gametests are provided.
+        // The gametest system is also enabled by default for other run configs under the /test command.
+        gameTestServer {
+            workingDirectory project.file(project.findProperty('gameTestDirectory') ?: 'build/gametest-run')
+            // Override only the automated test JVM; leave runClient and the default unchanged.
+            // gameTestHeap sets -Xmx; gameTestJvmArgs adds anything else the machine needs (this box
+            // runs the game while the gate runs, and the JVM died with "insufficient memory ...
+            // mmap failed to map 1002438656 bytes for G1 virtual space" until the gate was told to use
+            // a smaller heap and SerialGC instead of G1: -PgameTestJvmArgs="-XX:+UseSerialGC").
+            def extraJvmArgs = project.findProperty('gameTestJvmArgs')
+            def gateJvmArgs = ["-Xmx${project.findProperty('gameTestHeap') ?: '1536m'}".toString()]
+            if (extraJvmArgs) gateJvmArgs.addAll(extraJvmArgs.toString().trim().split('\\s+') as List)
+            jvmArgs(gateJvmArgs)
+            property 'forge.enabledGameTestNamespaces', project.findProperty('gameTestNamespaces') ?: 'gregtech,gregtech_repair'
+            if (project.findProperty('gameTestReport')) {
+                property 'gregtech.integration.gameTestReport', project.file(project.property('gameTestReport')).absolutePath
+            }
+        }
+
+        data {
+            // example of overriding the workingDirectory set in configureEach above
+            workingDirectory project.file('run-data')
+
+            // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
+            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+        }
+    }
+}
+
+// Include resources generated by data generators.
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+repositories {
+    // Put repositories for dependencies here
+    // ForgeGradle automatically adds the Forge maven and Maven Central for you
+    maven {
+        name = "BlameJared"
+        url = "https://maven.blamejared.com"
+    }
+    maven {
+        name = "Modrinth"
+        url = "https://api.modrinth.com/maven"
+    }
+
+    // If you have mod jar dependencies in ./libs, you can declare them as a repository like so.
+    // See https://docs.gradle.org/current/userguide/declaring_repositories.html#sub:flat_dir_resolver
+    // flatDir {
+    //     dir 'libs'
+    // }
+}
+
+dependencies {
+    implementation project(':core')
+    // Specify the version of Minecraft to use.
+    // Any artifact can be supplied so long as it has a "userdev" classifier artifact and is a compatible patcher artifact.
+    // The "userdev" classifier will be requested and setup by ForgeGradle.
+    // If the group id is "net.minecraft" and the artifact id is one of ["client", "server", "joined"],
+    // then special handling is done to allow a setup of a vanilla dependency without the use of an external repository.
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+
+    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
+    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
+
+    compileOnly fg.deobf("maven.modrinth:jade:${jade_version}")
+    runtimeOnly fg.deobf("maven.modrinth:jade:${jade_version}")
+
+    // §105: the mixin annotation processor generates gregtech.refmap.json (named -> SRG), which is what
+    // makes the mixin work in the obfuscated production environment too.
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
+    // Example mod dependency using a mod jar from ./libs with a flat dir repository
+    // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar
+    // The group id is ignored when searching -- in this case, it is "blank"
+    // implementation fg.deobf("blank:coolmod-${mc_version}:${coolmod_version}")
+
+    // For more info:
+    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
+    // http://www.gradle.org/docs/current/userguide/dependency_management.html
+}
+
+// ---------------------------------------------------------------------------
+// Mixins (§105)
+// ---------------------------------------------------------------------------
+// The refmap the annotation processor writes is contributed to the jar by MixinGradle; declaring the
+// sourceSet here is what tells the plugin which refmap belongs to the main sources.
+mixin {
+    add sourceSets.main, 'gregtech.refmap.json'
+    config 'gregtech.mixins.json'
+}
+
+// This block of code expands all declared replace properties in the specified resource targets.
+// A missing property will result in an error. Properties are expanded using ${} Groovy notation.
+// When "copyIdeResources" is enabled, this will also run before the game launches in IDE environments.
+// See https://docs.gradle.org/current/dsl/org.gradle.language.jvm.tasks.ProcessResources.html
+apply from: 'gradle/incremental-resources.gradle'
+
+tasks.named('processResources', ProcessResources).configure {
+    // Keep IDEA and Windows command-line builds on the same input fingerprint.
+    // Otherwise UTF-8/GBK defaults can invalidate all 57k resource files.
+    filteringCharset = 'UTF-8'
+    var replaceProperties = [
+            minecraft_version: minecraft_version, minecraft_version_range: minecraft_version_range,
+            forge_version: forge_version, forge_version_range: forge_version_range,
+            loader_version_range: loader_version_range,
+            mod_id: mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
+            mod_authors: mod_authors, mod_description: mod_description,
+    ]
+    inputs.properties replaceProperties
+
+    filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
+        expand replaceProperties + [project: project]
+    }
+}
+
+// Example for how to get properties into the manifest for reading at runtime.
+tasks.named('jar', Jar).configure {
+    // ForgeGradle rewrites every class in this jar, including pure Java constant pools.
+    // Keep core out of that pass and add its untouched output in distributionJar below.
+    destinationDirectory = layout.buildDirectory.dir('forge-intermediates')
+    duplicatesStrategy = DuplicatesStrategy.FAIL
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+    manifest {
+        attributes([
+                'Specification-Title'     : mod_id,
+                'Specification-Vendor'    : mod_authors,
+                'Specification-Version'   : '1', // We are version 1 of ourselves
+                'Implementation-Title'    : project.name,
+                'Implementation-Version'  : project.jar.archiveVersion,
+                'Implementation-Vendor'   : mod_authors
+        ])
+    }
+
+    // §107 (2026-09-18): the mod jar passed the plain-ZIP ceiling of 65,535 entries - `:jar` failed with
+    // "Archive contains more than 65535 entries" once the ore asset batch added 1,662 files (554 ore
+    // blocks x blockstate + block model + item model). Every entry is a real asset the game loads, so
+    // the fix is the zip64 extension rather than dropping files; java.util.zip, the mod-file finder and
+    // Mixin's zip handling all read zip64, and Forge's reobfuscator keeps the extension.
+    zip64 = true
+
+    // This is the preferred method to reobfuscate your jar file
+    finalizedBy 'reobfJar'
+}
+
+// RenameJarInPlace replaces jar.archiveFile. Its output must be consumed only after
+// reobfJar finishes, while the shared Java 17 classes remain byte-identical on both loaders.
+def distributionJar = tasks.register('distributionJar', Jar) {
+    dependsOn 'reobfJar', ':core:classes'
+    destinationDirectory = layout.buildDirectory.dir('libs')
+    from({ zipTree(tasks.named('jar', Jar).get().archiveFile.get().asFile) }) {
+        exclude 'META-INF/MANIFEST.MF'
+    }
+    from(project(':core').sourceSets.main.output)
+    duplicatesStrategy = DuplicatesStrategy.FAIL
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+    zip64 = true
+    // Merge the complete platform manifest, including MixinGradle's late additions.
+    doFirst {
+        def platformManifest = zipTree(tasks.named('jar', Jar).get().archiveFile.get().asFile)
+                .matching { include 'META-INF/MANIFEST.MF' }.singleFile
+        manifest.from(platformManifest)
+    }
+}
+tasks.named('assemble').configure { dependsOn distributionJar }
+
+// However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing:
+// tasks.named('publish').configure {
+//     dependsOn 'reobfJar'
+// }
+
+// Example configuration to allow publishing using the maven-publish plugin
+publishing {
+    publications {
+        register('mavenJava', MavenPublication) {
+            artifact distributionJar
+        }
+    }
+    repositories {
+        maven {
+            url "file://${project.projectDir}/mcmodsrepo"
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+}
+
+tasks.named('check').configure { dependsOn ':core:check' }
+
+// ---------------------------------------------------------------------------
+// Legacy classpath files for IDE launches
+// ---------------------------------------------------------------------------
+// ForgeGradle only writes build/classpath/<run>_minecraftClasspath.txt while a Gradle run task
+// actually executes. The IDEA run configurations (genIntellijRuns) launch the game directly and
+// only reference that file, so after a `clean` or a jar build the file is gone and the launch
+// dies in modlauncher with:
+//
+//   java.lang.module.ResolutionException: Modules main and gregtech export package ...
+//
+// because Forge then falls back to treating build/classes/java/main as the module "main" while
+// MOD_CLASSES still declares the mod module "gregtech". All four variants hold the same
+// Minecraft/Forge classpath, so restoring a missing one from any sibling is faithful.
+tasks.register('ensureRunClasspaths') {
+    description = 'Restores a missing build/classpath/<run>_minecraftClasspath.txt for IDE launches.'
+    group = 'forgegradle runs'
+    doLast {
+        def dir = file('build/classpath')
+        if (!dir.isDirectory()) return
+        def sources = dir.listFiles()?.findAll { it.name.endsWith('_minecraftClasspath.txt') && it.length() > 0 }
+        ['runClient', 'runServer', 'runData', 'runGameTestServer'].each { runName ->
+            def target = new File(dir, "${runName}_minecraftClasspath.txt")
+            if (target.exists()) return
+            if (sources == null || sources.isEmpty()) {
+                logger.warn("[gregtech] ${target.name} is missing and no sibling classpath file exists yet;" +
+                        " run './gradlew runClient' once before launching from the IDE.")
+                return
+            }
+            target.text = sources[0].text
+            logger.lifecycle("[gregtech] restored ${target.name} from ${sources[0].name}")
+        }
+    }
+}
+
+// genIntellijRuns wires these prep tasks as the IDE before-run steps, so the file is restored
+// right before every IDE launch instead of failing with the module conflict above.
+['prepareRunClientCompile', 'prepareRunServerCompile', 'prepareRunDataCompile',
+ 'prepareRunGameTestServerCompile'].each { prepTask ->
+    tasks.matching { it.name == prepTask }.configureEach { finalizedBy 'ensureRunClasspaths' }
+}
+

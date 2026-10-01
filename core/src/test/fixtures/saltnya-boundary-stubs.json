@@ -1,0 +1,17 @@
+{
+  "net/minecraft/network/chat/Component.java": "package net.minecraft.network.chat; public class Component { public static Component translatable(String key,Object...args){return new Component();} }",
+  "org/jetbrains/annotations/Nullable.java": "package org.jetbrains.annotations; public @interface Nullable {}",
+  "net/minecraft/resources/ResourceLocation.java": "package net.minecraft.resources; public class ResourceLocation {}",
+  "net/minecraft/world/item/Item.java": "package net.minecraft.world.item; public class Item {}",
+  "net/minecraft/world/level/block/Block.java": "package net.minecraft.world.level.block; public class Block {}",
+  "net/minecraftforge/registries/ForgeRegistries.java": "package net.minecraftforge.registries; import net.minecraft.resources.ResourceLocation; public class ForgeRegistries { public static final Registry ITEMS=new Registry(),BLOCKS=new Registry(); public static class Registry { public ResourceLocation getKey(Object o){return null;} } }",
+  "net/minecraftforge/fml/ModList.java": "package net.minecraftforge.fml; public class ModList { private static final ModList INSTANCE=new ModList(); public static ModList get(){return INSTANCE;} public boolean isLoaded(String id){return id.equals(\"minecraft\")||id.equals(\"gregtech\");} }",
+  "org/slf4j/Logger.java": "package org.slf4j; public interface Logger { default void warn(String s,Object...args){} default void info(String s,Object...args){} }",
+  "com/mojang/logging/LogUtils.java": "package com.mojang.logging; public class LogUtils { public static org.slf4j.Logger getLogger(){return new org.slf4j.Logger(){};} }",
+  "com/gregtech/gregtech/GregTech.java": "package com.gregtech.gregtech; public class GregTech { public static final String MODID=\"gregtech\"; }",
+  "com/gregtech/gregtech/loader/VanillaUnificationLoader.java": "package com.gregtech.gregtech.loader; public class VanillaUnificationLoader { public static void register(){} }",
+  "com/gregtech/gregtech/loader/VanillaCompositionLoader.java": "package com.gregtech.gregtech.loader; public class VanillaCompositionLoader { public static void register(){} }",
+  "net/minecraft/nbt/Tag.java": "package net.minecraft.nbt; public class Tag { public static final int TAG_LIST=9,TAG_COMPOUND=10; }",
+  "net/minecraft/nbt/ListTag.java": "package net.minecraft.nbt; public class ListTag extends java.util.ArrayList<CompoundTag> { public CompoundTag getCompound(int i){return get(i);} }",
+  "net/minecraft/nbt/CompoundTag.java": "package net.minecraft.nbt; public class CompoundTag { public void putInt(String k,int v){} public void putLong(String k,long v){} public void put(String k,ListTag v){} public boolean contains(String k,int t){return false;} public ListTag getList(String k,int t){return new ListTag();} public int getInt(String k){return 0;} public long getLong(String k){return 0;} }"
+}

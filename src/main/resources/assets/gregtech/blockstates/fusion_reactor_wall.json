@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "gregtech:block/machine/multiblock/fusion_reactor_wall"
+    }
+  }
+}

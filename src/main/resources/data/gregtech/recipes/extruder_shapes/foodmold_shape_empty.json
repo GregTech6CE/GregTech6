@@ -1,0 +1,26 @@
+{
+  "type": "gregtech:tool_shaped",
+  "allow_mirror": false,
+  "pattern": [
+    "hf",
+    "xP"
+  ],
+  "key": {
+    "h": {
+      "item": "gregtech:tool_hammer"
+    },
+    "f": {
+      "item": "gregtech:tool_file"
+    },
+    "x": {
+      "item": "gregtech:tool_wire_cutter"
+    },
+    "P": {
+      "item": "gregtech:plate_double_stainlesssteel"
+    }
+  },
+  "result": {
+    "item": "gregtech:foodmold_shape_empty",
+    "count": 1
+  }
+}

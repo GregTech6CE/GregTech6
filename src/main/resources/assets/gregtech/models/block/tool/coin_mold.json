@@ -1,0 +1,312 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "forge:composite",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "particle": "gregtech:block/machines/tools/mold_coinage/colored/bottom"
+  },
+  "children": {
+    "colored": {
+      "textures": {
+        "bottom": "gregtech:block/machines/tools/mold_coinage/colored/bottom",
+        "hole": "gregtech:block/machines/tools/mold_coinage/colored/hole",
+        "side": "gregtech:block/machines/tools/mold_coinage/colored/side",
+        "top": "gregtech:block/machines/tools/mold_coinage/colored/top"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            12,
+            16
+          ],
+          "faces": {
+            "west": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#top",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#bottom",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            4,
+            12,
+            4
+          ],
+          "to": [
+            12,
+            14,
+            12
+          ],
+          "faces": {
+            "west": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#hole",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#bottom",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            11,
+            12,
+            5
+          ],
+          "to": [
+            11,
+            14,
+            11
+          ],
+          "faces": {
+            "west": {
+              "texture": "#side",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            5,
+            12,
+            11
+          ],
+          "to": [
+            11,
+            14,
+            11
+          ],
+          "faces": {
+            "north": {
+              "texture": "#side",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            5,
+            12,
+            5
+          ],
+          "to": [
+            5,
+            14,
+            11
+          ],
+          "faces": {
+            "east": {
+              "texture": "#side",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            5,
+            12,
+            5
+          ],
+          "to": [
+            11,
+            14,
+            5
+          ],
+          "faces": {
+            "south": {
+              "texture": "#side",
+              "tintindex": 0
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    },
+    "overlay": {
+      "textures": {
+        "bottom": "gregtech:block/machines/tools/mold_coinage/overlay/bottom",
+        "hole": "gregtech:block/machines/tools/mold_coinage/overlay/hole",
+        "side": "gregtech:block/machines/tools/mold_coinage/overlay/side",
+        "top": "gregtech:block/machines/tools/mold_coinage/overlay/top"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            12,
+            16
+          ],
+          "faces": {
+            "west": {
+              "texture": "#side"
+            },
+            "east": {
+              "texture": "#side"
+            },
+            "north": {
+              "texture": "#side"
+            },
+            "south": {
+              "texture": "#side"
+            },
+            "up": {
+              "texture": "#top"
+            },
+            "down": {
+              "texture": "#bottom"
+            }
+          }
+        },
+        {
+          "from": [
+            4,
+            12,
+            4
+          ],
+          "to": [
+            12,
+            14,
+            12
+          ],
+          "faces": {
+            "west": {
+              "texture": "#side"
+            },
+            "east": {
+              "texture": "#side"
+            },
+            "north": {
+              "texture": "#side"
+            },
+            "south": {
+              "texture": "#side"
+            },
+            "up": {
+              "texture": "#hole"
+            },
+            "down": {
+              "texture": "#bottom"
+            }
+          }
+        },
+        {
+          "from": [
+            11,
+            12,
+            5
+          ],
+          "to": [
+            11,
+            14,
+            11
+          ],
+          "faces": {
+            "west": {
+              "texture": "#side"
+            }
+          }
+        },
+        {
+          "from": [
+            5,
+            12,
+            11
+          ],
+          "to": [
+            11,
+            14,
+            11
+          ],
+          "faces": {
+            "north": {
+              "texture": "#side"
+            }
+          }
+        },
+        {
+          "from": [
+            5,
+            12,
+            5
+          ],
+          "to": [
+            5,
+            14,
+            11
+          ],
+          "faces": {
+            "east": {
+              "texture": "#side"
+            }
+          }
+        },
+        {
+          "from": [
+            5,
+            12,
+            5
+          ],
+          "to": [
+            11,
+            14,
+            5
+          ],
+          "faces": {
+            "south": {
+              "texture": "#side"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "gregtech:block/iconsets/log_top_rainbowood",
+    "side": "gregtech:block/iconsets/log_side_rainbowood"
+  }
+}

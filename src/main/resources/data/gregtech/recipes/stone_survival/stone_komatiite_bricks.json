@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SS",
+    "SS"
+  ],
+  "key": {
+    "S": {
+      "item": "gregtech:stone_komatiite_stone"
+    }
+  },
+  "result": {
+    "item": "gregtech:stone_komatiite_bricks",
+    "count": 4
+  }
+}

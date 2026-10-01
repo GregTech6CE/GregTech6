@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "BB",
+    "BB"
+  ],
+  "key": {
+    "B": {
+      "item": "gregtech:red_clay"
+    }
+  },
+  "result": {
+    "item": "gregtech:clay_red"
+  }
+}

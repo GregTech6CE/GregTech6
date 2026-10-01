@@ -1,0 +1,21 @@
+{
+  "type": "gregtech:tool_shaped",
+  "_comment": "GT6 Loader_MultiTileEntities:2089",
+  "pattern": [
+    " V",
+    "VV",
+    "Vb"
+  ],
+  "key": {
+    "V": {
+      "item": "minecraft:vine"
+    },
+    "b": {
+      "item": "gregtech:tool_sword"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gregtech:rope_vine"
+  }
+}

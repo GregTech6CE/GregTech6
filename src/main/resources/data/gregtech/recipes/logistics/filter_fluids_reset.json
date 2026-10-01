@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:filter_fluids"
+    }
+  ],
+  "result": {
+    "item": "gregtech:filter_fluids"
+  }
+}

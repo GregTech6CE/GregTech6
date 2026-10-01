@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "DCS",
+    "CMC",
+    "RCE"
+  ],
+  "key": {
+    "M": {
+      "item": "gregtech:casing_machine_steelgalvanized"
+    },
+    "C": {
+      "item": "gregtech:circuit_ultimate"
+    },
+    "D": {
+      "item": "gregtech:crystal_processor_diamond"
+    },
+    "S": {
+      "item": "gregtech:crystal_processor_sapphire"
+    },
+    "R": {
+      "item": "gregtech:crystal_processor_ruby"
+    },
+    "E": {
+      "item": "gregtech:crystal_processor_emerald"
+    }
+  },
+  "result": {
+    "item": "gregtech:versatile_processor_unit"
+  }
+}

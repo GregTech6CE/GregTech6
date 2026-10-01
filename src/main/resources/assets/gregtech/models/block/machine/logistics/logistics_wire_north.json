@@ -1,0 +1,101 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "forge:composite",
+  "textures": {
+    "particle": "gregtech:block/iconsets/logistics_wire"
+  },
+  "children": {
+    "0": {
+      "parent": "minecraft:block/block",
+      "render_type": "minecraft:cutout",
+      "textures": {
+        "north": "gregtech:block/iconsets/logistics_wire",
+        "east": "gregtech:block/iconsets/logistics_wire",
+        "south": "gregtech:block/iconsets/logistics_wire",
+        "west": "gregtech:block/iconsets/logistics_wire",
+        "up": "gregtech:block/iconsets/logistics_wire",
+        "down": "gregtech:block/iconsets/logistics_wire"
+      },
+      "elements": [
+        {
+          "from": [
+            5,
+            5,
+            0
+          ],
+          "to": [
+            11,
+            11,
+            5
+          ],
+          "faces": {
+            "up": {
+              "texture": "#up"
+            },
+            "down": {
+              "texture": "#down"
+            },
+            "north": {
+              "texture": "#north"
+            },
+            "south": {
+              "texture": "#south"
+            },
+            "east": {
+              "texture": "#east"
+            },
+            "west": {
+              "texture": "#west"
+            }
+          }
+        }
+      ]
+    },
+    "1": {
+      "parent": "minecraft:block/block",
+      "render_type": "minecraft:cutout",
+      "textures": {
+        "north": "gregtech:block/iconsets/logistics_wire_overlay",
+        "east": "gregtech:block/iconsets/logistics_wire_overlay",
+        "south": "gregtech:block/iconsets/logistics_wire_overlay",
+        "west": "gregtech:block/iconsets/logistics_wire_overlay",
+        "up": "gregtech:block/iconsets/logistics_wire_overlay",
+        "down": "gregtech:block/iconsets/logistics_wire_overlay"
+      },
+      "elements": [
+        {
+          "from": [
+            5,
+            5,
+            0
+          ],
+          "to": [
+            11,
+            11,
+            5
+          ],
+          "faces": {
+            "up": {
+              "texture": "#up"
+            },
+            "down": {
+              "texture": "#down"
+            },
+            "north": {
+              "texture": "#north"
+            },
+            "south": {
+              "texture": "#south"
+            },
+            "east": {
+              "texture": "#east"
+            },
+            "west": {
+              "texture": "#west"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

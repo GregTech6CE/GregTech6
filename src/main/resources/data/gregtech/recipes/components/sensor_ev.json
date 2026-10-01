@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "P Q",
+    "PS ",
+    "CPP"
+  ],
+  "key": {
+    "P": {
+      "item": "gregtech:plate_curved_chromium"
+    },
+    "Q": {
+      "item": "minecraft:ender_pearl"
+    },
+    "S": {
+      "item": "gregtech:wire_01_aluminium"
+    },
+    "C": {
+      "item": "gregtech:circuit_elite"
+    }
+  },
+  "result": {
+    "item": "gregtech:compact_sensor_ev",
+    "count": 1
+  }
+}

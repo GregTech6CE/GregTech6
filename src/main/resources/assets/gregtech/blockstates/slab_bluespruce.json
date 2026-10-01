@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "type=bottom": {"model": "gregtech:block/wood/slab_bluespruce"},
+    "type=top": {"model": "gregtech:block/wood/slab_bluespruce_top"},
+    "type=double": {"model": "gregtech:block/iconsets/planks_bluespruce"}
+  }
+}

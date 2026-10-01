@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "gregtech:clay_bowl"
+  },
+  "result": "gregtech:mixing_bowl",
+  "experience": 0.0,
+  "cookingtime": 200
+}

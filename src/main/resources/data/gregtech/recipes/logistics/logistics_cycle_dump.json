@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "_comment": "GT6 MultiItemTechnological:131",
+  "ingredients": [
+    {
+      "item": "gregtech:generic_logistics_storage_bus"
+    }
+  ],
+  "result": {
+    "item": "gregtech:logistics_dump_bus_item"
+  }
+}

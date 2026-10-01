@@ -1,0 +1,48 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "gregtech:block/fluids/liquid_heavy_oil",
+    "still": "gregtech:block/fluids/liquid_heavy_oil",
+    "flow": "gregtech:block/fluids/liquid_heavy_oil"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "down": {
+          "texture": "#still",
+          "cullface": "down"
+        },
+        "up": {
+          "texture": "#still",
+          "cullface": "up"
+        },
+        "north": {
+          "texture": "#flow",
+          "cullface": "north"
+        },
+        "south": {
+          "texture": "#flow",
+          "cullface": "south"
+        },
+        "west": {
+          "texture": "#flow",
+          "cullface": "west"
+        },
+        "east": {
+          "texture": "#flow",
+          "cullface": "east"
+        }
+      }
+    }
+  ]
+}

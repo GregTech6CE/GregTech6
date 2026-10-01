@@ -1,0 +1,33 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "PCP",
+    "UwU",
+    "BXB"
+  ],
+  "key": {
+    "U": {
+      "tag": "gregtech:plate_curved/steel"
+    },
+    "X": {
+      "tag": "gregtech:rotor/steel"
+    },
+    "P": {
+      "tag": "gregtech:plate_quintuple/steel"
+    },
+    "C": {
+      "tag": "gregtech:plate_dense/copper"
+    },
+    "B": {
+      "item": "minecraft:bricks"
+    },
+    "w": {
+      "item": "gregtech:tool_wrench"
+    }
+  },
+  "result": {
+    "item": "gregtech:burning_box_fluidbed_dense_steel"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

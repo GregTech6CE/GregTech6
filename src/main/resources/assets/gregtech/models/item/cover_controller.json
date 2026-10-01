@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "gregtech:block/machines/covers/coverswitch/base",
+    "layer1": "gregtech:block/machines/covers/coverswitch/circuit",
+    "particle": "gregtech:block/machines/covers/coverswitch/base"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["M", "S"],
+  "key": {
+    "M": {"item": "gregtech:bathing_pot_wood"},
+    "S": {"item": "minecraft:brick_slab"}
+  },
+  "result": {"item": "gregtech:bathing_pot_table_wood"}
+}

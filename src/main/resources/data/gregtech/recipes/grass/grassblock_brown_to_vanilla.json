@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:grassblock_brown"
+    }
+  ],
+  "result": {
+    "item": "minecraft:grass_block"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "type": "gregtech:tool_shaped",
+  "allow_mirror": false,
+  "pattern": [
+    "WIW",
+    "XMx",
+    "WIW"
+  ],
+  "key": {
+    "W": {
+      "item": "gregtech:wire_01_annealed_copper"
+    },
+    "X": {
+      "item": "gregtech:wire_04_annealed_copper"
+    },
+    "I": {
+      "tag": "gregtech:plate_double/any_iron_or_steel"
+    },
+    "M": {
+      "item": "gregtech:casing_machine_iridium"
+    },
+    "x": {
+      "item": "gregtech:tool_wire_cutter"
+    }
+  },
+  "result": {
+    "item": "gregtech:transformer_luv_zpm"
+  }
+}

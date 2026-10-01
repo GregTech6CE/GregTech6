@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "P Q",
+    "PS ",
+    "CPP"
+  ],
+  "key": {
+    "P": {
+      "item": "gregtech:plate_curved_stainlesssteel"
+    },
+    "Q": {
+      "tag": "forge:gems/emerald"
+    },
+    "S": {
+      "item": "gregtech:wire_01_gold"
+    },
+    "C": {
+      "item": "gregtech:circuit_advanced"
+    }
+  },
+  "result": {
+    "item": "gregtech:compact_sensor_hv",
+    "count": 1
+  }
+}

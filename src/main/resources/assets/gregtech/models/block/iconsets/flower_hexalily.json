@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/lily_pad",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "particle": "gregtech:block/iconsets/flower_hexalily",
+    "texture": "gregtech:block/iconsets/flower_hexalily"
+  }
+}

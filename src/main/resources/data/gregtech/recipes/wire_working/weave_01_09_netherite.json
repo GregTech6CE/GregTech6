@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:wire_01_netherite"
+    },
+    {
+      "item": "gregtech:wire_01_netherite"
+    },
+    {
+      "item": "gregtech:wire_01_netherite"
+    },
+    {
+      "item": "gregtech:wire_01_netherite"
+    },
+    {
+      "item": "gregtech:wire_01_netherite"
+    },
+    {
+      "item": "gregtech:wire_01_netherite"
+    },
+    {
+      "item": "gregtech:wire_01_netherite"
+    },
+    {
+      "item": "gregtech:wire_01_netherite"
+    },
+    {
+      "item": "gregtech:wire_01_netherite"
+    }
+  ],
+  "result": {
+    "item": "gregtech:wire_09_netherite",
+    "count": 1
+  }
+}

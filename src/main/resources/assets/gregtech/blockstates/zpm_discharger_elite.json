@@ -1,0 +1,96 @@
+{
+  "variants": {
+    "facing=north,active=false,loaded=false": {
+      "model": "gregtech:block/machine/energy/zpm_discharger_elite_0_0"
+    },
+    "facing=east,active=false,loaded=false": {
+      "model": "gregtech:block/machine/energy/zpm_discharger_elite_0_0",
+      "y": 90
+    },
+    "facing=south,active=false,loaded=false": {
+      "model": "gregtech:block/machine/energy/zpm_discharger_elite_0_0",
+      "y": 180
+    },
+    "facing=west,active=false,loaded=false": {
+      "model": "gregtech:block/machine/energy/zpm_discharger_elite_0_0",
+      "y": 270
+    },
+    "facing=up,active=false,loaded=false": {
+      "model": "gregtech:block/machine/energy/zpm_discharger_elite_0_0",
+      "x": 270
+    },
+    "facing=down,active=false,loaded=false": {
+      "model": "gregtech:block/machine/energy/zpm_discharger_elite_0_0",
+      "x": 90
+    },
+    "facing=north,active=false,loaded=true": {
+      "model": "gregtech:block/machine/energy/zpm_discharger_elite_0_1"
+    },
+    "facing=east,active=false,loaded=true": {
+      "model": "gregtech:block/machine/energy/zpm_discharger_elite_0_1",
+      "y": 90
+    },
+    "facing=south,active=false,loaded=true": {
+      "model": "gregtech:block/machine/energy/zpm_discharger_elite_0_1",
+      "y": 180
+    },
+    "facing=west,active=false,loaded=true": {
+      "model": "gregtech:block/machine/energy/zpm_discharger_elite_0_1",
+      "y": 270
+    },
+    "facing=up,active=false,loaded=true": {
+      "model": "gregtech:block/machine/energy/zpm_discharger_elite_0_1",
+      "x": 270
+    },
+    "facing=down,active=false,loaded=true": {
+      "model": "gregtech:block/machine/energy/zpm_discharger_elite_0_1",
+      "x": 90
+    },
+    "facing=north,active=true,loaded=false": {
+      "model": "gregtech:block/machine/energy/zpm_discharger_elite_1_0"
+    },
+    "facing=east,active=true,loaded=false": {
+      "model": "gregtech:block/machine/energy/zpm_discharger_elite_1_0",
+      "y": 90
+    },
+    "facing=south,active=true,loaded=false": {
+      "model": "gregtech:block/machine/energy/zpm_discharger_elite_1_0",
+      "y": 180
+    },
+    "facing=west,active=true,loaded=false": {
+      "model": "gregtech:block/machine/energy/zpm_discharger_elite_1_0",
+      "y": 270
+    },
+    "facing=up,active=true,loaded=false": {
+      "model": "gregtech:block/machine/energy/zpm_discharger_elite_1_0",
+      "x": 270
+    },
+    "facing=down,active=true,loaded=false": {
+      "model": "gregtech:block/machine/energy/zpm_discharger_elite_1_0",
+      "x": 90
+    },
+    "facing=north,active=true,loaded=true": {
+      "model": "gregtech:block/machine/energy/zpm_discharger_elite_1_1"
+    },
+    "facing=east,active=true,loaded=true": {
+      "model": "gregtech:block/machine/energy/zpm_discharger_elite_1_1",
+      "y": 90
+    },
+    "facing=south,active=true,loaded=true": {
+      "model": "gregtech:block/machine/energy/zpm_discharger_elite_1_1",
+      "y": 180
+    },
+    "facing=west,active=true,loaded=true": {
+      "model": "gregtech:block/machine/energy/zpm_discharger_elite_1_1",
+      "y": 270
+    },
+    "facing=up,active=true,loaded=true": {
+      "model": "gregtech:block/machine/energy/zpm_discharger_elite_1_1",
+      "x": 270
+    },
+    "facing=down,active=true,loaded=true": {
+      "model": "gregtech:block/machine/energy/zpm_discharger_elite_1_1",
+      "x": 90
+    }
+  }
+}

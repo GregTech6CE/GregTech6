@@ -1,0 +1,36 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "XhY",
+    "ZMF",
+    "YwX"
+  ],
+  "key": {
+    "F": {
+      "item": "gregtech:fluid_filter"
+    },
+    "M": {
+      "item": "gregtech:casing_machine_double_steelgalvanized"
+    },
+    "X": {
+      "item": "gregtech:pipe_medium_galvanized_steel"
+    },
+    "Y": {
+      "item": "gregtech:item_pipe_medium_electrum"
+    },
+    "Z": {
+      "item": "gregtech:item_filter"
+    },
+    "h": {
+      "item": "gregtech:tool_hammer"
+    },
+    "w": {
+      "item": "gregtech:tool_wrench"
+    }
+  },
+  "result": {
+    "item": "gregtech:filter_items_fluids"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

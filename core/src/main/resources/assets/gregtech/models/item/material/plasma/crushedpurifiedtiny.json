@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "gregtech:item/material_icons/plasma/crushedpurifiedtiny",
+    "layer1": "gregtech:item/material_icons/plasma/crushedpurifiedtiny_overlay"
+  }
+}

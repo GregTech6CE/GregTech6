@@ -1,0 +1,30 @@
+modLoader="javafml"
+loaderVersion="[1,)"
+license="${mod_license}"
+
+[[mods]]
+modId="${mod_id}"
+version="${mod_version}"
+displayName="${mod_name}"
+authors="${mod_authors}"
+description='''
+GregTech 6 integration development build for Minecraft 1.21.1 NeoForge.
+This initial platform module loads the shared GT6 core. Gameplay content
+is being ported from the preserved Minecraft 1.20.1 Forge baseline.
+Third-party notices and unresolved source permissions are recorded in
+the integration documentation; this build is for local verification.
+'''
+
+[[dependencies.${mod_id}]]
+modId="neoforge"
+type="required"
+versionRange="[21.1.243,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.${mod_id}]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1]"
+ordering="NONE"
+side="BOTH"

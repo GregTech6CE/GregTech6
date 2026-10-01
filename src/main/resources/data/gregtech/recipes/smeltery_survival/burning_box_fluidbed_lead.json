@@ -1,0 +1,33 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "PCP",
+    "UwU",
+    "BXB"
+  ],
+  "key": {
+    "U": {
+      "tag": "gregtech:plate_curved/lead"
+    },
+    "X": {
+      "tag": "gregtech:rotor/lead"
+    },
+    "P": {
+      "tag": "forge:plates/lead"
+    },
+    "C": {
+      "tag": "gregtech:plate_double/copper"
+    },
+    "B": {
+      "item": "minecraft:bricks"
+    },
+    "w": {
+      "item": "gregtech:tool_wrench"
+    }
+  },
+  "result": {
+    "item": "gregtech:burning_box_fluidbed_lead"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

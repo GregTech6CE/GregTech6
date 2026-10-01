@@ -1,0 +1,24 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    " P ",
+    "PwP",
+    "PhP"
+  ],
+  "key": {
+    "P": {
+      "tag": "gregtech:plate_double/arsenic_copper"
+    },
+    "h": {
+      "item": "gregtech:tool_hammer"
+    },
+    "w": {
+      "item": "gregtech:tool_wrench"
+    }
+  },
+  "result": {
+    "item": "gregtech:steam_boiler_arsenic_copper"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

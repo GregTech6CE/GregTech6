@@ -1,0 +1,28 @@
+{
+  "type": "gregtech:tool_shaped",
+  "_comment": "GT6 Loader_MultiTileEntities:181-183, multi-tile 7039",
+  "pattern": [
+    "PPP",
+    "sfr",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "gregtech:planks_hazel"
+    },
+    "s": {
+      "item": "gregtech:tool_saw"
+    },
+    "f": {
+      "item": "gregtech:tool_file"
+    },
+    "r": {
+      "item": "gregtech:tool_soft_hammer"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gregtech:bookshelf_hazel",
+    "count": 1
+  }
+}

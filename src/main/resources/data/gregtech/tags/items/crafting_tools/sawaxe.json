@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "gregtech:tool_saw",
+    "gregtech:tool_axe",
+    "gregtech:tool_double_axe",
+    "gregtech:tool_universal_spade"
+  ]
+}

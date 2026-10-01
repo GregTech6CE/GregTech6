@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "gregtech:clay_brown"
+    }
+  ],
+  "result": {
+    "item": "gregtech:brown_clay",
+    "count": 4
+  }
+}

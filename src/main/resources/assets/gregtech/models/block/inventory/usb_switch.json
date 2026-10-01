@@ -1,0 +1,11 @@
+{
+  "parent": "gregtech:block/inventory/data_switch_base",
+  "textures": {
+    "colored_bottom": "gregtech:block/data_switch/usb/colored/bottom",
+    "colored_top": "gregtech:block/data_switch/usb/colored/top",
+    "colored_side": "gregtech:block/data_switch/usb/colored/side",
+    "overlay_bottom": "gregtech:block/data_switch/usb/overlay/bottom",
+    "overlay_top": "gregtech:block/data_switch/usb/overlay/top",
+    "overlay_side": "gregtech:block/data_switch/usb/overlay/side"
+  }
+}

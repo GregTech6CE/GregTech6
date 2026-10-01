@@ -1,0 +1,29 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "CLB",
+    "WQW"
+  ],
+  "key": {
+    "B": {
+      "item": "gregtech:wire_01_tin"
+    },
+    "C": {
+      "item": "gregtech:circuit_basic"
+    },
+    "L": {
+      "item": "gregtech:wire_01_lumium"
+    },
+    "Q": {
+      "item": "gregtech:blank_cover"
+    },
+    "W": {
+      "item": "gregtech:cable_01_tin"
+    }
+  },
+  "result": {
+    "item": "gregtech:energy_display_cover"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

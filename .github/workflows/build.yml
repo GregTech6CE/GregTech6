@@ -1,0 +1,182 @@
+name: Dual-platform build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: build-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  build:
+    name: Build ${{ matrix.minecraft }} ${{ matrix.loader }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - minecraft: '1.20.1'
+            loader: forge
+            task: build
+            libs: build/libs
+          - minecraft: '1.21.1'
+            loader: neoforge
+            task: ':neoforge:build'
+            libs: neoforge/build/libs
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install JDK 21 toolchain
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Record JDK 21
+        run: echo "JAVA21_HOME=$JAVA_HOME" >> "$GITHUB_ENV"
+      - name: Install JDK 17 launcher and core toolchain
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Record JDK 17
+        run: echo "JAVA17_HOME=$JAVA_HOME" >> "$GITHUB_ENV"
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Build platform and execute shared-core behavior contracts
+        env:
+          JAVA_HOME: ${{ env.JAVA17_HOME }}
+          PLATFORM_TASK: ${{ matrix.task }}
+        run: |
+          chmod +x gradlew
+          mkdir -p work
+          ./gradlew --no-daemon --stacktrace \
+            -Dorg.gradle.java.home="$JAVA17_HOME" \
+            -Dorg.gradle.java.installations.fromEnv=JAVA17_HOME,JAVA21_HOME \
+            -Dorg.gradle.java.installations.auto-download=false \
+            :core:check "$PLATFORM_TASK" 2>&1 | tee work/ci-build.log
+      - name: Verify current platform packaging and preserve its checksum
+        env:
+          LIBS_DIR: ${{ matrix.libs }}
+          MC_VERSION: ${{ matrix.minecraft }}
+          LOADER: ${{ matrix.loader }}
+        run: |
+          python3 - <<'PY'
+          import hashlib
+          import json
+          import os
+          import pathlib
+          import shutil
+          import subprocess
+          import sys
+
+          libs = pathlib.Path(os.environ['LIBS_DIR'])
+          jars = [p for p in libs.glob('*.jar')
+                  if not any(token in p.stem for token in ('-sources', '-javadoc', '-dev'))]
+          if len(jars) != 1:
+              raise SystemExit(f'Expected exactly one platform mod jar in {libs}, found {jars}')
+          source = jars[0]
+          report = pathlib.Path('work/packaging-reports') / (os.environ['LOADER'] + '.json')
+          subprocess.run([sys.executable, 'tools/integration/verify_artifacts.py',
+                          '--platform', os.environ['LOADER'], '--jar', str(source),
+                          '--output', str(report)], check=True)
+          verified = json.loads(report.read_text(encoding='utf-8'))
+          destination = pathlib.Path('work/ci-artifacts')
+          destination.mkdir(parents=True, exist_ok=True)
+          target = destination / f"gregtech6-{os.environ['MC_VERSION']}-{os.environ['LOADER']}.jar"
+          shutil.copyfile(source, target)
+          digest = hashlib.sha256(target.read_bytes()).hexdigest()
+          if digest != verified[os.environ['LOADER']]['sha256']:
+              raise SystemExit('Platform jar changed after packaging verification')
+          target.with_suffix('.jar.sha256').write_text(f'{digest}  {target.name}\n', encoding='utf-8')
+          (destination / 'build-commit.txt').write_text(os.environ['GITHUB_SHA'] + '\n', encoding='utf-8')
+          PY
+      - name: Upload packaging evidence without mod binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: packaging-${{ matrix.loader }}
+          path: work/packaging-reports/
+          if-no-files-found: error
+      - name: Upload platform test artifact
+        # Source authorization is unresolved; public CI may build, but may not distribute jars.
+        if: ${{ github.event.repository.private == true }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: gregtech6-${{ matrix.minecraft }}-${{ matrix.loader }}
+          path: work/ci-artifacts/
+          if-no-files-found: error
+      - name: Record public binary upload restriction
+        if: ${{ github.event.repository.private != true }}
+        run: echo "Source authorization is unresolved. Public CI builds and packaging evidence run; mod jar upload is disabled."
+      - name: Preserve failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: diagnostics-${{ matrix.minecraft }}-${{ matrix.loader }}
+          path: |
+            work/ci-build.log
+            build/reports/
+            build/test-results/
+            core/build/reports/
+            core/build/test-results/
+            neoforge/build/reports/
+            neoforge/build/test-results/
+          if-no-files-found: ignore
+
+  required-builds:
+    name: Both platform builds required
+    needs: build
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail if either platform failed or was cancelled
+        env:
+          MATRIX_RESULT: ${{ needs.build.result }}
+        run: test "$MATRIX_RESULT" = success
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download both packaging reports
+        uses: actions/download-artifact@v4
+        with:
+          pattern: packaging-*
+          path: work/packaging-reports/
+      - name: Require current commit and identical complete core evidence from both platforms
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import pathlib
+
+          root = pathlib.Path('work/packaging-reports')
+          reports = {}
+          for loader in ('forge', 'neoforge'):
+              matches = list(root.rglob(loader + '.json'))
+              if len(matches) != 1:
+                  raise SystemExit(f'Expected one {loader} packaging report, found {matches}')
+              report = json.loads(matches[0].read_text(encoding='utf-8'))
+              if report.get('status') != 'passed' or report.get('build_commit') != os.environ['GITHUB_SHA']:
+                  raise SystemExit(f'{loader} packaging evidence is failed or from another commit')
+              core = report.get('compiled_core_class_sha256')
+              if not core or report.get('shared_classes') != len(core):
+                  raise SystemExit(f'{loader} packaging evidence lacks the complete core class set')
+              if report[loader]['core_class_sha256'] != core:
+                  raise SystemExit(f'{loader} jar differs from its current compiled core')
+              reports[loader] = report
+          forge, neo = reports['forge'], reports['neoforge']
+          if forge['mod_id'] != neo['mod_id'] or forge['mod_version'] != neo['mod_version']:
+              raise SystemExit('Platform identity/version differs')
+          if forge['compiled_core_class_sha256'] != neo['compiled_core_class_sha256']:
+              raise SystemExit('Platform shared-core bytecode differs')
+          print(f"Both platforms contain the same {forge['shared_classes']} current core classes; packaging only.")
+          PY

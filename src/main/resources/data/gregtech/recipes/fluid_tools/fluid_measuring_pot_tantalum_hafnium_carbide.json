@@ -1,0 +1,26 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "Ch",
+    "Pf"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:plates/tantalum_hafnium_carbide"
+    },
+    "C": {
+      "item": "gregtech:plate_curved_tantalumhafniumcarbide"
+    },
+    "h": {
+      "item": "gregtech:tool_hammer"
+    },
+    "f": {
+      "item": "gregtech:tool_file"
+    }
+  },
+  "result": {
+    "item": "gregtech:fluid_measuring_pot_tantalum_hafnium_carbide"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

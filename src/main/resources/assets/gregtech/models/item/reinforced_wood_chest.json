@@ -1,0 +1,6 @@
+{
+  "parent": "gregtech:item/metal_chest",
+  "textures": {
+    "particle": "gregtech:block/machines/woodchest/overlay"
+  }
+}

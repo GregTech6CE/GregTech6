@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "gregtech:block/machine/pipe_quadruple_terrasteel_core"
+    }
+  }
+}

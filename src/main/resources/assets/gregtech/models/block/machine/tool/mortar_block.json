@@ -1,0 +1,336 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "forge:composite",
+  "textures": {
+    "particle": "gregtech:block/machines/tools/mortar/colored/bottom"
+  },
+  "children": {
+    "colored": {
+      "textures": {
+        "bottom": "gregtech:block/machines/tools/mortar/colored/bottom",
+        "insides": "gregtech:block/machines/tools/mortar/colored/insides",
+        "middleside": "gregtech:block/machines/tools/mortar/colored/middleside",
+        "middletop": "gregtech:block/machines/tools/mortar/colored/middletop",
+        "sides": "gregtech:block/machines/tools/mortar/colored/sides",
+        "top": "gregtech:block/machines/tools/mortar/colored/top"
+      },
+      "elements": [
+        {
+          "from": [
+            2,
+            0,
+            2
+          ],
+          "to": [
+            4,
+            6,
+            14
+          ],
+          "faces": {
+            "west": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#insides",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#top",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            2,
+            0,
+            2
+          ],
+          "to": [
+            14,
+            6,
+            4
+          ],
+          "faces": {
+            "north": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#insides",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#top",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            12,
+            0,
+            2
+          ],
+          "to": [
+            14,
+            6,
+            14
+          ],
+          "faces": {
+            "east": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#insides",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#top",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            2,
+            0,
+            12
+          ],
+          "to": [
+            14,
+            6,
+            14
+          ],
+          "faces": {
+            "south": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#insides",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#top",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            2,
+            0,
+            2
+          ],
+          "to": [
+            14,
+            1,
+            14
+          ],
+          "faces": {
+            "up": {
+              "texture": "#top",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#bottom",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            6,
+            0,
+            6
+          ],
+          "to": [
+            10,
+            9,
+            10
+          ],
+          "faces": {
+            "up": {
+              "texture": "#middletop",
+              "tintindex": 1
+            },
+            "north": {
+              "texture": "#middleside",
+              "tintindex": 1
+            },
+            "south": {
+              "texture": "#middleside",
+              "tintindex": 1
+            },
+            "west": {
+              "texture": "#middleside",
+              "tintindex": 1
+            },
+            "east": {
+              "texture": "#middleside",
+              "tintindex": 1
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    },
+    "overlay": {
+      "textures": {
+        "bottom": "gregtech:block/machines/tools/mortar/overlay/bottom",
+        "insides": "gregtech:block/machines/tools/mortar/overlay/insides",
+        "middleside": "gregtech:block/machines/tools/mortar/overlay/middleside",
+        "middletop": "gregtech:block/machines/tools/mortar/overlay/middletop",
+        "sides": "gregtech:block/machines/tools/mortar/overlay/sides",
+        "top": "gregtech:block/machines/tools/mortar/overlay/top"
+      },
+      "elements": [
+        {
+          "from": [
+            2,
+            0,
+            2
+          ],
+          "to": [
+            4,
+            6,
+            14
+          ],
+          "faces": {
+            "west": {
+              "texture": "#sides"
+            },
+            "east": {
+              "texture": "#insides"
+            },
+            "up": {
+              "texture": "#top"
+            }
+          }
+        },
+        {
+          "from": [
+            2,
+            0,
+            2
+          ],
+          "to": [
+            14,
+            6,
+            4
+          ],
+          "faces": {
+            "north": {
+              "texture": "#sides"
+            },
+            "south": {
+              "texture": "#insides"
+            },
+            "up": {
+              "texture": "#top"
+            }
+          }
+        },
+        {
+          "from": [
+            12,
+            0,
+            2
+          ],
+          "to": [
+            14,
+            6,
+            14
+          ],
+          "faces": {
+            "east": {
+              "texture": "#sides"
+            },
+            "west": {
+              "texture": "#insides"
+            },
+            "up": {
+              "texture": "#top"
+            }
+          }
+        },
+        {
+          "from": [
+            2,
+            0,
+            12
+          ],
+          "to": [
+            14,
+            6,
+            14
+          ],
+          "faces": {
+            "south": {
+              "texture": "#sides"
+            },
+            "north": {
+              "texture": "#insides"
+            },
+            "up": {
+              "texture": "#top"
+            }
+          }
+        },
+        {
+          "from": [
+            2,
+            0,
+            2
+          ],
+          "to": [
+            14,
+            1,
+            14
+          ],
+          "faces": {
+            "up": {
+              "texture": "#top"
+            },
+            "down": {
+              "texture": "#bottom"
+            }
+          }
+        },
+        {
+          "from": [
+            6,
+            0,
+            6
+          ],
+          "to": [
+            10,
+            9,
+            10
+          ],
+          "faces": {
+            "up": {
+              "texture": "#middletop"
+            },
+            "north": {
+              "texture": "#middleside"
+            },
+            "south": {
+              "texture": "#middleside"
+            },
+            "west": {
+              "texture": "#middleside"
+            },
+            "east": {
+              "texture": "#middleside"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    }
+  }
+}

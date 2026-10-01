@@ -1,0 +1,21 @@
+{
+  "type": "gregtech:tool_shaped",
+  "_comment": "GT6 Loader_MultiTileEntities:2088",
+  "pattern": [
+    " GG",
+    "GGG",
+    "GGq"
+  ],
+  "key": {
+    "G": {
+      "item": "gregtech:dry_grass"
+    },
+    "q": {
+      "item": "gregtech:tool_scissors"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gregtech:rope_grass"
+  }
+}

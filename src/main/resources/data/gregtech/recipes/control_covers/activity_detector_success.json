@@ -1,0 +1,29 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "WQW",
+    "BCX"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:stone_button"
+    },
+    "C": {
+      "item": "gregtech:circuit_good"
+    },
+    "Q": {
+      "item": "gregtech:blank_cover"
+    },
+    "W": {
+      "item": "gregtech:cable_01_tin"
+    },
+    "X": {
+      "item": "minecraft:redstone_torch"
+    }
+  },
+  "result": {
+    "item": "gregtech:activity_detector_success"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

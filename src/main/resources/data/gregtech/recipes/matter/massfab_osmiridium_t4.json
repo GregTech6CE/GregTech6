@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "RFS",
+    "FMF",
+    "RFS"
+  ],
+  "key": {
+    "R": {
+      "item": "gregtech:crystal_processor_ruby"
+    },
+    "S": {
+      "item": "gregtech:crystal_processor_sapphire"
+    },
+    "F": {
+      "item": "gregtech:compact_force_field_emitter_ev"
+    },
+    "M": {
+      "item": "gregtech:casing_machine_osmiridium"
+    }
+  },
+  "result": {
+    "item": "gregtech:massfab_osmiridium_t4"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:block_plate_trinitanium"
+    }
+  ],
+  "result": {
+    "item": "gregtech:plate_trinitanium",
+    "count": 9
+  }
+}

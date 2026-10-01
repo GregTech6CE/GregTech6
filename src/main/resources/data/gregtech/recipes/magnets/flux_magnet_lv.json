@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "SMS",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "tag": "forge:long_rods/lead"
+    },
+    "M": {
+      "item": "gregtech:electromagnet_lv"
+    }
+  },
+  "result": {
+    "item": "gregtech:flux_magnet_lv"
+  },
+  "_comment": "GT6 Loader_MultiTileEntities: 872"
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP",
+    "PPP",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:plates/graphene"
+    }
+  },
+  "result": {
+    "item": "gregtech:block_plate_graphene",
+    "count": 1
+  }
+}

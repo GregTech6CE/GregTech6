@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:wire_03_copper"
+    },
+    {
+      "item": "gregtech:wire_03_copper"
+    },
+    {
+      "item": "gregtech:wire_03_copper"
+    }
+  ],
+  "result": {
+    "item": "gregtech:wire_09_copper",
+    "count": 1
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "  s",
+    "PP ",
+    "xP "
+  ],
+  "key": {
+    "P": {
+      "item": "gregtech:plate_curved_plastic"
+    },
+    "s": {
+      "item": "gregtech:tool_saw"
+    },
+    "x": {
+      "item": "gregtech:tool_wire_cutter"
+    }
+  },
+  "result": {
+    "item": "gregtech:tap_plastic"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

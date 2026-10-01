@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WWW",
+    "W W",
+    "WWW"
+  ],
+  "key": {
+    "W": {
+      "item": "gregtech:wire_04_osmium"
+    }
+  },
+  "result": {
+    "item": "gregtech:large_osmium_coil"
+  }
+}

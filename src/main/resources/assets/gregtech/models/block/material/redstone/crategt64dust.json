@@ -1,0 +1,23 @@
+{
+  "loader": "forge:composite",
+  "children": {
+    "layer0": {
+      "parent": "minecraft:block/cube_all",
+      "textures": {
+        "all": "gregtech:block/material_icons/redstone/crategtdust"
+      },
+      "render_type": "minecraft:solid"
+    },
+    "layer1": {
+      "parent": "minecraft:block/cube_all",
+      "textures": {
+        "all": "gregtech:block/material_icons/redstone/crategtdust_overlay"
+      },
+      "render_type": "minecraft:cutout"
+    }
+  },
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "gregtech:block/material_icons/redstone/crategtdust"
+  }
+}

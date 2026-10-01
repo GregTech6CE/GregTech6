@@ -1,0 +1,26 @@
+{
+  "type": "gregtech:tool_shaped",
+  "allow_mirror": false,
+  "pattern": [
+    "WPW",
+    "BCB",
+    "BBB"
+  ],
+  "key": {
+    "P": {
+      "item": "gregtech:plate_batteryalloy"
+    },
+    "B": {
+      "item": "gregtech:lead_acid_cell_filled"
+    },
+    "W": {
+      "item": "gregtech:cable_01_aluminium"
+    },
+    "C": {
+      "tag": "gregtech:circuits_tier_4_plus"
+    }
+  },
+  "result": {
+    "item": "gregtech:battery_lead_acid_ev"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "gregtech:block/iconsets/aneutronic_fusion_top",
+    "side": "gregtech:block/iconsets/aneutronic_fusion_sides",
+    "bottom": "gregtech:block/iconsets/aneutronic_fusion_bottom"
+  }
+}

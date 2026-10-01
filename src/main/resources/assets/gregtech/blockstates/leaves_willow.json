@@ -1,0 +1,46 @@
+{
+  "variants": {
+    "distance=1,persistent=false": {
+      "model": "gregtech:block/iconsets/leaves_willow"
+    },
+    "distance=1,persistent=true": {
+      "model": "gregtech:block/iconsets/leaves_willow"
+    },
+    "distance=2,persistent=false": {
+      "model": "gregtech:block/iconsets/leaves_willow"
+    },
+    "distance=2,persistent=true": {
+      "model": "gregtech:block/iconsets/leaves_willow"
+    },
+    "distance=3,persistent=false": {
+      "model": "gregtech:block/iconsets/leaves_willow"
+    },
+    "distance=3,persistent=true": {
+      "model": "gregtech:block/iconsets/leaves_willow"
+    },
+    "distance=4,persistent=false": {
+      "model": "gregtech:block/iconsets/leaves_willow"
+    },
+    "distance=4,persistent=true": {
+      "model": "gregtech:block/iconsets/leaves_willow"
+    },
+    "distance=5,persistent=false": {
+      "model": "gregtech:block/iconsets/leaves_willow"
+    },
+    "distance=5,persistent=true": {
+      "model": "gregtech:block/iconsets/leaves_willow"
+    },
+    "distance=6,persistent=false": {
+      "model": "gregtech:block/iconsets/leaves_willow"
+    },
+    "distance=6,persistent=true": {
+      "model": "gregtech:block/iconsets/leaves_willow"
+    },
+    "distance=7,persistent=false": {
+      "model": "gregtech:block/iconsets/leaves_willow"
+    },
+    "distance=7,persistent=true": {
+      "model": "gregtech:block/iconsets/leaves_willow"
+    }
+  }
+}

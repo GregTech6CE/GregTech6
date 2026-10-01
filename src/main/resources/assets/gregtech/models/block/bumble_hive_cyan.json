@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "gregtech:block/nature/bumblehive/cyan/bottom",
+    "top": "gregtech:block/nature/bumblehive/cyan/top",
+    "side": "gregtech:block/nature/bumblehive/cyan/side"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column_horizontal",
+  "textures": {
+    "end": "gregtech:block/iconsets/grass_top_rotten",
+    "side": "gregtech:block/iconsets/grass_side_rotten"
+  }
+}

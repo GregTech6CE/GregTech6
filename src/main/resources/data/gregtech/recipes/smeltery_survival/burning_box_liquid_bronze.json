@@ -1,0 +1,30 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "PCP",
+    "IwI",
+    "BBB"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:plates/bronze"
+    },
+    "I": {
+      "tag": "gregtech:plate_curved/bronze"
+    },
+    "C": {
+      "tag": "gregtech:plate_double/copper"
+    },
+    "B": {
+      "item": "minecraft:bricks"
+    },
+    "w": {
+      "item": "gregtech:tool_wrench"
+    }
+  },
+  "result": {
+    "item": "gregtech:burning_box_liquid_bronze"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

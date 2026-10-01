@@ -1,0 +1,163 @@
+{
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "particle": "minecraft:block/oak_log",
+    "twig": "minecraft:block/oak_log"
+  },
+  "elements": [
+    {
+      "from": [
+        3,
+        0,
+        7
+      ],
+      "to": [
+        15,
+        2,
+        9
+      ],
+      "faces": {
+        "down": {
+          "texture": "#twig",
+          "uv": [
+            3,
+            7,
+            15,
+            9
+          ]
+        },
+        "up": {
+          "texture": "#twig",
+          "uv": [
+            3,
+            7,
+            15,
+            9
+          ]
+        },
+        "north": {
+          "texture": "#twig",
+          "uv": [
+            3,
+            14,
+            15,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#twig",
+          "uv": [
+            3,
+            14,
+            15,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#twig",
+          "uv": [
+            7,
+            14,
+            9,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#twig",
+          "uv": [
+            7,
+            14,
+            9,
+            16
+          ]
+        }
+      },
+      "rotation": {
+        "origin": [
+          9.0,
+          1,
+          8.0
+        ],
+        "axis": "y",
+        "angle": 22.5
+      }
+    },
+    {
+      "from": [
+        5,
+        0,
+        4
+      ],
+      "to": [
+        12,
+        2,
+        6
+      ],
+      "faces": {
+        "down": {
+          "texture": "#twig",
+          "uv": [
+            5,
+            4,
+            12,
+            6
+          ]
+        },
+        "up": {
+          "texture": "#twig",
+          "uv": [
+            5,
+            4,
+            12,
+            6
+          ]
+        },
+        "north": {
+          "texture": "#twig",
+          "uv": [
+            5,
+            14,
+            12,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#twig",
+          "uv": [
+            5,
+            14,
+            12,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#twig",
+          "uv": [
+            4,
+            14,
+            6,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#twig",
+          "uv": [
+            4,
+            14,
+            6,
+            16
+          ]
+        }
+      },
+      "rotation": {
+        "origin": [
+          8.5,
+          1,
+          5.0
+        ],
+        "axis": "y",
+        "angle": -22.5
+      }
+    }
+  ]
+}

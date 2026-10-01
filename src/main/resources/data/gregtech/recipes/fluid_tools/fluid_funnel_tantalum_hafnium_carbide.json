@@ -1,0 +1,24 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    " h ",
+    "PoP",
+    " P "
+  ],
+  "key": {
+    "P": {
+      "item": "gregtech:plate_curved_tantalumhafniumcarbide"
+    },
+    "h": {
+      "item": "gregtech:tool_hammer"
+    },
+    "o": {
+      "item": "gregtech:tool_bending_cylinder"
+    }
+  },
+  "result": {
+    "item": "gregtech:fluid_funnel_tantalum_hafnium_carbide"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

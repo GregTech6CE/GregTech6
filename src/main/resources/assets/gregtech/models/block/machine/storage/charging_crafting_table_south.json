@@ -1,0 +1,115 @@
+{
+  "loader": "forge:composite",
+  "parent": "minecraft:block/block",
+  "children": {
+    "colored": {
+      "render_type": "minecraft:cutout",
+      "textures": {
+        "bottom": "gregtech:block/machines/craftingtables/charging/colored/bottom",
+        "top": "gregtech:block/machines/craftingtables/charging/colored/top",
+        "front": "gregtech:block/machines/craftingtables/charging/colored/front",
+        "back": "gregtech:block/machines/craftingtables/charging/colored/back",
+        "side": "gregtech:block/machines/craftingtables/charging/colored/side"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#bottom",
+              "cullface": "down",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#top",
+              "cullface": "up",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#back",
+              "cullface": "north",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#front",
+              "cullface": "south",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#side",
+              "cullface": "west",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#side",
+              "cullface": "east",
+              "tintindex": 0
+            }
+          }
+        }
+      ]
+    },
+    "overlay": {
+      "render_type": "minecraft:cutout",
+      "textures": {
+        "bottom": "gregtech:block/machines/craftingtables/charging/overlay/bottom",
+        "top": "gregtech:block/machines/craftingtables/charging/overlay/top",
+        "front": "gregtech:block/machines/craftingtables/charging/overlay/front",
+        "back": "gregtech:block/machines/craftingtables/charging/overlay/back",
+        "side": "gregtech:block/machines/craftingtables/charging/overlay/side"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#bottom",
+              "cullface": "down"
+            },
+            "up": {
+              "texture": "#top",
+              "cullface": "up"
+            },
+            "north": {
+              "texture": "#back",
+              "cullface": "north"
+            },
+            "south": {
+              "texture": "#front",
+              "cullface": "south"
+            },
+            "west": {
+              "texture": "#side",
+              "cullface": "west"
+            },
+            "east": {
+              "texture": "#side",
+              "cullface": "east"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "textures": {
+    "particle": "gregtech:block/machines/craftingtables/charging/colored/side"
+  }
+}

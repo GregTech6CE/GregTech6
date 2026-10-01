@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "gregtech:clay_jug"
+  },
+  "result": "gregtech:fluid_jug",
+  "experience": 0,
+  "cookingtime": 200
+}

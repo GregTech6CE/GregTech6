@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "gregtech:block/bookshelf_metal_steel_galvanized",
+      "y": 0
+    },
+    "facing=east": {
+      "model": "gregtech:block/bookshelf_metal_steel_galvanized",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "gregtech:block/bookshelf_metal_steel_galvanized",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "gregtech:block/bookshelf_metal_steel_galvanized",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "_comment": "GT6 MultiItemTechnological:140",
+  "pattern": [
+    "C",
+    "Q"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:crafting_table"
+    },
+    "Q": {
+      "item": "gregtech:blank_cover"
+    }
+  },
+  "result": {
+    "item": "gregtech:crafting_table_cover"
+  }
+}

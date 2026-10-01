@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:bale_rye"
+    }
+  ],
+  "result": {
+    "item": "gregtech:rye",
+    "count": 9
+  }
+}

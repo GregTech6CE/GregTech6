@@ -1,0 +1,56 @@
+{
+  "source": "saltnya",
+  "source_snapshot": "415617825945a9f54b11fdc359ff9b3cf694c8cd",
+  "source_tag": "import/saltnya-snapshot",
+  "integration_base": "704fbb785d6f74c3b79dcbc069ec7cd5886a14ef",
+  "license_resolution": "Original author history and applicable authorization unresolved; All Rights Reserved and existing MDK text retained without relicensing",
+  "sources": [
+    {
+      "source_path": "src/main/java/com/gregtech/gregtech/loaders/a/Loader_Items.java",
+      "source_blob_sha1": "8a82be00140aa676549117b3396d8dcff553694f",
+      "source_sha256": "a280cec2ce5e86c7c120365cac486ff6d24fe1d1823cf23ea74299c28f204171"
+    },
+    {
+      "source_path": "src/main/java/com/gregtech/gregtech/item/MaterialItem.java",
+      "source_blob_sha1": "fe2a9a103ad62ef906543ce8ae36ef0eb45532ce",
+      "source_sha256": "87e1a1c834aeeebf7293cffe99eaf7f86c83a7812d6377ea7b4d8da00ac29db1"
+    },
+    {
+      "source_path": "src/main/java/com/gregtech/gregtech/registry/GTItems.java",
+      "source_blob_sha1": "9c3871ef0d07effa023ebeefe3427e84c90e0e06",
+      "source_sha256": "372d7804a95be4c63e88f02bb6b32ea3fc93c02b677461775032f6ed2797dc83"
+    }
+  ],
+  "shared_definition": {
+    "path": "core/src/main/java/com/gregtech/gregtech/api/material/MaterialItemDefinitions.java",
+    "sha256": "b28b1031d83f6de791a2322be7becfdad1b4abd225b7706917371a28b7030bd9",
+    "prefix_order": "All107 original explicit candidates in original order, verified by direct source comparison",
+    "material_order": "GTMaterialRegistry.sortedMaterials per prefix",
+    "filters": [
+      "HIDDEN excluded",
+      "material.resolve()!=material excluded",
+      "prefix.isValidFor required",
+      "plate/WoodTreated excluded for original block binding"
+    ],
+    "id_policy": "prefix.getItemId; on collision base_id; second collision same IllegalStateException",
+    "remaining_forge_tail": "GTTechnological, GTMultiItems, GTFoodItems, GTFuelRods byte-equal to original import",
+    "forge_coin_factory": "Original CoinItem special platform constructor retained"
+  },
+  "neo_platform_files": [
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/item/MaterialItem.java",
+      "sha256": "fec8dfb9dd1300126f2f0d5f8f7ff30af7630dd313ff2e4f2821bd231cbf7f57"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTItems.java",
+      "sha256": "a00c6631e69d37c30dbb8c7a4ab2de449553342a9129e9ff36ebd9f645d17ebb"
+    }
+  ],
+  "verification": "Only source/order/suffix preservation review; no new contracts, javac, Gradle, jars or games in this change. Main will verify the implementation closure once at phase end.",
+  "pending": [
+    "Client models, dynamic aliases, colors, lang resources and full tooltips",
+    "Neo coin placement/renderer and original other specialized item gameplay",
+    "Vanilla unification and composition adapters owned by main; no changes to ItemMaterialRegistry or ItemComposition here",
+    "Machines, gameplay and saved-world validation"
+  ]
+}

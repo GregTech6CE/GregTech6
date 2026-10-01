@@ -1,0 +1,50 @@
+{
+  "variants": {
+    "active=false,facing=north": {
+      "model": "gregtech:block/machine/tool/crank"
+    },
+    "active=false,facing=east": {
+      "model": "gregtech:block/machine/tool/crank",
+      "y": 90
+    },
+    "active=false,facing=south": {
+      "model": "gregtech:block/machine/tool/crank",
+      "y": 180
+    },
+    "active=false,facing=west": {
+      "model": "gregtech:block/machine/tool/crank",
+      "y": 270
+    },
+    "active=false,facing=up": {
+      "model": "gregtech:block/machine/tool/crank",
+      "x": 270
+    },
+    "active=false,facing=down": {
+      "model": "gregtech:block/machine/tool/crank",
+      "x": 90
+    },
+    "active=true,facing=north": {
+      "model": "gregtech:block/machine/tool/crank"
+    },
+    "active=true,facing=east": {
+      "model": "gregtech:block/machine/tool/crank",
+      "y": 90
+    },
+    "active=true,facing=south": {
+      "model": "gregtech:block/machine/tool/crank",
+      "y": 180
+    },
+    "active=true,facing=west": {
+      "model": "gregtech:block/machine/tool/crank",
+      "y": 270
+    },
+    "active=true,facing=up": {
+      "model": "gregtech:block/machine/tool/crank",
+      "x": 270
+    },
+    "active=true,facing=down": {
+      "model": "gregtech:block/machine/tool/crank",
+      "x": 90
+    }
+  }
+}

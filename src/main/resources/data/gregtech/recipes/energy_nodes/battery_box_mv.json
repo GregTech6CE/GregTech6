@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WCW",
+    "WCW",
+    "XMX"
+  ],
+  "key": {
+    "W": {
+      "tag": "gregtech:wire_01/any_copper"
+    },
+    "C": {
+      "tag": "gregtech:cable_01/any_copper"
+    },
+    "X": {
+      "tag": "gregtech:circuits_tier_2_plus"
+    },
+    "M": {
+      "item": "gregtech:casing_machine_aluminium"
+    }
+  },
+  "result": {
+    "item": "gregtech:battery_box_mv"
+  }
+}

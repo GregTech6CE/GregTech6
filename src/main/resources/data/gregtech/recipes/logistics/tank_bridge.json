@@ -1,0 +1,27 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "h  ",
+    "XMX",
+    "  w"
+  ],
+  "key": {
+    "M": {
+      "item": "gregtech:casing_machine_steel"
+    },
+    "X": {
+      "item": "gregtech:pipe_medium_steel"
+    },
+    "h": {
+      "item": "gregtech:tool_hammer"
+    },
+    "w": {
+      "item": "gregtech:tool_wrench"
+    }
+  },
+  "result": {
+    "item": "gregtech:tank_bridge"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

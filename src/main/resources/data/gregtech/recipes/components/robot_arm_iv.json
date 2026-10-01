@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CCC",
+    "MSM",
+    "PES"
+  ],
+  "key": {
+    "C": {
+      "item": "gregtech:cable_01_platinum"
+    },
+    "M": {
+      "item": "gregtech:compact_electric_motor_iv"
+    },
+    "S": {
+      "tag": "forge:rods/titanium"
+    },
+    "P": {
+      "item": "gregtech:compact_electric_piston_iv"
+    },
+    "E": {
+      "item": "gregtech:circuit_master"
+    }
+  },
+  "result": {
+    "item": "gregtech:compact_robot_arm_iv",
+    "count": 1
+  }
+}

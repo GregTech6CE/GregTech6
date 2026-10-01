@@ -1,0 +1,29 @@
+{
+  "parent": "gregtech:block/chemical_battery/advanced_8_0",
+  "overrides": [
+    {
+      "predicate": {
+        "gregtech:battery_charge": 0.25
+      },
+      "model": "gregtech:block/chemical_battery/advanced_8_1"
+    },
+    {
+      "predicate": {
+        "gregtech:battery_charge": 0.5
+      },
+      "model": "gregtech:block/chemical_battery/advanced_8_2"
+    },
+    {
+      "predicate": {
+        "gregtech:battery_charge": 0.75
+      },
+      "model": "gregtech:block/chemical_battery/advanced_8_3"
+    },
+    {
+      "predicate": {
+        "gregtech:battery_charge": 1.0
+      },
+      "model": "gregtech:block/chemical_battery/advanced_8_4"
+    }
+  ]
+}

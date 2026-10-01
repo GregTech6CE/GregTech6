@@ -1,0 +1,44 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "down": "gregtech:block/material_icons/metallic/pipequadruple",
+    "up": "gregtech:block/material_icons/metallic/pipequadruple",
+    "north": "gregtech:block/material_icons/metallic/pipequadruple",
+    "south": "gregtech:block/material_icons/metallic/pipequadruple",
+    "west": "gregtech:block/material_icons/metallic/pipequadruple",
+    "east": "gregtech:block/material_icons/metallic/pipequadruple",
+    "down_ov": "gregtech:block/material_icons/metallic/pipequadruple_overlay",
+    "up_ov": "gregtech:block/material_icons/metallic/pipequadruple_overlay",
+    "north_ov": "gregtech:block/material_icons/metallic/pipequadruple_overlay",
+    "south_ov": "gregtech:block/material_icons/metallic/pipequadruple_overlay",
+    "west_ov": "gregtech:block/material_icons/metallic/pipequadruple_overlay",
+    "east_ov": "gregtech:block/material_icons/metallic/pipequadruple_overlay"
+  },
+  "elements": [
+    {
+      "from": [0, 0, 0],
+      "to": [16, 16, 16],
+      "faces": {
+        "down":  { "texture": "#down",  "tintindex": 0 },
+        "up":    { "texture": "#up",    "tintindex": 0 },
+        "north": { "texture": "#north", "tintindex": 0 },
+        "south": { "texture": "#south", "tintindex": 0 },
+        "west":  { "texture": "#west",  "tintindex": 0 },
+        "east":  { "texture": "#east",  "tintindex": 0 }
+      }
+    },
+    {
+      "from": [0, 0, 0],
+      "to": [16, 16, 16],
+      "faces": {
+        "down":  { "texture": "#down_ov" },
+        "up":    { "texture": "#up_ov" },
+        "north": { "texture": "#north_ov" },
+        "south": { "texture": "#south_ov" },
+        "west":  { "texture": "#west_ov" },
+        "east":  { "texture": "#east_ov" }
+      }
+    }
+  ],
+  "render_type": "minecraft:cutout"
+}

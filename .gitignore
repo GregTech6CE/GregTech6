@@ -1,0 +1,15 @@
+build/
+run/
+run-data/
+.gradle/
+*.iml
+.idea/
+__pycache__/
+
+# Integration scratch, local runs and generated evidence. Summaries live in docs/integration.
+/work/
+**/build/
+**/.gradle/
+**/run/
+**/run-*/
+/local.properties

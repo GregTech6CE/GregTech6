@@ -1,0 +1,12 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": ["W W", "sPh", "W W"],
+  "key": {
+    "W": {"item": "gregtech:planks_treated"},
+    "P": {"tag": "forge:plates/lead"},
+    "s": {"item": "gregtech:tool_saw"},
+    "h": {"item": "gregtech:tool_hammer"}
+  },
+  "result": {"item": "gregtech:wood_wall"},
+  "allow_mirror": false
+}

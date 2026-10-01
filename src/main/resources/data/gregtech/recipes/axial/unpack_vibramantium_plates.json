@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:block_plate_vibramantium"
+    }
+  ],
+  "result": {
+    "item": "gregtech:plate_vibramantium",
+    "count": 9
+  }
+}

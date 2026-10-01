@@ -1,0 +1,309 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "forge:composite",
+  "textures": {
+    "particle": "gregtech:block/machines/tools/grindstone/colored/axle"
+  },
+  "children": {
+    "colored": {
+      "textures": {
+        "axle": "gregtech:block/machines/tools/grindstone/colored/axle",
+        "bottom": "gregtech:block/machines/tools/grindstone/colored/bottom",
+        "legs": "gregtech:block/machines/tools/grindstone/colored/legs"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            2,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#bottom",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#bottom",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#bottom",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#bottom",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#bottom",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#bottom",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            5,
+            0,
+            5
+          ],
+          "to": [
+            6,
+            11,
+            11
+          ],
+          "faces": {
+            "down": {
+              "texture": "#legs",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#legs",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#legs",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#legs",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#legs",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#legs",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            10,
+            0,
+            5
+          ],
+          "to": [
+            11,
+            11,
+            11
+          ],
+          "faces": {
+            "down": {
+              "texture": "#legs",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#legs",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#legs",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#legs",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#legs",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#legs",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            3,
+            8,
+            7
+          ],
+          "to": [
+            13,
+            10,
+            9
+          ],
+          "faces": {
+            "down": {
+              "texture": "#axle",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#axle",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#axle",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#axle",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#axle",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#axle",
+              "tintindex": 0
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    },
+    "overlay": {
+      "textures": {
+        "axle": "gregtech:block/machines/tools/grindstone/overlay/axle",
+        "bottom": "gregtech:block/machines/tools/grindstone/overlay/bottom",
+        "legs": "gregtech:block/machines/tools/grindstone/overlay/legs"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            2,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#bottom"
+            },
+            "up": {
+              "texture": "#bottom"
+            },
+            "north": {
+              "texture": "#bottom"
+            },
+            "south": {
+              "texture": "#bottom"
+            },
+            "west": {
+              "texture": "#bottom"
+            },
+            "east": {
+              "texture": "#bottom"
+            }
+          }
+        },
+        {
+          "from": [
+            5,
+            0,
+            5
+          ],
+          "to": [
+            6,
+            11,
+            11
+          ],
+          "faces": {
+            "down": {
+              "texture": "#legs"
+            },
+            "up": {
+              "texture": "#legs"
+            },
+            "north": {
+              "texture": "#legs"
+            },
+            "south": {
+              "texture": "#legs"
+            },
+            "west": {
+              "texture": "#legs"
+            },
+            "east": {
+              "texture": "#legs"
+            }
+          }
+        },
+        {
+          "from": [
+            10,
+            0,
+            5
+          ],
+          "to": [
+            11,
+            11,
+            11
+          ],
+          "faces": {
+            "down": {
+              "texture": "#legs"
+            },
+            "up": {
+              "texture": "#legs"
+            },
+            "north": {
+              "texture": "#legs"
+            },
+            "south": {
+              "texture": "#legs"
+            },
+            "west": {
+              "texture": "#legs"
+            },
+            "east": {
+              "texture": "#legs"
+            }
+          }
+        },
+        {
+          "from": [
+            3,
+            8,
+            7
+          ],
+          "to": [
+            13,
+            10,
+            9
+          ],
+          "faces": {
+            "down": {
+              "texture": "#axle"
+            },
+            "up": {
+              "texture": "#axle"
+            },
+            "north": {
+              "texture": "#axle"
+            },
+            "south": {
+              "texture": "#axle"
+            },
+            "west": {
+              "texture": "#axle"
+            },
+            "east": {
+              "texture": "#axle"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    }
+  }
+}

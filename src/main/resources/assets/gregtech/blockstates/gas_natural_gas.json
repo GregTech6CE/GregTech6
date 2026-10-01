@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "gregtech:block/fluid/gas_natural_gas"
+    },
+    "level=1": {
+      "model": "gregtech:block/fluid/gas_natural_gas_flow"
+    },
+    "level=2": {
+      "model": "gregtech:block/fluid/gas_natural_gas_flow"
+    },
+    "level=3": {
+      "model": "gregtech:block/fluid/gas_natural_gas_flow"
+    },
+    "level=4": {
+      "model": "gregtech:block/fluid/gas_natural_gas_flow"
+    },
+    "level=5": {
+      "model": "gregtech:block/fluid/gas_natural_gas_flow"
+    },
+    "level=6": {
+      "model": "gregtech:block/fluid/gas_natural_gas_flow"
+    },
+    "level=7": {
+      "model": "gregtech:block/fluid/gas_natural_gas_flow"
+    },
+    "level=8": {
+      "model": "gregtech:block/fluid/gas_natural_gas_flow"
+    },
+    "level=9": {
+      "model": "gregtech:block/fluid/gas_natural_gas_flow"
+    },
+    "level=10": {
+      "model": "gregtech:block/fluid/gas_natural_gas_flow"
+    },
+    "level=11": {
+      "model": "gregtech:block/fluid/gas_natural_gas_flow"
+    },
+    "level=12": {
+      "model": "gregtech:block/fluid/gas_natural_gas_flow"
+    },
+    "level=13": {
+      "model": "gregtech:block/fluid/gas_natural_gas_flow"
+    },
+    "level=14": {
+      "model": "gregtech:block/fluid/gas_natural_gas_flow"
+    },
+    "level=15": {
+      "model": "gregtech:block/fluid/gas_natural_gas_flow"
+    }
+  }
+}

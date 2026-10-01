@@ -1,0 +1,29 @@
+{
+  "type": "gregtech:tool_shaped",
+  "allow_mirror": false,
+  "pattern": [
+    "CWx",
+    "PBP",
+    " B "
+  ],
+  "key": {
+    "x": {
+      "item": "gregtech:tool_wire_cutter"
+    },
+    "P": {
+      "item": "gregtech:plate_batteryalloy"
+    },
+    "B": {
+      "item": "gregtech:lithium_cobalt_cell_filled"
+    },
+    "W": {
+      "item": "gregtech:cable_01_tin"
+    },
+    "C": {
+      "tag": "gregtech:circuits_tier_3_plus"
+    }
+  },
+  "result": {
+    "item": "gregtech:battery_lithium_cobalt_lv"
+  }
+}

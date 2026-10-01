@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "gregtech:clay_comb",
+    "gregtech:sticky_comb",
+    "gregtech:royal_comb",
+    "gregtech:soul_comb",
+    "gregtech:amnesic_comb",
+    "gregtech:military_comb",
+    "gregtech:pyro_comb",
+    "gregtech:cryo_comb",
+    "gregtech:aero_comb",
+    "gregtech:tera_comb"
+  ]
+}

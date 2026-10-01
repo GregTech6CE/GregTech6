@@ -1,0 +1,21 @@
+{
+  "type": "gregtech:tool_shaped",
+  "allow_mirror": false,
+  "pattern": [
+    "   ",
+    " P ",
+    "  h"
+  ],
+  "key": {
+    "h": {
+      "item": "gregtech:tool_hammer"
+    },
+    "P": {
+      "item": "gregtech:foodmold_shape_empty"
+    }
+  },
+  "result": {
+    "item": "gregtech:foodmold_shape_toast",
+    "count": 1
+  }
+}

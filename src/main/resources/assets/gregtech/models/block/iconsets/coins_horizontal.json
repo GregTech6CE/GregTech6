@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column_horizontal",
+  "textures": {
+    "end": "gregtech:block/iconsets/coin_top",
+    "side": "gregtech:block/iconsets/coin_side"
+  }
+}

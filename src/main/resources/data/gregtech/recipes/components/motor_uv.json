@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CWR",
+    "WIW",
+    "PWC"
+  ],
+  "key": {
+    "C": {
+      "item": "gregtech:wire_01_graphene"
+    },
+    "W": {
+      "item": "gregtech:wire_08_annealed_copper"
+    },
+    "R": {
+      "tag": "forge:rods/trinitanium"
+    },
+    "P": {
+      "item": "gregtech:plate_curved_trinitanium"
+    },
+    "I": {
+      "tag": "forge:long_rods/neodymium_magnetic"
+    }
+  },
+  "result": {
+    "item": "gregtech:compact_electric_motor_uv",
+    "count": 1
+  }
+}

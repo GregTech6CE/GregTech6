@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:clay_funnel"
+    }
+  ],
+  "result": {
+    "item": "minecraft:clay_ball",
+    "count": 3
+  }
+}

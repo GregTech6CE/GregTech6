@@ -1,0 +1,138 @@
+{
+  "source": "saltnya",
+  "source_credit": "saltnya (project identifier supplied by user; original commit authors and permissions are unresolved)",
+  "source_snapshot": "415617825945a9f54b11fdc359ff9b3cf694c8cd",
+  "source_snapshot_tag": "import/saltnya-snapshot",
+  "integration_base": "de18243bb9a81a7752d778ec8a5d1d392ba6294d",
+  "extracted_at": "2026-09-30",
+  "license_resolution": "Pending; source mod_license is All Rights Reserved and LICENSE.txt is the Forge MDK text. Existing metadata and notices retained. No new license granted. Import commit is not recovered upstream author history.",
+  "scope": "Only two pure original records moved to existing shared core; no registry, machine, energy acceptance, NBT, client or Neo implementation change",
+  "files": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/api/machine/MachineSpec.java",
+      "original_path": "src/main/java/com/gregtech/gregtech/api/machine/MachineSpec.java",
+      "original_blob_sha1": "05bfe51c9275e4d69f4c3a3bfe5c74fc112b0b30",
+      "original_sha256": "872fb50a6656f86c201d98d094a253244e00a525c94151098b47ffa8184c86e5",
+      "integrated_sha256": "872fb50a6656f86c201d98d094a253244e00a525c94151098b47ffa8184c86e5",
+      "change": "Exact-byte relocation, same package, constructors, record components and behavior; no platform imports"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/api/machine/CrucibleSpec.java",
+      "original_path": "src/main/java/com/gregtech/gregtech/api/machine/CrucibleSpec.java",
+      "original_blob_sha1": "8bf97aef1854170ca90f0966892201a05a5a8b3e",
+      "original_sha256": "521ed7556904427c6d1b3653fe930f9b697affd15895cb9ed528a8e80ab5fd9e",
+      "integrated_sha256": "521ed7556904427c6d1b3653fe930f9b697affd15895cb9ed528a8e80ab5fd9e",
+      "change": "Exact-byte relocation, same package, constructors, record components and behavior; no platform imports"
+    }
+  ],
+  "fixture_sources": [
+    {
+      "path": "src/main/java/com/gregtech/gregtech/registry/GTMachines.java",
+      "blob_sha1": "0f214dde702178f01f5ee925d4ad5c693a146798",
+      "sha256": "811bf042807fbb6d1aba0e5141759fac72d4b4dccb9ececad43886321a40df3d",
+      "lines": [
+        "79-80: brick efficiency2500, output16, hardness/resistance6",
+        "334-335: ceramic meta1005,2000/4000K, density0.8181818181818182, hardness/resistance5"
+      ]
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/api/machine/MachineRegistry.java",
+      "blob_sha1": "0080514edc41fc244dc1e0f581be295bd034b252",
+      "sha256": "8a16d1f713f7341ebd5532171e045b8d2535dd2299f4bcd65b86bccbaebf9595",
+      "lines": [
+        "84-88: MachineSpec construction retains burning_solid texture",
+        "149-168: same-material companions and mold meta offset50/5U"
+      ]
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/api/machine/MachineTextures.java",
+      "blob_sha1": "30e86c5cdd0330828dfdb58a94dcd8f1b1cf0b5a",
+      "sha256": "1f5e303040190ce1e055e1a24f2b2c5708731ed03fad01d8450c22c0bdc7ace2",
+      "lines": [
+        "7: BURNING_SOLID texture name"
+      ]
+    }
+  ],
+  "fixed_acceptance": [
+    "Brick2500=25percent,16HU/t",
+    "Ceramic explicit density differs from material default;7U=4540536000, hull mass636.3636357272728kg, melt limit2500K",
+    "Mold same material/density, meta1055,5U=3243240000, mass454.5454540909092kg",
+    "3Cu+1Sn+ceramic7U hull4432.696997901126kg, required45HU/K"
+  ],
+  "verification_status": "PASS independent Java17 original/current fixed fixtures and public API descriptors; all production core classes depend only on java.base; existing domain contracts pass. Full platform compile, packaging and gameplay still require main verification.",
+  "forge_reference_source_check": {
+    "referencing_production_files": 38,
+    "all_referencing_files_byte_equal_integration_base": true,
+    "source_sha256_aggregate": "227819c5b481ee1557162b86e3e99259c65a910c149e7364fd813c840d0008d3",
+    "paths": [
+      "src/main/java/com/gregtech/gregtech/api/machine/MachineRegistry.java",
+      "src/main/java/com/gregtech/gregtech/api/machine/crucible/CrucibleItemInput.java",
+      "src/main/java/com/gregtech/gregtech/block/machine/BasicMachineBlock.java",
+      "src/main/java/com/gregtech/gregtech/block/machine/BurningBoxBlock.java",
+      "src/main/java/com/gregtech/gregtech/block/machine/CrucibleCrossingBlock.java",
+      "src/main/java/com/gregtech/gregtech/block/machine/CrucibleFaucetBlock.java",
+      "src/main/java/com/gregtech/gregtech/block/machine/CrucibleHullBlockItem.java",
+      "src/main/java/com/gregtech/gregtech/block/machine/EngineBlock.java",
+      "src/main/java/com/gregtech/gregtech/block/machine/GTFacingMachineBlock.java",
+      "src/main/java/com/gregtech/gregtech/block/machine/GTMachineBlockItem.java",
+      "src/main/java/com/gregtech/gregtech/block/machine/MoldBasinBlock.java",
+      "src/main/java/com/gregtech/gregtech/block/machine/MoldBlock.java",
+      "src/main/java/com/gregtech/gregtech/block/machine/SmeltingCrucibleBlock.java",
+      "src/main/java/com/gregtech/gregtech/block/machine/SmeltingCrucibleBlockItem.java",
+      "src/main/java/com/gregtech/gregtech/block/machine/SolidBurningBoxBlock.java",
+      "src/main/java/com/gregtech/gregtech/blockentity/machine/BurningBoxBlockEntity.java",
+      "src/main/java/com/gregtech/gregtech/blockentity/machine/CrucibleCrossingBlockEntity.java",
+      "src/main/java/com/gregtech/gregtech/blockentity/machine/CrucibleFaucetBlockEntity.java",
+      "src/main/java/com/gregtech/gregtech/blockentity/machine/GTFacingMachineBlockEntity.java",
+      "src/main/java/com/gregtech/gregtech/blockentity/machine/MoldBasinBlockEntity.java",
+      "src/main/java/com/gregtech/gregtech/blockentity/machine/MoldBlockEntity.java",
+      "src/main/java/com/gregtech/gregtech/blockentity/machine/SmeltingCrucibleBlockEntity.java",
+      "src/main/java/com/gregtech/gregtech/blockentity/machine/SolidBurningBoxBlockEntity.java",
+      "src/main/java/com/gregtech/gregtech/client/CrucibleClientModels.java",
+      "src/main/java/com/gregtech/gregtech/client/CrucibleTooltips.java",
+      "src/main/java/com/gregtech/gregtech/client/EngineTooltips.java",
+      "src/main/java/com/gregtech/gregtech/client/MachineTooltips.java",
+      "src/main/java/com/gregtech/gregtech/client/SmelteryClientModels.java",
+      "src/main/java/com/gregtech/gregtech/client/SmelteryCompanionTooltips.java",
+      "src/main/java/com/gregtech/gregtech/client/SmelteryHullRenderer.java",
+      "src/main/java/com/gregtech/gregtech/content/multiblock/LargeCrucibleSpecs.java",
+      "src/main/java/com/gregtech/gregtech/integration/jade/EngineJadeProvider.java",
+      "src/main/java/com/gregtech/gregtech/registry/GTFluidPipes.java",
+      "src/main/java/com/gregtech/gregtech/registry/GTItemPipes.java",
+      "src/main/java/com/gregtech/gregtech/registry/GTMachines.java",
+      "src/main/java/com/gregtech/gregtech/registry/GTMaterialRegistration.java",
+      "src/main/java/com/gregtech/gregtech/registry/GTTanks.java",
+      "src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonChunkRoomWorkshop.java"
+    ],
+    "claim": "Original Forge caller source and imports unchanged; root implementation project(core) already present. Full platform compilation is a separate gate."
+  },
+  "verification": {
+    "jdk": "Oracle17.0.4",
+    "compile": "javac17.0.4 --release17 --limit-modules java.base",
+    "production_jdeps": "java.base",
+    "original_record_assertions": 34,
+    "current_record_assertions": 34,
+    "unchanged_existing_contract_assertions": {
+      "core": 64,
+      "materials": 6154,
+      "thermal": 53
+    },
+    "public_api_descriptors": "Original/current javap -public -s identical for both records",
+    "log_path": "core/build/machine-spec-verification.log",
+    "log_sha256": "9954d8fea03e99ec41d6bfb4feebea5b4832e788f16a68cc1c164c79db0e6358",
+    "fresh_output_directory": "core/build/machine-specs-532f667a-8ada-4c36-bb2d-07e7811e0cf1",
+    "gradle_invoked": false,
+    "game_invoked": false,
+    "limitations": "Source and API closure checked; no full Forge compile, production jar or machine runtime evidence in this change."
+  },
+  "verification_sources": [
+    {
+      "path": "core/src/test/java/com/gregtech/gregtech/core/MachineSpecBehaviorContracts.java",
+      "sha256": "4681a755c3d1d0422a0308b49ab35044d4a113dd95efac2e09c4f607f765d70b"
+    },
+    {
+      "path": "core/verify-machine-specs.py",
+      "sha256": "6d2dd84fe9639392ba41a6977b8d280ff0c9d7390b32e1001b2a68f8b57b016f"
+    }
+  ]
+}

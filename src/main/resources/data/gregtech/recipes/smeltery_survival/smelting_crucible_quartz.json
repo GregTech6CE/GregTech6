@@ -1,0 +1,24 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "BhB",
+    "ByB",
+    "BBB"
+  ],
+  "key": {
+    "B": {
+      "tag": "gregtech:gem/quartz"
+    },
+    "h": {
+      "item": "gregtech:tool_hammer"
+    },
+    "y": {
+      "item": "gregtech:tool_chisel"
+    }
+  },
+  "result": {
+    "item": "gregtech:smelting_crucible_quartz"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "gregtech:item/material_icons/opal/dustsmall",
+    "layer1": "gregtech:item/material_icons/opal/dustsmall_overlay"
+  }
+}

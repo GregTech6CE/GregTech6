@@ -1,0 +1,70 @@
+{
+  "source": "saltnya",
+  "source_credit": "saltnya (project author identifier supplied by user; original commit authors unavailable)",
+  "source_snapshot": "import/saltnya-snapshot",
+  "source_commit": "41561782",
+  "integration_base": "ffe109c8834610625802587a360621a657002194",
+  "extracted_at": "2026-09-30",
+  "license_resolution": "Pending; original permission metadata and notices retained without relicensing",
+  "scope": "Original role table closure, one MaterialRoleFlags helper; all worldgen implementations, block objects, registries and dimension APIs remain platform work",
+  "files": [
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/worldgen/GTOreVeins.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/worldgen/GTOreVeins.java",
+      "source_sha256": "f53c3dd6605da5362116eee0c635dbc29c434075e0ca44526f0e580711e9cace",
+      "integrated_sha256": "f53c3dd6605da5362116eee0c635dbc29c434075e0ca44526f0e580711e9cace",
+      "byte_identical": true,
+      "change": "exact byte-preserving relocation"
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/worldgen/GTStoneLayersGen.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/worldgen/GTStoneLayersGen.java",
+      "source_sha256": "e4878acdffc97959ba613e1f9b7c6de62f8f9308fa3c325a04da5d9e2a766ca4",
+      "integrated_sha256": "e4878acdffc97959ba613e1f9b7c6de62f8f9308fa3c325a04da5d9e2a766ca4",
+      "byte_identical": true,
+      "change": "exact byte-preserving relocation"
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/worldgen/GTWorldgenMaterials.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/worldgen/GTWorldgenMaterials.java",
+      "source_sha256": "697f19991d3e49fe48d65aa82b4093e2802b9828b5f0db315a00790e1cc358d0",
+      "integrated_sha256": "697f19991d3e49fe48d65aa82b4093e2802b9828b5f0db315a00790e1cc358d0",
+      "byte_identical": true,
+      "change": "exact byte-preserving relocation"
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/worldgen/GTBedrockOres.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/worldgen/GTBedrockOres.java",
+      "source_sha256": "72d2e1856d5ddffb0abb1e54da721c6023a155a7a18b2f78fcd1e28c0ea838aa",
+      "integrated_sha256": "5379a7b1ac9336ede9e74bdae81e0720f31608729b74f5fc5d36dd3f1ea0a01a",
+      "byte_identical": false,
+      "change": "MC-only forDimension moved to Forge GTBedrockOreDimensions; preceding table/record bytes unchanged"
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/block/stone/StoneType.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/block/stone/StoneType.java",
+      "source_sha256": "a488787b81d6693ec5e2ad96d2d1c67958023b9abe76545ec1759e45ffa44814",
+      "integrated_sha256": "62af44f8381c159c500e9df53a4ab3d15126be3fad79eda48348b9b2e1df9753",
+      "byte_identical": false,
+      "change": "Four MC imports and properties(StoneVariant) moved to Forge StoneBlockProperties; all preceding descriptor/enum body bytes unchanged"
+    }
+  ],
+  "original_test_dependency": {
+    "path": "src/main/java/com/gregtech/gregtech/block/stone/StoneVariant.java",
+    "sha256": "de4c108fd123441896cfd8904bb9b10ce014dadb24010c0173d8c92c3aee9fa0",
+    "scope": "Original enum compiled with original StoneType only; no runtime duplicate"
+  },
+  "role_baseline": {
+    "java": "JDK17.0.4, javac --release17 UTF-8; fresh GUID output",
+    "locale": "Locale.ROOT",
+    "presence": "Only minecraft/gregtech true, original UNKNOWN false",
+    "rule_order": "PrefixRegistry -> ModReferences -> MaterialGroups -> GTMaterialRegistry.init -> original GTWorldgenMaterials.flagOreMaterials -> original StoneType STONE loop -> domain postInit (vanilla hooks inert)",
+    "observation": "Sorted UTF-8 rows joined with LF, no trailing LF; M|id:name|GENERATE_ORE boolean|GENERATE_ORE_PROCESSING boolean|STONE boolean for all raw registered objects; S|ordinal|enum name|registryId|textureFolder|id:name|Float.toHexString(resistance)|Float.toHexString(hardness)|harvestLevel|witherProof for all StoneType values",
+    "sha256": "734a7fee39e9326dbfae519c34f3b9a0cb510d7d7a5535858cd04ab0aea99ccb",
+    "ore_objects": 210,
+    "ore_processing_objects": 415,
+    "stone_objects": 81,
+    "stone_descriptors": 27,
+    "stub_limit": "Original game APIs and GameTest annotations/helper are compile-only/inert; assertion helper throws on false. No block/dimension, item, worldgen, rendering, NBT, runtime, server, client or saved-world behavior is verified."
+  }
+}

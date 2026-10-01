@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.gregtech.gregtech.mixin",
+  "compatibilityLevel": "JAVA_16",
+  "refmap": "gregtech.refmap.json",
+  "mixins": [
+    "WaterFluidMixin",
+    "AbstractMinecartSpeedCapMixin",
+    "EntityFallingOreDropMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 0
+  }
+}

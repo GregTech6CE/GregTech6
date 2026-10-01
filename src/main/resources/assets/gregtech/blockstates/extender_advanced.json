@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "gregtech:block/misc/extender_advanced" },
+    "facing=east":  { "model": "gregtech:block/misc/extender_advanced", "y": 90 },
+    "facing=south": { "model": "gregtech:block/misc/extender_advanced", "y": 180 },
+    "facing=west":  { "model": "gregtech:block/misc/extender_advanced", "y": 270 }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:wire_03_silver"
+    },
+    {
+      "item": "gregtech:wire_03_silver"
+    },
+    {
+      "item": "gregtech:wire_03_silver"
+    },
+    {
+      "item": "gregtech:wire_03_silver"
+    },
+    {
+      "item": "gregtech:wire_03_silver"
+    }
+  ],
+  "result": {
+    "item": "gregtech:wire_15_silver",
+    "count": 1
+  }
+}

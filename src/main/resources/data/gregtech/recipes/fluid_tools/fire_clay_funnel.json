@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "gregtech:clay_funnel"
+  },
+  "result": "gregtech:fluid_funnel",
+  "experience": 0,
+  "cookingtime": 200
+}

@@ -1,0 +1,102 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.142'
+}
+
+group = rootProject.property('mod_group_id')
+version = rootProject.property('mod_version')
+
+base {
+    archivesName = 'gregtech-neoforge-1.21.1'
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
+}
+
+sourceSets {
+    bootstrapGameTest {
+        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+        runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
+    }
+}
+
+dependencies {
+    implementation project(':core')
+}
+
+neoForge {
+    version = '21.1.243'
+    addModdingDependenciesTo sourceSets.bootstrapGameTest
+
+    runs {
+        client {
+            client()
+            gameDirectory = project.file('run-client')
+            systemProperty 'gregtech.integration.clientSmoke', (rootProject.findProperty('clientSmoke') ?: 'false').toString()
+            systemProperty 'gregtech.integration.clientSmokeTimeoutSeconds', (rootProject.findProperty('clientSmokeTimeout') ?: '120').toString()
+            if (rootProject.findProperty('clientSmoke') == 'true') {
+                sourceSet = sourceSets.bootstrapGameTest
+                gameDirectory = project.file('build/client-smoke-run')
+                jvmArgument '-Xmx2g'
+                programArguments.addAll('--width', '1280', '--height', '720')
+            }
+        }
+        server {
+            server()
+            gameDirectory = project.file('run-server')
+            if (rootProject.findProperty('serverDirectory')) {
+                gameDirectory = project.file(rootProject.property('serverDirectory'))
+            }
+            jvmArgument '-Xmx2g'
+            programArgument '--nogui'
+        }
+        gameTestServer {
+            type = 'gameTestServer'
+            sourceSet = sourceSets.bootstrapGameTest
+            gameDirectory = project.file('build/bootstrap-gametest-run')
+            systemProperty 'neoforge.enabledGameTestNamespaces', 'gregtech_bootstrap'
+            jvmArgument '-Xmx1536m'
+        }
+        configureEach {
+            systemProperty 'forge.logging.markers', 'REGISTRIES'
+            logLevel = org.slf4j.event.Level.INFO
+        }
+    }
+
+    mods {
+        gregtech {
+            sourceSet sourceSets.main
+            sourceSet project(':core').sourceSets.main
+            sourceSet sourceSets.bootstrapGameTest
+        }
+    }
+}
+
+def modProperties = [
+        mod_id: 'gregtech',
+        mod_name: 'GregTech 6 Integrated',
+        mod_version: project.version.toString(),
+        mod_license: rootProject.property('mod_license'),
+        mod_authors: 'saltnya, brokestar233, Lorbineitte Masson, GregTech 6 team'
+]
+
+tasks.named('processResources', ProcessResources).configure {
+    inputs.properties(modProperties)
+    filesMatching('META-INF/neoforge.mods.toml') {
+        expand(modProperties)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+tasks.named('jar', Jar).configure {
+    // The same Java 17 output used by Forge is embedded exactly once.
+    from project(':core').sourceSets.main.output
+    duplicatesStrategy = DuplicatesStrategy.FAIL
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+    manifest.attributes('Implementation-Version': project.version.toString())
+}

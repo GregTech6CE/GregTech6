@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "stage=0": {
+      "model": "gregtech:block/wood/sapling_ebony"
+    },
+    "stage=1": {
+      "model": "gregtech:block/wood/sapling_ebony"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "  s",
+    "PRP",
+    "x  "
+  ],
+  "key": {
+    "P": {
+      "item": "gregtech:plate_curved_plastic"
+    },
+    "s": {
+      "item": "gregtech:tool_saw"
+    },
+    "x": {
+      "item": "gregtech:tool_wire_cutter"
+    },
+    "R": {
+      "tag": "forge:rings/rubber"
+    }
+  },
+  "result": {
+    "item": "gregtech:cap_nozzle_plastic"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

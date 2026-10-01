@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:wire_01_aluminium"
+    },
+    {
+      "item": "gregtech:wire_01_aluminium"
+    },
+    {
+      "item": "gregtech:wire_01_aluminium"
+    },
+    {
+      "item": "gregtech:wire_01_aluminium"
+    },
+    {
+      "item": "gregtech:wire_01_aluminium"
+    }
+  ],
+  "result": {
+    "item": "gregtech:wire_05_aluminium",
+    "count": 1
+  }
+}

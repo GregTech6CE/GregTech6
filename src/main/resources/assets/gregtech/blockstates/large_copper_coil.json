@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "gregtech:block/machine/multiblock/large_copper_coil"
+    }
+  }
+}

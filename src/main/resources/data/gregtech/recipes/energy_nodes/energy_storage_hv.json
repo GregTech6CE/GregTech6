@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WCW",
+    "WCW",
+    "XMX"
+  ],
+  "key": {
+    "W": {
+      "item": "gregtech:wire_04_gold"
+    },
+    "C": {
+      "item": "gregtech:cable_04_gold"
+    },
+    "X": {
+      "tag": "gregtech:circuits_tier_3_plus"
+    },
+    "M": {
+      "item": "gregtech:transformer_hv_ev"
+    }
+  },
+  "result": {
+    "item": "gregtech:energy_storage_hv"
+  }
+}

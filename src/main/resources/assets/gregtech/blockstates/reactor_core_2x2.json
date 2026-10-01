@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "gregtech:block/machine/energy/reactor_core_2x2" },
+    "facing=south": { "model": "gregtech:block/machine/energy/reactor_core_2x2", "y": 180 },
+    "facing=west": { "model": "gregtech:block/machine/energy/reactor_core_2x2", "y": 270 },
+    "facing=east": { "model": "gregtech:block/machine/energy/reactor_core_2x2", "y": 90 }
+  }
+}

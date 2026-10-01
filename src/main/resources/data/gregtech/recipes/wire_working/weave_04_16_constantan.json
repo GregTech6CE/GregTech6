@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:wire_04_constantan"
+    },
+    {
+      "item": "gregtech:wire_04_constantan"
+    },
+    {
+      "item": "gregtech:wire_04_constantan"
+    },
+    {
+      "item": "gregtech:wire_04_constantan"
+    }
+  ],
+  "result": {
+    "item": "gregtech:wire_16_constantan",
+    "count": 1
+  }
+}

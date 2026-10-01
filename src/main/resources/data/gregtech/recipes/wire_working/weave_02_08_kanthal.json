@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:wire_02_kanthal"
+    },
+    {
+      "item": "gregtech:wire_02_kanthal"
+    },
+    {
+      "item": "gregtech:wire_02_kanthal"
+    },
+    {
+      "item": "gregtech:wire_02_kanthal"
+    }
+  ],
+  "result": {
+    "item": "gregtech:wire_08_kanthal",
+    "count": 1
+  }
+}

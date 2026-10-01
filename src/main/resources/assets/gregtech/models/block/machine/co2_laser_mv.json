@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "gregtech:block/machines/multiblockparts/metalwall/0/colored/side"
+  }
+}

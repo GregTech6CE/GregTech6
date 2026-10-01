@@ -1,0 +1,42 @@
+{
+  "source": "saltnya",
+  "source_snapshot": "415617825945a9f54b11fdc359ff9b3cf694c8cd",
+  "source_tag": "import/saltnya-snapshot",
+  "integration_base": "230e709d9829b26dc0ee2b3d4f84ea425caff92b",
+  "license_resolution": "Original authorship history and applicable authorization unresolved; retained source metadata without relicensing",
+  "source_file": {
+    "path": "src/main/java/com/gregtech/gregtech/blockentity/machine/MoldBlockEntity.java",
+    "blob_sha1": "53004fb5ff7bcf4f2982a0da7dfef161df6dcfed",
+    "sha256": "88df3cda8094e23a37673ee145022034ba8594472110a1e790cf03d19984f059",
+    "table_lines": "85-293",
+    "lookup_lines": "480-491",
+    "required_units_lines": "719-731"
+  },
+  "block_solid_weight_source": {
+    "path": "src/main/java/com/gregtech/gregtech/data/MaterialPrefixes.java",
+    "blob_sha1": "633a7da755050a5fff4740d4552b2859dbca6b99",
+    "sha256": "027f4aaa2a25ed7ead1d11a97949be849d05345a9365d1c74ebb2f51413f38e4",
+    "lines": "780-785: explicit9U"
+  },
+  "core_file": {
+    "path": "core/src/main/java/com/gregtech/gregtech/api/machine/crucible/MoldShapes.java",
+    "sha256": "cfa27eef201e9c27af69aec0fec4b8ff5db5971eca425f1a8842d7ca1efe8928"
+  },
+  "extraction": "All original patterns, rotation/mirror bit arithmetic and HashMap insertion/overwrite order copied; pure Recipe wrappers replace platform-dependent output values. Entire builder source compared after undoing only token wrappers and generic type change.",
+  "API": [
+    "Recipe(MaterialPrefix itemPrefix,boolean blockSolid)",
+    "recipe(int rawShape): original25bit lookup, nonzero unknown nugget, zero null",
+    "isNuggetFallback(int rawShape)",
+    "requiredMaterialUnits(int rawShape): original prefix quantities, blockSolid9U, raw fallback bitCount*U9",
+    "recipes(): immutable view of all known shapes"
+  ],
+  "forge_platform": "getMoldRecipePrefix maps blockSolid token to original BlockMaterialPrefix; actual Items/Blocks/pickup/chisel/NBT/side/acid/basin remain platform",
+  "shared_rules_integration": "At main request, Forge cooling calls main-owned MoldCastingRules.cool and full admission calls acceptedAmount. That class is absent from this isolated branch and will arrive from the main implementation; no shadow class added.",
+  "verification": "Only direct complete builder/source boundary comparison; no new tests, javac, Gradle, jars or games. Batch compile and existing real flow gates remain with main.",
+  "legacy_behavior_retained": [
+    "Known nugget cross yields1*U9 regardless of its5 cavity cells",
+    "Unknown fallback bitCount uses rawshape including high legacy bits",
+    "trySetMoldShape validates unmasked raw key; known shape enumeration stays sorted",
+    "BlockSolid20cells maps to9U, not cell-count quantity"
+  ]
+}

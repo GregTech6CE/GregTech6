@@ -1,0 +1,21 @@
+{
+  "type": "gregtech:tool_shaped",
+  "allow_mirror": false,
+  "pattern": [
+    "x  ",
+    " P ",
+    "   "
+  ],
+  "key": {
+    "P": {
+      "item": "gregtech:extruder_shape_tinyplate"
+    },
+    "x": {
+      "item": "gregtech:tool_wire_cutter"
+    }
+  },
+  "result": {
+    "item": "gregtech:extruder_shape_axehead",
+    "count": 1
+  }
+}

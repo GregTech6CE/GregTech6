@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CCC",
+    "MSM",
+    "PES"
+  ],
+  "key": {
+    "C": {
+      "item": "gregtech:wire_01_graphene"
+    },
+    "M": {
+      "item": "gregtech:compact_electric_motor_uv"
+    },
+    "S": {
+      "tag": "forge:rods/trinitanium"
+    },
+    "P": {
+      "item": "gregtech:compact_electric_piston_uv"
+    },
+    "E": {
+      "item": "gregtech:integrated_circuit_8"
+    }
+  },
+  "result": {
+    "item": "gregtech:compact_robot_arm_uv",
+    "count": 1
+  }
+}

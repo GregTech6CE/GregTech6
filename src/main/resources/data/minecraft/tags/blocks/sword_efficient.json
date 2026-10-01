@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "gregtech:bale_grass",
+    "gregtech:bale_grass_dry",
+    "gregtech:bale_grass_moldy",
+    "gregtech:bale_grass_rotten",
+    "gregtech:bale_barley",
+    "gregtech:bale_oat",
+    "gregtech:bale_rice",
+    "gregtech:bale_rye"
+  ]
+}

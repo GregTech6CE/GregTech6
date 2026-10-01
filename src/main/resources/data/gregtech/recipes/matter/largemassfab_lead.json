@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "FFF",
+    "FMF",
+    "FFF"
+  ],
+  "key": {
+    "F": {
+      "item": "gregtech:compact_force_field_emitter_iv"
+    },
+    "M": {
+      "item": "gregtech:dense_lead_wall"
+    }
+  },
+  "result": {
+    "item": "gregtech:largemassfab_lead"
+  }
+}

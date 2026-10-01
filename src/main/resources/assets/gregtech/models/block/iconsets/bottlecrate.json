@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "gregtech:block/iconsets/bottlecrate_bottle_cap",
+    "side": "gregtech:block/iconsets/bottlecrate_bottle_sides",
+    "bottom": "gregtech:block/iconsets/bottlecrate_bottle_top"
+  }
+}

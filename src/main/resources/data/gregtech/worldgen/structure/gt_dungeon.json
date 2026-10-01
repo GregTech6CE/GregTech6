@@ -1,0 +1,6 @@
+{
+  "type": "gregtech:gt_dungeon",
+  "biomes": "#gregtech:has_structure/gt_dungeon",
+  "spawn_overrides": {},
+  "step": "underground_structures"
+}

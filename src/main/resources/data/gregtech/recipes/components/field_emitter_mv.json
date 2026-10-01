@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WPW",
+    "CGC",
+    "WPW"
+  ],
+  "key": {
+    "W": {
+      "item": "gregtech:wire_02_osmium"
+    },
+    "P": {
+      "item": "gregtech:plate_double_aluminium"
+    },
+    "C": {
+      "item": "gregtech:circuit_good"
+    },
+    "G": {
+      "item": "minecraft:ender_eye"
+    }
+  },
+  "result": {
+    "item": "gregtech:compact_force_field_emitter_mv",
+    "count": 1
+  }
+}

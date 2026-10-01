@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "P",
+    "B"
+  ],
+  "key": {
+    "P": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "B": {
+      "item": "gregtech:mixing_bowl"
+    }
+  },
+  "result": {
+    "item": "gregtech:mortar_netherite"
+  }
+}

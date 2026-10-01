@@ -1,0 +1,29 @@
+{
+  "type": "gregtech:tool_shaped",
+  "allow_mirror": false,
+  "pattern": [
+    "WIW",
+    "XMx",
+    "WIW"
+  ],
+  "key": {
+    "W": {
+      "tag": "gregtech:wire_01/any_copper"
+    },
+    "X": {
+      "tag": "gregtech:wire_04/any_copper"
+    },
+    "I": {
+      "tag": "gregtech:plate_double/any_iron_or_steel"
+    },
+    "M": {
+      "item": "gregtech:casing_machine_steelgalvanized"
+    },
+    "x": {
+      "item": "gregtech:tool_wire_cutter"
+    }
+  },
+  "result": {
+    "item": "gregtech:transformer_lv_mv"
+  }
+}

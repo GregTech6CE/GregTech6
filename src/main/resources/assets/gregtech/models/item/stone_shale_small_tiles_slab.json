@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "gregtech:block/stones/gt.stone.shale/small_tiles",
+    "top": "gregtech:block/stones/gt.stone.shale/small_tiles",
+    "side": "gregtech:block/stones/gt.stone.shale/small_tiles"
+  }
+}

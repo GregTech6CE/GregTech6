@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SPC",
+    "WQP",
+    "CWS"
+  ],
+  "key": {
+    "S": {
+      "item": "gregtech:wire_04_aluminium"
+    },
+    "P": {
+      "item": "gregtech:plate_curved_chromium"
+    },
+    "C": {
+      "item": "gregtech:circuit_elite"
+    },
+    "W": {
+      "item": "gregtech:cable_01_aluminium"
+    },
+    "Q": {
+      "item": "minecraft:ender_pearl"
+    }
+  },
+  "result": {
+    "item": "gregtech:compact_signal_emitter_ev",
+    "count": 1
+  }
+}

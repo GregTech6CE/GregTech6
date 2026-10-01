@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "gregtech:leaves_blue_mahoe",
+    "gregtech:leaves_bluespruce",
+    "gregtech:leaves_cinnamon",
+    "gregtech:leaves_coconut",
+    "gregtech:leaves_ebony",
+    "gregtech:leaves_hazel",
+    "gregtech:leaves_maple",
+    "gregtech:leaves_pine",
+    "gregtech:leaves_rainbowood",
+    "gregtech:leaves_rubber",
+    "gregtech:leaves_white_mahoe",
+    "gregtech:leaves_willow"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PCP",
+    "CMC",
+    "FCF"
+  ],
+  "key": {
+    "P": {
+      "item": "gregtech:crystal_processor_sapphire"
+    },
+    "C": {
+      "item": "gregtech:circuit_ultimate"
+    },
+    "F": {
+      "item": "gregtech:compact_force_field_emitter_luv"
+    },
+    "M": {
+      "item": "gregtech:casing_machine_dense_osmiridium"
+    }
+  },
+  "result": {
+    "item": "gregtech:zpm_discharger_advanced"
+  }
+}

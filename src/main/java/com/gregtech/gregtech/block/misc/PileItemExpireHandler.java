@@ -1,0 +1,90 @@
+package com.gregtech.gregtech.block.misc;
+
+import com.gregtech.gregtech.GregTech;
+import com.gregtech.gregtech.blockentity.misc.PileBlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.event.entity.item.ItemExpireEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+
+/**
+ * GT6 {@code GT_API_Proxy.onItemExpireEvent}: a dropped stack of ingots, plates or gem plates
+ * becomes its corresponding placeable pile when it would despawn. The original searches its
+ * {@code CUBE_3} positions in this exact order and places only in an irrelevant block.
+ */
+@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+public final class PileItemExpireHandler {
+    private static final BlockPos[] CUBE_3 = {
+            new BlockPos(0, 0, 0), new BlockPos(0, -1, 0), new BlockPos(0, 1, 0),
+            new BlockPos(0, 0, -1), new BlockPos(0, 0, 1), new BlockPos(-1, 0, 0),
+            new BlockPos(1, 0, 0), new BlockPos(0, -1, -1), new BlockPos(0, -1, 1),
+            new BlockPos(-1, -1, 0), new BlockPos(1, -1, 0), new BlockPos(0, 1, -1),
+            new BlockPos(0, 1, 1), new BlockPos(-1, 1, 0), new BlockPos(1, 1, 0),
+            new BlockPos(-1, 0, -1), new BlockPos(1, 0, 1), new BlockPos(1, 0, -1),
+            new BlockPos(-1, 0, 1), new BlockPos(-1, -1, -1), new BlockPos(1, -1, 1),
+            new BlockPos(1, -1, -1), new BlockPos(-1, -1, 1), new BlockPos(-1, 1, -1),
+            new BlockPos(1, 1, 1), new BlockPos(1, 1, -1), new BlockPos(-1, 1, 1)
+    };
+
+    private PileItemExpireHandler() {}
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public static void onItemExpire(ItemExpireEvent event) {
+        ItemEntity entity = event.getEntity();
+        Level level = entity.level();
+        if (level.isClientSide || entity.isRemoved()) return;
+        ItemStack stack = entity.getItem();
+        if (stack.isEmpty() || PileBlockEntity.materialOf(stack) == null) return;
+
+        var prefix = PileBlockEntity.prefixOf(stack);
+        PileBlock.Kind kind;
+        if (prefix == PileBlock.Kind.INGOT.prefix()) kind = PileBlock.Kind.INGOT;
+        else if (prefix == PileBlock.Kind.PLATE.prefix()) kind = PileBlock.Kind.PLATE;
+        else if (prefix == PileBlock.Kind.GEM_PLATE.prefix()) kind = PileBlock.Kind.GEM_PLATE;
+        else return;
+
+        BlockPos origin = entity.blockPosition();
+        for (BlockPos offset : CUBE_3) {
+            BlockPos target = origin.offset(offset);
+            if (!level.isInWorldBounds(target) || !level.getWorldBorder().isWithinBounds(target)
+                    || !isIrrelevant(level.getBlockState(target))) continue;
+            BlockState placed = kind.block().defaultBlockState();
+            if (!placed.canSurvive(level, target) || !level.setBlock(target, placed, Block.UPDATE_ALL)) continue;
+
+            if (!(level.getBlockEntity(target) instanceof PileBlockEntity pile)) {
+                level.removeBlock(target, false);
+                continue;
+            }
+            int moved = pile.add(stack);
+            if (moved == 0) {
+                level.removeBlock(target, false);
+                continue;
+            }
+            if (moved == stack.getCount()) {
+                entity.discard();
+            } else {
+                // Unusual modded stacks larger than GT6's 64-item pile keep their remainder.
+                stack.shrink(moved);
+                entity.setItem(stack);
+                event.setExtraLife(6000);
+            }
+            event.setCanceled(true);
+            return;
+        }
+    }
+
+    /** GT6 {@code WD.irrelevant}: air, vine, snow layer, fire, grass/fern or water. */
+    private static boolean isIrrelevant(BlockState state) {
+        return state.isAir() || state.is(Blocks.VINE) || state.is(Blocks.SNOW)
+                || state.is(Blocks.FIRE) || state.is(Blocks.SOUL_FIRE)
+                || state.is(Blocks.GRASS) || state.is(Blocks.TALL_GRASS)
+                || state.is(Blocks.FERN) || state.is(Blocks.LARGE_FERN) || state.is(Blocks.WATER);
+    }
+}

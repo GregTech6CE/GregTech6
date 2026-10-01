@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:wire_01_electrum"
+    },
+    {
+      "item": "gregtech:wire_01_electrum"
+    },
+    {
+      "item": "gregtech:wire_01_electrum"
+    },
+    {
+      "item": "gregtech:wire_01_electrum"
+    },
+    {
+      "item": "gregtech:wire_01_electrum"
+    },
+    {
+      "item": "gregtech:wire_01_electrum"
+    },
+    {
+      "item": "gregtech:wire_01_electrum"
+    },
+    {
+      "item": "gregtech:wire_01_electrum"
+    }
+  ],
+  "result": {
+    "item": "gregtech:wire_08_electrum",
+    "count": 1
+  }
+}

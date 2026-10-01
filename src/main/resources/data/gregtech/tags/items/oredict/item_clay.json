@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:clay_ball",
+    "gregtech:brown_clay",
+    "gregtech:red_clay",
+    "gregtech:yellow_clay",
+    "gregtech:blue_clay",
+    "gregtech:white_clay"
+  ]
+}

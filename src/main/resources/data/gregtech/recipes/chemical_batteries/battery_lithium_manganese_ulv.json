@@ -1,0 +1,29 @@
+{
+  "type": "gregtech:tool_shaped",
+  "allow_mirror": false,
+  "pattern": [
+    "Wx",
+    "BC",
+    "P "
+  ],
+  "key": {
+    "x": {
+      "item": "gregtech:tool_wire_cutter"
+    },
+    "P": {
+      "item": "gregtech:plate_batteryalloy"
+    },
+    "B": {
+      "item": "gregtech:lithium_manganese_cell_filled"
+    },
+    "W": {
+      "item": "gregtech:cable_01_lead"
+    },
+    "C": {
+      "tag": "gregtech:circuits_tier_2_plus"
+    }
+  },
+  "result": {
+    "item": "gregtech:battery_lithium_manganese_ulv"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "gregtech:mud"
+    }
+  ],
+  "result": {
+    "item": "gregtech:mud_2",
+    "count": 4
+  }
+}

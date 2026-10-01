@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:wire_02_iridium"
+    },
+    {
+      "tag": "forge:plates/rubber"
+    }
+  ],
+  "result": {
+    "item": "gregtech:cable_02_iridium",
+    "count": 1
+  }
+}

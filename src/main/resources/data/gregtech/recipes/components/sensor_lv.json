@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "P Q",
+    "PS ",
+    "CPP"
+  ],
+  "key": {
+    "P": {
+      "item": "gregtech:plate_curved_steelgalvanized"
+    },
+    "Q": {
+      "tag": "forge:gems/quartz"
+    },
+    "S": {
+      "item": "gregtech:wire_01_tin"
+    },
+    "C": {
+      "item": "gregtech:circuit_basic"
+    }
+  },
+  "result": {
+    "item": "gregtech:compact_sensor_lv",
+    "count": 1
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "gregtech:stone_sylvite_cobble"
+  },
+  "result": "gregtech:stone_sylvite_stone",
+  "experience": 0.0,
+  "cookingtime": 200
+}

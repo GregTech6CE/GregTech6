@@ -1,0 +1,21 @@
+{
+  "type": "gregtech:tool_shaped",
+  "allow_mirror": false,
+  "pattern": [
+    "   ",
+    " Px",
+    "   "
+  ],
+  "key": {
+    "P": {
+      "item": "gregtech:low_heat_extruder_shape_tinyplate"
+    },
+    "x": {
+      "item": "gregtech:tool_wire_cutter"
+    }
+  },
+  "result": {
+    "item": "gregtech:low_heat_extruder_shape_swordblade",
+    "count": 1
+  }
+}

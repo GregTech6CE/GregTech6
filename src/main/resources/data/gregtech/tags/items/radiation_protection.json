@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "gregtech:radiation_suit_helmet",
+    "gregtech:radiation_suit_chestplate",
+    "gregtech:radiation_suit_leggings",
+    "gregtech:radiation_suit_boots"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "P Q",
+    "PS ",
+    "CPP"
+  ],
+  "key": {
+    "P": {
+      "item": "gregtech:plate_curved_iridium"
+    },
+    "Q": {
+      "item": "minecraft:nether_star"
+    },
+    "S": {
+      "item": "gregtech:wire_01_graphene"
+    },
+    "C": {
+      "item": "gregtech:circuit_ultimate"
+    }
+  },
+  "result": {
+    "item": "gregtech:compact_sensor_luv",
+    "count": 1
+  }
+}

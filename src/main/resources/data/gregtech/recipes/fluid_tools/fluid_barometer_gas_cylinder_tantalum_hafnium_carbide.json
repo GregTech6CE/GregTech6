@@ -1,0 +1,36 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "RCR",
+    "BCh",
+    "TPd"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:plates/tantalum_hafnium_carbide"
+    },
+    "C": {
+      "item": "gregtech:plate_curved_tantalumhafniumcarbide"
+    },
+    "h": {
+      "item": "gregtech:tool_hammer"
+    },
+    "R": {
+      "tag": "forge:rings/tantalum_hafnium_carbide"
+    },
+    "B": {
+      "item": "gregtech:round_tantalumhafniumcarbide"
+    },
+    "T": {
+      "tag": "forge:screws/tantalum_hafnium_carbide"
+    },
+    "d": {
+      "item": "gregtech:tool_screwdriver"
+    }
+  },
+  "result": {
+    "item": "gregtech:fluid_barometer_gas_cylinder_tantalum_hafnium_carbide"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

@@ -1,0 +1,30 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "TwT",
+    "PQP",
+    "TdT"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:plates/stainless_steel"
+    },
+    "Q": {
+      "item": "gregtech:blank_cover"
+    },
+    "T": {
+      "tag": "forge:screws/stainless_steel"
+    },
+    "d": {
+      "item": "gregtech:tool_screwdriver"
+    },
+    "w": {
+      "item": "gregtech:tool_wrench"
+    }
+  },
+  "result": {
+    "item": "gregtech:shutter_cover"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

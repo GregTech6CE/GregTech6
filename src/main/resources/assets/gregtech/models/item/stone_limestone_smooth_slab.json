@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "gregtech:block/stones/gt.stone.limestone/smooth",
+    "top": "gregtech:block/stones/gt.stone.limestone/smooth",
+    "side": "gregtech:block/stones/gt.stone.limestone/smooth"
+  }
+}

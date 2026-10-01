@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:wire_04_tungsten"
+    }
+  ],
+  "result": {
+    "item": "gregtech:wire_01_tungsten",
+    "count": 4
+  }
+}

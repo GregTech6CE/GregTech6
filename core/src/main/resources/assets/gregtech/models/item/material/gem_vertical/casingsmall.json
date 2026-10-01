@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "gregtech:item/material_icons/gem_vertical/casingsmall",
+    "layer1": "gregtech:item/material_icons/gem_vertical/casingsmall_overlay"
+  }
+}

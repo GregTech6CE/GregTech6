@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "gregtech:battery_lead_acid_ulv",
+    "gregtech:battery_alkaline_ulv",
+    "gregtech:battery_nickel_cadmium_ulv",
+    "gregtech:battery_lithium_cobalt_ulv",
+    "gregtech:battery_lithium_manganese_ulv",
+    "gregtech:battery_eu_8"
+  ]
+}

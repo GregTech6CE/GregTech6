@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "gregtech:alcohol",
+    "gregtech:caffeine",
+    "gregtech:dehydration",
+    "gregtech:exploded",
+    "gregtech:fat",
+    "gregtech:sugar"
+  ]
+}

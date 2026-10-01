@@ -1,0 +1,66 @@
+{
+  "source": "saltnya",
+  "source_snapshot": "import/saltnya-snapshot",
+  "source_commit": "41561782",
+  "source_directory": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn",
+  "extracted_at": "2026-09-30",
+  "license_resolution": "Pending; inherited source permission metadata retained without relicensing",
+  "files": [
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/api/recipe/MachineWorkCost.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/api/recipe/MachineWorkCost.java",
+      "sha256": "c5691c58bc5c9d910a47cdb686138e61451ee923e960e288194cf041c7793227",
+      "dependencies": "java.base only",
+      "change": "exact byte-preserving relocation"
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/api/machine/crucible/CrucibleMath.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/api/machine/crucible/CrucibleMath.java",
+      "sha256": "68553baf356b1e69e1e60815865f1e054bfba3b7da493affef9ef1a34490c050",
+      "dependencies": "java.base only",
+      "change": "exact byte-preserving relocation"
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/api/energy/GTVoltageTiers.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/api/energy/GTVoltageTiers.java",
+      "sha256": "437ec24164f842cb2aee4db614f15a40c5076f96322562881d87341dd966c11f",
+      "dependencies": "java.base only",
+      "change": "exact byte-preserving relocation"
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/api/energy/EnergyPackets.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/api/energy/EnergyPackets.java",
+      "sha256": "8706971077df366192d41af1480edb9da6dc7d5dbe7f1ac97574e1715ca1a4d7",
+      "dependencies": "java.base only",
+      "change": "exact byte-preserving relocation"
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/api/material/AtomicProperties.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/api/material/AtomicProperties.java",
+      "sha256": "aecbc4294b67d5a0f5400d89eb0465df36015f2b3382051356a2d298e2daac8c",
+      "dependencies": "java.base only",
+      "change": "exact byte-preserving relocation"
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/api/material/GTValues.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/api/material/GTValues.java",
+      "sha256": "b7827f5bca2f01cb38f1675a1104544afd9147dbb232b0ec00aa0725e5e468bd",
+      "dependencies": "java.base only",
+      "change": "exact byte-preserving relocation"
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/api/definition/DefinitionCatalog.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/api/definition/DefinitionCatalog.java",
+      "sha256": "adcb879d10434d5e9bea81174876bdbec4a1931b107d129425068d0ba154eca5",
+      "dependencies": "java.base only",
+      "change": "exact byte-preserving relocation"
+    },
+    {
+      "original_path": "src/main/java/com/gregtech/gregtech/api/multiblock/PartBindings.java",
+      "core_path": "core/src/main/java/com/gregtech/gregtech/api/multiblock/PartBindings.java",
+      "sha256": "e11743331fef31f59fc0b5063280d4cd45fc288b2c1f0153a3c4580ee935110e",
+      "dependencies": "java.base only",
+      "change": "exact byte-preserving relocation"
+    }
+  ]
+}

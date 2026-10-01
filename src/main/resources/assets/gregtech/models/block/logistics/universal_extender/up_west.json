@@ -1,0 +1,112 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "forge:composite",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "particle": "gregtech:block/machines/extenders/universal/colored/side"
+  },
+  "children": {
+    "colored": {
+      "textures": {
+        "in": "gregtech:block/machines/extenders/universal/colored/in",
+        "out": "gregtech:block/machines/extenders/universal/colored/out",
+        "side": "gregtech:block/machines/extenders/universal/colored/side"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#side",
+              "cullface": "down",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#in",
+              "cullface": "up",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#side",
+              "cullface": "north",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#side",
+              "cullface": "south",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#out",
+              "cullface": "west",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#side",
+              "cullface": "east",
+              "tintindex": 0
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    },
+    "overlay": {
+      "textures": {
+        "in": "gregtech:block/machines/extenders/universal/overlay/in",
+        "out": "gregtech:block/machines/extenders/universal/overlay/out",
+        "side": "gregtech:block/machines/extenders/universal/overlay/side"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#side",
+              "cullface": "down"
+            },
+            "up": {
+              "texture": "#in",
+              "cullface": "up"
+            },
+            "north": {
+              "texture": "#side",
+              "cullface": "north"
+            },
+            "south": {
+              "texture": "#side",
+              "cullface": "south"
+            },
+            "west": {
+              "texture": "#out",
+              "cullface": "west"
+            },
+            "east": {
+              "texture": "#side",
+              "cullface": "east"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:wire_05_annealed_copper"
+    },
+    {
+      "item": "gregtech:wire_05_annealed_copper"
+    },
+    {
+      "item": "gregtech:wire_05_annealed_copper"
+    }
+  ],
+  "result": {
+    "item": "gregtech:wire_15_annealed_copper",
+    "count": 1
+  }
+}

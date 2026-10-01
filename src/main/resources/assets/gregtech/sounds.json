@@ -1,0 +1,20 @@
+{
+  "screwdriver": {
+    "subtitle": "subtitles.gregtech.screwdriver",
+    "sounds": [
+      "gregtech:screwdriver"
+    ]
+  },
+  "wrench": {
+    "subtitle": "subtitles.gregtech.wrench",
+    "sounds": [
+      "gregtech:wrench"
+    ]
+  },
+  "beep": {
+    "subtitle": "subtitles.gregtech.beep",
+    "sounds": [
+      "gregtech:beep"
+    ]
+  }
+}

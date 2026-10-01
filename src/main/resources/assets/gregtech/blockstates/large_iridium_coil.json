@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "gregtech:block/machine/fusion/large_iridium_coil"
+    }
+  }
+}

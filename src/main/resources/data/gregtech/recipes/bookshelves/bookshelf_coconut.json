@@ -1,0 +1,28 @@
+{
+  "type": "gregtech:tool_shaped",
+  "_comment": "GT6 Loader_MultiTileEntities:181-183, multi-tile 7098",
+  "pattern": [
+    "PPP",
+    "sfr",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "gregtech:planks_coconut"
+    },
+    "s": {
+      "item": "gregtech:tool_saw"
+    },
+    "f": {
+      "item": "gregtech:tool_file"
+    },
+    "r": {
+      "item": "gregtech:tool_soft_hammer"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gregtech:bookshelf_coconut",
+    "count": 1
+  }
+}

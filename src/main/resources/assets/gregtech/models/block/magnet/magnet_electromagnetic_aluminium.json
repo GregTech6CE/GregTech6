@@ -1,0 +1,100 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "forge:composite",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "particle": "gregtech:block/machines/magnets/magnet_electric/colored/back"
+  },
+  "children": {
+    "colored": {
+      "textures": {
+        "back": "gregtech:block/machines/magnets/magnet_electric/colored/back",
+        "front": "gregtech:block/machines/magnets/magnet_electric/colored/front",
+        "side": "gregtech:block/machines/magnets/magnet_electric/colored/side"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "west": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#front",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#back",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#side",
+              "tintindex": 0
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    },
+    "overlay": {
+      "textures": {
+        "back": "gregtech:block/machines/magnets/magnet_electric/overlay/back",
+        "front": "gregtech:block/machines/magnets/magnet_electric/overlay/front",
+        "side": "gregtech:block/machines/magnets/magnet_electric/overlay/side"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "west": {
+              "texture": "#side"
+            },
+            "east": {
+              "texture": "#side"
+            },
+            "north": {
+              "texture": "#front"
+            },
+            "south": {
+              "texture": "#back"
+            },
+            "up": {
+              "texture": "#side"
+            },
+            "down": {
+              "texture": "#side"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    }
+  }
+}

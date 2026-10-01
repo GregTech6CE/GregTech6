@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:bale_grass_rotten"
+    }
+  ],
+  "result": {
+    "item": "gregtech:rotten_grass",
+    "count": 9
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "Q",
+    "R"
+  ],
+  "key": {
+    "Q": {
+      "item": "gregtech:blank_cover"
+    },
+    "R": {
+      "item": "gregtech:wire_01_redalloy"
+    }
+  },
+  "result": {
+    "item": "gregtech:redstone_conductor_cover_emit"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

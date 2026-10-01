@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "facing=north,waterlogged=false": { "model": "gregtech:block/machine/energy/electric_heater_ev" },
+    "facing=north,waterlogged=true":  { "model": "gregtech:block/machine/energy/electric_heater_ev" },
+    "facing=east,waterlogged=false":  { "model": "gregtech:block/machine/energy/electric_heater_ev", "y": 90 },
+    "facing=east,waterlogged=true":   { "model": "gregtech:block/machine/energy/electric_heater_ev", "y": 90 },
+    "facing=south,waterlogged=false": { "model": "gregtech:block/machine/energy/electric_heater_ev", "y": 180 },
+    "facing=south,waterlogged=true":  { "model": "gregtech:block/machine/energy/electric_heater_ev", "y": 180 },
+    "facing=west,waterlogged=false":  { "model": "gregtech:block/machine/energy/electric_heater_ev", "y": 270 },
+    "facing=west,waterlogged=true":   { "model": "gregtech:block/machine/energy/electric_heater_ev", "y": 270 },
+    "facing=up,waterlogged=false":    { "model": "gregtech:block/machine/energy/electric_heater_ev", "x": 270 },
+    "facing=up,waterlogged=true":     { "model": "gregtech:block/machine/energy/electric_heater_ev", "x": 270 },
+    "facing=down,waterlogged=false":  { "model": "gregtech:block/machine/energy/electric_heater_ev", "x": 90 },
+    "facing=down,waterlogged=true":   { "model": "gregtech:block/machine/energy/electric_heater_ev", "x": 90 }
+  }
+}

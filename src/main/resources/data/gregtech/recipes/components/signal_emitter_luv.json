@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SPC",
+    "WQP",
+    "CWS"
+  ],
+  "key": {
+    "S": {
+      "item": "gregtech:wire_04_graphene"
+    },
+    "P": {
+      "item": "gregtech:plate_curved_iridium"
+    },
+    "C": {
+      "item": "gregtech:circuit_ultimate"
+    },
+    "W": {
+      "item": "gregtech:wire_01_graphene"
+    },
+    "Q": {
+      "item": "minecraft:nether_star"
+    }
+  },
+  "result": {
+    "item": "gregtech:compact_signal_emitter_luv",
+    "count": 1
+  }
+}

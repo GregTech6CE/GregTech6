@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CCC",
+    "MSM",
+    "PES"
+  ],
+  "key": {
+    "C": {
+      "item": "gregtech:cable_01_lead"
+    },
+    "M": {
+      "item": "gregtech:compact_electric_motor_ulv"
+    },
+    "S": {
+      "tag": "forge:rods/tin_alloy"
+    },
+    "P": {
+      "item": "gregtech:compact_electric_piston_ulv"
+    },
+    "E": {
+      "item": "gregtech:integrated_circuit_0"
+    }
+  },
+  "result": {
+    "item": "gregtech:compact_robot_arm_ulv",
+    "count": 1
+  }
+}

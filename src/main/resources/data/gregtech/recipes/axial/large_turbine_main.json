@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP",
+    "PMP",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "gregtech:block_plate_magnalium"
+    },
+    "M": {
+      "item": "gregtech:tank_wall_dense"
+    }
+  },
+  "result": {
+    "item": "gregtech:magnalium_steam_turbine_main_housing",
+    "count": 1
+  }
+}

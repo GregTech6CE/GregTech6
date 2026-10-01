@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "P",
+    "B"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:gems/sapphire"
+    },
+    "B": {
+      "item": "gregtech:mixing_bowl"
+    }
+  },
+  "result": {
+    "item": "gregtech:mortar_sapphire"
+  }
+}

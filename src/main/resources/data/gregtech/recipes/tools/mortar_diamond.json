@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "P",
+    "B"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:gems/diamond"
+    },
+    "B": {
+      "item": "gregtech:mixing_bowl"
+    }
+  },
+  "result": {
+    "item": "gregtech:mortar_diamond"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "gregtech:block/machines/covers/base",
+    "layer1": "gregtech:block/machines/covers/redstoneselector/underlay",
+    "layer2": "gregtech:block/machines/covers/redstoneselector/0",
+    "particle": "gregtech:block/machines/covers/base"
+  }
+}

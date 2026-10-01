@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:wire_01_niobium_titanium"
+    },
+    {
+      "item": "gregtech:wire_01_niobium_titanium"
+    }
+  ],
+  "result": {
+    "item": "gregtech:wire_02_niobium_titanium",
+    "count": 1
+  }
+}

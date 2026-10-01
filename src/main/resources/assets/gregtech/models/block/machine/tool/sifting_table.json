@@ -1,0 +1,451 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "forge:composite",
+  "textures": {
+    "particle": "gregtech:block/machines/tools/sifting_table/colored/border"
+  },
+  "children": {
+    "colored": {
+      "textures": {
+        "border": "gregtech:block/machines/tools/sifting_table/colored/border",
+        "grid": "gregtech:block/machines/tools/sifting_table/colored/grid",
+        "legs": "gregtech:block/machines/tools/sifting_table/colored/legs",
+        "plate": "gregtech:block/machines/tools/sifting_table/colored/plate"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            2,
+            13,
+            2
+          ],
+          "faces": {
+            "down": {
+              "texture": "#legs",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#legs",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#legs",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#legs",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#legs",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#legs",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            14,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            13,
+            2
+          ],
+          "faces": {
+            "down": {
+              "texture": "#legs",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#legs",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#legs",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#legs",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#legs",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#legs",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            0,
+            14
+          ],
+          "to": [
+            2,
+            13,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#legs",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#legs",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#legs",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#legs",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#legs",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#legs",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            14,
+            0,
+            14
+          ],
+          "to": [
+            16,
+            13,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#legs",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#legs",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#legs",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#legs",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#legs",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#legs",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            10,
+            0
+          ],
+          "to": [
+            16,
+            12,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#grid",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#grid",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#border",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#border",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#border",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#border",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            2,
+            0
+          ],
+          "to": [
+            16,
+            5,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#plate",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#plate",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#plate",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#plate",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#plate",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#plate",
+              "tintindex": 0
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    },
+    "overlay": {
+      "textures": {
+        "border": "gregtech:block/machines/tools/sifting_table/overlay/border",
+        "grid": "gregtech:block/machines/tools/sifting_table/overlay/grid",
+        "legs": "gregtech:block/machines/tools/sifting_table/overlay/legs",
+        "plate": "gregtech:block/machines/tools/sifting_table/overlay/plate"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            2,
+            13,
+            2
+          ],
+          "faces": {
+            "down": {
+              "texture": "#legs"
+            },
+            "up": {
+              "texture": "#legs"
+            },
+            "north": {
+              "texture": "#legs"
+            },
+            "south": {
+              "texture": "#legs"
+            },
+            "west": {
+              "texture": "#legs"
+            },
+            "east": {
+              "texture": "#legs"
+            }
+          }
+        },
+        {
+          "from": [
+            14,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            13,
+            2
+          ],
+          "faces": {
+            "down": {
+              "texture": "#legs"
+            },
+            "up": {
+              "texture": "#legs"
+            },
+            "north": {
+              "texture": "#legs"
+            },
+            "south": {
+              "texture": "#legs"
+            },
+            "west": {
+              "texture": "#legs"
+            },
+            "east": {
+              "texture": "#legs"
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            0,
+            14
+          ],
+          "to": [
+            2,
+            13,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#legs"
+            },
+            "up": {
+              "texture": "#legs"
+            },
+            "north": {
+              "texture": "#legs"
+            },
+            "south": {
+              "texture": "#legs"
+            },
+            "west": {
+              "texture": "#legs"
+            },
+            "east": {
+              "texture": "#legs"
+            }
+          }
+        },
+        {
+          "from": [
+            14,
+            0,
+            14
+          ],
+          "to": [
+            16,
+            13,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#legs"
+            },
+            "up": {
+              "texture": "#legs"
+            },
+            "north": {
+              "texture": "#legs"
+            },
+            "south": {
+              "texture": "#legs"
+            },
+            "west": {
+              "texture": "#legs"
+            },
+            "east": {
+              "texture": "#legs"
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            10,
+            0
+          ],
+          "to": [
+            16,
+            12,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#grid"
+            },
+            "up": {
+              "texture": "#grid"
+            },
+            "north": {
+              "texture": "#border"
+            },
+            "south": {
+              "texture": "#border"
+            },
+            "west": {
+              "texture": "#border"
+            },
+            "east": {
+              "texture": "#border"
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            2,
+            0
+          ],
+          "to": [
+            16,
+            5,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#plate"
+            },
+            "up": {
+              "texture": "#plate"
+            },
+            "north": {
+              "texture": "#plate"
+            },
+            "south": {
+              "texture": "#plate"
+            },
+            "west": {
+              "texture": "#plate"
+            },
+            "east": {
+              "texture": "#plate"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    }
+  }
+}

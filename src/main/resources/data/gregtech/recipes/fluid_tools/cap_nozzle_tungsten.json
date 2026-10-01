@@ -1,0 +1,27 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "  h",
+    "PRP",
+    "o  "
+  ],
+  "key": {
+    "P": {
+      "item": "gregtech:plate_curved_tungsten"
+    },
+    "h": {
+      "item": "gregtech:tool_hammer"
+    },
+    "o": {
+      "item": "gregtech:tool_bending_cylinder"
+    },
+    "R": {
+      "tag": "forge:rings/tungsten"
+    }
+  },
+  "result": {
+    "item": "gregtech:cap_nozzle_tungsten"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

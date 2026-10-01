@@ -1,0 +1,26 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "BW",
+    "CQ"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:lever"
+    },
+    "C": {
+      "item": "gregtech:circuit_basic"
+    },
+    "Q": {
+      "item": "gregtech:blank_cover"
+    },
+    "W": {
+      "item": "gregtech:cable_01_tin"
+    }
+  },
+  "result": {
+    "item": "gregtech:automatic_machine_switch"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP",
+    "PMP",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "gregtech:block_plate_trinitanium"
+    },
+    "M": {
+      "item": "gregtech:dense_titanium_wall"
+    }
+  },
+  "result": {
+    "item": "gregtech:trinitanium_steam_turbine_main_housing",
+    "count": 1
+  }
+}

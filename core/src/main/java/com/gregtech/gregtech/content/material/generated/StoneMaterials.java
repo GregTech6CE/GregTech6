@@ -1,0 +1,84 @@
+package com.gregtech.gregtech.content.material.generated;
+
+import com.gregtech.gregtech.api.material.GTMaterial;
+import com.gregtech.gregtech.api.material.MaterialProperty;
+import com.gregtech.gregtech.api.material.MaterialTextureSet;
+import com.gregtech.gregtech.data.GregTechConstants;
+import static com.gregtech.gregtech.api.material.MaterialFactories.*;
+
+/** Generated from GT6 material definitions. Regenerate with tools/transpile_gt6_materials.py. */
+public final class StoneMaterials {
+    private StoneMaterials() {}
+
+    public static final GTMaterial Stone = stone(8500, "Stone", "Stone", 0xCDCDCD).setTextureSet(MaterialTextureSet.STONE).setStats(1100, 2200, 1.0F).setToolStats(1, 2F, 16, 1);
+    public static final GTMaterial Concrete = stone(8501, "Concrete", "Concrete", 0x646464).setTextureSet(MaterialTextureSet.BRICK).setStats(500, 1000, 1.0F).setTooltipChemical("Stone").setToolStats(1, 2.5F, 32, 0);
+    public static final GTMaterial Netherrack = stone(8502, "Netherrack", "Netherrack", 0xC80000).setTextureSet(MaterialTextureSet.STONE).setStats(1500, 3000, 1.0F).setToolStats(1, 2F, 8, 0);
+    public static final GTMaterial NetherBrick = stone(8503, "Nether Brick", "BrickNether", 0x640000).setTextureSet(MaterialTextureSet.BRICK).setLocalName("BrickNether").setStats(1800, 3000, 1.0F).setToolStats(1, 2F, 24, 1);
+    public static final GTMaterial Endstone = stone(8504, "Endstone", "Endstone", 0xD9DE9E).setTextureSet(MaterialTextureSet.STONE).setStats(1200, 2400, 1.0F).setToolStats(1, 3F, 16, 1);
+    public static final GTMaterial Prismarine = stone(9219, "Prismarine", "Prismarine", 0x6EB2A5).setTextureSet(MaterialTextureSet.PRISMARINE).setStats(1000, 3000, 1.0F).setToolStats(1, 4F, 48, 1);
+    public static final GTMaterial PrismarineDark = stone(9220, "PrismarineDark", "PrismarineDark", 0x587D6C).setTextureSet(MaterialTextureSet.PRISMARINE).setStats(1000, 3000, 1.0F).setToolStats(1, 4F, 48, 1);
+    public static final GTMaterial Greenstone = stone(9172, "Greenstone", "Greenstone", 0x34FC34).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F);
+    public static final GTMaterial Bluestone = stone(9185, "Bluestone", "Bluestone", 0x3434FC).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F);
+    public static final GTMaterial Epidote = stone(9182, "Epidote", "Epidote", 0x808080).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F);
+    public static final GTMaterial SpaceStone = stone(8512, "Space Stone", "Space Stone", 0x636363).setTextureSet(MaterialTextureSet.SPACE).setStats(1000, 3000, 1.0F).setToolStats(1, 5F, 32, 1);
+    public static final GTMaterial MoonStone = stone(8513, "Moon Stone", "Moon Stone", 0xBDBDBD).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 5F, 32, 1);
+    public static final GTMaterial MoonTurf = stone(8514, "Moon Turf", "Moon Turf", 0xCFCFCF).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 3F, 16, 1);
+    public static final GTMaterial MarsStone = stone(8515, "Mars Stone", "Mars Stone", 0xBD4D4D).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 5F, 32, 1);
+    public static final GTMaterial MarsSand = stone(8516, "Mars Sand", "Mars Sand", 0xCF4242).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 3F, 16, 1);
+    public static final GTMaterial SkyStone = stone(8528, "Sky Stone", "Sky Stone", 0x515C60).setTextureSet(MaterialTextureSet.STONE).setStats(2200, 4400, 2.22079F).setTooltipChemical("Peridot₂RareEarthFeObsidian₅").setToolStats(1, 5F, 64, 2);
+    public static final GTMaterial Holystone = stone(8522, "Holystone", "Holystone", 0xACACAC).setTextureSet(MaterialTextureSet.STONE).setStats(2000, 4000, 1.0F).setToolStats(1, 5F, 128, 1);
+    public static final GTMaterial Livingrock = stone(8521, "Livingrock", "Livingrock", 0xC3CDC3).setTextureSet(MaterialTextureSet.STONE).setStats(1800, 3600, 1.0F).setToolStats(1, 5F, 128, 2);
+    public static final GTMaterial Deadrock = stone(8523, "Deadrock", "Deadrock", 0x9999A8).setTextureSet(MaterialTextureSet.STONE).setStats(1800, 3600, 1.0F).setToolStats(1, 5F, 128, 2);
+    public static final GTMaterial Betweenstone = stone(8519, "Betweenstone", "Betweenstone", 0x64A06E).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 2000, 1.0F).setToolStats(1, 4F, 32, 1);
+    public static final GTMaterial Pitstone = stone(8520, "Pitstone", "Pitstone", 0x28321E).setTextureSet(MaterialTextureSet.STONE).setStats(1200, 2400, 1.0F).setToolStats(1, 4F, 32, 1);
+    public static final GTMaterial Cragrock = stone(8524, "Cragrock", "Cragrock", 0x5D606B).setTextureSet(MaterialTextureSet.STONE).setStats(1400, 2800, 1.0F).setToolStats(1, 4F, 32, 1);
+    public static final GTMaterial Umber = stone(8517, "Umber", "Umber", 0x6F4D0B).setTextureSet(MaterialTextureSet.STONE).setStats(987, 1974, 1.0F).setToolStats(1, 3F, 32, 1);
+    public static final GTMaterial Shale = stone(9190, "Shale", "Shale", 0x8E8EA8).setTextureSet(MaterialTextureSet.STONE).setStats(1802, 3305, 0.803246F).setTooltipChemical("CaCO3₂MilkyQuartzClay").setToolStats(1, 2F, 16, 0);
+    public static final GTMaterial Redrock = stone(8509, "Redrock", "RedRock", 0xFF5032).setTextureSet(MaterialTextureSet.STONE).setLocalName("RedRock").setStats(1552, 3055, 0.8255F).setTooltipChemical("CaCO3₂FlintClayRed").setToolStats(1, 2.5F, 16, 1);
+    public static final GTMaterial Komatiite = stone(9177, "Komatiite", "Komatiite", 0xBEBE69).setTextureSet(MaterialTextureSet.STONE).setStats(1673, 3346, 0.987469F).setTooltipChemical("PeridotMgCO3₂Flint₆DarkAsh₃").setToolStats(1, 3F, 32, 2);
+    public static final GTMaterial Pumice = stone(9000, "Pumice", "Pumice", 0xDCD87F).setTextureSet(MaterialTextureSet.DULL).setStats(1673, 3346, 1.31424F).setTooltipChemical("Peridot₃MgCO3₂Flint₄DarkAsh₂").setToolStats(1, 3F, 32, 2);
+    public static final GTMaterial Gabbro = stone(9176, "Gabbro", "Gabbro", 0x413C3C).setTextureSet(MaterialTextureSet.STONE).setStats(1673, 3346, 0.942978F).setTooltipChemical("PeridotCaCO3₃Flint₈DarkAsh₄").setToolStats(1, 3F, 32, 2);
+    public static final GTMaterial Basalt = stone(8505, "Basalt", "Basalt", 0x3C3232).setTextureSet(MaterialTextureSet.STONE).setStats(1673, 3346, 0.942978F).setTooltipChemical("PeridotCaCO3₃Flint₈DarkAsh₄").setToolStats(1, 3F, 32, 2);
+    public static final GTMaterial Marble = stone(8506, "Marble", "Marble", 0xC8C8C8).setTextureSet(MaterialTextureSet.STONE).setStats(1525, 2795, 0.884225F).setTooltipChemical("MgCaCO3₇").setToolStats(1, 2.5F, 16, 1);
+    public static final GTMaterial Limestone = stone(9189, "Limestone", "Limestone", 0xE6C882).setTextureSet(MaterialTextureSet.STONE).setStats(1612, 3000, 0.762257F).setTooltipChemical("CaCO3").setToolStats(1, 2.5F, 16, 1);
+    public static final GTMaterial Greenschist = stone(9171, "Greenschist", "Greenschist", 0x69BE69).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 2F, 24, 1);
+    public static final GTMaterial Blueschist = stone(9184, "Blueschist", "Blueschist", 0x6969BE).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 2F, 24, 1);
+    public static final GTMaterial Grayschist = stone(9244, "Grayschist", "Grayschist", 0x918C91).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 2F, 24, 1);
+    public static final GTMaterial Pinkschist = stone(9245, "Pinkschist", "Pinkschist", 0xDCC3C3).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 2F, 24, 1);
+    public static final GTMaterial Gneiss = stone(9170, "Gneiss", "Gneiss", 0xFFC986).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 2F, 24, 1);
+    public static final GTMaterial Kimberlite = stone(9218, "Kimberlite", "Kimberlite", 0x64460A).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 2F, 24, 2);
+    public static final GTMaterial Quartzite = stone(9180, "Quartzite", "Quartzite", 0xE6CDCD).setTextureSet(MaterialTextureSet.QUARTZ).setStats(1000, 3000, 1.0F).setToolStats(1, 1.7F, 32, 1);
+    public static final GTMaterial Andesite = stone(9188, "Andesite", "Andesite", 0xBFBFBF).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 2.5F, 16, 1);
+    public static final GTMaterial Diorite = stone(8511, "Diorite", "Diorite", 0xF0F0F0).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 2.5F, 16, 1);
+    public static final GTMaterial Greywacke = stone(9173, "Greywacke", "Greywacke", 0xB0B0B0).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 2F, 16, 1);
+    public static final GTMaterial Siltstone = stone(9178, "Siltstone", "Siltstone", 0xFACDCD).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 2F, 16, 0);
+    public static final GTMaterial Rhyolite = stone(9179, "Rhyolite", "Rhyolite", 0x797979).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 2F, 16, 1);
+    public static final GTMaterial Migmatite = stone(9181, "Migmatite", "Migmatite", 0x462828).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 2F, 16, 1);
+    public static final GTMaterial Chert = stone(9186, "Chert", "Chert", 0x690A0A).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 2F, 16, 0);
+    public static final GTMaterial Dacite = stone(9187, "Dacite", "Dacite", 0x838383).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 2F, 16, 1);
+    public static final GTMaterial Slate = stone(9222, "Slate", "Slate", 0x94979C).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 2F, 16, 0);
+    public static final GTMaterial Deepslate = stone(9248, "Deepslate", "Deepslate", 0x393B3D).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 2F, 32, 1);
+    public static final GTMaterial Eclogite = stone(9191, "Eclogite", "Eclogite", 0x5A2828).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 2F, 16, 1);
+    public static final GTMaterial PhobosRock = stone(9249, "PhobosRock", "PhobosRock", 0xBDBDBD).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 5F, 128, 1);
+    public static final GTMaterial DeimosRock = stone(9250, "DeimosRock", "DeimosRock", 0xBDBDBD).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 5F, 128, 1);
+    public static final GTMaterial VenusRock = stone(9251, "VenusRock", "VenusRock", 0xBDBDBD).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 5F, 128, 1);
+    public static final GTMaterial MercuryRock = stone(9252, "MercuryRock", "MercuryRock", 0xBDBDBD).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 5F, 128, 1);
+    public static final GTMaterial CeresRock = stone(9253, "CeresRock", "CeresRock", 0xBDBDBD).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 5F, 128, 1);
+    public static final GTMaterial JupiterRock = stone(9254, "JupiterRock", "JupiterRock", 0xBDBDBD).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 5F, 128, 1);
+    public static final GTMaterial IoRock = stone(9255, "IoRock", "IoRock", 0xBDBDBD).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 5F, 128, 1);
+    public static final GTMaterial EuropaRock = stone(9256, "EuropaRock", "EuropaRock", 0xBDBDBD).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 5F, 128, 1);
+    public static final GTMaterial GanymedeRock = stone(9257, "GanymedeRock", "GanymedeRock", 0xBDBDBD).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 5F, 128, 1);
+    public static final GTMaterial CallistoRock = stone(9258, "CallistoRock", "CallistoRock", 0xBDBDBD).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 5F, 128, 1);
+    public static final GTMaterial SaturnRock = stone(9259, "SaturnRock", "SaturnRock", 0xBDBDBD).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 5F, 128, 1);
+    public static final GTMaterial RheaRock = stone(9260, "RheaRock", "RheaRock", 0xBDBDBD).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 5F, 128, 1);
+    public static final GTMaterial TitanRock = stone(9261, "TitanRock", "TitanRock", 0xBDBDBD).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 5F, 128, 1);
+    public static final GTMaterial OberonRock = stone(9262, "OberonRock", "OberonRock", 0xBDBDBD).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 5F, 128, 1);
+    public static final GTMaterial IapetusRock = stone(9263, "IapetusRock", "IapetusRock", 0xBDBDBD).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 5F, 128, 1);
+    public static final GTMaterial UranusRock = stone(9264, "UranusRock", "UranusRock", 0xBDBDBD).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 5F, 128, 1);
+    public static final GTMaterial TitaniaRock = stone(9265, "TitaniaRock", "TitaniaRock", 0xBDBDBD).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 5F, 128, 1);
+    public static final GTMaterial NeptuneRock = stone(9266, "NeptuneRock", "NeptuneRock", 0xBDBDBD).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 5F, 128, 1);
+    public static final GTMaterial TritonRock = stone(9267, "TritonRock", "TritonRock", 0xBDBDBD).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 5F, 128, 1);
+    public static final GTMaterial PlutoRock = stone(9268, "PlutoRock", "PlutoRock", 0xBDBDBD).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 5F, 128, 1);
+    public static final GTMaterial ErisRock = stone(9269, "ErisRock", "ErisRock", 0xBDBDBD).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 5F, 128, 1);
+    public static final GTMaterial Kepler22bRock = stone(9270, "Kepler22bRock", "Kepler22bRock", 0xBDBDBD).setTextureSet(MaterialTextureSet.STONE).setStats(1000, 3000, 1.0F).setToolStats(1, 5F, 128, 1);
+}

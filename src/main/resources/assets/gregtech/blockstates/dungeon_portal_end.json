@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "active=false": {
+      "model": "gregtech:block/dungeon/dungeon_portal_end_frame"
+    },
+    "active=true": {
+      "model": "gregtech:block/dungeon/dungeon_portal_end"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "kCR"
+  ],
+  "key": {
+    "C": {
+      "tag": "forge:dusts/porcelain"
+    },
+    "k": {
+      "item": "gregtech:tool_knife"
+    },
+    "R": {
+      "item": "gregtech:tool_rolling_pin"
+    }
+  },
+  "result": {
+    "item": "gregtech:modeled_porcelain_cup"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

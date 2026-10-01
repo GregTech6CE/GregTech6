@@ -1,0 +1,24 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "ChC",
+    "CyC",
+    "CCC"
+  ],
+  "key": {
+    "C": {
+      "tag": "forge:plates/graphene"
+    },
+    "h": {
+      "item": "gregtech:tool_hammer"
+    },
+    "y": {
+      "item": "gregtech:tool_chisel"
+    }
+  },
+  "result": {
+    "item": "gregtech:smelting_crucible_carbon"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

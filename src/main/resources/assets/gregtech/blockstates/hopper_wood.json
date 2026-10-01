@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "facing=down":  {"model": "gregtech:block/machine/hopper_down"},
+    "facing=up":    {"model": "gregtech:block/machine/hopper_up"},
+    "facing=north": {"model": "gregtech:block/machine/hopper_north"},
+    "facing=south": {"model": "gregtech:block/machine/hopper_south"},
+    "facing=west":  {"model": "gregtech:block/machine/hopper_west"},
+    "facing=east":  {"model": "gregtech:block/machine/hopper_east"}
+  }
+}

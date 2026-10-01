@@ -1,0 +1,220 @@
+{
+  "variants": {
+    "facing=down,secondary=down,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/down_up"
+    },
+    "facing=down,secondary=down,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/down_down"
+    },
+    "facing=down,secondary=up,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/down_up"
+    },
+    "facing=down,secondary=up,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/down_up"
+    },
+    "facing=down,secondary=north,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/down_up"
+    },
+    "facing=down,secondary=north,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/down_north"
+    },
+    "facing=down,secondary=south,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/down_up"
+    },
+    "facing=down,secondary=south,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/down_south"
+    },
+    "facing=down,secondary=west,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/down_up"
+    },
+    "facing=down,secondary=west,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/down_west"
+    },
+    "facing=down,secondary=east,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/down_up"
+    },
+    "facing=down,secondary=east,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/down_east"
+    },
+    "facing=up,secondary=down,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/up_down"
+    },
+    "facing=up,secondary=down,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/up_down"
+    },
+    "facing=up,secondary=up,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/up_down"
+    },
+    "facing=up,secondary=up,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/up_up"
+    },
+    "facing=up,secondary=north,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/up_down"
+    },
+    "facing=up,secondary=north,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/up_north"
+    },
+    "facing=up,secondary=south,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/up_down"
+    },
+    "facing=up,secondary=south,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/up_south"
+    },
+    "facing=up,secondary=west,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/up_down"
+    },
+    "facing=up,secondary=west,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/up_west"
+    },
+    "facing=up,secondary=east,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/up_down"
+    },
+    "facing=up,secondary=east,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/up_east"
+    },
+    "facing=north,secondary=down,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/north_south"
+    },
+    "facing=north,secondary=down,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/north_down"
+    },
+    "facing=north,secondary=up,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/north_south"
+    },
+    "facing=north,secondary=up,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/north_up"
+    },
+    "facing=north,secondary=north,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/north_south"
+    },
+    "facing=north,secondary=north,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/north_north"
+    },
+    "facing=north,secondary=south,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/north_south"
+    },
+    "facing=north,secondary=south,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/north_south"
+    },
+    "facing=north,secondary=west,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/north_south"
+    },
+    "facing=north,secondary=west,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/north_west"
+    },
+    "facing=north,secondary=east,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/north_south"
+    },
+    "facing=north,secondary=east,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/north_east"
+    },
+    "facing=south,secondary=down,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/south_north"
+    },
+    "facing=south,secondary=down,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/south_down"
+    },
+    "facing=south,secondary=up,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/south_north"
+    },
+    "facing=south,secondary=up,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/south_up"
+    },
+    "facing=south,secondary=north,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/south_north"
+    },
+    "facing=south,secondary=north,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/south_north"
+    },
+    "facing=south,secondary=south,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/south_north"
+    },
+    "facing=south,secondary=south,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/south_south"
+    },
+    "facing=south,secondary=west,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/south_north"
+    },
+    "facing=south,secondary=west,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/south_west"
+    },
+    "facing=south,secondary=east,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/south_north"
+    },
+    "facing=south,secondary=east,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/south_east"
+    },
+    "facing=west,secondary=down,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/west_east"
+    },
+    "facing=west,secondary=down,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/west_down"
+    },
+    "facing=west,secondary=up,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/west_east"
+    },
+    "facing=west,secondary=up,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/west_up"
+    },
+    "facing=west,secondary=north,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/west_east"
+    },
+    "facing=west,secondary=north,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/west_north"
+    },
+    "facing=west,secondary=south,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/west_east"
+    },
+    "facing=west,secondary=south,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/west_south"
+    },
+    "facing=west,secondary=west,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/west_east"
+    },
+    "facing=west,secondary=west,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/west_west"
+    },
+    "facing=west,secondary=east,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/west_east"
+    },
+    "facing=west,secondary=east,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/west_east"
+    },
+    "facing=east,secondary=down,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/east_west"
+    },
+    "facing=east,secondary=down,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/east_down"
+    },
+    "facing=east,secondary=up,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/east_west"
+    },
+    "facing=east,secondary=up,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/east_up"
+    },
+    "facing=east,secondary=north,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/east_west"
+    },
+    "facing=east,secondary=north,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/east_north"
+    },
+    "facing=east,secondary=south,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/east_west"
+    },
+    "facing=east,secondary=south,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/east_south"
+    },
+    "facing=east,secondary=west,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/east_west"
+    },
+    "facing=east,secondary=west,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/east_west"
+    },
+    "facing=east,secondary=east,secondary_set=false": {
+      "model": "gregtech:block/logistics/filter_slots/east_west"
+    },
+    "facing=east,secondary=east,secondary_set=true": {
+      "model": "gregtech:block/logistics/filter_slots/east_east"
+    }
+  }
+}

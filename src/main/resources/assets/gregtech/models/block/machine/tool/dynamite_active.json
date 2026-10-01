@@ -1,0 +1,99 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "forge:composite",
+  "textures": {
+    "particle": "gregtech:block/machines/tools/dynamite/colored/side"
+  },
+  "children": {
+    "colored": {
+      "textures": {
+        "front": "gregtech:block/machines/tools/dynamite/colored_active/front",
+        "back": "gregtech:block/machines/tools/dynamite/colored_active/back",
+        "side": "gregtech:block/machines/tools/dynamite/colored_active/side"
+      },
+      "elements": [
+        {
+          "from": [
+            5,
+            5,
+            0
+          ],
+          "to": [
+            11,
+            11,
+            16
+          ],
+          "faces": {
+            "north": {
+              "texture": "#front",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#back",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#side",
+              "tintindex": 0
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    },
+    "overlay": {
+      "textures": {
+        "front": "gregtech:block/machines/tools/dynamite/overlay_active/front",
+        "back": "gregtech:block/machines/tools/dynamite/overlay_active/back",
+        "side": "gregtech:block/machines/tools/dynamite/overlay_active/side"
+      },
+      "elements": [
+        {
+          "from": [
+            5,
+            5,
+            0
+          ],
+          "to": [
+            11,
+            11,
+            16
+          ],
+          "faces": {
+            "north": {
+              "texture": "#front"
+            },
+            "south": {
+              "texture": "#back"
+            },
+            "east": {
+              "texture": "#side"
+            },
+            "west": {
+              "texture": "#side"
+            },
+            "up": {
+              "texture": "#side"
+            },
+            "down": {
+              "texture": "#side"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "type": "gregtech:tool_shaped",
+  "allow_mirror": false,
+  "pattern": [
+    "WxW",
+    "BCB",
+    "BPB"
+  ],
+  "key": {
+    "x": {
+      "item": "gregtech:tool_wire_cutter"
+    },
+    "P": {
+      "item": "gregtech:plate_batteryalloy"
+    },
+    "B": {
+      "item": "gregtech:lead_acid_cell_filled"
+    },
+    "W": {
+      "item": "gregtech:cable_01_gold"
+    },
+    "C": {
+      "tag": "gregtech:circuits_tier_3_plus"
+    }
+  },
+  "result": {
+    "item": "gregtech:battery_lead_acid_hv"
+  }
+}

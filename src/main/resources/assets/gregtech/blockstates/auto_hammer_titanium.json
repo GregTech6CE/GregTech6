@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "gregtech:block/misc/auto_hammer_titanium"
+    },
+    "facing=east": {
+      "model": "gregtech:block/misc/auto_hammer_titanium",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "gregtech:block/misc/auto_hammer_titanium",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "gregtech:block/misc/auto_hammer_titanium",
+      "y": 270
+    },
+    "facing=up": {
+      "model": "gregtech:block/misc/auto_hammer_titanium",
+      "x": 270
+    },
+    "facing=down": {
+      "model": "gregtech:block/misc/auto_hammer_titanium",
+      "x": 90
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "stage=0": {
+      "model": "gregtech:block/wood/sapling_blue_mahoe"
+    },
+    "stage=1": {
+      "model": "gregtech:block/wood/sapling_blue_mahoe"
+    }
+  }
+}

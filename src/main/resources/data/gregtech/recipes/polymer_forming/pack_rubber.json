@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/rubber"
+    },
+    {
+      "tag": "forge:nuggets/rubber"
+    },
+    {
+      "tag": "forge:nuggets/rubber"
+    },
+    {
+      "tag": "forge:nuggets/rubber"
+    },
+    {
+      "tag": "forge:nuggets/rubber"
+    },
+    {
+      "tag": "forge:nuggets/rubber"
+    },
+    {
+      "tag": "forge:nuggets/rubber"
+    },
+    {
+      "tag": "forge:nuggets/rubber"
+    },
+    {
+      "tag": "forge:nuggets/rubber"
+    }
+  ],
+  "result": {
+    "item": "gregtech:ingot_rubber",
+    "count": 1
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "XRY",
+    "CMG",
+    "YSX"
+  ],
+  "key": {
+    "C": {
+      "item": "gregtech:circuit_advanced"
+    },
+    "G": {
+      "tag": "forge:gears/stainless_steel"
+    },
+    "M": {
+      "item": "gregtech:casing_machine_quadruple_stainlesssteel"
+    },
+    "R": {
+      "item": "gregtech:rotor_stainlesssteel"
+    },
+    "S": {
+      "item": "gregtech:spring_stainlesssteel"
+    },
+    "X": {
+      "item": "gregtech:pipe_medium_stainless_steel"
+    },
+    "Y": {
+      "item": "gregtech:item_pipe_medium_platinum"
+    }
+  },
+  "result": {
+    "item": "gregtech:universal_extender"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

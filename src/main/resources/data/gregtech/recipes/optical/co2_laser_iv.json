@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "LLL",
+    "LWL",
+    "CMC"
+  ],
+  "key": {
+    "L": {
+      "item": "gregtech:laser_emitter_carbondioxide"
+    },
+    "W": {
+      "item": "gregtech:cable_04_platinum"
+    },
+    "C": {
+      "item": "gregtech:circuit_master"
+    },
+    "M": {
+      "item": "gregtech:casing_machine_titanium"
+    }
+  },
+  "result": {
+    "item": "gregtech:co2_laser_iv"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:wire_02_lead"
+    },
+    {
+      "item": "gregtech:wire_02_lead"
+    },
+    {
+      "item": "gregtech:wire_02_lead"
+    },
+    {
+      "item": "gregtech:wire_02_lead"
+    },
+    {
+      "item": "gregtech:wire_02_lead"
+    },
+    {
+      "item": "gregtech:wire_02_lead"
+    },
+    {
+      "item": "gregtech:wire_02_lead"
+    },
+    {
+      "item": "gregtech:wire_02_lead"
+    }
+  ],
+  "result": {
+    "item": "gregtech:wire_16_lead",
+    "count": 1
+  }
+}

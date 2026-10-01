@@ -1,0 +1,72 @@
+package com.gregtech.gregtech.blockentity.inventory;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.Containers;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+
+/** GT6 Locker block entity: stores one armor set (head/chest/legs/feet). */
+public class LockerBlockEntity extends BlockEntity {
+
+    private static final EquipmentSlot[] SLOTS = {
+            EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
+
+    private final ItemStack[] armor = {ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY};
+
+    public LockerBlockEntity(BlockPos pos, BlockState state) {
+        super(com.gregtech.gregtech.registry.GTBlockEntities.LOCKER.get(), pos, state);
+    }
+
+    /** Swap the player's worn armor with the stored set (GT6 locker behavior). */
+    public void swapArmor(Player player) {
+        for (int i = 0; i < SLOTS.length; i++) {
+            ItemStack worn = player.getItemBySlot(SLOTS[i]);
+            player.setItemSlot(SLOTS[i], armor[i]);
+            armor[i] = worn;
+        }
+        if (level != null) {
+            level.playSound(null, worldPosition, SoundEvents.ARMOR_EQUIP_IRON,
+                    SoundSource.BLOCKS, 1.0F, 1.0F);
+        }
+        setChanged();
+    }
+
+    public void dropContents() {
+        if (level == null) return;
+        for (int i = 0; i < armor.length; i++) {
+            if (!armor[i].isEmpty()) {
+                Containers.dropItemStack(level, worldPosition.getX() + 0.5,
+                        worldPosition.getY() + 0.5, worldPosition.getZ() + 0.5, armor[i]);
+                armor[i] = ItemStack.EMPTY;
+            }
+        }
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+        ListTag list = new ListTag();
+        for (ItemStack stack : armor) {
+            list.add(stack.save(new CompoundTag()));
+        }
+        tag.put("gt.armor", list);
+    }
+
+    @Override
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        if (tag.contains("gt.armor")) {
+            ListTag list = tag.getList("gt.armor", 10);
+            for (int i = 0; i < armor.length && i < list.size(); i++) {
+                armor[i] = ItemStack.of(list.getCompound(i));
+            }
+        }
+    }
+}

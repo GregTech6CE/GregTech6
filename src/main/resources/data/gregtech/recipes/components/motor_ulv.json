@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CWR",
+    "WIW",
+    "PWC"
+  ],
+  "key": {
+    "C": {
+      "item": "gregtech:cable_01_lead"
+    },
+    "W": {
+      "item": "gregtech:wire_fine_copper"
+    },
+    "R": {
+      "tag": "forge:rods/tin_alloy"
+    },
+    "P": {
+      "item": "gregtech:plate_curved_tinalloy"
+    },
+    "I": {
+      "tag": "forge:bolts/iron_magnetic"
+    }
+  },
+  "result": {
+    "item": "gregtech:compact_electric_motor_ulv",
+    "count": 1
+  }
+}

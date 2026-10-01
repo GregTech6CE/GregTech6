@@ -1,0 +1,27 @@
+{
+  "type": "gregtech:tool_shaped",
+  "_comment": "GT6 Loader_MultiTileEntities:2235",
+  "pattern": [
+    " S ",
+    "PGP",
+    "DGD"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:string"
+    },
+    "P": {
+      "item": "minecraft:paper"
+    },
+    "G": {
+      "item": "gregtech:dust_gunpowder"
+    },
+    "D": {
+      "item": "gregtech:dust_silicondioxide"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gregtech:boomstick"
+  }
+}

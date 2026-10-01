@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "gregtech:block/stones/gt.stone.oilshale/smooth",
+    "top": "gregtech:block/stones/gt.stone.oilshale/smooth",
+    "side": "gregtech:block/stones/gt.stone.oilshale/smooth"
+  }
+}

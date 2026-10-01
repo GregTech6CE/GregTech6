@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "item": "gregtech:tungsten_wall" }
+  ],
+  "result": {
+    "item": "gregtech:lightning_rod_wall"
+  }
+}

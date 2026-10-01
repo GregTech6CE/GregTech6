@@ -1,0 +1,34 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "PwP",
+    "BMC",
+    "PEP"
+  ],
+  "key": {
+    "P": {
+      "item": "gregtech:plate_dense_adamantium"
+    },
+    "w": {
+      "item": "gregtech:tool_wrench"
+    },
+    "B": {
+      "tag": "gregtech:rechargeable_batteries/ev"
+    },
+    "M": {
+      "item": "gregtech:vibramantium_steam_turbine_main_housing"
+    },
+    "C": {
+      "tag": "gregtech:circuits_tier_6_plus"
+    },
+    "E": {
+      "item": "gregtech:compact_electric_motor_ev"
+    }
+  },
+  "result": {
+    "item": "gregtech:vibramantium_gas_turbine_main_housing",
+    "count": 1
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

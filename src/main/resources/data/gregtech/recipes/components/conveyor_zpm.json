@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "RRR",
+    "MCM",
+    "RRR"
+  ],
+  "key": {
+    "R": {
+      "tag": "forge:plates/rubber"
+    },
+    "M": {
+      "item": "gregtech:compact_electric_motor_zpm"
+    },
+    "C": {
+      "item": "gregtech:wire_01_graphene"
+    }
+  },
+  "result": {
+    "item": "gregtech:compact_electric_conveyor_zpm",
+    "count": 1
+  }
+}

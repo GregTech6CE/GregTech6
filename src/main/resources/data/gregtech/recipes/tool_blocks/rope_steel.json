@@ -1,0 +1,21 @@
+{
+  "type": "gregtech:tool_shaped",
+  "_comment": "GT6 Loader_MultiTileEntities:2091",
+  "pattern": [
+    " P",
+    "PP",
+    "Px"
+  ],
+  "key": {
+    "P": {
+      "item": "gregtech:wire_fine_steel"
+    },
+    "x": {
+      "item": "gregtech:tool_wire_cutter"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gregtech:rope_steel"
+  }
+}

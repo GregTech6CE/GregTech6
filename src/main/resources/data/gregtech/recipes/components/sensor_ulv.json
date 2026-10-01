@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "P Q",
+    "PS ",
+    "CPP"
+  ],
+  "key": {
+    "P": {
+      "item": "gregtech:plate_curved_tinalloy"
+    },
+    "Q": {
+      "tag": "forge:gems/quartz"
+    },
+    "S": {
+      "item": "gregtech:wire_01_lead"
+    },
+    "C": {
+      "item": "gregtech:integrated_circuit_0"
+    }
+  },
+  "result": {
+    "item": "gregtech:compact_sensor_ulv",
+    "count": 1
+  }
+}

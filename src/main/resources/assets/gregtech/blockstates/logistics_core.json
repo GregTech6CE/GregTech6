@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "facing=north": { "model": "gregtech:block/machine/logistics_core" },
+    "facing=south": { "model": "gregtech:block/machine/logistics_core", "y": 180 },
+    "facing=west": { "model": "gregtech:block/machine/logistics_core", "y": 270 },
+    "facing=east": { "model": "gregtech:block/machine/logistics_core", "y": 90 },
+    "facing=up": { "model": "gregtech:block/machine/logistics_core", "x": 270 },
+    "facing=down": { "model": "gregtech:block/machine/logistics_core", "x": 90 }
+  }
+}

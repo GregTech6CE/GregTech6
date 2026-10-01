@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "block/iconsets/gearbox",
+    "down": "block/iconsets/gearbox",
+    "up": "block/iconsets/gearbox",
+    "north": "block/iconsets/gearbox",
+    "south": "block/iconsets/gearbox",
+    "west": "block/iconsets/gearbox",
+    "east": "block/iconsets/gearbox"
+  }
+}

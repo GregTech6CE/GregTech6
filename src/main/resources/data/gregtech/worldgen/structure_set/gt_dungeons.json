@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "gregtech:gt_dungeon_lattice",
+    "spacing": 11,
+    "separation": 0,
+    "salt": 0
+  },
+  "structures": [
+    {
+      "structure": "gregtech:gt_dungeon",
+      "weight": 1
+    }
+  ]
+}

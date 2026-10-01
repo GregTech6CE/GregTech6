@@ -1,0 +1,27 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "BXB",
+    "BQB",
+    "BCB"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:stone_button"
+    },
+    "C": {
+      "item": "gregtech:circuit_basic"
+    },
+    "Q": {
+      "item": "gregtech:blank_cover"
+    },
+    "X": {
+      "item": "gregtech:integrated_circuit_0"
+    }
+  },
+  "result": {
+    "item": "gregtech:button_panel_selector"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

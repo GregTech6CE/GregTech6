@@ -1,0 +1,53 @@
+{
+  "type": "gregtech:tool_shaped",
+  "_comment": "GT6 MultiItemTechnological:822",
+  "pattern": [
+    "PLT",
+    "dRW",
+    "TCP"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:plates/titanium"
+    },
+    "L": {
+      "item": "gregtech:laser_emitter_helium"
+    },
+    "T": {
+      "tag": "forge:screws/titanium"
+    },
+    "d": {
+      "item": "gregtech:tool_screwdriver"
+    },
+    "R": {
+      "tag": "minecraft:music_discs"
+    },
+    "W": {
+      "item": "gregtech:usb4_cable"
+    },
+    "C": [
+      {
+        "item": "gregtech:circuit_basic"
+      },
+      {
+        "item": "gregtech:circuit_good"
+      },
+      {
+        "item": "gregtech:circuit_advanced"
+      },
+      {
+        "item": "gregtech:circuit_elite"
+      },
+      {
+        "item": "gregtech:circuit_master"
+      },
+      {
+        "item": "gregtech:circuit_ultimate"
+      }
+    ]
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gregtech:usb4_hdd"
+  }
+}

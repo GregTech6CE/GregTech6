@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "gregtech:block/machine/energy/solar_panel_germanium"
+    },
+    "facing=east": {
+      "model": "gregtech:block/machine/energy/solar_panel_germanium"
+    },
+    "facing=south": {
+      "model": "gregtech:block/machine/energy/solar_panel_germanium"
+    },
+    "facing=west": {
+      "model": "gregtech:block/machine/energy/solar_panel_germanium"
+    },
+    "facing=up": {
+      "model": "gregtech:block/machine/energy/solar_panel_germanium"
+    },
+    "facing=down": {
+      "model": "gregtech:block/machine/energy/solar_panel_germanium"
+    }
+  }
+}

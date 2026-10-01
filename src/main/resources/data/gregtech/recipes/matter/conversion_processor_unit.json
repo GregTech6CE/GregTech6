@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PCP",
+    "CMC",
+    "PCP"
+  ],
+  "key": {
+    "P": {
+      "item": "gregtech:crystal_processor_sapphire"
+    },
+    "C": {
+      "item": "gregtech:circuit_ultimate"
+    },
+    "M": {
+      "item": "gregtech:casing_machine_steelgalvanized"
+    }
+  },
+  "result": {
+    "item": "gregtech:conversion_processor_unit"
+  }
+}

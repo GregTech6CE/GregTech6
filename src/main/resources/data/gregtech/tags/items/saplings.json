@@ -1,0 +1,31 @@
+{
+  "replace": false,
+  "values": [
+    "gregtech:sapling_blue_mahoe",
+    "gregtech:sapling_ebony",
+    "gregtech:sapling_large_bluemahoe",
+    "gregtech:sapling_large_bluespruce",
+    "gregtech:sapling_large_cinnamon",
+    "gregtech:sapling_large_coconut",
+    "gregtech:sapling_large_hazel",
+    "gregtech:sapling_large_maple",
+    "gregtech:sapling_large_rainbowood",
+    "gregtech:sapling_large_rubber",
+    "gregtech:sapling_large_willow",
+    "gregtech:sapling_maple",
+    "gregtech:sapling_pine",
+    "gregtech:sapling_rainbowood",
+    "gregtech:sapling_rubber",
+    "gregtech:sapling_small_bluemahoe",
+    "gregtech:sapling_small_bluespruce",
+    "gregtech:sapling_small_cinnamon",
+    "gregtech:sapling_small_coconut",
+    "gregtech:sapling_small_hazel",
+    "gregtech:sapling_small_maple",
+    "gregtech:sapling_small_rainbowood",
+    "gregtech:sapling_small_rubber",
+    "gregtech:sapling_small_willow",
+    "gregtech:sapling_white_mahoe",
+    "gregtech:sapling_willow"
+  ]
+}

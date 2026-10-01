@@ -1,0 +1,29 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "gregtech:block/machine/sensor/kilobucketometer"
+    },
+    "facing=east": {
+      "model": "gregtech:block/machine/sensor/kilobucketometer",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "gregtech:block/machine/sensor/kilobucketometer",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "gregtech:block/machine/sensor/kilobucketometer",
+      "y": 270
+    },
+    "facing=up": {
+      "model": "gregtech:block/machine/sensor/kilobucketometer",
+      "x": 270,
+      "y": 180
+    },
+    "facing=down": {
+      "model": "gregtech:block/machine/sensor/kilobucketometer",
+      "x": 90,
+      "y": 180
+    }
+  }
+}

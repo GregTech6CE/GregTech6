@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP",
+    "PMP",
+    "PPP"
+  ],
+  "key": {
+    "M": {
+      "item": "gregtech:co2_laser_lv"
+    },
+    "P": {
+      "tag": "forge:plates/lead"
+    }
+  },
+  "result": {
+    "item": "gregtech:flux_laser_lv"
+  }
+}

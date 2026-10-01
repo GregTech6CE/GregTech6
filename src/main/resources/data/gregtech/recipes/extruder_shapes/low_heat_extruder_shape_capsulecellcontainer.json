@@ -1,0 +1,21 @@
+{
+  "type": "gregtech:tool_shaped",
+  "allow_mirror": false,
+  "pattern": [
+    "   ",
+    " P ",
+    "  x"
+  ],
+  "key": {
+    "P": {
+      "item": "gregtech:low_heat_extruder_shape_ring"
+    },
+    "x": {
+      "item": "gregtech:tool_wire_cutter"
+    }
+  },
+  "result": {
+    "item": "gregtech:low_heat_extruder_shape_capsulecellcontainer",
+    "count": 1
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "forge:composite",
+  "textures": {
+    "particle": "gregtech:block/machines/multiblockparts/processorlogic/0/colored/side"
+  },
+  "children": {
+    "base": {
+      "parent": "minecraft:block/block",
+      "render_type": "minecraft:cutout",
+      "textures": {
+        "up": "gregtech:block/machines/multiblockparts/processorlogic/0/colored/top",
+        "down": "gregtech:block/machines/multiblockparts/processorlogic/0/colored/bottom",
+        "north": "gregtech:block/machines/multiblockparts/processorlogic/0/colored/side",
+        "south": "gregtech:block/machines/multiblockparts/processorlogic/0/colored/side",
+        "east": "gregtech:block/machines/multiblockparts/processorlogic/0/colored/side",
+        "west": "gregtech:block/machines/multiblockparts/processorlogic/0/colored/side"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "up": {
+              "texture": "#up",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#down",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#north",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#south",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#east",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#west",
+              "tintindex": 0
+            }
+          }
+        }
+      ]
+    },
+    "overlay": {
+      "parent": "minecraft:block/block",
+      "render_type": "minecraft:cutout",
+      "textures": {
+        "up": "gregtech:block/machines/multiblockparts/processorlogic/0/overlay/top",
+        "down": "gregtech:block/machines/multiblockparts/processorlogic/0/overlay/bottom",
+        "north": "gregtech:block/machines/multiblockparts/processorlogic/0/overlay/side",
+        "south": "gregtech:block/machines/multiblockparts/processorlogic/0/overlay/side",
+        "east": "gregtech:block/machines/multiblockparts/processorlogic/0/overlay/side",
+        "west": "gregtech:block/machines/multiblockparts/processorlogic/0/overlay/side"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "up": {
+              "texture": "#up"
+            },
+            "down": {
+              "texture": "#down"
+            },
+            "north": {
+              "texture": "#north"
+            },
+            "south": {
+              "texture": "#south"
+            },
+            "east": {
+              "texture": "#east"
+            },
+            "west": {
+              "texture": "#west"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

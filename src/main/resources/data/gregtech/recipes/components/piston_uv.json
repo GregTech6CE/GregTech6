@@ -1,0 +1,34 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "TPP",
+    "dSS",
+    "TMG"
+  ],
+  "key": {
+    "T": {
+      "tag": "forge:screws/trinitanium"
+    },
+    "P": {
+      "tag": "forge:plates/trinitanium"
+    },
+    "d": {
+      "item": "gregtech:tool_screwdriver"
+    },
+    "S": {
+      "tag": "forge:rods/trinitanium"
+    },
+    "M": {
+      "item": "gregtech:compact_electric_motor_uv"
+    },
+    "G": {
+      "item": "gregtech:gear_gt_small_trinitanium"
+    }
+  },
+  "result": {
+    "item": "gregtech:compact_electric_piston_uv",
+    "count": 1
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

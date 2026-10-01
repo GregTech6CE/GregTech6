@@ -1,0 +1,14 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": ["UPU", "TMT", "UdU"],
+  "key": {
+    "P": {"item": "gregtech:crystal_processor_emerald"},
+    "T": {"tag": "forge:screws/steel_galvanized"},
+    "M": {"item": "gregtech:casing_machine_steelgalvanized"},
+    "U": {"item": "gregtech:usb3_cable"},
+    "d": {"item": "gregtech:tool_screwdriver"}
+  },
+  "result": {"item": "gregtech:usb_switch"},
+  "allow_mirror": false,
+  "_comment": "GT6 Loader_MultiTileEntities:1132"
+}

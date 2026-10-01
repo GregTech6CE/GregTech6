@@ -1,0 +1,8 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#minecraft:is_nether",
+  "features": [
+    "gregtech:gt_bedrock_ores"
+  ],
+  "step": "underground_ores"
+}
