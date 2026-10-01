@@ -248,109 +248,15 @@ public abstract class EngineBaseBlockEntity extends GTEnergyBlockEntity {
         return rotateAbsoluteToRelative(facing(), side);
     }
 
-    /** Convert a machine-relative face index back to a world {@link Direction}. */
+    /** Inverse of the same shared capability-side mapping, including vertical engines. */
     protected Direction relativeToAbsolute(int relDir) {
-        if (relDir == FaceConfig.BOTTOM) return Direction.DOWN;
-        if (relDir == FaceConfig.TOP)    return Direction.UP;
-        Direction f = facing();
-        return switch (f) {
-            case NORTH -> switch (relDir) {
-                case FaceConfig.LEFT  -> Direction.WEST;
-                case FaceConfig.RIGHT -> Direction.EAST;
-                case FaceConfig.FRONT -> Direction.NORTH;
-                case FaceConfig.BACK  -> Direction.SOUTH;
-                default -> Direction.NORTH;
-            };
-            case SOUTH -> switch (relDir) {
-                case FaceConfig.LEFT  -> Direction.EAST;
-                case FaceConfig.RIGHT -> Direction.WEST;
-                case FaceConfig.FRONT -> Direction.SOUTH;
-                case FaceConfig.BACK  -> Direction.NORTH;
-                default -> Direction.SOUTH;
-            };
-            case WEST -> switch (relDir) {
-                case FaceConfig.LEFT  -> Direction.SOUTH;
-                case FaceConfig.RIGHT -> Direction.NORTH;
-                case FaceConfig.FRONT -> Direction.WEST;
-                case FaceConfig.BACK  -> Direction.EAST;
-                default -> Direction.WEST;
-            };
-            case EAST -> switch (relDir) {
-                case FaceConfig.LEFT  -> Direction.NORTH;
-                case FaceConfig.RIGHT -> Direction.SOUTH;
-                case FaceConfig.FRONT -> Direction.EAST;
-                case FaceConfig.BACK  -> Direction.WEST;
-                default -> Direction.EAST;
-            };
-            case UP -> switch (relDir) {
-                case FaceConfig.LEFT  -> Direction.WEST;
-                case FaceConfig.RIGHT -> Direction.EAST;
-                case FaceConfig.FRONT -> Direction.UP;
-                case FaceConfig.BACK  -> Direction.DOWN;
-                default -> Direction.UP;
-            };
-            case DOWN -> switch (relDir) {
-                case FaceConfig.LEFT  -> Direction.WEST;
-                case FaceConfig.RIGHT -> Direction.EAST;
-                case FaceConfig.FRONT -> Direction.DOWN;
-                case FaceConfig.BACK  -> Direction.UP;
-                default -> Direction.DOWN;
-            };
-        };
+        return Direction.from3DDataValue(com.gregtech.gregtech.api.energy.EngineFaceRotation.toWorld(
+                facing().get3DDataValue(), relDir));
     }
 
-    /** Transform an absolute world {@link Direction} to a machine-relative face index,
-     *  given the block's facing (the direction the machine front points toward).
-     *  Extended for 6-way {@link net.minecraft.world.level.block.DirectionalBlock}. */
+    /** Retains the existing entry-face convention on both platforms. */
     static int rotateAbsoluteToRelative(Direction facing, Direction side) {
-        if (side == Direction.DOWN) {
-            return switch (facing) {
-                case DOWN -> FaceConfig.FRONT;
-                case UP   -> FaceConfig.BACK;
-                default   -> FaceConfig.BOTTOM;
-            };
-        }
-        if (side == Direction.UP) {
-            return switch (facing) {
-                case UP   -> FaceConfig.FRONT;
-                case DOWN -> FaceConfig.BACK;
-                default   -> FaceConfig.TOP;
-            };
-        }
-        return switch (facing) {
-            case NORTH -> switch (side) {
-                case NORTH -> FaceConfig.FRONT; case SOUTH -> FaceConfig.BACK;
-                case WEST  -> FaceConfig.RIGHT; case EAST  -> FaceConfig.LEFT;
-                default -> side.get3DDataValue();
-            };
-            case SOUTH -> switch (side) {
-                case SOUTH -> FaceConfig.FRONT; case NORTH -> FaceConfig.BACK;
-                case EAST  -> FaceConfig.RIGHT; case WEST  -> FaceConfig.LEFT;
-                default -> side.get3DDataValue();
-            };
-            case WEST -> switch (side) {
-                case WEST  -> FaceConfig.FRONT; case EAST  -> FaceConfig.BACK;
-                case SOUTH -> FaceConfig.RIGHT; case NORTH -> FaceConfig.LEFT;
-                default -> side.get3DDataValue();
-            };
-            case EAST -> switch (side) {
-                case EAST  -> FaceConfig.FRONT; case WEST  -> FaceConfig.BACK;
-                case NORTH -> FaceConfig.RIGHT; case SOUTH -> FaceConfig.LEFT;
-                default -> side.get3DDataValue();
-            };
-            case UP -> switch (side) {
-                case UP    -> FaceConfig.FRONT; case DOWN  -> FaceConfig.BACK;
-                case WEST  -> FaceConfig.LEFT;  case EAST  -> FaceConfig.RIGHT;
-                case NORTH -> FaceConfig.TOP;   case SOUTH -> FaceConfig.BOTTOM;
-                default -> side.get3DDataValue();
-            };
-            case DOWN -> switch (side) {
-                case DOWN  -> FaceConfig.FRONT; case UP    -> FaceConfig.BACK;
-                case WEST  -> FaceConfig.LEFT;  case EAST  -> FaceConfig.RIGHT;
-                case NORTH -> FaceConfig.TOP;   case SOUTH -> FaceConfig.BOTTOM;
-                default -> side.get3DDataValue();
-            };
-        };
+        return com.gregtech.gregtech.api.energy.EngineFaceRotation.toRelative(
+                facing.get3DDataValue(), side.get3DDataValue());
     }
-
 }

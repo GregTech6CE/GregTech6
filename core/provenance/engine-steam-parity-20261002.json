@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-02",
+  "integration_base": "4914a00244da2096aa5362987c650108b61f97c3",
+  "scope": "Shared inverse engine face mapping; retained specifications and entry-side convention; no donor subsystem addition",
+  "source": {
+    "author": "saltnya and retained original GregTech 6 contributors",
+    "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\EngineBaseBlockEntity.java",
+    "sha256": "30e4d19bfebcf1efe69f3d822e1fb2c54667322f8baf85d9524f0aefc049ecf0"
+  },
+  "targets": [
+    {
+      "path": "src/main/java/com/gregtech/gregtech/blockentity/machine/EngineBaseBlockEntity.java",
+      "base_git_blob_sha256": "ed257541dc5bfc61c7894747c6c0f5025601013faffef40895c2bbfc15111027",
+      "current_file_sha256": "ec3d4275d75024649a1a22fd584a4fba7dc4eba85ed2a1d8a2fcca0a7017ecaa"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/EngineBaseBlockEntity.java",
+      "base_git_blob_sha256": "bd4761b8245a54ee7bbf5c3ad82224fb20d393599ba363249ca0efbb5dec9c74",
+      "current_file_sha256": "1902dfce18f3242bfc66ff81e91416188a0adc7e9513501ed369aa88d10db92b"
+    }
+  ],
+  "shared_rule": {
+    "path": "core/src/main/java/com/gregtech/gregtech/api/energy/EngineFaceRotation.java",
+    "sha256": "4f58c533132c5d80ed1a2e5308db288ee9a41e448ebcde202bc655ce60df7587",
+    "derived_from": "existing entry-face mapping in retained EngineBaseBlockEntity"
+  },
+  "selection": "Retain authoritative capability-side convention and use its exact inverse for exhaust neighbors. Current Native vertical condensate and cold-start physical steam chain validated; corresponding Forge runtime remains pending.",
+  "license_evidence": "native-engines-boilers-sandwich-integration.json; energy-source-integration.json; ../../../docs/integration/LICENSE_REVIEW.md; notices unchanged; no relicensing",
+  "verification": "../../../docs/integration/verification/engine-steam-parity-20261002.md"
+}

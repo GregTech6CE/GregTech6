@@ -47,8 +47,9 @@ public final class NeoForgeDedicatedSmoke {
     private static final boolean ENABLED = !PHASE.isEmpty();
     private static final boolean SMELTERY_WORLD = Boolean.getBoolean("gregtech.integration.smelteryWorldSmoke");
     private static final boolean MACHINE_WORLD = Boolean.getBoolean("gregtech.integration.machineWorldSmoke");
+    private static final boolean STEAM_CHAIN = Boolean.getBoolean("gregtech.integration.steamChainSmoke");
     private static final String SESSION_ID = UUID.randomUUID().toString();
-    private static final int REQUIRED_TICKS = 200;
+    private static final int REQUIRED_TICKS = STEAM_CHAIN && "prepare".equals(PHASE) ? 12000 : 200;
     private static final AtomicBoolean TERMINAL = new AtomicBoolean();
     private static volatile MinecraftServer activeServer;
     private static volatile ScheduledExecutorService watchdog;
@@ -100,6 +101,11 @@ public final class NeoForgeDedicatedSmoke {
                 prepare(level);
                 verifyWorld(level);
                 LOGGER.info("SERVER_SMOKE_PREPARED {}", identity());
+                if (STEAM_CHAIN) {
+                    // Sprint ordinary world ticks; do not inject heat/KU or manually tick machines.
+                    activeServer.getCommands().performPrefixedCommand(activeServer.createCommandSourceStack(),
+                            "tick sprint " + REQUIRED_TICKS);
+                }
             } else {
                 // Never create/repair the specimen in verify: it must have loaded from disk.
                 verifyWorld(level);
@@ -151,6 +157,7 @@ public final class NeoForgeDedicatedSmoke {
         chest.setChanged();
         if (SMELTERY_WORLD) prepareSmeltery(level);
         if (MACHINE_WORLD) prepareMachines(level);
+        if (STEAM_CHAIN) prepareSteamChain(level);
     }
 
     private static void verifyWorld(ServerLevel level) {
@@ -175,6 +182,143 @@ public final class NeoForgeDedicatedSmoke {
         }
         if (SMELTERY_WORLD) verifySmeltery(level);
         if (MACHINE_WORLD) verifyMachines(level);
+        if (STEAM_CHAIN && ("verify".equals(PHASE) || observedTicks >= REQUIRED_TICKS)) verifySteamChain(level);
+    }
+
+    private static net.minecraft.core.BlockPos steamBase() { return specimenPos.south(12); }
+
+    private static Block steamBlock(String id) {
+        var key = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech", id);
+        if (!net.minecraft.core.registries.BuiltInRegistries.BLOCK.containsKey(key))
+            throw new IllegalStateException("Missing steam-chain block " + key);
+        return net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(key);
+    }
+
+    private static void prepareSteamChain(ServerLevel level) {
+        var base = steamBase();
+        // A playerless dedicated world needs real ticking tickets, not just getChunk().
+        for (var pos : java.util.List.of(base, base.north(2), base.east(4)))
+            level.setChunkForced(pos.getX() >> 4, pos.getZ() >> 4, true);
+        var pipePos = base.above(2);
+        var enginePos = pipePos.north();
+        var machinePos = pipePos.north(2);
+        for (var pos : java.util.List.of(base, base.above(), pipePos, enginePos, machinePos, machinePos.below())) {
+            level.getChunk(pos);
+            if (!level.getBlockState(pos).isAir()) throw new IllegalStateException("Steam chain refuses to overwrite " + pos);
+        }
+        level.setBlockAndUpdate(base.below(), Blocks.STONE.defaultBlockState());
+        level.setBlockAndUpdate(base, steamBlock("burning_box_solid_dense_bronze").defaultBlockState());
+        level.setBlockAndUpdate(base.above(), steamBlock("strong_steam_boiler_bronze").defaultBlockState());
+        var pipe = steamBlock("pipe_medium_steel").defaultBlockState()
+                .setValue(com.gregtech.gregtech.block.machine.FluidPipeBlock.propFor(net.minecraft.core.Direction.DOWN), true)
+                .setValue(com.gregtech.gregtech.block.machine.FluidPipeBlock.propFor(net.minecraft.core.Direction.NORTH), true);
+        level.setBlockAndUpdate(pipePos, pipe);
+        level.setBlockAndUpdate(enginePos, steamBlock("engine_steam_strong_bronze").defaultBlockState()
+                .setValue(net.minecraft.world.level.block.DirectionalBlock.FACING, net.minecraft.core.Direction.NORTH));
+        level.setBlockAndUpdate(machinePos, steamBlock("crusher_bronze").defaultBlockState()
+                .setValue(net.minecraft.world.level.block.HorizontalDirectionalBlock.FACING, net.minecraft.core.Direction.NORTH));
+        level.setBlockAndUpdate(machinePos.below(), Blocks.CHEST.defaultBlockState());
+        var boiler = (com.gregtech.gregtech.blockentity.machine.BoilerTankBlockEntity) level.getBlockEntity(base.above());
+        if (boiler.storedHeat() != 0 || !boiler.steamTank().isEmpty()) throw new IllegalStateException("Boiler must start cold");
+        boiler.waterTank().fill(new net.neoforged.neoforge.fluids.FluidStack(
+                com.gregtech.gregtech.registry.GTFluids.still("DistW").get(), 4000),
+                net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE);
+        var waterPipePos = base.east().above();
+        var waterSourcePos = base.east(2).above(2);
+        for (var pos : java.util.List.of(waterPipePos, waterPipePos.east(), waterSourcePos)) {
+            if (!level.getBlockState(pos).isAir()) throw new IllegalStateException("Water supply refuses overwrite");
+        }
+        var waterPipe = steamBlock("pipe_medium_steel").defaultBlockState()
+                .setValue(com.gregtech.gregtech.block.machine.FluidPipeBlock.propFor(net.minecraft.core.Direction.EAST), true)
+                .setValue(com.gregtech.gregtech.block.machine.FluidPipeBlock.propFor(net.minecraft.core.Direction.WEST), true);
+        level.setBlockAndUpdate(waterPipePos, waterPipe);
+        level.setBlockAndUpdate(waterPipePos.east(), waterPipe
+                .setValue(com.gregtech.gregtech.block.machine.FluidPipeBlock.propFor(net.minecraft.core.Direction.EAST), false)
+                .setValue(com.gregtech.gregtech.block.machine.FluidPipeBlock.propFor(net.minecraft.core.Direction.UP), true));
+        level.setBlockAndUpdate(waterSourcePos, steamBlock("drum_bronze").defaultBlockState());
+        var waterSource = (com.gregtech.gregtech.blockentity.machine.TankBlockEntity) level.getBlockEntity(waterSourcePos);
+        if (waterSource.fill(new net.neoforged.neoforge.fluids.FluidStack(
+                com.gregtech.gregtech.registry.GTFluids.still("DistW").get(), 50000),
+                net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE) != 50000)
+            throw new IllegalStateException("Could not supply distilled water reserve");
+        waterSource.toggleAutoOutput();
+        var engine = (com.gregtech.gregtech.blockentity.machine.KineticSteamEngineBlockEntity) level.getBlockEntity(enginePos);
+        if (engine.getKuEnergy() != 0 || !engine.steamTank().isEmpty()) throw new IllegalStateException("Engine must start cold");
+        var machine = (com.gregtech.gregtech.blockentity.machine.BasicMachineBlockEntity) level.getBlockEntity(machinePos);
+        machine.inventory().setStackInSlot(0, machineFeed());
+        var box = (com.gregtech.gregtech.blockentity.machine.SolidBurningBoxBlockEntity) level.getBlockEntity(base);
+        var player = net.neoforged.neoforge.common.util.FakePlayerFactory.getMinecraft(level);
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new ItemStack(Items.COAL, 64));
+        var hit = new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(base),
+                net.minecraft.core.Direction.NORTH, base, false);
+        steamClick(level, player, hit);
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new ItemStack(Items.FLINT_AND_STEEL));
+        steamClick(level, player, hit);
+        if (!box.isBurning() || box.getFuelStack().isEmpty() || player.getMainHandItem().getDamageValue() != 1)
+            throw new IllegalStateException("Actual coal ignition/wear failed");
+        var verticalPos = base.east(4).above(2);
+        if (!level.getBlockState(verticalPos).isAir() || !level.getBlockState(verticalPos.north()).isAir())
+            throw new IllegalStateException("Vertical exhaust specimen refuses overwrite");
+        level.setBlockAndUpdate(verticalPos, steamBlock("engine_steam_bronze").defaultBlockState()
+                .setValue(net.minecraft.world.level.block.DirectionalBlock.FACING, net.minecraft.core.Direction.UP));
+        level.setBlockAndUpdate(verticalPos.north(), steamBlock("drum_bronze").defaultBlockState());
+        var verticalInlet = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,
+                verticalPos, net.minecraft.core.Direction.DOWN);
+        if (verticalInlet == null || verticalInlet.fill(new net.neoforged.neoforge.fluids.FluidStack(
+                com.gregtech.gregtech.registry.GTFluids.still("Steam").get(), 200),
+                net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE) != 200)
+            throw new IllegalStateException("Vertical engine back-face steam inlet failed");
+        // Covers/exhaust depend on both directions using the same six-way mapping.
+        for (int facing = 0; facing < 6; facing++) for (int side = 0; side < 6; side++) {
+            int relative = com.gregtech.gregtech.api.energy.EngineFaceRotation.toRelative(facing, side);
+            if (com.gregtech.gregtech.api.energy.EngineFaceRotation.toWorld(facing, relative) != side)
+                throw new IllegalStateException("Engine face round trip failed");
+        }
+    }
+
+    private static void verifySteamChain(ServerLevel level) {
+        var base = steamBase();
+        level.getChunk(base); level.getChunk(base.north(2));
+        var boiler = (com.gregtech.gregtech.blockentity.machine.BoilerTankBlockEntity) level.getBlockEntity(base.above());
+        var box = (com.gregtech.gregtech.blockentity.machine.SolidBurningBoxBlockEntity) level.getBlockEntity(base);
+        var machine = (com.gregtech.gregtech.blockentity.machine.BasicMachineBlockEntity) level.getBlockEntity(base.above(2).north(2));
+        var chest = (ChestBlockEntity) level.getBlockEntity(machine.getBlockPos().below());
+        var waterSource = (com.gregtech.gregtech.blockentity.machine.TankBlockEntity) level.getBlockEntity(base.east(2).above(2));
+        var recipe = machine.recipeMap().findRecipe(java.util.List.of(machineFeed()), java.util.List.of(),
+                false, machine.inputSlots(), machine.outputSlots());
+        if (recipe == null || !machine.inventory().getStackInSlot(0).isEmpty()
+                || machine.machineControl(null).progressMax() != 0 || waterSource.getFluidInTank(0).getAmount() >= 50000
+                || box.getFuelStack().getCount() >= 64 || box.getAshStack().isEmpty())
+            throw new IllegalStateException("Natural steam chain did not complete: water=" + boiler.waterTank().getAmount()
+                    + " progress=" + machine.machineControl(null).progress() + "/" + machine.machineControl(null).progressMax());
+        for (int output = 0; output < recipe.mOutputs.length; output++) {
+            var expected = recipe.mOutputs[output];
+            if (expected == null || expected.isEmpty()) continue;
+            if (recipe.getOutputChance(output) != 10000) throw new IllegalStateException("Expected deterministic recipe");
+            int found = 0;
+            for (int slot = machine.inputSlots(); slot < machine.inventory().getSlots(); slot++)
+                if (ItemStack.isSameItemSameComponents(expected, machine.inventory().getStackInSlot(slot)))
+                    found += machine.inventory().getStackInSlot(slot).getCount();
+            for (int slot = 0; slot < chest.getContainerSize(); slot++)
+                if (ItemStack.isSameItemSameComponents(expected, chest.getItem(slot))) found += chest.getItem(slot).getCount();
+            if (found != expected.getCount()) throw new IllegalStateException("Steam powered recipe output mismatch " + found);
+        }
+        var exhaust = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,
+                base.east(4).above(2).north(), net.minecraft.core.Direction.SOUTH);
+        var recovered = exhaust == null ? net.neoforged.neoforge.fluids.FluidStack.EMPTY : exhaust.getFluidInTank(0);
+        if (recovered.getAmount() != 1 || recovered.getFluid() != com.gregtech.gregtech.registry.GTFluids.still("DistW").get())
+            throw new IllegalStateException("Vertical engine failed to recover one-L north-side condensate");
+        LOGGER.info("STEAM_CHAIN_COMPLETE ordinaryTicks={} coldStart=true directEnergyInjection=false manualMachineTicks=false water={} coal={}",
+                observedTicks, boiler.waterTank().getAmount(), box.getFuelStack().getCount());
+    }
+
+    private static void steamClick(ServerLevel level, net.minecraft.world.entity.player.Player player,
+                                   net.minecraft.world.phys.BlockHitResult hit) {
+        var event = new net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.RightClickBlock(
+                player, net.minecraft.world.InteractionHand.MAIN_HAND, hit.getBlockPos(), hit);
+        net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(event);
+        if (!event.isCanceled()) level.getBlockState(hit.getBlockPos()).useItemOn(player.getMainHandItem(), level,
+                player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
     }
 
     private static void prepareSmeltery(ServerLevel level) {
@@ -366,7 +510,7 @@ public final class NeoForgeDedicatedSmoke {
             LOGGER.info("SERVER_SMOKE_STOPPED {}", identity());
             if (TERMINAL.get()) return;
             if (!stopRequested || !normalStoppingObserved || observedTicks != REQUIRED_TICKS) {
-                throw new IllegalStateException("Server stopped without the requested 200-tick normal lifecycle");
+                throw new IllegalStateException("Server stopped without the requested ordinary-tick normal lifecycle");
             }
             Path levelData = worldRoot.resolve("level.dat");
             Path region = worldRoot.resolve("region").resolve("r." + (specimenPos.getX() >> 9)
@@ -453,6 +597,7 @@ public final class NeoForgeDedicatedSmoke {
         result.addProperty("smelteryWorldChecked", SMELTERY_WORLD);
         result.addProperty("machineWorldChecked", MACHINE_WORLD);
         result.addProperty("machineJobCompleted", machineJobCompleted);
+        result.addProperty("steamChainChecked", STEAM_CHAIN);
         return result;
     }
 }
