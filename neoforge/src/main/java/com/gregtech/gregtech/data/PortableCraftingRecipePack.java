@@ -58,6 +58,7 @@ public final class PortableCraftingRecipePack extends AbstractPackResources {
             addOriginal(generated, file);
         com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original equipment crafting datapack: {} rows ({} retained equipment rows)",
                 generated.size(), com.gregtech.gregtech.content.recipe.EquipmentCraftingCatalog.FILES.size());
+        addOriginalToolTag(generated);
         resources=Map.copyOf(generated);
         return resources;
     }
@@ -82,6 +83,22 @@ public final class PortableCraftingRecipePack extends AbstractPackResources {
                 throw new IllegalStateException("Duplicate original equipment recipe " + id);
         } catch (java.io.IOException failure) {
             throw new java.io.UncheckedIOException(failure);
+        }
+    }
+
+    /** Original ingredient tags merge at native singular paths, preserving their values. */
+    private static void addOriginalToolTag(Map<ResourceLocation, byte[]> generated) {
+        for (String tag : com.gregtech.gregtech.content.recipe.EquipmentCraftingCatalog.TAGS) {
+            var key = ResourceLocation.parse(tag);
+            String path = "data/" + key.getNamespace() + "/tags/items/" + key.getPath() + ".json";
+            try (var stream = PortableCraftingRecipePack.class.getClassLoader().getResourceAsStream(path)) {
+                if (stream == null) throw new IllegalStateException("Missing shared ingredient tag " + path);
+                var id = ResourceLocation.fromNamespaceAndPath(key.getNamespace(), "tags/item/" + key.getPath() + ".json");
+                if (generated.putIfAbsent(id, stream.readAllBytes()) != null)
+                    throw new IllegalStateException("Duplicate original ingredient tag " + id);
+            } catch (java.io.IOException failure) {
+                throw new java.io.UncheckedIOException(failure);
+            }
         }
     }
 
@@ -112,7 +129,7 @@ public final class PortableCraftingRecipePack extends AbstractPackResources {
 
     @Override
     public Set<String> getNamespaces(PackType type) {
-        return type == PackType.SERVER_DATA ? Set.of("gregtech") : Set.of();
+        return type == PackType.SERVER_DATA ? Set.of("gregtech", "forge") : Set.of();
     }
 
     @Override

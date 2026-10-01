@@ -72,7 +72,7 @@ public final class NeoManualToolCheckpoint {
        .orElseThrow(()->new IllegalStateException("Missing retained equipment recipe "+id));
    require(!holder.value().getResultItem(level.registryAccess()).isEmpty(),"nonempty equipment result "+id);
    for(var ingredient:holder.value().getIngredients())
-    if(!ingredient.isEmpty())require(ingredient.getItems().length>0,"resolved equipment ingredient/tag "+id);
+    if(ingredient!=Ingredient.EMPTY)require(ingredient.getItems().length>0,"resolved equipment ingredient/tag "+id);
    loaded++;
   }
   ItemStack hammer=tool(GTToolType.HARD_HAMMER), wrench=tool(GTToolType.WRENCH);
@@ -125,6 +125,7 @@ public final class NeoManualToolCheckpoint {
       && reclaim.assemble(reclaimInput,level.registryAccess()).getCount()==7,"original seven-clay reclaim count");
   routingCrafting(level);
   manufacturingCrafting(level);
+  survivalCrafting(level);
   com.mojang.logging.LogUtils.getLogger().info("EQUIPMENT_CRAFTING_CHECKPOINT_SUCCESS loaded={} resolvedIngredients=true boiler=true burner=true transformer=true mirrorRejected=true clayFiringRecipe=true reclaimCount=7 wrenchWear=800 hammerWear=400",loaded);
  }
 
@@ -232,6 +233,54 @@ public final class NeoManualToolCheckpoint {
   var wireRemains=recipe(level,"extruder_shapes/extruder_shape_wire").getRemainingItems(wireInput);
   require(wireRemains.get(0).getDamageValue()==400 && wireRemains.get(1).isEmpty(),"previous rod shape consumed when cutting wire shape");
   com.mojang.logging.LogUtils.getLogger().info("MANUFACTURING_CRAFTING_CHECKPOINT_SUCCESS wireRecipes={} conductorAmountConserved=true materialFamilyPreserved=true blankToRodToWire=true toolsWorn=true previousShapeConsumed=true rodMirrorRejected=true rodUniqueAmong78=true network=true",wires);
+ }
+ private static void survivalCrafting(ServerLevel level) {
+  var gear=equipmentForm(MaterialPrefix.gearGtSmall,Materials.Iron);
+  var rod=equipmentForm(MaterialPrefix.stick,Materials.Iron);
+  var selectorInput=CraftingInput.of(3,3,List.of(gear.copy(),tool(GTToolType.HARD_HAMMER),gear.copy(),
+      rod.copy(),rod.copy(),rod.copy(),gear.copy(),tool(GTToolType.WRENCH),gear.copy()));
+  ItemStack selector=craft(level,"hand_components/integrated_circuit_0",selectorInput,"integrated_circuit_0");
+  var screwdriver=tool(GTToolType.SCREWDRIVER);
+  var configureInput=CraftingInput.of(2,2,List.of(screwdriver,ItemStack.EMPTY,ItemStack.EMPTY,selector));
+  var configure=recipe(level,"hand_components/integrated_circuit_1");
+  craft(level,"hand_components/integrated_circuit_1",configureInput,"integrated_circuit_1");
+  var configureRemains=configure.getRemainingItems(configureInput);
+  require(configureRemains.get(0).getDamageValue()==100 && configureRemains.get(3).isEmpty()
+      && screwdriver.getDamageValue()==0,"selector consumed and screwdriver worn without input mutation");
+  var mirrored=CraftingInput.of(2,2,List.of(ItemStack.EMPTY,screwdriver,selector,ItemStack.EMPTY));
+  require(!configure.matches(mirrored,level) && !network(configure,level).matches(mirrored,level),"selector no-mirror retained in packet");
+  var goldWire=equipmentItem("wire_01_gold");var goldCable=equipmentItem("cable_01_gold");
+  var aluminium=equipmentForm(MaterialPrefix.plate,Materials.Aluminium);
+  var screws=equipmentForm(MaterialPrefix.screw,Materials.Aluminium);
+  var usbInput=CraftingInput.of(3,3,List.of(tool(GTToolType.WIRE_CUTTER),goldWire,tool(GTToolType.SCREWDRIVER),
+      aluminium.copy(),goldCable.copy(),aluminium.copy(),screws.copy(),goldCable.copy(),screws.copy()));
+  craft(level,"hand_components/usb1_cable",usbInput,"usb1_cable");
+  var steelScrew=equipmentForm(MaterialPrefix.screw,Materials.Steel);
+  var steelRod=equipmentForm(MaterialPrefix.stick,Materials.Steel);
+  var scaffoldInput=CraftingInput.of(3,2,List.of(steelScrew.copy(),equipmentForm(MaterialPrefix.plate,Materials.Steel),
+      steelScrew.copy(),steelRod.copy(),tool(GTToolType.SCREWDRIVER),steelRod.copy()));
+  craft(level,"scaffolds/scaffold",scaffoldInput,"scaffold");
+  var plank=new ItemStack(Items.OAK_PLANKS);
+  var shelfInput=CraftingInput.of(3,3,List.of(plank.copy(),plank.copy(),plank.copy(),
+      tool(GTToolType.SAW),tool(GTToolType.FILE),tool(GTToolType.SOFT_HAMMER),plank.copy(),plank.copy(),plank.copy()));
+  craft(level,"bookshelves/bookshelf",shelfInput,"bookshelf");
+  var baleInput=CraftingInput.of(3,3,new ArrayList<ItemStack>(Collections.nCopies(9,equipmentItem("barley"))));
+  ItemStack bale=craft(level,"bales/bale_barley_pack",baleInput,"bale_barley");
+  var unpackInput=CraftingInput.of(1,1,List.of(bale));
+  require(craft(level,"bales/bale_barley_unpack",unpackInput,"barley").getCount()==9,"barley packing/unpacking count");
+  var blueSpruce=equipmentItem("planks_bluespruce");
+  for(var type:List.of(GTToolType.SAW,GTToolType.AXE,GTToolType.DOUBLE_AXE,GTToolType.UNIVERSAL_SPADE)) {
+   var toolInput=CraftingInput.of(2,1,List.of(tool(type),blueSpruce.copy()));
+   require(craft(level,"wood/slab_bluespruce",toolInput,"slab_bluespruce").getCount()==2,"original sawaxe tag accepts "+type);
+  }
+  var reversedWood=CraftingInput.of(2,1,List.of(blueSpruce.copy(),tool(GTToolType.AXE)));
+  require(recipe(level,"wood/slab_bluespruce").matches(reversedWood,level),"wood recipe original mirror permission");
+  var bowlHolder=level.getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath("gregtech","tools/ceramic_bowl_firing")).orElseThrow();
+  require(bowlHolder.value() instanceof SmeltingRecipe,"bowl original firing kind");
+  var bowl=(SmeltingRecipe)bowlHolder.value();var bowlInput=new SingleRecipeInput(equipmentItem("clay_bowl"));
+  require(bowl.matches(bowlInput,level) && ItemStack.isSameItemSameComponents(bowl.assemble(bowlInput,level.registryAccess()),
+      equipmentItem("mixing_bowl")),"clay to ceramic bowl actual firing recipe query");
+  com.mojang.logging.LogUtils.getLogger().info("SURVIVAL_CRAFTING_CHECKPOINT_SUCCESS selector=true selectorWear=100 selectorMirrorRejected=true usbCable=true scaffold=true bookshelf=true barleyRoundTrip=9 sawaxeChoices=4 woodMirrorAllowed=true bowlFiringQuery=true");
  }
 
 }
