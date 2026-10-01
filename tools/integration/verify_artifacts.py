@@ -24,10 +24,18 @@ PLATFORMS = {
 GAMEPLAY_CLASSES = (
     'com/gregtech/gregtech/registry/GTBlocks.class',
     'com/gregtech/gregtech/registry/GTBlockEntities.class',
-    'com/gregtech/gregtech/registry/GTMachines.class',
     'com/gregtech/gregtech/worldgen/GTFeatures.class',
-    'com/gregtech/gregtech/blockentity/machine/SmeltingCrucibleBlockEntity.class',
 )
+PLATFORM_GAMEPLAY_CLASSES = {
+    'forge': (
+        'com/gregtech/gregtech/registry/GTMachines.class',
+        'com/gregtech/gregtech/blockentity/machine/SmeltingCrucibleBlockEntity.class',
+    ),
+    'neoforge': (
+        'com/gregtech/gregtech/platform/neoforge/machine/BasicMachineRegistries.class',
+        'com/gregtech/gregtech/platform/neoforge/smeltery/SmeltingCrucibleEntity.class',
+    ),
+}
 
 
 def read_properties(path):
@@ -141,7 +149,8 @@ def inspect(path, platform, required_core, properties, forbidden_tests):
         duplicates = [name for name, count in counts.items() if count > 1]
         if duplicates:
             raise ValueError(f'{path}: duplicate ZIP entries: {duplicates[:10]}')
-        missing_gameplay = [name for name in GAMEPLAY_CLASSES if counts.get(name) != 1]
+        required_gameplay = GAMEPLAY_CLASSES + PLATFORM_GAMEPLAY_CLASSES[platform]
+        missing_gameplay = [name for name in required_gameplay if counts.get(name) != 1]
         if missing_gameplay:
             raise ValueError(f'{path}: incomplete platform gameplay content: {missing_gameplay}')
         if metadata_path not in counts:
