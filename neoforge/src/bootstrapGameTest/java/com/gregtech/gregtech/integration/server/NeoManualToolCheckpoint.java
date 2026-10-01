@@ -123,7 +123,57 @@ public final class NeoManualToolCheckpoint {
   var reclaimInput=CraftingInput.of(1,1,List.of(unfired));
   require(reclaim.matches(reclaimInput,level) && reclaim.assemble(reclaimInput,level.registryAccess()).is(Items.CLAY_BALL)
       && reclaim.assemble(reclaimInput,level.registryAccess()).getCount()==7,"original seven-clay reclaim count");
+  routingCrafting(level);
   com.mojang.logging.LogUtils.getLogger().info("EQUIPMENT_CRAFTING_CHECKPOINT_SUCCESS loaded={} resolvedIngredients=true boiler=true burner=true transformer=true mirrorRejected=true clayFiringRecipe=true reclaimCount=7 wrenchWear=800 hammerWear=400",loaded);
+ }
+
+ private static ItemStack craft(ServerLevel level,String id,CraftingInput input,String output) {
+  var actual=recipe(level,id);require(actual.matches(input,level),"routing crafting pattern "+id);
+  var stack=actual.assemble(input,level.registryAccess());
+  require(ItemStack.isSameItemSameComponents(stack,equipmentItem(output)),"routing crafting result "+id);
+  return stack;
+ }
+ private static void routingCrafting(ServerLevel level) {
+  ItemStack saw=tool(GTToolType.SAW),mallet=tool(GTToolType.SOFT_HAMMER);
+  var woodInput=CraftingInput.of(3,3,List.of(ItemStack.EMPTY,ItemStack.EMPTY,saw,
+      new ItemStack(Items.OAK_PLANKS),new ItemStack(Items.OAK_PLANKS),new ItemStack(Items.OAK_PLANKS),
+      mallet,ItemStack.EMPTY,ItemStack.EMPTY));
+  craft(level,"pipes/pipe_medium_wood",woodInput,"pipe_medium_wood");
+  var woodRemains=recipe(level,"pipes/pipe_medium_wood").getRemainingItems(woodInput);
+  require(woodRemains.get(2).getDamageValue()==100 && woodRemains.get(6).getDamageValue()==100,
+      "wood pipe saw and soft hammer original wear");
+  require(saw.getDamageValue()==0 && mallet.getDamageValue()==0,"wood pipe remainder query preserves inputs");
+  var blankInput=CraftingInput.of(2,2,List.of(equipmentForm(MaterialPrefix.screw,Materials.Aluminium),
+      tool(GTToolType.HARD_HAMMER),equipmentForm(MaterialPrefix.plate,Materials.Aluminium),tool(GTToolType.SCREWDRIVER)));
+  ItemStack blank=craft(level,"logistics/blank_cover",blankInput,"blank_cover");
+  var blankRemains=recipe(level,"logistics/blank_cover").getRemainingItems(blankInput);
+  require(blankRemains.get(1).getDamageValue()==400 && blankRemains.get(3).getDamageValue()==100,
+      "blank cover hammer and screwdriver wear");
+  var foil=equipmentForm(MaterialPrefix.foil,Materials.Zinc);
+  var filterInput=CraftingInput.of(3,3,List.of(ItemStack.EMPTY,foil.copy(),ItemStack.EMPTY,
+      foil.copy(),blank,foil.copy(),ItemStack.EMPTY,foil.copy(),ItemStack.EMPTY));
+  ItemStack filter=craft(level,"logistics/item_filter",filterInput,"item_filter");
+  var pipe=equipmentItem("item_pipe_medium_electrum");
+  var machineInput=CraftingInput.of(3,3,List.of(ItemStack.EMPTY,tool(GTToolType.HARD_HAMMER),pipe.copy(),
+      filter.copy(),equipmentItem("casing_machine_steelgalvanized"),filter.copy(),pipe.copy(),tool(GTToolType.WRENCH),ItemStack.EMPTY));
+  ItemStack machine=craft(level,"logistics/filter_items",machineInput,"filter_items");
+  machine.set(DataComponents.CUSTOM_NAME,net.minecraft.network.chat.Component.literal("routing crafting reset specimen"));
+  var resetInput=CraftingInput.of(1,1,List.of(machine));
+  var reset=craft(level,"logistics/filter_items_reset",resetInput,"filter_items");
+  require(!reset.has(DataComponents.CUSTOM_NAME) && machine.has(DataComponents.CUSTOM_NAME),
+      "reset returns fresh output without mutating input");
+  var copper=equipmentItem("wire_01_copper");
+  var tin=equipmentItem("cable_01_tin");
+  var motorInput=CraftingInput.of(3,3,List.of(tin.copy(),copper.copy(),equipmentForm(MaterialPrefix.stick,Materials.SteelGalvanized),
+      copper.copy(),equipmentForm(MaterialPrefix.stick,Materials.IronMagnetic),copper.copy(),
+      equipmentItem("plate_curved_steelgalvanized"),copper.copy(),tin.copy()));
+  ItemStack motor=craft(level,"components/motor_lv",motorInput,"compact_electric_motor_lv");
+  var rubber=equipmentForm(MaterialPrefix.plate,Materials.Rubber);
+  var conveyorInput=CraftingInput.of(3,3,List.of(rubber.copy(),rubber.copy(),rubber.copy(),
+      motor.copy(),tin.copy(),motor.copy(),rubber.copy(),rubber.copy(),rubber.copy()));
+  craft(level,"components/conveyor_lv",conveyorInput,"compact_electric_conveyor_lv");
+  require(network(recipe(level,"logistics/blank_cover"),level).matches(blankInput,level),"blank cover packet round trip");
+  com.mojang.logging.LogUtils.getLogger().info("ROUTING_CRAFTING_CHECKPOINT_SUCCESS woodPipe=true sawWear=100 softHammerWear=100 blankCover=true filterCover=true itemFilterMachine=true resetFresh=true motor=true conveyor=true network=true");
  }
 
 }

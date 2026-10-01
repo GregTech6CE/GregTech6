@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-/** Original portable and energy/smeltery equipment recipes over shared catalogs; native data-pack reload and codecs. */
+/** Original portable, equipment and logistics recipes over shared catalogs; native data-pack reload and codecs. */
 @EventBusSubscriber(modid = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public final class PortableCraftingRecipePack extends AbstractPackResources {
     private static final Gson GSON=new Gson();
@@ -56,7 +56,7 @@ public final class PortableCraftingRecipePack extends AbstractPackResources {
             addOriginal(generated, "fluid_tools/" + file);
         for (String file : com.gregtech.gregtech.content.recipe.EquipmentCraftingCatalog.FILES)
             addOriginal(generated, file);
-        com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original equipment crafting datapack: {} rows ({} retained energy/smeltery rows)",
+        com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original equipment crafting datapack: {} rows ({} retained equipment rows)",
                 generated.size(), com.gregtech.gregtech.content.recipe.EquipmentCraftingCatalog.FILES.size());
         resources=Map.copyOf(generated);
         return resources;
