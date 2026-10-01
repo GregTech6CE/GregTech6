@@ -1,0 +1,689 @@
+{
+  "integration_base": "d9ad3d4fcb1f85c0b4a6faad6eafe6dc19de86e2",
+  "source_path": "F:\\Dev\\GregTech6\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+  "source_sha256": "82bd457e2f79fb33009e1dd07e7d8cf83f190204a3f7d5ec44cfc4bb340e8678",
+  "source_group_file": "core/src/main/java/com/gregtech/gregtech/data/MaterialGroups.java",
+  "source_group_sha256": "81d477942343e75c91a34fdbcf9df324599ddc7f01ab7d93ecb10a01fd84617e",
+  "recipes": [
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_steam_lead.json",
+      "sha256": "7f998c27f19cd37b97f3061bc9441b24fa9dbcc06ae645a3db90defdd0888290",
+      "upstream_line": 584,
+      "upstream_id": 1300,
+      "upstream_material": "MT.Pb",
+      "upstream_keys": {
+        "S": "OP.stick.dat(aMat)",
+        "P": "OP.plateDouble.dat(aMat)",
+        "I": "OP.springSmall.dat(aMat)"
+      },
+      "upstream_recipe": [
+        "PhP",
+        "SIS",
+        "PwP"
+      ],
+      "engine_id": "gregtech:engine_steam_lead",
+      "balance": "original pattern and exact prefix; original ANY families retained; no HBM-specific exact-item integration"
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_steam_tin_alloy.json",
+      "sha256": "8d94ef0488d771d99484ada8d0c83ea44f515c0990309ed9ee4e9de7c2b36d32",
+      "upstream_line": 585,
+      "upstream_id": 1301,
+      "upstream_material": "MT.TinAlloy",
+      "upstream_keys": {
+        "S": "OP.stick.dat(aMat)",
+        "P": "OP.plateDouble.dat(aMat)",
+        "I": "OP.springSmall.dat(aMat)"
+      },
+      "upstream_recipe": [
+        "PhP",
+        "SIS",
+        "PwP"
+      ],
+      "engine_id": "gregtech:engine_steam_tin_alloy",
+      "balance": "original pattern and exact prefix; original ANY families retained; no HBM-specific exact-item integration"
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_steam_bronze.json",
+      "sha256": "327c4b891c713c2b5e8953ac8cd4e3c4d3fb98fdd18dfbebf2ffa83de7bd39af",
+      "upstream_line": 586,
+      "upstream_id": 1302,
+      "upstream_material": "MT.Bronze",
+      "upstream_keys": {
+        "S": "OP.stick.dat(aMat)",
+        "P": "OP.plateDouble.dat(aMat)",
+        "I": "OP.springSmall.dat(aMat)"
+      },
+      "upstream_recipe": [
+        "PhP",
+        "SIS",
+        "PwP"
+      ],
+      "engine_id": "gregtech:engine_steam_bronze",
+      "balance": "original pattern and exact prefix; original ANY families retained; no HBM-specific exact-item integration"
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_steam_arsenic_copper.json",
+      "sha256": "7b9442f9a4fdbd2c0143cb4e4191461e5c91c987451387300dae8e9d9619e156",
+      "upstream_line": 587,
+      "upstream_id": 1312,
+      "upstream_material": "MT.ArsenicCopper",
+      "upstream_keys": {
+        "S": "OP.stick.dat(aMat)",
+        "P": "OP.plateDouble.dat(aMat)",
+        "I": "OP.springSmall.dat(aMat)"
+      },
+      "upstream_recipe": [
+        "PhP",
+        "SIS",
+        "PwP"
+      ],
+      "engine_id": "gregtech:engine_steam_arsenic_copper",
+      "balance": "original pattern and exact prefix; original ANY families retained; no HBM-specific exact-item integration"
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_steam_arsenic_bronze.json",
+      "sha256": "4165d962fb963b1f199925b5663a5e3add0763c7f96d31083fc7c05b45401352",
+      "upstream_line": 588,
+      "upstream_id": 1313,
+      "upstream_material": "MT.ArsenicBronze",
+      "upstream_keys": {
+        "S": "OP.stick.dat(aMat)",
+        "P": "OP.plateDouble.dat(aMat)",
+        "I": "OP.springSmall.dat(aMat)"
+      },
+      "upstream_recipe": [
+        "PhP",
+        "SIS",
+        "PwP"
+      ],
+      "engine_id": "gregtech:engine_steam_arsenic_bronze",
+      "balance": "original pattern and exact prefix; original ANY families retained; no HBM-specific exact-item integration"
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_steam_brass.json",
+      "sha256": "fbc0311ff4db4a99f2d4b1580eed584d734d85c6ddca3548849bf361a8532175",
+      "upstream_line": 589,
+      "upstream_id": 1309,
+      "upstream_material": "MT.Brass",
+      "upstream_keys": {
+        "S": "OP.stick.dat(aMat)",
+        "P": "OP.plateDouble.dat(aMat)",
+        "I": "OP.springSmall.dat(aMat)"
+      },
+      "upstream_recipe": [
+        "PhP",
+        "SIS",
+        "PwP"
+      ],
+      "engine_id": "gregtech:engine_steam_brass",
+      "balance": "original pattern and exact prefix; original ANY families retained; no HBM-specific exact-item integration"
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_steam_invar.json",
+      "sha256": "8ad496586e3f2c98081917166c4e834510d1e3d8908f9a603be6279d084e99f5",
+      "upstream_line": 590,
+      "upstream_id": 1303,
+      "upstream_material": "MT.Invar",
+      "upstream_keys": {
+        "S": "OP.stick.dat(aMat)",
+        "P": "OP.plateDouble.dat(aMat)",
+        "I": "OP.springSmall.dat(aMat)"
+      },
+      "upstream_recipe": [
+        "PhP",
+        "SIS",
+        "PwP"
+      ],
+      "engine_id": "gregtech:engine_steam_invar",
+      "balance": "original pattern and exact prefix; original ANY families retained; no HBM-specific exact-item integration"
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_steam_ironwood.json",
+      "sha256": "0fc43d7bb803b0d24eaf63db7d7dd4670cfb508ac13905b14dec4ddd3868eea8",
+      "upstream_line": 591,
+      "upstream_id": 1310,
+      "upstream_material": "MT.IronWood",
+      "upstream_keys": {
+        "S": "OP.stick.dat(aMat)",
+        "P": "OP.plateDouble.dat(aMat)",
+        "I": "OP.springSmall.dat(aMat)"
+      },
+      "upstream_recipe": [
+        "PhP",
+        "SIS",
+        "PwP"
+      ],
+      "engine_id": "gregtech:engine_steam_ironwood",
+      "balance": "original pattern and exact prefix; original ANY families retained; no HBM-specific exact-item integration"
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_steam_steel.json",
+      "sha256": "04e81c1c02a11b28f932c75f3971410801ea428d11f38101bedfb02c8d83af90",
+      "upstream_line": 592,
+      "upstream_id": 1304,
+      "upstream_material": "ANY.Steel",
+      "upstream_keys": {
+        "S": "OP.stick.dat(aMat)",
+        "P": "OP.plateDouble.dat(aMat)",
+        "I": "OP.springSmall.dat(aMat)"
+      },
+      "upstream_recipe": [
+        "PhP",
+        "SIS",
+        "PwP"
+      ],
+      "engine_id": "gregtech:engine_steam_steel",
+      "balance": "original pattern and exact prefix; original ANY families retained; no HBM-specific exact-item integration"
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_steam_fiery_steel.json",
+      "sha256": "4c3e5559a281311504b43fb0e12e5993dee8e03ceb8d0351d1407c77d02fce1c",
+      "upstream_line": 593,
+      "upstream_id": 1311,
+      "upstream_material": "MT.FierySteel",
+      "upstream_keys": {
+        "S": "OP.stick.dat(aMat)",
+        "P": "OP.plateDouble.dat(aMat)",
+        "I": "OP.springSmall.dat(aMat)"
+      },
+      "upstream_recipe": [
+        "PhP",
+        "SIS",
+        "PwP"
+      ],
+      "engine_id": "gregtech:engine_steam_fiery_steel",
+      "balance": "original pattern and exact prefix; original ANY families retained; no HBM-specific exact-item integration"
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_steam_chromium.json",
+      "sha256": "6d2492961bdcfbb8ea377858426ca7946c0db54985f49cea978a1f7f18047d9d",
+      "upstream_line": 594,
+      "upstream_id": 1305,
+      "upstream_material": "MT.Cr",
+      "upstream_keys": {
+        "S": "OP.stick.dat(aMat)",
+        "P": "OP.plateDouble.dat(aMat)",
+        "I": "OP.springSmall.dat(aMat)"
+      },
+      "upstream_recipe": [
+        "PhP",
+        "SIS",
+        "PwP"
+      ],
+      "engine_id": "gregtech:engine_steam_chromium",
+      "balance": "original pattern and exact prefix; original ANY families retained; no HBM-specific exact-item integration"
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_steam_titanium.json",
+      "sha256": "9df04d9b025d07cdc84e2c869d8508e7f5a428e513b68ab8b8b2693909332ae1",
+      "upstream_line": 595,
+      "upstream_id": 1306,
+      "upstream_material": "MT.Ti",
+      "upstream_keys": {
+        "S": "OP.stick.dat(aMat)",
+        "P": "OP.plateDouble.dat(aMat)",
+        "I": "OP.springSmall.dat(aMat)"
+      },
+      "upstream_recipe": [
+        "PhP",
+        "SIS",
+        "PwP"
+      ],
+      "engine_id": "gregtech:engine_steam_titanium",
+      "balance": "original pattern and exact prefix; original ANY families retained; no HBM-specific exact-item integration"
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_steam_tungsten.json",
+      "sha256": "4bbc0d6cc83d3db2dbee19e6c9227211f33d2df53495413b5f110b2a75bb5306",
+      "upstream_line": 596,
+      "upstream_id": 1307,
+      "upstream_material": "ANY.W",
+      "upstream_keys": {
+        "S": "OP.stick.dat(aMat)",
+        "P": "OP.plateDouble.dat(aMat)",
+        "I": "OP.springSmall.dat(aMat)"
+      },
+      "upstream_recipe": [
+        "PhP",
+        "SIS",
+        "PwP"
+      ],
+      "engine_id": "gregtech:engine_steam_tungsten",
+      "balance": "original pattern and exact prefix; original ANY families retained; no HBM-specific exact-item integration"
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_steam_tungsten_steel.json",
+      "sha256": "4f3734065330f656a73c40fe65202bfbad8a2db558007167b0e0cb6fd3b5fa69",
+      "upstream_line": 597,
+      "upstream_id": 1308,
+      "upstream_material": "MT.TungstenSteel",
+      "upstream_keys": {
+        "S": "OP.stick.dat(aMat)",
+        "P": "OP.plateDouble.dat(aMat)",
+        "I": "OP.springSmall.dat(aMat)"
+      },
+      "upstream_recipe": [
+        "PhP",
+        "SIS",
+        "PwP"
+      ],
+      "engine_id": "gregtech:engine_steam_tungsten_steel",
+      "balance": "original pattern and exact prefix; original ANY families retained; no HBM-specific exact-item integration"
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_steam_strong_lead.json",
+      "sha256": "4e8d0c0f68d93880238bd07035f4c5ddab9212e8e002553fe5f12236036cba89",
+      "upstream_line": 599,
+      "upstream_id": 1350,
+      "upstream_material": "MT.Pb",
+      "upstream_keys": {
+        "S": "OP.stick.dat(aMat)",
+        "P": "MD.HBM.mLoaded ? OP.plateDense.mat(aMat, 1) : OP.plateDense.dat(aMat)",
+        "I": "OP.spring.dat(aMat)"
+      },
+      "upstream_recipe": [
+        "PhP",
+        "SIS",
+        "PwP"
+      ],
+      "engine_id": "gregtech:engine_steam_strong_lead",
+      "balance": "original pattern and exact prefix; original ANY families retained; no HBM-specific exact-item integration"
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_steam_strong_tin_alloy.json",
+      "sha256": "f440733a2e83f0b5203b48f390fd34df9e92f23b1a325e476d6de6ae4ae1b797",
+      "upstream_line": 600,
+      "upstream_id": 1351,
+      "upstream_material": "MT.TinAlloy",
+      "upstream_keys": {
+        "S": "OP.stick.dat(aMat)",
+        "P": "OP.plateDense.dat(aMat)",
+        "I": "OP.spring.dat(aMat)"
+      },
+      "upstream_recipe": [
+        "PhP",
+        "SIS",
+        "PwP"
+      ],
+      "engine_id": "gregtech:engine_steam_strong_tin_alloy",
+      "balance": "original pattern and exact prefix; original ANY families retained; no HBM-specific exact-item integration"
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_steam_strong_bronze.json",
+      "sha256": "2af3e118988a403ddf70c45b6f812c485f108b5ecc714a22f30a32b7985586db",
+      "upstream_line": 601,
+      "upstream_id": 1352,
+      "upstream_material": "MT.Bronze",
+      "upstream_keys": {
+        "S": "OP.stick.dat(aMat)",
+        "P": "OP.plateDense.dat(aMat)",
+        "I": "OP.spring.dat(aMat)"
+      },
+      "upstream_recipe": [
+        "PhP",
+        "SIS",
+        "PwP"
+      ],
+      "engine_id": "gregtech:engine_steam_strong_bronze",
+      "balance": "original pattern and exact prefix; original ANY families retained; no HBM-specific exact-item integration"
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_steam_strong_arsenic_copper.json",
+      "sha256": "655fe344f92cd803e10010fc42c338183bf35762b3b9fb7c29dd08d8b764c616",
+      "upstream_line": 602,
+      "upstream_id": 1362,
+      "upstream_material": "MT.ArsenicCopper",
+      "upstream_keys": {
+        "S": "OP.stick.dat(aMat)",
+        "P": "OP.plateDense.dat(aMat)",
+        "I": "OP.spring.dat(aMat)"
+      },
+      "upstream_recipe": [
+        "PhP",
+        "SIS",
+        "PwP"
+      ],
+      "engine_id": "gregtech:engine_steam_strong_arsenic_copper",
+      "balance": "original pattern and exact prefix; original ANY families retained; no HBM-specific exact-item integration"
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_steam_strong_arsenic_bronze.json",
+      "sha256": "880b45e4dfdebc6eb6548156fce43c902ebe1d2bd0ae616a9fb6179ad4d4cd0e",
+      "upstream_line": 603,
+      "upstream_id": 1363,
+      "upstream_material": "MT.ArsenicBronze",
+      "upstream_keys": {
+        "S": "OP.stick.dat(aMat)",
+        "P": "OP.plateDense.dat(aMat)",
+        "I": "OP.spring.dat(aMat)"
+      },
+      "upstream_recipe": [
+        "PhP",
+        "SIS",
+        "PwP"
+      ],
+      "engine_id": "gregtech:engine_steam_strong_arsenic_bronze",
+      "balance": "original pattern and exact prefix; original ANY families retained; no HBM-specific exact-item integration"
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_steam_strong_brass.json",
+      "sha256": "629d51c8281e39e77a9875d5679bb2325462858b9b58053597003c0bbb096afe",
+      "upstream_line": 604,
+      "upstream_id": 1359,
+      "upstream_material": "MT.Brass",
+      "upstream_keys": {
+        "S": "OP.stick.dat(aMat)",
+        "P": "OP.plateDense.dat(aMat)",
+        "I": "OP.spring.dat(aMat)"
+      },
+      "upstream_recipe": [
+        "PhP",
+        "SIS",
+        "PwP"
+      ],
+      "engine_id": "gregtech:engine_steam_strong_brass",
+      "balance": "original pattern and exact prefix; original ANY families retained; no HBM-specific exact-item integration"
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_steam_strong_invar.json",
+      "sha256": "96198dd2f21ecc6966d1c8b036b7f625ce7998901f26f5e5a9de36939e01e81e",
+      "upstream_line": 605,
+      "upstream_id": 1353,
+      "upstream_material": "MT.Invar",
+      "upstream_keys": {
+        "S": "OP.stick.dat(aMat)",
+        "P": "OP.plateDense.dat(aMat)",
+        "I": "OP.spring.dat(aMat)"
+      },
+      "upstream_recipe": [
+        "PhP",
+        "SIS",
+        "PwP"
+      ],
+      "engine_id": "gregtech:engine_steam_strong_invar",
+      "balance": "original pattern and exact prefix; original ANY families retained; no HBM-specific exact-item integration"
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_steam_strong_ironwood.json",
+      "sha256": "be54ef918a69e3820fef30d44fd63b0c54580803e0e1dab3c305251ad2313a2b",
+      "upstream_line": 606,
+      "upstream_id": 1360,
+      "upstream_material": "MT.IronWood",
+      "upstream_keys": {
+        "S": "OP.stick.dat(aMat)",
+        "P": "OP.plateDense.dat(aMat)",
+        "I": "OP.spring.dat(aMat)"
+      },
+      "upstream_recipe": [
+        "PhP",
+        "SIS",
+        "PwP"
+      ],
+      "engine_id": "gregtech:engine_steam_strong_ironwood",
+      "balance": "original pattern and exact prefix; original ANY families retained; no HBM-specific exact-item integration"
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_steam_strong_steel.json",
+      "sha256": "7efbf5e25170c3478120181593287decc4d2bbd46de973723303a6af4d123bfe",
+      "upstream_line": 607,
+      "upstream_id": 1354,
+      "upstream_material": "ANY.Steel",
+      "upstream_keys": {
+        "S": "OP.stick.dat(aMat)",
+        "P": "OP.plateDense.dat(aMat)",
+        "I": "OP.spring.dat(aMat)"
+      },
+      "upstream_recipe": [
+        "PhP",
+        "SIS",
+        "PwP"
+      ],
+      "engine_id": "gregtech:engine_steam_strong_steel",
+      "balance": "original pattern and exact prefix; original ANY families retained; no HBM-specific exact-item integration"
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_steam_strong_fiery_steel.json",
+      "sha256": "7b1fd877e31327eb8a00af4ac34b4d2bd06320f4d1f2fa627f54dc42435c0f33",
+      "upstream_line": 608,
+      "upstream_id": 1361,
+      "upstream_material": "MT.FierySteel",
+      "upstream_keys": {
+        "S": "OP.stick.dat(aMat)",
+        "P": "OP.plateDense.dat(aMat)",
+        "I": "OP.spring.dat(aMat)"
+      },
+      "upstream_recipe": [
+        "PhP",
+        "SIS",
+        "PwP"
+      ],
+      "engine_id": "gregtech:engine_steam_strong_fiery_steel",
+      "balance": "original pattern and exact prefix; original ANY families retained; no HBM-specific exact-item integration"
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_steam_strong_chromium.json",
+      "sha256": "feacdeda6fd7f064fc21aadd2780653c18d42ba14981d74917d22902efbcc562",
+      "upstream_line": 609,
+      "upstream_id": 1355,
+      "upstream_material": "MT.Cr",
+      "upstream_keys": {
+        "S": "OP.stick.dat(aMat)",
+        "P": "OP.plateDense.dat(aMat)",
+        "I": "OP.spring.dat(aMat)"
+      },
+      "upstream_recipe": [
+        "PhP",
+        "SIS",
+        "PwP"
+      ],
+      "engine_id": "gregtech:engine_steam_strong_chromium",
+      "balance": "original pattern and exact prefix; original ANY families retained; no HBM-specific exact-item integration"
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_steam_strong_titanium.json",
+      "sha256": "c9d21185bc63caf1b43432e7cb89710644aab1350636de2cb85617a2b579c247",
+      "upstream_line": 610,
+      "upstream_id": 1356,
+      "upstream_material": "MT.Ti",
+      "upstream_keys": {
+        "S": "OP.stick.dat(aMat)",
+        "P": "OP.plateDense.dat(aMat)",
+        "I": "OP.spring.dat(aMat)"
+      },
+      "upstream_recipe": [
+        "PhP",
+        "SIS",
+        "PwP"
+      ],
+      "engine_id": "gregtech:engine_steam_strong_titanium",
+      "balance": "original pattern and exact prefix; original ANY families retained; no HBM-specific exact-item integration"
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_steam_strong_tungsten.json",
+      "sha256": "6afeffae8bc7abef8d82ee016f050ab435f2a202bbd0ceebcdf91000d409dcae",
+      "upstream_line": 611,
+      "upstream_id": 1357,
+      "upstream_material": "ANY.W",
+      "upstream_keys": {
+        "S": "OP.stick.dat(aMat)",
+        "P": "OP.plateDense.dat(aMat)",
+        "I": "OP.spring.dat(aMat)"
+      },
+      "upstream_recipe": [
+        "PhP",
+        "SIS",
+        "PwP"
+      ],
+      "engine_id": "gregtech:engine_steam_strong_tungsten",
+      "balance": "original pattern and exact prefix; original ANY families retained; no HBM-specific exact-item integration"
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_steam_strong_tungsten_steel.json",
+      "sha256": "52dceb5386de1d4b918d70049c7e7e1c66fa7734d49b6024f7fef8a0863c6069",
+      "upstream_line": 612,
+      "upstream_id": 1358,
+      "upstream_material": "MT.TungstenSteel",
+      "upstream_keys": {
+        "S": "OP.stick.dat(aMat)",
+        "P": "OP.plateDense.dat(aMat)",
+        "I": "OP.spring.dat(aMat)"
+      },
+      "upstream_recipe": [
+        "PhP",
+        "SIS",
+        "PwP"
+      ],
+      "engine_id": "gregtech:engine_steam_strong_tungsten_steel",
+      "balance": "original pattern and exact prefix; original ANY families retained; no HBM-specific exact-item integration"
+    }
+  ],
+  "tags": [
+    {
+      "path": "core/src/main/resources/data/gregtech/tags/items/engines/plate_double/any_steel.json",
+      "sha256": "fe01903c2b8abd698ef40264ecc0cbccd980f4b0245f6295742dc3b545348098",
+      "tag": "gregtech:engines/plate_double/any_steel",
+      "original_group_members": [
+        "steel",
+        "knightmetal",
+        "meteoric_steel"
+      ]
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/tags/items/engines/plate_dense/any_steel.json",
+      "sha256": "5490c04a6aeee7b6336a89bfb0e0c75393b9d016e6a0d5c701fac76860d95d85",
+      "tag": "gregtech:engines/plate_dense/any_steel",
+      "original_group_members": [
+        "steel",
+        "knightmetal",
+        "meteoric_steel"
+      ]
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/tags/items/engines/stick/any_steel.json",
+      "sha256": "72a45cc44b0e57673870890b32eece9b7391b88454b0c6a5e4441cbbcf4994a3",
+      "tag": "gregtech:engines/stick/any_steel",
+      "original_group_members": [
+        "steel",
+        "knightmetal",
+        "meteoric_steel"
+      ]
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/tags/items/engines/spring/any_steel.json",
+      "sha256": "e760adcabd8d2727c5d5fa8d03b7b5f59b33612caef49e985143842cd6a599a4",
+      "tag": "gregtech:engines/spring/any_steel",
+      "original_group_members": [
+        "steel",
+        "knightmetal",
+        "meteoric_steel"
+      ]
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/tags/items/engines/spring_small/any_steel.json",
+      "sha256": "34db5fb75326f7fd4cb8a73d5d12fe332391718b410a52fe96ff746349bd3e30",
+      "tag": "gregtech:engines/spring_small/any_steel",
+      "original_group_members": [
+        "steel",
+        "knightmetal",
+        "meteoric_steel"
+      ]
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/tags/items/engines/plate_double/any_tungsten.json",
+      "sha256": "2e5b2c027a0bfc625e52c7cf1a06688c3fd2c14feb22e55e7500b82199ad3f2c",
+      "tag": "gregtech:engines/plate_double/any_tungsten",
+      "original_group_members": [
+        "tungsten",
+        "tungsten_sintered"
+      ]
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/tags/items/engines/plate_dense/any_tungsten.json",
+      "sha256": "a0d1aa43d189e4078a8ef4c1a57f5f1d680491284dc991c04b54d743c44d75ab",
+      "tag": "gregtech:engines/plate_dense/any_tungsten",
+      "original_group_members": [
+        "tungsten",
+        "tungsten_sintered"
+      ]
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/tags/items/engines/stick/any_tungsten.json",
+      "sha256": "6189a68619e4ac85875fc3a31805375abe77eeeddd1c3f629afb37cc9faffee2",
+      "tag": "gregtech:engines/stick/any_tungsten",
+      "original_group_members": [
+        "tungsten",
+        "tungsten_sintered"
+      ]
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/tags/items/engines/spring/any_tungsten.json",
+      "sha256": "869ac7aaf00aa375b7b48eebffd5e1527851afa25b4e63a9482fc229e1fb0f4e",
+      "tag": "gregtech:engines/spring/any_tungsten",
+      "original_group_members": [
+        "tungsten",
+        "tungsten_sintered"
+      ]
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/tags/items/engines/spring_small/any_tungsten.json",
+      "sha256": "c1483debe85dae522aa06dcb8303dd9a668e1ed13f6ca88fd6e922a1304ea6f5",
+      "tag": "gregtech:engines/spring_small/any_tungsten",
+      "original_group_members": [
+        "tungsten",
+        "tungsten_sintered"
+      ]
+    }
+  ],
+  "choices": [
+    "Both versions consume these same translated GT6 registration patterns through the existing static recipe paths/catalog.",
+    "Original DEF_REV_NCC has no MIR flag. Hammer/wrench remain ordinary GT tool ingredients and are returned with existing original durability costs.",
+    "Original ANY.Steel/W memberships preserved, optional nested tags only omit unavailable material forms; actual ingredient closure is checked at runtime.",
+    "Steam engines were present in retained saltnya registry but had no crafting rows. No new engine registry/backend or speculative recipe balance.",
+    "Lead strong-engine HBM optional exact-stack branch not supported; retained normal GT material-tag branch is used."
+  ],
+  "license_changed": false,
+  "source_directories_modified": false,
+  "adapted_source_files": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/recipe/EquipmentCraftingCatalog.java",
+      "sha256": "9bdf4f0d375b7a4c07bc3d2131831a6a66b198decbfd0167126d98bdb0885b7a",
+      "base_blob_sha256": "b2991b827a98d16606f087ef01c5f6fdd97ebdb93b482eff447edf673abbdc3d"
+    },
+    {
+      "path": "build.gradle",
+      "sha256": "310c6ca6e7c9f6f50c971f5908755194b7af530b156d635e355eca1c1d3d5f41",
+      "base_blob_sha256": "571a29596c5941b12d5bf3398afb7549ab851e0c2f4f6bb2e49a344d93456b41"
+    },
+    {
+      "path": "neoforge/build.gradle",
+      "sha256": "6380ba24e2c00fc762a8ad4cf924a884e89ebd4dcfe95a24e4503414446293e9",
+      "base_blob_sha256": "d663c0b9e6c39f9e07c1e3a65c6844c06d8269b851133d31f0da9fbebadf2a7b"
+    },
+    {
+      "path": "src/bootstrapGameTest/java/com/gregtech/gregtech/integration/server/ForgeDedicatedSmoke.java",
+      "sha256": "8a0819081699f12c2e60b262e48dac350cbb6d969cfa130f59c6ac6e6de906fc",
+      "base_blob_sha256": "a3fbdb9f75164c9ec3ea320b57d88d01478d04a636a26980bd69acd13fafe776"
+    },
+    {
+      "path": "neoforge/src/bootstrapGameTest/java/com/gregtech/gregtech/integration/server/NeoForgeDedicatedSmoke.java",
+      "sha256": "44bfc1366acc8aefed9f2a0c64050ea284562d3c8e10e8ffc956514fa6d1104c",
+      "base_blob_sha256": "d190e06ec2e1d16448efc870cdebf014af48512e743b066f4e0438f303cf43d4"
+    },
+    {
+      "path": "neoforge/src/bootstrapGameTest/java/com/gregtech/gregtech/integration/server/NeoManualToolCheckpoint.java",
+      "sha256": "a84f13c9c522f8558904c728ae4ff3161af2878b5af9a55253cc9c4781c74f28",
+      "base_blob_sha256": "74ca507ad62d5df75c5342f366a0c2b22a499fa5d75cfcb329ff25dda9741694"
+    }
+  ],
+  "upstream_registry": {
+    "path": "F:\\Dev\\GregTech6\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\block\\multitileentity\\MultiTileEntityRegistry.java",
+    "sha256": "70fb3ce00e7036e343e253e0f9fd8401b05c3f4f4e16b88f1b3fb94c3b111e83",
+    "recipe_flags": "CR.DEF_REV_NCC (no MIR)"
+  },
+  "upstream_flags": {
+    "path": "F:\\Dev\\GregTech6\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\util\\CR.java",
+    "sha256": "952f94e0dfff66d27d2ac2b97ed47b6aa0c8250aa19babd5cc528c89616c0760"
+  },
+  "verification": "../../../docs/integration/verification/steam-engine-crafting-20261002.md"
+}

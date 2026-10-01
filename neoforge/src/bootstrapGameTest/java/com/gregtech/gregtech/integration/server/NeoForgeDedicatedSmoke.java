@@ -64,6 +64,8 @@ public final class NeoForgeDedicatedSmoke {
     private static boolean normalStoppingObserved;
 
     private NeoForgeDedicatedSmoke() {}
+    private static final boolean ENGINE_CRAFTING = Boolean.getBoolean("gregtech.integration.engineCraftingSmoke");
+    private static java.util.Map<String,ItemStack> craftedSteamResults = java.util.Map.of();
 
     @SubscribeEvent
     public static void serverStarted(ServerStartedEvent event) {
@@ -94,6 +96,7 @@ public final class NeoForgeDedicatedSmoke {
                     "No completed dedicated phase and stop within 120 seconds of ServerStarted")),
                     120, TimeUnit.SECONDS);
             LOGGER.info("SERVER_SMOKE_STARTED {}", identity());
+            if (ENGINE_CRAFTING) craftedSteamResults = NeoManualToolCheckpoint.steamEngineCrafting(level);
             // Explicitly load the real overworld chunk; no synthetic NBT round trip.
             level.getChunk(specimenPos);
             level.getChunk(specimenPos.east());
@@ -154,6 +157,10 @@ public final class NeoForgeDedicatedSmoke {
         chest.applyComponentsFromItemStack(namedChest);
         chest.setItem(0, new ItemStack(Items.COPPER_INGOT, 3));
         chest.setItem(1, new ItemStack(Items.IRON_INGOT, 1));
+        if (ENGINE_CRAFTING) {
+            chest.setItem(2, craftedSteamResults.get("engine_steam_bronze").copy());
+            chest.setItem(3, craftedSteamResults.get("engine_steam_strong_bronze").copy());
+        }
         chest.setChanged();
         if (SMELTERY_WORLD) prepareSmeltery(level);
         if (MACHINE_WORLD) prepareMachines(level);
@@ -175,7 +182,14 @@ public final class NeoForgeDedicatedSmoke {
                 || !chest.getItem(1).is(Items.IRON_INGOT) || chest.getItem(1).getCount() != 1) {
             throw new IllegalStateException("Real chest inventory is not 3 copper ingots plus 1 iron ingot");
         }
-        for (int slot = 2; slot < chest.getContainerSize(); slot++) {
+        if (ENGINE_CRAFTING) {
+            if (!ItemStack.isSameItemSameComponents(chest.getItem(2), craftedSteamResults.get("engine_steam_bronze"))
+                    || chest.getItem(2).getCount()!=1
+                    || !ItemStack.isSameItemSameComponents(chest.getItem(3), craftedSteamResults.get("engine_steam_strong_bronze"))
+                    || chest.getItem(3).getCount()!=1)
+                throw new IllegalStateException("Real persisted steam crafting results differ");
+        }
+        for (int slot = ENGINE_CRAFTING ? 4 : 2; slot < chest.getContainerSize(); slot++) {
             if (!chest.getItem(slot).isEmpty()) {
                 throw new IllegalStateException("Unexpected item in specimen chest slot " + slot);
             }

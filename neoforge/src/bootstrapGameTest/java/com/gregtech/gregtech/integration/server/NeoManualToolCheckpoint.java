@@ -64,6 +64,45 @@ public final class NeoManualToolCheckpoint {
  private static ItemStack equipmentForm(MaterialPrefix prefix,com.gregtech.gregtech.api.material.GTMaterial material) {
   var result=GTItems.getStack(prefix,material,1);require(!result.isEmpty(),"equipment form "+prefix+" / "+material);return result;
  }
+ public static Map<String,ItemStack> steamEngineCrafting(ServerLevel level) {
+  int checked=0;
+  Map<String,ItemStack> selected=new HashMap<>();
+  for(var entry:com.gregtech.gregtech.content.energy.EngineCatalog.all()) {
+   boolean strong=entry.spec() instanceof com.gregtech.gregtech.api.machine.StrongSteamEngineSpec;
+   String id;com.gregtech.gregtech.api.material.GTMaterial material;
+   if(strong) {var spec=(com.gregtech.gregtech.api.machine.StrongSteamEngineSpec)entry.spec();id=spec.id();material=spec.material();}
+   else if(entry.spec() instanceof com.gregtech.gregtech.api.machine.SteamEngineSpec spec) {id=spec.id();material=spec.material();}
+   else continue;
+   var plate=equipmentForm(strong?MaterialPrefix.plateDense:MaterialPrefix.plateDouble,material);
+   var rod=equipmentForm(MaterialPrefix.stick,material);
+   var spring=equipmentForm(strong?MaterialPrefix.spring:MaterialPrefix.springSmall,material);
+   var hammer=tool(GTToolType.HARD_HAMMER);var wrench=tool(GTToolType.WRENCH);
+   var input=CraftingInput.of(3,3,List.of(plate.copy(),hammer,plate.copy(),rod.copy(),spring,rod.copy(),plate.copy(),wrench,plate.copy()));
+   var craftRecipe=recipe(level,"engines/"+id);
+   for(var ingredient:craftRecipe.getIngredients())
+    if(ingredient!=Ingredient.EMPTY)require(ingredient.getItems().length>0,"engine ingredient closure "+id);
+   ItemStack result=craftRecipe.assemble(input,level.registryAccess());
+   require(craftRecipe.matches(input,level) && ItemStack.isSameItemSameComponents(result,equipmentItem(id)),"original steam engine pattern/output "+id);
+   var remains=craftRecipe.getRemainingItems(input);
+   require(remains.get(1).getDamageValue()==400 && remains.get(7).getDamageValue()==800
+       && hammer.getDamageValue()==0 && wrench.getDamageValue()==0,"steam engine original wear/no input mutation "+id);
+   for(int slot:List.of(0,2,3,4,5,6,8))require(remains.get(slot).isEmpty(),"engine material slots consumed "+id);
+   var bad=new ArrayList<>(input.items());bad.set(4,equipmentForm(strong?MaterialPrefix.springSmall:MaterialPrefix.spring,material));
+   require(!craftRecipe.matches(CraftingInput.of(3,3,bad),level),"regular/strong spring distinction "+id);
+   bad=new ArrayList<>(input.items());bad.set(0,equipmentForm(MaterialPrefix.plate,material));
+   require(!craftRecipe.matches(CraftingInput.of(3,3,bad),level),"single plate cannot replace double/dense "+id);
+   if(material.resolve()==Materials.Bronze.resolve()) {
+    require(network(craftRecipe,level).matches(input,level),"steam engine native packet "+id);
+    var wrong=new ArrayList<>(input.items());wrong.set(0,equipmentForm(strong?MaterialPrefix.plateDense:MaterialPrefix.plateDouble,Materials.Copper));
+    require(!craftRecipe.matches(CraftingInput.of(3,3,wrong),level),"wrong material rejected "+id);
+    selected.put(id,result);
+   }
+   checked++;
+  }
+  require(checked==28 && selected.size()==2,"all retained regular/strong steam engine crafting rows");
+  com.mojang.logging.LogUtils.getLogger().info("STEAM_ENGINE_CRAFTING_CHECKPOINT_SUCCESS {}","{\"platform\":\"neoforge\",\"recipes\":28,\"normalRows\":14,\"strongRows\":14,\"patternAndOutput\":true,\"prefixDistinction\":true,\"hammerWear\":400,\"wrenchWear\":800,\"selectedNativePackets\":2,\"playerCraftingClickVerified\":false}");
+  return Map.copyOf(selected);
+ }
  private static void equipment(ServerLevel level) {
   int loaded=0;
   for(String file:com.gregtech.gregtech.content.recipe.EquipmentCraftingCatalog.FILES) {

@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#gregtech:plate_double/steel",
+      "required": false
+    },
+    {
+      "id": "#gregtech:plate_double/knightmetal",
+      "required": false
+    },
+    {
+      "id": "#gregtech:plate_double/meteoric_steel",
+      "required": false
+    }
+  ]
+}

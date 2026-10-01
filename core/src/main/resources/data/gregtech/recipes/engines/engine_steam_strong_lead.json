@@ -1,0 +1,29 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "PhP",
+    "SIS",
+    "PwP"
+  ],
+  "key": {
+    "P": {
+      "tag": "gregtech:plate_dense/lead"
+    },
+    "S": {
+      "tag": "gregtech:stick/lead"
+    },
+    "I": {
+      "tag": "gregtech:spring/lead"
+    },
+    "h": {
+      "item": "gregtech:tool_hammer"
+    },
+    "w": {
+      "item": "gregtech:tool_wrench"
+    }
+  },
+  "result": {
+    "item": "gregtech:engine_steam_strong_lead"
+  },
+  "allow_mirror": false
+}

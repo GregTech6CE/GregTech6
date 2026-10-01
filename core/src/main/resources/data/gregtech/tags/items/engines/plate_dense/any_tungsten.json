@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#gregtech:plate_dense/tungsten",
+      "required": false
+    },
+    {
+      "id": "#gregtech:plate_dense/tungsten_sintered",
+      "required": false
+    }
+  ]
+}

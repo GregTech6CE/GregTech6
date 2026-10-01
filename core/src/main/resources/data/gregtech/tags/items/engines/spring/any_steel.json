@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#gregtech:spring/steel",
+      "required": false
+    },
+    {
+      "id": "#gregtech:spring/knightmetal",
+      "required": false
+    },
+    {
+      "id": "#gregtech:spring/meteoric_steel",
+      "required": false
+    }
+  ]
+}

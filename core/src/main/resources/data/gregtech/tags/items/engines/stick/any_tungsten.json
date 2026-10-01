@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#gregtech:stick/tungsten",
+      "required": false
+    },
+    {
+      "id": "#gregtech:stick/tungsten_sintered",
+      "required": false
+    }
+  ]
+}

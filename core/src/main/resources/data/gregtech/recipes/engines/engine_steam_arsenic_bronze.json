@@ -1,0 +1,29 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "PhP",
+    "SIS",
+    "PwP"
+  ],
+  "key": {
+    "P": {
+      "tag": "gregtech:plate_double/arsenic_bronze"
+    },
+    "S": {
+      "tag": "gregtech:stick/arsenic_bronze"
+    },
+    "I": {
+      "tag": "gregtech:spring_small/arsenic_bronze"
+    },
+    "h": {
+      "item": "gregtech:tool_hammer"
+    },
+    "w": {
+      "item": "gregtech:tool_wrench"
+    }
+  },
+  "result": {
+    "item": "gregtech:engine_steam_arsenic_bronze"
+  },
+  "allow_mirror": false
+}

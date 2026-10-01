@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#gregtech:spring/tungsten",
+      "required": false
+    },
+    {
+      "id": "#gregtech:spring/tungsten_sintered",
+      "required": false
+    }
+  ]
+}

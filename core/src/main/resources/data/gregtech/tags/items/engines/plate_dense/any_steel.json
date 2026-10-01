@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#gregtech:plate_dense/steel",
+      "required": false
+    },
+    {
+      "id": "#gregtech:plate_dense/knightmetal",
+      "required": false
+    },
+    {
+      "id": "#gregtech:plate_dense/meteoric_steel",
+      "required": false
+    }
+  ]
+}

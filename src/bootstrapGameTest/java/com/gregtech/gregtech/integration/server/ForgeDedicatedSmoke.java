@@ -60,6 +60,8 @@ public final class ForgeDedicatedSmoke {
     private static boolean normalStoppingObserved;
 
     private ForgeDedicatedSmoke() {}
+    private static final boolean ENGINE_CRAFTING = Boolean.getBoolean("gregtech.integration.engineCraftingSmoke");
+    private static java.util.Map<String,ItemStack> craftedSteamResults = java.util.Map.of();
 
     @SubscribeEvent
     public static void serverStarted(ServerStartedEvent event) {
@@ -90,6 +92,7 @@ public final class ForgeDedicatedSmoke {
                     "No completed dedicated phase and stop within 120 seconds of ServerStarted")),
                     120, TimeUnit.SECONDS);
             LOGGER.info("SERVER_SMOKE_STARTED {}", identity());
+            if (ENGINE_CRAFTING) craftedSteamResults = steamEngineCrafting(level);
             // Explicitly load the real overworld chunk; no synthetic NBT round trip.
             level.getChunk(specimenPos);
             level.getChunk(specimenPos.east());
@@ -142,6 +145,10 @@ public final class ForgeDedicatedSmoke {
         chest.setCustomName(Component.literal("gregtech-dedicated-smoke/" + specimenId));
         chest.setItem(0, new ItemStack(Items.COPPER_INGOT, 3));
         chest.setItem(1, new ItemStack(Items.IRON_INGOT, 1));
+        if (ENGINE_CRAFTING) {
+            chest.setItem(2, craftedSteamResults.get("engine_steam_bronze").copy());
+            chest.setItem(3, craftedSteamResults.get("engine_steam_strong_bronze").copy());
+        }
         chest.setChanged();
     }
 
@@ -160,11 +167,78 @@ public final class ForgeDedicatedSmoke {
                 || !chest.getItem(1).is(Items.IRON_INGOT) || chest.getItem(1).getCount() != 1) {
             throw new IllegalStateException("Real chest inventory is not 3 copper ingots plus 1 iron ingot");
         }
-        for (int slot = 2; slot < chest.getContainerSize(); slot++) {
+        if (ENGINE_CRAFTING) {
+            if (!ItemStack.isSameItemSameTags(chest.getItem(2), craftedSteamResults.get("engine_steam_bronze"))
+                    || chest.getItem(2).getCount()!=1
+                    || !ItemStack.isSameItemSameTags(chest.getItem(3), craftedSteamResults.get("engine_steam_strong_bronze"))
+                    || chest.getItem(3).getCount()!=1)
+                throw new IllegalStateException("Real persisted steam crafting results differ");
+        }
+        for (int slot = ENGINE_CRAFTING ? 4 : 2; slot < chest.getContainerSize(); slot++) {
             if (!chest.getItem(slot).isEmpty()) {
                 throw new IllegalStateException("Unexpected item in specimen chest slot " + slot);
             }
         }
+    }
+
+    private static java.util.Map<String,ItemStack> steamEngineCrafting(ServerLevel level) {
+        var results=new java.util.HashMap<String,ItemStack>();int checked=0;
+        var menu=new net.minecraft.world.inventory.AbstractContainerMenu(null,0) {
+            @Override public ItemStack quickMoveStack(net.minecraft.world.entity.player.Player player,int slot){return ItemStack.EMPTY;}
+            @Override public boolean stillValid(net.minecraft.world.entity.player.Player player){return true;}
+        };
+        for(var entry:com.gregtech.gregtech.content.energy.EngineCatalog.all()) {
+            boolean strong=entry.spec() instanceof com.gregtech.gregtech.api.machine.StrongSteamEngineSpec;
+            String id;com.gregtech.gregtech.api.material.GTMaterial material;
+            if(strong){var spec=(com.gregtech.gregtech.api.machine.StrongSteamEngineSpec)entry.spec();id=spec.id();material=spec.material();}
+            else if(entry.spec() instanceof com.gregtech.gregtech.api.machine.SteamEngineSpec spec){id=spec.id();material=spec.material();}
+            else continue;
+            var plate=steamForm(strong?com.gregtech.gregtech.data.MaterialPrefix.plateDense:com.gregtech.gregtech.data.MaterialPrefix.plateDouble,material);
+            var rod=steamForm(com.gregtech.gregtech.data.MaterialPrefix.stick,material);
+            var spring=steamForm(strong?com.gregtech.gregtech.data.MaterialPrefix.spring:com.gregtech.gregtech.data.MaterialPrefix.springSmall,material);
+            var hammer=com.gregtech.gregtech.item.GTToolItem.create(com.gregtech.gregtech.api.tool.GTToolType.HARD_HAMMER,
+                    com.gregtech.gregtech.content.material.Materials.Bronze,com.gregtech.gregtech.content.material.generated.WoodMaterials.Wood);
+            var wrench=com.gregtech.gregtech.item.GTToolItem.create(com.gregtech.gregtech.api.tool.GTToolType.WRENCH,
+                    com.gregtech.gregtech.content.material.Materials.Bronze,com.gregtech.gregtech.content.material.generated.WoodMaterials.Wood);
+            var input=new net.minecraft.world.inventory.TransientCraftingContainer(menu,3,3);
+            var stacks=java.util.List.of(plate.copy(),hammer,plate.copy(),rod.copy(),spring,rod.copy(),plate.copy(),wrench,plate.copy());
+            for(int slot=0;slot<9;slot++)input.setItem(slot,stacks.get(slot));
+            var recipe=level.getRecipeManager().byKey(new net.minecraft.resources.ResourceLocation("gregtech","engines/"+id)).orElseThrow();
+            if(!(recipe instanceof net.minecraft.world.item.crafting.CraftingRecipe craft))throw new IllegalStateException("Wrong steam crafting recipe type "+id);
+            for(var ingredient:craft.getIngredients())
+                if(ingredient!=net.minecraft.world.item.crafting.Ingredient.EMPTY && ingredient.getItems().length==0)
+                    throw new IllegalStateException("Unresolved steam ingredient "+id);
+            var result=craft.assemble(input,level.registryAccess());
+            var expected=net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation("gregtech",id));
+            if(expected==null || !craft.matches(input,level) || result.getItem()!=expected || result.getCount()!=1)
+                throw new IllegalStateException("Original steam crafting shape/output "+id);
+            var remains=craft.getRemainingItems(input);
+            if(remains.get(1).getDamageValue()!=400 || remains.get(7).getDamageValue()!=800
+                    || hammer.getDamageValue()!=0 || wrench.getDamageValue()!=0)
+                throw new IllegalStateException("Original steam crafting tool wear "+id);
+            for(int slot:java.util.List.of(0,2,3,4,5,6,8))if(!remains.get(slot).isEmpty())
+                throw new IllegalStateException("Steam material not consumed "+id);
+            input.setItem(4,steamForm(strong?com.gregtech.gregtech.data.MaterialPrefix.springSmall:com.gregtech.gregtech.data.MaterialPrefix.spring,material));
+            if(craft.matches(input,level))throw new IllegalStateException("Wrong steam spring accepted "+id);
+            input.setItem(4,spring);input.setItem(0,steamForm(com.gregtech.gregtech.data.MaterialPrefix.plate,material));
+            if(craft.matches(input,level))throw new IllegalStateException("Wrong steam plate accepted "+id);
+            if(material.resolve()==com.gregtech.gregtech.content.material.Materials.Bronze.resolve()) {
+                input.setItem(0,steamForm(strong?com.gregtech.gregtech.data.MaterialPrefix.plateDense:com.gregtech.gregtech.data.MaterialPrefix.plateDouble,
+                        com.gregtech.gregtech.content.material.Materials.Copper));
+                if(craft.matches(input,level))throw new IllegalStateException("Wrong steam material accepted "+id);
+                results.put(id,result);
+            }
+            checked++;
+        }
+        if(checked!=28 || results.size()!=2)throw new IllegalStateException("Incomplete steam crafting catalog");
+        LOGGER.info("STEAM_ENGINE_CRAFTING_CHECKPOINT_SUCCESS {}","{\"platform\":\"forge\",\"recipes\":28,\"normalRows\":14,\"strongRows\":14,\"patternAndOutput\":true,\"prefixDistinction\":true,\"hammerWear\":400,\"wrenchWear\":800,\"playerCraftingClickVerified\":false}");
+        return java.util.Map.copyOf(results);
+    }
+
+    private static ItemStack steamForm(com.gregtech.gregtech.data.MaterialPrefix prefix,com.gregtech.gregtech.api.material.GTMaterial material) {
+        var stack=com.gregtech.gregtech.registry.GTItems.getStack(prefix,material,1);
+        if(stack.isEmpty())throw new IllegalStateException("Missing exact steam form "+prefix+" / "+material);
+        return stack;
     }
 
     @SubscribeEvent

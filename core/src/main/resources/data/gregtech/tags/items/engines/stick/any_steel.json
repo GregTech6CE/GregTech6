@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#gregtech:stick/steel",
+      "required": false
+    },
+    {
+      "id": "#gregtech:stick/knightmetal",
+      "required": false
+    },
+    {
+      "id": "#gregtech:stick/meteoric_steel",
+      "required": false
+    }
+  ]
+}
