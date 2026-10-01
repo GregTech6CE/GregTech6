@@ -245,7 +245,7 @@ public final class Loader_FormConversionCraftingRecipes {
     }
 
     private static int recipe(List<Recipe<?>> recipes, ItemStack input, ItemStack output, String path) {        NonNullList<Ingredient> ingredients = NonNullList.withSize(input.getCount(), Ingredient.of(input));
-        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTech.MODID, path);
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, path);
         recipes.add(new ShapelessRecipe(id, "gt.wire_sizes", CraftingBookCategory.MISC,
                 MaterialUnification.canonical(output.copy()), ingredients));
         REGISTERED.add(id.toString());
@@ -257,7 +257,7 @@ public final class Loader_FormConversionCraftingRecipes {
         NonNullList<Ingredient> ingredients = NonNullList.withSize(conversion.inputCount(),
                 formIngredient(input));
         ItemStack result = MaterialUnification.canonical(output.copy());
-        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTech.MODID,
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE,
                 "form_conversion/" + sanitize(conversion.input()) + "_to_" + sanitize(conversion.output()) + "/"
                         + sanitize(material.getName()) + "_" + conversion.inputCount());
         recipes.add(new ShapelessRecipe(id, "gt.form_conversion", CraftingBookCategory.MISC, result, ingredients));

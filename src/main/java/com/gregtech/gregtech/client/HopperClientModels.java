@@ -23,7 +23,7 @@ import java.util.Map;
  * Hopper / queuehopper shared model registration and bake-time aliasing.
  * Follows the same pattern as {@link MachineBlockClientModels} for burning boxes.
  */
-@Mod.EventBusSubscriber(modid = GregTech.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class HopperClientModels {
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final String[] HOPPER_TYPES = {"hopper", "queuehopper"};
@@ -46,7 +46,7 @@ public final class HopperClientModels {
         int hoppers = aliasHoppers(models, MachineRegistry.hoppers(), "hopper");
         int queueHoppers = aliasHoppers(models, MachineRegistry.queueHoppers(), "queuehopper");
         LOGGER.info("[{}] Hopper model aliasing: {} hoppers, {} queuehoppers",
-                GregTech.MODID, hoppers, queueHoppers);
+                GregTech.NAMESPACE, hoppers, queueHoppers);
     }
 
     private static <T extends Block> int aliasHoppers(
@@ -62,11 +62,11 @@ public final class HopperClientModels {
             }
         }
         if (byFacing.isEmpty()) {
-            LOGGER.warn("[{}] No per-facing models found for hopper type '{}'", GregTech.MODID, texPath);
+            LOGGER.warn("[{}] No per-facing models found for hopper type '{}'", GregTech.NAMESPACE, texPath);
             return 0;
         }
         if (byFacing.size() < 6) {
-            LOGGER.warn("[{}] Only {}/6 per-facing models found for '{}'", GregTech.MODID, byFacing.size(), texPath);
+            LOGGER.warn("[{}] Only {}/6 per-facing models found for '{}'", GregTech.NAMESPACE, byFacing.size(), texPath);
             return 0;
         }
 

@@ -7,8 +7,7 @@ import net.minecraft.world.item.*;
 public final class FilterRules {
     private FilterRules() {}
     public static boolean itemMatches(ItemStack template,ItemStack candidate){
-        return !template.isEmpty()&&!candidate.isEmpty()&&template.is(candidate.getItem())
-                &&(!template.hasTag()||ItemStack.isSameItemSameTags(template,candidate));
+        return FilterPolicy.matches(!template.isEmpty()&&!candidate.isEmpty(),template.is(candidate.getItem()),!template.hasTag(),ItemStack.isSameItemSameTags(template,candidate));
     }
     public static String prefix(ItemStack stack){
         if(stack.isEmpty())return "";

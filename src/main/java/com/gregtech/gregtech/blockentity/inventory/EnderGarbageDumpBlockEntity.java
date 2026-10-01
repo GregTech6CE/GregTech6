@@ -29,7 +29,7 @@ import javax.annotation.Nullable;
 public class EnderGarbageDumpBlockEntity extends BlockEntity implements MenuProvider {
 
     /** Slots shown in the GUI (a double-chest page of the garbage piles). */
-    public static final int VIEW_SLOTS = 54;
+    public static final int VIEW_SLOTS = com.gregtech.gregtech.content.storage.GarbageStorageRules.VIEW_SLOTS;
 
     public EnderGarbageDumpBlockEntity(BlockPos pos, BlockState state) {
         super(com.gregtech.gregtech.registry.GTBlockEntities.ENDER_GARBAGE_DUMP.get(), pos, state);
@@ -56,7 +56,7 @@ public class EnderGarbageDumpBlockEntity extends BlockEntity implements MenuProv
     public GarbageView view() { return view; }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, EnderGarbageDumpBlockEntity dump) {
-        if (level.getGameTime() % 10 != 0) return;
+        if (!com.gregtech.gregtech.content.storage.GarbageStorageRules.dumpDue(level.getGameTime())) return;
         BlockEntity below = level.getBlockEntity(pos.below());
         // never feed garbage back into a bin (it would loop forever)
         if (below == null || below instanceof EnderGarbageBlockEntity) return;

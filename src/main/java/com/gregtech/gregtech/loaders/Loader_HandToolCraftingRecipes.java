@@ -501,7 +501,7 @@ public final class Loader_HandToolCraftingRecipes {
         String type = MaterialEquivalence.materialName(material);
         for (String candidate : new String[]{type, type.replace("_", "")}) {
             Item item = ForgeRegistries.ITEMS.getValue(
-                    ResourceLocation.fromNamespaceAndPath(GregTech.MODID, "stone_" + candidate + "_stone"));
+                    ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, "stone_" + candidate + "_stone"));
             if (item != null && item != Items.AIR) return new ItemStack(item);
         }
         return GTItems.getStack(MaterialPrefix.ingot, material, 1);
@@ -852,7 +852,7 @@ public final class Loader_HandToolCraftingRecipes {
                 ingredients.set(x + y * width, ingredient);
             }
         }
-        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTech.MODID, "hand/" + path);
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, "hand/" + path);
         ShapedRecipe base = new ShapedRecipe(id, "gt.hand", CraftingBookCategory.MISC,
                 width, height, ingredients, output.copy());
         // GT6's registration patterns are CR.DEF_REV style, i.e. without MIR (CR.java:161-163):

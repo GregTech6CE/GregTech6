@@ -196,7 +196,7 @@ public final class BehaviorLighter {
      */
     public static ItemStack consumeFuel(ItemStack stack, LighterSpec spec, long cost, @Nullable Player player) {
         if (ItemBehaviors.creative(player)) return stack;                          // :111
-        long units = (cost + MAX_CHANCE - 1) / MAX_CHANCE;                         // UT.Code.units(..., T)
+        long units = com.gregtech.gregtech.content.tool.ConsumableRules.ignitionUnits(cost);                         // UT.Code.units(..., T)
         return spec.can().spent(stack, Math.max(1L, units));
     }
 }

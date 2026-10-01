@@ -1,0 +1,119 @@
+{
+  "loader": "neoforge:composite",
+  "children": {
+    "layer0": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "down": "gregtech:block/machines/generators/burning_solid/colored/bottom",
+        "up": "gregtech:block/machines/generators/burning_solid/colored/top",
+        "north": "gregtech:block/machines/generators/burning_solid/colored/front",
+        "south": "gregtech:block/machines/generators/burning_solid/colored/back",
+        "west": "gregtech:block/machines/generators/burning_solid/colored/right",
+        "east": "gregtech:block/machines/generators/burning_solid/colored/left"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#down",
+              "cullface": "down",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#up",
+              "cullface": "up",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#north",
+              "cullface": "north",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#south",
+              "cullface": "south",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#west",
+              "cullface": "west",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#east",
+              "cullface": "east",
+              "tintindex": 0
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:solid"
+    },
+    "layer1": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "down": "gregtech:block/machines/generators/burning_solid/overlay_active/bottom",
+        "up": "gregtech:block/machines/generators/burning_solid/overlay_active/top",
+        "north": "gregtech:block/machines/generators/burning_solid/overlay_active/front",
+        "south": "gregtech:block/machines/generators/burning_solid/overlay_active/back",
+        "west": "gregtech:block/machines/generators/burning_solid/overlay_active/right",
+        "east": "gregtech:block/machines/generators/burning_solid/overlay_active/left"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#down",
+              "cullface": "down"
+            },
+            "up": {
+              "texture": "#up",
+              "cullface": "up"
+            },
+            "north": {
+              "texture": "#north",
+              "cullface": "north"
+            },
+            "south": {
+              "texture": "#south",
+              "cullface": "south"
+            },
+            "west": {
+              "texture": "#west",
+              "cullface": "west"
+            },
+            "east": {
+              "texture": "#east",
+              "cullface": "east"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    }
+  },
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "gregtech:block/machines/generators/burning_solid/colored/bottom"
+  }
+}

@@ -17,22 +17,29 @@ import java.util.Map;
 
 /** GT6's 300 plank-index shelves and 60 metalset shelves, limited to planks obtainable in this port. */
 public final class BookShelfVariants {
-    public record Variant(String path, int originalId, String kind, String materialName,
-                          String displayMaterialName, String texture, float hardness,
-                          float resistance, int flammability) {
-        public boolean metal() { return kind.equals("metal"); }
+    public record Variant(BookShelfRules.VariantSpec spec) {
+        public String path(){return spec.path();}
+        public int originalId(){return spec.originalId();}
+        public String kind(){return spec.kind();}
+        public String materialName(){return spec.materialName();}
+        public String displayMaterialName(){return spec.displayMaterialName();}
+        public String texture(){return spec.texture();}
+        public float hardness(){return spec.hardness();}
+        public float resistance(){return spec.resistance();}
+        public int flammability(){return spec.flammability();}
+        public boolean metal() { return kind().equals("metal"); }
 
         public GTMaterial material() {
-            GTMaterial material = GTMaterialRegistry.get(materialName);
-            if (!material.isValid()) throw new IllegalStateException("Unknown bookshelf material: " + materialName);
+            GTMaterial material = GTMaterialRegistry.get(materialName());
+            if (!material.isValid()) throw new IllegalStateException("Unknown bookshelf material: " + materialName());
             return material;
         }
 
         public MutableComponent displayName() {
-            if (path.equals("bookshelf")) return Component.translatable("block.gregtech.bookshelf");
+            if (path().equals("bookshelf")) return Component.translatable("block.gregtech.bookshelf");
             return Component.translatable("block.gregtech.bookshelf_variant",
                     Component.translatable("material.gregtech."
-                            + displayMaterialName.toLowerCase(java.util.Locale.ROOT)));
+                            + displayMaterialName().toLowerCase(java.util.Locale.ROOT)));
         }
     }
 
@@ -68,11 +75,11 @@ public final class BookShelfVariants {
             List<Variant> variants = new ArrayList<>();
             for (var entry : array) {
                 var value = entry.getAsJsonObject();
-                variants.add(new Variant(value.get("path").getAsString(), value.get("gt6_id").getAsInt(),
+                variants.add(new Variant(new BookShelfRules.VariantSpec(value.get("path").getAsString(), value.get("gt6_id").getAsInt(),
                         value.get("kind").getAsString(), value.get("material").getAsString(),
                         value.get("display").getAsString(), value.get("texture").getAsString(),
                         value.get("hardness").getAsFloat(), value.get("resistance").getAsFloat(),
-                        value.get("flammability").getAsInt()));
+                        value.get("flammability").getAsInt())));
             }
             if (variants.isEmpty()) throw new IllegalStateException("No GT6 bookshelf variants");
             return List.copyOf(variants);

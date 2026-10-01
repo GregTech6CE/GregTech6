@@ -35,12 +35,7 @@ public final class OriginalLargeBoilerSpecs {
         }
     }
 
-    private static final List<Variant> VARIANTS = List.of(
-            new Variant(17201, "stainless_steel_boiler_main_barometer", 18022,   8_192,   6),
-            new Variant(17202, "titanium_boiler_main_barometer",       18026,  16_384,   9),
-            new Variant(17203, "tungstensteel_boiler_main_barometer",   18023,  32_768, 12.5f),
-            new Variant(17204, "adamantium_boiler_main_barometer",     18025, 262_144, 100),
-            new Variant(17205, "invar_boiler_main_barometer",          18027,   8_192,   6));
+    private static final List<Variant> VARIANTS=OriginalLargeBoilerParameters.all().stream().map(p->new Variant(p.originalId(),p.path(),p.denseWallId(),p.steamOutput(),p.hardness())).toList();
 
     /** Controller at front-centre of the lowest wall layer, one block ahead of the body centre. */
     public static final MultiblockLayout LAYOUT = layout();
@@ -52,17 +47,5 @@ public final class OriginalLargeBoilerSpecs {
                 .orElseThrow(() -> new IllegalArgumentException("Unknown GT6 large boiler " + id));
     }
 
-    private static MultiblockLayout layout() {
-        var cells = new ArrayList<MultiblockLayout.Cell>();
-        for (int y = -1; y <= 2; y++) for (int back = 0; back <= 2; back++)
-            for (int right = -1; right <= 1; right++) {
-                MultiblockLayout.Role role;
-                if (y == -1) role = MultiblockLayout.Role.HEAT_INPUT;
-                else if (y == 0) role = MultiblockLayout.Role.FLUID_INPUT;
-                else if (y == 1 && right == 0 && back == 1) role = MultiblockLayout.Role.AIR;
-                else role = MultiblockLayout.Role.FLUID_OUTPUT;
-                cells.add(new MultiblockLayout.Cell(right, y, back, role));
-            }
-        return new MultiblockLayout(cells);
-    }
+    private static MultiblockLayout layout(){return MultiblockLayout.fromShared(OriginalLargeBoilerParameters.LAYOUT);}
 }

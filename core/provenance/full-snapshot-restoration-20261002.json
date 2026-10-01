@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-02",
+  "request": "Restore the previously ported NeoForge source to the current project and rebuild version 0.0.0.",
+  "source_snapshot_commit": "84be9ccb2ec2db43e15efe3d4f03c9098d9828c5",
+  "preserved_history_ref": "refs/remotes/recovery/complete-main",
+  "previous_current_head": "f4ec348a",
+  "restored_scope": ["src", "core", "neoforge"],
+  "source_java_files_after_restoration": {"forge": 1117, "core": 351, "neoforge": 941},
+  "copied_snapshot_files": 57617,
+  "relocated_identical_git_blobs": 17488,
+  "removed_obsolete_tracked_files": 37206,
+  "recovered_missing_provenance_or_documents": 192,
+  "preserved_current_work": ["English README", "Chinese README", "root gradle.properties", "Community Edition identity", "renamed material baseline", "current integration documents", "CI workflow", "origin", "current Git history"],
+  "adaptations": ["NeoForge description uses the root description property", "artifact verification requires restored gameplay classes on both platforms"],
+  "original_authorship": "Retained through recovered provenance records, original notices and the imported snapshot history reference. The three donor directories and preserved snapshot were not modified.",
+  "license_change": false,
+  "validation_scope": "Source restoration, current shared-core contracts, production artifact compilation and packaging. No claim that previous runtime evidence proves the restored tree's current gameplay or saved-world compatibility.",
+  "full_file_receipt": "Ignored work/complete-restoration-files.json retains the per-file source Git blobs and relocation mappings."
+}

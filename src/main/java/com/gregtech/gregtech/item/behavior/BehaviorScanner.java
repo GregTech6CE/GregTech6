@@ -238,14 +238,7 @@ public final class BehaviorScanner {
      * {@code COMPAT_IC2.isExplosionWhitelisted(block)}, and the port has no IC2.</p>
      */
     public static String blastResistance(double resistance) {
-        String value = (int) resistance + "." + (((int) (resistance * 10)) % 10);
-        String word;
-        if (resistance < 4) word = "(Terrible)";
-        else if (resistance < 12) word = "(Ghast Proof)";
-        else if (resistance < 16) word = "(Creeper Proof)";
-        else if (resistance <= 40) word = "(TNT Proof)";
-        else word = "(Strong Dynamite Proof)";
-        return "Blast Resistance: " + value + " " + word;
+        return com.gregtech.gregtech.content.tool.ConsumableRules.blastResistance(resistance);
     }
 
     /**

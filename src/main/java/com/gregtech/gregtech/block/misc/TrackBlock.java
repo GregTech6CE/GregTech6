@@ -69,10 +69,8 @@ public final class TrackBlock {
                     && sameAxis(level, pos.west(), RailShape.EAST_WEST);
             default -> false;
         };
-        if (!straight) return Math.min(speed, CURVE_SPEED);
-        // GT6 asks `doChunksNearChunkExist(..., 17)`; a 17-block radius spans the neighbour chunks.
-        return level.hasChunksAt(pos.offset(-16, 0, -16), pos.offset(16, 0, 16))
-                ? speed : Math.min(speed, UNLOADED_SPEED);
+        return com.gregtech.gregtech.content.transport.TrackCatalog.speed(speed,straight,
+                level.hasChunksAt(pos.offset(-16,0,-16),pos.offset(16,0,16)));
     }
 
     private static boolean sameAxis(Level level, BlockPos pos, RailShape shape) {
@@ -80,6 +78,17 @@ public final class TrackBlock {
         return state.getBlock() instanceof BaseRailBlock rail
                 && state.getValue(rail.getShapeProperty()) == shape;
     }
+
+    static void moveCart(AbstractMinecart cart,BlockState state,Level level,BlockPos pos,boolean powered){
+        var motion=cart.getDeltaMovement();var shape=state.getValue(((BaseRailBlock)state.getBlock()).getShapeProperty());
+        int axis=shape==RailShape.EAST_WEST?1:shape==RailShape.NORTH_SOUTH?2:0;
+        boolean launch=powered && !(Math.sqrt(motion.x*motion.x+motion.z*motion.z)>.01D);
+        boolean negative=launch && (axis==1?solidWall(level,pos.west()):axis==2&&solidWall(level,pos.north()));
+        boolean positive=launch && (axis==1?solidWall(level,pos.east()):axis==2&&solidWall(level,pos.south()));
+        var next=com.gregtech.gregtech.content.transport.TrackMotionRules.apply(motion.x,motion.y,motion.z,powered,axis,negative,positive);
+        cart.setDeltaMovement(next.x(),next.y(),next.z());
+    }
+    private static boolean solidWall(Level level,BlockPos pos){return level.getBlockState(pos).isRedstoneConductor(level,pos);}
 
     /** GT6's plain track ({@code Loader_Rails:41-50}). */
     public static final class Straight extends RailBlock {
@@ -111,7 +120,7 @@ public final class TrackBlock {
         private final float speed;
 
         public Booster(Properties properties, float speed) {
-            super(properties);
+            super(properties,true);
             this.speed = speed;
         }
 
@@ -125,27 +134,7 @@ public final class TrackBlock {
         public void onMinecartPass(BlockState state, Level level, BlockPos pos, AbstractMinecart cart) {
             if (cart == null) return;
             applySpeedToCart(speed, state, level, pos, cart);
-            var motion = cart.getDeltaMovement();
-            double horizontal = Math.sqrt(motion.x * motion.x + motion.z * motion.z);
-            if (state.getValue(PoweredRailBlock.POWERED)) {
-                if (horizontal > 0.01D) {
-                    cart.setDeltaMovement(motion.x * 2, motion.y, motion.z * 2);
-                    return;
-                }
-                // GT6 launches a standing cart away from the wall it touches.
-                RailShape shape = state.getValue(getShapeProperty());
-                if (shape == RailShape.EAST_WEST) {
-                    if (solid(level, pos.west())) cart.setDeltaMovement(0.02D, motion.y, motion.z);
-                    else if (solid(level, pos.east())) cart.setDeltaMovement(-0.02D, motion.y, motion.z);
-                } else if (shape == RailShape.NORTH_SOUTH) {
-                    if (solid(level, pos.north())) cart.setDeltaMovement(motion.x, motion.y, 0.02D);
-                    else if (solid(level, pos.south())) cart.setDeltaMovement(motion.x, motion.y, -0.02D);
-                }
-            } else if (horizontal < 0.03D) {
-                cart.setDeltaMovement(0, 0, 0);
-            } else {
-                cart.setDeltaMovement(motion.x / 2, 0, motion.z / 2);
-            }
+            moveCart(cart,state,level,pos,state.getValue(PoweredRailBlock.POWERED));
         }
 
         private static boolean solid(Level level, BlockPos pos) {

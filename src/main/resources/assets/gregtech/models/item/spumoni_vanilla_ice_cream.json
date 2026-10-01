@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "gregtech:item/food/spumoni_vanilla_ice_cream"
-  }
-}

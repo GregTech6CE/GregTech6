@@ -63,12 +63,12 @@ public final class AdvancedButtonBlockEntity extends BlockEntity {
     }
 
     public void adjustLength(int increment) {
-        maxLength = maxLength > Long.MAX_VALUE - increment ? 20 : maxLength + increment;
+        maxLength = com.gregtech.gregtech.content.tool.UtilityToolRules.buttonLength(maxLength,increment);
         refresh(false);
     }
 
     public void adjustStrength(int increment) {
-        strength = Math.floorMod(strength - 1 + increment, 15) + 1;
+        strength = com.gregtech.gregtech.content.tool.UtilityToolRules.buttonStrength(strength,increment);
         refresh(true);
     }
 

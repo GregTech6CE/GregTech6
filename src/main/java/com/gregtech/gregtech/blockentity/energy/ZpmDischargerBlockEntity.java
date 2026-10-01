@@ -42,8 +42,7 @@ public final class ZpmDischargerBlockEntity extends GTEnergyBlockEntity implemen
         var module=inventory.getStackInSlot(0);
         boolean loaded=ZpmEnergy.isModule(module)&&module.getCount()==1;
         if(tick++%20==0&&loaded&&buffer<ZpmEnergy.PACKET*80){
-            long packets=buffer<ZpmEnergy.PACKET*40?40:20;
-            long taken=Math.min(packets,ZpmEnergy.stored(module)/ZpmEnergy.PACKET)*ZpmEnergy.PACKET;
+            long taken=com.gregtech.gregtech.content.energy.ZpmWorkRules.recharge(buffer,ZpmEnergy.stored(module));
             if(taken>0){ZpmEnergy.set(module,ZpmEnergy.stored(module)-taken);buffer+=taken;setChanged();}
         }
         if(!stopped&&loaded&&buffer>=ZpmEnergy.PACKET){
@@ -72,5 +71,5 @@ public final class ZpmDischargerBlockEntity extends GTEnergyBlockEntity implemen
     @Override public void invalidateCaps(){super.invalidateCaps();items.invalidate();}
     @Override public void reviveCaps(){super.reviveCaps();items=LazyOptional.of(()->inventory);}
     @Override protected void saveAdditional(CompoundTag t){super.saveAdditional(t);t.put("gt.zpm.inventory",inventory.serializeNBT());t.putLong("gt.zpm.buffer",buffer);t.putBoolean("gt.stopped",stopped);}
-    @Override public void load(CompoundTag t){super.load(t);if(t.contains("gt.zpm.inventory"))inventory.deserializeNBT(t.getCompound("gt.zpm.inventory"));buffer=Math.max(0,Math.min(ZpmEnergy.PACKET*320,t.getLong("gt.zpm.buffer")));stopped=t.getBoolean("gt.stopped");}
+    @Override public void load(CompoundTag t){super.load(t);if(t.contains("gt.zpm.inventory"))inventory.deserializeNBT(t.getCompound("gt.zpm.inventory"));buffer=com.gregtech.gregtech.content.energy.ZpmWorkRules.savedBuffer(t.getLong("gt.zpm.buffer"));stopped=t.getBoolean("gt.stopped");}
 }

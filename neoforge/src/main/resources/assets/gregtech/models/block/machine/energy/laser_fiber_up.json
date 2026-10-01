@@ -1,0 +1,101 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:composite",
+  "textures": {
+    "particle": "gregtech:block/iconsets/fiber_wire"
+  },
+  "children": {
+    "0": {
+      "parent": "minecraft:block/block",
+      "render_type": "minecraft:cutout",
+      "textures": {
+        "north": "gregtech:block/iconsets/fiber_wire",
+        "east": "gregtech:block/iconsets/fiber_wire",
+        "south": "gregtech:block/iconsets/fiber_wire",
+        "west": "gregtech:block/iconsets/fiber_wire",
+        "up": "gregtech:block/iconsets/fiber_wire",
+        "down": "gregtech:block/iconsets/fiber_wire"
+      },
+      "elements": [
+        {
+          "from": [
+            6,
+            10,
+            6
+          ],
+          "to": [
+            10,
+            16,
+            10
+          ],
+          "faces": {
+            "up": {
+              "texture": "#up"
+            },
+            "down": {
+              "texture": "#down"
+            },
+            "north": {
+              "texture": "#north"
+            },
+            "south": {
+              "texture": "#south"
+            },
+            "east": {
+              "texture": "#east"
+            },
+            "west": {
+              "texture": "#west"
+            }
+          }
+        }
+      ]
+    },
+    "1": {
+      "parent": "minecraft:block/block",
+      "render_type": "minecraft:cutout",
+      "textures": {
+        "north": "gregtech:block/iconsets/fiber_wire_overlay",
+        "east": "gregtech:block/iconsets/fiber_wire_overlay",
+        "south": "gregtech:block/iconsets/fiber_wire_overlay",
+        "west": "gregtech:block/iconsets/fiber_wire_overlay",
+        "up": "gregtech:block/iconsets/fiber_wire_overlay",
+        "down": "gregtech:block/iconsets/fiber_wire_overlay"
+      },
+      "elements": [
+        {
+          "from": [
+            6,
+            10,
+            6
+          ],
+          "to": [
+            10,
+            16,
+            10
+          ],
+          "faces": {
+            "up": {
+              "texture": "#up"
+            },
+            "down": {
+              "texture": "#down"
+            },
+            "north": {
+              "texture": "#north"
+            },
+            "south": {
+              "texture": "#south"
+            },
+            "east": {
+              "texture": "#east"
+            },
+            "west": {
+              "texture": "#west"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

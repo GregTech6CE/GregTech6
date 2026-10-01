@@ -21,7 +21,7 @@ public final class GTMaterialRegistration {
 
     /** Call from common setup after all blocks are registered. */
     public static void registerAll() {
-        GregTech.LOGGER.info("[{}] Registering GT block item materials for F3+H tooltips", GregTech.MODID);
+        GregTech.LOGGER.info("[{}] Registering GT block item materials for F3+H tooltips", GregTech.NAMESPACE);
 
         int count = 0;
         // The original GT6 ore unifier treats this placeable block as one
@@ -172,7 +172,7 @@ public final class GTMaterialRegistration {
             count++;
         }
 
-        GregTech.LOGGER.info("[{}] Registered {} GT block items for material tooltips", GregTech.MODID, count);
+        GregTech.LOGGER.info("[{}] Registered {} GT block items for material tooltips", GregTech.NAMESPACE, count);
     }
 
     @SuppressWarnings("unchecked")

@@ -21,8 +21,25 @@ sourceSets {
     }
 }
 
+repositories {
+    maven { name = 'BlameJared'; url = 'https://maven.blamejared.com' }
+    maven { name = 'Modrinth'; url = 'https://api.modrinth.com/maven' }
+}
+
 dependencies {
-    implementation project(':core')
+    compileOnly "mezz.jei:jei-1.21.1-common-api:${rootProject.property('neoforge_jei_version')}"
+    compileOnly "mezz.jei:jei-1.21.1-neoforge-api:${rootProject.property('neoforge_jei_version')}"
+    runtimeOnly "mezz.jei:jei-1.21.1-neoforge:${rootProject.property('neoforge_jei_version')}"
+    compileOnly "maven.modrinth:jade:${rootProject.property('neoforge_jade_version')}"
+    runtimeOnly "maven.modrinth:jade:${rootProject.property('neoforge_jade_version')}"
+
+    if (rootProject.findProperty('directCoreClasspath')?.toString() == 'true') {
+        // Local development can use the same compiled core output directly.
+        // This avoids rebuilding its large resource archive before an ordinary run.
+        implementation files(project(':core').sourceSets.main.output)
+    } else {
+        implementation project(':core')
+    }
 }
 
 neoForge {
@@ -44,6 +61,17 @@ neoForge {
         }
         server {
             server()
+            sourceSet = sourceSets.bootstrapGameTest
+            systemProperty 'gregtech.integration.serverSmokePhase', (rootProject.findProperty('serverSmokePhase') ?: '').toString()
+            systemProperty 'gregtech.integration.serverSmokeId', (rootProject.findProperty('serverSmokeId') ?: '').toString()
+            systemProperty 'gregtech.integration.manualToolSmoke', (rootProject.findProperty('manualToolSmoke') ?: 'false').toString()
+            systemProperty 'gregtech.integration.poweredToolSmoke', (rootProject.findProperty('poweredToolSmoke') ?: 'false').toString()
+            systemProperty 'gregtech.integration.itemLogisticsSmoke', (rootProject.findProperty('itemLogisticsSmoke') ?: 'false').toString()
+            systemProperty 'gregtech.integration.itemRoutingSmoke', (rootProject.findProperty('itemRoutingSmoke') ?: 'false').toString()
+            ['X', 'Y', 'Z'].each { axis ->
+                def coordinate = rootProject.findProperty('serverSmoke' + axis)
+                if (coordinate != null) systemProperty 'gregtech.integration.serverSmoke' + axis, coordinate.toString()
+            }
             gameDirectory = project.file('run-server')
             if (rootProject.findProperty('serverDirectory')) {
                 gameDirectory = project.file(rootProject.property('serverDirectory'))
@@ -54,8 +82,8 @@ neoForge {
         gameTestServer {
             type = 'gameTestServer'
             sourceSet = sourceSets.bootstrapGameTest
-            gameDirectory = project.file('build/bootstrap-gametest-run')
-            systemProperty 'neoforge.enabledGameTestNamespaces', 'gregtech_bootstrap'
+            gameDirectory = project.file(rootProject.findProperty('neoforgeGameTestDirectory') ?: 'build/bootstrap-gametest-run')
+            systemProperty 'neoforge.enabledGameTestNamespaces', (rootProject.findProperty('gameTestNamespaces') ?: 'gregtech_bootstrap').toString()
             jvmArgument '-Xmx1536m'
         }
         configureEach {
@@ -78,6 +106,7 @@ def modProperties = [
         mod_name: rootProject.property('mod_name'),
         mod_version: project.version.toString(),
         mod_license: rootProject.property('mod_license'),
+        mod_description: rootProject.property('mod_description'),
         mod_authors: 'saltnya, brokestar233, Lorbineitte Masson, GregTech 6 team'
 ]
 
@@ -93,6 +122,8 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 tasks.named('jar', Jar).configure {
+    // Embedding the complete shared resource catalog requires ZIP64 too.
+    zip64 = true
     // The same Java 17 output used by Forge is embedded exactly once.
     from project(':core').sourceSets.main.output
     duplicatesStrategy = DuplicatesStrategy.FAIL

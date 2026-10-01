@@ -27,9 +27,9 @@ import java.util.function.Consumer;
 /** GT6 fluid registry holder — DeferredRegisters and lookup maps populated by {@code Loader_Fluids}. */
 public final class GTFluids {
     public static final DeferredRegister<FluidType> FLUID_TYPES =
-            DeferredRegister.create(ForgeRegistries.Keys.FLUID_TYPES, GregTech.MODID);
+            DeferredRegister.create(ForgeRegistries.Keys.FLUID_TYPES, GregTech.NAMESPACE);
     public static final DeferredRegister<Fluid> FLUIDS =
-            DeferredRegister.create(ForgeRegistries.FLUIDS, GregTech.MODID);
+            DeferredRegister.create(ForgeRegistries.FLUIDS, GregTech.NAMESPACE);
 
     private static final Map<String, RegistryObject<Fluid>> STILL_BY_FIELD = new HashMap<>();
     private static final Map<String, RegistryObject<Fluid>> FLOWING_BY_FIELD = new HashMap<>();

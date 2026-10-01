@@ -17,7 +17,7 @@ import java.util.Set;
 import java.util.WeakHashMap;
 
 /** Forge 1.20 equivalent of GT6's MOB_SPAWN_INHIBITORS list. */
-@Mod.EventBusSubscriber(modid = GregTech.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public final class VonDaGraaggSpawnInhibitor {
     private static final WeakHashMap<ServerLevel, Set<BlockPos>> ACTIVE = new WeakHashMap<>();
 
@@ -34,8 +34,7 @@ public final class VonDaGraaggSpawnInhibitor {
 
     /** GT6 checks a square horizontal range and exempts mossy cobblestone within ±5 blocks. */
     public static boolean inhibits(ServerLevel level, BlockPos controller, int range, BlockPos spawn) {
-        if (range <= 0 || Math.abs(spawn.getX() - controller.getX()) > range
-                || Math.abs(spawn.getZ() - controller.getZ()) > range) return false;
+        if(!VonDaGraaggRules.within(spawn.getX()-controller.getX(),spawn.getZ()-controller.getZ(),range))return false;
         for (int dy = -5; dy <= 5; dy++) {
             BlockPos nearby = spawn.offset(0, dy, 0);
             if (level.isInWorldBounds(nearby)) {

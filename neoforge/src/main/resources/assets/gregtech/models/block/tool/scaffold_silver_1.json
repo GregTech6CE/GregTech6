@@ -1,0 +1,358 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:composite",
+  "textures": {
+    "particle": "gregtech:block/iconsets/plate"
+  },
+  "children": {
+    "base": {
+      "textures": {
+        "particle": "gregtech:block/iconsets/plate",
+        "plate": "gregtech:block/iconsets/plate",
+        "rod": "gregtech:block/material_icons/shiny/blocksolid"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            10,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#plate",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#plate",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#plate",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#plate",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#plate",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#plate",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            2,
+            10,
+            2
+          ],
+          "faces": {
+            "down": {
+              "texture": "#rod",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#rod",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#rod",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#rod",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#rod",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#rod",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            0,
+            14
+          ],
+          "to": [
+            2,
+            10,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#rod",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#rod",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#rod",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#rod",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#rod",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#rod",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            14,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            10,
+            2
+          ],
+          "faces": {
+            "down": {
+              "texture": "#rod",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#rod",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#rod",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#rod",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#rod",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#rod",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            14,
+            0,
+            14
+          ],
+          "to": [
+            16,
+            10,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#rod",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#rod",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#rod",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#rod",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#rod",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#rod",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            2,
+            4,
+            0
+          ],
+          "to": [
+            14,
+            5,
+            4
+          ],
+          "faces": {
+            "down": {
+              "texture": "#plate",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#plate",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#plate",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#plate",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#plate",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#plate",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            2,
+            12,
+            0
+          ],
+          "to": [
+            14,
+            13,
+            4
+          ],
+          "faces": {
+            "down": {
+              "texture": "#plate",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#plate",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#plate",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#plate",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#plate",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#plate",
+              "tintindex": 0
+            }
+          }
+        }
+      ]
+    },
+    "hatch": {
+      "textures": {
+        "hatch": "gregtech:block/iconsets/hatch"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            10,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#hatch",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#hatch",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            2,
+            4,
+            0
+          ],
+          "to": [
+            14,
+            5,
+            4
+          ],
+          "faces": {
+            "down": {
+              "texture": "#hatch",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#hatch",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            2,
+            12,
+            0
+          ],
+          "to": [
+            14,
+            13,
+            4
+          ],
+          "faces": {
+            "down": {
+              "texture": "#hatch",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#hatch",
+              "tintindex": 0
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    }
+  }
+}

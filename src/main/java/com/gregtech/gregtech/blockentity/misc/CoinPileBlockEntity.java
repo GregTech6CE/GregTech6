@@ -41,13 +41,13 @@ import java.util.List;
  */
 public class CoinPileBlockEntity extends BlockEntity {
     /** GT6's sixteen faces: {@code mCoinStackSizes = new byte[16]} ({@code MultiTileEntityCoin.java:71}). */
-    public static final int FACES = 16;
+    public static final int FACES = com.gregtech.gregtech.block.CoinPileRules.FACES;
     /**
      * GT6's per-face cap: {@code private static final byte COIN_STACKSIZE = 16}
      * ({@code MultiTileEntityCoin.java:74}), used by the add ({@code :167}) and the item merge
      * ({@code :201}, {@code :217}).
      */
-    public static final int FACE_STACK_SIZE = 16;
+    public static final int FACE_STACK_SIZE = com.gregtech.gregtech.block.CoinPileRules.PER_FACE;
     /**
      * The legacy coarse fill state has four values. The block entity renderer itself draws all
      * sixteen exact per-face heights from GT6 ({@code MultiTileEntityCoin.java:385}).
@@ -75,7 +75,7 @@ public class CoinPileBlockEntity extends BlockEntity {
      * coordinates clamped into {@code [0, 0.99)}.
      */
     public static int faceAt(double hitX, double hitZ) {
-        return faceAxis(hitX) * 4 + faceAxis(hitZ);
+        return com.gregtech.gregtech.block.CoinPileRules.faceAt(hitX,hitZ);
     }
 
     private static int faceAxis(double value) {
@@ -202,14 +202,7 @@ public class CoinPileBlockEntity extends BlockEntity {
         // the total and the 16-per-cell cap invariant also gives the same varied pile silhouette.
         if (level != null) {
             int total = total();
-            java.util.Arrays.fill(faces, (byte) 0);
-            while (total > 0) {
-                int face = level.random.nextInt(FACES);
-                if (faces[face] < FACE_STACK_SIZE) {
-                    faces[face]++;
-                    total--;
-                }
-            }
+            com.gregtech.gregtech.block.CoinPileRules.repack(faces,total,level.random::nextInt);
         }
         setChanged();
         syncState();

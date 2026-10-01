@@ -159,7 +159,7 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
         for (FluidStack fluidIn : recipe.mFluidInputs) {
             fuelTank.remove(fluidIn.getAmount());
         }
-        energy += eut * recipe.mDuration * spec.efficiency() / 10000;
+        energy += BurningBoxFuelRules.recipeHeat(eut, recipe.mDuration, spec.efficiency());
         return true;
     }
 
@@ -180,7 +180,7 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
             fuelTank.remove(fluidIn.getAmount());
         }
         inventory.extractItem(0, 1, false);
-        energy += eut * recipe.mDuration * spec.efficiency() / 10000;
+        energy += BurningBoxFuelRules.recipeHeat(eut, recipe.mDuration, spec.efficiency());
         // Queue ash from first output
         ItemStack[] outputs = recipe.mOutputs;
         if (outputs.length > 0 && outputs[0] != null && !outputs[0].isEmpty())

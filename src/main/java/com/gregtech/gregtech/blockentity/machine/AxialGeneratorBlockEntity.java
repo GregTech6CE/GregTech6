@@ -68,7 +68,7 @@ public abstract class AxialGeneratorBlockEntity extends GTEnergyBlockEntity impl
     protected void convertAndEmit() {
         converting=false;emitted=false;
         if(energy<=0)return;
-        long output=energy*grade().output()/grade().input();
+        long output=com.gregtech.gregtech.content.multiblock.OriginalGeneratorParameters.convert(energy,grade().output(),grade().input());
         if(output>grade().outputMaximum()) { overload();return; }
         if(output>=grade().output()/2) {
             converting=true;

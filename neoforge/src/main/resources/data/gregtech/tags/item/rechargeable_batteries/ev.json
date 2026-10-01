@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "gregtech:battery_lead_acid_ev",
+    "gregtech:battery_alkaline_ev",
+    "gregtech:battery_nickel_cadmium_ev",
+    "gregtech:battery_lithium_cobalt_ev",
+    "gregtech:battery_lithium_manganese_ev",
+    "gregtech:battery_eu_2048",
+    "gregtech:battery_ev"
+  ]
+}

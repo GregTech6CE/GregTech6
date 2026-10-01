@@ -33,7 +33,7 @@ public abstract class AutoToolBlockEntity extends GTEnergyBlockEntity {
     @Override public long getEnergySizeInputRecommended(GregTechTags.Tag type,Direction side) { return input(); }
     @Override public long getEnergySizeOutputRecommended(GregTechTags.Tag type,Direction side) { return 0; }
     protected boolean overvoltage(long size) {
-        if (Math.abs(size)<=input()*2) return false;
+        if (!com.gregtech.gregtech.content.tool.AutomaticToolRules.overvoltage(size,input())) return false;
         if(level!=null && !level.isClientSide) level.explode(null,worldPosition.getX()+.5,worldPosition.getY()+.5,worldPosition.getZ()+.5,2,net.minecraft.world.level.Level.ExplosionInteraction.BLOCK);
         return true;
     }

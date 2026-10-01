@@ -3,6 +3,7 @@ package com.gregtech.gregtech.blockentity.energy;
 import com.gregtech.gregtech.blockentity.GTEnergyBlockEntity;
 import com.gregtech.gregtech.block.energy.LaserConverterBlock;
 import com.gregtech.gregtech.content.energy.LaserSpec;
+import com.gregtech.gregtech.content.energy.LaserWorkRules;
 import com.gregtech.gregtech.api.energy.EnergyTransfer;
 import com.gregtech.gregtech.data.GregTechTags;
 import com.gregtech.gregtech.registry.GTBlockEntities;
@@ -42,8 +43,8 @@ public final class LaserConverterBlockEntity extends GTEnergyBlockEntity impleme
     public void toggleStopped(){stopped=!stopped;setChanged();}
     public void tick(){
         if(level==null||level.isClientSide)return;
-        long output=energy*spec().output()/spec().input();
-        boolean active=!stopped && output>=Math.max(1,spec().output()/2);
+        long output=LaserWorkRules.converted(spec(),energy);
+        boolean active=LaserWorkRules.active(spec(),output,stopped);
         emitted=active&&EnergyTransfer.emitEnergyToSide(spec().outputType(),front(),output,1,this)>0;
         // These four GT6 converters waste their per-tick supply even if their output is disconnected.
         if(energy!=0){energy=0;setChanged();}
@@ -52,7 +53,7 @@ public final class LaserConverterBlockEntity extends GTEnergyBlockEntity impleme
     }
     @Override public boolean isEnergyType(GregTechTags.Tag type,Direction side,boolean emitting){return type==(emitting?spec().outputType():spec().inputType());}
     @Override public Collection<GregTechTags.Tag> getEnergyTypes(Direction side){return List.of(spec().inputType(),spec().outputType());}
-    @Override public boolean isEnergyAcceptingFrom(GregTechTags.Tag type,Direction side,boolean theoretical){return type==spec().inputType()&&(theoretical||!stopped)&&(side==null||(spec().backInputOnly()?side==front().getOpposite():side!=front()));}
+    @Override public boolean isEnergyAcceptingFrom(GregTechTags.Tag type,Direction side,boolean theoretical){return type==spec().inputType()&&(theoretical||!stopped)&&LaserWorkRules.acceptsFace(spec().backInputOnly(),front().ordinal(),side==null?-1:side.ordinal());}
     @Override public boolean isEnergyEmittingTo(GregTechTags.Tag type,Direction side,boolean theoretical){return type==spec().outputType()&&(side==null||side==front());}
     @Override public long getEnergySizeInputRecommended(GregTechTags.Tag type,Direction side){return type==spec().inputType()?spec().input():0;}
     @Override public long getEnergySizeOutputRecommended(GregTechTags.Tag type,Direction side){return type==spec().outputType()?spec().output():0;}
@@ -60,7 +61,7 @@ public final class LaserConverterBlockEntity extends GTEnergyBlockEntity impleme
     @Override public long getEnergyOffered(GregTechTags.Tag type,Direction side,long size){return 0;}
     @Override public long doInject(GregTechTags.Tag type,Direction side,long size,long amount,boolean execute){
         if(size<=0||amount<=0||size>spec().input()*2||!isEnergyAcceptingFrom(type,side,false))return 0;
-        long accepted=Math.min(amount,(spec().input()*2-energy)/size);
+        long accepted=LaserWorkRules.packets(spec(),energy,size,amount);
         if(execute&&accepted>0){energy+=size*accepted;setChanged();}
         return accepted;
     }
@@ -72,5 +73,5 @@ public final class LaserConverterBlockEntity extends GTEnergyBlockEntity impleme
     @Override public void invalidateCaps(){super.invalidateCaps();forgeEnergy.invalidate();}
     @Override public void reviveCaps(){super.reviveCaps();forgeEnergy=createForgeEnergy();}
     @Override protected void saveAdditional(CompoundTag tag){super.saveAdditional(tag);tag.putLong("gt.laser.energy",energy);tag.putBoolean("gt.stopped",stopped);}
-    @Override public void load(CompoundTag tag){super.load(tag);energy=Math.max(0,Math.min(spec().input()*2,tag.getLong("gt.laser.energy")));stopped=tag.getBoolean("gt.stopped");}
+    @Override public void load(CompoundTag tag){super.load(tag);energy=LaserWorkRules.stored(spec(),tag.getLong("gt.laser.energy"));stopped=tag.getBoolean("gt.stopped");}
 }

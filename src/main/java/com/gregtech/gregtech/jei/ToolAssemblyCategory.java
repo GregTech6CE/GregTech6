@@ -34,7 +34,7 @@ public final class ToolAssemblyCategory {
     private ToolAssemblyCategory() {}
 
     public static final RecipeType<ToolAssemblyCatalog.ToolAssemblyInfo> TYPE =
-            RecipeType.create(GregTech.MODID, "tool_assembly", ToolAssemblyCatalog.ToolAssemblyInfo.class);
+            RecipeType.create(GregTech.NAMESPACE, "tool_assembly", ToolAssemblyCatalog.ToolAssemblyInfo.class);
 
     /** The JEI category: one slot per required form, the tool as output. */
     public static final class Category implements IRecipeCategory<ToolAssemblyCatalog.ToolAssemblyInfo> {

@@ -1,0 +1,115 @@
+{
+  "loader": "neoforge:composite",
+  "parent": "minecraft:block/block",
+  "children": {
+    "colored": {
+      "render_type": "minecraft:cutout",
+      "textures": {
+        "bottom": "gregtech:block/machines/drawers/quad/colored/bottom",
+        "top": "gregtech:block/machines/drawers/quad/colored/top",
+        "front": "gregtech:block/machines/drawers/quad/colored/front",
+        "back": "gregtech:block/machines/drawers/quad/colored/back",
+        "side": "gregtech:block/machines/drawers/quad/colored/side"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#bottom",
+              "cullface": "down",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#top",
+              "cullface": "up",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#back",
+              "cullface": "north",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#front",
+              "cullface": "south",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#side",
+              "cullface": "west",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#side",
+              "cullface": "east",
+              "tintindex": 0
+            }
+          }
+        }
+      ]
+    },
+    "overlay": {
+      "render_type": "minecraft:cutout",
+      "textures": {
+        "bottom": "gregtech:block/machines/drawers/quad/overlay/bottom",
+        "top": "gregtech:block/machines/drawers/quad/overlay/top",
+        "front": "gregtech:block/machines/drawers/quad/overlay/front",
+        "back": "gregtech:block/machines/drawers/quad/overlay/back",
+        "side": "gregtech:block/machines/drawers/quad/overlay/side"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#bottom",
+              "cullface": "down"
+            },
+            "up": {
+              "texture": "#top",
+              "cullface": "up"
+            },
+            "north": {
+              "texture": "#back",
+              "cullface": "north"
+            },
+            "south": {
+              "texture": "#front",
+              "cullface": "south"
+            },
+            "west": {
+              "texture": "#side",
+              "cullface": "west"
+            },
+            "east": {
+              "texture": "#side",
+              "cullface": "east"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "textures": {
+    "particle": "gregtech:block/machines/drawers/quad/colored/side"
+  }
+}

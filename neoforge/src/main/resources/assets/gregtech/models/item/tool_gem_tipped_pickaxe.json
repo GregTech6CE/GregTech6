@@ -1,0 +1,10 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "gregtech:item/material_icons/dull/stick",
+    "layer1": "gregtech:item/material_icons/dull/toolheadpickaxe",
+    "layer2": "gregtech:item/material_icons/dull/toolheadpickaxe_overlay",
+    "layer3": "gregtech:item/material_icons/dull/toolheadpickaxegem",
+    "layer4": "gregtech:item/material_icons/dull/toolheadpickaxegem_overlay"
+  }
+}

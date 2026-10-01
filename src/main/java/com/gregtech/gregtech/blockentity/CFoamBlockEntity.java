@@ -17,9 +17,9 @@ import net.minecraft.world.level.block.state.BlockState;
  */
 public class CFoamBlockEntity extends BlockEntity {
     /** GT6 waits a hundred ticks before the first drying roll. */
-    public static final int GRACE_TICKS = 100;
+    public static final int GRACE_TICKS = com.gregtech.gregtech.block.ConstructionRules.FOAM_GRACE;
     /** GT6's {@code rng(5900) == 0} — about five minutes per block on average. */
-    public static final int DRY_CHANCE = 5900;
+    public static final int DRY_CHANCE = com.gregtech.gregtech.block.ConstructionRules.FOAM_DRY_CHANCE;
 
     private long timer;
     private boolean dried;
@@ -35,8 +35,7 @@ public class CFoamBlockEntity extends BlockEntity {
     public void tick() {
         if (level == null || level.isClientSide || dried) return;
         timer++;
-        if (timer < GRACE_TICKS) return;
-        if (level.random.nextInt(DRY_CHANCE) != 0) return;
+        if (!com.gregtech.gregtech.block.ConstructionRules.dries(timer,level.random::nextInt)) return;
         dry();
     }
 

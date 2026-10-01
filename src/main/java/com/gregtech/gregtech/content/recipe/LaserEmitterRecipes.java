@@ -29,15 +29,7 @@ import java.util.List;
  */
 public final class LaserEmitterRecipes {
     /** GT6 gas -> port emitter item id, in the original's order. */
-    private static final String[][] GASES = {
-            {"Helium", "laser_emitter_helium"},
-            {"Neon", "laser_emitter_neon"},
-            {"Argon", "laser_emitter_argon"},
-            {"Krypton", "laser_emitter_krypton"},
-            {"Xenon", "laser_emitter_xenon"},
-            {"HeliumNeon", "laser_emitter_heliumneon"},
-            {"CarbonMonoxide", "laser_emitter_carbonmonoxide"},
-            {"CarbonDioxide", "laser_emitter_carbondioxide"}};
+    private static final String[][] GASES = LaserEmitterRecipeRows.gases();
 
     private static final List<String> ENTRIES = new ArrayList<>();
     private static final List<String> SKIPPED = new ArrayList<>();
@@ -96,7 +88,7 @@ public final class LaserEmitterRecipes {
     }
 
     private static ItemStack item(String id) {
-        var item = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(GregTech.MODID, id));
+        var item = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, id));
         return item == null || item == Items.AIR ? ItemStack.EMPTY : new ItemStack(item);
     }
 

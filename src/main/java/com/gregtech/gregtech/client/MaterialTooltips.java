@@ -78,14 +78,14 @@ public final class MaterialTooltips {
         if (prefix != null) {
             List<Integer> shapeless = ShapelessRecipeTooltipIndex.inputAmounts(prefix, mat);
             if (!shapeless.isEmpty()) {
-                tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".shapeless_recipes")
+                tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".shapeless_recipes")
                         .append(Component.literal(shapeless.toString()).withStyle(ChatFormatting.WHITE))
                         .withStyle(ChatFormatting.AQUA));
             }
         }
 
         if (flag.isAdvanced()) {
-            tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".contained_materials")
+            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".contained_materials")
                     .withStyle(ChatFormatting.DARK_AQUA));
             for (MaterialChemistry.WeightedMaterial weighted : materials) {
                 if (weighted.material().isValid()) {
@@ -93,7 +93,7 @@ public final class MaterialTooltips {
                 }
             }
         } else {
-            tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".f3h_hint")
+            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".f3h_hint")
                     .withStyle(ChatFormatting.DARK_GRAY));
         }
 
@@ -116,26 +116,26 @@ public final class MaterialTooltips {
     public static void appendSourceModTooltip(List<Component> tooltip, GTMaterial mat) {
         ModData source = mat.getSourceMod();
         if (source == null || source == ModReferences.UNKNOWN) {
-            tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".material_from_gt")
+            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".material_from_gt")
                     .withStyle(ChatFormatting.BLUE));
             return;
         }
         if (source == ModReferences.MC) {
-            tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".vanilla_material")
+            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".vanilla_material")
                     .withStyle(ChatFormatting.BLUE));
             return;
         }
         if ((source == ModReferences.GT || source == ModReferences.GAPI) && isPeriodicTableElement(mat)) {
-            tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".material_from_periodic_table")
+            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".material_from_periodic_table")
                     .withStyle(ChatFormatting.BLUE));
             return;
         }
         if (source == ModReferences.GT || source == ModReferences.GAPI) {
-            tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".material_from_gt")
+            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".material_from_gt")
                     .withStyle(ChatFormatting.BLUE));
             return;
         }
-        tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".material_from_mod", source.name)
+        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".material_from_mod", source.name)
                 .withStyle(ChatFormatting.BLUE));
     }
 
@@ -146,7 +146,7 @@ public final class MaterialTooltips {
                 && !mat.has(MaterialProperty.ANTIMATTER);
     }
 
-    public static void appendForeign(ItemStack stack, ItemMaterialRegistry.ItemMaterialData data,
+    public static void appendForeign(ItemStack stack, com.gregtech.gregtech.api.material.ItemComposition data,
                                      List<Component> tooltip, TooltipFlag flag) {
         var form = com.gregtech.gregtech.api.material.MaterialEquivalence.form(stack);
         if(form!=null) {
@@ -171,7 +171,7 @@ public final class MaterialTooltips {
         if (!data.recoverable()) tooltip.add(Component.translatable("tooltip.gregtech.composition_descriptive").withStyle(ChatFormatting.GRAY));
 
         if (flag.isAdvanced()) {
-            tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".contained_materials")
+            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".contained_materials")
                     .withStyle(ChatFormatting.DARK_AQUA));
             for (var component : data.components()) for (MaterialChemistry.WeightedMaterial weighted : MaterialChemistry.materialWeights(component.material(), component.amount())) {
                 if (weighted.material().isValid()) {
@@ -179,7 +179,7 @@ public final class MaterialTooltips {
                 }
             }
         } else {
-            tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".f3h_hint")
+            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".f3h_hint")
                     .withStyle(ChatFormatting.DARK_GRAY));
         }
 
@@ -267,7 +267,7 @@ public final class MaterialTooltips {
         }
         long heat = burnValue * GregTechConstants.EU_PER_FURNACE_TICK;
         tooltip.add(Component.empty()
-                .append(Component.translatable("tooltip." + GregTech.MODID + ".fuel_value.label")
+                .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".fuel_value.label")
                         .withStyle(ChatFormatting.RED))
                 .append(Component.literal(Long.toString(burnValue)).withStyle(ChatFormatting.WHITE))
                 .append(Component.literal(" (" + heat + " ").withStyle(ChatFormatting.WHITE))
@@ -277,7 +277,7 @@ public final class MaterialTooltips {
 
     public static void appendFlammableTooltip(GTMaterial material, List<Component> tooltip) {
         if (material.resolve().has(MaterialProperty.FLAMMABLE)) {
-            tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".flammable")
+            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".flammable")
                     .withStyle(ChatFormatting.RED));
         }
     }

@@ -18,7 +18,7 @@ public class WireBlockItem extends BlockItem {
     public Component getName(ItemStack stack) {
         if (getBlock() instanceof ElectricWireBlock wire) {
             WireSpec spec = wire.spec();
-            String key = "item." + com.gregtech.gregtech.GregTech.MODID + "." + (spec.insulated() ? "cable" : "wire");
+            String key = "item." + com.gregtech.gregtech.GregTech.NAMESPACE + "." + (spec.insulated() ? "cable" : "wire");
             return Component.translatable(key,
                     MaterialPresentation.name(spec.material()),
                     Component.literal(String.valueOf(spec.size())));

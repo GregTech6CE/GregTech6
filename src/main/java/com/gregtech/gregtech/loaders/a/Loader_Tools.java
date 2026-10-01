@@ -19,7 +19,7 @@ import net.minecraftforge.registries.RegistryObject;
 public record Loader_Tools(IEventBus bus) implements IGTLoader {
 
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS =
-            DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, GregTech.MODID);
+            DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, GregTech.NAMESPACE);
 
     /** Head + handle assembly (GT6 {@code AdvancedCraftingTool}). */
     public static final RegistryObject<RecipeSerializer<GTToolAssemblyRecipe>> TOOL_ASSEMBLY =
@@ -53,6 +53,6 @@ public record Loader_Tools(IEventBus bus) implements IGTLoader {
     }
 
     public static ResourceLocation recipeId(GTToolType type) {
-        return ResourceLocation.fromNamespaceAndPath(GregTech.MODID, "tools/" + type.id());
+        return ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, "tools/" + type.id());
     }
 }

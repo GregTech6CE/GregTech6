@@ -37,7 +37,7 @@ import java.util.Map;
 
 /** GT6 MultiTileEntityCrucible: 3x3x3 open vessel, per-material wall, shared smelting engine. */
 public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBlockEntity implements MultiblockPortOwner {
-    public static final long MAX_AMOUNT = 16L * 3 * 3 * 3 * GTValues.U;
+    public static final long MAX_AMOUNT = com.gregtech.gregtech.content.multiblock.OriginalLargeCrucibleParameters.CAPACITY_UNITS;
     private static final long MB_UNIT = GTValues.U / 144L;
     private final LargeCrucibleSpecs.Variant variant;
     private final PartBindings<BlockPos, MultiblockLayout.Role> bindings = new PartBindings<>();
@@ -113,16 +113,12 @@ public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBl
         if (level == null || isRemoved() || !level.hasChunkAt(worldPosition)) return false;
         Block wall = variant.wall();
         Map<BlockPos, MultiblockLayout.Role> candidates = new LinkedHashMap<>(24);
-        for (int y = 0; y < 3; y++) for (int x = -1; x <= 1; x++) for (int z = -1; z <= 1; z++) {
-            BlockPos pos = worldPosition.offset(x, y, z);
-            if (!level.hasChunkAt(pos)) { bindings.clear(this::release); return false; }
-            if (x == 0 && z == 0) {
-                if (y > 0 && !level.getBlockState(pos).isAir()) { bindings.clear(this::release); return false; }
-                continue;
-            }
-            if (!level.getBlockState(pos).is(wall)) { bindings.clear(this::release); return false; }
-            candidates.put(pos, y == 0 ? MultiblockLayout.Role.ENERGY_INPUT
-                    : y == 1 ? MultiblockLayout.Role.CRUCIBLE : MultiblockLayout.Role.ITEM_FLUID_IO);
+        for(var cell:com.gregtech.gregtech.content.multiblock.SharedLargeCrucibleStructure.CELLS){
+            BlockPos pos=worldPosition.offset(cell.x(),cell.y(),cell.z());
+            if(!level.hasChunkAt(pos)){bindings.clear(this::release);return false;}
+            if(cell.air()){if(!level.getBlockState(pos).isAir()){bindings.clear(this::release);return false;}continue;}
+            if(!level.getBlockState(pos).is(wall)){bindings.clear(this::release);return false;}
+            candidates.put(pos,MultiblockLayout.Role.valueOf(cell.role().name()));
         }
         return bindings.update(candidates,
                 pos -> level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity port && port.canBind(worldPosition),

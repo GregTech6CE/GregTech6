@@ -11,7 +11,7 @@ import java.util.*;
 
 /** Original GT6 sprites, with the exact same face mapping used by the server's buttons. */
 public final class PanelCoverRenderer {
-    private static final String[] BUTTON_STYLES={"underlay","underlay_0_to_15","underlay_0_to_F","underlay_1_to_16","underlay_16_1_to_15","underlay_keypad_1_to_9","underlay_keypad_9_to_1","underlay_bits"};
+    private static final String[] BUTTON_STYLES={"underlay","underlay_0_to_15","underlay_0_to_f","underlay_1_to_16","underlay_16_1_to_15","underlay_keypad_1_to_9","underlay_keypad_9_to_1","underlay_bits"};
     private PanelCoverRenderer(){}
     public static List<String> layers(ItemStack stack){
         var panel=PanelCover.of(stack);if(panel==null)return List.of();

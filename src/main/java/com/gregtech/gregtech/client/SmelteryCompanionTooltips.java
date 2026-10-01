@@ -47,57 +47,57 @@ public final class SmelteryCompanionTooltips {
     }
 
     private static void appendMoldSelect(List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".smeltery.mold.select")
+        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".smeltery.mold.select")
                 .withStyle(ChatFormatting.AQUA));
     }
 
     private static void appendProducesBlockSolid(List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".smeltery.mold.produces",
-                        Component.translatable("tooltip." + GregTech.MODID + ".smeltery.product.block_solid"))
+        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".smeltery.mold.produces",
+                        Component.translatable("tooltip." + GregTech.NAMESPACE + ".smeltery.product.block_solid"))
                 .withStyle(ChatFormatting.AQUA));
     }
 
     private static void appendInteractTop(List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".smeltery.interact_top",
-                        Component.translatable("tooltip." + GregTech.MODID + ".smeltery.face.top"))
+        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".smeltery.interact_top",
+                        Component.translatable("tooltip." + GregTech.NAMESPACE + ".smeltery.face.top"))
                 .withStyle(ChatFormatting.GOLD));
     }
 
     private static void appendInteract(List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".smeltery.interact")
+        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".smeltery.interact")
                 .withStyle(ChatFormatting.GOLD));
     }
 
     private static void appendAcidProofIfNeeded(CrucibleSpec spec, List<Component> tooltip) {
         if (spec.acidProof()) {
-            tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".crucible.acidproof")
+            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".crucible.acidproof")
                     .withStyle(ChatFormatting.GOLD));
         }
     }
 
     private static void appendMeltdown(CrucibleSpec spec, List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".crucible.meltdown",
+        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".crucible.meltdown",
                         spec.meltDownTemperatureK())
                 .withStyle(ChatFormatting.DARK_RED));
     }
 
     private static void appendContactDamage(List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".crucible.contact_damage")
+        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".crucible.contact_damage")
                 .withStyle(ChatFormatting.DARK_RED));
     }
 
     private static void appendPincers(List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".smeltery.tool.pincers")
+        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".smeltery.tool.pincers")
                 .withStyle(ChatFormatting.GRAY));
     }
 
     private static void appendMonkeyWrenchAutoInputs(List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".smeltery.tool.monkey_wrench_auto_inputs")
+        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".smeltery.tool.monkey_wrench_auto_inputs")
                 .withStyle(ChatFormatting.GRAY));
     }
 
     private static void appendSoftHammerReset(List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".smeltery.tool.soft_hammer_reset")
+        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".smeltery.tool.soft_hammer_reset")
                 .withStyle(ChatFormatting.GRAY));
     }
 }

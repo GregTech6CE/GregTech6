@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "gregtech:item/iconsets/flint_tinder",
+    "layer1": "gregtech:item/iconsets/flint_tinder_overlay"
+  }
+}

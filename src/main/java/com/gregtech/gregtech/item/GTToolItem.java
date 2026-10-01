@@ -211,7 +211,7 @@ public class GTToolItem extends Item {
 
     @Override
     public String getDescriptionId() {
-        return "item." + GregTech.MODID + ".tool." + toolType.id();
+        return "item." + GregTech.NAMESPACE + ".tool." + toolType.id();
     }
 
     @Override
@@ -221,9 +221,9 @@ public class GTToolItem extends Item {
         }
         GTMaterial head = GTToolHelper.getHead(stack);
         if (toolType == GTToolType.GEM_PICK) {
-            return Component.translatable("item." + GregTech.MODID + ".tool.gem_tipped_pickaxe.named", MaterialPresentation.name(head));
+            return Component.translatable("item." + GregTech.NAMESPACE + ".tool.gem_tipped_pickaxe.named", MaterialPresentation.name(head));
         }
-        return Component.translatable("item." + GregTech.MODID + ".tool." + toolType.id() + ".named",
+        return Component.translatable("item." + GregTech.NAMESPACE + ".tool." + toolType.id() + ".named",
                 MaterialPresentation.name(head), Component.translatable(toolType.translationKey()));
     }
 

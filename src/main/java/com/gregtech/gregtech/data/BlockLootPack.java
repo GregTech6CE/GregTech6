@@ -46,10 +46,10 @@ public final class BlockLootPack extends AbstractPackResources {
             // Supply vanilla loot only. Blocks overriding getDrops retain their specialized NBT/drop behavior.
             // GT6 spike metadata distinguished the two materials and wall/omni/falling mode. Copy
             // those properties into BlockStateTag so mining a configured spike does not erase them.
-            Map<String,Object> entry=block instanceof com.gregtech.gregtech.block.misc.SpikeBlock
+            Map<String,Object> entry=block instanceof com.gregtech.gregtech.api.block.StatefulBlockLoot stateful
                     ? Map.of("type","minecraft:item", "name",ForgeRegistries.ITEMS.getKey(block.asItem()).toString(),
                             "functions",List.of(Map.of("function","minecraft:copy_state", "block",id.toString(),
-                                    "properties",List.of("mode","secondary"))))
+                                    "properties",stateful.lootStateProperties())))
                     : Map.of("type","minecraft:item","name",ForgeRegistries.ITEMS.getKey(block.asItem()).toString());
             var pool=Map.of("rolls",1,"entries",List.of(entry),"conditions",List.of(Map.of("condition","minecraft:survives_explosion")));
             result.put(new ResourceLocation(id.getNamespace(),"loot_tables/blocks/"+id.getPath()+".json"),

@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class GTItems {
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, GregTech.MODID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, GregTech.NAMESPACE);
 
     public record CreativeEntry(GTMaterial material, RegistryObject<Item> item) {}
     private static final Map<String, java.util.NavigableMap<String,CreativeEntry>> BY_PREFIX = new HashMap<>();

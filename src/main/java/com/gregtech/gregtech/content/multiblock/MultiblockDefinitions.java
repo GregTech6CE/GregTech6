@@ -44,18 +44,8 @@ public final class MultiblockDefinitions {
 
         // GT6 17101 registers the Distillation Tower as HU 512 with NBT_INPUT_MIN 1 /
         // NBT_INPUT_MAX 1024 — an explicit range, not the derived input/2..input*2.
-        BasicMachineSpec spec = new BasicMachineSpec(
-                "distillation_tower_main", Materials.StainlessSteel, "distillationtower", "HU", 1,
-                512, 0, 6.0f, 6.0f,
-                FaceConfig.builder()
-                        .itemIn(TOP, LEFT).itemOut(BACK, BOTTOM)
-                        .fluidIn(TOP, LEFT).fluidOut(BACK, BOTTOM)
-                        .energyIn(BOTTOM, FRONT)
-                        .itemAutoIn(LEFT).itemAutoOut(BACK)
-                        .fluidAutoOut(BACK).build(),
-                List.of(new WeightedMaterial(Materials.StainlessSteel, 8),
-                        new WeightedMaterial(Materials.Steel, 8), new WeightedMaterial(Materials.Copper, 4)),
-                MachineRecipeMaps.DistillationTower, 1, 1, 1024);
+        var original=OriginalMultiblockMachineParameters.distillationTower();
+        BasicMachineSpec spec=new BasicMachineSpec(original.id(),original.material(),original.machineName(),original.energyType(),original.tier(),original.energyIn(),original.energyOut(),original.hardness(),original.blastResistance(),FaceConfig.from(original.faceConfig()),original.constructionMaterials(),MachineRecipeMaps.DistillationTower,original.parallelLimit(),original.energyInMin(),original.energyInMax());
         DISTILLATION_TOWER_MAIN = MachineRegistry.registerBasicMachine(spec,
                 props -> new com.gregtech.gregtech.block.machine.MultiblockControllerBlock(spec, props));
 

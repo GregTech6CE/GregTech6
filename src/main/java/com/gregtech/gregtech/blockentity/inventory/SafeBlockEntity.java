@@ -15,7 +15,7 @@ import java.util.UUID;
 
 /** GT6 mechanical/key safe: 15 slots, front access, no automation capability. */
 public class SafeBlockEntity extends BlockEntity {
-    private final SimpleContainer inventory = new SimpleContainer(15);
+    private final SimpleContainer inventory = new SimpleContainer(com.gregtech.gregtech.content.storage.SafeLockRules.SLOTS);
     @Nullable private UUID owner;
     private long keyId;
     private boolean opened;
@@ -34,7 +34,7 @@ public class SafeBlockEntity extends BlockEntity {
     public boolean opened() { return opened; }
     public void setKeyId(long id) { keyId = id; opened = false; syncLock(); }
     public boolean canOpen(Player player) {
-        return keyLocked() ? opened : owner == null || owner.equals(player.getUUID());
+        return com.gregtech.gregtech.content.storage.SafeLockRules.canOpen(keyLocked(), opened, owner, player.getUUID());
     }
     /** GT6 mechanical safe claims its first interacting player, or a sneaking placer. */
     public boolean claimAndOpen(Player player) {
@@ -45,19 +45,13 @@ public class SafeBlockEntity extends BlockEntity {
     /** GT6 Behavior_Key: bind blank locks, toggle matching keys, copy only while unlocked. */
     public boolean useKey(ItemStack key) {
         if (!keyLocked() || !(key.getItem() instanceof GTDungeonKeyItem) || level == null || level.isClientSide) return false;
-        long supplied = GTDungeonKeyItem.keyId(key);
-        if (supplied == 0) {
-            if (keyId != 0) {
-                if (!opened) return false;
-                GTDungeonKeyItem.setKeyId(key, keyId);
-                return true;
-            }
-            do { supplied = level.random.nextLong() & Long.MAX_VALUE; } while (supplied == 0);
-            GTDungeonKeyItem.setKeyId(key, supplied);
-        }
-        if (keyId == 0) keyId = supplied;
-        if (keyId != supplied) return false;
-        opened = !opened;
+        long supplied = GTDungeonKeyItem.keyId(key), generated = 0;
+        if (supplied == 0 && keyId == 0) do { generated = level.random.nextLong() & Long.MAX_VALUE; } while (generated == 0);
+        var result = com.gregtech.gregtech.content.storage.SafeLockRules.useKey(keyId, opened, supplied, generated);
+        if (!result.accepted()) return false;
+        if (result.itemId() != supplied) GTDungeonKeyItem.setKeyId(key, result.itemId());
+        if (!result.toggle()) return true;
+        keyId = result.lockId(); opened = result.opened();
         syncLock();
         level.playSound(null, worldPosition, net.minecraft.sounds.SoundEvents.LEVER_CLICK,
                 net.minecraft.sounds.SoundSource.BLOCKS, 1, .25F);

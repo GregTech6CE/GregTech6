@@ -96,7 +96,7 @@ public final class CoinGeometry {
         }
 
         public int pixelDepth(int x, int z) {
-            return ((rows[0][x] >>> z) & 1) + 2 * ((rows[1][x] >>> z) & 1);
+            return com.gregtech.gregtech.block.CoinPileRules.pixelDepth(rows,x,z);
         }
 
         public synchronized List<AABB> pixelBoxes(int count) {
@@ -134,8 +134,8 @@ public final class CoinGeometry {
     }
 
     public static AABB cell(int face, int count) {
-        double x = (face / 4) / 4.0, z = (face % 4) / 4.0;
-        return new AABB(x, 0, z, x + .25, count / 16.0, z + .25);
+        var b=com.gregtech.gregtech.block.CoinPileRules.cell(face,count);
+        return new AABB(b.x0(),b.y0(),b.z0(),b.x1(),b.y1(),b.z1());
     }
 
     /**

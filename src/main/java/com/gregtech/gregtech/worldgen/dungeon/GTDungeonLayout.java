@@ -75,15 +75,7 @@ public final class GTDungeonLayout {
      * half a layout away from it. The anchors are the coordinates whose absolute value is
      * {@code ANCHOR_OFFSET} modulo {@link #GRID_PERIOD}.
      */
-    private static int nearestAnchor(int chunk) {
-        int sign = chunk < 0 ? -1 : 1;
-        int magnitude = Math.abs(chunk);
-        int lattice = ANCHOR_OFFSET + GRID_PERIOD
-                * Math.round((magnitude - ANCHOR_OFFSET) / (float) GRID_PERIOD);
-        // The widest layout is (2 + MAX_SIZE) cells, so its anchor sits up to that many halves away.
-        if (Math.abs(magnitude - lattice) > MAX_LAYOUT_HALF) return Integer.MIN_VALUE;
-        return sign * lattice;
-    }
+    private static int nearestAnchor(int chunk) {return DungeonLayoutRules.nearestAnchor(chunk);}
 
     /**
      * GT6's anchor test on one axis ({@code WorldgenDungeonGT:151-152}):
@@ -93,14 +85,10 @@ public final class GTDungeonLayout {
      * as its structure chunks, so {@code /locate structure gregtech:gt_dungeon} answers with the same
      * anchors the feature builds a dungeon from. Public because it is that shared rule.
      */
-    public static boolean isAnchor(int chunk) {
-        return Math.abs((long) chunk) % GRID_PERIOD == ANCHOR_OFFSET;
-    }
+    public static boolean isAnchor(int chunk) {return DungeonLayoutRules.isAnchor(chunk);}
 
     /** The grid region of one axis, in vanilla's own {@code floorDiv} sense (region {@code 0} starts at 0). */
-    public static int regionOf(int chunk) {
-        return Math.floorDiv(chunk, GRID_PERIOD);
-    }
+    public static int regionOf(int chunk) {return DungeonLayoutRules.regionOf(chunk);}
 
     /**
      * The anchor {@link #isAnchor} accepts inside the given grid region. Chunk 0 lies on the border of
@@ -109,9 +97,7 @@ public final class GTDungeonLayout {
      * ({@code GRID_PERIOD - ANCHOR_OFFSET}, so region {@code -1} holds -5), which is what
      * {@code abs(chunk) % GRID_PERIOD} means.
      */
-    public static int anchorOfRegion(int region) {
-        return region * GRID_PERIOD + (region >= 0 ? ANCHOR_OFFSET : GRID_PERIOD - ANCHOR_OFFSET);
-    }
+    public static int anchorOfRegion(int region) {return DungeonLayoutRules.anchorOfRegion(region);}
 
     /** The grid cell of a chunk inside a layout, as {@code [i, j]}, or null when it is outside. */
     @Nullable
@@ -134,10 +120,7 @@ public final class GTDungeonLayout {
      * structure exists exactly where the feature builds a dungeon.
      */
     public static long seedFor(long worldSeed, ChunkPos anchor) {
-        long seed = worldSeed;
-        seed ^= (long) anchor.x * 341873128712L;
-        seed ^= (long) anchor.z * 132897987541L;
-        return seed;
+        return DungeonLayoutRules.seed(worldSeed,anchor.x,anchor.z);
     }
 
     /** GT6's {@code aRandom.nextInt(mProbability) != 0} gate, evaluated once per anchor. */
@@ -148,7 +131,7 @@ public final class GTDungeonLayout {
     /** GT6's anchor-based spawn clearance ({@code WorldgenDungeonGT:142-144}). */
     public static boolean passesAnchorClearance(ChunkPos anchor) {
         int minX = anchor.getMinBlockX(), minZ = anchor.getMinBlockZ();
-        return Math.abs((long) minX) >= SPAWN_CLEARANCE && Math.abs((long) minZ) >= SPAWN_CLEARANCE;
+        return DungeonLayoutRules.clearance(minX,minZ);
     }
 
     /**
@@ -166,9 +149,7 @@ public final class GTDungeonLayout {
     }
 
     /** GT6's {@code mMinY + aRandom.nextInt(Math.max(1, mMaxY - mMinY))}. */
-    public static int offsetY(RandomSource random) {
-        return MIN_Y + random.nextInt(Math.max(1, MAX_Y - MIN_Y));
-    }
+    public static int offsetY(RandomSource random) {return DungeonLayoutRules.offsetY(random::nextInt);}
 
     /** The dungeon's Y level in the 1.18+ world (see {@code GTWorldgenScale}). */
     public static int y(WorldGenLevel level, int offsetY) {
@@ -182,9 +163,7 @@ public final class GTDungeonLayout {
     }
 
     /** The size of the layout in cells, exactly GT6's {@code 2 + mMinSize + rnd(1 + mMaxSize - mMinSize)}. */
-    public static int size(RandomSource random) {
-        return 2 + MIN_SIZE + random.nextInt(1 + MAX_SIZE - MIN_SIZE);
-    }
+    public static int size(RandomSource random) {return DungeonLayoutRules.size(random::nextInt);}
 
     /**
      * GT6's layout algorithm ({@code WorldgenDungeonGT:159-248}): pick two "important" cells
@@ -196,145 +175,18 @@ public final class GTDungeonLayout {
      * {@link #BARRACKS} / {@link #ENTRANCE} = the important rooms. The returned array is indexed
      * {@code [i][j]} with {@code i} along X and {@code j} along Z.</p>
      */
-    public static byte[][] layout(RandomSource random) {
-        // GT6 rolls the two dimensions separately but allocates one rectangular array.
-        int rows = size(random), columns = size(random);
-        byte[][] cells = new byte[rows][columns];
-
-        // GT6: two important rooms, placed at random inner cells (the countdown runs from -1 down).
-        for (int k = -1, tries = 0; k >= -IMPORTANT_ROOM_COUNT && tries < 10000; tries++) {
-            int i = 1 + random.nextInt(cells.length - 2);
-            int j = 1 + random.nextInt(cells[i].length - 2);
-            if (cells[i][j] == 0) cells[i][j] = (byte) k--;
-        }
-
-        // GT6: keep scattering rooms until at least two exist.
-        int roomCount = 0;
-        while (roomCount < 2) {
-            for (int i = 1; i < cells.length - 1; i++) {
-                for (int j = 1; j < cells[i].length - 1; j++) {
-                    if (cells[i][j] == 0 && random.nextInt(ROOM_CHANCE) == 0) {
-                        cells[i][j] = (byte) (1 + random.nextInt(ROOM_ID_COUNT));
-                        roomCount++;
-                    }
-                }
-            }
-        }
-
-        // GT6: carve a corridor from every occupied cell towards the centre.
-        for (int i = 1; i < cells.length - 1; i++) {
-            for (int j = 1; j < cells[i].length - 1; j++) {
-                if (cells[i][j] == 0) continue;
-                int a = i, b = j;
-                while (a != cells.length / 2) {
-                    a += a > cells.length / 2 ? -1 : 1;
-                    if (cells[a][b] == 0) cells[a][b] = CORRIDOR; else break;
-                }
-                while (b != cells[a].length / 2) {
-                    b += b > cells[a].length / 2 ? -1 : 1;
-                    if (cells[a][b] == 0) cells[a][b] = CORRIDOR; else break;
-                }
-            }
-        }
-
-        // GT6's two cleanup passes.
-        settle(cells, false);
-        settle(cells, true);
-        return cells;
-    }
+    public static byte[][] layout(RandomSource random) {return DungeonLayoutRules.layout(random::nextInt);}
 
     /** One of GT6's two cleanup passes over the corridor cells. */
-    private static void settle(byte[][] cells, boolean extended) {
-        boolean changed = true;
-        while (changed) {
-            changed = false;
-            for (int i = 1; i < cells.length - 1; i++) {
-                for (int j = 1; j < cells[i].length - 1; j++) {
-                    if (cells[i][j] != CORRIDOR) continue;
-                    // A straight-through piece is fine (GT6's two early "continue" cases).
-                    if (cells[i + 1][j] != 0 && cells[i - 1][j] != 0 && cells[i][j - 1] == 0 && cells[i][j + 1] == 0) continue;
-                    if (cells[i + 1][j] == 0 && cells[i - 1][j] == 0 && cells[i][j - 1] != 0 && cells[i][j + 1] != 0) continue;
 
-                    int connections = 0;
-                    if (cells[i + 1][j] != 0) connections++;
-                    if (cells[i - 1][j] != 0) connections++;
-                    if (cells[i][j + 1] != 0) connections++;
-                    if (cells[i][j - 1] != 0) connections++;
-                    if (connections <= 1) {
-                        cells[i][j] = EMPTY;
-                        changed = true;
-                        continue;
-                    }
-                    if (extended) {
-                        if (cells[i + 1][j + 1] != 0) connections++;
-                        if (cells[i + 1][j - 1] != 0) connections++;
-                        if (cells[i - 1][j + 1] != 0) connections++;
-                        if (cells[i - 1][j - 1] != 0) connections++;
-                        if (connections >= 7) {
-                            cells[i][j] = EMPTY;
-                            changed = true;
-                            continue;
-                        }
-                        if (connections == 5) {
-                            if (cells[i + 1][j - 1] == 0 && cells[i + 1][j] == 0 && cells[i + 1][j + 1] == 0) {
-                                cells[i][j] = EMPTY; changed = true; continue;
-                            }
-                            if (cells[i - 1][j - 1] == 0 && cells[i - 1][j] == 0 && cells[i - 1][j + 1] == 0) {
-                                cells[i][j] = EMPTY; changed = true; continue;
-                            }
-                            if (cells[i - 1][j + 1] == 0 && cells[i][j + 1] == 0 && cells[i + 1][j + 1] == 0) {
-                                cells[i][j] = EMPTY; changed = true; continue;
-                            }
-                            if (cells[i - 1][j - 1] == 0 && cells[i][j - 1] == 0 && cells[i + 1][j - 1] == 0) {
-                                cells[i][j] = EMPTY; changed = true; continue;
-                            }
-                        }
-                    }
-                    // GT6's four corner rules.
-                    if (cells[i + 1][j] != 0 && cells[i + 1][j + 1] != 0 && cells[i][j + 1] != 0
-                            && cells[i - 1][j] == 0 && cells[i][j - 1] == 0) {
-                        cells[i][j] = EMPTY; changed = true; continue;
-                    }
-                    if (cells[i + 1][j] != 0 && cells[i + 1][j - 1] != 0 && cells[i][j - 1] != 0
-                            && cells[i - 1][j] == 0 && cells[i][j + 1] == 0) {
-                        cells[i][j] = EMPTY; changed = true; continue;
-                    }
-                    if (cells[i - 1][j] != 0 && cells[i - 1][j + 1] != 0 && cells[i][j + 1] != 0
-                            && cells[i + 1][j] == 0 && cells[i][j - 1] == 0) {
-                        cells[i][j] = EMPTY; changed = true; continue;
-                    }
-                    if (cells[i - 1][j] != 0 && cells[i - 1][j - 1] != 0 && cells[i][j - 1] != 0
-                            && cells[i + 1][j] == 0 && cells[i][j + 1] == 0) {
-                        cells[i][j] = EMPTY;
-                        changed = true;
-                    }
-                }
-            }
-        }
-    }
 
     /** GT6's per-cell connection count: how many of the four horizontal neighbours are dungeon cells. */
-    public static int connectionCount(byte[][] cells, int i, int j) {
-        int count = 0;
-        if (occupied(cells, i + 1, j)) count++;
-        if (occupied(cells, i - 1, j)) count++;
-        if (occupied(cells, i, j + 1)) count++;
-        if (occupied(cells, i, j - 1)) count++;
-        return count;
-    }
+    public static int connectionCount(byte[][] cells, int i, int j) {return DungeonLayoutRules.connectionCount(cells,i,j);}
 
     // Mob-farm outer platforms can occupy the layout's empty border cells. Outside the
     // layout is empty space, not a fifth neighbour or an index into another dungeon.
-    private static boolean occupied(byte[][] cells, int i, int j) {
-        return i >= 0 && i < cells.length && j >= 0 && j < cells[i].length && cells[i][j] != EMPTY;
-    }
+
 
     /** Every cell of a layout, in GT6's own iteration order (row-major over i then j). */
-    public static List<int[]> cells(byte[][] cells) {
-        List<int[]> out = new ArrayList<>();
-        for (int i = 0; i < cells.length; i++) {
-            for (int j = 0; j < cells[i].length; j++) out.add(new int[]{i, j, cells[i][j]});
-        }
-        return out;
-    }
+    public static List<int[]> cells(byte[][] cells) {return DungeonLayoutRules.cells(cells);}
 }

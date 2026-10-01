@@ -31,27 +31,7 @@ public final class GTLootChests {
      * {@code van.<ChestGenHooks constant>} (that is how the loot transpiler emits the rows GT6 added to
      * the vanilla chest tables, §21).
      */
-    private static final String[] TABLES = {
-            "dungeon|van.DUNGEON_CHEST",
-            "mineshaft|van.MINESHAFT_CORRIDOR",
-            "library|van.STRONGHOLD_LIBRARY",
-            "stronghold_storage|van.STRONGHOLD_CROSSING",
-            "stronghold_corridor|van.STRONGHOLD_CORRIDOR",
-            "desert_pyramid|van.PYRAMID_DESERT_CHEST",
-            "jungle_temple|van.PYRAMID_JUNGLE_CHEST",
-            "jungle_dispenser|van.PYRAMID_JUNGLE_DISPENSER",
-            "blacksmith|van.VILLAGE_BLACKSMITH",
-            "bonus|van.BONUS_CHEST",
-            "flawless|gt.flawless",
-            "gems|gt.gems",
-            "misc|gt.misc",
-            "seeds|gt.seeds",
-            "saplings|gt.saplings",
-            "books|gt.books",
-            "bottles|gt.bottles",
-            // The material dictionary table, built from the registered materials since §31.
-            "matdicts|gt.matdicts",
-    };
+    private static final java.util.List<String> TABLES = com.gregtech.gregtech.content.loot.LootChestCatalog.ENTRIES;
 
     public static final List<RegistryObject<com.gregtech.gregtech.block.inventory.LootChestBlock>> LOOT_CHESTS =
             new ArrayList<>();

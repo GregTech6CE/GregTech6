@@ -38,24 +38,19 @@ import java.util.Set;
  */
 public class GTPitFeature extends Feature<NoneFeatureConfiguration> {
     /** GT6 {@code int tChance = 320} with {@code chance = 1}: {@code nextInt(divider) > chance - 1}. */
-    public static final int CHANCE = 1;
-    public static final int DIVIDER = 320;
+    public static final int CHANCE = TerrainWorldgenRules.PIT_CHANCE;
+    public static final int DIVIDER = TerrainWorldgenRules.PIT_DIVIDER;
     /** GT6's vertical window: {@code waterLevel + 16} down to {@code waterLevel - 8}. */
-    public static final int ABOVE_SEA = 16;
-    public static final int BELOW_SEA = 8;
+    public static final int ABOVE_SEA = TerrainWorldgenRules.PIT_ABOVE_SEA;
+    public static final int BELOW_SEA = TerrainWorldgenRules.PIT_BELOW_SEA;
     /** GT6 stops a column after seven pit blocks ({@code tGenerated < 7}). */
-    public static final int MAX_DEPTH = 7;
+    public static final int MAX_DEPTH = TerrainWorldgenRules.PIT_MAX_DEPTH;
 
     /** One GT6 pit registration: the name from {@code Loader_Worldgen} and the block it fills with. */
     public record Pit(String name, String blockId) {}
 
     /** {@code Loader_Worldgen:592-597} minus the default-disabled red clay and the PFAA entries. */
-    public static final List<Pit> PITS = List.of(
-            new Pit("pit.clay.vanilla", "minecraft:clay"),
-            new Pit("pit.clay.brown", "gregtech:clay_brown"),
-            new Pit("pit.clay.yellow", "gregtech:clay_yellow"),
-            new Pit("pit.clay.blue", "gregtech:clay_blue"),
-            new Pit("pit.clay.white", "gregtech:clay_white"));
+    public static final List<Pit> PITS = TerrainWorldgenRules.PITS.stream().map(row->new Pit(row.name(),row.blockId())).toList();
 
     /** GT6 {@code BIOMES_PLAINS} / {@code BIOMES_SAVANNA}. */
     private static final Set<ResourceLocation> PLAINS = Set.of(

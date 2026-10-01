@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "gregtech:block/signal_wire/cable_01_signalum"
+    }
+  }
+}

@@ -238,7 +238,7 @@ public class ElectricWireBlockEntity extends BlockEntity implements IEnergyCondu
         if (packetAmperage <= 0 || packetVoltage == Long.MIN_VALUE || packetVoltage == 0) return true;
         long magnitude = Math.abs(packetVoltage);
         transferredAmperes = saturatedAdd(transferredAmperes, packetAmperage);
-        long watts = magnitude > Long.MAX_VALUE / packetAmperage ? Long.MAX_VALUE : magnitude * packetAmperage;
+        long watts = com.gregtech.gregtech.content.energy.WirePacketRules.wattage(magnitude,packetAmperage);
         transferredWattage = saturatedAdd(transferredWattage, watts);
         if (magnitude > voltage() || transferredAmperes > amperage()) {
             if (burnCounter < 16) burnCounter++;
@@ -248,16 +248,15 @@ public class ElectricWireBlockEntity extends BlockEntity implements IEnergyCondu
     }
 
     private static long saturatedAdd(long left, long right) {
-        return left > Long.MAX_VALUE - right ? Long.MAX_VALUE : left + right;
+        return com.gregtech.gregtech.content.energy.WirePacketRules.saturatedAdd(left,right);
     }
 
     /** Recursive energy transfer along wire network. */
     public long transferElectricity(Direction fromSide, long packetVoltage, long packetAmperage, Set<BlockPos> visited) {
-        if (level == null || level.isClientSide || isRemoved() || packetVoltage == Long.MIN_VALUE || packetAmperage <= 0 || Math.abs(packetVoltage) <= lossPerBlock()) return 0;
+        if (level == null || level.isClientSide || isRemoved() || !com.gregtech.gregtech.content.energy.WirePacketRules.canTransfer(packetVoltage,packetAmperage,lossPerBlock())) return 0;
         if (!visited.add(getBlockPos())) return 0;
 
-        if (packetVoltage > 0) packetVoltage -= lossPerBlock();
-        else packetVoltage += lossPerBlock();
+        packetVoltage=com.gregtech.gregtech.content.energy.WirePacketRules.afterLoss(packetVoltage,lossPerBlock());
 
         long usedAmperes = 0;
         for (Direction side : Direction.values()) {

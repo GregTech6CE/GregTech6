@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab",
-  "textures": {
-    "bottom": "gregtech:block/stones/gt.stone.prismarine.light/bricks_reinforced",
-    "top": "gregtech:block/stones/gt.stone.prismarine.light/bricks_reinforced",
-    "side": "gregtech:block/stones/gt.stone.prismarine.light/bricks_reinforced"
-  }
-}

@@ -28,7 +28,7 @@ import net.minecraftforge.fml.common.Mod;
 /**
  * Handles interactions with smeltery components (mold, basin, faucet, crossing).
  */
-@Mod.EventBusSubscriber(modid = GregTech.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public final class SmelteryInteractionHandler {
     private SmelteryInteractionHandler() {}
 

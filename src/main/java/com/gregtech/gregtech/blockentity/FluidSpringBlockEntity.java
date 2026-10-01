@@ -55,7 +55,7 @@ public class FluidSpringBlockEntity extends BlockEntity {
 
     public void setSpring(String fluidId, int amount) {
         this.fluidId = fluidId == null ? "" : fluidId;
-        this.amount = Math.max(1, amount);
+        this.amount = com.gregtech.gregtech.worldgen.FluidSpringRules.positiveAmount(amount);
         setChanged();
         if (level != null && !level.isClientSide) {
             level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
@@ -75,10 +75,10 @@ public class FluidSpringBlockEntity extends BlockEntity {
         boolean sameFluidAbove = !above.getFluidState().isEmpty() && above.getFluidState().getType() == fluid;
         if (!active) {
             // GT6 waits for a free spot above and activates then.
-            if (above.isAir() || above.canBeReplaced()) active = true;
+            if (above.isAir() || above.canBeReplaced()) { active = true; setChanged(); }
             else return;
         }
-        if (level.random.nextInt(amount) != 0) return;
+        if (!com.gregtech.gregtech.worldgen.FluidSpringRules.rolls(level.random::nextInt,amount)) return;
         emit();
     }
 
@@ -111,19 +111,19 @@ public class FluidSpringBlockEntity extends BlockEntity {
 
     /** Test/tools helper: how many ticks GT6's roll needs on average for this spring. */
     public static int expectedTicks(int amount) {
-        return Math.max(1, amount);
+        return com.gregtech.gregtech.worldgen.FluidSpringRules.positiveAmount(amount);
     }
 
     /** A deterministic roll for tests: GT6 uses {@code rng(amount) == 0}. */
     public static boolean rollsThisTick(RandomSource random, int amount) {
-        return random.nextInt(Math.max(1, amount)) == 0;
+        return com.gregtech.gregtech.worldgen.FluidSpringRules.rolls(random::nextInt,amount);
     }
 
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
         fluidId = tag.getString("spring");
-        amount = tag.contains("amount") ? tag.getInt("amount") : DEFAULT_AMOUNT;
+        amount = com.gregtech.gregtech.worldgen.FluidSpringRules.positiveAmount(tag.contains("amount") ? tag.getInt("amount") : DEFAULT_AMOUNT);
         active = tag.getBoolean("active");
     }
 

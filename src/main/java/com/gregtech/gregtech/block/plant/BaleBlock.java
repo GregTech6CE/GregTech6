@@ -30,19 +30,19 @@ public final class BaleBlock extends RotatedPillarBlock {
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState previous, boolean moving) {
         super.onPlace(state, level, pos, previous, moving);
         if (!level.isClientSide && state.getBlock() != previous.getBlock() && canAge()) {
-            level.scheduleTick(pos, this, 2400 + level.random.nextInt(2400));
+            level.scheduleTick(pos, this, com.gregtech.gregtech.content.plant.BaleAgingRules.initialDelay(level.random.nextInt(2400)));
         }
     }
 
     private boolean canAge() {
-        return stage == Stage.FRESH || stage == Stage.MOLDY;
+        return com.gregtech.gregtech.content.plant.BaleAgingRules.canAge(stage.name());
     }
 
     /** Mirrors GT6's scheduled drying/rotting checks while retaining pillar orientation. */
     @Override
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (!canAge()) return;
-        level.scheduleTick(pos, this, 1100 + random.nextInt(200));
+        level.scheduleTick(pos, this, com.gregtech.gregtech.content.plant.BaleAgingRules.retryDelay(random.nextInt(200)));
         if (random.nextInt(3) > 0) return;
         if (level.dimension() == Level.NETHER && stage == Stage.FRESH) {
             replace(state, level, pos, Stage.DRY);
@@ -66,19 +66,14 @@ public final class BaleBlock extends RotatedPillarBlock {
         }
         wet |= level.isRainingAt(pos.above(2));
         if (stage == Stage.FRESH) {
-            replace(state, level, pos, wet ? Stage.MOLDY : Stage.DRY);
+            replace(state, level, pos, Stage.valueOf(com.gregtech.gregtech.content.plant.BaleAgingRules.freshResult(wet)));
         } else if (wet || random.nextInt(42) == 0) {
             replace(state, level, pos, Stage.ROTTEN);
         }
     }
 
     private static void replace(BlockState state, ServerLevel level, BlockPos pos, Stage target) {
-        String id = switch (target) {
-            case DRY -> "bale_grass_dry";
-            case MOLDY -> "bale_grass_moldy";
-            case ROTTEN -> "bale_grass_rotten";
-            default -> throw new IllegalArgumentException("Not an ageing result: " + target);
-        };
+        String id=com.gregtech.gregtech.content.plant.BaleAgingRules.id(target.name());
         var block = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(
                 net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech", id));
         if (block instanceof BaleBlock) {

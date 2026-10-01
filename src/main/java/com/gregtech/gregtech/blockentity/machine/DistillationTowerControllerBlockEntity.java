@@ -18,9 +18,6 @@ public class DistillationTowerControllerBlockEntity extends LargeRecipeMachineBl
         return Layout.CELLS;
     }
     private static final class Layout {
-        static final List<LargeMachineLayouts.Cell> CELLS = ControllerStructureLayouts.cells(
-                com.gregtech.gregtech.registry.GTMultiblocks.DISTILLATION_TOWER_MAIN.get()).keySet().stream()
-            .map(p -> new LargeMachineLayouts.Cell(p.getX(),p.getY(),p.getZ(),p.getY()<0?18101:18102,
-                p.getY()<0?Role.ENERGY_INPUT:p.getY()==0?Role.ITEM_FLUID_IO:Role.FLUID_OUTPUT)).toList();
+        static final List<LargeMachineLayouts.Cell> CELLS=LargeMachineLayouts.fromShared(com.gregtech.gregtech.content.multiblock.SharedDistillationTowerStructure.CELLS);
     }
 }

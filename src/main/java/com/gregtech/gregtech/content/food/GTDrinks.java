@@ -44,7 +44,8 @@ public final class GTDrinks {
             return;
         }
         built = true;
-        for (Row row : GTDrinksGen.ROWS) {
+        for (DrinkNutritionRows.Row source : GTDrinksGen.ROWS) {
+            Row row=new Row(source.field(),source.foodLevel(),source.saturation(),source.alcohol(),source.caffeine(),source.dehydration(),source.sugar(),source.fat(),source.radiation());
             // GT6 keys drinks by FL field name for most fluids and by the FL.create("...") name for the
             // brews; the port keys its own table by field, so try both and finally match on the registry
             // path with sanitizePath applied to both sides (which is what the port itself registers).

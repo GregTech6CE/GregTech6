@@ -7,7 +7,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 /** Reports one aggregate per rebuild, rather than spamming one line per material tab. */
-@Mod.EventBusSubscriber(modid=GregTech.MOD_ID,value=Dist.CLIENT)
+@Mod.EventBusSubscriber(modid=GregTech.MODID,value=Dist.CLIENT)
 public final class CreativeBuildTimings {
     private static long nanos;
     private static int tabs;

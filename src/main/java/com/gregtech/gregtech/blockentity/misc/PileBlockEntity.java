@@ -44,7 +44,7 @@ public class PileBlockEntity extends BlockEntity {
     /** GT6's {@code NBT_VALUE} ({@code gregapi/data/CS.java:1218}) - the key GT6 saves the stack under. */
     public static final String NBT_VALUE = "gt.value";
     /** GT6's stack limit for a pile ({@code MultiTileEntityPlaceable.java:82}). */
-    public static final int MAX_SIZE = 64;
+    public static final int MAX_SIZE = com.gregtech.gregtech.block.MaterialPileRules.MAX_SIZE;
 
     private final PileBlock.Kind kind;
     private ItemStack stored = ItemStack.EMPTY;
@@ -130,7 +130,7 @@ public class PileBlockEntity extends BlockEntity {
     public static MaterialPrefix prefixOf(ItemStack stack) {
         MaterialPrefix prefix = MaterialItem.getPrefix(stack);
         if (prefix != null) return prefix;
-        return ItemMaterialRegistry.get(stack).map(ItemMaterialRegistry.ItemMaterialData::prefix).orElse(null);
+        return ItemMaterialRegistry.get(stack).map(com.gregtech.gregtech.api.material.ItemComposition::prefix).orElse(null);
     }
 
     /**
@@ -143,7 +143,7 @@ public class PileBlockEntity extends BlockEntity {
         if (stack.isEmpty()) return null;
         if (stack.getItem() instanceof MaterialItem materialItem) return materialItem.getMaterial();
         return ItemMaterialRegistry.get(stack)
-                .map(ItemMaterialRegistry.ItemMaterialData::material)
+                .map(com.gregtech.gregtech.api.material.ItemComposition::material)
                 .filter(GTMaterial::isValid)
                 .orElse(null);
     }
@@ -162,7 +162,8 @@ public class PileBlockEntity extends BlockEntity {
         if (stored.isEmpty()) return true;
         GTMaterial heldMaterial = materialOf(held);
         GTMaterial storedMaterial = materialOf(stored);
-        return heldMaterial != null && storedMaterial != null && heldMaterial.resolve() == storedMaterial.resolve();
+        return heldMaterial != null && storedMaterial != null && heldMaterial.resolve() == storedMaterial.resolve()
+                && java.util.Objects.equals(held.getTag(), stored.getTag());
     }
 
     /** True when both piles hold the very same stack - GT6's {@code ST.equal} in its column walk. */
@@ -185,7 +186,7 @@ public class PileBlockEntity extends BlockEntity {
         if (!canAccept(held)) return 0;
         int room = MAX_SIZE - count();
         if (room <= 0) return 0;
-        int moved = Math.min(room, held.getCount());
+        int moved = com.gregtech.gregtech.block.MaterialPileRules.add(count(),held.getCount());
         if (stored.isEmpty()) stored = held.copyWithCount(moved);
         else stored.grow(moved);
         setChanged();
@@ -203,7 +204,7 @@ public class PileBlockEntity extends BlockEntity {
      */
     public ItemStack take(int amount) {
         if (stored.isEmpty() || amount <= 0) return ItemStack.EMPTY;
-        int taken = Math.min(amount, stored.getCount());
+        int taken = com.gregtech.gregtech.block.MaterialPileRules.take(stored.getCount(),amount);
         ItemStack result = stored.copyWithCount(taken);
         stored.shrink(taken);
         if (stored.isEmpty()) stored = ItemStack.EMPTY;

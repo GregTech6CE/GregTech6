@@ -1,0 +1,348 @@
+{
+  "loader": "neoforge:composite",
+  "children": {
+    "layer0": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "particle": "gregtech:block/material_icons/lapis/blocksolid",
+        "wall": "gregtech:block/material_icons/lapis/blocksolid"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            1,
+            16,
+            16
+          ],
+          "faces": {
+            "west": {
+              "texture": "#wall",
+              "tintindex": 0,
+              "cullface": "west"
+            },
+            "east": {
+              "texture": "#wall",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#wall",
+              "tintindex": 0,
+              "cullface": "north"
+            },
+            "south": {
+              "texture": "#wall",
+              "tintindex": 0,
+              "cullface": "south"
+            },
+            "up": {
+              "texture": "#wall",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            15,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "east": {
+              "texture": "#wall",
+              "tintindex": 0,
+              "cullface": "east"
+            },
+            "west": {
+              "texture": "#wall",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#wall",
+              "tintindex": 0,
+              "cullface": "north"
+            },
+            "south": {
+              "texture": "#wall",
+              "tintindex": 0,
+              "cullface": "south"
+            },
+            "up": {
+              "texture": "#wall",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            1,
+            0,
+            0
+          ],
+          "to": [
+            15,
+            16,
+            1
+          ],
+          "faces": {
+            "north": {
+              "texture": "#wall",
+              "tintindex": 0,
+              "cullface": "north"
+            },
+            "south": {
+              "texture": "#wall",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#wall",
+              "tintindex": 0,
+              "cullface": "west"
+            },
+            "east": {
+              "texture": "#wall",
+              "tintindex": 0,
+              "cullface": "east"
+            },
+            "up": {
+              "texture": "#wall",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            1,
+            0,
+            15
+          ],
+          "to": [
+            15,
+            16,
+            16
+          ],
+          "faces": {
+            "south": {
+              "texture": "#wall",
+              "tintindex": 0,
+              "cullface": "south"
+            },
+            "north": {
+              "texture": "#wall",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#wall",
+              "tintindex": 0,
+              "cullface": "west"
+            },
+            "east": {
+              "texture": "#wall",
+              "tintindex": 0,
+              "cullface": "east"
+            },
+            "up": {
+              "texture": "#wall",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            1,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#wall",
+              "tintindex": 0,
+              "cullface": "down"
+            },
+            "up": {
+              "texture": "#wall",
+              "tintindex": 0
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:solid"
+    },
+    "layer1": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "wall": "gregtech:block/material_icons/lapis/blocksolid_overlay"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            1,
+            16,
+            16
+          ],
+          "faces": {
+            "west": {
+              "texture": "#wall",
+              "cullface": "west"
+            },
+            "east": {
+              "texture": "#wall"
+            },
+            "north": {
+              "texture": "#wall",
+              "cullface": "north"
+            },
+            "south": {
+              "texture": "#wall",
+              "cullface": "south"
+            },
+            "up": {
+              "texture": "#wall"
+            }
+          }
+        },
+        {
+          "from": [
+            15,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "east": {
+              "texture": "#wall",
+              "cullface": "east"
+            },
+            "west": {
+              "texture": "#wall"
+            },
+            "north": {
+              "texture": "#wall",
+              "cullface": "north"
+            },
+            "south": {
+              "texture": "#wall",
+              "cullface": "south"
+            },
+            "up": {
+              "texture": "#wall"
+            }
+          }
+        },
+        {
+          "from": [
+            1,
+            0,
+            0
+          ],
+          "to": [
+            15,
+            16,
+            1
+          ],
+          "faces": {
+            "north": {
+              "texture": "#wall",
+              "cullface": "north"
+            },
+            "south": {
+              "texture": "#wall"
+            },
+            "west": {
+              "texture": "#wall",
+              "cullface": "west"
+            },
+            "east": {
+              "texture": "#wall",
+              "cullface": "east"
+            },
+            "up": {
+              "texture": "#wall"
+            }
+          }
+        },
+        {
+          "from": [
+            1,
+            0,
+            15
+          ],
+          "to": [
+            15,
+            16,
+            16
+          ],
+          "faces": {
+            "south": {
+              "texture": "#wall",
+              "cullface": "south"
+            },
+            "north": {
+              "texture": "#wall"
+            },
+            "west": {
+              "texture": "#wall",
+              "cullface": "west"
+            },
+            "east": {
+              "texture": "#wall",
+              "cullface": "east"
+            },
+            "up": {
+              "texture": "#wall"
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            1,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#wall",
+              "cullface": "down"
+            },
+            "up": {
+              "texture": "#wall"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    }
+  },
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "gregtech:block/material_icons/lapis/blocksolid"
+  }
+}

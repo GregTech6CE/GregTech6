@@ -1,0 +1,8 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#minecraft:is_nether",
+  "features": [
+    "gregtech:gt_nether_scatter"
+  ],
+  "step": "underground_decoration"
+}

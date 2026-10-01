@@ -19,16 +19,15 @@ import net.minecraftforge.eventbus.api.IEventBus;
 
 import java.util.List;
 
-@Mod(GregTech.MOD_ID)
+@Mod(GregTech.MODID)
 public class GregTech {
-    public static final String MOD_ID = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID;
-    /** Existing registry/resource namespace, distinct from the loader mod ID. */
-    public static final String MODID = com.gregtech.gregtech.api.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+    public static final String MODID = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID;
+    public static final String NAMESPACE = com.gregtech.gregtech.api.mod.GregTechIdentity.REGISTRY_NAMESPACE;
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public GregTech(FMLJavaModLoadingContext context) {
         com.gregtech.gregtech.api.mod.ModData.bindPresence(id -> net.minecraftforge.fml.ModList.get().isLoaded(
-                MODID.equals(id) ? MOD_ID : id));
+                NAMESPACE.equals(id) ? MODID : id));
         GTMaterialRegistry.setLogSink((warning, message) -> {
             if (warning) LOGGER.warn(message); else LOGGER.info(message);
         });
@@ -216,9 +215,9 @@ public class GregTech {
                     collapsed.subList(0, Math.min(8, collapsed.size())));
 
             long itemCount = ForgeRegistries.ITEMS.getKeys().stream()
-                    .filter(id -> MODID.equals(id.getNamespace())).count();
+                    .filter(id -> NAMESPACE.equals(id.getNamespace())).count();
             long blockCount = ForgeRegistries.BLOCKS.getKeys().stream()
-                    .filter(id -> MODID.equals(id.getNamespace())).count();
+                    .filter(id -> NAMESPACE.equals(id.getNamespace())).count();
             LOGGER.info("{} loaded: {} materials, {} items, {} blocks",
                     MODID, GTMaterialRegistry.allMaterials().size(), itemCount, blockCount);
             if (itemCount == 0) {
@@ -228,6 +227,6 @@ public class GregTech {
     }
 
     public static ResourceLocation id(String path) {
-        return ResourceLocation.fromNamespaceAndPath(MODID, path.toLowerCase());
+        return ResourceLocation.fromNamespaceAndPath(NAMESPACE, path.toLowerCase());
     }
 }

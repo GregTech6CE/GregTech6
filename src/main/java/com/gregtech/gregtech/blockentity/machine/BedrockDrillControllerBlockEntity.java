@@ -27,7 +27,7 @@ import java.util.*;
 
 /** GT6 drilling cycle: intact bedrock deposit, 32768 RU and 100 mB lubricant per output. */
 public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity implements MultiblockPortOwner,BlockContents {
-    public static final long ENERGY_CAPACITY=40000, WORK_ENERGY=32768;
+    public static final long ENERGY_CAPACITY=com.gregtech.gregtech.content.multiblock.AdvancedControllerRules.DRILL_CAPACITY, WORK_ENERGY=com.gregtech.gregtech.content.multiblock.AdvancedControllerRules.DRILL_WORK;
     private long energy;
     private int stoneType=java.util.concurrent.ThreadLocalRandom.current().nextInt(StoneType.values().length+2);
     private final List<GTMaterial> deposit=new ArrayList<>();
@@ -44,7 +44,7 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
     private LazyOptional<IFluidHandler> fluids=LazyOptional.of(()->lubricant);
     public BedrockDrillControllerBlockEntity(BlockPos pos,BlockState state){super(GTBlockEntities.BEDROCK_DRILL.get(),pos,state);}
     public static MultiblockLayout.Role role(int x,int y,int z) {
-        return y==-4?MultiblockLayout.Role.CASING:y==-1&&((x==0)!=(z==0))?MultiblockLayout.Role.ENERGY_INPUT:MultiblockLayout.Role.FLUID_INPUT;
+        return MultiblockLayout.Role.valueOf(com.gregtech.gregtech.content.multiblock.AdvancedControllerRules.drillRole(x,y,z).name());
     }
     @Override public boolean isStructureOk(){
         if(level==null||isRemoved()||worldPosition.getY()-5<level.getMinBuildHeight())return false;
@@ -81,9 +81,9 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
                 var remaining=ItemHandlerHelper.insertItemStacked(target,output.getStackInSlot(0).copy(),false);output.setStackInSlot(0,remaining);
             });
         }
-        if(energy<WORK_ENERGY||!output.getStackInSlot(0).isEmpty()||lubricant.getFluidAmount()<100)return;
+        if(energy<WORK_ENERGY||!output.getStackInSlot(0).isEmpty()||lubricant.getFluidAmount()<com.gregtech.gregtech.content.multiblock.AdvancedControllerRules.DRILL_LUBRICANT)return;
         ItemStack product=nextProduct();if(product.isEmpty())return;
-        lubricant.drain(100,IFluidHandler.FluidAction.EXECUTE);energy-=WORK_ENERGY;output.setStackInSlot(0,product);setChanged();
+        lubricant.drain(com.gregtech.gregtech.content.multiblock.AdvancedControllerRules.DRILL_LUBRICANT,IFluidHandler.FluidAction.EXECUTE);energy-=WORK_ENERGY;output.setStackInSlot(0,product);setChanged();
     }
     private ItemStack nextProduct(){
         if(level.random.nextInt(1000)==0)stoneType=level.random.nextInt(StoneType.values().length+2);

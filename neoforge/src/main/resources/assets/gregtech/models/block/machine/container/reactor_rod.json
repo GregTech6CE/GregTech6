@@ -1,0 +1,98 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:composite",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "particle": "gregtech:block/machines/generators/reactor_rods/colored/sides"
+  },
+  "children": {
+    "colored": {
+      "textures": {
+        "sides": "gregtech:block/machines/generators/reactor_rods/colored/sides",
+        "top": "gregtech:block/machines/generators/reactor_rods/colored/top"
+      },
+      "elements": [
+        {
+          "from": [
+            6,
+            0,
+            6
+          ],
+          "to": [
+            10,
+            16,
+            10
+          ],
+          "faces": {
+            "west": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#top",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#top",
+              "tintindex": 0
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    },
+    "overlay": {
+      "textures": {
+        "sides": "gregtech:block/machines/generators/reactor_rods/overlay/sides",
+        "top": "gregtech:block/machines/generators/reactor_rods/overlay/top"
+      },
+      "elements": [
+        {
+          "from": [
+            6,
+            0,
+            6
+          ],
+          "to": [
+            10,
+            16,
+            10
+          ],
+          "faces": {
+            "west": {
+              "texture": "#sides"
+            },
+            "east": {
+              "texture": "#sides"
+            },
+            "north": {
+              "texture": "#sides"
+            },
+            "south": {
+              "texture": "#sides"
+            },
+            "up": {
+              "texture": "#top"
+            },
+            "down": {
+              "texture": "#top"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    }
+  }
+}

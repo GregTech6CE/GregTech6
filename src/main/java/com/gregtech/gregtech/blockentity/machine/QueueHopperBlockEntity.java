@@ -101,9 +101,11 @@ public class QueueHopperBlockEntity extends BlockEntity implements IItemHandler,
 
     private void tickServer() {
         int tMovedItems = 0;
+        boolean processed = false;
         if (mCheck > 0) {
             mCheck--;
         } else if ((mCheck == 0 || inventoryChanged || blockUpdated) && !hasRedstoneIncomingFromNonRail()) {
+            processed = true;
             Direction facing = getFacing();
             int last = lastSlot();
 
@@ -185,8 +187,8 @@ public class QueueHopperBlockEntity extends BlockEntity implements IItemHandler,
                 notifyAdjacentInventoryUpdatables(facing);
             }
         }
-        inventoryChanged = false;
-        blockUpdated = false;
+        // Retain work notifications until the cooldown/redstone gate permits processing.
+        if (processed) { inventoryChanged = false; blockUpdated = false; }
         if (tMovedItems > 0) setChanged();
 
         // Suction: idle check every 20t, switch to every-tick active while items present
@@ -428,6 +430,7 @@ public class QueueHopperBlockEntity extends BlockEntity implements IItemHandler,
         if (!simulate) {
             ItemStack result = stack.split(toExtract);
             if (stack.isEmpty()) inventory.set(slot, ItemStack.EMPTY);
+            inventoryChanged = true;
             setChanged();
             return result;
         }
@@ -439,7 +442,7 @@ public class QueueHopperBlockEntity extends BlockEntity implements IItemHandler,
 
     /** GT6: mMode directly sets per-slot capacity (min 1, max 64, default 64). */
     private int getSlotLimitFor(int slot) {
-        return mMode <= 0 ? 64 : Math.max(1, Math.min(64, mMode));
+        return com.gregtech.gregtech.content.transport.HopperControlRules.slotLimit(mMode,true);
     }
 
     @Override
@@ -523,13 +526,7 @@ public class QueueHopperBlockEntity extends BlockEntity implements IItemHandler,
     // ── Wrench / tool interaction ───────────────────────────────────────
 
     public void cycleMode(boolean sneak) {
-        if (sneak) {
-            if (--mMode < 1) mMode = 64;
-        } else {
-            if (++mMode > 64) mMode = 1;
-        }
-        setChanged();
-        syncToClient();
+        mMode=com.gregtech.gregtech.content.transport.HopperControlRules.cycle(mMode,sneak,true);setChanged();syncToClient();
     }
 
     public void resetMode() {

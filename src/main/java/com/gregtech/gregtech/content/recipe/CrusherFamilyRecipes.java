@@ -1,5 +1,7 @@
 package com.gregtech.gregtech.content.recipe;
 
+import com.gregtech.gregtech.content.recipe.CrusherFamilyRecipeRows.Row;
+
 import com.gregtech.gregtech.GregTech;
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
@@ -36,17 +38,9 @@ public final class CrusherFamilyRecipes {
                     + " Loader_Recipes_OreProcessing#pulverizeMulti");
 
     /** GT6 row: input and output pair with the row's material multiplier. */
-    private record Row(MaterialPrefix input, MaterialPrefix output, int outCount, long multiplier) {}
 
-    private static final List<Row> ROWS = List.of(
-            new Row(MaterialPrefix.gemLegendary, MaterialPrefix.gemExquisite, 2, 256),
-            new Row(MaterialPrefix.gemExquisite, MaterialPrefix.gemFlawless, 2, 256),
-            new Row(MaterialPrefix.gemFlawless, MaterialPrefix.gem, 2, 256),
-            new Row(MaterialPrefix.gem, MaterialPrefix.gemFlawed, 2, 256),
-            new Row(MaterialPrefix.gemFlawed, MaterialPrefix.gemChipped, 2, 256),
-            new Row(MaterialPrefix.bouleGt, MaterialPrefix.gem, 4, 256),
-            new Row(MaterialPrefix.gemChipped, null, 0, 256),
-            new Row(MaterialPrefix.rockGt, null, 0, 16));
+
+    private static final List<Row> ROWS = CrusherFamilyRecipeRows.ROWS;
 
     private static boolean registered;
 

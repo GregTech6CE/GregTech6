@@ -1,0 +1,261 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "gregtech:stone_granite_black_stone",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_black_stone_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_black_cobble",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_black_cobble_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_black_cobble_mossy",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_black_cobble_mossy_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_black_smooth",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_black_smooth_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_black_bricks",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_black_bricks_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_black_bricks_mossy",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_black_bricks_mossy_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_black_bricks_cracked",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_black_bricks_cracked_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_black_bricks_chiseled",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_black_bricks_chiseled_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_black_bricks_redstone",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_black_bricks_redstone_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_black_bricks_reinforced",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_black_bricks_reinforced_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_black_small_bricks",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_black_small_bricks_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_black_square_bricks",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_black_square_bricks_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_black_tiles",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_black_tiles_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_black_small_tiles",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_black_small_tiles_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_black_windmill_tiles_a",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_black_windmill_tiles_a_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_black_windmill_tiles_b",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_black_windmill_tiles_b_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_red_stone",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_red_stone_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_red_cobble",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_red_cobble_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_red_cobble_mossy",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_red_cobble_mossy_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_red_smooth",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_red_smooth_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_red_bricks",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_red_bricks_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_red_bricks_mossy",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_red_bricks_mossy_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_red_bricks_cracked",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_red_bricks_cracked_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_red_bricks_chiseled",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_red_bricks_chiseled_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_red_bricks_redstone",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_red_bricks_redstone_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_red_bricks_reinforced",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_red_bricks_reinforced_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_red_small_bricks",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_red_small_bricks_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_red_square_bricks",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_red_square_bricks_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_red_tiles",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_red_tiles_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_red_small_tiles",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_red_small_tiles_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_red_windmill_tiles_a",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_red_windmill_tiles_a_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_red_windmill_tiles_b",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_granite_red_windmill_tiles_b_slab",
+      "required": false
+    }
+  ]
+}

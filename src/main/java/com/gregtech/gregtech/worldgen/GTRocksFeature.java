@@ -137,12 +137,7 @@ public class GTRocksFeature extends Feature<NoneFeatureConfiguration> {
      * : flint) : null}.
      */
     public static Litter litterFor(RandomSource random) {
-        if (random.nextInt(AMOUNT) != 0) return Litter.PLAIN;
-        if (random.nextInt(METEORIC_CHANCE) == 0) {
-            return new Litter(null, METEORIC_IRON, random.nextInt(RAW_ORE_CHANCE) == 0);
-        }
-        return new Litter(FLINT, null, false);
-    }
+        var value=TerrainWorldgenRules.litter(random::nextInt);return new Litter(value.itemId(),value.material(),value.rawOre());}
 
     /** Places GT6's lying-item rock (the port's rock block) carrying {@code litter}. */
     public static boolean placeRock(WorldGenLevel level, BlockPos pos, Litter litter) {

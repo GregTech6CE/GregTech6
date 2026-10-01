@@ -43,7 +43,7 @@ public class EnderGarbageBlockEntity extends BlockEntity implements MenuProvider
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, EnderGarbageBlockEntity bin) {
         // GT6 cadence: once every 100 ticks, paused by a redstone signal
-        if (level.getGameTime() % 100 != 50) return;
+        if (!com.gregtech.gregtech.content.storage.GarbageStorageRules.binDue(level.getGameTime())) return;
         if (level.hasNeighborSignal(pos)) return;
         bin.dumpToGarbage();
     }

@@ -23,7 +23,7 @@ import org.slf4j.Logger;
 import java.util.EnumMap;
 import java.util.Map;
 
-@Mod.EventBusSubscriber(modid = GregTech.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class MachineBlockClientModels {
     private static final Logger LOGGER = LogUtils.getLogger();
 
@@ -225,7 +225,7 @@ public final class MachineBlockClientModels {
         }
 
         LOGGER.info("[{}] Machine model aliasing: {} solid burning boxes, {} new burning boxes, {} basic machines, {} engines ({} solid missing, {} new missing, {} basic missing)",
-                GregTech.MODID, aliased, newBurningAliased, basicAliased, engineAliased, missing, newBurningMissing, basicMissing);
+                GregTech.NAMESPACE, aliased, newBurningAliased, basicAliased, engineAliased, missing, newBurningMissing, basicMissing);
     }
 
     private static Map<Direction, BakedModel> loadFacingVariants(Map<ResourceLocation, BakedModel> models,

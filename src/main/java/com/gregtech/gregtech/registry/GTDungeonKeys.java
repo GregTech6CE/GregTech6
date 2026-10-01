@@ -26,8 +26,7 @@ import java.util.List;
 public final class GTDungeonKeys {
 
     /** GT6's {@code IL.KEYS} ({@code IL.java:516}), in that exact order. */
-    private static final String[] MATERIALS = {
-            "brass", "bronze", "copper", "gold", "iron", "lead", "plastic", "platinum", "silver", "tin"};
+    private static final java.util.List<String> MATERIALS = com.gregtech.gregtech.content.storage.SafeLockRules.KEY_MATERIALS;
 
     private static final List<RegistryObject<GTDungeonKeyItem>> ALL = new ArrayList<>();
 

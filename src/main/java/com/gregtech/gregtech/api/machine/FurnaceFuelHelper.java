@@ -27,7 +27,7 @@ public final class FurnaceFuelHelper {
         if (burnValue <= 0) {
             return Optional.empty();
         }
-        long heat = burnValue * GregTechConstants.EU_PER_FURNACE_TICK * efficiency / 10000L;
+        long heat = MaterialFuelRules.heatUnits(burnValue, efficiency);
         if (heat <= 0) {
             return Optional.empty();
         }
@@ -50,12 +50,10 @@ public final class FurnaceFuelHelper {
             if (ash == null || !ash.isValid() || amount <= 0) {
                 return Optional.empty();
             }
-            long itemAmount = data.amount() > 0 ? data.amount() : MaterialPrefix.dust.getMaterialWeight();
-            long scaled = FurnaceFuelValue.scaleUnits(amount, GregTechConstants.U, itemAmount);
-            if (scaled <= 0) {
+            int count = MaterialFuelRules.ashTinyCount(material, data.amount());
+            if (count <= 0) {
                 return Optional.empty();
             }
-            int count = (int) Math.min(64L, Math.max(1L, scaled / GregTechConstants.U9));
             ItemStack stack = MaterialStackItemHelper.createStack(MaterialPrefix.dustTiny, ash, count);
             return stack.isEmpty() ? Optional.empty() : Optional.of(stack);
         }).orElse(null);

@@ -96,7 +96,7 @@ public class GTSurfaceFloraFeature extends Feature<NoneFeatureConfiguration> {
         if (random.nextInt(log.probability()) != 0) return false;
         int x = minX + random.nextInt(16);
         int z = minZ + random.nextInt(16);
-        if (!log.biomes().contains(biomeId(level, x, z))) return false;
+        if (!log.biomes().contains(String.valueOf(biomeId(level, x, z)))) return false;
         BlockPos ground = surface(level, x, z);
         if (ground == null) return false;
         BlockState state = level.getBlockState(ground);

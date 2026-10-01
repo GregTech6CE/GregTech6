@@ -187,7 +187,7 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler {
 
         FluidStack in = fermentRecipe.mFluidInputs[0];
         FluidStack out = fermentRecipe.mFluidOutputs[0];
-        long produced = (long) out.getAmount() * tank.getAmount() / Math.max(1, in.getAmount());
+        long produced = com.gregtech.gregtech.api.fluid.BarrelFermentationRules.output(out.getAmount(),tank.getAmount(),in.getAmount());
         tank.setFluid(new FluidStack(out.getFluid(), (int) Math.min(Math.max(1, produced), tank.getCapacity())));
         resetSeal();
         setChanged();
@@ -195,9 +195,7 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler {
 
     /** GT6's {@code UT.Code.divup(max(1, |EUt * duration|) * max(1, amount), max(1, input))}. */
     public static long sealedDuration(Recipe recipe, long amount) {
-        long power = Math.max(1, Math.abs(recipe.mEUt * recipe.mDuration));
-        long input = Math.max(1, recipe.mFluidInputs[0].getAmount());
-        return (power * Math.max(1, amount) + input - 1) / input;
+        return com.gregtech.gregtech.api.fluid.BarrelFermentationRules.duration(recipe.mEUt,recipe.mDuration,amount,recipe.mFluidInputs[0].getAmount());
     }
 
     /**

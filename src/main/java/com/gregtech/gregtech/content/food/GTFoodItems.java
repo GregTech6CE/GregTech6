@@ -73,11 +73,13 @@ public final class GTFoodItems {
     public record Entry(String id, String display, int meta, Food food, Stats stats,
                         String container, int containerCount, boolean hasFoodStat, int line) {}
 
+    private static Entry fromShared(FoodNutritionRows.Entry r) { var f=r.food();var q=r.stats();return new Entry(r.id(),r.display(),r.meta(),new Food(f.level(),f.saturation(),f.hydration(),f.temperature(),f.alwaysEdible(),f.rotten()),new Stats(q.alcohol(),q.caffeine(),q.dehydration(),q.sugar(),q.fat(),q.radiation()),r.container(),r.containerCount(),r.hasFoodStat(),r.line()); }
+    private static final List<Entry> ROWS=GTFoodItemsGen.ROWS.stream().map(GTFoodItems::fromShared).toList();
     private static final Map<String, Entry> BY_ID = new LinkedHashMap<>();
     private static final List<String> MISSING_ITEMS = new ArrayList<>();
 
     static {
-        for (Entry entry : GTFoodItemsGen.ROWS) {
+        for (Entry entry : ROWS) {
             BY_ID.put(entry.id(), entry);
         }
     }
@@ -86,7 +88,7 @@ public final class GTFoodItems {
 
     /** GT6 food rows, in GT6's {@code addItem} meta order. */
     public static List<Entry> rows() {
-        return GTFoodItemsGen.ROWS;
+        return ROWS;
     }
 
     /** The row of a port item id (GT6's display name spelled the way the port registers it), or null. */

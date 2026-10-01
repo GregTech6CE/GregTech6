@@ -79,17 +79,8 @@ public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBl
 
     /** Axles may only connect in a straight line: max 2 connections on the same axis. */
     public static boolean isValidConnectionState(BlockState state) {
-        int count = 0;
-        Direction.Axis axis = null;
-        for (BooleanProperty prop : CONNECTIONS) {
-            if (state.getValue(prop)) {
-                count++;
-                Direction dir = propToDir(prop);
-                if (axis == null) axis = dir.getAxis();
-                else if (dir.getAxis() != axis) return false;
-            }
-        }
-        return count <= 2;
+        int mask=0;for(var direction:Direction.values())if(state.getValue(propFor(direction)))mask|=1<<direction.ordinal();
+        return com.gregtech.gregtech.content.energy.AxleConnectionRules.valid(mask);
     }
 
     private static Direction propToDir(BooleanProperty prop) {

@@ -26,53 +26,18 @@ public class Loader_Recipes_Fuels implements IGTLoader {
 
     @Override
     public void run() {
-        // ── Engine fuels (combustion engines) ───────────────────────────────
-        engine(128, 12, "Nitrofuel");
-        engine(64, 12, "Fuel");          // high-octane
-        engine(64, 8, "Diesel");
-        engine(64, 7, "Petrol");
-        engine(64, 5, "Rocket_Fuel");
-        engine(32, 10, "Fire_Water");
-        engine(16, 9, "Ethanol");
-        engine(16, 9, "Methanol");
-        engine(16, 6, "Hootch");
-
-        // ── Gas turbine fuels ────────────────────────────────────────────────
-        gas(16, 2, "Hydrogen", 2, water(3), null);
-        gas(64, 30, "Methane", 5, water(6), co2(3));
-        gas(64, 30, "NaturalGas", 5, water(6), co2(3));
-        gas(64, 56, "Butane", 7, water(7), co2(6));
-        gas(64, 40, "Propane", 5, water(5), co2(4));
-        gas(64, 5, "Ethylene", 1, water(1), co2(1));
-        gas(64, 4, "Propylene", 1, water(1), co2(1));
-
-        // ── Burnable fuels (boilers / fluidized bed) ─────────────────────────
-        burn(16, 48, "Oil_ExtraHeavy");
-        burn(16, 36, "Oil_Heavy");
-        burn(16, 24, "Oil_Medium");
-        burn(16, 24, "Oil_Normal");
-        burn(16, 18, "Oil_Light");
-        burn(16, 18, "Oil_Soulsand");
-        burn(16, 2, "Oil_Creosote");
-        burn(16, 2, "Biomass");
-        burn(16, 2, "BiomassIC2");
-        burn(16, 4, "Oil_Nut");
-        burn(16, 4, "Oil_Olive");
-        burn(16, 2, "Oil_Lin");
-        burn(16, 2, "Oil_Hemp");
-        burn(16, 2, "Oil_Sunflower");
-        burn(16, 2, "Oil_Seed");
-        burn(16, 4, "Oil_Fish");
-        burn(16, 8, "Oil_Whale");
-
-        // ── Hot fluids (heat exchangers / thermal generators) ────────────────
-        hot(16, 1250, "Lava", make("Lava_Pahoehoe", 1));
-        hot(16, 20000, "Lava_Volcanic", make("Lava_Pahoehoe", 1));
-        hot(2, 1, "Hot_Water", water(1));
-        hot(16, 6, "Blaze", null);
+        for(var row:com.gregtech.gregtech.content.recipe.OriginalFuelRecipeRows.ROWS)switch(row.kind()){
+            case "engine"->engine(row.eut(),row.duration(),row.input());
+            case "burn"->burn(row.eut(),row.duration(),row.input());
+            case "gas"->gas(row.eut(),row.duration(),row.input(),row.amount(),rowFluid(row.output(),row.outputAmount()),rowFluid(row.output2(),row.output2Amount()));
+            case "hot"->hot(row.eut(),row.duration(),row.input(),rowFluid(row.output(),row.outputAmount()));
+            default->throw new IllegalStateException("Unknown original fuel kind "+row.kind());
+        }
 
         LOGGER.info("[gregtech] Fuel tables: {} added, {} skipped (missing fluids)", added, skipped);
     }
+
+    private static FluidStack rowFluid(String key,int amount){return key==null?null:key.equals("water")?water(amount):make(key,amount);}
 
     private void engine(long eut, long duration, String key) {
         FluidStack in = make(key, 1);

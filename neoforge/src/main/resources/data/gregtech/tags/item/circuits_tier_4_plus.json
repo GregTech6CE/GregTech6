@@ -1,0 +1,20 @@
+{
+  "replace": false,
+  "values": [
+    "gregtech:circuit_elite",
+    "gregtech:circuit_master",
+    "gregtech:circuit_ultimate",
+    {
+      "id": "#forge:circuits/elite",
+      "required": false
+    },
+    {
+      "id": "#forge:circuits/master",
+      "required": false
+    },
+    {
+      "id": "#forge:circuits/ultimate",
+      "required": false
+    }
+  ]
+}

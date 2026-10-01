@@ -79,6 +79,8 @@ public final class GTToolBlocks {
         return block;
     }
 
+    private static RegistryObject<com.gregtech.gregtech.block.tool.RopeBlock> rope(com.gregtech.gregtech.content.tool.UtilityToolRules.Rope spec){return rope(spec.id(),com.gregtech.gregtech.api.material.GTMaterialRegistry.get(spec.material()));}
+
     /** One of GT6's three explosives: same model, tinted, with the original's blast quality. */
     private static RegistryObject<com.gregtech.gregtech.block.tool.DynamiteBlock> dynamite(
             String id, float resistance, int fortune, com.gregtech.gregtech.api.material.GTMaterial material) {
@@ -123,11 +125,11 @@ public final class GTToolBlocks {
         GTBlocks.BLOCK_ITEMS.register("rope", () -> new BlockItem(ROPE.get(), new Item.Properties().stacksTo(64)));   // GT6 Ropes: 64
         // GT6's five other ropes (Loader_MultiTileEntities:2087-2091); the shared greyscale texture is
         // tinted by the rope's material, so no extra art is needed.
-        ROPE_SILK = rope("rope_silk", com.gregtech.gregtech.content.material.Materials.White);      // :2087
-        ROPE_GRASS = rope("rope_grass", com.gregtech.gregtech.content.material.Materials.Yellow);   // :2088
-        ROPE_VINE = rope("rope_vine", com.gregtech.gregtech.content.material.Materials.Green);      // :2089
-        ROPE_PLASTIC = rope("rope_plastic", com.gregtech.gregtech.content.material.Materials.Plastic);  // :2090
-        ROPE_STEEL = rope("rope_steel", com.gregtech.gregtech.content.material.Materials.Steel);    // :2091
+        ROPE_SILK = rope(com.gregtech.gregtech.content.tool.UtilityToolRules.ROPES.stream().filter(v->v.id().equals("rope_silk")).findFirst().orElseThrow());      // :2087
+        ROPE_GRASS = rope(com.gregtech.gregtech.content.tool.UtilityToolRules.ROPES.stream().filter(v->v.id().equals("rope_grass")).findFirst().orElseThrow());   // :2088
+        ROPE_VINE = rope(com.gregtech.gregtech.content.tool.UtilityToolRules.ROPES.stream().filter(v->v.id().equals("rope_vine")).findFirst().orElseThrow());      // :2089
+        ROPE_PLASTIC = rope(com.gregtech.gregtech.content.tool.UtilityToolRules.ROPES.stream().filter(v->v.id().equals("rope_plastic")).findFirst().orElseThrow());  // :2090
+        ROPE_STEEL = rope(com.gregtech.gregtech.content.tool.UtilityToolRules.ROPES.stream().filter(v->v.id().equals("rope_steel")).findFirst().orElseThrow());    // :2091
         DYNAMITE = GTBlocks.BLOCKS.register("dynamite", () -> new com.gregtech.gregtech.block.tool.DynamiteBlock(
                 BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED)
                         .strength(0.2f, 0.0f).sound(SoundType.GRASS).noOcclusion().instabreak(),

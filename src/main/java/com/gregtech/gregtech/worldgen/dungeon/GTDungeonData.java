@@ -979,9 +979,14 @@ public final class GTDungeonData {
         return plant != null && set(ax, ay, az, plant.defaultBlockState());
     }
 
-    /** GT6's ZPM module ({@code mStructure.mZPM}); the port's ZPM has no "energised" block state. */
+    /** GT6's two-in-three charged dungeon artifact; persist charge in the existing module. */
     public boolean zpm(int ax, int ay, int az, boolean active) {
-        return set(ax, ay, az, GTLasers.ZPM.get().defaultBlockState());
+        if (!set(ax, ay, az, GTLasers.ZPM.get().defaultBlockState())) return false;
+        if (!(level.getBlockEntity(new BlockPos(x + ax,y + ay,z + az))
+                instanceof com.gregtech.gregtech.blockentity.energy.ZpmModuleBlockEntity module))
+            throw new IllegalStateException("Dungeon ZPM entity missing");
+        module.initializeDungeonEnergy(active);
+        return true;
     }
 
     public boolean zpm(int ax, int ay, int az) { return zpm(ax, ay, az, next2in3()); }

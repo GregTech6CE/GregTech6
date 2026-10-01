@@ -1,0 +1,8 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#minecraft:is_end",
+  "features": [
+    "gregtech:gt_bumble_hives"
+  ],
+  "step": "vegetal_decoration"
+}

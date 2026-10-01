@@ -72,10 +72,7 @@ public class DrawerQuadBlock extends DirectionalBlock implements EntityBlock, Si
 
     /** GT6 UT.Code.getFacingCoordsClicked, including the exact middle-line tie break. */
     public static int quadrant(Direction facing, BlockPos pos, Vec3 hit) {
-        double x=hit.x-pos.getX(), y=hit.y-pos.getY(), z=hit.z-pos.getZ();
-        double u = switch(facing) { case DOWN, UP, SOUTH -> x; case NORTH -> 1-x; case WEST -> z; case EAST -> 1-z; };
-        double v = switch(facing) { case DOWN -> 1-z; case UP -> z; default -> 1-y; };
-        return (u > .5 ? 1 : 0) | (v > .5 ? 2 : 0);
+        return com.gregtech.gregtech.content.storage.ContainerStorageRules.quadrant(facing.ordinal(),hit.x-pos.getX(),hit.y-pos.getY(),hit.z-pos.getZ());
     }
     @Override public com.gregtech.gregtech.api.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return com.gregtech.gregtech.api.tool.GTToolHelper.isMachineWrench(tool)

@@ -196,7 +196,7 @@ public class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration> {
                 } else if (def.blockId() != null) {
                     // Whole-block ore seams (GT6 BlockRockOres -> iconset blocks).
                     Block seam = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(
-                            new net.minecraft.resources.ResourceLocation(com.gregtech.gregtech.GregTech.MODID, def.blockId()));
+                            new net.minecraft.resources.ResourceLocation(com.gregtech.gregtech.GregTech.NAMESPACE, def.blockId()));
                     if (seam != null && seam != Blocks.AIR) {
                         stone = seam.defaultBlockState();
                     }

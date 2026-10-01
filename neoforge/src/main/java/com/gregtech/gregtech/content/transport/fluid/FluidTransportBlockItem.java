@@ -1,0 +1,28 @@
+package com.gregtech.gregtech.content.transport.fluid;
+import com.gregtech.gregtech.block.machine.TankBlock;
+import com.gregtech.gregtech.block.machine.FluidPipeBlock;
+import com.gregtech.gregtech.client.TankTooltips;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.network.chat.Component;
+import java.util.List;
+/** Original tank/pipe tooltip and stack limits; BlockItem restores BLOCK_ENTITY_DATA on placement. */
+public final class FluidTransportBlockItem extends BlockItem {
+    public FluidTransportBlockItem(Block block,Properties properties){super(block,properties);}
+    @Override public Component getName(ItemStack stack){
+        if(getBlock() instanceof TankBlock tank)return Component.literal(tank.spec().materialName()+" Tank");
+        if(getBlock() instanceof FluidPipeBlock pipe){
+            String size=pipe.spec().size().name();
+            return Component.literal(size.substring(0,1).toUpperCase(java.util.Locale.ROOT)+size.substring(1).toLowerCase(java.util.Locale.ROOT)
+                    +" "+pipe.spec().materialName()+" Fluid Pipe");
+        }
+        return super.getName(stack);
+    }
+    @Override public void appendHoverText(ItemStack stack,TooltipContext context,List<Component> lines,TooltipFlag flag){
+        super.appendHoverText(stack,context,lines,flag);
+        if(getBlock() instanceof TankBlock tank)TankTooltips.appendTank(tank.spec(),lines);
+        if(getBlock() instanceof FluidPipeBlock pipe)TankTooltips.appendPipe(pipe.spec(),lines);
+    }
+}

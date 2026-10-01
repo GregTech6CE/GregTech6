@@ -8,10 +8,10 @@ import com.gregtech.gregtech.registry.GTBlockEntities;
 import net.minecraft.core.*;
 import net.minecraft.world.level.block.state.BlockState;
 import java.util.*;
+import com.gregtech.gregtech.content.energy.LaserPacketRouter;
 
 /** Lossless LU packet routing. Iterative traversal prevents stack overflow and revisiting cycles. */
 public final class LaserFiberBlockEntity extends GTEnergyBlockEntity {
-    private static final int MAX_VISITED=4096;
     /** GT6 MultiTileEntityWireLaser.mTransferred / mTransferredLast: LU sent through this fiber. */
     private long transferred;
     private long transferredLast;
@@ -20,9 +20,7 @@ public final class LaserFiberBlockEntity extends GTEnergyBlockEntity {
     /** GT6 onTick2 moves this tick's transfer count into the sensor-visible previous-tick value. */
     public void rollTransferWindow(){transferredLast=transferred;transferred=0;}
     private void recordTransfer(long size,long packets){
-        long magnitude=Math.abs(size);
-        long lu=packets>Long.MAX_VALUE/magnitude?Long.MAX_VALUE:packets*magnitude;
-        transferred=lu>Long.MAX_VALUE-transferred?Long.MAX_VALUE:transferred+lu;
+        transferred=LaserPacketRouter.recordedUnits(transferred,size,packets);
     }
     private boolean connected(Direction side){
         // onPlace may update connections before LevelChunk finishes assigning the entity's initial state.
@@ -45,31 +43,14 @@ public final class LaserFiberBlockEntity extends GTEnergyBlockEntity {
     @Override public long getEnergyDemanded(GregTechTags.Tag type,Direction side,long size){return isEnergyAcceptingFrom(type,side,false)?Long.MAX_VALUE:0;}
     @Override public synchronized long doEnergyInjection(GregTechTags.Tag type,Direction side,long size,long amount,boolean execute){
         if(level==null||size==0||size==Long.MIN_VALUE||amount<=0||!isEnergyAcceptingFrom(type,side,false))return 0;
-        var visited=new HashSet<BlockPos>();
-        var queue=new ArrayDeque<LaserFiberBlockEntity>();
-        var parents=new HashMap<LaserFiberBlockEntity,LaserFiberBlockEntity>();
-        visited.add(worldPosition);if(side!=null)visited.add(worldPosition.relative(side));queue.add(this);
-        long used=0;
-        while(!queue.isEmpty() && used<amount && visited.size()<MAX_VISITED){
-            var wire=queue.removeFirst();
-            for(var output:Direction.values()){
-                if(!wire.connected(output))continue;
-                var next=wire.worldPosition.relative(output);
-                if(!level.hasChunkAt(next)||visited.contains(next))continue;
-                var target=level.getBlockEntity(next);
-                if(target instanceof LaserFiberBlockEntity fiber){
-                    if(fiber.connected(output.getOpposite())){visited.add(next);parents.put(fiber,wire);queue.addLast(fiber);}
-                }else if(target instanceof IEnergyBlock receiver && receiver.isEnergyAcceptingFrom(type,output.getOpposite(),false)){
-                    visited.add(next);
-                    long accepted=Math.max(0,Math.min(amount-used,receiver.doEnergyInjection(type,output.getOpposite(),size,amount-used,execute)));
-                    used+=accepted;
-                    if(execute && accepted>0)
-                        for(LaserFiberBlockEntity path=wire;path!=null;path=parents.get(path))path.recordTransfer(size,accepted);
-                    if(used>=amount)break;
-                }
-                if(visited.size()>=MAX_VISITED)break;
-            }
-        }
-        return used;
+        return LaserPacketRouter.route(worldPosition,side==null?-1:side.ordinal(),size,amount,execute,new LaserPacketRouter.Network<BlockPos>(){
+            public BlockPos neighbor(BlockPos node,int direction){return node.relative(Direction.values()[direction]);}
+            public boolean loaded(BlockPos node){return level.hasChunkAt(node);}
+            public boolean fiber(BlockPos node){return level.getBlockEntity(node) instanceof LaserFiberBlockEntity;}
+            public boolean connected(BlockPos node,int direction){return level.getBlockEntity(node) instanceof LaserFiberBlockEntity fiber&&fiber.connected(Direction.values()[direction]);}
+            public boolean accepts(BlockPos node,int direction){return level.getBlockEntity(node) instanceof IEnergyBlock receiver&&receiver.isEnergyAcceptingFrom(type,Direction.values()[direction],false);}
+            public long inject(BlockPos node,int direction,long size,long amount,boolean execute){return level.getBlockEntity(node) instanceof IEnergyBlock receiver?receiver.doEnergyInjection(type,Direction.values()[direction],size,amount,execute):0;}
+            public void record(BlockPos node,long size,long accepted){if(level.getBlockEntity(node) instanceof LaserFiberBlockEntity fiber)fiber.recordTransfer(size,accepted);}
+        });
     }
 }

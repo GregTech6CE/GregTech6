@@ -1,0 +1,26 @@
+{
+  "loader": "neoforge:composite",
+  "children": {
+    "layer0": {
+      "parent": "minecraft:block/cube_all",
+      "textures": {
+        "all": "gregtech:block/iconsets/crate"
+      },
+      "render_type": "minecraft:solid"
+    },
+    "layer1": {
+      "parent": "minecraft:block/cube_all",
+      "textures": {
+        "all": "gregtech:block/material_icons/hex/crategtraw"
+      },
+      "render_type": "minecraft:solid"
+    },
+    "layer2": {
+      "parent": "minecraft:block/cube_all",
+      "textures": {
+        "all": "gregtech:block/material_icons/hex/crategtraw_overlay"
+      },
+      "render_type": "minecraft:cutout"
+    }
+  }
+}

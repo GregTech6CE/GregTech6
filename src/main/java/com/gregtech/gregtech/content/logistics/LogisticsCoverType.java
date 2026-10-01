@@ -1,61 +1,37 @@
 package com.gregtech.gregtech.content.logistics;
-
 import com.gregtech.gregtech.content.cover.CoverItems;
 import net.minecraft.world.item.ItemStack;
-
-/** The GT6 1086-1099 cover family; display covers are reserved for W4. */
+/** Platform ItemStack lookup over the single shared original cover definition table. */
 public enum LogisticsCoverType {
-    CPU_LOGIC("logistics_display_cpu_logic", Role.DISPLAY, Channel.NONE, false, false),
-    CPU_CONTROL("logistics_display_cpu_control", Role.DISPLAY, Channel.NONE, false, false),
-    CPU_STORAGE("logistics_display_cpu_storage", Role.DISPLAY, Channel.NONE, false, false),
-    CPU_CONVERSION("logistics_display_cpu_conversion", Role.DISPLAY, Channel.NONE, false, false),
-    FLUID_EXPORT("filtered_logistics_export_bus_fluid", Role.EXPORT, Channel.FLUID, true, false),
-    FLUID_IMPORT("filtered_logistics_import_bus_fluid", Role.IMPORT, Channel.FLUID, true, false),
-    FLUID_STORAGE("filtered_logistics_storage_bus_fluid", Role.STORAGE, Channel.FLUID, true, false),
-    ITEM_EXPORT("filtered_logistics_export_bus_item", Role.EXPORT, Channel.ITEM, true, true),
-    ITEM_IMPORT("filtered_logistics_import_bus_item", Role.IMPORT, Channel.ITEM, true, true),
-    ITEM_STORAGE("filtered_logistics_storage_bus_item", Role.STORAGE, Channel.ITEM, true, false),
-    GENERIC_EXPORT("generic_logistics_export_bus", Role.EXPORT, Channel.BOTH, false, true),
-    GENERIC_IMPORT("generic_logistics_import_bus", Role.IMPORT, Channel.BOTH, false, true),
-    GENERIC_STORAGE("generic_logistics_storage_bus", Role.STORAGE, Channel.BOTH, false, false),
-    ITEM_DUMP("logistics_dump_bus_item", Role.DUMP, Channel.ITEM, false, false);
-
+    CPU_LOGIC(LogisticsCoverDefinition.CPU_LOGIC),
+    CPU_CONTROL(LogisticsCoverDefinition.CPU_CONTROL),
+    CPU_STORAGE(LogisticsCoverDefinition.CPU_STORAGE),
+    CPU_CONVERSION(LogisticsCoverDefinition.CPU_CONVERSION),
+    FLUID_EXPORT(LogisticsCoverDefinition.FLUID_EXPORT),
+    FLUID_IMPORT(LogisticsCoverDefinition.FLUID_IMPORT),
+    FLUID_STORAGE(LogisticsCoverDefinition.FLUID_STORAGE),
+    ITEM_EXPORT(LogisticsCoverDefinition.ITEM_EXPORT),
+    ITEM_IMPORT(LogisticsCoverDefinition.ITEM_IMPORT),
+    ITEM_STORAGE(LogisticsCoverDefinition.ITEM_STORAGE),
+    GENERIC_EXPORT(LogisticsCoverDefinition.GENERIC_EXPORT),
+    GENERIC_IMPORT(LogisticsCoverDefinition.GENERIC_IMPORT),
+    GENERIC_STORAGE(LogisticsCoverDefinition.GENERIC_STORAGE),
+    ITEM_DUMP(LogisticsCoverDefinition.ITEM_DUMP);
     public enum Role { IMPORT, EXPORT, STORAGE, DUMP, DISPLAY }
     public enum Channel { ITEM, FLUID, BOTH, NONE }
-
-    private final String id;
-    private final Role role;
-    private final Channel channel;
-    private final boolean filtered;
-    private final boolean targetStackSize;
-
-    LogisticsCoverType(String id, Role role, Channel channel, boolean filtered, boolean targetStackSize) {
-        this.id = id;
-        this.role = role;
-        this.channel = channel;
-        this.filtered = filtered;
-        this.targetStackSize = targetStackSize;
-    }
-
-    public String id() { return id; }
-    public Role role() { return role; }
-    public Channel channel() { return channel; }
-    public boolean filtered() { return filtered; }
-    public boolean targetStackSize() { return targetStackSize; }
-    public boolean usesPriority() { return role != Role.DISPLAY && role != Role.DUMP; }
-    public boolean routesItems() { return channel == Channel.ITEM || channel == Channel.BOTH; }
-    public boolean routesFluids() { return channel == Channel.FLUID || channel == Channel.BOTH; }
-
+    private final LogisticsCoverDefinition definition;
+    LogisticsCoverType(LogisticsCoverDefinition definition) { this.definition=definition; }
+    public String id() { return definition.id(); }
+    public Role role() { return Role.valueOf(definition.role().name()); }
+    public Channel channel() { return Channel.valueOf(definition.channel().name()); }
+    public boolean filtered() { return definition.filtered(); }
+    public boolean targetStackSize() { return definition.targetStackSize(); }
+    public boolean usesPriority() { return definition.usesPriority(); }
+    public boolean routesItems() { return definition.routesItems(); }
+    public boolean routesFluids() { return definition.routesFluids(); }
+    public int effectivePriority(int value) { return definition.effectivePriority(value); }
     public static LogisticsCoverType of(ItemStack stack) {
-        String id = CoverItems.behavior(stack);
-        if (id == null) return null;
-        for (var type : values()) if (type.id.equals(id)) return type;
-        return null;
-    }
-
-    /** GT6 filtered buses treat value zero as Filtered; generic buses treat it as Generic. */
-    public int effectivePriority(int value) {
-        int priority = value & 3;
-        return priority == 0 ? (filtered ? 3 : 1) : priority;
+        var definition=LogisticsCoverDefinition.ofBehavior(CoverItems.behavior(stack));
+        return definition==null?null:valueOf(definition.name());
     }
 }

@@ -72,4 +72,13 @@ public abstract class AbstractMinecartSpeedCapMixin {
             info.cancel();
         }
     }
+    /** The GT callback owns x2 boost and one braking step. Skip vanilla's additional
+     * powered-rail velocity change, while the actual block remains a non-activator.
+     * This also avoids activating TNT/hopper carts on a GT booster. */
+    @org.spongepowered.asm.mixin.injection.Redirect(method="moveAlongTrack",
+            at=@At(value="INVOKE",target="Lnet/minecraft/world/level/block/PoweredRailBlock;isActivatorRail()Z",remap=false))
+    private boolean gregtech$useTrackBoosterMotion(net.minecraft.world.level.block.PoweredRailBlock rail){
+        return rail instanceof com.gregtech.gregtech.block.misc.TrackBlock.Booster || rail.isActivatorRail();
+    }
+
 }

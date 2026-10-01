@@ -262,7 +262,7 @@ public class Loader_Recipes_OreProcessing implements IGTLoader {
     private static ItemStack blockStack(com.gregtech.gregtech.api.prefix.BlockMaterialPrefix prefix, GTMaterial material) {
         if (prefix == null) return ItemStack.EMPTY;
         net.minecraft.world.level.block.Block block = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(
-                new net.minecraft.resources.ResourceLocation(com.gregtech.gregtech.GregTech.MODID, prefix.getBlockId(material)));
+                new net.minecraft.resources.ResourceLocation(com.gregtech.gregtech.GregTech.NAMESPACE, prefix.getBlockId(material)));
         if (block == null || block == net.minecraft.world.level.block.Blocks.AIR) return ItemStack.EMPTY;
         ItemStack stack = new ItemStack(block);
         return stack.isEmpty() ? ItemStack.EMPTY : stack;

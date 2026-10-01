@@ -37,62 +37,62 @@ public final class CrucibleTooltips {
         }
 
         if (flag.isAdvanced()) {
-            tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".contained_materials")
+            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".contained_materials")
                     .withStyle(ChatFormatting.DARK_AQUA));
             tooltip.add(containedHullLine(spec));
         } else {
-            tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".f3h_hint")
+            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".f3h_hint")
                     .withStyle(ChatFormatting.DARK_GRAY));
         }
     }
 
     private static void appendEnergyConversion(List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".crucible.energy_convert",
+        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".crucible.energy_convert",
                         CrucibleSpec.MIN_HU_PER_TICK, CrucibleSpec.KG_PER_ENERGY)
                 .withStyle(ChatFormatting.AQUA));
     }
 
     private static void appendThermalMass(CrucibleSpec spec, List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".crucible.thermal_mass",
+        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".crucible.thermal_mass",
                         formatMass(spec.thermalMassKg()))
                 .withStyle(ChatFormatting.YELLOW));
     }
 
     private static void appendMeltdown(CrucibleSpec spec, List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".crucible.meltdown",
+        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".crucible.meltdown",
                         spec.meltDownTemperatureK())
                 .withStyle(ChatFormatting.DARK_RED));
     }
 
     private static void appendKuSteelmaking(List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".crucible.ku_steelmaking")
+        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".crucible.ku_steelmaking")
                 .withStyle(ChatFormatting.WHITE));
     }
 
     private static void appendAcidProof(List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".crucible.acidproof")
+        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".crucible.acidproof")
                 .withStyle(ChatFormatting.GOLD));
     }
 
     private static void appendContactDamage(List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".crucible.contact_damage")
+        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".crucible.contact_damage")
                 .withStyle(ChatFormatting.DARK_RED));
     }
 
     private static void appendThermometer(List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".crucible.thermometer")
+        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".crucible.thermometer")
                 .withStyle(ChatFormatting.GRAY));
     }
 
     private static void appendBlastResistance(CrucibleSpec spec, List<Component> tooltip) {
         float resistance = spec.blastResistance();
         Component suffix = resistance >= 12.0F
-                ? Component.translatable("tooltip." + GregTech.MODID + ".machine.blast.creeper").withStyle(ChatFormatting.GREEN)
+                ? Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.blast.creeper").withStyle(ChatFormatting.GREEN)
                 : resistance >= 7.0F
-                ? Component.translatable("tooltip." + GregTech.MODID + ".machine.blast.ghast").withStyle(ChatFormatting.RED)
-                : Component.translatable("tooltip." + GregTech.MODID + ".machine.blast.terrible").withStyle(ChatFormatting.RED);
+                ? Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.blast.ghast").withStyle(ChatFormatting.RED)
+                : Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.blast.terrible").withStyle(ChatFormatting.RED);
         tooltip.add(Component.empty()
-                .append(Component.translatable("tooltip." + GregTech.MODID + ".machine.blast_resistance")
+                .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.blast_resistance")
                         .withStyle(ChatFormatting.WHITE))
                 .append(Component.literal(String.format(Locale.ROOT, "%.1f ", resistance))
                         .withStyle(ChatFormatting.GOLD))
@@ -100,7 +100,7 @@ public final class CrucibleTooltips {
     }
 
     private static void appendHarvestPickaxe(List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".crucible.harvest_pickaxe")
+        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".crucible.harvest_pickaxe")
                 .withStyle(ChatFormatting.GRAY));
     }
 

@@ -1,0 +1,23 @@
+{
+  "loader": "neoforge:composite",
+  "children": {
+    "layer0": {
+      "parent": "minecraft:block/cube_all",
+      "textures": {
+        "all": "gregtech:block/material_icons/sand/blockdust"
+      },
+      "render_type": "minecraft:solid"
+    },
+    "layer1": {
+      "parent": "minecraft:block/cube_all",
+      "textures": {
+        "all": "gregtech:block/material_icons/sand/blockdust_overlay"
+      },
+      "render_type": "minecraft:cutout"
+    }
+  },
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "gregtech:block/material_icons/sand/blockdust"
+  }
+}

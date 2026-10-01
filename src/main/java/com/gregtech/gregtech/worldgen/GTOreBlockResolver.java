@@ -120,7 +120,7 @@ public final class GTOreBlockResolver {
 
     @Nullable
     private static Block lookup(String path) {
-        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTech.MODID, path);
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, path);
         return ForgeRegistries.BLOCKS.containsKey(id) ? ForgeRegistries.BLOCKS.getValue(id) : null;
     }
 

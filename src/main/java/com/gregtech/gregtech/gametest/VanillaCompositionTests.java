@@ -80,7 +80,7 @@ public final class VanillaCompositionTests {
         }
         h.succeed();
     }
-    private static long units(ItemMaterialRegistry.ItemMaterialData data,String material){
+    private static long units(com.gregtech.gregtech.api.material.ItemComposition data,String material){
         return data.components().stream().filter(c->c.material().getName().equals(material)).mapToLong(MaterialComponent::amount).sum();
     }
 

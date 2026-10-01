@@ -22,8 +22,7 @@ import org.jetbrains.annotations.Nullable;
 
 /** One-plate inventory and GT6 coin-pattern NBT for {@code MultiTileEntityMoldCoinage}. */
 public final class CoinMoldBlockEntity extends BlockEntity {
-    private boolean unique;
-    private final short[][] shape = new short[2][16];
+    private final com.gregtech.gregtech.content.tool.CoinStampPattern pattern=new com.gregtech.gregtech.content.tool.CoinStampPattern();
     private final ItemStackHandler inventory = new ItemStackHandler(1) {
         @Override public int getSlotLimit(int slot) { return 1; }
         @Override public boolean isItemValid(int slot, ItemStack stack) { return acceptsPlate(stack); }
@@ -82,13 +81,11 @@ public final class CoinMoldBlockEntity extends BlockEntity {
         ItemStack coin = GTItems.getStack(MaterialPrefix.coin,
                 MaterialEquivalence.form(plate).material(), 1);
         if (coin.isEmpty()) return false;
-        if (unique) coin.getOrCreateTag().putBoolean("gt.coin.unique", true);
+        if (pattern.unique()) coin.getOrCreateTag().putBoolean(com.gregtech.gregtech.content.tool.CoinStampPattern.UNIQUE, true);
         // GT6 writes every row, including zero rows. Otherwise a blank custom die is
         // indistinguishable from an untagged registered coin using the default relief.
         CompoundTag coinTag = coin.getOrCreateTag();
-        for (int face = 0; face < 2; face++)
-            for (int row = 0; row < 16; row++)
-                coinTag.putShort("gt.coin.shape." + face + "." + row, shape[face][row]);
+        pattern.write(coinTag::putShort);
         inventory.setStackInSlot(0, coin);
         return true;
     }
@@ -106,18 +103,14 @@ public final class CoinMoldBlockEntity extends BlockEntity {
 
     public CompoundTag saveItemConfig() {
         CompoundTag tag = new CompoundTag();
-        tag.putBoolean("gt.coin.unique", unique);
-        for (int face = 0; face < 2; face++)
-            for (int row = 0; row < 16; row++)
-                tag.putShort("gt.coin.shape." + face + "." + row, shape[face][row]);
+        tag.putBoolean(com.gregtech.gregtech.content.tool.CoinStampPattern.UNIQUE, pattern.unique());
+        pattern.write(tag::putShort);
         return tag;
     }
 
     public void loadItemConfig(CompoundTag tag) {
-        unique = tag.getBoolean("gt.coin.unique");
-        for (int face = 0; face < 2; face++)
-            for (int row = 0; row < 16; row++)
-                shape[face][row] = tag.getShort("gt.coin.shape." + face + "." + row);
+        pattern.unique(tag.getBoolean(com.gregtech.gregtech.content.tool.CoinStampPattern.UNIQUE));
+        pattern.read(tag::getShort);
         sync();
     }
 

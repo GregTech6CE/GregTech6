@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 /** Mold basin / mold / crossing / faucet hull models (same texture-set sharing as smelting crucibles). */
-@Mod.EventBusSubscriber(modid = GregTech.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class SmelteryClientModels {
     private static final Logger LOGGER = LogUtils.getLogger();
 
@@ -53,7 +53,7 @@ public final class SmelteryClientModels {
         int crossings = aliasHullBlocks(models, MachineRegistry.crucibleCrossings(), CrucibleCrossingIcons::sharedModelLocation, false);
         int faucets = aliasHullBlocks(models, MachineRegistry.crucibleFaucets(), CrucibleFaucetIcons::sharedModelLocation, true);
         LOGGER.info("[{}] Smeltery hull aliasing: {} basins, {} molds, {} crossings, {} faucets",
-                GregTech.MODID, basins, molds, crossings, faucets);
+                GregTech.NAMESPACE, basins, molds, crossings, faucets);
     }
 
     private static <T extends Block> int aliasHullBlocks(

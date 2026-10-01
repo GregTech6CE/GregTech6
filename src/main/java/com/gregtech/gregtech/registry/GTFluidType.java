@@ -25,7 +25,7 @@ public final class GTFluidType {
             }
             return Component.literal(material.getDisplayNameFallback());
         }
-        return Component.translatable("fluid_type." + GregTech.MODID + "." + langPath);
+        return Component.translatable("fluid_type." + GregTech.NAMESPACE + "." + langPath);
     }
 
     /** Full tooltip lines matching GT6 original format. */

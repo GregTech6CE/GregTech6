@@ -1,0 +1,156 @@
+{
+  "loader": "neoforge:composite",
+  "children": {
+    "layer0": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "top": "gregtech:block/machines/tools/dust_funnel/colored/top",
+        "sides": "gregtech:block/machines/tools/dust_funnel/colored/sides",
+        "bottom": "gregtech:block/machines/tools/dust_funnel/colored/bottom",
+        "hole": "gregtech:block/machines/tools/dust_funnel/colored/hole",
+        "particle": "gregtech:block/machines/tools/dust_funnel/colored/top"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            8,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "up": {
+              "texture": "#top"
+            },
+            "down": {
+              "texture": "#bottom"
+            },
+            "north": {
+              "texture": "#sides"
+            },
+            "south": {
+              "texture": "#sides"
+            },
+            "west": {
+              "texture": "#sides"
+            },
+            "east": {
+              "texture": "#sides"
+            }
+          }
+        },
+        {
+          "from": [
+            2,
+            0,
+            2
+          ],
+          "to": [
+            14,
+            8,
+            14
+          ],
+          "faces": {
+            "down": {
+              "texture": "#hole"
+            },
+            "north": {
+              "texture": "#sides"
+            },
+            "south": {
+              "texture": "#sides"
+            },
+            "west": {
+              "texture": "#sides"
+            },
+            "east": {
+              "texture": "#sides"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:solid"
+    },
+    "layer1": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "top": "gregtech:block/machines/tools/dust_funnel/overlay/top",
+        "sides": "gregtech:block/machines/tools/dust_funnel/overlay/sides",
+        "bottom": "gregtech:block/machines/tools/dust_funnel/overlay/bottom",
+        "hole": "gregtech:block/machines/tools/dust_funnel/overlay/hole"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            8,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "up": {
+              "texture": "#top"
+            },
+            "down": {
+              "texture": "#bottom"
+            },
+            "north": {
+              "texture": "#sides"
+            },
+            "south": {
+              "texture": "#sides"
+            },
+            "west": {
+              "texture": "#sides"
+            },
+            "east": {
+              "texture": "#sides"
+            }
+          }
+        },
+        {
+          "from": [
+            2,
+            0,
+            2
+          ],
+          "to": [
+            14,
+            8,
+            14
+          ],
+          "faces": {
+            "down": {
+              "texture": "#hole"
+            },
+            "north": {
+              "texture": "#sides"
+            },
+            "south": {
+              "texture": "#sides"
+            },
+            "west": {
+              "texture": "#sides"
+            },
+            "east": {
+              "texture": "#sides"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    }
+  },
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "gregtech:block/machines/tools/dust_funnel/colored/top"
+  }
+}

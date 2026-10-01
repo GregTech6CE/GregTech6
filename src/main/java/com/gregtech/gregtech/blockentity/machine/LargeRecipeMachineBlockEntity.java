@@ -18,15 +18,11 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
     private final PartBindings<BlockPos,MultiblockLayout.Role> bindings=new PartBindings<>();
     public LargeRecipeMachineBlockEntity(BlockEntityType<?> type,BlockPos pos,BlockState state) { super(type,pos,state); }
     @Override protected boolean usesTimeEnergy() { return spec()!=null&&spec().energyTag()==GregTechTags.Energy.TU; }
-    @Override protected long inputMinimum() { return usesTimeEnergy()||spec().energyTag()==GregTechTags.Energy.HU?1:512; }
-    @Override protected long inputMaximum() { return usesTimeEnergy()?16:4096; }
+    @Override protected long inputMinimum() { return com.gregtech.gregtech.content.multiblock.LargeMachineProcessingRules.inputMinimum(usesTimeEnergy(),spec().energyTag()==GregTechTags.Energy.HU); }
+    @Override protected long inputMaximum() { return com.gregtech.gregtech.content.multiblock.LargeMachineProcessingRules.inputMaximum(usesTimeEnergy()); }
     @Override protected boolean cheapOverclocking() { return !usesTimeEnergy(); }
-    @Override protected boolean requiresConstantEnergy() { return !usesTimeEnergy()&&!Set.of("largecrusher","largeshredder","largesqueezer").contains(spec().machineName()); }
-    @Override protected int efficiency() { return switch(spec().machineName()) {
-        case "largeoven" -> 2500;
-        case "largecentrifuge","largeelectrolyzer","largesluice","largecrusher","largeshredder","largesqueezer" -> 5000;
-        default -> 10000;
-    }; }
+    @Override protected boolean requiresConstantEnergy() { return com.gregtech.gregtech.content.multiblock.LargeMachineProcessingRules.constantEnergy(usesTimeEnergy(),spec().machineName()); }
+    @Override protected int efficiency() { return com.gregtech.gregtech.content.multiblock.LargeMachineProcessingRules.efficiency(spec().machineName()); }
     @Override protected boolean parallelScalesDuration() { return !usesTimeEnergy(); }
     @Override public long getEnergySizeInputRecommended(GregTechTags.Tag type,Direction side) { return usesTimeEnergy()?1:512; }
     @Override public long getEnergySizeInputMin(GregTechTags.Tag type,Direction side) { return inputMinimum(); }

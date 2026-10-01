@@ -1,5 +1,8 @@
 package com.gregtech.gregtech.content.recipe;
 
+import com.gregtech.gregtech.content.recipe.PressAmmunitionRecipeRows.PressRow;
+import com.gregtech.gregtech.content.recipe.PressAmmunitionRecipeRows.UnboxRow;
+
 import com.gregtech.gregtech.GregTech;
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
@@ -45,29 +48,14 @@ public final class PressAmmunitionRecipes {
                     + " gated on GT6 ANY.Iron.mToThis, which the port does not model");
 
     /** GT6 Press rows: (input prefix, input count, mold registry id, output prefix, ticks). */
-    private record PressRow(MaterialPrefix input, int inCount, String moldId, MaterialPrefix output, long ticks) {}
 
-    private static final List<PressRow> PRESS_ROWS = List.of(
-            new PressRow(MaterialPrefix.round, 1, "press_bullet_casing_shape_small",
-                    MaterialPrefix.bulletGtSmall, 16),
-            new PressRow(MaterialPrefix.bolt, 1, "press_bullet_casing_shape_small",
-                    MaterialPrefix.bulletGtSmall, 16),
-            new PressRow(MaterialPrefix.round, 2, "press_bullet_casing_shape_medium",
-                    MaterialPrefix.bulletGtMedium, 32),
-            new PressRow(MaterialPrefix.bolt, 2, "press_bullet_casing_shape_medium",
-                    MaterialPrefix.bulletGtMedium, 32),
-            new PressRow(MaterialPrefix.round, 3, "press_bullet_casing_shape_large",
-                    MaterialPrefix.bulletGtLarge, 64),
-            new PressRow(MaterialPrefix.bolt, 3, "press_bullet_casing_shape_large",
-                    MaterialPrefix.bulletGtLarge, 64));
+
+    private static final List<PressRow> PRESS_ROWS = PressAmmunitionRecipeRows.PRESS_ROWS;
 
     /** GT6 Unboxinator rows: bullets come back as tiny dust piles, the mold is recovered. */
-    private record UnboxRow(MaterialPrefix input, MaterialPrefix output, int outCount, String moldId) {}
 
-    private static final List<UnboxRow> UNBOX_ROWS = List.of(
-            new UnboxRow(MaterialPrefix.bulletGtSmall, MaterialPrefix.dustTiny, 1, "press_bullet_casing_shape_small"),
-            new UnboxRow(MaterialPrefix.bulletGtMedium, MaterialPrefix.dustTiny, 2, "press_bullet_casing_shape_medium"),
-            new UnboxRow(MaterialPrefix.bulletGtLarge, MaterialPrefix.dustTiny, 3, "press_bullet_casing_shape_large"));
+
+    private static final List<UnboxRow> UNBOX_ROWS = PressAmmunitionRecipeRows.UNBOX_ROWS;
 
     private static boolean registered;
 

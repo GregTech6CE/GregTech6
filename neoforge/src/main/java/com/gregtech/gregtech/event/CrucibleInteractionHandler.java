@@ -1,0 +1,44 @@
+package com.gregtech.gregtech.event;
+
+import com.gregtech.gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+
+/**
+ * Server-side crucible interactions. {@link net.minecraft.world.level.block.Block#use} runs on the
+ * client first and returning {@link InteractionResult#SUCCESS} there can prevent the server packet
+ * from applying block-entity changes; all authoritative logic lives here instead.
+ * <p>
+ * Mold and basin right-click pour is handled by {@link SmelteryInteractionHandler}.
+ */
+@EventBusSubscriber(modid = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID)
+public final class CrucibleInteractionHandler {
+    private CrucibleInteractionHandler() {}
+
+    @SubscribeEvent(priority = EventPriority.HIGH)
+    public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+        if (event.getLevel().isClientSide()) {
+            return;
+        }
+        if (event.getHitVec().getDirection() != Direction.UP) {
+            return;
+        }
+        BlockEntity blockEntity = event.getLevel().getBlockEntity(event.getPos());
+        SmeltingCrucibleEntity crucible = blockEntity instanceof SmeltingCrucibleEntity direct
+                ? direct : blockEntity instanceof com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity port
+                        && port.isCrucibleUpperPort() && port.crucibleController() instanceof SmeltingCrucibleEntity owner ? owner : null;
+        if (crucible == null) return;
+        if (crucible instanceof com.gregtech.gregtech.blockentity.machine.LargeCrucibleControllerBlockEntity large
+                && !large.isStructureOk()) return;
+        InteractionResult result = crucible.tryUse(event.getEntity(), event.getHand(), event.getHitVec());
+        if (result != InteractionResult.PASS) {
+            event.setCanceled(true);
+            event.setCancellationResult(result);
+        }
+    }
+}

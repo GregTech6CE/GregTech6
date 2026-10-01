@@ -19,7 +19,7 @@ public class FilterMenu extends AbstractContainerMenu {
     public FilterMenu(int id,Inventory inventory,FilterBlockEntity filter) {this(id,inventory,filter,filter!=null&&filter.prefixMode());}
     private FilterMenu(int id,Inventory inventory,FilterBlockEntity filter,boolean prefixMode) {
         
-        super(GTMenuTypes.FILTER.get(),id);this.filter=filter;this.prefixMode=prefixMode;this.templateSlots=prefixMode?1:54;templates=filter==null?new SimpleContainer(54):filter.templates();
+        super(GTMenuTypes.FILTER.get(),id);this.filter=filter;this.prefixMode=prefixMode;this.templateSlots=prefixMode?1:com.gregtech.gregtech.content.logistics.FilterPolicy.TEMPLATES;templates=filter==null?new SimpleContainer(com.gregtech.gregtech.content.logistics.FilterPolicy.TEMPLATES):filter.templates();
         data=filter==null?new SimpleContainerData(1):new ContainerData() {
             public int get(int key) { return filter.blacklist()?1:0; }
             public void set(int key,int value) {}

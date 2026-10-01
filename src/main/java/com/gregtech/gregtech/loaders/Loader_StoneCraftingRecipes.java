@@ -197,7 +197,7 @@ public final class Loader_StoneCraftingRecipes {
                 ingredients.set(x + y * width, ingredient);
             }
         }
-        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTech.MODID, "stone/" + path);
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, "stone/" + path);
         ShapedRecipe base = new ShapedRecipe(id, "gt.stone", CraftingBookCategory.BUILDING,
                 width, height, ingredients, output.copy());
         recipes.add(new ToolShapedRecipe(base, allowMirror));
@@ -220,7 +220,7 @@ public final class Loader_StoneCraftingRecipes {
             }
             ingredients.add(Ingredient.of(stacks[i]));
         }
-        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTech.MODID, "stone/" + path);
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, "stone/" + path);
         recipes.add(new ShapelessRecipe(id, "gt.stone", CraftingBookCategory.BUILDING, output.copy(), ingredients));
         REGISTERED.add(id.toString());
         return 1;

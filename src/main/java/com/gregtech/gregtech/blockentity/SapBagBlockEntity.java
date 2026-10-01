@@ -30,7 +30,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public class SapBagBlockEntity extends BlockEntity implements IFluidHandler {
     /** GT6 {@code new FluidTankGT(8000)} — 32 taps of 250 mB. */
-    public static final long CAPACITY = 8000;
+    public static final long CAPACITY = com.gregtech.gregtech.content.tool.UtilityToolRules.SAP_CAPACITY;
 
     private final FluidTankGT tank = new FluidTankGT(CAPACITY).setOnChanged(this::contentsChanged);
     private ItemStack stored = ItemStack.EMPTY;

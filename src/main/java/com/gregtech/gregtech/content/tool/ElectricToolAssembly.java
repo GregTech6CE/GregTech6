@@ -27,7 +27,7 @@ public enum ElectricToolAssembly {
     private final MaterialPrefix head;
     private final String[] rows;
     ElectricToolAssembly(String id, MaterialPrefix head, String... rows) {
-        this.id=id; this.head=head; this.rows=rows;
+        this.id=id; this.head=head; this.rows=ElectricToolCatalog.get(id).rows().toArray(String[]::new);
     }
     public ElectricToolItem item() {
         return switch(this) {
@@ -38,10 +38,7 @@ public enum ElectricToolAssembly {
         };
     }
     public static boolean validMaterial(GTMaterial material) {
-        // The six GT6 BOUNCY/STRETCHY polymers have toolTypes <= 1, so also fail typemin(3).
-        return material != null && material.isValid() && material.resolve()==material
-                && material.getToolTypes()>=3 && material.getToolQuality()>=1
-                && !material.has(MaterialProperty.WOOD) && !material.has(MaterialProperty.ANTIMATTER);
+        return ElectricToolCatalog.validMaterial(material);
     }
     public ToolShapedRecipe recipe(GTMaterial material) {
         return recipe(material,new ItemStack(GTElectricItems.BATTERY_LV.get()),"");

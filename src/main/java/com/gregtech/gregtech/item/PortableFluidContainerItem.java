@@ -20,13 +20,14 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 /** Finite, persistent fluid storage. Both machine interaction and automation use the same handler. */
-public final class PortableFluidContainerItem extends BlockItem {
+public final class PortableFluidContainerItem extends BlockItem implements com.gregtech.gregtech.api.inventory.ContainerShapeLike {
     private final PortableFluidContainerSpec spec;
     public PortableFluidContainerItem(net.minecraft.world.level.block.Block block, PortableFluidContainerSpec spec, Properties properties) {
         super(block, properties);
         this.spec = spec;
     }
     public PortableFluidContainerSpec spec() { return spec; }
+    @Override public String shapeId() { return spec.shapeId(); }
     @Override public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
         return new FluidHandlerItemStack(stack, spec.capacity()) {
             @Override public boolean canFillFluidType(FluidStack fluid) { return accepts(fluid); }

@@ -9,5 +9,5 @@ public final class CompactMatterFabricatorBlockEntity extends BasicMachineBlockE
     public CompactMatterFabricatorBlockEntity(BlockEntityType<?> type,BlockPos pos,BlockState state){super(type,pos,state);}
     @Override protected boolean cheapOverclocking(){return true;}
     @Override protected boolean requiresConstantEnergy(){return false;}
-    @Override protected int efficiency(){return 5000+1250*(Math.max(1,Math.min(5,spec().tier()))-1);}
+    @Override protected int efficiency(){return com.gregtech.gregtech.content.multiblock.LargeMachineProcessingRules.compactMatterEfficiency(spec().tier());}
 }

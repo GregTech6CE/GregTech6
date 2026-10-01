@@ -54,7 +54,7 @@ public class GTBedrockOreFeature extends Feature<NoneFeatureConfiguration> {
         BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();
         if (pick.flowerId() != null) {
             Block flower = ForgeRegistries.BLOCKS.getValue(
-                    new ResourceLocation(com.gregtech.gregtech.GregTech.MODID, pick.flowerId()));
+                    new ResourceLocation(com.gregtech.gregtech.GregTech.NAMESPACE, pick.flowerId()));
             if (flower != null && flower != Blocks.AIR) {
                 BlockState flowerState = flower.defaultBlockState();
                 for (int attempt = 0; attempt < 6; attempt++) {
@@ -110,73 +110,17 @@ public class GTBedrockOreFeature extends Feature<NoneFeatureConfiguration> {
      */
     public static boolean placeVein(WorldGenLevel level, RandomSource random, int minX, int minZ,
                                     GTMaterial material) {
-        if (material == null) return false;
-        int floor = level.getMinBuildHeight();
-        BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();
-        // GT6 requires existing bedrock at the vein's centre column.
-        cursor.set(minX + 8, floor, minZ + 8);
-        if (!level.getBlockState(cursor).is(Blocks.BEDROCK)) return false;
-
-        boolean placedAny = false;
-        // (2) the bedrock core.
-        for (int x = 5; x < 11; x++) {
-            for (int z = 5; z < 11; z++) {
-                cursor.set(minX + x, floor, minZ + z);
-                switch (random.nextInt(6)) {
-                    case 0 -> placedAny |= GTOreBlockResolver.placeBedrockOre(level, cursor, material);
-                    case 1, 2 -> placedAny |= placeSmallBedrockOre(level, cursor, material);
-                    default -> { }
-                }
-            }
-        }
-        cursor.set(minX + 6 + random.nextInt(4), floor, minZ + 6 + random.nextInt(4));
-        GTOreBlockResolver.placeBedrockOre(level, cursor, material);
-
-        // (3) the muffin blob.
-        int[] inner = MUFFIN_INNER;
-        int[] outer = MUFFIN_OUTER;
-        for (int y = 1; y < inner.length; y++) {
-            for (int x = inner[y]; x < outer[y]; x++) {
-                for (int z = inner[y]; z < outer[y]; z++) {
-                    cursor.set(minX + x, floor + y, minZ + z);
-                    // GT6 first turns the surrounding stone into deepslate (or removes bedrock);
-                    // 1.20.1's deep layers are deepslate already, so the port skips that step.
-                    switch (random.nextInt(6)) {
-                        case 0 -> placedAny |= GTOreBlockResolver.placeOre(level, cursor, material, false);
-                        case 1, 2 -> placedAny |= GTOreBlockResolver.placeOre(level, cursor, material, true);
-                        default -> { }
-                    }
-                }
-            }
-        }
-
-        // (4) the sprinkle: random walks from the blob up to the water level.
-        for (int i = 5 + random.nextInt(3); i > 0; i--) {
-            int x = 5 + random.nextInt(6);
-            int z = 5 + random.nextInt(6);
-            for (int y = inner.length; y < level.getSeaLevel(); y++) {
-                switch (random.nextInt(7)) {
-                    case 0 -> x++;
-                    case 1 -> x--;
-                    case 2 -> z++;
-                    case 3 -> z--;
-                    default -> { }
-                }
-                if (x <= 0 || x >= 15 || z <= 0 || z >= 15) {
-                    placedAny |= placeSprinkle(level, minX + x, floor + y, minZ + z, material);
-                    break;
-                }
-                if (random.nextInt(3) != 0) {
-                    placedAny |= placeSprinkle(level, minX + x, floor + y, minZ + z, material);
-                }
-            }
-        }
-        return placedAny;
+        if(material==null)return false;
+        return MineralWorldgenRules.bedrockVein(minX,minZ,level.getMinBuildHeight(),level.getSeaLevel(),random::nextInt,new MineralWorldgenRules.VeinSink(){
+            public boolean isBedrockFloor(int x,int y,int z){return level.getBlockState(new BlockPos(x,y,z)).is(Blocks.BEDROCK);}
+            public boolean bedrock(int x,int y,int z,boolean small){return GTOreBlockResolver.placeBedrockOre(level,new BlockPos(x,y,z),material);}
+            public boolean ore(int x,int y,int z,boolean small){if(level.isOutsideBuildHeight(y))return false;return GTOreBlockResolver.placeOre(level,new BlockPos(x,y,z),material,small);}
+        });
     }
 
     /** GT6's muffin bounds: {@code tD1}/{@code tD2} indexed by the layer ({@code tY} 1..6). */
-    public static final int[] MUFFIN_INNER = {5, 4, 2, 1, 0, 2, 5};
-    public static final int[] MUFFIN_OUTER = {11, 12, 14, 15, 16, 14, 11};
+    public static final int[] MUFFIN_INNER = MineralWorldgenRules.MUFFIN_INNER;
+    public static final int[] MUFFIN_OUTER = MineralWorldgenRules.MUFFIN_OUTER;
 
     /** A small ore inside the bedrock floor (GT6's {@code oreSmallBedrock}). */
     private static boolean placeSmallBedrockOre(WorldGenLevel level, BlockPos pos, GTMaterial material) {
@@ -210,6 +154,6 @@ public class GTBedrockOreFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     private static long weight(GTBedrockOres.BedrockOre ore) {
-        return Math.max(1, 1_000_000L / Math.max(1, ore.chance()));
+        return MineralWorldgenRules.bedrockWeight(ore.chance());
     }
 }

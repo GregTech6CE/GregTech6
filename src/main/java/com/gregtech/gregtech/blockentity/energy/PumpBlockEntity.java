@@ -30,13 +30,13 @@ public class PumpBlockEntity extends GTEnergyBlockEntity {
     private final FluidTankGT tank;
     private LazyOptional<IFluidHandler> fluidCap;
 
-    private static final int SCAN_AREA = 128;
-    private static final int ENERGY_TO_START_DRAIN = 8192;
-    private static final int ENERGY_PER_DRAIN = 2048;
+    private static final int SCAN_AREA = com.gregtech.gregtech.content.energy.PumpWorkRules.SCAN_AREA;
+    private static final int ENERGY_TO_START_DRAIN = com.gregtech.gregtech.content.energy.PumpWorkRules.START_ENERGY;
+    private static final int ENERGY_PER_DRAIN = com.gregtech.gregtech.content.energy.PumpWorkRules.DRAIN_ENERGY;
 
     public PumpBlockEntity(BlockPos pos, BlockState state) {
         super(GTBlockEntities.PUMP.get(), pos, state);
-        this.tank = new FluidTankGT(16000).setOnChanged(this::setChanged);
+        this.tank = new FluidTankGT(com.gregtech.gregtech.content.energy.PumpWorkRules.TANK_CAPACITY).setOnChanged(this::setChanged);
     }
 
     @Override
@@ -127,12 +127,8 @@ public class PumpBlockEntity extends GTEnergyBlockEntity {
     public long doEnergyInjection(GregTechTags.Tag energyType, @Nullable Direction side, long size, long amount, boolean doInject) {
         if (side == null || energyType != GregTechTags.Energy.RU || amount <= 0 || size == Long.MIN_VALUE
                 || !isEnergyAcceptingFrom(energyType, side, false)) return 0;
-        long packet = Math.abs(size);
-        if (packet < getEnergySizeInputMin(energyType, side)
-                || packet > getEnergySizeInputMax(energyType, side)
-                || energyBuffer >= ENERGY_TO_START_DRAIN) return 0;
-        long room = ENERGY_TO_START_DRAIN - energyBuffer;
-        long absorbed = Math.min(amount, room / packet);
+        long packet=Math.abs(size);
+        long absorbed=com.gregtech.gregtech.content.energy.PumpWorkRules.accepted(energyBuffer,size,amount,getEnergySizeInputMax(energyType,side));
         if (doInject && absorbed > 0) {
             energyBuffer += packet * absorbed;
             setChanged();
@@ -179,7 +175,7 @@ public class PumpBlockEntity extends GTEnergyBlockEntity {
 
         BlockPos checkPos = basePos.offset(pump.pumpX - SCAN_AREA / 2, 0, pump.pumpZ - SCAN_AREA / 2);
         // Scan downward from current X,Z
-        for (int dy = 64; dy >= 0 && pump.energyBuffer >= ENERGY_PER_DRAIN; dy--) {
+        for (int dy = com.gregtech.gregtech.content.energy.PumpWorkRules.SCAN_DEPTH; dy >= 0 && pump.energyBuffer >= ENERGY_PER_DRAIN; dy--) {
             BlockPos fluidPos = checkPos.atY(checkPos.getY() - dy);
             if (!level.hasChunkAt(fluidPos)) continue;
 
@@ -223,6 +219,7 @@ public class PumpBlockEntity extends GTEnergyBlockEntity {
         Direction facing = getBlockState().getValue(PumpBlock.FACING);
         for (Direction side : Direction.values()) {
             if (side == facing || side == facing.getOpposite() || tank.isEmpty()) continue;
+            if(!level.hasChunkAt(worldPosition.relative(side)))continue;
             BlockEntity be = level.getBlockEntity(worldPosition.relative(side));
             if (be == null) continue;
             LazyOptional<IFluidHandler> cap = be.getCapability(ForgeCapabilities.FLUID_HANDLER, side.getOpposite());

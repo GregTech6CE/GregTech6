@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "gregtech:disjunction",
+    "gregtech:butchery",
+    "gregtech:gt_haste",
+    "gregtech:sharpness_multi",
+    "gregtech:smite_multi"
+  ]
+}

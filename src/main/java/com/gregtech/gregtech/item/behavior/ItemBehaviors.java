@@ -77,59 +77,7 @@ public final class ItemBehaviors {
     public record Entry(String itemId, Class<?> behaviour) {}
 
     /** Every GT6 {@code gregtech.items.behaviors} class this layer implements, with its port item. */
-    public static final List<Entry> PORTED = List.of(
-            new Entry("tape", BehaviorDuctTape.class),
-            new Entry("tape_2", BehaviorDuctTape.class),
-            new Entry("duct_tape", BehaviorDuctTape.class),
-            new Entry("duct_tape_2", BehaviorDuctTape.class),
-            new Entry("braintech_aerospace_advanced_reinforced_duct_tape_fal_84", BehaviorDuctTape.class),
-            new Entry("braintech_aerospace_advanced_reinforced_duct_tape_fal_84_2", BehaviorDuctTape.class),
-            new Entry("portable_scanner", BehaviorScanner.class),
-            new Entry("debug_scanner", BehaviorScanner.class),
-            new Entry("tool_plunger", BehaviorPlungerFluid.class),
-            new Entry("tool_flint_and_tinder", BehaviorFlintAndTinder.class),
-            new Entry("match", BehaviorLighter.class),
-            new Entry("match_box", BehaviorLighter.class),
-            new Entry("match_box_full", BehaviorLighter.class),
-            new Entry("lighter_empty", BehaviorLighter.class),
-            new Entry("lighter", BehaviorLighter.class),
-            new Entry("lighter_full", BehaviorLighter.class),
-            new Entry("shiny_lighter_empty", BehaviorLighter.class),
-            new Entry("shiny_lighter", BehaviorLighter.class),
-            new Entry("shiny_lighter_full", BehaviorLighter.class),
-            new Entry("plastic_lighter_empty", BehaviorLighter.class),
-            new Entry("plastic_lighter", BehaviorLighter.class),
-            new Entry("plastic_lighter_full", BehaviorLighter.class),
-            new Entry("plastic_lighter_broken", BehaviorLighter.class),
-            new Entry("fire_starter", BehaviorLighter.class),
-            new Entry("fire_starter_2", BehaviorLighter.class),
-            new Entry("c_foam_removal_spray", BehaviorSprayFoamRemover.class),
-            new Entry("c_foam_removal_spray_2", BehaviorSprayFoamRemover.class),
-            new Entry("hardening_spray", BehaviorSprayFoamHardener.class),
-            new Entry("hardening_spray_2", BehaviorSprayFoamHardener.class),
-            new Entry("fire_extinguisher_co2", BehaviorSprayExtinguisher.class),
-            new Entry("fire_extinguisher_co2_2", BehaviorSprayExtinguisher.class),
-            new Entry("paint_removal_spray", BehaviorSprayColorRemover.class),
-            new Entry("paint_removal_spray_2", BehaviorSprayColorRemover.class),
-            // §110 batch: the two debug wands of MultiItemRandomTools:519-520 and the Remote Activator
-            // of :515. The builder's wand is a tool (GTToolType.BUILDER_WAND), so it is dispatched from
-            // GTToolItem instead of from here.
-            new Entry("chunk_eraser", BehaviorChunkEraser.class),
-            new Entry("worldgen_debug_wand", BehaviorWorldgenDebugger.class),
-            new Entry("remote_activator", BehaviorRemote.class),
-            // §114: the two data-storage tooltips. GT6 hangs them on the USB items
-            // (MultiItemRandomTools:422-438, MultiItemTechnological:814-817) and they render the NBT
-            // the stack carries, so the port's slot in the behaviour layer is a tooltip entry point
-            // rather than a click one - see ItemBehaviors.tooltip below.
-            new Entry("usb1_stick", BehaviorDataStorage.class),
-            new Entry("usb2_stick", BehaviorDataStorage.class),
-            new Entry("usb3_stick", BehaviorDataStorage.class),
-            new Entry("usb4_stick", BehaviorDataStorage.class),
-            new Entry("usb1_hdd", BehaviorDataStorage16.class),
-            new Entry("usb2_hdd", BehaviorDataStorage16.class),
-            new Entry("usb3_hdd", BehaviorDataStorage16.class),
-            new Entry("usb4_hdd", BehaviorDataStorage16.class),
-            new Entry("empty_spray_can", null));
+    public static final List<Entry> PORTED = com.gregtech.gregtech.content.tool.ItemBehaviorCatalog.ALL.stream().map(v->new Entry(v.itemId(),switch(v.behavior()){case "BehaviorChunkEraser" -> BehaviorChunkEraser.class;case "BehaviorDataStorage" -> BehaviorDataStorage.class;case "BehaviorDataStorage16" -> BehaviorDataStorage16.class;case "BehaviorDuctTape" -> BehaviorDuctTape.class;case "BehaviorFlintAndTinder" -> BehaviorFlintAndTinder.class;case "BehaviorLighter" -> BehaviorLighter.class;case "BehaviorPlungerFluid" -> BehaviorPlungerFluid.class;case "BehaviorRemote" -> BehaviorRemote.class;case "BehaviorScanner" -> BehaviorScanner.class;case "BehaviorSprayColorRemover" -> BehaviorSprayColorRemover.class;case "BehaviorSprayExtinguisher" -> BehaviorSprayExtinguisher.class;case "BehaviorSprayFoamHardener" -> BehaviorSprayFoamHardener.class;case "BehaviorSprayFoamRemover" -> BehaviorSprayFoamRemover.class;case "BehaviorWorldgenDebugger" -> BehaviorWorldgenDebugger.class;default -> null;})).toList();
 
     /** The behaviour class registered for a port item id, or empty when the item has none yet. */
     public static Optional<Class<?>> behaviourOf(String itemId) {
@@ -485,7 +433,7 @@ public final class ItemBehaviors {
          * @return the stack to store back; {@link ItemStack#isEmpty()} when the last one was consumed
          */
         public ItemStack spent(ItemStack stack, long amount) {
-            long left = Math.max(0L, remaining(stack) - amount);
+            long left = com.gregtech.gregtech.content.tool.ConsumableRules.remainingAfter(remaining(stack),amount);
             if (left <= 0) return usedUp(stack);
             CompoundTag tag = stack.hasTag() ? stack.getTag().copy() : new CompoundTag();
             tag.putLong(key, left);

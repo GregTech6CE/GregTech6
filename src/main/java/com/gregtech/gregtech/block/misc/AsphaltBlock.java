@@ -14,7 +14,7 @@ public class AsphaltBlock extends Block {
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
         if (entity instanceof LivingEntity) {
-            entity.setDeltaMovement(entity.getDeltaMovement().multiply(1.2, 1.0, 1.2));
+            entity.setDeltaMovement(entity.getDeltaMovement().multiply(com.gregtech.gregtech.block.ConstructionRules.ASPHALT_SPEED,1.0,com.gregtech.gregtech.block.ConstructionRules.ASPHALT_SPEED));
         }
         super.stepOn(level, pos, state, entity);
     }

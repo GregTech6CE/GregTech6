@@ -9,7 +9,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 /** Rebuilds shapeless tooltip index when recipes reload (client + dedicated server). */
-@Mod.EventBusSubscriber(modid = GregTech.MOD_ID)
+@Mod.EventBusSubscriber(modid = GregTech.MODID)
 public final class ShapelessRecipeTooltipIndexLoader {
     private ShapelessRecipeTooltipIndexLoader() {}
 
@@ -18,7 +18,7 @@ public final class ShapelessRecipeTooltipIndexLoader {
         ShapelessRecipeTooltipIndex.rebuild(event.getServer().getRecipeManager());
     }
 
-    @Mod.EventBusSubscriber(modid = GregTech.MOD_ID, value = Dist.CLIENT)
+    @Mod.EventBusSubscriber(modid = GregTech.MODID, value = Dist.CLIENT)
     public static final class Client {
         private Client() {}
 

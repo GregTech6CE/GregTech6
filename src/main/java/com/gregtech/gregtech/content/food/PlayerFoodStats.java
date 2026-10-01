@@ -61,7 +61,7 @@ public final class PlayerFoodStats {
         if (stat < 0 || stat >= GTFoodStats.TRACKED) {
             return;
         }
-        int value = (int) Math.max(0, Math.min(127, get(player, stat) + Math.max(-127, Math.min(127, amount))));
+        int value = NutritionRules.change(get(player,stat),amount);
         if (value == 0) {
             store(player).remove(KEYS[stat]);
         } else {
@@ -93,83 +93,10 @@ public final class PlayerFoodStats {
         if (!player.isAlive()) {
             return;
         }
-        int alcohol = get(player, GTFoodStats.ALCOHOL);
-        if (alcohol >= 100) {
-            overdose(player, GTDamageTypes.ALCOHOL);
-            effect(player, MobEffects.CONFUSION, 1200, 2);
-            effect(player, MobEffects.DAMAGE_BOOST, 300, 3);
-        } else if (alcohol >= 75) {
-            effect(player, MobEffects.CONFUSION, 1200, 1);
-            effect(player, MobEffects.DAMAGE_BOOST, 300, 2);
-        } else if (alcohol >= 50) {
-            effect(player, MobEffects.CONFUSION, 1200, 0);
-            effect(player, MobEffects.DAMAGE_BOOST, 300, 1);
-        } else if (alcohol >= 25) {
-            effect(player, MobEffects.DAMAGE_BOOST, 300, 0);
-        }
-
-        int caffeine = get(player, GTFoodStats.CAFFEINE);
-        if (caffeine >= 100) {
-            overdose(player, GTDamageTypes.CAFFEINE);
-            effect(player, MobEffects.WEAKNESS, 1200, 2);
-            effect(player, MobEffects.DIG_SPEED, 300, 3);
-        } else if (caffeine >= 75) {
-            effect(player, MobEffects.WEAKNESS, 1200, 1);
-            effect(player, MobEffects.DIG_SPEED, 300, 2);
-        } else if (caffeine >= 50) {
-            effect(player, MobEffects.WEAKNESS, 1200, 0);
-            effect(player, MobEffects.DIG_SPEED, 300, 1);
-        } else if (caffeine >= 25) {
-            effect(player, MobEffects.DIG_SPEED, 300, 0);
-        }
-
-        if (!NUTRITION_SYSTEM) {
-            return;
-        }
-        int fat = get(player, GTFoodStats.FAT);
-        if (fat >= 100) {
-            overdose(player, GTDamageTypes.FAT);
-            effect(player, MobEffects.MOVEMENT_SLOWDOWN, 1200, 2);
-            effect(player, MobEffects.DAMAGE_RESISTANCE, 300, 3);
-        } else if (fat >= 75) {
-            effect(player, MobEffects.MOVEMENT_SLOWDOWN, 1200, 1);
-            effect(player, MobEffects.DAMAGE_RESISTANCE, 300, 2);
-        } else if (fat >= 50) {
-            effect(player, MobEffects.MOVEMENT_SLOWDOWN, 1200, 0);
-            effect(player, MobEffects.DAMAGE_RESISTANCE, 300, 1);
-        } else if (fat >= 25) {
-            effect(player, MobEffects.DAMAGE_RESISTANCE, 300, 0);
-        }
-
-        int sugar = get(player, GTFoodStats.SUGAR);
-        if (sugar >= 100) {
-            overdose(player, GTDamageTypes.SUGAR);
-            effect(player, MobEffects.DIG_SLOWDOWN, 1200, 2);
-            effect(player, MobEffects.MOVEMENT_SPEED, 300, 3);
-            effect(player, MobEffects.JUMP, 300, 3);
-        } else if (sugar >= 75) {
-            effect(player, MobEffects.DIG_SLOWDOWN, 1200, 1);
-            effect(player, MobEffects.MOVEMENT_SPEED, 300, 2);
-            effect(player, MobEffects.JUMP, 300, 2);
-        } else if (sugar >= 50) {
-            effect(player, MobEffects.DIG_SLOWDOWN, 1200, 0);
-            effect(player, MobEffects.MOVEMENT_SPEED, 300, 1);
-            effect(player, MobEffects.JUMP, 300, 1);
-        } else if (sugar >= 25) {
-            effect(player, MobEffects.MOVEMENT_SPEED, 300, 0);
-            effect(player, MobEffects.JUMP, 300, 0);
-        }
-
-        int dehydration = get(player, GTFoodStats.DEHYDRATION);
-        if (dehydration >= 100) {
-            overdose(player, GTDamageTypes.DEHYDRATION);
-            effect(player, MobEffects.HUNGER, 1200, 3);
-        } else if (dehydration >= 75) {
-            effect(player, MobEffects.HUNGER, 1200, 2);
-        } else if (dehydration >= 50) {
-            effect(player, MobEffects.HUNGER, 1200, 1);
-        } else if (dehydration >= 25) {
-            effect(player, MobEffects.HUNGER, 1200, 0);
+        for(int stat=0;stat<GTFoodStats.TRACKED;stat++) {
+            if(!NUTRITION_SYSTEM&&stat>=2)continue;int value=get(player,stat);
+            if(value>=100)overdose(player,switch(stat){case 0->GTDamageTypes.ALCOHOL;case 1->GTDamageTypes.CAFFEINE;case 2->GTDamageTypes.DEHYDRATION;case 3->GTDamageTypes.SUGAR;default->GTDamageTypes.FAT;});
+            for(var row:NutritionRules.effects(stat,value)) effect(player,switch(row.id()){case "nausea"->MobEffects.CONFUSION;case "strength"->MobEffects.DAMAGE_BOOST;case "weakness"->MobEffects.WEAKNESS;case "haste"->MobEffects.DIG_SPEED;case "hunger"->MobEffects.HUNGER;case "mining_fatigue"->MobEffects.DIG_SLOWDOWN;case "speed"->MobEffects.MOVEMENT_SPEED;case "jump_boost"->MobEffects.JUMP;case "slowness"->MobEffects.MOVEMENT_SLOWDOWN;default->MobEffects.DAMAGE_RESISTANCE;},row.duration(),row.amplifier());
         }
     }
 

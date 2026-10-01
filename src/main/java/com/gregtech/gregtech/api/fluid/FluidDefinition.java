@@ -2,9 +2,9 @@ package com.gregtech.gregtech.api.fluid;
 
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.data.RegisteredFluids;
-import com.gregtech.gregtech.data.RegisteredFluids.FluidEntry;
-import com.gregtech.gregtech.data.RegisteredFluids.FluidFlags;
-import com.gregtech.gregtech.data.RegisteredFluids.FluidTextureMode;
+import com.gregtech.gregtech.data.FluidCatalog.FluidEntry;
+import com.gregtech.gregtech.data.FluidCatalog.FluidFlags;
+import com.gregtech.gregtech.data.FluidCatalog.FluidTextureMode;
 
 import java.util.Objects;
 

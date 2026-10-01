@@ -19,19 +19,9 @@ import net.minecraftforge.fml.common.Mod;
  * becomes its corresponding placeable pile when it would despawn. The original searches its
  * {@code CUBE_3} positions in this exact order and places only in an irrelevant block.
  */
-@Mod.EventBusSubscriber(modid = GregTech.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public final class PileItemExpireHandler {
-    private static final BlockPos[] CUBE_3 = {
-            new BlockPos(0, 0, 0), new BlockPos(0, -1, 0), new BlockPos(0, 1, 0),
-            new BlockPos(0, 0, -1), new BlockPos(0, 0, 1), new BlockPos(-1, 0, 0),
-            new BlockPos(1, 0, 0), new BlockPos(0, -1, -1), new BlockPos(0, -1, 1),
-            new BlockPos(-1, -1, 0), new BlockPos(1, -1, 0), new BlockPos(0, 1, -1),
-            new BlockPos(0, 1, 1), new BlockPos(-1, 1, 0), new BlockPos(1, 1, 0),
-            new BlockPos(-1, 0, -1), new BlockPos(1, 0, 1), new BlockPos(1, 0, -1),
-            new BlockPos(-1, 0, 1), new BlockPos(-1, -1, -1), new BlockPos(1, -1, 1),
-            new BlockPos(1, -1, -1), new BlockPos(-1, -1, 1), new BlockPos(-1, 1, -1),
-            new BlockPos(1, 1, 1), new BlockPos(1, 1, -1), new BlockPos(-1, 1, 1)
-    };
+    private static final BlockPos[] CUBE_3=java.util.Arrays.stream(com.gregtech.gregtech.block.MaterialPileRules.EXPIRE_OFFSETS).map(v->new BlockPos(v[0],v[1],v[2])).toArray(BlockPos[]::new);
 
     private PileItemExpireHandler() {}
 

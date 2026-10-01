@@ -26,7 +26,7 @@ import java.util.Map;
  */
 public final class GTMultiItems {
     public static final DeferredRegister<Item> ITEMS =
-            DeferredRegister.create(ForgeRegistries.ITEMS, GregTech.MODID);
+            DeferredRegister.create(ForgeRegistries.ITEMS, GregTech.NAMESPACE);
 
     private static final Map<String, RegistryObject<Item>> BY_ID = new LinkedHashMap<>();
 
@@ -62,11 +62,10 @@ public final class GTMultiItems {
                             (float) (context.getClickLocation().x - context.getClickedPos().getX()),
                             (float) (context.getClickLocation().y - context.getClickedPos().getY()),
                             (float) (context.getClickLocation().z - context.getClickedPos().getZ()));
-            if (!outcome.acted()) return InteractionResult.PASS;
             if (context.getPlayer() != null) {
                 context.getPlayer().setItemInHand(context.getHand(), outcome.stack());
             }
-            return InteractionResult.SUCCESS;
+            return outcome.acted()?InteractionResult.SUCCESS:InteractionResult.PASS;
         }
 
         /** Entity half of the same dispatch (the extinguisher douses burning mobs, and so on). */
@@ -75,9 +74,8 @@ public final class GTMultiItems {
                                                       InteractionHand hand) {
             com.gregtech.gregtech.item.behavior.ItemBehaviors.Outcome outcome =
                     com.gregtech.gregtech.item.behavior.ItemBehaviors.useOnEntity(target, player, stack);
-            if (!outcome.acted()) return InteractionResult.PASS;
-            player.setItemInHand(hand, outcome.stack());
-            return InteractionResult.SUCCESS;
+            player.setItemInHand(hand,outcome.stack());
+            return outcome.acted()?InteractionResult.SUCCESS:InteractionResult.PASS;
         }
 
         /**
@@ -143,6 +141,7 @@ public final class GTMultiItems {
                 default -> new MultiItem(name, hasTooltip, props);
             }));
         }
+        for(var dye:com.gregtech.gregtech.content.tool.PaintingRules.DYES){BY_ID.put(dye.fullId(),ITEMS.register(dye.fullId(),()->new com.gregtech.gregtech.item.PaintSprayItem(dye,new Item.Properties().stacksTo(1))));BY_ID.put(dye.usedId(),ITEMS.register(dye.usedId(),()->new com.gregtech.gregtech.item.PaintSprayItem(dye,new Item.Properties().stacksTo(1))));}
         // GT6's Dusty Guide Book (MultiItemBooks:67, addItem 32765) opens the gt.books table. The port
         // registers it by hand: it is the only MultiItemBooks entry the loot chain needs, and
         // transpile_gt6_multiitems.py has a HAND_REGISTERED set so a later "books" category never

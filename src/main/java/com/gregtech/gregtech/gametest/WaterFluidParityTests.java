@@ -272,7 +272,7 @@ public final class WaterFluidParityTests {
         Set<String> ours = new TreeSet<>();
         for (Holder<Fluid> holder : registry.getTagOrEmpty(FluidTags.WATER)) {
             ResourceLocation fluidId = ForgeRegistries.FLUIDS.getKey(holder.value());
-            if (fluidId != null && fluidId.getNamespace().equals(GregTech.MODID)) ours.add(fluidId.getPath());
+            if (fluidId != null && fluidId.getNamespace().equals(GregTech.NAMESPACE)) ours.add(fluidId.getPath());
         }
         Set<String> expected = new TreeSet<>(allIds());
         helper.assertTrue(ours.equals(expected),

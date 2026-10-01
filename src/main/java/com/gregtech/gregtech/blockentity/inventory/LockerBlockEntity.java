@@ -15,8 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 /** GT6 Locker block entity: stores one armor set (head/chest/legs/feet). */
 public class LockerBlockEntity extends BlockEntity {
 
-    private static final EquipmentSlot[] SLOTS = {
-            EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
+    private static final EquipmentSlot[] SLOTS = com.gregtech.gregtech.content.storage.ContainerStorageRules.ARMOR_ORDER.stream().map(EquipmentSlot::valueOf).toArray(EquipmentSlot[]::new);
 
     private final ItemStack[] armor = {ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY};
 

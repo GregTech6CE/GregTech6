@@ -125,9 +125,12 @@ public final class GTDecorBlocks {
 
     private static RegistryObject<BarsBlock> bars(String id, String material, int tint,
                                                    int harvestLevel, float blastResistance) {
+        var shared=com.gregtech.gregtech.block.BarsRules.spec(id);
+        material=shared.material();tint=shared.tint();harvestLevel=shared.harvest();blastResistance=shared.resistance();
+        final String resolvedMaterial=material;final int resolvedTint=tint,resolvedHarvest=harvestLevel;final float resolvedResistance=blastResistance;
         RegistryObject<BarsBlock> ro = GTBlocks.BLOCKS.register(id,
-                () -> new BarsBlock(material, tint, harvestLevel,
-                        props(MapColor.METAL, 5f).strength(5f, blastResistance)
+                () -> new BarsBlock(resolvedMaterial, resolvedTint, resolvedHarvest,
+                        props(MapColor.METAL, 5f).strength(5f, resolvedResistance)
                                 .sound(SoundType.METAL).noOcclusion()));
         ALL.add(ro);
         GTBlocks.BLOCK_ITEMS.register(id, () -> new BarsBlockItem(ro.get(), new Item.Properties()));

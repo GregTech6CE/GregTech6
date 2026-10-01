@@ -24,8 +24,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class GTBlocks {
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, GregTech.MODID);
-    public static final DeferredRegister<Item> BLOCK_ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, GregTech.MODID);
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, GregTech.NAMESPACE);
+    public static final DeferredRegister<Item> BLOCK_ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, GregTech.NAMESPACE);
 
     private static final Map<String, RegistryObject<Block>> BY_KEY = new HashMap<>();
     private static final Map<String, RegistryObject<Block>> STONES_BY_ID = new HashMap<>();

@@ -181,9 +181,9 @@ public final class CoinAndPileAssetTests {
                 continue;
             }
             String id = MaterialPrefix.coin.getItemId(material);
-            if (ForgeRegistries.ITEMS.getValue(ResourceLocation.parse(GregTech.MODID + ":" + id))
+            if (ForgeRegistries.ITEMS.getValue(ResourceLocation.parse(GregTech.NAMESPACE + ":" + id))
                     != stack.getItem()) {
-                problems.add(GregTech.MODID + ":" + id + " is not registered under the prefix's own id");
+                problems.add(GregTech.NAMESPACE + ":" + id + " is not registered under the prefix's own id");
             }
         }
         // The registry's own answer, split into the coins and whatever else shares their path prefix.
@@ -192,7 +192,7 @@ public final class CoinAndPileAssetTests {
         Set<String> coinPrefixed = new TreeSet<>();
         for (Item item : ForgeRegistries.ITEMS) {
             ResourceLocation id = ForgeRegistries.ITEMS.getKey(item);
-            if (id == null || !id.getNamespace().equals(GregTech.MODID)) continue;
+            if (id == null || !id.getNamespace().equals(GregTech.NAMESPACE)) continue;
             if (item instanceof MaterialItem materialItem && materialItem.getPrefix() == MaterialPrefix.coin) {
                 coins.add(id.getPath());
             } else if (id.getPath().startsWith("coin_")) {

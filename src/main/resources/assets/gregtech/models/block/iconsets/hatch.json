@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "gregtech:block/iconsets/hatch"
-  },
-  "render_type": "minecraft:cutout"
-}

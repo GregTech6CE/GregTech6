@@ -16,11 +16,7 @@ public final class GasTurbineDefinitions {
         public Block wall() { return wallId == 18022 ? GTMultiblocks.TANK_WALL_DENSE.get() : LargeMachineParts.block(wallId); }
         public boolean accepts(Block block) { return block == wall() || wallId == 18022 && block == GTMultiblocks.LARGE_GAS_TURBINE_WALL.get(); }
     }
-    public static final List<Grade> GRADES = List.of(
-            new Grade("large_gas_turbine_main", "Magnalium", "StainlessSteel", 6144, 4096, 18022, 6),
-            new Grade("large_gas_turbine_trinitanium", "Trinitanium", "Titanium", 12288, 8192, 18026, 9),
-            new Grade("large_gas_turbine_graphene", "Graphene", "TungstenSteel", 24576, 16384, 18023, 12.5f),
-            new Grade("large_gas_turbine_vibramantium", "Vibramantium", "Adamantium", 196608, 131072, 18025, 100));
+    public static final List<Grade> GRADES=OriginalGeneratorParameters.GRADES.stream().map(p->new Grade(p.id(),p.rotor(),p.casingMaterial(),p.input(),p.output(),p.wallId(),p.hardness())).toList();
     private static final List<RegistryObject<Block>> BLOCKS = new ArrayList<>();
     private GasTurbineDefinitions() {}
     public static void register() {

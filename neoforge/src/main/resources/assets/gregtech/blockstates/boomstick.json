@@ -1,0 +1,124 @@
+{
+  "variants": {
+    "armed=false,facing=north,sunk=false": {
+      "model": "gregtech:block/machine/tool/dynamite",
+      "x": 0,
+      "y": 0
+    },
+    "armed=false,facing=north,sunk=true": {
+      "model": "gregtech:block/machine/tool/dynamite_sunk",
+      "x": 0,
+      "y": 0
+    },
+    "armed=true,facing=north,sunk=false": {
+      "model": "gregtech:block/machine/tool/dynamite_active",
+      "x": 0,
+      "y": 0
+    },
+    "armed=true,facing=north,sunk=true": {
+      "model": "gregtech:block/machine/tool/dynamite_active_sunk",
+      "x": 0,
+      "y": 0
+    },
+    "armed=false,facing=east,sunk=false": {
+      "model": "gregtech:block/machine/tool/dynamite",
+      "x": 0,
+      "y": 90
+    },
+    "armed=false,facing=east,sunk=true": {
+      "model": "gregtech:block/machine/tool/dynamite_sunk",
+      "x": 0,
+      "y": 90
+    },
+    "armed=true,facing=east,sunk=false": {
+      "model": "gregtech:block/machine/tool/dynamite_active",
+      "x": 0,
+      "y": 90
+    },
+    "armed=true,facing=east,sunk=true": {
+      "model": "gregtech:block/machine/tool/dynamite_active_sunk",
+      "x": 0,
+      "y": 90
+    },
+    "armed=false,facing=south,sunk=false": {
+      "model": "gregtech:block/machine/tool/dynamite",
+      "x": 0,
+      "y": 180
+    },
+    "armed=false,facing=south,sunk=true": {
+      "model": "gregtech:block/machine/tool/dynamite_sunk",
+      "x": 0,
+      "y": 180
+    },
+    "armed=true,facing=south,sunk=false": {
+      "model": "gregtech:block/machine/tool/dynamite_active",
+      "x": 0,
+      "y": 180
+    },
+    "armed=true,facing=south,sunk=true": {
+      "model": "gregtech:block/machine/tool/dynamite_active_sunk",
+      "x": 0,
+      "y": 180
+    },
+    "armed=false,facing=west,sunk=false": {
+      "model": "gregtech:block/machine/tool/dynamite",
+      "x": 0,
+      "y": 270
+    },
+    "armed=false,facing=west,sunk=true": {
+      "model": "gregtech:block/machine/tool/dynamite_sunk",
+      "x": 0,
+      "y": 270
+    },
+    "armed=true,facing=west,sunk=false": {
+      "model": "gregtech:block/machine/tool/dynamite_active",
+      "x": 0,
+      "y": 270
+    },
+    "armed=true,facing=west,sunk=true": {
+      "model": "gregtech:block/machine/tool/dynamite_active_sunk",
+      "x": 0,
+      "y": 270
+    },
+    "armed=false,facing=up,sunk=false": {
+      "model": "gregtech:block/machine/tool/dynamite",
+      "x": 270,
+      "y": 0
+    },
+    "armed=false,facing=up,sunk=true": {
+      "model": "gregtech:block/machine/tool/dynamite_sunk",
+      "x": 270,
+      "y": 0
+    },
+    "armed=true,facing=up,sunk=false": {
+      "model": "gregtech:block/machine/tool/dynamite_active",
+      "x": 270,
+      "y": 0
+    },
+    "armed=true,facing=up,sunk=true": {
+      "model": "gregtech:block/machine/tool/dynamite_active_sunk",
+      "x": 270,
+      "y": 0
+    },
+    "armed=false,facing=down,sunk=false": {
+      "model": "gregtech:block/machine/tool/dynamite",
+      "x": 90,
+      "y": 0
+    },
+    "armed=false,facing=down,sunk=true": {
+      "model": "gregtech:block/machine/tool/dynamite_sunk",
+      "x": 90,
+      "y": 0
+    },
+    "armed=true,facing=down,sunk=false": {
+      "model": "gregtech:block/machine/tool/dynamite_active",
+      "x": 90,
+      "y": 0
+    },
+    "armed=true,facing=down,sunk=true": {
+      "model": "gregtech:block/machine/tool/dynamite_active_sunk",
+      "x": 90,
+      "y": 0
+    }
+  }
+}

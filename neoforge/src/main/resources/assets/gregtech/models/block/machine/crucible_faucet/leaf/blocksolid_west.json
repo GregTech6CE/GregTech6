@@ -1,0 +1,244 @@
+{
+  "loader": "neoforge:composite",
+  "children": {
+    "layer0": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "particle": "gregtech:block/material_icons/leaf/blocksolid",
+        "wall": "gregtech:block/material_icons/leaf/blocksolid"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            1,
+            6
+          ],
+          "to": [
+            4,
+            2,
+            10
+          ],
+          "faces": {
+            "down": {
+              "texture": "#wall",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#wall",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#wall",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#wall",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#wall",
+              "tintindex": 0,
+              "cullface": "west"
+            },
+            "east": {
+              "texture": "#wall",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            2,
+            5
+          ],
+          "to": [
+            4,
+            6,
+            6
+          ],
+          "faces": {
+            "down": {
+              "texture": "#wall",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#wall",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#wall",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#wall",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#wall",
+              "tintindex": 0,
+              "cullface": "west"
+            },
+            "east": {
+              "texture": "#wall",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            2,
+            10
+          ],
+          "to": [
+            4,
+            6,
+            11
+          ],
+          "faces": {
+            "down": {
+              "texture": "#wall",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#wall",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#wall",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#wall",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#wall",
+              "tintindex": 0,
+              "cullface": "west"
+            },
+            "east": {
+              "texture": "#wall",
+              "tintindex": 0
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:solid"
+    },
+    "layer1": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "wall": "gregtech:block/material_icons/leaf/blocksolid_overlay"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            1,
+            6
+          ],
+          "to": [
+            4,
+            2,
+            10
+          ],
+          "faces": {
+            "down": {
+              "texture": "#wall"
+            },
+            "up": {
+              "texture": "#wall"
+            },
+            "north": {
+              "texture": "#wall"
+            },
+            "south": {
+              "texture": "#wall"
+            },
+            "west": {
+              "texture": "#wall",
+              "cullface": "west"
+            },
+            "east": {
+              "texture": "#wall"
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            2,
+            5
+          ],
+          "to": [
+            4,
+            6,
+            6
+          ],
+          "faces": {
+            "down": {
+              "texture": "#wall"
+            },
+            "up": {
+              "texture": "#wall"
+            },
+            "north": {
+              "texture": "#wall"
+            },
+            "south": {
+              "texture": "#wall"
+            },
+            "west": {
+              "texture": "#wall",
+              "cullface": "west"
+            },
+            "east": {
+              "texture": "#wall"
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            2,
+            10
+          ],
+          "to": [
+            4,
+            6,
+            11
+          ],
+          "faces": {
+            "down": {
+              "texture": "#wall"
+            },
+            "up": {
+              "texture": "#wall"
+            },
+            "north": {
+              "texture": "#wall"
+            },
+            "south": {
+              "texture": "#wall"
+            },
+            "west": {
+              "texture": "#wall",
+              "cullface": "west"
+            },
+            "east": {
+              "texture": "#wall"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    }
+  },
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "gregtech:block/material_icons/leaf/blocksolid"
+  }
+}

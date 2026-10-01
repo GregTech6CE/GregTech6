@@ -26,7 +26,7 @@ public class LongDistEndpointBlockEntity extends CapabilityRelayBlockEntity {
         long now=level.getGameTime();
         boolean valid=destination!=null && pipes.stream().allMatch(this::pipe)
                 && endpoints.entrySet().stream().allMatch(e->level.hasChunkAt(e.getKey())&&level.getBlockState(e.getKey())==e.getValue());
-        if((destination!=null && !valid) || (scannedAt!=now && (!valid || now-scannedAt>=20))) scan(now);
+        if((destination!=null && !valid) || (com.gregtech.gregtech.content.logistics.LongDistanceRules.rescan(now,scannedAt,valid))) scan(now);
         return destination;
     }
     private void scan(long now) {
@@ -41,7 +41,7 @@ public class LongDistEndpointBlockEntity extends CapabilityRelayBlockEntity {
             if(!level.hasChunkAt(current)) return;
             if(!pipe(current)) continue;
             pipes.add(current);
-            if(pipes.size()>4096) return;
+            if(pipes.size()>com.gregtech.gregtech.content.logistics.LongDistanceRules.MAX_SCAN) return;
             for(var direction:Direction.values()) {
                 var next=current.relative(direction);
                 if(!level.hasChunkAt(next)) return;
@@ -54,7 +54,7 @@ public class LongDistEndpointBlockEntity extends CapabilityRelayBlockEntity {
                 } else if(pipe(next) && visited.add(next)) queue.add(next);
             }
         }
-        if(sources.size()!=1 || !sources.contains(worldPosition) || receivers.size()!=1) return;
+        if(!com.gregtech.gregtech.content.logistics.LongDistanceRules.unique(sources.size(),sources.contains(worldPosition),receivers.size())) return;
         var receiver=receivers.iterator().next();var front=level.getBlockState(receiver).getValue(LongDistEndpointBlock.FACING);
         destination=new Target(receiver.relative(front.getOpposite()),front);
     }

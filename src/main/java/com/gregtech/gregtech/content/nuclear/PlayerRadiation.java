@@ -22,7 +22,7 @@ public final class PlayerRadiation {
 
     public static void change(Player player, long amount) {
         // Clamp the delta before addition so even third-party callers cannot overflow it.
-        int value = (int) Math.max(0, Math.min(127, dose(player) + Math.max(-127, Math.min(127, amount))));
+        int value = com.gregtech.gregtech.content.food.NutritionRules.change(dose(player),amount);
         if (value == 0) player.getPersistentData().remove(KEY);
         else player.getPersistentData().putInt(KEY, value);
     }

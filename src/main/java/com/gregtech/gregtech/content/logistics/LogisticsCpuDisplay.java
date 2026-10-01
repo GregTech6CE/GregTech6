@@ -20,15 +20,11 @@ public final class LogisticsCpuDisplay {
 
     /** The GT6 cover emits both strong and weak redstone from this 0..15 value. */
     public static int signal(int used, int total) {
-        if (used <= 0 || total <= 0) return 0;
-        if (used >= total) return 15;
-        return 14 - (int) Math.max(0, Math.min(13, ((total - used) * 14L) / total));
+        return LogisticsDisplayRules.signal(used,total);
     }
 
     /** The GT6 texture ladder uses 0..10, separately from the redstone signal. */
     public static int visual(int used, int total) {
-        if (used <= 0 || total <= 0) return 0;
-        if (used >= total) return 10;
-        return 9 - (int) Math.max(0, Math.min(8, ((total - used) * 9L) / total));
+        return LogisticsDisplayRules.visual(used,total);
     }
 }

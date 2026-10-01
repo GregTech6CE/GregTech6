@@ -1,0 +1,90 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "down": "gregtech:block/material_icons/metallic/pipeside",
+    "up": "gregtech:block/material_icons/metallic/pipeside",
+    "north": "gregtech:block/material_icons/metallic/pipeside",
+    "south": "gregtech:block/material_icons/metallic/pipeside",
+    "west": "gregtech:block/material_icons/metallic/pipeside",
+    "east": "gregtech:block/material_icons/metallic/pipeside",
+    "down_ov": "gregtech:block/material_icons/metallic/pipeside_overlay",
+    "up_ov": "gregtech:block/material_icons/metallic/pipeside_overlay",
+    "north_ov": "gregtech:block/material_icons/metallic/pipeside_overlay",
+    "south_ov": "gregtech:block/material_icons/metallic/pipeside_overlay",
+    "west_ov": "gregtech:block/material_icons/metallic/pipeside_overlay",
+    "east_ov": "gregtech:block/material_icons/metallic/pipeside_overlay"
+  },
+  "elements": [
+    {
+      "from": [
+        2,
+        2,
+        2
+      ],
+      "to": [
+        14,
+        14,
+        14
+      ],
+      "faces": {
+        "down": {
+          "texture": "#down",
+          "tintindex": 0
+        },
+        "up": {
+          "texture": "#up",
+          "tintindex": 0
+        },
+        "north": {
+          "texture": "#north",
+          "tintindex": 0
+        },
+        "south": {
+          "texture": "#south",
+          "tintindex": 0
+        },
+        "west": {
+          "texture": "#west",
+          "tintindex": 0
+        },
+        "east": {
+          "texture": "#east",
+          "tintindex": 0
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        2,
+        2
+      ],
+      "to": [
+        14,
+        14,
+        14
+      ],
+      "faces": {
+        "down": {
+          "texture": "#down_ov"
+        },
+        "up": {
+          "texture": "#up_ov"
+        },
+        "north": {
+          "texture": "#north_ov"
+        },
+        "south": {
+          "texture": "#south_ov"
+        },
+        "west": {
+          "texture": "#west_ov"
+        },
+        "east": {
+          "texture": "#east_ov"
+        }
+      }
+    }
+  ],
+  "render_type": "minecraft:cutout"
+}

@@ -11,7 +11,7 @@ import java.util.function.BiFunction;
 /** Native GT packet forwarding. No buffers, energy conversion, absolute-value conversion or chunk loads. */
 public abstract class EnergyRelayBlockEntity extends CapabilityRelayBlockEntity implements IEnergyBlock {
     private final Map<Direction,net.minecraftforge.common.util.LazyOptional<net.minecraftforge.energy.IEnergyStorage>> flux=new EnumMap<>(Direction.class);
-    private static final ThreadLocal<Set<EnergyRelayBlockEntity>> ACTIVE=ThreadLocal.withInitial(HashSet::new);
+    private static final com.gregtech.gregtech.content.logistics.RelayVisitSet<EnergyRelayBlockEntity> ACTIVE=new com.gregtech.gregtech.content.logistics.RelayVisitSet<>();
     protected EnergyRelayBlockEntity(BlockEntityType<?> type,BlockPos pos,BlockState state){super(type,pos,state);}
     protected abstract boolean supportsEnergy();
     @Override public <T> net.minecraftforge.common.util.LazyOptional<T> getCapability(net.minecraftforge.common.capabilities.Capability<T> cap,Direction side){

@@ -72,13 +72,13 @@ public final class LogisticsCoreStructure {
     /** The four processor counters of GT6 {@code :68}. */
     public record Counts(int logic, int control, int storage, int conversion) {
         /** GT6 {@code :144}: every counter must be positive, and the structure must be complete. */
-        public boolean valid() { return logic > 0 && control > 0 && storage > 0 && conversion > 0; }
+        public boolean valid() { return new LogisticsCoreLayout.Counts(logic,control,storage,conversion).valid(); }
         /** GT6 {@code :216}: minimum stored energy before a routing pass can start. */
-        public long routingThreshold() { return 128L + (long) logic * 64L * conversion; }
+        public long routingThreshold() { return new LogisticsCoreLayout.Counts(logic,control,storage,conversion).routingThreshold(); }
         /** GT6 {@code :699}: the nominal buffer ceiling (an incoming packet may exceed it). */
-        public long energyCapacity() { return 128L + (long) logic * 256L * conversion; }
+        public long energyCapacity() { return new LogisticsCoreLayout.Counts(logic,control,storage,conversion).energyCapacity(); }
         /** GT6 {@code :209,504}: fixed charge once per 20-tick logistics pass. */
-        public long fixedEnergyPerPass() { return 20L + logic + control + storage + conversion; }
+        public long fixedEnergyPerPass() { return new LogisticsCoreLayout.Counts(logic,control,storage,conversion).fixedEnergyPerPass(); }
     }
 
     private static final List<Cell> CELLS = create();
@@ -89,18 +89,7 @@ public final class LogisticsCoreStructure {
     public static List<Cell> cells() { return CELLS; }
 
     private static List<Cell> create() {
-        var cells = new ArrayList<Cell>();
-        for (int right = -RADIUS; right <= RADIUS; right++) {
-            for (int up = -RADIUS; up <= RADIUS; up++) {
-                for (int back = 0; back <= 2 * RADIUS; back++) {
-                    if (right == 0 && up == 0 && back == 0) continue; // the controller itself
-                    int dy = back - RADIUS;                            // squared distance from the centre
-                    int d2 = right * right + up * up + dy * dy;
-                    cells.add(new Cell(right, up, back, d2 < 4 ? Kind.CPU : d2 > 6 ? Kind.WALL : Kind.VENT));
-                }
-            }
-        }
-        return List.copyOf(cells);
+        return LogisticsCoreLayout.cells().stream().map(cell->new Cell(cell.right(),cell.up(),cell.back(),Kind.valueOf(cell.kind().name()))).toList();
     }
 
     /** Block a cell of the given class must hold, for the diagnostic messages and for JEI. */
@@ -114,11 +103,7 @@ public final class LogisticsCoreStructure {
 
     /** The counters a processor part contributes, or {@code null} when the block is not a core CPU. */
     public static Counts contribution(Block block) {
-        if (block == LargeMachineParts.block(VERSATILE)) return new Counts(1, 1, 1, 1);
-        if (block == LargeMachineParts.block(LOGIC)) return new Counts(4, 0, 0, 0);
-        if (block == LargeMachineParts.block(CONTROL)) return new Counts(0, 4, 0, 0);
-        if (block == LargeMachineParts.block(STORAGE)) return new Counts(0, 0, 4, 0);
-        if (block == LargeMachineParts.block(CONVERSION)) return new Counts(0, 0, 0, 4);
+        for(int id:new int[]{VERSATILE,LOGIC,CONTROL,STORAGE,CONVERSION}){if(block!=LargeMachineParts.block(id))continue;var contribution=LogisticsCoreLayout.contribution(id);return new Counts(contribution.logic(),contribution.control(),contribution.storage(),contribution.conversion());}
         return null;
     }
 

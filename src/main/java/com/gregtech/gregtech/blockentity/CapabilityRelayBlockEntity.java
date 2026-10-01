@@ -15,7 +15,7 @@ import java.util.function.Function;
 /** Live, sided forwarding without local storage, chunk loading or recursive capability loops. */
 public abstract class CapabilityRelayBlockEntity extends BlockEntity {
     public record Target(BlockPos position,Direction side) {}
-    private static final ThreadLocal<Set<CapabilityRelayBlockEntity>> ACTIVE=ThreadLocal.withInitial(HashSet::new);
+    private static final com.gregtech.gregtech.content.logistics.RelayVisitSet<CapabilityRelayBlockEntity> ACTIVE=new com.gregtech.gregtech.content.logistics.RelayVisitSet<>();
     private final Map<Direction,LazyOptional<IItemHandler>> itemCaps=new EnumMap<>(Direction.class);
     private final Map<Direction,LazyOptional<IFluidHandler>> fluidCaps=new EnumMap<>(Direction.class);
     protected CapabilityRelayBlockEntity(BlockEntityType<?> type,BlockPos pos,BlockState state) { super(type,pos,state); }

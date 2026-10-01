@@ -30,7 +30,7 @@ public final class ProcessingToolBlock extends ShapedToolBlock implements Entity
         if (level.isClientSide || type != com.gregtech.gregtech.registry.GTBlockEntities.PROCESSING_TOOL.get()
                 || toolId().equals("juicer")) return null;
         return (world, pos, blockState, entity) -> {
-            if (world.getGameTime() % 600 == 10) ((ProcessingToolBlockEntity) entity).collectRain();
+            if (com.gregtech.gregtech.content.tool.OpenVesselRules.rainDue(world.getGameTime())) ((ProcessingToolBlockEntity) entity).collectRain();
         };
     }
     @Override public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {

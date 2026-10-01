@@ -28,8 +28,8 @@ public final class VanillaCompositionLoader {
                     components.add(MaterialComponent.of(material, part.getValue().getAsLong()));
                 }
                 var previous = ItemMaterialRegistry.base(item);
-                var prefix = previous.map(ItemMaterialRegistry.ItemMaterialData::prefix).orElse(null);
-                ItemMaterialRegistry.register(item, new ItemMaterialRegistry.ItemMaterialData(prefix, components,
+                var prefix = previous.map(com.gregtech.gregtech.api.material.ItemComposition::prefix).orElse(null);
+                ItemMaterialRegistry.register(item, new com.gregtech.gregtech.api.material.ItemComposition(prefix, components,
                         row.get("source").getAsString(), row.get("recoverable").getAsBoolean()));
             }
             if (!errors.isEmpty()) throw new IllegalStateException("Unresolved vanilla materials: " + errors);

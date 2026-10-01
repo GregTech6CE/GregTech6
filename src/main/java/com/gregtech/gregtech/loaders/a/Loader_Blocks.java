@@ -47,21 +47,18 @@ public record Loader_Blocks() implements IGTLoader {
         Set<String> seenIds = new HashSet<>();
         int count = 0;
 
-        // Keep generated block registration order deterministic for saved worlds.
-        for (GTMaterial material : GTMaterialRegistry.sortedMaterials()) {
-            if (material.has(MaterialProperty.HIDDEN)) continue;
-            if (material.resolve() != material) continue;
-
-            for (BlockMaterialPrefix prefix : BlockPrefixRegistry.all()) {
-                if (!prefix.isValidFor(material)) continue;
-                String blockId = uniqueBlockId(prefix, material, seenIds);
-                GTMaterial bound = material;
-                BlockMaterialPrefix boundPrefix = prefix;
-                RegistryObject<Block> block = GTBlocks.BLOCKS.register(blockId, () -> createBlock(boundPrefix, bound));
-                GTBlocks.bind(prefix, material, block);
-                GTBlocks.registerBlockItem(blockId, block);
-                count++;
+        for (var definition : com.gregtech.gregtech.api.material.MaterialBlockDefinitions.all()) {
+            GTMaterial material = definition.material();
+            BlockMaterialPrefix prefix = definition.prefix();
+            String blockId = definition.blockId();
+            if (!blockId.equals(definition.baseBlockId())) {
+                LOGGER.warn("Duplicate block id '{}' for material {} (id={}); using '{}'",
+                        definition.baseBlockId(), material.getName(), material.getId(), blockId);
             }
+            RegistryObject<Block> block = GTBlocks.BLOCKS.register(blockId, () -> createBlock(prefix, material));
+            GTBlocks.bind(prefix, material, block);
+            GTBlocks.registerBlockItem(blockId, block);
+            count++;
         }
         LOGGER.info("Queued {} material blocks for registration", count);
     }
@@ -69,9 +66,9 @@ public record Loader_Blocks() implements IGTLoader {
     private static Block createBlock(BlockMaterialPrefix prefix, GTMaterial material) {
         boolean isOre = "ore".equals(prefix.getName()) || "oreSmall".equals(prefix.getName());
         BlockBehaviour.Properties properties = BlockBehaviour.Properties.of()
-                .mapColor(prefix.mapColor())
+                .mapColor(com.gregtech.gregtech.block.BlockPrefixPresentation.mapColor(prefix))
                 .strength(prefix.computeHardness(material), prefix.computeResistance(material))
-                .sound(prefix.soundType());
+                .sound(com.gregtech.gregtech.block.BlockPrefixPresentation.soundType(prefix));
         if (!prefix.falling() && !prefix.isCrate()) {
             properties = properties.requiresCorrectToolForDrops();
         }
@@ -82,18 +79,6 @@ public record Loader_Blocks() implements IGTLoader {
             return new OreBlock(properties, prefix, material);
         }
         return new MaterialBlock(properties, prefix, material);
-    }
-
-    private static String uniqueBlockId(BlockMaterialPrefix prefix, GTMaterial material, Set<String> seenIds) {
-        String base = prefix.getBlockId(material);
-        if (seenIds.add(base)) return base;
-        String withId = base + "_" + material.getId();
-        if (seenIds.add(withId)) {
-            LOGGER.warn("Duplicate block id '{}' for material {} (id={}); using '{}'",
-                    base, material.getName(), material.getId(), withId);
-            return withId;
-        }
-        throw new IllegalStateException("Could not allocate unique block id for " + prefix.getName() + " / " + material.getName());
     }
 
     // === Stone blocks ===

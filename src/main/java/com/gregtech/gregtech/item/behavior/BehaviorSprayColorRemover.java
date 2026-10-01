@@ -113,6 +113,7 @@ public final class BehaviorSprayColorRemover {
     public static long decolorize(Level level, BlockPos pos, Direction side, long uses, @Nullable Player player,
                                   ItemStack can, float hitX, float hitY, float hitZ) {
         if (uses < 1L) return 0L;
+        if(com.gregtech.gregtech.content.tool.PaintTargets.unpaint(level,pos))return REMOVE_COST;
         var state = level.getBlockState(pos);
         var block = state.getBlock();
         if (STAINED_CLAY.contains(block)) {                                       // :101

@@ -58,6 +58,7 @@ public class KineticDieselEngineBlockEntity extends EngineBaseBlockEntity implem
         return FaceConfig.builder()
                 .fluidIn(FaceConfig.LEFT, FaceConfig.RIGHT, FaceConfig.BACK, FaceConfig.TOP)
                 .fluidOut(FaceConfig.BOTTOM)
+                .energyOut(FaceConfig.FRONT)
                 .build();
     }
 

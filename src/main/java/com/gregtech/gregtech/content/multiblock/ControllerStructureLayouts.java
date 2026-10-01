@@ -59,18 +59,13 @@ public final class ControllerStructureLayouts {
             result.put(originalDynamo, AxialGeneratorDefinitions.grade(originalDynamo).cells());
         }
         var tower=new LinkedHashMap<BlockPos,Block>();
-        for(int x=-1;x<=1;x++)for(int y=-1;y<8;y++)for(int z=0;z<3;z++){
-            var pos=new BlockPos(x,y,z);if(!pos.equals(BlockPos.ZERO))tower.put(pos,y==-1?GTMultiblocks.HEAT_TRANSMITTER.get():GTMultiblocks.DISTILLATION_TOWER_PART.get());
-        }
+        for(var cell:SharedDistillationTowerStructure.CELLS)tower.put(new BlockPos(cell.right(),cell.up(),cell.back()),cell.part()==18101?GTMultiblocks.HEAT_TRANSMITTER.get():GTMultiblocks.DISTILLATION_TOWER_PART.get());
         result.put(GTMultiblocks.DISTILLATION_TOWER_MAIN.get(),Map.copyOf(tower));
         return Collections.unmodifiableMap(result);
     }
     private static Map<BlockPos,Block> hollow(Block wall,int radius,int minY,int maxY){
         var cells=new LinkedHashMap<BlockPos,Block>();
-        for(int x=-radius;x<=radius;x++)for(int y=minY;y<=maxY;y++)for(int z=-radius;z<=radius;z++){
-            if(Math.abs(x)<radius&&Math.abs(z)<radius&&y>minY&&y<maxY)continue;
-            var pos=new BlockPos(x,y,z+1);if(!pos.equals(BlockPos.ZERO))cells.put(pos,wall);
-        }
+        for(var cell:SharedHollowControllerGeometry.cells(radius,minY,maxY))cells.put(new BlockPos(cell.x(),cell.y(),cell.z()),wall);
         return Map.copyOf(cells);
     }
     /** Exact GT6 170xx hollow vessel: the valve is the centre of its front wall. */

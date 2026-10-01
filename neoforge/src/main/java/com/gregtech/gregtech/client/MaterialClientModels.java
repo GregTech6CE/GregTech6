@@ -47,7 +47,7 @@ public final class MaterialClientModels {
             if (model == null) {
                 missing++;
             } else {
-                models.put(ModelResourceLocation.inventory(entry.getId()), model);
+                models.put(ModelResourceLocation.inventory(entry.getId()),item instanceof com.gregtech.gregtech.item.CoinItem?new CoinItemBakedModel(model):model);
                 aliased++;
             }
         }

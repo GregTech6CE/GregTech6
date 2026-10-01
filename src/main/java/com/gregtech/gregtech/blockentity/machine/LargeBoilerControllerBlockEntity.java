@@ -28,9 +28,9 @@ import java.util.List;
  */
 public class LargeBoilerControllerBlockEntity extends GTEnergyBlockEntity implements com.gregtech.gregtech.api.multiblock.MultiblockPortOwner {
 
-    private static final long STEAM_PER_HU = 2;
-    private static final long STEAM_PER_WATER = 200;
-    private static final long HEAT_CAPACITY = 65_536;
+    private static final long STEAM_PER_HU = com.gregtech.gregtech.content.multiblock.LegacyBoilerProcessing.STEAM_PER_HU;
+    private static final long STEAM_PER_WATER = com.gregtech.gregtech.content.multiblock.LegacyBoilerProcessing.STEAM_PER_WATER;
+    private static final long HEAT_CAPACITY = com.gregtech.gregtech.content.multiblock.LegacyBoilerProcessing.HEAT_CAPACITY;
 
     private long heat;
     private final FluidTankGT waterTank = new FluidTankGT(16_000).setOnChanged(this::setChanged);
@@ -89,14 +89,8 @@ public class LargeBoilerControllerBlockEntity extends GTEnergyBlockEntity implem
         var steamFluid = com.gregtech.gregtech.registry.GTFluids.still("Steam");
         if (steamFluid == null || !steamFluid.isPresent()) return;
 
-        long steamSpace = steamTank.getCapacity() - steamTank.getAmount();
-        long maxByHeat = heat * STEAM_PER_HU;
-        long maxByWater = waterTank.getAmount() * STEAM_PER_WATER;
-        long steam = Math.min(Math.min(maxByHeat, maxByWater), steamSpace);
-        // work in whole water millibuckets to keep the ratios exact
-        long water = steam / STEAM_PER_WATER;
-        if (water <= 0) return;
-        steam = water * STEAM_PER_WATER;
+        var plan=com.gregtech.gregtech.content.multiblock.LegacyBoilerProcessing.plan(heat,waterTank.getAmount(),steamTank.getCapacity()-steamTank.getAmount());
+        long water=plan.water(),steam=plan.steam();if(water<=0)return;
 
         waterTank.drain((int) water, IFluidHandler.FluidAction.EXECUTE);
         heat -= steam / STEAM_PER_HU;

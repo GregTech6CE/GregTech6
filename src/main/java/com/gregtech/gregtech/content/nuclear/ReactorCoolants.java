@@ -2,27 +2,24 @@ package com.gregtech.gregtech.content.nuclear;
 import com.gregtech.gregtech.registry.GTFluids;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraft.world.level.material.Fluid;
-import java.util.*;
-/** Original heat conversion units; identity lookup never accepts a fluid by substring. */
+/** Registry boundary over the shared original coolant table. */
 public enum ReactorCoolants {
-    DISTILLED("DistW","Steam",80,160,1,true),
-    INDUSTRIAL("Coolant_IC2","Coolant_IC2_Hot",20,1,1,false),
-    TIN("GenMolten_Tin","Hot_Molten_Tin",40,1,3,false),
-    SODIUM("GenMolten_Sodium","Hot_Molten_Sodium",30,1,6,false),
-    SEMIHEAVY("GenLiquid_SemiheavyWater","Hot_Semi_Heavy_Water",40,1,1,true),
-    HEAVY("GenLiquid_HeavyWater","Hot_Heavy_Water",50,1,1,true),
-    TRITIATED("GenLiquid_TritiatedWater","Hot_Tritiated_Water",60,1,1,true),
-    LITHIUM_CHLORIDE("GenLiquid_LithiumChloride","Hot_Molten_LiCl",15,1,1,false),
-    CO2("CarbonDioxide","Hot_Carbon_Dioxide",20,1,1,false),
-    HELIUM("Helium","Hot_Helium",30,1,1,false),
-    THORIUM_SALT("Thorium_Salt","GenLiquid_LithiumChloride",2560000,1,1,false);
-    public final String input,output; public final int heat,expansion,heatDivider;public final boolean moderates;
-    ReactorCoolants(String i,String o,int h,int e,int d,boolean m){input=i;output=o;heat=h;expansion=e;heatDivider=d;moderates=m;}
-    public Fluid inputFluid(){return resolve(input);}public Fluid outputFluid(){return resolve(output);}
-    private static Fluid resolve(String field){var holder=GTFluids.still(field);return holder!=null&&holder.isPresent()?holder.get():null;}
-    public static ReactorCoolants of(FluidStack stack){if(stack.isEmpty())return null;for(var c:values())if(c.inputFluid()==stack.getFluid())return c;return null;}
-    public int self(ReactorRodCatalog.Rod r){return switch(this){case INDUSTRIAL->r.self()*4;case CO2->r.self()*3;case LITHIUM_CHLORIDE->r.self()*5;case THORIUM_SALT->0;default->r.self();};}
-    public int emission(ReactorRodCatalog.Rod r){return switch(this){case INDUSTRIAL->r.emission()*4;case HELIUM,LITHIUM_CHLORIDE,THORIUM_SALT->r.emission()/2;default->r.emission();};}
-    public int divisor(ReactorRodCatalog.Rod r){return Math.max(1,switch(this){case INDUSTRIAL->r.divisor()*2;case TIN,SODIUM,THORIUM_SALT->r.divisor()-1;default->r.divisor();});}
-    public int maximum(ReactorRodCatalog.Rod r){return switch(this){case HEAVY->(r.maximum()+7)/8;case TRITIATED->(r.maximum()+15)/16;case LITHIUM_CHLORIDE->r.maximum()+(r.maximum()+3)/4;case THORIUM_SALT->r.maximum()*4;default->r.maximum();};}
+ DISTILLED(ReactorCoolantRules.DISTILLED),
+ INDUSTRIAL(ReactorCoolantRules.INDUSTRIAL),
+ TIN(ReactorCoolantRules.TIN),
+ SODIUM(ReactorCoolantRules.SODIUM),
+ SEMIHEAVY(ReactorCoolantRules.SEMIHEAVY),
+ HEAVY(ReactorCoolantRules.HEAVY),
+ TRITIATED(ReactorCoolantRules.TRITIATED),
+ LITHIUM_CHLORIDE(ReactorCoolantRules.LITHIUM_CHLORIDE),
+ CO2(ReactorCoolantRules.CO2),
+ HELIUM(ReactorCoolantRules.HELIUM),
+ THORIUM_SALT(ReactorCoolantRules.THORIUM_SALT);
+ private final ReactorCoolantRules rules;
+ public final String input,output;public final int heat,expansion,heatDivider;public final boolean moderates;
+ ReactorCoolants(ReactorCoolantRules r){rules=r;input=r.input;output=r.output;heat=r.heat;expansion=r.expansion;heatDivider=r.heatDivider;moderates=r.moderates;}
+ public Fluid inputFluid(){return resolve(input);}public Fluid outputFluid(){return resolve(output);}
+ private static Fluid resolve(String field){var holder=GTFluids.still(field);return holder!=null&&holder.isPresent()?holder.get():null;}
+ public static ReactorCoolants of(FluidStack stack){if(stack.isEmpty())return null;for(var c:values())if(c.inputFluid()==stack.getFluid())return c;return null;}
+ public int self(ReactorRodCatalog.Rod r){return rules.self(r);}public int emission(ReactorRodCatalog.Rod r){return rules.emission(r);}public int divisor(ReactorRodCatalog.Rod r){return rules.divisor(r);}public int maximum(ReactorRodCatalog.Rod r){return rules.maximum(r);}
 }

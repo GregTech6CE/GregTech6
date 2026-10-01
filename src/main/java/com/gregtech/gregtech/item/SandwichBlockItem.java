@@ -37,7 +37,7 @@ public final class SandwichBlockItem extends BlockItem {
     }
 
     @Override public int getUseDuration(ItemStack stack) {
-        return Math.max(32, SandwichBlockEntity.itemFood(stack) * 8);
+        return com.gregtech.gregtech.content.food.SandwichRules.useDuration(SandwichBlockEntity.itemFood(stack));
     }
 
     @Override public UseAnim getUseAnimation(ItemStack stack) { return UseAnim.EAT; }

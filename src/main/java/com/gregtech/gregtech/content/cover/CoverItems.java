@@ -62,7 +62,7 @@ public final class CoverItems {
                 default -> null;
             };
         }
-        if (!key.getNamespace().equals(GregTech.MODID)) return null;
+        if (!key.getNamespace().equals(GregTech.NAMESPACE)) return null;
         if (id.startsWith("compact_electric_pump_")) return PUMP;               // IL.PUMPS[i]
         if (id.startsWith("compact_electric_conveyor_")) return CONVEYOR;       // IL.CONVEYERS[i]
         if (id.startsWith("compact_robot_arm_")) return ROBOT_ARM;              // IL.ROBOT_ARMS[i]
@@ -144,6 +144,6 @@ public final class CoverItems {
     private static String path(ItemStack stack) {
         if (stack.isEmpty()) return null;
         ResourceLocation key = ForgeRegistries.ITEMS.getKey(stack.getItem());
-        return key != null && key.getNamespace().equals(GregTech.MODID) ? key.getPath() : null;
+        return key != null && key.getNamespace().equals(GregTech.NAMESPACE) ? key.getPath() : null;
     }
 }

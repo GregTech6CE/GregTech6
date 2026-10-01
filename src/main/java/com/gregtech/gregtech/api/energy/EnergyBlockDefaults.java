@@ -27,10 +27,8 @@ public final class EnergyBlockDefaults {
         if (size == 0 || size == Long.MIN_VALUE || amount <= 0 || !self.isEnergyAcceptingFrom(energyType, side, false)) {
             return 0;
         }
-        if (GregTechTags.Energy.isSizeIrrelevant(energyType) || Math.abs(size) >= self.getEnergySizeInputMin(energyType, side)) {
-            return self.doInject(energyType, side, size, amount, doInject);
-        }
-        return amount;
+        return EnergyGate.gateInjection(energyType, true, size, self.getEnergySizeInputMin(energyType, side), amount,
+                () -> self.doInject(energyType, side, size, amount, doInject));
     }
 
     public static long doEnergyExtraction(IEnergyBlock self, GregTechTags.Tag energyType, @Nullable Direction side,
@@ -38,10 +36,8 @@ public final class EnergyBlockDefaults {
         if (size == 0 || size == Long.MIN_VALUE || amount <= 0 || !self.isEnergyEmittingTo(energyType, side, false)) {
             return 0;
         }
-        if (GregTechTags.Energy.isSizeIrrelevant(energyType) || Math.abs(size) >= self.getEnergySizeOutputMin(energyType, side)) {
-            return self.doExtract(energyType, side, size, amount, doExtract);
-        }
-        return 0;
+        return EnergyGate.gateExtraction(energyType, true, size, self.getEnergySizeOutputMin(energyType, side), amount,
+                () -> self.doExtract(energyType, side, size, amount, doExtract));
     }
 
     public static long getEnergySizeOutputMin(IEnergyBlock self, GregTechTags.Tag energyType, @Nullable Direction side) {

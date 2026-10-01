@@ -6,12 +6,7 @@ import net.minecraft.world.phys.AABB;
 public final class BottleCrateGeometry {
     private BottleCrateGeometry() {}
     public static AABB bounds(int slot,int part) {
-        if(slot<0 || slot>=9 || part<0 || part>2) throw new IllegalArgumentException();
-        double x=1+5*(slot%3),z=1+5*(slot/3);
-        return switch(part) {
-            case 0 -> new AABB(x/16+.01,1/16.,z/16+.01,(x+4)/16-.01,12/16.,(z+4)/16-.01);
-            case 1 -> new AABB(x/16+.005,1/16.,z/16+.005,(x+4)/16-.005,13/16.,(z+4)/16-.005);
-            default -> new AABB((x+1)/16,13/16.,(z+1)/16,(x+3)/16,1,(z+3)/16);
-        };
+        var b=com.gregtech.gregtech.content.storage.ContainerStorageRules.bottleBounds(slot,part);
+        return new AABB(b.x0(),b.y0(),b.z0(),b.x1(),b.y1(),b.z1());
     }
 }

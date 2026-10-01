@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.Mod;
  * <p>
  * Mold and basin right-click pour is handled by {@link SmelteryInteractionHandler}.
  */
-@Mod.EventBusSubscriber(modid = GregTech.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public final class CrucibleInteractionHandler {
     private CrucibleInteractionHandler() {}
 

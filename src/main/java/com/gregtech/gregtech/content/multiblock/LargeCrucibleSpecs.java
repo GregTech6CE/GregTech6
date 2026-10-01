@@ -16,7 +16,7 @@ public final class LargeCrucibleSpecs {
         public CrucibleSpec crucible() {
             // GT6 weighs the hull as 100 material units for heat calculations.
             return CrucibleSpec.of(path, material, originalId, hardness, hardness,
-                    acidProof, 100L * GTValues.U);
+                    acidProof, OriginalLargeCrucibleParameters.HULL_UNITS);
         }
 
         public Block wall() {
@@ -24,15 +24,7 @@ public final class LargeCrucibleSpecs {
         }
     }
 
-    private static final List<Variant> VARIANTS = List.of(
-            new Variant(17309, "large_steel_crucible", Materials.Steel, 18009, 6, false),
-            new Variant(17302, "large_stainless_steel_crucible", Materials.StainlessSteel, 18002, 6, true),
-            new Variant(17307, "large_invar_crucible", Materials.Invar, 18007, 6, false),
-            new Variant(17306, "large_titanium_crucible", Materials.Titanium, 18006, 9, false),
-            new Variant(17303, "large_tungstensteel_crucible", Materials.Tungstensteel, 18003, 12.5f, false),
-            new Variant(17304, "large_tungsten_crucible", Materials.Tungsten, 18004, 10, true),
-            new Variant(17312, "large_tantalum_hafnium_carbide_crucible", Materials.TantalumHafniumCarbide, 18012, 12.5f, false),
-            new Variant(17305, "large_adamantium_crucible", Materials.Adamantium, 18005, 100, true));
+    private static final List<Variant> VARIANTS = OriginalLargeCrucibleParameters.DEFINITIONS.stream().map(d -> new Variant(d.originalId(), d.path(), com.gregtech.gregtech.api.material.GTMaterialRegistry.get(d.material()), d.wallId(), d.hardness(), d.acidProof())).toList();
 
     /** The older port-only main stays usable in existing test worlds. */
     public static final Variant LEGACY = new Variant(-1, "large_crucible_main", Materials.StainlessSteel, -1, 5, true);

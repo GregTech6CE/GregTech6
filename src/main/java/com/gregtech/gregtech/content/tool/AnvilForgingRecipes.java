@@ -10,24 +10,12 @@ import static com.gregtech.gregtech.data.MaterialPrefix.*;
 
 /** Loader_Recipes_Handlers 175–199, restricted by the original self-forging material declarations. */
 public final class AnvilForgingRecipes {
-    private record Rule(MaterialPrefix first,MaterialPrefix second,MaterialPrefix output,int outputCount,MaterialPrefix scrap,int scrapCount) {}
-    private static Rule join(MaterialPrefix first,MaterialPrefix second,MaterialPrefix output) { return new Rule(first,second,output,1,null,0); }
-    private static Rule flatten(MaterialPrefix first,MaterialPrefix output,int count,MaterialPrefix scrap,int scrapCount) { return new Rule(first,null,output,count,scrap,scrapCount); }
-    private static final List<Rule> RULES=List.of(
-            join(ingot,ingot,ingotDouble), join(ingot,ingotDouble,ingotTriple), join(ingot,ingotTriple,ingotQuadruple), join(ingot,ingotQuadruple,ingotQuintuple),
-            join(ingotDouble,ingotDouble,ingotQuadruple), join(ingotDouble,ingotTriple,ingotQuintuple),
-            join(plate,plate,plateDouble), join(plate,plateDouble,plateTriple), join(plate,plateTriple,plateQuadruple), join(plate,plateQuadruple,plateQuintuple),
-            join(plateDouble,plateDouble,plateQuadruple), join(plateDouble,plateTriple,plateQuintuple), join(stick,stick,stickLong),
-            flatten(ingotDouble,plate,1,scrapGt,9), flatten(ingotTriple,plateDouble,1,scrapGt,9),
-            flatten(ingotQuadruple,plateTriple,1,scrapGt,9), flatten(ingotQuintuple,plateQuadruple,1,scrapGt,9),
-            flatten(chunkGt,plateTiny,1,scrapGt,1),
-            flatten(plate,itemCasing,1,scrapGt,4), flatten(plateCurved,plate,1,null,0), flatten(itemCasing,railGt,2,null,0));
     public static int register() {
         int count=0;
         for(var material:GTMaterialRegistry.sortedMaterials()) {
             if(material.resolve()!=material || !AnvilMaterialCatalog.SELF_FORGING.contains(material.getName())) continue;
             if(!material.isValid() || !material.has(MaterialProperty.SMITHABLE) || material.has(MaterialProperty.FLAMMABLE) || material.has(MaterialProperty.ANTIMATTER)) continue;
-            for(var rule:RULES) {
+            for(var rule:AnvilForgingCatalog.RULES) {
                 var first=GTItems.getStack(rule.first(),material);
                 var second=rule.second()==null?ItemStack.EMPTY:GTItems.getStack(rule.second(),material);
                 var out=GTItems.getStack(rule.output(),material,rule.outputCount());

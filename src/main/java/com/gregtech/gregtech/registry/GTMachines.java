@@ -76,8 +76,8 @@ public final class GTMachines {
             "burning_box_solid_ultimet", com.gregtech.gregtech.content.material.generated.CompoundMaterials.Ultimet, 9000, 256, 12.5F, 12.5F);
 
     /** Brick — GT6 meta 1199 ({@code MultiTileEntityGeneratorBrick}). */
-    public static final RegistryObject<SolidBurningBoxBlock> BURNING_BOX_SOLID_BRICK = solidBurningBox(
-            "burning_box_solid_brick", com.gregtech.gregtech.content.material.generated.CompoundMaterials.ClayBrick, 2500, 16, 6.0F, 6.0F);
+    public static final RegistryObject<SolidBurningBoxBlock> BURNING_BOX_SOLID_BRICK =
+            MachineRegistry.registerSolidBurningBox(com.gregtech.gregtech.api.machine.InitialSmelteryDefinitions.brickBurningBox());
 
     // --- Dense solid burning boxes (GT6 meta 1150–1162) ---
 
@@ -312,131 +312,121 @@ public final class GTMachines {
     // --- Smelting crucibles (GT6 meta 1000–1039, texture 1022) ---
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_STONE =
-            crucible("smelting_crucible_stone", com.gregtech.gregtech.content.material.generated.StoneMaterials.Stone, 1000, 5.0F, 5.0F, false, 1100, 3220, 2.65F,
-                    CrucibleSpec.STONE_CRUCIBLE_HULL_UNITS);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_stone"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_BASALT =
-            crucible("smelting_crucible_basalt", com.gregtech.gregtech.content.material.generated.StoneMaterials.Basalt, 1001, 15.0F, 15.0F, false, 1100, 3220, 2.65F,
-                    CrucibleSpec.STONE_CRUCIBLE_HULL_UNITS);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_basalt"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_GRANITE_BLACK =
-            crucible("smelting_crucible_granite_black", Materials.GraniteBlack, 1002, 15.0F, 15.0F, false, 1100, 3220, 2.65F,
-                    CrucibleSpec.STONE_CRUCIBLE_HULL_UNITS);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_granite_black"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_GRANITE_RED =
-            crucible("smelting_crucible_granite_red", Materials.GraniteRed, 1003, 15.0F, 15.0F, false, 1100, 3220, 2.65F,
-                    CrucibleSpec.STONE_CRUCIBLE_HULL_UNITS);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_granite_red"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_NETHER_BRICK =
-            crucible("smelting_crucible_nether_brick", com.gregtech.gregtech.content.material.generated.StoneMaterials.NetherBrick, 1004, 5.0F, 5.0F, false, 1100, 3220, 2.65F,
-                    CrucibleSpec.STONE_CRUCIBLE_HULL_UNITS);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_nether_brick"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_CERAMIC =
-            crucible("smelting_crucible_ceramic", Materials.Ceramic, 1005, 5.0F, 5.0F, false, 2000, 4000, 0.8181818181818182D);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.InitialSmelteryDefinitions.ceramicCrucible());
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_UMBER =
-            crucible("smelting_crucible_umber", com.gregtech.gregtech.content.material.generated.StoneMaterials.Umber, 1006, 5.0F, 5.0F, false, 1100, 3220, 2.65F,
-                    CrucibleSpec.STONE_CRUCIBLE_HULL_UNITS);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_umber"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_LIVINGROCK =
-            crucible("smelting_crucible_livingrock", com.gregtech.gregtech.content.material.generated.StoneMaterials.Livingrock, 1007, 5.0F, 5.0F, false, 1100, 3220, 2.65F,
-                    CrucibleSpec.STONE_CRUCIBLE_HULL_UNITS);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_livingrock"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_HOLYSTONE =
-            crucible("smelting_crucible_holystone", com.gregtech.gregtech.content.material.generated.StoneMaterials.Holystone, 1008, 5.0F, 5.0F, false, 1100, 3220, 2.65F,
-                    CrucibleSpec.STONE_CRUCIBLE_HULL_UNITS);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_holystone"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_BETWEENSTONE =
-            crucible("smelting_crucible_betweenstone", com.gregtech.gregtech.content.material.generated.StoneMaterials.Betweenstone, 1009, 5.0F, 5.0F, false, 1100, 3220, 2.65F,
-                    CrucibleSpec.STONE_CRUCIBLE_HULL_UNITS);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_betweenstone"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_QUARTZ =
-            crucible("smelting_crucible_quartz", Materials.MilkyQuartz, 1018, 5.0F, 5.0F, false, 1986, 3220, 2.2F,
-                    CrucibleSpec.STONE_CRUCIBLE_HULL_UNITS);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_quartz"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_CARBON =
-            crucible("smelting_crucible_carbon", Materials.Carbon, 1019, 10.0F, 10.0F, false);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_carbon"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_BRONZE =
-            crucible("smelting_crucible_bronze", Materials.Bronze, 1020, 7.0F, 7.0F, false, 1357, 2835, 8.96F);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_bronze"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_INVAR =
-            crucible("smelting_crucible_invar", Materials.Invar, 1021, 4.0F, 4.0F, false, 1700, 3000, 8.0F);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_invar"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_STEEL =
-            crucible("smelting_crucible_steel", Materials.Steel, 1022, 6.0F, 6.0F, false, 2046, 3134, 7.85F);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_steel"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_HSLA =
-            crucible("smelting_crucible_hsla", Materials.HSLASteel, 1041, 6.0F, 6.0F, false, 2046, 3134, 7.85F);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_hsla"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_TITANIUM =
-            crucible("smelting_crucible_titanium", Materials.Titanium, 1023, 9.0F, 9.0F, false);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_titanium"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_TUNGSTEN =
-            crucible("smelting_crucible_tungsten", Materials.Tungsten, 1024, 10.0F, 10.0F, true);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_tungsten"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_STAINLESS_STEEL =
-            crucible("smelting_crucible_stainless_steel", Materials.StainlessSteel, 1025, 6.0F, 6.0F, true, 2046, 3134, 8.0F);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_stainless_steel"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_DARK_IRON =
-            crucible("smelting_crucible_dark_iron", Materials.DarkIron, 1026, 6.0F, 6.0F, false, 1811, 3134, 7.87F);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_dark_iron"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_KNIGHTMETAL =
-            crucible("smelting_crucible_knightmetal", Materials.Knightmetal, 1027, 6.0F, 6.0F, false, 2046, 3134, 7.85F);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_knightmetal"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_FIERY_STEEL =
-            crucible("smelting_crucible_fiery_steel", Materials.FierySteel, 1028, 6.0F, 6.0F, false, 2046, 3134, 7.85F);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_fiery_steel"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_OCTINE =
-            crucible("smelting_crucible_octine", Materials.Octine, 1042, 6.0F, 6.0F, false, 2046, 3134, 7.85F);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_octine"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_THAUMIUM =
-            crucible("smelting_crucible_thaumium", Materials.Thaumium, 1029, 6.0F, 6.0F, true, 2046, 3134, 7.85F);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_thaumium"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_VOID_METAL =
-            crucible("smelting_crucible_void_metal", Materials.VoidMetal, 1030, 10.0F, 10.0F, true, 2046, 3134, 7.85F);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_void_metal"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_METEORIC_IRON =
-            crucible("smelting_crucible_meteoric_iron", Materials.MeteoricIron, 1031, 6.0F, 6.0F, false, 2011, 3334, 7.87F);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_meteoric_iron"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_METEORIC_STEEL =
-            crucible("smelting_crucible_meteoric_steel", Materials.MeteoricSteel, 1032, 6.0F, 6.0F, false, 2246, 3334, 7.85F);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_meteoric_steel"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_CHROMIUM =
-            crucible("smelting_crucible_chromium", Materials.Chromium, 1033, 9.0F, 9.0F, true);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_chromium"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_MOLYBDENUM =
-            crucible("smelting_crucible_molybdenum", Materials.Molybdenum, 1034, 9.0F, 9.0F, false);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_molybdenum"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_NIOBIUM =
-            crucible("smelting_crucible_niobium", Materials.Niobium, 1035, 9.0F, 9.0F, false);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_niobium"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_TANTALUM =
-            crucible("smelting_crucible_tantalum", Materials.Tantalum, 1036, 9.0F, 9.0F, false);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_tantalum"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_OSMIUM =
-            crucible("smelting_crucible_osmium", Materials.OsmiumElemental, 1037, 9.0F, 9.0F, false);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_osmium"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_VANADIUM =
-            crucible("smelting_crucible_vanadium", Materials.Vanadium, 1038, 9.0F, 9.0F, false);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_vanadium"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_IRIDIUM =
-            crucible("smelting_crucible_iridium", Materials.Iridium, 1039, 9.0F, 9.0F, true);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_iridium"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_NIOBIUM_TITANIUM =
-            crucible("smelting_crucible_niobium_titanium", Materials.NiobiumTitanium, 1040, 9.0F, 9.0F, false);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_niobium_titanium"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_TA4HFC5 =
-            crucible("smelting_crucible_ta4hfc5", Materials.TantalumHafniumCarbide, 1043, 9.0F, 9.0F, false);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_ta4hfc5"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_NETHERITE =
-            crucible("smelting_crucible_netherite", Materials.Netherite, 1044, 6.0F, 6.0F, true, 2046, 3134, 8.0F);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_netherite"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_BEDROCK_HSLA_ALLOY =
-            crucible("smelting_crucible_bedrock_hsla_alloy", Materials.BedrockHSLAAlloy, 1048, 100.0F, 100.0F, false);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_bedrock_hsla_alloy"));
 
     public static final RegistryObject<SmeltingCrucibleBlock> SMELTING_CRUCIBLE_AD =
-            crucible("smelting_crucible_ad", Materials.Adamantium, 1049, 100.0F, 100.0F, true);
+            MachineRegistry.registerSmeltingCrucible(com.gregtech.gregtech.api.machine.OriginalCrucibleDefinitions.get("smelting_crucible_ad"));
 
     // --- Hoppers (GT6 meta 8000+aID, ordered by original GT6 aID) ---
 
@@ -699,21 +689,15 @@ public final class GTMachines {
     private static RegistryObject<SolidBurningBoxBlock> solidBurningBox(
             String id, GTMaterial material, int efficiency, long outputHu, float hardness, float blastResistance) {
         return MachineRegistry.registerSolidBurningBox(
-                id, material.getLocalName(), material.getColor(), efficiency, outputHu, hardness, blastResistance);
+                com.gregtech.gregtech.api.machine.BurningBoxDefinitions.spec(id));
     }
 
     private static RegistryObject<BurningBoxBlock> burningBox(
             String id, GTMaterial material, BurningBoxFuelType fuelType,
             int efficiency, long outputHu, float hardness, float blastResistance) {
-        String textureSet = switch (fuelType) {
-            case LIQUID -> MachineTextures.BURNING_LIQUID;
-            case GAS -> MachineTextures.BURNING_GAS;
-            case FLUIDIZED_BED -> MachineTextures.BURNING_FLUIDBED;
-            case SOLID -> MachineTextures.BURNING_SOLID;
-        };
-        return MachineRegistry.registerBurningBox(
-                fuelType, id, material.getLocalName(), material.getColor(),
-                efficiency, outputHu, hardness, blastResistance, textureSet);
+        var spec = com.gregtech.gregtech.api.machine.BurningBoxDefinitions.spec(id);
+        return MachineRegistry.registerBurningBox(fuelType, spec.id(), spec.materialName(), spec.tintRgb(),
+                spec.efficiency(), spec.outputRate(), spec.hardness(), spec.blastResistance(), spec.textureSet());
     }
 
     private static RegistryObject<SmeltingCrucibleBlock> crucible(String id, GTMaterial material, int gt6MetaId,
@@ -740,11 +724,11 @@ public final class GTMachines {
 
     private static RegistryObject<HopperBlock> hopper(String id, GTMaterial material, int slotCount,
                                                        float hardness, float blastResistance) {
-        return MachineRegistry.registerHopper(HopperSpec.of(id, material, slotCount, hardness, blastResistance));
+        return MachineRegistry.registerHopper(com.gregtech.gregtech.content.transport.HopperCatalog.get(id));
     }
 
     private static RegistryObject<QueueHopperBlock> queueHopper(String id, GTMaterial material, int slotCount,
                                                                  float hardness, float blastResistance) {
-        return MachineRegistry.registerQueueHopper(HopperSpec.of(id, material, slotCount, hardness, blastResistance));
+        return MachineRegistry.registerQueueHopper(com.gregtech.gregtech.content.transport.HopperCatalog.get(id));
     }
 }

@@ -44,9 +44,7 @@ public final class GTTanks {
     public static RegistryObject<TankBlock> registerLogisticsTank() {
         String id = "logistics_tank";
         var material = com.gregtech.gregtech.content.material.Materials.Tungsten;
-        TankSpec spec = TankSpec.of(id, material, TankSpec.TankType.LOGISTICS_BARREL,
-                1_000_000, true, true, true, true, false, 1.0F, 10.0F)
-                .withMaxTemperature(100_000);
+        TankSpec spec=com.gregtech.gregtech.content.transport.fluid.LogisticsTankSpec.spec();
         RegistryObject<TankBlock> block = GTBlocks.BLOCKS.register(id,
                 () -> new com.gregtech.gregtech.block.machine.LogisticsTankBlock(
                         spec, TankBlock.defaultProperties(spec)));

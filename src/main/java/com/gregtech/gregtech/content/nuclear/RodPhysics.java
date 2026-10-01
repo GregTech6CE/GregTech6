@@ -17,8 +17,8 @@ public final class RodPhysics {
     }
     public static boolean moderated(ItemStack stack){var d=definition(stack);return d!=null&&(d.kind()==ReactorRodCatalog.Kind.MODERATOR||stack.hasTag()&&stack.getTag().getBoolean("gt.moderated"));}
     public static void moderate(ItemStack stack){if(definition(stack)!=null&&definition(stack).kind()==ReactorRodCatalog.Kind.NUCLEAR)stack.getOrCreateTag().putBoolean("gt.moderated_next",true);}
-    public static int bound(long n){return (int)Math.max(0,Math.min(Integer.MAX_VALUE,n));}
-    public static long ceil(long n,long d){return n/d+(n%d==0?0:1);}
+    public static int bound(long n){return RodPhysicsMath.bound(n);}
+    public static long ceil(long n,long d){return RodPhysicsMath.ceil(n,d);}
     public static int self(ItemStack stack,ReactorCoolants coolant){var d=definition(stack);return d==null||d.kind()!=ReactorRodCatalog.Kind.NUCLEAR||life(stack)<=0?0:coolant==null?d.self():coolant.self(d);}
     public static int emission(ItemStack stack,int previous,ReactorCoolants coolant){
         var d=definition(stack);if(d==null||d.kind()!=ReactorRodCatalog.Kind.NUCLEAR||life(stack)<=0)return 0;
@@ -40,12 +40,11 @@ public final class RodPhysics {
     public record Reaction(ItemStack stack,long heat){}
     public static Reaction react(ItemStack stack,int flux,ReactorCoolants coolant){
         var d=definition(stack);if(d==null)return new Reaction(stack,0);
-        long heat=switch(d.kind()){case NUCLEAR->flux;case ABSORBER->2L*flux;case BREEDER,PRODUCT->flux/2;default->0;};
+        long heat=RodPhysicsMath.heat(d.kind(),flux);
         if(d.kind()==ReactorRodCatalog.Kind.NUCLEAR||d.kind()==ReactorRodCatalog.Kind.BREEDER){
             if(coolant!=null&&coolant.moderates){moderate(stack);stack.getOrCreateTag().putBoolean("gt.moderated",true);}
             long maximum=coolant==null?d.maximum():coolant.maximum(d);
-            long loss=d.kind()==ReactorRodCatalog.Kind.BREEDER?flux:flux<=maximum?100:ceil(400L*flux,Math.max(1,maximum));
-            if(d.kind()==ReactorRodCatalog.Kind.NUCLEAR&&moderated(stack))loss*=4;
+            long loss=RodPhysicsMath.loss(d.kind(),flux,maximum,moderated(stack));
             long remaining=Math.max(0,life(stack)-loss);stack.getOrCreateTag().putLong("gt.reactor_life",remaining);
             if(remaining==0&&d.product()!=0)return new Reaction(GTFuelRods.stack(d.product()),heat);
         }

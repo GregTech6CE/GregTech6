@@ -58,7 +58,7 @@ public final class EnergyTransfer {
         if (receiver instanceof IEnergyBlock energyBlock) {
             return energyBlock.doEnergyExtraction(energyType, sideOutOf, size, amount, true);
         }
-        return 0;
+        return EnergyCompat.extractEnergyFrom(energyType, sideOutOf, size, amount, receiver);
     }
 
     /** Units transferred per tick at rated output (HU/Steam amount or EU packet count). */

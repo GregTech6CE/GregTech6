@@ -1,0 +1,142 @@
+{
+  "variants": {
+    "facing=north,activity=0,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv"
+    },
+    "facing=north,activity=0,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv"
+    },
+    "facing=east,activity=0,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv",
+      "y": 90
+    },
+    "facing=east,activity=0,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv",
+      "y": 90
+    },
+    "facing=south,activity=0,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv",
+      "y": 180
+    },
+    "facing=south,activity=0,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv",
+      "y": 180
+    },
+    "facing=west,activity=0,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv",
+      "y": 270
+    },
+    "facing=west,activity=0,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv",
+      "y": 270
+    },
+    "facing=up,activity=0,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv",
+      "x": 270
+    },
+    "facing=up,activity=0,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv",
+      "x": 270
+    },
+    "facing=down,activity=0,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv",
+      "x": 90
+    },
+    "facing=down,activity=0,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv",
+      "x": 90
+    },
+    "facing=north,activity=1,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv_1"
+    },
+    "facing=north,activity=1,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv_1"
+    },
+    "facing=east,activity=1,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv_1",
+      "y": 90
+    },
+    "facing=east,activity=1,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv_1",
+      "y": 90
+    },
+    "facing=south,activity=1,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv_1",
+      "y": 180
+    },
+    "facing=south,activity=1,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv_1",
+      "y": 180
+    },
+    "facing=west,activity=1,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv_1",
+      "y": 270
+    },
+    "facing=west,activity=1,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv_1",
+      "y": 270
+    },
+    "facing=up,activity=1,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv_1",
+      "x": 270
+    },
+    "facing=up,activity=1,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv_1",
+      "x": 270
+    },
+    "facing=down,activity=1,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv_1",
+      "x": 90
+    },
+    "facing=down,activity=1,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv_1",
+      "x": 90
+    },
+    "facing=north,activity=2,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv_2"
+    },
+    "facing=north,activity=2,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv_2"
+    },
+    "facing=east,activity=2,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv_2",
+      "y": 90
+    },
+    "facing=east,activity=2,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv_2",
+      "y": 90
+    },
+    "facing=south,activity=2,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv_2",
+      "y": 180
+    },
+    "facing=south,activity=2,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv_2",
+      "y": 180
+    },
+    "facing=west,activity=2,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv_2",
+      "y": 270
+    },
+    "facing=west,activity=2,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv_2",
+      "y": 270
+    },
+    "facing=up,activity=2,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv_2",
+      "x": 270
+    },
+    "facing=up,activity=2,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv_2",
+      "x": 270
+    },
+    "facing=down,activity=2,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv_2",
+      "x": 90
+    },
+    "facing=down,activity=2,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/transformer_ev_iv_2",
+      "x": 90
+    }
+  }
+}

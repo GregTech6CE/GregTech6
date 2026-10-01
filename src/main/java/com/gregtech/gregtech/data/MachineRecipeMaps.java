@@ -26,80 +26,80 @@ public class MachineRecipeMaps {
     //   needsOutputs, combinePower, useBucketIn, useBucketOut)
 
     public static final RecipeMap
-    Furnace                   = new RecipeMap(null, "mc.recipe.furnace"                  , "Furnace"                  , GUI+"Oven"                 , 1, 1,1, 1, 1,0, 0, false,false,false,false)
-    , Microwave                = new RecipeMap(null, "gt.recipe.microwave"               , "Microwave"                , GUI+"Oven"                 , 1, 1,1, 1, 1,0, 0, false,false,false,false)
-    , Roasting                 = new RecipeMap(null, "gt.recipe.roaster"                 , "Roaster"                  , GUI+"Roaster"              , 1, 3,1, 1, 1,1, 2, false,false,true ,true )
-    , Distillery               = new RecipeMap(null, "gt.recipe.distillery"              , "Distillery"               , GUI+"Distillery"           , 1, 2,1, 1, 2,1, 2, false,false,false,false)
-    , Extruder                 = new RecipeMap(null, "gt.recipe.extruder"                , "Extruder"                 , GUI+"Extruder"             , 2, 2,2, 0, 0,0, 0, false,false,true ,true )
-    , Smelter                  = new RecipeMap(null, "gt.recipe.smelter"                 , "Smelter"                  , GUI+"Smelter"              , 1, 1,0, 1, 1,0, 1, false,false,true ,true )
-    , CrystallisationCrucible  = new RecipeMap(null, "gt.recipe.crystallisationcrucible" , "Crystallisation Crucible" , GUI+"CrystallisationCrucible", 1, 1,1, 3, 0,1, 1, false,false,true ,true )
-    , Drying                   = new RecipeMap(null, "gt.recipe.drying"                  , "Dryer"                    , GUI+"Dryer"                , 1, 1,0, 1, 3,0, 1, false,false,true ,true )
-    , Laminator                = new RecipeMap(null, "gt.recipe.laminator"               , "Laminator"                , GUI+"Laminator"            , 2, 1,2, 0, 0,0, 2, false,false,true ,true )
-    , CatalyticCracking        = new RecipeMap(null, "gt.recipe.catalyticcracking"       , "Catalytic Cracking"       , GUI+"CatalyticCracking"    , 1, 3,0, 2, 9,1, 2, false,false,true ,true )
-    , SteamCracking            = new RecipeMap(null, "gt.recipe.steamcracking"           , "Steam Cracking"           , GUI+"SteamCracking"        , 1, 3,0, 2, 9,1, 2, false,false,true ,true )
-    , DistillationTower        = new RecipeMap(null, "gt.recipe.distillationtower"       , "Distillation Tower"       , GUI+"DistillationTower"    , 1, 3,0, 1, 9,0, 1, false,false,false,false)
-    , CryoDistillationTower    = new RecipeMap(null, "gt.recipe.cryodistillationtower"   , "Cryo Distillation Tower"  , GUI+"CryoDistillationTower", 1, 3,0, 1, 9,0, 1, false,false,false,false)
+    Furnace                   = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Furnace)
+    , Microwave                = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Microwave)
+    , Roasting                 = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Roasting)
+    , Distillery               = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Distillery)
+    , Extruder                 = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Extruder)
+    , Smelter                  = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Smelter)
+    , CrystallisationCrucible  = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.CrystallisationCrucible)
+    , Drying                   = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Drying)
+    , Laminator                = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Laminator)
+    , CatalyticCracking        = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.CatalyticCracking)
+    , SteamCracking            = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.SteamCracking)
+    , DistillationTower        = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.DistillationTower)
+    , CryoDistillationTower    = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.CryoDistillationTower)
     // RU / KU machines
-    , Shredder                 = new RecipeMap(null, "gt.recipe.shredder"                , "Shredder"                 , GUI+"Shredder"             , 1,12,1, 0, 0,0, 0, false,false,true ,true )
-    , Lathe                    = new RecipeMap(null, "gt.recipe.lathe"                   , "Lathe"                    , GUI+"Lathe"                , 1, 2,1, 0, 0,0, 0, false,false,true ,true )
-    , Cutter                   = new RecipeMap(null, "gt.recipe.cutter"                  , "Cutter"                   , GUI+"Cutter"               , 1, 3,1, 1, 0,1, 0, false,false,true ,true )
-    , Centrifuge               = new RecipeMap(null, "gt.recipe.centrifuge"              , "Centrifuge"               , GUI+"Centrifuge"           , 1, 6,0, 1, 6,0, 0, false,false,true ,true )
-    , RollingMill              = new RecipeMap(null, "gt.recipe.rollingmill"             , "Rolling Mill"             , GUI+"RollingMill"          , 1, 1,1, 0, 0,0, 0, false,false,true ,true )
-    , RollBender               = new RecipeMap(null, "gt.recipe.rollbender"              , "Roll Bender"              , GUI+"RollBender"           , 1, 1,1, 0, 0,0, 0, false,false,true ,true )
-    , RollFormer               = new RecipeMap(null, "gt.recipe.rollformer"              , "Roll Former"              , GUI+"RollFormer"           , 1, 1,1, 0, 0,0, 0, false,false,true ,true )
-    , ClusterMill              = new RecipeMap(null, "gt.recipe.clustermill"             , "Cluster Mill"             , GUI+"ClusterMill"          , 1, 1,1, 0, 0,0, 0, false,false,true ,true )
-    , Wiremill                 = new RecipeMap(null, "gt.recipe.wiremill"                , "Wiremill"                 , GUI+"Wiremill"             , 1, 1,1, 0, 0,0, 0, false,false,true ,true )
-    , Mixer                    = new RecipeMap(null, "gt.recipe.mixer"                   , "Mixer"                    , GUI+"Mixer"                , 6, 1,0, 6, 2,0, 2, false,false,true ,true )
-    , Loom                     = new RecipeMap(null, "gt.recipe.loom"                    , "Loom"                     , GUI+"Loom"                 , 6, 1,1, 0, 0,0, 0, false,false,true ,true )
-    , Sluice                   = new RecipeMap(null, "gt.recipe.sluice"                  , "Sluice"                   , GUI+"Sluice"               , 1, 9,1, 1, 1,1, 2, false,false,true ,true )
-    , Sharpening               = new RecipeMap(null, "gt.recipe.sharpener"               , "Sharpener"                , GUI+"Sharpener"            , 1, 2,1, 0, 0,0, 0, false,false,true ,true )
-    , BurnMixer                = new RecipeMap(null, "gt.recipe.burnmixer"               , "Burner Mixer"             , GUI+"BurnMixer"            , 6, 1,0, 6, 2,0, 2, false,false,true ,true )
-    , PressureWasher           = new RecipeMap(null, "gt.recipe.pressurewasher"          , "Pressure Washer"          , GUI+"PressureWasher"       , 1, 2,1, 1, 0,1, 0, false,false,true ,true )
-    , Crusher                  = new RecipeMap(null, "gt.recipe.crusher"                 , "Crusher"                  , GUI+"Crusher"              , 1,12,1, 0, 0,0, 0, false,false,true ,true )
-    , Sifting                  = new RecipeMap(null, "gt.recipe.sifter"                  , "Sifter"                   , GUI+"Sifter"               , 1,12,1, 0, 0,0, 0, false,false,true ,true )
-    , Squeezer                 = new RecipeMap(null, "gt.recipe.squeezer"                , "Squeezer"                 , GUI+"Squeezer"             , 1, 2,1, 0, 1,0, 0, false,false,true ,true )
-    , Compressor               = new RecipeMap(null, "gt.recipe.compressor"              , "Compressor"               , GUI+"Compressor"           , 1, 1,1, 0, 0,0, 0, false,false,true ,true )
-    , Press                    = new RecipeMap(null, "gt.recipe.press"                   , "Press"                    , GUI+"Press"                , 3, 1,2, 0, 0,0, 0, false,false,true ,true )
+    , Shredder                 = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Shredder)
+    , Lathe                    = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Lathe)
+    , Cutter                   = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Cutter)
+    , Centrifuge               = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Centrifuge)
+    , RollingMill              = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.RollingMill)
+    , RollBender               = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.RollBender)
+    , RollFormer               = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.RollFormer)
+    , ClusterMill              = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.ClusterMill)
+    , Wiremill                 = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Wiremill)
+    , Mixer                    = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Mixer)
+    , Loom                     = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Loom)
+    , Sluice                   = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Sluice)
+    , Sharpening               = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Sharpening)
+    , BurnMixer                = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.BurnMixer)
+    , PressureWasher           = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.PressureWasher)
+    , Crusher                  = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Crusher)
+    , Sifting                  = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Sifting)
+    , Squeezer                 = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Squeezer)
+    , Compressor               = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Compressor)
+    , Press                    = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Press)
     // Minimal-input validation relaxed vs GT6 (was: 1 item / 2 total): GT6 met those minimums
     // with ST.tag selector pseudo-items, which this port does not have; fluid-only electrolysis
     // (water) and single-dust decomposition are legitimate recipes here.
-    , Electrolyzer             = new RecipeMap(null, "gt.recipe.electrolyzer"            , "Electrolyzer"             , GUI+"Electrolyzer"         , 2, 6,0, 2, 6,0, 1, false,false,true ,true )
-    , Canner                   = new RecipeMap(null, "gt.recipe.canner"                  , "Canning Machine"          , GUI+"Canner"               , 2, 2,1, 1, 1,0, 1, false,false,true ,true )
-    , Injector                 = new RecipeMap(null, "gt.recipe.injector"                , "Injector"                 , GUI+"Injector"             , 2, 1,0, 2, 1,0, 2, false,false,true ,true )
-    , Printer                  = new RecipeMap(null, "gt.recipe.printer"                 , "Printer"                  , GUI+"Printer"              , 2, 1,1, 6, 0,1, 2, false,false,false,false)
-    , ScannerVisuals           = new RecipeMap(null, "gt.recipe.scannervisuals"          , "Scanner (Visuals)"        , GUI+"ScannerVisuals"       , 2, 2,2, 0, 0,0, 2, false,false,true ,true )
-    , Autocrafter              = new RecipeMap(null, "gt.recipe.autocrafting"            , "Crafting"                 , GUI+"Crafting"             , 9,12,1, 0, 0,0, 1, false,false,true ,true )
-    , Slicer                   = new RecipeMap(null, "gt.recipe.slicer"                  , "Slicer"                   , GUI+"Slicer"               , 2, 2,2, 0, 0,0, 2, false,false,true ,true )
-    , Nanofab                  = new RecipeMap(null, "gt.recipe.nanofab"                 , "Nanoscale Fabricator"     , GUI+"Nanofab"              , 2, 1,0, 1, 1,0, 1, false,false,true ,true )
-    , Plantalyzer              = new RecipeMap(null, "gt.recipe.plantalyzer"             , "Plantalyzer"              , GUI+"Plantalyzer"          , 2, 2,0, 1, 0,0, 1, false,false,true ,true )
-    , Bumblelyzer              = new RecipeMap(null, "gt.recipe.bumblelyzer"             , "Bumblelyzer"              , GUI+"Bumblelyzer"          , 2, 2,0, 1, 0,0, 2, false,false,true ,true )
-    , Boxinator                = new RecipeMap(null, "gt.recipe.boxinator"               , "Boxinator"                , GUI+"Boxinator"            , 2, 1,2, 0, 0,0, 0, false,false,true ,true )
-    , Unboxinator              = new RecipeMap(null, "gt.recipe.unboxinator"             , "Unboxinator"              , GUI+"Unboxinator"          , 1,12,1, 0, 0,0, 0, false,false,true ,true )
-    , Polarizer                = new RecipeMap(null, "gt.recipe.polarizer"               , "Polarizer"                , GUI+"Polarizer"            , 1, 1,1, 0, 0,0, 0, false,false,true ,true )
-    , MagneticSeparator        = new RecipeMap(null, "gt.recipe.magneticseparator"       , "Magnetic Separator"       , GUI+"MagneticSeparator"    , 1, 6,0, 1, 6,0, 1, false,false,true ,true )
-    , LaserEngraver            = new RecipeMap(null, "gt.recipe.laserengraver"           , "Precision Laser Engraver" , GUI+"LaserEngraver"        , 2, 1,2, 0, 0,0, 2, false,false,true ,true )
-    , Welder                   = new RecipeMap(null, "gt.recipe.welder"                  , "Welding Machine"          , GUI+"Welder"               , 9, 1,2, 1, 0,0, 2, false,false,true ,true )
-    , Freezer                  = new RecipeMap(null, "gt.recipe.freezer"                 , "Freezer"                  , GUI+"Freezer"              , 1, 1,1, 1, 1,0, 1, false,false,true ,true )
-    , CryoMixer                = new RecipeMap(null, "gt.recipe.cryomixer"               , "Cryo Mixer"               , GUI+"CryoMixer"            , 6, 1,0, 6, 2,0, 2, false,false,true ,true )
-    , Massfab                  = new RecipeMap(null, "gt.recipe.massfab"                 , "Matter Fabricator"        , GUI+"Massfab"              , 2, 1,0, 1, 2,0, 1, false,false,false,false)
-    , ScannerMolecular         = new RecipeMap(null, "gt.recipe.scannermolecular"        , "Molecular Scanner"        , GUI+"ScannerMolecular"     , 2, 1,1, 0, 0,0, 2, false,false,false,false)
-    , Replicator               = new RecipeMap(null, "gt.recipe.replicator"              , "Matter Replicator"        , GUI+"Replicator"           , 3, 3,1, 3, 3,0, 2, false,false,false,false)
-    , Autoclave                = new RecipeMap(null, "gt.recipe.autoclave"               , "Autoclave"                , GUI+"Autoclave"            , 2, 3,2, 1, 1,1, 0, false,false,true ,true )
-    , Bath                     = new RecipeMap(null, "gt.recipe.bath"                    , "Bath"                     , GUI+"Bath"                 , 6, 6,1, 1, 3,1, 2, false,false,true ,true )
-    , Generifier               = new RecipeMap(null, "gt.recipe.generifier"              , "Generifier"               , GUI+"Generifier"           , 1, 1,0, 1, 1,0, 1, false,false,false,false)
-    , Coagulator               = new RecipeMap(null, "gt.recipe.coagulator"              , "Coagulator"               , GUI+"Coagulator"           , 0, 1,0, 1, 0,1, 0, false,false,true ,true )
-    , Fermenter                = new RecipeMap(null, "gt.recipe.fermenter"               , "Fermenter"                , GUI+"Fermenter"            , 1, 1,1, 1, 1,0, 1, false,false,true ,true )
-    , Melter                   = new RecipeMap(null, "gt.recipe.melter"                  , "Melter"                   , GUI+"Melter"               , 1, 1,0, 1, 1,0, 1, false,false,true ,true )
-    , CokeOven                 = new RecipeMap(null, "gt.recipe.cokeoven"                , "Coke Oven"                , GUI+"CokeOven"             , 1, 9,1, 0, 1,0, 1, false,false,true ,true )
-    , Lightning                = new RecipeMap(null, "gt.recipe.lightning"               , "Lightning Processor"      , GUI+"Lightning"            , 6, 6,0, 6, 6,0, 2, false,false,true ,true )
-    , ImplosionCompressor      = new RecipeMap(null, "gt.recipe.implosioncompressor"     , "Implosion Compressor"     , GUI+"ImplosionCompressor"  , 3, 3,3, 0, 0,0, 0, false,false,true ,true )
-    , Fusion                   = new RecipeMap(null, "gt.recipe.fusionreactor"           , "Fusion Reactor"           , GUI+"Fusion"               , 2, 6,1, 2, 6,0, 2, false,false,true ,true )
+    , Electrolyzer             = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Electrolyzer)
+    , Canner                   = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Canner)
+    , Injector                 = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Injector)
+    , Printer                  = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Printer)
+    , ScannerVisuals           = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.ScannerVisuals)
+    , Autocrafter              = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Autocrafter)
+    , Slicer                   = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Slicer)
+    , Nanofab                  = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Nanofab)
+    , Plantalyzer              = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Plantalyzer)
+    , Bumblelyzer              = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Bumblelyzer)
+    , Boxinator                = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Boxinator)
+    , Unboxinator              = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Unboxinator)
+    , Polarizer                = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Polarizer)
+    , MagneticSeparator        = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.MagneticSeparator)
+    , LaserEngraver            = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.LaserEngraver)
+    , Welder                   = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Welder)
+    , Freezer                  = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Freezer)
+    , CryoMixer                = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.CryoMixer)
+    , Massfab                  = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Massfab)
+    , ScannerMolecular         = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.ScannerMolecular)
+    , Replicator               = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Replicator)
+    , Autoclave                = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Autoclave)
+    , Bath                     = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Bath)
+    , Generifier               = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Generifier)
+    , Coagulator               = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Coagulator)
+    , Fermenter                = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Fermenter)
+    , Melter                   = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Melter)
+    , CokeOven                 = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.CokeOven)
+    , Lightning                = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Lightning)
+    , ImplosionCompressor      = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.ImplosionCompressor)
+    , Fusion                   = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Fusion)
 
     // ── Aliases ───────────────────────────────────────────────────────────
     , Oven = Furnace, Cooker = Furnace
     , HeatMixer = Mixer
     , Debarker = PressureWasher
-    , Mortar = new RecipeMap(null, "gt.recipe.mortar", "Mortar", GUI+"Mortar", 1, 2, 1, 0, 0, 0, 0, false, false, true, true)
+    , Mortar = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Mortar)
     , buzzsaw = Cutter
     , sander = Sharpening
     , debarker_alias = PressureWasher
@@ -108,37 +108,37 @@ public class MachineRecipeMaps {
     , electricsifter = Sifting
 
     // ── Misc / special ────────────────────────────────────────────────────
-    , DidYouKnow               = new RecipeMap(null, "gt.recipe.other"                  , "Did you know...?"         , GUI+"Default"              , 6, 6,0, 3, 3,0, 1, false,false,false,false)
+    , DidYouKnow               = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.DidYouKnow)
     , Other = DidYouKnow
-    , ToolHeads                = new RecipeMap(null, "gt.recipe.toolhead"               , "Craft Head on Handle"     , GUI+"Crafting2By2"         , 4, 1,0, 0, 0,0, 0, false,false,false,false)
-    , Cooking                  = new RecipeMap(null, "gt.recipe.cooker"                 , "Cooker"                   , GUI+"Cooker"               , 9, 1,1, 3, 1,1, 2, false,false,true ,true )
+    , ToolHeads                = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.ToolHeads)
+    , Cooking                  = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Cooking)
 
     // ── Deprecated / reserved ──────────────────────────────────────────────
-    , BlastFurnace             = new RecipeMap(null, "gt.recipe.blastfurnace"           , "Blast Furnace"            , GUI+"Default"              , 2, 2,1, 0, 0,0, 0, false,false,true ,true )
-    , VacuumFreezer            = new RecipeMap(null, "gt.recipe.vacuumfreezer"          , "Vacuum Freezer"           , GUI+"Default"              , 1, 1,1, 0, 0,0, 0, false,false,true ,true )
-    , Assembler                = new RecipeMap(null, "gt.recipe.assembler"              , "Assembler"                , GUI+"Assembler"            , 2, 1,1, 1, 0,0, 0, false,false,true ,true )
-    , CNC                      = new RecipeMap(null, "gt.recipe.cncmachine"             , "CNC Machine"              , GUI+"Default"              , 2, 1,2, 1, 0,1, 0, false,false,true ,true )
+    , BlastFurnace             = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.BlastFurnace)
+    , VacuumFreezer            = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.VacuumFreezer)
+    , Assembler                = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Assembler)
+    , CNC                      = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.CNC)
 
     // ── GT6 smeltery / alloying maps ──────────────────────────────────────
     // Both crucible maps carry GT6's NBT/NEI special value: the temperature in Kelvin
     // (RM.java declares "Temperature: " / 1 / " K" for CrucibleAlloying and CrucibleSmelting).
     // Both are instant: the crucible converts the moment the input reaches its melting point, so the
     // recipe viewer must not print a duration for them (RecipeMap#instantRecipes).
-    , CrucibleAlloying         = new RecipeMap(null, "gt.recipe.cruciblealloying"       , "Combination Smelting"     , GUI+"Alloying"             ,12,12,1, 0, 0,0, 0, false,false,true ,true ).specialValueLabel("Temperature: ", 1, " K").instantRecipes()
-    , CrucibleSmelting         = new RecipeMap(null, "gt.recipe.cruciblesmelting"       , "Crucible Smelting"        , GUI+"Default"              , 6, 6,1, 0, 0,0, 0, false,false,true ,true ).specialValueLabel("Temperature: ", 1, " K").instantRecipes()
+    , CrucibleAlloying         = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.CrucibleAlloying)
+    , CrucibleSmelting         = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.CrucibleSmelting)
 
     // ── Extra / utility ───────────────────────────────────────────────────
-    , BedrockOreList           = new RecipeMap(null, "gt.recipe.bedrockorelist"         , "Bedrock Drill"            , GUI+"BedrockOreList"       , 1,12,1, 1, 0,1, 0, false,false,false,false)
-    , ByProductList            = new RecipeMap(null, "gt.recipe.byproductlist"          , "Ore Byproduct List"       , GUI+"OreByproducts"        , 6,12,1, 0, 0,0, 0, false,false,true ,true )
-    , Hammer                   = new RecipeMap(null, "gt.recipe.hammer"                 , "Hammer"                   , GUI+"Hammer"               , 1, 1,1, 0, 0,0, 0, false,false,true ,true )
-    , Chisel                   = new RecipeMap(null, "gt.recipe.chisel"                 , "Chisel"                   , GUI+"Chisel"               , 1, 1,1, 0, 0,0, 0, false,false,true ,true )
-    , Calciner                 = new RecipeMap(null, "gt.recipe.calciner"               , "Calciner"                 , GUI+"Calciner"             , 3, 3,0, 3, 3,0, 2, false,false,true ,true )
-    , Juicer                   = new RecipeMap(null, "gt.recipe.juicer"                 , "Juicer"                   , GUI+"Juicer"               , 1, 3,1, 0, 1,0, 0, false,false,true ,true )
-    , Anvil                    = new RecipeMap(null, "gt.recipe.anvil"                  , "Anvil"                    , GUI+"Anvil"                , 2, 2,2, 0, 0,0, 0, false,false,true ,true )
-    , AnvilBendSmall           = new RecipeMap(null, "gt.recipe.anvil.bend.small"       , "Anvil Bending (Small)"    , GUI+"AnvilBendingSmall"    , 2, 2,2, 0, 0,0, 0, false,false,true ,true )
-    , AnvilBendBig             = new RecipeMap(null, "gt.recipe.anvil.bend.big"         , "Anvil Bending (Big)"      , GUI+"AnvilBendingBig"      , 2, 2,2, 0, 0,0, 0, false,false,true ,true )
-    , BumbleQueens             = new RecipeMap(null, "gt.recipe.bumblequeen"            , "Bumblebee Queen"          , GUI+"Default"              , 2, 6,0, 0, 0,0, 1, false,false,true ,true )
-    , Trees                    = new RecipeMap(null, "gt.recipe.trees"                  , "Family Tree"              , GUI+"FamilyTree"           , 3,12,0, 0, 0,0, 1, false,false,true ,true )
+    , BedrockOreList           = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.BedrockOreList)
+    , ByProductList            = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.ByProductList)
+    , Hammer                   = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Hammer)
+    , Chisel                   = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Chisel)
+    , Calciner                 = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Calciner)
+    , Juicer                   = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Juicer)
+    , Anvil                    = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Anvil)
+    , AnvilBendSmall           = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.AnvilBendSmall)
+    , AnvilBendBig             = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.AnvilBendBig)
+    , BumbleQueens             = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.BumbleQueens)
+    , Trees                    = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Trees)
     ;
 
     // -- Dynamic (input-computed) providers -------------------------------
@@ -427,5 +427,13 @@ public class MachineRecipeMaps {
         if (invalid(aInput) || aOutputs == null || aOutputs.length <= 0 || invalid(aOutputs[0])) return false;
         Lathe.addRecipe1(true, aEUt, aDuration, aInput, aOutputs);
         return true;
+    }
+    private static com.gregtech.gregtech.api.recipe.RecipeMap fromDefinition(com.gregtech.gregtech.api.recipe.RecipeMapSpec spec) {
+        var map=new com.gregtech.gregtech.api.recipe.RecipeMap(null,spec.mNameInternal,spec.mNameLocal,spec.mGUIPath,
+                spec.mInputItemsCount,spec.mOutputItemsCount,spec.mMinimalInputItems,
+                spec.mInputFluidCount,spec.mOutputFluidCount,spec.mMinimalInputFluids,spec.mMinimalInputs,
+                spec.mNeedsOutputs,spec.mCombinePower,spec.mUseBucketSizeIn,spec.mUseBucketSizeOut);
+        map.specialValueLabel(spec.mSpecialValuePre,spec.mSpecialValueMultiplier,spec.mSpecialValuePost);
+        if(spec.mInstantRecipes)map.instantRecipes();return map;
     }
 }

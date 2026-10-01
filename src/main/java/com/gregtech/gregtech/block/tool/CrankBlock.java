@@ -101,10 +101,10 @@ public class CrankBlock extends DirectionalBlock {
      * for as long as a player keeps targeting the crank ({@code :76-96}); half a second is the port's
      * stand-in for "the player let go".
      */
-    public static final int ACTIVE_TICKS = 10;
+    public static final int ACTIVE_TICKS = com.gregtech.gregtech.content.tool.UtilityToolRules.CRANK_TICKS;
 
     /** GT6's redstone value while active ({@code MultiTileEntityCrank:116}). */
-    public static final int ACTIVE_SIGNAL = 15;
+    public static final int ACTIVE_SIGNAL = com.gregtech.gregtech.content.tool.UtilityToolRules.CRANK_SIGNAL;
 
     private static final VoxelShape[] SHAPES = new VoxelShape[6];
     static {
@@ -202,7 +202,7 @@ public class CrankBlock extends DirectionalBlock {
             Direction mounting = handle.getOpposite();
             long strength = 2L + effectLevel(player, net.minecraft.world.effect.MobEffects.DAMAGE_BOOST);
             long weakness = 1 + effectLevel(player, net.minecraft.world.effect.MobEffects.WEAKNESS);
-            long speed = -((8 * strength + weakness - 1) / weakness);
+            long speed = com.gregtech.gregtech.content.tool.UtilityToolRules.crankSize((int)(strength-2),(int)(weakness-1));
 
             // GT6 MultiTileEntityCrank:78/193: the packet goes into the block the crank is mounted on,
             // i.e. the machine on the side opposite the handle. There is no machine on most cranks, and

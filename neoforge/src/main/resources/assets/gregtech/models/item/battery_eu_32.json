@@ -1,0 +1,47 @@
+{
+  "parent": "gregtech:block/chemical_battery/advanced_32_0",
+  "overrides": [
+    {
+      "predicate": {
+        "gregtech:battery_charge": 0.14285714285714285
+      },
+      "model": "gregtech:block/chemical_battery/advanced_32_1"
+    },
+    {
+      "predicate": {
+        "gregtech:battery_charge": 0.2857142857142857
+      },
+      "model": "gregtech:block/chemical_battery/advanced_32_2"
+    },
+    {
+      "predicate": {
+        "gregtech:battery_charge": 0.42857142857142855
+      },
+      "model": "gregtech:block/chemical_battery/advanced_32_3"
+    },
+    {
+      "predicate": {
+        "gregtech:battery_charge": 0.5714285714285714
+      },
+      "model": "gregtech:block/chemical_battery/advanced_32_4"
+    },
+    {
+      "predicate": {
+        "gregtech:battery_charge": 0.7142857142857143
+      },
+      "model": "gregtech:block/chemical_battery/advanced_32_5"
+    },
+    {
+      "predicate": {
+        "gregtech:battery_charge": 0.8571428571428571
+      },
+      "model": "gregtech:block/chemical_battery/advanced_32_6"
+    },
+    {
+      "predicate": {
+        "gregtech:battery_charge": 1.0
+      },
+      "model": "gregtech:block/chemical_battery/advanced_32_7"
+    }
+  ]
+}

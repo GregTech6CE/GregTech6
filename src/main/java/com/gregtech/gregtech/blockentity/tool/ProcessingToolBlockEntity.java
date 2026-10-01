@@ -34,16 +34,17 @@ public final class ProcessingToolBlockEntity extends BlockEntity implements Bloc
     public ProcessingToolBlockEntity(BlockPos pos, BlockState state) {
         super(GTBlockEntities.PROCESSING_TOOL.get(), pos, state);
         String id = ((ProcessingToolBlock)state.getBlock()).toolId();
-        juicer = id.equals("juicer");
-        wooden = id.equals("bathing_pot_wood") || id.equals("bathing_pot_table_wood");
-        bowl = id.equals("mixing_bowl") || id.equals("mixing_bowl_table");
+        var profile=com.gregtech.gregtech.content.tool.OpenVesselRules.profile(id);
+        juicer = profile.juicer();
+        wooden = profile.wooden();
+        bowl = profile.bowl();
         recipes = juicer ? MachineRecipeMaps.Juicer : id.startsWith("bathing_pot") ? MachineRecipeMaps.Bath : MachineRecipeMaps.Mixer;
         items = new ItemStackHandler(recipes.mInputItemsCount + recipes.mOutputItemsCount) {
             @Override public boolean isItemValid(int slot, ItemStack stack) { return slot < recipes.mInputItemsCount && recipes.containsInput(stack); }
             @Override protected void onContentsChanged(int slot) { changed(); }
         };
-        inputs = tanks(recipes.mInputFluidCount, wooden ? 4000 : 8000);
-        outputs = tanks(recipes.mOutputFluidCount, juicer ? 1000000 : wooden ? 4000 : 8000);
+        inputs = tanks(recipes.mInputFluidCount, com.gregtech.gregtech.content.tool.OpenVesselRules.inputCapacity(wooden));
+        outputs = tanks(recipes.mOutputFluidCount, com.gregtech.gregtech.content.tool.OpenVesselRules.outputCapacity(juicer,wooden));
         itemHandler = new IItemHandler() {
             public int getSlots() { return items.getSlots(); }
             public ItemStack getStackInSlot(int slot) { return items.getStackInSlot(slot); }
@@ -71,22 +72,17 @@ public final class ProcessingToolBlockEntity extends BlockEntity implements Bloc
         var entry = com.gregtech.gregtech.registry.GTFluids.entryForFluid(fluid);
         long temperature = entry == null ? fluid.getFluidType().getTemperature() : entry.temperature();
         int density = fluid.getFluidType().getDensity();
-        if (density <= 0) return false;
         long limit = inputs.length == 0 ? Long.MAX_VALUE : inputs[0].maxTemperature();
-        if (wooden ? temperature > limit : temperature >= limit) return false;
         boolean simple = fluid == net.minecraft.world.level.material.Fluids.WATER
                 || fluid == net.minecraft.world.level.material.Fluids.FLOWING_WATER
                 || entry != null && entry.hasFlag(com.gregtech.gregtech.data.RegisteredFluids.FluidFlags.SIMPLE);
-        if (bowl && !simple) return false;
-        if (wooden && (!simple || com.gregtech.gregtech.api.fluid.FluidHazards.isGas(fluid)
-                || com.gregtech.gregtech.api.fluid.FluidHazards.isAcid(fluid)
-                || entry != null && entry.hasFlag(com.gregtech.gregtech.data.RegisteredFluids.FluidFlags.MAGIC))) return false;
-        return true;
+        return com.gregtech.gregtech.content.tool.OpenVesselRules.accepts(wooden,bowl,temperature,limit,density,simple,
+                com.gregtech.gregtech.api.fluid.FluidHazards.isGas(fluid),com.gregtech.gregtech.api.fluid.FluidHazards.isAcid(fluid),
+                entry != null && entry.hasFlag(com.gregtech.gregtech.data.RegisteredFluids.FluidFlags.MAGIC));
     }
     /** Original GT6: collect rainfall every 600 ticks, doubled during thunderstorms. */
     public static int rainfallAmount(float downfall, float temperature, boolean thunder) {
-        if (!Float.isFinite(downfall) || !Float.isFinite(temperature) || downfall <= 0 || temperature < 0.2F) return 0;
-        return (int) Math.min(8000, Math.max(1, (long)(downfall * 200)) * (thunder ? 2L : 1L));
+        return com.gregtech.gregtech.content.tool.OpenVesselRules.rainfallAmount(downfall,temperature,thunder);
     }
     public void collectRain() {
         if (juicer || level == null || level.isClientSide || !level.isRainingAt(worldPosition.above())) return;
@@ -118,7 +114,7 @@ public final class ProcessingToolBlockEntity extends BlockEntity implements Bloc
     public boolean process(Player player) {
         if (juicer || level == null || level.isClientSide) return false;
         for (var recipe : recipes.mRecipeList) {
-            if (!recipe.mEnabled || recipe.mFakeRecipe || recipe.mEUt < 0 || recipe.mEUt > 32) continue;
+            if (!recipe.mEnabled || recipe.mFakeRecipe || !com.gregtech.gregtech.content.tool.OpenVesselRules.recipePower(recipe.mEUt)) continue;
             var remaining = RecipeInputs.consume(recipe, inputItems(), inputFluids(), 1);
             if (remaining == null || !canOutput(recipe)) continue;
             for (int i=0;i<remaining.items().size();i++) items.setStackInSlot(i, remaining.items().get(i));
@@ -130,7 +126,7 @@ public final class ProcessingToolBlockEntity extends BlockEntity implements Bloc
             }
             for (int i=0;i<recipe.mFluidOutputs.length;i++) outputs[i].fill(recipe.mFluidOutputs[i], IFluidHandler.FluidAction.EXECUTE);
             if (player != null) {
-                double divisor = juicer ? 10000 : recipes == MachineRecipeMaps.Bath ? 1000 : 250;
+                double divisor = com.gregtech.gregtech.content.tool.OpenVesselRules.exhaustionDivisor(juicer,recipes==MachineRecipeMaps.Bath);
                 player.causeFoodExhaustion((float)Math.min(Float.MAX_VALUE, Math.abs((double)recipe.mEUt)*recipe.mDuration/divisor));
             }
             changed(); return true;
@@ -194,7 +190,7 @@ public final class ProcessingToolBlockEntity extends BlockEntity implements Bloc
         var held=player.getItemInHand(hand);
         if (held.isEmpty()) return false;
         for (var recipe:recipes.mRecipeList) {
-            if (!recipe.mEnabled || recipe.mFakeRecipe || recipe.mEUt<0 || recipe.mEUt>32) continue;
+            if (!recipe.mEnabled || recipe.mFakeRecipe || !com.gregtech.gregtech.content.tool.OpenVesselRules.recipePower(recipe.mEUt)) continue;
             var remaining=RecipeInputs.consume(recipe,List.of(held),List.of(),1);
             if (remaining==null || !canOutput(recipe)) continue;
             if (!player.getAbilities().instabuild) player.setItemInHand(hand,remaining.items().get(0));

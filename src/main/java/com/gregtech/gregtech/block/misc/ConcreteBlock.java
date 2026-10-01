@@ -39,9 +39,7 @@ public final class ConcreteBlock extends Block {
     private static final TagKey<Item> IRON_RODS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge", "rods/iron"));
     private static final TagKey<Item> STEEL_RODS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge", "rods/steel"));
     // GT6 ANY.Iron:119 accepts these iron/steel material aliases for its stick form.
-    private static final Set<String> IRON_FAMILY = Set.of("Iron", "WroughtIron", "IronCast",
-            "IronCompressed", "PigIron", "MeteoricIron", "Meteorite", "Enori", "Steel",
-            "Knightmetal", "MeteoricSteel");
+    private static final Set<String> IRON_FAMILY=com.gregtech.gregtech.block.ConstructionRules.IRON_FAMILY;
     private final boolean reinforced;
 
     public ConcreteBlock(boolean reinforced, Properties properties) {
@@ -77,24 +75,7 @@ public final class ConcreteBlock extends Block {
 
     /** GT6 CS.DYES_INT, in DyeColor rather than GT6 metadata order. */
     public static int tint(DyeColor color) {
-        return switch (color) {
-            case BLACK -> 0x202020;
-            case RED -> 0xFF0000;
-            case GREEN -> 0x00FF00;
-            case BROWN -> 0x604000;
-            case BLUE -> 0x0000FF;
-            case PURPLE -> 0x800080;
-            case CYAN -> 0x00FFFF;
-            case LIGHT_GRAY -> 0xC0C0C0;
-            case GRAY -> 0x808080;
-            case PINK -> 0xFFC0C0;
-            case LIME -> 0x80FF80;
-            case YELLOW -> 0xFFFF00;
-            case LIGHT_BLUE -> 0x8080FF;
-            case MAGENTA -> 0xFF00FF;
-            case ORANGE -> 0xFF8000;
-            case WHITE -> 0xFFFFFF;
-        };
+        return com.gregtech.gregtech.block.ConstructionRules.tint(color.getName());
     }
 
     @Override

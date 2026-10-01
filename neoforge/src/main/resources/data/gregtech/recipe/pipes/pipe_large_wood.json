@@ -1,0 +1,25 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "WWs",
+    "W W",
+    "rWW"
+  ],
+  "key": {
+    "s": {
+      "item": "gregtech:tool_saw"
+    },
+    "r": {
+      "item": "gregtech:tool_soft_hammer"
+    },
+    "W": {
+      "tag": "gregtech:wooden_planks"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "gregtech:pipe_large_wood"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

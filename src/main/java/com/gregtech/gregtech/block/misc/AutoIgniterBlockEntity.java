@@ -24,11 +24,11 @@ public class AutoIgniterBlockEntity extends AutoToolBlockEntity {
         return 1;
     }
     @Override public void tick() {
-        if(level==null || level.isClientSide || level.getGameTime()%10!=0) return;
+        if(level==null || level.isClientSide || !com.gregtech.gregtech.content.tool.AutomaticToolRules.igniterDue(level.getGameTime())) return;
         if(cooldown>0) { cooldown--;setChanged(); }
         if(stopped || energy==0) return;
         var target=worldPosition.relative(facing());
-        boolean success=level.getBlockEntity(target) instanceof PoweredToolTarget tool && tool.usePoweredIgniter(facing().getOpposite(),energy*20,quality());
+        boolean success=level.getBlockEntity(target) instanceof PoweredToolTarget tool && tool.usePoweredIgniter(facing().getOpposite(),com.gregtech.gregtech.content.tool.AutomaticToolRules.igniterBudget(energy),quality());
         var state=level.getBlockState(target);
         if(!success && (CampfireBlock.canLight(state) || CandleBlock.canLight(state) || CandleCakeBlock.canLight(state))) {
             level.setBlockAndUpdate(target,state.setValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.LIT,true)); success=true;
@@ -37,9 +37,9 @@ public class AutoIgniterBlockEntity extends AutoToolBlockEntity {
             level.setBlockAndUpdate(target,BaseFireBlock.getState(level,target));success=true;
         }
         if(success) level.playSound(null,target,SoundEvents.FLINTANDSTEEL_USE,SoundSource.BLOCKS,1,1);
-        energy=0;cooldown=10;setChanged();
+        energy=0;cooldown=com.gregtech.gregtech.content.tool.AutomaticToolRules.RECHARGE_STEPS;setChanged();
     }
     public int cooldown() { return cooldown; }
     @Override protected void saveAdditional(CompoundTag tag) { super.saveAdditional(tag);tag.putInt("gt.cooldown",cooldown); }
-    @Override public void load(CompoundTag tag) { super.load(tag);cooldown=Math.max(0,Math.min(10,tag.getInt("gt.cooldown"))); }
+    @Override public void load(CompoundTag tag) { super.load(tag);cooldown=Math.max(0,Math.min(com.gregtech.gregtech.content.tool.AutomaticToolRules.RECHARGE_STEPS,tag.getInt("gt.cooldown"))); }
 }

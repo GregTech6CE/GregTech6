@@ -14,7 +14,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 public final class GTToolItems {
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, GregTech.MODID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, GregTech.NAMESPACE);
 
     private static final Map<GTToolType, RegistryObject<GTToolItem>> BY_TYPE = new EnumMap<>(GTToolType.class);
 

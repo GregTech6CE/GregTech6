@@ -103,9 +103,11 @@ public class HopperBlockEntity extends BlockEntity implements IItemHandler, IIte
 
     private void tickServer() {
         int tMovedItems = 0;
+        boolean processed = false;
         if (mCheck > 0) {
             mCheck--;
         } else if ((mCheck == 0 || inventoryChanged || blockUpdated) && !hasRedstoneIncomingFromNonRail()) {
+            processed = true;
             Direction facing = getFacing();
             // Phase 1: Output — push items out the facing side (skip UP, skip rail-without-cart)
             if (facing != Direction.UP && !invEmpty()) {
@@ -161,8 +163,8 @@ public class HopperBlockEntity extends BlockEntity implements IItemHandler, IIte
                 notifyAdjacentInventoryUpdatables(facing);
             }
         }
-        inventoryChanged = false;
-        blockUpdated = false;
+        // Retain work notifications until the cooldown/redstone gate permits processing.
+        if (processed) { inventoryChanged = false; blockUpdated = false; }
         if (tMovedItems > 0) setChanged();
 
         // Suction: idle check every 20t, switch to every-tick active while items present
@@ -433,6 +435,7 @@ public class HopperBlockEntity extends BlockEntity implements IItemHandler, IIte
         if (!simulate) {
             ItemStack result = stack.split(toExtract);
             if (stack.isEmpty()) inventory.set(slot, ItemStack.EMPTY);
+            inventoryChanged = true;
             setChanged();
             return result;
         }
@@ -443,7 +446,7 @@ public class HopperBlockEntity extends BlockEntity implements IItemHandler, IIte
     public int getSlotLimit(int slot) { return getSlotLimitFor(slot); }
 
     private int getSlotLimitFor(int slot) {
-        return mMode <= 0 ? 64 : mMode * Math.max(1, 64 / mMode);
+        return com.gregtech.gregtech.content.transport.HopperControlRules.slotLimit(mMode,false);
     }
 
     @Override
@@ -537,13 +540,7 @@ public class HopperBlockEntity extends BlockEntity implements IItemHandler, IIte
     // ── Wrench / tool interaction ───────────────────────────────────────
 
     public void cycleMode(boolean sneak) {
-        if (sneak) {
-            if (--mMode < 0) mMode = 64;
-        } else {
-            if (++mMode > 64) mMode = 0;
-        }
-        setChanged();
-        syncToClient();
+        mMode=com.gregtech.gregtech.content.transport.HopperControlRules.cycle(mMode,sneak,false);setChanged();syncToClient();
     }
 
     public void toggleExactMode() {

@@ -32,7 +32,7 @@ import org.jetbrains.annotations.Nullable;
 /** GT6's 19000 USB switch (16 sticks) and 19001 HDD switch (one drive, 16 files). */
 public class UsbSwitchBlockEntity extends BlockEntity
         implements UsbDataPort, PanelCoverHost, MachineControl.Provider, MenuProvider {
-    public static final int USB_SLOTS = 16;
+    public static final int USB_SLOTS = com.gregtech.gregtech.content.data.UsbDataRules.FILES;
     public static final int HDD_SLOTS = 1;
 
     private final UsbSwitchBlock.Kind kind;
@@ -78,7 +78,7 @@ public class UsbSwitchBlockEntity extends BlockEntity
 
     /** Selector cover modes are 0..15; changing mode affects the next adjacent USB read. */
     public int setMode(int value) {
-        int next = Math.max(0, Math.min(15, value));
+        int next = com.gregtech.gregtech.content.data.UsbDataRules.mode(value);
         if (mode != next && !isRemoved() && (level == null || !level.isClientSide)) {
             mode = next;
             setChanged();
@@ -173,7 +173,7 @@ public class UsbSwitchBlockEntity extends BlockEntity
     }
     @Override public void load(CompoundTag tag) {
         super.load(tag);
-        mode = Math.max(0, Math.min(15, tag.getInt("gt.mode")));
+        mode = com.gregtech.gregtech.content.data.UsbDataRules.mode(tag.getInt("gt.mode"));
         CompoundTag inventory = tag.getCompound("gt_switch").copy();
         inventory.putInt("Size", items.getSlots());
         items.deserializeNBT(inventory);

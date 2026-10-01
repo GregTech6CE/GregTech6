@@ -42,9 +42,7 @@ public class DustFunnelBlockEntity extends BlockEntity {
     public static boolean isDust(ItemStack stack) {
         if (!(stack.getItem() instanceof MaterialItem mat)) return false;
         MaterialPrefix prefix = mat.getPrefix();
-        return (prefix == MaterialPrefix.dust || prefix == MaterialPrefix.dustSmall
-                || prefix == MaterialPrefix.dustTiny || prefix == MaterialPrefix.dustDiv72)
-                && CrucibleItemInput.isValid(stack);
+        return com.gregtech.gregtech.content.tool.UtilityToolRules.dust(prefix.getName()) && CrucibleItemInput.isValid(stack);
     }
 
     /** @return how many items were taken from the held stack */
@@ -61,7 +59,7 @@ public class DustFunnelBlockEntity extends BlockEntity {
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, DustFunnelBlockEntity funnel) {
-        if (level.getGameTime() % 5 != 0) return;
+        if (!com.gregtech.gregtech.content.tool.UtilityToolRules.dustDue(level.getGameTime())) return;
         ItemStack stack = funnel.buffer.getStackInSlot(0);
         if (stack.isEmpty()) return;
         if (!(level.getBlockEntity(pos.below()) instanceof SmeltingCrucibleBlockEntity crucible)) return;

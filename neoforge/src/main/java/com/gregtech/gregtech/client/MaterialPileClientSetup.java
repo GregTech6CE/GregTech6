@@ -1,0 +1,4 @@
+package com.gregtech.gregtech.client;
+import com.gregtech.gregtech.registry.GTMaterialPiles;import com.gregtech.gregtech.blockentity.misc.PileBlockEntity;import net.neoforged.fml.common.EventBusSubscriber;import net.neoforged.bus.api.SubscribeEvent;import net.neoforged.api.distmarker.Dist;import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
+@EventBusSubscriber(modid = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID,bus=EventBusSubscriber.Bus.MOD,value=Dist.CLIENT)
+public final class MaterialPileClientSetup {@SubscribeEvent public static void blocks(RegisterColorHandlersEvent.Block e){for(var b:GTMaterialPiles.all())e.register((s,l,p,t)->{if(t==0&&l!=null&&p!=null&&l.getBlockEntity(p) instanceof PileBlockEntity pile){var material=PileBlockEntity.materialOf(pile.stored());if(material!=null)return material.getColor();}return 0xFFFFFF;},b.get());}}

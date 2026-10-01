@@ -23,7 +23,7 @@ import net.minecraftforge.registries.RegistryObject;
  */
 public final class GTFeatures {
     public static final DeferredRegister<Feature<?>> FEATURES =
-            DeferredRegister.create(ForgeRegistries.FEATURES, GregTech.MODID);
+            DeferredRegister.create(ForgeRegistries.FEATURES, GregTech.NAMESPACE);
 
     /** Large layered ore veins (GT6 {@code WorldgenOresLarge}). */
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> ORE_VEIN =

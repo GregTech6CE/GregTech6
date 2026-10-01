@@ -10,6 +10,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.slf4j.Logger;
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ import java.util.TreeMap;
 public final class GTItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(GregTechNeoForge.NAMESPACE);
     private static final Logger LOGGER = LogUtils.getLogger();
-    public record CreativeEntry(GTMaterial material, DeferredItem<MaterialItem> item) {}
+    public record CreativeEntry(GTMaterial material, DeferredHolder<Item, ? extends Item> item) {}
     private static final Map<String, NavigableMap<String, CreativeEntry>> BY_PREFIX = new HashMap<>();
     private static final List<DeferredItem<MaterialItem>> ALL = new ArrayList<>();
     private static boolean initialized;
@@ -43,7 +44,7 @@ public final class GTItems {
                         definition.baseItemId(), material.getName(), material.getId(), definition.itemId());
             }
             DeferredItem<MaterialItem> item = ITEMS.register(definition.itemId(), () ->
-                    new MaterialItem(new Item.Properties().stacksTo(64), prefix, material));
+                    prefix==MaterialPrefix.coin?new com.gregtech.gregtech.item.CoinItem(new Item.Properties().stacksTo(64),material):new MaterialItem(new Item.Properties().stacksTo(64), prefix, material));
             bind(prefix, material, item);
             ALL.add(item);
         }
@@ -52,7 +53,7 @@ public final class GTItems {
         return ALL.size();
     }
 
-    public static void bind(MaterialPrefix prefix, GTMaterial material, DeferredItem<MaterialItem> item) {
+    public static void bind(MaterialPrefix prefix, GTMaterial material, DeferredHolder<Item, ? extends Item> item) {
         BY_PREFIX.computeIfAbsent(prefix.getName(), ignored -> new TreeMap<>(
                         String.CASE_INSENSITIVE_ORDER.thenComparing(Comparator.naturalOrder())))
                 .put(material.getName(), new CreativeEntry(material, item));
@@ -62,7 +63,7 @@ public final class GTItems {
         return prefix.getName() + "/" + material.getName();
     }
 
-    public static DeferredItem<MaterialItem> getObject(MaterialPrefix prefix, GTMaterial material) {
+    public static DeferredHolder<Item, ? extends Item> getObject(MaterialPrefix prefix, GTMaterial material) {
         var entries = BY_PREFIX.get(prefix.getName());
         var entry = entries == null ? null : entries.get(material.getName());
         return entry == null ? null : entry.item();
@@ -73,7 +74,7 @@ public final class GTItems {
     }
 
     public static ItemStack getStack(MaterialPrefix prefix, GTMaterial material, int count) {
-        DeferredItem<MaterialItem> item = getObject(prefix, material);
+        DeferredHolder<Item, ? extends Item> item = getObject(prefix, material);
         return item == null ? ItemStack.EMPTY : new ItemStack(item.get(), count);
     }
 

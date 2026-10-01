@@ -58,19 +58,10 @@ public class TreeHoleBlockEntity extends BlockEntity {
     }
 
     /** GT6 {@code tLeavesCount > …} gates: 60 rubber, 250 maple/rainbowood. */
-    public static int threshold(WoodSpecies species) {
-        return species == WoodSpecies.RUBBER ? 60 : 250;
-    }
+    public static int threshold(WoodSpecies species){return com.gregtech.gregtech.worldgen.TreeSpeciesRules.threshold(species);}
 
     /** GT6's roll divisors: {@code rng(260)} / {@code rng(560)} / {@code rng(420)}. */
-    public static int divisor(WoodSpecies species) {
-        return switch (species) {
-            case RUBBER -> 260;
-            case MAPLE -> 560;
-            case RAINBOWOOD -> 420;
-            default -> 1; // no GT6 hole exists for the other species
-        };
-    }
+    public static int divisor(WoodSpecies species){return com.gregtech.gregtech.worldgen.TreeSpeciesRules.divisor(species);}
 
     /**
      * GT6's per-species leaf counting: the hole walks up its trunk to the tree top and then checks

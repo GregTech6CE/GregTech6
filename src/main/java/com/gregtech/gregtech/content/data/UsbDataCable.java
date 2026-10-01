@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 
 /** GT6 USB cable item: resolves a directly adjacent port, optionally pinned to gt.usb.dir. */
 public final class UsbDataCable {
-    public static final String NBT_DIRECTION = "gt.usb.dir";
+    public static final String NBT_DIRECTION = UsbDataRules.DIRECTION;
     private UsbDataCable() {}
 
     @Nullable

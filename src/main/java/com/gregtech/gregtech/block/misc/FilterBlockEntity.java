@@ -17,14 +17,14 @@ import net.minecraftforge.fluids.*;
 /** Filter templates are ghosts, never stored cargo. Both insertion and extraction obey the same rule. */
 public class FilterBlockEntity extends CapabilityRelayBlockEntity implements MenuProvider, LogisticsSemiFilteredItem {
     private boolean blacklist;
-    private final SimpleContainer templates=new SimpleContainer(54) {
+    private final SimpleContainer templates=new SimpleContainer(com.gregtech.gregtech.content.logistics.FilterPolicy.TEMPLATES) {
         @Override public void setChanged() { super.setChanged();FilterBlockEntity.this.setChanged(); }
     };
     public FilterBlockEntity(BlockPos pos,BlockState state) { super(com.gregtech.gregtech.registry.GTBlockEntities.FILTER.get(),pos,state); }
     public SimpleContainer templates() { return templates; }
     public boolean blacklist() { return blacklist; }
     public void toggleMode() { blacklist=!blacklist;setChanged(); }
-    public void setTemplate(int slot,ItemStack stack) { if(slot>=0&&slot<54) templates.setItem(slot,prefixMode()&&slot!=0?ItemStack.EMPTY:stack.copyWithCount(1)); }
+    public void setTemplate(int slot,ItemStack stack) { if(slot>=0&&slot<com.gregtech.gregtech.content.logistics.FilterPolicy.TEMPLATES) templates.setItem(slot,prefixMode()&&slot!=0?ItemStack.EMPTY:stack.copyWithCount(1)); }
     public boolean prefixMode() { return kind().equals("oredict"); }
     public void clearFilter() { blacklist=false;templates.clearContent();setChanged(); }
     public String selectedPrefix() { return com.gregtech.gregtech.content.logistics.FilterRules.prefix(templates.getItem(0)); }
@@ -34,8 +34,8 @@ public class FilterBlockEntity extends CapabilityRelayBlockEntity implements Men
             String prefix = selectedPrefix();
             return prefix.isEmpty() ? null : LogisticsItemFilter.prefix(prefix);
         }
-        var selected = new java.util.ArrayList<ItemStack>(54);
-        for (int i = 0; i < 54; i++) selected.add(templates.getItem(i));
+        var selected = new java.util.ArrayList<ItemStack>(com.gregtech.gregtech.content.logistics.FilterPolicy.TEMPLATES);
+        for (int i = 0; i < com.gregtech.gregtech.content.logistics.FilterPolicy.TEMPLATES; i++) selected.add(templates.getItem(i));
         return LogisticsItemFilter.items(selected);
     }
     private String kind() { return ((FilterBlock)getBlockState().getBlock()).filterType(); }
@@ -59,25 +59,25 @@ public class FilterBlockEntity extends CapabilityRelayBlockEntity implements Men
             return !selected.isEmpty()&&(blacklist!=selected.equals(com.gregtech.gregtech.content.logistics.FilterRules.prefix(stack)));
         }
         boolean found=false;
-        for(int i=0;i<54&&!found;i++)found=com.gregtech.gregtech.content.logistics.FilterRules.itemMatches(templates.getItem(i),stack);
-        return blacklist!=found;
+        for(int i=0;i<com.gregtech.gregtech.content.logistics.FilterPolicy.TEMPLATES&&!found;i++)found=com.gregtech.gregtech.content.logistics.FilterRules.itemMatches(templates.getItem(i),stack);
+        return com.gregtech.gregtech.content.logistics.FilterPolicy.allows(blacklist,found);
     }
     @Override public boolean permitsFluid(FluidStack stack) {
         if(stack.isEmpty())return false;
         if(prefixMode())return true;
         boolean found=false;
-        for(int i=0;i<54&&!found;i++) {
+        for(int i=0;i<com.gregtech.gregtech.content.logistics.FilterPolicy.TEMPLATES&&!found;i++) {
             var template=templates.getItem(i);var fluid=FluidDisplayBinding.resolve(template);
             if(fluid.isEmpty())fluid=FluidUtil.getFluidContained(template).orElse(FluidStack.EMPTY);
             found=!fluid.isEmpty()&&fluid.getFluid()==stack.getFluid();
         }
-        return blacklist!=found;
+        return com.gregtech.gregtech.content.logistics.FilterPolicy.allows(blacklist,found);
     }
     @Override public Component getDisplayName() { return Component.translatable(prefixMode()?"gregtech.filter.prefix_title":"gregtech.filter.title"); }
     @Override public AbstractContainerMenu createMenu(int id,Inventory inventory,Player player) { return new com.gregtech.gregtech.client.gui.FilterMenu(id,inventory,this); }
     @Override protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);tag.putBoolean("gt.blacklist",blacklist);var list=new ListTag();
-        for(int i=0;i<54;i++) if(!templates.getItem(i).isEmpty()) { var entry=templates.getItem(i).save(new CompoundTag());entry.putInt("Slot",i);list.add(entry); }
+        for(int i=0;i<com.gregtech.gregtech.content.logistics.FilterPolicy.TEMPLATES;i++) if(!templates.getItem(i).isEmpty()) { var entry=templates.getItem(i).save(new CompoundTag());entry.putInt("Slot",i);list.add(entry); }
         tag.put("gt.filter_templates",list);
     }
     @Override public void load(CompoundTag tag) {

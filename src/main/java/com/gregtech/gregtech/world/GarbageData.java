@@ -32,7 +32,7 @@ public class GarbageData extends SavedData {
      * Past this cap the oldest pile is dropped, which bounds the dump while leaving the behaviour for
      * every dump a player can actually reach through the container (it shows 54 piles) unchanged.</p>
      */
-    public static final int MAX_ENTRIES = 256;
+    public static final int MAX_ENTRIES = com.gregtech.gregtech.content.storage.GarbageStorageRules.MAX_ENTRIES;
 
     /** One merged garbage pile: an item template (count 1) plus an unbounded count. */
     private static final class Entry {
@@ -71,8 +71,7 @@ public class GarbageData extends SavedData {
         if (fluid == null || fluid.isEmpty()) return;
         for (FluidStack f : fluids) {
             if (f.isFluidEqual(fluid)) {
-                long sum = (long) f.getAmount() + fluid.getAmount();
-                f.setAmount((int) Math.min(Integer.MAX_VALUE, sum));
+                f.setAmount(com.gregtech.gregtech.content.storage.GarbageStorageRules.fluidMerge(f.getAmount(),fluid.getAmount()));
                 setDirty();
                 return;
             }
@@ -100,13 +99,13 @@ public class GarbageData extends SavedData {
     public ItemStack viewItem(int slot) {
         if (slot < 0 || slot >= items.size()) return ItemStack.EMPTY;
         Entry e = items.get(slot);
-        return e.template.copyWithCount((int) Math.min(e.count, e.template.getMaxStackSize()));
+        return e.template.copyWithCount(com.gregtech.gregtech.content.storage.GarbageStorageRules.take(e.count,Integer.MAX_VALUE,e.template.getMaxStackSize()));
     }
 
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
         if (slot < 0 || slot >= items.size() || amount <= 0) return ItemStack.EMPTY;
         Entry e = items.get(slot);
-        int take = (int) Math.min(Math.min(e.count, amount), e.template.getMaxStackSize());
+        int take = com.gregtech.gregtech.content.storage.GarbageStorageRules.take(e.count,amount,e.template.getMaxStackSize());
         if (take <= 0) return ItemStack.EMPTY;
         ItemStack out = e.template.copyWithCount(take);
         if (!simulate) {

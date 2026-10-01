@@ -45,8 +45,7 @@ public class GTBlackSandFeature extends Feature<NoneFeatureConfiguration> {
     public static final int SAND_VARIANTS = 3;
 
     /** GT6 {@code BlocksGT.Sands} metas 0/1/2 (Magnetite / BasalticMineralSand / GraniticMineralSand). */
-    public static final List<String> BLACK_SANDS = List.of(
-            "sand_magnetite", "sand_basalt_magnetite", "sand_granite_magnetite");
+    public static final List<String> BLACK_SANDS = com.gregtech.gregtech.block.BlackSandDefinitions.IDS;
 
     public GTBlackSandFeature() {
         super(NoneFeatureConfiguration.CODEC);
@@ -153,7 +152,7 @@ public class GTBlackSandFeature extends Feature<NoneFeatureConfiguration> {
 
     private static BlockState blockState(String id) {
         Block block = ForgeRegistries.BLOCKS.getValue(
-                ResourceLocation.fromNamespaceAndPath(com.gregtech.gregtech.GregTech.MODID, id));
+                ResourceLocation.fromNamespaceAndPath(com.gregtech.gregtech.GregTech.NAMESPACE, id));
         return block == null || block == Blocks.AIR ? null : block.defaultBlockState();
     }
 

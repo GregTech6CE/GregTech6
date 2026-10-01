@@ -15,9 +15,8 @@ public final class FluidFuelBatch {
     }
     public static MultiPlan plan(Recipe recipe,FluidStack input,List<FluidStack> outputs,int[] capacities,long needed,int efficiency) {
         if(!recipe.mEnabled||recipe.mFakeRecipe||recipe.mEUt>=0||recipe.mInputs.length!=0||recipe.mOutputs.length!=0||recipe.mFluidInputs.length!=1||recipe.mFluidOutputs.length>outputs.size()||capacities.length!=outputs.size()||needed<=0||efficiency<=0)return null;
-        BigInteger value=BigInteger.valueOf(recipe.mEUt).abs().multiply(BigInteger.valueOf(recipe.mDuration)).multiply(BigInteger.valueOf(efficiency)).divide(BigInteger.valueOf(10000));
-        if(value.signum()<=0||value.compareTo(BigInteger.valueOf(Long.MAX_VALUE))>0)return null;
-        long energy=value.longValue();
+        long energy=FluidFuelChargeMath.energy(recipe.mEUt,recipe.mDuration,efficiency);
+        if(energy<=0)return null;
         int target=(int)Math.min(Integer.MAX_VALUE,needed/energy+(needed%energy==0?0:1));
         for(int i=0;i<recipe.mFluidOutputs.length;i++) {
             var exhaust=recipe.mFluidOutputs[i];var output=outputs.get(i);

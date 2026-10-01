@@ -21,7 +21,7 @@ import net.minecraftforge.fml.common.Mod;
 /**
  * GT6 block-highlight wrench grid for slab placement, burning-box facing, and pipe connections.
  */
-@Mod.EventBusSubscriber(modid = GregTech.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public final class SlabPlacementOverlayRenderer {
     private static long clientTime;
 

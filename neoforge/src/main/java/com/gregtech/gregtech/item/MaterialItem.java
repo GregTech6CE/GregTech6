@@ -46,6 +46,12 @@ public class MaterialItem extends Item {
         return "item.gregtech." + prefix.getRegistryName();
     }
 
+    @Override
+    public void appendHoverText(ItemStack stack, TooltipContext context, java.util.List<Component> tooltip, net.minecraft.world.item.TooltipFlag flag) {
+        com.gregtech.gregtech.client.MaterialTooltips.append(stack, material, prefix, tooltip, flag);
+        super.appendHoverText(stack, context, tooltip, flag);
+    }
+
     public int getTintColor() {
         return 0xFF000000 | (material.getColor() & 0xFFFFFF);
     }

@@ -45,10 +45,7 @@ public final class BarsBlockItem extends BlockItem {
     }
 
     private static int chosenBit(int mask, Direction face, double x, double z) {
-        int bit = Integer.bitCount(mask) == 3 ? 15 ^ mask : BarsBlock.placementBit(Direction.UP, x, z);
-        if ((mask & bit) != 0 || face.getAxis().isHorizontal()) bit = BarsBlock.placementBit(face, x, z);
-        if ((mask & bit) != 0 && face.getAxis().isHorizontal()) bit = BarsBlock.faceBit(face);
-        return bit;
+        return com.gregtech.gregtech.block.BarsRules.chosen(mask,face.getAxis().name().charAt(0),BarsBlock.faceBit(face),x,z);
     }
 
     private static InteractionResult join(UseOnContext context, BlockPos pos, BlockState state, int bit) {

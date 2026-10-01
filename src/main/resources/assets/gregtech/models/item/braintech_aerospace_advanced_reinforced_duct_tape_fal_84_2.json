@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "gregtech:item/randomtools/braintech_aerospace_advanced_reinforced_duct_tape_fal_84_2"
-  }
-}

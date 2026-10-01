@@ -1,7 +1,0 @@
-{
-  "variants": {
-    "": {
-      "model": "gregtech:block/machine/multiblock/bedrock_mining_drill_controller"
-    }
-  }
-}

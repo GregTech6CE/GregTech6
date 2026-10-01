@@ -1,0 +1,107 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:composite",
+  "textures": {
+    "particle": "gregtech:block/machines/laserabsorbers/electric_laser/colored/side"
+  },
+  "children": {
+    "colored": {
+      "parent": "minecraft:block/block",
+      "render_type": "minecraft:cutout",
+      "textures": {
+        "north": "gregtech:block/machines/laserabsorbers/electric_laser/colored/front",
+        "east": "gregtech:block/machines/laserabsorbers/electric_laser/colored/side",
+        "south": "gregtech:block/machines/laserabsorbers/electric_laser/colored/back",
+        "west": "gregtech:block/machines/laserabsorbers/electric_laser/colored/side",
+        "up": "gregtech:block/machines/laserabsorbers/electric_laser/colored/side",
+        "down": "gregtech:block/machines/laserabsorbers/electric_laser/colored/side"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "up": {
+              "texture": "#up",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#down",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#north",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#south",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#east",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#west",
+              "tintindex": 0
+            }
+          }
+        }
+      ]
+    },
+    "overlay": {
+      "parent": "minecraft:block/block",
+      "render_type": "minecraft:cutout",
+      "textures": {
+        "north": "gregtech:block/machines/laserabsorbers/electric_laser/overlay/front",
+        "east": "gregtech:block/machines/laserabsorbers/electric_laser/overlay/side",
+        "south": "gregtech:block/machines/laserabsorbers/electric_laser/overlay/back",
+        "west": "gregtech:block/machines/laserabsorbers/electric_laser/overlay/side",
+        "up": "gregtech:block/machines/laserabsorbers/electric_laser/overlay/side",
+        "down": "gregtech:block/machines/laserabsorbers/electric_laser/overlay/side"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "up": {
+              "texture": "#up"
+            },
+            "down": {
+              "texture": "#down"
+            },
+            "north": {
+              "texture": "#north"
+            },
+            "south": {
+              "texture": "#south"
+            },
+            "east": {
+              "texture": "#east"
+            },
+            "west": {
+              "texture": "#west"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

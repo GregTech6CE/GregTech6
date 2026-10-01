@@ -21,7 +21,7 @@ import java.util.*;
 
 /** Original two-layer heat exchanger, hot-fluid recipes and eight upward heat outlets. */
 public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity implements MultiblockPortOwner,IFluidHandler {
-    public static final int RATE=16384;
+    public static final int RATE=com.gregtech.gregtech.content.multiblock.OriginalGeneratorParameters.HEAT_EXCHANGER_RATE;
     private long heat;
     private final PartBindings<BlockPos,MultiblockLayout.Role> bindings=new PartBindings<>();
     private final FluidTank hot=new FluidTank(RATE*10,stack->FuelRecipeMaps.Hot.containsInput(stack)) {
@@ -36,11 +36,10 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
     @Override public boolean isStructureOk(){
         if(level==null||isRemoved())return false;
         var parts=new LinkedHashMap<BlockPos,MultiblockLayout.Role>();
-        for(int y=0;y<2;y++)for(int x=-1;x<=1;x++)for(int z=-1;z<=1;z++){
-            if(x==0&&y==0&&z==0)continue;
-            var pos=worldPosition.offset(x,y,z);var expected=y==0||x==0&&z==0?LargeMachineParts.block(18024):GTMultiblocks.HEAT_TRANSMITTER.get();
+        for(var cell:com.gregtech.gregtech.content.multiblock.SharedHeatExchangerStructure.CELLS){
+            var pos=worldPosition.offset(cell.right(),cell.up(),cell.back());var expected=LargeMachineParts.block(cell.part());
             if(!level.hasChunkAt(pos)||!level.getBlockState(pos).is(expected)||!(level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity)){bindings.clear(this::release);return false;}
-            parts.put(pos,y==0?MultiblockLayout.Role.FLUID_INPUT:MultiblockLayout.Role.CASING);
+            parts.put(pos,MultiblockLayout.Role.valueOf(cell.role().name()));
         }
         return bindings.update(parts,p->((MultiblockPortBlockEntity)level.getBlockEntity(p)).canBind(worldPosition),
                 (p,r)->((MultiblockPortBlockEntity)level.getBlockEntity(p)).bind(worldPosition,r),this::release);

@@ -1,0 +1,163 @@
+package com.gregtech.gregtech.content.cover;
+
+import com.gregtech.gregtech.api.energy.IEnergyBlock;
+import com.gregtech.gregtech.api.machine.MachineControl;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.ItemStack;
+
+/** Server behavior for the original interactive panels, scales and cover gate. No client dependency. */
+public final class PanelCoverRuntime {
+    public static final String VALUE="gt.panel.value",STYLE="gt.panel.style",RESET="gt.panel.reset",COUNTDOWN="gt.panel.countdown";
+    private final PanelCoverHost host;
+    private final int[] signals=new int[6];
+    private final boolean[] strong=new boolean[6];
+    private boolean stopped,restore=true;
+    public PanelCoverRuntime(PanelCoverHost host){this.host=host;}
+    public boolean stopped(){return stopped;}
+    public static int value(ItemStack stack){return CoverStackData.has(stack)?CoverStackData.read(stack).getInt(VALUE):0;}
+    public static int style(ItemStack stack){return CoverStackData.has(stack)?CoverStackData.read(stack).getInt(STYLE):0;}
+    public void loaded(){restore=true;}
+    private boolean server(){return host.coverOwner().getLevel()!=null&&!host.coverOwner().getLevel().isClientSide&&!host.coverOwner().isRemoved();}
+    public int incoming(Direction side){
+        var owner=host.coverOwner();var level=owner.getLevel();var pos=owner.getBlockPos().relative(side);
+        return level!=null&&level.hasChunkAt(pos)?level.getSignal(pos,side):0;
+    }
+    private MachineControl control(Direction side){var c=host.coverControl(side);return c!=null&&c.available()?c:null;}
+    private long[] energy(Direction side){
+        if(host.coverOwner() instanceof IEnergyBlock energy){
+            var types=energy.getEnergyCapacitorTypes(side);
+            if(!types.isEmpty()){var type=types.iterator().next();return new long[]{energy.getEnergyStored(type,side),energy.getEnergyCapacity(type,side)};}
+        }
+        return null;
+    }
+    public boolean canAttach(Direction side,ItemStack stack){
+        // GT6 logistics covers only attach to ITileEntityLogistics; ordinary machines and pipes
+        // must not accept them merely because they are registered cover items.
+        if(com.gregtech.gregtech.content.logistics.LogisticsCoverType.of(stack)!=null)
+            return host.coverOwner() instanceof com.gregtech.gregtech.content.logistics.LogisticsHost logistics
+                    && logistics.canLogistics(null);
+        var panel=PanelCover.of(stack);if(panel==null)return true;
+        var c=control(side);
+        if(panel.selector())return c!=null&&c.supportsMode();
+        if(panel==PanelCover.PROGRESS)return c!=null&&c.supportsProgress();
+        if(panel==PanelCover.STATUS)return c!=null;
+        if(panel.energy())return energy(side)!=null;
+        return true;
+    }
+    public void attached(Direction side){
+        var stack=host.getCover(side);var panel=PanelCover.of(stack);var c=control(side);
+        if(panel!=null&&panel.selector()&&c!=null)CoverStackData.putInt(stack,VALUE,c.mode()&15);
+        refreshStopped();changed();
+    }
+    public void changed(){
+        var owner=host.coverOwner();owner.setChanged();
+        if(server())owner.getLevel().sendBlockUpdated(owner.getBlockPos(),owner.getBlockState(),owner.getBlockState(),2);
+    }
+    private boolean setValue(ItemStack stack,int value){
+        if(value(stack)==value)return false;CoverStackData.putInt(stack,VALUE,value);return true;
+    }
+    /** Exact source quantisation without overflowing long at large capacities. */
+    public static int scale(long amount,long capacity,int maximum){
+        if(amount<=0||capacity<=0)return 0;if(amount>=capacity)return maximum;
+        // floor((capacity-amount)*(maximum-1)/capacity), using exact integer arithmetic.
+        long remaining=capacity-amount;
+        int quotient=remaining<=Long.MAX_VALUE/(maximum-1)
+            ?(int)(remaining*(maximum-1)/capacity)
+            :java.math.BigInteger.valueOf(remaining).multiply(java.math.BigInteger.valueOf(maximum-1)).divide(java.math.BigInteger.valueOf(capacity)).intValue();
+        return maximum-1-Math.min(maximum-2,quotient);
+    }
+    private void refreshStopped(){
+        stopped=false;
+        // GT6 evaluates cover controllers in side order; the final one owns the shared stopped flag.
+        for(var side:Direction.values())if(PanelCover.of(host.getCover(side))==PanelCover.CONTROLLER)
+            stopped=(incoming(side)>0)==MachineCoverSpec.inverted(host.getCover(side));
+    }
+    public void beforeTick(){
+        if(!server())return;refreshStopped();boolean changed=false;
+        for(var side:Direction.values()){
+            var stack=host.getCover(side);var panel=PanelCover.of(stack);if(panel==null||!panel.selector())continue;
+            var c=control(side);if(c==null||!c.supportsMode()||stopped)continue;
+            if(panel==PanelCover.REDSTONE)c.setMode(incoming(side));
+            else if(restore)c.setMode(value(stack)&15);
+            if(panel==PanelCover.BUTTONS&&CoverStackData.has(stack)){
+                int ticks=CoverStackData.read(stack).getInt(COUNTDOWN);
+                if(ticks>1){CoverStackData.putInt(stack,COUNTDOWN,--ticks);host.coverOwner().setChanged();if(ticks==1)c.setMode(0);}
+            }
+            changed|=setValue(stack,c.mode()&15);
+        }
+        restore=false;if(changed)changed();
+    }
+    public void afterTick(){
+        if(!server())return;
+        boolean visualChanged=false,signalChanged=false;
+        int conducted=0;
+        for(var side:Direction.values())if(PanelCover.of(host.getCover(side))==PanelCover.CONDUCTOR_IN)conducted=Math.max(conducted,incoming(side));
+        for(var side:Direction.values()){
+            var stack=host.getCover(side);var panel=PanelCover.of(stack);int signal=0;boolean power=false;
+            if(panel!=null){
+                var c=control(side);int value=value(stack);
+                switch(panel){
+                    case PROGRESS -> value=c!=null&&c.supportsProgress()?scale(c.progress(),c.progressMax(),15):0;
+                    case ENERGY,ENERGY_DISPLAY -> {var energy=energy(side);value=energy==null?0:scale(energy[0],energy[1],panel==PanelCover.ENERGY?15:10);}
+                    case STATUS -> {
+                        value=0;
+                        if(host.coverSupportsPossible())value|=32|(host.coverPossible(side)?1:0);
+                        if(c!=null)value|=64|128|256|(c.running()?2:0)|(c.active()?4:0)|(c.enabled()?8:0);
+                    }
+                    case CONDUCTOR_OUT -> value=conducted;
+                    default -> {}
+                }
+                visualChanged|=setValue(stack,value);
+                if(panel.output())signal=Math.max(0,Math.min(15,value));
+                if(panel==PanelCover.PROGRESS||panel==PanelCover.ENERGY)if(MachineCoverSpec.inverted(stack))signal=15-signal;
+                power=panel.strongConfig()&&MachineCoverSpec.strong(stack);
+            }
+            int i=side.ordinal();
+            if(signals[i]!=signal||strong[i]!=power){
+                boolean old=strong[i];signals[i]=signal;strong[i]=power;signalChanged=true;
+                var owner=host.coverOwner();var neighbor=owner.getBlockPos().relative(side);
+                if((old||power)&&owner.getLevel().hasChunkAt(neighbor))owner.getLevel().updateNeighborsAt(neighbor,owner.getBlockState().getBlock());
+            }
+        }
+        if(visualChanged)changed();
+        if(signalChanged){var owner=host.coverOwner();owner.getLevel().updateNeighborsAt(owner.getBlockPos(),owner.getBlockState().getBlock());}
+    }
+    public int signal(Direction side){return signals[side.ordinal()];}
+    public int strongSignal(Direction side){return strong[side.ordinal()]?signal(side):0;}
+    public boolean shuttered(Direction side){
+        var stack=host.getCover(side);
+        return PanelCover.of(stack)==PanelCover.SHUTTER&&(!MachineCoverSpec.inverted(stack)==stopped);
+    }
+    public boolean configure(Direction side,boolean cutter,boolean chisel){
+        var stack=host.getCover(side);var panel=PanelCover.of(stack);if(panel==null)return false;
+        if(chisel&&panel!=PanelCover.BUTTONS&&panel!=PanelCover.STATUS)return false;
+        if(!chisel&&(cutter?!panel.strongConfig():!panel.invertible()&&panel!=PanelCover.BUTTONS))return false;
+        if(!server())return true;
+        var tag=CoverStackData.readOrEmpty(stack);
+        if(chisel)tag.putInt(STYLE,Math.floorMod(style(stack)+1,panel==PanelCover.BUTTONS?8:2));
+        else if(cutter)tag.putBoolean("gt.cover.strong",!MachineCoverSpec.strong(stack));
+        else if(panel==PanelCover.BUTTONS){tag.putBoolean(RESET,!tag.getBoolean(RESET));tag.putInt(COUNTDOWN,0);}
+        else tag.putBoolean("gt.cover.inverted",!MachineCoverSpec.inverted(stack));
+        CoverStackData.write(stack,tag);refreshStopped();changed();afterTick();return true;
+    }
+    public boolean click(Direction side,double u,double v){
+        var stack=host.getCover(side);var panel=PanelCover.of(stack);if(panel==null)return false;
+        if(stopped&&panel.selector())return false;
+        var c=control(side);
+        if(panel==PanelCover.STATUS){
+            if(c==null||u<10/16.0||(Math.floorMod(style(stack),2)==0?v<12/16.0:v>4/16.0))return false;
+            if(server()){c.setEnabled(!c.enabled());afterTick();}return true;
+        }
+        if(panel!=PanelCover.MANUAL&&panel!=PanelCover.BUTTONS&&panel!=PanelCover.EMITTER)return false;
+        if(panel.selector()&&(c==null||!c.supportsMode()))return false;
+        int next=panel==PanelCover.BUTTONS?Math.min(3,(int)(u*4))+4*Math.min(3,(int)(v*4)):CoverFaceCoordinates.select(value(stack)&15,u,v);
+        if(next<0)return false;
+        if(server()){
+            if(panel.selector())next=c.setMode(next)&15;
+            setValue(stack,next);
+            if(panel==PanelCover.BUTTONS&&CoverStackData.readOrEmpty(stack).getBoolean(RESET))CoverStackData.putInt(stack,COUNTDOWN,10);
+            changed();afterTick();
+        }
+        return true;
+    }
+}

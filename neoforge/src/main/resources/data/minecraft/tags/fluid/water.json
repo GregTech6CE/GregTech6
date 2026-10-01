@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "gregtech:seawater",
+    "gregtech:seawater_flowing",
+    "gregtech:riverwater",
+    "gregtech:riverwater_flowing",
+    "gregtech:swampwater",
+    "gregtech:swampwater_flowing"
+  ]
+}

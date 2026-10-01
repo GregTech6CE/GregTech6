@@ -36,7 +36,7 @@ import java.util.List;
  */
 public final class GTFoodItems {
     public static final DeferredRegister<Item> ITEMS =
-            DeferredRegister.create(ForgeRegistries.ITEMS, GregTech.MODID);
+            DeferredRegister.create(ForgeRegistries.ITEMS, GregTech.NAMESPACE);
 
     private static final List<String> REGISTERED = new ArrayList<>();
 

@@ -37,7 +37,7 @@ public final class GTBlockEntities {
     private GTBlockEntities() {}
 
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES =
-            DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, GregTech.MODID);
+            DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, GregTech.NAMESPACE);
 
     public static final RegistryObject<BlockEntityType<com.gregtech.gregtech.blockentity.energy.SignalWireBlockEntity>> SIGNAL_WIRE =
             BLOCK_ENTITY_TYPES.register("signal_wire", () -> BlockEntityType.Builder.of(

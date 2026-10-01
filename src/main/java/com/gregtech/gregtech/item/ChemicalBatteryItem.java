@@ -45,14 +45,14 @@ public final class ChemicalBatteryItem extends BlockItem implements IItemEnergy 
         long packet=packet(stack,type,size,amount),stored=stored(stack);
         if(packet==0||stored>=spec().capacity())return 0;
         // GT6 accepts the final packet even when it does not completely fit; excess is discarded.
-        long accepted=Math.min(Math.min(spec().voltage(),amount),Math.max(1,(spec().capacity()-stored)/packet));
+        long accepted=com.gregtech.gregtech.content.energy.ItemBatteryRules.injectionPackets(spec().capacity(),stored,spec().voltage(),packet,amount);
         if(execute)setCharge(stack,stored+accepted*packet);
         return accepted;
     }
     @Override public long doEnergyExtraction(GregTechTags.Tag type,ItemStack stack,long size,long amount,Level level,BlockPos pos,boolean execute){
         long packet=packet(stack,type,size,amount);
         if(packet==0)return 0;
-        long accepted=Math.min(Math.min(spec().voltage(),amount),stored(stack)/packet);
+        long accepted=com.gregtech.gregtech.content.energy.ItemBatteryRules.extractionPackets(stored(stack),spec().voltage(),packet,amount);
         if(execute&&accepted>0)setCharge(stack,stored(stack)-accepted*packet);
         return accepted;
     }

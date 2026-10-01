@@ -25,7 +25,7 @@ public final class MachineTooltips {
         // Recipes
         var recipeMap = MachineRecipeMaps.byMachineName(spec.machineName());
         String recipeName = recipeMap != null ? recipeMap.mNameLocal : spec.machineName();
-        tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".machine.recipes")
+        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.recipes")
                 .append(Component.literal(recipeName).withStyle(ChatFormatting.WHITE))
                 .withStyle(ChatFormatting.AQUA));
 
@@ -78,7 +78,7 @@ public final class MachineTooltips {
 
         // Contained materials
         if (spec.constructionMaterials() != null && !spec.constructionMaterials().isEmpty()) {
-            tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".machine.contained_materials")
+            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.contained_materials")
                     .withStyle(ChatFormatting.AQUA));
             for (WeightedMaterial wm : spec.constructionMaterials()) {
                 tooltip.add(MaterialTooltips.containedMaterialLine(wm.material(), wm.amount()));
@@ -99,8 +99,8 @@ public final class MachineTooltips {
         appendEnergyOutHu(spec, tooltip);
 
         // Energy IN: None
-        tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".machine.energy_in")
-                .append(Component.translatable("tooltip." + GregTech.MODID + ".machine.none")
+        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.energy_in")
+                .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.none")
                         .withStyle(ChatFormatting.WHITE))
                 .withStyle(ChatFormatting.RED));
 
@@ -126,15 +126,15 @@ public final class MachineTooltips {
     // ── Shared line helpers ─────────────────────────────────────────────
 
     public static void appendFurnaceFuelRecipes(List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".machine.recipes")
-                .append(Component.translatable("tooltip." + GregTech.MODID + ".machine.recipes.furnace_fuels")
+        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.recipes")
+                .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.recipes.furnace_fuels")
                         .withStyle(ChatFormatting.WHITE))
                 .withStyle(ChatFormatting.AQUA));
     }
 
     public static void appendEfficiency(MachineSpec spec, List<Component> tooltip) {
         tooltip.add(Component.empty()
-                .append(Component.translatable("tooltip." + GregTech.MODID + ".machine.efficiency.label")
+                .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.efficiency.label")
                         .withStyle(ChatFormatting.GREEN))
                 .append(Component.literal(formatEfficiencyPercent(spec.efficiency()) + "%")
                         .withStyle(ChatFormatting.WHITE)));
@@ -142,7 +142,7 @@ public final class MachineTooltips {
 
     public static void appendEnergyOutHu(MachineSpec spec, List<Component> tooltip) {
         tooltip.add(Component.empty()
-                .append(Component.translatable("tooltip." + GregTech.MODID + ".machine.energy_out")
+                .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.energy_out")
                         .withStyle(ChatFormatting.RED))
                 .append(Component.literal(TooltipHelper.formatLong(spec.outputRate()) + " HU/t")
                         .withStyle(ChatFormatting.WHITE)));
@@ -151,42 +151,42 @@ public final class MachineTooltips {
     // ── Burning box specific lines ──────────────────────────────────────
 
     public static void appendRequiresAirFront(List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".machine.requirement.air_front")
+        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.requirement.air_front")
                 .withStyle(ChatFormatting.GOLD));
     }
 
     public static void appendRequiresAshesFront(List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".machine.requirement.ashes_front")
+        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.requirement.ashes_front")
                 .withStyle(ChatFormatting.GOLD));
     }
 
     public static void appendRequiresIgnitionFront(List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".machine.requirement.ignite_front")
+        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.requirement.ignite_front")
                 .withStyle(ChatFormatting.GOLD));
     }
 
     public static void appendNoGuiClickFront(List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".machine.nogui.click_front")
+        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.nogui.click_front")
                 .withStyle(ChatFormatting.GOLD));
     }
 
     public static void appendHazardFire(List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".machine.hazard.fire", 4)
+        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.hazard.fire", 4)
                 .withStyle(ChatFormatting.DARK_RED));
     }
 
     public static void appendHazardContactTop(List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".machine.hazard.contact_top")
+        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.hazard.contact_top")
                 .withStyle(ChatFormatting.DARK_RED));
     }
 
     public static void appendShovelEmpty(List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".machine.tool.shovel_empty")
+        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.tool.shovel_empty")
                 .withStyle(ChatFormatting.GRAY));
     }
 
     public static void appendWrenchFacing(List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".machine.tool.wrench_facing")
+        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.tool.wrench_facing")
                 .withStyle(ChatFormatting.GRAY));
     }
 

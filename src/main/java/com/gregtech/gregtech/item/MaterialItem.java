@@ -63,7 +63,7 @@ public class MaterialItem extends Item {
 
     @Override
     public String getDescriptionId() {
-        return "item." + GregTech.MODID + "." + prefix.getRegistryName();
+        return "item." + GregTech.NAMESPACE + "." + prefix.getRegistryName();
     }
 
     @Override

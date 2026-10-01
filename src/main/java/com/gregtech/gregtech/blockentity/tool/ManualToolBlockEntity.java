@@ -38,7 +38,7 @@ public class ManualToolBlockEntity extends BlockEntity {
         }
     }
 
-    private final net.minecraft.core.NonNullList<ItemStack> outputs = net.minecraft.core.NonNullList.withSize(12, ItemStack.EMPTY);
+    private final net.minecraft.core.NonNullList<ItemStack> outputs = net.minecraft.core.NonNullList.withSize(com.gregtech.gregtech.content.tool.ManualWorkRules.OUTPUTS, ItemStack.EMPTY);
     private int stoneUses;
     private ItemStack lastHeld = ItemStack.EMPTY;
     private java.util.UUID siftingPlayer;
@@ -116,7 +116,7 @@ public class ManualToolBlockEntity extends BlockEntity {
                 return;
             }
             if (!ItemStack.isSameItemSameTags(lastHeld, held)) { progress = 0; lastHeld = held.copyWithCount(1); }
-            if (!player.getAbilities().instabuild && ++progress < 10) return;
+            if (!player.getAbilities().instabuild && ++progress < com.gregtech.gregtech.content.tool.ManualWorkRules.GRIND_CLICKS) return;
             int enchantmentXp = removableEnchantmentXp(held);
             if (enchantmentXp > 0) {
                 ItemStack result = held.copyWithCount(1);
@@ -146,7 +146,7 @@ public class ManualToolBlockEntity extends BlockEntity {
     }
 
     public static void serverTick(net.minecraft.world.level.Level level, BlockPos pos, BlockState state, ManualToolBlockEntity tool) {
-        if (tool.kind != Kind.SIFTING || tool.siftingPlayer == null || level.getGameTime() % 5 != 0) return;
+        if (tool.kind != Kind.SIFTING || tool.siftingPlayer == null || !com.gregtech.gregtech.content.tool.ManualWorkRules.siftDue(level.getGameTime())) return;
         Player player = level.getPlayerByUUID(tool.siftingPlayer);
         if (player == null || player.distanceToSqr(pos.getX()+.5, pos.getY()+.5, pos.getZ()+.5) > 64
                 || !(player.pick(5, 1, false) instanceof net.minecraft.world.phys.BlockHitResult hit)
@@ -157,20 +157,15 @@ public class ManualToolBlockEntity extends BlockEntity {
         if (tool.work.isEmpty() || tool.outputs.stream().anyMatch(stack -> !stack.isEmpty())) return;
         var haste = player.getEffect(net.minecraft.world.effect.MobEffects.DIG_SPEED);
         var fatigue = player.getEffect(net.minecraft.world.effect.MobEffects.DIG_SLOWDOWN);
-        tool.progress += haste == null ? 1 : haste.getAmplifier() + 2;
-        int threshold = 4 * (fatigue == null ? 2 : fatigue.getAmplifier() + 3);
+        tool.progress += com.gregtech.gregtech.content.tool.ManualWorkRules.siftIncrement(haste==null?-1:haste.getAmplifier());
+        int threshold = com.gregtech.gregtech.content.tool.ManualWorkRules.siftThreshold(fatigue==null?-1:fatigue.getAmplifier());
         if (player.getAbilities().instabuild || tool.progress >= threshold) tool.craft(player, tool.work, true);
         else tool.markUpdated();
     }
 
     private static int abrasiveUses(ItemStack stack) {
         if (stack.getItem() instanceof com.gregtech.gregtech.item.MaterialItem item && item.getPrefix().getName().equals("stone")) {
-            return switch (item.getMaterial().getName()) {
-                case "SoulSand", "EndSandWhite", "EndSandBlack" -> 16;
-                case "RedSand" -> 8;
-                case "Sand" -> 4;
-                default -> 0;
-            };
+            return com.gregtech.gregtech.content.tool.ManualWorkRules.abrasiveUses(item.getMaterial().getName());
         }
         return stack.is(net.minecraftforge.common.Tags.Items.SANDSTONE) ? 8 : 0;
     }
@@ -178,7 +173,7 @@ public class ManualToolBlockEntity extends BlockEntity {
     private Recipe recipe(ItemStack input) {
         if (input.isEmpty()) return null;
         Recipe recipe = map().findRecipe(List.of(input), List.<FluidStack>of(), false, 1, 12);
-        return recipe != null && !recipe.mFakeRecipe && Math.abs(recipe.mEUt) <= 32 && recipe.mInputs.length == 1 ? recipe : null;
+        return recipe != null && !recipe.mFakeRecipe && recipe.mEUt >= -com.gregtech.gregtech.content.tool.ManualWorkRules.MAX_GU && recipe.mEUt <= com.gregtech.gregtech.content.tool.ManualWorkRules.MAX_GU && recipe.mInputs.length == 1 ? recipe : null;
     }
 
     private void craft(Player player, ItemStack input, boolean retainOutputs) {
@@ -196,7 +191,7 @@ public class ManualToolBlockEntity extends BlockEntity {
             else give(player, out);
         }
         if (kind == Kind.GRINDSTONE && !player.getAbilities().instabuild) stoneUses--;
-        double divisor = kind == Kind.MORTAR ? 250 : kind == Kind.GRINDSTONE ? 10000 : 1000;
+        double divisor = com.gregtech.gregtech.content.tool.ManualWorkRules.exhaustionDivisor(kind.name());
         player.causeFoodExhaustion((float) (Math.abs((double) recipe.mEUt) * recipe.mDuration / divisor));
         level.playSound(null, worldPosition, kind == Kind.SIFTING ? SoundEvents.SAND_BREAK : SoundEvents.STONE_HIT,
                 SoundSource.BLOCKS, 1F, 1F);

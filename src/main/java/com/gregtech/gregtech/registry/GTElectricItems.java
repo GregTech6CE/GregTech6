@@ -38,18 +38,24 @@ public final class GTElectricItems {
         return ro;
     }
 
+    private static RegistryObject<BatteryItem> regBattery(String id) {
+        var spec=com.gregtech.gregtech.content.energy.LegacyBatteryDefinitions.get(id);
+        return reg(id,()->new BatteryItem(spec.name(),spec.capacity(),spec.tier(),new Item.Properties().stacksTo(1)));
+    }
+
+    private static ElectricToolItem electric(String id){var spec=com.gregtech.gregtech.content.tool.ElectricToolCatalog.get(id);return new ElectricToolItem(spec.name(),Tiers.IRON,spec.capacity(),1,spec.energyPerUse(),new Item.Properties().stacksTo(1));}
     public static void registerAll() {
         // Batteries (name, capacity EU, tier, properties)
-        BATTERY_LV = reg("battery_lv", () -> new BatteryItem("LV Battery", 100_000, 1, new Item.Properties().stacksTo(1)));
-        BATTERY_MV = reg("battery_mv", () -> new BatteryItem("MV Battery", 400_000, 2, new Item.Properties().stacksTo(1)));
-        BATTERY_HV = reg("battery_hv", () -> new BatteryItem("HV Battery", 1_600_000, 3, new Item.Properties().stacksTo(1)));
-        BATTERY_EV = reg("battery_ev", () -> new BatteryItem("EV Battery", 6_400_000, 4, new Item.Properties().stacksTo(1)));
-        BATTERY_IV = reg("battery_iv", () -> new BatteryItem("IV Battery", 25_600_000, 5, new Item.Properties().stacksTo(1)));
+        BATTERY_LV = regBattery("battery_lv");
+        BATTERY_MV = regBattery("battery_mv");
+        BATTERY_HV = regBattery("battery_hv");
+        BATTERY_EV = regBattery("battery_ev");
+        BATTERY_IV = regBattery("battery_iv");
 
         // Electric tools
-        ELECTRIC_DRILL = reg("electric_drill", () -> new ElectricToolItem("Drill", Tiers.IRON, 100_000, 1, 100, new Item.Properties().stacksTo(1)));
-        ELECTRIC_CHAINSAW = reg("electric_chainsaw", () -> new ElectricToolItem("Chainsaw", Tiers.IRON, 100_000, 1, 100, new Item.Properties().stacksTo(1)));
-        ELECTRIC_WRENCH = reg("electric_wrench", () -> new ElectricToolItem("Wrench", Tiers.IRON, 50_000, 1, 50, new Item.Properties().stacksTo(1)));
-        ELECTRIC_SCREWDRIVER = reg("electric_screwdriver", () -> new ElectricToolItem("Screwdriver", Tiers.IRON, 50_000, 1, 50, new Item.Properties().stacksTo(1)));
+        ELECTRIC_DRILL = reg("electric_drill", () -> electric("electric_drill"));
+        ELECTRIC_CHAINSAW = reg("electric_chainsaw", () -> electric("electric_chainsaw"));
+        ELECTRIC_WRENCH = reg("electric_wrench", () -> electric("electric_wrench"));
+        ELECTRIC_SCREWDRIVER = reg("electric_screwdriver", () -> electric("electric_screwdriver"));
     }
 }

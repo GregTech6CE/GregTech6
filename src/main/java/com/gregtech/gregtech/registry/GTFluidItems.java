@@ -15,7 +15,7 @@ import java.util.Map;
 /** GT6 fluid item holder — DeferredRegister and lookup map populated by {@code Loader_Fluids}. */
 public final class GTFluidItems {
     public static final DeferredRegister<Item> ITEMS =
-            DeferredRegister.create(ForgeRegistries.ITEMS, GregTech.MODID);
+            DeferredRegister.create(ForgeRegistries.ITEMS, GregTech.NAMESPACE);
 
     private static final Map<String, RegistryObject<FluidItem>> BY_FIELD = new LinkedHashMap<>();
 

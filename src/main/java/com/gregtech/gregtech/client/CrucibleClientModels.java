@@ -19,7 +19,7 @@ import org.slf4j.Logger;
 import java.util.Map;
 
 /** Crucibles: GT6 bowl hull via {@link CrucibleBlockBakedModel} + content BER top pass. */
-@Mod.EventBusSubscriber(modid = GregTech.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class CrucibleClientModels {
     private static final Logger LOGGER = LogUtils.getLogger();
 
@@ -80,7 +80,7 @@ public final class CrucibleClientModels {
             aliased++;
         }
 
-        LOGGER.info("[{}] Crucible model aliasing: {} mapped, {} missing", GregTech.MODID, aliased, missing);
+        LOGGER.info("[{}] Crucible model aliasing: {} mapped, {} missing", GregTech.NAMESPACE, aliased, missing);
     }
 
     private static BakedModel lookupModel(Map<ResourceLocation, BakedModel> models, ResourceLocation modelId) {

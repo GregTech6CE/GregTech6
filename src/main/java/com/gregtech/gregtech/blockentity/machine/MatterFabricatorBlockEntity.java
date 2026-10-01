@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public final class MatterFabricatorBlockEntity extends LargeRecipeMachineBlockEntity {
     public MatterFabricatorBlockEntity(BlockEntityType<?> type,BlockPos pos,BlockState state){super(type,pos,state);}
     @Override protected long inputMinimum(){return 1;}
-    @Override protected long inputMaximum(){return 2097152;}
+    @Override protected long inputMaximum(){return com.gregtech.gregtech.content.multiblock.LargeMachineProcessingRules.MATTER_INPUT_MAX;}
     @Override protected boolean requiresConstantEnergy(){return false;}
     @Override public long getEnergySizeInputRecommended(GregTechTags.Tag type,Direction side){return type==GregTechTags.Energy.QU?1:0;}
     @Override public long portEnergyInputRecommended(Role role,GregTechTags.Tag type){return getEnergySizeInputRecommended(type,null);}

@@ -96,26 +96,7 @@ public class GearboxBlockEntity extends BlockEntity implements IEnergyBlock {
 
     /** Original GT6 checkGears: opposite pairs need their own axle; triangles jam. */
     public boolean gearsWork() {
-        int mask = gearMask & 63;
-        int count = Integer.bitCount(mask);
-        if (count <= 1) return true;
-        if (count >= 5) return false;
-        boolean xPair = (mask & 48) == 48;
-        boolean yPair = (mask & 3) == 3;
-        boolean zPair = (mask & 12) == 12;
-        if (count == 2) {
-            if (!xPair && !yPair && !zPair) return true;
-            return switch (axisCode) {
-                case 1 -> (mask & 48) != 0;
-                case 2 -> (mask & 3) != 0;
-                case 3 -> (mask & 12) != 0;
-                default -> false;
-            };
-        }
-        if (axisCode == 1 && xPair || axisCode == 2 && yPair || axisCode == 3 && zPair) return false;
-        int usedAxes = ((mask & 48) != 0 ? 1 : 0)
-                + ((mask & 3) != 0 ? 1 : 0) + ((mask & 12) != 0 ? 1 : 0);
-        return usedAxes < 3;
+        return com.gregtech.gregtech.content.energy.GearboxRotationRules.gearsWork(gearMask,axisCode);
     }
 
     /** Caller must consume a matching large material gear from inventory first. */
@@ -263,26 +244,7 @@ public class GearboxBlockEntity extends BlockEntity implements IEnergyBlock {
 
     /** Original getRotations: rotation consistency is per-face, not merely input sign. */
     private int rotations(Direction input, boolean negative) {
-        if (!gearsWork()) return 0;
-        int result = negative ? bit(input) : 0;
-        if (onAxis(input)) {
-            if (!negative) result |= bit(input.getOpposite());
-            if (hasGear(input)) {
-                if (!negative) result |= adjacentGears(input);
-                return (result & gearMask & 63) | 64;
-            }
-            if (hasGear(input.getOpposite())) {
-                if (negative) result |= adjacentGears(input);
-                return (result & gearMask & 63) | 64;
-            }
-            return 0;
-        }
-        if (hasGear(input)) {
-            if (negative) result |= bit(input.getOpposite());
-            if (!negative) result |= adjacentGears(input);
-            return (result & gearMask & 63) | 64;
-        }
-        return 0;
+        return com.gregtech.gregtech.content.energy.GearboxRotationRules.rotations(gearMask,axisCode,input.ordinal(),negative);
     }
 
     @Override

@@ -1,0 +1,181 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:composite",
+  "textures": {
+    "particle": "gregtech:block/machines/redstone/buttons/advanced/0/0/colored_off"
+  },
+  "children": {
+    "colored": {
+      "textures": {
+        "face": "gregtech:block/machines/redstone/buttons/advanced/0/0/colored_on"
+      },
+      "elements": [
+        {
+          "from": [
+            4,
+            4,
+            0
+          ],
+          "to": [
+            12,
+            12,
+            2
+          ],
+          "faces": {
+            "north": {
+              "texture": "#face",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#face",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#face",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#face",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#face",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#face",
+              "tintindex": 0
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    },
+    "overlay": {
+      "textures": {
+        "face": "gregtech:block/machines/redstone/buttons/advanced/0/0/overlay_on"
+      },
+      "elements": [
+        {
+          "from": [
+            4,
+            4,
+            0
+          ],
+          "to": [
+            12,
+            12,
+            2
+          ],
+          "faces": {
+            "north": {
+              "texture": "#face"
+            },
+            "south": {
+              "texture": "#face"
+            },
+            "east": {
+              "texture": "#face"
+            },
+            "west": {
+              "texture": "#face"
+            },
+            "up": {
+              "texture": "#face"
+            },
+            "down": {
+              "texture": "#face"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    },
+    "glowing": {
+      "textures": {
+        "face": "gregtech:block/machines/redstone/buttons/advanced/0/0/glowing_on"
+      },
+      "elements": [
+        {
+          "from": [
+            4,
+            4,
+            0
+          ],
+          "to": [
+            12,
+            12,
+            2
+          ],
+          "faces": {
+            "north": {
+              "texture": "#face",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#face",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#face",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#face",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#face",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#face",
+              "tintindex": 0
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    },
+    "glowverlay": {
+      "textures": {
+        "face": "gregtech:block/machines/redstone/buttons/advanced/0/0/glowverlay_on"
+      },
+      "elements": [
+        {
+          "from": [
+            4,
+            4,
+            0
+          ],
+          "to": [
+            12,
+            12,
+            2
+          ],
+          "faces": {
+            "north": {
+              "texture": "#face"
+            },
+            "south": {
+              "texture": "#face"
+            },
+            "east": {
+              "texture": "#face"
+            },
+            "west": {
+              "texture": "#face"
+            },
+            "up": {
+              "texture": "#face"
+            },
+            "down": {
+              "texture": "#face"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    }
+  }
+}

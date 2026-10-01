@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "gregtech:block/machines/covers/base",
+    "layer1": "gregtech:block/machines/covers/detectorrunningsuccessfully/circuit",
+    "particle": "gregtech:block/machines/covers/detectorrunningsuccessfully/circuit"
+  }
+}

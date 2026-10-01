@@ -33,28 +33,10 @@ public class WoodLeavesBlock extends LeavesBlock {
     }
 
     /** GT6 {@code BlockTreeLeavesAB.getLeavesRangeSide} / {@code BlockTreeLeavesCD}'s blue spruce. */
-    public static int rangeSide(WoodSpecies species) {
-        return switch (species) {
-            case RUBBER -> 2;                                    // AB meta 0
-            case WILLOW, COCONUT -> 4;                           // AB metas 2 and 6
-            case BLUE_SPRUCE, PINE -> 6;                         // CD meta 0 (the conifer's wide skirt)
-            case MAPLE, BLUE_MAHOE, HAZEL, CINNAMON, RAINBOWOOD -> 3;
-            // The wood-dictionary species borrow their shape's ranges.
-            case EBONY -> 3;
-            case WHITE_MAHOE -> 3;
-        };
-    }
+    public static int rangeSide(WoodSpecies species){return com.gregtech.gregtech.worldgen.TreeSpeciesRules.rangeSide(species);}
 
     /** GT6 {@code BlockTreeLeavesAB.getLeavesRangeYNeg} / {@code BlockTreeLeavesCD} (always 2). */
-    public static int rangeYNeg(WoodSpecies species) {
-        return switch (species) {
-            case BLUE_MAHOE -> 4;                                // AB meta 3
-            case CINNAMON, RAINBOWOOD -> 3;                      // AB metas 5 and 7
-            case COCONUT -> 1;                                   // AB meta 6
-            case WHITE_MAHOE -> 4;                               // borrows the blue mahoe shape
-            default -> 2;                                        // rubber, maple, willow, hazel, spruce, pine, ebony
-        };
-    }
+    public static int rangeYNeg(WoodSpecies species){return com.gregtech.gregtech.worldgen.TreeSpeciesRules.rangeYNeg(species);}
 
     /**
      * GT6's decay check ({@code BlockBaseLeaves.updateTick2}): is the species' log still inside the

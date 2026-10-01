@@ -14,4 +14,7 @@ public class WoodSaplingBlock extends SaplingBlock {
     }
 
     public WoodSpecies species() { return species; }
+    @Override protected boolean mayPlaceOn(net.minecraft.world.level.block.state.BlockState state,net.minecraft.world.level.BlockGetter level,net.minecraft.core.BlockPos pos){
+        return super.mayPlaceOn(state,level,pos)||com.gregtech.gregtech.worldgen.TreeSpeciesRules.allowsSand(species)&&state.is(net.minecraft.tags.BlockTags.SAND);
+    }
 }

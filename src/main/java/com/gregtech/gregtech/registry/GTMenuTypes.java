@@ -16,10 +16,10 @@ public final class GTMenuTypes {
     private GTMenuTypes() {}
 
     public static final DeferredRegister<MenuType<?>> MENU_TYPES =
-            DeferredRegister.create(ForgeRegistries.MENU_TYPES, GregTech.MODID);
+            DeferredRegister.create(ForgeRegistries.MENU_TYPES, GregTech.NAMESPACE);
 
     // All distinct hopper slot counts used by GT6 materials
-    private static final int[] HOPPER_SIZES = {1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 14, 15, 16, 18, 27, 36, 54};
+    private static final int[] HOPPER_SIZES = com.gregtech.gregtech.api.inventory.InventorySlotLayout.supportedSizes();
     private static final Map<Integer, RegistryObject<MenuType<HopperContainerMenu>>> BY_SIZE = new HashMap<>();
 
     static {

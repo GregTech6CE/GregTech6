@@ -41,7 +41,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 /** GT6 electric wire block with pipe-style 6-way BooleanProperty connections and dynamic thickness. */
-public class ElectricWireBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, ToolInteractionTarget {
+public class ElectricWireBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, ToolInteractionTarget, com.gregtech.gregtech.api.energy.WireMaterialLike {
     public static final BooleanProperty UP    = BooleanProperty.create("up");
     public static final BooleanProperty DOWN  = BooleanProperty.create("down");
     public static final BooleanProperty NORTH = BooleanProperty.create("north");

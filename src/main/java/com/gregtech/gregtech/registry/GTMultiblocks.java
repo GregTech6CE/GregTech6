@@ -67,20 +67,7 @@ public final class GTMultiblocks {
         if(block instanceof BasicMachineBlock machine) return machine.basicSpec().material().getColor();
         var id = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getKey(block);
         if (id == null) return 0xFFFFFF;
-        return switch (id.getPath()) {
-            case "heat_transmitter", "heat_exchanger_wall" -> com.gregtech.gregtech.content.material.Materials.Invar.getColor();
-            case "coke_oven_wall", "large_crucible_wall", "coke_oven_main", "large_crucible_main" -> com.gregtech.gregtech.content.material.Materials.Ceramic.getColor();
-            case "bedrock_drill_wall", "implosion_compressor_wall", "implosion_compressor_main" -> com.gregtech.gregtech.content.material.Materials.Tungstensteel.getColor();
-            case "heat_exchanger_main" -> com.gregtech.gregtech.content.material.Materials.Tungsten.getColor();
-            case "bedrock_drill_main" -> com.gregtech.gregtech.content.material.Materials.Titanium.getColor();
-            case "lightning_rod_wall", "lightning_rod_main" -> com.gregtech.gregtech.content.material.Materials.Tungsten.getColor();
-            case "lightning_rod_pillar" -> com.gregtech.gregtech.content.material.Materials.SteelGalvanized.getColor();
-            case "large_niobium_titanium_coil" -> com.gregtech.gregtech.content.material.Materials.NiobiumTitanium.getColor();
-            case "large_dynamo_wall" -> com.gregtech.gregtech.content.material.Materials.AnnealedCopper.getColor();
-            case "centrifuge_part" -> com.gregtech.gregtech.content.material.Materials.Tungstensteel.getColor();
-            case "fusion_reactor_wall" -> com.gregtech.gregtech.content.material.Materials.Iridium.getColor();
-            default -> com.gregtech.gregtech.content.material.Materials.StainlessSteel.getColor();
-        };
+        return com.gregtech.gregtech.api.material.GTMaterialRegistry.get(com.gregtech.gregtech.content.multiblock.OriginalMultiblockTintPolicy.material(id.getPath())).getColor();
     }
 
     public static List<RegistryObject<? extends Block>> texturedBlocks() {

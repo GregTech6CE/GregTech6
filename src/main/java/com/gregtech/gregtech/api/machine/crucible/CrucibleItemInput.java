@@ -35,11 +35,7 @@ public final class CrucibleItemInput {
         if (stack.getItem() instanceof MaterialItem materialItem) {
             GTMaterial material = materialItem.getMaterial().resolve();
             MaterialPrefix prefix = materialItem.getPrefix();
-            if (prefix == MaterialPrefix.oreRaw) {
-                result.add(ore(material, 1));
-            } else {
-                result.add(CrucibleMaterialStack.of(material, prefix == null ? GTValues.U : prefix.getMaterialWeight()));
-            }
+            result.add(CrucibleInputRules.materialItem(material, prefix));
             return result;
         }
 
@@ -103,7 +99,7 @@ public final class CrucibleItemInput {
             result.add(ore(vanillaOre, count)); return result;
         }
 
-        Optional<ItemMaterialRegistry.ItemMaterialData> data = ItemMaterialRegistry.get(stack);
+        Optional<com.gregtech.gregtech.api.material.ItemComposition> data = ItemMaterialRegistry.get(stack);
         // Both ore block forms use GT6's ore crushing target in a crucible. Vanilla-style
         // stone ores are ordinary 2U; crystal/rock ores are 4U dense ores.
         if (ItemMaterialRegistry.canRecover(stack) && data.isPresent()
@@ -124,8 +120,7 @@ public final class CrucibleItemInput {
     }
 
     private static CrucibleMaterialStack ore(GTMaterial material, long count) {
-        return CrucibleMaterialStack.of(material.getTargetCrushingMaterial(),
-                Math.multiplyExact(material.getTargetCrushingAmount(), count * material.getOreMultiplier()));
+        return CrucibleInputRules.ore(material, count);
     }
 
     private static void addStoneMaterials(List<CrucibleMaterialStack> result, GTMaterial material,

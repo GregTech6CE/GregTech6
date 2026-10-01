@@ -43,20 +43,7 @@ public class GTFluidSpringsFeature extends Feature<NoneFeatureConfiguration> {
                          int amount) {}
 
     /** {@code Loader_Worldgen:782-788} — the overworld springs, in GT6's order. */
-    public static final List<Spring> SPRINGS = List.of(
-            new Spring("overworld.fluid.oil.extraheavy", "gregtech:liquid_extra_heavy_oil",
-                    "gregtech:liquid_extra_heavy_oil", 400, 2, 6000),
-            new Spring("overworld.fluid.oil.heavy", "gregtech:liquid_heavy_oil",
-                    "gregtech:liquid_heavy_oil", 400, 2, 6000),
-            new Spring("overworld.fluid.oil.medium", "gregtech:liquid_medium_oil",
-                    "gregtech:liquid_medium_oil", 400, 2, 6000),
-            new Spring("overworld.fluid.oil.light", "gregtech:liquid_light_oil",
-                    "gregtech:liquid_light_oil", 400, 2, 6000),
-            new Spring("overworld.fluid.gas.natural", "gregtech:gas_natural_gas",
-                    "gregtech:gas_natural_gas", 200, 1, 3000),
-            new Spring("overworld.fluid.water", "gregtech:watergeothermal",
-                    "gregtech:watergeothermal", 100, 3, 500),
-            new Spring("overworld.fluid.lava", "minecraft:lava", "minecraft:lava", 200, 1, 1000));
+    public static final List<Spring> SPRINGS=FluidSpringRules.SPRINGS.stream().map(v->new Spring(v.name(),v.fluidId(),v.blockId(),v.probability(),v.indicatorType(),v.amount())).toList();
 
     /** GT6's crater: seven layers below the filler ring, one spring per 16 bedrock columns. */
     public static final int CRATER_LAYERS = 7;
@@ -110,25 +97,12 @@ public class GTFluidSpringsFeature extends Feature<NoneFeatureConfiguration> {
         if (fill == null) return false;
         Block filler = level.getLevel().dimension() == Level.NETHER ? Blocks.NETHERRACK : Blocks.DEEPSLATE;
         int base = level.getMinBuildHeight();
-        boolean placed = false;
-        for (int i = 0; i <= CRATER_LAYERS - 1; i++) {
-            for (int x = minX + i; x <= minX + 15 - i; x++) {
-                for (int z = minZ + i; z <= minZ + 15 - i; z++) {
-                    BlockPos fillerPos = new BlockPos(x, base + 1 + i, z);
-                    if (!level.getBlockState(fillerPos).isSolidRender(level, fillerPos)) {
-                        level.setBlock(fillerPos, filler.defaultBlockState(), 2);
-                    }
-                    if (i > 0) {
-                        level.setBlock(new BlockPos(x, base + i, z), fill, 2);
-                        placed = true;
-                    }
-                    if (i > 2 && random.nextInt(CRATER_SPRING_CHANCE) == 0 && isBedrock(level, x, z)) {
-                        if (placeSpring(level, new BlockPos(x, base, z), spring)) placed = true;
-                    }
-                }
-            }
-        }
-        return placed;
+        return FluidSpringRules.carve(minX,minZ,random::nextInt,new FluidSpringRules.CraterSink(){
+            public void filler(int x,int y,int z){BlockPos p=new BlockPos(x,base+y,z);if(!level.getBlockState(p).isSolidRender(level,p))level.setBlock(p,filler.defaultBlockState(),2);}
+            public void fluid(int x,int y,int z){level.setBlock(new BlockPos(x,base+y,z),fill,2);}
+            public boolean bedrock(int x,int z){return isBedrock(level,x,z);}
+            public boolean spring(int x,int z){return placeSpring(level,new BlockPos(x,base,z),spring);}
+        });
     }
 
     private static boolean isBedrock(WorldGenLevel level, int x, int z) {

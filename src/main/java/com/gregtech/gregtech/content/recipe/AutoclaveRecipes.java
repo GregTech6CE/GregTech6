@@ -1,5 +1,7 @@
 package com.gregtech.gregtech.content.recipe;
 
+import com.gregtech.gregtech.content.recipe.AutoclaveRecipeRows.Row;
+
 import com.gregtech.gregtech.GregTech;
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
@@ -39,22 +41,9 @@ public final class AutoclaveRecipes {
                     + " counterpart; ANTIMATTER.NOT and CRYSTALLISABLE are applied");
 
     /** GT6 row: input prefix, input count, steam mB, distilled water mB, ticks, circuit, output prefix, count. */
-    private record Row(MaterialPrefix input, int inCount, int steam, int distW, long ticks, int circuit,
-                       MaterialPrefix output, int outCount) {}
 
-    private static final List<Row> ROWS = List.of(
-            new Row(MaterialPrefix.dustSmall, 1, 25600, 120, 800, 0, MaterialPrefix.gemChipped, 1),
-            new Row(MaterialPrefix.dustSmall, 2, 51200, 240, 1600, 1, MaterialPrefix.gemFlawed, 1),
-            new Row(MaterialPrefix.dustSmall, 4, 102400, 480, 3200, 2, MaterialPrefix.gem, 1),
-            new Row(MaterialPrefix.dustSmall, 8, 204800, 960, 6400, 3, MaterialPrefix.gemFlawless, 1),
-            new Row(MaterialPrefix.dustSmall, 16, 409600, 1920, 12800, 4, MaterialPrefix.gemExquisite, 1),
-            new Row(MaterialPrefix.dustSmall, 32, 819200, 3840, 25600, 5, MaterialPrefix.gemLegendary, 1),
-            new Row(MaterialPrefix.dust, 1, 102400, 480, 3200, 0, MaterialPrefix.gemChipped, 4),
-            new Row(MaterialPrefix.dust, 1, 102400, 480, 3200, 1, MaterialPrefix.gemFlawed, 2),
-            new Row(MaterialPrefix.dust, 1, 102400, 480, 3200, 2, MaterialPrefix.gem, 1),
-            new Row(MaterialPrefix.dust, 2, 204800, 960, 6400, 3, MaterialPrefix.gemFlawless, 1),
-            new Row(MaterialPrefix.dust, 4, 409600, 1920, 12800, 4, MaterialPrefix.gemExquisite, 1),
-            new Row(MaterialPrefix.dust, 8, 819200, 3840, 25600, 5, MaterialPrefix.gemLegendary, 1));
+
+    private static final List<Row> ROWS = AutoclaveRecipeRows.ROWS;
 
     private static boolean registered;
 

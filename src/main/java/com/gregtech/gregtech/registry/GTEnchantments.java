@@ -13,7 +13,7 @@ import net.minecraftforge.registries.RegistryObject;
 /** Wave 48 N13: GT6 enchantments (Disjunction, Butchery, etc.). */
 public final class GTEnchantments {
     private static final DeferredRegister<Enchantment> ENCHS =
-            DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, GregTech.MODID);
+            DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, GregTech.NAMESPACE);
 
     public static final RegistryObject<Enchantment> DISJUNCTION = ENCHS.register("disjunction",
             () -> new Enchantment(Enchantment.Rarity.COMMON, EnchantmentCategory.WEAPON, new EquipmentSlot[]{EquipmentSlot.MAINHAND}) {});

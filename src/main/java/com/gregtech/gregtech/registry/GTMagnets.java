@@ -33,16 +33,5 @@ public final class GTMagnets {
         GTBlocks.BLOCK_ITEMS.register(id, () -> new BlockItem(block.get(), new Item.Properties()));
     }
 
-    public static void registerAll() {
-        add("magnet_iron", Materials.IronMagnetic, "Iron");
-        add("magnet_steel", Materials.SteelMagnetic, "Steel");
-        add("magnet_neodymium", Materials.NeodymiumMagnetic, "Neodymium");
-        add("magnet_cobalt", Materials.CobaltBrass, "Cobalt");
-        add("magnet_alnico", Materials.Invar, "Alnico");
-        add("magnet_ferrite", Materials.CastIron, "Ferrite");
-        add("magnet_electromagnetic_steel", Materials.Steel, "Electromagnetic Steel");
-        add("magnet_electromagnetic_aluminium", Materials.Aluminium, "Electromagnetic Aluminium");
-        add("magnet_electromagnetic_galvanized", Materials.SteelGalvanized, "Electromagnetic Galvanized Steel");
-        add("magnet_tungsten_steel", Materials.Tungstensteel, "Tungsten Steel");
-    }
+    public static void registerAll(){for(var v:com.gregtech.gregtech.content.energy.MagnetCatalog.ALL)add(v.id(),v.material(),v.name());}
 }

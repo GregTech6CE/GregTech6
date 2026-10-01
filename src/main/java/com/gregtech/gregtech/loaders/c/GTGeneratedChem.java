@@ -90,7 +90,7 @@ public final class GTGeneratedChem {
     private static void load(String set, Runnable loader) {
         int beforeAdded = added;
         int beforeSkipped = skipped;
-        loader.run();
+        GeneratedRecipeSink.emit(GTGeneratedChem::register,loader);
         SET_STATS.add(new SetStats(set, added - beforeAdded, skipped - beforeSkipped));
     }
 
@@ -249,7 +249,7 @@ public final class GTGeneratedChem {
                     var key = id.indexOf(':') >= 0
                             ? net.minecraft.resources.ResourceLocation.tryParse(id)
                             : net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(
-                                    com.gregtech.gregtech.GregTech.MODID, id);
+                                    com.gregtech.gregtech.GregTech.NAMESPACE, id);
                     techItem = key == null ? null
                             : net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(key);
                 }

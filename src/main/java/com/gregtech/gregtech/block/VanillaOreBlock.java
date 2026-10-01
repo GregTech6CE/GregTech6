@@ -25,23 +25,8 @@ public final class VanillaOreBlock extends IconSetBlock {
     public record Spec(String icon, String material, int harvestLevel, float hardnessMultiplier,
                        int burnLevel, int minXp, int maxXp) {}
 
-    public static final List<Spec> SPECS = List.of(
-            new Spec("ore_sulfur", "Sulfur", 0, 0.5F, 30, 0, 2),
-            new Spec("ore_apatite", "Apatite", 0, 0.5F, 30, 0, 2),
-            new Spec("ore_ruby", "Ruby", 2, 1.5F, 0, 3, 7),
-            new Spec("ore_amber", "Amber", 1, 1.0F, 0, 3, 7),
-            new Spec("ore_amethyst", "Amethyst", 2, 1.0F, 0, 3, 7),
-            new Spec("ore_galena", "Galena", 1, 1.0F, 0, 2, 5),
-            new Spec("ore_tetrahedrite", "Tetrahedrite", 1, 1.0F, 0, 2, 5),
-            new Spec("ore_cassiterite", "Cassiterite", 1, 1.0F, 0, 2, 5),
-            new Spec("ore_sheldonite", "Cooperite", 2, 1.5F, 0, 2, 5),
-            new Spec("ore_pentlandite", "Pentlandite", 1, 1.0F, 0, 2, 5),
-            new Spec("ore_scheelite", "Scheelite", 2, 1.5F, 0, 2, 5),
-            new Spec("ore_rutile", "Rutile", 2, 1.5F, 0, 2, 5),
-            new Spec("ore_bastnasite", "Bastnasite", 2, 1.5F, 0, 2, 5),
-            new Spec("ore_graphite", "Graphite", 0, 0.5F, 30, 2, 5),
-            new Spec("ore_pitchblende", "Pitchblende", 3, 2.0F, 0, 2, 5),
-            new Spec("ore_borax", "Borax", 0, 0.5F, 0, 2, 5));
+    public static final List<Spec> SPECS = SpecialOreDefinitions.vanilla().stream().map(s -> new Spec(s.icon(), s.material(),
+            s.harvestLevel(), s.hardnessMultiplier(), s.burnLevel(), s.minXp(), s.maxXp())).toList();
 
     public static Spec spec(String iconName) {
         for (Spec spec : SPECS) if (spec.icon().equals(iconName)) return spec;

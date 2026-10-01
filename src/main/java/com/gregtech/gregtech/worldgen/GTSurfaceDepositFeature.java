@@ -50,15 +50,15 @@ import javax.annotation.Nullable;
 public class GTSurfaceDepositFeature extends Feature<NoneFeatureConfiguration> {
 
     /** GT6 {@code BlocksGT.Diggables} metas 5/1/6/4 - meta 3 (Red Clay) is Nether-only. */
-    public static final String[] CLAYS = {"clay_blue", "clay_brown", "clay_white", "clay_yellow"};
+    public static final String[] CLAYS = TerrainWorldgenRules.SEAM_CLAYS.toArray(String[]::new);
 
     /** The rolled disc: {@code radius = MIN_RADIUS + nextInt(MAX_RADIUS - MIN_RADIUS + 1)}. */
-    public static final int MIN_RADIUS = 4;
-    public static final int MAX_RADIUS = 7;
+    public static final int MIN_RADIUS = TerrainWorldgenRules.SEAM_MIN_RADIUS;
+    public static final int MAX_RADIUS = TerrainWorldgenRules.SEAM_MAX_RADIUS;
 
     /** The rolled thickness: {@code depth = MIN_DEPTH + nextInt(MAX_DEPTH - MIN_DEPTH + 1)}. */
-    public static final int MIN_DEPTH = 2;
-    public static final int MAX_DEPTH = 4;
+    public static final int MIN_DEPTH = TerrainWorldgenRules.SEAM_MIN_DEPTH;
+    public static final int MAX_DEPTH = TerrainWorldgenRules.SEAM_MAX_DEPTH;
 
     public GTSurfaceDepositFeature() {
         super(NoneFeatureConfiguration.CODEC);
@@ -155,7 +155,7 @@ public class GTSurfaceDepositFeature extends Feature<NoneFeatureConfiguration> {
     @Nullable
     private static BlockState blockState(String id) {
         Block block = ForgeRegistries.BLOCKS.getValue(
-                new ResourceLocation(com.gregtech.gregtech.GregTech.MODID, id));
+                new ResourceLocation(com.gregtech.gregtech.GregTech.NAMESPACE, id));
         return block == null || block == Blocks.AIR ? null : block.defaultBlockState();
     }
 }

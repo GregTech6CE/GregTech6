@@ -1,5 +1,7 @@
 package com.gregtech.gregtech.content.recipe;
 
+import com.gregtech.gregtech.content.recipe.BatteryCellRecipeRows.Fill;
+
 import com.gregtech.gregtech.GregTech;
 import com.gregtech.gregtech.api.recipe.Recipe;
 import com.gregtech.gregtech.data.MachineRecipeMaps;
@@ -39,19 +41,9 @@ import java.util.List;
 public final class BatteryCellRecipes {
 
     /** GT6 empty cell -> filled cell plus the electrolyte its {@code FluidContainerData} carries. */
-    private record Fill(String empty, String filled, String fluid, int mb, String source) {}
 
-    private static final List<Fill> FILLS = List.of(
-            new Fill("lead_acid_cell_empty", "lead_acid_cell_filled",
-                    "SulfuricAcid", 2000, "MultiItemTechnological:462"),
-            new Fill("alkaline_button_cell_empty", "alkaline_button_cell_filled",
-                    "WaterDistilled", 1000, "MultiItemTechnological:467"),
-            new Fill("nickel_cadmium_cell_empty", "nickel_cadmium_cell_filled",
-                    "WaterDistilled", 1000, "MultiItemTechnological:472"),
-            new Fill("lithium_cobalt_cell_empty", "lithium_cobalt_cell_filled",
-                    "HydrochloricAcid", 2000, "MultiItemTechnological:477"),
-            new Fill("lithium_manganese_cell_empty", "lithium_manganese_cell_filled",
-                    "HydrogenFluoride", 2000, "MultiItemTechnological:482"));
+
+    private static final List<Fill> FILLS = BatteryCellRecipeRows.FILLS;
 
     private static final List<String> ENTRIES = new ArrayList<>();
     private static final List<String> SKIPPED = new ArrayList<>();

@@ -22,7 +22,7 @@ public final class EngineTooltips {
     private static final int FLUID_IN_FACES   = 1 << FaceConfig.BACK;
     private static final int FLUID_OUT_FACES  = ENERGY_OUT_FACES;
 
-    private static final String MOD = GregTech.MODID;
+    private static final String MOD = GregTech.NAMESPACE;
 
     public static void appendEngine(EngineBlock block, List<Component> tooltip) {
         EngineType type = block.engineType();

@@ -69,33 +69,12 @@ public class SensorBlockEntity extends BlockEntity {
      * test can drive it without a clock.
      */
     public static long tpsFromElapsed(long elapsedMillis, int tickRate) {
-        return elapsedMillis > 0 ? (tickRate * 100000L) / elapsedMillis : TPS_DEFAULT;
+        return com.gregtech.gregtech.api.sensor.SensorPanelRules.tpsFromElapsed(elapsedMillis,tickRate);
     }
 
     private final com.gregtech.gregtech.api.sensor.SensorAverage average = new com.gregtech.gregtech.api.sensor.SensorAverage();
     public com.gregtech.gregtech.api.sensor.SixCellDisplay.Glyph[] displayCells() {
-        String unit = switch (kind) {
-            case FLUID -> "liter"; case ENERGY -> "eu"; case PROGRESS -> "scale";
-            case THERMOMETER -> "kelvin"; case TACHOMETER -> "ru"; case WEIGHTOMETRIC -> "ton";
-            case WEIGHTOMETRIC_LIGHT -> "gramm"; case WEIGHTOMETRIC_MEDIUM -> "kilogramm";
-            case WEIGHTOMETRIC_SUPER_HEAVY -> "kiloton"; case TPS -> "clock";
-            case BUCKETOMETER -> "cubicmeter"; case KILOBUCKETOMETER -> "cubicdecameter";
-            case GIBBLOMETER -> "gibbl"; case LUMINOMETER -> "lumin"; case PLAYERCOUNTER -> "greg";
-            case CHRONOMETER -> "clock"; case GEIGER -> "neutron"; case LASEROMETER -> "lu";
-            default -> null;
-        };
-        int color = switch (kind) {
-            case FLUID, BUCKETOMETER, KILOBUCKETOMETER -> 0x0000FF;
-            case ENERGY, THERMOMETER, TPS -> 0xFF0000;
-            case TACHOMETER, CHRONOMETER, GEIGER -> 0x00FF00;
-            case GIBBLOMETER, LASEROMETER -> 0xFFFF00;
-            case PLAYERCOUNTER, PROGRESS -> 0x80C0FF;
-            case LUMINOMETER -> 0xFFFF80;
-            case WEIGHTOMETRIC, WEIGHTOMETRIC_LIGHT, WEIGHTOMETRIC_MEDIUM,
-                 WEIGHTOMETRIC_SUPER_HEAVY -> 0xC0C0C0;
-            default -> 0xFFFFFF;
-        };
-        return com.gregtech.gregtech.api.sensor.SixCellDisplay.sensor(value,mode,hexadecimal,unit,color);
+        return com.gregtech.gregtech.api.sensor.SixCellDisplay.sensor(value,mode,hexadecimal,com.gregtech.gregtech.api.sensor.SensorPanelRules.unit(kind.name()),com.gregtech.gregtech.api.sensor.SensorPanelRules.color(kind.name()));
     }
     public String displayText() {
         String number = hexadecimal ? Long.toHexString(value).toUpperCase(java.util.Locale.ROOT) : Long.toString(value);
@@ -218,13 +197,8 @@ public class SensorBlockEntity extends BlockEntity {
                     }
                 }
                 case TACHOMETER -> {
-                    if (target instanceof IEnergyBlock energy) {
-                        long cap = energy.getEnergyCapacity(GregTechTags.Energy.RU, facing);
-                        if (cap > 0) {
-                            newValue = energy.getEnergyStored(GregTechTags.Energy.RU, facing);
-                            maximum = cap;
-                        }
-                    }
+                    if(target instanceof com.gregtech.gregtech.blockentity.energy.AxleBlockEntity axle){newValue=axle.transferredLast();maximum=com.gregtech.gregtech.api.sensor.SensorPanelRules.transferMaximum(axle.maxSpeed(),axle.maxPower());}
+                    else if(target instanceof com.gregtech.gregtech.blockentity.energy.GearboxBlockEntity gearbox&&target.getBlockState().getBlock() instanceof com.gregtech.gregtech.block.energy.GearboxBlock block){newValue=gearbox.transferredLast();maximum=com.gregtech.gregtech.api.sensor.SensorPanelRules.transferMaximum(block.spec().maxSpeed(),block.spec().maxPower());}
                 }
                 case WEIGHTOMETRIC, WEIGHTOMETRIC_LIGHT, WEIGHTOMETRIC_MEDIUM,
                      WEIGHTOMETRIC_SUPER_HEAVY -> {

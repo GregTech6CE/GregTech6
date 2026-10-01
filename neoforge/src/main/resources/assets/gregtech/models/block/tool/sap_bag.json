@@ -1,0 +1,100 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:composite",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "particle": "gregtech:block/machines/tools/sapbag/colored/bottom"
+  },
+  "children": {
+    "colored": {
+      "textures": {
+        "bottom": "gregtech:block/machines/tools/sapbag/colored/bottom",
+        "side": "gregtech:block/machines/tools/sapbag/colored/side",
+        "top": "gregtech:block/machines/tools/sapbag/colored/top"
+      },
+      "elements": [
+        {
+          "from": [
+            5,
+            0,
+            0
+          ],
+          "to": [
+            11,
+            7,
+            6
+          ],
+          "faces": {
+            "west": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#side",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#top",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#bottom",
+              "tintindex": 0
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    },
+    "overlay": {
+      "textures": {
+        "bottom": "gregtech:block/machines/tools/sapbag/overlay/bottom",
+        "side": "gregtech:block/machines/tools/sapbag/overlay/side",
+        "top": "gregtech:block/machines/tools/sapbag/overlay/top"
+      },
+      "elements": [
+        {
+          "from": [
+            5,
+            0,
+            0
+          ],
+          "to": [
+            11,
+            7,
+            6
+          ],
+          "faces": {
+            "west": {
+              "texture": "#side"
+            },
+            "east": {
+              "texture": "#side"
+            },
+            "north": {
+              "texture": "#side"
+            },
+            "south": {
+              "texture": "#side"
+            },
+            "up": {
+              "texture": "#top"
+            },
+            "down": {
+              "texture": "#bottom"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    }
+  }
+}

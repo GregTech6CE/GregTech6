@@ -18,10 +18,7 @@ public final class UsbDataMedia {
         if (stack == null || stack.isEmpty()) return -1;
         var key = ForgeRegistries.ITEMS.getKey(stack.getItem());
         if (key == null || !key.getNamespace().equals("gregtech")) return -1;
-        String name = key.getPath();
-        if (!name.startsWith("usb") || !name.endsWith(suffix) || name.length() != 4 + suffix.length()) return -1;
-        char numeral = name.charAt(3);
-        return numeral >= '1' && numeral <= '4' ? numeral - '0' : -1;
+        return UsbDataRules.tier(key.getNamespace(),key.getPath(),suffix);
     }
 
     public static boolean isStick(ItemStack stack) { return stickTier(stack) >= 1; }
@@ -35,8 +32,7 @@ public final class UsbDataMedia {
 
     @Nullable
     public static CompoundTag readStick(ItemStack stack, int requestedTier) {
-        if (requestedTier < 0 || requestedTier > 4 || stickTier(stack) < requestedTier
-                || stickFileTier(stack) > requestedTier) return null;
+        if (!UsbDataRules.readable(stickTier(stack),requestedTier,stickFileTier(stack))) return null;
         CompoundTag tag = stack.getTag();
         if (tag == null || !tag.contains(GTMaterialDataRecipes.NBT_USB_DATA, 10)) return null;
         CompoundTag file = tag.getCompound(GTMaterialDataRecipes.NBT_USB_DATA);
@@ -44,7 +40,7 @@ public final class UsbDataMedia {
     }
 
     public static boolean writeStick(ItemStack stack, int requestedTier, @Nullable CompoundTag data) {
-        if (requestedTier < 0 || requestedTier > 4 || stickTier(stack) < requestedTier) return false;
+        if (!UsbDataRules.writable(stickTier(stack),requestedTier)) return false;
         if (data == null || data.isEmpty()) {
             CompoundTag tag = stack.getTag();
             if (tag != null) {
@@ -62,8 +58,7 @@ public final class UsbDataMedia {
 
     @Nullable
     public static CompoundTag readDrive(ItemStack drive, int slot, int requestedTier) {
-        if (slot < 0 || slot >= GTMaterialDataRecipes.DRIVE_SLOTS || requestedTier < 0 || requestedTier > 4
-                || driveTier(drive) < requestedTier) return null;
+        if (!UsbDataRules.slot(slot) || !UsbDataRules.writable(driveTier(drive),requestedTier)) return null;
         CompoundTag tag = drive.getTag();
         if (tag == null || !tag.contains(GTMaterialDataRecipes.NBT_USB_DRIVE, 10)) return null;
         CompoundTag files = tag.getCompound(GTMaterialDataRecipes.NBT_USB_DRIVE);
@@ -74,8 +69,7 @@ public final class UsbDataMedia {
     }
 
     public static boolean writeDrive(ItemStack drive, int slot, int requestedTier, @Nullable CompoundTag data) {
-        if (slot < 0 || slot >= GTMaterialDataRecipes.DRIVE_SLOTS || requestedTier < 0 || requestedTier > 4
-                || driveTier(drive) < requestedTier) return false;
+        if (!UsbDataRules.slot(slot) || !UsbDataRules.writable(driveTier(drive),requestedTier)) return false;
         CompoundTag tag = drive.getOrCreateTag();
         CompoundTag files = tag.getCompound(GTMaterialDataRecipes.NBT_USB_DRIVE).copy();
         if (data == null || data.isEmpty()) {

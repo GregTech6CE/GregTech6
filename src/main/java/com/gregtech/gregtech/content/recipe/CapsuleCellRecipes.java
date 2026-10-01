@@ -39,8 +39,7 @@ public final class CapsuleCellRecipes {
     }
     /** RecipeMapHandlerPrefixForging.getCosts / OreDictMaterial.getWeight, at 96 GU/t. */
     public static long hotExtrusionTicks(com.gregtech.gregtech.api.material.GTMaterial material,long units) {
-        double kilograms=material.getDensity()*111.111111*units/com.gregtech.gregtech.api.material.GTValues.U;
-        return Math.max(16,1+(long)Math.abs((material.getMeltingPoint()-293d)*kilograms/(75*96)));
+        return ExtrusionWorkRules.hotExtrusionTicks(material,units);
     }
 
     /** RecipeMapShredder: an empty capcellcon recovers 1/9 U; a filled one is never recyclable. */

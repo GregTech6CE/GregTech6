@@ -86,11 +86,16 @@ public final class MachineRegistry {
             float hardness, float blastResistance) {
         MachineSpec spec = new MachineSpec(id, materialName, tintRgb, efficiency, outputHu,
                 MachineTextures.BURNING_SOLID, hardness, blastResistance);
+        return registerSolidBurningBox(spec);
+    }
+
+    public static RegistryObject<SolidBurningBoxBlock> registerSolidBurningBox(MachineSpec spec) {
+        String id = spec.id();
         RegistryObject<SolidBurningBoxBlock> block = GTBlocks.BLOCKS.register(id, () -> new SolidBurningBoxBlock(
                 spec,
                 BlockBehaviour.Properties.of()
                         .mapColor(MapColor.METAL)
-                        .strength(hardness, blastResistance)
+                        .strength(spec.hardness(), spec.blastResistance())
                         .requiresCorrectToolForDrops()
                         .lightLevel(state -> state.getValue(SolidBurningBoxBlock.LIT) ? 13 : 0)));
         SOLID_BURNING_BOXES.add(block);
@@ -155,17 +160,7 @@ public final class MachineRegistry {
     }
 
     private static CrucibleSpec companionSpec(CrucibleSpec base, String id, int metaOffset, long hullMaterialUnits) {
-        return new CrucibleSpec(
-                id,
-                base.material(),
-                base.gt6MetaId() + metaOffset,
-                base.meltingPointK(),
-                base.boilingPointK(),
-                base.hullDensity(),
-                base.hardness(),
-                base.blastResistance(),
-                base.acidProof(),
-                hullMaterialUnits);
+        return SmelteryCompanionDefinitions.copy(base,id,metaOffset,hullMaterialUnits);
     }
 
     public static RegistryObject<MoldBlock> registerMold(CrucibleSpec spec) {

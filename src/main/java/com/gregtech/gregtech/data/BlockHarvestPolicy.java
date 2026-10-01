@@ -25,7 +25,7 @@ public final class BlockHarvestPolicy {
   var id=net.minecraftforge.registries.ForgeRegistries.BLOCKS.getKey(block);
   String path=id==null?"":id.getPath();
   // Wooden hulls take precedence over machinery implemented by the same base class.
-  if(path.startsWith("wood_barrel") || path.startsWith("axle_wood_") || path.equals("gearbox_wood") || path.endsWith("_treated_wood") || path.endsWith("_wood") || path.startsWith("tank_wood") || path.startsWith("wood_tank") || path.contains("wooden") || path.startsWith("chest_wood")) return Tool.AXE;
+  if(BlockHarvestNames.woodenHull(path)) return Tool.AXE;
   if(block instanceof GTMachineBlock || block instanceof com.gregtech.gregtech.block.energy.EnergyNodeBlock
       || block instanceof com.gregtech.gregtech.block.inventory.SafeBlock
       || block instanceof com.gregtech.gregtech.block.inventory.UsbSwitchBlock
@@ -58,15 +58,5 @@ public final class BlockHarvestPolicy {
   if(block instanceof MaterialBlockLike m && tool(block)==Tool.PICKAXE) return m.prefix().harvestLevel(m.material());
   return 0;
  }
- public static String tag(Tool tool) {
-  return switch(tool) {
-   case PICKAXE,AXE,SHOVEL -> "minecraft:mineable/"+tool.name().toLowerCase(java.util.Locale.ROOT);
-   case SWORD -> "gregtech:mineable/sword";
-   case WRENCH -> "gregtech:mineable/wrench";
-   case CROWBAR -> "gregtech:mineable/crowbar";
-   case CUTTER -> "gregtech:mineable/wire_cutter";
-   case SHEARS -> "gregtech:mineable/shears";
-   case HAND -> "gregtech:mineable/hand";
-  };
- }
+ public static String tag(Tool tool) { return BlockHarvestNames.tag(tool.name()); }
 }

@@ -45,24 +45,17 @@ public class GTColtanFeature extends Feature<NoneFeatureConfiguration> {
 
     /** GT6's centre point: {@code new Random(seed + 5).nextGaussian() * 1500} for x and z. */
     public static BlockPos centre(long seed) {
-        Random random = new Random(seed + 5);
-        int x = (int) (random.nextGaussian() * 1500);
-        int z = (int) (random.nextGaussian() * 1500);
-        return new BlockPos(x, 0, z);
+        var point=MineralWorldgenRules.coltanCentre(seed);return new BlockPos(point.x(),0,point.z());
     }
 
     /** GT6's material table for one scatter roll. */
     public static GTMaterial materialFor(int roll) {
-        return switch (roll) {
-            case 0 -> OreMaterials.Columbite;
-            case 1 -> OreMaterials.Tantalite;
-            default -> OreMaterials.Coltan;
-        };
+        return com.gregtech.gregtech.api.material.GTMaterialRegistry.get(MineralWorldgenRules.coltanMaterial(roll));
     }
 
     /** GT6's count: {@code max(1, amount/2 + rand(1 + amount)/2)}. */
     public static int count(RandomSource random, int amount) {
-        return Math.max(1, amount / 2 + random.nextInt(1 + amount) / 2);
+        return MineralWorldgenRules.coltanCount(amount,random::nextInt);
     }
 
     @Override
@@ -78,7 +71,7 @@ public class GTColtanFeature extends Feature<NoneFeatureConfiguration> {
 
     /** GT6's squared distance from a chunk's origin corner to the field centre. */
     public static int distanceSquared(BlockPos centre, int minX, int minZ) {
-        return (centre.getX() - minX) * (centre.getX() - minX) + (centre.getZ() - minZ) * (centre.getZ() - minZ);
+        return MineralWorldgenRules.distanceSquared(centre.getX(),centre.getZ(),minX,minZ);
     }
 
     /** True when GT6 would treat this chunk as part of the coltan field. */

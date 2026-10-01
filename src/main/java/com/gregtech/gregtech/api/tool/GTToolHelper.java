@@ -187,12 +187,7 @@ public final class GTToolHelper {
      * Gem pick uses {@code 0.25} multiplier (= quarter durability of the same gem as a normal pick).
      */
     public static int computeMaxDurability(GTToolType type, GTMaterial statMaterial) {
-        long base = statMaterial.getToolDurability();
-        if (base <= 0) {
-            base = 64;
-        }
-        long max = Math.round(base * 100L * type.durabilityMultiplier());
-        return (int) Math.max(1L, Math.min(Integer.MAX_VALUE, max));
+        return com.gregtech.gregtech.api.machine.ManualToolRules.maximumDurability(statMaterial, type.durabilityMultiplier());
     }
 
     public static int getHarvestLevel(ItemStack stack) {
@@ -310,7 +305,7 @@ public final class GTToolHelper {
         if (gt6Return <= 0 || !isTool(stack) || user != null && isCreative(user)) {
             return;
         }
-        int amount = (int) Math.ceil(gt6Return * 100.0D / 10000.0D);
+        int amount = com.gregtech.gregtech.api.machine.ManualToolRules.clickDamage(gt6Return);
         hurt(stack, amount, user, slot);
     }
 

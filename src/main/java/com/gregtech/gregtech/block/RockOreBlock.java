@@ -22,16 +22,9 @@ import java.util.Map;
 public final class RockOreBlock extends IconSetBlock implements DenseOreBlock {
     public record Spec(String material, int harvestLevel, float hardnessMultiplier, boolean flammable) {}
 
-    private static final Map<String, Spec> SPECS = Map.ofEntries(
-            Map.entry("ore_anthracite", new Spec("Coal", 0, 0.5F, true)),
-            Map.entry("ore_lignite", new Spec("Lignite", 0, 0.5F, true)),
-            Map.entry("ore_salt", new Spec("NaCl", 1, 1.0F, false)),
-            Map.entry("ore_rocksalt", new Spec("KCl", 1, 1.0F, false)),
-            Map.entry("ore_bauxite", new Spec("Bauxite", 2, 2.0F, false)),
-            Map.entry("ore_oil", new Spec("Oilshale", 1, 0.5F, true)),
-            Map.entry("ore_gypsum", new Spec("Gypsum", 0, 0.5F, false)),
-            Map.entry("ore_milkyquartz", new Spec("MilkyQuartz", 1, 1.0F, false)),
-            Map.entry("ore_netherquartz", new Spec("NetherQuartz", 1, 1.0F, false)));
+    private static final Map<String, Spec> SPECS = SpecialOreDefinitions.rocks().entrySet().stream().collect(
+            java.util.stream.Collectors.toUnmodifiableMap(Map.Entry::getKey, e -> new Spec(e.getValue().material(),
+                    e.getValue().harvestLevel(), e.getValue().hardnessMultiplier(), e.getValue().flammable())));
 
     public static Spec spec(String iconName) {
         return SPECS.get(iconName);

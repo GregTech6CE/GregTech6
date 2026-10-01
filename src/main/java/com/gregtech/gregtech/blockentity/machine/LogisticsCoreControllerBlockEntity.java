@@ -245,23 +245,11 @@ public final class LogisticsCoreControllerBlockEntity extends GTEnergyBlockEntit
     }
     @Override public long injectPortEnergy(MultiblockLayout.Role role, GregTechTags.Tag type,
                                            long size, long amount, boolean execute) {
-        if (!acceptsEU(role, type) || size == Long.MIN_VALUE || size == 0 || amount <= 0
-                || !isStructureOk() || energy > processors.energyCapacity()) return 0;
-        long packet = Math.abs(size);
-        if (!execute) return amount; // GT6 checks the over-voltage only on execution.
-        if (packet > 1024) {
-            if (level != null && !level.isClientSide)
-                level.explode(null, worldPosition.getX() + .5, worldPosition.getY() + .5,
-                        worldPosition.getZ() + .5, 6, Level.ExplosionInteraction.BLOCK);
-            return amount;
-        }
-        // Preserve GT6's packet overfill: the check is on the *previous* energy, not new energy.
-        long accepted = Math.min(amount, (Long.MAX_VALUE - energy) / packet);
-        if (accepted > 0) {
-            energy += accepted * packet;
-            setChanged();
-        }
-        return accepted;
+        if(!acceptsEU(role,type)||!isStructureOk())return 0;
+        var plan=com.gregtech.gregtech.content.logistics.LogisticsCorePowerRules.inject(energy,processors.energyCapacity(),size,amount,execute);
+        if(plan.explode()){if(level!=null&&!level.isClientSide)level.explode(null,worldPosition.getX()+.5,worldPosition.getY()+.5,worldPosition.getZ()+.5,6,Level.ExplosionInteraction.BLOCK);}
+        else if(execute&&plan.accepted()>0){energy=plan.energy();setChanged();}
+        return plan.accepted();
     }
 
     private static boolean acceptsEU(MultiblockLayout.Role role, GregTechTags.Tag type) {

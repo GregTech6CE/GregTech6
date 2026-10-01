@@ -16,7 +16,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Map;
 
-@Mod.EventBusSubscriber(modid = GregTech.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class GTToolModel {
     public static final ModelProperty<ItemStack> STACK = new ModelProperty<>();
 

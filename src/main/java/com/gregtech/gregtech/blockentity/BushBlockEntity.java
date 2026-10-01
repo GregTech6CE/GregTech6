@@ -25,11 +25,11 @@ import org.jetbrains.annotations.Nullable;
  */
 public class BushBlockEntity extends BlockEntity {
     /** GT6 checks {@code SERVER_TIME % 128} — the growth cycle length. */
-    public static final int CYCLE_TICKS = 128;
+    public static final int CYCLE_TICKS = com.gregtech.gregtech.content.plant.BushGrowthRules.CYCLE_TICKS;
     /** GT6's byte overflow counter: a stage advances every 256 growth increments. */
-    public static final int GROWTH_PER_STAGE = 256;
+    public static final int GROWTH_PER_STAGE = com.gregtech.gregtech.content.plant.BushGrowthRules.GROWTH_PER_STAGE;
     /** GT6's light gate when the bush cannot see the sky. */
-    public static final int LIGHT_GATE = 9;
+    public static final int LIGHT_GATE = com.gregtech.gregtech.content.plant.BushGrowthRules.LIGHT_GATE;
 
     private String berryId = "";
     private int growth;
@@ -90,10 +90,8 @@ public class BushBlockEntity extends BlockEntity {
             return 0;
         }
         int stage = state.getValue(BushBlock.STAGE);
-        for (int i = 0; i < increments && stage < 3; i++) {
-            growth = (growth + 1) & 0xFF; // GT6's byte counter
-            if (growth == 0) stage++;
-        }
+        var result=com.gregtech.gregtech.content.plant.BushGrowthRules.advance(growth,stage,increments);
+        growth=result.counter();stage=result.stage();
         if (stage != state.getValue(BushBlock.STAGE)) {
             level.setBlock(worldPosition, state.setValue(BushBlock.STAGE, stage), 3);
         }

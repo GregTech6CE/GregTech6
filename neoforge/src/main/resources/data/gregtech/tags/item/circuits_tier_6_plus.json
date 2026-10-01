@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "gregtech:circuit_ultimate",
+    {
+      "id": "#forge:circuits/ultimate",
+      "required": false
+    }
+  ]
+}

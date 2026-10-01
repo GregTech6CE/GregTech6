@@ -78,6 +78,6 @@ public final class Loader_ToolCraftingRecipes {
     }
 
     private static ResourceLocation id(String path) {
-        return ResourceLocation.fromNamespaceAndPath(GregTech.MODID, path);
+        return ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, path);
     }
 }

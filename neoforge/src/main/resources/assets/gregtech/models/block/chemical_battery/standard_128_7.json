@@ -1,0 +1,75 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "bottom": "gregtech:block/machines/batteries/eu/standard/128/bottom",
+    "top": "gregtech:block/machines/batteries/eu/standard/128/top",
+    "sides": "gregtech:block/machines/batteries/eu/standard/128/sides",
+    "bar": "gregtech:block/machines/batteries/eu/standard/128/bar",
+    "particle": "gregtech:block/machines/batteries/eu/standard/128/sides"
+  },
+  "elements": [
+    {
+      "from": [
+        4,
+        0,
+        4
+      ],
+      "to": [
+        12,
+        11,
+        12
+      ],
+      "faces": {
+        "north": {
+          "texture": "#sides"
+        },
+        "south": {
+          "texture": "#sides"
+        },
+        "east": {
+          "texture": "#sides"
+        },
+        "west": {
+          "texture": "#sides"
+        },
+        "up": {
+          "texture": "#top"
+        },
+        "down": {
+          "texture": "#bottom"
+        }
+      }
+    },
+    {
+      "from": [
+        3.968,
+        1,
+        3.968
+      ],
+      "to": [
+        12.032,
+        8,
+        12.032
+      ],
+      "faces": {
+        "north": {
+          "texture": "#bar",
+          "tintindex": 0
+        },
+        "south": {
+          "texture": "#bar",
+          "tintindex": 0
+        },
+        "east": {
+          "texture": "#bar",
+          "tintindex": 0
+        },
+        "west": {
+          "texture": "#bar",
+          "tintindex": 0
+        }
+      }
+    }
+  ]
+}

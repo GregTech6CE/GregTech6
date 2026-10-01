@@ -115,7 +115,7 @@ public final class MaterialAnvilBlockEntity extends BlockEntity implements com.g
     }
     private long hammer(Player player, ItemStack hammer, Direction facing, Direction side, double half, long budget) {
         if (durability == 0) return 0;
-        RecipeMap map = switch (com.gregtech.gregtech.content.tool.AnvilRules.surface(facing, side, half)) {
+        RecipeMap map = switch (com.gregtech.gregtech.content.tool.AnvilRules.surface(facing, side, half, player==null)) {
             case TOP -> MachineRecipeMaps.Anvil; case SMALL -> MachineRecipeMaps.AnvilBendSmall; case BIG -> MachineRecipeMaps.AnvilBendBig;
         };
         for (Recipe recipe : map.mRecipeList) {

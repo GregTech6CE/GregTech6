@@ -24,12 +24,7 @@ public final class BookShelfGeometry {
 
     /** Model-space book bounds for a north-facing shelf, directly from the GT6 render passes. */
     public static AABB bookBounds(int slot) {
-        if (slot < 0 || slot >= GTBookList.SLOTS) throw new IllegalArgumentException("book slot " + slot);
-        int column = slot % 7;
-        boolean front = slot < 14;
-        int x = front ? 1 + column * 2 : 13 - column * 2;
-        int y = slot % 14 < 7 ? 9 : 1;
-        int z = front ? 2 : 9;
-        return new AABB(x / 16.0, y / 16.0, z / 16.0, (x + 2) / 16.0, (y + 6) / 16.0, (z + 5) / 16.0);
+        var b=BookShelfRules.bookBounds(slot);
+        return new AABB(b.x0(),b.y0(),b.z0(),b.x1(),b.y1(),b.z1());
     }
 }

@@ -125,11 +125,11 @@ public final class Loader_WoodCraftingRecipes {
         ItemStack gear = requiredTreated(GTItems.getStack(MaterialPrefix.gearGt,
                 GTMaterialRegistry.get("WoodTreated"), 1), "treated gear");
 
-        addTreated(recipes, "wood_bolt", new String[]{"s ", " S"},
+        addTreated(recipes, "wood_bolt", com.gregtech.gregtech.content.recipe.TreatedWoodCraftingRows.BOLT_PATTERN,
                 Map.of('s', Ingredient.of(saw), 'S', Ingredient.of(net.minecraft.world.item.Items.STICK)), woodBolt);
-        addTreated(recipes, "small_gear", new String[]{"P ", " s"},
+        addTreated(recipes, "small_gear", com.gregtech.gregtech.content.recipe.TreatedWoodCraftingRows.SMALL_GEAR_PATTERN,
                 Map.of('P', Ingredient.of(plank), 's', Ingredient.of(saw)), smallGear);
-        addTreated(recipes, "gear", new String[]{"BPB", "PsP", "BPB"},
+        addTreated(recipes, "gear", com.gregtech.gregtech.content.recipe.TreatedWoodCraftingRows.GEAR_PATTERN,
                 Map.of('B', Ingredient.of(treatedBolt), 'P', Ingredient.of(plank), 's', Ingredient.of(saw)), gear);
         return 3;
     }
@@ -154,7 +154,7 @@ public final class Loader_WoodCraftingRecipes {
                 ingredients.set(x + y * width, ingredient);
             }
         }
-        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTech.MODID, "wood/treated/" + path);
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, "wood/treated/" + path);
         ShapedRecipe base = new ShapedRecipe(id, "gt.wood", CraftingBookCategory.MISC,
                 width, pattern.length, ingredients, result);
         recipes.add(new ToolShapedRecipe(base, false));
@@ -218,7 +218,7 @@ public final class Loader_WoodCraftingRecipes {
         }
         output.setCount(count);
 
-        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTech.MODID, "wood/" + path);
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, "wood/" + path);
         if (shape.equals("shapeless")) {
             NonNullList<Ingredient> ingredients = NonNullList.create();
             for (Ingredient ingredient : keys.values()) ingredients.add(ingredient);

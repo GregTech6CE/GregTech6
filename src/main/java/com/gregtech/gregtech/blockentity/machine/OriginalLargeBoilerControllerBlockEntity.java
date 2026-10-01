@@ -44,9 +44,9 @@ import java.util.List;
  */
 public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBlockEntity
         implements MultiblockPortOwner {
-    private static final int WATER_CAPACITY = 128_000;
-    private static final int HU_PER_WATER = 80;
-    private static final int STEAM_PER_WATER = 160;
+    private static final int WATER_CAPACITY = com.gregtech.gregtech.content.multiblock.OriginalLargeBoilerParameters.WATER_CAPACITY;
+    private static final int HU_PER_WATER = com.gregtech.gregtech.content.multiblock.OriginalLargeBoilerParameters.HU_PER_WATER;
+    private static final int STEAM_PER_WATER = com.gregtech.gregtech.content.multiblock.OriginalLargeBoilerParameters.STEAM_PER_WATER;
 
     private final OriginalLargeBoilerSpecs.Variant variant;
     private final PartBindings<BlockPos, MultiblockLayout.Role> bindings = new PartBindings<>();

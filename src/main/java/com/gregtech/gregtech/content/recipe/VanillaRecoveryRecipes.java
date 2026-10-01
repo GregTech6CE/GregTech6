@@ -24,7 +24,7 @@ public final class VanillaRecoveryRecipes {
             var crushed = new LinkedHashMap<GTMaterial,Long>();
             for (var c : data.components()) {
                 var target = c.material().getTargetPulverMaterial();
-                long amount = java.math.BigInteger.valueOf(c.amount()).multiply(java.math.BigInteger.valueOf(c.material().getTargetPulverAmount())).divide(java.math.BigInteger.valueOf(GTValues.U)).longValueExact();
+                long amount = MaterialRecoveryRules.pulverizedAmount(c.material(),c.amount());
                 if (target != null && amount > 0) crushed.merge(target.resolve(), amount, Long::sum);
             }
             var outputs = new ArrayList<ItemStack>();
@@ -34,8 +34,7 @@ public final class VanillaRecoveryRecipes {
                 var dust = dust(c.getKey(), c.getValue());
                 if (dust.isEmpty()) { complete = false; break; }
                 outputs.add(dust);
-                long work = (c.getKey().getName().contains("Quartz") ? 64L : c.getKey().hasAny(MaterialProperty.WOOD,MaterialProperty.STONE,MaterialProperty.GEM) ? 2L : 256L)
-                        * Math.max(1,c.getKey().getToolQuality()+1);
+                long work = MaterialRecoveryRules.shredderWork(c.getKey());
                 duration += (c.getValue()*work+GTValues.U-1)/GTValues.U;
             }
             if (!complete || outputs.size() > MachineRecipeMaps.Shredder.mOutputItemsCount) continue;
@@ -48,14 +47,7 @@ public final class VanillaRecoveryRecipes {
     }
     /** OM.dust pile choice; floor any unrepresentable fraction, never manufacture extra mass. */
     private static ItemStack dust(GTMaterial material,long amount) {
-        long unit = GTValues.U;
-        if (amount < unit/72) return ItemStack.EMPTY;
-        if (amount >= unit && (amount >= unit*16 || amount%unit == 0)) return pile(MaterialPrefix.dust,material,amount/unit);
-        if (amount >= unit/4 && (amount >= unit*8 || amount%(unit/4) <= amount%(unit/9))) return pile(MaterialPrefix.dustSmall,material,amount/(unit/4));
-        if (amount >= unit/9 && (amount >= unit || amount%(unit/9) <= amount%(unit/72))) return pile(MaterialPrefix.dustTiny,material,amount/(unit/9));
-        return pile(MaterialPrefix.dustDiv72,material,amount/(unit/72));
-    }
-    private static ItemStack pile(MaterialPrefix prefix,GTMaterial material,long count) {
-        return GTItems.getStack(prefix,material,(int)Math.min(64,count));
+        var pile=MaterialRecoveryRules.dust(amount);
+        return pile==null?ItemStack.EMPTY:GTItems.getStack(pile.prefix(),material,pile.count());
     }
 }

@@ -1,0 +1,20 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "sP"
+  ],
+  "key": {
+    "s": {
+      "tag": "gregtech:crafting_tools/sawaxe"
+    },
+    "P": {
+      "item": "gregtech:planks_bluespruce"
+    }
+  },
+  "result": {
+    "count": 2,
+    "id": "gregtech:slab_bluespruce"
+  },
+  "_comment": "GT6 Loader_Recipes_Woods.java:270 uses CR.DEF_NCC_MIR and tool v (craftingToolSawAxe); GT6 re-registers axe and saw under sawaxe.",
+  "allow_mirror": true
+}

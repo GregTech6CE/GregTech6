@@ -1,0 +1,9 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#minecraft:is_nether",
+  "features": [
+    "gregtech:gt_small_ores",
+    "gregtech:gt_nether_deposits"
+  ],
+  "step": "underground_ores"
+}

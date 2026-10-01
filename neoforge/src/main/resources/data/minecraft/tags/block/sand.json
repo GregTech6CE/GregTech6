@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "gregtech:sand_magnetite",
+    "gregtech:sand_basalt_magnetite",
+    "gregtech:sand_granite_magnetite"
+  ]
+}

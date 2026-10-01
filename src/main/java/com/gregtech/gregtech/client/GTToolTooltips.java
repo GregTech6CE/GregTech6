@@ -32,7 +32,7 @@ public final class GTToolTooltips {
         long damage = stack.getDamageValue();
         long remaining = Math.max(0, max - damage);
 
-        tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".tool_durability",
+        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tool_durability",
                         Component.literal(GTCodeFormat.makeString(remaining)).withStyle(ChatFormatting.GREEN),
                         Component.literal(GTCodeFormat.makeString(max)).withStyle(ChatFormatting.GREEN))
                 .withStyle(ChatFormatting.WHITE));
@@ -44,36 +44,36 @@ public final class GTToolTooltips {
 
         float combat = type.baseDamage() + head.getToolQuality();
         float hearts = (combat + 1.0F) / 2.0F;
-        tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".tool_melee_damage",
+        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tool_melee_damage",
                         Component.literal(String.format(Locale.ROOT, "+%.1f", combat)).withStyle(ChatFormatting.BLUE),
                         Component.literal(String.format(Locale.ROOT, "(= %.1f Hearts)", hearts)).withStyle(ChatFormatting.RED))
                 .withStyle(ChatFormatting.WHITE));
 
         float attackSpeed = type.attackSpeed();
-        tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".tool_attack_speed",
+        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tool_attack_speed",
                         Component.literal(String.format(Locale.ROOT, "%.1f", attackSpeed)).withStyle(ChatFormatting.GREEN))
                 .withStyle(ChatFormatting.WHITE));
 
         float miningSpeed = Math.max(Float.MIN_NORMAL, type.speedMultiplier() * head.getToolSpeed());
-        tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".tool_mining_speed",
+        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tool_mining_speed",
                         Component.literal(String.format(Locale.ROOT, "%.1f", miningSpeed)).withStyle(ChatFormatting.LIGHT_PURPLE))
                 .withStyle(ChatFormatting.WHITE));
 
         long craftingUses = GTCodeFormat.divUp(remaining, type.damagePerCraft());
-        tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".tool_crafting_uses",
+        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tool_crafting_uses",
                         Component.literal(GTCodeFormat.makeString(craftingUses)).withStyle(ChatFormatting.GREEN))
                 .withStyle(ChatFormatting.WHITE));
 
         if (type.canPenetrate()) {
-            tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".tool_penetrate_armor")
+            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tool_penetrate_armor")
                     .withStyle(ChatFormatting.DARK_GRAY));
         }
         if (type.canCollect()) {
-            tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".tool_autocollect")
+            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tool_autocollect")
                     .withStyle(ChatFormatting.DARK_GRAY));
         }
         if (type.tooltipKey() != null) {
-            tooltip.add(Component.translatable("tooltip." + GregTech.MODID + ".tool_hint." + type.tooltipKey())
+            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tool_hint." + type.tooltipKey())
                     .withStyle(ChatFormatting.DARK_GRAY));
         }
     }

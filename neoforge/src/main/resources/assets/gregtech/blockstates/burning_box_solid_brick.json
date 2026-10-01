@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "facing=north,lit=false": {
+      "model": "gregtech:block/machine/burning_box_brick/north_off"
+    },
+    "facing=north,lit=true": {
+      "model": "gregtech:block/machine/burning_box_brick/north_on"
+    },
+    "facing=south,lit=false": {
+      "model": "gregtech:block/machine/burning_box_brick/south_off"
+    },
+    "facing=south,lit=true": {
+      "model": "gregtech:block/machine/burning_box_brick/south_on"
+    },
+    "facing=east,lit=false": {
+      "model": "gregtech:block/machine/burning_box_brick/east_off"
+    },
+    "facing=east,lit=true": {
+      "model": "gregtech:block/machine/burning_box_brick/east_on"
+    },
+    "facing=west,lit=false": {
+      "model": "gregtech:block/machine/burning_box_brick/west_off"
+    },
+    "facing=west,lit=true": {
+      "model": "gregtech:block/machine/burning_box_brick/west_on"
+    }
+  }
+}

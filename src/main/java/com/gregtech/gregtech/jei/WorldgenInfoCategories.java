@@ -43,20 +43,20 @@ public final class WorldgenInfoCategories {
 
     public record LayerInfo(String stoneDisplay, ItemStack stone, List<GTMaterial> ores) {}
 
-    public static final RecipeType<VeinInfo> VEIN_TYPE = RecipeType.create(GregTech.MODID, "ore_veins", VeinInfo.class);
-    public static final RecipeType<SmallOreInfo> SMALL_ORE_TYPE = RecipeType.create(GregTech.MODID, "small_ores_info", SmallOreInfo.class);
-    public static final RecipeType<LayerInfo> LAYER_TYPE = RecipeType.create(GregTech.MODID, "stone_layers_info", LayerInfo.class);
+    public static final RecipeType<VeinInfo> VEIN_TYPE = RecipeType.create(GregTech.NAMESPACE, "ore_veins", VeinInfo.class);
+    public static final RecipeType<SmallOreInfo> SMALL_ORE_TYPE = RecipeType.create(GregTech.NAMESPACE, "small_ores_info", SmallOreInfo.class);
+    public static final RecipeType<LayerInfo> LAYER_TYPE = RecipeType.create(GregTech.NAMESPACE, "stone_layers_info", LayerInfo.class);
 
     public static ItemStack oreStack(GTMaterial material) {
         if (material == null || !material.resolve().isValid()) return new ItemStack(Items.STONE);
-        Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(GregTech.MODID,
+        Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(GregTech.NAMESPACE,
                 "ore_" + material.resolve().getName().toLowerCase()));
         return item == null ? new ItemStack(Items.STONE) : new ItemStack(item);
     }
 
     public static ItemStack smallOreStack(GTMaterial material) {
         if (material == null || !material.resolve().isValid()) return new ItemStack(Items.STONE);
-        Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(GregTech.MODID,
+        Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(GregTech.NAMESPACE,
                 "ore_small_" + material.resolve().getName().toLowerCase()));
         return item == null ? oreStack(material) : new ItemStack(item);
     }
@@ -96,12 +96,12 @@ public final class WorldgenInfoCategories {
             String display;
             if (def.stoneType() != null) {
                 String id = "stone_" + def.stoneType().toLowerCase() + "_stone";
-                Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(GregTech.MODID, id));
+                Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(GregTech.NAMESPACE, id));
                 if (item == null) continue;
                 stone = new ItemStack(item);
                 display = def.material();
             } else if (def.blockId() != null) {
-                Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(GregTech.MODID, def.blockId()));
+                Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(GregTech.NAMESPACE, def.blockId()));
                 if (item == null) continue;
                 stone = new ItemStack(item);
                 display = def.material();
@@ -242,13 +242,13 @@ public final class WorldgenInfoCategories {
 
     public record BedrockInfo(String name, GTMaterial material, int chance, ItemStack flower) {}
 
-    public static final RecipeType<BedrockInfo> BEDROCK_TYPE = RecipeType.create(GregTech.MODID, "bedrock_ores", BedrockInfo.class);
+    public static final RecipeType<BedrockInfo> BEDROCK_TYPE = RecipeType.create(GregTech.NAMESPACE, "bedrock_ores", BedrockInfo.class);
 
     public static List<BedrockInfo> buildBedrockOres() {
         List<BedrockInfo> out = new ArrayList<>();
         for (com.gregtech.gregtech.worldgen.GTBedrockOres.BedrockOre ore
                 : com.gregtech.gregtech.worldgen.GTBedrockOres.OVERWORLD) {
-            Item flower = ForgeRegistries.ITEMS.getValue(new ResourceLocation(GregTech.MODID, ore.flowerId()));
+            Item flower = ForgeRegistries.ITEMS.getValue(new ResourceLocation(GregTech.NAMESPACE, ore.flowerId()));
             out.add(new BedrockInfo(ore.name(), ore.material(), ore.chance(),
                     flower == null ? new ItemStack(Items.POPPY) : new ItemStack(flower)));
         }

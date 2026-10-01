@@ -1,0 +1,389 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "gregtech:stone_basalt_stone",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_basalt_stone_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_basalt_cobble",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_basalt_cobble_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_basalt_cobble_mossy",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_basalt_cobble_mossy_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_basalt_smooth",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_basalt_smooth_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_basalt_bricks",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_basalt_bricks_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_basalt_bricks_mossy",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_basalt_bricks_mossy_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_basalt_bricks_cracked",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_basalt_bricks_cracked_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_basalt_bricks_chiseled",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_basalt_bricks_chiseled_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_basalt_bricks_redstone",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_basalt_bricks_redstone_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_basalt_bricks_reinforced",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_basalt_bricks_reinforced_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_basalt_small_bricks",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_basalt_small_bricks_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_basalt_square_bricks",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_basalt_square_bricks_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_basalt_tiles",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_basalt_tiles_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_basalt_small_tiles",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_basalt_small_tiles_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_basalt_windmill_tiles_a",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_basalt_windmill_tiles_a_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_basalt_windmill_tiles_b",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_basalt_windmill_tiles_b_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_komatiite_stone",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_komatiite_stone_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_komatiite_cobble",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_komatiite_cobble_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_komatiite_cobble_mossy",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_komatiite_cobble_mossy_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_komatiite_smooth",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_komatiite_smooth_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_komatiite_bricks",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_komatiite_bricks_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_komatiite_bricks_mossy",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_komatiite_bricks_mossy_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_komatiite_bricks_cracked",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_komatiite_bricks_cracked_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_komatiite_bricks_chiseled",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_komatiite_bricks_chiseled_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_komatiite_bricks_redstone",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_komatiite_bricks_redstone_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_komatiite_bricks_reinforced",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_komatiite_bricks_reinforced_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_komatiite_small_bricks",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_komatiite_small_bricks_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_komatiite_square_bricks",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_komatiite_square_bricks_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_komatiite_tiles",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_komatiite_tiles_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_komatiite_small_tiles",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_komatiite_small_tiles_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_komatiite_windmill_tiles_a",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_komatiite_windmill_tiles_a_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_komatiite_windmill_tiles_b",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_komatiite_windmill_tiles_b_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_kimberlite_stone",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_kimberlite_stone_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_kimberlite_cobble",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_kimberlite_cobble_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_kimberlite_cobble_mossy",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_kimberlite_cobble_mossy_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_kimberlite_smooth",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_kimberlite_smooth_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_kimberlite_bricks",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_kimberlite_bricks_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_kimberlite_bricks_mossy",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_kimberlite_bricks_mossy_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_kimberlite_bricks_cracked",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_kimberlite_bricks_cracked_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_kimberlite_bricks_chiseled",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_kimberlite_bricks_chiseled_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_kimberlite_bricks_redstone",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_kimberlite_bricks_redstone_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_kimberlite_bricks_reinforced",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_kimberlite_bricks_reinforced_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_kimberlite_small_bricks",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_kimberlite_small_bricks_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_kimberlite_square_bricks",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_kimberlite_square_bricks_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_kimberlite_tiles",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_kimberlite_tiles_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_kimberlite_small_tiles",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_kimberlite_small_tiles_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_kimberlite_windmill_tiles_a",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_kimberlite_windmill_tiles_a_slab",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_kimberlite_windmill_tiles_b",
+      "required": false
+    },
+    {
+      "id": "gregtech:stone_kimberlite_windmill_tiles_b_slab",
+      "required": false
+    }
+  ]
+}

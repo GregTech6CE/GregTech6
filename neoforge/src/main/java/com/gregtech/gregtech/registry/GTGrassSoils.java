@@ -1,0 +1,3 @@
+package com.gregtech.gregtech.registry;
+import com.gregtech.gregtech.block.*;import net.minecraft.world.level.block.*;import net.minecraft.world.level.block.state.BlockBehaviour;
+public final class GTGrassSoils {private GTGrassSoils(){}public static void initialize(){for(var spec:GrassSoilCatalog.SPECS){net.neoforged.neoforge.registries.DeferredHolder<Block,Block> block=GTBlocks.BLOCKS.register(spec.id(),()->{var p=BlockBehaviour.Properties.of().strength(.6f).sound(SoundType.GRAVEL);return spec.plantSoil()?new GTGrassBlock(p.isValidSpawn((state,level,pos,entity)->false),spec.side()):new IconSetBlock(p,spec.side());});GTBlocks.registerBlockItem(spec.id(),block);}}}

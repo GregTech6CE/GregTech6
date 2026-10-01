@@ -21,7 +21,7 @@ public class AutoHammerBlockEntity extends AutoToolBlockEntity {
             if(size>0) {
                 if(overvoltage(size)) return amount;
                 pullingBack=false;
-                energy+=Math.min((Long.MAX_VALUE/20-energy)/size,amount)*size;
+                energy=com.gregtech.gregtech.content.tool.AutomaticToolRules.hammerStored(energy,size,amount);
             } else pullingBack=true;
             setChanged();
         }
@@ -31,7 +31,7 @@ public class AutoHammerBlockEntity extends AutoToolBlockEntity {
         if(level==null || level.isClientSide || stopped || !pullingBack || energy<=0) return;
         var target=worldPosition.relative(facing());
         var entity=level.getBlockEntity(target);
-        boolean success=entity instanceof PoweredToolTarget tool && tool.usePoweredHammer(facing().getOpposite(),energy*10,quality())>0;
+        boolean success=entity instanceof PoweredToolTarget tool && tool.usePoweredHammer(facing().getOpposite(),com.gregtech.gregtech.content.tool.AutomaticToolRules.hammerBudget(energy),quality())>0;
         var state=level.getBlockState(target);
         if(!success && entity==null && state.is(BlockTags.MINEABLE_WITH_PICKAXE)) {
             float hardness=state.getDestroySpeed(level,target);
@@ -48,5 +48,5 @@ public class AutoHammerBlockEntity extends AutoToolBlockEntity {
         energy=0;setChanged();
     }
     @Override protected void saveAdditional(CompoundTag tag) { super.saveAdditional(tag);tag.putBoolean("gt.pulling_back",pullingBack); }
-    @Override public void load(CompoundTag tag) { super.load(tag);energy=Math.min(energy,Long.MAX_VALUE/20);pullingBack=tag.getBoolean("gt.pulling_back"); }
+    @Override public void load(CompoundTag tag) { super.load(tag);energy=com.gregtech.gregtech.content.tool.AutomaticToolRules.hammerSaved(energy);pullingBack=tag.getBoolean("gt.pulling_back"); }
 }

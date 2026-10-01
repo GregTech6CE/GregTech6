@@ -6,6 +6,7 @@ import com.gregtech.gregtech.api.multiblock.PartBindings;
 import com.gregtech.gregtech.blockentity.GTEnergyBlockEntity;
 import com.gregtech.gregtech.content.multiblock.LargeMachineParts;
 import com.gregtech.gregtech.content.multiblock.VonDaGraaggSpawnInhibitor;
+import com.gregtech.gregtech.content.multiblock.VonDaGraaggRules;
 import com.gregtech.gregtech.data.GregTechTags;
 import com.gregtech.gregtech.registry.GTBlockEntities;
 import net.minecraft.core.BlockPos;
@@ -23,7 +24,7 @@ import java.util.List;
 
 /** GT6 17996: 41 galvanized base walls, 5 copper coils and the dense-steel top. */
 public final class VonDaGraaggControllerBlockEntity extends GTEnergyBlockEntity implements MultiblockPortOwner {
-    public static final long CAPACITY = 4096;
+    public static final long CAPACITY = VonDaGraaggRules.CAPACITY;
     private final PartBindings<BlockPos, MultiblockLayout.Role> bindings = new PartBindings<>();
     private long energy;
     private int range;
@@ -39,26 +40,7 @@ public final class VonDaGraaggControllerBlockEntity extends GTEnergyBlockEntity 
         if (level == null || isRemoved() || worldPosition.getY() + 7 >= level.getMaxBuildHeight())
             return invalid();
         var parts = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
-        // GT6 MultiTileEntityVonDaGraagg.checkStructure2: omit only the four 5x5 corners.
-        for (int x = -2; x <= 2; x++) for (int z = -2; z <= 2; z++) {
-            if (Math.abs(x * z) >= 4) continue;
-            for (int y = 0; y <= 1; y++) {
-                if (x == 0 && y == 0 && z == 0) continue; // the controller
-                if (!part(parts, x, y, z, 18028, MultiblockLayout.Role.ENERGY_INPUT))
-                    return invalid();
-            }
-        }
-        for (int y = 2; y <= 6; y++)
-            if (!part(parts, 0, y, 0, 18040, MultiblockLayout.Role.CASING)) return invalid();
-        if (!part(parts, 0, 7, 0, 18029, MultiblockLayout.Role.CASING)) return invalid();
-        for (int x = -1; x <= 1; x++) for (int z = -1; z <= 1; z++) {
-            if (x == 0 && z == 0) continue;
-            if (!part(parts, x, 6, z, 18029, MultiblockLayout.Role.CASING)) return invalid();
-            if (x * z == 0) {
-                if (!part(parts, x, 5, z, 18029, MultiblockLayout.Role.CASING)
-                        || !part(parts, x, 7, z, 18029, MultiblockLayout.Role.CASING)) return invalid();
-            }
-        }
+        for(var cell:VonDaGraaggRules.layout())if(!part(parts,cell.x(),cell.y(),cell.z(),cell.partId(),cell.energyInput()?MultiblockLayout.Role.ENERGY_INPUT:MultiblockLayout.Role.CASING))return invalid();
         return bindings.update(parts,
                 pos -> level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity port
                         && port.canBind(worldPosition),
@@ -86,8 +68,8 @@ public final class VonDaGraaggControllerBlockEntity extends GTEnergyBlockEntity 
                                   VonDaGraaggControllerBlockEntity be) {
         if (!(level instanceof ServerLevel server)) return;
         boolean formed = be.isStructureOk();
-        int nextRange = formed ? (int) (Math.min(be.energy, CAPACITY) / 16) : 0;
-        long nextEnergy = Math.max(0, be.energy - CAPACITY);
+        int nextRange = VonDaGraaggRules.range(be.energy,formed);
+        long nextEnergy = VonDaGraaggRules.afterDrain(be.energy);
         boolean changed = nextRange != be.range || nextEnergy != be.energy;
         be.range = nextRange;
         be.energy = nextEnergy;
@@ -160,6 +142,6 @@ public final class VonDaGraaggControllerBlockEntity extends GTEnergyBlockEntity 
     @Override public void load(CompoundTag tag) {
         super.load(tag);
         energy = Math.max(0, tag.getLong("gt.energy"));
-        range = Math.max(0, Math.min(256, tag.getInt("gt.range")));
+        range = Math.max(0, Math.min(255, tag.getInt("gt.range")));
     }
 }

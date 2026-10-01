@@ -23,18 +23,8 @@ public final class GTPumps {
     public static List<RegistryObject<PumpBlock>> all() { return Collections.unmodifiableList(ALL); }
 
     public static void registerAll() {
-        record Tier(String name, GTMaterial mat, long speed) {}
-        Tier[] tiers = {
-                new Tier("bronze", Materials.Bronze, 32),
-                new Tier("steel", Materials.Steel, 128),
-                new Tier("titanium", Materials.Titanium, 512),
-                new Tier("tungstensteel", Materials.Tungstensteel, 2048),
-        };
-
-        for (int i = 0; i < tiers.length; i++) {
-            Tier t = tiers[i];
-            String id = "rotational_pump_" + t.name();
-            PumpSpec spec = new PumpSpec(id, t.mat(), t.speed(), i + 1);
+        for(var spec:com.gregtech.gregtech.content.energy.PumpCatalog.all()){
+            String id=spec.id();
             RegistryObject<PumpBlock> block = GTBlocks.BLOCKS.register(id,
                     () -> new PumpBlock(spec, BlockBehaviour.Properties.of()
                             .mapColor(MapColor.METAL)

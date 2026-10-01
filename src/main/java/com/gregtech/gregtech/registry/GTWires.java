@@ -45,15 +45,7 @@ public final class GTWires {
      * (64, 32, 21, 16, 12, 10, 9, 8, 7, 6, 5, 4); its cables use 64/32/16/8/4 for sizes 1/2/4/8/12.
      */
     public static int stackSize(int size, boolean insulated) {
-        if (!insulated) return Math.max(1, 64 / Math.max(1, size));
-        return switch (size) {
-            case 1 -> 64;
-            case 2 -> 32;
-            case 4 -> 16;
-            case 8 -> 8;
-            case 12 -> 4;
-            default -> 1;
-        };
+        return com.gregtech.gregtech.content.energy.WireCatalog.stackSize(size,insulated);
     }
 
     /** All bare wire blocks for BlockEntityType registration. */

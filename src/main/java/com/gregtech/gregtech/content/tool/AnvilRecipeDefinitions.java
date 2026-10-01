@@ -28,12 +28,7 @@ public final class AnvilRecipeDefinitions {
         return new Rule(map,in,1,null,0,out,1,by,amount,true);
     }
     /** Original prefix-handler cost: ceiling(material units * 64 * (quality+1) / U). */
-    public static long duration(long units,int quality) {
-        var numerator=java.math.BigInteger.valueOf(units).multiply(java.math.BigInteger.valueOf(64L*(Math.max(0,quality)+1L)));
-        var unit=java.math.BigInteger.valueOf(GTValues.U);
-        return numerator.add(unit.subtract(java.math.BigInteger.ONE)).divide(unit).max(java.math.BigInteger.ONE)
-                .min(java.math.BigInteger.valueOf(Long.MAX_VALUE)).longValue();
-    }
+    public static long duration(long units,int quality){return AnvilRecipeCost.duration(units,quality);}
     public static int register() {
         int count=0;
         for(var material:GTMaterialRegistry.sortedMaterials()) {

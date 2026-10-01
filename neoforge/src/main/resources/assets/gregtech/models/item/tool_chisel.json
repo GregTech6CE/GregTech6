@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "gregtech:item/material_icons/dull/toolheadchisel",
+    "layer1": "gregtech:item/material_icons/dull/toolheadchisel_overlay",
+    "layer2": "gregtech:item/iconsets/handle_chisel",
+    "layer3": "gregtech:item/iconsets/handle_chisel_overlay"
+  }
+}

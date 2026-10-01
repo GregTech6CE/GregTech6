@@ -4,8 +4,8 @@ import net.minecraft.core.*;
 import net.minecraft.world.level.block.state.BlockState;
 /** Opposing face bridge; each capability operation resolves the current adjacent inventory. */
 public class ExtenderBlockEntity extends com.gregtech.gregtech.blockentity.EnergyRelayBlockEntity implements com.gregtech.gregtech.api.machine.MachineControl.Provider, com.gregtech.gregtech.content.cover.PanelCoverHost, com.gregtech.gregtech.api.inventory.BlockContents {
-    private static final ThreadLocal<java.util.Set<ExtenderBlockEntity>> CONTROLS=ThreadLocal.withInitial(java.util.HashSet::new);
-    private static final ThreadLocal<java.util.Set<ExtenderBlockEntity>> SIGNALS=ThreadLocal.withInitial(java.util.HashSet::new);
+    private static final com.gregtech.gregtech.content.logistics.RelayVisitSet<ExtenderBlockEntity> CONTROLS=new com.gregtech.gregtech.content.logistics.RelayVisitSet<>();
+    private static final com.gregtech.gregtech.content.logistics.RelayVisitSet<ExtenderBlockEntity> SIGNALS=new com.gregtech.gregtech.content.logistics.RelayVisitSet<>();
     private final int[] previousSignals=new int[6];
     private int previousComparator;
     private final net.minecraft.world.item.ItemStack[] covers={net.minecraft.world.item.ItemStack.EMPTY,net.minecraft.world.item.ItemStack.EMPTY,net.minecraft.world.item.ItemStack.EMPTY,net.minecraft.world.item.ItemStack.EMPTY,net.minecraft.world.item.ItemStack.EMPTY,net.minecraft.world.item.ItemStack.EMPTY};
@@ -37,11 +37,11 @@ public class ExtenderBlockEntity extends com.gregtech.gregtech.blockentity.Energ
         if(getBlockState().getBlock() instanceof SourceExtenderBlock source){
             var state=getBlockState();var front=state.getValue(SourceExtenderBlock.FACING);
             if(source.spec().bridge&&side==null)return null;
-            var exit=source.spec().bridge?side.getOpposite():side==front?state.getValue(SourceExtenderBlock.SECONDARY):front;
+            var exit=Direction.values()[com.gregtech.gregtech.content.logistics.RelayRoutingRules.exit(source.spec().bridge,side==null?-1:side.ordinal(),front.ordinal(),state.getValue(SourceExtenderBlock.SECONDARY).ordinal())];
             return new Target(worldPosition.relative(exit),exit.getOpposite());
         }
         var front=getBlockState().getValue(ExtenderBlock.FACING);
-        var exit=side==front?front.getOpposite():front;
+        var exit=Direction.values()[com.gregtech.gregtech.content.logistics.RelayRoutingRules.exit(false,side==null?-1:side.ordinal(),front.ordinal(),front.getOpposite().ordinal())];
         return new Target(worldPosition.relative(exit),exit.getOpposite());
     }
     @Override protected boolean supportsItems(){return !(getBlockState().getBlock() instanceof SourceExtenderBlock source)||source.spec().items;}

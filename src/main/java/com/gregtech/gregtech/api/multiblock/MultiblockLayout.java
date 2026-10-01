@@ -18,6 +18,7 @@ public final class MultiblockLayout {
         for(var cell:cells) if(!positions.add(new BlockPos(cell.right(),cell.up(),cell.back()))) throw new IllegalArgumentException("Duplicate structure cell");
         this.cells=List.copyOf(cells);
     }
+    public static MultiblockLayout fromShared(StructureGrid layout){return new MultiblockLayout(layout.cells().stream().map(cell->new Cell(cell.right(),cell.up(),cell.back(),Role.valueOf(cell.role().name()))).toList());}
     public List<Cell> cells() { return cells; }
     public boolean matches(BlockPos controller, Direction front, Predicate<BlockPos> loaded, BiPredicate<BlockPos,Role> matches) {
         if(!front.getAxis().isHorizontal()) return false;

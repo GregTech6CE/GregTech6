@@ -101,12 +101,12 @@ public final class GTMiscBlocks {
 
     public static void registerAll() {
         // N10: Panels
-        PANEL_WOOD = reg("panel_wood", () -> new PanelBlock("wood", 0xBC9862, props(MapColor.WOOD, 2f)));
-        PANEL_CONCRETE = reg("panel_concrete", () -> new PanelBlock("concrete", 0x808080, props(MapColor.STONE, 4f)));
-        PANEL_CFOAM = reg("panel_cfoam", () -> new PanelBlock("cfoam", 0xD0D0D0, props(MapColor.WOOL, 1f)));
-        PANEL_ASPHALT = reg("panel_asphalt", () -> new PanelBlock("asphalt", 0x1A1A1A, props(MapColor.COLOR_BLACK, 3f)));
-        PANEL_COLORED_GRAY = reg("panel_colored_gray", () -> new PanelBlock("colored_gray", 0x808080, props(MapColor.COLOR_GRAY, 2f)));
-        PANEL_COLORED_BLACK = reg("panel_colored_black", () -> new PanelBlock("colored_black", 0x1A1A1A, props(MapColor.COLOR_BLACK, 2f)));
+        PANEL_WOOD = reg("panel_wood", () -> panel("wood"));
+        PANEL_CONCRETE = reg("panel_concrete", () -> panel("concrete"));
+        PANEL_CFOAM = reg("panel_cfoam", () -> panel("cfoam"));
+        PANEL_ASPHALT = reg("panel_asphalt", () -> panel("asphalt"));
+        PANEL_COLORED_GRAY = reg("panel_colored_gray", () -> panel("colored_gray"));
+        PANEL_COLORED_BLACK = reg("panel_colored_black", () -> panel("colored_black"));
 
         // N9: Crafting Tables
         for(var spec:GTStorageMetals.ALL){
@@ -138,30 +138,32 @@ public final class GTMiscBlocks {
         }
 
         // N8: Auto Igniters (6 tiers)
-        AUTO_IGNITER_STEEL = reg("auto_igniter_steel", () -> new AutoIgniterBlock(props(MapColor.METAL, 6f), 8, 0));
-        AUTO_IGNITER_ALUMINIUM = reg("auto_igniter_aluminium", () -> new AutoIgniterBlock(props(MapColor.METAL, 4f), 32, 1));
-        AUTO_IGNITER_STAINLESS = reg("auto_igniter_stainless", () -> new AutoIgniterBlock(props(MapColor.METAL, 7f), 128, 2));
-        AUTO_IGNITER_TITANIUM = reg("auto_igniter_titanium", () -> new AutoIgniterBlock(props(MapColor.METAL, 9f), 512, 3));
-        AUTO_IGNITER_TUNGSTEN = reg("auto_igniter_tungsten", () -> new AutoIgniterBlock(props(MapColor.METAL, 12f), 2048, 4));
-        AUTO_IGNITER_ULTIMET = reg("auto_igniter_ultimet", () -> new AutoIgniterBlock(props(MapColor.METAL, 14f), 8192, 5));
+        AUTO_IGNITER_STEEL = reg("auto_igniter_steel", () -> new AutoIgniterBlock(props(MapColor.METAL, com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_igniter_steel").hardness()), com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_igniter_steel").input(), com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_igniter_steel").quality()));
+        AUTO_IGNITER_ALUMINIUM = reg("auto_igniter_aluminium", () -> new AutoIgniterBlock(props(MapColor.METAL, com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_igniter_aluminium").hardness()), com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_igniter_aluminium").input(), com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_igniter_aluminium").quality()));
+        AUTO_IGNITER_STAINLESS = reg("auto_igniter_stainless", () -> new AutoIgniterBlock(props(MapColor.METAL, com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_igniter_stainless").hardness()), com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_igniter_stainless").input(), com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_igniter_stainless").quality()));
+        AUTO_IGNITER_TITANIUM = reg("auto_igniter_titanium", () -> new AutoIgniterBlock(props(MapColor.METAL, com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_igniter_titanium").hardness()), com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_igniter_titanium").input(), com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_igniter_titanium").quality()));
+        AUTO_IGNITER_TUNGSTEN = reg("auto_igniter_tungsten", () -> new AutoIgniterBlock(props(MapColor.METAL, com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_igniter_tungsten").hardness()), com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_igniter_tungsten").input(), com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_igniter_tungsten").quality()));
+        AUTO_IGNITER_ULTIMET = reg("auto_igniter_ultimet", () -> new AutoIgniterBlock(props(MapColor.METAL, com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_igniter_ultimet").hardness()), com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_igniter_ultimet").input(), com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_igniter_ultimet").quality()));
 
         // N8: Auto Hammers (4 tiers)
-        AUTO_HAMMER_STEEL = reg("auto_hammer_steel", () -> new AutoHammerBlock(props(MapColor.METAL, 6f), 8, 1));
-        AUTO_HAMMER_ALUMINIUM = reg("auto_hammer_aluminium", () -> new AutoHammerBlock(props(MapColor.METAL, 4f), 32, 2));
-        AUTO_HAMMER_TITANIUM = reg("auto_hammer_titanium", () -> new AutoHammerBlock(props(MapColor.METAL, 9f), 128, 3));
-        AUTO_HAMMER_TUNGSTEN = reg("auto_hammer_tungsten", () -> new AutoHammerBlock(props(MapColor.METAL, 12f), 512, 4));
+        AUTO_HAMMER_STEEL = reg("auto_hammer_steel", () -> new AutoHammerBlock(props(MapColor.METAL, com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_steel").hardness()), com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_steel").input(), com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_steel").quality()));
+        AUTO_HAMMER_ALUMINIUM = reg("auto_hammer_aluminium", () -> new AutoHammerBlock(props(MapColor.METAL, com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_aluminium").hardness()), com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_aluminium").input(), com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_aluminium").quality()));
+        AUTO_HAMMER_TITANIUM = reg("auto_hammer_titanium", () -> new AutoHammerBlock(props(MapColor.METAL, com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_titanium").hardness()), com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_titanium").input(), com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_titanium").quality()));
+        AUTO_HAMMER_TUNGSTEN = reg("auto_hammer_tungsten", () -> new AutoHammerBlock(props(MapColor.METAL, com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_tungsten").hardness()), com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_tungsten").input(), com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_tungsten").quality()));
 
         // N5: Long Distance Transport
         LONG_DIST_PIPE = reg("long_dist_pipe", () -> new LongDistPipeBlock(false, props(MapColor.METAL, 3f)));
         LONG_DIST_WIRE = reg("long_dist_wire", () -> new LongDistPipeBlock(true, props(MapColor.METAL, 3f)));
         LONG_DIST_ENDPOINT_ITEM = reg("long_dist_endpoint_item", () -> new LongDistEndpointBlock(false, props(MapColor.METAL, 5f)));
         LONG_DIST_ENDPOINT_FLUID = reg("long_dist_endpoint_fluid", () -> new LongDistEndpointBlock(true, props(MapColor.METAL, 5f)));
-        LONG_DIST_TRANSFORMER_ULV = reg("long_dist_transformer_ulv", () -> new LongDistanceTransformerBlock(2048, props(MapColor.METAL, 4f)));
-        LONG_DIST_TRANSFORMER_LV = reg("long_dist_transformer_lv", () -> new LongDistanceTransformerBlock(8192, props(MapColor.METAL, 4f)));
-        LONG_DIST_TRANSFORMER_MV = reg("long_dist_transformer_mv", () -> new LongDistanceTransformerBlock(32768, props(MapColor.METAL, 4f)));
-        LONG_DIST_TRANSFORMER_ZPM = reg("long_dist_transformer_zpm", () -> new LongDistanceTransformerBlock(131072, props(MapColor.METAL, 4f)));
-        LONG_DIST_TRANSFORMER_UV = reg("long_dist_transformer_uv", () -> new LongDistanceTransformerBlock(524288, props(MapColor.METAL, 4f)));
+        LONG_DIST_TRANSFORMER_ULV = reg("long_dist_transformer_ulv", () -> new LongDistanceTransformerBlock(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.voltage("long_dist_transformer_ulv"), props(MapColor.METAL, 4f)));
+        LONG_DIST_TRANSFORMER_LV = reg("long_dist_transformer_lv", () -> new LongDistanceTransformerBlock(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.voltage("long_dist_transformer_lv"), props(MapColor.METAL, 4f)));
+        LONG_DIST_TRANSFORMER_MV = reg("long_dist_transformer_mv", () -> new LongDistanceTransformerBlock(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.voltage("long_dist_transformer_mv"), props(MapColor.METAL, 4f)));
+        LONG_DIST_TRANSFORMER_ZPM = reg("long_dist_transformer_zpm", () -> new LongDistanceTransformerBlock(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.voltage("long_dist_transformer_zpm"), props(MapColor.METAL, 4f)));
+        LONG_DIST_TRANSFORMER_UV = reg("long_dist_transformer_uv", () -> new LongDistanceTransformerBlock(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.voltage("long_dist_transformer_uv"), props(MapColor.METAL, 4f)));
     }
+
+    private static PanelBlock panel(String material){var s=com.gregtech.gregtech.content.transport.PanelCatalog.get(material);return new PanelBlock(s.material(),s.tint(),props(switch(s.mapColor()){case "WOOD"->MapColor.WOOD;case "STONE"->MapColor.STONE;case "WOOL"->MapColor.WOOL;case "COLOR_BLACK"->MapColor.COLOR_BLACK;default->MapColor.COLOR_GRAY;},s.hardness()));}
 
     private static BlockBehaviour.Properties props(MapColor color, float hardness) {
         return BlockBehaviour.Properties.of().mapColor(color).strength(hardness, hardness).requiresCorrectToolForDrops();

@@ -22,9 +22,7 @@ import java.util.stream.IntStream;
 
 /** Four 36-slot inventories. Side mapping follows GT6 MultiTileEntityDrawerQuad and CS.FACING_ROTATIONS. */
 public class DrawerQuadBlockEntity extends BlockEntity implements BlockContents {
-    public static final int COMPARTMENTS = 4, PAGE_SIZE = 36, SLOT_COUNT = 144;
-    private static final int[][] ROTATIONS = {{0,1,2,3,4,5},{0,1,2,3,4,5},{0,1,3,5,4,2},
-            {0,1,5,3,2,4},{0,1,2,4,3,5},{0,1,4,2,5,3}};
+    public static final int COMPARTMENTS = com.gregtech.gregtech.content.storage.ContainerStorageRules.COMPARTMENTS, PAGE_SIZE = com.gregtech.gregtech.content.storage.ContainerStorageRules.PAGE_SIZE, SLOT_COUNT = com.gregtech.gregtech.content.storage.ContainerStorageRules.DRAWER_SLOTS;
     private boolean sidedAccess, loading, refilling, capsValid = true;
     // Only used to retain over-capacity contents from the earlier, incorrect bulk implementation.
     private final List<ItemStack> overflow = new ArrayList<>();
@@ -48,10 +46,7 @@ public class DrawerQuadBlockEntity extends BlockEntity implements BlockContents 
     @Override public void invalidateCaps() { super.invalidateCaps(); capsValid = false; resetCapabilities(); }
     @Override public void reviveCaps() { super.reviveCaps(); capsValid = true; }
     public int[] accessibleSlots(@Nullable Direction side) {
-        int local = !sidedAccess || side == null ? 3 : ROTATIONS[getBlockState().getValue(DrawerQuadBlock.FACING).ordinal()][side.ordinal()];
-        return IntStream.range(0, SLOT_COUNT).filter(i -> switch(local) {
-            case 0 -> i >= 72; case 1 -> i < 72; case 2 -> i / 36 % 2 == 0; case 4 -> i / 36 % 2 == 1; default -> true;
-        }).toArray();
+        return com.gregtech.gregtech.content.storage.ContainerStorageRules.drawerSlots(sidedAccess,getBlockState().getValue(DrawerQuadBlock.FACING).ordinal(),side==null?-1:side.ordinal());
     }
     private IItemHandlerModifiable view(int[] slots) {
         return new IItemHandlerModifiable() {

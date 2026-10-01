@@ -31,12 +31,12 @@ import java.util.Set;
  */
 public class GTTurfFeature extends Feature<NoneFeatureConfiguration> {
     /** GT6 {@code aRandom.nextInt(32) > 0}. */
-    public static final int DIVIDER = 32;
+    public static final int DIVIDER = TerrainWorldgenRules.TURF_DIVIDER;
     /** GT6's vertical window: {@code waterLevel + 1} down to {@code waterLevel - 12}. */
-    public static final int ABOVE_SEA = 1;
-    public static final int BELOW_SEA = 12;
+    public static final int ABOVE_SEA = TerrainWorldgenRules.TURF_ABOVE_SEA;
+    public static final int BELOW_SEA = TerrainWorldgenRules.TURF_BELOW_SEA;
     /** GT6 stops a column after two turf blocks ({@code tGenerated < 2}). */
-    public static final int MAX_DEPTH = 2;
+    public static final int MAX_DEPTH = TerrainWorldgenRules.TURF_MAX_DEPTH;
     /** GT6 {@code BlocksGT.Diggables} meta 2 = "Turf" (material Peat). */
     public static final String TURF = "gregtech:turf";
 

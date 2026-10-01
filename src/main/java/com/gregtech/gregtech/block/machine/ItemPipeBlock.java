@@ -43,7 +43,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 /** GT6 item pipe block with wrench-toggleable I/O and thin-cross collision shape. */
-public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, ToolInteractionTarget {
+public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, ToolInteractionTarget, com.gregtech.gregtech.api.inventory.PipeFormLike {
     public static final BooleanProperty UP    = BooleanProperty.create("up");
     public static final BooleanProperty DOWN  = BooleanProperty.create("down");
     public static final BooleanProperty NORTH = BooleanProperty.create("north");
@@ -67,6 +67,7 @@ public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterlogg
     }
 
     public ItemPipeSpec spec() { return spec; }
+    @Override public String pipeSizeName() { return spec.size().name(); }
 
     private static final Map<Direction, BooleanProperty> DIR_TO_PROP = new EnumMap<>(Direction.class);
     static {

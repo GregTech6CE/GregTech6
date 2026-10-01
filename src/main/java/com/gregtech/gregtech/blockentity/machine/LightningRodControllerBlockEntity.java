@@ -14,7 +14,7 @@ import java.util.*;
 
 /** Original five solid layers plus rod pillar; a strike stores 18000 packets of 32768 EU. */
 public class LightningRodControllerBlockEntity extends GTEnergyBlockEntity implements com.gregtech.gregtech.api.multiblock.StructureController {
-    public static final long PACKET=32768, ENERGY_CAPACITY=18000*PACKET;
+    public static final long PACKET=com.gregtech.gregtech.content.multiblock.AdvancedControllerRules.LIGHTNING_PACKET, ENERGY_CAPACITY=com.gregtech.gregtech.content.multiblock.AdvancedControllerRules.LIGHTNING_CAPACITY;
     private static final Set<LightningRodControllerBlockEntity> LOADED=Collections.newSetFromMap(new WeakHashMap<>());
     private long energy;
     private int rodLength;
@@ -53,7 +53,7 @@ public class LightningRodControllerBlockEntity extends GTEnergyBlockEntity imple
             long sent=0;var below=pos.below();
             if(level.hasChunkAt(below)&&level.getBlockEntity(below) instanceof IEnergyBlock target)
                 sent=target.doEnergyInjection(GregTechTags.Energy.EU,Direction.UP,PACKET,Math.min(16,machine.energy/PACKET),true);
-            machine.energy-=Math.min(machine.energy,Math.max(1,Math.min(16,sent))*PACKET);machine.setChanged();return;
+            machine.energy-=com.gregtech.gregtech.content.multiblock.AdvancedControllerRules.lightningDrain(machine.energy,sent);machine.setChanged();return;
         }
         if(machine.rodLength>0 && level.random.nextInt(1000000)<Math.min(100,machine.rodLength)
                 && (level.isThundering() || level.isRaining()&&level.random.nextInt(10)==0)) {

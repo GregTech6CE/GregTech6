@@ -31,7 +31,7 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
         slot=helper.getSlotDrawable();
     }
     public static RecipeType<Recipe> recipeType(RecipeMap map) {
-        return RecipeType.create(GregTech.MODID,map.mNameInternal.toLowerCase(Locale.ROOT),Recipe.class);
+        return RecipeType.create(GregTech.NAMESPACE,map.mNameInternal.toLowerCase(Locale.ROOT),Recipe.class);
     }
     @Override public RecipeType<Recipe> getRecipeType() {return recipeType(map);}
     @Override public Component getTitle() {return Component.literal(map.mNameLocal);}

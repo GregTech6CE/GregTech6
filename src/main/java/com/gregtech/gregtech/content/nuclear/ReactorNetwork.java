@@ -8,7 +8,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import java.util.*;
 /** Two-phase world-end exchange: every emission reads last cycle, independent of BE tick order. */
-@Mod.EventBusSubscriber(modid=GregTech.MOD_ID)
+@Mod.EventBusSubscriber(modid=GregTech.MODID)
 public final class ReactorNetwork {
     /**
      * Cores enqueued during the current level tick, drained by {@link #end} at the end of that tick.

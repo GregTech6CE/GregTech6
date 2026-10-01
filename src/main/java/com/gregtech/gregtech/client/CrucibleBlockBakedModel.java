@@ -31,10 +31,7 @@ public final class CrucibleBlockBakedModel implements BakedModel {
 
     /** GT6 {@code tRGBaArray[0..2] = channel*2+50 / channel/2+50}. */
     public static int meltdownRgb(int rgb) {
-        int r = Math.min(255, ((rgb >> 16) & 0xFF) * 2 + 50);
-        int g = Math.min(255, ((rgb >> 8) & 0xFF) * 2 + 50);
-        int b = Math.min(255, ((rgb & 0xFF) / 2 + 50));
-        return (r << 16) | (g << 8) | b;
+        return com.gregtech.gregtech.api.machine.crucible.CrucibleHullTint.meltdownRgb(rgb);
     }
 
     @Override

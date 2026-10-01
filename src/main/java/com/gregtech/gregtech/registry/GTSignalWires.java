@@ -14,9 +14,7 @@ public final class GTSignalWires {
     private GTSignalWires() {}
     public static List<RegistryObject<SignalWireBlock>> all() { return Collections.unmodifiableList(ALL); }
     public static void register() {
-        family("redalloy", Materials.RedAlloy, 16, false);
-        family("signalum", Materials.Signalum, 64, false);
-        family("lumium", Materials.Lumium, 16, true);
+        for(var def:com.gregtech.gregtech.content.energy.SignalWireCatalog.families())family(def.name(),def.material(),def.range(),def.luminous());
     }
     private static void family(String name, GTMaterial material, int range, boolean luminous) {
         for (boolean insulated : new boolean[]{false, true}) {

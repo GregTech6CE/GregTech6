@@ -42,7 +42,7 @@ import java.util.Map;
  * {@code tech:loot_pouch}, {@code tech:seed_pouch} and {@code tech:dusty_guide_book} rows below hand
  * out.</p>
  */
-@Mod.EventBusSubscriber(modid = GregTech.MOD_ID)
+@Mod.EventBusSubscriber(modid = GregTech.MODID)
 public final class LootTableInjection {
 
     /**

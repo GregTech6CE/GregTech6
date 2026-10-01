@@ -75,7 +75,7 @@ import java.util.List;
  *       fake so the machine can never run one ({@link #registerDisplayRows()}).</li>
  * </ul>
  */
-@Mod.EventBusSubscriber(modid = com.gregtech.gregtech.GregTech.MOD_ID,
+@Mod.EventBusSubscriber(modid = com.gregtech.gregtech.GregTech.MODID,
         bus = Mod.EventBusSubscriber.Bus.MOD)
 public final class GTBumbleBeeRecipes {
 

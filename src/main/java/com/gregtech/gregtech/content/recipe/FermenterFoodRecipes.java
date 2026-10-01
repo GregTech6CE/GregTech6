@@ -32,47 +32,7 @@ public final class FermenterFoodRecipes {
     // GT6's two remaining food recipes (Loader_Recipes_Food:614-615) ferment the GregTech-Craft
     // potion fluids "potion.goldenapplejuice" and "potion.idunsapplejuice"; this port has no such
     // fluids, so they are recorded as missing content rather than invented.
-    private static final String[][] RECIPES = {
-            {"Milk", "Milk_Spoiled", "64"},
-            {"MilkGrC", "Milk_Spoiled", "64"},
-            {"Honeydew", "ShortMead", "64"},
-            {"Juice_Pear", "Cider_Pear", "64"},
-            {"Juice_Peach", "Cider_Peach", "64"},
-            {"Juice_Ananas", "Cider_Ananas", "64"},
-            {"Juice_Apple", "Cider_Apple", "64"},
-            {"Juice_AppleGrC", "Cider_Apple", "64"},
-            {"Cider_Apple", "Vinegar_Apple", "128"},
-            {"Mash_Rice", "Sake", "64"},
-            {"Mash_Wheat", "Whiskey_Scotch", "64"},
-            {"Whiskey_Scotch", "Whiskey_GlenMcKenner", "128"},
-            {"Mash_WheatHops", "Beer", "64"},
-            {"Mash_Hops", "Beer_Dark", "64"},
-            {"Beer_Dark", "Beer_Dragonblood", "128"},
-            {"Juice_Reed", "Rum_White", "64"},
-            {"Rum_White", "Vinegar_Cane", "128"},
-            {"Rum_Dark", "Vinegar_Cane", "128"},
-            {"Sake", "Vinegar_Rice", "128"},
-            {"Wine_Grape_Red", "Vinegar_Grape", "128"},
-            {"Wine_Grape_White", "Vinegar_Grape", "128"},
-            {"Wine_Grape_Green", "Vinegar_Grape", "128"},
-            {"Wine_Grape_Purple", "Vinegar_Grape", "128"},
-            {"Juice_Grape_Red", "Wine_Grape_Red", "64"},
-            {"Juice_Grape_White", "Wine_Grape_White", "64"},
-            {"Juice_Grape_Green", "Wine_Grape_Green", "64"},
-            {"Juice_Grape_Purple", "Wine_Grape_Purple", "64"},
-            {"Juice_Apricot", "Wine_Apricot", "64"},
-            {"Juice_Banana", "Wine_Banana", "64"},
-            {"Juice_Carrot", "Wine_Carrot", "64"},
-            {"Juice_Cherry", "Wine_Cherry", "64"},
-            {"Juice_Lemon", "Wine_Lemon", "64"},
-            {"Juice_Lime", "Wine_Citrus", "64"},
-            {"Juice_Orange", "Wine_Citrus", "64"},
-            {"Juice_Kiwi", "Wine_Citrus", "64"},
-            {"Juice_Cranberry", "Wine_Cranberry", "64"},
-            {"Juice_Elderberry", "Wine_Elderberry", "64"},
-            {"Juice_Plum", "Wine_Plum", "64"},
-            {"Juice_Tomato", "Wine_Tomato", "64"},
-    };
+    private static final String[][] RECIPES = FermentationRecipeDefinitions.RECIPES;
 
     /** GT6's fermenter rate: 16 EU/t for every one of these recipes. */
     private static final long EU_T = 16;

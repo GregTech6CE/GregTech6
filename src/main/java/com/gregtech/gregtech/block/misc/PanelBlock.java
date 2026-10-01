@@ -22,12 +22,7 @@ public class PanelBlock extends Block {
     private static final Map<Direction, VoxelShape> SHAPES = new EnumMap<>(Direction.class);
 
     static {
-        SHAPES.put(Direction.DOWN, box(0, 0, 0, 16, 1, 16));
-        SHAPES.put(Direction.UP, box(0, 15, 0, 16, 16, 16));
-        SHAPES.put(Direction.NORTH, box(0, 0, 0, 16, 16, 1));
-        SHAPES.put(Direction.SOUTH, box(0, 0, 15, 16, 16, 16));
-        SHAPES.put(Direction.WEST, box(0, 0, 0, 1, 16, 16));
-        SHAPES.put(Direction.EAST, box(15, 0, 0, 16, 16, 16));
+        for(var face:Direction.values()){var v=com.gregtech.gregtech.content.transport.PanelCatalog.bounds(face.ordinal());SHAPES.put(face,box(v[0],v[1],v[2],v[3],v[4],v[5]));}
     }
 
     private final String materialName;

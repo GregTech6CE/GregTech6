@@ -71,10 +71,7 @@ public class BarsBlock extends Block {
 
     /** GT6 chooses a segment by the clicked face and the quarter of the face hit. */
     public static int placementBit(Direction face, double hitX, double hitZ) {
-        if (face.getAxis() == Direction.Axis.X) return hitZ < 0.5D ? 1 : 2;
-        if (face.getAxis() == Direction.Axis.Z) return hitX < 0.5D ? 4 : 8;
-        return hitX < hitZ ? (hitX + hitZ < 1.0D ? 4 : 2)
-                : (hitX + hitZ < 1.0D ? 1 : 8);
+        return com.gregtech.gregtech.block.BarsRules.placement(face.getAxis().name().charAt(0),hitX,hitZ);
     }
 
     public static int faceBit(Direction face) {
@@ -112,6 +109,6 @@ public class BarsBlock extends Block {
 
     /** One dropped item for every segment, as GT6's connection-count drop rule. */
     @Override public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
-        return List.of(new ItemStack(this, Math.max(1, Integer.bitCount(state.getValue(MASK)))));
+        return List.of(new ItemStack(this, com.gregtech.gregtech.block.BarsRules.dropCount(state.getValue(MASK))));
     }
 }

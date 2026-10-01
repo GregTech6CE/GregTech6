@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class GTCreativeTabIcons {
-    public static final DeferredRegister<Item> ICONS = DeferredRegister.create(ForgeRegistries.ITEMS, GregTech.MODID);
+    public static final DeferredRegister<Item> ICONS = DeferredRegister.create(ForgeRegistries.ITEMS, GregTech.NAMESPACE);
 
     private static final Map<MaterialPrefix, RegistryObject<Item>> BY_MATERIAL_PREFIX = new HashMap<>();
     private static final Map<BlockMaterialPrefix, RegistryObject<Item>> BY_BLOCK_PREFIX = new HashMap<>();

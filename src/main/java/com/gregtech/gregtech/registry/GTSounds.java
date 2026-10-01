@@ -10,7 +10,7 @@ import net.minecraftforge.registries.RegistryObject;
 /** GT6 custom sound events — registered to {@code ForgeRegistries.SOUND_EVENTS}. */
 public final class GTSounds {
     public static final DeferredRegister<SoundEvent> REGISTRY =
-            DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, GregTech.MODID);
+            DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, GregTech.NAMESPACE);
 
     public static final RegistryObject<SoundEvent> WRENCH   = register("wrench");
     public static final RegistryObject<SoundEvent> SCREWDRIVER = register("screwdriver");

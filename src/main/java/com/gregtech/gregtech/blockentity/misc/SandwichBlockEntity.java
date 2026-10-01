@@ -23,7 +23,7 @@ import java.util.List;
 
 /** The sixteen GT6 sandwich layer slots. An occupied slot marks the layer's bottom pixel. */
 public final class SandwichBlockEntity extends BlockEntity {
-    public static final int SLOTS = 16;
+    public static final int SLOTS = com.gregtech.gregtech.content.food.SandwichRules.SLOTS;
     private final ItemStack[] ingredients = new ItemStack[SLOTS];
     private boolean redstone;
     private boolean dropped;
@@ -99,7 +99,7 @@ public final class SandwichBlockEntity extends BlockEntity {
         ItemStack remainder = stack.getCraftingRemainingItem();
         if (!remainder.isEmpty() && (remainder.is(Items.GLASS_BOTTLE)
                 || ForgeRegistries.ITEMS.getKey(remainder.getItem()).equals(GregTech.id("bottle_empty"))))
-            amount = (amount + 3) / 4;
+            amount = com.gregtech.gregtech.content.food.SandwichRules.containerQuantity(amount,true);
         if (stack.getCount() < amount) return 0;
         if (!redstone && SandwichIngredients.isRedstone(stack)) {
             redstone = true;
@@ -134,7 +134,7 @@ public final class SandwichBlockEntity extends BlockEntity {
             FoodProperties props = stack.getFoodProperties(null);
             if (props != null) saturation = Math.max(saturation, props.getSaturationModifier());
         }
-        return saturation + 0.5f;
+        return com.gregtech.gregtech.content.food.SandwichRules.saturation(saturation);
     }
 
     public static int itemFood(ItemStack stack) { return totalFood(readItemIngredients(stack)); }

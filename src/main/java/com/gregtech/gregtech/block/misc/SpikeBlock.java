@@ -54,7 +54,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * choice and wall/omni/falling shape; named blockstate properties preserve those in 1.20.1.
  * Worldgen's existing default {@code spike_steel} state is omni, as GT6's mob farm uses meta 6/14.
  */
-public final class SpikeBlock extends Block implements ToolInteractionTarget {
+public final class SpikeBlock extends Block implements ToolInteractionTarget, com.gregtech.gregtech.api.block.StatefulBlockLoot {
+    @Override public java.util.List<String> lootStateProperties(){return java.util.List.of("mode","secondary");}
     public enum Family { METAL, STEEL, SHARP, FANCY, SUPER }
     public enum Mode implements StringRepresentable {
         WALL("wall"), OMNI("omni"), FALLING("falling");
@@ -164,7 +165,7 @@ public final class SpikeBlock extends Block implements ToolInteractionTarget {
     @Override public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
         if (entity instanceof LivingEntity
                 && (state.getValue(MODE) != Mode.WALL || state.getValue(FACING) != Direction.UP)) {
-            entity.setDeltaMovement(entity.getDeltaMovement().multiply(0.1, 1.0, 0.1));
+            entity.setDeltaMovement(entity.getDeltaMovement().multiply(com.gregtech.gregtech.block.SpikeRules.WALK_FACTOR,1.0,com.gregtech.gregtech.block.SpikeRules.WALK_FACTOR));
         }
         super.stepOn(level, pos, state, entity);
     }
@@ -179,26 +180,7 @@ public final class SpikeBlock extends Block implements ToolInteractionTarget {
 
     /** Exact GT6 damage table without TFC's optional ×80 health compatibility multiplier. */
     public float damageFor(BlockState state, LivingEntity living) {
-        boolean secondary = state.getValue(SECONDARY);
-        boolean omni = state.getValue(MODE) != Mode.WALL;
-        float amount = switch (family) {
-            case STEEL -> living instanceof IronGolem ? 0 : 8;
-            case SHARP -> secondary ? 10 :
-                    (living instanceof IronGolem || living instanceof Skeleton || living instanceof Slime ? 0 : 5);
-            case SUPER -> secondary ? 50 : 15;
-            case METAL -> {
-                boolean target = secondary ? living.getMobType() == MobType.ARTHROPOD : living instanceof Slime;
-                if (target) yield 20;
-                yield living instanceof IronGolem || living instanceof Skeleton || (secondary && living instanceof Slime)
-                        ? 0 : 2;
-            }
-            case FANCY -> {
-                boolean target = secondary ? isEnderOrWere(living) : living.getMobType() == MobType.UNDEAD;
-                if (target) yield 20;
-                yield living instanceof IronGolem || living instanceof Skeleton || living instanceof Slime ? 0 : 2;
-            }
-        };
-        return omni ? amount * 0.5F : amount;
+        return com.gregtech.gregtech.block.SpikeRules.damage(family.name(),state.getValue(SECONDARY),state.getValue(MODE)!=Mode.WALL,living instanceof IronGolem,living instanceof Skeleton,living instanceof Slime,living.getMobType()==MobType.ARTHROPOD,living.getMobType()==MobType.UNDEAD,isEnderOrWere(living));
     }
 
     private static boolean isEnderOrWere(LivingEntity living) {

@@ -58,7 +58,7 @@ public final class GTBumbleProducts {
      * a species inside its comb tier, 0..3.
      */
     public static int level(int speciesId) {
-        return (speciesId / 10) % 10;
+        return BumbleSpeciesRules.level(speciesId);
     }
 
     /**
@@ -66,12 +66,7 @@ public final class GTBumbleProducts {
      * per 10000 for the levels 0..3, and 10000 for anything outside the table.
      */
     public static int chance(int speciesId) {
-        return switch (level(speciesId)) {
-            case 0 -> 2500;
-            case 1 -> 5000;
-            case 2 -> 7500;
-            default -> 10000;
-        };
+        return BumbleSpeciesRules.productChance(speciesId);
     }
 
     /** GT6's {@code bumbleProductCount} ({@code MultiItemBumbles:492-494}): one product per species. */
@@ -87,7 +82,7 @@ public final class GTBumbleProducts {
         String comb = GTBumbleSpecies.combOf(speciesId);
         if (comb == null) comb = "honey_comb";                      // GT6 :211 `default: Comb_Honey`
         Item item = ForgeRegistries.ITEMS.getValue(
-                ResourceLocation.fromNamespaceAndPath(GregTech.MODID, comb));
+                ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, comb));
         if (item == null || item == Items.AIR) return ItemStack.EMPTY;
         return new ItemStack(item, Math.max(1, count));
     }

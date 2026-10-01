@@ -67,11 +67,19 @@ public final class ForgeBronzeChainTests {
         helper.setBlock(heaterPos, GTMachines.BURNING_BOX_SOLID_BRICK.get().defaultBlockState()
                 .setValue(GTFacingMachineBlock.FACING, Direction.NORTH));
         helper.setBlock(coldPos, GTMachines.SMELTING_CRUCIBLE_CERAMIC.get());
+        // This specimen intentionally has no item input. Physically keep ambient
+        // world entities out without changing production suction or the air gap.
+        helper.setBlock(coldPos.above(), Blocks.GLASS);
+        for (Direction side : Direction.Plane.HORIZONTAL) {
+            helper.setBlock(coldPos.relative(side), Blocks.GLASS);
+        }
         helper.setBlock(fullPos.below(), Blocks.STONE);
         helper.setBlock(fullPos, GTMachines.SMELTING_CRUCIBLE_CERAMIC.get());
         var heater = (SolidBurningBoxBlockEntity) helper.getBlockEntity(heaterPos);
         var cold = (SmeltingCrucibleBlockEntity) helper.getBlockEntity(coldPos);
         var full = (SmeltingCrucibleBlockEntity) helper.getBlockEntity(fullPos);
+        helper.assertTrue(cold.getContentView().isEmpty() && cold.getCacheStack().isEmpty(),
+                "New disconnected crucible must have no content/cache before the world ticks");
         Player player = helper.makeMockSurvivalPlayer();
         ItemEntity charge = dropCharge(helper, full, ingots(helper, Materials.Copper, 17), 0.5);
         try {

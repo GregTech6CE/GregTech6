@@ -14,7 +14,8 @@ import java.util.*;
 /** Transient binding is rebuilt after chunk load; no duplicated inventory or heat is stored here. */
 public final class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
         com.gregtech.gregtech.content.logistics.LogisticsCoverHost,
-        com.gregtech.gregtech.api.machine.ITileEntityCrucible {
+        com.gregtech.gregtech.api.machine.ITileEntityCrucible,
+        com.gregtech.gregtech.api.multiblock.BoundMachinePort {
     private final com.gregtech.gregtech.content.logistics.LogisticsCovers covers =
             new com.gregtech.gregtech.content.logistics.LogisticsCovers(this, this);
     private BlockPos controller;

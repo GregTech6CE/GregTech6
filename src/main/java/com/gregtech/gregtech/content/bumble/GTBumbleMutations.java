@@ -54,37 +54,6 @@ public final class GTBumbleMutations {
      * Rocky + Sandy = Red Sand, Rocky + Frozen = Coal, Rocky + Nether = Heavy Metal, Royal + ??? =
      * Heroic, Frosty + Nether = Gloomstone); there is nothing to port for those.</p>
      */
-    private static final int[][] COMBINATIONS = {
-            // case 3: Cultivated Bumblebee
-            {30, 130, 10100},    // Normal + Water = Sticky
-            {30, 530, 10000},    // Normal + Rocky = Clay
-            {30, 930, 10200},    // Normal + Sandy = Royal
-            // case 13: Subnautic Bumblebee
-            {130, 30, 10100},    // Normal + Water = Sticky (reverse)
-            {130, 530, 10400},   // Rock + Water = Amnesic / Lubricant
-            // case 33: Demonic Bumblebee
-            {330, 430, 10300},   // Nether + End = Satanic
-            {330, 10530, 20000}, // Nether + Military = Pyro
-            // case 43: Nihilistic Bumblebee
-            {430, 330, 10300},   // Nether + End = Satanic (reverse)
-            {430, 10530, 20200}, // End + Military = Aero
-            // case 53: Bumbelvis
-            {530, 30, 10000},    // Normal + Rocky = Clay (reverse)
-            {530, 130, 10400},   // Rock + Water = Amnesic / Lubricant (reverse)
-            {530, 10530, 20300}, // Rocky + Military = Tera
-            // case 63: Bumblezan
-            {630, 930, 10500},   // Jungle + Sandy = Soldier
-            // case 73: Bumble Claus
-            {730, 10530, 20100}, // Frosty + Military = Cryo
-            // case 93: Bumbobee
-            {930, 30, 10200},    // Normal + Sandy = Royal (reverse)
-            {930, 630, 10500},   // Jungle + Sandy = Soldier (reverse)
-            // case 1053: General Bumblemond, the military tier's level 3
-            {10530, 330, 20000}, // Nether + Military = Pyro (reverse)
-            {10530, 430, 20200}, // End + Military = Aero (reverse)
-            {10530, 530, 20300}, // Rocky + Military = Tera (reverse)
-            {10530, 730, 20100}  // Frosty + Military = Cryo (reverse)
-    };
 
     private GTBumbleMutations() {}
 
@@ -105,12 +74,7 @@ public final class GTBumbleMutations {
 
     /** The chance table of {@code MultiItemBumbles:460-466}, keyed by the level digit. */
     private static int mutateChance(int level) {
-        return switch (level) {
-            case 0, 1 -> 500;
-            case 2 -> 250;
-            case 3 -> 25;
-            default -> 0;
-        };
+        return BumbleSpeciesRules.mutationChanceForLevel(level);
     }
 
     /**
@@ -140,14 +104,7 @@ public final class GTBumbleMutations {
         BumbleBeeType type = BumbleBeeType.of(bee);
         if (species == null || type == null) return bee.copy();
 
-        GTBumbleSpecies.Species mutated;
-        switch (level(species)) {
-            case 0: mutated = GTBumbleSpecies.byId(species.id() + 10); break;
-            case 1:
-            case 2: mutated = GTBumbleSpecies.byId(species.id() + (random.nextBoolean() ? 10 : -10)); break;
-            case 3: mutated = GTBumbleSpecies.byId(species.id() - 10); break;
-            default: return bee.copy();
-        }
+        GTBumbleSpecies.Species mutated=GTBumbleSpecies.byId(BumbleSpeciesRules.mutatedSpecies(species.id(),random::nextBoolean));
         if (mutated == null) return bee.copy();
 
         ItemStack result = BumbleBeeType.stack(mutated, type, BumbleBeeGenes.peek(bee), bee.getCount());
@@ -191,19 +148,11 @@ public final class GTBumbleMutations {
      */
     @Nullable
     public static GTBumbleSpecies.Species combineSpecies(GTBumbleSpecies.Species a, GTBumbleSpecies.Species b) {
-        if (a == null || b == null) return null;
-        for (int[] entry : COMBINATIONS) {
-            if (entry[0] != a.id() || entry[1] != b.id()) continue;
-            GTBumbleSpecies.Species result = GTBumbleSpecies.byId(entry[2]);
-            if (result != null) return result;
-            // Port rule: a result species the port does not have skips the entry, so the pair falls
-            // through to GT6's first-parent fallback (unreachable while all 80 species are registered).
-        }
-        return a;
+        return a==null||b==null?null:GTBumbleSpecies.byId(BumbleSpeciesRules.combine(a.id(),b.id()));
     }
 
     /** GT6's level digit: {@code (meta / 10) % 10}, the species' position inside its tier of four. */
     private static int level(GTBumbleSpecies.Species species) {
-        return (species.id() / 10) % 10;
+        return BumbleSpeciesRules.level(species.id());
     }
 }

@@ -1,0 +1,107 @@
+{
+  "loader": "neoforge:composite",
+  "children": {
+    "layer0": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "down": "gregtech:block/material_icons/dull/pipenonuple",
+        "up": "gregtech:block/material_icons/dull/pipenonuple",
+        "north": "gregtech:block/material_icons/dull/pipenonuple",
+        "south": "gregtech:block/material_icons/dull/pipenonuple",
+        "west": "gregtech:block/material_icons/dull/pipenonuple",
+        "east": "gregtech:block/material_icons/dull/pipenonuple"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#down",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#up",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#north",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#south",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#west",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#east",
+              "tintindex": 0
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:solid"
+    },
+    "layer1": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "down": "gregtech:block/material_icons/dull/pipenonuple_overlay",
+        "up": "gregtech:block/material_icons/dull/pipenonuple_overlay",
+        "north": "gregtech:block/material_icons/dull/pipenonuple_overlay",
+        "south": "gregtech:block/material_icons/dull/pipenonuple_overlay",
+        "west": "gregtech:block/material_icons/dull/pipenonuple_overlay",
+        "east": "gregtech:block/material_icons/dull/pipenonuple_overlay"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#down"
+            },
+            "up": {
+              "texture": "#up"
+            },
+            "north": {
+              "texture": "#north"
+            },
+            "south": {
+              "texture": "#south"
+            },
+            "west": {
+              "texture": "#west"
+            },
+            "east": {
+              "texture": "#east"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    }
+  },
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "gregtech:block/material_icons/dull/pipenonuple"
+  }
+}

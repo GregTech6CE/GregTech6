@@ -8,21 +8,21 @@ import java.util.*;
 
 /** Immutable per-item compositions; stack damage is evaluated without caching ItemStacks. */
 public final class ItemMaterialRegistry {
-    private static final Map<Item, ItemMaterialData> BY_ITEM = new IdentityHashMap<>();
+    private static final Map<Item, ItemComposition> BY_ITEM = new IdentityHashMap<>();
     private ItemMaterialRegistry() {}
     public static void register(Item item, @Nullable MaterialPrefix prefix, GTMaterial material) {
         register(item, prefix, material, prefix == null ? GTValues.U : prefix.getMaterialWeight());
     }
     public static void register(Item item, @Nullable MaterialPrefix prefix, GTMaterial material, long amount) {
         if (item != null && material != null && material.isValid() && amount > 0)
-            register(item, new ItemMaterialData(prefix, material, amount));
+            register(item, new ItemComposition(prefix, material, amount));
     }
-    public static void register(Item item, ItemMaterialData data) {
+    public static void register(Item item, ItemComposition data) {
         if (item != null && data != null) BY_ITEM.put(item, data);
     }
-    public static Optional<ItemMaterialData> base(Item item) { return Optional.ofNullable(BY_ITEM.get(item)); }
-    public static Map<Item, ItemMaterialData> entries() { return Collections.unmodifiableMap(BY_ITEM); }
-    public static Optional<ItemMaterialData> get(ItemStack stack) {
+    public static Optional<ItemComposition> base(Item item) { return Optional.ofNullable(BY_ITEM.get(item)); }
+    public static Map<Item, ItemComposition> entries() { return Collections.unmodifiableMap(BY_ITEM); }
+    public static Optional<ItemComposition> get(ItemStack stack) {
         if (stack.isEmpty()) return Optional.empty();
         var data = BY_ITEM.get(stack.getItem());
         if (data == null) return Optional.empty();
@@ -31,7 +31,7 @@ public final class ItemMaterialRegistry {
         long remaining = Math.max(0, maximum - stack.getDamageValue());
         var scaled = data.components().stream().map(c -> MaterialComponent.of(c.material(), c.amount() * remaining / maximum))
                 .filter(c -> c.amount() > 0).toList();
-        return Optional.of(new ItemMaterialData(data.prefix(), scaled, data.source(), data.recoverable()));
+        return Optional.of(new ItemComposition(data.prefix(), scaled, data.source(), data.recoverable()));
     }
     /** Do not consume stored inventories/entities or fluid containers as empty shells. */
     public static boolean canRecover(ItemStack stack) {
@@ -43,21 +43,5 @@ public final class ItemMaterialRegistry {
     public static boolean hasStoredContents(ItemStack stack) {
         var tag = stack.getTag();
         return tag != null && (tag.contains("BlockEntityTag") || tag.contains("Items") || tag.contains("EntityTag") || tag.contains("ChargedProjectiles"));
-    }
-    public record ItemMaterialData(@Nullable MaterialPrefix prefix, List<MaterialComponent> components, String source, boolean recoverable) {
-        public ItemMaterialData {
-            var merged = new LinkedHashMap<GTMaterial, Long>();
-            for (var c : components) {
-                if (!c.material().isValid() || c.amount() <= 0) throw new IllegalArgumentException("Invalid item material component: " + c);
-                merged.merge(c.material().resolve(), c.amount(), Math::addExact);
-            }
-            components = merged.entrySet().stream().map(e -> MaterialComponent.of(e.getKey(), e.getValue())).toList();
-        }
-        public ItemMaterialData(@Nullable MaterialPrefix prefix, GTMaterial material, long amount) {
-            this(prefix, List.of(MaterialComponent.of(material, amount)), "GT6 unification", true);
-        }
-        // Compatibility accessors for callers that need the primary material.
-        public GTMaterial material() { return components.isEmpty() ? MaterialSentinels.Invalid : components.get(0).material(); }
-        public long amount() { return components.isEmpty() ? 0 : components.get(0).amount(); }
     }
 }

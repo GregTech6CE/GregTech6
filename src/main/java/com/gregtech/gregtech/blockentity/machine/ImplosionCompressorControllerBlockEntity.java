@@ -17,15 +17,7 @@ import java.util.*;
 /** GT6 implosion: 25 dense tungstensteel walls, one air cell, timed explosive recipes. */
 public class ImplosionCompressorControllerBlockEntity extends BasicMachineBlockEntity implements MultiblockPortOwner {
     private final PartBindings<BlockPos,MultiblockLayout.Role> bindings=new PartBindings<>();
-    public static final MultiblockLayout LAYOUT=createLayout();
-    private static MultiblockLayout createLayout() {
-        var cells=new ArrayList<MultiblockLayout.Cell>();
-        for(int x=-1;x<=1;x++) for(int y=0;y<=2;y++) for(int z=0;z<=2;z++) {
-            if(x==0&&y==0&&z==0) continue;
-            cells.add(new MultiblockLayout.Cell(x,y,z,x==0&&y==1&&z==1?MultiblockLayout.Role.AIR:MultiblockLayout.Role.ITEM_IO));
-        }
-        return new MultiblockLayout(cells);
-    }
+    public static final MultiblockLayout LAYOUT=MultiblockLayout.fromShared(com.gregtech.gregtech.content.multiblock.SharedImplosionStructure.LAYOUT);
     public ImplosionCompressorControllerBlockEntity(BlockPos pos,BlockState state) {
         super(GTBlockEntities.IMPLOSION_COMPRESSOR.get(),pos,state);
         setSpec(BasicMachineSpec.builder("implosion_compressor_main",com.gregtech.gregtech.api.material.GTMaterialRegistry.get("TungstenSteel"))

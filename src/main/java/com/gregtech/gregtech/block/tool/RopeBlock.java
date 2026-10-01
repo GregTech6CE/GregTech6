@@ -119,6 +119,7 @@ public class RopeBlock extends HorizontalDirectionalBlock {
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
+    @Override public boolean isLadder(BlockState state,LevelReader level,BlockPos pos,net.minecraft.world.entity.LivingEntity entity){return true;}
     @Override
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(Component.translatable("gt.tooltip.rope.1").withStyle(net.minecraft.ChatFormatting.GRAY));

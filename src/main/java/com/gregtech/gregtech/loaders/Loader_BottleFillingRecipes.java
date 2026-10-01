@@ -45,20 +45,7 @@ public final class Loader_BottleFillingRecipes {
      * One GT6 family: the port's bottle item and the GT6 fluid its 1000 mB container holds. The key is
      * resolved through {@link GTDrinks#fluidForField}, the same lookup the bottles themselves use.
      */
-    private record Family(String bottleId, String fluidKey, String source) {}
-
-    /** GT6 {@code MultiItemBottles} order; {@code source} is the row block the four counts come from. */
-    private static final List<Family> FAMILIES = List.of(
-            new Family("seed_oil", "Oil_Seed", "MultiItemBottles:129-132"),
-            new Family("milk", "Milk", "MultiItemBottles:143-146"),
-            new Family("soy_milk", "MilkSoy", "MultiItemBottles:151-154"),
-            new Family("honey", "Honey", "MultiItemBottles:164-167"),
-            new Family("green_slime_bottle", "Slime_Green", "MultiItemBottles:211-214"),
-            new Family("pink_slime_bottle", "Slime_Pink", "MultiItemBottles:216-219"),
-            new Family("blue_slime_bottle", "Slime_Blue", "MultiItemBottles:221-224"),
-            new Family("juice", "Juice", "MultiItemBottles:232-235"),
-            new Family("maple_sap", "Sap_Maple", "MultiItemBottles:268-271"),
-            new Family("rainbow_sap", "Sap_Rainbow", "MultiItemBottles:277-280"));
+    private static final List<com.gregtech.gregtech.content.food.BottleFillingRows.Family> FAMILIES=com.gregtech.gregtech.content.food.BottleFillingRows.FAMILIES;
 
     private Loader_BottleFillingRecipes() {}
 
@@ -73,7 +60,7 @@ public final class Loader_BottleFillingRecipes {
         REGISTERED.clear();
         SKIPPED.clear();
         int added = 0;
-        for (Family family : FAMILIES) added += fill(recipes, family);
+        for (com.gregtech.gregtech.content.food.BottleFillingRows.Family family : FAMILIES) added += fill(recipes, family);
         added += fillLubricant(recipes);
         if (added > 0) com.gregtech.gregtech.recipe.RuntimeRecipeLifecycle.replaceGenerated(manager, recipes);
         GregTech.LOGGER.info("Registered {} GT6 bottle filling rows for {} families ({} skipped)",
@@ -82,7 +69,7 @@ public final class Loader_BottleFillingRecipes {
     }
 
     /** The four GT6 counts (4/3/2/1 bottles) of one family, in GT6's order. */
-    private static int fill(List<Recipe<?>> recipes, Family family) {
+    private static int fill(List<Recipe<?>> recipes, com.gregtech.gregtech.content.food.BottleFillingRows.Family family) {
         Item bottle = ForgeRegistries.ITEMS.getValue(GregTech.id(family.bottleId()));
         if (bottle == null || bottle == Items.AIR) {
             SKIPPED.add(family.bottleId() + ": the port registers no such bottle item");

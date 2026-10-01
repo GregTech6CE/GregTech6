@@ -16,10 +16,7 @@ import java.util.Map;
 public final class BlackSandBlock extends SandBlock {
     public record Spec(String material, int dustColor) {}
 
-    private static final Map<String, Spec> SPECS = Map.of(
-            "sand_magnetite", new Spec("Magnetite", 0x1E1E1E),
-            "sand_basalt_magnetite", new Spec("BasalticMineralSand", 0x283228),
-            "sand_granite_magnetite", new Spec("GraniticMineralSand", 0x283C3C));
+    private static final Map<String,Spec> SPECS=BlackSandDefinitions.SPECS.entrySet().stream().collect(java.util.stream.Collectors.toUnmodifiableMap(Map.Entry::getKey,e->new Spec(e.getValue().material(),e.getValue().dustColor())));
 
     public static Spec spec(String iconName) {
         return SPECS.get(iconName);

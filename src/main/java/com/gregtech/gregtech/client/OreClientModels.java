@@ -32,7 +32,7 @@ import java.util.Map;
  * stone-pinned {@link OreBakedModel#stoneModel} view. The blockstate JSON still only needs its one
  * {@code ""} variant.
  */
-@Mod.EventBusSubscriber(modid = GregTech.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class OreClientModels {
     private static final Logger LOGGER = LogUtils.getLogger();
 
@@ -51,7 +51,7 @@ public final class OreClientModels {
         BlockItemModelHelper.captureFromVanillaBlockItem(models);
         BakedModel template = BakedModelLookup.find(models, TEMPLATE);
         if (template == null) {
-            LOGGER.error("[{}] vanilla stone model missing — ore models not replaced", GregTech.MODID);
+            LOGGER.error("[{}] vanilla stone model missing — ore models not replaced", GregTech.NAMESPACE);
             return;
         }
 
@@ -76,7 +76,7 @@ public final class OreClientModels {
             mapped++;
         }
         LOGGER.info("[{}] Ore model replacement: {} ore blocks, {} state models from {} shared models",
-                GregTech.MODID, mapped, states, sharedModels.size());
+                GregTech.NAMESPACE, mapped, states, sharedModels.size());
     }
 
     /**
@@ -89,15 +89,15 @@ public final class OreClientModels {
         String cacheKey = primary.folder() + "/" + file;
         return cache.computeIfAbsent(cacheKey, key -> {
             for (MaterialTextureSet set : new MaterialTextureSet[]{primary, MaterialTextureSet.DULL, MaterialTextureSet.METALLIC}) {
-                ResourceLocation texture = new ResourceLocation(GregTech.MODID,
+                ResourceLocation texture = new ResourceLocation(GregTech.NAMESPACE,
                         "block/material_icons/" + set.folder() + "/" + file);
-                ResourceLocation file_png = new ResourceLocation(GregTech.MODID,
+                ResourceLocation file_png = new ResourceLocation(GregTech.NAMESPACE,
                         "textures/block/material_icons/" + set.folder() + "/" + file + ".png");
                 if (Minecraft.getInstance().getResourceManager().getResource(file_png).isPresent()) {
                     return texture;
                 }
             }
-            return new ResourceLocation(GregTech.MODID, "block/material_icons/metallic/" + file);
+            return new ResourceLocation(GregTech.NAMESPACE, "block/material_icons/metallic/" + file);
         });
     }
 }

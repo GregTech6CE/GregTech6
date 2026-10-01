@@ -491,41 +491,13 @@ public class ItemPipeBlockEntity extends BlockEntity
         return coverFilterPermits(side, candidate);
     }
 
-    /** BFS scan of connected item pipe network. Returns map of pipe -> accumulated step distance. */
-    private Map<ItemPipeBlockEntity, Long> scanPipeNetwork(BlockState state) {
-        Map<ItemPipeBlockEntity, Long> result = new LinkedHashMap<>();
-        Deque<ItemPipeBlockEntity> queue = new ArrayDeque<>();
-        result.put(this, spec.stepSize());
-        queue.add(this);
-
-        while (!queue.isEmpty()) {
-            ItemPipeBlockEntity current = queue.poll();
-            long currentStep = result.get(current);
-            BlockState curState = current.getBlockState();
-
-            for (Direction side : Direction.values()) {
-                if (!curState.getValue(ItemPipeBlock.propFor(side))) continue;
-                if (!current.canEmitTo(side)) continue;
-
-                BlockPos neighborPos = current.worldPosition.relative(side);
-                BlockEntity be = level.getBlockEntity(neighborPos);
-                if (be instanceof ItemPipeBlockEntity neighborPipe) {
-                    if (result.containsKey(neighborPipe)) continue;
-                    if (!neighborPipe.canAcceptFrom(side.getOpposite())) continue;
-                    long neighborStep = currentStep + neighborPipe.spec.stepSize();
-                    result.put(neighborPipe, neighborStep);
-                    queue.add(neighborPipe);
-                }
-            }
-        }
-        return result;
-    }
-
     /**
      * Forward items to the best adjacent pipe that leads to a non-pipe inventory.
      * Avoids sending back to the side items were received from.
      */
     private boolean forwardToBestPipe(BlockState state) {
+        ItemStack offered = inventory.get(0);
+        if (offered.isEmpty()) return false;
         // Find the adjacent pipe with the best (lowest step-distance) path to an exit
         long bestPathCost = Long.MAX_VALUE;
         ItemPipeBlockEntity bestNeighbor = null;
@@ -534,15 +506,18 @@ public class ItemPipeBlockEntity extends BlockEntity
         for (Direction side : Direction.values()) {
             if (!canEmitTo(side)) continue;
             if (lastReceivedFrom >= 0 && lastReceivedFrom == side.ordinal()) continue;
-            if (!state.getValue(ItemPipeBlock.propFor(side))) continue;
+            if (!state.getValue(ItemPipeBlock.propFor(side)) || !coverPermitsItemTraffic(side, offered)) continue;
 
             BlockPos neighborPos = worldPosition.relative(side);
+            if (!level.hasChunkAt(neighborPos)) continue;
             BlockEntity be = level.getBlockEntity(neighborPos);
             if (!(be instanceof ItemPipeBlockEntity neighborPipe)) continue;
-            if (!neighborPipe.canAcceptFrom(side.getOpposite())) continue;
+            if (!neighborPipe.canAcceptFrom(side.getOpposite())
+                    || !neighborPipe.getBlockState().getValue(ItemPipeBlock.propFor(side.getOpposite()))
+                    || !neighborPipe.coverPermitsItemTraffic(side.getOpposite(),offered)) continue;
 
             // Check if this neighbor or any pipe reachable from it is adjacent to a non-pipe inventory
-            long cost = findBestExitCost(neighborPipe);
+            long cost = findBestExitCost(neighborPipe, offered);
             if (cost >= 0 && cost < bestPathCost) {
                 bestPathCost = cost;
                 bestNeighbor = neighborPipe;
@@ -556,58 +531,60 @@ public class ItemPipeBlockEntity extends BlockEntity
         return pushItemsToPipe(bestNeighbor, bestDir);
     }
 
-    /** BFS from start pipe to find the lowest step-distance to a non-pipe inventory that accepts items. */
-    private long findBestExitCost(ItemPipeBlockEntity start) {
-        Map<ItemPipeBlockEntity, Long> visited = new LinkedHashMap<>();
-        Deque<ItemPipeBlockEntity> queue = new ArrayDeque<>();
-        visited.put(start, 0L);
-        queue.add(start);
-
-        while (!queue.isEmpty()) {
-            ItemPipeBlockEntity current = queue.poll();
-            long currentCost = visited.get(current);
-
-            // Check if this pipe has an adjacent non-pipe inventory that can accept items
-            if (current.hasAdjacentNonPipeTarget()) {
-                return currentCost + current.spec.stepSize();
-            }
-
-            BlockState curState = current.getBlockState();
-            for (Direction side : Direction.values()) {
-                if (!curState.getValue(ItemPipeBlock.propFor(side))) continue;
-                if (!current.canEmitTo(side)) continue;
-
-                BlockPos neighborPos = current.worldPosition.relative(side);
-                BlockEntity be = level.getBlockEntity(neighborPos);
-                if (be instanceof ItemPipeBlockEntity neighborPipe) {
-                    if (visited.containsKey(neighborPipe)) continue;
-                    if (!neighborPipe.canAcceptFrom(side.getOpposite())) continue;
-                    visited.put(neighborPipe, currentCost + neighborPipe.spec.stepSize());
-                    queue.add(neighborPipe);
-                }
-            }
-        }
-        return -1;
+    /** Shared minimum-weight search over currently loaded pipes and accepting inventory faces. */
+    private long findBestExitCost(ItemPipeBlockEntity start,ItemStack offered) {
+        return com.gregtech.gregtech.content.transport.WeightedItemPipeRoutes.minimumExitCost(start,
+                pipe -> pipe.spec.stepSize(), pipe -> {
+                    java.util.List<ItemPipeBlockEntity> adjacent = new java.util.ArrayList<>();
+                    BlockState current = pipe.getBlockState();
+                    for (Direction face : Direction.values()) {
+                        if (!current.getValue(ItemPipeBlock.propFor(face)) || !pipe.canEmitTo(face)
+                                || !pipe.coverPermitsItemTraffic(face,offered)) continue;
+                        BlockPos next = pipe.worldPosition.relative(face);
+                        if (!level.hasChunkAt(next)) continue;
+                        if (level.getBlockEntity(next) instanceof ItemPipeBlockEntity neighbor && neighbor != this
+                                && neighbor.getBlockState().getValue(ItemPipeBlock.propFor(face.getOpposite()))
+                                && neighbor.canAcceptFrom(face.getOpposite())
+                                && neighbor.coverPermitsItemTraffic(face.getOpposite(),offered)) adjacent.add(neighbor);
+                    }
+                    return adjacent;
+                }, pipe -> pipe.hasAdjacentNonPipeTarget(offered),
+                com.gregtech.gregtech.content.transport.WeightedItemPipeRoutes.MAX_VISITED_PIPES);
     }
 
-    /** Check if this pipe has an adjacent non-pipe inventory that can accept items. */
-    private boolean hasAdjacentNonPipeTarget() {
+    private IItemHandler itemHandler(BlockEntity entity,Direction face) {
+        if (entity == null) return null;
+        return entity.getCapability(ForgeCapabilities.ITEM_HANDLER,face).orElse(null);
+    }
+
+    private IItemHandler itemHandlerAt(BlockPos pos,Direction face) {
+        return level != null && level.hasChunkAt(pos) ? itemHandler(level.getBlockEntity(pos),face) : null;
+    }
+
+    /** Presence alone is insufficient: a full or filtered endpoint is not a usable exit. */
+    private boolean hasAdjacentNonPipeTarget(ItemStack offered) {
         BlockState state = getBlockState();
         for (Direction side : Direction.values()) {
-            if (!canEmitTo(side)) continue;
-            if (!state.getValue(ItemPipeBlock.propFor(side))) continue;
-            BlockPos neighborPos = worldPosition.relative(side);
-            BlockEntity be = level.getBlockEntity(neighborPos);
-            if (be instanceof ItemPipeBlockEntity) continue;
-            if (be == null) continue;
-            LazyOptional<IItemHandler> cap = be.getCapability(ForgeCapabilities.ITEM_HANDLER, side.getOpposite());
-            if (cap.isPresent()) return true;
+            if (!canEmitTo(side) || lastReceivedFrom == side.ordinal()
+                    || !state.getValue(ItemPipeBlock.propFor(side))
+                    || !coverPermitsItemTraffic(side,offered)) continue;
+            BlockPos next = worldPosition.relative(side);
+            if (!level.hasChunkAt(next)) continue;
+            BlockEntity entity = level.getBlockEntity(next);
+            if (entity instanceof ItemPipeBlockEntity) continue;
+            IItemHandler handler = itemHandler(entity,side.getOpposite());
+            if (handler == null) continue;
+            ItemStack remainder = ItemHandlerHelper.insertItemStacked(handler,offered.copy(),true);
+            if (remainder != null && remainder.getCount() >= 0 && remainder.getCount() < offered.getCount()
+                    && (remainder.isEmpty() || ItemStack.isSameItemSameTags(offered,remainder))) return true;
         }
         return false;
     }
 
     /** Push items from this pipe's inventory into an adjacent pipe. */
     private boolean pushItemsToPipe(ItemPipeBlockEntity target, Direction side) {
+        IItemHandler receiving = itemHandler(target,side.getOpposite());
+        if (receiving == null) return false;
         for (int slot = 0; slot < inventory.size(); slot++) {
             ItemStack stack = inventory.get(slot);
             if (stack.isEmpty()) continue;
@@ -618,14 +595,11 @@ public class ItemPipeBlockEntity extends BlockEntity
             // sender's filter would only stop arrivals and never departures — the half §111 had to add
             // to `distribute` after the fact.
             if (!coverPermitsItemTraffic(side, toSend)) continue;
-            ItemStack remainder = ItemHandlerHelper.insertItemStacked(target, toSend, true);
-            int accepted = toSend.getCount() - remainder.getCount();
+            int accepted = com.gregtech.gregtech.content.transport.ItemPipeTransferAdapter.transfer(toSend,
+                    () -> itemHandlerAt(target.worldPosition,side.getOpposite())).accepted();
             if (accepted <= 0) continue;
-
-            ItemStack drained = stack.split(accepted);
-            ItemHandlerHelper.insertItemStacked(target, drained, false);
+            stack.shrink(accepted);
             transferredThisSecond += accepted;
-            target.setReceivedFrom(side.getOpposite());
             if (stack.isEmpty()) {
                 inventory.set(slot, ItemStack.EMPTY);
             }
@@ -642,12 +616,13 @@ public class ItemPipeBlockEntity extends BlockEntity
         int start = level.random.nextInt(6);
         for (int i = 0; i < 6; i++) {
             Direction side = Direction.values()[(start + i) % 6];
-            if (!canEmitTo(side)) continue;
+            if (!canEmitTo(side) || !getBlockState().getValue(ItemPipeBlock.propFor(side))) continue;
             // Don't push back to where items came from
             if (lastReceivedFrom >= 0 && lastReceivedFrom == side.ordinal()) continue;
 
             // Don't push to other item pipes (handled by forwardToBestPipe)
             BlockPos targetPos = worldPosition.relative(side);
+            if (!level.hasChunkAt(targetPos)) continue;
             BlockEntity be = level.getBlockEntity(targetPos);
             if (be instanceof ItemPipeBlockEntity) continue;
 
@@ -669,13 +644,10 @@ public class ItemPipeBlockEntity extends BlockEntity
                 // filter can differ per stack, so the test sits inside the slot loop and the loop
                 // keeps trying the other slots.
                 if (!coverPermitsItemTraffic(side, toSend)) continue;
-                ItemStack remainder = ItemHandlerHelper.insertItemStacked(target, toSend, true);
-                int accepted = toSend.getCount() - remainder.getCount();
+                int accepted = com.gregtech.gregtech.content.transport.ItemPipeTransferAdapter.transfer(toSend,
+                        () -> itemHandlerAt(targetPos,side.getOpposite())).accepted();
                 if (accepted <= 0) continue;
-
-                // Execute
-                ItemStack drained = stack.split(accepted);
-                ItemHandlerHelper.insertItemStacked(target, drained, false);
+                stack.shrink(accepted);
                 transferredThisSecond += accepted;
                 if (stack.isEmpty()) {
                     inventory.set(slot, ItemStack.EMPTY);
@@ -976,6 +948,7 @@ public class ItemPipeBlockEntity extends BlockEntity
         @NotNull
         @Override
         public ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
+            if ((disabledInputs & (1 << sideOrdinal)) != 0) return stack;
             ItemStack result = ItemPipeBlockEntity.this.insertItem(slot, stack, simulate);
             if (!simulate && result.getCount() < stack.getCount()) {
                 setReceivedFrom(sideOrdinal);
@@ -986,6 +959,7 @@ public class ItemPipeBlockEntity extends BlockEntity
         @NotNull
         @Override
         public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            if ((disabledOutputs & (1 << sideOrdinal)) != 0) return ItemStack.EMPTY;
             return ItemPipeBlockEntity.this.extractItem(slot, amount, simulate);
         }
 

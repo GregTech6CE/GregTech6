@@ -6,6 +6,6 @@ import net.minecraft.core.Direction;
 public final class TankFlowRules {
     private TankFlowRules() {}
     public static boolean canAutoOutput(Direction face, boolean gas, int density) {
-        return face.getAxis().isHorizontal() || gas || face==(density<0?Direction.UP:Direction.DOWN);
+        return com.gregtech.gregtech.api.multiblock.StructureGrid.canAutoOutput(face.getStepY(),gas,density);
     }
 }

@@ -134,7 +134,7 @@ public final class Loader_OvenRecipes {
             if (input.isEmpty() || output.isEmpty()) continue;
             if (!covered.add(input.getItem())) continue;   // the vanilla list already covers this input
             recipes.add(new SmeltingRecipe(
-                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(GregTech.MODID,
+                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE,
                             "furnace/" + net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(input.getItem()).getNamespace()
                                     + "/" + net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(input.getItem()).getPath()),
                     "", CookingBookCategory.MISC, Ingredient.of(input), output.copy(), 0.0F,

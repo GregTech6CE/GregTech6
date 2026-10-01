@@ -130,44 +130,10 @@ public final class GTIconSetBlocks {
     /** {id, side texture, top texture, bottom texture} — grass-style blocks. */
     public static final String[][] BOTTOM_TOP_BLOCKS = buildBottomTopBlocks();
 
-    private static String[][] buildColumnBlocks() {
-        List<String[]> list = new ArrayList<>();
-        for (String wood : new String[]{"bluemahoe", "bluespruce", "cinnamon", "coconut", "dry", "frozen",
-                "hazel", "maple", "mossy", "rainbowood", "rotten", "rubber", "willow"}) {
-            list.add(new String[]{"log_" + wood, "log_side_" + wood, "log_top_" + wood});
-        }
-        // Resin/sap/hole logs: special side texture, plain top of the same wood.
-        list.add(new String[]{"log_hole_maple", "log_hole_maple", "log_top_maple"});
-        list.add(new String[]{"log_hole_rainbowood", "log_hole_rainbowood", "log_top_rainbowood"});
-        list.add(new String[]{"log_hole_rubber", "log_hole_rubber", "log_top_rubber"});
-        list.add(new String[]{"log_sap_maple", "log_sap_maple", "log_top_maple"});
-        list.add(new String[]{"log_sap_rainbowood", "log_sap_rainbowood", "log_top_rainbowood"});
-        list.add(new String[]{"log_resin_rubber", "log_resin_rubber", "log_top_rubber"});
-        for (String wood : new String[]{"acacia", "birch", "bluemahoe", "bluespruce", "cinnamon", "coconut",
-                "darkoak", "darkwood", "greatwood", "hazel", "jungle", "maple", "oak", "rainbowood", "rubber",
-                "rubberwood", "silverwood", "skyroot", "spruce", "willow", "wood"}) {
-            list.add(new String[]{"beam_" + wood, "beam_side_" + wood, "beam_top_" + wood});
-        }
-        for (String crop : new String[]{"barley", "oat", "rice", "rye"}) {
-            list.add(new String[]{"bale_" + crop, crop + "_side", crop + "_top"});
-        }
-        list.add(new String[]{"bale_grass", "grass_side", "grass_top"});
-        for (String stage : new String[]{"dry", "moldy", "rotten"}) {
-            list.add(new String[]{"bale_grass_" + stage, "grass_side_" + stage, "grass_top_" + stage});
-        }
-        return list.toArray(new String[0][]);
-    }
+    private static String[][] buildColumnBlocks(){return com.gregtech.gregtech.content.plant.IconColumnCatalog.all();}
 
     private static String[][] buildBottomTopBlocks() {
-        List<String[]> list = new ArrayList<>();
-        list.add(new String[]{"grass", "grass_side", "grass_top", "minecraft:block/dirt"});
-        for (String v : new String[]{"dry", "moldy", "rotten"}) {
-            list.add(new String[]{"grass_" + v, "grass_side_" + v, "grass_top_" + v, "minecraft:block/dirt"});
-        }
-        for (String c : new String[]{"brown", "dark", "light", "medium", "normal", "yellow"}) {
-            list.add(new String[]{"grassblock_" + c, "grassblock_side_" + c, "grassblock_top_" + c, "minecraft:block/dirt"});
-        }
-        return list.toArray(new String[0][]);
+        return com.gregtech.gregtech.block.GrassSoilCatalog.SPECS.stream().map(v->new String[]{v.id(),v.side(),v.top(),"minecraft:block/dirt"}).toArray(String[][]::new);
     }
 
     /** Registry id for an icon name; {@code ore_*} would collide with OreBlock ids. */
@@ -183,7 +149,7 @@ public final class GTIconSetBlocks {
 
     /** Glowtus behaves like a vanilla lily pad (water-placed flat plant). */
     public static boolean isLily(String n) {
-        return n.equals("flower_hexalily") || n.startsWith("glowtus_");
+        return com.gregtech.gregtech.content.plant.IconPlantCatalog.lily(n);
     }
 
     private static Block createBlock(String iconName) {
@@ -220,11 +186,7 @@ public final class GTIconSetBlocks {
             return new com.gregtech.gregtech.block.misc.LongDistPipeBlock(kind, propertiesFor(iconName));
         }
         if(iconName.startsWith("long_dist_wire_")) {
-            long maximum=switch(iconName.substring("long_dist_wire_".length())) {
-                case "ev" -> 4096; case "iv" -> 16384; case "luv" -> 65536;
-                case "zpm" -> 262144; case "uv" -> 1048576;
-                default -> throw new IllegalArgumentException(iconName);
-            };
+            long maximum=com.gregtech.gregtech.content.logistics.LongDistanceCatalog.voltage(iconName);
             return new com.gregtech.gregtech.block.misc.LongDistPipeBlock(true,maximum,propertiesFor(iconName));
         }
         if (isLily(iconName)) {
@@ -335,70 +297,7 @@ public final class GTIconSetBlocks {
 
     private static final String[] ICON_NAMES = buildIconNames();
 
-    private static String[] buildIconNames() {
-        return new String[] {
-            "asphalt",
-            "cfoam_fresh", "cfoam_fresh_owned", "cfoam_hardened", "cfoam_hardened_owned",
-            "clay_blue", "clay_brown", "clay_red", "clay_white", "clay_yellow",
-            "concrete", "concrete_reinforced", "crate",
-            "crystal_ore_arsenopyrite", "crystal_ore_chalcopyrite", "crystal_ore_cinnabar",
-            "crystal_ore_cobaltite", "crystal_ore_galena", "crystal_ore_kesterite",
-            "crystal_ore_molybdenite", "crystal_ore_pyrite", "crystal_ore_sphalerite",
-            "crystal_ore_stannite", "crystal_ore_stibnite", "crystal_ore_tetrahedrite",
-            "flower_alpine_catchfly", "flower_altered_andesite_buckwheat", "flower_copper_plant",
-            "flower_crosby_buckwheat", "flower_desert_trumpet", "flower_four_wing_saltbush",
-            "flower_hexalily", "flower_narcissus_sheldonia", "flower_orechid",
-            "flower_pandanus_candelabrum", "flower_prince_s_plume", "flower_sagebrush",
-            "flower_thlaspi_lereschianum", "flower_thompsons_locoweed",
-            "flower_tufted_evening_primrose", "flower_tungstus", "flower_viola_calaminaria",
-            "fluid_spring",
-            "gear", "gear_clockwise", "gear_counterclockwise",
-            "gearbox", "gearbox_axle",
-            "glass_clear",
-            "glowtus_black", "glowtus_blue", "glowtus_brown", "glowtus_cyan",
-            "glowtus_gray", "glowtus_green", "glowtus_light_blue", "glowtus_light_gray",
-            "glowtus_lime", "glowtus_magenta", "glowtus_orange", "glowtus_pink",
-            "glowtus_purple", "glowtus_red", "glowtus_white", "glowtus_yellow",
-            "greg_o_lantern", "hatch",
-            "leaves_bluemahoe", "leaves_bluespruce", "leaves_bluespruce_xmas",
-            "leaves_cinnamon", "leaves_coconut", "leaves_hazel",
-            "leaves_maple", "leaves_maple_brown", "leaves_maple_orange",
-            "leaves_maple_red", "leaves_maple_yellow",
-            "leaves_opaque_bluemahoe", "leaves_opaque_bluespruce", "leaves_opaque_bluespruce_xmas",
-            "leaves_opaque_cinnamon", "leaves_opaque_coconut", "leaves_opaque_hazel",
-            "leaves_opaque_maple", "leaves_opaque_maple_brown", "leaves_opaque_maple_orange",
-            "leaves_opaque_maple_red", "leaves_opaque_maple_yellow",
-            "leaves_opaque_rainbowood", "leaves_opaque_rubber", "leaves_opaque_willow",
-            "leaves_rainbowood", "leaves_rubber", "leaves_willow",
-            "logistics_wire",
-            "long_dist_pipe_fluid", "long_dist_pipe_item",
-            "long_dist_wire", "long_dist_wire_ev", "long_dist_wire_iv",
-            "long_dist_wire_luv", "long_dist_wire_uv", "long_dist_wire_zpm",
-            "machine", "mud",
-            "ore_amber", "ore_amethyst", "ore_anthracite", "ore_apatite",
-            "ore_bastnasite", "ore_bauxite", "ore_borax", "ore_cassiterite",
-            "ore_galena", "ore_graphite", "ore_gypsum", "ore_lignite",
-            "ore_milkyquartz", "ore_netherquartz", "ore_oil", "ore_pentlandite",
-            "ore_pitchblende", "ore_rocksalt", "ore_ruby", "ore_rutile",
-            "ore_salt", "ore_scheelite", "ore_sheldonite", "ore_sulfur",
-            "ore_tetrahedrite",
-            "piston_idle", "piston_moving",
-            "planks_bluemahoe", "planks_bluespruce", "planks_cinnamon",
-            "planks_coconut", "planks_compressed", "planks_dry", "planks_frozen",
-            "planks_hazel", "planks_maple", "planks_mossy", "planks_rainbowood",
-            "planks_rotten", "planks_rubber", "planks_treated", "planks_willow",
-            "planks_wood",
-            "rendering_error",
-            "sand_basalt_magnetite", "sand_granite_magnetite", "sand_magnetite",
-            "sapling_large_bluemahoe", "sapling_large_bluespruce", "sapling_large_cinnamon",
-            "sapling_large_coconut", "sapling_large_hazel", "sapling_large_maple",
-            "sapling_large_rainbowood", "sapling_large_rubber", "sapling_large_willow",
-            "sapling_small_bluemahoe", "sapling_small_bluespruce", "sapling_small_cinnamon",
-            "sapling_small_coconut", "sapling_small_hazel", "sapling_small_maple",
-            "sapling_small_rainbowood", "sapling_small_rubber", "sapling_small_willow",
-            "turf",
-        };
-    }
+    private static String[] buildIconNames(){return com.gregtech.gregtech.content.plant.IconPlantCatalog.ICON_NAMES.clone();}
 
     static {
         // Validation: every icon name must have a corresponding texture

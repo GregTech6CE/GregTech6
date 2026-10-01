@@ -46,15 +46,7 @@ import java.util.Map;
  * the mod unobtainable outside of creative mode.</p>
  */
 public final class PipeRecipes {
-    /** One GT6 row: curved plates in, circuit tag, pipe size out. */
-    private record Row(int curved, int circuit, PipeSpec.PipeSize size) {}
-
-    private static final List<Row> ROWS = List.of(
-            new Row(1, 1, PipeSpec.PipeSize.TINY),      // :324 / :339
-            new Row(1, 2, PipeSpec.PipeSize.SMALL),     // :325 / :340
-            new Row(3, 3, PipeSpec.PipeSize.MEDIUM),    // :326 / :341
-            new Row(6, 4, PipeSpec.PipeSize.LARGE),     // :327 / :342
-            new Row(12, 5, PipeSpec.PipeSize.HUGE));    // :328 / :343
+    private static final List<PipeWeldingRules.Row> ROWS=PipeWeldingRules.ROWS;
 
     /** Item pipes only exist for these sizes in GT6 ({@code MultiTileEntityPipeItem:77-79}). */
     private static final Map<PipeSpec.PipeSize, ItemPipeSpec.ItemPipeSize> ITEM_PIPE_SIZES = Map.of(
@@ -104,7 +96,7 @@ public final class PipeRecipes {
             if (!material.isValid()) continue;
             if (material.has(MaterialProperty.ANTIMATTER) || material.has(MaterialProperty.FLAMMABLE)) continue;
             if (!material.has(MaterialProperty.SMITHABLE)) continue;      // GT6 SMITHABLE
-            for (Row row : ROWS) weld(material, row, fluid, item);
+            for (PipeWeldingRules.Row row : ROWS) weld(material, row, fluid, item);
             bundle(material, fluid);
         }
         GregTech.LOGGER.info("Registered {} GT6 pipe welding rows ({} GT6 rows skipped: {})",
@@ -144,7 +136,7 @@ public final class PipeRecipes {
         }
     }
 
-    private static void weld(GTMaterial material, Row row,
+    private static void weld(GTMaterial material, PipeWeldingRules.Row row,
                              Map<String, Map<PipeSpec.PipeSize, ItemStack>> fluid,
                              Map<String, Map<ItemPipeSpec.ItemPipeSize, ItemStack>> item) {
         ItemStack input = GTItems.getStack(MaterialPrefix.plateCurved, material, row.curved());
@@ -171,11 +163,7 @@ public final class PipeRecipes {
         // GT6's RecipeMapHandlerPrefix#getCosts with multiplier 64 for the hard pass (:324-328), and an
         // explicit 16 * <curved plates> for the easy-heatable pass (:339-343) - the same two-branch cost
         // WelderFamilyRecipes uses for the other prefix rows.
-        long unitsIn = MaterialPrefix.plateCurved.getMaterialWeight() * row.curved();
-        long easyTicks = 16L * row.curved();
-        long hardTicks = Math.max(1, (unitsIn * 64L * (material.getToolQuality() + 1)
-                + GTValues.U - 1) / GTValues.U);
-        long ticks = MaterialWorkability.isFurnace(material) ? easyTicks : hardTicks;
+        long ticks = PipeWeldingRules.ticks(material,row);
 
         ItemStack tag = new ItemStack(GTTechnological.selectorTag(row.circuit()));
         Recipe recipe = MachineRecipeMaps.Welder.addRecipe2(true, 16, ticks, input, tag, output);

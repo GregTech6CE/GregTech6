@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column_horizontal",
-  "textures": {
-    "end": "gregtech:block/iconsets/rye_top",
-    "side": "gregtech:block/iconsets/rye_side"
-  }
-}

@@ -56,8 +56,7 @@ public class BottleCrateBlock extends HorizontalDirectionalBlock implements Enti
 
     /** GT6's world-coordinate grid, independent of the frame's facing. */
     public static int slotAt(BlockPos pos, BlockHitResult hit) {
-        double x=hit.getLocation().x-pos.getX(), z=hit.getLocation().z-pos.getZ();
-        return (x<5.5/16 ? 0 : x<10.5/16 ? 1 : 2) + (z<5.5/16 ? 0 : z<10.5/16 ? 3 : 6);
+        return com.gregtech.gregtech.content.storage.ContainerStorageRules.bottleSlot(hit.getLocation().x-pos.getX(),hit.getLocation().z-pos.getZ());
     }
 
     @Override

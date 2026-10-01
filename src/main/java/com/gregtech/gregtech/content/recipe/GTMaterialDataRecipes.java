@@ -63,30 +63,30 @@ import java.util.List;
 public final class GTMaterialDataRecipes {
 
     /** GT6 {@code CS.NBT_USB_DATA}. */
-    public static final String NBT_USB_DATA = "gt.usb.data";
+    public static final String NBT_USB_DATA = com.gregtech.gregtech.content.data.UsbDataRules.DATA;
     /** GT6 {@code CS.NBT_REPLICATOR_DATA} — a short holding the material id. */
-    public static final String NBT_REPLICATOR_DATA = "gt.replicator.data";
+    public static final String NBT_REPLICATOR_DATA = com.gregtech.gregtech.content.data.UsbDataRules.MATERIAL;
     /** GT6 {@code CS.NBT_USB_TIER}. */
-    public static final String NBT_USB_TIER = "gt.usb.tier";
+    public static final String NBT_USB_TIER = com.gregtech.gregtech.content.data.UsbDataRules.TIER;
 
     /** GT6 {@code OD_USB_STICKS[3]} — the tier the molecular scanner reads and writes. */
     public static final String USB_STICK = "usb3_stick";
-    private static final int USB_TIER = 3;
+    private static final int USB_TIER = com.gregtech.gregtech.content.data.UsbDataRules.SCANNER_TIER;
 
     /** GT6's scanner power ({@code RecipeMapScannerMolecular:57}); the T3 machine accepts 256..1024. */
-    private static final long SCANNER_EU = 512;
+    private static final long SCANNER_EU = com.gregtech.gregtech.content.data.MaterialDataRules.SCANNER_POWER;
     /** GT6's printer power for a normal / a many-pages book ({@code RecipeMapPrinter:135}). */
-    private static final long PRINTER_EU = 512;
-    private static final long PRINTER_EU_MANY = 1024;
+    private static final long PRINTER_EU = com.gregtech.gregtech.content.data.MaterialDataRules.PRINTER_POWER;
+    private static final long PRINTER_EU_MANY = com.gregtech.gregtech.content.data.MaterialDataRules.PRINTER_MANY_POWER;
     /** GT6's printer duration. */
-    private static final long PRINTER_TICKS = 16;
+    private static final long PRINTER_TICKS = com.gregtech.gregtech.content.data.MaterialDataRules.PRINTER_TICKS;
     /** GT6's black dye per print, in the port's 144 mB dye unit. */
-    private static final int DYE_MB = 72;
-    private static final int DYE_MB_MANY = 144;
+    private static final int DYE_MB = com.gregtech.gregtech.content.data.MaterialDataRules.DYE_MB;
+    private static final int DYE_MB_MANY = com.gregtech.gregtech.content.data.MaterialDataRules.DYE_MANY_MB;
     /** GT6's threshold for the "large" printed book. */
-    private static final int MANY_PAGES = 50;
+    private static final int MANY_PAGES = com.gregtech.gregtech.content.data.MaterialDataRules.MANY_PAGES;
     /** GT6's replicator power per nucleon ({@code RecipeMapReplicator:91}). */
-    private static final long REPLICATOR_EU_PER_NUCLEON = 256;
+    private static final long REPLICATOR_EU_PER_NUCLEON = com.gregtech.gregtech.content.data.MaterialDataRules.REPLICATOR_POWER_PER_NUCLEON;
 
     private static boolean registered;
 
@@ -192,10 +192,10 @@ public final class GTMaterialDataRecipes {
      * concatenated — the layout below keeps that exactly.
      * </p>
      */
-    public static final String NBT_USB_DRIVE = "gt.usb.drive";
+    public static final String NBT_USB_DRIVE = com.gregtech.gregtech.content.data.UsbDataRules.DRIVE;
 
     /** GT6's drives hold sixteen files ({@code MultiTileEntityHDDSwitch} mode index 0-15). */
-    public static final int DRIVE_SLOTS = 16;
+    public static final int DRIVE_SLOTS = com.gregtech.gregtech.content.data.UsbDataRules.FILES;
 
     /** The tier a file carries when the port writes it — the same 3 the scanner's stick gets. */
     public static final int DRIVE_FILE_TIER = USB_TIER;
@@ -204,10 +204,10 @@ public final class GTMaterialDataRecipes {
             java.util.regex.Pattern.compile("usb([1-4])_hdd");
 
     /** GT6 {@code NBT_USB_DATA+i}: the key of one slot's data compound. */
-    public static String slotDataKey(int slot) { return NBT_USB_DATA + slot; }
+    public static String slotDataKey(int slot) { return com.gregtech.gregtech.content.data.UsbDataRules.slotData(slot); }
 
     /** GT6 {@code NBT_USB_TIER+i}: the key of one slot's tier byte. */
-    public static String slotTierKey(int slot) { return NBT_USB_TIER + slot; }
+    public static String slotTierKey(int slot) { return com.gregtech.gregtech.content.data.UsbDataRules.slotTier(slot); }
 
     /**
      * The drive's tier, read from its item id ({@code usb<N>_hdd}), or 0 when the stack is not a drive.
@@ -496,10 +496,7 @@ public final class GTMaterialDataRecipes {
      * stick (2).
      */
     private static ItemStack primaryForm(GTMaterial material) {
-        List<MaterialPrefix> forms = List.of(MaterialPrefix.gem, MaterialPrefix.plateGem,
-                MaterialPrefix.ingot, MaterialPrefix.plate, MaterialPrefix.nugget,
-                MaterialPrefix.chunkGt, MaterialPrefix.dust, MaterialPrefix.dustTiny,
-                MaterialPrefix.dustSmall, MaterialPrefix.stick);
+        List<MaterialPrefix> forms = com.gregtech.gregtech.content.data.MaterialDataRules.FORMS;
         for (MaterialPrefix form : forms) {
             if (!form.isValidFor(material)) continue;
             ItemStack stack = GTItems.getStack(form, material, 1);
@@ -512,10 +509,7 @@ public final class GTMaterialDataRecipes {
 
     /** GT6 hands out a whole material unit: 9 nuggets, 4 chunks, 9 tiny dusts, 4 small dusts, 2 sticks. */
     private static long unitCount(MaterialPrefix form) {
-        if (form == MaterialPrefix.nugget || form == MaterialPrefix.dustTiny) return 9;
-        if (form == MaterialPrefix.chunkGt || form == MaterialPrefix.dustSmall) return 4;
-        if (form == MaterialPrefix.stick) return 2;
-        return 1;
+        return com.gregtech.gregtech.content.data.MaterialDataRules.units(form);
     }
 
 }

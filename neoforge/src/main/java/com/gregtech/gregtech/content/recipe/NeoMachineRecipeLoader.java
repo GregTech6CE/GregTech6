@@ -1,0 +1,60 @@
+package com.gregtech.gregtech.content.recipe;
+/** Forge Source1 named recipe order over the same materials/maps; native boundaries only. */
+public final class NeoMachineRecipeLoader {
+ private static boolean loaded;private NeoMachineRecipeLoader(){}
+ public static void load(){if(loaded)throw new IllegalStateException("Neo machine recipes initialized twice");loaded=true;
+  new com.gregtech.gregtech.loaders.c.Loader_Recipes_Parts().run();
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe VanillaProcessingRecipes: {}",com.gregtech.gregtech.content.recipe.VanillaProcessingRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe DiggableRecipes: {}",com.gregtech.gregtech.content.recipe.DiggableRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe VanillaBlockProcessingRecipes: {}",com.gregtech.gregtech.content.recipe.VanillaBlockProcessingRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe VanillaWoodProcessingRecipes: {}",com.gregtech.gregtech.content.recipe.VanillaWoodProcessingRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe RegisteredWoodSurvivalRecipes: {}",com.gregtech.gregtech.content.recipe.RegisteredWoodSurvivalRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe CropProcessingRecipes: {}",com.gregtech.gregtech.content.recipe.CropProcessingRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe DyeProcessingRecipes: {}",com.gregtech.gregtech.content.recipe.DyeProcessingRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe TextileFinishingRecipes: {}",com.gregtech.gregtech.content.recipe.TextileFinishingRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe BiologicalMaterialRecipes: {}",com.gregtech.gregtech.content.recipe.BiologicalMaterialRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe GlowtusProcessingRecipes: {}",com.gregtech.gregtech.content.recipe.GlowtusProcessingRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe BedrockFlowerProcessingRecipes: {}",com.gregtech.gregtech.content.recipe.BedrockFlowerProcessingRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe SurvivalUtilityRecipes: {}",com.gregtech.gregtech.content.recipe.SurvivalUtilityRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe CrucibleSmeltingRecipes: {}",com.gregtech.gregtech.content.recipe.CrucibleSmeltingRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe StructuralPartRecipes: {}",com.gregtech.gregtech.content.recipe.StructuralPartRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe MachineCasingRecipes: {}",com.gregtech.gregtech.content.recipe.MachineCasingRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe CapsuleCellRecipes: {}",com.gregtech.gregtech.content.recipe.CapsuleCellRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe CapsuleCellRecipes: {}",com.gregtech.gregtech.content.recipe.CapsuleCellRecipes.registerRecycling());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe ImplosionRecipes: {}",com.gregtech.gregtech.content.recipe.ImplosionRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe AnvilRecipeDefinitions: {}",com.gregtech.gregtech.content.tool.AnvilRecipeDefinitions.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe StoneAndToolSurvivalRecipes: {}",com.gregtech.gregtech.content.recipe.StoneAndToolSurvivalRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe StoneVariantRecipes: {}",com.gregtech.gregtech.content.recipe.StoneVariantRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe ElectronicsRecipes: {}",com.gregtech.gregtech.content.recipe.ElectronicsRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe WireProcessingRecipes: {}",com.gregtech.gregtech.content.recipe.WireProcessingRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe PolymerFormingRecipes: {}",com.gregtech.gregtech.content.recipe.PolymerFormingRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe GrapheneNanofabricationRecipes: {}",com.gregtech.gregtech.content.recipe.GrapheneNanofabricationRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe ReactorRodRecipes: {}",com.gregtech.gregtech.content.nuclear.ReactorRodRecipes.register());
+  new com.gregtech.gregtech.loaders.c.Loader_Recipes_Alloys().run();
+  new com.gregtech.gregtech.loaders.c.Loader_Recipes_Decomp().run();
+  com.gregtech.gregtech.data.FuelRecipeMaps.bootstrap();
+  new com.gregtech.gregtech.loaders.c.Loader_Recipes_Fuels().run();
+  new com.gregtech.gregtech.loaders.c.Loader_Recipes_Chem().run();
+  new com.gregtech.gregtech.loaders.c.Loader_Recipes_Fusion().run();
+  new com.gregtech.gregtech.loaders.c.Loader_Recipes_Matter().run();
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe VanillaRecoveryRecipes: {}",com.gregtech.gregtech.content.recipe.VanillaRecoveryRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe VehiclePackagingRecipes: {}",com.gregtech.gregtech.content.recipe.VehiclePackagingRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe MaterialFormConversionRecipes: {}",com.gregtech.gregtech.content.recipe.MaterialFormConversionRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe MortarGrindingRecipes: {}",com.gregtech.gregtech.content.recipe.MortarGrindingRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe PressAmmunitionRecipes: {}",com.gregtech.gregtech.content.recipe.PressAmmunitionRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe WelderFamilyRecipes: {}",com.gregtech.gregtech.content.recipe.WelderFamilyRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe PipeRecipes: {}",com.gregtech.gregtech.content.recipe.PipeRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe SharpeningRecipes: {}",com.gregtech.gregtech.content.recipe.SharpeningRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe AutoclaveRecipes: {}",com.gregtech.gregtech.content.recipe.AutoclaveRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe AnvilShreddingRecipes: {}",com.gregtech.gregtech.content.recipe.AnvilShreddingRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe ShredderRecyclingRecipes: {}",com.gregtech.gregtech.content.recipe.ShredderRecyclingRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe CrusherFamilyRecipes: {}",com.gregtech.gregtech.content.recipe.CrusherFamilyRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe FurnaceSmeltingRecipes: {}",com.gregtech.gregtech.content.recipe.FurnaceSmeltingRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe LaserEmitterRecipes: {}",com.gregtech.gregtech.content.recipe.LaserEmitterRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe BatteryCellRecipes: {}",com.gregtech.gregtech.content.recipe.BatteryCellRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe GTMainRecipes: {}",com.gregtech.gregtech.content.recipe.GTMainRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe GTMaterialDataRecipes: {}",com.gregtech.gregtech.content.recipe.GTMaterialDataRecipes.register());
+  com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe FoodItemRecipes: {}",com.gregtech.gregtech.content.recipe.FoodItemRecipes.register());
+  com.gregtech.gregtech.loaders.c.GTGeneratedChem.loadAll();
+ }
+}

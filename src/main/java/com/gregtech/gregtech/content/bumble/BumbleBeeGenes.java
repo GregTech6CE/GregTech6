@@ -46,7 +46,7 @@ public final class BumbleBeeGenes {
 
     /** 1.20.1's {@code Mth} has no {@code clamp(long, long, long)} overload. */
     private static long clamp(long value, long min, long max) {
-        return Math.max(min, Math.min(max, value));
+        return BumbleGenomeRules.clamp(value,min,max);
     }
 
     // ── the tag ──────────────────────────────────────────────────────────
@@ -94,25 +94,8 @@ public final class BumbleBeeGenes {
      */
     public static CompoundTag fromEnvironment(long temperature, float rainfall, boolean hasSky,
                                               boolean day, boolean night, RandomSource random) {
-        CompoundTag genes = new CompoundTag();
-        setHumidityMin(genes, rainfall - 0.10F - random.nextInt(41) / 100.0F);
-        setHumidityMax(genes, rainfall + 0.10F + random.nextInt(41) / 100.0F);
-        setTemperatureMin(genes, temperature - 15 - random.nextInt(31));
-        setTemperatureMax(genes, temperature + 15 + random.nextInt(31));
-        setOffspring(genes, 1 + random.nextInt(4));
-        setWorkForce(genes, 1 + random.nextInt(10000));
-        setAggressiveness(genes, 100 + random.nextInt(9901));
-        setLifeSpan(genes, 1200 + random.nextInt(142801));
-        // GT6 turns the false/false case into true/true, so a bee is always active at some time.
-        setDayActive(genes, day || !night);
-        setNightActive(genes, night || !day);
-        if (hasSky) {
-            setOutsideActive(genes, true);
-            if (random.nextInt(10000) < (int) (rainfall * 10000)) setRainproof(genes, true);
-            if (random.nextInt(20000) < (int) (rainfall * 10000)) setStormproof(genes, true);
-        } else {
-            setInsideActive(genes, true);
-        }
+        CompoundTag genes=encode(BumbleGenomeRules.fromEnvironment(temperature,rainfall,hasSky,day,night,bits(random)));
+        for(String key:new String[]{"rain","storm","inside","outside"})if(!genes.getBoolean(key))genes.remove(key);
         return genes;
     }
 
@@ -122,26 +105,10 @@ public final class BumbleBeeGenes {
      * always work.
      */
     public static CompoundTag inherit(ItemStack princess, ItemStack drone, RandomSource random) {
-        CompoundTag a = peek(princess);
-        CompoundTag b = peek(drone);
-        if (a == null) a = random(random);
-        if (b == null) b = random(random);
-        CompoundTag genes = new CompoundTag();
-        setHumidityMin(genes, humidityMin(random.nextBoolean() ? a : b));
-        setHumidityMax(genes, humidityMax(random.nextBoolean() ? a : b));
-        setOffspring(genes, offspring(random.nextBoolean() ? a : b));
-        setWorkForce(genes, workForce(random.nextBoolean() ? a : b));
-        setAggressiveness(genes, aggressiveness(random.nextBoolean() ? a : b));
-        setLifeSpan(genes, lifeSpan(random.nextBoolean() ? a : b));
-        setTemperatureMin(genes, temperatureMin(random.nextBoolean() ? a : b));
-        setTemperatureMax(genes, temperatureMax(random.nextBoolean() ? a : b));
-        setRainproof(genes, rainproof(random.nextBoolean() ? a : b));
-        setStormproof(genes, stormproof(random.nextBoolean() ? a : b));
-        setNightActive(genes, nightActive(random.nextBoolean() ? a : b));
-        setDayActive(genes, dayActive(random.nextBoolean() ? a : b) || !nightActive(genes));
-        setInsideActive(genes, insideActive(random.nextBoolean() ? a : b));
-        setOutsideActive(genes, outsideActive(random.nextBoolean() ? a : b) || !insideActive(genes));
-        return genes;
+        CompoundTag a=peek(princess),b=peek(drone);
+        if(a==null)a=random(random);
+        if(b==null)b=random(random);
+        return encode(BumbleGenomeRules.inherit(decode(a),decode(b),bits(random)));
     }
 
     // ── genes (GT6's setters clamp exactly like {@code UT.Code.bind}) ─────
@@ -241,5 +208,10 @@ public final class BumbleBeeGenes {
         if (outside ? !outsideActive(genes) : !insideActive(genes)) return false;
         if (raining && !rainproof(genes)) return false;
         return !thundering || stormproof(genes);
+    }
+    private static BumbleGenomeRules.RandomBits bits(RandomSource random){return new BumbleGenomeRules.RandomBits(){public int nextInt(int bound){return random.nextInt(bound);}public boolean nextBoolean(){return random.nextBoolean();}};}
+    private static BumbleGenomeRules.Genome decode(CompoundTag g){return new BumbleGenomeRules.Genome(humidityMin(g),humidityMax(g),offspring(g),workForce(g),aggressiveness(g),lifeSpan(g),temperatureMin(g),temperatureMax(g),rainproof(g),stormproof(g),nightActive(g),dayActive(g),insideActive(g),outsideActive(g));}
+    private static CompoundTag encode(BumbleGenomeRules.Genome g){
+        CompoundTag tag=new CompoundTag();setHumidityMin(tag,g.minhum());setHumidityMax(tag,g.maxhum());setOffspring(tag,g.offspring());setWorkForce(tag,g.work());setAggressiveness(tag,g.aggro());setLifeSpan(tag,g.life());setTemperatureMin(tag,g.mintemp());setTemperatureMax(tag,g.maxtemp());setRainproof(tag,g.rain());setStormproof(tag,g.storm());setNightActive(tag,g.night());setDayActive(tag,g.day());setInsideActive(tag,g.inside());setOutsideActive(tag,g.outside());return tag;
     }
 }

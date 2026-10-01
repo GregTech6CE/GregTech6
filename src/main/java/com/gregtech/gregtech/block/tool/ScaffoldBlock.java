@@ -83,10 +83,7 @@ public final class ScaffoldBlock extends ShapedToolBlock {
             level.removeBlock(pos, false);
             return;
         }
-        int design = vertical
-                ? isScaffold(level.getBlockState(pos.above())) ? 2
-                : isScaffold(level.getBlockState(pos.below())) ? 1 : 3
-                : 0;
+        int design = com.gregtech.gregtech.content.tool.UtilityToolRules.scaffoldDesign(vertical,isScaffold(level.getBlockState(pos.above())),isScaffold(level.getBlockState(pos.below())));
         if (state.getValue(DESIGN) != design) level.setBlock(pos, state.setValue(DESIGN, design), Block.UPDATE_ALL);
     }
 
@@ -99,7 +96,7 @@ public final class ScaffoldBlock extends ShapedToolBlock {
     private boolean groundConnection(LevelReader level, BlockPos pos, Direction facing) {
         Direction first = facing.getAxis() == Direction.Axis.X ? Direction.EAST : Direction.NORTH;
         for (Direction direction : new Direction[]{first, first.getOpposite()}) {
-            for (int distance = 1; distance < 256; distance++) {
+            for (int distance = 1; distance < com.gregtech.gregtech.content.tool.UtilityToolRules.SCAFFOLD_SEARCH; distance++) {
                 BlockPos next = pos.relative(direction, distance);
                 if (!isScaffold(level.getBlockState(next))) break;
                 if (verticalSupport(level, next)) return true;

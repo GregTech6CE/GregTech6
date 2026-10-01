@@ -75,7 +75,7 @@ public final class GTEntityHelper {
                 stack.getItem() instanceof com.gregtech.gregtech.item.MaterialItem materialItem
                         ? materialItem.getPrefix()
                         : ItemMaterialRegistry.get(stack)
-                                .map(ItemMaterialRegistry.ItemMaterialData::prefix).orElse(null);
+                                .map(com.gregtech.gregtech.api.material.ItemComposition::prefix).orElse(null);
         return prefix == null ? 0.0F : prefix.heatDamage();
     }
 

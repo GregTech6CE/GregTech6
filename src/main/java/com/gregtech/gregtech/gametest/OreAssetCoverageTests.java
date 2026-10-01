@@ -100,8 +100,8 @@ public final class OreAssetCoverageTests {
                 small++;
             }
             ResourceLocation id = ForgeRegistries.BLOCKS.getKey(block);
-            if (id == null || !id.getNamespace().equals(GregTech.MODID)) {
-                problems.add(block + ": registered under " + id + ", not " + GregTech.MODID);
+            if (id == null || !id.getNamespace().equals(GregTech.NAMESPACE)) {
+                problems.add(block + ": registered under " + id + ", not " + GregTech.NAMESPACE);
                 continue;
             }
             // The asset path is the registry path: BlockMaterialPrefix#getBlockId is
@@ -127,13 +127,13 @@ public final class OreAssetCoverageTests {
             String referenced = defaultVariantModel(resourceJson(blockstatePath));
             if (referenced == null) {
                 problems.add(path + ": blockstate has no default variant model");
-            } else if (referenced.startsWith(GregTech.MODID + ":") && !resourceExists(modelResource(referenced))) {
+            } else if (referenced.startsWith(GregTech.NAMESPACE + ":") && !resourceExists(modelResource(referenced))) {
                 problems.add(path + ": blockstate points at the missing model " + referenced);
             }
             String parent = parentOf(resourceJson(itemPath));
             if (parent == null) {
                 problems.add(path + ": item model has no parent to render from");
-            } else if (parent.startsWith(GregTech.MODID + ":") && !resourceExists(modelResource(parent))) {
+            } else if (parent.startsWith(GregTech.NAMESPACE + ":") && !resourceExists(modelResource(parent))) {
                 problems.add(path + ": item model points at the missing model " + parent);
             }
         }

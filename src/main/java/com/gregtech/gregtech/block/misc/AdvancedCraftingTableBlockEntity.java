@@ -22,9 +22,9 @@ import java.util.stream.IntStream;
  * Slot layout and consumption order follow MultiTileEntityAdvancedCraftingTable (LGPL-3.0-or-later).
  */
 public class AdvancedCraftingTableBlockEntity extends BlockEntity implements BlockContents {
-    public static final int SIZE=71;
-    public static final int[] INPUTS=IntStream.concat(IntStream.range(0,21),IntStream.range(35,71)).toArray();
-    public static final int[] STORAGE=IntStream.concat(IntStream.range(0,16),IntStream.range(35,71)).toArray();
+    public static final int SIZE=com.gregtech.gregtech.content.storage.AdvancedCraftingRules.SIZE;
+    public static final int[] INPUTS=com.gregtech.gregtech.content.storage.AdvancedCraftingRules.inputs();
+    public static final int[] STORAGE=com.gregtech.gregtech.content.storage.AdvancedCraftingRules.storage();
     private boolean blocked16,blocked36,filter16,filter36,flush,loading,capsValid=true;
     private LazyOptional<IItemHandler> itemCap=LazyOptional.empty();
     private long revision;
@@ -105,12 +105,7 @@ public class AdvancedCraftingTableBlockEntity extends BlockEntity implements Blo
         return ItemStack.isSameItemSameTags(a,b);
     }
     private static int source(ItemStack[] state,ItemStack wanted,int gridSlot) {
-        if(same(state[gridSlot],wanted)&&state[gridSlot].getCount()>1)return gridSlot;
-        for(int i=21;i<30;i++)if(same(state[i],wanted)&&state[i].getCount()>1)return i;
-        for(int i=70;i>=35;i--)if(same(state[i],wanted))return i;
-        for(int i=20;i>=0;i--)if(same(state[i],wanted))return i;
-        for(int i=21;i<30;i++)if(same(state[i],wanted))return i;
-        return -1;
+        return com.gregtech.gregtech.content.storage.AdvancedCraftingRules.source(i->same(state[i],wanted),i->state[i].getCount(),gridSlot);
     }
     private record Plan(ItemStack[] after,ItemStack output,CraftingRecipe recipe,CraftingContainer grid) {}
     private Plan plan() {
@@ -166,11 +161,7 @@ public class AdvancedCraftingTableBlockEntity extends BlockEntity implements Blo
         };
     }
     private int[] automationSlots() {
-        var out=new ArrayList<Integer>();out.add(33);
-        if(flush)for(int i=21;i<30;i++)out.add(i);
-        if(!blocked16)for(int i=0;i<16;i++)out.add(i);
-        if(!blocked36)for(int i=35;i<71;i++)out.add(!flush&&i==63?64:!flush&&i==64?63:i);
-        return out.stream().mapToInt(Integer::intValue).toArray();
+        return com.gregtech.gregtech.content.storage.AdvancedCraftingRules.automationSlots(flush,blocked16,blocked36);
     }
     private boolean accepts(int slot,ItemStack stack) {
         if(slot>=0&&slot<16) {if(filter16)for(int i=0;i<16;i++)if(same(stack,inventory.getStackInSlot(i)))return i==slot;return true;}

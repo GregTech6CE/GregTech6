@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "gregtech:sand_magnetite",
+    "gregtech:sand_basalt_magnetite",
+    "gregtech:sand_granite_magnetite",
+    "gregtech:grass",
+    "gregtech:grassblock_brown",
+    "gregtech:grassblock_dark",
+    "gregtech:grassblock_light",
+    "gregtech:grassblock_medium",
+    "gregtech:grassblock_normal",
+    "gregtech:grassblock_yellow"
+  ]
+}

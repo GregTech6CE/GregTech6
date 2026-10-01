@@ -142,18 +142,9 @@ public final class GTLootTables {
     public static ItemStack roll(String table, RandomSource random) {
         List<Row> rows = rows(table);
         if (rows.isEmpty()) return ItemStack.EMPTY;
-        int total = 0;
-        for (Row row : rows) total += row.weight();
-        int pick = random.nextInt(total);
-        for (Row row : rows) {
-            pick -= row.weight();
-            if (pick < 0) {
-                int count = row.min() + (row.max() > row.min() ? random.nextInt(row.max() - row.min() + 1) : 0);
-                ItemStack stack = row.stack().copy();
-                stack.setCount(Math.min(count, stack.getMaxStackSize()));
-                return stack;
-            }
-        }
+        int index=LootRollRules.pick(rows.stream().mapToInt(Row::weight).toArray(),random::nextInt);
+        if(index>=0){var row=rows.get(index);int count=LootRollRules.count(row.min(),row.max(),random::nextInt);ItemStack stack=row.stack().copy();stack.setCount(Math.min(count,stack.getMaxStackSize()));return stack;}
+
         return ItemStack.EMPTY;
     }
 
@@ -186,7 +177,7 @@ public final class GTLootTables {
     public static int fillInto(String table, net.minecraftforge.items.ItemStackHandler inventory,
                                RandomSource random) {
         int[] range = countRange(table);
-        int rolls = range[0] + (range[1] > range[0] ? random.nextInt(range[1] - range[0] + 1) : 0);
+        int rolls = LootRollRules.count(range[0],range[1],random::nextInt);
         int placed = 0;
         for (int draw = 0; draw < rolls; draw++) {
             ItemStack stack = roll(table, random);

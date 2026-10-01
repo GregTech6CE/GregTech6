@@ -34,22 +34,12 @@ public final class GTBookList {
 
     /** GT6 {@code BooksGT.BOOK_REGISTER}: everything that can sit on a shelf. */
     public static boolean canPlace(ItemStack stack) {
-        if (stack.isEmpty()) return false;
-        if (isBook(stack)) return true;
-        if (stack.is(Items.PAPER) || stack.is(Items.MAP) || stack.is(Items.FILLED_MAP)
-                || stack.is(Items.NAME_TAG) || stack.is(Items.ITEM_FRAME) || stack.is(Items.PAINTING)
-                || stack.is(Items.OAK_BUTTON) || stack.is(Items.STONE_BUTTON)
-                || stack.is(Items.LEVER) || stack.is(Items.REDSTONE_TORCH)
-                || stack.is(Items.COBBLESTONE)) {
-            return true;
-        }
-        return false;
+        return !stack.isEmpty() && BookShelfRules.canPlace(ForgeRegistries.ITEMS.getKey(stack.getItem()).toString());
     }
 
     /** GT6 {@code BooksGT.BOOKS_NORMAL} — worth one enchantment point. */
     public static boolean isNormalBook(ItemStack stack) {
-        return stack.is(Items.BOOK) || stack.is(Items.WRITABLE_BOOK) || stack.is(Items.WRITTEN_BOOK)
-                || isDustyBook(stack);
+        return !stack.isEmpty() && BookShelfRules.enchantPower(ForgeRegistries.ITEMS.getKey(stack.getItem()).toString())==1;
     }
 
     /** GT6 {@code BooksGT.BOOKS_ENCHANTED} — worth two enchantment points. */
@@ -64,9 +54,7 @@ public final class GTBookList {
 
     /** GT6 excludes its button, lever, torch and cobblestone decoys from automated extraction. */
     public static boolean canAutoExtract(ItemStack stack) {
-        return !stack.isEmpty() && !stack.is(Items.OAK_BUTTON) && !stack.is(Items.STONE_BUTTON)
-                && !stack.is(Items.LEVER) && !stack.is(Items.REDSTONE_TORCH)
-                && !stack.is(Items.COBBLESTONE);
+        return !stack.isEmpty() && BookShelfRules.canAutoExtract(ForgeRegistries.ITEMS.getKey(stack.getItem()).toString());
     }
 
     /** GT6 {@code MultiTileEntityBookShelf.getEnchantPowerBonus}: +1 per book, +2 per enchanted book. */
@@ -90,10 +78,10 @@ public final class GTBookList {
      * 14..27 — {@code MultiTileEntityBookShelf}'s click formula and its {@code rng(14)} dungeon loot
      * both use that layout).
      */
-    public static final int SLOTS = 28;
+    public static final int SLOTS = BookShelfRules.SLOTS;
 
     /** Slots per row on one face. */
-    public static final int COLUMNS = 7;
+    public static final int COLUMNS = BookShelfRules.COLUMNS;
 
     /**
      * GT6's click-to-slot mapping:
@@ -105,10 +93,7 @@ public final class GTBookList {
      * @param hitY  hit y within the block (0..1, GT6's {@code tCoords[1]})
      */
     public static int slotFor(boolean front, double hitX, double hitY) {
-        int base = hitY < 0.5D ? (front ? 6 : 20) : (front ? 13 : 27);
-        int column = (int) Math.floor(8.0D * (hitX - 1.0D / 16.0D));
-        column = Math.max(0, Math.min(6, column));
-        return base - column;
+        return BookShelfRules.slotFor(front,hitX,hitY);
     }
 
     /** Unused, but keeps the vanilla bookshelf block referenced for the javadoc above. */

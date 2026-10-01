@@ -70,7 +70,7 @@ public class BatteryItem extends Item implements IItemEnergy {
         long space = capacity - getEnergyStored(stack, energyType);
         if (space <= 0) return 0;
         // TileEntityBase08Battery:155-173: cap packets per call; permit the last partial packet.
-        long accepted = Math.min(Math.min(voltage(), amount), Math.max(1, space / size));
+        long accepted = com.gregtech.gregtech.content.energy.ItemBatteryRules.injectionPackets(capacity,capacity-space,voltage(),size,amount);
         if (doInject && accepted > 0) {
             CompoundTag tag = stack.getOrCreateTag();
             tag.putLong("gt.charge", capacity - Math.max(0, space - accepted * size));
@@ -84,7 +84,7 @@ public class BatteryItem extends Item implements IItemEnergy {
         size = packet(stack, energyType, size, amount);
         if (size == 0) return 0;
         long stored = getEnergyStored(stack, energyType);
-        long available = Math.min(Math.min(voltage(), amount), stored / size);
+        long available = com.gregtech.gregtech.content.energy.ItemBatteryRules.extractionPackets(stored,voltage(),size,amount);
         if (doExtract && available > 0) {
             CompoundTag tag = stack.getOrCreateTag();
             tag.putLong("gt.charge", stored - available * size);

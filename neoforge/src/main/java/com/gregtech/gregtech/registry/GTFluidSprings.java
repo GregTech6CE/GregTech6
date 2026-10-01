@@ -1,0 +1,3 @@
+package com.gregtech.gregtech.registry;
+import com.gregtech.gregtech.block.FluidSpringBlock;import net.minecraft.world.level.block.*;import net.minecraft.world.level.block.state.BlockBehaviour;import net.minecraft.world.level.material.MapColor;import net.neoforged.neoforge.registries.DeferredHolder;
+public final class GTFluidSprings {private GTFluidSprings(){}public static DeferredHolder<Block,Block> FLUID_SPRING;public static void initialize(){FLUID_SPRING=GTBlocks.BLOCKS.register("fluid_spring",()->new FluidSpringBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WATER).strength(3,3).requiresCorrectToolForDrops().sound(SoundType.STONE)));GTBlocks.registerBlockItem("fluid_spring",FLUID_SPRING);}}

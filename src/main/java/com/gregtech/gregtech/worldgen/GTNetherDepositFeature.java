@@ -29,20 +29,15 @@ import java.util.concurrent.ConcurrentHashMap;
 public class GTNetherDepositFeature extends Feature<NoneFeatureConfiguration> {
 
     /** The 12 GT6 crystal ore kinds (iconset blocks). */
-    private static final String[] CRYSTAL_ORES = {
-            "crystal_ore_arsenopyrite", "crystal_ore_chalcopyrite", "crystal_ore_cinnabar",
-            "crystal_ore_cobaltite", "crystal_ore_galena", "crystal_ore_kesterite",
-            "crystal_ore_molybdenite", "crystal_ore_pyrite", "crystal_ore_sphalerite",
-            "crystal_ore_stannite", "crystal_ore_stibnite", "crystal_ore_tetrahedrite",
-    };
+    private static final String[] CRYSTAL_ORES = NetherDepositRules.CRYSTALS.toArray(String[]::new);
 
     /** GT6's nether water level ({@code WD.waterLevel} in a no-sky dimension) - the lava sea. */
-    public static final int NETHER_WATER_LEVEL = 31;
+    public static final int NETHER_WATER_LEVEL = NetherDepositRules.WATER_LEVEL;
 
     /** GT6's {@code WorldgenNetherQuartz}: two noise layers at {@code 40 + noise(x, 0|64, z, 200)}. */
-    public static final int QUARTZ_BASE_Y = 40;
-    public static final int QUARTZ_OPTIONS = 200;
-    public static final float[] QUARTZ_NOISE_Y = {0.0F, 64.0F};
+    public static final int QUARTZ_BASE_Y = NetherDepositRules.QUARTZ_BASE_Y;
+    public static final int QUARTZ_OPTIONS = NetherDepositRules.QUARTZ_OPTIONS;
+    public static final float[] QUARTZ_NOISE_Y = NetherDepositRules.QUARTZ_NOISE_Y;
 
     private static final Map<Long, GTCellNoise> NOISE_BY_SEED = new ConcurrentHashMap<>();
 
@@ -159,20 +154,11 @@ public class GTNetherDepositFeature extends Feature<NoneFeatureConfiguration> {
         // GT6 replaces the ceiling block itself, not the air block below it.
         level.setBlock(cursor.set(x, y + 1, z), crystal, 2);
         int seedY = y + 1;
-        for (int i = 0; i < 1500; i++) {
-            int tX = x + random.nextInt(8) - random.nextInt(8);
-            int tY = seedY - random.nextInt(12);
-            int tZ = z + random.nextInt(8) - random.nextInt(8);
-            cursor.set(tX, tY, tZ);
-            if (!level.getBlockState(cursor).isAir()) continue;
-            int neighbours = 0;
-            for (Direction dir : Direction.values()) {
-                if (level.getBlockState(cursor.relative(dir)).is(crystal.getBlock())) neighbours++;
-            }
-            if (neighbours == 1) {
-                level.setBlock(new BlockPos(tX, tY, tZ), crystal, 2);
-            }
-        }
+        NetherDepositRules.growCrystal(x,seedY,z,random::nextInt,new NetherDepositRules.CrystalSink(){
+            public boolean air(int px,int py,int pz){return level.getBlockState(new BlockPos(px,py,pz)).isAir();}
+            public int crystalNeighbors(int px,int py,int pz){int count=0;BlockPos pos=new BlockPos(px,py,pz);for(Direction dir:Direction.values())if(level.getBlockState(pos.relative(dir)).is(crystal.getBlock()))count++;return count;}
+            public void place(int px,int py,int pz){level.setBlock(new BlockPos(px,py,pz),crystal,2);}
+        });
         return true;
     }
 
@@ -194,7 +180,7 @@ public class GTNetherDepositFeature extends Feature<NoneFeatureConfiguration> {
     @Nullable
     private static BlockState blockState(String id) {
         Block block = ForgeRegistries.BLOCKS.getValue(
-                new ResourceLocation(com.gregtech.gregtech.GregTech.MODID, id));
+                new ResourceLocation(com.gregtech.gregtech.GregTech.NAMESPACE, id));
         return block == null || block == Blocks.AIR ? null : block.defaultBlockState();
     }
 }

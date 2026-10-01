@@ -7,9 +7,15 @@
   "mixins": [
     "WaterFluidMixin",
     "AbstractMinecartSpeedCapMixin",
-    "EntityFallingOreDropMixin"
+    "EntityFallingOreDropMixin",
+    "BlockEntityPaintMixin",
+    "WolfCollarAccessor"
   ],
   "injectors": {
     "defaultRequire": 0
-  }
+  },
+  "client": [
+    "BlockPaintColorMixin",
+    "ItemPaintColorMixin"
+  ]
 }

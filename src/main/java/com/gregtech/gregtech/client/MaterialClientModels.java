@@ -25,7 +25,7 @@ import java.util.IdentityHashMap;
  * Maps each material item to a shared icon model ({@code models/item/material/{textureSet}/{prefix}.json}).
  * Per-material color comes from item tint on layer 0  - no per-item JSON required.
  */
-@Mod.EventBusSubscriber(modid = GregTech.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class MaterialClientModels {
     private static final Logger LOGGER = LogUtils.getLogger();
 
@@ -70,7 +70,7 @@ public final class MaterialClientModels {
         }
 
         LOGGER.info("[{}] Material model aliasing: {} mapped, {} missing shared model",
-                GregTech.MODID, aliased, missing);
+                GregTech.NAMESPACE, aliased, missing);
     }
 
     private static BakedModel resolveSharedModel(Map<ResourceLocation, BakedModel> models, MaterialItem materialItem) {

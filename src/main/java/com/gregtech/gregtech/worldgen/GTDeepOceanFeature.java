@@ -52,12 +52,7 @@ public class GTDeepOceanFeature extends Feature<NoneFeatureConfiguration> {
     public record Tier(int fromL, int toL, int radius) {}
 
     /** GT6's four tiers, in source order. */
-    public static final Tier[] TIERS = {
-            new Tier(8, 10, 0),
-            new Tier(5, 7, 1),
-            new Tier(2, 4, 2),
-            new Tier(0, 1, 3),
-    };
+    public static final Tier[] TIERS = MineralWorldgenRules.PYLON_TIERS.stream().map(row->new Tier(row.fromL(),row.toL(),row.radius())).toArray(Tier[]::new);
 
     public GTDeepOceanFeature() {
         super(NoneFeatureConfiguration.CODEC);

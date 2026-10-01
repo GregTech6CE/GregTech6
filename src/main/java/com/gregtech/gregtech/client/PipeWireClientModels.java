@@ -33,7 +33,7 @@ import java.util.Map;
  * {@link PipeWireBakedModel} (GT6 thin-into-thick connection rendering).
  * Items use the same geometry with two opposite connection arms.
  */
-@Mod.EventBusSubscriber(modid = GregTech.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class PipeWireClientModels {
     private static final Logger LOGGER = LogUtils.getLogger();
 
@@ -106,7 +106,7 @@ public final class PipeWireClientModels {
             replaced += replace(models, block, model);
         }
 
-        LOGGER.info("[{}] Dynamic pipe/wire models: {} state variants replaced", GregTech.MODID, replaced);
+        LOGGER.info("[{}] Dynamic pipe/wire models: {} state variants replaced", GregTech.NAMESPACE, replaced);
     }
 
     private static int replace(Map<ResourceLocation, BakedModel> models, Block block, BakedModel model) {

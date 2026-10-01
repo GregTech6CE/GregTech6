@@ -14,7 +14,7 @@ import java.util.Locale;
 public final class TooltipHelper {
     private TooltipHelper() {}
 
-    private static final String MOD = GregTech.MODID;
+    private static final String MOD = GregTech.NAMESPACE;
 
     // ── Direction names ────────────────────────────────────────────────────
 

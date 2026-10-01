@@ -64,19 +64,7 @@ public final class RoadStripeRailBlock extends BaseRailBlock {
 
     @Override public void onMinecartPass(BlockState state, Level level, BlockPos pos, AbstractMinecart cart) {
         TrackBlock.applySpeedToCart(0.5F, state, level, pos, cart);
-        var motion = cart.getDeltaMovement();
-        double horizontal = Math.hypot(motion.x, motion.z);
-        if (horizontal > 0.01D) {
-            cart.setDeltaMovement(motion.x * 2, motion.y, motion.z * 2);
-            return;
-        }
-        if (state.getValue(SHAPE) == RailShape.EAST_WEST) {
-            if (solid(level, pos.west())) cart.setDeltaMovement(0.02D, motion.y, motion.z);
-            else if (solid(level, pos.east())) cart.setDeltaMovement(-0.02D, motion.y, motion.z);
-        } else if (state.getValue(SHAPE) == RailShape.NORTH_SOUTH) {
-            if (solid(level, pos.north())) cart.setDeltaMovement(motion.x, motion.y, 0.02D);
-            else if (solid(level, pos.south())) cart.setDeltaMovement(motion.x, motion.y, -0.02D);
-        }
+        TrackBlock.moveCart(cart,state,level,pos,true);
     }
 
     private static boolean solid(Level level, BlockPos pos) {

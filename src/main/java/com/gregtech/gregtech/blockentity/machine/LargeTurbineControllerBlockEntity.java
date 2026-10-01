@@ -38,7 +38,7 @@ public class LargeTurbineControllerBlockEntity extends AxialGeneratorBlockEntity
         else if(!stopped&&steam.getFluidAmount()>=grade().input()) {
             int amount=steam.getFluidAmount();steam.drain(amount,FluidAction.EXECUTE);
             energy+=amount/2;pending=amount/2;
-            int condensed=(steamCounter+amount)/170;steamCounter=(steamCounter+amount)%170;
+            int condensed=(steamCounter+amount)/com.gregtech.gregtech.content.multiblock.OriginalGeneratorParameters.STEAM_CONDENSATION_RATIO;steamCounter=(steamCounter+amount)%com.gregtech.gregtech.content.multiblock.OriginalGeneratorParameters.STEAM_CONDENSATION_RATIO;
             var distilled=GTFluids.still("DistW");
             if(condensed>0&&distilled!=null&&distilled.isPresent())water.fill(new FluidStack(distilled.get(),condensed),FluidAction.EXECUTE);
             // As in GT6 the distilled-water tank voids excess; a full output never blocks the shaft.
@@ -70,5 +70,5 @@ public class LargeTurbineControllerBlockEntity extends AxialGeneratorBlockEntity
         long amount=tag.contains("Fluid")?tag.getLong("Amount"):fluid.getAmount();
         fluid.setAmount((int)Math.max(0,Math.min(tank.getCapacity(),amount)));tank.setFluid(fluid);
     }
-    @Override public void load(CompoundTag tag){super.load(tag);pending=Math.max(0,Math.min(grade().inputMaximum(),tag.getLong("gt.pending")));steamCounter=Math.floorMod(tag.getInt("gt.steam_counter"),170);readTank(steam,tag.getCompound("gt.steam"));if(!steam.isEmpty()&&!isSteam(steam.getFluid()))steam.setFluid(FluidStack.EMPTY);readTank(water,tag.getCompound("gt.water"));}
+    @Override public void load(CompoundTag tag){super.load(tag);pending=Math.max(0,Math.min(grade().inputMaximum(),tag.getLong("gt.pending")));steamCounter=Math.floorMod(tag.getInt("gt.steam_counter"),com.gregtech.gregtech.content.multiblock.OriginalGeneratorParameters.STEAM_CONDENSATION_RATIO);readTank(steam,tag.getCompound("gt.steam"));if(!steam.isEmpty()&&!isSteam(steam.getFluid()))steam.setFluid(FluidStack.EMPTY);readTank(water,tag.getCompound("gt.water"));}
 }

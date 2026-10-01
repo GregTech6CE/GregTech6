@@ -123,7 +123,7 @@ public class OreBlock extends Block implements MaterialBlockLike {
 
     @Override
     public String getDescriptionId() {
-        return "block." + GregTech.MODID + "." + prefix.getRegistryName();
+        return "block." + GregTech.NAMESPACE + "." + prefix.getRegistryName();
     }
 
     @Override

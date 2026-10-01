@@ -34,15 +34,15 @@ public final class GTStructures {
 
     /** {@code gregtech:gt_dungeon} as a structure type ({@code data/gregtech/worldgen/structure/gt_dungeon.json}). */
     public static final DeferredRegister<StructureType<?>> STRUCTURE_TYPES =
-            DeferredRegister.create(Registries.STRUCTURE_TYPE, GregTech.MODID);
+            DeferredRegister.create(Registries.STRUCTURE_TYPE, GregTech.NAMESPACE);
 
     /** {@code gregtech:gt_dungeon_lattice} as a placement type, registered like vanilla's {@code random_spread}. */
     public static final DeferredRegister<StructurePlacementType<?>> PLACEMENT_TYPES =
-            DeferredRegister.create(Registries.STRUCTURE_PLACEMENT, GregTech.MODID);
+            DeferredRegister.create(Registries.STRUCTURE_PLACEMENT, GregTech.NAMESPACE);
 
     /** The anchor marker piece ({@link GTDungeonAnchorPiece}) needs a piece id to be saved with its chunk. */
     public static final DeferredRegister<StructurePieceType> PIECE_TYPES =
-            DeferredRegister.create(Registries.STRUCTURE_PIECE, GregTech.MODID);
+            DeferredRegister.create(Registries.STRUCTURE_PIECE, GregTech.NAMESPACE);
 
     /** The dungeon structure's type; its codec is {@link GTDungeonStructure#CODEC}. */
     public static final RegistryObject<StructureType<GTDungeonStructure>> DUNGEON_TYPE =
@@ -59,11 +59,11 @@ public final class GTStructures {
 
     /** Key of the dungeon structure ({@code data/gregtech/worldgen/structure/gt_dungeon.json}). */
     public static final ResourceKey<Structure> DUNGEON = ResourceKey.create(Registries.STRUCTURE,
-            ResourceLocation.fromNamespaceAndPath(GregTech.MODID, "gt_dungeon"));
+            ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, "gt_dungeon"));
 
     /** Key of the structure set that carries the dungeon ({@code data/gregtech/worldgen/structure_set/gt_dungeons.json}). */
     public static final ResourceKey<StructureSet> DUNGEON_SET = ResourceKey.create(Registries.STRUCTURE_SET,
-            ResourceLocation.fromNamespaceAndPath(GregTech.MODID, "gt_dungeons"));
+            ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, "gt_dungeons"));
 
     /**
      * The dungeon in a tag of its own ({@code data/gregtech/tags/worldgen/structure/gt_dungeon.json}), so
@@ -72,7 +72,7 @@ public final class GTStructures {
      * ({@code ServerLevel:1121-1134}) - can ask for it.
      */
     public static final TagKey<Structure> DUNGEON_TAG = TagKey.create(Registries.STRUCTURE,
-            ResourceLocation.fromNamespaceAndPath(GregTech.MODID, "gt_dungeon"));
+            ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, "gt_dungeon"));
 
     private GTStructures() {}
 

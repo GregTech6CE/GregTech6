@@ -96,11 +96,7 @@ public class MoldBasinBlockEntity extends BlockEntity implements ITileEntityMold
     private void tickServer() {
         // Update temperature toward environment
         long envTemp = environmentTemperature();
-        if (temperature > envTemp) {
-            temperature = Math.max(envTemp, temperature - Math.min(5, temperature - envTemp));
-        } else if (temperature < envTemp) {
-            temperature = Math.min(envTemp, temperature + Math.min(5, envTemp - temperature));
-        }
+        temperature=com.gregtech.gregtech.api.machine.crucible.MoldCastingRules.cool(temperature,envTemp);
 
         // Clear empty content
         if (contentAmount <= 0) {

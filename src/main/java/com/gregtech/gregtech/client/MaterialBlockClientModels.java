@@ -19,7 +19,7 @@ import org.slf4j.Logger;
 
 import java.util.Map;
 
-@Mod.EventBusSubscriber(modid = GregTech.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class MaterialBlockClientModels {
     private static final Logger LOGGER = LogUtils.getLogger();
 
@@ -79,7 +79,7 @@ public final class MaterialBlockClientModels {
             aliased++;
         }
 
-        LOGGER.info("[{}] Material block model aliasing: {} mapped, {} missing", GregTech.MODID, aliased, missing);
+        LOGGER.info("[{}] Material block model aliasing: {} mapped, {} missing", GregTech.NAMESPACE, aliased, missing);
     }
 
     private static BakedModel resolveSharedModel(Map<ResourceLocation, BakedModel> models, MaterialBlockLike materialBlock) {

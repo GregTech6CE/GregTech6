@@ -48,7 +48,7 @@ public class LongDistanceTransformerBlockEntity extends GTEnergyBlockEntity {
         var receivers=new HashMap<LongDistanceTransformerBlockEntity,Integer>();
         queue.add(start); distance.put(start,0);
         while(!queue.isEmpty()) {
-            var pos=queue.remove(); wires.add(pos); if(wires.size()>4096) return null;
+            var pos=queue.remove(); wires.add(pos); if(wires.size()>com.gregtech.gregtech.content.logistics.LongDistanceRules.MAX_SCAN) return null;
             for(var side:Direction.values()) {
                 var next=pos.relative(side);
                 if(!level.hasChunkAt(next)) return null;
@@ -62,11 +62,11 @@ public class LongDistanceTransformerBlockEntity extends GTEnergyBlockEntity {
                 }
             }
         }
-        if(sources.size()!=1 || !sources.contains(worldPosition) || receivers.size()!=1) return null;
+        if(!com.gregtech.gregtech.content.logistics.LongDistanceRules.unique(sources.size(),sources.contains(worldPosition),receivers.size())) return null;
         var receiver=receivers.keySet().iterator().next();
         return receiver==this || receiver.stopped ? null : new Route(receiver,receivers.get(receiver),wires,wireBlock.maximumVoltage());
     }
-    public static long loss(long distance) { return Math.max(64,distance/8); }
+    public static long loss(long distance) { return com.gregtech.gregtech.content.logistics.LongDistanceRules.loss(distance); }
     @Override public boolean isEnergyType(GregTechTags.Tag type,Direction side,boolean emitting) { return type==GregTechTags.Energy.EU; }
     @Override public Collection<GregTechTags.Tag> getEnergyTypes(Direction side) { return List.of(GregTechTags.Energy.EU); }
     @Override public boolean isEnergyAcceptingFrom(GregTechTags.Tag type,Direction side,boolean theoretical) {

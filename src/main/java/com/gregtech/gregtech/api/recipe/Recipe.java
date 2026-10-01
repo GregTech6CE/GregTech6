@@ -61,7 +61,7 @@ public class Recipe {
         return this;
     }
     public boolean isCatalystInput(int index) {
-        return catalystInputs.get(index) || mInputs[index].getItem() instanceof com.gregtech.gregtech.item.TechItem tool && tool.isCatalyst();
+        return catalystInputs.get(index) || mInputs[index].getItem() instanceof com.gregtech.gregtech.api.recipe.RecipeCatalystLike tool && tool.isCatalyst();
     }
 
     // ── Output helpers ───────────────────────────────────────────────────
@@ -76,13 +76,7 @@ public class Recipe {
         if (index < 0 || index >= mOutputs.length || processes <= 0) return 0;
         ItemStack output = mOutputs[index];
         if (output == null || output.isEmpty()) return 0;
-        long attempts = (long) output.getCount() * processes;
-        int chance = getOutputChance(index);
-        if (chance >= 10000) return attempts;
-        if (chance <= 0) return 0;
-        long count = 0;
-        for (long i = 0; i < attempts; i++) if (random.applyAsInt(10000) < chance) count++;
-        return count;
+        return RecipeChanceRules.rollOutputCount(output.getCount(),getOutputChance(index),processes,random);
     }
 
     public ItemStack getOutput(int idx) {

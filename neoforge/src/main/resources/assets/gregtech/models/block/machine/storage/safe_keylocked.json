@@ -1,0 +1,111 @@
+{
+  "loader": "neoforge:composite",
+  "parent": "minecraft:block/block",
+  "children": {
+    "colored": {
+      "textures": {
+        "front": "gregtech:block/machines/safes/keylocked/colored/front",
+        "back": "gregtech:block/machines/safes/keylocked/colored/back",
+        "side": "gregtech:block/machines/safes/keylocked/colored/side"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "up": {
+              "texture": "#side",
+              "cullface": "up",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#side",
+              "cullface": "down",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#side",
+              "cullface": "east",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#side",
+              "cullface": "west",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#front",
+              "cullface": "north",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#back",
+              "cullface": "south",
+              "tintindex": 0
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    },
+    "overlay": {
+      "textures": {
+        "front": "gregtech:block/machines/safes/keylocked/overlay/front",
+        "back": "gregtech:block/machines/safes/keylocked/overlay/back",
+        "side": "gregtech:block/machines/safes/keylocked/overlay/side"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "up": {
+              "texture": "#side",
+              "cullface": "up"
+            },
+            "down": {
+              "texture": "#side",
+              "cullface": "down"
+            },
+            "east": {
+              "texture": "#side",
+              "cullface": "east"
+            },
+            "west": {
+              "texture": "#side",
+              "cullface": "west"
+            },
+            "north": {
+              "texture": "#front",
+              "cullface": "north"
+            },
+            "south": {
+              "texture": "#back",
+              "cullface": "south"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    }
+  },
+  "textures": {
+    "particle": "gregtech:block/machines/safes/keylocked/overlay/side"
+  }
+}

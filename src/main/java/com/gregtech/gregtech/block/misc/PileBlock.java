@@ -144,17 +144,13 @@ public class PileBlock extends Block implements EntityBlock {
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         int count = state.getValue(STACK);
-        int perLayer = kind == Kind.INGOT ? 8 : 4;
-        int layerHeight = kind == Kind.INGOT ? 2 : 1;
-        // An empty, directly placed port block remains selectable until filled.
-        int height = Math.max(1, ((count + perLayer - 1) / perLayer) * layerHeight);
+        int height=com.gregtech.gregtech.block.MaterialPileRules.outlineHeight(kind==Kind.INGOT,count);
         return Block.box(0, 0, 0, 16, height, 16);
     }
 
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        int perLayer = kind == Kind.INGOT ? 8 : 4;
-        int height = state.getValue(STACK) / perLayer * (kind == Kind.INGOT ? 2 : 1);
+        int height=com.gregtech.gregtech.block.MaterialPileRules.collisionHeight(kind==Kind.INGOT,state.getValue(STACK));
         return height == 0 ? Shapes.empty() : Block.box(0, 0, 0, 16, height, 16);
     }
 

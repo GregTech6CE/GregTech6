@@ -60,19 +60,6 @@ public final class GTTrackBlocks {
      * GT6 {@code Loader_Rails:41-72}: material, top speed, explosion resistance and the rail material
      * the booster recipe uses as its "G" ingredient. Order is GT6's registration order.
      */
-    private static final String[][] MATERIALS = {
-            {"Aluminium", "0.20", "6", "Silver"},
-            {"Bronze", "0.30", "8", "Silver"},
-            {"Magnalium", "0.60", "12", "Silver"},
-            {"Steel", "0.60", "12", "Gold"},
-            {"StainlessSteel", "0.80", "10", "Gold"},
-            {"Tungsten", "1.00", "20", "Electrum"},
-            {"Titanium", "1.20", "16", "Electrum"},
-            {"Tungstensteel", "1.40", "20", "Platinum"},
-            {"TungstenCarbide", "1.60", "24", "Platinum"},
-            {"Adamantium", "4.00", "100", "Osmium"},
-    };
-
     private static final List<Track> TRACKS = new ArrayList<>();
     private static final Map<String, Track> BY_ID = new LinkedHashMap<>();
     private static boolean registered;
@@ -87,26 +74,22 @@ public final class GTTrackBlocks {
 
     /** GT6's material name for a port slug, e.g. {@code tungstensteel}. */
     public static String materialName(String slug) {
-        for (String[] row : MATERIALS) {
-            if (row[0].toLowerCase(Locale.ROOT).equals(slug)) return row[0];
-        }
-        return null;
+        return com.gregtech.gregtech.content.transport.TrackCatalog.materialName(slug);
     }
 
     /** The booster recipe's "G" ingredient material ({@code Loader_Rails:119-128}), or null. */
     public static String boosterMaterial(String material) {
-        for (String[] row : MATERIALS) if (row[0].equals(material)) return row[3];
-        return null;
+        return com.gregtech.gregtech.content.transport.TrackCatalog.boosterMaterial(material);
     }
 
     /** Registers the thirty tracks; idempotent. */
     public static synchronized void registerAll() {
         if (registered) return;
         registered = true;
-        for (String[] row : MATERIALS) {
-            String material = row[0];
-            float speed = Float.parseFloat(row[1]);
-            float resistance = Float.parseFloat(row[2]);
+        for (var row : com.gregtech.gregtech.content.transport.TrackCatalog.MATERIALS) {
+            String material = row.name();
+            float speed = row.speed();
+            float resistance = row.resistance();
             String slug = material.toLowerCase(Locale.ROOT);
             add("track_" + slug, Family.STRAIGHT, material, speed, resistance);
             add("track_booster_" + slug, Family.BOOSTER, material, speed, resistance);
