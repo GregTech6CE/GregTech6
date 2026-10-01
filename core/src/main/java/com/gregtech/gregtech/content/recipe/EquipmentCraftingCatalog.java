@@ -4,6 +4,16 @@ package com.gregtech.gregtech.content.recipe;
 public final class EquipmentCraftingCatalog {
     private EquipmentCraftingCatalog() {}
     public static final java.util.List<String> FILES = java.util.List.of(
+            "engines/engine_electric_galvanized_steel.json",
+            "engines/engine_electric_aluminium.json",
+            "engines/engine_electric_stainless_steel.json",
+            "engines/engine_electric_chromium.json",
+            "engines/engine_electric_titanium.json",
+            "engines/engine_flux_lead.json",
+            "engines/engine_flux_invar.json",
+            "engines/engine_flux_electrum.json",
+            "engines/engine_flux_enderium_base.json",
+            "engines/engine_flux_enderium.json",
             "engines/engine_steam_lead.json",
             "engines/engine_steam_tin_alloy.json",
             "engines/engine_steam_bronze.json",

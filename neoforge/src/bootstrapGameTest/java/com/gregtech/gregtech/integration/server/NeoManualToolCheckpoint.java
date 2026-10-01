@@ -103,6 +103,54 @@ public final class NeoManualToolCheckpoint {
   com.mojang.logging.LogUtils.getLogger().info("STEAM_ENGINE_CRAFTING_CHECKPOINT_SUCCESS {}","{\"platform\":\"neoforge\",\"recipes\":28,\"normalRows\":14,\"strongRows\":14,\"patternAndOutput\":true,\"prefixDistinction\":true,\"hammerWear\":400,\"wrenchWear\":800,\"selectedNativePackets\":2,\"playerCraftingClickVerified\":false}");
   return Map.copyOf(selected);
  }
+ public static void electricFluxCrafting(ServerLevel level) {
+  String[] electric={"galvanized_steel","aluminium","stainless_steel","chromium","titanium"};
+  String[] flux={"lead","invar","electrum","enderium_base","enderium"};
+  var plates=List.of(Materials.SteelGalvanized,Materials.Aluminium,Materials.StainlessSteel,Materials.Chromium,Materials.Titanium);
+  var magnets=List.of(Materials.IronMagnetic,Materials.SteelMagnetic,Materials.SteelMagnetic,Materials.NeodymiumMagnetic,Materials.NeodymiumMagnetic);
+  var gears=List.of(Materials.Lead,Materials.Invar,Materials.Electrum,Materials.EnderiumBase,Materials.Enderium);
+  int[] widths={1,2,4,8,16};
+  for(int i=0;i<5;i++) {
+   String electricId="engine_electric_"+electric[i],fluxId="engine_flux_"+flux[i];
+   var plate=equipmentForm(MaterialPrefix.plateTriple,plates.get(i));
+   var rod=equipmentForm(MaterialPrefix.stickLong,magnets.get(i));
+   var wire=equipmentItem(String.format(Locale.ROOT,"wire_%02d_%s",widths[i],i<2?"copper":"annealed_copper"));
+   var hammer=tool(GTToolType.HARD_HAMMER);var wrench=tool(GTToolType.WRENCH);
+   var input=CraftingInput.of(3,3,List.of(plate.copy(),hammer,plate.copy(),wire.copy(),rod,wire.copy(),plate.copy(),wrench,plate.copy()));
+   var actual=recipe(level,"engines/"+electricId);
+   for(var ingredient:actual.getIngredients()) if(ingredient!=Ingredient.EMPTY)require(ingredient.getItems().length>0,"electric ingredient closure "+electricId);
+   var assembled=craft(level,"engines/"+electricId,input,electricId);
+   require(network(actual,level).matches(input,level),"electric actual serializer "+electricId);
+   var remains=actual.getRemainingItems(input);
+   require(remains.get(1).getItem()==hammer.getItem() && remains.get(1).getDamageValue()==400
+       && remains.get(7).getItem()==wrench.getItem() && remains.get(7).getDamageValue()==800
+       && hammer.getDamageValue()==0 && wrench.getDamageValue()==0,"electric wear/nonmutation "+electricId);
+   for(int slot:List.of(0,2,3,4,5,6,8))require(remains.get(slot).isEmpty(),"electric consumed raw slot "+electricId);
+   var wrong=new ArrayList<>(input.items());wrong.set(0,equipmentForm(MaterialPrefix.plateDouble,plates.get(i)));
+   require(!actual.matches(CraftingInput.of(3,3,wrong),level),"triple plate distinction "+electricId);
+   wrong=new ArrayList<>(input.items());wrong.set(4,equipmentForm(MaterialPrefix.stickLong,Materials.Bronze));
+   require(!actual.matches(CraftingInput.of(3,3,wrong),level),"long magnetic rod distinction "+electricId);
+   wrong=new ArrayList<>(input.items());wrong.set(3,equipmentItem(String.format(Locale.ROOT,"wire_%02d_annealed_copper",widths[(i+1)%5])));
+   require(!actual.matches(CraftingInput.of(3,3,wrong),level),"wire width distinction "+electricId);
+   if(i<2) {
+    var equivalent=new ArrayList<>(input.items());var annealed=equipmentItem(String.format(Locale.ROOT,"wire_%02d_annealed_copper",widths[i]));
+    equivalent.set(3,annealed.copy());equivalent.set(5,annealed.copy());
+    require(actual.matches(CraftingInput.of(3,3,equivalent),level),"original ANY.Cu includes annealed copper "+electricId);
+   } else {
+    wrong=new ArrayList<>(input.items());wrong.set(3,equipmentItem(String.format(Locale.ROOT,"wire_%02d_copper",widths[i])));
+    require(!actual.matches(CraftingInput.of(3,3,wrong),level),"high tier exact annealed copper "+electricId);
+   }
+   var gear=equipmentForm(MaterialPrefix.gearGt,gears.get(i));
+   var upgrade=CraftingInput.of(1,3,List.of(gear.copy(),assembled,gear.copy()));
+   var fluxRecipe=recipe(level,"engines/"+fluxId);
+   for(var ingredient:fluxRecipe.getIngredients()) if(ingredient!=Ingredient.EMPTY)require(ingredient.getItems().length>0,"flux ingredient closure "+fluxId);
+   craft(level,"engines/"+fluxId,upgrade,fluxId);
+   require(network(fluxRecipe,level).matches(upgrade,level),"flux actual serializer "+fluxId);
+   for(var remainder:fluxRecipe.getRemainingItems(upgrade))require(remainder.isEmpty(),"electric engine consumed in flux upgrade "+fluxId);
+   require(!fluxRecipe.matches(CraftingInput.of(1,3,List.of(gear.copy(),equipmentItem("engine_electric_"+electric[(i+1)%5]),gear.copy())),level),"flux correct tier prerequisite "+fluxId);
+  }
+  com.mojang.logging.LogUtils.getLogger().info("ELECTRIC_FLUX_CRAFTING_CHECKPOINT_SUCCESS {}","{\"platform\":\"neoforge\",\"recipes\":10,\"electricRows\":5,\"fluxRows\":5,\"actualSerializerRoundTrips\":10,\"electricToFluxAllTiers\":true,\"wireWidthAndMaterialDistinction\":true,\"hammerWear\":400,\"wrenchWear\":800,\"playerCraftingClickVerified\":false}");
+ }
  private static void equipment(ServerLevel level) {
   int loaded=0;
   for(String file:com.gregtech.gregtech.content.recipe.EquipmentCraftingCatalog.FILES) {

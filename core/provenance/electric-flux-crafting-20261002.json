@@ -1,0 +1,223 @@
+{
+  "integration_base": "24d9f67bc14be448b66a531e918d6a222b7a864d",
+  "source_path": "F:\\Dev\\GregTech6\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+  "source_sha256": "82bd457e2f79fb33009e1dd07e7d8cf83f190204a3f7d5ec44cfc4bb340e8678",
+  "recipes": [
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_electric_galvanized_steel.json",
+      "sha256": "e84c9fd5b9879c1bf2262f767d5117d7e837be00a7b2bf877b75897b1c6c8b13",
+      "upstream_line": 833,
+      "upstream_id": 10011,
+      "upstream_keys": {
+        "P": "OP.plateTriple.dat(aMat)",
+        "I": "OP.stickLong.dat(MT.IronMagnetic        )",
+        "C": "OP.wireGt01.dat(ANY.Cu)"
+      },
+      "pattern": [
+        "PhP",
+        "CIC",
+        "PwP"
+      ],
+      "tier": 1,
+      "engine_id": "gregtech:engine_electric_galvanized_steel",
+      "source_provisional_comment": true
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_electric_aluminium.json",
+      "sha256": "4195f5385f4a4fe742c46c5cb822bfff02d9bc6dbb426bc3d9e0f4864453791c",
+      "upstream_line": 834,
+      "upstream_id": 10012,
+      "upstream_keys": {
+        "P": "OP.plateTriple.dat(aMat)",
+        "I": "OP.stickLong.dat(MT.SteelMagnetic       )",
+        "C": "OP.wireGt02.dat(ANY.Cu)"
+      },
+      "pattern": [
+        "PhP",
+        "CIC",
+        "PwP"
+      ],
+      "tier": 2,
+      "engine_id": "gregtech:engine_electric_aluminium",
+      "source_provisional_comment": false
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_electric_stainless_steel.json",
+      "sha256": "9f91f96d23eb1a073d4ecefb0155d3af916a12e971914cc55f2cbdfd1060aea1",
+      "upstream_line": 835,
+      "upstream_id": 10013,
+      "upstream_keys": {
+        "P": "OP.plateTriple.dat(aMat)",
+        "I": "OP.stickLong.dat(MT.SteelMagnetic       )",
+        "C": "OP.wireGt04.dat(MT.AnnealedCopper)"
+      },
+      "pattern": [
+        "PhP",
+        "CIC",
+        "PwP"
+      ],
+      "tier": 3,
+      "engine_id": "gregtech:engine_electric_stainless_steel",
+      "source_provisional_comment": false
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_electric_chromium.json",
+      "sha256": "79183bb64a7a8f80cf93011997efd1179db2afe52fac333c97f5452fcaaaf11b",
+      "upstream_line": 836,
+      "upstream_id": 10014,
+      "upstream_keys": {
+        "P": "OP.plateTriple.dat(aMat)",
+        "I": "OP.stickLong.dat(MT.NeodymiumMagnetic   )",
+        "C": "OP.wireGt08.dat(MT.AnnealedCopper)"
+      },
+      "pattern": [
+        "PhP",
+        "CIC",
+        "PwP"
+      ],
+      "tier": 4,
+      "engine_id": "gregtech:engine_electric_chromium",
+      "source_provisional_comment": false
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_electric_titanium.json",
+      "sha256": "b9657dcc8164a96f122f6362c93d5ef0c9cf340cd79fbbe97dcc726056978b8c",
+      "upstream_line": 837,
+      "upstream_id": 10015,
+      "upstream_keys": {
+        "P": "OP.plateTriple.dat(aMat)",
+        "I": "OP.stickLong.dat(MT.NeodymiumMagnetic   )",
+        "C": "OP.wireGt16.dat(MT.AnnealedCopper)"
+      },
+      "pattern": [
+        "PhP",
+        "CIC",
+        "PwP"
+      ],
+      "tier": 5,
+      "engine_id": "gregtech:engine_electric_titanium",
+      "source_provisional_comment": false
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_flux_lead.json",
+      "sha256": "2110923ae736d325d8e80e992fbb0e6a21400fcd9e462f7099b15704c22839a6",
+      "upstream_line": 840,
+      "upstream_id": 11011,
+      "upstream_keys": {
+        "M": "aRegistry.getItem(10011)",
+        "G": "OP.gearGt.dat(aMat)"
+      },
+      "pattern": [
+        "G",
+        "M",
+        "G"
+      ],
+      "tier": 1,
+      "engine_id": "gregtech:engine_flux_lead",
+      "source_provisional_comment": false
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_flux_invar.json",
+      "sha256": "4e08e74a1c53321ad706f3a3cf818f8eb55ea13f270f945e36b5a27920e037e6",
+      "upstream_line": 841,
+      "upstream_id": 11012,
+      "upstream_keys": {
+        "M": "aRegistry.getItem(10012)",
+        "G": "OP.gearGt.dat(aMat)"
+      },
+      "pattern": [
+        "G",
+        "M",
+        "G"
+      ],
+      "tier": 2,
+      "engine_id": "gregtech:engine_flux_invar",
+      "source_provisional_comment": false
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_flux_electrum.json",
+      "sha256": "f3a35b0c08a041b9923ae6b9968ce9c19bfc29a08e550e9a608c6e66a24f7e9a",
+      "upstream_line": 842,
+      "upstream_id": 11013,
+      "upstream_keys": {
+        "M": "aRegistry.getItem(10013)",
+        "G": "OP.gearGt.dat(aMat)"
+      },
+      "pattern": [
+        "G",
+        "M",
+        "G"
+      ],
+      "tier": 3,
+      "engine_id": "gregtech:engine_flux_electrum",
+      "source_provisional_comment": false
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_flux_enderium_base.json",
+      "sha256": "e3e0247a0265fe7536812f76dc17d3df43e122b11a740c30645c646a9754b559",
+      "upstream_line": 843,
+      "upstream_id": 11014,
+      "upstream_keys": {
+        "M": "aRegistry.getItem(10014)",
+        "G": "OP.gearGt.dat(aMat)"
+      },
+      "pattern": [
+        "G",
+        "M",
+        "G"
+      ],
+      "tier": 4,
+      "engine_id": "gregtech:engine_flux_enderium_base",
+      "source_provisional_comment": false
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_flux_enderium.json",
+      "sha256": "baf184d6d97bb093e46153a6fcf9ee9c206c9cd62283e9f34a6f933355894209",
+      "upstream_line": 844,
+      "upstream_id": 11015,
+      "upstream_keys": {
+        "M": "aRegistry.getItem(10015)",
+        "G": "OP.gearGt.dat(aMat)"
+      },
+      "pattern": [
+        "G",
+        "M",
+        "G"
+      ],
+      "tier": 5,
+      "engine_id": "gregtech:engine_flux_enderium",
+      "source_provisional_comment": false
+    }
+  ],
+  "choices": [
+    "Electric engines use original triple plates, long magnetic rods and correct 01/02 ANY.Cu or 04/08/16 annealed copper wire widths.",
+    "Original 11011..11015 flux recipes consume registry 10011..10015: ELECTRIC engines, not flux motors. All five electric engine prerequisites already registered.",
+    "Original DEF_REV_NCC/no MIR retained; no changes to energy conversion, machine registry IDs, inventories or saved-state formats.",
+    "LV electric source row retains its upstream provisional TODO: Temp Recipes status. Not a new balance endorsement."
+  ],
+  "license_changed": false,
+  "source_directories_modified": false,
+  "adapted_source_files": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/recipe/EquipmentCraftingCatalog.java",
+      "sha256": "40f36025279dd4e1e659930e6182afa33934064e5907ca1ccbe4f8fc2d87a3ef",
+      "base_blob_sha256": "9b16fe31aa6c3d23c2a675d6e026eae8246915b532708ac3cfc109bad98ccc11"
+    },
+    {
+      "path": "neoforge/build.gradle",
+      "sha256": "6ac0477ff9ec36a3653aec30271ac7c5375110f371efaa138c115aeadd4a7eb5",
+      "base_blob_sha256": "98c8b7921e3a047d8a9aa0d95e8d062035ad9103dc679362121f8c974f6e5fc5"
+    },
+    {
+      "path": "neoforge/src/bootstrapGameTest/java/com/gregtech/gregtech/integration/server/NeoForgeDedicatedSmoke.java",
+      "sha256": "b8717b232eb5178c2fde94458f3bba573560efff8009135fd4e8ee614096bb67",
+      "base_blob_sha256": "5b5efbdae42abe771ca83e2554d9cad2d8f6647b6cfefae54f809a3bb67523cf"
+    },
+    {
+      "path": "neoforge/src/bootstrapGameTest/java/com/gregtech/gregtech/integration/server/NeoManualToolCheckpoint.java",
+      "sha256": "566f8e0e7ec8af343475085ee26237926e4c027026df2cfd196d17898e17fae0",
+      "base_blob_sha256": "69d25d5b56560c03af2d58f34f377a808e6d3b45d84e720f087fc601804830a7"
+    }
+  ],
+  "verification": "../../../docs/integration/verification/electric-flux-crafting-20261002.md"
+}

@@ -67,6 +67,7 @@ neoForge {
         }
         server {
             systemProperty 'gregtech.integration.engineCraftingSmoke', (rootProject.findProperty('engineCraftingSmoke') ?: 'false').toString()
+            systemProperty 'gregtech.integration.electricFluxCraftingSmoke', (rootProject.findProperty('electricFluxCraftingSmoke') ?: 'false').toString()
             server()
             sourceSet = sourceSets.bootstrapGameTest
             systemProperty 'gregtech.integration.serverSmokePhase', (rootProject.findProperty('serverSmokePhase') ?: '').toString()

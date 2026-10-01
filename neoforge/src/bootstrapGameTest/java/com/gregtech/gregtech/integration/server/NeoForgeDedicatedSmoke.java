@@ -97,6 +97,7 @@ public final class NeoForgeDedicatedSmoke {
                     120, TimeUnit.SECONDS);
             LOGGER.info("SERVER_SMOKE_STARTED {}", identity());
             if (ENGINE_CRAFTING) craftedSteamResults = NeoManualToolCheckpoint.steamEngineCrafting(level);
+            if (Boolean.getBoolean("gregtech.integration.electricFluxCraftingSmoke")) NeoManualToolCheckpoint.electricFluxCrafting(level);
             // Explicitly load the real overworld chunk; no synthetic NBT round trip.
             level.getChunk(specimenPos);
             level.getChunk(specimenPos.east());

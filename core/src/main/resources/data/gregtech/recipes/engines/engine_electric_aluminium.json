@@ -1,0 +1,29 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "PhP",
+    "CIC",
+    "PwP"
+  ],
+  "key": {
+    "P": {
+      "tag": "gregtech:plate_triple/aluminium"
+    },
+    "I": {
+      "tag": "gregtech:stick_long/steel_magnetic"
+    },
+    "C": {
+      "tag": "gregtech:wire_02/any_copper"
+    },
+    "h": {
+      "item": "gregtech:tool_hammer"
+    },
+    "w": {
+      "item": "gregtech:tool_wrench"
+    }
+  },
+  "result": {
+    "item": "gregtech:engine_electric_aluminium"
+  },
+  "allow_mirror": false
+}

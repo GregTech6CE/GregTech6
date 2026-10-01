@@ -1,0 +1,29 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "PhP",
+    "CIC",
+    "PwP"
+  ],
+  "key": {
+    "P": {
+      "tag": "gregtech:plate_triple/stainless_steel"
+    },
+    "I": {
+      "tag": "gregtech:stick_long/steel_magnetic"
+    },
+    "C": {
+      "item": "gregtech:wire_04_annealed_copper"
+    },
+    "h": {
+      "item": "gregtech:tool_hammer"
+    },
+    "w": {
+      "item": "gregtech:tool_wrench"
+    }
+  },
+  "result": {
+    "item": "gregtech:engine_electric_stainless_steel"
+  },
+  "allow_mirror": false
+}

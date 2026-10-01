@@ -1,0 +1,20 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "G",
+    "M",
+    "G"
+  ],
+  "key": {
+    "G": {
+      "tag": "gregtech:gear_gt/lead"
+    },
+    "M": {
+      "item": "gregtech:engine_electric_galvanized_steel"
+    }
+  },
+  "result": {
+    "item": "gregtech:engine_flux_lead"
+  },
+  "allow_mirror": false
+}

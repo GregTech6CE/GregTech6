@@ -1,0 +1,20 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "G",
+    "M",
+    "G"
+  ],
+  "key": {
+    "G": {
+      "tag": "gregtech:gear_gt/electrum"
+    },
+    "M": {
+      "item": "gregtech:engine_electric_stainless_steel"
+    }
+  },
+  "result": {
+    "item": "gregtech:engine_flux_electrum"
+  },
+  "allow_mirror": false
+}
