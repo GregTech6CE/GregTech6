@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-/** Original portable crafting dictionary patterns over shared catalogs; native data-pack reload and codecs. */
+/** Original portable and energy/smeltery equipment recipes over shared catalogs; native data-pack reload and codecs. */
 @EventBusSubscriber(modid = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public final class PortableCraftingRecipePack extends AbstractPackResources {
     private static final Gson GSON=new Gson();
@@ -40,7 +40,7 @@ public final class PortableCraftingRecipePack extends AbstractPackResources {
     public static void packs(AddPackFindersEvent event) {
         if (event.getPackType() != PackType.SERVER_DATA) return;
         event.addRepositorySource(output -> {
-            var location=new net.minecraft.server.packs.PackLocationInfo("gregtech:portable_crafting_recipes",Component.literal("GregTech original portable crafting crafting recipes"),PackSource.BUILT_IN,java.util.Optional.empty());
+            var location=new net.minecraft.server.packs.PackLocationInfo("gregtech:portable_crafting_recipes",Component.literal("GregTech original equipment crafting recipes"),PackSource.BUILT_IN,java.util.Optional.empty());
             Pack pack=Pack.readMetaAndCreate(location,new Pack.ResourcesSupplier(){
                 public PackResources openPrimary(net.minecraft.server.packs.PackLocationInfo info){return new PortableCraftingRecipePack(info);}
                 public PackResources openFull(net.minecraft.server.packs.PackLocationInfo info,Pack.Metadata metadata){return new PortableCraftingRecipePack(info);}
@@ -52,16 +52,44 @@ public final class PortableCraftingRecipePack extends AbstractPackResources {
     private synchronized Map<ResourceLocation,byte[]> data(){
         if(resources!=null)return resources;
         Map<ResourceLocation,byte[]> generated=new HashMap<>();
-        for(String file:com.gregtech.gregtech.content.tool.PortableCraftingCatalog.FILES){String path="data/gregtech/recipes/fluid_tools/"+file;try(var stream=PortableCraftingRecipePack.class.getClassLoader().getResourceAsStream(path)){if(stream==null)throw new IllegalStateException("Missing shared portable recipe "+path);var recipe=com.google.gson.JsonParser.parseString(new String(stream.readAllBytes(),StandardCharsets.UTF_8)).getAsJsonObject();var result=recipe.get("result");if(result.isJsonPrimitive()){var obj=new com.google.gson.JsonObject();obj.addProperty("id",result.getAsString());recipe.add("result",obj);}else{var obj=result.getAsJsonObject();if(obj.has("item")){obj.add("id",obj.remove("item"));}}
-            generated.put(ResourceLocation.fromNamespaceAndPath("gregtech","recipe/fluid_tools/"+file),GSON.toJson(recipe).getBytes(StandardCharsets.UTF_8));}catch(java.io.IOException failure){throw new java.io.UncheckedIOException(failure);}}
-        com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original portable crafting datapack: {} rows",generated.size());resources=Map.copyOf(generated);return resources;
+        for (String file : com.gregtech.gregtech.content.tool.PortableCraftingCatalog.FILES)
+            addOriginal(generated, "fluid_tools/" + file);
+        for (String file : com.gregtech.gregtech.content.recipe.EquipmentCraftingCatalog.FILES)
+            addOriginal(generated, file);
+        com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original equipment crafting datapack: {} rows ({} retained energy/smeltery rows)",
+                generated.size(), com.gregtech.gregtech.content.recipe.EquipmentCraftingCatalog.FILES.size());
+        resources=Map.copyOf(generated);
+        return resources;
+    }
+
+    /** The resource owns balance and tools; this boundary only adapts native JSON shape/path. */
+    private static void addOriginal(Map<ResourceLocation, byte[]> generated, String file) {
+        String path = "data/gregtech/recipes/" + file;
+        try (var stream = PortableCraftingRecipePack.class.getClassLoader().getResourceAsStream(path)) {
+            if (stream == null) throw new IllegalStateException("Missing shared equipment recipe " + path);
+            var recipe = com.google.gson.JsonParser.parseString(new String(stream.readAllBytes(), StandardCharsets.UTF_8)).getAsJsonObject();
+            var result = recipe.get("result");
+            if (result.isJsonPrimitive()) {
+                var object = new com.google.gson.JsonObject();
+                object.addProperty("id", result.getAsString());
+                recipe.add("result", object);
+            } else {
+                var object = result.getAsJsonObject();
+                if (object.has("item")) object.add("id", object.remove("item"));
+            }
+            var id = ResourceLocation.fromNamespaceAndPath("gregtech", "recipe/" + file);
+            if (generated.putIfAbsent(id, GSON.toJson(recipe).getBytes(StandardCharsets.UTF_8)) != null)
+                throw new IllegalStateException("Duplicate original equipment recipe " + id);
+        } catch (java.io.IOException failure) {
+            throw new java.io.UncheckedIOException(failure);
+        }
     }
 
     @Override
     public IoSupplier<InputStream> getRootResource(String... path) {
         if (path.length != 1 || !path[0].equals("pack.mcmeta")) return null;
         return () -> new ByteArrayInputStream(("{\"pack\":{\"pack_format\":48,\"description\":"
-                + "\"GregTech original portable crafting crafting recipes\"}}").getBytes(StandardCharsets.UTF_8));
+                + "\"GregTech original equipment crafting recipes\"}}").getBytes(StandardCharsets.UTF_8));
     }
 
     @Override
