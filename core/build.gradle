@@ -18,6 +18,13 @@ tasks.withType(JavaCompile).configureEach {
     options.release = 17
 }
 
+// Pure Java contracts do not consume the shared Minecraft asset catalog.
+// Keep tens of thousands of static resources off their compiler/runtime classpaths.
+sourceSets.test {
+    compileClasspath = sourceSets.main.output.classesDirs + configurations.testCompileClasspath
+    runtimeClasspath = output + sourceSets.main.output.classesDirs + configurations.testRuntimeClasspath
+}
+
 tasks.named('jar', Jar).configure {
     // Shared textures/models now exceed the ZIP 16-bit entry count.
     zip64 = true

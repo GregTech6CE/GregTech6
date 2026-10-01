@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-02",
+  "source_snapshot": "84be9ccb2ec2db43e15efe3d4f03c9098d9828c5",
+  "change": "Restored MaterialPrefix.getTextureFileName lowercases explicit texture filenames with Locale.ROOT, matching the lowercase Minecraft resource paths. Existing name fallback also uses Locale.ROOT.",
+  "definitions_sha256": "c9986fc24145c0a36be697f5d31859d5412f44f6792c03614ba64882b121b765",
+  "post_init_sha256": "0b94ea77d35f804c08adfad20835ad5a88f31081572bc45a25654f394eba8f47",
+  "differential_verification": "The existing MaterialBaselineProbe ran against restored compiled core. A temporary shadow MaterialPrefix compiled from dbd38be9 recovered both exact Community Edition fingerprints e342834d... and 1c5e74b2.... Combining that shadow with the prior name-only ModReferences shadow recovered both exact original import fingerprints ad70436d... and 59a5c25d.... Therefore the snapshot differences are isolated to the authorized display name and restored texture filename case correction.",
+  "material_definition_changes": "No material objects, aliases, weights or reactions removed; all snapshot observation fields retained.",
+  "related_records": ["material-baseline.json", "community-material-baseline.json", "full-snapshot-restoration-20261002.json"],
+  "temporary_probe": "Ignored work/ci-restored-prefix-probe; no shadow classes included in artifacts."
+}

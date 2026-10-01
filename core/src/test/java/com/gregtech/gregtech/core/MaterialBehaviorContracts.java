@@ -18,8 +18,10 @@ public final class MaterialBehaviorContracts {
     // These fingerprints retain every observed field and include the authorized
     // Community Edition display name; the name-only differential against the
     // original fingerprints is recorded in provenance/community-material-baseline.json.
-    private static final String DEFINITIONS_SHA256 = "e342834d614505a21e2786340caaaec8052d54d01263e98adffeb8628d8b2b61";
-    private static final String POST_INIT_SHA256 = "1c5e74b25b3b020d53a65e1b995ad38e284fe82198a5dccdd7c4f9d41c485826";
+    // The restored port also lowercases explicit texture filenames for Minecraft;
+    // its isolated differential is recorded in provenance/restored-prefix-baseline.json.
+    private static final String DEFINITIONS_SHA256 = "c9986fc24145c0a36be697f5d31859d5412f44f6792c03614ba64882b121b765";
+    private static final String POST_INIT_SHA256 = "0b94ea77d35f804c08adfad20835ad5a88f31081572bc45a25654f394eba8f47";
     private static int assertions;
     private MaterialBehaviorContracts() {}
 
