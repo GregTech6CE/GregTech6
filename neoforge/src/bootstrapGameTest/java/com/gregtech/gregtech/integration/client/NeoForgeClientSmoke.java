@@ -55,6 +55,8 @@ public final class NeoForgeClientSmoke {
     private static long firstTitleFrameAt;
     private static int renderedFrames;
     private static boolean captureRequested;
+    private static boolean modelsChecked;
+    private static java.util.List<net.minecraft.world.item.ItemStack> gallery;
 
     private NeoForgeClientSmoke() {}
 
@@ -104,6 +106,9 @@ public final class NeoForgeClientSmoke {
                 firstTitleFrameAt = System.nanoTime();
                 renderedFrames = 0;
             }
+            if (Boolean.getBoolean("gregtech.integration.clientModelSmoke")) {
+                checkAndRenderModels(minecraft, event.getGuiGraphics());
+            }
             renderedFrames++;
             snapshotState(minecraft, "render_thread");
             if (renderedFrames < REQUIRED_RENDERED_FRAMES
@@ -130,6 +135,54 @@ public final class NeoForgeClientSmoke {
                     message -> afterScreenshotSaved(minecraft, screenshot, capturedFrames, message));
         } catch (Throwable failure) {
             fail("render_or_capture", failure);
+        }
+    }
+
+    /** One opt-in batch in the existing smoke: actual registry models and actual item renderer. */
+    private static void checkAndRenderModels(Minecraft minecraft, net.minecraft.client.gui.GuiGraphics graphics) {
+        if (!modelsChecked) {
+            var manager = minecraft.getModelManager();
+            var missing = manager.getMissingModel();
+            int materials = 0;
+            int fluids = 0;
+            for (var item : net.minecraft.core.registries.BuiltInRegistries.ITEM) {
+                if (!(item instanceof com.gregtech.gregtech.item.MaterialItem)
+                        && !(item instanceof com.gregtech.gregtech.platform.neoforge.fluid.FluidDisplayItem)) continue;
+                var id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(item);
+                var model = manager.getModel(net.minecraft.client.resources.model.ModelResourceLocation.inventory(id));
+                if (model == null || model == missing) throw new IllegalStateException("Missing final inventory model: " + id);
+                if (item instanceof com.gregtech.gregtech.item.MaterialItem) materials++; else fluids++;
+            }
+            if (materials != com.gregtech.gregtech.registry.GTItems.allEntries().size() || fluids == 0)
+                throw new IllegalStateException("Incomplete registry model check");
+            gallery = new java.util.ArrayList<>();
+            var ids = new com.google.gson.JsonArray();
+            for (String id : new String[]{"ingot_iron", "plate_copper", "gear_gt_bronze", "coin_gold", "fluid_item_reedwater"}) {
+                var key = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech", id);
+                var item = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(key);
+                if (item == net.minecraft.world.item.Items.AIR) throw new IllegalStateException("Missing gallery item: " + key);
+                gallery.add(new net.minecraft.world.item.ItemStack(item));
+                ids.add(key.toString());
+            }
+            var crusher = net.minecraft.core.registries.BuiltInRegistries.ITEM.stream()
+                    .filter(item -> item instanceof net.minecraft.world.item.BlockItem blockItem
+                            && blockItem.getBlock() instanceof com.gregtech.gregtech.block.machine.BasicMachineBlock machine
+                            && machine.basicSpec().machineName().equals("crusher"))
+                    .findFirst().orElseThrow(() -> new IllegalStateException("No registered crusher"));
+            gallery.add(new net.minecraft.world.item.ItemStack(crusher));
+            ids.add(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(crusher).toString());
+            var result = new JsonObject();
+            result.addProperty("materialModels", materials);
+            result.addProperty("fluidModels", fluids);
+            result.addProperty("missingFinalModels", 0);
+            result.add("galleryItems", ids);
+            LOGGER.info("CLIENT_MODEL_SMOKE_SUCCESS {}", result);
+            modelsChecked = true;
+        }
+        graphics.fill(10, 100, 110, 190, 0xD0000000);
+        graphics.drawString(minecraft.font, "GT models", 16, 106, 0xFFFFFF);
+        for (int i = 0; i < gallery.size(); i++) {
+            graphics.renderItem(gallery.get(i), 18 + (i % 3) * 30, 122 + (i / 3) * 30);
         }
     }
 

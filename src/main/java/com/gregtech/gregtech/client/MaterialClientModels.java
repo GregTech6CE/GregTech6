@@ -39,6 +39,7 @@ public final class MaterialClientModels {
         PrefixRegistry.ensurePrefixesLoaded();
         for (MaterialTextureSet set : MaterialTextureSet.MODELED) {
             for (MaterialPrefix prefix : PrefixRegistry.all()) {
+                if (prefix.isHiddenFromCreative() && !GTItems.hasBoundItems(prefix)) continue;
                 event.register(MaterialIcons.sharedModelLocation(set, prefix));
             }
         }

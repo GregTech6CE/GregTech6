@@ -52,10 +52,11 @@ neoForge {
             gameDirectory = project.file('run-client')
             systemProperty 'gregtech.integration.clientSmoke', (rootProject.findProperty('clientSmoke') ?: 'false').toString()
             systemProperty 'gregtech.integration.clientSmokeTimeoutSeconds', (rootProject.findProperty('clientSmokeTimeout') ?: '120').toString()
+            systemProperty 'gregtech.integration.clientModelSmoke', (rootProject.findProperty('clientModelSmoke') ?: 'false').toString()
             if (rootProject.findProperty('clientSmoke') == 'true') {
                 sourceSet = sourceSets.bootstrapGameTest
                 gameDirectory = project.file('build/client-smoke-run')
-                jvmArgument '-Xmx2g'
+                jvmArgument '-Xmx' + (rootProject.findProperty('clientSmokeHeap') ?: '2g').toString()
                 programArguments.addAll('--width', '1280', '--height', '720')
             }
         }

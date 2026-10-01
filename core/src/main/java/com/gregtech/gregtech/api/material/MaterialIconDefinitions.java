@@ -36,6 +36,12 @@ public final class MaterialIconDefinitions {
         return generatedModelJson(set, prefix);
     }
 
+    /** Both platform geometry loaders delegate this reference to the original baked template cache. */
+    public static String sharedInventoryJson(String parent) {
+        return "{\"loader\":\"" + com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID
+                + ":shared_inventory\",\"parent\":\"" + parent + "\"}";
+    }
+
     private static String generatedModelJson(MaterialTextureSet set, MaterialPrefix prefix) {
         return """
                 {

@@ -55,6 +55,11 @@
       "type": "minecraft:directory",
       "source": "block/machines/engines/kinetic_steam/colored",
       "prefix": "block/machines/engines/kinetic_steam/colored/"
+    },
+    {
+      "type": "minecraft:directory",
+      "source": "items",
+      "prefix": "items/"
     }
   ]
 }

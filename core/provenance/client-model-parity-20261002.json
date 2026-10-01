@@ -1,0 +1,138 @@
+{
+  "integration_base": "02da64f46cc7b2f92164f53003e882e1b1c76155",
+  "display_name": "GregTech 6 Community Edition",
+  "loader_id": "gregtech6",
+  "resource_namespace": "gregtech",
+  "version": "0.0.0",
+  "source_files": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/api/material/MaterialIconDefinitions.java",
+      "sha256": "2c750cb1c61005ec0e7fb13a45ce32688a1d0433cffbe4ea4b6be8fea41a7e44",
+      "base_blob_sha256": "3ed68ae56788e39742be67b4ddf8eb88c7175828406b03bbdc93e06169c35503",
+      "origin": "integration adaptation over retained saltnya original template/resource rules; new loader/pack adapter authored in integration"
+    },
+    {
+      "path": "core/src/main/resources/assets/gregtech/models/block/wood/sapling_blue_mahoe.json",
+      "sha256": "34884724b96cf24139d50419ef445e8782aef2a4bfb985c5030ec9ae6c226e64",
+      "base_blob_sha256": "b14e7bdc90547f19e2ac89afe8e6b0c38f7f7e247960b01f9c0bc9ef895bca57",
+      "origin": "integration adaptation over retained saltnya original template/resource rules; new loader/pack adapter authored in integration"
+    },
+    {
+      "path": "core/src/main/resources/assets/gregtech/models/item/sapling_blue_mahoe.json",
+      "sha256": "c59f1b726fc1e5c436bb666cb1172e6faca7b1dd93f3fc8e7f42c4edc20d2375",
+      "base_blob_sha256": "880dd51196a7333f077b04cfc7c5838c91c400fdfb9a4308f111f2b80a03318f",
+      "origin": "integration adaptation over retained saltnya original template/resource rules; new loader/pack adapter authored in integration"
+    },
+    {
+      "path": "core/src/main/resources/assets/gregtech/textures/block/material_icons/gas/molten.png.mcmeta",
+      "sha256": "aeb5e7f424c6c944855edbb00602c8a37af10636ec81c777af111310c0aa4aae",
+      "base_blob_sha256": "6a19bef21d66aac8fdcd8032751057733e321446b304d38f5ee8ba35efe99a1d",
+      "origin": "integration adaptation over retained saltnya original template/resource rules; new loader/pack adapter authored in integration"
+    },
+    {
+      "path": "core/src/main/resources/assets/gregtech/textures/block/material_icons/plasma/molten.png.mcmeta",
+      "sha256": "aeb5e7f424c6c944855edbb00602c8a37af10636ec81c777af111310c0aa4aae",
+      "base_blob_sha256": "6a19bef21d66aac8fdcd8032751057733e321446b304d38f5ee8ba35efe99a1d",
+      "origin": "integration adaptation over retained saltnya original template/resource rules; new loader/pack adapter authored in integration"
+    },
+    {
+      "path": "core/src/main/resources/assets/minecraft/atlases/blocks.json",
+      "sha256": "787cfc64364cedc3fc01c9c356c82d926e947333dbd3387d5625210dac93eeba",
+      "base_blob_sha256": "65c12415b37ad2f3713a4f032e3b718c6f25e56cf8e09e3f47b6b52200b0ad99",
+      "origin": "integration adaptation over retained saltnya original template/resource rules; new loader/pack adapter authored in integration"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/MaterialClientModels.java",
+      "sha256": "1415615d03901c0e0d493ef68c050fb120006d2c98068e2bb6c73f6056b39d26",
+      "base_blob_sha256": "e0a620f27d2bcc4dcb6a67bad14c9cc5acb8e7bd760f2dd22328248892f98f39",
+      "origin": "integration adaptation over retained saltnya original template/resource rules; new loader/pack adapter authored in integration"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/MaterialBlockClientModels.java",
+      "sha256": "011004c2c32454991cc8d5050d884982f9ca7f200b6b770f7aea0bbfd0e57902",
+      "base_blob_sha256": "b181869f558d7a95944e192acfc86f680d807e29ea92607700e1e9262f5f0cd4",
+      "origin": "integration adaptation over retained saltnya original template/resource rules; new loader/pack adapter authored in integration"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/MaterialClientModels.java",
+      "sha256": "62d72ff6277ed3609bdbaff47186bbc3aae1ee1855ce1df06e6e0bf51b0c5bda",
+      "base_blob_sha256": "78e8bf37f104e1ac456920d67535a49d69cd87f5dde2e14fecb8a57202d8afff",
+      "origin": "integration adaptation over retained saltnya original template/resource rules; new loader/pack adapter authored in integration"
+    },
+    {
+      "path": "core/src/main/resources/assets/gregtech/models/item/resin_hole_rubber.json",
+      "sha256": "f5a0ca4e345effc1a5ac78db69e0deab1c227715e2649645fcc7d7a39dfb6b81",
+      "base_blob_sha256": null,
+      "origin": "integration adaptation over retained saltnya original template/resource rules; new loader/pack adapter authored in integration"
+    },
+    {
+      "path": "core/src/main/resources/assets/gregtech/models/item/tab_icon_block_ore.json",
+      "sha256": "5f44aa8c20fe9f63943187de5405bd58febc56bdf8968b00e29fdca24124682c",
+      "base_blob_sha256": null,
+      "origin": "integration adaptation over retained saltnya original template/resource rules; new loader/pack adapter authored in integration"
+    },
+    {
+      "path": "core/src/main/resources/assets/gregtech/models/item/tab_icon_block_ore_small.json",
+      "sha256": "538827a01c4ddaa2393a02f0a84ca2181076ab1ff77c55a396bd6eb177e887b1",
+      "base_blob_sha256": null,
+      "origin": "integration adaptation over retained saltnya original template/resource rules; new loader/pack adapter authored in integration"
+    },
+    {
+      "path": "core/src/main/resources/assets/gregtech/models/item/tapped_maple.json",
+      "sha256": "06651727eddfddb28fb2fdc0624c1d2b55d1de7205ced5e0cd76925d001b47db",
+      "base_blob_sha256": null,
+      "origin": "integration adaptation over retained saltnya original template/resource rules; new loader/pack adapter authored in integration"
+    },
+    {
+      "path": "core/src/main/resources/assets/gregtech/models/item/tapped_rainbowood.json",
+      "sha256": "8ba73c6357376e9163d6358d705256cec728a20fc5c4752885f37b12f27e001c",
+      "base_blob_sha256": null,
+      "origin": "integration adaptation over retained saltnya original template/resource rules; new loader/pack adapter authored in integration"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/SharedInventoryModelPack.java",
+      "sha256": "27796fc0346d231feff191d7258d195248bf3365cd3ae91e6fe8405844cf7932",
+      "base_blob_sha256": null,
+      "origin": "integration adaptation over retained saltnya original template/resource rules; new loader/pack adapter authored in integration"
+    },
+    {
+      "path": "neoforge/src/main/resources/assets/gregtech/models/block/material/none/ore.json",
+      "sha256": "59457e9c9c00d102094659e5059801a1267df27368df2e33e4f969410282923b",
+      "base_blob_sha256": null,
+      "origin": "integration adaptation over retained saltnya original template/resource rules; new loader/pack adapter authored in integration"
+    },
+    {
+      "path": "neoforge/src/main/resources/assets/gregtech/models/block/material/none/oresmall.json",
+      "sha256": "b4c009c70c6b5cbf99501148a3ad1bde1f4fe33b55592784e80b0b3f80e7d06a",
+      "base_blob_sha256": null,
+      "origin": "integration adaptation over retained saltnya original template/resource rules; new loader/pack adapter authored in integration"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/SharedInventoryModelPack.java",
+      "sha256": "06c1a3c4b16f72efb8efaec83705b98dff874206296797577cea2f68d44d8df7",
+      "base_blob_sha256": null,
+      "origin": "integration adaptation over retained saltnya original template/resource rules; new loader/pack adapter authored in integration"
+    },
+    {
+      "path": "src/main/resources/assets/gregtech/models/block/material/none/ore.json",
+      "sha256": "180fa775360bbb96a93543c2f130fefd4fc574583b2fc52533bcece107ae2a0c",
+      "base_blob_sha256": null,
+      "origin": "integration adaptation over retained saltnya original template/resource rules; new loader/pack adapter authored in integration"
+    },
+    {
+      "path": "src/main/resources/assets/gregtech/models/block/material/none/oresmall.json",
+      "sha256": "c6664f08b9978ce2ce044a3ff09ad65d4bc8dea1a06909a314fb53c021da6add",
+      "base_blob_sha256": null,
+      "origin": "integration adaptation over retained saltnya original template/resource rules; new loader/pack adapter authored in integration"
+    }
+  ],
+  "source_directories_modified": false,
+  "license_changed": false,
+  "choices": [
+    "Generate only absent registry inventory JSON as references; delegate geometry to cached real parent templates.",
+    "Fill only absent material blockstates, preserving registry/state and original material template.",
+    "Reuse retained original ore icon overlays, trees and legacy armor artwork.",
+    "Single-frame gas/plasma art retains frame zero; do not invent absent animation frames."
+  ],
+  "verification": "../../../docs/integration/verification/client-model-parity-20261002.md"
+}

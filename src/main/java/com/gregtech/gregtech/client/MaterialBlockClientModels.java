@@ -31,6 +31,9 @@ public final class MaterialBlockClientModels {
         java.util.Set<ResourceLocation> registered = new java.util.HashSet<>();
         for (MaterialTextureSet set : MaterialTextureSet.MODELED) {
             for (BlockMaterialPrefix prefix : BlockPrefixRegistry.all()) {
+                // World ores use OreClientModels; only NONE has the actual tab-icon templates.
+                if ((prefix == BlockMaterialPrefix.ore || prefix == BlockMaterialPrefix.oreSmall)
+                        && set != MaterialTextureSet.NONE) continue;
                 ResourceLocation location = BlockMaterialIcons.sharedModelLocation(set, prefix);
                 if (registered.add(location)) event.register(location);
             }

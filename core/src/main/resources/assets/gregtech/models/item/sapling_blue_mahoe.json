@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "gregtech:block/iconsets/sapling_small_blue_mahoe"
+    "layer0": "gregtech:block/iconsets/sapling_small_bluemahoe"
   }
 }
