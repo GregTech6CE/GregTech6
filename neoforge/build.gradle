@@ -53,9 +53,14 @@ neoForge {
             systemProperty 'gregtech.integration.clientSmoke', (rootProject.findProperty('clientSmoke') ?: 'false').toString()
             systemProperty 'gregtech.integration.clientSmokeTimeoutSeconds', (rootProject.findProperty('clientSmokeTimeout') ?: '120').toString()
             systemProperty 'gregtech.integration.clientModelSmoke', (rootProject.findProperty('clientModelSmoke') ?: 'false').toString()
-            if (rootProject.findProperty('clientSmoke') == 'true') {
+            systemProperty 'gregtech.integration.clientWorldSmoke', (rootProject.findProperty('clientWorldSmoke') ?: 'false').toString()
+            systemProperty 'gregtech.integration.clientWorldPhase', (rootProject.findProperty('clientWorldPhase') ?: '').toString()
+            systemProperty 'gregtech.integration.clientWorldName', (rootProject.findProperty('clientWorldName') ?: '').toString()
+            systemProperty 'gregtech.integration.clientWorldId', (rootProject.findProperty('clientWorldId') ?: '').toString()
+            if (rootProject.findProperty('clientSmoke') == 'true' || rootProject.findProperty('clientWorldSmoke') == 'true') {
                 sourceSet = sourceSets.bootstrapGameTest
-                gameDirectory = project.file('build/client-smoke-run')
+                gameDirectory = project.file(rootProject.findProperty('clientWorldSmoke') == 'true'
+                        ? 'build/client-world-smoke-run' : 'build/client-smoke-run')
                 jvmArgument '-Xmx' + (rootProject.findProperty('clientSmokeHeap') ?: '2g').toString()
                 programArguments.addAll('--width', '1280', '--height', '720')
             }

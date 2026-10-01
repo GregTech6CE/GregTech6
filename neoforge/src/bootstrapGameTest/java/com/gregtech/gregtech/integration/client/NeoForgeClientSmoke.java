@@ -35,8 +35,14 @@ public final class NeoForgeClientSmoke {
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final String PLATFORM = "neoforge";
     private static final String MINECRAFT_VERSION = "1.21.1";
-    private static final boolean ENABLED =
-            Boolean.getBoolean("gregtech.integration.clientSmoke");
+    private static final boolean WORLD_ENABLED = Boolean.getBoolean("gregtech.integration.clientWorldSmoke");
+    private static final boolean ENABLED = WORLD_ENABLED || Boolean.getBoolean("gregtech.integration.clientSmoke");
+    private static final String WORLD_PHASE = System.getProperty("gregtech.integration.clientWorldPhase", "");
+    private static final String WORLD_NAME = System.getProperty("gregtech.integration.clientWorldName", "");
+    private static final String WORLD_ID = System.getProperty("gregtech.integration.clientWorldId", "");
+    private static final String ORIGINAL_SPECIMEN = "cb23b5a6-244c-4102-bce8-0b817bc7f390";
+    private static final net.minecraft.core.BlockPos CRUSHER = new net.minecraft.core.BlockPos(0, 240, 6);
+    private static final net.minecraft.core.BlockPos MIXER = new net.minecraft.core.BlockPos(0, 240, 8);
     private static final int REQUIRED_RENDERED_FRAMES = 5;
     // Both vanilla title screens may fade their widgets in over two seconds.
     private static final long TITLE_SETTLE_NANOS = TimeUnit.MILLISECONDS.toNanos(2500);
@@ -57,6 +63,13 @@ public final class NeoForgeClientSmoke {
     private static boolean captureRequested;
     private static boolean modelsChecked;
     private static java.util.List<net.minecraft.world.item.ItemStack> gallery;
+    private static volatile int worldStage;
+    private static int worldFrames;
+    private static long worldStageAt;
+    private static java.util.concurrent.CompletableFuture<JsonObject> serverAction;
+    private static net.minecraft.client.server.IntegratedServer worldServer;
+    private static final java.util.List<JsonObject> worldCaptures = new java.util.ArrayList<>();
+    private static final JsonObject worldProof = new JsonObject();
 
     private NeoForgeClientSmoke() {}
 
@@ -65,8 +78,13 @@ public final class NeoForgeClientSmoke {
         try {
             String configured = System.getProperty("gregtech.integration.clientSmokeTimeoutSeconds");
             if (configured != null) timeoutSeconds = Integer.parseInt(configured.trim());
-            if (timeoutSeconds < 30 || timeoutSeconds > 300) {
-                throw new IllegalArgumentException("clientSmokeTimeoutSeconds must be within 30..300");
+            if (timeoutSeconds < 30 || timeoutSeconds > (WORLD_ENABLED ? 600 : 300)) {
+                throw new IllegalArgumentException("Invalid client smoke timeout budget");
+            }
+            if (WORLD_ENABLED && (!WORLD_NAME.matches("client-world-[a-z0-9-]+")
+                    || !(WORLD_PHASE.equals("prepare") || WORLD_PHASE.equals("verify"))
+                    || !UUID.fromString(WORLD_ID).toString().equals(WORLD_ID))) {
+                throw new IllegalArgumentException("World smoke requires an isolated world name, phase and UUID");
             }
         } catch (RuntimeException invalidConfiguration) {
             fail("configuration", invalidConfiguration);
@@ -78,10 +96,10 @@ public final class NeoForgeClientSmoke {
             return thread;
         });
         executor.schedule(() -> fail("timeout",
-                new TimeoutException("No completed title-screen screenshot within "
+                new TimeoutException("No completed client smoke within "
                         + timeoutSeconds + " seconds")),
                 timeoutSeconds, TimeUnit.SECONDS);
-        LOGGER.info("CLIENT_SMOKE_STARTED {}", identity());
+        LOGGER.info("{} {}", marker("STARTED"), identity());
         return executor;
     }
 
@@ -92,6 +110,10 @@ public final class NeoForgeClientSmoke {
         try {
             snapshotState(minecraft, "render_thread");
             if (TERMINAL.get() || captureRequested) return;
+            if (WORLD_ENABLED) {
+                afterWorldScreen(minecraft, event);
+                return;
+            }
             if (!(event.getScreen() instanceof TitleScreen)
                     || minecraft.screen != event.getScreen()
                     || minecraft.getOverlay() != null) {
@@ -223,7 +245,7 @@ public final class NeoForgeClientSmoke {
     private static void finishSuccess(Minecraft minecraft, JsonObject result) {
         if (!TERMINAL.compareAndSet(false, true)) return;
         if (WATCHDOG != null) WATCHDOG.shutdownNow();
-        LOGGER.info("CLIENT_SMOKE_SUCCESS {}", result);
+        LOGGER.info("{} {}", marker("SUCCESS"), result);
         minecraft.stop();
     }
 
@@ -231,11 +253,11 @@ public final class NeoForgeClientSmoke {
         if (!TERMINAL.compareAndSet(false, true)) return;
         if (WATCHDOG != null) WATCHDOG.shutdownNow();
         JsonObject result = identity();
-        result.addProperty("phase", phase);
+        result.addProperty(WORLD_ENABLED ? "reason" : "phase", phase);
         result.addProperty("error", failure.toString());
         addSnapshot(result, lastSnapshot);
         // Log first: a stuck client thread must never suppress the failure receipt.
-        LOGGER.error("CLIENT_SMOKE_FAILED {}", result, failure);
+        LOGGER.error("{} {}", marker("FAILED"), result, failure);
         try {
             Minecraft minecraft = Minecraft.getInstance();
             if (minecraft != null) {
@@ -245,7 +267,7 @@ public final class NeoForgeClientSmoke {
                     try {
                         snapshotState(minecraft, "main_thread_at_failure");
                         JsonObject current = identity();
-                        current.addProperty("phase", phase);
+                        current.addProperty(WORLD_ENABLED ? "reason" : "phase", phase);
                         addSnapshot(current, lastSnapshot);
                         LOGGER.warn("CLIENT_SMOKE_FAILURE_STATE {}", current);
                     } catch (Throwable diagnosticFailure) {
@@ -288,6 +310,279 @@ public final class NeoForgeClientSmoke {
         result.addProperty("timeoutSeconds", timeoutSeconds);
         result.addProperty("elapsedMs",
                 TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - STARTED_AT));
+        if (WORLD_ENABLED) {
+            result.addProperty("phase", WORLD_PHASE);
+            result.addProperty("worldName", WORLD_NAME);
+            result.addProperty("specimenId", WORLD_ID);
+            result.addProperty("pid", ProcessHandle.current().pid());
+            result.addProperty("stage", worldStage);
+        }
         return result;
+    }
+
+    private static String marker(String phase) {
+        return (WORLD_ENABLED ? "CLIENT_WORLD_SMOKE_" : "CLIENT_SMOKE_") + phase;
+    }
+
+    private static void stage(int next) {
+        worldStage = next;
+        worldFrames = 0;
+        worldStageAt = System.nanoTime();
+    }
+
+    private static boolean settle(int frames) {
+        return ++worldFrames >= frames && System.nanoTime() - worldStageAt > TimeUnit.MILLISECONDS.toNanos(500);
+    }
+
+    private static net.minecraft.server.level.ServerPlayer serverPlayer(Minecraft minecraft) {
+        var player = worldServer.getPlayerList().getPlayer(minecraft.player.getUUID());
+        if (player == null) throw new IllegalStateException("No actual integrated-server player");
+        return player;
+    }
+
+    private static com.gregtech.gregtech.blockentity.machine.BasicMachineBlockEntity machine(
+            net.minecraft.core.BlockPos pos) {
+        if (worldServer.overworld().getBlockEntity(pos) instanceof
+                com.gregtech.gregtech.blockentity.machine.BasicMachineBlockEntity machine) return machine;
+        throw new IllegalStateException("No actual saved machine at " + pos);
+    }
+
+    private static void requireStock(net.minecraft.world.item.ItemStack stack) {
+        var name = stack.get(net.minecraft.core.component.DataComponents.CUSTOM_NAME);
+        if (stack.isEmpty() || stack.getCount() != 1 || name == null
+                || !name.getString().equals("client-gui-stock/" + WORLD_ID)
+                || !(stack.getItem() instanceof com.gregtech.gregtech.item.MaterialItem material)
+                || material.getPrefix() != com.gregtech.gregtech.data.MaterialPrefix.gemChipped
+                || material.getMaterial().resolve() != com.gregtech.gregtech.content.material.Materials.Diamond.resolve())
+            throw new IllegalStateException("Named chipped diamond stock did not survive actual menu/save path: " + stack
+                    + ", name=" + (name == null ? "none" : name.getString()));
+    }
+
+    private static void requireWater(net.neoforged.neoforge.fluids.FluidStack fluid, int amount) {
+        var name = fluid.get(net.minecraft.core.component.DataComponents.CUSTOM_NAME);
+        if (fluid.getFluid() != net.minecraft.world.level.material.Fluids.WATER || fluid.getAmount() != amount
+                || name == null || !name.getString().equals("machine-water/" + ORIGINAL_SPECIMEN))
+            throw new IllegalStateException("Actual named mixer water differs: " + fluid);
+    }
+
+    private static JsonObject prepareClientWorld(Minecraft minecraft) {
+        var level = worldServer.overworld();
+        if (!(level.getBlockEntity(new net.minecraft.core.BlockPos(0,240,0)) instanceof
+                net.minecraft.world.level.block.entity.ChestBlockEntity chest)
+                || chest.getCustomName() == null || !chest.getCustomName().getString()
+                        .equals("gregtech-dedicated-smoke/" + ORIGINAL_SPECIMEN))
+            throw new IllegalStateException("Copied original machine-world marker is absent");
+        var crusher = machine(CRUSHER);
+        var mixer = machine(MIXER);
+        if (!crusher.spec().id().equals("crusher_bronze") || !mixer.spec().id().equals("mixer_bronze")
+                || crusher.machineControl(null).enabled() || mixer.machineControl(null).enabled())
+            throw new IllegalStateException("Copied stopped machine identities changed");
+        var player = serverPlayer(minecraft);
+        if (WORLD_PHASE.equals("prepare")) {
+            if (!crusher.inventory().getStackInSlot(0).isEmpty())
+                throw new IllegalStateException("Refusing to overwrite existing crusher input");
+            requireWater(mixer.getFluidInTank(0), 1000);
+            // Supplied specimen/footing in the copied world; never claim survival acquisition.
+            for (int x=-4; x<=4; x++) for (int z=-3; z<=13; z++) {
+                var pos = new net.minecraft.core.BlockPos(x,239,z);
+                if (level.getBlockState(pos).isAir())
+                    level.setBlockAndUpdate(pos, net.minecraft.world.level.block.Blocks.STONE.defaultBlockState());
+            }
+            player.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
+            player.getInventory().clearContent();
+            var stock = com.gregtech.gregtech.registry.GTItems.getStack(com.gregtech.gregtech.data.MaterialPrefix.gemChipped,
+                    com.gregtech.gregtech.content.material.Materials.Diamond);
+            stock.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME, Component.literal("client-gui-stock/" + WORLD_ID));
+            player.getInventory().setItem(9, stock);
+            player.inventoryMenu.broadcastChanges();
+        } else {
+            requireStock(crusher.inventory().getStackInSlot(0));
+            requireWater(mixer.getFluidInTank(0),1500);
+            if (!player.getInventory().getItem(9).isEmpty())
+                throw new IllegalStateException("Saved player still owns the transferred stock");
+        }
+        level.getGameRules().getRule(net.minecraft.world.level.GameRules.RULE_DOMOBSPAWNING).set(false,worldServer);
+        level.getGameRules().getRule(net.minecraft.world.level.GameRules.RULE_DAYLIGHT).set(false,worldServer);
+        level.setDayTime(6000);
+        player.connection.teleport(3.5,240,10.5,135,18);
+        var result=identity();
+        result.addProperty("serverClass",worldServer.getClass().getName());
+        result.addProperty("originalSpecimenId",ORIGINAL_SPECIMEN);
+        result.addProperty("copiedStoppedMachinesLoaded",true);
+        result.addProperty("restoredTransferredStock",WORLD_PHASE.equals("verify"));
+        result.addProperty("restoredNamedWaterAmount",mixer.getFluidInTank(0).getAmount());
+        return result;
+    }
+
+    private static void afterWorldScreen(Minecraft minecraft, ScreenEvent.Render.Post event) throws Exception {
+        if (worldStage==0 && event.getScreen() instanceof TitleScreen && minecraft.getOverlay()==null) {
+            Path dir=minecraft.gameDirectory.toPath().toAbsolutePath().normalize();
+            if (!dir.endsWith("client-world-smoke-run") || !Files.isRegularFile(dir.resolve("saves").resolve(WORLD_NAME).resolve("level.dat")))
+                throw new IllegalStateException("World smoke refuses a non-isolated/missing copied world");
+            stage(1);
+            minecraft.execute(()-> {
+                try {
+                    // Acknowledge only the experimental metadata warning of the supplied disposable copy.
+                    // Recovery, account, resource-pack and low-disk dialogs are not accepted by this probe.
+                    try(var access=minecraft.getLevelSource().createAccess(WORLD_NAME)) {
+                        var path=access.getLevelPath(net.minecraft.world.level.storage.LevelResource.LEVEL_DATA_FILE);
+                        var data=net.minecraft.nbt.NbtIo.readCompressed(path,net.minecraft.nbt.NbtAccounter.unlimitedHeap());
+                        data.getCompound("Data").putBoolean("confirmedExperimentalSettings",true);
+                        net.minecraft.nbt.NbtIo.writeCompressed(data,path);
+                    }
+                    minecraft.options.renderDistance().set(4);
+                    minecraft.options.simulationDistance().set(5);
+                    minecraft.createWorldOpenFlows().openWorld(WORLD_NAME,
+                            ()->fail("world_open_cancelled",new IllegalStateException("Copied world open cancelled")));
+                } catch(Throwable failure) { fail("world_open",failure); }
+            });
+            return;
+        }
+        if (!(event.getScreen() instanceof com.gregtech.gregtech.client.gui.BasicMachineScreen screen)) return;
+        var menu=screen.getMenu();
+        if (worldStage==5 && menu.machineName().equals("crusher")) {
+            if (WORLD_PHASE.equals("prepare")) {
+                int playerBase=menu.slots.size()-36;
+                requireStock(menu.getSlot(playerBase).getItem());
+                minecraft.gameMode.handleInventoryMouseClick(menu.containerId,playerBase,0,
+                        net.minecraft.world.inventory.ClickType.QUICK_MOVE,minecraft.player);
+                stage(6);
+            } else {
+                requireStock(menu.getSlot(0).getItem());
+                stage(7);
+            }
+        }
+        if (worldStage==6 && menu.machineName().equals("crusher")) {
+            if (System.nanoTime()-worldStageAt > TimeUnit.SECONDS.toNanos(10))
+                throw new IllegalStateException("Shift-click did not settle on both actual inventories in 10 seconds");
+            if (menu.getSlot(0).getItem().isEmpty()) return;
+            requireStock(menu.getSlot(0).getItem());
+            if (!menu.getSlot(menu.slots.size()-36).getItem().isEmpty()) return;
+            if (serverAction==null) serverAction=worldServer.submit(()-> {
+                var stock=machine(CRUSHER).inventory().getStackInSlot(0);
+                if(!stock.isEmpty())requireStock(stock);
+                var result=identity();result.addProperty("stockReady",!stock.isEmpty());return result;
+            });
+            if (serverAction.isDone()) {
+                boolean ready=serverAction.get().get("stockReady").getAsBoolean();serverAction=null;
+                if(ready)stage(7);
+            }
+        }
+        if (worldStage==7 && menu.machineName().equals("crusher") && settle(8)) {
+            requireStock(menu.getSlot(0).getItem());
+            worldProof.addProperty("actualRightClickCrusherMenu",true);
+            worldProof.addProperty("namedItemClientServerTransferOrReload",true);
+            captureWorld(minecraft,event.getGuiGraphics(),"crusher-gui",8);
+        }
+        if (worldStage==10 && menu.machineName().equals("mixer")) {
+            var stock=menu.getSlot(0).getItem();
+            var name=stock.get(net.minecraft.core.component.DataComponents.CUSTOM_NAME);
+            if (!stock.is(net.minecraft.world.item.Items.COPPER_INGOT) || stock.getCount()!=3 || name==null
+                    || !name.getString().equals("machine-stock/"+ORIGINAL_SPECIMEN)) return;
+            var fluid=menu.slots.stream().filter(slot -> slot instanceof com.gregtech.gregtech.client.gui.SlotFluid sf
+                    && sf.isInput() && sf.tankIndex()==0).map(slot -> ((com.gregtech.gregtech.client.gui.SlotFluid)slot).fluid())
+                    .findFirst().orElseThrow();
+            if (fluid.isEmpty()) return;
+            requireWater(fluid,WORLD_PHASE.equals("prepare")?1000:1500);
+            if (WORLD_PHASE.equals("prepare")) {
+                serverAction=worldServer.submit(()-> {
+                    var mixer=machine(MIXER);var added=mixer.getFluidInTank(0).copy();added.setAmount(500);
+                    if (mixer.getTanksInput()[0].fill(added,net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE)!=500)
+                        throw new IllegalStateException("Real mixer tank did not accept supplied matching 500mB");
+                    mixer.setChanged();return identity();
+                });
+                stage(11);
+            } else stage(12);
+        }
+        if (worldStage==11 && menu.machineName().equals("mixer") && serverAction.isDone()) {
+            serverAction.get();
+            var fluid=menu.slots.stream().filter(slot -> slot instanceof com.gregtech.gregtech.client.gui.SlotFluid sf
+                    && sf.isInput() && sf.tankIndex()==0).map(slot -> ((com.gregtech.gregtech.client.gui.SlotFluid)slot).fluid())
+                    .findFirst().orElseThrow();
+            if(fluid.getAmount()!=1500)return;
+            requireWater(fluid,1500);serverAction=null;stage(12);
+        }
+        if (worldStage==12 && menu.machineName().equals("mixer") && settle(8)) {
+            worldProof.addProperty("actualRightClickMixerMenu",true);
+            worldProof.addProperty("namedFluidClientAmount",1500);
+            worldProof.addProperty("liveFluidPacketUpdate",WORLD_PHASE.equals("prepare"));
+            captureWorld(minecraft,event.getGuiGraphics(),"mixer-gui",13);
+        }
+    }
+
+    @SubscribeEvent
+    public static void worldTick(net.neoforged.neoforge.client.event.ClientTickEvent.Post event) {
+        if (!WORLD_ENABLED || TERMINAL.get() || captureRequested) return;
+        var minecraft=Minecraft.getInstance();
+        try {
+            snapshotState(minecraft,"world_client_tick");
+            if (worldStage==1 && minecraft.level!=null && minecraft.player!=null && minecraft.getSingleplayerServer()!=null) {
+                worldServer=minecraft.getSingleplayerServer();
+                serverAction=worldServer.submit(()->prepareClientWorld(minecraft));stage(2);
+            } else if (worldStage==2 && serverAction.isDone()) {
+                worldProof.add("loadedWorld",serverAction.get());serverAction=null;stage(3);
+            } else if (worldStage==4 || worldStage==8) {
+                if(worldStage==8)minecraft.player.closeContainer();
+                int next=worldStage==4?5:9;
+                int z=worldStage==4?6:8;
+                serverAction=worldServer.submit(()-> { serverPlayer(minecraft).connection.teleport(2.5,240,z+0.5,90,15);return identity(); });
+                stage(next);
+            } else if ((worldStage==5 || worldStage==9) && serverAction!=null && serverAction.isDone()
+                    && minecraft.screen==null && Math.abs(minecraft.player.getX()-2.5)<0.2) {
+                serverAction.get();serverAction=null;
+                var pos=worldStage==5?CRUSHER:MIXER;
+                minecraft.gameMode.useItemOn(minecraft.player,net.minecraft.world.InteractionHand.MAIN_HAND,
+                        new net.minecraft.world.phys.BlockHitResult(new net.minecraft.world.phys.Vec3(1,240.5,pos.getZ()+0.5),
+                                net.minecraft.core.Direction.EAST,pos,false));
+                if(worldStage==9)stage(10);
+            } else if (worldStage==13) {
+                minecraft.player.closeContainer();
+                if(serverAction==null)serverAction=worldServer.submit(()-> {
+                    requireStock(machine(CRUSHER).inventory().getStackInSlot(0));
+                    requireWater(machine(MIXER).getFluidInTank(0),1500);return identity();
+                });
+                if(serverAction.isDone()) {
+                    serverAction.get();serverAction=null;stage(14);
+                    // Match vanilla PauseScreen: close the level connection before waiting for server shutdown.
+                    minecraft.level.disconnect();
+                    minecraft.disconnect(new TitleScreen());
+                }
+            } else if (worldStage==14 && minecraft.level==null && minecraft.player==null
+                    && minecraft.getSingleplayerServer()==null && worldServer.isShutdown()) {
+                var result=identity();result.addProperty("normalIntegratedServerStop",true);
+                result.addProperty("savedWorldExists",Files.isRegularFile(minecraft.gameDirectory.toPath().resolve("saves").resolve(WORLD_NAME).resolve("level.dat")));
+                result.add("proof",worldProof);var captures=new com.google.gson.JsonArray();worldCaptures.forEach(captures::add);result.add("captures",captures);
+                finishSuccess(minecraft,result);
+            }
+        } catch(Throwable failure) { fail("world_stage_"+worldStage,failure); }
+    }
+
+    @SubscribeEvent
+    public static void afterWorldGui(net.neoforged.neoforge.client.event.RenderGuiEvent.Post event) {
+        if (!WORLD_ENABLED || TERMINAL.get() || captureRequested || worldStage!=3) return;
+        var minecraft=Minecraft.getInstance();
+        try {
+            if (minecraft.screen!=null || minecraft.level==null || minecraft.player==null
+                    || minecraft.player.getY()<239 || !minecraft.level.getBlockState(CRUSHER).is(
+                            net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","crusher_bronze"))))return;
+            if(settle(30))captureWorld(minecraft,event.getGuiGraphics(),"world",4);
+        } catch(Throwable failure) { fail("world_render",failure); }
+    }
+
+    private static void captureWorld(Minecraft minecraft,net.minecraft.client.gui.GuiGraphics graphics,String role,int next) {
+        captureRequested=true;graphics.flush();
+        String name="gregtech-client-world-neoforge-1.21.1-"+WORLD_PHASE+"-"+role+"-"+UUID.randomUUID()+".png";
+        Path path=minecraft.gameDirectory.toPath().resolve(Screenshot.SCREENSHOT_DIR).resolve(name).toAbsolutePath().normalize();
+        Screenshot.grab(minecraft.gameDirectory,name,minecraft.getMainRenderTarget(),message-> {
+            try {
+                if(message!=null && message.getContents() instanceof TranslatableContents text && text.getKey().equals("screenshot.failure"))
+                    throw new IOException("World screenshot write failed: "+message.getString());
+                var image=ImageIO.read(path.toFile());
+                if(image==null)throw new IOException("World screenshot did not decode");
+                var receipt=identity();receipt.addProperty("role",role);receipt.addProperty("screenshot",path.toString());
+                receipt.addProperty("width",image.getWidth());receipt.addProperty("height",image.getHeight());image.flush();
+                minecraft.execute(()-> { worldCaptures.add(receipt);LOGGER.info("CLIENT_WORLD_CAPTURE_SUCCESS {}",receipt);captureRequested=false;stage(next); });
+            } catch(Throwable failure) { fail("world_screenshot_"+role,failure); }
+        });
     }
 }

@@ -123,7 +123,9 @@ public class BasicMachineScreen extends AbstractContainerScreen<BasicMachineCont
 
     @Override
     protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
-        graphics.drawString(font, title, titleLabelX, titleLabelY, 0x404040, false);
+        // Legacy machine layouts use the top row for input slots (for example the mixer).
+        // Keep the title above the panel instead of drawing it through the inventory.
+        graphics.drawString(font, title, titleLabelX, -font.lineHeight - 3, 0xFFFFFF, true);
     }
 
     @Override

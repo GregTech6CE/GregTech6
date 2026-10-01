@@ -1,0 +1,43 @@
+{
+  "integration_base": "b462a44de028d45fca7be4e97b9a0bada752021b",
+  "source_files": [
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/gui/BasicMachineScreen.java",
+      "sha256": "550e57a5a6d12eabe097dfa1a2909bf5d55273aaac494a43657d929bbb4df211",
+      "base_blob_sha256": "f960937574a82640b6c8fb9bbf58a8235419044a43e97900f203380affac59b7",
+      "role": "production"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/gui/BasicMachineScreen.java",
+      "sha256": "8a1ec4bbc6d720165ddfaee2747a4aeb732a5cec1b80979e8d7191b356a349fa",
+      "base_blob_sha256": "76fa60cccdf8a5b0e66f7e0140ce60b17b5c41a84d56be25bc38fd6ebf145b7d",
+      "role": "production"
+    },
+    {
+      "path": "neoforge/build.gradle",
+      "sha256": "d277a9576e723e57e209da197399343b735223cbca51a4bdb4426c22d6bf18a2",
+      "base_blob_sha256": "25bd541699efbe9a2adfe40aa9dbb24f77c24ebf83b537ec6fa9ba2f68c9fdf8",
+      "role": "development-evidence-only"
+    },
+    {
+      "path": "neoforge/src/bootstrapGameTest/java/com/gregtech/gregtech/integration/client/NeoForgeClientSmoke.java",
+      "sha256": "b1dcb4aa4db5b424bc37b5ce252ebedf321ec6cc3107822ed80fe4940da0e24d",
+      "base_blob_sha256": "1098ff6e55b565b6025cdcf312b9ecb95085e5ab48dbabb434c079b2b594edf4",
+      "role": "development-evidence-only"
+    },
+    {
+      "path": "tools/integration/verify_client_smoke.py",
+      "sha256": "1b067a2c74be121d8f68a7fb2b6fc6838437a8b7faf92dca5b644b8ca0d588d0",
+      "base_blob_sha256": "f8f585d626bc422d59cd319799808c0b20e09691a0f6b6e6d8d43b1a9d077010",
+      "role": "development-evidence-only"
+    }
+  ],
+  "source_directories_modified": false,
+  "license_changed": false,
+  "choices": [
+    "Retain saltnya menu/slot and fluid-packet implementation; observed title overlap repaired identically on both platforms without moving slots.",
+    "Reuse existing opt-in Neo client smoke and dedicated machine checkpoint copy; real menus, shift-click and separate JVM reload.",
+    "Follow vanilla PauseScreen connection-disconnect then Minecraft.disconnect; no direct save command counts as normal logout."
+  ],
+  "verification": "../../../docs/integration/verification/client-world-parity-20261002.md"
+}
