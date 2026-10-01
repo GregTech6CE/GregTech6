@@ -124,6 +124,7 @@ public final class NeoManualToolCheckpoint {
   require(reclaim.matches(reclaimInput,level) && reclaim.assemble(reclaimInput,level.registryAccess()).is(Items.CLAY_BALL)
       && reclaim.assemble(reclaimInput,level.registryAccess()).getCount()==7,"original seven-clay reclaim count");
   routingCrafting(level);
+  manufacturingCrafting(level);
   com.mojang.logging.LogUtils.getLogger().info("EQUIPMENT_CRAFTING_CHECKPOINT_SUCCESS loaded={} resolvedIngredients=true boiler=true burner=true transformer=true mirrorRejected=true clayFiringRecipe=true reclaimCount=7 wrenchWear=800 hammerWear=400",loaded);
  }
 
@@ -174,6 +175,63 @@ public final class NeoManualToolCheckpoint {
   craft(level,"components/conveyor_lv",conveyorInput,"compact_electric_conveyor_lv");
   require(network(recipe(level,"logistics/blank_cover"),level).matches(blankInput,level),"blank cover packet round trip");
   com.mojang.logging.LogUtils.getLogger().info("ROUTING_CRAFTING_CHECKPOINT_SUCCESS woodPipe=true sawWear=100 softHammerWear=100 blankCover=true filterCover=true itemFilterMachine=true resetFresh=true motor=true conveyor=true network=true");
+ }
+ private static com.gregtech.gregtech.api.energy.WireSpec wireSpec(ItemStack stack) {
+  require(stack.getItem() instanceof net.minecraft.world.item.BlockItem,"wire recipe result/input is block item");
+  var block=((net.minecraft.world.item.BlockItem)stack.getItem()).getBlock();
+  require(block instanceof com.gregtech.gregtech.api.energy.WireMaterialLike,"wire recipe uses real conductor metadata");
+  return ((com.gregtech.gregtech.api.energy.WireMaterialLike)block).spec();
+ }
+ private static void manufacturingCrafting(ServerLevel level) {
+  int wires=0;
+  for(String file:com.gregtech.gregtech.content.recipe.EquipmentCraftingCatalog.FILES) {
+   if(!file.startsWith("wire_working/"))continue;
+   String id=file.substring(0,file.length()-5);
+   var actual=recipe(level,id);require(actual instanceof ShapelessRecipe,"retained shapeless wire recipe "+id);
+   var inputs=new ArrayList<ItemStack>(Collections.nCopies(9,ItemStack.EMPTY));
+   long inputAmount=0;com.gregtech.gregtech.api.energy.WireSpec family=null;int slot=0;
+   for(var ingredient:actual.getIngredients()) {
+    require(ingredient.getItems().length>0,"resolved wire ingredient "+id);
+    var stack=ingredient.getItems()[0].copyWithCount(1);inputs.set(slot++,stack);
+    if(stack.getItem() instanceof net.minecraft.world.item.BlockItem item
+        && item.getBlock() instanceof com.gregtech.gregtech.api.energy.WireMaterialLike wire) {
+     var spec=wire.spec();
+     if(family!=null)require(family.id().equals(spec.id()) && family.material().resolve()==spec.material().resolve(),"single conductor family "+id);
+     family=spec;inputAmount+=spec.materialAmount();
+    }
+   }
+   var input=CraftingInput.of(3,3,inputs);require(actual.matches(input,level),"actual wire recipe matches "+id);
+   var output=actual.assemble(input,level.registryAccess());var spec=wireSpec(output);
+   require(family!=null && family.id().equals(spec.id()) && family.material().resolve()==spec.material().resolve(),"wire family preserved "+id);
+   require(inputAmount==spec.materialAmount()*output.getCount(),"wire conductor amount conserved "+id);
+   wires++;
+  }
+  require(wires==1316,"complete retained wire recipe family");
+  var blankInput=CraftingInput.of(2,2,List.of(tool(GTToolType.HARD_HAMMER),tool(GTToolType.FILE),
+      tool(GTToolType.WIRE_CUTTER),equipmentItem("plate_double_tungstencarbide")));
+  ItemStack blank=craft(level,"extruder_shapes/extruder_shape_empty",blankInput,"extruder_shape_empty");
+  var blankRemains=recipe(level,"extruder_shapes/extruder_shape_empty").getRemainingItems(blankInput);
+  require(blankRemains.get(0).getDamageValue()==400 && blankRemains.get(1).getDamageValue()==100
+      && blankRemains.get(2).getDamageValue()==400 && blankRemains.get(3).isEmpty(),"blank mold tools wear and plate consumed");
+  ItemStack cutter=tool(GTToolType.WIRE_CUTTER);
+  var rodInput=CraftingInput.of(2,1,List.of(blank,cutter));
+  var rodRecipe=recipe(level,"extruder_shapes/extruder_shape_rod");
+  ItemStack rod=craft(level,"extruder_shapes/extruder_shape_rod",rodInput,"extruder_shape_rod");
+  var rodRemains=rodRecipe.getRemainingItems(rodInput);
+  require(rodRemains.get(0).isEmpty() && rodRemains.get(1).getDamageValue()==400 && cutter.getDamageValue()==0,
+      "blank consumed while usable cutter returned without input mutation");
+  var mirrored=CraftingInput.of(2,1,List.of(cutter,blank));
+  require(!rodRecipe.matches(mirrored,level) && !network(rodRecipe,level).matches(mirrored,level),"rod mold no-mirror survives native network");
+  require(network(rodRecipe,level).matches(rodInput,level),"rod mold actual packet round trip");
+  int collisions=0;
+  for(String file:com.gregtech.gregtech.content.recipe.EquipmentCraftingCatalog.FILES)
+   if(file.startsWith("extruder_shapes/") && recipe(level,file.substring(0,file.length()-5)).matches(rodInput,level))collisions++;
+  require(collisions==1,"selected rod mold matches one original shape only");
+  var wireInput=CraftingInput.of(1,2,List.of(tool(GTToolType.WIRE_CUTTER),rod));
+  craft(level,"extruder_shapes/extruder_shape_wire",wireInput,"extruder_shape_wire");
+  var wireRemains=recipe(level,"extruder_shapes/extruder_shape_wire").getRemainingItems(wireInput);
+  require(wireRemains.get(0).getDamageValue()==400 && wireRemains.get(1).isEmpty(),"previous rod shape consumed when cutting wire shape");
+  com.mojang.logging.LogUtils.getLogger().info("MANUFACTURING_CRAFTING_CHECKPOINT_SUCCESS wireRecipes={} conductorAmountConserved=true materialFamilyPreserved=true blankToRodToWire=true toolsWorn=true previousShapeConsumed=true rodMirrorRejected=true rodUniqueAmong78=true network=true",wires);
  }
 
 }
