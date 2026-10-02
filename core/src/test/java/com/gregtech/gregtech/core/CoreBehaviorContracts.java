@@ -1,6 +1,8 @@
 package com.gregtech.gregtech.core;
 
 import com.gregtech.gregtech.api.definition.DefinitionCatalog;
+import com.gregtech.gregtech.api.fluid.FluidPipeChannels;
+import com.gregtech.gregtech.api.fluid.FluidPipeSafety;
 import com.gregtech.gregtech.api.energy.EnergyPackets;
 import com.gregtech.gregtech.api.energy.GTVoltageTiers;
 import com.gregtech.gregtech.api.machine.crucible.CrucibleMath;
@@ -23,6 +25,9 @@ public final class CoreBehaviorContracts {
         workCostGoldens();
         machineEnergyGoldens();
         itemPipeRoutingAndDelivery();
+        fluidPipeChannels();
+        fluidPipeSafety();
+        fluidPipeCatalog();
         voltageGoldens();
         materialAndCrucibleUnits();
         signedPacketsAndFiniteBuffer();
@@ -30,7 +35,145 @@ public final class CoreBehaviorContracts {
         definitionIdentityAndSnapshot();
         multiblockOwnershipLifecycle();
         addonLifecycle();
-        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 10 groups (Java 17; no game dependencies)");
+        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 13 groups (Java 17; no game dependencies)");
+    }
+
+    private static void fluidPipeCatalog() {
+        // Fixed source rows: GT6 Loader_MultiTileEntities:1846-1885. Gas/acid/plasma/magic bits.
+        String[] rows = {
+            "wood,50,0000,340",
+            "treated_wood,75,0000,340",
+            "plastic,100,1000,370",
+            "rubber,100,1000,350",
+            "copper,100,1000,0",
+            "aluminium,100,1000,0",
+            "tin_alloy,125,1000,0",
+            "bronze,150,1000,0",
+            "invar,200,1000,0",
+            "steel,200,1000,0",
+            "galvanized_steel,250,1000,0",
+            "hsla,250,1000,0",
+            "gold,100,1100,0",
+            "chrome,200,1100,0",
+            "stainless_steel,250,1100,0",
+            "vanadium_steel,400,1100,0",
+            "desh,200,1001,0",
+            "tungsten_alloy,300,1001,0",
+            "tungsten_steel,400,1001,0",
+            "tungsten_carbide,450,1001,0",
+            "desh_alloy,350,1001,0",
+            "palladium,400,1001,0",
+            "carbon,1000,1000,0",
+            "tantalum_hafnium_carbide,300,1001,0",
+            "titanium,300,1000,0",
+            "tungsten,350,1101,0",
+            "efrine,250,1011,0",
+            "netherite,300,1111,0",
+            "iridium,500,1101,0",
+            "ironwood,200,1001,0",
+            "thaumium,250,1101,0",
+            "manasteel,250,1101,0",
+            "void_metal,500,1101,0",
+            "terrasteel,500,1101,0",
+            "gaia_spirit,1000,1111,0",
+            "bedrock_hsla,1000,1001,0",
+            "adamantium,10000,1111,0",
+            "draconium,2500,1111,0",
+            "awakened_draconium,10000,1111,0",
+            "infinity,1000000000,1111,0",
+        };
+        var specs = com.gregtech.gregtech.content.transport.fluid.FluidTransportDefinitions.pipes();
+        equal(280, specs.size(), "40 original materials in seven sizes");
+        Map<String, com.gregtech.gregtech.api.machine.PipeSpec> byId = new java.util.HashMap<>();
+        for (var spec : specs) check(byId.put(spec.id(), spec) == null, "unique pipe registry ID");
+        String[] sizes = {"tiny", "small", "medium", "large", "huge", "quadruple", "nonuple"};
+        long[] multiples = {1, 2, 6, 12, 24, 6, 2};
+        int[] channels = {1, 1, 1, 1, 1, 4, 9};
+        for (String row : rows) {
+            String[] fields = row.split(",");
+            for (int i = 0; i < sizes.length; i++) {
+                String id = "pipe_" + sizes[i] + "_" + fields[0];
+                var spec = byId.get(id);
+                check(spec != null, "expected pipe " + id);
+                equal(Long.parseLong(fields[1]) * multiples[i], spec.capacity(), id + " capacity");
+                equal(channels[i], spec.tankCount(), id + " channels");
+                equal(fields[0].equals("wood") || fields[0].equals("treated_wood") ? 150 : 0,
+                        spec.flammability(), id + " original flammability and fire spread");
+                String flags = (spec.gasProof() ? "1" : "0") + (spec.acidProof() ? "1" : "0")
+                        + (spec.plasmaProof() ? "1" : "0") + (spec.magicProof() ? "1" : "0");
+                check(fields[2].equals(flags), id + " four independent proof flags");
+                long explicit = Long.parseLong(fields[3]);
+                if (explicit > 0) equal(explicit, spec.maxTemperature(), id + " explicit temperature");
+            }
+        }
+        var steel = byId.get("pipe_medium_steel");
+        var explicit = com.gregtech.gregtech.api.machine.PipeSpec.of("custom", steel.material(), steel.size(),
+                200, true, false, false, true, 345);
+        equal(345, explicit.maxTemperature(), "factory preserves explicit limit instead of recomputing it");
+    }
+
+    private static void fluidPipeSafety() {
+        check(FluidPipeSafety.canIgnite(false, true, false, false), "air can ignite without checking flammability");
+        check(FluidPipeSafety.canIgnite(false, true, true, true), "flammable GT noncolliding block may burn");
+        check(!FluidPipeSafety.canIgnite(false, true, true, false), "nonflammable GT block remains protected");
+        check(!FluidPipeSafety.canIgnite(true, true, false, true), "lava/fire/explicit protection wins over flammability");
+        check(!FluidPipeSafety.canIgnite(false, false, false, true), "solid flammable blocks are not directly replaced");
+        check(!FluidPipeSafety.canIgnite(false, false, true, false), "solid GT blocks stay intact");
+        equal(4, FluidPipeSafety.magicLoss(true, false, false), "magic liquid loses four");
+        equal(16, FluidPipeSafety.magicLoss(true, true, false), "magic gas loses sixteen before physical leakage");
+        equal(0, FluidPipeSafety.magicLoss(true, false, true), "magic proof protects liquid");
+        equal(0, FluidPipeSafety.magicLoss(true, true, true), "magic proof protects gas");
+        equal(0, FluidPipeSafety.magicLoss(false, false, false), "ordinary liquid has no magic loss");
+        equal(0, FluidPipeSafety.magicLoss(false, true, false), "ordinary gas has no magic loss");
+        equal(24, FluidPipeSafety.magicLoss(true, true, false)
+                + FluidPipeSafety.losses(true, false, false, false, false, false).gas(),
+                "unprotected magical gas loses sixteen plus eight");
+        var steelAcidGas = FluidPipeSafety.losses(true, false, true, true, false, false);
+        equal(0, steelAcidGas.gas(), "gas proof excludes only gas loss");
+        equal(16, steelAcidGas.acid(), "acid gas still corrodes steel");
+        var acidProofGas = FluidPipeSafety.losses(true, false, true, false, false, true);
+        equal(8, acidProofGas.gas(), "acid proof does not stop gas loss");
+        equal(0, acidProofGas.acid(), "acid proof prevents chemical branch");
+        var compound = FluidPipeSafety.losses(true, true, true, false, false, false);
+        equal(88, compound.gas() + compound.plasma() + compound.acid(), "independent physical hazards accumulate");
+        var proof = FluidPipeSafety.losses(true, true, true, true, true, true);
+        equal(0, proof.gas() + proof.plasma() + proof.acid(), "all physical proofs stop losses");
+        equal(300, FluidPipeSafety.observeTemperature(1300, 300, true), "first fluid replaces old hot temperature");
+        equal(1300, FluidPipeSafety.observeTemperature(1300, 300, false), "later cold channel preserves hottest temperature");
+        equal(1300, FluidPipeSafety.observeTemperature(300, 1300, false), "later hot channel raises temperature");
+        equal(999, FluidPipeSafety.emptyTemperature(1000, 300), "empty pipe cools by one kelvin");
+        equal(101, FluidPipeSafety.emptyTemperature(100, 300), "empty pipe warms by one kelvin");
+        equal(300, FluidPipeSafety.emptyTemperature(300, 300), "ambient equilibrium");
+        equal(Long.MAX_VALUE - 1, FluidPipeSafety.emptyTemperature(Long.MAX_VALUE, Long.MIN_VALUE), "extreme cooling cannot overflow");
+        equal(Long.MIN_VALUE + 1, FluidPipeSafety.emptyTemperature(Long.MIN_VALUE, Long.MAX_VALUE), "extreme warming cannot overflow");
+    }
+
+    private static void fluidPipeChannels() {
+        equal(2, FluidPipeChannels.select(4, i -> i == 2, i -> i == 0 || i == 3),
+                "existing fluid wins over an earlier empty channel");
+        equal(1, FluidPipeChannels.select(4, i -> false, i -> i == 1 || i == 3),
+                "new fluid uses first empty channel");
+        equal(-1, FluidPipeChannels.select(4, i -> false, i -> false), "occupied incompatible pipe refuses fluid");
+        equal(0, FluidPipeChannels.select(1, i -> false, i -> true), "single-channel receiver is independent of source index");
+        equal(-1, FluidPipeChannels.select(0, i -> false, i -> false), "absent channel rejected");
+        equal(101, FluidPipeChannels.distributionLevel(101, new long[]{100}, 0), "odd shared mean rounds up");
+        equal(200, FluidPipeChannels.distributionLevel(600, new long[]{0, 0}, 0), "three-way source-inclusive mean");
+        equal(200, FluidPipeChannels.distributionLevel(600, new long[]{0}, 1), "machines share the same mean");
+        equal(267, FluidPipeChannels.distributionLevel(600, new long[]{200}, 1), "round combined mean upward");
+        equal(Long.MAX_VALUE, FluidPipeChannels.distributionLevel(Long.MAX_VALUE,
+                new long[]{Long.MAX_VALUE, Long.MAX_VALUE, Long.MAX_VALUE}, 0), "long sum cannot overflow");
+        equal(4611686018427387904L, FluidPipeChannels.distributionLevel(Long.MAX_VALUE, new long[]{}, 1),
+                "large source and empty machine mean");
+        equal(0, FluidPipeChannels.pressureShare(600, 1200, 2), "half capacity creates no pressure");
+        equal(100, FluidPipeChannels.pressureShare(800, 1200, 2), "excess pressure split across pipes");
+        equal(0, FluidPipeChannels.pressureShare(1200, 1200, 0), "no pipe pressure targets");
+        equal(0, FluidPipeChannels.cauldronCost(0, 333), "partial cauldron step cannot consume fluid");
+        equal(334, FluidPipeChannels.cauldronCost(0, 666), "one affordable cauldron step");
+        equal(667, FluidPipeChannels.cauldronCost(0, 999), "two affordable cauldron steps");
+        equal(1000, FluidPipeChannels.cauldronCost(0, 1000), "full cauldron costs one bucket");
+        equal(667, FluidPipeChannels.cauldronCost(1, 1000), "two remaining steps paid together");
+        equal(334, FluidPipeChannels.cauldronCost(2, 1000), "only last step paid");
+        equal(0, FluidPipeChannels.cauldronCost(3, 1000), "full cauldron consumes nothing");
     }
 
     /** Original BlueprintRegressionTests.java:276-283 numeric fixtures. */

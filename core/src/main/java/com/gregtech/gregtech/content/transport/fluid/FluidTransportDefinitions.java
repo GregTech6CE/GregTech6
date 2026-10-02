@@ -5,53 +5,54 @@ import com.gregtech.gregtech.api.machine.TankSpec;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Locale;
-/** Original saltnya tank and pipe catalog, in original registration order. Logistics tank is a separate host. */
+/** GT6 pipe parameters adapted to the existing registry IDs; saltnya tank catalog. Logistics tank is a separate host. */
 public final class FluidTransportDefinitions {
     private FluidTransportDefinitions() {}
     private record FluidPipeMat(String idSuffix, GTMaterial material, long baseCapacity,
-                                boolean gasProof, boolean acidProof, boolean plasmaProof) {}
+                                boolean gasProof, boolean acidProof, boolean plasmaProof,
+                                boolean magicProof, long maxTemperature, int flammability) {}
 
     private static final FluidPipeMat[] FLUID_PIPE_MATS = {
-            new FluidPipeMat("wood",                  com.gregtech.gregtech.content.material.generated.WoodMaterials.Wood,                50,   false, false, false),
-            new FluidPipeMat("treated_wood",          com.gregtech.gregtech.content.material.generated.WoodMaterials.WoodTreated,         75,   false, false, false),
-            new FluidPipeMat("plastic",               com.gregtech.gregtech.content.material.generated.CompoundMaterials.Plastic,        100,   true,  false, false),
-            new FluidPipeMat("rubber",                com.gregtech.gregtech.content.material.generated.CompoundMaterials.Rubber,         100,   true,  false, false),
-            new FluidPipeMat("copper",                com.gregtech.gregtech.content.material.generated.ElementMaterials.Copper,              100,   true,  false, false),
-            new FluidPipeMat("aluminium",             com.gregtech.gregtech.content.material.generated.ElementMaterials.Aluminium,              100,   true,  false, false),
-            new FluidPipeMat("tin_alloy",             com.gregtech.gregtech.content.material.generated.CompoundMaterials.TinAlloy,       125,   true,  false, false),
-            new FluidPipeMat("bronze",                com.gregtech.gregtech.content.material.generated.CompoundMaterials.Bronze,         120,   true,  false, false),
-            new FluidPipeMat("invar",                 com.gregtech.gregtech.content.material.generated.CompoundMaterials.Invar,          200,   true,  false, false),
-            new FluidPipeMat("steel",                 com.gregtech.gregtech.content.material.generated.CompoundMaterials.Steel,          200,   true,  false, false),
-            new FluidPipeMat("galvanized_steel",      com.gregtech.gregtech.content.material.generated.CompoundMaterials.SteelGalvanized, 250,  true,  false, false),
-            new FluidPipeMat("hsla",                  com.gregtech.gregtech.content.material.generated.CompoundMaterials.HSLASteel,           250,   true,  false, false),
-            new FluidPipeMat("gold",                  com.gregtech.gregtech.content.material.generated.ElementMaterials.Gold,              100,   true,  true,  false),
-            new FluidPipeMat("chrome",                com.gregtech.gregtech.content.material.generated.ElementMaterials.Chromium,              200,   true,  true,  false),
-            new FluidPipeMat("stainless_steel",       com.gregtech.gregtech.content.material.generated.CompoundMaterials.StainlessSteel, 250,   true,  true,  false),
-            new FluidPipeMat("vanadium_steel",        com.gregtech.gregtech.content.material.generated.CompoundMaterials.VanadiumSteel,  400,   true,  true,  false),
-            new FluidPipeMat("desh",                  com.gregtech.gregtech.content.material.generated.CompoundMaterials.Desh,           200,   true,  false, true),
-            new FluidPipeMat("tungsten_alloy",        com.gregtech.gregtech.content.material.generated.CompoundMaterials.HSLATungstenAlloy,  300,   true,  false, true),
-            new FluidPipeMat("tungsten_steel",        com.gregtech.gregtech.content.material.generated.CompoundMaterials.Tungstensteel,  400,   true,  false, true),
-            new FluidPipeMat("tungsten_carbide",      com.gregtech.gregtech.content.material.generated.CompoundMaterials.TungstenCarbide, 450,  true,  false, true),
-            new FluidPipeMat("desh_alloy",            com.gregtech.gregtech.content.material.generated.CompoundMaterials.WorkersAlloy,      350,   true,  false, true),
-            new FluidPipeMat("palladium",             com.gregtech.gregtech.content.material.generated.ElementMaterials.Palladium,              400,   true,  false, true),
-            new FluidPipeMat("carbon",                com.gregtech.gregtech.content.material.generated.ElementMaterials.Carbon,              1000,   true,  false, false),
-            new FluidPipeMat("tantalum_hafnium_carbide", com.gregtech.gregtech.content.material.generated.CompoundMaterials.TantalumHafniumCarbide,    300,   true,  false, true),
-            new FluidPipeMat("titanium",              com.gregtech.gregtech.content.material.generated.ElementMaterials.Titanium,              400,   true,  true,  true),
-            new FluidPipeMat("tungsten",              com.gregtech.gregtech.content.material.generated.ElementMaterials.Tungsten,               600,   true,  true,  true),
-            new FluidPipeMat("efrine",                com.gregtech.gregtech.content.material.generated.CompoundMaterials.Efrine,         250,   true,  true,  true),
-            new FluidPipeMat("netherite",             com.gregtech.gregtech.content.material.generated.CompoundMaterials.Netherite,      300,   true,  true,  true),
-            new FluidPipeMat("iridium",               com.gregtech.gregtech.content.material.generated.ElementMaterials.Iridium,              500,   true,  true,  true),
-            new FluidPipeMat("ironwood",              com.gregtech.gregtech.content.material.generated.CompoundMaterials.Ironwood,       200,   true,  false, true),
-            new FluidPipeMat("thaumium",              com.gregtech.gregtech.content.material.generated.CompoundMaterials.Thaumium,       250,   true,  true,  true),
-            new FluidPipeMat("manasteel",             com.gregtech.gregtech.content.material.generated.CompoundMaterials.Manasteel,      250,   true,  true,  true),
-            new FluidPipeMat("void_metal",            com.gregtech.gregtech.content.material.generated.CompoundMaterials.VoidMetal,      500,   true,  true,  true),
-            new FluidPipeMat("terrasteel",            com.gregtech.gregtech.content.material.generated.CompoundMaterials.Terrasteel,     500,   true,  true,  true),
-            new FluidPipeMat("gaia_spirit",           com.gregtech.gregtech.content.material.generated.CompoundMaterials.GaiaSpirit,    1000,   true,  true,  true),
-            new FluidPipeMat("bedrock_hsla",          com.gregtech.gregtech.content.material.generated.CompoundMaterials.BedrockHSLAAlloy, 1000, true, false, true),
-            new FluidPipeMat("adamantium",            com.gregtech.gregtech.content.material.generated.ElementMaterials.Adamantium,             10000,   true,  true,  true),
-            new FluidPipeMat("draconium",             com.gregtech.gregtech.content.material.generated.CompoundMaterials.Draconium,      2500,  true,  true,  true),
-            new FluidPipeMat("awakened_draconium",    com.gregtech.gregtech.content.material.generated.CompoundMaterials.DraconiumAwakened, 10000, true, true, true),
-            new FluidPipeMat("infinity",              com.gregtech.gregtech.content.material.generated.CompoundMaterials.Infinity,       1_000_000_000, true, true, true),
+            new FluidPipeMat("wood", com.gregtech.gregtech.content.material.generated.WoodMaterials.Wood, 50, false, false, false, false, 340, 150),
+            new FluidPipeMat("treated_wood", com.gregtech.gregtech.content.material.generated.WoodMaterials.WoodTreated, 75, false, false, false, false, 340, 150),
+            new FluidPipeMat("plastic", com.gregtech.gregtech.content.material.generated.CompoundMaterials.Plastic, 100, true, false, false, false, 370, 0),
+            new FluidPipeMat("rubber", com.gregtech.gregtech.content.material.generated.CompoundMaterials.Rubber, 100, true, false, false, false, 350, 0),
+            new FluidPipeMat("copper", com.gregtech.gregtech.content.material.generated.ElementMaterials.Copper, 100, true, false, false, false, 0, 0),
+            new FluidPipeMat("aluminium", com.gregtech.gregtech.content.material.generated.ElementMaterials.Aluminium, 100, true, false, false, false, 0, 0),
+            new FluidPipeMat("tin_alloy", com.gregtech.gregtech.content.material.generated.CompoundMaterials.TinAlloy, 125, true, false, false, false, 0, 0),
+            new FluidPipeMat("bronze", com.gregtech.gregtech.content.material.generated.CompoundMaterials.Bronze, 150, true, false, false, false, 0, 0),
+            new FluidPipeMat("invar", com.gregtech.gregtech.content.material.generated.CompoundMaterials.Invar, 200, true, false, false, false, 0, 0),
+            new FluidPipeMat("steel", com.gregtech.gregtech.content.material.generated.CompoundMaterials.Steel, 200, true, false, false, false, 0, 0),
+            new FluidPipeMat("galvanized_steel", com.gregtech.gregtech.content.material.generated.CompoundMaterials.SteelGalvanized, 250, true, false, false, false, 0, 0),
+            new FluidPipeMat("hsla", com.gregtech.gregtech.content.material.generated.CompoundMaterials.HSLASteel, 250, true, false, false, false, 0, 0),
+            new FluidPipeMat("gold", com.gregtech.gregtech.content.material.generated.ElementMaterials.Gold, 100, true, true, false, false, 0, 0),
+            new FluidPipeMat("chrome", com.gregtech.gregtech.content.material.generated.ElementMaterials.Chromium, 200, true, true, false, false, 0, 0),
+            new FluidPipeMat("stainless_steel", com.gregtech.gregtech.content.material.generated.CompoundMaterials.StainlessSteel, 250, true, true, false, false, 0, 0),
+            new FluidPipeMat("vanadium_steel", com.gregtech.gregtech.content.material.generated.CompoundMaterials.VanadiumSteel, 400, true, true, false, false, 0, 0),
+            new FluidPipeMat("desh", com.gregtech.gregtech.content.material.generated.CompoundMaterials.Desh, 200, true, false, false, true, 0, 0),
+            new FluidPipeMat("tungsten_alloy", com.gregtech.gregtech.content.material.generated.CompoundMaterials.HSLATungstenAlloy, 300, true, false, false, true, 0, 0),
+            new FluidPipeMat("tungsten_steel", com.gregtech.gregtech.content.material.generated.CompoundMaterials.Tungstensteel, 400, true, false, false, true, 0, 0),
+            new FluidPipeMat("tungsten_carbide", com.gregtech.gregtech.content.material.generated.CompoundMaterials.TungstenCarbide, 450, true, false, false, true, 0, 0),
+            new FluidPipeMat("desh_alloy", com.gregtech.gregtech.content.material.generated.CompoundMaterials.WorkersAlloy, 350, true, false, false, true, 0, 0),
+            new FluidPipeMat("palladium", com.gregtech.gregtech.content.material.generated.ElementMaterials.Palladium, 400, true, false, false, true, 0, 0),
+            new FluidPipeMat("carbon", com.gregtech.gregtech.content.material.generated.ElementMaterials.Carbon, 1000, true, false, false, false, 0, 0),
+            new FluidPipeMat("tantalum_hafnium_carbide", com.gregtech.gregtech.content.material.generated.CompoundMaterials.TantalumHafniumCarbide, 300, true, false, false, true, 0, 0),
+            new FluidPipeMat("titanium", com.gregtech.gregtech.content.material.generated.ElementMaterials.Titanium, 300, true, false, false, false, 0, 0),
+            new FluidPipeMat("tungsten", com.gregtech.gregtech.content.material.generated.ElementMaterials.Tungsten, 350, true, true, false, true, 0, 0),
+            new FluidPipeMat("efrine", com.gregtech.gregtech.content.material.generated.CompoundMaterials.Efrine, 250, true, false, true, true, 0, 0),
+            new FluidPipeMat("netherite", com.gregtech.gregtech.content.material.generated.CompoundMaterials.Netherite, 300, true, true, true, true, 0, 0),
+            new FluidPipeMat("iridium", com.gregtech.gregtech.content.material.generated.ElementMaterials.Iridium, 500, true, true, false, true, 0, 0),
+            new FluidPipeMat("ironwood", com.gregtech.gregtech.content.material.generated.CompoundMaterials.Ironwood, 200, true, false, false, true, 0, 0),
+            new FluidPipeMat("thaumium", com.gregtech.gregtech.content.material.generated.CompoundMaterials.Thaumium, 250, true, true, false, true, 0, 0),
+            new FluidPipeMat("manasteel", com.gregtech.gregtech.content.material.generated.CompoundMaterials.Manasteel, 250, true, true, false, true, 0, 0),
+            new FluidPipeMat("void_metal", com.gregtech.gregtech.content.material.generated.CompoundMaterials.VoidMetal, 500, true, true, false, true, 0, 0),
+            new FluidPipeMat("terrasteel", com.gregtech.gregtech.content.material.generated.CompoundMaterials.Terrasteel, 500, true, true, false, true, 0, 0),
+            new FluidPipeMat("gaia_spirit", com.gregtech.gregtech.content.material.generated.CompoundMaterials.GaiaSpirit, 1000, true, true, true, true, 0, 0),
+            new FluidPipeMat("bedrock_hsla", com.gregtech.gregtech.content.material.generated.CompoundMaterials.BedrockHSLAAlloy, 1000, true, false, false, true, 0, 0),
+            new FluidPipeMat("adamantium", com.gregtech.gregtech.content.material.generated.ElementMaterials.Adamantium, 10000, true, true, true, true, 0, 0),
+            new FluidPipeMat("draconium", com.gregtech.gregtech.content.material.generated.CompoundMaterials.Draconium, 2500, true, true, true, true, 0, 0),
+            new FluidPipeMat("awakened_draconium", com.gregtech.gregtech.content.material.generated.CompoundMaterials.DraconiumAwakened, 10000, true, true, true, true, 0, 0),
+            new FluidPipeMat("infinity", com.gregtech.gregtech.content.material.generated.CompoundMaterials.Infinity, 1000000000, true, true, true, true, 0, 0),
     };
 
     private record WoodDef(String id, GTMaterial material, long capacity) {}
@@ -98,7 +99,8 @@ public final class FluidTransportDefinitions {
         var result = new ArrayList<PipeSpec>();
         for (var mat : FLUID_PIPE_MATS) for (var size : PipeSpec.PipeSize.values())
             result.add(PipeSpec.of("pipe_" + size.name().toLowerCase(Locale.ROOT) + "_" + mat.idSuffix,
-                    mat.material, size, mat.baseCapacity, mat.gasProof, mat.acidProof, mat.plasmaProof, false));
+                    mat.material, size, mat.baseCapacity, mat.gasProof, mat.acidProof, mat.plasmaProof, mat.magicProof,
+                    mat.maxTemperature > 0 ? mat.maxTemperature : (long)(mat.material.getMeltingPoint() * 1.25D), mat.flammability));
         return List.copyOf(result);
     }
     public static List<TankSpec> tanks() {

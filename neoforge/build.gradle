@@ -102,7 +102,7 @@ neoForge {
             sourceSet = sourceSets.bootstrapGameTest
             gameDirectory = project.file(rootProject.findProperty('neoforgeGameTestDirectory') ?: 'build/bootstrap-gametest-run')
             systemProperty 'neoforge.enabledGameTestNamespaces', (rootProject.findProperty('gameTestNamespaces') ?: 'gregtech_bootstrap').toString()
-            jvmArgument '-Xmx1536m'
+            jvmArgument '-Xmx' + (rootProject.findProperty('gameTestHeap') ?: '1536m').toString()
         }
         configureEach {
             systemProperty 'forge.logging.markers', 'REGISTRIES'

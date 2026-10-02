@@ -13,6 +13,10 @@ gregtech6-main: brokestar233 and its contributors.
 cruciblecraft: Copyright (C) 2026 Lorbineitte Masson and its contributors.
 Original copyright headers and the source/history records are retained.
 
+Additional behavior reference: wolfram0108 / gregtech6_w (LGPL-3.0-or-later),
+compared with original GT6 for fluid pipe channel selection. Its engine adaptation
+and assets are not imported by this change. See docs/integration/SOURCES.md.
+
 Assets and other third-party components retain their own licenses, not this blanket
 code declaration. Upstream GT6 default assets: CC0-1.0 unless otherwise stated.
 GregTech logos and derivatives: CC-BY-NC-4.0. Other author/component-specific notices

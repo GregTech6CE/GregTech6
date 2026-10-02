@@ -31,9 +31,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -289,55 +287,14 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler {
         }
     }
 
-    /** Handle player right-click interaction: fill tank fully from fluid container, or drain tank into container. */
+    /** Use the platform transaction so replacement containers, stacks and creative mode stay consistent. */
     public InteractionResult handleUse(Player player, InteractionHand hand) {
-        ItemStack held = player.getItemInHand(hand);
-        if (held.isEmpty()) return InteractionResult.PASS;
-
-        LazyOptional<IFluidHandlerItem> heldCap = FluidUtil.getFluidHandler(held);
-        if (!heldCap.isPresent()) return InteractionResult.PASS;
-        IFluidHandlerItem heldHandler = heldCap.orElse(null);
-        if (heldHandler == null) return InteractionResult.PASS;
-
-        // Check what the held item contains
-        FluidStack heldFluid = FluidStack.EMPTY;
-        for (int t = 0; t < heldHandler.getTanks(); t++) {
-            FluidStack f = heldHandler.getFluidInTank(t);
-            if (!f.isEmpty()) {
-                heldFluid = f;
-                break;
-            }
-        }
-
-        if (!heldFluid.isEmpty()) {
-            // Filled container: drain ALL into this tank (if compatible)
-            FluidStack drained = heldHandler.drain(Integer.MAX_VALUE, FluidAction.SIMULATE);
-            if (drained.isEmpty()) return InteractionResult.PASS;
-
-            int filled = this.fill(drained, FluidAction.SIMULATE);
-            if (filled <= 0) return InteractionResult.PASS;
-
-            drained = heldHandler.drain(filled, FluidAction.EXECUTE);
-            if (!drained.isEmpty()) {
-                this.fill(drained.copy(), FluidAction.EXECUTE);
-                setChanged();
-                level.playSound(null, worldPosition, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 0.5F, 1.0F);
-                return InteractionResult.CONSUME;
-            }
-        } else {
-            // Empty container: fill it from this tank (standard Forge behaviour)
-            boolean success = FluidUtil.interactWithFluidHandler(player, hand, this);
-            if (success) {
-                setChanged();
-                level.playSound(null, worldPosition, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 0.5F, 1.0F);
-                return InteractionResult.CONSUME;
-            }
-        }
-
-        return InteractionResult.PASS;
+        if (level == null || level.isClientSide) return InteractionResult.PASS;
+        if (!com.gregtech.gregtech.platform.forge.transport.FluidContainerInteraction.use(player, hand, this))
+            return InteractionResult.PASS;
+        setChanged();
+        return InteractionResult.CONSUME;
     }
-
-    // === IFluidHandler ===
 
     @Override
     public int getTanks() { return 1; }

@@ -1,5 +1,10 @@
 package com.gregtech.gregtech.blockentity.machine;
 
+import com.gregtech.gregtech.api.fluid.FluidPipeChannels;
+import com.gregtech.gregtech.api.fluid.FluidPipeSafety;
+import com.gregtech.gregtech.api.fluid.PipeIgnition;
+import com.gregtech.gregtech.registry.GTFluids;
+
 import com.gregtech.gregtech.api.fluid.FluidHazards;
 import com.gregtech.gregtech.api.fluid.FluidTankGT;
 import com.gregtech.gregtech.api.inventory.BlockContents;
@@ -21,6 +26,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -93,9 +101,8 @@ import java.util.Set;
  * {@code getFluidTankFillable2} picks the first tank already holding that fluid and otherwise the
  * first empty one ({@code :463-466}). A face only gates <em>connectivity</em>
  * ({@code canAcceptFluidsFrom}/{@code canEmitFluidsTo}, {@code :510-511}). The port is the same
- * shape and was before this batch: {@link #getCapability} hands out this very block entity for every
- * side, and {@link #fill} is that same first-matching-or-empty scan. So the sink a face's cover is
- * given is the pipe itself — which is precisely the handler GT6's covers are handed. The one
+ * shape: sided handlers gate connectivity, filters and channel-local backflow, while unsided
+ * access serves the pipe's own cover operations. All faces see the same channels. The one
  * exception is the pressure valve, which hard-codes {@code mTanks[0]}
  * ({@code CoverPressureValve:51}) and can only be attached when the pipe has a single tank, so
  * {@code tanks[0]} and "the pipe" coincide there.</p>
@@ -127,13 +134,13 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     //     BasicMachineBlockEntity:71 does it, because PanelCoverRuntime itself allocates an int[6]
     //     and a boolean[6] (PanelCoverRuntime:12-13) — this is the one place this class deliberately
     //     does not copy the machine's eager field;
-    //   * `faceHandlers` is null until a face actually carries a fluid filter (see
+    //   * `faceHandlers` is null until a sided capability is requested (see
     //     {@link #faceHandler}).
 
     /** One cover item per {@link Direction#ordinal()}; {@code null} until a cover is attached. */
     private @Nullable ItemStack[] covers;
 
-    /** Whether any face carries a cover. The cover tick pass and the face handler both hang off this. */
+    /** Whether any face carries a cover. The cover tick pass is skipped when this is false. */
     private boolean hasCovers;
 
     /**
@@ -147,7 +154,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     /** Created by {@link #panels()} on first use, never in the constructor. */
     private @Nullable PanelCoverRuntime panels;
 
-    /** Per-face filter views, built by {@link #faceHandler} and dropped by {@link #invalidateCaps}. */
+    /** Per-face capability views, built by {@link #faceHandler} and dropped by {@link #invalidateCaps}. */
     private @Nullable IFluidHandler[] faceHandlers;
 
     public FluidPipeBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -161,6 +168,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
                     .setGasProof(spec.gasProof())
                     .setAcidProof(spec.acidProof())
                     .setPlasmaProof(spec.plasmaProof())
+                    .setMagicProof(spec.magicProof())
                     .setMaxTemperature(spec.maxTemperature());
         }
         this.lastReceivedFrom = new byte[count];
@@ -182,24 +190,33 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     }
 
     private void tickServer(BlockState state) {
-        // Temperature drift toward environment
-        long envTemp = FluidTransportEnvironment.environmentTemperature(level, worldPosition);
-        if (temperature > envTemp) {
-            temperature = Math.max(envTemp, temperature - Math.min(5, temperature - envTemp));
-        } else if (temperature < envTemp) {
-            temperature = Math.min(envTemp, temperature + Math.min(5, envTemp - temperature));
-        }
-
-        // Safety checks per tank
+        transferredAmount = 0;
+        boolean firstFluid = true;
         for (int i = 0; i < tanks.length; i++) {
             FluidStack fluid = tanks[i].getFluid();
-            if (fluid.isEmpty()) continue;
-            // GT6 MultiTileEntityPipeFluid:292/:315 — a corroded pipe returns before distributing.
-            if (!checkSafety(fluid, i)) return;
+            if (!fluid.isEmpty()) {
+                var entry = GTFluids.entryForFluid(fluid.getFluid());
+                long fluidTemperature = entry == null
+                        ? fluid.getFluid().getFluidType().getTemperature(fluid) : entry.temperature();
+                temperature = FluidPipeSafety.observeTemperature(temperature, fluidTemperature, firstFluid);
+                firstFluid = false;
+                if (!checkSafety(fluid, i)) return;
+            }
+            // Original checks each channel, even an empty one retaining heat from the previous tick.
+            if (temperature > spec.maxTemperature()) {
+                PipeIgnition.igniteNeighbors(level, worldPosition);
+                if (overheatDestroysPipe()) {
+                    for (FluidTankGT tank : tanks) tank.setEmpty();
+                    level.setBlock(worldPosition, net.minecraft.world.level.block.Blocks.FIRE.defaultBlockState(), 3);
+                    return;
+                }
+            }
+            // GT6 processes safety and distribution channel by channel, then clears that channel's mask.
+            if (!tanks[i].isEmpty()) distributeChannel(state, tanks[i], i);
+            lastReceivedFrom[i] = 0;
         }
-
-        // Distribute fluid (only to connected sides)
-        distribute(state);
+        if (firstFluid) temperature = FluidPipeSafety.emptyTemperature(temperature,
+                FluidTransportEnvironment.environmentTemperature(level, worldPosition));
         // Zero cost when unused: `hasCovers` is false for every coverless pipe, so this is a single
         // field read and returns — no face is walked, nothing is allocated, nothing is dispatched.
         if (hasCovers) tickCovers();
@@ -418,56 +435,70 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
         return true;
     }
 
-    /**
-     * GT6 {@code MultiTileEntityPipeFluid:296-317}: the pipe's proof flags against the fluid it holds.
-     * A fluid whose hazard class the pipe is not proof against eats fluid every tick and fizzes, and
-     * acid additionally burns whatever stands next to the pipe and can destroy it outright.
-     *
-     * <p>Per hazard class, in GT6's own order:
-     * <ul>
-     *   <li><b>gas</b> ({@code :296-300}) - like plasma it only leaks heat, so the pipe survives;</li>
-     *   <li><b>plasma</b> ({@code :302-306}) - same, but 64 units a tick instead of 8;</li>
-     *   <li><b>acid</b> ({@code :308-317}) - 16 units a tick, {@code applyChemDamage(entity, 2)} to
-     *       everything within {@code box(-1,-1,-1,+2,+2,+2)} (a 3x3x3), and {@code rng(100) == 0}
-     *       trashes the whole pipe and replaces it with air.</li>
-     * </ul>
-     * Gas and plasma share GT6's {@code applyTemperatureDamage(entity, mTemperature, 2.0F, 10.0F)} on
-     * a 5x5x5 {@code box(-2,-2,-2,+3,+3,+3)}; the port's {@link GTEntityHelper} is the same code.
-     *
-     * <p>The accept/reject half is {@link FluidHazards#proofRejects}, a pure function the GameTest
-     * drives directly, so only the in-world consequence lives here.
-     *
-     * @return {@code false} when the pipe destroyed itself and the caller must stop ticking it
-     */
+    /** GT6 runs magic, gas, plasma and acid independently against the original channel fluid. */
     private boolean checkSafety(FluidStack fluid, int tankIndex) {
-        if (fluid.isEmpty()) return true;
+        if (fluid.isEmpty() || level == null) return true;
         FluidTankGT tank = tanks[tankIndex];
         Fluid fluidType = fluid.getFluid();
-        if (!FluidHazards.proofRejects(fluidType, tank.isGasProof(), tank.isAcidProof(), tank.isPlasmaProof())) {
-            return true;
+        int magicLoss = FluidPipeSafety.magicLoss(FluidHazards.isMagic(fluidType),
+                FluidHazards.isGas(fluidType), tank.isMagicProof());
+        if (magicLoss > 0) {
+            leak(tank, magicLoss);
+            // Original direct applyPotion has no thermal/chemical armor or creative immunity gate.
+            hurtAround(worldPosition, 3.0D, entity -> {
+                if (entity instanceof LivingEntity living) {
+                    living.addEffect(new MobEffectInstance(MobEffects.POISON, 1200, 1));
+                }
+            });
+            if (magicDestroysPipe()) {
+                for (FluidTankGT other : tanks) other.setEmpty();
+                // GT6's absent-Thaumcraft fallback is air (IL.block -> ST.block(null) -> CS.NB).
+                // A future pollution integration must supply the actual mod's registered block.
+                level.removeBlock(worldPosition, false);
+                return false;
+            }
         }
-        if (level == null) return true;
-
-        int trash = FluidHazards.pipeTrashPerTick(fluidType);
-        if (trash > 0) tank.remove(trash);
-        // GT6 UT.Sounds.send(SFX.MC_FIZZ, this, F) — vanilla's fizz is FIRE_EXTINGUISH.
-        level.playSound(null, worldPosition, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 1.0F);
-
-        if (FluidHazards.isAcid(fluidType)) {
+        var losses = FluidPipeSafety.losses(FluidHazards.isGas(fluidType), FluidHazards.isPlasma(fluidType),
+                FluidHazards.isAcid(fluidType), tank.isGasProof(), tank.isPlasmaProof(), tank.isAcidProof());
+        if (losses.gas() > 0) leakHeat(tank, losses.gas());
+        if (losses.plasma() > 0) leakHeat(tank, losses.plasma());
+        if (losses.acid() > 0) {
+            leak(tank, losses.acid());
             hurtAround(worldPosition, 1.0D, entity ->
                     GTEntityHelper.applyChemDamage(entity, FluidHazards.PIPE_ACID_DAMAGE));
-            // GT6 :312-316 — one in PIPE_ACID_DESTROY_CHANCE destroys the pipe and its contents.
-            if (level.random.nextInt(FluidHazards.PIPE_ACID_DESTROY_CHANCE) == 0) {
+            if (corrosionDestroysPipe()) {
+                // Empty before removal: the block's break callback must not export destroyed contents.
                 for (FluidTankGT other : tanks) other.setEmpty();
                 level.removeBlock(worldPosition, false);
                 return false;
             }
-            return true;
         }
-        // Gas and plasma never destroy the pipe, they only leak its heat into the neighbourhood.
+        return true;
+    }
+
+    /** Random decision isolated so world tests can exercise both corrosion outcomes deterministically. */
+    protected boolean corrosionDestroysPipe() {
+        return level.random.nextInt(FluidHazards.PIPE_ACID_DESTROY_CHANCE) == 0;
+    }
+
+    /** One percent per overheated channel, as in original onServerTickPre. */
+    protected boolean overheatDestroysPipe() {
+        return level.random.nextInt(100) == 0;
+    }
+
+    protected boolean magicDestroysPipe() {
+        return level.random.nextInt(FluidHazards.PIPE_MAGIC_DESTROY_CHANCE) == 0;
+    }
+
+    private void leak(FluidTankGT tank, int amount) {
+        transferredAmount += tank.remove(amount);
+        level.playSound(null, worldPosition, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 1.0F);
+    }
+
+    private void leakHeat(FluidTankGT tank, int amount) {
+        leak(tank, amount);
         hurtAround(worldPosition, 2.0D, entity -> GTEntityHelper.applyTemperatureDamage(entity,
                 temperature, FluidHazards.PIPE_TEMPERATURE_MULTIPLIER, FluidHazards.PIPE_TEMPERATURE_CAP));
-        return true;
     }
 
     /**
@@ -527,131 +558,88 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
         }
     }
 
-    /**
-     * GT6-style fluid distribution. Pipe-to-pipe transfers use pairwise equalization
-     * (the pipe with more fluid sends half the difference to the pipe with less).
-     * Pipe-to-machine transfers evenly split available fluid to all valid machine targets.
-     * Only distributes to connected sides; respects backflow prevention.
-     */
-    private void distribute(BlockState state) {
-        if (level == null) return;
-        transferredAmount = 0;
-
-        for (int i = 0; i < tanks.length; i++) {
-            FluidTankGT tank = tanks[i];
-            if (tank.isEmpty()) continue;
-
-            // Partition targets: pipe neighbors vs machine/IFluidHandler neighbors. The machine side
-            // remembers the face it was found on, because the pushing face's own cover has to gate the
-            // outgoing half as well (§112).
-            java.util.List<FluidPipeBlockEntity> pipeTargets = new java.util.ArrayList<>();
-            java.util.List<MachineTarget> machineTargets = new java.util.ArrayList<>();
-
-            for (Direction side : Direction.values()) {
-                if ((lastReceivedFrom[i] & (1 << side.ordinal())) != 0) continue;
-                if (!state.getValue(FluidPipeBlock.propFor(side))) continue;
-                BlockEntity be = level.getBlockEntity(worldPosition.relative(side));
-                if (be instanceof FluidPipeBlockEntity adjPipe) {
-                    if (i < adjPipe.tanks.length) {
-                        pipeTargets.add(adjPipe);
-                    }
-                } else if (be != null) {
-                    final Direction face = side;
-                    IFluidHandler handler=level.getCapability(Capabilities.FluidHandler.BLOCK,worldPosition.relative(side),side.getOpposite());
-                    if(handler!=null)machineTargets.add(new MachineTarget(face,handler));
-                }
-            }
-
-            // 1) Pipe-to-pipe: pairwise equalization — send half the difference to converge to equilibrium
-            for (FluidPipeBlockEntity adjPipe : pipeTargets) {
-                if (tank.isEmpty()) break;
-                long myAmount = tank.getAmount();
-                long adjAmount = adjPipe.tanks[i].getAmount();
-                long total = myAmount + adjAmount;
-                long avg = total / 2;
-                if (myAmount <= avg) continue;
-
-                int toSend = FluidTankGT.bindInt(Math.min(myAmount - avg, tank.getAmount()));
-                if (toSend <= 0) continue;
-
-                FluidStack drained = tank.drain(toSend, IFluidHandler.FluidAction.SIMULATE);
-                if (drained.isEmpty()) continue;
-
-                // §111: the receiving pipe's own face filter gates pipe-to-pipe traffic exactly like it
-                // gates anything else arriving on that face. Without this the equalization below would
-                // step around the very cover the player installed on the neighbour (the capability path
-                // in `distribute`'s machine half is filtered by the receiver's own getCapability call).
-                Direction toTarget = directionTo(adjPipe);
-                if (toTarget != null) {
-                    // §111: the receiving pipe's own face filter gates pipe-to-pipe traffic exactly like
-                    // it gates anything else arriving on that face. Without this the equalization below
-                    // would step around the very cover the player installed on the neighbour.
-                    if (!adjPipe.coverFluidFilterPermits(toTarget.getOpposite(), drained)) continue;
-                    // §112: and a filter on *this* pipe's face gates the outgoing half — a face filter
-                    // gates what passes through the face, not only what arrives on it.
-                    if (!coverFluidFilterPermits(toTarget, drained)) continue;
-                }
-
-                int filled = adjPipe.fill(drained, IFluidHandler.FluidAction.EXECUTE);
-                if (filled > 0) {
-                    tank.drain(filled, IFluidHandler.FluidAction.EXECUTE);
-                    transferredAmount += filled;
-                    if (toTarget != null) {
-                        for (int j = 0; j < adjPipe.lastReceivedFrom.length; j++) {
-                            adjPipe.lastReceivedFrom[j] |= (byte) (1 << toTarget.getOpposite().ordinal());
-                        }
-                    }
-                }
-            }
-
-            // 2) Pipe-to-machine: evenly split remaining fluid among all accepting machine targets
-            if (!machineTargets.isEmpty() && !tank.isEmpty()) {
-                int count = machineTargets.size();
-                long perTarget = Math.max(1, (tank.getAmount() + count - 1) / count);
-
-                for (MachineTarget target : machineTargets) {
-                    if (tank.isEmpty()) break;
-                    int toSend = FluidTankGT.bindInt(Math.min(perTarget, tank.getAmount()));
-                    if (toSend <= 0) continue;
-
-                    FluidStack drained = tank.drain(toSend, IFluidHandler.FluidAction.SIMULATE);
-                    if (drained.isEmpty()) continue;
-
-                    // §112: the face the fluid leaves through carries its own gate — a filter there
-                    // refuses the fluid just like it refuses an insert arriving on that face.
-                    if (!coverFluidFilterPermits(target.side(), drained)) continue;
-
-                    int filled = target.handler().fill(drained, IFluidHandler.FluidAction.EXECUTE);
-                    if (filled > 0) {
-                        tank.drain(filled, IFluidHandler.FluidAction.EXECUTE);
-                        transferredAmount += filled;
-                    }
+    private void distributeChannel(BlockState state, FluidTankGT tank, int channel) {
+        // Vanilla cauldrons have no block entity. They take priority over ordinary targets.
+        fillCauldrons(state, tank);
+        if (tank.isEmpty()) return;
+        java.util.List<FluidTankGT> pipes = new java.util.ArrayList<>();
+        java.util.List<IFluidHandler> machines = new java.util.ArrayList<>();
+        FluidStack fluid = tank.getFluid();
+        for (Direction side : Direction.values()) {
+            if ((lastReceivedFrom[channel] & (1 << side.ordinal())) != 0
+                    || !state.getValue(FluidPipeBlock.propFor(side))
+                    || !coverFluidFilterPermits(side, fluid)) continue;
+            BlockPos neighborPos = worldPosition.relative(side);
+            if (!level.hasChunkAt(neighborPos)) continue;
+            BlockEntity be = level.getBlockEntity(neighborPos);
+            if (be instanceof FluidPipeBlockEntity neighbor) {
+                Direction incoming = side.getOpposite();
+                if (!neighbor.getBlockState().getValue(FluidPipeBlock.propFor(incoming))
+                        || !neighbor.coverFluidFilterPermits(incoming, fluid)) continue;
+                int targetChannel = neighbor.fillableChannel(fluid);
+                if (targetChannel < 0) continue;
+                FluidTankGT target = neighbor.tanks[targetChannel];
+                if (target.getAmount() >= tank.getAmount()) continue;
+                // Original GT6 marks eligible channels before distribution, even if capacity blocks the push.
+                neighbor.lastReceivedFrom[targetChannel] |= (byte) (1 << incoming.ordinal());
+                pipes.add(level.random.nextInt(pipes.size() + 1), target);
+            } else {
+                IFluidHandler handler = level.getCapability(Capabilities.FluidHandler.BLOCK, neighborPos, side.getOpposite());
+                if (handler == null) continue;
+                FluidStack probe = fluid.copy();
+                probe.setAmount(1);
+                if (handler.fill(probe, FluidAction.SIMULATE) > 0
+                        || handler.fill(fluid.copy(), FluidAction.SIMULATE) > 0) {
+                    machines.add(level.random.nextInt(machines.size() + 1), handler);
                 }
             }
         }
-
-        for (int i = 0; i < lastReceivedFrom.length; i++) {
-            lastReceivedFrom[i] = 0;
+        if (pipes.isEmpty() && machines.isEmpty()) return;
+        long[] amounts = new long[pipes.size()];
+        for (int i = 0; i < amounts.length; i++) amounts[i] = pipes.get(i).getAmount();
+        long targetLevel = FluidPipeChannels.distributionLevel(tank.getAmount(), amounts, machines.size());
+        for (FluidTankGT target : pipes) transferToPipe(tank, target, targetLevel - target.getAmount());
+        for (IFluidHandler target : machines) {
+            if (tank.isEmpty()) break;
+            FluidStack offered = tank.drain(FluidTankGT.bindInt(targetLevel), FluidAction.SIMULATE);
+            int accepted = target.fill(offered, FluidAction.EXECUTE);
+            transferredAmount += tank.remove(accepted);
         }
+        long pressure = FluidPipeChannels.pressureShare(tank.getAmount(), spec.capacity(), pipes.size());
+        if (pressure > 0) for (FluidTankGT target : pipes) transferToPipe(tank, target, pressure);
     }
 
-    /**
-     * One neighbour fluid handler reached through one of this pipe's faces.
-     *
-     * <p>§112: the face has to travel with the handler, because a filter cover on <em>this</em> pipe's
-     * face gates what leaves through it just as it gates what arrives on it.</p>
-     */
-    private record MachineTarget(Direction side, IFluidHandler handler) {}
+    /** Selected channels already match full fluid identity; keep internal pipe amounts as longs. */
+    private void transferToPipe(FluidTankGT source, FluidTankGT target, long requested) {
+        long amount = Math.min(Math.min(requested, source.getAmount()), target.capacity() - target.getAmount());
+        if (amount <= 0) return;
+        if (target.isEmpty()) target.setFluid(source.getFluidLong(), amount);
+        else target.add(amount);
+        transferredAmount += source.remove(amount);
+    }
 
-    @Nullable
-    private Direction directionTo(FluidPipeBlockEntity other) {
-        BlockPos diff = other.worldPosition.subtract(worldPosition);
-        for (Direction d : Direction.values()) {
-            if (d.getStepX() == diff.getX() && d.getStepY() == diff.getY() && d.getStepZ() == diff.getZ()) {
-                return d;
-            }
+    private void fillCauldrons(BlockState state, FluidTankGT tank) {
+        FluidStack fluid = tank.getFluid();
+        var entry = com.gregtech.gregtech.registry.GTFluids.entryForFluid(fluid.getFluid());
+        boolean water = fluid.getFluid() == net.minecraft.world.level.material.Fluids.WATER
+                || entry != null && (entry.flags() & com.gregtech.gregtech.data.FluidCatalog.FluidFlags.WATER) != 0;
+        if (!water) return;
+        for (Direction side : Direction.values()) {
+            if (!state.getValue(FluidPipeBlock.propFor(side)) || !coverFluidFilterPermits(side, fluid)) continue;
+            BlockPos pos = worldPosition.relative(side);
+            if (!level.hasChunkAt(pos)) continue;
+            BlockState cauldron = level.getBlockState(pos);
+            int current;
+            if (cauldron.is(net.minecraft.world.level.block.Blocks.CAULDRON)) current = 0;
+            else if (cauldron.is(net.minecraft.world.level.block.Blocks.WATER_CAULDRON))
+                current = cauldron.getValue(net.minecraft.world.level.block.LayeredCauldronBlock.LEVEL);
+            else continue;
+            int cost = FluidPipeChannels.cauldronCost(current, tank.getAmount());
+            if (cost == 0) continue;
+            BlockState filled = net.minecraft.world.level.block.Blocks.WATER_CAULDRON.defaultBlockState()
+                    .setValue(net.minecraft.world.level.block.LayeredCauldronBlock.LEVEL, current + cost * 3 / 1000);
+            if (level.setBlockAndUpdate(pos, filled)) tank.remove(cost);
         }
-        return null;
     }
 
     /** Dump fluids to adjacent tanks when pipe is broken (Factorio-style). */
@@ -661,6 +649,8 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
             if (tank.isEmpty()) continue;
             for (Direction side : Direction.values()) {
                 if (tank.isEmpty()) break;
+                if (!connected(side) || !coverFluidFilterPermits(side, tank.getFluid())
+                        || !level.hasChunkAt(worldPosition.relative(side))) continue;
                 BlockEntity be = level.getBlockEntity(worldPosition.relative(side));
                 if (be == null) continue;
                 IFluidHandler target=level.getCapability(Capabilities.FluidHandler.BLOCK,worldPosition.relative(side),side.getOpposite());
@@ -786,14 +776,17 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     @Override
     public int fill(FluidStack resource, FluidAction action) {
         if (resource.isEmpty()) return 0;
-        // Fill the first empty or matching tank
-        for (int i = 0; i < tanks.length; i++) {
+        int channel = fillableChannel(resource);
+        return channel < 0 ? 0 : tanks[channel].fill(resource, action);
+    }
+
+    /** GT6 and the wolfram port both reserve an existing fluid channel before any empty one. */
+    private int fillableChannel(FluidStack resource) {
+        if (resource.isEmpty()) return -1;
+        return FluidPipeChannels.select(tanks.length, i -> {
             FluidStack existing = tanks[i].getFluid();
-            if (existing.isEmpty() || existing.getFluid() == resource.getFluid()) {
-                return tanks[i].fill(resource, action);
-            }
-        }
-        return 0;
+            return !existing.isEmpty() && FluidStack.isSameFluidSameComponents(existing, resource);
+        }, i -> tanks[i].isEmpty());
     }
 
     @NotNull
@@ -802,8 +795,8 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
         if (resource.isEmpty()) return FluidStack.EMPTY;
         for (FluidTankGT tank : tanks) {
             FluidStack existing = tank.getFluid();
-            if (existing.getFluid() == resource.getFluid()) {
-                return tank.drain(resource.getAmount(), action);
+            if (!existing.isEmpty() && FluidStack.isSameFluidSameComponents(existing, resource)) {
+                return tank.drain(resource, action);
             }
         }
         return FluidStack.EMPTY;
@@ -823,11 +816,11 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     // === Capability ===
 
     public IFluidHandler capabilityHandler(@Nullable Direction side) {
-        return side != null && hasCovers && isFluidFilterFace(side) ? faceHandler(side) : this;
+        return side!=null?faceHandler(side):this;
     }
 
-    private boolean isFluidFilterFace(Direction side) {
-        return CoverUtilityBehaviors.FILTER_FLUID.equals(coverIdOf(side));
+    private boolean connected(Direction side) {
+        return !isRemoved() && getBlockState().getValue(FluidPipeBlock.propFor(side));
     }
 
     private IFluidHandler faceHandler(Direction side){
@@ -876,7 +869,10 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
         for (int i = 0; i < tanks.length && i < lastReceivedFrom.length; i++) {
             lastReceivedFrom[i] = tag.contains(NBT_LAST_RECEIVED + i) ? tag.getByte(NBT_LAST_RECEIVED + i) : 0;
             if (tag.contains(NBT_TANK_PREFIX + i)) {
-                tanks[i].readFromNBT(tag.getCompound(NBT_TANK_PREFIX + i),lookup);
+                // The registered pipe owns capacity. Preserve overfull legacy contents until drained.
+                CompoundTag contents = tag.getCompound(NBT_TANK_PREFIX + i).copy();
+                contents.putLong("Capacity", spec.capacity());
+                tanks[i].readFromNBT(contents,lookup);
             }
         }
         loadCovers(tag,lookup);
@@ -968,7 +964,10 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
         if (tag.contains(NBT_TRANSFERRED)) transferredAmount = tag.getLong(NBT_TRANSFERRED);
         for (int i = 0; i < tanks.length; i++) {
             if (tag.contains(NBT_TANK_PREFIX + i)) {
-                tanks[i].readFromNBT(tag.getCompound(NBT_TANK_PREFIX + i),lookup);
+                // The registered pipe owns capacity. Preserve overfull legacy contents until drained.
+                CompoundTag contents = tag.getCompound(NBT_TANK_PREFIX + i).copy();
+                contents.putLong("Capacity", spec.capacity());
+                tanks[i].readFromNBT(contents,lookup);
             }
         }
         loadCovers(tag,lookup);
@@ -977,11 +976,14 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     public long getTransferredAmount() { return transferredAmount; }
     public long getTemperature() { return temperature; }
 
-    /** Handle player right-click with fluid container — fill pipe from container or drain pipe into container. */
-    public net.minecraft.world.InteractionResult handleUse(net.minecraft.world.entity.player.Player player,net.minecraft.world.InteractionHand hand) {
-        if(level==null||level.isClientSide||player.getItemInHand(hand).isEmpty())return net.minecraft.world.InteractionResult.PASS;
-        if(!com.gregtech.gregtech.platform.neoforge.transport.FluidContainerInteraction.use(player,hand,this))return net.minecraft.world.InteractionResult.PASS;
-        setChanged();return net.minecraft.world.InteractionResult.CONSUME;
+    /** Container transactions use the clicked face, including its connection, filter and backflow rules. */
+    public net.minecraft.world.InteractionResult handleUse(Player player, net.minecraft.world.InteractionHand hand,
+                                                           Direction side) {
+        if (level == null || level.isClientSide) return net.minecraft.world.InteractionResult.PASS;
+        if (!com.gregtech.gregtech.platform.neoforge.transport.FluidContainerInteraction.use(player, hand, capabilityHandler(side)))
+            return net.minecraft.world.InteractionResult.PASS;
+        setChanged();
+        return net.minecraft.world.InteractionResult.CONSUME;
     }
     // ── Client model data (dynamic pipe model neighbor sizes) ───────────────
 
@@ -1011,22 +1013,10 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     // ── The face-aware view a fluid filter needs ─────────────────────────────
 
     /**
-     * {@code BasicMachineBlockEntity} can hang the fluid filter on its own sided capability because
-     * its {@code fill}/{@code drain} take a face. A pipe's do not: {@link #getCapability} hands out
-     * the pipe itself for every side, so the face has to be carried <em>by the handler</em>. This is
-     * that handler — the pipe plus one face — and it is built only where a fluid filter actually sits
-     * ({@link #getCapability}), never for a coverless pipe.
-     *
-     * <p>Everything except the two intercepts delegates straight through: {@code getTanks},
-     * {@code getFluidInTank}, {@code getTankCapacity} and {@code isFluidValid} are the pipe's own
-     * answers, so a mod that queries the face sees exactly the pipe it saw before.</p>
-     *
-     * <p><b>Not intercepted:</b> {@link #handleUse}, the player's bucket path, which has no face to
-     * give the rule ({@code handleUse(Player, InteractionHand)}). GT6 asks
-     * {@code interceptFluidFill(aCoverSide, aData, aSide, fluid)} with the face the fluid enters from
-     * even for a player's bucket ({@code CoverFilterFluid:117}); the port's bucket path cannot, so a
-     * bucket ignores the filter on the face it is clicked against. The capability path — pipe to
-     * pipe, pipe to machine — is filtered, which is the traffic the cover exists for.</p>
+     * Sided capability view: checks current connections and covers on every operation, including
+     * calls through a cached handler after a wrench or cover change. Only executed fills mark the
+     * receiving channel for backflow prevention. Unsided internal access remains available.
+     * Player container interaction uses this same face view.
      */
     private static final class FaceFluidHandler implements IFluidHandler {
         private final FluidPipeBlockEntity pipe;
@@ -1051,14 +1041,18 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
         /** GT6 {@code CoverFilterFluid:117-122} {@code interceptFluidFill}: refuse, do not partially fill. */
         @Override
         public int fill(FluidStack resource, FluidAction action) {
-            if (!pipe.coverFluidFilterPermits(side, resource)) return 0;
-            return pipe.fill(resource, action);
+            if (!pipe.connected(side) || !pipe.coverFluidFilterPermits(side, resource)) return 0;
+            int channel = pipe.fillableChannel(resource);
+            if (channel < 0) return 0;
+            int accepted = pipe.tanks[channel].fill(resource, action);
+            if (accepted > 0 && action.execute()) pipe.lastReceivedFrom[channel] |= (byte) (1 << side.ordinal());
+            return accepted;
         }
 
         /** GT6 {@code CoverFilterFluid:124-129} {@code interceptFluidDrain}, asked with the stack offered. */
         @NotNull @Override
         public FluidStack drain(FluidStack resource, FluidAction action) {
-            if (!pipe.coverFluidFilterPermits(side, resource)) return FluidStack.EMPTY;
+            if (!pipe.connected(side) || !pipe.coverFluidFilterPermits(side, resource)) return FluidStack.EMPTY;
             return pipe.drain(resource, action);
         }
 
@@ -1069,7 +1063,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
          */
         @NotNull @Override
         public FluidStack drain(int maxDrain, FluidAction action) {
-            if (!pipe.coverFluidFilterPermits(side, pipe.firstDrainCandidate())) return FluidStack.EMPTY;
+            if (!pipe.connected(side) || !pipe.coverFluidFilterPermits(side, pipe.firstDrainCandidate())) return FluidStack.EMPTY;
             return pipe.drain(maxDrain, action);
         }
     }

@@ -6,8 +6,7 @@ public final class FluidPipeDefinitions {
     private FluidPipeDefinitions() {}
     public static void register() {
         for (var s:FluidTransportDefinitions.pipes()) {
-            var block=GTFluidPipes.register(s.id(),s.material(),s.size(),
-                    s.capacity()/s.size().capacityMultiplier(),s.gasProof(),s.acidProof(),s.plasmaProof());
+            var block=GTFluidPipes.register(s);
             if(s.id().equals("pipe_medium_steel"))GTFluidPipes.PIPE_MEDIUM_STEEL=block;
         }
     }

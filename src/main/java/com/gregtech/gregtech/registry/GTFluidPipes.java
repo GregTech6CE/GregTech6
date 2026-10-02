@@ -23,6 +23,13 @@ public final class GTFluidPipes {
             String id, GTMaterial material, PipeSpec.PipeSize size, long baseCapacity,
             boolean gasProof, boolean acidProof, boolean plasmaProof) {
         PipeSpec spec = PipeSpec.of(id, material, size, baseCapacity, gasProof, acidProof, plasmaProof, false);
+        return register(spec);
+    }
+
+    public static RegistryObject<FluidPipeBlock> register(PipeSpec spec) {
+        String id = spec.id();
+        GTMaterial material = spec.material();
+        PipeSpec.PipeSize size = spec.size();
         RegistryObject<FluidPipeBlock> block = GTBlocks.BLOCKS.register(id,
                 () -> new FluidPipeBlock(spec, FluidPipeBlock.defaultProperties(spec)));
         ALL.add(block);

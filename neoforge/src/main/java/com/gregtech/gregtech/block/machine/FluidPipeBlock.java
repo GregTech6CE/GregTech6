@@ -246,7 +246,7 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
         if (!player.isShiftKeyDown()) {
             BlockEntity fluidTarget = level.getBlockEntity(pos);
             if (fluidTarget instanceof FluidPipeBlockEntity pipe) {
-                InteractionResult result = pipe.handleUse(player, hand);
+                InteractionResult result = pipe.handleUse(player, hand, hit.getDirection());
                 if (result != InteractionResult.PASS) return result;
             }
         }
@@ -334,6 +334,16 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
             if (NeoToolBindings.isMachineWrench(tool)) return true;
         }
         return super.canHarvestBlock(state, level, pos, player);
+    }
+
+    @Override
+    public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction face) {
+        return spec.flammability();
+    }
+
+    @Override
+    public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction face) {
+        return spec.flammability();
     }
 
     public static Properties defaultProperties(PipeSpec spec) {

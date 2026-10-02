@@ -14,8 +14,17 @@ public record PipeSpec(
         boolean acidProof,
         boolean plasmaProof,
         boolean magicProof,
-        long maxTemperature
+        long maxTemperature,
+        int flammability
 ) {
+    /** Compatibility constructor for existing callers; old definitions had no fire behavior. */
+    public PipeSpec(String id, GTMaterial material, PipeSize size, long capacity, int tankCount,
+                    float diameter, boolean gasProof, boolean acidProof, boolean plasmaProof,
+                    boolean magicProof, long maxTemperature) {
+        this(id, material, size, capacity, tankCount, diameter, gasProof, acidProof,
+                plasmaProof, magicProof, maxTemperature, 0);
+    }
+
     public enum PipeSize {
         TINY, SMALL, MEDIUM, LARGE, HUGE, QUADRUPLE, NONUPLE;
 
@@ -56,7 +65,6 @@ public record PipeSpec(
 
     public int tintRgb() { return material.getColor(); }
     public String materialName() { return material.getLocalName(); }
-    public long maxTemperature() { return Math.round(material.getMeltingPoint() * 1.25D); }
 
     /** Blast resistance derived from material tool quality and durability. */
     public float blastResistance() {
@@ -68,9 +76,23 @@ public record PipeSpec(
 
     public static PipeSpec of(String id, GTMaterial material, PipeSize size, long baseCapacity,
                               boolean gasProof, boolean acidProof, boolean plasmaProof, boolean magicProof) {
+        return of(id, material, size, baseCapacity, gasProof, acidProof, plasmaProof, magicProof,
+                (long)(material.getMeltingPoint() * 1.25D));
+    }
+
+    /** Explicit GT6 wood/plastic/rubber limits must survive registration and serialization. */
+    public static PipeSpec of(String id, GTMaterial material, PipeSize size, long baseCapacity,
+                              boolean gasProof, boolean acidProof, boolean plasmaProof, boolean magicProof,
+                              long maxTemperature) {
+        return of(id, material, size, baseCapacity, gasProof, acidProof, plasmaProof, magicProof, maxTemperature, 0);
+    }
+
+    public static PipeSpec of(String id, GTMaterial material, PipeSize size, long baseCapacity,
+                              boolean gasProof, boolean acidProof, boolean plasmaProof, boolean magicProof,
+                              long maxTemperature, int flammability) {
         return new PipeSpec(id, material, size,
                 baseCapacity * size.capacityMultiplier(), size.tankCount(), size.diameter(),
                 gasProof, acidProof, plasmaProof, magicProof,
-                Math.round(material.getMeltingPoint() * 1.25D));
+                maxTemperature, flammability);
     }
 }

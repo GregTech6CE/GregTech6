@@ -202,6 +202,8 @@ public final class PipeCoverTests {
         helper.assertTrue(pipe.clickFilterCover(Direction.EAST, new ItemStack(Items.LAVA_BUCKET)),
                 "the held lava bucket becomes the pipe's fluid filter (CoverFilterFluid:92-114)");
 
+        connect(helper.getLevel(), pipe.getBlockPos(), Direction.EAST);
+        connect(helper.getLevel(), pipe.getBlockPos(), Direction.WEST);
         IFluidHandler east = face(pipe, Direction.EAST);
         IFluidHandler west = face(pipe, Direction.WEST);
         helper.assertTrue(east != null && west != null,

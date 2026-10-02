@@ -7,8 +7,8 @@ import com.gregtech.gregtech.registry.GTFluids;
 import net.minecraft.world.level.material.Fluid;
 
 /**
- * GT6's three fluid hazard classes - acid, gas and plasma - as pure functions, plus the proof-flag
- * truth table that decides what a pipe, a tank or a barrel does with them.
+ * GT6 physical hazard classes - acid, gas and plasma - as pure functions, plus the proof-flag
+ * truth table used by existing vessels. Magic is classified separately by isMagic for pipe ticks.
  *
  * <p><b>Where GT6 keeps the answer.</b> Not on the block and not on the pipe: every GT6 hazard test
  * is {@code FL.acid}/{@code FL.gas}/{@code FL.plasma} against a fluid <em>name</em> held in a global
@@ -56,6 +56,16 @@ import net.minecraft.world.level.material.Fluid;
  * @see #proofRejects(Fluid, boolean, boolean, boolean) the accept/reject decision the vessels use
  */
 public final class FluidHazards {
+    public static final int PIPE_MAGIC_DESTROY_CHANCE = 100;
+
+    /** GT6 FL.magic: explicit fluid flags plus magical material-derived fluids (FL:1119). */
+    public static boolean isMagic(Fluid fluid) {
+        if (fluid == null || fluid == net.minecraft.world.level.material.Fluids.EMPTY) return false;
+        var entry = GTFluids.entryForFluid(fluid);
+        return entry != null && (entry.hasFlag(RegisteredFluids.FluidFlags.MAGIC)
+                || FluidVisualPolicy.material(entry).has(MaterialProperty.MAGICAL));
+    }
+
     /**
      * GT6's three hazard classes plus {@link #NONE}, with the amount of fluid a non-proof pipe loses
      * per tick for each of them.
