@@ -27,7 +27,8 @@ public final class CoreBehaviorContracts {
         atomicMassBounds();
         definitionIdentityAndSnapshot();
         multiblockOwnershipLifecycle();
-        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 7 groups (Java 17; no game dependencies)");
+        addonLifecycle();
+        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 8 groups (Java 17; no game dependencies)");
     }
 
     /** Original BlueprintRegressionTests.java:276-283 numeric fixtures. */
@@ -70,7 +71,33 @@ public final class CoreBehaviorContracts {
         equal(3, GTVoltageTiers.tierMin(520), "between HV and EV");
         equal(128, GTVoltageTiers.maxVoltageOf(40), "display voltage rounds up to MV");
         check("LV".equals(GTVoltageTiers.nameOf(32)), "LV label");
+        check("PUV1".equals(GTVoltageTiers.nameOf(2097152)), "original post-ultimate label");
+        check("XV".equals(GTVoltageTiers.nameOf(2147483648L)), "original maximum label");
+        equal(2147483648L, com.gregtech.gregtech.data.GregTechConstants.V[14], "legacy voltage table uses original finite XV");
+        equal(8589934592L, com.gregtech.gregtech.data.GregTechConstants.V[15], "legacy voltage table has no Long.MAX_VALUE sentinel");
+        check(java.util.Arrays.equals(GTVoltageTiers.NAMES,com.gregtech.gregtech.data.GregTechConstants.VN), "one canonical voltage name table");
         equal(1, GTVoltageTiers.tierMax(-32), "signed voltage magnitude");
+    }
+
+    private static void addonLifecycle() {
+        var calls = new ArrayList<String>();
+        var context = new com.gregtech.gregtech.api.addon.GregTechAddon.Context("neoforge", "1.21.1");
+        for (String id : List.of("zz_example", "aa_example"))
+            com.gregtech.gregtech.api.addon.GregTechAddons.register(new com.gregtech.gregtech.api.addon.GregTechAddon() {
+                public String id() { return id; }
+                public void onRecipesReady(Context actual) {
+                    check(actual.equals(context) && actual.apiVersion()==1, "addon receives exact platform context");
+                    calls.add(id);
+                }
+            });
+        check(!com.gregtech.gregtech.api.addon.GregTechAddons.recipesReady(), "registration does not mean recipe lifecycle completed");
+        com.gregtech.gregtech.api.addon.GregTechAddons.dispatchRecipesReady(context);
+        check(calls.equals(List.of("aa_example", "zz_example")), "deterministic once-only addon ordering");
+        check(com.gregtech.gregtech.api.addon.GregTechAddons.recipesReady(), "successful addon lifecycle ready");
+        boolean repeated=false;
+        try { com.gregtech.gregtech.api.addon.GregTechAddons.dispatchRecipesReady(context); }
+        catch (IllegalStateException expected) { repeated=true; }
+        check(repeated && calls.size()==2, "second dispatch rejects without another callback");
     }
 
     /** Source GTValues and GregTechConstants.L=144: one ingot is 144 L and one nugget 16 L. */

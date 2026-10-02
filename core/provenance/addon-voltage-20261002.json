@@ -1,0 +1,60 @@
+{
+  "integration_base": "ef5e2a9f0430664e92c798ace9bd6b452372b3d0",
+  "adapted_source_files": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/api/tool/ToolAssemblyRules.java",
+      "sha256": "e68478c04312a94a0fb6c1a56710ffdb8ef66fd1a70acf8bc76f82246054f654"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/recipe/GTToolAssemblyRecipe.java",
+      "sha256": "f3662df416f9f58d828e9ef1ad754f220c1af294649c741915658ef57ab9f8f3"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/recipe/GTToolAssemblyRecipe.java",
+      "sha256": "389d275e5e55d9ec4b8e79318e8ba1aba3ef664a5b132368fa47c14f65d9d955"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/api/addon/GregTechAddon.java",
+      "sha256": "c59728dff2a2e7c6b28e54be104dbe070ee97e7bfed1adaa0ea4fdf74d62076d"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/api/addon/GregTechAddons.java",
+      "sha256": "f822be47b30ad2530710d5a326031f1b64f84807e3d3c1972a7450bb4a66eabe"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/api/energy/GTVoltageTiers.java",
+      "sha256": "39b5c3c45db1211f2a669355651e1f982f7f27cb0c752dca36021326600732af"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/data/GregTechConstants.java",
+      "sha256": "34cfbf5f047bba707dcc592f37eaa7e4c88a4f8f215fc0cac507a69d343c17da"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/GregTech.java",
+      "sha256": "5e050d982a16b8f65175023755f91e5d08f07cce1b0c780362f75b28e1a8141c"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "sha256": "001f88289566a5ca4ee3fe6ef83798c61fb7aeace033228c5e1b8162f84f696c"
+    }
+  ],
+  "tool_rule_source": {
+    "path": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\recipe\\GTToolAssemblyRecipe.java",
+    "sha256": "8ffe6c2cfff32a4013c7f065b2994b03fd0db07abd6899bb14e2ad59d025ea10"
+  },
+  "voltage_original_source": {
+    "path": "F:\\Dev\\GregTech6\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+    "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+    "lines": "146-157"
+  },
+  "choices": [
+    "Share existing head/handle admission while retaining typed CraftingContainer/CraftingInput and platform stack creation.",
+    "Replace GT5/GTCE display names and incorrect legacy highest sentinels with original GT6 V/VN; one canonical table supplies legacy views.",
+    "Introduce one deterministic shared recipe-ready addon callback, integrated after built-in setup; no parallel material/recipe/energy implementation.",
+    "Publish compile-only shared-domain SDK and scoped docs; new-material/machine registration and complete old GregAPI replacement are not advertised.",
+    "Owner-confirmed LGPL-3.0-or-later code adoption is separate from preserved asset/component licenses."
+  ],
+  "source_directories_modified": false,
+  "license_adoption": "code-license-adoption-20261002.json",
+  "verification": "../../../docs/integration/verification/addon-voltage-20261002.md"
+}

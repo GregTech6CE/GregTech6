@@ -134,6 +134,10 @@ public final class GregTechNeoForge {
         com.gregtech.gregtech.content.transport.fluid.FermentationAccess.bindOriginalRecipeMaps();
         GTMaterialRegistry.postInit();
         com.gregtech.gregtech.content.recipe.NeoMachineRecipeLoader.load();
+        com.gregtech.gregtech.api.addon.GregTechAddons.dispatchRecipesReady(
+                new com.gregtech.gregtech.api.addon.GregTechAddon.Context("neoforge", "1.21.1"));
+        LOGGER.info("GT addon API {} ready: {}", com.gregtech.gregtech.api.addon.GregTechAddons.API_VERSION,
+                com.gregtech.gregtech.api.addon.GregTechAddons.registeredIds());
         MachineWorkCost.Cost cost = MachineWorkCost.calculate(
                 8, 20, 1, false, 10_000, 8, 32, false);
         if (cost == null || cost.minimumPower() != 8 || cost.totalWork() != 160) {

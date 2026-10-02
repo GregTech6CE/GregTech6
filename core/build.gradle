@@ -32,6 +32,17 @@ tasks.named('jar', Jar).configure {
     reproducibleFileOrder = true
 }
 
+// Compile-only shared addon API/domain dependency. Runtime classes are supplied by the mod JAR.
+tasks.register('addonApiJar', Jar) {
+    dependsOn tasks.named('compileJava')
+    archiveBaseName = 'gregtech6-addon-api'
+    archiveVersion = rootProject.version.toString()
+    from sourceSets.main.output.classesDirs
+    from('src/main/resources/META-INF/gregtech6') { into 'META-INF/gregtech6' }
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}
+
 tasks.register('coreBehaviorContracts', JavaExec) {
     description = 'Runs fixed GT6 behavior fixtures without Minecraft, Forge, or NeoForge.'
     group = 'verification'

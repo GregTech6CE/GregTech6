@@ -113,6 +113,7 @@ minecraft {
         }
 
         server {
+            property 'gregtech.integration.toolAssemblySmoke', (project.findProperty('toolAssemblySmoke') ?: 'false').toString()
             property 'gregtech.integration.engineCraftingSmoke', (project.findProperty('engineCraftingSmoke') ?: 'false').toString()
             property 'gregtech.integration.steamChainSmoke', (project.findProperty('steamChainSmoke') ?: 'false').toString()
             property 'gregtech.integration.dieselPowerSmoke', (project.findProperty('dieselPowerSmoke') ?: 'false').toString()

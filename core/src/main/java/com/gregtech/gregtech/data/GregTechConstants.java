@@ -43,17 +43,10 @@ public class GregTechConstants {
     public static final int EU_PER_FURNACE_TICK = 25;
     public static final int EU_PER_LAVA = 80;
 
-    public static final String[] VN = {
-            "ULV", "LV", "MV", "HV", "EV", "IV", "LuV", "ZPM", "UV", "PUV1",
-            "PUV2", "PUV3", "PUV4", "PUV5", "XV", "XV"
-    };
+    public static final String[] VN = com.gregtech.gregtech.api.energy.GTVoltageTiers.NAMES.clone();
 
-    /** GT6 voltage tier values: ULV=8, LV=32, ..., MAX=Long.MAX_VALUE. Index matches {@link #VN}. */
-    public static final long[] V = {
-            8L, 32L, 128L, 512L, 2048L, 8192L, 32768L, 131072L, 524288L,
-            2097152L, 8388608L, 33554432L, 134217728L, 536870912L,
-            2147483647L, Long.MAX_VALUE
-    };
+    /** Original GT6 CS.V; the last two finite entries are 2147483648 and 8589934592. */
+    public static final long[] V = com.gregtech.gregtech.api.energy.GTVoltageTiers.VOLTAGES.clone();
 
     public static final String[] DYE_NAMES = {
             "Black", "Red", "Green", "Brown", "Blue", "Purple", "Cyan", "Light Gray",

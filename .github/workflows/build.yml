@@ -64,7 +64,7 @@ jobs:
             -Dorg.gradle.java.home="$JAVA17_HOME" \
             -Dorg.gradle.java.installations.fromEnv=JAVA17_HOME,JAVA21_HOME \
             -Dorg.gradle.java.installations.auto-download=false \
-            :core:check "$PLATFORM_TASK" 2>&1 | tee work/ci-build.log
+            :core:check :core:addonApiJar "$PLATFORM_TASK" 2>&1 | tee work/ci-build.log
       - name: Verify current platform packaging and preserve its checksum
         env:
           LIBS_DIR: ${{ matrix.libs }}
@@ -99,6 +99,13 @@ jobs:
           if digest != verified[os.environ['LOADER']]['sha256']:
               raise SystemExit('Platform jar changed after packaging verification')
           target.with_suffix('.jar.sha256').write_text(f'{digest}  {target.name}\n', encoding='utf-8')
+          sdks = list(pathlib.Path('core/build/libs').glob('gregtech6-addon-api-*.jar'))
+          if len(sdks) != 1:
+              raise SystemExit(f'Expected one addon SDK, found {sdks}')
+          sdk = sdks[0]
+          subprocess.run([sys.executable, 'tools/integration/verify_addon_api.py',
+                          '--jar', str(sdk), '--output', str(report.with_name('addon-api.json'))], check=True)
+          shutil.copyfile(sdk, destination / sdk.name)
           (destination / 'build-commit.txt').write_text(os.environ['GITHUB_SHA'] + '\n', encoding='utf-8')
           PY
       - name: Upload packaging evidence without mod binaries
@@ -108,16 +115,12 @@ jobs:
           path: work/packaging-reports/
           if-no-files-found: error
       - name: Upload platform test artifact
-        # Source authorization is unresolved; public CI may build, but may not distribute jars.
-        if: ${{ github.event.repository.private == true }}
+        # Owner adopted LGPL-3.0-or-later; these are test artifacts, not automatic releases.
         uses: actions/upload-artifact@v4
         with:
           name: gregtech6-${{ matrix.minecraft }}-${{ matrix.loader }}
           path: work/ci-artifacts/
           if-no-files-found: error
-      - name: Record public binary upload restriction
-        if: ${{ github.event.repository.private != true }}
-        run: echo "Source authorization is unresolved. Public CI builds and packaging evidence run; mod jar upload is disabled."
       - name: Preserve failure diagnostics
         if: failure()
         uses: actions/upload-artifact@v4

@@ -206,6 +206,10 @@ public class GregTech {
                     throw new IllegalStateException("Phase C failed: " + loader.getClass().getSimpleName(), e);
                 }
             }
+            com.gregtech.gregtech.api.addon.GregTechAddons.dispatchRecipesReady(
+                    new com.gregtech.gregtech.api.addon.GregTechAddon.Context("forge", "1.20.1"));
+            LOGGER.info("GT addon API {} ready: {}", com.gregtech.gregtech.api.addon.GregTechAddons.API_VERSION,
+                    com.gregtech.gregtech.api.addon.GregTechAddons.registeredIds());
             // Rows that RecipeMap.make cancelled down to nothing and dropped; a non-zero value is
             // expected whenever an optimized table contains an input that cancels against its own output.
             var collapsed = com.gregtech.gregtech.api.recipe.RecipeMap.collapsedSamples();

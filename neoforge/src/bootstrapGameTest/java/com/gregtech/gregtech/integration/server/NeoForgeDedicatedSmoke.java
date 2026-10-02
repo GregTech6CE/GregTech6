@@ -47,6 +47,7 @@ public final class NeoForgeDedicatedSmoke {
     private static final boolean ENABLED = !PHASE.isEmpty();
     private static final boolean SMELTERY_WORLD = Boolean.getBoolean("gregtech.integration.smelteryWorldSmoke");
     private static final boolean MACHINE_WORLD = Boolean.getBoolean("gregtech.integration.machineWorldSmoke");
+    private static final boolean TOOL_ASSEMBLY = Boolean.getBoolean("gregtech.integration.toolAssemblySmoke");
     private static final boolean STEAM_CHAIN = Boolean.getBoolean("gregtech.integration.steamChainSmoke");
     private static final boolean DIESEL_POWER = Boolean.getBoolean("gregtech.integration.dieselPowerSmoke");
     private static final boolean DIESEL_BASELINE = Boolean.getBoolean("gregtech.integration.dieselPowerBaseline");
@@ -174,6 +175,7 @@ public final class NeoForgeDedicatedSmoke {
         if (SMELTERY_WORLD) prepareSmeltery(level);
         if (MACHINE_WORLD) prepareMachines(level);
         if (STEAM_CHAIN) prepareSteamChain(level);
+        if (TOOL_ASSEMBLY) prepareToolAssembly(level);
         if (DIESEL_POWER) prepareDieselPower(level);
         if (EARLY_TOOL_CHAIN) prepareEarlyTools(level);
     }
@@ -200,7 +202,8 @@ public final class NeoForgeDedicatedSmoke {
                     || chest.getItem(3).getCount()!=1)
                 throw new IllegalStateException("Real persisted steam crafting results differ");
         }
-        for (int slot = EARLY_TOOL_CHAIN ? 5 : ENGINE_CRAFTING ? 4 : 2; slot < chest.getContainerSize(); slot++) {
+        if (TOOL_ASSEMBLY) verifyToolAssembly(level);
+        for (int slot = EARLY_TOOL_CHAIN ? 5 : TOOL_ASSEMBLY || ENGINE_CRAFTING ? 4 : 2; slot < chest.getContainerSize(); slot++) {
             if (!chest.getItem(slot).isEmpty()) {
                 throw new IllegalStateException("Unexpected item in specimen chest slot " + slot);
             }
@@ -210,6 +213,69 @@ public final class NeoForgeDedicatedSmoke {
         if (MACHINE_WORLD) verifyMachines(level);
         if (STEAM_CHAIN && ("verify".equals(PHASE) || observedTicks >= REQUIRED_TICKS)) verifySteamChain(level);
         if (DIESEL_POWER && observedTicks >= REQUIRED_TICKS) finishDieselPower(level);
+    }
+
+    private static void prepareToolAssembly(ServerLevel level) {
+        try {
+            var pos=specimenPos.south(6);var bench=pos.east(2);
+            for(var target:java.util.List.of(pos,bench)) {
+                level.getChunk(target);
+                if(!level.getBlockState(target).isAir()||!level.getBlockState(target.below()).isAir())throw new IllegalStateException("Tool assembly refuses overwrite");
+                level.setBlockAndUpdate(target.below(),Blocks.STONE.defaultBlockState());
+            }
+            var block=net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","grindstone_block"));
+            if(!(block instanceof com.gregtech.gregtech.block.tool.ManualToolBlock))throw new IllegalStateException("Missing actual grindstone");
+            level.setBlockAndUpdate(pos,block.defaultBlockState());level.setBlockAndUpdate(bench,Blocks.CRAFTING_TABLE.defaultBlockState());
+            var station=(com.gregtech.gregtech.blockentity.tool.ManualToolBlockEntity)level.getBlockEntity(pos);
+            var actor=net.neoforged.neoforge.common.util.FakePlayerFactory.get(level,new com.mojang.authlib.GameProfile(UUID.fromString(specimenId),"[gt-assembly]"));
+            actor.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);actor.getInventory().clearContent();actor.getInventory().selected=8;
+            actor.setPos(pos.getX()+.5,pos.getY(),pos.getZ()+1.5);
+            var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(pos),net.minecraft.core.Direction.UP,pos,false);
+            actor.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,new ItemStack(Items.SANDSTONE));
+            actor.gameMode.useItemOn(actor,level,actor.getMainHandItem(),net.minecraft.world.InteractionHand.MAIN_HAND,hit);
+            if(!actor.getMainHandItem().isEmpty()||station.stoneUses()!=8)throw new IllegalStateException("Actual sandstone install failed");
+            var raw=com.gregtech.gregtech.registry.GTItems.getStack(com.gregtech.gregtech.data.MaterialPrefix.toolHeadRawPickaxe,com.gregtech.gregtech.content.material.Materials.Bronze);
+            if(raw.isEmpty())throw new IllegalStateException("Missing registered raw bronze pick head");
+            actor.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,raw);
+            for(int click=0;click<10;click++)actor.gameMode.useItemOn(actor,level,actor.getMainHandItem(),net.minecraft.world.InteractionHand.MAIN_HAND,hit);
+            if(!actor.getMainHandItem().isEmpty()||station.stoneUses()!=7)throw new IllegalStateException("Actual ten grind clicks did not consume raw head/one abrasive use");
+            var expected=com.gregtech.gregtech.registry.GTItems.getStack(com.gregtech.gregtech.data.MaterialPrefix.toolHeadPickaxe,com.gregtech.gregtech.content.material.Materials.Bronze);
+            ItemStack head=ItemStack.EMPTY;
+            for(int slot=0;slot<actor.getInventory().getContainerSize();slot++) {
+                var held=actor.getInventory().getItem(slot);
+                if(!ItemStack.isSameItemSameComponents(held,expected))continue;
+                if(held.getCount()!=1||!head.isEmpty())throw new IllegalStateException("Wrong actual grinding yield");
+                head=held.copy();held.shrink(1);
+            }
+            if(head.isEmpty())throw new IllegalStateException("Grinding did not supply actual finished bronze head");
+            var menu=new net.minecraft.world.inventory.CraftingMenu(0,actor.getInventory(),net.minecraft.world.inventory.ContainerLevelAccess.create(level,bench));actor.containerMenu=menu;
+            menu.getSlot(1).set(raw.copyWithCount(1));menu.getSlot(9).set(new ItemStack(Items.STICK));
+            if(!menu.getSlot(0).getItem().isEmpty())throw new IllegalStateException("Unfinished head must not assemble");
+            menu.getSlot(1).set(head.copy());menu.getSlot(9).set(head.copy());
+            if(!menu.getSlot(0).getItem().isEmpty())throw new IllegalStateException("Two heads must not replace handle");
+            menu.getSlot(9).set(new ItemStack(Items.STICK,3));menu.getSlot(5).set(new ItemStack(Items.DIAMOND));
+            if(!menu.getSlot(0).getItem().isEmpty())throw new IllegalStateException("Assembly must reject third occupied slot");
+            menu.getSlot(5).set(ItemStack.EMPTY);menu.clicked(0,0,net.minecraft.world.inventory.ClickType.PICKUP,actor);
+            var pick=menu.getCarried().copy();
+            if(!com.gregtech.gregtech.api.tool.GTToolHelper.isUsable(pick)||com.gregtech.gregtech.api.tool.GTToolHelper.getType(pick)!=com.gregtech.gregtech.api.tool.GTToolType.PICKAXE||com.gregtech.gregtech.api.tool.GTToolHelper.getHead(pick)!=com.gregtech.gregtech.content.material.Materials.Bronze||com.gregtech.gregtech.api.tool.GTToolHelper.getHandle(pick)!=com.gregtech.gregtech.content.material.generated.WoodMaterials.Wood||pick.getDamageValue()!=0||pick.getCount()!=1)throw new IllegalStateException("Actual shared bronze head/wood assembly failed");
+            if(!menu.getSlot(1).getItem().isEmpty()||!menu.getSlot(9).getItem().is(Items.STICK)||menu.getSlot(9).getItem().getCount()!=2)throw new IllegalStateException("Actual result slot did not consume exactly one head/handle");
+            var chest=(ChestBlockEntity)level.getBlockEntity(specimenPos);chest.setItem(2,pick);chest.setItem(3,menu.getSlot(9).getItem().copy());chest.setChanged();
+            menu.setCarried(ItemStack.EMPTY);menu.getSlot(9).set(ItemStack.EMPTY);actor.containerMenu=actor.inventoryMenu;
+            var saved=new com.google.gson.JsonObject();saved.addProperty("specimenId",specimenId);saved.addProperty("grindClicks",10);saved.addProperty("remainingAbrasiveUses",7);saved.addProperty("rawHeadRejected",true);saved.addProperty("duplicateHeadRejected",true);saved.addProperty("thirdOccupiedSlotRejected",true);saved.addProperty("pick",pick.saveOptional(level.registryAccess()).toString());saved.addProperty("sticks",chest.getItem(3).saveOptional(level.registryAccess()).toString());saved.addProperty("station",station.saveWithoutMetadata(level.registryAccess()).toString());
+            Files.writeString(worldRoot.getParent().resolve("tool-assembly-snapshot.json"),saved.toString());LOGGER.info("TOOL_ASSEMBLY_ACTUAL_GRIND_CRAFT_SUCCESS {}",saved);
+        } catch(Exception failure) {throw new IllegalStateException("Tool assembly prepare failed",failure);}
+    }
+
+    private static void verifyToolAssembly(ServerLevel level) {
+        try {
+            var saved=com.google.gson.JsonParser.parseString(Files.readString(worldRoot.getParent().resolve("tool-assembly-snapshot.json"))).getAsJsonObject();
+            if(!specimenId.equals(saved.get("specimenId").getAsString()))throw new IllegalStateException("Wrong saved tool assembly identity");
+            var chest=(ChestBlockEntity)level.getBlockEntity(specimenPos);var pick=chest.getItem(2);
+            if(!net.minecraft.nbt.TagParser.parseTag(saved.get("pick").getAsString()).equals(pick.saveOptional(level.registryAccess()))||!net.minecraft.nbt.TagParser.parseTag(saved.get("sticks").getAsString()).equals(chest.getItem(3).saveOptional(level.registryAccess())))throw new IllegalStateException("Saved actual bronze tool or handle remainder changed");
+            var station=level.getBlockEntity(specimenPos.south(6));
+            if(!net.minecraft.nbt.TagParser.parseTag(saved.get("station").getAsString()).equals(station.saveWithoutMetadata(level.registryAccess())))throw new IllegalStateException("Saved actual grindstone stock changed");
+            LOGGER.info("TOOL_ASSEMBLY_SAVED_STOCK_SUCCESS {}",saved);
+        } catch(Exception failure) {throw new IllegalStateException("Tool assembly reload failed",failure);}
     }
 
     private static ItemStack takeEarly(net.minecraft.server.level.ServerPlayer actor,net.minecraft.world.item.Item item,int count) {

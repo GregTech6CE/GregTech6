@@ -98,7 +98,7 @@ def check_metadata(raw, platform, properties):
     if metadata.get('loaderVersion') != expected_loader_range:
         raise ValueError(f'loaderVersion must be {expected_loader_range!r}')
     if metadata.get('license') != properties['mod_license']:
-        raise ValueError('Descriptor license differs from the preserved root declaration')
+        raise ValueError('Descriptor license differs from the current root declaration')
     mods = metadata.get('mods')
     if not isinstance(mods, list) or len(mods) != 1 or not isinstance(mods[0], dict):
         raise ValueError('Descriptor must declare exactly one integration mod')
@@ -162,6 +162,11 @@ def inspect(path, platform, required_core, properties, forbidden_tests):
             metadata = check_metadata(archive.read(metadata_path), platform, properties)
         except (ValueError, TypeError, UnicodeError) as error:
             raise ValueError(f'{path}: invalid {metadata_path}: {error}') from error
+        if properties['mod_license'] == 'LGPL-3.0-or-later':
+            repo = Path(__file__).resolve().parents[2]
+            for name in ('LICENSE', 'COPYING.LESSER', 'COPYING', 'NOTICE'):
+                if archive.read('META-INF/gregtech6/' + name) != (repo / name).read_bytes():
+                    raise ValueError(f'{path}: missing/stale current license or notice: {name}')
         stems, resources = forbidden_tests
         contamination = [name for name in counts
                          if name in resources or name.startswith('data/gregtech_bootstrap/')

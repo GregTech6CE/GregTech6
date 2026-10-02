@@ -16,10 +16,10 @@ public final class GTVoltageTiers {
             8L, 32L, 128L, 512L, 2048L, 8192L, 32768L, 131072L, 524288L, 2097152L,
             8388608L, 33554432L, 134217728L, 536870912L, 2147483648L, 8589934592L};
 
-    /** GT6 tier names in {@link #VOLTAGES} order (see {@code WireTooltips}' ladder). */
+    /** Original GT6 CS.VN names, including Post Ultimate tiers and both maximum entries. */
     public static final String[] NAMES = {
-            "ULV", "LV", "MV", "HV", "EV", "IV", "LuV", "ZPM", "UV", "UHV",
-            "UEV", "UIV", "UMV", "UXV", "MAX", "MAX+"};
+            "ULV", "LV", "MV", "HV", "EV", "IV", "LuV", "ZPM", "UV", "PUV1",
+            "PUV2", "PUV3", "PUV4", "PUV5", "XV", "XV"};
 
     private GTVoltageTiers() {}
 
@@ -51,7 +51,7 @@ public final class GTVoltageTiers {
         return tier < VOLTAGES.length ? VOLTAGES[tier] : VOLTAGES[VOLTAGES.length - 1];
     }
 
-    /** The tier name for a voltage, e.g. {@code "LV"} for 32; {@code "MAX+"} above the table. */
+    /** The tier name for a voltage, e.g. {@code "LV"} for 32; {@code "XV"} above the table. */
     public static String nameOf(long size) {
         int tier = tierMax(size);
         return tier < NAMES.length ? NAMES[tier] : NAMES[NAMES.length - 1];

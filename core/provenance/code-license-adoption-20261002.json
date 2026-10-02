@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-02",
+  "code_license": "LGPL-3.0-or-later",
+  "owner_statement": "我就是saltnya所以不管这个项目所属",
+  "user_instruction": "协议沿用另外两个项目的",
+  "scope": "Project code only; third-party assets/component licenses and attribution retained",
+  "license_sources": [
+    {
+      "path": "F:\\Dev\\GregTech6\\gregtech6-master\\gregtech6-master\\COPYING.LESSER",
+      "sha256": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118"
+    },
+    {
+      "path": "F:\\Dev\\GregTech6\\gregtech6-master\\gregtech6-master\\COPYING",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+    }
+  ],
+  "preserved_old_template": "docs/integration/audits/notices/saltnya/LICENSE.txt",
+  "external_publication_performed": false
+}

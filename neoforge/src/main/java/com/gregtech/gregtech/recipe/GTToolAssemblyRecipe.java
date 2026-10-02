@@ -4,6 +4,7 @@ import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.MaterialEquivalence;
 import com.gregtech.gregtech.api.tool.GTToolHelper;
 import com.gregtech.gregtech.api.tool.GTToolType;
+import com.gregtech.gregtech.api.tool.ToolAssemblyRules;
 import com.gregtech.gregtech.content.material.Materials;
 import com.gregtech.gregtech.data.MaterialPrefix;
 import com.gregtech.gregtech.item.GTToolItem;
@@ -55,51 +56,28 @@ public final class GTToolAssemblyRecipe extends ShapelessRecipe {
 
     @Override
     public ItemStack assemble(CraftingInput grid, net.minecraft.core.HolderLookup.Provider access) {
-        Inputs inputs = readInputs(grid);
+        ToolAssemblyRules.Inputs inputs = readInputs(grid);
         return inputs == null ? ItemStack.EMPTY : GTToolItem.create(type, inputs.head(), inputs.handle());
     }
 
-    /** A magnifying glass is a lens plus a handle; every other row here is head + handle. */
-    private boolean isLensTool() {
-        return type == GTToolType.MAGNIFYING_GLASS;
-    }
-
     @Nullable
-    private Inputs readInputs(CraftingInput grid) {
-        MaterialPrefix wanted = isLensTool() ? MaterialPrefix.lens : type.headPrefix();
-        if (wanted == null) return null;
-        GTMaterial head = null;
-        GTMaterial handle = null;
-        int items = 0;
+    private ToolAssemblyRules.Inputs readInputs(CraftingInput grid) {
+        var forms = new java.util.ArrayList<ToolAssemblyRules.Form>(2);
         for (int slot = 0; slot < grid.size(); slot++) {
             ItemStack stack = grid.getItem(slot);
             if (stack.isEmpty()) continue;
-            if (++items > 2) return null;
+            if (forms.size() == 2) return null;
             var form = MaterialEquivalence.form(stack);
             if (form == null) return null;
-            if (form.prefix() == wanted) {
-                if (head != null) return null;
-                GTMaterial candidate = form.material().resolve();
-                if (candidate == null || (!isLensTool() && !type.canUseHead(candidate))) return null;
-                head = candidate;
-            } else if (form.prefix() == MaterialPrefix.stick) {
-                if (handle != null) return null;
-                GTMaterial candidate = form.material().resolve();
-                if (candidate == null || !GTToolHelper.isValidStick(candidate)) return null;
-                handle = candidate;
-            } else {
-                return null;
-            }
+            forms.add(new ToolAssemblyRules.Form(form.prefix(), form.material()));
         }
-        return head != null && handle != null ? new Inputs(head, handle) : null;
+        return ToolAssemblyRules.match(type.definition(), forms);
     }
 
     @Override
     public RecipeSerializer<?> getSerializer() {
         return GTToolRecipeSerializers.ASSEMBLY;
     }
-
-    private record Inputs(GTMaterial head, GTMaterial handle) {}
 
     // ── display ───────────────────────────────────────────────────────────
 

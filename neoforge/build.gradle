@@ -66,6 +66,7 @@ neoForge {
             }
         }
         server {
+            systemProperty 'gregtech.integration.toolAssemblySmoke', (rootProject.findProperty('toolAssemblySmoke') ?: 'false').toString()
             systemProperty 'gregtech.integration.engineCraftingSmoke', (rootProject.findProperty('engineCraftingSmoke') ?: 'false').toString()
             systemProperty 'gregtech.integration.electricFluxCraftingSmoke', (rootProject.findProperty('electricFluxCraftingSmoke') ?: 'false').toString()
             systemProperty 'gregtech.integration.dieselCraftingSmoke', (rootProject.findProperty('dieselCraftingSmoke') ?: 'false').toString()
