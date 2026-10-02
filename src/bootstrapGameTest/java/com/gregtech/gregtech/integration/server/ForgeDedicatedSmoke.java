@@ -44,6 +44,8 @@ public final class ForgeDedicatedSmoke {
     private static final String MINECRAFT_VERSION = "1.20.1";
     private static final String PHASE = System.getProperty("gregtech.integration.serverSmokePhase", "");
     private static final boolean ENABLED = !PHASE.isEmpty();
+    private static final boolean DIESEL_POWER = Boolean.getBoolean("gregtech.integration.dieselPowerSmoke");
+    private static boolean dieselCycleObserved;
     private static final String SESSION_ID = UUID.randomUUID().toString();
     private static final int REQUIRED_TICKS = 200;
     private static final AtomicBoolean TERMINAL = new AtomicBoolean();
@@ -104,6 +106,7 @@ public final class ForgeDedicatedSmoke {
             } else {
                 // Never create/repair the specimen in verify: it must have loaded from disk.
                 verifyWorld(level);
+                if (DIESEL_POWER) readDieselPower(level);
                 worldReadVerified = true;
                 LOGGER.info("SERVER_SMOKE_WORLD_VERIFIED {}", identity());
             }
@@ -151,6 +154,7 @@ public final class ForgeDedicatedSmoke {
             chest.setItem(3, craftedSteamResults.get("engine_steam_strong_bronze").copy());
         }
         chest.setChanged();
+        if (DIESEL_POWER) prepareDieselPower(level);
     }
 
     private static void verifyWorld(ServerLevel level) {
@@ -180,6 +184,120 @@ public final class ForgeDedicatedSmoke {
                 throw new IllegalStateException("Unexpected item in specimen chest slot " + slot);
             }
         }
+        if (DIESEL_POWER && observedTicks >= REQUIRED_TICKS) finishDieselPower(level);
+    }
+
+    private static net.minecraft.core.BlockPos steamBase() { return specimenPos.south(12); }
+
+    private static com.gregtech.gregtech.blockentity.machine.KineticDieselEngineBlockEntity diesel(ServerLevel level,int offset) {
+        return (com.gregtech.gregtech.blockentity.machine.KineticDieselEngineBlockEntity)level.getBlockEntity(steamBase().east(offset));
+    }
+
+    private static void prepareDieselPower(ServerLevel level) {
+        var base=steamBase();
+        for (var pos:java.util.List.of(base,base.west(),base.east(4),base.east(8))) level.setChunkForced(pos.getX()>>4,pos.getZ()>>4,true);
+        var placements=new java.util.LinkedHashMap<BlockPos,net.minecraft.world.level.block.state.BlockState>();
+        placements.put(base,steamBlock("engine_rotation_bronze").defaultBlockState().setValue(net.minecraft.world.level.block.DirectionalBlock.FACING,net.minecraft.core.Direction.NORTH));
+        placements.put(base.west(),steamBlock("engine_diesel_steel").defaultBlockState().setValue(net.minecraft.world.level.block.DirectionalBlock.FACING,net.minecraft.core.Direction.EAST));
+        placements.put(base.north(),steamBlock("crusher_bronze").defaultBlockState().setValue(net.minecraft.world.level.block.HorizontalDirectionalBlock.FACING,net.minecraft.core.Direction.NORTH));
+        placements.put(base.north().below(),Blocks.CHEST.defaultBlockState());
+        for(int offset:new int[]{4,8}) {
+            placements.put(base.east(offset),steamBlock("engine_diesel_bronze").defaultBlockState().setValue(net.minecraft.world.level.block.DirectionalBlock.FACING,net.minecraft.core.Direction.NORTH));
+            placements.put(base.east(offset).north(),Blocks.STONE.defaultBlockState());
+        }
+        placements.put(base.east(4).south(),Blocks.STONE.defaultBlockState());
+        placements.put(base.east(8).south(),steamBlock("drum_bronze").defaultBlockState());
+        placements.put(base.west(2),Blocks.STONE.defaultBlockState());
+        for(var e:placements.entrySet()) {level.getChunk(e.getKey());if(!level.getBlockState(e.getKey()).isAir())throw new IllegalStateException("Diesel specimen refuses overwrite "+e.getKey());level.setBlockAndUpdate(e.getKey(),e.getValue());}
+        var machine=(com.gregtech.gregtech.blockentity.machine.BasicMachineBlockEntity)level.getBlockEntity(base.north());
+        machine.inventory().setStackInSlot(0,machineFeed());
+        supplyDiesel(level,-1,100);supplyDiesel(level,4,1);supplyDiesel(level,8,1);
+    }
+
+    private static void supplyDiesel(ServerLevel level,int offset,int amount) {
+        var pos=steamBase().east(offset);
+        var inlet=level.getBlockEntity(pos).getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.FLUID_HANDLER,net.minecraft.core.Direction.UP).resolve().orElse(null);
+        if(inlet==null||inlet.fill(new net.minecraftforge.fluids.FluidStack(com.gregtech.gregtech.registry.GTFluids.still("Diesel").get(),amount),net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE)!=amount)throw new IllegalStateException("Diesel actual fuel capability failed");
+    }
+
+    private static Path dieselSnapshotPath(){return worldRoot.getParent().resolve("diesel-power-snapshot.json");}
+    private static JsonObject dieselSnapshot(ServerLevel level,String stage) {
+        var object=new JsonObject();object.addProperty("stage",stage);object.addProperty("specimenId",specimenId);
+        for(int offset:new int[]{-1,4,8}) {
+            var be=diesel(level,offset);var row=new JsonObject();row.addProperty("energy",be.getKuEnergy());row.addProperty("fuel",be.fuelTank().getAmount());row.addProperty("exhaust",be.exhaustTank().getAmount());row.addProperty("stopped",be.isStopped());object.add(Integer.toString(offset),row);
+        }
+        return object;
+    }
+
+    private static void readDieselPower(ServerLevel level) throws IOException {
+        var saved=com.google.gson.JsonParser.parseString(Files.readString(dieselSnapshotPath())).getAsJsonObject();
+        if(!saved.get("specimenId").getAsString().equals(specimenId)||!saved.get("stage").getAsString().equals("powered"))throw new IllegalStateException("Wrong diesel saved stage");
+        for(int offset:new int[]{-1,4,8}) {
+            level.getChunk(steamBase().east(offset));var actual=dieselSnapshot(level,"loaded").getAsJsonObject(Integer.toString(offset));
+            if(!actual.equals(saved.getAsJsonObject(Integer.toString(offset))))throw new IllegalStateException("Diesel real disk stock/stopped mismatch "+offset+" "+actual);
+            var be=diesel(level,offset);
+            var ru=com.gregtech.gregtech.data.GregTechTags.Energy.RU;
+            var ku=com.gregtech.gregtech.data.GregTechTags.Energy.KU;
+            long rated=be.spec().outputRate();
+            if(be.getEnergySizeOutputMin(ru,null)!=rated||be.getEnergySizeOutputRecommended(ru,null)!=rated||be.getEnergySizeOutputMax(ru,null)!=rated||be.getEnergySizeOutputMin(ku,null)!=0||be.getEnergySizeOutputMax(ku,null)!=0)throw new IllegalStateException("Diesel exact rated RU packet range mismatch");
+            long stored=be.getKuEnergy();
+            if(be.doInject(com.gregtech.gregtech.data.GregTechTags.Energy.KU,null,16,1,true)!=0 || be.doInject(com.gregtech.gregtech.data.GregTechTags.Energy.RU,null,16,1,true)!=0 || be.getKuEnergy()!=stored)throw new IllegalStateException("Fuel motor accepted external energy");
+            if(!be.isEnergyType(com.gregtech.gregtech.data.GregTechTags.Energy.RU,null,true)||be.isEnergyType(com.gregtech.gregtech.data.GregTechTags.Energy.KU,null,true)||be.getEnergyStored(com.gregtech.gregtech.data.GregTechTags.Energy.RU,null)!=be.getKuEnergy())throw new IllegalStateException("Diesel RU API not aligned");
+        }
+        for(var pos:java.util.List.of(steamBase(),steamBase().west(),steamBase().east(8)))level.setChunkForced(pos.getX()>>4,pos.getZ()>>4,true);
+        LOGGER.info("DIESEL_POWER_DISK_READ {}",saved);
+        verifyDieselOutput(level); // No fresh fuel or output is supplied after reload.
+    }
+
+    private static void observeDieselCycle(ServerLevel level) {
+        int offset=8;var be=diesel(level,offset);
+        if("verify".equals(PHASE)||dieselCycleObserved||be.fuelTank().getAmount()!=0||be.getKuEnergy()<=0)return;
+        long expected=512;
+        if(be.getKuEnergy()!=expected)throw new IllegalStateException("One real mB diesel cycle: "+be.getKuEnergy()+" expected "+expected);
+        if( be.getEnergyCapacity(com.gregtech.gregtech.data.GregTechTags.Energy.RU,null)<expected)throw new IllegalStateException("RU reservoir reports less than its full cycle");
+        dieselCycleObserved=true;
+        diesel(level,4).setStopped(true);
+        LOGGER.info("DIESEL_CYCLE_OBSERVED baseline=false ordinaryTick={} oneFuelMilliBucket=true storedEnergy={} originalRecipeEnergy=512",observedTicks,be.getKuEnergy());
+    }
+
+    private static void verifyDieselOutput(ServerLevel level) {
+        var machine=(com.gregtech.gregtech.blockentity.machine.BasicMachineBlockEntity)level.getBlockEntity(steamBase().north());
+        var chest=(ChestBlockEntity)level.getBlockEntity(steamBase().north().below());
+        var recipe=machine.recipeMap().findRecipe(java.util.List.of(machineFeed()),java.util.List.of(),false,machine.inputSlots(),machine.outputSlots());
+        if(recipe==null||!machine.inventory().getStackInSlot(0).isEmpty()||machine.machineControl(null).progressMax()!=0)throw new IllegalStateException("Diesel/RU/rotation/KU did not complete real crushing");
+        for(int i=0;i<recipe.mOutputs.length;i++) {
+            var expected=recipe.mOutputs[i];if(expected==null||expected.isEmpty())continue;if(recipe.getOutputChance(i)!=10000)throw new IllegalStateException("Needs deterministic actual recipe");
+            int found=0;for(int s=machine.inputSlots();s<machine.inventory().getSlots();s++)if(ItemStack.isSameItemSameTags(expected,machine.inventory().getStackInSlot(s)))found+=machine.inventory().getStackInSlot(s).getCount();
+            for(int s=0;s<chest.getContainerSize();s++)if(ItemStack.isSameItemSameTags(expected,chest.getItem(s)))found+=chest.getItem(s).getCount();
+            if(found!=expected.getCount())throw new IllegalStateException("Diesel output lost or duplicated");
+            int inChest=0;for(int slot=0;slot<chest.getContainerSize();slot++)if(ItemStack.isSameItemSameTags(expected,chest.getItem(slot)))inChest+=chest.getItem(slot).getCount();
+            if(inChest!=expected.getCount())throw new IllegalStateException("Diesel recipe did not deliver actual output to chest");
+        }
+        var tank=(com.gregtech.gregtech.blockentity.machine.TankBlockEntity)level.getBlockEntity(steamBase().east(8).south());
+        if(tank.getFluidInTank(0).getAmount()!=1||tank.getFluidInTank(0).getFluid()!=com.gregtech.gregtech.registry.GTFluids.still("CarbonDioxide").get())throw new IllegalStateException("Diesel real rear exhaust delivery failed");
+    }
+
+    private static void finishDieselPower(ServerLevel level) {
+        var generator=diesel(level,-1);
+        if("prepare".equals(PHASE)&&!dieselCycleObserved)throw new IllegalStateException("No real full diesel fuel-cycle observation");
+        verifyDieselOutput(level);
+        generator.setStopped(true);
+        ((com.gregtech.gregtech.blockentity.machine.BasicMachineBlockEntity)level.getBlockEntity(steamBase().north())).machineControl(null).setEnabled(false);
+        var snapshot=dieselSnapshot(level,"powered");
+        try{Files.writeString(dieselSnapshotPath(),snapshot.toString());}catch(IOException e){throw new IllegalStateException(e);}
+        LOGGER.info("DIESEL_POWER_CHECKPOINT_SUCCESS {}",snapshot);
+    }
+
+    private static Block steamBlock(String id) {
+        var key = new net.minecraft.resources.ResourceLocation("gregtech", id);
+        if (!net.minecraft.core.registries.BuiltInRegistries.BLOCK.containsKey(key))
+            throw new IllegalStateException("Missing steam-chain block " + key);
+        return net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(key);
+    }
+
+    private static ItemStack machineFeed() {
+        return com.gregtech.gregtech.registry.GTItems.getStack(com.gregtech.gregtech.data.MaterialPrefix.gemChipped,
+                com.gregtech.gregtech.content.material.Materials.Diamond);
     }
 
     private static java.util.Map<String,ItemStack> steamEngineCrafting(ServerLevel level) {
@@ -309,6 +427,7 @@ public final class ForgeDedicatedSmoke {
         if (!ENABLED || server != activeServer || TERMINAL.get() || stopRequested) return;
         try {
             observedTicks++;
+            if (DIESEL_POWER) observeDieselCycle(server.overworld());
             if (observedTicks < REQUIRED_TICKS) return;
             verifyWorld(server.overworld());
             stopRequested = true;

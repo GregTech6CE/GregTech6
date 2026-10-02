@@ -1,0 +1,43 @@
+{
+  "integration_base": "69f730b8ff9c97d52b5c712bdcc54c748fc466b8",
+  "upstream_motor": {
+    "path": "F:\\Dev\\GregTech6\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\generators\\MultiTileEntityMotorLiquid.java",
+    "sha256": "5c5227afcb215886ed33727809fd93b13150d11a1d4d98bdd2e16998a09323d2",
+    "behavior_lines": "229–231: recommended/min/max all return the one fixed rated packet size"
+  },
+  "adapted_source_files": [
+    {
+      "path": "build.gradle",
+      "sha256": "b813f5b4c9a25f3553e589536ec7c4e91bbbc6ad83b8fdd23e43b5a58a1fb873",
+      "base_blob_sha256": "367c5b36f2ac04cdfdebe10edc5f95c70041108a09a0469c557fe83a663304bc"
+    },
+    {
+      "path": "src/bootstrapGameTest/java/com/gregtech/gregtech/integration/server/ForgeDedicatedSmoke.java",
+      "sha256": "d7357fc9af8a8e289d5ec60f4533bb1c70bacf6dc5b54e7d563ec06fe22ef9af",
+      "base_blob_sha256": "45018ce9d2baa470ea4fb593bc3e2d8ce3870fba5ca2531294330c3d40e03885"
+    },
+    {
+      "path": "neoforge/src/bootstrapGameTest/java/com/gregtech/gregtech/integration/server/NeoForgeDedicatedSmoke.java",
+      "sha256": "76f307909a8e6e444bea33cc7f1dd5094dec3f7117ce72fd0373df6655d01d1b",
+      "base_blob_sha256": "a20d4e8af06913fc979ce73305275a7ef32ece3b3f2c5774ab77f36703d180fb"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/blockentity/machine/KineticDieselEngineBlockEntity.java",
+      "sha256": "1c63581b8ddcc960762e2ad92851e6b4a3c655377e25a39a62201572cda3ca23",
+      "base_blob_sha256": "dc220f25fd0bb46d01c74e1ec5615235667f07895beba9e675773d1f7302df35"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/KineticDieselEngineBlockEntity.java",
+      "sha256": "4f6c1ab6520162141af608ed1e5af76c4a305c909994659d404de98caf553f2c",
+      "base_blob_sha256": "9c7f4b4acb913dfefd4f7e96cd92e7343b099b4dd731cc06aab322839b1de8e8"
+    }
+  ],
+  "choices": [
+    "Both diesel adapters expose one rated RU packet size, not the inherited generic half-to-double range. Wrong energy types return zero.",
+    "Existing opt-in Forge/Neo dedicated checkpoints are reused; no new fixture class or fake recipe/backend. Forge uses Forge fluid capability and NBT item equality; Neo uses its native boundary.",
+    "Existing IDs, numeric buffer, tank and stop keys retained. Previous RU layout behavior/compatibility note remains applicable."
+  ],
+  "source_directories_modified": false,
+  "license_changed": false,
+  "verification": "../../../docs/integration/verification/forge-diesel-power-20261002.md"
+}

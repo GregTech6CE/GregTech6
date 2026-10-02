@@ -59,6 +59,8 @@ public class KineticDieselEngineBlockEntity extends EngineBaseBlockEntity implem
     // The original motor only pushes one packet; pull must not produce a second packet in the same tick.
     @Override public long getEnergyOffered(GregTechTags.Tag type, @Nullable Direction side, long size) { return 0; }
     @Override public long doExtract(GregTechTags.Tag type, @Nullable Direction side, long size, long amount, boolean execute) { return 0; }
+    @Override public long getEnergySizeOutputMin(GregTechTags.Tag type, @Nullable Direction side) { return type==GregTechTags.Energy.RU?outputRate():0; }
+    @Override public long getEnergySizeOutputMax(GregTechTags.Tag type, @Nullable Direction side) { return type==GregTechTags.Energy.RU?outputRate():0; }
     @Override public long getEnergyCapacity(GregTechTags.Tag type, @Nullable Direction side) { return type==GregTechTags.Energy.RU?Math.max(kuEnergy,outputRate()*2):0; }
 
     @Override protected GregTechTags.Tag inputEnergyType() { return GregTechTags.Energy.KU; } // doesn't accept external energy

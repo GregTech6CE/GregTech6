@@ -258,6 +258,10 @@ public final class NeoForgeDedicatedSmoke {
             level.getChunk(steamBase().east(offset));var actual=dieselSnapshot(level,"loaded").getAsJsonObject(Integer.toString(offset));
             if(!actual.equals(saved.getAsJsonObject(Integer.toString(offset))))throw new IllegalStateException("Diesel real disk stock/stopped mismatch "+offset+" "+actual);
             var be=diesel(level,offset);
+            var ru=com.gregtech.gregtech.data.GregTechTags.Energy.RU;
+            var ku=com.gregtech.gregtech.data.GregTechTags.Energy.KU;
+            long rated=be.spec().outputRate();
+            if(be.getEnergySizeOutputMin(ru,null)!=rated||be.getEnergySizeOutputRecommended(ru,null)!=rated||be.getEnergySizeOutputMax(ru,null)!=rated||be.getEnergySizeOutputMin(ku,null)!=0||be.getEnergySizeOutputMax(ku,null)!=0)throw new IllegalStateException("Diesel exact rated RU packet range mismatch");
             long stored=be.getKuEnergy();
             if(be.doInject(com.gregtech.gregtech.data.GregTechTags.Energy.KU,null,16,1,true)!=0 || be.doInject(com.gregtech.gregtech.data.GregTechTags.Energy.RU,null,16,1,true)!=0 || be.getKuEnergy()!=stored)throw new IllegalStateException("Fuel motor accepted external energy");
             if(!be.isEnergyType(com.gregtech.gregtech.data.GregTechTags.Energy.RU,null,true)||be.isEnergyType(com.gregtech.gregtech.data.GregTechTags.Energy.KU,null,true)||be.getEnergyStored(com.gregtech.gregtech.data.GregTechTags.Energy.RU,null)!=be.getKuEnergy())throw new IllegalStateException("Diesel RU API not aligned");
