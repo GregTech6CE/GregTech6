@@ -28,7 +28,7 @@ public final class CrucibleItemInput {
 
     public static List<CrucibleMaterialStack> parse(ItemStack stack) {
         List<CrucibleMaterialStack> result = new ArrayList<>();
-        if (stack.isEmpty()) {
+        if (stack.isEmpty() || ItemMaterialRegistry.hasStoredContents(stack)) {
             return result;
         }
 

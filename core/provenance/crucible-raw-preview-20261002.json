@@ -1,0 +1,72 @@
+{
+  "integration_base": "68682331a7d354ab7d31ea49e9fffad245645d6a",
+  "authors": [
+    "saltnya",
+    "GregTech 6 original contributors",
+    "existing integration contributors"
+  ],
+  "adapted_source_files": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/api/machine/crucible/CrucibleInputRules.java",
+      "baseline_git_blob_sha256": "7d21e58c8191a8deb5cdda06fe9d4acb70b4e50f9e4a8f72db8db23b5302807f",
+      "sha256": "6fcb4a912f965dfa85618d30e5c6b7991633243afdb2004c9b9fad946692735b"
+    },
+    {
+      "path": "core/src/test/java/com/gregtech/gregtech/core/MaterialBehaviorContracts.java",
+      "baseline_git_blob_sha256": "5426a010c004df7fa4438d2cbf96145db37a57ba8431cfd8623fcb5446e8c846",
+      "sha256": "7063d62c6bde28713da3376dd20bf7376c0dd6aed318f7cd226687e2209c2ed4"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/api/machine/crucible/CrucibleItemInput.java",
+      "baseline_git_blob_sha256": "e361b6194c079bfba077ec0703612449a3699b23b03360a4c210fec5a45adfdf",
+      "sha256": "5d47a6f7afbf737891655453068b36aa8c162dad36162645ae4cbcc56d3728c1"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/content/recipe/CrucibleSmeltingRecipes.java",
+      "baseline_git_blob_sha256": "7a697169dd4ba523eacafc49d48f4b2c018fc0a50f5c3e01d816ded68675164d",
+      "sha256": "ba9270cf446f99502c10ef8a436c53f3d124716329ed050da68ba4ea92c9d927"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/content/recipe/CrucibleSmeltingRecipes.java",
+      "baseline_git_blob_sha256": "7a697169dd4ba523eacafc49d48f4b2c018fc0a50f5c3e01d816ded68675164d",
+      "sha256": "ba9270cf446f99502c10ef8a436c53f3d124716329ed050da68ba4ea92c9d927"
+    },
+    {
+      "path": "neoforge/src/bootstrapGameTest/java/com/gregtech/gregtech/platform/neoforge/gametest/NeoBronzeChainTests.java",
+      "baseline_git_blob_sha256": "270d0a62c0ff661b6cec8f706e53fbd2229cc332843dbdba1b5c7c0f9d55b4d3",
+      "sha256": "06cdac695ace4e49cd53666446aa6fe81030a9b57cd544a4e643002904d619ba"
+    }
+  ],
+  "references": [
+    {
+      "author": "saltnya",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\gregtech6reborn\\src\\main\\java\\com\\gregtech\\gregtech\\api\\machine\\crucible\\CrucibleItemInput.java",
+      "sha256": "6b2607cf2a3fe4cc5b3513acde72940e26597445f915733714aba76050bdc01c"
+    },
+    {
+      "author": "GregTech 6 original contributors",
+      "source": "F:\\Dev\\GregTech6\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntitySmeltery.java",
+      "sha256": "eaf9b833c4c439a102bb346c6c4e032d88b6d97b823003232f45d185f23597f1"
+    },
+    {
+      "author": "GregTech 6 original contributors",
+      "source": "F:\\Dev\\GregTech6\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapCrucible.java",
+      "sha256": "48e87b089b6460cb2d55d32bcbcf8485af3565722e466f86b8e417e5ee3de1ab"
+    },
+    {
+      "author": "Lorbineitte Masson; comparison only",
+      "source": "F:\\Dev\\GregtTech6New\\Libs\\cruciblecraft\\src\\main\\java\\com\\masson\\cruciblecraft\\machine\\component\\CrucibleProcessCore.java",
+      "sha256": "97b741554e5a4fbe1ac4fac304256ca0c56fbbe14077de8fa87a1edd562ab088"
+    }
+  ],
+  "choices": [
+    "Retain original raw-ore crushing payload: copper/tin charge one U, not the two-U item shell weight.",
+    "Use the same shared input conversion for both recipe previews; preserve real crucible material precision and temperature.",
+    "Match Forge upfront stored-content rejection to NeoForge; no second material/thermal/recipe registry.",
+    "Keep masson independent process architecture as comparison, without importing its second store or changing Kelvin/temperature units.",
+    "Keep actual canonical copper ingot output; correct test item-ID assumption rather than changing valid production unification."
+  ],
+  "source_directories_modified": false,
+  "code_license": "LGPL-3.0-or-later",
+  "new_donor_subsystem_imported": false
+}

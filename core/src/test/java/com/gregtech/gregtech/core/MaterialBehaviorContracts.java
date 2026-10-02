@@ -114,6 +114,25 @@ public final class MaterialBehaviorContracts {
                         && MaterialPrefix.nugget.getMaterialWeight() == 72072000L
                         && MaterialPrefix.dustDiv72.getMaterialWeight() == 9009000L,
                 "Original item form weights must retain exact GT6 fractions");
+        var rawCopper = com.gregtech.gregtech.api.machine.crucible.CrucibleInputRules.materialItem(copper, MaterialPrefix.oreRaw);
+        var rawTin = com.gregtech.gregtech.api.machine.crucible.CrucibleInputRules.materialItem(tin, MaterialPrefix.oreRaw);
+        check(rawCopper.material == copper && rawCopper.amount == GTValues.U
+                && rawTin.material == tin && rawTin.amount == GTValues.U,
+                "Original smeltery raw Cu/Sn each admit one U, separate from oreRaw shell weight two U");
+        var copperPreview = com.gregtech.gregtech.api.machine.crucible.CrucibleInputRules.smeltingPreview(copper, MaterialPrefix.oreRaw);
+        var tinPreview = com.gregtech.gregtech.api.machine.crucible.CrucibleInputRules.smeltingPreview(tin, MaterialPrefix.oreRaw);
+        check(copperPreview != null && copperPreview.material()==copper && copperPreview.amount()==GTValues.U && copperPreview.temperatureK()==1357,
+                "Raw copper display agrees with actual one-ingot payload at 1357K");
+        check(tinPreview != null && tinPreview.material()==tin && tinPreview.amount()==GTValues.U && tinPreview.temperatureK()==505,
+                "Raw tin display agrees with actual one-ingot payload at 505K");
+        check(com.gregtech.gregtech.api.machine.crucible.CrucibleInputRules.ore(copper,9).amount==9*GTValues.U,
+                "Raw copper block is nine actual raw charges, not eighteen melted ingots");
+        var rawCharges = stacks(copper, rawCopper.amount*3, tin, rawTin.amount);
+        com.gregtech.gregtech.api.machine.crucible.CrucibleProcess.process(rawCharges,1356,293,true,true);
+        check(amountOf(rawCharges,bronze)==0, "Actual raw Cu/Sn charges cannot alloy before 1357K");
+        com.gregtech.gregtech.api.machine.crucible.CrucibleProcess.process(rawCharges,1357,1356,false,true);
+        check(rawCharges.size()==1 && amountOf(rawCharges,bronze)==4*GTValues.U,
+                "Three admitted raw copper and one tin charge form exactly four U bronze");
         check(GregTechConstants.C == 273 && GregTechConstants.DEF_ENV_TEMP == 293 && GregTechConstants.L == 144,
                 "Integer Kelvin offset and external litre boundary must stay distinct from U");
     }

@@ -28,7 +28,7 @@ import java.util.TreeSet;
  * is registered for both crucible maps
  * ({@code RM.CrucibleSmelting.mRecipeMachineList.addAll(RM.CrucibleAlloying.mRecipeMachineList)},
  * {@code Loader_MultiTileEntities:294}), so its tab is what tells a player at which temperature a
- * material melts and what it turns into — including the iron chain, where
+ * material melts and what it turns into — using the actual raw-ore crushing payload before smelting, including the iron chain, where
  * {@code Pig Iron → Wrought Iron} needs 2011 K.
  * </p>
  * <p>
@@ -69,11 +69,6 @@ public final class CrucibleSmeltingRecipes {
             if (!material.isValid() || !material.has(MaterialProperty.MELTING)) continue;
             GTMaterial target = material.getTargetSmeltingMaterial();
             if (target == null || !target.isValid()) continue;
-            long targetAmount = material.getTargetSmeltingAmount();
-            if (targetAmount <= 0) continue;
-
-            long temperature = material.getMeltingPoint();
-            if (temperature <= 0) continue;
 
             // GT6 lists the processing forms always and the solid forms only for the materials that
             // are actually transformed into their smelting target (Pig Iron → Wrought Iron, ores, …).
@@ -84,16 +79,17 @@ public final class CrucibleSmeltingRecipes {
             for (MaterialPrefix prefix : forms) {
                 ItemStack input = GTItems.getStack(prefix, material, 1);
                 if (input.isEmpty()) continue;
-                // GT6 UT.Code.units(inputAmount, U, targetAmount, false).
-                long amount = Math.max(1, prefix.getMaterialWeight() * targetAmount / GTValues.U);
-                ItemStack output = OM.ingotOrDust(target, amount);
+                // Raw ore must first use the actual crushing payload, not its 2U shell weight.
+                var preview = com.gregtech.gregtech.api.machine.crucible.CrucibleInputRules.smeltingPreview(material, prefix);
+                if (preview == null) continue;
+                ItemStack output = OM.ingotOrDust(preview.material(), preview.amount());
                 if (output.isEmpty()) {
-                    MISSING.add(prefix.getName() + " of " + target.getName());
+                    MISSING.add(prefix.getName() + " of " + preview.material().getName());
                     continue;
                 }
                 if (MachineRecipeMaps.CrucibleSmelting.addFakeRecipe(false,
                         new ItemStack[]{input}, new ItemStack[]{output}, null, null, null, null,
-                        0, 0, temperature) != null) {
+                        0, 0, preview.temperatureK()) != null) {
                     count++;
                 }
             }

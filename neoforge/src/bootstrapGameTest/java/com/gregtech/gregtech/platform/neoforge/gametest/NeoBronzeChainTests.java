@@ -24,7 +24,7 @@ import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 import java.util.List;
 
-/** One stage-level real chain check. Given equipment/ingredients, not a survival acquisition claim. */
+/** Existing stage chain now mines its raw charges with a real crafted starter pick; equipment is supplied. */
 @GameTestHolder("gregtech_playflow")
 @PrefixGameTestTemplate(false)
 public final class NeoBronzeChainTests {
@@ -39,7 +39,13 @@ public final class NeoBronzeChainTests {
         var box = (SolidBurningBoxEntity) helper.getBlockEntity(boxPos);
         var crucible = (SmeltingCrucibleEntity) helper.getBlockEntity(cruciblePos);
         var mold = (MoldEntity) helper.getBlockEntity(moldPos);
-        Player player = helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+        var actor = net.neoforged.neoforge.common.util.FakePlayerFactory.get(helper.getLevel(),
+                new com.mojang.authlib.GameProfile(java.util.UUID.randomUUID(), "[gt-raw-bronze]"));
+        actor.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
+        actor.getInventory().clearContent();
+        actor.getInventory().selected = 8;
+        Player player = actor;
+        List<ItemStack> minedCharges = harvestRawCharges(helper, actor);
         var wood = com.gregtech.gregtech.api.material.GTMaterialRegistry.get("Wood");
         var chisel = SmelteryRegistries.CHISEL.get().assemble(Materials.Steel, wood);
         var pincers = SmelteryRegistries.PINCERS.get().assemble(Materials.Steel, wood);
@@ -48,8 +54,8 @@ public final class NeoBronzeChainTests {
         for (int z = 0; z < 5; z++) for (int x = 0; x < 3; x++)
             click(helper, player, mold.getBlockPos(), Direction.UP, 0.125 + (x + 0.5) * 0.15, 0.1875, 0.125 + (z + 0.5) * 0.15);
         helper.assertTrue(chisel.getDamageValue() == 15 && mold.getMoldRequiredMaterialUnits() == GTValues.U, "Fifteen real chisel clicks carve one-U ingot form");
-        List<ItemEntity> charges = List.of(drop(helper, crucible, GTItems.getStack(MaterialPrefix.ingot, Materials.Copper, 3), 0.35),
-                drop(helper, crucible, GTItems.getStack(MaterialPrefix.ingot, Materials.Tin, 1), 0.65));
+        List<ItemEntity> charges = List.of(drop(helper, crucible, minedCharges.get(0), 0.35),
+                drop(helper, crucible, minedCharges.get(1), 0.65));
         int[] phase = {0}, pickups = {0};
         boolean[] finished = {false};
         helper.onEachTick(() -> {
@@ -102,6 +108,82 @@ public final class NeoBronzeChainTests {
             }
         });
     }
+    private static List<ItemStack> harvestRawCharges(GameTestHelper helper,
+            net.neoforged.neoforge.common.util.FakePlayer actor) {
+        BlockPos bench = new BlockPos(1, 1, 1);
+        helper.setBlock(bench, Blocks.CRAFTING_TABLE);
+        var menu = new net.minecraft.world.inventory.CraftingMenu(77, actor.getInventory(),
+                net.minecraft.world.inventory.ContainerLevelAccess.create(helper.getLevel(), helper.absolutePos(bench)));
+        actor.containerMenu = menu;
+        // Starter flint/stick and equipment are supplied; the actual recipe result must consume them.
+        for (int slot = 1; slot <= 3; slot++) menu.getSlot(slot).set(new ItemStack(Items.FLINT));
+        menu.getSlot(5).set(new ItemStack(Items.STICK));
+        menu.clicked(0, 0, net.minecraft.world.inventory.ClickType.PICKUP, actor);
+        ItemStack pick = menu.getCarried().copy();
+        helper.assertTrue(com.gregtech.gregtech.api.tool.GTToolHelper.isUsable(pick)
+                && com.gregtech.gregtech.api.tool.GTToolHelper.getHead(pick) == Materials.Flint,
+                "Real workbench result must produce the starter flint pick");
+        for (int slot = 1; slot <= 9; slot++) helper.assertTrue(menu.getSlot(slot).getItem().isEmpty(), "Workbench consumed actual inputs");
+        menu.setCarried(ItemStack.EMPTY);
+        actor.containerMenu = actor.inventoryMenu;
+        actor.setItemInHand(InteractionHand.MAIN_HAND, pick);
+        for (int i = 0; i < 4; i++) {
+            var material = i == 3 ? Materials.Tin : Materials.Copper;
+            BlockPos relative = new BlockPos(6 + i, 1, 3), absolute = helper.absolutePos(relative);
+            var block = com.gregtech.gregtech.registry.GTBlocks.getObject(
+                    com.gregtech.gregtech.api.prefix.BlockMaterialPrefix.ore, material);
+            helper.assertTrue(block != null, "Registered actual raw ore block exists");
+            helper.setBlock(relative.below(), Blocks.STONE);
+            helper.setBlock(relative, block.get());
+            actor.setPos(absolute.getX()+.5, absolute.getY(), absolute.getZ()+1.5);
+            helper.assertTrue(pick.isCorrectToolForDrops(helper.getLevel().getBlockState(absolute))
+                    && actor.gameMode.destroyBlock(absolute) && helper.getLevel().getBlockState(absolute).isAir(),
+                    "Crafted starter pick actually harvests the placed ore");
+            ItemStack expected = GTItems.getStack(MaterialPrefix.oreRaw, material);
+            int found = 0;
+            for (var entity : helper.getLevel().getEntitiesOfClass(ItemEntity.class,
+                    new net.minecraft.world.phys.AABB(absolute).inflate(1))) {
+                if (!ItemStack.isSameItemSameComponents(entity.getItem(), expected)) continue;
+                found += entity.getItem().getCount();
+                helper.assertTrue(actor.getInventory().add(entity.getItem().copy()), "Actual raw drops fit actor inventory");
+                entity.discard();
+            }
+            helper.assertTrue(found == 1, "Each real harvest produces exactly one raw charge");
+        }
+        helper.assertTrue(pick.getDamageValue() == 300, "Four real harvests retain actual starter wear");
+        actor.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
+        var result = new java.util.ArrayList<ItemStack>();
+        for (var material : List.of(Materials.Copper, Materials.Tin)) {
+            ItemStack expected = GTItems.getStack(MaterialPrefix.oreRaw, material);
+            int required = material == Materials.Copper ? 3 : 1;
+            ItemStack gathered = ItemStack.EMPTY;
+            for (int slot = 0; slot < actor.getInventory().getContainerSize(); slot++) {
+                var stack = actor.getInventory().getItem(slot);
+                if (!ItemStack.isSameItemSameComponents(stack, expected)) continue;
+                if (gathered.isEmpty()) gathered = stack.copyWithCount(0);
+                gathered.grow(stack.getCount());
+                actor.getInventory().setItem(slot, ItemStack.EMPTY);
+            }
+            helper.assertTrue(gathered.getCount() == required, "Use harvested raw stock without replacement");
+            var display = com.gregtech.gregtech.data.MachineRecipeMaps.CrucibleSmelting.mRecipeList.stream()
+                    .filter(recipe -> recipe.mInputs.length==1 && ItemStack.isSameItemSameComponents(recipe.mInputs[0],expected))
+                    .findFirst().orElseThrow();
+            // Recipe registration intentionally unifies copper to vanilla's copper ingot.
+            var outputForm = display.mOutputs.length == 1
+                    ? com.gregtech.gregtech.api.material.MaterialEquivalence.form(display.mOutputs[0]) : null;
+            helper.assertTrue(display.mFakeRecipe && display.mOutputs.length==1
+                    && outputForm != null && outputForm.prefix() == MaterialPrefix.ingot
+                    && outputForm.material() == material.resolve() && display.mOutputs[0].getCount()==1
+                    && display.mSpecialValue==material.getMeltingPoint(), "Actual recipe directory shows the real one-U raw yield and temperature");
+            LogUtils.getLogger().info("GT6_NEO_RAW_PREVIEW material={} output={} count={} temperature={}",
+                    material.getName(), net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(display.mOutputs[0].getItem()),
+                    display.mOutputs[0].getCount(), display.mSpecialValue);
+            result.add(gathered);
+        }
+        LogUtils.getLogger().info("GT6_NEO_PLAYFLOW_RAW_MINED actualHarvests=4 rawCopper=3 rawTin=1 flintPickWear=300 recipePreviewOneU=true");
+        return result;
+    }
+
     private static void verifyStackedBasin(GameTestHelper helper, Player player, MoldEntity mold) {
         var basinBlock = SmelteryRegistries.basins().stream()
                 .filter(holder -> holder.get().spec().material().equals(Materials.Ceramic))
