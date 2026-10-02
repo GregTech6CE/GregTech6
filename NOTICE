@@ -2,7 +2,8 @@ GregTech 6 Community Edition
 Code: SPDX-License-Identifier: LGPL-3.0-or-later
 
 This project's code is distributed under the GNU Lesser General Public License,
-version 3 or (at your option) any later version. See LICENSE / COPYING.LESSER and COPYING.
+version 3 or (at your option) any later version. See LICENSE and docs/licenses/GPL-3.0.txt.
+In distributed JARs, the GPL text is META-INF/gregtech6/GPL-3.0.txt.
 On 2026-10-02 the project owner identified themselves as saltnya in the development
 conversation and instructed adoption of the other two ports' code license.
 
