@@ -22,6 +22,7 @@ public final class CoreBehaviorContracts {
     public static void main(String[] args) {
         workCostGoldens();
         machineEnergyGoldens();
+        itemPipeRoutingAndDelivery();
         voltageGoldens();
         materialAndCrucibleUnits();
         signedPacketsAndFiniteBuffer();
@@ -29,7 +30,7 @@ public final class CoreBehaviorContracts {
         definitionIdentityAndSnapshot();
         multiblockOwnershipLifecycle();
         addonLifecycle();
-        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 9 groups (Java 17; no game dependencies)");
+        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 10 groups (Java 17; no game dependencies)");
     }
 
     /** Original BlueprintRegressionTests.java:276-283 numeric fixtures. */
@@ -94,6 +95,57 @@ public final class CoreBehaviorContracts {
         equal(96, MachineWorkCost.advance(64,128,32), "ordinary recipe advances by supplied work");
         equal(128, MachineWorkCost.advance(120,128,32), "completed recipe stops at its cost");
         equal(Long.MAX_VALUE, MachineWorkCost.advance(Long.MAX_VALUE-4,Long.MAX_VALUE,32), "largest job can complete without wraparound");
+    }
+
+    private static void itemPipeRoutingAndDelivery() {
+        var edges = Map.of("first", List.of("join"), "second", List.of("join"));
+        var costs = Map.of("first", 5L, "second", 1L, "join", 4L);
+        var selected = com.gregtech.gregtech.content.transport.WeightedItemPipeRoutes.bestExit(
+                List.of("first", "second"), n -> costs.get(n), n -> edges.getOrDefault(n,List.of()), "join"::equals, 32);
+        check(selected != null && "second".equals(selected.firstHop()), "shared exit reached by cheapest first hop");
+        equal(5, selected.cost(), "minimum weighted path includes both pipe steps");
+        equal(9, com.gregtech.gregtech.content.transport.WeightedItemPipeRoutes.minimumExitCost(
+                "first", n -> costs.get(n), n -> edges.getOrDefault(n,List.of()), "join"::equals,32), "single-hop API retained");
+        var tied = com.gregtech.gregtech.content.transport.WeightedItemPipeRoutes.bestExit(
+                List.of("first","second"), n -> "first".equals(n)?3: "join".equals(n)?7:10,
+                n -> "first".equals(n)?List.of("join"):List.of(), n -> !"first".equals(n),32);
+        check(tied != null && "first".equals(tied.firstHop()), "equal costs retain original first-face ordering despite longer path");
+        var saturated = com.gregtech.gregtech.content.transport.WeightedItemPipeRoutes.bestExit(
+                List.of("first"), n -> Long.MAX_VALUE, n -> List.of(), n -> true,32);
+        check(saturated != null && saturated.cost()==Long.MAX_VALUE, "saturated valid route is selectable");
+        check(com.gregtech.gregtech.content.transport.WeightedItemPipeRoutes.bestExit(
+                List.of("first","second"), n -> costs.get(n), n -> edges.getOrDefault(n,List.of()), "join"::equals,1)==null,
+                "visit limit applies once to the combined scan");
+        var cycle = com.gregtech.gregtech.content.transport.WeightedItemPipeRoutes.bestExit(
+                List.of("first"), n -> 0, n -> "first".equals(n)?List.of("second"):List.of("first"), "second"::equals,32);
+        check(cycle != null && "first".equals(cycle.firstHop()) && cycle.cost()==0, "zero-step cycles terminate and retain ingress hop");
+
+        int[] actualUnits={0};boolean[] fails={false};
+        var port = new com.gregtech.gregtech.content.transport.ItemPipeTransfer.Port<int[]>() {
+            public boolean begin(boolean simulate){return true;}
+            public int slots(){return 1;}
+            public int[] stack(int slot){return new int[]{0,0};}
+            public int count(int[] stack){return stack[1];}
+            public int[] copyWithCount(int[] stack,int count){return new int[]{stack[0],count};}
+            public boolean same(int[] a,int[] b){return a[0]==b[0];}
+            public int[] insert(int slot,int[] offered,boolean simulate){
+                if(fails[0])throw new IllegalStateException("foreign handler failed");
+                int accepted=Math.min(offered[1],simulate?4:2);
+                if(!simulate)actualUnits[0]+=accepted;
+                return copyWithCount(offered,offered[1]-accepted);
+            }
+        };
+        var probe=com.gregtech.gregtech.content.transport.ItemPipeTransfer.simulate(new int[]{1,6},port);
+        equal(4,probe.planned(),"exit probe validates partial remainder");
+        equal(0,actualUnits[0],"exit probe never performs actual insertion");
+        var delivery=com.gregtech.gregtech.content.transport.ItemPipeTransfer.transfer(new int[]{1,6},port);
+        equal(4,delivery.planned(),"normal delivery uses same destination plan");
+        equal(2,delivery.accepted(),"only smaller actual commit is charged to source");
+        equal(2,actualUnits[0],"actual provider commit matches source bill");
+        fails[0]=true;
+        var bad=com.gregtech.gregtech.content.transport.ItemPipeTransfer.simulate(new int[]{1,6},port);
+        check(bad.handlerFailed()&&bad.planned()==0,"exceptional exit safely rejected");
+        equal(2,actualUnits[0],"exceptional probe cannot execute a delivery");
     }
 
     private static void addonLifecycle() {

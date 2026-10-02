@@ -495,9 +495,7 @@ public class ItemPipeBlockEntity extends BlockEntity
         ItemStack offered = inventory.get(0);
         if (offered.isEmpty()) return false;
         // Find the adjacent pipe with the best (lowest step-distance) path to an exit
-        long bestPathCost = Long.MAX_VALUE;
-        ItemPipeBlockEntity bestNeighbor = null;
-        Direction bestDir = null;
+        java.util.Map<ItemPipeBlockEntity, Direction> candidates = new java.util.LinkedHashMap<>();
 
         for (Direction side : Direction.values()) {
             if (!canEmitTo(side)) continue;
@@ -512,24 +510,16 @@ public class ItemPipeBlockEntity extends BlockEntity
                     || !neighborPipe.getBlockState().getValue(ItemPipeBlock.propFor(side.getOpposite()))
                     || !neighborPipe.coverPermitsItemTraffic(side.getOpposite(),offered)) continue;
 
-            // Check if this neighbor or any pipe reachable from it is adjacent to a non-pipe inventory
-            long cost = findBestExitCost(neighborPipe, offered);
-            if (cost >= 0 && cost < bestPathCost) {
-                bestPathCost = cost;
-                bestNeighbor = neighborPipe;
-                bestDir = side;
-            }
+            candidates.put(neighborPipe, side);
         }
-
-        if (bestNeighbor == null) return false;
-
-        // Push items to the best neighbor pipe
-        return pushItemsToPipe(bestNeighbor, bestDir);
+        var exit = findBestExit(candidates.keySet(), offered);
+        return exit != null && pushItemsToPipe(exit.firstHop(), candidates.get(exit.firstHop()));
     }
 
     /** Shared minimum-weight search over currently loaded pipes and accepting inventory faces. */
-    private long findBestExitCost(ItemPipeBlockEntity start,ItemStack offered) {
-        return com.gregtech.gregtech.content.transport.WeightedItemPipeRoutes.minimumExitCost(start,
+    private com.gregtech.gregtech.content.transport.WeightedItemPipeRoutes.Exit<ItemPipeBlockEntity> findBestExit(
+            Iterable<ItemPipeBlockEntity> starts, ItemStack offered) {
+        return com.gregtech.gregtech.content.transport.WeightedItemPipeRoutes.bestExit(starts,
                 pipe -> pipe.spec.stepSize(), pipe -> {
                     java.util.List<ItemPipeBlockEntity> adjacent = new java.util.ArrayList<>();
                     BlockState current = pipe.getBlockState();
@@ -568,11 +558,8 @@ public class ItemPipeBlockEntity extends BlockEntity
             if (!level.hasChunkAt(next)) continue;
             BlockEntity entity = level.getBlockEntity(next);
             if (entity instanceof ItemPipeBlockEntity) continue;
-            IItemHandler handler = itemHandler(entity,side.getOpposite());
-            if (handler == null) continue;
-            ItemStack remainder = ItemHandlerHelper.insertItemStacked(handler,offered.copy(),true);
-            if (remainder != null && remainder.getCount() >= 0 && remainder.getCount() < offered.getCount()
-                    && (remainder.isEmpty() || ItemStack.isSameItemSameComponents(offered,remainder))) return true;
+            if (com.gregtech.gregtech.content.transport.ItemPipeTransferAdapter.canAccept(offered,
+                    () -> itemHandlerAt(next, side.getOpposite()))) return true;
         }
         return false;
     }
@@ -673,21 +660,19 @@ public class ItemPipeBlockEntity extends BlockEntity
         if (level == null || level.isClientSide) return;
         for (Direction side : Direction.values()) {
             if (isEmpty()) break;
-            BlockEntity be = level.getBlockEntity(worldPosition.relative(side));
-            if (be instanceof ItemPipeBlockEntity) continue;
-            if (be == null) continue;
-            IItemHandler cap=level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,be.getBlockPos(),side.getOpposite());
-            if (cap==null) continue;
-            IItemHandler target=cap;
-            if (target == null) continue;
+            BlockPos targetPos = worldPosition.relative(side);
+            if (!level.hasChunkAt(targetPos)) continue;
+            BlockEntity entity = level.getBlockEntity(targetPos);
+            if (entity == null || entity instanceof ItemPipeBlockEntity) continue;
             for (int slot = 0; slot < inventory.size(); slot++) {
                 ItemStack stack = inventory.get(slot);
                 if (stack.isEmpty()) continue;
-                ItemStack remainder = ItemHandlerHelper.insertItemStacked(target, stack.copy(), false);
-                int moved = stack.getCount() - remainder.getCount();
+                int moved = com.gregtech.gregtech.content.transport.ItemPipeTransferAdapter.transfer(stack.copy(),
+                        () -> itemHandlerAt(targetPos, side.getOpposite())).accepted();
                 if (moved > 0) {
                     stack.shrink(moved);
                     if (stack.isEmpty()) inventory.set(slot, ItemStack.EMPTY);
+                    setChanged();
                 }
             }
         }
@@ -823,7 +808,7 @@ public class ItemPipeBlockEntity extends BlockEntity
     @NotNull
     @Override
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
-        if (slot < 0 || slot >= inventory.size()) return ItemStack.EMPTY;
+        if (slot < 0 || slot >= inventory.size() || amount <= 0) return ItemStack.EMPTY;
         ItemStack stack = inventory.get(slot);
         if (stack.isEmpty()) return ItemStack.EMPTY;
         int toExtract = Math.min(amount, stack.getCount());

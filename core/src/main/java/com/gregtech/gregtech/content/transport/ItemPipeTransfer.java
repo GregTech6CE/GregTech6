@@ -21,6 +21,13 @@ public final class ItemPipeTransfer {
     public record Result(int planned, int accepted, boolean handlerFailed) {}
     private record Offer(int accepted, boolean failed) {}
 
+    /** Probe the exact same validated destination contract, without an actual insertion pass. */
+    public static <S> Result simulate(S offered, Port<S> port) {
+        if (port.count(offered) <= 0) return new Result(0, 0, false);
+        Offer planned = offer(offered, port, true);
+        return new Result(planned.accepted(), 0, planned.failed());
+    }
+
     public static <S> Result transfer(S offered, Port<S> port) {
         int count = port.count(offered);
         if (count <= 0) return new Result(0, 0, false);
