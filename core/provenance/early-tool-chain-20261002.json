@@ -1,0 +1,50 @@
+{
+  "integration_base": "0d6cca56375ccbc6182d3deed4f43766eeabebff",
+  "adapted_source_files": [
+    {
+      "path": "neoforge/build.gradle",
+      "sha256": "e2f806ce621bb668be466e17e993e57a77dcf57ed844db025a848f544f6a68ce",
+      "base_blob_sha256": "9bf5c70d23f564f86e5afe04a5b8ddb2e79e87bd888d2a51d8ecf52177433b2f"
+    },
+    {
+      "path": "neoforge/src/bootstrapGameTest/java/com/gregtech/gregtech/integration/server/NeoForgeDedicatedSmoke.java",
+      "sha256": "595a37d9bce9736fc5ffd20bb2101ce2528c57f3fabf3e2c74cb317d7743166b",
+      "base_blob_sha256": "f720ff3c51e493e1b1c6affb005db8664fc6a59801de11e728c36e8fb4aaaa99"
+    }
+  ],
+  "unchanged_production_files": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/tool/ManualToolRecipeCatalog.java",
+      "sha256": "512135ccb9b26193ce86f1db0e1d2ae41f639be06cd34b1f2927ed5150786e20"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/recipe/GTToolPatternRecipe.java",
+      "sha256": "71bc70a4f8b7105a2fe32548c7fa69cb8742a3670fea730f271e3da756634afb"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/block/RockBlock.java",
+      "sha256": "5e65bc33808fe347ec86e813e172e0d86dd9b4503c450ef3fb1cdb251eceb7ec"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/block/OreBlock.java",
+      "sha256": "2f4186c48b0174d14bb9d72b580221b3a0a3aeb2da16256e5b4b1c12aae6af44"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/RockBlockEntity.java",
+      "sha256": "95aa19cd56581b44305c805705ace283865e864442b71a20e4c3bbce6e83749e"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "sha256": "23879770b258e72b825a896ada5e0b6391d21adb97a773581f21e390fb818aca"
+    }
+  ],
+  "choices": [
+    "Reuse the existing default-disabled dedicated checkpoint; no new fixture class or forced progression/balance changes.",
+    "Run the existing shared manual tool recipe through the actual server workbench result click and real survival ore break, rather than treating recipe lookup as crafting.",
+    "Keep actual ItemStack components and ore quantities in the saved world for an independent-JVM comparison.",
+    "No production changes; retain existing dual JARs with actual SHA confirmation."
+  ],
+  "source_directories_modified": false,
+  "license_changed": false,
+  "verification": "../../../docs/integration/verification/early-tool-chain-20261002.md"
+}

@@ -52,6 +52,7 @@ public final class NeoForgeDedicatedSmoke {
     private static final boolean DIESEL_BASELINE = Boolean.getBoolean("gregtech.integration.dieselPowerBaseline");
     private static final boolean DIESEL_READ_ONLY = Boolean.getBoolean("gregtech.integration.dieselPowerReadOnly");
     private static boolean dieselCycleObserved;
+    private static final boolean EARLY_TOOL_CHAIN = Boolean.getBoolean("gregtech.integration.earlyToolChainSmoke");
     private static final String SESSION_ID = UUID.randomUUID().toString();
     private static final int REQUIRED_TICKS = STEAM_CHAIN && "prepare".equals(PHASE) ? 12000 : 200;
     private static final AtomicBoolean TERMINAL = new AtomicBoolean();
@@ -119,6 +120,7 @@ public final class NeoForgeDedicatedSmoke {
                 // Never create/repair the specimen in verify: it must have loaded from disk.
                 verifyWorld(level);
                 if (DIESEL_POWER) readDieselPower(level);
+                if (EARLY_TOOL_CHAIN) verifyEarlyTools(level);
                 worldReadVerified = true;
                 LOGGER.info("SERVER_SMOKE_WORLD_VERIFIED {}", identity());
             }
@@ -173,6 +175,7 @@ public final class NeoForgeDedicatedSmoke {
         if (MACHINE_WORLD) prepareMachines(level);
         if (STEAM_CHAIN) prepareSteamChain(level);
         if (DIESEL_POWER) prepareDieselPower(level);
+        if (EARLY_TOOL_CHAIN) prepareEarlyTools(level);
     }
 
     private static void verifyWorld(ServerLevel level) {
@@ -197,15 +200,90 @@ public final class NeoForgeDedicatedSmoke {
                     || chest.getItem(3).getCount()!=1)
                 throw new IllegalStateException("Real persisted steam crafting results differ");
         }
-        for (int slot = ENGINE_CRAFTING ? 4 : 2; slot < chest.getContainerSize(); slot++) {
+        for (int slot = EARLY_TOOL_CHAIN ? 5 : ENGINE_CRAFTING ? 4 : 2; slot < chest.getContainerSize(); slot++) {
             if (!chest.getItem(slot).isEmpty()) {
                 throw new IllegalStateException("Unexpected item in specimen chest slot " + slot);
             }
         }
+        if (EARLY_TOOL_CHAIN && observedTicks >= REQUIRED_TICKS) verifyEarlyTools(level);
         if (SMELTERY_WORLD) verifySmeltery(level);
         if (MACHINE_WORLD) verifyMachines(level);
         if (STEAM_CHAIN && ("verify".equals(PHASE) || observedTicks >= REQUIRED_TICKS)) verifySteamChain(level);
         if (DIESEL_POWER && observedTicks >= REQUIRED_TICKS) finishDieselPower(level);
+    }
+
+    private static ItemStack takeEarly(net.minecraft.server.level.ServerPlayer actor,net.minecraft.world.item.Item item,int count) {
+        var result=new ItemStack(item,count);int left=count;
+        for(int slot=0;slot<actor.getInventory().getContainerSize()&&left>0;slot++) {
+            var stock=actor.getInventory().getItem(slot);if(!stock.is(item))continue;
+            int amount=Math.min(left,stock.getCount());stock.shrink(amount);left-=amount;
+        }
+        if(left!=0)throw new IllegalStateException("Missing actually collected early material "+item);
+        return result;
+    }
+
+    private static void prepareEarlyTools(ServerLevel level) {
+        try {
+        var base=specimenPos.south(6);
+        var actor=net.neoforged.neoforge.common.util.FakePlayerFactory.get(level,new com.mojang.authlib.GameProfile(UUID.fromString(specimenId),"[gt-early]"));
+        actor.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);actor.getInventory().clearContent();actor.getInventory().selected=8;
+        if(actor.getAbilities().instabuild)throw new IllegalStateException("Early actor must be survival");
+        for(int offset=0;offset<9;offset++) {
+            var pos=base.east(offset);level.getChunk(pos);
+            if(!level.getBlockState(pos).isAir()||!level.getBlockState(pos.below()).isAir())throw new IllegalStateException("Early specimens refuse overwrite");
+            level.setBlockAndUpdate(pos.below(),Blocks.STONE.defaultBlockState());
+        }
+        for(int i=0;i<4;i++) {
+            var pos=base.east(i);level.setBlockAndUpdate(pos,i==3?com.gregtech.gregtech.registry.GTBlocks.TWIGS.get().defaultBlockState():com.gregtech.gregtech.registry.GTBlocks.ROCK.get().defaultBlockState());
+            if(i<3)((com.gregtech.gregtech.blockentity.RockBlockEntity)level.getBlockEntity(pos)).setItemId("minecraft:flint");
+            actor.setPos(pos.getX()+0.5,pos.getY(),pos.getZ()+1.5);actor.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ItemStack.EMPTY);
+            var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(pos),net.minecraft.core.Direction.UP,pos,false);
+            actor.gameMode.useItemOn(actor,level,ItemStack.EMPTY,net.minecraft.world.InteractionHand.MAIN_HAND,hit);
+            if(!level.getBlockState(pos).isAir())throw new IllegalStateException("Actual right-click did not collect rock/twig");
+        }
+        var bench=base.east(4);level.setBlockAndUpdate(bench,Blocks.CRAFTING_TABLE.defaultBlockState());
+        var menu=new net.minecraft.world.inventory.CraftingMenu(0,actor.getInventory(),net.minecraft.world.inventory.ContainerLevelAccess.create(level,bench));
+        actor.containerMenu=menu;
+        for(int x=0;x<3;x++)menu.getSlot(1+x).set(takeEarly(actor,Items.FLINT,1));
+        menu.getSlot(5).set(takeEarly(actor,Items.STICK,1));
+        menu.clicked(0,0,net.minecraft.world.inventory.ClickType.PICKUP,actor);
+        var pick=menu.getCarried().copy();
+        if(!com.gregtech.gregtech.api.tool.GTToolHelper.isUsable(pick)||com.gregtech.gregtech.api.tool.GTToolHelper.getType(pick)!=com.gregtech.gregtech.api.tool.GTToolType.PICKAXE||com.gregtech.gregtech.api.tool.GTToolHelper.getHead(pick)!=com.gregtech.gregtech.content.material.Materials.Flint||com.gregtech.gregtech.api.tool.GTToolHelper.getHandle(pick)!=com.gregtech.gregtech.content.material.generated.WoodMaterials.Wood)throw new IllegalStateException("Actual early crafting result slot did not produce Flint/Wood pick "+pick);
+        for(int slot=1;slot<=9;slot++)if(!menu.getSlot(slot).getItem().isEmpty())throw new IllegalStateException("Actual result-slot click did not consume early grid");
+        menu.setCarried(ItemStack.EMPTY);actor.containerMenu=actor.inventoryMenu;
+        actor.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,pick);int before=pick.getDamageValue();
+        for(int i=0;i<4;i++) {
+            var material=i==3?com.gregtech.gregtech.content.material.Materials.Tin:com.gregtech.gregtech.content.material.Materials.Copper;
+            var pos=base.east(5+i);var ore=com.gregtech.gregtech.registry.GTBlocks.getObject(com.gregtech.gregtech.api.prefix.BlockMaterialPrefix.ore,material);
+            if(ore==null)throw new IllegalStateException("Missing registered early ore "+material);
+            level.setBlockAndUpdate(pos,ore.get().defaultBlockState());actor.setPos(pos.getX()+0.5,pos.getY(),pos.getZ()+1.5);
+            if(!pick.isCorrectToolForDrops(level.getBlockState(pos))||!actor.gameMode.destroyBlock(pos)||!level.getBlockState(pos).isAir())throw new IllegalStateException("Crafted flint pick cannot harvest actual ore "+material);
+            var raw=com.gregtech.gregtech.registry.GTItems.getStack(com.gregtech.gregtech.data.MaterialPrefix.oreRaw,material);
+            int found=0;
+            for(var drop:level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,new net.minecraft.world.phys.AABB(pos).inflate(1))) {
+                if(!ItemStack.isSameItemSameComponents(drop.getItem(),raw))continue;
+                found+=drop.getItem().getCount();if(!actor.getInventory().add(drop.getItem().copy()))throw new IllegalStateException("Actual ore pickup inventory full");drop.discard();
+            }
+            if(found!=1)throw new IllegalStateException("Wrong real harvest drop "+material+" / "+found);
+        }
+        pick=actor.getMainHandItem();if(!com.gregtech.gregtech.api.tool.GTToolHelper.isUsable(pick)||pick.getDamageValue()<=before)throw new IllegalStateException("Harvested early pick lost usability or mining wear");
+        var chest=(ChestBlockEntity)level.getBlockEntity(specimenPos);chest.setItem(2,pick.copy());
+        chest.setItem(3,takeEarly(actor,com.gregtech.gregtech.registry.GTItems.getStack(com.gregtech.gregtech.data.MaterialPrefix.oreRaw,com.gregtech.gregtech.content.material.Materials.Copper).getItem(),3));
+        chest.setItem(4,takeEarly(actor,com.gregtech.gregtech.registry.GTItems.getStack(com.gregtech.gregtech.data.MaterialPrefix.oreRaw,com.gregtech.gregtech.content.material.Materials.Tin).getItem(),1));chest.setChanged();
+        var saved=new JsonObject();saved.addProperty("specimenId",specimenId);saved.addProperty("workbenchResultSlotClicked",true);saved.addProperty("actualOreHarvests",4);saved.addProperty("pickWear",pick.getDamageValue()-before);
+        var items=new JsonObject();for(int slot=2;slot<=4;slot++)items.addProperty(Integer.toString(slot),chest.getItem(slot).saveOptional(level.registryAccess()).toString());saved.add("items",items);
+        Files.writeString(worldRoot.getParent().resolve("early-tool-snapshot.json"),saved.toString());LOGGER.info("EARLY_TOOL_COLLECT_CRAFT_HARVEST_SUCCESS {}",saved);
+        } catch(Exception e) {throw new IllegalStateException(e);}
+    }
+
+    private static void verifyEarlyTools(ServerLevel level) {
+        try {
+        var saved=com.google.gson.JsonParser.parseString(Files.readString(worldRoot.getParent().resolve("early-tool-snapshot.json"))).getAsJsonObject();
+        if(!saved.get("specimenId").getAsString().equals(specimenId))throw new IllegalStateException("Wrong early saved specimen");
+        var chest=(ChestBlockEntity)level.getBlockEntity(specimenPos);
+        for(int slot=2;slot<=4;slot++)if(!chest.getItem(slot).saveOptional(level.registryAccess()).equals(net.minecraft.nbt.TagParser.parseTag(saved.getAsJsonObject("items").get(Integer.toString(slot)).getAsString())))throw new IllegalStateException("Early actual saved component stock differs "+slot);
+        LOGGER.info("EARLY_TOOL_SAVED_STOCK_SUCCESS {}",saved);
+        } catch(Exception e) {throw new IllegalStateException(e);}
     }
 
     private static net.minecraft.core.BlockPos steamBase() { return specimenPos.south(12); }
