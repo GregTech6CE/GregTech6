@@ -69,6 +69,9 @@ neoForge {
             systemProperty 'gregtech.integration.engineCraftingSmoke', (rootProject.findProperty('engineCraftingSmoke') ?: 'false').toString()
             systemProperty 'gregtech.integration.electricFluxCraftingSmoke', (rootProject.findProperty('electricFluxCraftingSmoke') ?: 'false').toString()
             systemProperty 'gregtech.integration.dieselCraftingSmoke', (rootProject.findProperty('dieselCraftingSmoke') ?: 'false').toString()
+            systemProperty 'gregtech.integration.dieselPowerSmoke', (rootProject.findProperty('dieselPowerSmoke') ?: 'false').toString()
+            systemProperty 'gregtech.integration.dieselPowerBaseline', (rootProject.findProperty('dieselPowerBaseline') ?: 'false').toString()
+            systemProperty 'gregtech.integration.dieselPowerReadOnly', (rootProject.findProperty('dieselPowerReadOnly') ?: 'false').toString()
             server()
             sourceSet = sourceSets.bootstrapGameTest
             systemProperty 'gregtech.integration.serverSmokePhase', (rootProject.findProperty('serverSmokePhase') ?: '').toString()

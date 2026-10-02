@@ -1,0 +1,75 @@
+{
+  "integration_base": "d63e117f1da9b38da1e0de8d8e28d3541dedc1f5",
+  "upstream_motor": {
+    "path": "F:\\Dev\\GregTech6\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\generators\\MultiTileEntityMotorLiquid.java",
+    "sha256": "5c5227afcb215886ed33727809fd93b13150d11a1d4d98bdd2e16998a09323d2",
+    "behavior_lines": "107–145: emit one rated RU packet, debit even when unaccepted; refuel below two packets; preserve entire recipe power; exhaust behind facing"
+  },
+  "adapted_source_files": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/api/machine/LiquidFuelCycle.java",
+      "sha256": "e8e68a461dbdabd1b34359bba8a79821c7b06d137da29cc5eda31266f90bd69e",
+      "base_blob_sha256": null
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/api/machine/DieselEngineSpec.java",
+      "sha256": "9c58e898bd30885ca1a9a1819855922d11c07dd838a5760c4b8c849029927171",
+      "base_blob_sha256": "012089eaa3b579e2b7fa5b41234acf8f84da2d68c99ff30d1ae562b4af1a553f"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/EngineCatalog.java",
+      "sha256": "b37c20cb204cdb03deac7ec451b673e41d25ab96adbdc62d5c471fe2334ef1e0",
+      "base_blob_sha256": "1a8547cdd88c5bb1a8422bd30ddfef1451373ce3951b05330ba88b642513b3ad"
+    },
+    {
+      "path": "neoforge/build.gradle",
+      "sha256": "104b32f85d4c9d0044c6935b975084ce106fe85d62ec46124a8f45efb0170a40",
+      "base_blob_sha256": "4e20dfbbd8e3b2de12f1b19d9770cb2faa03f892ccef0c20135483d6cff3f28a"
+    },
+    {
+      "path": "neoforge/src/bootstrapGameTest/java/com/gregtech/gregtech/integration/server/NeoForgeDedicatedSmoke.java",
+      "sha256": "e3a8abbc51e63e4029f5c26b132e79995b3c18fe27b0de04ffdb9d05c50a44ad",
+      "base_blob_sha256": "c8b950ce10375383c3b457b4554bb4b98fabb3ff0e1f7dfa948bc6637bebbd69"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/blockentity/machine/EngineBaseBlockEntity.java",
+      "sha256": "9649c3de1715a7e064ab5d6ace13dadb78d89eb2b612b1ead52915aa62dd296a",
+      "base_blob_sha256": "86d2e413647f790e9b9606ee1ba46352377e5dddf67f4e3e0e56772f518c83dd"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/blockentity/machine/KineticDieselEngineBlockEntity.java",
+      "sha256": "3230965ac81a97c1cc3ea1ee7af770f36c6fefa9ef8d62fe6c21685fd2e6fb4c",
+      "base_blob_sha256": "d669a5573c87ae20b95a46b59065ae65bda02f5f5c58b3fde7aee91d3cf89991"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/client/EngineTooltips.java",
+      "sha256": "426544d7e0bb2fca10024be76f3f45294f1245e838e2a7b8f7a8cdd45014d5f8",
+      "base_blob_sha256": "ab9f876f031e7209109cb82fb94a14cb4a5e08c098704cbbd7e8bc3a5c94d8e7"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/EngineBaseBlockEntity.java",
+      "sha256": "0de0f6304f929173201556aa5ed6a272e42417c75f828140fd7f87140cf805d1",
+      "base_blob_sha256": "10772420724efc5ceaed9beca65aa86eecacad4f5c6a9d7b6117a1bf88500ca2"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/KineticDieselEngineBlockEntity.java",
+      "sha256": "12bde6f59c46fc9eced0090d57d47ac79f252fddeb79b9a6d20287cc647e2330",
+      "base_blob_sha256": "de8bc011ad82ca41b0d5b32d03806d62a1c55cdd878d24a8d9aaea361d01084c"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/EngineTooltips.java",
+      "sha256": "c28997258b6a9a481240b1b64f09a8b5cb825ef569651d2bb9c729675f4db18c",
+      "base_blob_sha256": "372d8c584fa51e9e7564166ab0be69f26c28afa3ef3bdbad87ac89294c197da2"
+    }
+  ],
+  "old_world_specimen": "e40eaf48-83ca-451b-86f7-01b3a874013d",
+  "verification": "../../../docs/integration/verification/diesel-power-parity-20261002.md",
+  "choices": [
+    "Default engine output remains KU; diesel overrides RU and refuses all external energy injection/pull extraction, preserving push-only one packet per tick.",
+    "Both diesel adapters consume shared LiquidFuelCycle arithmetic. Full recipe amount/energy and original refill threshold replace hard-coded one-unit input and clipped two-packet credit.",
+    "Same kuEnergy NBT key retained to preserve existing numeric stock; type behavior changes to original RU, requiring explicit layout adaptation. No fabricated automatic save migration.",
+    "Actual exhaust moves behind facing and preserves stack payload when delivering. No new registrations or separate backend."
+  ],
+  "license_changed": false,
+  "source_directories_modified": false
+}

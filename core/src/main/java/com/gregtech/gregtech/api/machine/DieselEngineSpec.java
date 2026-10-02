@@ -2,7 +2,7 @@ package com.gregtech.gregtech.api.machine;
 
 import com.gregtech.gregtech.api.material.GTMaterial;
 
-/** Liquid fuel → KU engine. Consumes FM.Engine fuels (Diesel, Fuel, Nitrofuel, etc.). */
+/** Liquid fuel → RU engine. Consumes FM.Engine fuels (Diesel, Fuel, Nitrofuel, etc.). */
 public record DieselEngineSpec(
         String id, GTMaterial material, int tier,
         long inputRate, long outputRate,

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-/** Shared base for KU generator engines. Uses GT6 packet-count energy model. */
+/** Shared engine energy API. Historical kuEnergy field/NBT key retained; diesel emits RU. */
 public abstract class EngineBaseBlockEntity extends GTEnergyBlockEntity {
     protected long kuEnergy;
     protected FaceConfig faceConfig;
@@ -29,6 +29,7 @@ public abstract class EngineBaseBlockEntity extends GTEnergyBlockEntity {
     protected abstract long outputRate();
     protected abstract long inputRate();
     protected abstract GregTechTags.Tag inputEnergyType();
+    protected GregTechTags.Tag outputEnergyType() { return GregTechTags.Energy.KU; }
     public abstract FaceConfig defaultFaceConfig();
 
     /** Whether the engine is ready to output KU to the energy network.
@@ -54,14 +55,14 @@ public abstract class EngineBaseBlockEntity extends GTEnergyBlockEntity {
 
     @Override
     public boolean isEnergyType(GregTechTags.Tag energyType, @Nullable Direction side, boolean emitting) {
-        if (emitting) return energyType == GregTechTags.Energy.KU;
+        if (emitting) return energyType == outputEnergyType();
         return energyType == inputEnergyType();
     }
 
     @Override
     public Collection<GregTechTags.Tag> getEnergyTypes(@Nullable Direction side) {
         List<GregTechTags.Tag> types = new ArrayList<>(2);
-        types.add(GregTechTags.Energy.KU);
+        types.add(outputEnergyType());
         types.add(inputEnergyType());
         return types;
     }
@@ -76,7 +77,7 @@ public abstract class EngineBaseBlockEntity extends GTEnergyBlockEntity {
 
     @Override
     public boolean isEnergyEmittingTo(GregTechTags.Tag energyType, @Nullable Direction side, boolean theoretical) {
-        if (energyType != GregTechTags.Energy.KU) return false;
+        if (energyType != outputEnergyType()) return false;
         if (side == null) return true;
         int rel = relativeDir(side);
         int outputs = resolvedFaceConfig().energyOutputs();
@@ -94,7 +95,7 @@ public abstract class EngineBaseBlockEntity extends GTEnergyBlockEntity {
 
     @Override
     public long getEnergySizeOutputRecommended(GregTechTags.Tag energyType, @Nullable Direction side) {
-        if (energyType != GregTechTags.Energy.KU) return 0;
+        if (energyType != outputEnergyType()) return 0;
         return outputRate();
     }
 
@@ -111,7 +112,7 @@ public abstract class EngineBaseBlockEntity extends GTEnergyBlockEntity {
     @Override
     public long getEnergyOffered(GregTechTags.Tag energyType, @Nullable Direction side, long size) {
         if (energyType == inputEnergyType()) return 0;
-        if (energyType == GregTechTags.Energy.KU && size > 0 && isReadyToOutput()) {
+        if (energyType == outputEnergyType() && size > 0 && isReadyToOutput()) {
             return Math.min(kuEnergy, maxKuOutputPerTick()) / size;
         }
         return 0;
@@ -136,7 +137,7 @@ public abstract class EngineBaseBlockEntity extends GTEnergyBlockEntity {
 
     @Override
     public long doExtract(GregTechTags.Tag energyType, @Nullable Direction side, long size, long amount, boolean doExtract) {
-        if (energyType != GregTechTags.Energy.KU || amount <= 0 || size <= 0 || !isReadyToOutput()) return 0;
+        if (energyType != outputEnergyType() || amount <= 0 || size <= 0 || !isReadyToOutput()) return 0;
         long total = amount * size;
         long toTake = Math.min(kuEnergy, total);
         long extracted = toTake / size;
@@ -149,12 +150,12 @@ public abstract class EngineBaseBlockEntity extends GTEnergyBlockEntity {
 
     @Override
     public long getEnergyStored(GregTechTags.Tag energyType, @Nullable Direction side) {
-        return energyType == GregTechTags.Energy.KU ? kuEnergy : 0;
+        return energyType == outputEnergyType() ? kuEnergy : 0;
     }
 
     @Override
     public long getEnergyCapacity(GregTechTags.Tag energyType, @Nullable Direction side) {
-        return energyType == GregTechTags.Energy.KU ? outputRate() * 2 : 0;
+        return energyType == outputEnergyType() ? outputRate() * 2 : 0;
     }
 
     /** Internal KU buffer for heat color / status display. */
@@ -225,7 +226,7 @@ public abstract class EngineBaseBlockEntity extends GTEnergyBlockEntity {
         long packets = kuEnergy / size;
         if (packets <= 0) return;
         long emitted = EnergyTransfer.emitEnergyToNetwork(
-                GregTechTags.Energy.KU, size, packets, this);
+                outputEnergyType(), size, packets, this);
         if (emitted > 0) {
             kuEnergy -= emitted * size;
             setChanged();

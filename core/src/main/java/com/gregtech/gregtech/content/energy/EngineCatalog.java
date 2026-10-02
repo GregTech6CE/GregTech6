@@ -81,7 +81,7 @@ public final class EngineCatalog {
 
     // ── Diesel engine data (from original GT6 Loader_MultiTileEntities) ──────
 
-    /** Diesel engines (liquid fuel → KU): Bronze, ArsenicCopper, ArsenicBronze, Steel, Invar, Ti, TungstenSteel, Ir */
+    /** Diesel engines (liquid fuel → RU): Bronze, ArsenicCopper, ArsenicBronze, Steel, Invar, Ti, TungstenSteel, Ir */
     private static final GTMaterial[] DIESEL_MATS = {
             Materials.Bronze, Materials.ArsenicCopper, Materials.ArsenicBronze, Materials.Steel,
             Materials.Invar, Materials.Titanium, Materials.Tungstensteel, Materials.Iridium

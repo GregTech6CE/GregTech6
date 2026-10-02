@@ -33,6 +33,7 @@ public final class EngineTooltips {
             case FLUX     -> appendFlux(block, ms, tooltip);
             case STEAM    -> appendSteam(block, ms, tooltip);
             case ROTATION -> appendRotation(block, ms, tooltip);
+            case DIESEL   -> tooltip.add(Component.empty().append(Component.translatable("tooltip."+MOD+".machine.energy_out")).append(Component.literal(" "+TooltipHelper.formatLong(block.engineSpec(DieselEngineSpec.class).outputRate())+" RU/t ("+TooltipHelper.dirMaskToString(ENERGY_OUT_FACES)+")")).withStyle(ChatFormatting.RED));
         }
 
         // Tool hints
