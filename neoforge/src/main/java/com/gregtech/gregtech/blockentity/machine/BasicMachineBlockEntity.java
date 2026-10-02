@@ -1,6 +1,7 @@
 package com.gregtech.gregtech.blockentity.machine;
 
 import com.gregtech.gregtech.api.energy.FaceConfig;
+import com.gregtech.gregtech.api.machine.BasicMachineEnergy;
 import com.gregtech.gregtech.api.energy.IEnergyBlock;
 import com.gregtech.gregtech.api.fluid.FluidTankGT;
 import com.gregtech.gregtech.api.machine.BasicMachineSpec;
@@ -168,7 +169,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         long energyInMin = inputMinimum();
         long energyInMax = inputMaximum();
 
-        if (usesTimeEnergy() && switchesAllowRunning()) mEnergy=Math.min(inputMaximum(),mEnergy+1);
+        if (usesTimeEnergy() && switchesAllowRunning()) mEnergy=BasicMachineEnergy.add(mEnergy,inputMaximum(),1,1);
         boolean wasRunning = mRunning;
         boolean wasActive = mActive;
 
@@ -211,8 +212,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         }
 
         // ── Drain buffer ─────────────────────────────────────────────────
-        mEnergy -= energyInMax;
-        if (mEnergy < 0) mEnergy = 0;
+        mEnergy = BasicMachineEnergy.drain(mEnergy, energyInMax);
 
         if(successful){mInventoryChanged=true;refreshWorkPossible();}
         mInventoryChanged = false;
@@ -251,16 +251,15 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             if (!source.isEnergyEmittingTo(energyTag(), absDir.getOpposite(), false)) continue;
             long offered = source.getEnergyOffered(energyTag(), absDir.getOpposite(), size);
             if (offered <= 0) continue;
-            long extracted = source.doEnergyExtraction(energyTag(), absDir.getOpposite(), size, offered, true);
-            if (extracted > 0) {
-                mEnergy += extracted * size;
-                if (mEnergy > inputMaximum()) mEnergy = inputMaximum();
-            }
+            long requested = BasicMachineEnergy.accepted(mEnergy, inputMaximum(), size, offered);
+            if (requested <= 0) continue;
+            long extracted = source.doEnergyExtraction(energyTag(), absDir.getOpposite(), size, requested, true);
+            if (extracted > 0) mEnergy = BasicMachineEnergy.add(mEnergy, inputMaximum(), size, extracted);
         }
     }
 
     private void doActive(Level level, BlockPos pos, long aEnergy) {
-        mProgress += aEnergy;
+        mProgress = com.gregtech.gregtech.api.recipe.MachineWorkCost.advance(mProgress, mMaxProgress, aEnergy);
         if (mProgress >= mMaxProgress) {
             if (!produceOutputs()) {
                 mProgress = mMaxProgress;
@@ -1085,7 +1084,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     @Override
     public boolean isEnergyAcceptingFrom(GregTechTags.Tag energyType, @Nullable Direction side, boolean theoretical) {
-        if (!isEnergyType(energyType, side, false)) return false;
+        if (!isEnergyType(energyType, side, false) || (!theoretical && controlStopped)) return false;
         if (side == null) return true;
         return FaceConfig.has(faceConfig.energyInputs(), relativeDir(side));
     }
@@ -1105,12 +1104,10 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             if (doInject) explodeFromOvervoltage(sizeAbs);
             return amount;
         }
-        long maxInput = inputMaximum() - mEnergy;
-        long maxAmount = maxInput / sizeAbs + (maxInput % sizeAbs != 0 ? 1 : 0);
-        long consumed = Math.min(amount, maxAmount);
+        long consumed = BasicMachineEnergy.accepted(mEnergy, inputMaximum(), size, amount);
         if (doInject && consumed > 0) {
-            mEnergy += consumed * sizeAbs;
-            if (mEnergy > inputMaximum()) mEnergy = inputMaximum();
+            mEnergy = BasicMachineEnergy.add(mEnergy, inputMaximum(), size, consumed);
+            setChanged();
         }
         return consumed;
     }
@@ -1140,9 +1137,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     @Override
     public long getEnergyDemanded(GregTechTags.Tag energyType, @Nullable Direction side, long size) {
         if (size==0||size==Long.MIN_VALUE||!isEnergyAcceptingFrom(energyType, side, false)) return 0;
-        size=Math.abs(size);
-        long maxInput = Math.max(0,inputMaximum() - mEnergy);
-        return maxInput / size + (maxInput % size != 0 ? 1 : 0);
+        return BasicMachineEnergy.demanded(mEnergy, inputMaximum(), size);
     }
 
     @Override

@@ -702,6 +702,25 @@ public final class NeoForgeDedicatedSmoke {
                 || !stock.is(Items.COPPER_INGOT) || stock.getCount() != 3
                 || !Component.literal("machine-stock/" + specimenId).equals(stock.get(DataComponents.CUSTOM_NAME)))
             throw new IllegalStateException("Stopped mixer inventory/components did not survive");
+        var energyType = mixer.spec().energyTag();
+        long packet = mixer.spec().energyIn();
+        if (!mixer.isEnergyAcceptingFrom(energyType, null, true)
+                || mixer.isEnergyAcceptingFrom(energyType, null, false)
+                || mixer.getEnergyDemanded(energyType, null, packet) != 0
+                || mixer.doInject(energyType, null, packet, 2, false) != 0
+                || mixer.doInject(energyType, null, packet, 2, true) != 0)
+            throw new IllegalStateException("Stopped machine accepted real/simulated energy");
+        mixer.machineControl(null).setEnabled(true);
+        try {
+            var beforeEnergySimulation = mixer.saveWithoutMetadata(level.registryAccess());
+            if (mixer.getEnergyDemanded(energyType, null, packet) != 2
+                    || mixer.doInject(energyType, null, packet, 9, false) != 2
+                    || !beforeEnergySimulation.equals(mixer.saveWithoutMetadata(level.registryAccess())))
+                throw new IllegalStateException("Machine packet simulation mutated state or ignored buffer demand");
+        } finally {
+            mixer.machineControl(null).setEnabled(false);
+        }
+        LOGGER.info("MACHINE_ENERGY_ADMISSION_SUCCESS stoppedRejects=true theoreticalVisible=true simulationUnchanged=true wholePacketDemand=2");
         var water = mixer.getTanksInput()[0].getFluid();
         if (water.getAmount() != 1000 || !net.neoforged.neoforge.fluids.FluidStack.isSameFluidSameComponents(water, markedWater()))
             throw new IllegalStateException("Mixer input fluid/components did not survive");

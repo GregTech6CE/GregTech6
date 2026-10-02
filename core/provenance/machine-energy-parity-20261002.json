@@ -1,0 +1,51 @@
+{
+  "base_commit": "d0bfbea08ae2a32652742c533a89f2930b6e8110",
+  "references": [
+    {
+      "author": "saltnya",
+      "path": "F:/Dev/GregtTech6New/Libs/gregtech6reborn/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java",
+      "sha256": "47d974c8e009b66d21ff5096504996e8990038fed3604b37fd2c9cc8d0c2d808"
+    },
+    {
+      "author": "masson",
+      "path": "F:/Dev/GregtTech6New/Libs/cruciblecraft/src/main/java/com/masson/cruciblecraft/machine/processing/MachineEnergyBuffer.java",
+      "sha256": "4733cf1dfc184aaac64c6afab55339af31643bc8adbe408731d8bd319ab8c9de"
+    },
+    {
+      "author": "brokestar233",
+      "path": "F:/Dev/GregtTech6New/Libs/gregtech6-main/src/main/java/gregapi/tileentity/energy/EnergyBridge.java",
+      "sha256": "56c4e65af3f487ce7066ebf01358935c188ce54814c58b86abf85b1540c93f9a"
+    },
+    {
+      "author": "original_gt6",
+      "path": "F:/Dev/GregTech6/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/machines/MultiTileEntityBasicMachine.java",
+      "sha256": "1798706545c33c801735ac5fb56b0ae37a8b6e3b7819f40f41183a2057b0c860"
+    }
+  ],
+  "adapted_sources": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/api/machine/BasicMachineEnergy.java",
+      "sha256": "d33a6b24e93f6974477450a24c602dd0fda88831583d4b4d76baf1f73e8f0858"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/api/recipe/MachineWorkCost.java",
+      "sha256": "93d9fafb25dde44085cf143a53bdd2c4df87a3b218ab3bac1f231ebb9672e54a"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java",
+      "sha256": "59acf9f763c5b8b880937918454ae7434d2e9dfa9e71d60bb4b18b5ea117b102"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java",
+      "sha256": "d8966f8c768204250148966557144a2fc73af4f2541c1a709bddd271f5d7da7e"
+    }
+  ],
+  "choices": [
+    "Keep saltnya full machine/recipe/cover/NBT adapters and current rounded-up packet admission/clipped buffer.",
+    "Use masson finite/overflow-safe buffer discipline, without importing its independent machine registry/state or floor-packet gameplay as a second framework.",
+    "Use brokestar packet overflow/unit separation as comparison; do not add arbitrary EU/FE conversion or embed its separate energy network.",
+    "Original GT6 stopped/theoretical admission distinguishes visible connection from actual energy receipt.",
+    "Limit provider extraction to current whole-packet demand, persist accepted input, bound work completion, retain original per-tick unused-power drain."
+  ],
+  "source_directories_modified": false
+}

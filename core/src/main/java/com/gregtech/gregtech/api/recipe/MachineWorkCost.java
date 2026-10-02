@@ -6,6 +6,12 @@ import java.math.BigInteger;
 public final class MachineWorkCost {
     public record Cost(long minimumPower,long totalWork) {}
     private MachineWorkCost() {}
+    /** Bound completed work without overflowing at the largest representable recipe costs. */
+    public static long advance(long completed, long total, long supplied) {
+        long limit = Math.max(0, total);
+        long progress = Math.min(limit, Math.max(0, completed));
+        return progress + Math.min(limit - progress, Math.max(0, supplied));
+    }
     public static Cost calculate(long recipePower,long duration,int parallel,boolean scaleDuration,int efficiency,long minimumInput,long maximumInput,boolean cheapOverclocking) {
         if(recipePower<0||recipePower>maximumInput||duration<1||parallel<1||efficiency<1)return null;
         long power=Math.max(1,recipePower);

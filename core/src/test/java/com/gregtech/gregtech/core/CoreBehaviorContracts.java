@@ -21,6 +21,7 @@ public final class CoreBehaviorContracts {
 
     public static void main(String[] args) {
         workCostGoldens();
+        machineEnergyGoldens();
         voltageGoldens();
         materialAndCrucibleUnits();
         signedPacketsAndFiniteBuffer();
@@ -28,7 +29,7 @@ public final class CoreBehaviorContracts {
         definitionIdentityAndSnapshot();
         multiblockOwnershipLifecycle();
         addonLifecycle();
-        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 8 groups (Java 17; no game dependencies)");
+        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 9 groups (Java 17; no game dependencies)");
     }
 
     /** Original BlueprintRegressionTests.java:276-283 numeric fixtures. */
@@ -77,6 +78,22 @@ public final class CoreBehaviorContracts {
         equal(8589934592L, com.gregtech.gregtech.data.GregTechConstants.V[15], "legacy voltage table has no Long.MAX_VALUE sentinel");
         check(java.util.Arrays.equals(GTVoltageTiers.NAMES,com.gregtech.gregtech.data.GregTechConstants.VN), "one canonical voltage name table");
         equal(1, GTVoltageTiers.tierMax(-32), "signed voltage magnitude");
+    }
+
+    private static void machineEnergyGoldens() {
+        equal(2, com.gregtech.gregtech.api.machine.BasicMachineEnergy.demanded(33, 64, 16), "GT6 whole-packet rounded demand");
+        equal(2, com.gregtech.gregtech.api.machine.BasicMachineEnergy.accepted(33, 64, -16, 9), "signed packet admission");
+        equal(64, com.gregtech.gregtech.api.machine.BasicMachineEnergy.add(33, 64, 16, 2), "inherited buffer clips last packet excess");
+        equal(49, com.gregtech.gregtech.api.machine.BasicMachineEnergy.add(33, 64, 16, 1), "one admitted packet");
+        equal(0, com.gregtech.gregtech.api.machine.BasicMachineEnergy.accepted(65, 64, 16, 9), "old over-capacity state never returns negative packets");
+        equal(0, com.gregtech.gregtech.api.machine.BasicMachineEnergy.accepted(0, 64, Long.MIN_VALUE, 1), "unrepresentable signed magnitude rejected");
+        equal(0, com.gregtech.gregtech.api.machine.BasicMachineEnergy.accepted(0, 64, 1, -1), "negative request rejected");
+        equal(Long.MAX_VALUE, com.gregtech.gregtech.api.machine.BasicMachineEnergy.add(0, Long.MAX_VALUE, 2, Long.MAX_VALUE), "large packet train saturates without overflow");
+        equal(32, com.gregtech.gregtech.api.machine.BasicMachineEnergy.drain(96,64), "per-tick rated drain keeps remaining input");
+        equal(0, com.gregtech.gregtech.api.machine.BasicMachineEnergy.drain(16,64), "unused partial input discarded");
+        equal(96, MachineWorkCost.advance(64,128,32), "ordinary recipe advances by supplied work");
+        equal(128, MachineWorkCost.advance(120,128,32), "completed recipe stops at its cost");
+        equal(Long.MAX_VALUE, MachineWorkCost.advance(Long.MAX_VALUE-4,Long.MAX_VALUE,32), "largest job can complete without wraparound");
     }
 
     private static void addonLifecycle() {
