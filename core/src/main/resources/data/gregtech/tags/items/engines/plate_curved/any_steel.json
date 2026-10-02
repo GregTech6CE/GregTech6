@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#gregtech:plate_curved/steel",
+      "required": false
+    },
+    {
+      "id": "#gregtech:plate_curved/knightmetal",
+      "required": false
+    },
+    {
+      "id": "#gregtech:plate_curved/meteoric_steel",
+      "required": false
+    }
+  ]
+}

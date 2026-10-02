@@ -1,0 +1,286 @@
+{
+  "integration_base": "ff90ac50886b10b7cf19dc4eed00ac532da62b88",
+  "source_path": "F:\\Dev\\GregTech6\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+  "source_sha256": "82bd457e2f79fb33009e1dd07e7d8cf83f190204a3f7d5ec44cfc4bb340e8678",
+  "lubricant_ore_source": "F:\\Dev\\GregTech6\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\load\\LoaderOreDictReRegistrations.java",
+  "lubricant_ore_source_sha256": "d34719309a5ddf5bd7fc01c0462b57af52b4cf980a69fae4d4042c2ab78b07ef",
+  "recipes": [
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_diesel_bronze.json",
+      "sha256": "d22321fd7325769c89161cd208f5eeee0086bd17a474e3a39fe8ed89e9be8440",
+      "upstream_line": 722,
+      "upstream_id": 9147,
+      "upstream_material": "MT.Bronze",
+      "upstream_keys": {
+        "M": "OP.casingMachineDouble.dat(aMat)",
+        "P": "OP.plateCurved.dat(aMat)",
+        "S": "OP.stick.dat(aMat)",
+        "G": "OP.gearGt.dat(aMat)",
+        "C": "OP.gearGtSmall.dat(aMat)",
+        "L": "OD.itemLubricant"
+      },
+      "pattern": [
+        "PLP",
+        "SMS",
+        "GPC"
+      ],
+      "engine_id": "gregtech:engine_diesel_bronze",
+      "upstream_output_energy": "RU",
+      "retained_port_output_energy": "KU (known unresolved parity gap; not changed by crafting batch)"
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_diesel_arsenic_copper.json",
+      "sha256": "2eff4370270673257ac34494ffdef9ea6a994fa0f885603710b767158f1e874b",
+      "upstream_line": 723,
+      "upstream_id": 9146,
+      "upstream_material": "MT.ArsenicCopper",
+      "upstream_keys": {
+        "M": "OP.casingMachineDouble.dat(aMat)",
+        "P": "OP.plateCurved.dat(aMat)",
+        "S": "OP.stick.dat(aMat)",
+        "G": "OP.gearGt.dat(aMat)",
+        "C": "OP.gearGtSmall.dat(aMat)",
+        "L": "OD.itemLubricant"
+      },
+      "pattern": [
+        "PLP",
+        "SMS",
+        "GPC"
+      ],
+      "engine_id": "gregtech:engine_diesel_arsenic_copper",
+      "upstream_output_energy": "RU",
+      "retained_port_output_energy": "KU (known unresolved parity gap; not changed by crafting batch)"
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_diesel_arsenic_bronze.json",
+      "sha256": "4a11ee0a7d9718d677a437044039741efebfae37a7e6fa7959b42320a2c5dc8f",
+      "upstream_line": 724,
+      "upstream_id": 9145,
+      "upstream_material": "MT.ArsenicBronze",
+      "upstream_keys": {
+        "M": "OP.casingMachineDouble.dat(aMat)",
+        "P": "OP.plateCurved.dat(aMat)",
+        "S": "OP.stick.dat(aMat)",
+        "G": "OP.gearGt.dat(aMat)",
+        "C": "OP.gearGtSmall.dat(aMat)",
+        "L": "OD.itemLubricant"
+      },
+      "pattern": [
+        "PLP",
+        "SMS",
+        "GPC"
+      ],
+      "engine_id": "gregtech:engine_diesel_arsenic_bronze",
+      "upstream_output_energy": "RU",
+      "retained_port_output_energy": "KU (known unresolved parity gap; not changed by crafting batch)"
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_diesel_steel.json",
+      "sha256": "1d52010e0f2e4aa4725a567130b9f8f1f7ea3e2e46d06ffbf33fa2b1a8a453e3",
+      "upstream_line": 725,
+      "upstream_id": 9148,
+      "upstream_material": "ANY.Steel",
+      "upstream_keys": {
+        "M": "OP.casingMachineDouble.dat(aMat)",
+        "P": "OP.plateCurved.dat(aMat)",
+        "S": "OP.stick.dat(aMat)",
+        "G": "OP.gearGt.dat(aMat)",
+        "C": "OP.gearGtSmall.dat(aMat)",
+        "L": "OD.itemLubricant"
+      },
+      "pattern": [
+        "PLP",
+        "SMS",
+        "GPC"
+      ],
+      "engine_id": "gregtech:engine_diesel_steel",
+      "upstream_output_energy": "RU",
+      "retained_port_output_energy": "KU (known unresolved parity gap; not changed by crafting batch)"
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_diesel_invar.json",
+      "sha256": "81590329fdc91bc4e50378a67e22d5070eb372ddec4c53c476bf9c80bdceb23f",
+      "upstream_line": 726,
+      "upstream_id": 9149,
+      "upstream_material": "MT.Invar",
+      "upstream_keys": {
+        "M": "OP.casingMachineDouble.dat(aMat)",
+        "P": "OP.plateCurved.dat(aMat)",
+        "S": "OP.stick.dat(aMat)",
+        "G": "OP.gearGt.dat(aMat)",
+        "C": "OP.gearGtSmall.dat(aMat)",
+        "L": "OD.itemLubricant"
+      },
+      "pattern": [
+        "PLP",
+        "SMS",
+        "GPC"
+      ],
+      "engine_id": "gregtech:engine_diesel_invar",
+      "upstream_output_energy": "RU",
+      "retained_port_output_energy": "KU (known unresolved parity gap; not changed by crafting batch)"
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_diesel_titanium.json",
+      "sha256": "bf985f304546a47287776917ca6379b036ca30580d220f9b5a626c50de2df457",
+      "upstream_line": 727,
+      "upstream_id": 9197,
+      "upstream_material": "MT.Ti",
+      "upstream_keys": {
+        "M": "OP.casingMachineDouble.dat(aMat)",
+        "P": "OP.plateCurved.dat(aMat)",
+        "S": "OP.stick.dat(aMat)",
+        "G": "OP.gearGt.dat(aMat)",
+        "C": "OP.gearGtSmall.dat(aMat)",
+        "L": "OD.itemLubricant"
+      },
+      "pattern": [
+        "PLP",
+        "SMS",
+        "GPC"
+      ],
+      "engine_id": "gregtech:engine_diesel_titanium",
+      "upstream_output_energy": "RU",
+      "retained_port_output_energy": "KU (known unresolved parity gap; not changed by crafting batch)"
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_diesel_tungsten_steel.json",
+      "sha256": "4a2848725f6fbb8fc23ed582298ee3c72b033ea7c3b6ad0e00217e74aef22982",
+      "upstream_line": 728,
+      "upstream_id": 9198,
+      "upstream_material": "MT.TungstenSteel",
+      "upstream_keys": {
+        "M": "OP.casingMachineDouble.dat(aMat)",
+        "P": "OP.plateCurved.dat(aMat)",
+        "S": "OP.stick.dat(aMat)",
+        "G": "OP.gearGt.dat(aMat)",
+        "C": "OP.gearGtSmall.dat(aMat)",
+        "L": "OD.itemLubricant"
+      },
+      "pattern": [
+        "PLP",
+        "SMS",
+        "GPC"
+      ],
+      "engine_id": "gregtech:engine_diesel_tungsten_steel",
+      "upstream_output_energy": "RU",
+      "retained_port_output_energy": "KU (known unresolved parity gap; not changed by crafting batch)"
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/recipes/engines/engine_diesel_iridium.json",
+      "sha256": "f1f3d8bf354d48198e74efe22afdf9475ff7650ac04cc6e922ea7d89adeb6b1f",
+      "upstream_line": 729,
+      "upstream_id": 9199,
+      "upstream_material": "MT.Ir",
+      "upstream_keys": {
+        "M": "OP.casingMachineDouble.dat(aMat)",
+        "P": "OP.plateCurved.dat(aMat)",
+        "S": "OP.stick.dat(aMat)",
+        "G": "OP.gearGt.dat(aMat)",
+        "C": "OP.gearGtSmall.dat(aMat)",
+        "L": "OD.itemLubricant"
+      },
+      "pattern": [
+        "PLP",
+        "SMS",
+        "GPC"
+      ],
+      "engine_id": "gregtech:engine_diesel_iridium",
+      "upstream_output_energy": "RU",
+      "retained_port_output_energy": "KU (known unresolved parity gap; not changed by crafting batch)"
+    }
+  ],
+  "tags": [
+    {
+      "path": "core/src/main/resources/data/gregtech/tags/items/engines/casing_machine_double/any_steel.json",
+      "sha256": "3c3dcdd2e495a878bfcff137a0aa100b12a5d4810b6dde9db9f0e92489ead549",
+      "tag": "gregtech:engines/casing_machine_double/any_steel",
+      "original_members": [
+        "steel",
+        "knightmetal",
+        "meteoric_steel"
+      ]
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/tags/items/engines/plate_curved/any_steel.json",
+      "sha256": "da9e392da73218ee292d9329d6234343a3a890852d3e17b6e72b3b03ad89882e",
+      "tag": "gregtech:engines/plate_curved/any_steel",
+      "original_members": [
+        "steel",
+        "knightmetal",
+        "meteoric_steel"
+      ]
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/tags/items/engines/gear_gt/any_steel.json",
+      "sha256": "7c6a49a598ff8a4c64a5d597d55a95699fa79d72d0187e90fa0a62b6d28ad441",
+      "tag": "gregtech:engines/gear_gt/any_steel",
+      "original_members": [
+        "steel",
+        "knightmetal",
+        "meteoric_steel"
+      ]
+    },
+    {
+      "path": "core/src/main/resources/data/gregtech/tags/items/engines/gear_gt_small/any_steel.json",
+      "sha256": "81282af137729cea31a64bbac47c531a31b6a7a34db76c4bf040e54ab7d26719",
+      "tag": "gregtech:engines/gear_gt_small/any_steel",
+      "original_members": [
+        "steel",
+        "knightmetal",
+        "meteoric_steel"
+      ]
+    }
+  ],
+  "choices": [
+    "Original nonmirrored patterns and exact curved plates/double machine casing/big and small gears; original ANY.Steel members, not alternate universal metal tags.",
+    "OD.itemLubricant allows real 250mB lubricant bottle or drainable 1000mB Lubricant/LubRoCant vessel, returns emptied vessel; early vegetable/seed/animal oils and display-fluid items rejected.",
+    "Existing finite-fluid ingredient is extended with an opt-in bottle alternative, default false. Legacy bottle-filling remains 1000mB-only.",
+    "Original diesel RU vs retained Forge/Neo KU is recorded as unresolved. No energy balancing, register/save-ID or powered behavior changes in this crafting batch."
+  ],
+  "license_changed": false,
+  "source_directories_modified": false,
+  "adapted_source_files": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/recipe/EquipmentCraftingCatalog.java",
+      "sha256": "d467ba06d5bcfb5611232f2d21dbb4281a985eae0777fe2766d4b77c5925c8ce",
+      "base_blob_sha256": "b9bfaf6645054ba56dfd621e6cf1ae133ba58711dffe23e6d21da7cd4350166e"
+    },
+    {
+      "path": "build.gradle",
+      "sha256": "5202407ebb95de1bba89a04bd46255dc3ae6a89c84e4e81d5d7159d84219301f",
+      "base_blob_sha256": "eb352fe1e75d18418cb11373916fbafa3e803493911969f406f7f7dbcf97cc37"
+    },
+    {
+      "path": "neoforge/build.gradle",
+      "sha256": "90ab699913447b7c23f1789a0badadfd6e228dae931ba781d5b10a6e81e300a1",
+      "base_blob_sha256": "751247550100e629de53febbf93a67976edb0d09ef45563454c935a3212621b6"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/recipe/FiniteBottleFillingRecipe.java",
+      "sha256": "fc5ad16791beb6f00cbd64c4c3c66ef416f04dc9e01dd1f10a5711d3b7622557",
+      "base_blob_sha256": "2beaeaea338114228177e9977d672c66229f0142900cbcb1319c664359951fa7"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/recipe/FiniteBottleFillingRecipe.java",
+      "sha256": "6d2b377da534b184a1e09d542632409fba238d60d9abd7f4755655b82d236aa5",
+      "base_blob_sha256": "d8f13b6c9864bcca7d0a726a8ec145c4fb4ca7fb31321040126b1fd0fad495dd"
+    },
+    {
+      "path": "src/bootstrapGameTest/java/com/gregtech/gregtech/integration/server/ForgeDedicatedSmoke.java",
+      "sha256": "1a7625c867774bb1c5fc8eca512d9ad800464cb216b2164e3f9028715d087525",
+      "base_blob_sha256": "62781453a87f3b59f1041aafc99a4d6f00278ff27103a84346f4979c66efc0a5"
+    },
+    {
+      "path": "neoforge/src/bootstrapGameTest/java/com/gregtech/gregtech/integration/server/NeoForgeDedicatedSmoke.java",
+      "sha256": "fdd9330bb48be7c1b682b8e39c578770041cc9eeb29f57be78e201d08339c36c",
+      "base_blob_sha256": "2b34b52b1420e27257f0605d6c9e5e52885ce73f6823f350bfd2da3dd93c2346"
+    },
+    {
+      "path": "neoforge/src/bootstrapGameTest/java/com/gregtech/gregtech/integration/server/NeoManualToolCheckpoint.java",
+      "sha256": "ef91969dd8114fed9dbfa36df9db4a3e1b25e77567f7f2bb8e8e0bb793eb305c",
+      "base_blob_sha256": "97db3ee14dbf15434480243aa33ec086b95d9e3b546a6c64cf0e4a39770ff95d"
+    }
+  ],
+  "verification": "../../../docs/integration/verification/diesel-crafting-20261002.md"
+}

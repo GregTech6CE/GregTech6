@@ -4,6 +4,14 @@ package com.gregtech.gregtech.content.recipe;
 public final class EquipmentCraftingCatalog {
     private EquipmentCraftingCatalog() {}
     public static final java.util.List<String> FILES = java.util.List.of(
+            "engines/engine_diesel_bronze.json",
+            "engines/engine_diesel_arsenic_copper.json",
+            "engines/engine_diesel_arsenic_bronze.json",
+            "engines/engine_diesel_steel.json",
+            "engines/engine_diesel_invar.json",
+            "engines/engine_diesel_titanium.json",
+            "engines/engine_diesel_tungsten_steel.json",
+            "engines/engine_diesel_iridium.json",
             "engines/engine_electric_galvanized_steel.json",
             "engines/engine_electric_aluminium.json",
             "engines/engine_electric_stainless_steel.json",
@@ -2190,6 +2198,10 @@ public final class EquipmentCraftingCatalog {
             "wood/slab_bluespruce.json"
     );
     public static final java.util.List<String> TAGS = java.util.List.of(
+            "gregtech:engines/casing_machine_double/any_steel",
+            "gregtech:engines/plate_curved/any_steel",
+            "gregtech:engines/gear_gt/any_steel",
+            "gregtech:engines/gear_gt_small/any_steel",
             "gregtech:engines/plate_double/any_steel",
             "gregtech:engines/plate_dense/any_steel",
             "gregtech:engines/stick/any_steel",

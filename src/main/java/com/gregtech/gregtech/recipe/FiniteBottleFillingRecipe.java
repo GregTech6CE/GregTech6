@@ -82,18 +82,35 @@ public final class FiniteBottleFillingRecipe extends ShapelessRecipe {
     /** Accepts only a drainable finite 1000 mB item, never the creative/display fluid item. */
     public static final class ContainerIngredient extends AbstractIngredient {
         private static final IIngredientSerializer<ContainerIngredient> SERIALIZER = new IIngredientSerializer<>() {
-            @Override public ContainerIngredient parse(FriendlyByteBuf buffer) { return container(buffer.readUtf()); }
-            @Override public ContainerIngredient parse(JsonObject json) { return container(json.get("fluid").getAsString()); }
+            @Override public ContainerIngredient parse(FriendlyByteBuf buffer) { return new ContainerIngredient(buffer.readUtf(), buffer.readBoolean()); }
+            @Override public ContainerIngredient parse(JsonObject json) { return new ContainerIngredient(json.get("fluid").getAsString(), json.has("allow_lubricant_bottle") && json.get("allow_lubricant_bottle").getAsBoolean()); }
             @Override public void write(FriendlyByteBuf buffer, ContainerIngredient ingredient) {
                 buffer.writeUtf(ingredient.fluidKey);
+                buffer.writeBoolean(ingredient.allowLubricantBottle);
             }
         };
 
         private final String fluidKey;
+        private final boolean allowLubricantBottle;
 
         private ContainerIngredient(String fluidKey) {
-            super(Stream.of(new Ingredient.ItemValue(example(fluidKey))));
+            this(fluidKey, false);
+        }
+
+        private ContainerIngredient(String fluidKey, boolean allowLubricantBottle) {
+            super(examples(fluidKey, allowLubricantBottle));
+            if (allowLubricantBottle && !"Lubricant".equals(fluidKey))
+                throw new IllegalArgumentException("250mB bottle alternative is only valid for industrial lubricant");
             this.fluidKey = fluidKey;
+            this.allowLubricantBottle = allowLubricantBottle;
+        }
+
+        private static Stream<Ingredient.Value> examples(String fluidKey, boolean allowBottle) {
+            Stream<Ingredient.Value> vessels = Stream.of(new Ingredient.ItemValue(example(fluidKey)));
+            if (!allowBottle) return vessels;
+            Item bottle = ForgeRegistries.ITEMS.getValue(GregTech.id("lubricant_bottle"));
+            if (bottle == null || bottle == Items.AIR) throw new IllegalStateException("Missing industrial lubricant bottle");
+            return Stream.concat(vessels, Stream.of(new Ingredient.ItemValue(new ItemStack(bottle))));
         }
 
         private boolean accepts(Fluid fluid) {
@@ -127,6 +144,8 @@ public final class FiniteBottleFillingRecipe extends ShapelessRecipe {
         @Override public boolean test(@Nullable ItemStack input) {
             if (input == null || input.isEmpty() || input.getItem() instanceof FluidItem
                     || FluidDisplayBinding.hasPayload(input)) return false;
+            if (allowLubricantBottle && input.getItem() instanceof com.gregtech.gregtech.item.BottleItem bottle)
+                return accepts(bottle.fluid());
             ItemStack one = input.copyWithCount(1);
             var handler = FluidUtil.getFluidHandler(one).resolve().orElse(null);
             if (handler == null) return false;
@@ -140,6 +159,8 @@ public final class FiniteBottleFillingRecipe extends ShapelessRecipe {
         }
 
         static ItemStack drainOne(ItemStack input) {
+            if (input.getItem() instanceof com.gregtech.gregtech.item.BottleItem)
+                return com.gregtech.gregtech.item.BottleItem.emptyBottle();
             var handler = FluidUtil.getFluidHandler(input.copyWithCount(1)).resolve().orElseThrow();
             FluidStack before = FluidUtil.getFluidContained(input).orElse(FluidStack.EMPTY);
             FluidStack drained = handler.drain(new FluidStack(before.getFluid(), 1000),
@@ -155,6 +176,7 @@ public final class FiniteBottleFillingRecipe extends ShapelessRecipe {
             JsonObject json = new JsonObject();
             json.addProperty("type", GregTech.id("finite_fluid_container_1000").toString());
             json.addProperty("fluid", fluidKey);
+            if (allowLubricantBottle) json.addProperty("allow_lubricant_bottle", true);
             return json;
         }
     }

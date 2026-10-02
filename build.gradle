@@ -114,6 +114,7 @@ minecraft {
 
         server {
             property 'gregtech.integration.engineCraftingSmoke', (project.findProperty('engineCraftingSmoke') ?: 'false').toString()
+            property 'gregtech.integration.dieselCraftingSmoke', (project.findProperty('dieselCraftingSmoke') ?: 'false').toString()
             property 'gregtech.integration.serverSmokePhase', (project.findProperty('serverSmokePhase') ?: '').toString()
             property 'gregtech.integration.serverSmokeId', (project.findProperty('serverSmokeId') ?: '').toString()
             ['X', 'Y', 'Z'].each { axis ->

@@ -1,0 +1,34 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "PLP",
+    "SMS",
+    "GPC"
+  ],
+  "key": {
+    "M": {
+      "tag": "gregtech:casing_machine_double/bronze"
+    },
+    "P": {
+      "tag": "gregtech:plate_curved/bronze"
+    },
+    "S": {
+      "tag": "gregtech:stick/bronze"
+    },
+    "G": {
+      "tag": "gregtech:gear_gt/bronze"
+    },
+    "C": {
+      "tag": "gregtech:gear_gt_small/bronze"
+    },
+    "L": {
+      "type": "gregtech:finite_fluid_container_1000",
+      "fluid": "Lubricant",
+      "allow_lubricant_bottle": true
+    }
+  },
+  "result": {
+    "item": "gregtech:engine_diesel_bronze"
+  },
+  "allow_mirror": false
+}

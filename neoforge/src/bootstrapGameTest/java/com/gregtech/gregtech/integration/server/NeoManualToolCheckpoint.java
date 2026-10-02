@@ -151,6 +151,54 @@ public final class NeoManualToolCheckpoint {
   }
   com.mojang.logging.LogUtils.getLogger().info("ELECTRIC_FLUX_CRAFTING_CHECKPOINT_SUCCESS {}","{\"platform\":\"neoforge\",\"recipes\":10,\"electricRows\":5,\"fluxRows\":5,\"actualSerializerRoundTrips\":10,\"electricToFluxAllTiers\":true,\"wireWidthAndMaterialDistinction\":true,\"hammerWear\":400,\"wrenchWear\":800,\"playerCraftingClickVerified\":false}");
  }
+ public static void dieselCrafting(ServerLevel level) {
+  var industrial=new com.gregtech.gregtech.recipe.FiniteBottleFillingRecipe.ContainerIngredient("Lubricant",true);
+  var fillingOnly=new com.gregtech.gregtech.recipe.FiniteBottleFillingRecipe.ContainerIngredient("Lubricant");
+  var bottle=equipmentItem("lubricant_bottle");var cell=industrial.example();
+  require(industrial.test(bottle)&&industrial.test(cell)&&!fillingOnly.test(bottle),"industrial bottle alternative/default filling isolation");
+  var emptyCell=cell.copy();var emptyHandler=net.neoforged.neoforge.fluids.FluidUtil.getFluidHandler(emptyCell).orElseThrow();
+  emptyHandler.drain(1000,net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE);emptyCell=emptyHandler.getContainer();
+  var shortCell=cell.copy();var shortHandler=net.neoforged.neoforge.fluids.FluidUtil.getFluidHandler(shortCell).orElseThrow();
+  shortHandler.drain(1,net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE);shortCell=shortHandler.getContainer();
+  require(!industrial.test(emptyCell)&&!industrial.test(shortCell)&&!industrial.test(equipmentItem("olive_oil")),"empty/999mB/early oil rejected");
+  var display=com.gregtech.gregtech.registry.GTFluidItems.get("Lubricant");require(display!=null&&!industrial.test(new ItemStack(display)),"creative fluid display rejected");
+  var rotary=cell.copy();var rotaryHandler=net.neoforged.neoforge.fluids.FluidUtil.getFluidHandler(rotary).orElseThrow();
+  rotaryHandler.drain(1000,net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE);
+  var rotaryFluid=com.gregtech.gregtech.registry.GTFluids.still("LubRoCant");
+  require(rotaryFluid!=null&&rotaryFluid.isBound()&&rotaryHandler.fill(new net.neoforged.neoforge.fluids.FluidStack(rotaryFluid.get(),1000),net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE)==1000,"actual LubRoCant vessel");
+  rotary=rotaryHandler.getContainer();require(industrial.test(rotary),"original LubRoCant alias accepted");
+  int checked=0;
+  for(var entry:com.gregtech.gregtech.content.energy.EngineCatalog.all()) {
+   if(!(entry.spec() instanceof com.gregtech.gregtech.api.machine.DieselEngineSpec spec))continue;
+   String id=spec.id();var material=spec.material();
+   var plate=equipmentForm(MaterialPrefix.plateCurved,material);var rod=equipmentForm(MaterialPrefix.stick,material);
+   var gear=equipmentForm(MaterialPrefix.gearGt,material);var small=equipmentForm(MaterialPrefix.gearGtSmall,material);
+   var casing=com.gregtech.gregtech.registry.GTBlocks.getStack(com.gregtech.gregtech.api.prefix.BlockMaterialPrefix.casingMachineDouble,material);require(!casing.isEmpty(),"diesel original double casing "+id);
+   var actual=recipe(level,"engines/"+id);
+   for(var ingredient:actual.getIngredients())if(ingredient!=Ingredient.EMPTY)require(ingredient.getItems().length>0,"diesel ingredient closure "+id);
+   for(var lubricant:List.of(bottle,cell,rotary)) {
+    var input=CraftingInput.of(3,3,List.of(plate.copy(),lubricant.copy(),plate.copy(),rod.copy(),casing.copy(),rod.copy(),gear.copy(),plate.copy(),small.copy()));
+    craft(level,"engines/"+id,input,id);
+    var decoded=network(actual,level);require(decoded.matches(input,level),"diesel actual container codec round trip "+id);
+    var remains=decoded.getRemainingItems(input);
+    if(lubricant==bottle)require(ItemStack.isSameItemSameComponents(remains.get(1),com.gregtech.gregtech.item.BottleItem.emptyBottle())&&remains.get(1).getCount()==1,"250mB bottle consumed/empty bottle returned "+id);
+    else require(remains.get(1).getItem()==lubricant.getItem()&&remains.get(1).getCount()==1&&net.neoforged.neoforge.fluids.FluidUtil.getFluidContained(remains.get(1)).orElse(net.neoforged.neoforge.fluids.FluidStack.EMPTY).isEmpty()
+        &&net.neoforged.neoforge.fluids.FluidUtil.getFluidContained(lubricant).orElseThrow().getAmount()==1000,"1000mB drained physical vessel/input preserved "+id);
+    for(int slot:List.of(0,2,3,4,5,6,7,8))require(remains.get(slot).isEmpty(),"diesel material slot consumed "+id);
+    var wrong=new ArrayList<>(input.items());Collections.swap(wrong,6,8);
+    require(!actual.matches(CraftingInput.of(3,3,wrong),level),"original asymmetric mirror rejected "+id);
+    wrong=new ArrayList<>(input.items());wrong.set(1,equipmentItem("olive_oil"));require(!actual.matches(CraftingInput.of(3,3,wrong),level),"industrial cannot use early lubricant "+id);
+   }
+   checked++;
+  }
+  var emptyBottle=com.gregtech.gregtech.item.BottleItem.emptyBottle();
+  var fillingInput=CraftingInput.of(3,2,List.of(cell.copy(),emptyBottle.copy(),emptyBottle.copy(),emptyBottle.copy(),emptyBottle.copy(),ItemStack.EMPTY));
+  var filling=recipe(level,"bottles/lubricant_bottle_x4");require(filling.matches(fillingInput,level)&&filling.assemble(fillingInput,level.registryAccess()).getCount()==4&&network(filling,level).matches(fillingInput,level),"legacy 1000mB four-bottle filling still matches/network");
+  var invalid=new ArrayList<>(fillingInput.items());invalid.set(0,bottle.copy());require(!filling.matches(CraftingInput.of(3,2,invalid),level),"legacy filling cannot turn one 250mB bottle into four");
+  var fillingRemains=filling.getRemainingItems(fillingInput);require(fillingRemains.get(0).getItem()==cell.getItem()&&net.neoforged.neoforge.fluids.FluidUtil.getFluidContained(fillingRemains.get(0)).orElse(net.neoforged.neoforge.fluids.FluidStack.EMPTY).isEmpty(),"legacy filling drained finite container returned");
+  require(checked==8,"all retained diesel crafting rows");
+  com.mojang.logging.LogUtils.getLogger().info("DIESEL_CRAFTING_CHECKPOINT_SUCCESS {}","{\"platform\":\"neoforge\",\"recipes\":8,\"actualSerializerRoundTrips\":25,\"bottle250AndVessel1000\":true,\"lubRoCantAlias\":true,\"emptyContainersReturned\":true,\"legacyFillingStill1000\":true,\"rejectEarlyOilAndShortVessel\":true,\"nonMirrorShape\":true,\"playerCraftingClickVerified\":false}");
+ }
  private static void equipment(ServerLevel level) {
   int loaded=0;
   for(String file:com.gregtech.gregtech.content.recipe.EquipmentCraftingCatalog.FILES) {

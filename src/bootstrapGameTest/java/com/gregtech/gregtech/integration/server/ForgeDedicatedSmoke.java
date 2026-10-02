@@ -93,6 +93,7 @@ public final class ForgeDedicatedSmoke {
                     120, TimeUnit.SECONDS);
             LOGGER.info("SERVER_SMOKE_STARTED {}", identity());
             if (ENGINE_CRAFTING) craftedSteamResults = steamEngineCrafting(level);
+            if (Boolean.getBoolean("gregtech.integration.dieselCraftingSmoke")) dieselCrafting(level);
             // Explicitly load the real overworld chunk; no synthetic NBT round trip.
             level.getChunk(specimenPos);
             level.getChunk(specimenPos.east());
@@ -233,6 +234,63 @@ public final class ForgeDedicatedSmoke {
         if(checked!=28 || results.size()!=2)throw new IllegalStateException("Incomplete steam crafting catalog");
         LOGGER.info("STEAM_ENGINE_CRAFTING_CHECKPOINT_SUCCESS {}","{\"platform\":\"forge\",\"recipes\":28,\"normalRows\":14,\"strongRows\":14,\"patternAndOutput\":true,\"prefixDistinction\":true,\"hammerWear\":400,\"wrenchWear\":800,\"playerCraftingClickVerified\":false}");
         return java.util.Map.copyOf(results);
+    }
+
+    private static void dieselCrafting(ServerLevel level) {
+        var menu=new net.minecraft.world.inventory.AbstractContainerMenu(null,0) {
+            @Override public ItemStack quickMoveStack(net.minecraft.world.entity.player.Player player,int slot){return ItemStack.EMPTY;}
+            @Override public boolean stillValid(net.minecraft.world.entity.player.Player player){return true;}
+        };
+        var bottle=new ItemStack(java.util.Objects.requireNonNull(net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation("gregtech","lubricant_bottle"))));
+        var early=new ItemStack(java.util.Objects.requireNonNull(net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation("gregtech","olive_oil"))));
+        var cell=new ItemStack(java.util.Objects.requireNonNull(net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation("gregtech","fluid_cell_tin"))));
+        var handler=net.minecraftforge.fluids.FluidUtil.getFluidHandler(cell).resolve().orElseThrow();
+        var fluid=com.gregtech.gregtech.registry.GTFluids.still("Lubricant");
+        if(fluid==null || !fluid.isPresent() || handler.fill(new net.minecraftforge.fluids.FluidStack(fluid.get(),1000),net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE)!=1000)throw new IllegalStateException("Missing finite lubricant vessel");
+        cell=handler.getContainer();int checked=0;
+        for(var entry:com.gregtech.gregtech.content.energy.EngineCatalog.all()) {
+            if(!(entry.spec() instanceof com.gregtech.gregtech.api.machine.DieselEngineSpec spec))continue;
+            var material=spec.material();String id=spec.id();
+            var plate=steamForm(com.gregtech.gregtech.data.MaterialPrefix.plateCurved,material);
+            var rod=steamForm(com.gregtech.gregtech.data.MaterialPrefix.stick,material);
+            var gear=steamForm(com.gregtech.gregtech.data.MaterialPrefix.gearGt,material);
+            var small=steamForm(com.gregtech.gregtech.data.MaterialPrefix.gearGtSmall,material);
+            var casing=com.gregtech.gregtech.registry.GTBlocks.getStack(com.gregtech.gregtech.api.prefix.BlockMaterialPrefix.casingMachineDouble,material);
+            if(casing.isEmpty())throw new IllegalStateException("Missing diesel double casing "+id);
+            var actual=level.getRecipeManager().byKey(new net.minecraft.resources.ResourceLocation("gregtech","engines/"+id)).orElseThrow();
+            if(!(actual instanceof net.minecraft.world.item.crafting.CraftingRecipe craft))throw new IllegalStateException("Wrong diesel crafting type");
+            for(var ingredient:craft.getIngredients())if(ingredient!=net.minecraft.world.item.crafting.Ingredient.EMPTY&&ingredient.getItems().length==0)throw new IllegalStateException("Missing diesel ingredient "+id);
+            for(var lubricant:java.util.List.of(bottle,cell)) {
+                var input=new net.minecraft.world.inventory.TransientCraftingContainer(menu,3,3);
+                var slots=java.util.List.of(plate.copy(),lubricant.copy(),plate.copy(),rod.copy(),casing.copy(),rod.copy(),gear.copy(),plate.copy(),small.copy());
+                for(int s=0;s<9;s++)input.setItem(s,slots.get(s));
+                var result=craft.assemble(input,level.registryAccess());
+                var expected=net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation("gregtech",id));
+                if(!craft.matches(input,level)||result.getItem()!=expected||result.getCount()!=1)throw new IllegalStateException("Original diesel shape/output "+id);
+                var decoded=dieselPacket(craft);if(!decoded.matches(input,level))throw new IllegalStateException("Diesel ingredient network policy lost "+id);
+                var remains=decoded.getRemainingItems(input);var returned=remains.get(1);
+                if(lubricant==bottle) {if(!ItemStack.isSameItemSameTags(returned,com.gregtech.gregtech.item.BottleItem.emptyBottle())||returned.getCount()!=1)throw new IllegalStateException("Diesel 250 bottle remainder "+id);}
+                else if(returned.getItem()!=lubricant.getItem()||returned.getCount()!=1||!net.minecraftforge.fluids.FluidUtil.getFluidContained(returned).orElse(net.minecraftforge.fluids.FluidStack.EMPTY).isEmpty()||net.minecraftforge.fluids.FluidUtil.getFluidContained(lubricant).orElseThrow().getAmount()!=1000)throw new IllegalStateException("Diesel finite 1000 vessel remainder/input mutation "+id);
+                for(int s:java.util.List.of(0,2,3,4,5,6,7,8))if(!remains.get(s).isEmpty())throw new IllegalStateException("Diesel raw slot remainder "+id);
+                input.setItem(6,small.copy());input.setItem(8,gear.copy());if(craft.matches(input,level))throw new IllegalStateException("Diesel mirror accepted "+id);
+                input.setItem(6,gear.copy());input.setItem(8,small.copy());input.setItem(1,early.copy());if(craft.matches(input,level))throw new IllegalStateException("Diesel early oil accepted "+id);
+            }
+            checked++;
+        }
+        var filling=level.getRecipeManager().byKey(new net.minecraft.resources.ResourceLocation("gregtech","bottles/lubricant_bottle_x4")).orElseThrow();
+        var input=new net.minecraft.world.inventory.TransientCraftingContainer(menu,3,2);input.setItem(0,cell.copy());
+        for(int s=1;s<=4;s++)input.setItem(s,com.gregtech.gregtech.item.BottleItem.emptyBottle());
+        if(!(filling instanceof net.minecraft.world.item.crafting.CraftingRecipe craft)||!craft.matches(input,level)||craft.assemble(input,level.registryAccess()).getCount()!=4||!dieselPacket(craft).matches(input,level))throw new IllegalStateException("Legacy filling 1000mB recipe regression");
+        input.setItem(0,bottle.copy());if(craft.matches(input,level))throw new IllegalStateException("Legacy filling converts 250 bottle into four");
+        if(checked!=8)throw new IllegalStateException("Incomplete diesel recipe catalog");
+        LOGGER.info("DIESEL_CRAFTING_CHECKPOINT_SUCCESS {}","{\"platform\":\"forge\",\"recipes\":8,\"actualSerializerRoundTrips\":17,\"bottle250AndVessel1000\":true,\"emptyContainersReturned\":true,\"legacyFillingStill1000\":true,\"rejectEarlyOil\":true,\"nonMirrorShape\":true,\"playerCraftingClickVerified\":false}");
+    }
+
+    @SuppressWarnings({"unchecked","rawtypes"})
+    private static net.minecraft.world.item.crafting.CraftingRecipe dieselPacket(net.minecraft.world.item.crafting.CraftingRecipe recipe) {
+        net.minecraft.world.item.crafting.RecipeSerializer serializer=recipe.getSerializer();
+        var buffer=new net.minecraft.network.FriendlyByteBuf(io.netty.buffer.Unpooled.buffer());
+        try {serializer.toNetwork(buffer,recipe);var decoded=(net.minecraft.world.item.crafting.CraftingRecipe)serializer.fromNetwork(recipe.getId(),buffer);if(buffer.readableBytes()!=0)throw new IllegalStateException("Diesel recipe packet trailing bytes");return decoded;}finally{buffer.release();}
     }
 
     private static ItemStack steamForm(com.gregtech.gregtech.data.MaterialPrefix prefix,com.gregtech.gregtech.api.material.GTMaterial material) {

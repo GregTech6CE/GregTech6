@@ -1,0 +1,34 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "PLP",
+    "SMS",
+    "GPC"
+  ],
+  "key": {
+    "M": {
+      "tag": "gregtech:casing_machine_double/iridium"
+    },
+    "P": {
+      "tag": "gregtech:plate_curved/iridium"
+    },
+    "S": {
+      "tag": "gregtech:stick/iridium"
+    },
+    "G": {
+      "tag": "gregtech:gear_gt/iridium"
+    },
+    "C": {
+      "tag": "gregtech:gear_gt_small/iridium"
+    },
+    "L": {
+      "type": "gregtech:finite_fluid_container_1000",
+      "fluid": "Lubricant",
+      "allow_lubricant_bottle": true
+    }
+  },
+  "result": {
+    "item": "gregtech:engine_diesel_iridium"
+  },
+  "allow_mirror": false
+}

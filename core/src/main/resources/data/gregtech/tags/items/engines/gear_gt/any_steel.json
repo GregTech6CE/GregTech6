@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#gregtech:gear_gt/steel",
+      "required": false
+    },
+    {
+      "id": "#gregtech:gear_gt/knightmetal",
+      "required": false
+    },
+    {
+      "id": "#gregtech:gear_gt/meteoric_steel",
+      "required": false
+    }
+  ]
+}

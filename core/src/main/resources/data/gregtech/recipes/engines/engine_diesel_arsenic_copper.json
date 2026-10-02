@@ -1,0 +1,34 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "PLP",
+    "SMS",
+    "GPC"
+  ],
+  "key": {
+    "M": {
+      "tag": "gregtech:casing_machine_double/arsenic_copper"
+    },
+    "P": {
+      "tag": "gregtech:plate_curved/arsenic_copper"
+    },
+    "S": {
+      "tag": "gregtech:stick/arsenic_copper"
+    },
+    "G": {
+      "tag": "gregtech:gear_gt/arsenic_copper"
+    },
+    "C": {
+      "tag": "gregtech:gear_gt_small/arsenic_copper"
+    },
+    "L": {
+      "type": "gregtech:finite_fluid_container_1000",
+      "fluid": "Lubricant",
+      "allow_lubricant_bottle": true
+    }
+  },
+  "result": {
+    "item": "gregtech:engine_diesel_arsenic_copper"
+  },
+  "allow_mirror": false
+}

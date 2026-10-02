@@ -1,0 +1,34 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "PLP",
+    "SMS",
+    "GPC"
+  ],
+  "key": {
+    "M": {
+      "tag": "gregtech:casing_machine_double/tungsten_steel"
+    },
+    "P": {
+      "tag": "gregtech:plate_curved/tungsten_steel"
+    },
+    "S": {
+      "tag": "gregtech:stick/tungsten_steel"
+    },
+    "G": {
+      "tag": "gregtech:gear_gt/tungsten_steel"
+    },
+    "C": {
+      "tag": "gregtech:gear_gt_small/tungsten_steel"
+    },
+    "L": {
+      "type": "gregtech:finite_fluid_container_1000",
+      "fluid": "Lubricant",
+      "allow_lubricant_bottle": true
+    }
+  },
+  "result": {
+    "item": "gregtech:engine_diesel_tungsten_steel"
+  },
+  "allow_mirror": false
+}

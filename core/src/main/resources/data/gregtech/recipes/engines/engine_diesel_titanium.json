@@ -1,0 +1,34 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "PLP",
+    "SMS",
+    "GPC"
+  ],
+  "key": {
+    "M": {
+      "tag": "gregtech:casing_machine_double/titanium"
+    },
+    "P": {
+      "tag": "gregtech:plate_curved/titanium"
+    },
+    "S": {
+      "tag": "gregtech:stick/titanium"
+    },
+    "G": {
+      "tag": "gregtech:gear_gt/titanium"
+    },
+    "C": {
+      "tag": "gregtech:gear_gt_small/titanium"
+    },
+    "L": {
+      "type": "gregtech:finite_fluid_container_1000",
+      "fluid": "Lubricant",
+      "allow_lubricant_bottle": true
+    }
+  },
+  "result": {
+    "item": "gregtech:engine_diesel_titanium"
+  },
+  "allow_mirror": false
+}
