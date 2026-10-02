@@ -1,0 +1,54 @@
+{
+  "integration_base": "4a8f7b246f54b5e430b8070fba7ce0ff16f166e3",
+  "adapted_source_files": [
+    {
+      "path": "build.gradle",
+      "sha256": "d5a47b7049196610b355888bebac1bcc4f2425c4353761e41d168cb0bbf3cbd3",
+      "base_blob_sha256": "427cfc67742b0ccaf5983bb942fdb09293390ae72c66d09691f7e0c917924333"
+    },
+    {
+      "path": "src/bootstrapGameTest/java/com/gregtech/gregtech/integration/server/ForgeDedicatedSmoke.java",
+      "sha256": "16c6060e17506b701300703fc80fcd45d0ca09514cc8e86dbcca1c5c2e9ef7f0",
+      "base_blob_sha256": "92d44e1c7415614c1a161a847f72ebecee58388943a9f8ffb6d50564d2bb8d31"
+    }
+  ],
+  "unchanged_production_files": [
+    {
+      "path": "src/main/java/com/gregtech/gregtech/blockentity/machine/BoilerTankBlockEntity.java",
+      "sha256": "1622ea6765d1f3cfe0997070abe258fee839e93e6fc5e00bf8b48d3a4ec2c0e6"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/blockentity/machine/SolidBurningBoxBlockEntity.java",
+      "sha256": "3d5ad6c2fd8bb13795d5c6358c6ded53c42978704a972dd4e288185dd196474e"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/blockentity/machine/KineticSteamEngineBlockEntity.java",
+      "sha256": "9f6d8879efb2f0b9d06edf078e544f51fca4d65cd48844a74955a9e10ddeb229"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/blockentity/machine/FluidPipeBlockEntity.java",
+      "sha256": "cf0d9b8706406277e3179cc9f2bec0562018ab7d65f1781ef331e2e5fede45bb"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/blockentity/machine/TankBlockEntity.java",
+      "sha256": "e458ff05fee5f16b7b878429aeaf1bd11b13f85e05e1db648013590183960e56"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java",
+      "sha256": "b24850c0e87b117bf4ee097a71657ce0245114a8ffe24fb3584115be58a72afc"
+    }
+  ],
+  "reference_checkpoint": {
+    "path": "neoforge/src/bootstrapGameTest/java/com/gregtech/gregtech/integration/server/NeoForgeDedicatedSmoke.java",
+    "sha256": "76f307909a8e6e444bea33cc7f1dd5094dec3f7117ce72fd0373df6655d01d1b"
+  },
+  "choices": [
+    "Forge uses actual normal world tick rate and stops immediately after actual processing/chest delivery; no unsupported tick sprint or hand-ticked thermal state.",
+    "Forge RightClickBlock and fluid capability boundaries replace Neo equivalents, reusing existing fixture class.",
+    "All eleven actual block entity saveWithoutMetadata compounds are recorded before normal stop and compared semantically using TagParser in the fresh JVM before any ticks; no synthetic load/repair.",
+    "No production code/resource changes; retain existing dual JARs from 4a8f7b246 and verify their actual delivered hashes instead of rebuilding unchanged assets."
+  ],
+  "source_directories_modified": false,
+  "license_changed": false,
+  "verification": "../../../docs/integration/verification/forge-steam-chain-20261002.md"
+}
