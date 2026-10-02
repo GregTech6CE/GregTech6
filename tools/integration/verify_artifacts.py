@@ -164,9 +164,11 @@ def inspect(path, platform, required_core, properties, forbidden_tests):
             raise ValueError(f'{path}: invalid {metadata_path}: {error}') from error
         if properties['mod_license'] == 'LGPL-3.0-or-later':
             repo = Path(__file__).resolve().parents[2]
-            for name in ('LICENSE', 'COPYING.LESSER', 'COPYING', 'NOTICE'):
-                if archive.read('META-INF/gregtech6/' + name) != (repo / name).read_bytes():
+            for name, source in (('LICENSE', 'LICENSE'), ('GPL-3.0.txt', 'docs/licenses/GPL-3.0.txt'), ('NOTICE', 'NOTICE')):
+                if counts.get('META-INF/gregtech6/' + name) != 1 or archive.read('META-INF/gregtech6/' + name) != (repo / source).read_bytes():
                     raise ValueError(f'{path}: missing/stale current license or notice: {name}')
+            if any('META-INF/gregtech6/' + name in counts for name in ('COPYING.LESSER', 'COPYING', 'LICENSE.txt')):
+                raise ValueError(f'{path}: contains the superseded duplicate license layout')
         stems, resources = forbidden_tests
         contamination = [name for name in counts
                          if name in resources or name.startswith('data/gregtech_bootstrap/')

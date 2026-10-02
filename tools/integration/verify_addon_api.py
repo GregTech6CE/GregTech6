@@ -16,8 +16,9 @@ def inspect(path,repo):
             if hashlib.sha256(data).hexdigest()!=expected or data[:4]!=b'\xca\xfe\xba\xbe' or int.from_bytes(data[6:8],'big')!=61:
                 raise ValueError('Stale or non-Java17 SDK class: '+name)
         if any(name.startswith(('assets/','data/')) or name in ('META-INF/mods.toml','META-INF/neoforge.mods.toml') for name in counts):raise ValueError('SDK contains runtime assets or loader descriptor')
-        for name in ['LICENSE','COPYING.LESSER','COPYING','NOTICE']:
-            if archive.read('META-INF/gregtech6/'+name)!=(repo/name).read_bytes():raise ValueError('SDK license/notice differs: '+name)
+        for name,source in [('LICENSE','LICENSE'),('GPL-3.0.txt','docs/licenses/GPL-3.0.txt'),('NOTICE','NOTICE')]:
+            if counts.get('META-INF/gregtech6/'+name)!=1 or archive.read('META-INF/gregtech6/'+name)!=(repo/source).read_bytes():raise ValueError('SDK license/notice differs: '+name)
+        if any('META-INF/gregtech6/'+name in counts for name in ['COPYING.LESSER','COPYING','LICENSE.txt']):raise ValueError('SDK contains superseded duplicate licenses')
     return {'path':str(path.resolve()),'bytes':path.stat().st_size,'sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'shared_classes':len(required),'java_class_version':61,'compile_only':True,'external_addon_runtime_verified':False}
 
 if __name__=='__main__':
