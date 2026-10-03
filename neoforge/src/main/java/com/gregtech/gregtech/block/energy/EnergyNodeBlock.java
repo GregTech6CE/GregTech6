@@ -138,14 +138,8 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
-        // Turbines: install a rotor part, crowbar removes it
+        // Return obsolete installed rotors from worlds made by earlier port versions.
         if (node.isTurbine()) {
-            if (EnergyNodeBlockEntity.isRotorItem(held)) {
-                if (!level.isClientSide && node.installRotor(held)) {
-                    if (!player.getAbilities().instabuild) held.shrink(1);
-                }
-                return InteractionResult.sidedSuccess(level.isClientSide);
-            }
             if (node.hasRotor() && com.gregtech.gregtech.platform.neoforge.NeoToolBindings.matches(held,"crowbar")) {
                 if (!level.isClientSide) {
                     ItemStack removed = node.removeRotor();
@@ -205,8 +199,6 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
                         .append(Component.literal(spec.inputRate() + " L/t Steam")
                                 .withStyle(net.minecraft.ChatFormatting.WHITE)));
                 tooltip.add(com.gregtech.gregtech.client.TooltipHelper.energyOutLine(spec.outputRate(), outUnit));
-                tooltip.add(Component.translatable("tooltip.gregtech.node.rotor")
-                        .withStyle(net.minecraft.ChatFormatting.GRAY));
             }
             default -> {
                 tooltip.add(com.gregtech.gregtech.client.TooltipHelper.energyInLine(

@@ -24,6 +24,7 @@ public final class CoreBehaviorContracts {
     public static void main(String[] args) {
         workCostGoldens();
         machineEnergyGoldens();
+        sourceSteamConversion();
         itemPipeRoutingAndDelivery();
         fluidPipeChannels();
         fluidPipeSafety();
@@ -35,7 +36,35 @@ public final class CoreBehaviorContracts {
         definitionIdentityAndSnapshot();
         multiblockOwnershipLifecycle();
         addonLifecycle();
-        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 13 groups (Java 17; no game dependencies)");
+        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 14 groups (Java 17; no game dependencies)");
+    }
+
+    private static void sourceSteamConversion() {
+        // MultiTileEntityTurbineSteam consumes a batch once, halves its energy over two ticks;
+        // TE_Behavior_Energy_Converter emits one variable packet and wastes input maximum.
+        var first = com.gregtech.gregtech.content.energy.SteamTurbineConversion.step(0,0,96,0,48);
+        equal(48, first.energy(), "96L source steam first half");
+        equal(48, first.pending(), "96L source steam pending half");
+        equal(96, first.consumed(), "consume the whole steam batch once");
+        equal(96, first.remainder(), "condensate remainder below 160L");
+        var second = com.gregtech.gregtech.content.energy.SteamTurbineConversion.step(0,48,96,96,48);
+        equal(48, second.energy(), "pending half restored next tick");
+        equal(0, second.pending(), "pending half used once");
+        equal(0, second.consumed(), "new steam waits for next batch");
+        equal(16, com.gregtech.gregtech.content.energy.SteamTurbineConversion.output(48,48,16), "bronze turbine nominal RU");
+        equal(32, com.gregtech.gregtech.content.energy.SteamTurbineConversion.output(96,48,16), "bronze turbine full packet");
+        equal(22, com.gregtech.gregtech.content.energy.SteamTurbineConversion.output(32,32,22), "LV dynamo full packet EU");
+        equal(11, com.gregtech.gregtech.content.energy.SteamTurbineConversion.output(16,32,22), "minimum dynamo packet EU");
+        equal(0, com.gregtech.gregtech.content.energy.SteamTurbineConversion.waste(48,48), "turbine spends steam even without receiver");
+        equal(4, com.gregtech.gregtech.content.energy.SteamTurbineConversion.waste(100,48), "subtract maximum input, not recommended input");
+        var condensate = com.gregtech.gregtech.content.energy.SteamTurbineConversion.step(0,0,64,96,48);
+        equal(1, condensate.condensate(), "160L accumulated source steam yields one distilled water");
+        equal(0, condensate.remainder(), "160L condensate resets remainder");
+        var stopped = com.gregtech.gregtech.content.energy.SteamTurbineConversion.step(7,48,96,96,48);
+        equal(55, stopped.energy(), "stopping the inlet does not cancel a stored batch");
+        equal(0, stopped.pending(), "stored second half is released");
+        equal(0, stopped.consumed(), "staged half does not consume another steam batch");
+        equal(0, com.gregtech.gregtech.content.energy.SteamTurbineConversion.step(0,0,47,0,48).consumed(), "batch below source input minimum waits");
     }
 
     private static void fluidPipeCatalog() {

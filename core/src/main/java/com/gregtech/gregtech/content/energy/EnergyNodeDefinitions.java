@@ -40,7 +40,7 @@ public final class EnergyNodeDefinitions {
             result.add(EnergyNodeSpec.builder("electric_dynamo_" + tiers[i].name(), tiers[i].mat())
                     .kind(Kind.CONVERTER).texture("dynamos/electric_rotation")
                     .input(GregTechTags.Energy.RU, tiers[i].v()).output(GregTechTags.Energy.EU, dynamoOut[i])
-                    .capacity(tiers[i].v() * 4).names("Electric Dynamo (" + tiers[i].name().toUpperCase() + ")", "发电机(" + tiers[i].name().toUpperCase() + ")").build());
+                    .capacity(tiers[i].v() * 2).names("Electric Dynamo (" + tiers[i].name().toUpperCase() + ")", "发电机(" + tiers[i].name().toUpperCase() + ")").build());
         }
 
         // Transformers: step-down — accept the higher voltage, emit the lower (GT6 10040+).
@@ -97,7 +97,7 @@ public final class EnergyNodeDefinitions {
             result.add(EnergyNodeSpec.builder("steam_turbine_" + t.name(), t.mat())
                     .kind(Kind.TURBINE).texture("turbines/rotation_steam")
                     .input(GregTechTags.Energy.STEAM, t.steamLt()).output(GregTechTags.Energy.RU, t.ruOut())
-                    .capacity(t.ruOut() * 8).names("Steam Turbine (" + t.mat().getLocalName() + ")", "蒸汽轮机(" + t.zh() + ")").build());
+                    .capacity(t.steamLt() * 2).names("Steam Turbine (" + t.mat().getLocalName() + ")", "蒸汽轮机(" + t.zh() + ")").build());
         }
 
         // Solar panels (GT6 10050/10051): silicon is the ULV panel (Electric_T[0] = tin alloy),
