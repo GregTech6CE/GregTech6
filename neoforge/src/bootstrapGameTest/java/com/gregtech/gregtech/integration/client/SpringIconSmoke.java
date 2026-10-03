@@ -14,7 +14,14 @@ final class SpringIconSmoke {
         player.onUpdateAbilities();
         for(int i=0;i<WORLD_FLUIDS.length;i++) {
             var pos=new net.minecraft.core.BlockPos(i*2,200,0);
-            if(!level.getBlockState(pos).isAir()) throw new IllegalStateException("Smoke refuses to overwrite world specimen");
+            if(!level.getBlockState(pos).isAir()) {
+                // A repeated EMI run can reuse only this exact spring fixture; never replace other blocks.
+                var expected=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",WORLD_FLUIDS[i]);
+                if (!(level.getBlockEntity(pos) instanceof com.gregtech.gregtech.blockentity.FluidSpringBlockEntity spring)
+                        || spring.fluid()==null || !net.minecraft.core.registries.BuiltInRegistries.FLUID.getKey(spring.fluid()).equals(expected))
+                    throw new IllegalStateException("Smoke refuses to overwrite world specimen at "+pos);
+                continue;
+            }
             level.setBlockAndUpdate(pos.below(),net.minecraft.world.level.block.Blocks.STONE.defaultBlockState());
             level.setBlockAndUpdate(pos.above(),net.minecraft.world.level.block.Blocks.STONE.defaultBlockState());
             level.setBlockAndUpdate(pos,com.gregtech.gregtech.registry.GTFluidSprings.FLUID_SPRING.get().defaultBlockState());

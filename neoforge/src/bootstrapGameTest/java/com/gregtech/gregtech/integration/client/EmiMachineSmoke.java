@@ -32,7 +32,7 @@ final class EmiMachineSmoke {
             if (!manager.getRecipesByOutput(plate).contains(recipe))
                 throw new IllegalStateException("EMI plate output search omits " + machine);
         }
-        for (String machine : new String[]{"crusher", "bath", "centrifuge", "shredder", "sluice", "magneticseparator", "sifting"}) {
+        for (String machine : new String[]{"crusher", "bath", "centrifuge", "shredder", "sluice", "magneticseparator", "sifter"}) {
             var ore = nativeRecipes.stream().filter(r -> r.getCategory().getId().getPath().contains(machine))
                 .filter(r -> r.getInputs().stream().anyMatch(s -> s.getEmiStacks().stream().anyMatch(t ->
                     t.getId().getPath().startsWith("ore_") || t.getId().getPath().startsWith("crushed_") || t.getId().getPath().startsWith("crushed_purified_"))))
