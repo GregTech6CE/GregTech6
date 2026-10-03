@@ -95,7 +95,9 @@ public final class GTBlocks {
     }
 
     public static DeferredHolder<Item, Item> registerBlockItem(String id, DeferredHolder<Block, Block> block) {
-        return BLOCK_ITEMS.register(id, () -> new com.gregtech.gregtech.block.MaterialBlockItem(block.get(), new Item.Properties().stacksTo(materialStackLimit(block.get()))));
+        return BLOCK_ITEMS.register(id, () -> block.get() instanceof net.minecraft.world.level.block.WaterlilyBlock
+                ? new net.minecraft.world.item.PlaceOnWaterBlockItem(block.get(), new Item.Properties())
+                : new com.gregtech.gregtech.block.MaterialBlockItem(block.get(), new Item.Properties().stacksTo(materialStackLimit(block.get()))));
     }
 
     private static int materialStackLimit(Block block) {

@@ -64,7 +64,9 @@ public final class GTIconSetBlocks {
             RegistryObject<Block> block = GTBlocks.BLOCKS.register(blockId, () -> createBlock(iconName));
             if (iconName.equals("logistics_wire")) LOGISTICS_WIRE = block;
             RegistryObject<Item> item = GTBlocks.BLOCK_ITEMS.register(blockId,
-                    () -> new BlockItem(block.get(), new Item.Properties().stacksTo(64)));
+                    () -> block.get() instanceof net.minecraft.world.level.block.WaterlilyBlock
+                            ? new net.minecraft.world.item.PlaceOnWaterBlockItem(block.get(), new Item.Properties())
+                            : new BlockItem(block.get(), new Item.Properties().stacksTo(64)));
             if (iconName.equals("planks_treated")) {
                 // GT6 Loader_Woods:85-87: the treated plank block is also the
                 // canonical OP.plate/WoodTreated, rather than a separate flat item.
@@ -192,10 +194,10 @@ public final class GTIconSetBlocks {
         if (isLily(iconName)) {
             if (iconName.equals("flower_hexalily"))
                 return new com.gregtech.gregtech.block.plant.BedrockHexalilyBlock(
-                        BlockBehaviour.Properties.of().instabreak().noCollission().sound(SoundType.LILY_PAD),
+                        BlockBehaviour.Properties.of().instabreak().sound(SoundType.LILY_PAD),
                         iconName);
             return new com.gregtech.gregtech.block.IconSetLilyBlock(
-                    BlockBehaviour.Properties.of().instabreak().noCollission().sound(SoundType.LILY_PAD)
+                    BlockBehaviour.Properties.of().instabreak().sound(SoundType.LILY_PAD)
                             .lightLevel(state -> iconName.startsWith("glowtus_") ? 15 : 0), iconName);
         }
         if (isPlant(iconName)) {
