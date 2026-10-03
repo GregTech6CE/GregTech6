@@ -1,0 +1,95 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:composite",
+  "textures": {
+    "particle": "gregtech:block/plants/bush/colored/bush"
+  },
+  "children": {
+    "colored": {
+      "textures": {
+        "bush": "gregtech:block/plants/bush/colored/bush"
+      },
+      "elements": [
+        {
+          "from": [
+            12,
+            2,
+            2
+          ],
+          "to": [
+            16,
+            14,
+            14
+          ],
+          "faces": {
+            "north": {
+              "texture": "#bush",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#bush",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#bush",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#bush",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#bush",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#bush",
+              "tintindex": 0
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    },
+    "overlay": {
+      "textures": {
+        "bush": "gregtech:block/plants/bush/overlay/bush"
+      },
+      "elements": [
+        {
+          "from": [
+            12,
+            2,
+            2
+          ],
+          "to": [
+            16,
+            14,
+            14
+          ],
+          "faces": {
+            "north": {
+              "texture": "#bush"
+            },
+            "south": {
+              "texture": "#bush"
+            },
+            "east": {
+              "texture": "#bush"
+            },
+            "west": {
+              "texture": "#bush"
+            },
+            "up": {
+              "texture": "#bush"
+            },
+            "down": {
+              "texture": "#bush"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    }
+  }
+}

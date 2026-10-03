@@ -33,6 +33,7 @@ public class BushBlockEntity extends BlockEntity {
 
     private String berryId = "";
     private int growth;
+    private boolean supportChecked;
 
     public BushBlockEntity(BlockPos pos, BlockState state) {
         super(GTBlockEntities.BUSH.get(), pos, state);
@@ -50,7 +51,9 @@ public class BushBlockEntity extends BlockEntity {
 
     /** The berries this bush hands out (GT6 keeps the item stack it was planted with). */
     public ItemStack berryStack(int count) {
-        var item = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech", berryId));
+        var key = GTBerryBushes.itemId(berryId);
+        if (key == null) return ItemStack.EMPTY;
+        var item = ForgeRegistries.ITEMS.getValue(key);
         return item == null ? ItemStack.EMPTY : new ItemStack(item, count);
     }
 
@@ -62,6 +65,10 @@ public class BushBlockEntity extends BlockEntity {
 
     public void tick() {
         if (level == null || level.isClientSide) return;
+        if (!supportChecked || level.getGameTime() % CYCLE_TICKS == 64) {
+            supportChecked = true;
+            if (!refreshSupport()) return;
+        }
         if (level.getGameTime() % CYCLE_TICKS != 0) return;
         grow();
     }
@@ -76,15 +83,18 @@ public class BushBlockEntity extends BlockEntity {
         if (level == null) return 0;
         BlockState state = getBlockState();
         if (!(state.getBlock() instanceof BushBlock)) return 0;
-        if (berryId.isEmpty()) return 0;
+        if (!refreshSupport() || berryId.isEmpty()) return 0;
         int speed = speed();
         if (speed <= 0) return 0;
         if (state.getValue(BushBlock.STAGE) >= 3) return 0;
         int increments;
+        var support = BushBlock.isCore(state) ? null : net.minecraft.core.Direction.from3DDataValue(state.getValue(BushBlock.SUPPORT));
+        var sample = worldPosition.offset(support == null ? 0 : support.getStepX(),
+                support == net.minecraft.core.Direction.UP ? 1 : 2, support == null ? 0 : support.getStepZ());
         if (level.canSeeSky(worldPosition.above())) {
             // GT6: mSpeed increments, plus the same again while it rains on the bush.
-            increments = speed + (level.isRainingAt(worldPosition.above()) ? speed : 0);
-        } else if (level.getMaxLocalRawBrightness(worldPosition.above()) > LIGHT_GATE) {
+            increments = speed + (level.isRainingAt(sample) ? speed : 0);
+        } else if (level.getMaxLocalRawBrightness(sample) > LIGHT_GATE) {
             increments = speed;
         } else {
             return 0;
@@ -105,8 +115,32 @@ public class BushBlockEntity extends BlockEntity {
      */
     public int speed() {
         if (level == null) return 0;
+        BlockState state = getBlockState();
+        if (!BushBlock.isCore(state)) {
+            var parent = level.getBlockEntity(worldPosition.relative(net.minecraft.core.Direction.from3DDataValue(state.getValue(BushBlock.SUPPORT))));
+            return parent instanceof BushBlockEntity bush && BushBlock.isCore(bush.getBlockState()) ? bush.speed() : 0;
+        }
         BlockState ground = level.getBlockState(worldPosition.below());
         return BushBlock.isPlantableGround(ground) ? 1 : 0;
+    }
+
+    /** GT6 copies its core's berry and speed, removes snow, and pops unsupported branches. */
+    public boolean refreshSupport() {
+        if (level == null || level.isClientSide) return true;
+        if (level.getBlockState(worldPosition.above()).is(net.minecraft.world.level.block.Blocks.SNOW))
+            level.removeBlock(worldPosition.above(), false);
+        BlockState state = getBlockState();
+        if (BushBlock.isCore(state)) return true;
+        BlockPos parentPos = worldPosition.relative(net.minecraft.core.Direction.from3DDataValue(state.getValue(BushBlock.SUPPORT)));
+        if (level.getBlockEntity(parentPos) instanceof BushBlockEntity parent) {
+            if (!berryId.equals(parent.berryId())) setBerry(parent.berryId());
+            return true;
+        }
+        if (!(level.getBlockState(parentPos).getBlock() instanceof BushBlock)) {
+            level.destroyBlock(worldPosition, true);
+            return false;
+        }
+        return true;
     }
 
     @Override

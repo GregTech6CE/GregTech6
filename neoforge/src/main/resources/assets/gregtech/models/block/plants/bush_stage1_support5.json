@@ -1,0 +1,167 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:composite",
+  "textures": {
+    "particle": "gregtech:block/plants/bush/colored/bush"
+  },
+  "children": {
+    "colored": {
+      "textures": {
+        "bush": "gregtech:block/plants/bush/colored/bush",
+        "berry": "gregtech:block/plants/bush/colored/berries_immature"
+      },
+      "elements": [
+        {
+          "from": [
+            12,
+            2,
+            2
+          ],
+          "to": [
+            16,
+            14,
+            14
+          ],
+          "faces": {
+            "north": {
+              "texture": "#bush",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#bush",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#bush",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#bush",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#bush",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#bush",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            12,
+            2,
+            2
+          ],
+          "to": [
+            16,
+            14,
+            14
+          ],
+          "faces": {
+            "north": {
+              "texture": "#berry",
+              "tintindex": 1
+            },
+            "south": {
+              "texture": "#berry",
+              "tintindex": 1
+            },
+            "east": {
+              "texture": "#berry",
+              "tintindex": 1
+            },
+            "west": {
+              "texture": "#berry",
+              "tintindex": 1
+            },
+            "up": {
+              "texture": "#berry",
+              "tintindex": 1
+            },
+            "down": {
+              "texture": "#berry",
+              "tintindex": 1
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    },
+    "overlay": {
+      "textures": {
+        "bush": "gregtech:block/plants/bush/overlay/bush",
+        "berry": "gregtech:block/plants/bush/overlay/berries_immature"
+      },
+      "elements": [
+        {
+          "from": [
+            12,
+            2,
+            2
+          ],
+          "to": [
+            16,
+            14,
+            14
+          ],
+          "faces": {
+            "north": {
+              "texture": "#bush"
+            },
+            "south": {
+              "texture": "#bush"
+            },
+            "east": {
+              "texture": "#bush"
+            },
+            "west": {
+              "texture": "#bush"
+            },
+            "up": {
+              "texture": "#bush"
+            },
+            "down": {
+              "texture": "#bush"
+            }
+          }
+        },
+        {
+          "from": [
+            12,
+            2,
+            2
+          ],
+          "to": [
+            16,
+            14,
+            14
+          ],
+          "faces": {
+            "north": {
+              "texture": "#berry"
+            },
+            "south": {
+              "texture": "#berry"
+            },
+            "east": {
+              "texture": "#berry"
+            },
+            "west": {
+              "texture": "#berry"
+            },
+            "up": {
+              "texture": "#berry"
+            },
+            "down": {
+              "texture": "#berry"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    }
+  }
+}

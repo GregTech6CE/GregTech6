@@ -27,7 +27,7 @@ public class BerryBushCatalog {
     private static final Map<String, BerryType> TYPES = new LinkedHashMap<>();
 
     /** GT6 {@code BushesGT.DEFAULT} (the string/cotton entry). */
-    public static final BerryType DEFAULT = new BerryType("default", 0x22cc22, 0x33cc33, 0x44cc44, 0xeeeeee);
+    public static final BerryType DEFAULT = new BerryType("minecraft:string", 0x22cc22, 0x33cc33, 0x44cc44, 0xeeeeee);
     /** GT6 renders a bush that has no berry yet in this colour. */
     public static final int NO_BERRY_COLOUR = 0xff00ff;
 
@@ -59,7 +59,22 @@ public class BerryBushCatalog {
     }
 
     public static BerryType byId(String id) {
+        if ("minecraft:string".equals(id) || "string".equals(id) || "default".equals(id)) return DEFAULT;
         return TYPES.get(id);
+    }
+
+    /** CS.BushesGT also registers string as its default cotton bush. */
+    public static java.util.List<BerryType> worldgenTypes() {
+        var entries = new java.util.ArrayList<BerryType>();
+        entries.add(DEFAULT);
+        entries.addAll(types());
+        return java.util.List.copyOf(entries);
+    }
+
+    public static int worldgenSize() { return TYPES.size() + 1; }
+
+    public static BerryType worldgenByIndex(int index) {
+        return worldgenTypes().get(Math.floorMod(index, worldgenSize()));
     }
 
     /** The tint colour of a stage's render layer, exactly as GT6's {@code getRenderPasses2} picks it. */

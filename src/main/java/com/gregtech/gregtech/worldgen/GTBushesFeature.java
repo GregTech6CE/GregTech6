@@ -25,8 +25,8 @@ import java.util.Set;
  *
  * <p>GT6 plants one bush per chunk with a {@code 1/4} roll in plains and woods (never in frozen
  * biomes), picks the berry type with its value noise at {@code (x/2, 300, z/2)} modulo the number of
- * berry types, and then spreads the same bush to up to four horizontal neighbours (and decorative
- * side pieces, which the port's single-block bush does not need).
+ * berry types, and then spreads the same bush to up to four horizontal neighbours (and attached
+ * branches on each core).
  *
  * <p>The port keeps GT6's noise: {@code gregtech.worldgen.GTCellNoise} is a port of GT6's
  * {@code NoiseGenerator} including its 256-cell offset table, so the same coordinates give the same
@@ -80,31 +80,47 @@ public class GTBushesFeature extends Feature<NoneFeatureConfiguration> {
     /** GT6's berry type selection: the world noise at {@code (x/2, 300, z/2)} into the berry list. */
     public static int berryIndex(WorldGenLevel level, int x, int z) {
         var noise = new GTCellNoise(level.getSeed());
-        return Math.floorMod(noise.get(x / 2.0F, NOISE_Y, z / 2.0F, GTBerryBushes.size()), GTBerryBushes.size());
+        return Math.floorMod(noise.get(x / 2.0F, NOISE_Y, z / 2.0F, GTBerryBushes.worldgenSize()), GTBerryBushes.worldgenSize());
     }
 
     static boolean placeBush(WorldGenLevel level, int x, int z, RandomSource random) {
         if (!bushBiome(biomeId(level, x, z))) return false;
         BlockPos ground = GTSurfaceFloraFeature.surface(level, x, z);
         if (ground == null || !BushBlock.isPlantableGround(level.getBlockState(ground))) return false;
-        String berry = GTBerryBushes.byIndex(berryIndex(level, x, z)).id();
+        String berry = GTBerryBushes.worldgenByIndex(berryIndex(level, x, z)).id();
         if (!placeOne(level, ground.above(), berry)) return false;
         // GT6 spreads the same berry to up to four horizontal neighbours.
         for (var direction : net.minecraft.core.Direction.Plane.HORIZONTAL) {
             if (!random.nextBoolean()) continue;
             BlockPos side = ground.relative(direction);
             if (!BushBlock.isPlantableGround(level.getBlockState(side))) continue;
-            placeOne(level, side.above(), berry);
+            if (placeOne(level, side.above(), berry)) placeBranches(level, side.above(), berry);
         }
+        placeBranches(level, ground.above(), berry);
         return true;
     }
 
     private static boolean placeOne(WorldGenLevel level, BlockPos pos, String berry) {
-        if (!level.getBlockState(pos).isAir()) return false;
-        BlockState state = GTBushes.BUSH.get().defaultBlockState();
+        if (!level.getBlockState(pos).canBeReplaced()) return false;
+        if (level.getBlockState(pos.below()).is(net.minecraft.world.level.block.Blocks.GRASS_BLOCK))
+            level.setBlock(pos.below(), net.minecraft.world.level.block.Blocks.DIRT.defaultBlockState(), 2);
+        BlockState state = GTBushes.BUSH.get().defaultBlockState().setValue(BushBlock.STAGE, 3);
         if (!level.setBlock(pos, state, 2)) return false;
         if (level.getBlockEntity(pos) instanceof BushBlockEntity bush) bush.setBerry(berry);
         return true;
+    }
+
+    /** GT6 WorldgenBushes.placeBushSides: four horizontal faces and the top of a ripe core. */
+    public static void placeBranches(WorldGenLevel level, BlockPos core, String berry) {
+        for (var direction : net.minecraft.core.Direction.values()) {
+            if (direction == net.minecraft.core.Direction.DOWN) continue;
+            BlockPos pos = core.relative(direction);
+            if (!level.getBlockState(pos).canBeReplaced()) continue;
+            var state = GTBushes.BUSH.get().defaultBlockState().setValue(BushBlock.STAGE, 3)
+                    .setValue(BushBlock.SUPPORT, direction.getOpposite().get3DDataValue());
+            if (level.setBlock(pos, state, 2) && level.getBlockEntity(pos) instanceof BushBlockEntity bush)
+                bush.setBerry(berry);
+        }
     }
 
     private static ResourceLocation biomeId(WorldGenLevel level, int x, int z) {

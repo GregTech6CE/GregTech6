@@ -34,7 +34,7 @@ import java.util.List;
 /**
  * GT6's berry bush ({@code MultiTileEntityBush}, multi-tile 32759).
  *
- * <p>GT6's bush is a small plant block that grows a chosen berry type over four stages: the
+ * <p>GT6's bush has a full-block core and thin attached branches that grows a chosen berry type over four stages: the
  * {@link BushBlockEntity} advances one stage per 256 growth increments, GT6's rain and light bonuses
  * included. Right-clicking a ripe bush hands out 1-2 berries and resets the stage, and right-clicking
  * a bush that has no berry yet with a GT6 berry sets its type.
@@ -47,38 +47,73 @@ public class BushBlock extends Block implements EntityBlock {
     /** GT6's {@code mStage}: 0 = bare bush, 1 = bloom, 2 = immature berries, 3 = ripe. */
     public static final IntegerProperty STAGE = IntegerProperty.create("stage", 0, 3);
 
-    private static final VoxelShape SHAPE = box(2.0, 0.0, 2.0, 14.0, 4.0, 14.0);
-    private static final VoxelShape COLLISION = box(2.0, 0.0, 2.0, 14.0, 2.0, 14.0);
+    /** 0..5 are the supporting direction; 6 is an independent rooted core. */
+    public static final IntegerProperty SUPPORT = IntegerProperty.create("support", 0, 6);
+
+    public static boolean isCore(BlockState state) { return state.getValue(SUPPORT) == 6; }
+
+    private static VoxelShape shape(BlockState state, boolean collision) {
+        if (isCore(state)) return net.minecraft.world.phys.shapes.Shapes.block();
+        double thickness = collision ? 2 : 4;
+        return switch (Direction.from3DDataValue(state.getValue(SUPPORT))) {
+            case DOWN -> box(2, 0, 2, 14, thickness, 14);
+            case UP -> box(2, 16 - thickness, 2, 14, 16, 14);
+            case NORTH -> box(2, 2, 0, 14, 14, thickness);
+            case SOUTH -> box(2, 2, 16 - thickness, 14, 14, 16);
+            case WEST -> box(0, 2, 2, thickness, 14, 14);
+            case EAST -> box(16 - thickness, 2, 2, 16, 14, 14);
+        };
+    }
 
     public BushBlock(Properties properties) {
         super(properties);
-        registerDefaultState(stateDefinition.any().setValue(STAGE, 0));
+        registerDefaultState(stateDefinition.any().setValue(STAGE, 0).setValue(SUPPORT, 6));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(STAGE);
+        builder.add(STAGE, SUPPORT);
     }
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return SHAPE;
+        return shape(state, false);
     }
 
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return COLLISION;
+        return shape(state, true);
     }
 
     /** GT6 {@code canPlace}: the bush needs the ground below to be plantable greens. */
     @Override
     public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
-        return isPlantableGround(level.getBlockState(pos.below()));
+        if (isCore(state)) return isPlantableGround(level.getBlockState(pos.below()));
+        return level.getBlockState(pos.relative(Direction.from3DDataValue(state.getValue(SUPPORT)))).getBlock() instanceof BushBlock;
     }
 
     /** GT6 {@code BlocksGT.plantableGreens}: grass/dirt-like ground the bush grows on. */
     public static boolean isPlantableGround(BlockState state) {
-        return state.is(net.minecraft.tags.BlockTags.DIRT) || state.is(net.minecraft.world.level.block.Blocks.MOSS_BLOCK);
+        return state.is(net.minecraft.tags.BlockTags.DIRT) || state.is(net.minecraft.world.level.block.Blocks.MOSS_BLOCK) || state.is(net.minecraft.world.level.block.Blocks.FARMLAND);
+    }
+
+    @Override
+    public BlockState getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext context) {
+        Direction support = context.getClickedFace().getOpposite();
+        BlockPos parentPos = context.getClickedPos().relative(support);
+        BlockState parent = context.getLevel().getBlockState(parentPos);
+        if (parent.getBlock() instanceof BushBlock && isCore(parent)
+                && context.getLevel().getBlockEntity(parentPos) instanceof BushBlockEntity bush) {
+            String planted = packedBerry(context.getItemInHand());
+            if (planted.isEmpty() || planted.equals(bush.berryId()))
+                return defaultBlockState().setValue(SUPPORT, support.get3DDataValue());
+        }
+        return defaultBlockState().canSurvive(context.getLevel(), context.getClickedPos()) ? defaultBlockState() : null;
+    }
+
+    private static String packedBerry(ItemStack stack) {
+        var data = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
+        return data == null ? "" : data.copyTag().getString("berry");
     }
 
     @Override
@@ -112,6 +147,7 @@ public class BushBlock extends Block implements EntityBlock {
     public void setPlacedBy(Level level, BlockPos pos, BlockState state,
                             @Nullable LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(level, pos, state, placer, stack);
+        if (level.getBlockEntity(pos) instanceof BushBlockEntity bush) bush.refreshSupport();
         var packedData=stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
         CompoundTag data=packedData==null?null:packedData.copyTag();
         if (data == null || !data.contains("berry", Tag.TAG_STRING)) return;

@@ -207,7 +207,7 @@ public final class BushTests {
         int again = GTBushesFeature.berryIndex((net.minecraft.world.level.WorldGenLevel) helper.getLevel(),
                 BASE_X, BASE_Z);
         helper.assertTrue(first == again, "the berry type is deterministic per position");
-        helper.assertTrue(first >= 0 && first < GTBerryBushes.size(),
+        helper.assertTrue(first >= 0 && first < GTBerryBushes.worldgenSize(),
                 "the noise index is inside the berry table, got " + first);
         helper.succeed();
     }

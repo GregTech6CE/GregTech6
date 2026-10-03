@@ -75,6 +75,12 @@ public final class GregTechClient {
 
     @SubscribeEvent
     public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
+        event.register((stack, tint) -> {
+            var data = stack.getTagElement("BlockEntityTag");
+            var type = data == null ? null : com.gregtech.gregtech.content.plant.GTBerryBushes.byId(data.getString("berry"));
+            return tint == 0 ? type == null ? com.gregtech.gregtech.content.plant.GTBerryBushes.NO_BERRY_COLOUR : type.bush()
+                    : com.gregtech.gregtech.content.plant.GTBerryBushes.stageColour(type, 3);
+        }, com.gregtech.gregtech.registry.GTBushes.BUSH.get().asItem());
         com.gregtech.gregtech.registry.GTChemicalBatteries.allRegistered().forEach(entry->
                 event.register((stack,index)->index==0?entry.get().spec().chemistry().color:0xFFFFFF,entry.get().asItem()));
         java.util.stream.Stream.concat(com.gregtech.gregtech.registry.GTMiscBlocks.ADVANCED_CRAFTING_TABLES.stream(),com.gregtech.gregtech.registry.GTMiscBlocks.CHARGING_CRAFTING_TABLES.stream()).forEach(entry -> event.register((stack,index) -> index==0?entry.get().material().getColor():0xFFFFFF,entry.get().asItem()));
