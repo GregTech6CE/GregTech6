@@ -74,7 +74,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
             if (!id.getNamespace().equals("gregtech") || SharedInventoryModelPack.class.getResource(
                     "/assets/gregtech/models/item/" + id.getPath() + ".json") != null) continue;
             ResourceLocation parent = null;
-            if (item instanceof MaterialItem material) {
+            if (item instanceof com.gregtech.gregtech.api.material.MaterialFormItem material) {
                 parent = MaterialIcons.sharedModelLocation(MaterialIcons.resolveTextureSet(material.getMaterial()), material.getPrefix());
             } else if (item instanceof com.gregtech.gregtech.platform.neoforge.fluid.FluidDisplayItem) {
                 parent = location("item/fluid_item");

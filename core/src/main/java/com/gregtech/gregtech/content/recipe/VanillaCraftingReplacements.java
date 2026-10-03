@@ -18,6 +18,10 @@ public final class VanillaCraftingReplacements {
     }
     public static List<Row> rows() {
         var rows=new ArrayList<Row>();
+        // Loader_Recipes_Vanilla:469,478 removes the vanilla arrow shortcut and uses four shafts.
+        rows.add(new Row("minecraft:arrow","minecraft:arrow",4,null,keys("F=item:minecraft:flint",
+                "A=item:gregtech:arrow_gt_wood_empty","B=item:gregtech:arrow_gt_wood_empty",
+                "C=item:gregtech:arrow_gt_wood_empty","D=item:gregtech:arrow_gt_wood_empty")));
         shaped(rows,"furnace",1,"XXX/XFX/XXX","X=tag:minecraft:stone_crafting_materials","F=firestarter");
         shaped(rows,"paper",1,"XXX","X=item:minecraft:sugar_cane");
         rows.add(new Row("minecraft:book","minecraft:book",1,null,keys("L=item:minecraft:leather","A=item:minecraft:paper","B=item:minecraft:paper","C=item:minecraft:paper")));

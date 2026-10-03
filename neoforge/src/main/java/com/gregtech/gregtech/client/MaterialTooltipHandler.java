@@ -17,7 +17,7 @@ public final class MaterialTooltipHandler {
     @SubscribeEvent
     public static void onItemTooltip(ItemTooltipEvent event) {
         ItemStack stack = event.getItemStack();
-        if (stack.isEmpty() || stack.getItem() instanceof MaterialItem
+        if (stack.isEmpty() || stack.getItem() instanceof com.gregtech.gregtech.api.material.MaterialFormItem
                 || stack.getItem() instanceof MaterialBlockItem blockItem && blockItem.material() != null) {
             return;
         }

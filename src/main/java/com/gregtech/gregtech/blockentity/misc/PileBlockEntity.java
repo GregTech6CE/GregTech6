@@ -141,7 +141,7 @@ public class PileBlockEntity extends BlockEntity {
     @Nullable
     public static GTMaterial materialOf(ItemStack stack) {
         if (stack.isEmpty()) return null;
-        if (stack.getItem() instanceof MaterialItem materialItem) return materialItem.getMaterial();
+        if (stack.getItem() instanceof com.gregtech.gregtech.api.material.MaterialFormItem materialItem) return materialItem.getMaterial();
         return ItemMaterialRegistry.get(stack)
                 .map(com.gregtech.gregtech.api.material.ItemComposition::material)
                 .filter(GTMaterial::isValid)

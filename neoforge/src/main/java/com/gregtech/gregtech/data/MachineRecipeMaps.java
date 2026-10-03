@@ -251,7 +251,7 @@ public final class MachineRecipeMaps {
      */
     public static ItemStack neverFurnaceOutput(ItemStack aOutput) {
         if (invalid(aOutput)) return aOutput;
-        if (!(aOutput.getItem() instanceof com.gregtech.gregtech.item.MaterialItem materialItem)) return aOutput;
+        if (!(aOutput.getItem() instanceof com.gregtech.gregtech.api.material.MaterialFormItem materialItem)) return aOutput;
         com.gregtech.gregtech.api.material.GTMaterial material = materialItem.getMaterial().resolve();
         if (material == null || !material.isValid() || !material.has(MaterialProperty.NEVER_FURNACE)) {
             return aOutput;
@@ -266,7 +266,7 @@ public final class MachineRecipeMaps {
     /** Whether the stack's material may not be produced by furnace smelting (GT6 NEVER_FURNACE). */
     public static boolean isNeverFurnace(ItemStack aStack) {
         return aStack != null && !aStack.isEmpty()
-                && aStack.getItem() instanceof com.gregtech.gregtech.item.MaterialItem materialItem
+                && aStack.getItem() instanceof com.gregtech.gregtech.api.material.MaterialFormItem materialItem
                 && materialItem.getMaterial().resolve() != null
                 && materialItem.getMaterial().resolve().has(MaterialProperty.NEVER_FURNACE);
     }

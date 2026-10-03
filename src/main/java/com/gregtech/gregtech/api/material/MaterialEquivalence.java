@@ -18,7 +18,7 @@ public final class MaterialEquivalence {
         Map.entry("foil","foils"),Map.entry("wireGt01","wires"),Map.entry("oreRaw","raw_materials"));
     private MaterialEquivalence() {}
     public static Form form(ItemStack stack) {
-        if(stack.getItem() instanceof MaterialItem m) return new Form(m.getPrefix(),m.getMaterial().resolve());
+        if(stack.getItem() instanceof com.gregtech.gregtech.api.material.MaterialFormItem m) return new Form(m.getPrefix(),m.getMaterial().resolve());
         var data=ItemMaterialRegistry.base(stack.getItem()).orElse(null);
         if(data==null||data.prefix()==null||data.components().size()!=1||data.amount()!=data.prefix().getMaterialWeight()) return null;
         return new Form(data.prefix(),data.material().resolve());

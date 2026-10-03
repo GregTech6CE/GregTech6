@@ -43,7 +43,7 @@ public final class MaterialClientModels {
         int aliased = 0;
         int missing = 0;
         for (var entry : GTItems.allEntries()) {
-            MaterialItem item = entry.get();
+            com.gregtech.gregtech.api.material.MaterialFormItem item = (com.gregtech.gregtech.api.material.MaterialFormItem) entry.get();
             BakedModel model = resolveSharedModel(models, item);
             if (model == null) {
                 missing++;
@@ -58,12 +58,12 @@ public final class MaterialClientModels {
     @SubscribeEvent
     public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
         for (var entry : GTItems.allEntries()) {
-            MaterialItem item = entry.get();
-            event.register(ItemColorARGB.opaque((stack, layer) -> layer == 0 ? item.getTintColor() : 0xFFFFFF), item);
+            com.gregtech.gregtech.api.material.MaterialFormItem item = (com.gregtech.gregtech.api.material.MaterialFormItem) entry.get();
+            event.register(ItemColorARGB.opaque((stack, layer) -> layer == 0 ? item.getTintColor() : 0xFFFFFF), entry.get());
         }
     }
 
-    private static BakedModel resolveSharedModel(Map<ModelResourceLocation, BakedModel> models, MaterialItem item) {
+    private static BakedModel resolveSharedModel(Map<ModelResourceLocation, BakedModel> models, com.gregtech.gregtech.api.material.MaterialFormItem item) {
         MaterialTextureSet primary = MaterialIcons.resolveTextureSet(item.getMaterial());
         BakedModel model = lookupModel(models, primary, item.getPrefix());
         if (model != null) return model;

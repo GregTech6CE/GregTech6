@@ -343,7 +343,7 @@ public final class MachineRecipeIngredients {
         if (materialItems != null) return;
         Map<MaterialPrefix, Map<GTMaterial, Item>> index = new HashMap<>();
         for (Item item : BuiltInRegistries.ITEM) {
-            if (item instanceof MaterialItem materialItem) {
+            if (item instanceof com.gregtech.gregtech.api.material.MaterialFormItem materialItem) {
                 GTMaterial material = materialItem.getMaterial();
                 if (material != null && material.isValid()) {
                     index.computeIfAbsent(materialItem.getPrefix(), k -> new HashMap<>()).put(material, item);

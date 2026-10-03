@@ -11,7 +11,7 @@ public final class FilterRules {
     }
     public static String prefix(ItemStack stack){
         if(stack.isEmpty())return "";
-        if(stack.getItem() instanceof MaterialItem item)return item.getPrefix().getName();
+        if(stack.getItem() instanceof com.gregtech.gregtech.api.material.MaterialFormItem item)return item.getPrefix().getName();
         if(stack.getItem() instanceof com.gregtech.gregtech.item.PortableFluidContainerItem item&&item.spec().shapeId().equals("cell"))return "capcellcon";
         if(stack.getItem() instanceof BlockItem item&&item.getBlock() instanceof com.gregtech.gregtech.block.machine.FluidPipeBlock pipe)
             return pipePrefix(pipe.spec().size().name());

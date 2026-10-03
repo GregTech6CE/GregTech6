@@ -9828,5 +9828,10 @@
   "jade.gregtech.boiler.contact_damage": "接触烫伤：%.2f",
   "jade.gregtech.boiler.descaling_explosion": "当前压力下除垢会爆炸",
   "jade.gregtech.boiler.descaling_damage": "除垢烫伤：%.2f",
-  "block.gregtech.cfoam_slab": "硬化建筑泡沫半砖"
+  "block.gregtech.cfoam_slab": "硬化建筑泡沫半砖",
+  "item.gregtech.arrow_gt_wood_empty": "无箭头的木箭",
+  "item.gregtech.arrow_gt_plastic_empty": "无箭头的塑料箭",
+  "item.gregtech.bullet_gt_small_empty": "小型弹壳",
+  "item.gregtech.bullet_gt_medium_empty": "中型弹壳",
+  "item.gregtech.bullet_gt_large_empty": "大型弹壳"
 }

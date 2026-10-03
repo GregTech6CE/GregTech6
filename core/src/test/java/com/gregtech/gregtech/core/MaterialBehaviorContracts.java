@@ -24,8 +24,10 @@ public final class MaterialBehaviorContracts {
     // See docs/integration/verification/tools-power-issues-20261003.md.
     // Full 110-row MT.woodnormal source restoration and isolated graph differential:
     // docs/integration/verification/normal-wood-differential-20261003.json.
-    private static final String DEFINITIONS_SHA256 = "21173e86142600ef6097d3850af04d57989c2c1f4b6f2f7e748197e27b1d9ec8";
-    private static final String POST_INIT_SHA256 = "1472636103bb2605d777847455acb0cf83b80e6c76f56fafae28cac49b6ff2bd";
+    // Only five EMPTY ammunition form booleans change; isolated full graph proof:
+    // docs/integration/verification/ammunition-differential-20261004.json.
+    private static final String DEFINITIONS_SHA256 = "c9744976f092d8eae2f111d9fdde90e815a308fe40e08efd2b48c10c21f7a368";
+    private static final String POST_INIT_SHA256 = "99a2334097c88fdc89fff7c6a03d75c5022120b2793cc46d8d268fc36b037122";
     private static int assertions;
     private MaterialBehaviorContracts() {}
 
@@ -65,6 +67,7 @@ public final class MaterialBehaviorContracts {
             check(material.getTargetBurningMaterial() == GTMaterialRegistry.get("DarkAshes") && material.getTargetBurningAmount() == GregTechConstants.U / 9, "MT coke dark ash " + fuel.getKey());
         }
         assertions += SourceWoodFixtures.validate();
+        assertions += AmmunitionSourceSamples.verify();
         validateIdentityGraph();
         validateMetadata();
         check(com.gregtech.gregtech.content.tool.OriginalToolMaterials.inFamily(GTMaterialRegistry.get("Knightmetal"), "Steel"), "ANY.Steel accepts Knightmetal screws and rings");

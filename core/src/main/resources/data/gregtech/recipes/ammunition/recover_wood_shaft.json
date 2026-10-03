@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:arrow"
+    }
+  ],
+  "result": {
+    "item": "gregtech:arrow_gt_wood_empty"
+  },
+  "_comment": "GT6 Loader_Recipes_Vanilla:475-484 (Gregorius Techneticies)"
+}

@@ -32,7 +32,7 @@ public final class CrucibleItemInput {
             return result;
         }
 
-        if (stack.getItem() instanceof MaterialItem materialItem) {
+        if (stack.getItem() instanceof com.gregtech.gregtech.api.material.MaterialFormItem materialItem) {
             GTMaterial material = materialItem.getMaterial().resolve();
             MaterialPrefix prefix = materialItem.getPrefix();
             result.add(CrucibleInputRules.materialItem(material, prefix));

@@ -45,6 +45,7 @@ public final class GregTechNeoForge {
         com.gregtech.gregtech.registry.GTDungeonKeys.registerAll();
         com.gregtech.gregtech.registry.GTRadiationProtection.MATERIALS.register(modEventBus);
         int materialItems = GTItems.register(modEventBus);
+        com.gregtech.gregtech.registry.GTProjectiles.register(modEventBus);
         new com.gregtech.gregtech.loaders.a.Loader_Blocks().run();
         com.gregtech.gregtech.registry.GTWoods.registerAll();
         com.gregtech.gregtech.registry.GTTreeHoles.registerAll();
@@ -116,9 +117,11 @@ public final class GregTechNeoForge {
     }
 
     private void finishSharedSetup() {
+        com.gregtech.gregtech.registry.GTProjectiles.registerDispensers();
         for (var holder : GTItems.allEntries()) {
             var item = holder.get();
-            ItemMaterialRegistry.register(item, item.getPrefix(), item.getMaterial());
+            var form = (com.gregtech.gregtech.api.material.MaterialFormItem) item;
+            ItemMaterialRegistry.register(item, form.getPrefix(), form.getMaterial());
         }
         com.gregtech.gregtech.registry.GTDungeonBlocks.registerPotPlants();
         registerBlockCompositions();

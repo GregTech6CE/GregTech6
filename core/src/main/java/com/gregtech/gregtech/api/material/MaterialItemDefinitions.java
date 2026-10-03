@@ -139,7 +139,7 @@ public final class MaterialItemDefinitions {
         List<Definition> definitions = new ArrayList<>();
         for (MaterialPrefix prefix : candidatePrefixes()) {
             for (GTMaterial material : GTMaterialRegistry.sortedMaterials()) {
-                if (material.has(MaterialProperty.HIDDEN)) continue;
+                // Prefix validation retains the original five EMPTY ammunition components.
                 if (material.resolve() != material) continue;
                 if (!prefix.isValidFor(material)) continue;
                 // Original Loader_Woods binds this plate to the placeable treated plank block.

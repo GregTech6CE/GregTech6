@@ -34,6 +34,7 @@ public class GregTech {
         IEventBus modEventBus = context.getModEventBus();
 
         GTPackets.register();
+        com.gregtech.gregtech.registry.GTProjectiles.register(modEventBus);
         com.gregtech.gregtech.worldgen.GTFeatures.register(modEventBus);
 
         // Phase A — Data, materials, basic items/blocks, fluids, tools
@@ -78,6 +79,7 @@ public class GregTech {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
+            com.gregtech.gregtech.registry.GTProjectiles.registerDispensers();
             com.gregtech.gregtech.registry.GTDungeonBlocks.registerPotPlants();
             // Phase C — Post-registration (material linking, recipes, F3+H tooltips)
             List<IGTLoader> phaseC = List.of(

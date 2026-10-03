@@ -192,7 +192,9 @@ public final class GTGeneratedChem {
                 return OM.dust(material, amount);
             }
             case "i" -> {
-                GTMaterial material = material(parts[2]);
+                GTMaterial material = "Empty".equals(parts[2]) && prefix(parts[1]) != null
+                        && prefix(parts[1]).hasEmptyAmmunitionForm()
+                        ? com.gregtech.gregtech.content.material.Materials.Empty : material(parts[2]);
                 if (material == null) return null;
                 // Keep a visible stack; register() separately marks GT6 count-zero inputs as catalysts.
                 int count = Math.max(1, Integer.parseInt(parts[3]));

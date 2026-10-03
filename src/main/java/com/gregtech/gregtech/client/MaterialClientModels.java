@@ -53,7 +53,7 @@ public final class MaterialClientModels {
         Map<BakedModel, BakedModel> coinModels = new IdentityHashMap<>();
 
         for (var entry : GTItems.allEntries()) {
-            if (!(entry.get() instanceof MaterialItem materialItem)) {
+            if (!(entry.get() instanceof com.gregtech.gregtech.api.material.MaterialFormItem materialItem)) {
                 continue;
             }
 
@@ -74,7 +74,7 @@ public final class MaterialClientModels {
                 GregTech.NAMESPACE, aliased, missing);
     }
 
-    private static BakedModel resolveSharedModel(Map<ResourceLocation, BakedModel> models, MaterialItem materialItem) {
+    private static BakedModel resolveSharedModel(Map<ResourceLocation, BakedModel> models, com.gregtech.gregtech.api.material.MaterialFormItem materialItem) {
         MaterialTextureSet primary = MaterialIcons.resolveTextureSet(materialItem.getMaterial());
         BakedModel model = lookupModel(models, primary, materialItem.getPrefix());
         if (model != null) {

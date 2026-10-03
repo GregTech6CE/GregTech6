@@ -11,7 +11,7 @@ public final class MaterialDisplayBinding {
     private static Map<GTMaterial,List<ItemStack>> aliases;
     private MaterialDisplayBinding() {}
     public static synchronized List<ItemStack> alternatives(ItemStack display) {
-        if (!(display.getItem() instanceof MaterialItem item) || item.getPrefix()!=MaterialPrefix.unit) return List.of();
+        if (!(display.getItem() instanceof com.gregtech.gregtech.api.material.MaterialFormItem item) || item.getPrefix()!=MaterialPrefix.unit) return List.of();
         if (aliases==null) {
             Map<GTMaterial,List<ItemStack>> index=new IdentityHashMap<>();
             for(Item registered:ForgeRegistries.ITEMS.getValues()) {

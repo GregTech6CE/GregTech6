@@ -1,0 +1,22 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "PS",
+    "sP"
+  ],
+  "key": {
+    "S": {
+      "tag": "gregtech:ammunition/sticks_wood"
+    },
+    "P": {
+      "tag": "gregtech:ammunition/tiny_plastic_plates"
+    },
+    "s": {
+      "item": "gregtech:tool_saw"
+    }
+  },
+  "result": {
+    "item": "gregtech:arrow_gt_wood_empty"
+  },
+  "_comment": "GT6 Loader_Recipes_Vanilla:475-484 (Gregorius Techneticies)"
+}

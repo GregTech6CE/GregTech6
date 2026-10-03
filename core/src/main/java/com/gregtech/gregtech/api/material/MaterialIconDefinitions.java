@@ -7,6 +7,8 @@ public final class MaterialIconDefinitions {
     private MaterialIconDefinitions() {}
 
     public static MaterialTextureSet resolveTextureSet(GTMaterial material) {
+        // Original OreDictMaterial:252 keeps EMPTY on SET_NONE (headless arrows/charged casings).
+        if ("Empty".equals(material.getName())) return MaterialTextureSet.NONE;
         MaterialTextureSet set = material.getTextureSet();
         if (set != null) return set;
         if (material.has(MaterialProperty.WOOD)) return MaterialTextureSet.WOOD;

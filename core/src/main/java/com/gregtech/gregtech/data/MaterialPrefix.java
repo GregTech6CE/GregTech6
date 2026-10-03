@@ -648,9 +648,17 @@ private final String name;
     }
 
     public boolean isValidFor(GTMaterial material) {
-        if (material == null || material.has(MaterialProperty.HIDDEN)) return false;
+        if (material == null) return false;
+        // OP uses EMPTY for arrow shafts and powder-filled bullet casings, not for press molds.
+        if (material.getName().equals("Empty")) return hasEmptyAmmunitionForm();
+        if (material.has(MaterialProperty.HIDDEN)) return false;
         if (!validator.test(material)) return false;
         return parent == null || parent.isValidFor(material);
+    }
+
+    public boolean hasEmptyAmmunitionForm() {
+        return this == arrowGtWood || this == arrowGtPlastic || this == bulletGtSmall
+                || this == bulletGtMedium || this == bulletGtLarge;
     }
 
     public String getItemId(GTMaterial material) {

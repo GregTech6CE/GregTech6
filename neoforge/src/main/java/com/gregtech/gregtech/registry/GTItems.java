@@ -29,7 +29,7 @@ public final class GTItems {
     private static final Logger LOGGER = LogUtils.getLogger();
     public record CreativeEntry(GTMaterial material, DeferredHolder<Item, ? extends Item> item) {}
     private static final Map<String, NavigableMap<String, CreativeEntry>> BY_PREFIX = new HashMap<>();
-    private static final List<DeferredItem<MaterialItem>> ALL = new ArrayList<>();
+    private static final List<DeferredItem<Item>> ALL = new ArrayList<>();
     private static boolean initialized;
     private GTItems() {}
 
@@ -43,8 +43,10 @@ public final class GTItems {
                 LOGGER.warn("Duplicate item id '{}' for material {} (id={}); using '{}'",
                         definition.baseItemId(), material.getName(), material.getId(), definition.itemId());
             }
-            DeferredItem<MaterialItem> item = ITEMS.register(definition.itemId(), () ->
-                    prefix==MaterialPrefix.coin?new com.gregtech.gregtech.item.CoinItem(new Item.Properties().stacksTo(64),material):new MaterialItem(new Item.Properties().stacksTo(64), prefix, material));
+            DeferredItem<Item> item = ITEMS.register(definition.itemId(), () ->
+                    prefix==MaterialPrefix.coin?new com.gregtech.gregtech.item.CoinItem(new Item.Properties().stacksTo(64),material):com.gregtech.gregtech.content.recipe.MaterialArrowRules.isArrow(prefix, material)
+                            ? new com.gregtech.gregtech.item.MaterialArrowItem(new Item.Properties().stacksTo(64),prefix,material)
+                            : new MaterialItem(new Item.Properties().stacksTo(64), prefix, material));
             bind(prefix, material, item);
             ALL.add(item);
         }
@@ -82,7 +84,7 @@ public final class GTItems {
         return getStack(prefix, material, 1);
     }
 
-    public static Collection<DeferredItem<MaterialItem>> allEntries() {
+    public static Collection<DeferredItem<Item>> allEntries() {
         return Collections.unmodifiableList(ALL);
     }
 

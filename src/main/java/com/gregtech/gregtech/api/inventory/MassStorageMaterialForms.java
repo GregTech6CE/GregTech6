@@ -127,7 +127,7 @@ public final class MassStorageMaterialForms {
 
     private static Form form(ItemStack stack) {
         if (stack.isEmpty()) return null;
-        if (stack.getItem() instanceof MaterialItem item)
+        if (stack.getItem() instanceof com.gregtech.gregtech.api.material.MaterialFormItem item)
             return form(item.getPrefix().getName(), item.getMaterial().resolve(),
                     item.getPrefix().getMaterialWeight());
         if (stack.getItem() instanceof BlockItem blockItem) {

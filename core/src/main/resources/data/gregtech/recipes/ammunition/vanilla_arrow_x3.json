@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:flint"
+    },
+    {
+      "item": "gregtech:arrow_gt_wood_empty"
+    },
+    {
+      "item": "gregtech:arrow_gt_wood_empty"
+    },
+    {
+      "item": "gregtech:arrow_gt_wood_empty"
+    }
+  ],
+  "result": {
+    "item": "minecraft:arrow",
+    "count": 3
+  },
+  "_comment": "GT6 Loader_Recipes_Vanilla:475-484 (Gregorius Techneticies)"
+}

@@ -11,6 +11,12 @@ public final class ItemMaterialRegistry {
     private static final Map<Item, ItemComposition> BY_ITEM = new IdentityHashMap<>();
     private ItemMaterialRegistry() {}
     public static void register(Item item, @Nullable MaterialPrefix prefix, GTMaterial material) {
+        if (item != null && prefix != null && prefix.hasEmptyAmmunitionForm()) {
+            var parts = MaterialChemistry.prefixMaterialWeights(material, prefix).stream()
+                    .map(c -> MaterialComponent.of(c.material(), c.amount())).toList();
+            if (!parts.isEmpty()) register(item, new ItemComposition(prefix, parts, "GT6 OP ammunition components", true));
+            return;
+        }
         register(item, prefix, material, prefix == null ? GTValues.U : prefix.getMaterialWeight());
     }
     public static void register(Item item, @Nullable MaterialPrefix prefix, GTMaterial material, long amount) {

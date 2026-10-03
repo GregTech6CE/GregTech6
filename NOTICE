@@ -15,7 +15,10 @@ Original copyright headers and the source/history records are retained.
 
 Additional behavior reference: wolfram0108 / gregtech6_w (LGPL-3.0-or-later),
 compared with original GT6 for fluid pipe channel selection. Its engine adaptation
-and assets are not imported by this change. See docs/integration/SOURCES.md.
+and assets were not imported for that fluid-pipe change. See docs/integration/SOURCES.md.
+The material arrow texture is now retained from its GregTech asset catalog
+(src/main/resources/assets/gregtech/textures/entity/arrow.png), under its upstream
+CC0-1.0 default asset license. See docs/integration/verification/ammunition-source-20261004.json.
 
 Assets and other third-party components retain their own licenses, not this blanket
 code declaration. Upstream GT6 default assets: CC0-1.0 unless otherwise stated.

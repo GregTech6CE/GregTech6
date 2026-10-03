@@ -9828,5 +9828,10 @@
   "jade.gregtech.boiler.contact_damage": "Contact heat damage: %.2f",
   "jade.gregtech.boiler.descaling_explosion": "Descaling at this pressure causes an explosion",
   "jade.gregtech.boiler.descaling_damage": "Descaling heat damage: %.2f",
-  "block.gregtech.cfoam_slab": "Hardened Construction Foam Slab"
+  "block.gregtech.cfoam_slab": "Hardened Construction Foam Slab",
+  "item.gregtech.arrow_gt_wood_empty": "Headless Wood Arrow",
+  "item.gregtech.arrow_gt_plastic_empty": "Headless Plastic Arrow",
+  "item.gregtech.bullet_gt_small_empty": "Small Bullet Casing",
+  "item.gregtech.bullet_gt_medium_empty": "Medium Bullet Casing",
+  "item.gregtech.bullet_gt_large_empty": "Large Bullet Casing"
 }

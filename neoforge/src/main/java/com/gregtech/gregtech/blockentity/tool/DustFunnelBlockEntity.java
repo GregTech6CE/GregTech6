@@ -37,7 +37,7 @@ public class DustFunnelBlockEntity extends BlockEntity {
     }
 
     public static boolean isDust(ItemStack stack) {
-        if (!(stack.getItem() instanceof MaterialItem mat)) return false;
+        if (!(stack.getItem() instanceof com.gregtech.gregtech.api.material.MaterialFormItem mat)) return false;
         MaterialPrefix prefix = mat.getPrefix();
         return com.gregtech.gregtech.content.tool.UtilityToolRules.dust(prefix.getName()) && !CrucibleItemInput.parse(stack).isEmpty();
     }

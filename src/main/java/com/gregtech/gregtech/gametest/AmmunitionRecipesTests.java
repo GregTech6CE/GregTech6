@@ -62,30 +62,30 @@ public final class AmmunitionRecipesTests {
         helper.assertTrue(material != null, "the port has a material with rounds and bullets");
         ItemStack round = GTItems.getStack(MaterialPrefix.round, material, 1);
         ItemStack bolt = GTItems.getStack(MaterialPrefix.bolt, material, 1);
-        ItemStack smallMold = new ItemStack(GTTechnological.get("press_bullet_casing_shape_small"));
-        ItemStack mediumMold = new ItemStack(GTTechnological.get("press_bullet_casing_shape_medium"));
-        ItemStack largeMold = new ItemStack(GTTechnological.get("press_bullet_casing_shape_large"));
-        helper.assertTrue(!smallMold.isEmpty() && !mediumMold.isEmpty() && !largeMold.isEmpty(),
-                "the port has all three bullet casing molds");
+        ItemStack smallCasing = GTItems.getStack(MaterialPrefix.bulletGtSmall, com.gregtech.gregtech.content.material.Materials.Empty, 1);
+        ItemStack mediumCasing = GTItems.getStack(MaterialPrefix.bulletGtMedium, com.gregtech.gregtech.content.material.Materials.Empty, 1);
+        ItemStack largeCasing = GTItems.getStack(MaterialPrefix.bulletGtLarge, com.gregtech.gregtech.content.material.Materials.Empty, 1);
+        helper.assertTrue(!smallCasing.isEmpty() && !mediumCasing.isEmpty() && !largeCasing.isEmpty(),
+                "the port has all three charged bullet casings");
 
         ItemStack small = GTItems.getStack(MaterialPrefix.bulletGtSmall, material, 1);
-        helper.assertTrue(route(MachineRecipeMaps.Press, round, smallMold, small) != null,
-                "a round presses into a small bullet with the small mold");
+        helper.assertTrue(route(MachineRecipeMaps.Press, round, smallCasing, small) != null,
+                "a round consumes a charged small casing to make a bullet");
         if (!bolt.isEmpty()) {
-            helper.assertTrue(route(MachineRecipeMaps.Press, bolt, smallMold, small) != null,
+            helper.assertTrue(route(MachineRecipeMaps.Press, bolt, smallCasing, small) != null,
                     "a bolt presses into a small bullet");
         }
         ItemStack medium = GTItems.getStack(MaterialPrefix.bulletGtMedium, material, 1);
         if (!medium.isEmpty()) {
             Recipe row = route(MachineRecipeMaps.Press, GTItems.getStack(MaterialPrefix.round, material, 2),
-                    mediumMold, medium);
+                    mediumCasing, medium);
             helper.assertTrue(row != null, "two rounds press into a medium bullet");
             helper.assertTrue(row.mInputs[0].getCount() == 2, "the medium row needs two rounds");
         }
         ItemStack large = GTItems.getStack(MaterialPrefix.bulletGtLarge, material, 1);
         if (!large.isEmpty()) {
             Recipe row = route(MachineRecipeMaps.Press, GTItems.getStack(MaterialPrefix.round, material, 3),
-                    largeMold, large);
+                    largeCasing, large);
             helper.assertTrue(row != null, "three rounds press into a large bullet");
             helper.assertTrue(row.mInputs[0].getCount() == 3, "the large row needs three rounds");
         }
@@ -93,7 +93,7 @@ public final class AmmunitionRecipesTests {
     }
 
     @GameTest(template = "test_empty", timeoutTicks = 400)
-    public static void ammunitionIsRecycledWithItsMold(GameTestHelper helper) {
+    public static void ammunitionIsRecycledWithItsChargedCasing(GameTestHelper helper) {
         GTMaterial material = firstBulletMaterial();
         helper.assertTrue(material != null, "bullet material exists");
         ItemStack small = GTItems.getStack(MaterialPrefix.bulletGtSmall, material, 1);
@@ -101,15 +101,10 @@ public final class AmmunitionRecipesTests {
         helper.assertTrue(!tiny.isEmpty(), "the material has tiny dust piles");
         Recipe recovery = route(MachineRecipeMaps.Unboxinator, small, null, tiny);
         helper.assertTrue(recovery != null, "a small bullet disassembles back into tiny dust");
-        boolean moldReturned = contains(recovery.mOutputs,
-                new ItemStack(GTTechnological.get("press_bullet_casing_shape_small")));
-        // GT6 returns the mold as an additional output (:454); the port keeps it when the map allows
-        // two outputs, otherwise the dust-only row is registered instead.
-        helper.assertTrue(recovery.mOutputs.length >= 1, "recovery row has outputs");
-        if (recovery.mOutputs.length > 1 && !moldReturned) {
-            helper.fail("second output is not the mold: " + java.util.Arrays.toString(recovery.mOutputs));
-            return;
-        }
+        boolean casingReturned = contains(recovery.mOutputs,
+                GTItems.getStack(MaterialPrefix.bulletGtSmall, com.gregtech.gregtech.content.material.Materials.Empty, 1));
+        helper.assertTrue(recovery.mOutputs.length == 2 && casingReturned,
+                "GT6 returns the tiny metal dust and charged casing, never a press mold");
         helper.succeed();
     }
 
@@ -118,7 +113,7 @@ public final class AmmunitionRecipesTests {
         int routes = PressAmmunitionRecipes.entries().size();
         List<String> skipped = PressAmmunitionRecipes.skipped();
         helper.assertTrue(routes > 100, "ammunition routes registered: " + routes);
-        helper.assertTrue(skipped.size() >= 2, "GT6 rows the port cannot express stay recorded: " + skipped);
+        helper.assertTrue(skipped.isEmpty(), "all source ammunition rows are represented: " + skipped);
         var json = new java.util.TreeMap<String, Object>();
         json.put("ammunitionRoutes", routes);
         json.put("pressRecipes", MachineRecipeMaps.Press.mRecipeList.size());

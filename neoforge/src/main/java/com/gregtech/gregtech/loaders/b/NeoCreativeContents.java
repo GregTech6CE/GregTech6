@@ -62,7 +62,7 @@ public final class NeoCreativeContents {
         // Source registries expose many extra items through overlapping pages. Keep every real
         // non-material item reachable, including portable blocks, keys and newly integrated tracks.
         Set<Item> visible=Collections.newSetFromMap(new IdentityHashMap<>());for(var page:out.values())for(var stack:page)visible.add(stack.getItem());
-        for(var item:BuiltInRegistries.ITEM){if(!BuiltInRegistries.ITEM.getKey(item).getNamespace().equals("gregtech")||visible.contains(item)||item instanceof MaterialItem||item instanceof com.gregtech.gregtech.item.CreativeTabIconItem||item instanceof com.gregtech.gregtech.platform.neoforge.fluid.FluidDisplayItem)continue;
+        for(var item:BuiltInRegistries.ITEM){if(!BuiltInRegistries.ITEM.getKey(item).getNamespace().equals("gregtech")||visible.contains(item)||item instanceof com.gregtech.gregtech.api.material.MaterialFormItem||item instanceof com.gregtech.gregtech.item.CreativeTabIconItem||item instanceof com.gregtech.gregtech.platform.neoforge.fluid.FluidDisplayItem)continue;
             if(item instanceof BlockItem b&&(b.getBlock() instanceof MaterialBlockLike||b.getBlock() instanceof GTStoneBlock||b.getBlock() instanceof GTStoneSlabBlock))continue;
             add(out,"tools",item);
         }

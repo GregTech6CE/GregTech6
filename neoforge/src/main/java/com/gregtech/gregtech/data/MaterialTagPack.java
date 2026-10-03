@@ -43,12 +43,26 @@ public final class MaterialTagPack extends AbstractPackResources {
         // "gregtech:<prefix registry name>/<material>" (e.g. gregtech:ingot/iron).
         // There is deliberately NO umbrella "gregtech:material" tag that lists all of them: resolving it
         // enumerates every material item in the mod, which costs JEI several seconds on each open.
+        add(tags,"gregtech","item","ammunition/sticks_wood","minecraft:stick");
         var byMaterial=new TreeMap<String,Set<String>>();
         var blocksByMaterial=new TreeMap<String,Set<String>>();
         for(var item:BuiltInRegistries.ITEM) {
             var id=BuiltInRegistries.ITEM.getKey(item); if(id==null||item==Items.AIR)continue;
             var form=MaterialEquivalence.form(new ItemStack(item));
             if(form!=null) {
+                if(form.prefix()==MaterialPrefix.stick || form.prefix()==MaterialPrefix.plateTiny) {
+                    var material=form.material().resolve();
+                    boolean wood=com.gregtech.gregtech.content.tool.OriginalToolMaterials.inFamily(material,"Wood");
+                    boolean plastic=com.gregtech.gregtech.content.tool.OriginalToolMaterials.inFamily(material,"Plastic");
+                    if(form.prefix()==MaterialPrefix.stick && wood)
+                        add(tags,"gregtech","item","ammunition/sticks_wood",id.toString());
+                    if(plastic)
+                        add(tags,"gregtech","item",form.prefix()==MaterialPrefix.stick
+                                ? "ammunition/sticks_plastic" : "ammunition/tiny_plastic_plates",id.toString());
+                }
+
+                if(com.gregtech.gregtech.content.recipe.MaterialArrowRules.isArrow(form.prefix(),form.material()))
+                    add(tags,"minecraft","item","arrows",id.toString());
                 String common=MaterialEquivalence.tagPath(form);
                 if(common!=null) add(tags,"forge","item",common,id.toString());
                 addMaterial(byMaterial,form.material(),id.toString());
@@ -190,6 +204,10 @@ public final class MaterialTagPack extends AbstractPackResources {
         }
         var gson=new com.google.gson.Gson(); var result=new HashMap<ResourceLocation,byte[]>();
         tags.forEach((path,values)->result.put(ResourceLocation.parse(path),gson.toJson(Map.of("replace",false,"values",compatibleValues(path,values,aliases))).getBytes(StandardCharsets.UTF_8)));
+        result.put(ResourceLocation.parse("gregtech:tags/item/ammunition/feathers.json"),gson.toJson(Map.of(
+                "replace",false,"values",List.of("minecraft:feather",
+                        Map.of("id","#forge:feathers","required",false),
+                        Map.of("id","#c:feathers","required",false)))).getBytes(StandardCharsets.UTF_8));
         resources=Collections.unmodifiableMap(result); return resources;
     }
 
@@ -233,6 +251,6 @@ public final class MaterialTagPack extends AbstractPackResources {
     public void listResources(PackType type,String ns,String path,ResourceOutput out) {
         if(type==PackType.SERVER_DATA)data().forEach((id,bytes)->{if(id.getNamespace().equals(ns)&&id.getPath().startsWith(path+"/"))out.accept(id,()->new ByteArrayInputStream(bytes));});
     }
-    public Set<String> getNamespaces(PackType type) { return type==PackType.SERVER_DATA?Set.of("forge","c","gregtech"):Set.of(); }
+    public Set<String> getNamespaces(PackType type) { return type==PackType.SERVER_DATA?Set.of("forge","c","gregtech","minecraft"):Set.of(); }
     public void close() { resources=null; }
 }

@@ -57,7 +57,8 @@ public final class MaterialChemistry {
 
     /** F3+H rows including prefix-specific components (e.g. steel in wrench heads). */
     public static List<WeightedMaterial> prefixMaterialWeights(GTMaterial material, MaterialPrefix prefix) {
-        if (!material.isValid() || prefix == null) {
+        if (prefix == null || (!material.isValid()
+                && !("Empty".equals(material.getName()) && prefix.hasEmptyAmmunitionForm()))) {
             return List.of();
         }
         if (prefix == MaterialPrefix.toolHeadWrench) {
@@ -92,33 +93,33 @@ public final class MaterialChemistry {
         }
         if (prefix == MaterialPrefix.arrowGtWood) {
             List<WeightedMaterial> out = new ArrayList<>(2);
-            out.add(new WeightedMaterial(material, GTValues.U9));
+            if (material.isValid()) out.add(new WeightedMaterial(material, GTValues.U9));
             out.add(new WeightedMaterial(com.gregtech.gregtech.content.material.generated.WoodMaterials.Wood, GTValues.U2));
             return List.copyOf(out);
         }
         if (prefix == MaterialPrefix.arrowGtPlastic) {
             List<WeightedMaterial> out = new ArrayList<>(2);
-            out.add(new WeightedMaterial(material, GTValues.U9));
+            if (material.isValid()) out.add(new WeightedMaterial(material, GTValues.U9));
             out.add(new WeightedMaterial(Materials.Plastic, GTValues.U2));
             return List.copyOf(out);
         }
         if (prefix == MaterialPrefix.bulletGtSmall) {
             List<WeightedMaterial> out = new ArrayList<>(3);
-            out.add(new WeightedMaterial(material, GTValues.U9));
+            if (material.isValid()) out.add(new WeightedMaterial(material, GTValues.U9));
             out.add(new WeightedMaterial(Materials.Brass, GTValues.U9));
             out.add(new WeightedMaterial(Materials.Gunpowder, GTValues.U9));
             return List.copyOf(out);
         }
         if (prefix == MaterialPrefix.bulletGtMedium) {
             List<WeightedMaterial> out = new ArrayList<>(3);
-            out.add(new WeightedMaterial(material, GTValues.U9 * 2));
+            if (material.isValid()) out.add(new WeightedMaterial(material, GTValues.U9 * 2));
             out.add(new WeightedMaterial(Materials.Brass, GTValues.U9 * 2));
             out.add(new WeightedMaterial(Materials.Gunpowder, GTValues.U9 * 2));
             return List.copyOf(out);
         }
         if (prefix == MaterialPrefix.bulletGtLarge) {
             List<WeightedMaterial> out = new ArrayList<>(3);
-            out.add(new WeightedMaterial(material, GTValues.U3));
+            if (material.isValid()) out.add(new WeightedMaterial(material, GTValues.U3));
             out.add(new WeightedMaterial(Materials.Brass, GTValues.U3));
             out.add(new WeightedMaterial(Materials.Gunpowder, GTValues.U3));
             return List.copyOf(out);

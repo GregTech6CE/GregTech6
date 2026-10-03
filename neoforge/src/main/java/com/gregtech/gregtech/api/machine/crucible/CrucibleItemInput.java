@@ -15,7 +15,7 @@ public final class CrucibleItemInput {
     public static List<CrucibleMaterialStack> parse(ItemStack stack) {
         List<CrucibleMaterialStack> result = new ArrayList<>();
         if (stack.isEmpty() || ItemMaterialRegistry.hasStoredContents(stack)) return result;
-        if (stack.getItem() instanceof MaterialItem item) {
+        if (stack.getItem() instanceof com.gregtech.gregtech.api.material.MaterialFormItem item) {
             result.add(CrucibleInputRules.materialItem(item.getMaterial(), item.getPrefix()));
             return result;
         }

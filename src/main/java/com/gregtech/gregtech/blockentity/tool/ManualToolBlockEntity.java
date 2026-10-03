@@ -164,7 +164,7 @@ public class ManualToolBlockEntity extends BlockEntity {
     }
 
     private static int abrasiveUses(ItemStack stack) {
-        if (stack.getItem() instanceof com.gregtech.gregtech.item.MaterialItem item && item.getPrefix().getName().equals("stone")) {
+        if (stack.getItem() instanceof com.gregtech.gregtech.api.material.MaterialFormItem item && item.getPrefix().getName().equals("stone")) {
             return com.gregtech.gregtech.content.tool.ManualWorkRules.abrasiveUses(item.getMaterial().getName());
         }
         return stack.is(net.minecraftforge.common.Tags.Items.SANDSTONE) ? 8 : 0;

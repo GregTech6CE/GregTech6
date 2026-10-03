@@ -21,7 +21,7 @@ import java.util.List;
  * Material data lives on the {@link Item} instance (registry identity), not on stack NBT.
  * This matches the GregTech Modern approach on 1.20.1: no MetaItem / stack-tag material payload.
  */
-public class MaterialItem extends Item {
+public class MaterialItem extends Item implements com.gregtech.gregtech.api.material.MaterialFormItem {
     private final MaterialPrefix prefix;
     private final GTMaterial material;
 
@@ -41,23 +41,41 @@ public class MaterialItem extends Item {
 
     /** Resolves material from the registered item type, never from stack NBT. */
     public static GTMaterial getMaterial(ItemStack stack) {
-        return stack.getItem() instanceof MaterialItem materialItem
-                ? materialItem.material
+        return stack.getItem() instanceof com.gregtech.gregtech.api.material.MaterialFormItem materialItem
+                ? materialItem.getMaterial()
                 : GTMaterialRegistry.get("NULL");
     }
 
     /** Resolves prefix from the registered item type, never from stack NBT. */
     public static MaterialPrefix getPrefix(ItemStack stack) {
-        return stack.getItem() instanceof MaterialItem materialItem ? materialItem.prefix : null;
+        return stack.getItem() instanceof com.gregtech.gregtech.api.material.MaterialFormItem materialItem ? materialItem.getPrefix() : null;
     }
 
     public static boolean isMaterialItem(ItemStack stack, MaterialPrefix prefix, GTMaterial material) {
-        if (!(stack.getItem() instanceof MaterialItem materialItem)) return false;
-        return materialItem.prefix == prefix && materialItem.material.resolve() == material.resolve();
+        if (!(stack.getItem() instanceof com.gregtech.gregtech.api.material.MaterialFormItem materialItem)) return false;
+        return materialItem.getPrefix() == prefix && materialItem.getMaterial().resolve() == material.resolve();
+    }
+
+    /** PrefixItemProjectile:115-125 consumes ammunition used in a living-entity melee attack. */
+    public static boolean consumeAmmoOnAttack(ItemStack stack, net.minecraft.world.entity.player.Player player,
+                                              net.minecraft.world.entity.Entity target) {
+        if (!player.level().isClientSide && !player.getAbilities().instabuild
+                && target instanceof net.minecraft.world.entity.LivingEntity
+                && stack.getItem() instanceof com.gregtech.gregtech.api.material.MaterialFormItem form
+                && form.getPrefix().hasEmptyAmmunitionForm()) stack.shrink(1);
+        return false;
+    }
+
+    @Override
+    public boolean onLeftClickEntity(ItemStack stack, net.minecraft.world.entity.player.Player player,
+                                     net.minecraft.world.entity.Entity target) {
+        return consumeAmmoOnAttack(stack, player, target);
     }
 
     @Override
     public Component getName(ItemStack stack) {
+        if ("Empty".equals(material.getName()) && prefix.hasEmptyAmmunitionForm())
+            return Component.translatable(getDescriptionId() + "_empty");
         return Component.translatable(getDescriptionId(), MaterialPresentation.name(material));
     }
 

@@ -34,6 +34,8 @@ public record Loader_Items() implements IGTLoader {
             RegistryObject<Item> registered = GTItems.ITEMS.register(definition.itemId(), () ->
                     prefix == MaterialPrefix.coin
                             ? new CoinItem(new Item.Properties().stacksTo(64), material)
+                            : com.gregtech.gregtech.content.recipe.MaterialArrowRules.isArrow(prefix, material)
+                            ? new com.gregtech.gregtech.item.MaterialArrowItem(new Item.Properties().stacksTo(64), prefix, material)
                             : new MaterialItem(new Item.Properties().stacksTo(64), prefix, material));
             GTItems.bind(prefix, material, registered);
             total++;

@@ -199,7 +199,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
 
     public static boolean isRotorItem(net.minecraft.world.item.ItemStack stack) {
         return !stack.isEmpty()
-                && stack.getItem() instanceof com.gregtech.gregtech.item.MaterialItem mat
+                && stack.getItem() instanceof com.gregtech.gregtech.api.material.MaterialFormItem mat
                 && mat.getPrefix() == com.gregtech.gregtech.data.MaterialPrefix.rotor;
     }
 

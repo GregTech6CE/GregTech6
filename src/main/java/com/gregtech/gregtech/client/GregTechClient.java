@@ -98,8 +98,8 @@ public final class GregTechClient {
                 event.register((stack, tintIndex) -> tintIndex == 0 ? rod.tintRgb() : 0xFFFFFF, rod);
             } else if (entry.get() instanceof com.gregtech.gregtech.item.ElectricToolItem electric) {
                 event.register(electric::tint, electric);
-            } else if (entry.get() instanceof MaterialItem materialItem) {
-                event.register((stack, tintIndex) -> tintIndex == 0 ? materialItem.getTintColor() : 0xFFFFFF, materialItem);
+            } else if (entry.get() instanceof com.gregtech.gregtech.api.material.MaterialFormItem materialItem) {
+                event.register((stack, tintIndex) -> tintIndex == 0 ? materialItem.getTintColor() : 0xFFFFFF, entry.get());
             }
         });
         com.gregtech.gregtech.registry.GTMiscBlocks.all().forEach(entry -> {

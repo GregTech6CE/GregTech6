@@ -27,8 +27,8 @@ public final class GTMaterialRegistration {
         // Material items carry their identity on the Item instance. Fuel/ash and recovery
         // consumers use the same composition registry as block items and vanilla forms.
         for (var holder : GTItems.allEntries()) {
-            if (holder.isPresent() && holder.get() instanceof com.gregtech.gregtech.item.MaterialItem item) {
-                ItemMaterialRegistry.register(item, item.getPrefix(), item.getMaterial());
+            if (holder.isPresent() && holder.get() instanceof com.gregtech.gregtech.api.material.MaterialFormItem item) {
+                ItemMaterialRegistry.register(holder.get(), item.getPrefix(), item.getMaterial());
                 count++;
             }
         }

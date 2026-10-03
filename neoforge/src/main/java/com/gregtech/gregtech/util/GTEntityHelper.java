@@ -72,7 +72,7 @@ public final class GTEntityHelper {
         // ones; the port keeps material items off ItemMaterialRegistry (their prefix lives on the
         // MaterialItem instance), so both paths are needed here.
         com.gregtech.gregtech.data.MaterialPrefix prefix =
-                stack.getItem() instanceof com.gregtech.gregtech.item.MaterialItem materialItem
+                stack.getItem() instanceof com.gregtech.gregtech.api.material.MaterialFormItem materialItem
                         ? materialItem.getPrefix()
                         : ItemMaterialRegistry.get(stack)
                                 .map(com.gregtech.gregtech.api.material.ItemComposition::prefix).orElse(null);
