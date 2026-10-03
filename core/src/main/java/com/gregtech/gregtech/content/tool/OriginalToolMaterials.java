@@ -41,8 +41,8 @@ public final class OriginalToolMaterials {
             case "WoodMagical" -> MAGIC_WOODS.contains(name) || (material.has(MaterialProperty.WOOD) && material.has(MaterialProperty.MAGICAL));
             case "MagicIron" -> MAGIC_IRONS.contains(name);
             case "Rubber" -> material.getTextureSet() == MaterialTextureSet.RUBBER;
-            case "Iron" -> Set.of("Iron", "WroughtIron", "IronMagnetic").contains(name);
-            case "Steel" -> Set.of("Steel", "SteelMagnetic", "HSLA", "SpringSteel").contains(name);
+            case "Iron" -> Set.of("Iron", "WroughtIron", "IronMagnetic", "IronCast", "IronCompressed", "PigIron", "MeteoricIron", "Meteorite", "Enori", "Steel", "Knightmetal", "MeteoricSteel").contains(name);
+            case "Steel" -> Set.of("Steel", "SteelMagnetic", "Knightmetal", "MeteoricSteel").contains(name);
             default -> false;
         };
     }

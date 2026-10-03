@@ -61,6 +61,9 @@ public final class MaterialBehaviorContracts {
         }
         validateIdentityGraph();
         validateMetadata();
+        check(com.gregtech.gregtech.content.tool.OriginalToolMaterials.inFamily(GTMaterialRegistry.get("Knightmetal"), "Steel"), "ANY.Steel accepts Knightmetal screws and rings");
+        check(com.gregtech.gregtech.content.tool.OriginalToolMaterials.inFamily(GTMaterialRegistry.get("MeteoricSteel"), "Steel"), "ANY.Steel accepts MeteoricSteel screws and rings");
+        check(com.gregtech.gregtech.content.tool.OriginalToolMaterials.acceptsHandle(GTMaterialRegistry.get("EnderAmethyst"), GTMaterialRegistry.get("Steel")), "ANY.Iron accepts Steel rods for EnderAmethyst tools");
         validateCopperTinBronze();
         validateAmountsAndReactions();
         System.out.println("Material behavior contracts passed: " + assertions
