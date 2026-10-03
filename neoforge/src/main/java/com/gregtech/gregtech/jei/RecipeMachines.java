@@ -14,7 +14,7 @@ public final class RecipeMachines {
                 .findFirst().orElseThrow(() -> new IllegalStateException("Missing native machine: "+id)).get();
     }
     private RecipeMachines() {}
-    static Map<RecipeMap,List<ItemStack>> collect() {
+    public static Map<RecipeMap,List<ItemStack>> collect() {
         Map<RecipeMap,List<ItemStack>> result=new LinkedHashMap<>();
         for (var entry:BasicMachineRegistries.all()) if(entry.isBound() && !entry.get().basicSpec().machineName().equals("fusionreactor"))
             add(result,MachineRecipeMaps.byMachineName(entry.get().basicSpec().machineName()),new ItemStack(entry.get()));

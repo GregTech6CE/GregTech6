@@ -82,7 +82,7 @@ public final class NeoForgeClientSmoke {
                 throw new IllegalArgumentException("Invalid client smoke timeout budget");
             }
             if (WORLD_ENABLED && (!WORLD_NAME.matches("client-world-[a-z0-9-]+")
-                    || !(WORLD_PHASE.equals("prepare") || WORLD_PHASE.equals("verify"))
+                    || !(WORLD_PHASE.equals("prepare") || WORLD_PHASE.equals("verify") || WORLD_PHASE.equals("emi"))
                     || !UUID.fromString(WORLD_ID).toString().equals(WORLD_ID))) {
                 throw new IllegalArgumentException("World smoke requires an isolated world name, phase and UUID");
             }
@@ -196,6 +196,7 @@ public final class NeoForgeClientSmoke {
             ToolIconSmoke.check(minecraft, gallery);
             if (net.neoforged.fml.ModList.get().isLoaded("jei")) JeiToolSlotSmoke.check();
             SpringIconSmoke.check(minecraft, gallery);
+            if (net.neoforged.fml.ModList.get().isLoaded("emi")) EmiMachineSmoke.check();
             var result = new JsonObject();
             result.addProperty("materialModels", materials);
             result.addProperty("fluidModels", fluids);
@@ -418,6 +419,11 @@ public final class NeoForgeClientSmoke {
     }
 
     private static void afterWorldScreen(Minecraft minecraft, ScreenEvent.Render.Post event) throws Exception {
+        if (WORLD_PHASE.equals("emi") && worldStage==20
+                && event.getScreen().getClass().getName().equals("dev.emi.emi.screen.RecipeScreen")) {
+            if (settle(30)) captureWorld(minecraft,event.getGuiGraphics(),"extruder-plate",22);
+            return;
+        }
         if (worldStage==0 && event.getScreen() instanceof TitleScreen && minecraft.getOverlay()==null) {
             Path dir=minecraft.gameDirectory.toPath().toAbsolutePath().normalize();
             if (!dir.endsWith("client-world-smoke-run") || !Files.isRegularFile(dir.resolve("saves").resolve(WORLD_NAME).resolve("level.dat")))
@@ -519,6 +525,33 @@ public final class NeoForgeClientSmoke {
         var minecraft=Minecraft.getInstance();
         try {
             snapshotState(minecraft,"world_client_tick");
+            if (WORLD_PHASE.equals("emi") && worldStage!=14) {
+                if (worldStage==1 && minecraft.level!=null && minecraft.player!=null && minecraft.getSingleplayerServer()!=null) {
+                    worldServer=minecraft.getSingleplayerServer();
+                    ToolIconSmoke.check(minecraft,new java.util.ArrayList<>());
+                    SpringIconSmoke.check(minecraft,new java.util.ArrayList<>());
+                    serverAction=worldServer.submit(()-> { SpringIconSmoke.prepareWorld(worldServer.overworld(),serverPlayer(minecraft));return identity(); });
+                    stage(17);
+                } else if (worldStage==17 && serverAction.isDone()) {
+                    serverAction.get();serverAction=null;stage(18);
+                } else if (worldStage==18) {
+                    var recipe=EmiMachineSmoke.installedRecipe();
+                    if (recipe!=null && SpringIconSmoke.checkWorld(minecraft)) {
+                        worldProof.addProperty("jeiAbsent",true);
+                        worldProof.addProperty("nativeEmiOutputLookup",true);
+                        minecraft.setScreen(new net.minecraft.client.gui.screens.inventory.InventoryScreen(minecraft.player));
+                        dev.emi.emi.api.EmiApi.displayRecipe(recipe);
+                        stage(20);
+                    }
+                } else if (worldStage==22 && minecraft.screen!=null) {
+                    minecraft.setScreen(null);
+                } else if (worldStage==21) {
+                    stage(14);
+                    minecraft.level.disconnect();
+                    minecraft.disconnect(new TitleScreen());
+                }
+                return;
+            }
             if (worldStage==1 && minecraft.level!=null && minecraft.player!=null && minecraft.getSingleplayerServer()!=null) {
                 worldServer=minecraft.getSingleplayerServer();
                 serverAction=worldServer.submit(()->prepareClientWorld(minecraft));stage(2);
@@ -562,9 +595,18 @@ public final class NeoForgeClientSmoke {
 
     @SubscribeEvent
     public static void afterWorldGui(net.neoforged.neoforge.client.event.RenderGuiEvent.Post event) {
-        if (!WORLD_ENABLED || TERMINAL.get() || captureRequested || worldStage!=3) return;
+        if (!WORLD_ENABLED || TERMINAL.get() || captureRequested) return;
         var minecraft=Minecraft.getInstance();
         try {
+            if (WORLD_PHASE.equals("emi") && worldStage==22 && minecraft.screen==null) {
+                if (SpringIconSmoke.checkWorld(minecraft) && settle(30)) {
+                    worldProof.addProperty("synchronizedWorldSpringModels",true);
+                    checkAndRenderModels(minecraft,event.getGuiGraphics());
+                    captureWorld(minecraft,event.getGuiGraphics(),"tools-and-springs",21);
+                }
+                return;
+            }
+            if(worldStage!=3)return;
             if (minecraft.screen!=null || minecraft.level==null || minecraft.player==null
                     || minecraft.player.getY()<239 || !minecraft.level.getBlockState(CRUSHER).is(
                             net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","crusher_bronze"))))return;

@@ -24,12 +24,19 @@ sourceSets {
 repositories {
     maven { name = 'BlameJared'; url = 'https://maven.blamejared.com' }
     maven { name = 'Modrinth'; url = 'https://api.modrinth.com/maven' }
+    maven { name = 'EMI'; url = 'https://maven.terraformersmc.com/releases' }
 }
 
 dependencies {
+    compileOnly "dev.emi:emi-neoforge:1.1.24+1.21.1:api"
+    if (rootProject.findProperty('emiSmoke') == 'true') {
+        runtimeOnly "dev.emi:emi-neoforge:1.1.24+1.21.1"
+    }
     compileOnly "mezz.jei:jei-1.21.1-common-api:${rootProject.property('neoforge_jei_version')}"
     compileOnly "mezz.jei:jei-1.21.1-neoforge-api:${rootProject.property('neoforge_jei_version')}"
-    runtimeOnly "mezz.jei:jei-1.21.1-neoforge:${rootProject.property('neoforge_jei_version')}"
+    if (rootProject.findProperty('emiOnlySmoke') != 'true') {
+        runtimeOnly "mezz.jei:jei-1.21.1-neoforge:${rootProject.property('neoforge_jei_version')}"
+    }
     compileOnly "maven.modrinth:jade:${rootProject.property('neoforge_jade_version')}"
     runtimeOnly "maven.modrinth:jade:${rootProject.property('neoforge_jade_version')}"
 
