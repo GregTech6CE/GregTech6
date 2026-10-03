@@ -48,6 +48,46 @@ public class GTWorldFluidBlock extends LiquidBlock {
         super(fluid, properties);
     }
 
+
+    /** Loader_Blocks:149-153 assigns 1000 to all four oils and natural gas. */
+    @Override
+    public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction face) {
+        String path = net.minecraft.core.registries.BuiltInRegistries.FLUID.getKey(state.getFluidState().getType()).getPath();
+        if (path.endsWith("_flowing")) path = path.substring(0, path.length() - 8);
+        return switch (path) {
+            case "liquid_extra_heavy_oil", "liquid_heavy_oil", "liquid_medium_oil", "liquid_light_oil", "gas_natural_gas" -> 1000;
+            default -> 0;
+        };
+    }
+
+    @Override
+    public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction face) {
+        return getFlammability(state, level, pos, face);
+    }
+
+    private void scheduleIgnition(BlockState state, Level level, BlockPos pos) {
+        if (!level.isClientSide && getFlammability(state, level, pos, Direction.UP) > 0)
+            level.scheduleTick(pos, this, 1);
+    }
+
+    /** BlockBaseFluid:135-145 consumes oil/gas when a neighbouring fire or lava heats it. */
+    @Override
+    public void tick(BlockState state, net.minecraft.server.level.ServerLevel level, BlockPos pos,
+                     net.minecraft.util.RandomSource random) {
+        if (getFlammability(state, level, pos, Direction.UP) == 0) return;
+        for (Direction face : Direction.values()) {
+            BlockState neighbor = level.getBlockState(pos.relative(face));
+            if (!(neighbor.getBlock() instanceof net.minecraft.world.level.block.BaseFireBlock)
+                    && !neighbor.getFluidState().is(FluidTags.LAVA)) continue;
+            com.gregtech.gregtech.api.fluid.PipeIgnition.igniteNeighbors(level, pos);
+            for (int i = 0; i < 3; i++)
+                com.gregtech.gregtech.api.fluid.PipeIgnition.igniteNeighbors(level,
+                        pos.offset(random.nextInt(9)-4, random.nextInt(9)-4, random.nextInt(9)-4));
+            level.setBlock(pos, Blocks.FIRE.defaultBlockState(), 3);
+            return;
+        }
+    }
+
     /** {@code LiquidBlock.isPathfindable} with the fluid read through the supplier. */
     @Override
     public boolean isPathfindable(BlockState state,PathComputationType type) {
@@ -63,6 +103,7 @@ public class GTWorldFluidBlock extends LiquidBlock {
     /** {@code LiquidBlock.onPlace} with the fluid read through the supplier. */
     @Override
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
+        scheduleIgnition(state, level, pos);
         if (!FluidInteractionRegistry.canInteract(level, pos)) {
             level.scheduleTick(pos, state.getFluidState().getType(), fluid.getTickDelay(level));
         }
@@ -82,6 +123,7 @@ public class GTWorldFluidBlock extends LiquidBlock {
     @Override
     public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos,
                                 boolean isMoving) {
+        scheduleIgnition(state, level, pos);
         if (!FluidInteractionRegistry.canInteract(level, pos)) {
             level.scheduleTick(pos, state.getFluidState().getType(), fluid.getTickDelay(level));
         }
