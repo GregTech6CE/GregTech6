@@ -178,6 +178,7 @@ public final class NeoForgeClientSmoke {
             if (materials != com.gregtech.gregtech.registry.GTItems.allEntries().size() || fluids == 0)
                 throw new IllegalStateException("Incomplete registry model check");
             gallery = new java.util.ArrayList<>();
+            MaterialTooltipSmoke.check();
             var ids = new com.google.gson.JsonArray();
             for (String id : new String[]{"ingot_iron", "plate_copper", "gear_gt_bronze", "coin_gold", "fluid_item_reedwater"}) {
                 var key = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech", id);
@@ -196,6 +197,12 @@ public final class NeoForgeClientSmoke {
             ToolIconSmoke.check(minecraft, gallery);
             if (net.neoforged.fml.ModList.get().isLoaded("jei")) JeiToolSlotSmoke.check();
             SpringIconSmoke.check(minecraft, gallery);
+            LayeredItemSmoke.check(minecraft, gallery);
+            var plants = new java.util.ArrayList<net.minecraft.world.item.ItemStack>();
+            PlantIconSmoke.check(minecraft, plants);
+            gallery = plants;
+            ids = new com.google.gson.JsonArray();
+            for (var stack : gallery) ids.add(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());
             if (net.neoforged.fml.ModList.get().isLoaded("emi")) EmiMachineSmoke.check();
             var result = new JsonObject();
             result.addProperty("materialModels", materials);
@@ -205,10 +212,14 @@ public final class NeoForgeClientSmoke {
             LOGGER.info("CLIENT_MODEL_SMOKE_SUCCESS {}", result);
             modelsChecked = true;
         }
-        graphics.fill(10, 100, 170, 215, 0xD0000000);
-        graphics.drawString(minecraft.font, "GT models", 16, 106, 0xFFFFFF);
+        graphics.fill(10, 60, 270, 85 + ((gallery.size() + 5) / 6) * 38, 0xD0000000);
+        graphics.drawString(minecraft.font, "GT layered models", 16, 66, 0xFFFFFF);
         for (int i = 0; i < gallery.size(); i++) {
-            graphics.renderItem(gallery.get(i), 18 + (i % 5) * 30, 122 + (i / 5) * 30);
+            graphics.pose().pushPose();
+            graphics.pose().translate(18 + (i % 6) * 42, 84 + (i / 6) * 38, 0);
+            graphics.pose().scale(2, 2, 1);
+            graphics.renderItem(gallery.get(i), 0, 0);
+            graphics.pose().popPose();
         }
     }
 

@@ -52,6 +52,7 @@ public final class ForgeClientSmoke {
 
     // These fields are accessed only by the client/render thread.
     private static Screen observedTitle;
+    private static java.util.List<net.minecraft.world.item.ItemStack> gallery;
     private static long firstTitleFrameAt;
     private static int renderedFrames;
     private static boolean captureRequested;
@@ -103,6 +104,19 @@ public final class ForgeClientSmoke {
                 observedTitle = event.getScreen();
                 firstTitleFrameAt = System.nanoTime();
                 renderedFrames = 0;
+                MaterialTooltipSmoke.check();
+                gallery = new java.util.ArrayList<>();
+                PlantIconSmoke.check(minecraft, gallery);
+            }
+            var graphics = event.getGuiGraphics();
+            graphics.fill(10, 60, 270, 85 + ((gallery.size() + 5) / 6) * 38, 0xD0000000);
+            graphics.drawString(minecraft.font, "GT plant models", 16, 66, 0xFFFFFF);
+            for (int i = 0; i < gallery.size(); i++) {
+                graphics.pose().pushPose();
+                graphics.pose().translate(18 + (i % 6) * 42, 84 + (i / 6) * 38, 0);
+                graphics.pose().scale(2, 2, 1);
+                graphics.renderItem(gallery.get(i), 0, 0);
+                graphics.pose().popPose();
             }
             renderedFrames++;
             snapshotState(minecraft, "render_thread");
