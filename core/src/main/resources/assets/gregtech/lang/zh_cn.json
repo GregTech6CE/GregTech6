@@ -9833,5 +9833,9 @@
   "item.gregtech.arrow_gt_plastic_empty": "无箭头的塑料箭",
   "item.gregtech.bullet_gt_small_empty": "小型弹壳",
   "item.gregtech.bullet_gt_medium_empty": "中型弹壳",
-  "item.gregtech.bullet_gt_large_empty": "大型弹壳"
+  "item.gregtech.bullet_gt_large_empty": "大型弹壳",
+  "tooltip.gregtech.scanner.energy": "%s / %s EU - 电压：%s",
+  "tooltip.gregtech.scanner.infinite": "可作为无限能量电池",
+  "tooltip.gregtech.scanner.blocks": "可扫描世界中的方块",
+  "tooltip.gregtech.scanner.crops": "可分析世界中的作物"
 }

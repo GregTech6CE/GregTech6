@@ -79,7 +79,7 @@ import java.util.Optional;
 public final class BehaviorScanner {
 
     /** GT6 {@code CS.V[3]} ({@code CS.java:151}): the EU one scanned section costs ({@code WD.java:939}). */
-    public static final long COST_PER_SECTION = 512L;
+    public static final long COST_PER_SECTION = com.gregtech.gregtech.content.tool.ScannerEnergyRules.SECTION_COST;
 
     /** GT6 {@code WD.java:925}: from this scan level on the Java classes are printed too. */
     public static final int CLASS_LEVEL = 10;
@@ -174,8 +174,10 @@ public final class BehaviorScanner {
                     }
                 }
             }
-            // WD.java:1002-1008 — IFluidHandler, all tanks of the clicked face.
-            if (be instanceof IFluidHandler handler) {
+            // WD.java:1002-1008 — modern fluid capabilities expose tanks on the clicked face.
+            IFluidHandler handler = be.getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.FLUID_HANDLER, side).orElse(null);
+            if (handler == null && be instanceof IFluidHandler direct) handler = direct;
+            if (handler != null) {
                 cost += COST_PER_SECTION;
                 for (int i = 0; i < handler.getTanks(); i++) {
                     FluidStack fluid = handler.getFluidInTank(i);

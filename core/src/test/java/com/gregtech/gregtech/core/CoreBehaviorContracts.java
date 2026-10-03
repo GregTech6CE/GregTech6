@@ -38,8 +38,41 @@ public final class CoreBehaviorContracts {
         addonLifecycle();
         miniaturePortalSignals();
         bedrockAndBoilerSourceSamples();
+        scannerEnergySourceSamples();
         assertions += OriginWorldgenSamples.verify();
-        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 17 groups (Java 17; no game dependencies)");
+        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 18 groups (Java 17; no game dependencies)");
+    }
+
+    private static void scannerEnergySourceSamples() {
+        // MultiItemRandomTools:517-518 and EnergyStat:68-75,108-124; independent fixed values.
+        var scanner = com.gregtech.gregtech.content.tool.ScannerEnergyRules.PORTABLE;
+        var crop = com.gregtech.gregtech.content.tool.ScannerEnergyRules.CROP;
+        var debug = com.gregtech.gregtech.content.tool.ScannerEnergyRules.DEBUG;
+        equal(4096000L, scanner.capacity(), "source HV scanner capacity");
+        equal(1024000L, crop.capacity(), "source MV cropnalyzer capacity");
+        check(scanner.acceptsPacket(1,256), "HV half-voltage input is accepted");
+        check(scanner.acceptsPacket(1,1024), "HV double-voltage input is accepted");
+        check(!scanner.acceptsPacket(1,128), "MV input cannot charge the HV scanner");
+        check(!scanner.acceptsPacket(1,2048), "EV input cannot charge the HV scanner");
+        check(!scanner.acceptsPacket(2,512), "charging requires a single discharged item");
+        check(crop.acceptsPacket(1,64) && crop.acceptsPacket(1,256), "MV crop input range is 64 through 256");
+        equal(64L, scanner.injectionPackets(1,0,512,1000), "tools cap injection at 64 packets");
+        equal(1L, scanner.injectionPackets(1,4095999,512,64), "source accepts one final oversized packet");
+        equal(0L, scanner.injectionPackets(1,4096000,512,1), "a full buffer accepts no packets");
+        equal(64L, scanner.injectionPackets(1,0,-512,1000), "GT signed packet magnitude is accepted");
+        equal(0L, scanner.injectionPackets(1,0,Long.MIN_VALUE,1), "absolute packet overflow is rejected");
+        var exact = com.gregtech.gregtech.content.tool.ScannerEnergyRules.use(1024,1024,false);
+        check(exact.successful() && exact.remaining() == 0, "an exact payment reports the scan");
+        var partial = com.gregtech.gregtech.content.tool.ScannerEnergyRules.use(1023,1024,false);
+        check(!partial.successful() && partial.remaining() == 0, "an underfunded scan drains partial charge and reports nothing");
+        var freeHeader = com.gregtech.gregtech.content.tool.ScannerEnergyRules.use(0,0,false);
+        check(freeHeader.successful(), "plain block headers work on an empty scanner");
+        var creative = com.gregtech.gregtech.content.tool.ScannerEnergyRules.use(27,1024,true);
+        check(creative.successful() && creative.remaining() == 27, "creative and debug scan without payment");
+        equal(32768L, com.gregtech.gregtech.content.tool.ScannerEnergyRules.CROP_DISCOVERY_COST, "first IC2 crop scan uses V[6]");
+        equal(512L, com.gregtech.gregtech.content.tool.ScannerEnergyRules.CROP_RESCAN_COST, "subsequent IC2 crop scan uses V[3]");
+        check(debug.scansBlocks() && !crop.scansBlocks(), "debug scans blocks; cropnalyzer only scans IC2 crops");
+        check(!com.gregtech.gregtech.content.tool.OriginalCropScan.supports(new Object()), "a non-IC2 object does not invent a crop analysis");
     }
 
     private static void bedrockAndBoilerSourceSamples() {

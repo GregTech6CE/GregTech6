@@ -127,6 +127,9 @@ public final class GTMultiItems {
                 continue;
             }
             BY_ID.put(id, ITEMS.register(id, () -> switch(id) {
+                case "portable_scanner", "portable_cropnalyzer", "debug_scanner" ->
+                    new com.gregtech.gregtech.item.ScannerItem(name,
+                        com.gregtech.gregtech.content.tool.ScannerEnergyRules.forItem(id), props);
                 case "radaway" -> new com.gregtech.gregtech.item.RadawayItem();
                 case "geiger_counter" -> new com.gregtech.gregtech.item.GeigerCounterItem();
                 case "empty_wax_pill" -> new MultiItem(name,hasTooltip,new Item.Properties().food(

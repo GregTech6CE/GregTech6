@@ -77,7 +77,7 @@ public final class ItemBehaviors {
     public record Entry(String itemId, Class<?> behaviour) {}
 
     /** Every GT6 {@code gregtech.items.behaviors} class this layer implements, with its port item. */
-    public static final List<Entry> PORTED = com.gregtech.gregtech.content.tool.ItemBehaviorCatalog.ALL.stream().map(v->new Entry(v.itemId(),switch(v.behavior()){case "BehaviorChunkEraser" -> BehaviorChunkEraser.class;case "BehaviorDataStorage" -> BehaviorDataStorage.class;case "BehaviorDataStorage16" -> BehaviorDataStorage16.class;case "BehaviorDuctTape" -> BehaviorDuctTape.class;case "BehaviorFlintAndTinder" -> BehaviorFlintAndTinder.class;case "BehaviorLighter" -> BehaviorLighter.class;case "BehaviorPlungerFluid" -> BehaviorPlungerFluid.class;case "BehaviorRemote" -> BehaviorRemote.class;case "BehaviorScanner" -> BehaviorScanner.class;case "BehaviorSprayColorRemover" -> BehaviorSprayColorRemover.class;case "BehaviorSprayExtinguisher" -> BehaviorSprayExtinguisher.class;case "BehaviorSprayFoamHardener" -> BehaviorSprayFoamHardener.class;case "BehaviorSprayFoamRemover" -> BehaviorSprayFoamRemover.class;case "BehaviorWorldgenDebugger" -> BehaviorWorldgenDebugger.class;default -> null;})).toList();
+    public static final List<Entry> PORTED = com.gregtech.gregtech.content.tool.ItemBehaviorCatalog.ALL.stream().map(v->new Entry(v.itemId(),switch(v.behavior()){case "BehaviorChunkEraser" -> BehaviorChunkEraser.class;case "BehaviorDataStorage" -> BehaviorDataStorage.class;case "BehaviorDataStorage16" -> BehaviorDataStorage16.class;case "BehaviorDuctTape" -> BehaviorDuctTape.class;case "BehaviorFlintAndTinder" -> BehaviorFlintAndTinder.class;case "BehaviorLighter" -> BehaviorLighter.class;case "BehaviorPlungerFluid" -> BehaviorPlungerFluid.class;case "BehaviorRemote" -> BehaviorRemote.class;case "BehaviorScanner" -> BehaviorScanner.class;case "BehaviorCropnalyzer" -> BehaviorCropnalyzer.class;case "BehaviorSprayColorRemover" -> BehaviorSprayColorRemover.class;case "BehaviorSprayExtinguisher" -> BehaviorSprayExtinguisher.class;case "BehaviorSprayFoamHardener" -> BehaviorSprayFoamHardener.class;case "BehaviorSprayFoamRemover" -> BehaviorSprayFoamRemover.class;case "BehaviorWorldgenDebugger" -> BehaviorWorldgenDebugger.class;default -> null;})).toList();
 
     /** The behaviour class registered for a port item id, or empty when the item has none yet. */
     public static Optional<Class<?>> behaviourOf(String itemId) {
@@ -182,10 +182,8 @@ public final class ItemBehaviors {
      * GT6's per-family consumable triples, the scan level of each scanner, the lighter chances — is
      * looked up from the item's own registry path ({@link #PORTED}).</p>
      *
-     * <p><b>Not modelled here:</b> GT6's scanner pays for its scan out of the item's own energy
-     * buffer ({@code Behavior_Scanner:53} calls {@code aItem.useEnergy}), and the port registers
-     * {@code portable_scanner} / {@code debug_scanner} as plain items with no buffer. The scan still
-     * runs and reports its {@code CS.V[3]} cost, it just cannot be charged yet.</p>
+     * <p>ScannerItem now owns the source energy buffer. Scans gather information first and only
+     * send it when EnergyStat-style payment succeeds; IC2 crop scanning takes priority.</p>
      *
      * @return whether the click was handled, plus the stack to store back
      */
@@ -217,16 +215,22 @@ public final class ItemBehaviors {
         if (id.startsWith("fire_extinguisher_co2")) {
             return BehaviorSprayExtinguisher.useOn(level, pos, side, player, stack, hitX, hitY, hitZ);
         }
-        if (id.equals("portable_scanner") || id.equals("debug_scanner")) {
-            int scanLevel = id.equals("debug_scanner") ? BehaviorScanner.DEBUG_LEVEL
-                    : BehaviorScanner.PORTABLE_LEVEL;
+        var scanner = com.gregtech.gregtech.content.tool.ScannerEnergyRules.forItem(id);
+        if (scanner != null) {
+            if (!(player instanceof net.minecraft.server.level.ServerPlayer)) return Outcome.refused(stack);
             List<String> lines = new ArrayList<>();
-            long cost = BehaviorScanner.scan(level, pos, side, scanLevel, player, lines);
-            if (player != null) {
-                for (String line : lines) player.displayClientMessage(Component.literal(line), false);
+            long cost = BehaviorCropnalyzer.scan(level, pos, lines);
+            if (cost <= 0) {
+                if (!scanner.scansBlocks()) return Outcome.refused(stack);
+                cost = BehaviorScanner.scan(level, pos, side, scanner.scanLevel(), player, lines);
             }
             lastScanCost = cost;
-            return Outcome.acted(stack);          // Behavior_Scanner:54 returns T for a server player
+            if (stack.getItem() instanceof com.gregtech.gregtech.item.ScannerItem item
+                    && item.useEnergy(stack, cost, player)) {
+                for (String line : lines) player.displayClientMessage(Component.literal(line), false);
+            }
+            // Both original behaviors consume the server click even when payment fails.
+            return Outcome.acted(stack);
         }
         // §110: the debug pair (MultiItemRandomTools:519-520) and the Remote Activator's bind half.
         // Both debug items are deliberately exempt from the build-permission gate, exactly like GT6's
