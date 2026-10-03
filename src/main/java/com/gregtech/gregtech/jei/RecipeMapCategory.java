@@ -40,6 +40,10 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
     @Override public void setRecipe(IRecipeLayoutBuilder builder,Recipe recipe,IFocusGroup focuses) {
         addSide(builder,true,recipe.mInputs,recipe.mFluidInputs,recipe);
         addSide(builder,false,recipe.mOutputs,recipe.mFluidOutputs,recipe);
+        var special = RecipeSpecialItems.display(recipe.mSpecialItems);
+        if (!special.isEmpty()) builder.addSlot(RecipeIngredientRole.CATALYST, 80, 43)
+                .setSlotName("special_tool").setBackground(slot, -1, -1).addItemStacks(special)
+                .addTooltipCallback((view, tooltip) -> tooltip.add(Component.translatable("gregtech.jei.catalyst")));
     }
     private void addSide(IRecipeLayoutBuilder builder,boolean input,ItemStack[] items,FluidStack[] fluids,Recipe recipe) {
         var role=input?RecipeIngredientRole.INPUT:RecipeIngredientRole.OUTPUT;

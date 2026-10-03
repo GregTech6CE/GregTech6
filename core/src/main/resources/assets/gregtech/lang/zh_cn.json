@@ -9713,5 +9713,6 @@
   "tooltip.gregtech.wire.voltage": "电压: %s EU  (%s)",
   "tooltip.gregtech.electric_wrench.switch": "潜行右键无方块实体的方块切换扳手模式",
   "gregtech.spray.paint": "喷漆罐（%s）",
-  "gregtech.spray.remaining": "剩余次数：%s"
+  "gregtech.spray.remaining": "剩余次数：%s",
+  "gregtech.jei.catalyst": "不消耗"
 }

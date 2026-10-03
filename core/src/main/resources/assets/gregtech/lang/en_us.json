@@ -9713,5 +9713,6 @@
   "tooltip.gregtech.wire.voltage": "Voltage: %s EU  (%s)",
   "tooltip.gregtech.electric_wrench.switch": "Sneak-right-click a block without a block entity to switch wrench mode",
   "gregtech.spray.paint": "Spray Paint (%s)",
-  "gregtech.spray.remaining": "Remaining Uses: %s"
+  "gregtech.spray.remaining": "Remaining Uses: %s",
+  "gregtech.jei.catalyst": "Not consumed"
 }

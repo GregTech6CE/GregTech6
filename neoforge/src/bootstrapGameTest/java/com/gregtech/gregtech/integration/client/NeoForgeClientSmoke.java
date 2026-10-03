@@ -193,6 +193,8 @@ public final class NeoForgeClientSmoke {
                     .findFirst().orElseThrow(() -> new IllegalStateException("No registered crusher"));
             gallery.add(new net.minecraft.world.item.ItemStack(crusher));
             ids.add(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(crusher).toString());
+            ToolIconSmoke.check(minecraft, gallery);
+            if (net.neoforged.fml.ModList.get().isLoaded("jei")) JeiToolSlotSmoke.check();
             var result = new JsonObject();
             result.addProperty("materialModels", materials);
             result.addProperty("fluidModels", fluids);
@@ -201,10 +203,10 @@ public final class NeoForgeClientSmoke {
             LOGGER.info("CLIENT_MODEL_SMOKE_SUCCESS {}", result);
             modelsChecked = true;
         }
-        graphics.fill(10, 100, 110, 190, 0xD0000000);
+        graphics.fill(10, 100, 170, 215, 0xD0000000);
         graphics.drawString(minecraft.font, "GT models", 16, 106, 0xFFFFFF);
         for (int i = 0; i < gallery.size(); i++) {
-            graphics.renderItem(gallery.get(i), 18 + (i % 3) * 30, 122 + (i / 3) * 30);
+            graphics.renderItem(gallery.get(i), 18 + (i % 5) * 30, 122 + (i / 5) * 30);
         }
     }
 
