@@ -265,11 +265,11 @@ public class GTBumbleHivesFeature extends Feature<NoneFeatureConfiguration> {
                                     @Nullable CompoundTag overrideGenes) {
         GTBumbleSpecies.Species species = GTBumbleSpecies.byId(colony.speciesId());
         if (species == null) return false;
-        Block hive = com.gregtech.gregtech.registry.GTBumbleBlocks.BUMBLE_HIVE == null ? null : com.gregtech.gregtech.registry.GTBumbleBlocks.BUMBLE_HIVE.get();
+        Block hive = com.gregtech.gregtech.registry.GTBumbleBlocks.hive(colony.dye());
         if (hive == null) return false;
 
         CompoundTag genes = overrideGenes != null ? overrideGenes : genesFor(level, pos, random);
-        BlockState state = hive.defaultBlockState().setValue(BumbleHiveBlock.COLOR, colony.dye());
+        BlockState state = hive.defaultBlockState();
         if (!level.setBlock(pos, state, 2)) return false;
         if (!(level.getBlockEntity(pos) instanceof BumbleHiveBlockEntity hiveEntity)) return false;
 

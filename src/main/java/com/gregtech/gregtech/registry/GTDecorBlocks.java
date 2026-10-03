@@ -82,6 +82,16 @@ public final class GTDecorBlocks {
 
     /** GT6's wild bumblebee hive ({@code MultiTileEntityBumbleHive}, placed by {@code WorldgenHives}). */
     public static RegistryObject<BumbleHiveBlock> BUMBLE_HIVE;
+    private static final java.util.Map<net.minecraft.world.item.DyeColor, RegistryObject<BumbleHiveBlock>> HIVE_VARIANTS = new java.util.EnumMap<>(net.minecraft.world.item.DyeColor.class);
+
+    public static BumbleHiveBlock hive(net.minecraft.world.item.DyeColor color) { return HIVE_VARIANTS.get(color).get(); }
+
+    public static Block[] allHives() {
+        var blocks = new java.util.ArrayList<Block>();
+        blocks.add(BUMBLE_HIVE.get());
+        HIVE_VARIANTS.values().forEach(h -> blocks.add(h.get()));
+        return blocks.toArray(Block[]::new);
+    }
 
     private GTDecorBlocks() {}
 
@@ -248,6 +258,10 @@ public final class GTDecorBlocks {
         // WorldgenHives: the wild bumblebee colonies.
         BUMBLE_HIVE = reg("bumble_hive", () -> new com.gregtech.gregtech.block.misc.BumbleHiveBlock(
                 com.gregtech.gregtech.block.misc.BumbleHiveBlock.properties()));
+        for (var color : net.minecraft.world.item.DyeColor.values()) {
+            HIVE_VARIANTS.put(color, reg("bumble_hive_" + color.getName(), () ->
+                    new com.gregtech.gregtech.block.misc.FixedBumbleHiveBlock(BumbleHiveBlock.properties(), color)));
+        }
     }
 
     private static BlockBehaviour.Properties props(MapColor color, float hardness) {

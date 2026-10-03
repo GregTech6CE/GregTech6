@@ -103,6 +103,7 @@ public class Loader_Creative implements IGTLoader {
             // Wave 48: decorative blocks + placeables
             for (var entry : com.gregtech.gregtech.registry.GTDecorBlocks.all()) {
                 if (!entry.isPresent()) continue;
+                if (entry.getId().getPath().equals("bumble_hive")) continue;
                 var block = entry.get();
                 if (block instanceof com.gregtech.gregtech.block.misc.ConcreteBlock) {
                     for (var color : net.minecraft.world.item.DyeColor.values())

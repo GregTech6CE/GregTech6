@@ -9714,5 +9714,21 @@
   "tooltip.gregtech.electric_wrench.switch": "潜行右键无方块实体的方块切换扳手模式",
   "gregtech.spray.paint": "喷漆罐（%s）",
   "gregtech.spray.remaining": "剩余次数：%s",
-  "gregtech.jei.catalyst": "不消耗"
+  "gregtech.jei.catalyst": "不消耗",
+  "block.gregtech.bumble_hive_white": "白色蜜蜂巢",
+  "block.gregtech.bumble_hive_orange": "橙色蜜蜂巢",
+  "block.gregtech.bumble_hive_magenta": "品红色蜜蜂巢",
+  "block.gregtech.bumble_hive_light_blue": "淡蓝色蜜蜂巢",
+  "block.gregtech.bumble_hive_yellow": "黄色蜜蜂巢",
+  "block.gregtech.bumble_hive_lime": "黄绿色蜜蜂巢",
+  "block.gregtech.bumble_hive_pink": "粉红色蜜蜂巢",
+  "block.gregtech.bumble_hive_gray": "灰色蜜蜂巢",
+  "block.gregtech.bumble_hive_light_gray": "淡灰色蜜蜂巢",
+  "block.gregtech.bumble_hive_cyan": "青色蜜蜂巢",
+  "block.gregtech.bumble_hive_purple": "紫色蜜蜂巢",
+  "block.gregtech.bumble_hive_blue": "蓝色蜜蜂巢",
+  "block.gregtech.bumble_hive_brown": "棕色蜜蜂巢",
+  "block.gregtech.bumble_hive_green": "绿色蜜蜂巢",
+  "block.gregtech.bumble_hive_red": "红色蜜蜂巢",
+  "block.gregtech.bumble_hive_black": "黑色蜜蜂巢"
 }

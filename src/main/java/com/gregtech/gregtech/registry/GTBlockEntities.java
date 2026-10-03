@@ -462,7 +462,7 @@ public final class GTBlockEntities {
     public static final RegistryObject<BlockEntityType<com.gregtech.gregtech.blockentity.misc.BumbleHiveBlockEntity>> BUMBLE_HIVE =
             BLOCK_ENTITY_TYPES.register("bumble_hive", () ->
                     BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.misc.BumbleHiveBlockEntity::new,
-                            GTDecorBlocks.BUMBLE_HIVE.get()).build(null));
+                            GTDecorBlocks.allHives()).build(null));
 
     public static final RegistryObject<BlockEntityType<com.gregtech.gregtech.blockentity.machine.CokeOvenControllerBlockEntity>> COKE_OVEN =
             BLOCK_ENTITY_TYPES.register("coke_oven", () -> BlockEntityType.Builder.of(

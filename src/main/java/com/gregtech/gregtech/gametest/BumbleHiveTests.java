@@ -263,8 +263,8 @@ public final class BumbleHiveTests {
         helper.assertTrue(GTBumbleHivesFeature.placeHive(level, pos, GTBumbleHivesFeature.ROCK,
                 RandomSource.create(1L), genes), "placing a hive succeeds");
         BlockState state = server.getBlockState(pos);
-        helper.assertTrue(state.getBlock() == GTDecorBlocks.BUMBLE_HIVE.get(), "the hive block is placed");
-        helper.assertTrue(state.getValue(BumbleHiveBlock.COLOR) == DyeColor.LIGHT_GRAY,
+        helper.assertTrue(state.getBlock() instanceof BumbleHiveBlock, "the hive block is placed");
+        helper.assertTrue(BumbleHiveBlock.colorOf(state) == DyeColor.LIGHT_GRAY,
                 "the rock colony is GT6's light grey");
         helper.assertTrue(server.getBlockEntity(pos) instanceof BumbleHiveBlockEntity, "the hive has its block entity");
         BumbleHiveBlockEntity hive = (BumbleHiveBlockEntity) server.getBlockEntity(pos);
@@ -307,12 +307,12 @@ public final class BumbleHiveTests {
                 "1 work force is one comb");
         helper.assertTrue(other.inventory().getStackInSlot(2).isEmpty(),
                 "an offspring of 0 leaves the drone slot empty");
-        helper.assertTrue(server.getBlockState(second).getValue(BumbleHiveBlock.COLOR) == DyeColor.LIGHT_BLUE,
+        helper.assertTrue(BumbleHiveBlock.colorOf(server.getBlockState(second)) == DyeColor.LIGHT_BLUE,
                 "the water colony is light blue");
 
         // Only a player's break hands the colony out (GT6's mDroppable).
         Player player = helper.makeMockPlayer();
-        GTDecorBlocks.BUMBLE_HIVE.get().playerWillDestroy(server, pos, state, player);
+        state.getBlock().playerWillDestroy(server, pos, state, player);
         helper.assertTrue(hive.contents().isEmpty(), "breaking the hive empties it");
         List<ItemEntity> drops = server.getEntitiesOfClass(ItemEntity.class, new AABB(pos).inflate(2.0));
         helper.assertTrue(drops.size() == 3, "comb, princess and drones drop, got " + drops.size());
@@ -421,16 +421,16 @@ public final class BumbleHiveTests {
         helper.assertTrue(GTBumbleHivesFeature.placeUnderground(level, x, z, random),
                 "the rock pocket pass finds the pocket");
         BlockState underground = server.getBlockState(pocket);
-        if (underground.getBlock() != GTDecorBlocks.BUMBLE_HIVE.get()) {
+        if (!(underground.getBlock() instanceof BumbleHiveBlock)) {
             StringBuilder found = new StringBuilder();
             for (int y = lowY; y < highY; y++) {
                 BlockState state = server.getBlockState(new BlockPos(x, y, z));
-                if (state.getBlock() == GTDecorBlocks.BUMBLE_HIVE.get()) found.append(" y=").append(y);
+                if (state.getBlock() instanceof BumbleHiveBlock) found.append(" y=").append(y);
             }
             helper.assertTrue(false, "the hive replaces the rock block, got " + underground
                     + " (pocket y=" + pocketY + ", hives in the band:" + (found.length() == 0 ? " none" : found) + ")");
         }
-        helper.assertTrue(underground.getValue(BumbleHiveBlock.COLOR) == DyeColor.LIGHT_GRAY,
+        helper.assertTrue(BumbleHiveBlock.colorOf(underground) == DyeColor.LIGHT_GRAY,
                 "the underground colony is the rocky light grey one");
         BumbleHiveBlockEntity caveHive = (BumbleHiveBlockEntity) server.getBlockEntity(pocket);
         helper.assertTrue(caveHive != null && "rock_comb".equals(itemId(caveHive.inventory().getStackInSlot(0))),
@@ -465,15 +465,15 @@ public final class BumbleHiveTests {
                     + " down=" + server.getBlockState(hivePos.below()));
         }
         BlockState surface = server.getBlockState(hivePos);
-        helper.assertTrue(surface.getBlock() == GTDecorBlocks.BUMBLE_HIVE.get(),
+        helper.assertTrue(surface.getBlock() instanceof BumbleHiveBlock,
                 "the hive sits where the ground block's support was, got " + surface);
         // The colony comes from the biome at that spot plus the grass above it - the water rule cannot
         // fire because the neighbours were cleared.
         GTBumbleHivesFeature.Colony expected = GTBumbleHivesFeature.colonyFor(
                 server.getBiome(hivePos), false, Blocks.GRASS_BLOCK.defaultBlockState());
-        helper.assertTrue(surface.getValue(BumbleHiveBlock.COLOR) == expected.dye(),
+        helper.assertTrue(BumbleHiveBlock.colorOf(surface) == expected.dye(),
                 "the grass colony of this biome is " + expected.trigger() + ", got "
-                        + surface.getValue(BumbleHiveBlock.COLOR).getName());
+                        + BumbleHiveBlock.colorOf(surface).getName());
         BumbleHiveBlockEntity colony = (BumbleHiveBlockEntity) server.getBlockEntity(hivePos);
         helper.assertTrue(colony != null, "the surface hive has its block entity");
         ItemStack comb = colony.inventory().getStackInSlot(0);

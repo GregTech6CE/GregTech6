@@ -9714,5 +9714,21 @@
   "tooltip.gregtech.electric_wrench.switch": "Sneak-right-click a block without a block entity to switch wrench mode",
   "gregtech.spray.paint": "Spray Paint (%s)",
   "gregtech.spray.remaining": "Remaining Uses: %s",
-  "gregtech.jei.catalyst": "Not consumed"
+  "gregtech.jei.catalyst": "Not consumed",
+  "block.gregtech.bumble_hive_white": "White Bumblebee Hive",
+  "block.gregtech.bumble_hive_orange": "Orange Bumblebee Hive",
+  "block.gregtech.bumble_hive_magenta": "Magenta Bumblebee Hive",
+  "block.gregtech.bumble_hive_light_blue": "Light Blue Bumblebee Hive",
+  "block.gregtech.bumble_hive_yellow": "Yellow Bumblebee Hive",
+  "block.gregtech.bumble_hive_lime": "Lime Bumblebee Hive",
+  "block.gregtech.bumble_hive_pink": "Pink Bumblebee Hive",
+  "block.gregtech.bumble_hive_gray": "Gray Bumblebee Hive",
+  "block.gregtech.bumble_hive_light_gray": "Light Gray Bumblebee Hive",
+  "block.gregtech.bumble_hive_cyan": "Cyan Bumblebee Hive",
+  "block.gregtech.bumble_hive_purple": "Purple Bumblebee Hive",
+  "block.gregtech.bumble_hive_blue": "Blue Bumblebee Hive",
+  "block.gregtech.bumble_hive_brown": "Brown Bumblebee Hive",
+  "block.gregtech.bumble_hive_green": "Green Bumblebee Hive",
+  "block.gregtech.bumble_hive_red": "Red Bumblebee Hive",
+  "block.gregtech.bumble_hive_black": "Black Bumblebee Hive"
 }

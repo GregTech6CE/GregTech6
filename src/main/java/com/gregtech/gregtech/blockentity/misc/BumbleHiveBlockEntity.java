@@ -40,6 +40,20 @@ public class BumbleHiveBlockEntity extends BlockEntity {
     /** The hive's contents, in GT6's slot order. */
     public ItemStackHandler inventory() { return inventory; }
 
+    /** Upgrade the old color-property block after its inventory has loaded. */
+    public void migrateLegacyVariant() {
+        if (level == null || level.isClientSide || !getBlockState().hasProperty(com.gregtech.gregtech.block.misc.BumbleHiveBlock.COLOR)) return;
+        var color = getBlockState().getValue(com.gregtech.gregtech.block.misc.BumbleHiveBlock.COLOR);
+        var target = net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech", "bumble_hive_" + color.getName()));
+        if (!(target instanceof com.gregtech.gregtech.block.misc.FixedBumbleHiveBlock)) return;
+        var contents = new ItemStack[SLOTS];
+        for (int i = 0; i < SLOTS; i++) contents[i] = inventory.getStackInSlot(i).copy();
+        if (level.setBlock(worldPosition, target.defaultBlockState(), 3)
+                && level.getBlockEntity(worldPosition) instanceof BumbleHiveBlockEntity migrated) {
+            for (int i = 0; i < SLOTS; i++) migrated.inventory.setStackInSlot(i, contents[i]);
+        }
+    }
+
     /** Everything inside, for the drop logic and the tooltips. */
     public java.util.List<ItemStack> contents() {
         java.util.List<ItemStack> out = new java.util.ArrayList<>();

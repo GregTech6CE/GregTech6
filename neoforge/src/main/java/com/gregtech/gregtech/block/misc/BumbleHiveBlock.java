@@ -44,12 +44,26 @@ public class BumbleHiveBlock extends Block implements EntityBlock {
     @Override public com.mojang.serialization.MapCodec<? extends Block> codec(){return com.mojang.serialization.MapCodec.unit(this);}
     public BumbleHiveBlock(Properties properties) {
         super(properties);
-        registerDefaultState(stateDefinition.any().setValue(COLOR, DyeColor.LIGHT_GRAY));
+        registerDefaultState(stateDefinition.any().hasProperty(COLOR)
+                ? stateDefinition.any().setValue(COLOR, DyeColor.LIGHT_GRAY) : stateDefinition.any());
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(COLOR);
+    }
+
+    public static DyeColor colorOf(BlockState state) {
+        return state.getBlock() instanceof FixedBumbleHiveBlock hive ? hive.color() : state.getValue(COLOR);
+    }
+
+    @Override
+    public <T extends BlockEntity> net.minecraft.world.level.block.entity.BlockEntityTicker<T> getTicker(
+            Level level, BlockState state, net.minecraft.world.level.block.entity.BlockEntityType<T> type) {
+        if (level.isClientSide || this instanceof FixedBumbleHiveBlock) return null;
+        return (world, pos, current, entity) -> {
+            if (entity instanceof BumbleHiveBlockEntity hive) hive.migrateLegacyVariant();
+        };
     }
 
     @Nullable
