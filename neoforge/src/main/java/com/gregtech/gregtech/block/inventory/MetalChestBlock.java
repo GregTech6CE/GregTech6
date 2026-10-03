@@ -96,11 +96,8 @@ public class MetalChestBlock extends HorizontalDirectionalBlock implements Entit
             return (world, pos, blockState, be) ->
                     MetalChestBlockEntity.clientTick(world, pos, blockState, (MetalChestBlockEntity) be);
         }
-        // GT6 loot chests roll their table on the first tick a player can open them
-        // (`MultiTileEntityChest:236 generateDungeonLoot`).
-        return (world, pos, blockState, be) -> {
-            if (be instanceof MetalChestBlockEntity chest) chest.generateLootIfNeeded();
-        };
+        // MultiTileEntityChest.onBlockActivated2 generates loot when opening, never on placement.
+        return null;
     }
 
     @Override
