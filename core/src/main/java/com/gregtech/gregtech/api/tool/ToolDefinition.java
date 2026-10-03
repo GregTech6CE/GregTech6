@@ -123,6 +123,7 @@ public enum ToolDefinition {
     /** GT6 {@code getToolDamagePerBlockBreak} default is 100; mining tools often use 25; wrench is 50. */
     public int damagePerBlockBreak() {
         return switch (this) {
+            case AXE, DOUBLE_AXE -> 50;
             case WRENCH, MONKEY_WRENCH, WIRE_CUTTER, CROWBAR, PLUNGER, SCOOP, BRANCH_CUTTER, KNIFE, SCISSORS,
                  PINCERS, HAND_DRILL, BUILDER_WAND -> 50;
             default -> harvestTag != null && miningTool ? 25 : 100;

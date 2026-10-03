@@ -162,8 +162,10 @@ public class GTToolItem extends Item {
 
     @Override
     public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity entity) {
-        if (!level.isClientSide && state.getDestroySpeed(level, pos) != 0.0F) {
-            GTToolHelper.damageForBlockBreak(stack, state, entity);
+        if (!level.isClientSide && !com.gregtech.gregtech.item.behavior.AxeColumnHarvest.harvesting()) {
+            if (state.getDestroySpeed(level, pos) != 0.0F) GTToolHelper.damageForBlockBreak(stack, state, entity);
+            if (entity instanceof net.minecraft.server.level.ServerPlayer player)
+                com.gregtech.gregtech.item.behavior.AxeColumnHarvest.harvest(player, stack, state, pos);
         }
         return true;
     }
