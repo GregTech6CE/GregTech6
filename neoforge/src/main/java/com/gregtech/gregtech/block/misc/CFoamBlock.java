@@ -7,7 +7,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -26,7 +25,7 @@ import java.util.List;
  * removed is scraped away (GT6's {@code removeFoam} sets the block to air), so it drops nothing; the
  * hardened block behaves like an ordinary building block.
  */
-public class CFoamBlock extends Block implements EntityBlock {
+public class CFoamBlock extends ColoredConstructionBlock {
     private final boolean fresh;
 
     public CFoamBlock(Properties properties) {
@@ -34,7 +33,7 @@ public class CFoamBlock extends Block implements EntityBlock {
     }
 
     public CFoamBlock(boolean fresh, Properties properties) {
-        super(properties);
+        super(properties, net.minecraft.world.item.DyeColor.WHITE);
         this.fresh = fresh;
     }
 
@@ -46,12 +45,10 @@ public class CFoamBlock extends Block implements EntityBlock {
         entity.causeFallDamage(fallDistance, 0.5f, level.damageSources().fall());
     }
 
-    @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return fresh ? new CFoamBlockEntity(pos, state) : null;
     }
 
-    @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         if (!fresh || level.isClientSide) return null;
         return (l, p, s, be) -> {
@@ -63,7 +60,7 @@ public class CFoamBlock extends Block implements EntityBlock {
     @Override
     public List<net.minecraft.world.item.ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         if (fresh) return Collections.emptyList();
-        return List.of(new net.minecraft.world.item.ItemStack(this));
+        return super.getDrops(state, builder);
     }
 
     /** The hardened block this foam turns into (GT6's {@code BlocksGT.CFoam}). */

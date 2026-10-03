@@ -48,7 +48,8 @@ public class CFoamBlockEntity extends BlockEntity {
     public boolean dry() {
         if (level == null || level.isClientSide || dried) return false;
         dried = true;
-        BlockState hardened = CFoamBlock.hardened().defaultBlockState();
+        BlockState hardened = CFoamBlock.hardened().defaultBlockState()
+                .setValue(CFoamBlock.COLOR, getBlockState().getValue(CFoamBlock.COLOR));
         return level.setBlock(worldPosition, hardened, 3);
     }
 

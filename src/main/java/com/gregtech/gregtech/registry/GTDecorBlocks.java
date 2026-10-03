@@ -28,6 +28,7 @@ public final class GTDecorBlocks {
 
     // N11: CFoam
     public static RegistryObject<CFoamBlock> CFOAM;
+    public static RegistryObject<com.gregtech.gregtech.block.misc.CFoamSlabBlock> CFOAM_SLAB;
     public static RegistryObject<CFoamBlock> CFOAM_FRESH;
 
     // N11: Glass
@@ -148,6 +149,7 @@ public final class GTDecorBlocks {
     }
 
     public static void registerAll() {
+        CFOAM_SLAB = reg("cfoam_slab", () -> new com.gregtech.gregtech.block.misc.CFoamSlabBlock(props(MapColor.WOOL, 1f).sound(SoundType.WOOL)));
         // N11: Asphalt
         ASPHALT = reg("asphalt", () -> new AsphaltBlock(props(MapColor.COLOR_BLACK, 3f).sound(SoundType.STONE)));
 
@@ -163,7 +165,7 @@ public final class GTDecorBlocks {
 
         // N11: CFoam
         CFOAM = reg("cfoam", () -> new CFoamBlock(props(MapColor.WOOL, 1f).sound(SoundType.WOOL)));
-        CFOAM_FRESH = reg("cfoam_fresh", () -> new CFoamBlock(true, props(MapColor.WOOL, 0.5f).sound(SoundType.WOOL)));
+        CFOAM_FRESH = reg("cfoam_fresh", () -> new com.gregtech.gregtech.block.misc.FreshCFoamBlock( props(MapColor.WOOL, 0.5f).sound(SoundType.WOOL)));
 
         // N11: Glass
         GLASS_CLEAR = coloredGlass("glass_clear", false,

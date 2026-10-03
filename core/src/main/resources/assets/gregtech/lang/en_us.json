@@ -9827,5 +9827,6 @@
   "jade.gregtech.boiler.dismantle_safe": "Current pressure is safe to dismantle",
   "jade.gregtech.boiler.contact_damage": "Contact heat damage: %.2f",
   "jade.gregtech.boiler.descaling_explosion": "Descaling at this pressure causes an explosion",
-  "jade.gregtech.boiler.descaling_damage": "Descaling heat damage: %.2f"
+  "jade.gregtech.boiler.descaling_damage": "Descaling heat damage: %.2f",
+  "block.gregtech.cfoam_slab": "Hardened Construction Foam Slab"
 }

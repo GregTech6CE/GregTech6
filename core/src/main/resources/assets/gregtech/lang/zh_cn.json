@@ -9827,5 +9827,6 @@
   "jade.gregtech.boiler.dismantle_safe": "当前压力下可安全拆除",
   "jade.gregtech.boiler.contact_damage": "接触烫伤：%.2f",
   "jade.gregtech.boiler.descaling_explosion": "当前压力下除垢会爆炸",
-  "jade.gregtech.boiler.descaling_damage": "除垢烫伤：%.2f"
+  "jade.gregtech.boiler.descaling_damage": "除垢烫伤：%.2f",
+  "block.gregtech.cfoam_slab": "硬化建筑泡沫半砖"
 }

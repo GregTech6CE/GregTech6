@@ -4,6 +4,7 @@
     {
       "id": "#gregtech:stone_blocks",
       "required": false
-    }
+    },
+    "gregtech:cfoam_slab"
   ]
 }
