@@ -1,0 +1,16 @@
+{
+  "type": "gregtech:tool_shapeless",
+  "_comment": "GT6 MultiItemRandomTools:215",
+  "ingredients": [
+    {
+      "item": "gregtech:clay_mold"
+    },
+    {
+      "tag": "gregtech:molds/forms/nugget/bi"
+    }
+  ],
+  "result": {
+    "item": "gregtech:clay_nugget_mold",
+    "count": 1
+  }
+}

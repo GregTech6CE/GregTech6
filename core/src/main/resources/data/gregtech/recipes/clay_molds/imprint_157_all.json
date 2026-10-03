@@ -1,0 +1,16 @@
+{
+  "type": "gregtech:tool_shapeless",
+  "_comment": "GT6 MultiItemRandomTools:157",
+  "ingredients": [
+    {
+      "item": "gregtech:clay_mold"
+    },
+    {
+      "item": "gregtech:tool_gem_tipped_pickaxe"
+    }
+  ],
+  "result": {
+    "item": "gregtech:clay_pickaxe_mold",
+    "count": 1
+  }
+}

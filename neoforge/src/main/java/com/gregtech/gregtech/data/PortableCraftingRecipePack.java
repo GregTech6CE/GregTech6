@@ -56,6 +56,8 @@ public final class PortableCraftingRecipePack extends AbstractPackResources {
             addOriginal(generated, "fluid_tools/" + file);
         for (String file : com.gregtech.gregtech.content.recipe.EquipmentCraftingCatalog.FILES)
             addOriginal(generated, file);
+        for (String file : com.gregtech.gregtech.content.recipe.ClayMoldCatalog.FILES)
+            addOriginal(generated,file);
         com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original equipment crafting datapack: {} rows ({} retained equipment rows)",
                 generated.size(), com.gregtech.gregtech.content.recipe.EquipmentCraftingCatalog.FILES.size());
         addOriginalToolTag(generated);

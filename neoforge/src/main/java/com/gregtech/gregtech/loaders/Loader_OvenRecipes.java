@@ -147,7 +147,29 @@ public final class Loader_OvenRecipes {
             ADDED_TO_VANILLA.add(input);
             added++;
         }
+        mirrorClayMoldBlasting(recipes);
         return added;
+    }
+
+    /** Original MTE firing enables blast furnace as well as ordinary furnace (F,F,T). */
+    private static void mirrorClayMoldBlasting(List<RecipeHolder<?>> recipes) {
+        var covered=new java.util.HashSet<Item>();
+        for(var holder:recipes) {
+            var recipe=holder.value();
+            if(recipe.getType()!=RecipeType.BLASTING)continue;
+            for(var ingredient:recipe.getIngredients())for(var stack:ingredient.getItems())covered.add(stack.getItem());
+        }
+        int added=0;
+        for(var raw:com.gregtech.gregtech.content.recipe.ClayMoldCatalog.RAW) {
+            var input=com.gregtech.gregtech.content.recipe.ClayMoldRecipes.input(raw);
+            if(!covered.add(input.getItem()))continue;
+            var output=com.gregtech.gregtech.content.recipe.ClayMoldRecipes.output(raw);
+            var id=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","clay_molds/blast_"+raw.id());
+            recipes.add(new RecipeHolder<>(id,new net.minecraft.world.item.crafting.BlastingRecipe(
+                    "",CookingBookCategory.MISC,Ingredient.of(input),output,0.0F,100)));
+            added++;
+        }
+        com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original clay mold blast firing: {} rows",added);
     }
 
     private static final List<ItemStack> ADDED_TO_VANILLA = new ArrayList<>();

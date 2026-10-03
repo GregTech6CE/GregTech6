@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "_comment": "GT6 MultiItemRandomTools:87",
+  "ingredients": [
+    {
+      "item": "gregtech:clay_item_casing_mold"
+    }
+  ],
+  "result": {
+    "item": "minecraft:clay_ball",
+    "count": 5
+  }
+}

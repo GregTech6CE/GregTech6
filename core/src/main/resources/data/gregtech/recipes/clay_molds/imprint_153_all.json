@@ -1,0 +1,19 @@
+{
+  "type": "gregtech:tool_shapeless",
+  "_comment": "GT6 MultiItemRandomTools:153",
+  "ingredients": [
+    {
+      "item": "gregtech:clay_mold"
+    },
+    {
+      "tag": "minecraft:planks"
+    },
+    {
+      "tag": "minecraft:planks"
+    }
+  ],
+  "result": {
+    "item": "gregtech:clay_file_mold",
+    "count": 1
+  }
+}

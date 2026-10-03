@@ -143,6 +143,7 @@ public class MoldBlock extends Block implements EntityBlock, GTMachineBlock, Sim
             if (GTToolHelper.canCollectMachineDrop(tool, state)) {
                 ItemStack machine = getCloneItemStack(level, pos, state);
                 if (!machine.isEmpty()) {
+                    if (blockEntity instanceof MoldBlockEntity mold) MoldItemData.withShape(machine,mold.getMoldShape());
                     if (!player.getInventory().add(machine)) {
                         popResource(level, pos, machine);
                     } else if (player instanceof ServerPlayer) {
@@ -165,6 +166,22 @@ public class MoldBlock extends Block implements EntityBlock, GTMachineBlock, Sim
             }
         }
         super.onRemove(state, level, pos, newState, isMoving);
+    }
+
+    @Override
+    public ItemStack getCloneItemStack(net.minecraft.world.level.BlockGetter level, BlockPos pos, BlockState state) {
+        var stack=new ItemStack(this);
+        if(level.getBlockEntity(pos) instanceof MoldBlockEntity mold)
+            MoldItemData.withShape(stack,mold.getMoldShape());
+        return stack;
+    }
+
+    @Override
+    public java.util.List<ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
+        var drops = super.getDrops(state,builder);
+        if(builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof MoldBlockEntity mold)
+            for(var stack:drops)if(stack.is(asItem()))MoldItemData.withShape(stack,mold.getMoldShape());
+        return drops;
     }
 
     public static Properties defaultProperties(CrucibleSpec spec) {

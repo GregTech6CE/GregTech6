@@ -33,6 +33,8 @@ public record Loader_Tools(IEventBus bus) implements IGTLoader {
     public static final RegistryObject<RecipeSerializer<GTToolHeadRecipe>> TOOL_HEAD =
             RECIPE_SERIALIZERS.register("tool_head", () -> GTToolRecipeSerializers.HEAD);
 
+    public static final RegistryObject<RecipeSerializer<com.gregtech.gregtech.recipe.ToolShapelessRecipe>> TOOL_SHAPELESS =
+            RECIPE_SERIALIZERS.register("tool_shapeless", () -> com.gregtech.gregtech.recipe.ToolShapelessRecipe.SERIALIZER);
     public static final RegistryObject<RecipeSerializer<com.gregtech.gregtech.recipe.ToolShapedRecipe>> TOOL_SHAPED =
             RECIPE_SERIALIZERS.register("tool_shaped", () -> com.gregtech.gregtech.recipe.ToolShapedRecipe.SERIALIZER);
 

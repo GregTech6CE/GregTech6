@@ -100,6 +100,7 @@ public final class SmelteryClientModels {
             }
             BakedModel worldModel = new CrucibleBlockBakedModel(shared);
             BakedModel itemModel = BlockItemClientModels.asBlockItem(shared);
+            if (block instanceof MoldBlock) itemModel = new MoldItemBakedModel(itemModel);
             BlockItemClientModels.alias(models, blockId, blockModelId, worldModel, itemModel);
             BlockItemClientModels.aliasItemInventory(models, itemId, itemModel);
             aliased++;

@@ -1,0 +1,16 @@
+{
+  "type": "gregtech:tool_shapeless",
+  "_comment": "GT6 MultiItemRandomTools:227",
+  "ingredients": [
+    {
+      "item": "gregtech:clay_mold"
+    },
+    {
+      "tag": "gregtech:molds/forms/geargtsmall/bismuthbronze"
+    }
+  ],
+  "result": {
+    "item": "gregtech:clay_small_gear_mold",
+    "count": 1
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "gregtech:tool_shapeless",
+  "_comment": "GT6 MultiItemRandomTools:163",
+  "ingredients": [
+    {
+      "item": "gregtech:clay_mold"
+    },
+    {
+      "item": "gregtech:tool_double_axe"
+    }
+  ],
+  "result": {
+    "item": "gregtech:clay_double_axe_mold",
+    "count": 1
+  }
+}

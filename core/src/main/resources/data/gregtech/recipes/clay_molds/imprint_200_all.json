@@ -1,0 +1,16 @@
+{
+  "type": "gregtech:tool_shapeless",
+  "_comment": "GT6 MultiItemRandomTools:200",
+  "ingredients": [
+    {
+      "item": "gregtech:clay_mold"
+    },
+    {
+      "tag": "gregtech:molds/forms/arrowgtwood/all"
+    }
+  ],
+  "result": {
+    "item": "gregtech:clay_arrow_mold",
+    "count": 1
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "_comment": "GT6 MultiItemRandomTools:101",
+  "ingredients": [
+    {
+      "item": "gregtech:clay_screwdriver_mold"
+    }
+  ],
+  "result": {
+    "item": "minecraft:clay_ball",
+    "count": 5
+  }
+}

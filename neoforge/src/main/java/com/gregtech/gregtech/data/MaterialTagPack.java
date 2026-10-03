@@ -44,12 +44,22 @@ public final class MaterialTagPack extends AbstractPackResources {
         // There is deliberately NO umbrella "gregtech:material" tag that lists all of them: resolving it
         // enumerates every material item in the mod, which costs JEI several seconds on each open.
         add(tags,"gregtech","item","ammunition/sticks_wood","minecraft:stick");
+        add(tags,"forge","items","clay_balls","minecraft:clay_ball");
+        add(tags,"gregtech","items","molds/forms/ingot/brick","minecraft:brick");
+        var moldForms=com.gregtech.gregtech.content.recipe.ClayMoldCatalog.FORMS.stream()
+                .collect(java.util.stream.Collectors.groupingBy(f -> f.prefix().equals("casingSmall") ? "itemCasing" : f.prefix()));
         var byMaterial=new TreeMap<String,Set<String>>();
         var blocksByMaterial=new TreeMap<String,Set<String>>();
         for(var item:BuiltInRegistries.ITEM) {
             var id=BuiltInRegistries.ITEM.getKey(item); if(id==null||item==Items.AIR)continue;
+            if(item instanceof BlockItem pane && (pane.getBlock() instanceof net.minecraft.world.level.block.StainedGlassPaneBlock
+                    || id.toString().equals("minecraft:glass_pane")))
+                add(tags,"forge","items","glass_panes",id.toString());
             var form=MaterialEquivalence.form(new ItemStack(item));
             if(form!=null) {
+                for(var moldForm:moldForms.getOrDefault(form.prefix().getName(),java.util.List.of()))
+                    if(moldForm.accepts(form.prefix(),form.material()))
+                        add(tags,"gregtech","items",moldForm.tag(),id.toString());
                 for(var family:com.gregtech.gregtech.content.recipe.TechnologyIngredients.FAMILIES)
                     if(family.accepts(form.prefix(),form.material()))
                         add(tags,"gregtech","item","technology/"+family.tag(),id.toString());

@@ -1,0 +1,19 @@
+{
+  "type": "gregtech:tool_shapeless",
+  "_comment": "GT6 MultiItemRandomTools:228",
+  "ingredients": [
+    {
+      "item": "gregtech:clay_mold"
+    },
+    {
+      "tag": "gregtech:molds/forms/plate/pb"
+    },
+    {
+      "tag": "gregtech:molds/forms/plate/pb"
+    }
+  ],
+  "result": {
+    "item": "gregtech:clay_file_mold",
+    "count": 1
+  }
+}

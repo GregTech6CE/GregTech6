@@ -1,0 +1,19 @@
+{
+  "type": "gregtech:tool_shapeless",
+  "_comment": "GT6 MultiItemRandomTools:222",
+  "ingredients": [
+    {
+      "item": "gregtech:clay_mold"
+    },
+    {
+      "tag": "gregtech:molds/forms/stick/bronze"
+    },
+    {
+      "tag": "gregtech:molds/forms/stick/bronze"
+    }
+  ],
+  "result": {
+    "item": "gregtech:clay_long_rod_mold",
+    "count": 1
+  }
+}

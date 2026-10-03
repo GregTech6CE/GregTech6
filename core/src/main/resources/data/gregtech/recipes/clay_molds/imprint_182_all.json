@@ -1,0 +1,16 @@
+{
+  "type": "gregtech:tool_shapeless",
+  "_comment": "GT6 MultiItemRandomTools:182",
+  "ingredients": [
+    {
+      "item": "gregtech:clay_mold"
+    },
+    {
+      "tag": "gregtech:molds/forms/toolheadrawshovel/all"
+    }
+  ],
+  "result": {
+    "item": "gregtech:clay_shovel_mold",
+    "count": 1
+  }
+}

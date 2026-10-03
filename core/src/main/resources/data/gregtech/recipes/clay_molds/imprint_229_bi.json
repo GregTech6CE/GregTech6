@@ -1,0 +1,19 @@
+{
+  "type": "gregtech:tool_shapeless",
+  "_comment": "GT6 MultiItemRandomTools:229",
+  "ingredients": [
+    {
+      "item": "gregtech:clay_mold"
+    },
+    {
+      "tag": "forge:glass_panes"
+    },
+    {
+      "tag": "gregtech:molds/forms/stick/bi"
+    }
+  ],
+  "result": {
+    "item": "gregtech:clay_chisel_mold",
+    "count": 1
+  }
+}

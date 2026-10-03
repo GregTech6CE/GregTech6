@@ -144,6 +144,7 @@ public class MoldBlock extends Block implements EntityBlock, GTMachineBlock, Sim
             if (GTToolHelper.canCollectMachineDrop(tool, state)) {
                 ItemStack machine = getCloneItemStack(state,null,level,pos,player);
                 if (!machine.isEmpty()) {
+                    if (blockEntity instanceof MoldBlockEntity mold) MoldItemData.withShape(machine,mold.getMoldShape());
                     if (!player.getInventory().add(machine)) {
                         popResource(level, pos, machine);
                     } else if (player instanceof ServerPlayer) {
@@ -168,6 +169,22 @@ public class MoldBlock extends Block implements EntityBlock, GTMachineBlock, Sim
         super.onRemove(state, level, pos, newState, isMoving);
     }
 
+    @Override
+    public ItemStack getCloneItemStack(BlockState state, net.minecraft.world.phys.HitResult target, net.minecraft.world.level.LevelReader level, BlockPos pos, Player player) {
+        var stack=new ItemStack(this);
+        if(level.getBlockEntity(pos) instanceof MoldBlockEntity mold)
+            MoldItemData.withShape(stack,mold.getMoldShape());
+        return stack;
+    }
+
+    @Override
+    public java.util.List<ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
+        var drops = java.util.List.of(new ItemStack(this));
+        if(builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof MoldBlockEntity mold)
+            for(var stack:drops)if(stack.is(asItem()))MoldItemData.withShape(stack,mold.getMoldShape());
+        return drops;
+    }
+
     public static Properties defaultProperties(CrucibleSpec spec) {
         return Properties.of()
                 .strength(spec.hardness(), spec.blastResistance())
@@ -175,5 +192,5 @@ public class MoldBlock extends Block implements EntityBlock, GTMachineBlock, Sim
                 .requiresCorrectToolForDrops()
                 .noOcclusion();
     }
-    @Override public java.util.List<ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder){return java.util.List.of(new ItemStack(this));}
+
 }

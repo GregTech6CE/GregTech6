@@ -38,5 +38,8 @@
     "Unknown fallback bitCount uses rawshape including high legacy bits",
     "trySetMoldShape validates unmasked raw key; known shape enumeration stays sorted",
     "BlockSolid20cells maps to9U, not cell-count quantity"
-  ]
+  ],
+  "status": "Historical saltnya snapshot extraction; superseded for the current shape table by direct original GT6 source",
+  "superseded_by": "docs/integration/verification/clay-molds-source-20261004.json",
+  "historical_evidence_note": "Source_snapshot and core_file hashes in this receipt describe the original extraction snapshot, not the current implementation."
 }
