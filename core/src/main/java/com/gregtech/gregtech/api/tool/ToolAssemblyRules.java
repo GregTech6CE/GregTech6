@@ -31,6 +31,9 @@ public final class ToolAssemblyRules {
                 return null;
             }
         }
-        return head != null && handle != null ? new Inputs(head, handle) : null;
+        return head != null && handle != null
+                && com.gregtech.gregtech.content.tool.OriginalToolMaterials.acceptsAssemblyHead(type, head)
+                && com.gregtech.gregtech.content.tool.OriginalToolMaterials.acceptsHandle(head, handle)
+                ? new Inputs(head, handle) : null;
     }
 }

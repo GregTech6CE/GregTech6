@@ -18,7 +18,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 public final class GTToolHeadRecipe extends GTToolPatternRecipe {
 
     public GTToolHeadRecipe(ResourceLocation id, GTToolType type, int patternIndex) {
-        super(id, type, GTToolRecipes.heads(type).get(patternIndex));
+        super(id, type, GTToolRecipes.heads(type).get(patternIndex), true);
     }
 
     @Override

@@ -9,6 +9,10 @@ final class MaterialFormCorrections {
     private MaterialFormCorrections() {}
 
     static void apply() {
+        // MT.java:1259 G_STONE, STONE, WOOD. Needed for the source's petrified-wood
+        // rock knapping rows and wood/plastic handle equivalence.
+        CompoundMaterials.PetrifiedWood.put(MaterialProperty.STONE, MaterialProperty.WOOD,
+                MaterialProperty.GENERATE_STICKS);
         // GT6 field names the port spells differently, whose specs (`omd:CrO2`, `omd:Flour`) would
         // otherwise not resolve — both are real GT6 chemistry/food rows (§25):
         //   MT.java:8685 Chromium Dioxide ("CrO₂")      ← `Roasting: omd:Cr + Oxygen -> omd:CrO2`

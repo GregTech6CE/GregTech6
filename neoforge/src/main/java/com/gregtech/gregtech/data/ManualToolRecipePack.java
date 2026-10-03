@@ -55,12 +55,12 @@ public final class ManualToolRecipePack extends AbstractPackResources {
         Map<ResourceLocation,byte[]> generated=new HashMap<>();int shaped=0,heads=0,assemblies=0;List<String> without=new ArrayList<>();
         for(var type:com.gregtech.gregtech.api.tool.GTToolType.values()){
           var patterns=com.gregtech.gregtech.recipe.GTToolRecipes.shaped(type);
-          for(int i=0;i<patterns.size();i++){add(generated,"tools/"+type.id()+(i==0?"":"_"+i),"tool_crafting",type.id(),i);shaped++;}
+          for(int i=0;i<patterns.size();i++){if(!com.gregtech.gregtech.recipe.GTToolPatternRecipe.hasMaterials(type,patterns.get(i)))continue;add(generated,"tools/"+type.id()+(i==0?"":"_"+i),"tool_crafting",type.id(),i);shaped++;}
           boolean assembly=type.requiresHeadAssembly()||type==com.gregtech.gregtech.api.tool.GTToolType.MAGNIFYING_GLASS;
           if(assembly){add(generated,"tools/"+type.id()+"_assembly","tool_assembly",type.id(),0);assemblies++;}
           if(patterns.isEmpty()&&!assembly)without.add(type.id());
           var headPatterns=com.gregtech.gregtech.recipe.GTToolRecipes.heads(type);
-          for(int i=0;i<headPatterns.size();i++){add(generated,"tool_heads/"+type.id()+(i==0?"":"_"+i),"tool_head",type.id(),i);heads++;}
+          for(int i=0;i<headPatterns.size();i++){if(!com.gregtech.gregtech.recipe.GTToolPatternRecipe.hasMaterials(type,headPatterns.get(i)))continue;add(generated,"tool_heads/"+type.id()+(i==0?"":"_"+i),"tool_head",type.id(),i);heads++;}
         }
         com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original manual tool datapack: {} shaped tools, {} head+handle assemblies, {} heads; original table without manual row: {}",shaped,assemblies,heads,without);
         int powered=0;

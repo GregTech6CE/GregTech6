@@ -31,8 +31,7 @@ import java.util.Map;
  * <p>Key letters are GT6's ({@code Loader_Tools:395-425} for tools, {@code CR.java:336-360} for the
  * bare tool keys): {@code A} the tool head, {@code H} the handle stick, {@code I} ingot, {@code P}
  * plate, {@code G} gem, {@code B} plateCurved, {@code C} plateGem, {@code S} stick, {@code T} screw,
- * {@code O} ring, {@code N} nugget, {@code R} rock, {@code V/W/X/Y/Z} the special object (plate where
- * GT6 registers none), and the lowercase letters are crafting tools ({@code h} hammer, {@code f}
+ * {@code O} ring, {@code N} nugget, {@code R} rock, {@code V/W/X/Y/Z} the per-tool special object, and the lowercase letters are crafting tools ({@code h} hammer, {@code f}
  * file, {@code s} saw, {@code d} screwdriver, {@code r} soft hammer, {@code x} wire cutter, {@code k}
  * knife, {@code y} chisel, {@code z} bending cylinder, {@code w} wrench…).</p>
  *
@@ -67,6 +66,21 @@ public final class ManualToolRecipeCatalog {
                           Map<Character, ToolDefinition> tools, boolean mirror, boolean normalHandle,
                           Gate gate) {
 
+        public Pattern {
+            // CraftingInput in 1.21 trims empty margins before recipe matching. GT6's CR.shaped
+            // does the same; keep the stored pattern canonical on both platforms.
+            int left = rows[0].length(), right = -1, top = rows.length, bottom = -1;
+            for (int y = 0; y < rows.length; y++) for (int x = 0; x < rows[y].length(); x++) {
+                if (rows[y].charAt(x) == ' ') continue;
+                left = Math.min(left, x); right = Math.max(right, x);
+                top = Math.min(top, y); bottom = Math.max(bottom, y);
+            }
+            if (right < left) throw new IllegalArgumentException("Empty tool pattern");
+            String[] trimmed = new String[bottom - top + 1];
+            for (int y = top; y <= bottom; y++) trimmed[y - top] = rows[y].substring(left, right + 1);
+            rows = trimmed;
+        }
+
         public Pattern(String[] rows, Map<Character, MaterialPrefix> forms,
                        Map<Character, ToolDefinition> tools, boolean mirror, boolean normalHandle) {
             this(rows, forms, tools, mirror, normalHandle, Gate.NONE);
@@ -80,7 +94,7 @@ public final class ManualToolRecipeCatalog {
 
         /** Every letter in the pattern, in row order. */
         public List<Character> letters() {
-            return rows[0].chars().mapToObj(c -> (char) c)
+            return java.util.Arrays.stream(rows).flatMapToInt(String::chars).mapToObj(c -> (char) c)
                     .filter(c -> c != ' ')
                     .distinct()
                     .toList();
@@ -179,7 +193,7 @@ public final class ManualToolRecipeCatalog {
                         tools('x', ToolDefinition.WIRE_CUTTER, 'f', ToolDefinition.FILE))));
         SHAPED.put(ToolDefinition.PINCERS, List.of(
                 tool(new String[]{"XhX", " T ", "SdS"},
-                        forms('X', MaterialPrefix.plate, 'T', MaterialPrefix.screw,
+                        forms('X', MaterialPrefix.plateCurved, 'T', MaterialPrefix.screw,
                                 'S', MaterialPrefix.stick),
                         tools('h', ToolDefinition.HARD_HAMMER, 'd', ToolDefinition.SCREWDRIVER))));
         SHAPED.put(ToolDefinition.SCOOP, List.of(
@@ -230,10 +244,10 @@ public final class ManualToolRecipeCatalog {
                         Map.of(), false, true)));
         SHAPED.put(ToolDefinition.HAND_DRILL, List.of(
                 pattern(new String[]{"  X", "HYH", "YH "},
-                        forms('X', MaterialPrefix.plate, 'Y', MaterialPrefix.plate),
+                        forms('X', MaterialPrefix.toolHeadArrow, 'Y', MaterialPrefix.bolt),
                         Map.of(), false, true)));
         SHAPED.put(ToolDefinition.UNIVERSAL_SPADE, List.of(
-                tool(new String[]{"AT", "Sd"}, forms('S', MaterialPrefix.stick),
+                tool(new String[]{"AT", "Sd"}, forms('S', MaterialPrefix.stick, 'T', MaterialPrefix.screw),
                         tools('d', ToolDefinition.SCREWDRIVER))));
         // Loader_Tools:245-247 — the rolling pin is one of the hand-written rows (CR.DEF_MIR).
         SHAPED.put(ToolDefinition.ROLLING_PIN, List.of(
@@ -249,7 +263,7 @@ public final class ManualToolRecipeCatalog {
         // Loader_Tools:255-290 — the hand-written early tools, one row per family, with the rock or
         // the flint itself as the material: flint (MT.Flint), bone (MT.Bone), obsidian, petrified
         // wood and every stone material (ANY.Stone.mToThis). The handle is one of GT6's handle loop
-        // entries (wood stick, bamboo, bone, plastic), which the port expresses as "any valid stick".
+        // entries (wood stick, bamboo, bone, plastic), limited to those early handle families.
         addEarly(ToolDefinition.KNIFE, new String[]{"HX"}, flint(), true);
         addEarly(ToolDefinition.AXE, new String[]{"XX", "XH"}, flint(), true);
         addEarly(ToolDefinition.SHOVEL, new String[]{"X", "H"}, flint(), false);
@@ -365,11 +379,11 @@ public final class ManualToolRecipeCatalog {
         // (its tool row builds it straight from plates), so the head is only reachable through this row.
         HEADS.put(ToolDefinition.WRENCH, List.of(
                 head(new String[]{"hPW", "PVP", "WPd"},
-                        forms('P', MaterialPrefix.plate, 'W', MaterialPrefix.plate, 'V', MaterialPrefix.plate),
+                        forms('P', MaterialPrefix.plate, 'W', MaterialPrefix.screw, 'V', MaterialPrefix.ring),
                         tools('h', ToolDefinition.HARD_HAMMER, 'd', ToolDefinition.SCREWDRIVER)),
                 head(new String[]{"hCW", "CVC", "WCd"},
-                        forms('C', MaterialPrefix.plateGem, 'W', MaterialPrefix.plateGem,
-                                'V', MaterialPrefix.plateGem),
+                        forms('C', MaterialPrefix.plateGem, 'W', MaterialPrefix.screw,
+                                'V', MaterialPrefix.ring),
                         tools('h', ToolDefinition.HARD_HAMMER, 'd', ToolDefinition.SCREWDRIVER))));
     }
 
@@ -410,6 +424,22 @@ public final class ManualToolRecipeCatalog {
     /** Every tool whose head has a shaped GT6 recipe. */
     public static Map<ToolDefinition, List<Pattern>> allHeads() {
         return Map.copyOf(HEADS);
+    }
+
+    /** Loader_Tools' special objects are independent ingredients, not the tool's metal. */
+    public static String specialItem(ToolDefinition type, char letter) {
+        if (letter != 'V') return null;
+        return switch (type) {
+            case CROWBAR -> "minecraft:blue_dye";
+            case SCOOP -> "#minecraft:wool";
+            default -> null;
+        };
+    }
+
+    public static String specialMaterial(ToolDefinition type, char letter) {
+        if (type == ToolDefinition.PLUNGER && letter == 'V') return "Rubber";
+        if (type == ToolDefinition.WRENCH && (letter == 'V' || letter == 'W')) return "Steel";
+        return null;
     }
 
     /**

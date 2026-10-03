@@ -6,6 +6,8 @@ import com.gregtech.gregtech.api.material.MaterialEquivalence;
 import com.gregtech.gregtech.api.tool.GTToolHelper;
 import com.gregtech.gregtech.api.tool.GTToolType;
 import com.gregtech.gregtech.content.material.Materials;
+import com.gregtech.gregtech.content.tool.ManualToolRecipeCatalog;
+import com.gregtech.gregtech.content.tool.OriginalToolMaterials;
 import com.gregtech.gregtech.data.MaterialPrefix;
 import com.gregtech.gregtech.item.GTToolItem;
 import com.gregtech.gregtech.registry.GTItems;
@@ -38,8 +40,12 @@ public abstract class GTToolPatternRecipe extends ToolShapedRecipe {
     protected final GTToolRecipes.Pattern pattern;
 
     protected GTToolPatternRecipe(ResourceLocation id, GTToolType type, GTToolRecipes.Pattern pattern) {
+        this(id, type, pattern, false);
+    }
+
+    protected GTToolPatternRecipe(ResourceLocation id, GTToolType type, GTToolRecipes.Pattern pattern, boolean head) {
         super(new ShapedRecipe(id, "gt.tools", CraftingBookCategory.EQUIPMENT, pattern.width(), pattern.height(),
-                        ingredientsOf(type, pattern), displayResult(type, pattern)),
+                        ingredientsOf(type, pattern), displayResult(type, pattern, head)),
                 pattern.mirror());
         this.type = type;
         this.pattern = pattern;
@@ -111,9 +117,15 @@ public abstract class GTToolPatternRecipe extends ToolShapedRecipe {
                     if (!(stack.getItem() instanceof GTToolItem item) || item.toolType() != tool) return null;
                     continue;
                 }
+                var special = specialIngredient(type, pattern, letter);
+                if (special != null) {
+                    if (!special.test(stack)) return null;
+                    continue;
+                }
                 GTMaterial form = classify(stack, letter, material);
                 if (form == null) return null;
                 if (letter == 'H') {
+                    if (handle != null && handle != form) return null;
                     handle = form;
                 } else if (material == null) {
                     material = form;
@@ -121,6 +133,9 @@ public abstract class GTToolPatternRecipe extends ToolShapedRecipe {
             }
         }
         if (material == null || !acceptsMaterial(material)) return null;
+        if (handle != null && !(pattern.gate().skipHeadGate()
+                ? OriginalToolMaterials.earlyHandle(handle)
+                : pattern.normalHandle() ? OriginalToolMaterials.acceptsHandle(material, handle) : handle == material)) return null;
         return new Match(material, handle == null ? material : handle);
     }
 
@@ -136,7 +151,7 @@ public abstract class GTToolPatternRecipe extends ToolShapedRecipe {
         // The early rows take any rock (a stone never has a tool-head form), and a fixed tool material
         // (flint, bone) is settled by the item itself.
         if (gate.skipHeadGate() || gate.toolMaterial() != null) return true;
-        return type.canUseHead(material);
+        return type.canUseHead(material) && OriginalToolMaterials.acceptsHead(type.definition(), material);
     }
 
     /** The material a fixed item stands for (GT6 {@code MT.Flint} / {@code MT.Bone}), or null. */
@@ -172,13 +187,17 @@ public abstract class GTToolPatternRecipe extends ToolShapedRecipe {
             return head != null && type.canUseHead(head) ? head : null;
         }
         if (letter == 'H') {
+            if (pattern.gate().skipHeadGate()) {
+                if (stack.is(net.minecraft.world.item.Items.BONE)) return Materials.Bone;
+                if (stack.is(net.minecraft.world.item.Items.BAMBOO)) return com.gregtech.gregtech.content.material.generated.WoodMaterials.Bamboo;
+            }
             var form = MaterialEquivalence.form(stack);
             if (form == null || form.prefix() != MaterialPrefix.stick) return null;
             GTMaterial stick = form.material().resolve();
             if (stick == null || !GTToolHelper.isValidStick(stick)) return null;
             // GT6 mUseNormalHandle: the handle is the head material's handle material, usually wood;
             // otherwise the tool is made of one material throughout.
-            return !pattern.normalHandle() && material != null && stick != material ? null : stick;
+            return !pattern.normalHandle() && !pattern.gate().skipHeadGate() && material != null && stick != material ? null : stick;
         }
         MaterialPrefix prefix = pattern.forms().get(letter);
         if (prefix == null) return null;
@@ -215,6 +234,10 @@ public abstract class GTToolPatternRecipe extends ToolShapedRecipe {
         return steel;
     }
 
+    public static boolean hasMaterials(GTToolType type, GTToolRecipes.Pattern pattern) {
+        return GTMaterialRegistry.allMaterials().stream().anyMatch(material -> material.isValid() && fits(type, pattern, material));
+    }
+
     private static boolean fits(GTToolType type, GTToolRecipes.Pattern pattern, GTMaterial material) {
         var gate = pattern.gate();
         if (gate.toolMaterial() != null) return true;
@@ -223,9 +246,9 @@ public abstract class GTToolPatternRecipe extends ToolShapedRecipe {
         if (gate.onlyStone() && !material.has(com.gregtech.gregtech.api.material.MaterialProperty.STONE)) {
             return false;
         }
-        if (!gate.skipHeadGate() && !type.canUseHead(material)) return false;
+        if (!gate.skipHeadGate() && (!type.canUseHead(material) || !OriginalToolMaterials.acceptsHead(type.definition(), material))) return false;
         for (var entry : pattern.forms().entrySet()) {
-            if (entry.getKey() == 'H') continue;
+            if (entry.getKey() == 'H' || specialIngredient(type, pattern, entry.getKey()) != null) continue;
             if (entry.getKey() == 'A') {
                 if (type.headPrefix() == null || !type.headPrefix().isValidFor(material)) return false;
                 continue;
@@ -254,6 +277,8 @@ public abstract class GTToolPatternRecipe extends ToolShapedRecipe {
 
     private static Ingredient ingredientFor(GTToolType type, GTToolRecipes.Pattern pattern, char letter,
                                            GTMaterial material, GTMaterial handle) {
+        var special = specialIngredient(type, pattern, letter);
+        if (special != null) return special;
         var tool = pattern.tools().get(letter);
         if (tool != null) {
             ItemStack stack = GTToolHelper.displayTool(tool);
@@ -275,16 +300,34 @@ public abstract class GTToolPatternRecipe extends ToolShapedRecipe {
     }
 
     private static GTMaterial handleMaterial(@Nullable GTMaterial material, GTToolRecipes.Pattern pattern) {
-        if (material == null || pattern.normalHandle()) {
-            for (GTMaterial candidate : GTMaterialRegistry.allMaterials()) {
-                if (candidate.isValid() && GTToolHelper.isValidStick(candidate)) return candidate;
-            }
-        }
-        return material;
+        if (material == null) return com.gregtech.gregtech.content.material.generated.WoodMaterials.Wood;
+        if (pattern.gate().skipHeadGate()) return com.gregtech.gregtech.content.material.generated.WoodMaterials.Wood;
+        return pattern.normalHandle() ? OriginalToolMaterials.defaultHandle(material) : material;
     }
 
-    private static ItemStack displayResult(GTToolType type, GTToolRecipes.Pattern pattern) {
+    public static Ingredient specialIngredient(GTToolType type, GTToolRecipes.Pattern pattern, char letter) {
+        String fixed = ManualToolRecipeCatalog.specialItem(type.definition(), letter);
+        if (fixed != null) {
+            var id = new net.minecraft.resources.ResourceLocation(fixed.startsWith("#") ? fixed.substring(1) : fixed);
+            return fixed.startsWith("#") ? Ingredient.of(net.minecraft.tags.ItemTags.create(id))
+                    : Ingredient.of(net.minecraft.core.registries.BuiltInRegistries.ITEM.get(id));
+        }
+        String family = ManualToolRecipeCatalog.specialMaterial(type.definition(), letter);
+        if (family == null || !pattern.forms().containsKey(letter)) return null;
+        var prefix = pattern.forms().get(letter);
+        var stacks = new java.util.ArrayList<ItemStack>();
+        for (var candidate : GTMaterialRegistry.allMaterials()) {
+            if (!OriginalToolMaterials.inFamily(candidate, family)) continue;
+            var stack = GTItems.getStack(prefix, candidate, 1);
+            if (!stack.isEmpty()) stacks.add(stack);
+        }
+        return Ingredient.of(stacks.stream());
+    }
+
+    private static ItemStack displayResult(GTToolType type, GTToolRecipes.Pattern pattern, boolean head) {
         GTMaterial material = displayMaterial(type, pattern);
-        return GTToolItem.create(type, material, handleMaterial(material, pattern));
+        return head ? GTItems.getStack(GTToolRecipes.headPrefix(type), material, 1)
+                : GTToolItem.create(type, material, type == GTToolType.FLINT_AND_TINDER
+                        ? com.gregtech.gregtech.content.material.Materials.Flint : handleMaterial(material, pattern));
     }
 }

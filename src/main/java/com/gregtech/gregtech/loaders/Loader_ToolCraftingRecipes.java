@@ -44,6 +44,7 @@ public final class Loader_ToolCraftingRecipes {
         for (GTToolType type : GTToolType.values()) {
             List<GTToolRecipes.Pattern> patterns = GTToolRecipes.shaped(type);
             for (int i = 0; i < patterns.size(); i++) {
+                if (!com.gregtech.gregtech.recipe.GTToolPatternRecipe.hasMaterials(type, patterns.get(i))) continue;
                 ResourceLocation id = id("tools/" + type.id() + (i == 0 ? "" : "_" + i));
                 recipes.add(type == GTToolType.FLINT_AND_TINDER
                         ? new GTFlintAndTinderRecipe(id)
@@ -61,6 +62,7 @@ public final class Loader_ToolCraftingRecipes {
             if (patterns.isEmpty() && !assembly) withoutRecipe.add(type.id());
             List<GTToolRecipes.Pattern> headPatterns = GTToolRecipes.heads(type);
             for (int i = 0; i < headPatterns.size(); i++) {
+                if (!com.gregtech.gregtech.recipe.GTToolPatternRecipe.hasMaterials(type, headPatterns.get(i))) continue;
                 ResourceLocation id = id("tool_heads/" + type.id() + (i == 0 ? "" : "_" + i));
                 recipes.add(new GTToolHeadRecipe(id, type, i));
                 REGISTERED.add(id.toString());

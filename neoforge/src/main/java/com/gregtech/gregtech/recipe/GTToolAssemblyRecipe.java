@@ -83,7 +83,7 @@ public final class GTToolAssemblyRecipe extends ShapelessRecipe {
 
     private static ItemStack displayResult(GTToolType type) {
         GTMaterial head = displayHeadMaterial(type);
-        GTMaterial handle = firstHandle();
+        GTMaterial handle = com.gregtech.gregtech.content.tool.OriginalToolMaterials.defaultHandle(head);
         return GTToolItem.create(type, head, handle);
     }
 
@@ -95,20 +95,22 @@ public final class GTToolAssemblyRecipe extends ShapelessRecipe {
     }
 
     private static Ingredient displayHandle(GTToolType type) {
-        ItemStack stack = GTItems.getStack(MaterialPrefix.stick, firstHandle(), 1);
+        ItemStack stack = GTItems.getStack(MaterialPrefix.stick, com.gregtech.gregtech.content.tool.OriginalToolMaterials.defaultHandle(displayHeadMaterial(type)), 1);
         return stack.isEmpty() ? Ingredient.EMPTY : Ingredient.of(stack);
     }
 
     private static GTMaterial displayHeadMaterial(GTToolType type) {
         MaterialPrefix prefix = type == GTToolType.MAGNIFYING_GLASS ? MaterialPrefix.lens : type.headPrefix();
         if (prefix != null && Materials.Steel != null && prefix.isValidFor(Materials.Steel)
-                && (type == GTToolType.MAGNIFYING_GLASS || type.canUseHead(Materials.Steel))) {
+                && (type == GTToolType.MAGNIFYING_GLASS || type.canUseHead(Materials.Steel))
+                && com.gregtech.gregtech.content.tool.OriginalToolMaterials.acceptsAssemblyHead(type.definition(), Materials.Steel)) {
             return Materials.Steel;
         }
-        return GTToolHelper.firstToolMaterial(prefix, type);
+        for (var candidate : com.gregtech.gregtech.api.material.GTMaterialRegistry.allMaterials()) {
+            if (prefix != null && prefix.isValidFor(candidate) && type.canUseHead(candidate)
+                    && com.gregtech.gregtech.content.tool.OriginalToolMaterials.acceptsAssemblyHead(type.definition(), candidate)) return candidate;
+        }
+        return null;
     }
 
-    private static GTMaterial firstHandle() {
-        return GTToolHelper.firstHandleMaterial();
-    }
 }

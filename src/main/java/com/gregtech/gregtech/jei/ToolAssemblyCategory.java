@@ -41,7 +41,7 @@ public final class ToolAssemblyCategory {
         private final IDrawable background, icon, slot;
 
         public Category(IGuiHelper gui) {
-            this.background = gui.createBlankDrawable(150, 60);
+            this.background = gui.createBlankDrawable(150, 82);
             this.slot = gui.getSlotDrawable();
             this.icon = gui.createDrawableItemStack(GTToolItem.create(GTToolType.WRENCH,
                     GTMaterialRegistry.get("Iron"), GTMaterialRegistry.get("Iron")));
@@ -55,23 +55,26 @@ public final class ToolAssemblyCategory {
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, ToolAssemblyCatalog.ToolAssemblyInfo info,
                               IFocusGroup focuses) {
-            int i = 0;
-            for (List<ItemStack> stacks : info.inputs()) {
-                builder.addSlot(RecipeIngredientRole.INPUT, 1 + i * 18, 1)
-                        .setBackground(slot, -1, -1)
-                        .addItemStacks(stacks);
-                i++;
+            int index = 0;
+            if (info.pattern() != null) {
+                for (int y=0; y<info.pattern().height(); y++) for (int x=0; x<info.pattern().width(); x++) {
+                    char letter = info.pattern().at(x,y);
+                    if (letter == ' ') continue;
+                    var role = info.pattern().tools().containsKey(letter) ? RecipeIngredientRole.CATALYST : RecipeIngredientRole.INPUT;
+                    builder.addSlot(role, 1+x*18, 1+y*18).setBackground(slot,-1,-1).addItemStacks(info.inputs().get(index++));
+                }
+            } else {
+                for (var stacks : info.inputs()) builder.addSlot(RecipeIngredientRole.INPUT, 1+(index++)*18, 19)
+                    .setBackground(slot,-1,-1).addItemStacks(stacks);
             }
-            builder.addSlot(RecipeIngredientRole.OUTPUT, 1 + i * 18 + 18, 1)
-                    .setBackground(slot, -1, -1)
-                    .addItemStack(info.output());
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 91, 19).setBackground(slot,-1,-1).addItemStack(info.output());
         }
 
         @Override
         public void draw(ToolAssemblyCatalog.ToolAssemblyInfo info, IRecipeSlotsView view, GuiGraphics g,
                          double mx, double my) {
             var font = net.minecraft.client.Minecraft.getInstance().font;
-            int y = 24;
+            int y = 58;
             if (info.headAssembly()) {
                 g.drawString(font, Component.translatable("gregtech.jei.info.tool_head_and_handle"), 1, y, 0xFF404040, false);
             } else {

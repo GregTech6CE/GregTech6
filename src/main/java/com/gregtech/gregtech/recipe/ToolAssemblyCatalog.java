@@ -53,7 +53,58 @@ public final class ToolAssemblyCatalog {
         List<ToolAssemblyInfo> out = new ArrayList<>();
         for (GTToolType type : GTToolType.values()) {
             ToolAssemblyInfo info = build(type);
-            if (info != null) out.add(info);
+            if (info != null) out.addAll(materialRows(info));
+        }
+        return out;
+    }
+
+    /** Keep the body material fixed in each viewer row, just as GT6 registers per material. */
+    private static List<ToolAssemblyInfo> materialRows(ToolAssemblyInfo info) {
+        var out = new ArrayList<ToolAssemblyInfo>();
+        var type = info.type();
+        if (info.headAssembly()) {
+            for (var headStack : info.inputs().get(0)) {
+                var head = MaterialItem.getMaterial(headStack);
+                var handle = com.gregtech.gregtech.content.tool.OriginalToolMaterials.defaultHandle(head);
+                if (handle == null) continue;
+                var handles = sticks();
+                handles.removeIf(stack -> !com.gregtech.gregtech.content.tool.OriginalToolMaterials.acceptsHandle(head, MaterialItem.getMaterial(stack)));
+                listsHandle(handles, handle);
+                out.add(new ToolAssemblyInfo(type,List.of(List.of(headStack),handles),GTToolItem.create(type,head,handle),true,null));
+            }
+            return out;
+        }
+        var pattern = info.pattern();
+        if (pattern == null) return List.of(info);
+        var letters = new ArrayList<Character>();
+        for (int y=0;y<pattern.height();y++) for (int x=0;x<pattern.width();x++)
+            if (pattern.at(x,y)!=' ') letters.add(pattern.at(x,y));
+        int first=-1;
+        for (int i=0;i<letters.size();i++) if (isMaterialCell(pattern,letters.get(i)) && !(pattern.normalHandle() && letters.get(i)=='H')) { first=i;break; }
+        if (first<0) return List.of(info);
+        var seen = new java.util.HashSet<GTMaterial>();
+        for (var candidate : info.inputs().get(first)) {
+            var material = MaterialItem.getMaterial(candidate);
+            if (material == null || !seen.add(material)) continue;
+            if (type != GTToolType.FLINT_AND_TINDER && !com.gregtech.gregtech.content.tool.OriginalToolMaterials.acceptsHead(type.definition(),material)) continue;
+            var handle = type == GTToolType.FLINT_AND_TINDER ? GTMaterialRegistry.get("Flint")
+                : pattern.normalHandle() ? com.gregtech.gregtech.content.tool.OriginalToolMaterials.defaultHandle(material) : material;
+            if (handle == null) continue;
+            var slots = new ArrayList<List<ItemStack>>();boolean valid=true;
+            for (int i=0;i<letters.size();i++) {
+                char letter=letters.get(i);var options=info.inputs().get(i);
+                if (pattern.normalHandle() && letter=='H') {
+                    var handles=new ArrayList<>(options);
+                    handles.removeIf(stack -> !com.gregtech.gregtech.content.tool.OriginalToolMaterials.acceptsHandle(material,MaterialItem.getMaterial(stack)));
+                    if (handles.isEmpty()) { valid=false;break; }
+                    listsHandle(handles,handle);slots.add(handles);
+                } else if (isMaterialCell(pattern,letter)) {
+                    var stack=findMaterial(options,material);
+                    if (stack==null) { valid=false;break; }
+                    slots.add(List.of(stack));
+                } else slots.add(options);
+            }
+            if (valid) out.add(new ToolAssemblyInfo(type,List.copyOf(slots),GTToolItem.create(type,material,handle),false,pattern));
         }
         return out;
     }
@@ -72,17 +123,19 @@ public final class ToolAssemblyCatalog {
 
     /** GT6's head + handle assembly (the shapeless {@code AdvancedCraftingTool} row). */
     private static ToolAssemblyInfo headAndHandle(GTToolType type) {
-        List<ItemStack> heads = stacksOf(type.headPrefix(), type);
-        List<ItemStack> handles = sticks();
-        if (heads.isEmpty() || handles.isEmpty()) return null;
-        List<List<ItemStack>> inputs = new ArrayList<>(List.of(heads, handles));
-        // The handle may be a different material than the head (GT6 keeps the head's stats and allows
-        // any valid stick), so the two lists need no alignment.
+        List<ItemStack> heads = stacksOf(type == GTToolType.MAGNIFYING_GLASS ? MaterialPrefix.lens : type.headPrefix(), type);
+        heads.removeIf(stack -> !com.gregtech.gregtech.content.tool.OriginalToolMaterials.acceptsAssemblyHead(type.definition(), MaterialItem.getMaterial(stack))
+                || com.gregtech.gregtech.content.tool.OriginalToolMaterials.defaultHandle(MaterialItem.getMaterial(stack)) == null);
+        if (heads.isEmpty()) return null;
         GTMaterial head = MaterialItem.getMaterial(heads.get(0));
-        GTMaterial handle = MaterialItem.getMaterial(handles.get(0));
+        var handles = sticks();
+        handles.removeIf(stack -> !com.gregtech.gregtech.content.tool.OriginalToolMaterials.acceptsHandle(head, MaterialItem.getMaterial(stack)));
+        GTMaterial handle = com.gregtech.gregtech.content.tool.OriginalToolMaterials.defaultHandle(head);
+        var sample = GTItems.getStack(MaterialPrefix.stick, handle, 1);
+        handles.removeIf(stack -> stack.getItem() == sample.getItem()); handles.add(0, sample);
         ItemStack output = GTToolItem.create(type, head, handle);
         if (output.isEmpty()) return null;
-        return new ToolAssemblyInfo(type, List.copyOf(inputs), output, true, null);
+        return new ToolAssemblyInfo(type, List.of(heads, handles), output, true, null);
     }
 
     /** One slot per pattern cell, each listing every item that fits there. */
@@ -103,14 +156,29 @@ public final class ToolAssemblyCatalog {
         // first in all of them — otherwise the shown combination would mix materials and fail.
         GTMaterial sample = alignToCommonMaterial(pattern, letters, inputs);
         if (sample == null) return null;
-        ItemStack output = GTToolItem.create(type, sample, sample);
+        GTMaterial handle = sample;
+        if (pattern.normalHandle()) {
+            handle = com.gregtech.gregtech.content.tool.OriginalToolMaterials.defaultHandle(sample);
+            if (handle == null) return null;
+            for (int i = 0; i < letters.size(); i++) if (letters.get(i) == 'H') {
+                GTMaterial target = handle;
+                listsHandle(inputs.get(i), target);
+            }
+        }
+        ItemStack output = GTToolItem.create(type, sample, handle);
         if (output.isEmpty()) return null;
         return new ToolAssemblyInfo(type, List.copyOf(inputs), output, false, pattern);
     }
 
+    private static void listsHandle(List<ItemStack> handles, GTMaterial target) {
+        var sample = GTItems.getStack(MaterialPrefix.stick, target, 1);
+        handles.removeIf(stack -> stack.getItem() == sample.getItem());
+        handles.add(0, sample);
+    }
+
     /** A slot that a material form fills: everything but the fixed vanilla items and the tools. */
     private static boolean isMaterialCell(GTToolRecipes.Pattern pattern, char letter) {
-        return letter != 'F' && pattern.tools().get(letter) == null
+        return letter != 'F' && letter != 'V' && letter != 'W' && pattern.tools().get(letter) == null
                 && !pattern.gate().items().containsKey(letter);
     }
 
@@ -124,7 +192,7 @@ public final class ToolAssemblyCatalog {
                                                     List<List<ItemStack>> lists) {
         int first = -1;
         for (int i = 0; i < letters.size(); i++) {
-            if (isMaterialCell(pattern, letters.get(i))) {
+            if (isMaterialCell(pattern, letters.get(i)) && !(pattern.normalHandle() && letters.get(i) == 'H')) {
                 first = i;
                 break;
             }
@@ -135,12 +203,12 @@ public final class ToolAssemblyCatalog {
             if (material == null) continue;
             boolean everywhere = true;
             for (int i = 0; i < letters.size() && everywhere; i++) {
-                if (!isMaterialCell(pattern, letters.get(i))) continue;
+                if (!isMaterialCell(pattern, letters.get(i)) || pattern.normalHandle() && letters.get(i) == 'H') continue;
                 everywhere = findMaterial(lists.get(i), material) != null;
             }
             if (!everywhere) continue;
             for (int i = 0; i < letters.size(); i++) {
-                if (!isMaterialCell(pattern, letters.get(i))) continue;
+                if (!isMaterialCell(pattern, letters.get(i)) || pattern.normalHandle() && letters.get(i) == 'H') continue;
                 List<ItemStack> rebuilt = new ArrayList<>(lists.get(i).size());
                 rebuilt.add(findMaterial(lists.get(i), material));
                 for (ItemStack stack : lists.get(i)) {
@@ -155,6 +223,8 @@ public final class ToolAssemblyCatalog {
 
     /** Every item that satisfies one pattern letter. */
     private static List<ItemStack> optionsFor(GTToolType type, GTToolRecipes.Pattern pattern, char letter) {
+        var special = GTToolPatternRecipe.specialIngredient(type, pattern, letter);
+        if (special != null) return java.util.Arrays.asList(special.getItems());
         GTToolType tool = pattern.tools().get(letter);
         if (tool != null) {
             // A usable tool, not the bare item: a stack without GT.ToolStats cannot be crafted with.
@@ -212,13 +282,7 @@ public final class ToolAssemblyCatalog {
 
     /** Magnifying glass: an optic lens plus a handle (GT6 lens + stick), shapeless like GT6's row. */
     private static ToolAssemblyInfo magnifyingGlass(GTToolType type) {
-        List<ItemStack> lenses = stacksOf(MaterialPrefix.lens, type);
-        List<ItemStack> handles = sticks();
-        if (lenses.isEmpty() || handles.isEmpty()) return null;
-        GTMaterial lens = MaterialItem.getMaterial(lenses.get(0));
-        GTMaterial handle = MaterialItem.getMaterial(handles.get(0));
-        return new ToolAssemblyInfo(type, List.of(lenses, handles),
-                GTToolItem.create(type, lens, handle), true, null);
+        return headAndHandle(type);
     }
 
     /** Every registered item of {@code prefix} whose material may be used as this tool's head. */
