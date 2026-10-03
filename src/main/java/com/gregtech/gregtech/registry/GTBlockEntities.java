@@ -240,7 +240,7 @@ public final class GTBlockEntities {
     public static final RegistryObject<BlockEntityType<com.gregtech.gregtech.blockentity.inventory.BottleCrateBlockEntity>> BOTTLE_CRATE =
             BLOCK_ENTITY_TYPES.register("bottle_crate", () -> BlockEntityType.Builder.of(
                     com.gregtech.gregtech.blockentity.inventory.BottleCrateBlockEntity::new,
-                    GTStorage.BOTTLE_CRATE.get()).build(null));
+                    GTStorage.BOTTLE_CRATES.stream().map(net.minecraftforge.registries.RegistryObject::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
 
     public static final RegistryObject<BlockEntityType<com.gregtech.gregtech.blockentity.tool.PortableContainerBlockEntity>> PORTABLE_CONTAINER =
             BLOCK_ENTITY_TYPES.register("portable_container", () -> BlockEntityType.Builder.of(

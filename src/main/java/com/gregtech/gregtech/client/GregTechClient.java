@@ -84,6 +84,7 @@ public final class GregTechClient {
         com.gregtech.gregtech.registry.GTChemicalBatteries.allRegistered().forEach(entry->
                 event.register((stack,index)->index==0?entry.get().spec().chemistry().color:0xFFFFFF,entry.get().asItem()));
         java.util.stream.Stream.concat(com.gregtech.gregtech.registry.GTMiscBlocks.ADVANCED_CRAFTING_TABLES.stream(),com.gregtech.gregtech.registry.GTMiscBlocks.CHARGING_CRAFTING_TABLES.stream()).forEach(entry -> event.register((stack,index) -> index==0?entry.get().material().getColor():0xFFFFFF,entry.get().asItem()));
+        com.gregtech.gregtech.registry.GTStorage.BOTTLE_CRATES.forEach(entry -> event.register((stack,index) -> index == 0 ? entry.get().tintRgb() : 0xFFFFFF, entry.get().asItem()));
         com.gregtech.gregtech.registry.GTStorage.DRAWERS.forEach(entry -> event.register((stack,index) -> index == 0 ? entry.get().material().getColor() : 0xFFFFFF, entry.get().asItem()));
         java.util.stream.Stream.concat(com.gregtech.gregtech.registry.GTStorage.SAFES.stream(), com.gregtech.gregtech.registry.GTStorage.KEY_SAFES.stream())
                 .forEach(entry -> event.register((stack, tintIndex) -> tintIndex == 0 ? entry.get().material().getColor() : 0xFFFFFF, entry.get().asItem()));
@@ -495,6 +496,7 @@ public final class GregTechClient {
             }
         });
         java.util.stream.Stream.concat(com.gregtech.gregtech.registry.GTMiscBlocks.ADVANCED_CRAFTING_TABLES.stream(),com.gregtech.gregtech.registry.GTMiscBlocks.CHARGING_CRAFTING_TABLES.stream()).forEach(entry -> event.register((state,level,pos,index) -> index==0?entry.get().material().getColor():0xFFFFFF,entry.get()));
+        com.gregtech.gregtech.registry.GTStorage.BOTTLE_CRATES.forEach(entry -> event.register((state,level,pos,index) -> index == 0 ? entry.get().tintRgb() : 0xFFFFFF, entry.get()));
         com.gregtech.gregtech.registry.GTStorage.DRAWERS.forEach(entry -> event.register((state,level,pos,index) -> index == 0 ? entry.get().material().getColor() : 0xFFFFFF, entry.get()));
         java.util.stream.Stream.concat(com.gregtech.gregtech.registry.GTStorage.SAFES.stream(), com.gregtech.gregtech.registry.GTStorage.KEY_SAFES.stream())
                 .forEach(entry -> event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? entry.get().material().getColor() : 0xFFFFFF, entry.get()));

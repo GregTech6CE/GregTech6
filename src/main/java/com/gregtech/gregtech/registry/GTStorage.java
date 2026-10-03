@@ -41,6 +41,8 @@ public final class GTStorage {
     public static RegistryObject<com.gregtech.gregtech.block.inventory.EnderGarbageBlock> ENDER_GARBAGE;
     public static RegistryObject<com.gregtech.gregtech.block.inventory.EnderGarbageDumpBlock> ENDER_GARBAGE_DUMP;
 
+
+    public static final java.util.List<net.minecraftforge.registries.RegistryObject<com.gregtech.gregtech.block.inventory.BottleCrateBlock>> BOTTLE_CRATES = new java.util.ArrayList<>();
     private GTStorage() {}
     public static final java.util.List<RegistryObject<com.gregtech.gregtech.block.inventory.MetalChestBlock>> REINFORCED_WOOD_CHESTS =
             new java.util.ArrayList<>();
@@ -84,7 +86,24 @@ public final class GTStorage {
                                 .strength(0.5f, 2.0f)
                                 .sound(net.minecraft.world.level.block.SoundType.WOOD)));
         GTBlocks.BLOCK_ITEMS.register("bottle_crate",
-                () -> new BlockItem(BOTTLE_CRATE.get(), new Item.Properties()));   // GT6 Bottlecrate: 64
+                () -> new BlockItem(BOTTLE_CRATE.get(), new Item.Properties().stacksTo(16)));   // GT6 Bottlecrate: 64
+
+        BOTTLE_CRATES.add(BOTTLE_CRATE);
+        for (var spec : com.gregtech.gregtech.content.storage.BottleCrateVariants.WOODS) {
+            var crate = GTBlocks.BLOCKS.register(spec.id(), () -> new com.gregtech.gregtech.block.inventory.BottleCrateBlock(
+                    null, spec.texture(), BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).noOcclusion()
+                            .strength(.5f, 2f).sound(net.minecraft.world.level.block.SoundType.WOOD)));
+            GTBlocks.BLOCK_ITEMS.register(spec.id(), () -> new net.minecraft.world.item.BlockItem(crate.get(), new net.minecraft.world.item.Item.Properties().stacksTo(16)));
+            BOTTLE_CRATES.add(crate);
+        }
+        for (var spec : GTStorageMetals.ALL) {
+            String id = "bottle_crate_" + spec.suffix();
+            var crate = GTBlocks.BLOCKS.register(id, () -> new com.gregtech.gregtech.block.inventory.BottleCrateBlock(
+                    spec.material(), null, BlockBehaviour.Properties.of().mapColor(MapColor.METAL).noOcclusion()
+                            .strength(.5f, spec.resistance()).sound(net.minecraft.world.level.block.SoundType.METAL).requiresCorrectToolForDrops()));
+            GTBlocks.BLOCK_ITEMS.register(id, () -> new net.minecraft.world.item.BlockItem(crate.get(), new net.minecraft.world.item.Item.Properties().stacksTo(16)));
+            BOTTLE_CRATES.add(crate);
+        }
         USB_SWITCH = GTBlocks.BLOCKS.register("usb_switch", () ->
                 new com.gregtech.gregtech.block.inventory.UsbSwitchBlock(
                         com.gregtech.gregtech.block.inventory.UsbSwitchBlock.Kind.USB,

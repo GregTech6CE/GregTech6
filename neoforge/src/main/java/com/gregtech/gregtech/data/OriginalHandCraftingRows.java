@@ -542,12 +542,28 @@ public final class OriginalHandCraftingRows {
                         'P',Ingredient.of(BuiltInRegistries.ITEM.get(id("planks_treated"))),
                         'G',Ingredient.of(ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge","glue"))),
                         'B',Ingredient.of(woodBolts)),new ItemStack(GTStorageContainers.BOTTLE_CRATE.get()));
+        // GT6 texture-index variants share the recipe but retain the exact plank identity.
+        for (var spec : com.gregtech.gregtech.content.storage.BottleCrateVariants.WOODS) {
+            added += register(recipes,"storage/"+spec.id(),new String[]{"sfr","PGP","BPB"},
+                    Map.of('s',Ingredient.of(tool(GTToolType.SAW)), 'f',Ingredient.of(tool(GTToolType.FILE)),
+                            'r',Ingredient.of(tool(GTToolType.SOFT_HAMMER)),
+                            'P',Ingredient.of(BuiltInRegistries.ITEM.get(ResourceLocation.parse(spec.plank()))),
+                            'G',Ingredient.of(ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge","glue"))),
+                            'B',Ingredient.of(woodBolts)),new ItemStack(BuiltInRegistries.BLOCK.get(id(spec.id()))));
+        }
         for (GTStorageMetals.Spec spec : GTStorageMetals.ALL) {
             GTMaterial material = spec.material();
             ItemStack plate = tagOrPlate("plates", material, MaterialPrefix.plate);
             ItemStack ring = tagOrPlate("rings", material, MaterialPrefix.ring);
             ItemStack stick = tagOrPlate("rods", material, MaterialPrefix.stick);
             ItemStack screw = tagOrPlate("screws", material, MaterialPrefix.screw);
+            // Loader_MultiTileEntities:144: three small casings, two screws and screwdriver.
+            ItemStack smallCasing = GTItems.getStack(MaterialPrefix.itemCasing, material, 1);
+            if (!smallCasing.isEmpty() && !screw.isEmpty())
+                added += register(recipes,"storage/bottle_crate_"+spec.suffix(),new String[]{"CdC","TCT"},
+                        Map.of('C',Ingredient.of(smallCasing),'T',Ingredient.of(screw),
+                                'd',Ingredient.of(tool(GTToolType.SCREWDRIVER))),new ItemStack(BuiltInRegistries.BLOCK.get(id("bottle_crate_"+spec.suffix()))));
+
             ItemStack casing = GTBlocks.getStack(BlockMaterialPrefix.casingMachine, material);
             ItemStack chest = metalChest(spec);
             ItemStack storage = massStorage(spec);

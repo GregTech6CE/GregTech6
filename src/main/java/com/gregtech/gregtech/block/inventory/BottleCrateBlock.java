@@ -27,17 +27,34 @@ import java.util.List;
 /** GT6 bottle crate: nine X/Z cells, whole-stack interaction and inventory-preserving drops. */
 public class BottleCrateBlock extends HorizontalDirectionalBlock implements EntityBlock, com.gregtech.gregtech.api.tool.ToolInteractionTarget {
 
+    private final com.gregtech.gregtech.api.material.GTMaterial material;
+    private final String woodTexture;
     public BottleCrateBlock(Properties properties) {
+        this(null, "gregtech:block/iconsets/planks_treated", properties);
+    }
+    public BottleCrateBlock(com.gregtech.gregtech.api.material.GTMaterial material,
+                            String woodTexture, Properties properties) {
         super(properties);
+        this.material = material;
+        this.woodTexture = woodTexture;
         registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
+    }
+
+    public boolean metal() { return material != null; }
+    public int tintRgb() { return metal() ? material.getColor() : 0xFFFFFF; }
+    public String frameTexture() {
+        return metal() ? "gregtech:block/material_icons/"
+                + com.gregtech.gregtech.api.material.MaterialIconDefinitions.resolveTextureSet(material).folder()
+                + "/" + com.gregtech.gregtech.api.prefix.BlockMaterialPrefix.casingMachine.getTextureFileName()
+                : woodTexture;
     }
 
     @Override public com.gregtech.gregtech.api.tool.ToolInteractionSpec toolInteraction(BlockState state,ItemStack tool) {
         return com.gregtech.gregtech.api.tool.GTToolHelper.isMachineWrench(tool)
                 ? com.gregtech.gregtech.api.tool.ToolInteractionSpec.facing(FACING,com.gregtech.gregtech.block.machine.MachineRotationType.HORIZONTAL) : null;
     }
-    @Override public int getFlammability(BlockState state,BlockGetter level,BlockPos pos,Direction face) { return 150; }
-    @Override public int getFireSpreadSpeed(BlockState state,BlockGetter level,BlockPos pos,Direction face) { return 150; }
+    @Override public int getFlammability(BlockState state,BlockGetter level,BlockPos pos,Direction face) { return metal() ? 0 : 150; }
+    @Override public int getFireSpreadSpeed(BlockState state,BlockGetter level,BlockPos pos,Direction face) { return metal() ? 0 : 150; }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

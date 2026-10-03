@@ -59,6 +59,18 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         Map<ResourceLocation, byte[]> references = new HashMap<>();
         for (var item : BuiltInRegistries.ITEM) {
             ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);
+            if (id.getNamespace().equals("gregtech") && !id.getPath().equals("bottle_crate")
+                    && item instanceof BlockItem crateItem
+                    && crateItem.getBlock() instanceof com.gregtech.gregtech.block.inventory.BottleCrateBlock crate) {
+                String model = "block/inventory/" + id.getPath();
+                String blockJson = "{\"parent\":\"gregtech:block/inventory/bottle_crate_tinted\",\"textures\":{\"wood\":\"" + crate.frameTexture() + "\"}}";
+                result.put(location("models/" + model + ".json"), blockJson.getBytes(StandardCharsets.UTF_8));
+                result.put(location("blockstates/" + id.getPath() + ".json"),
+                        ("{\"variants\":{\"\":{\"model\":\"gregtech:" + model + "\"}}}").getBytes(StandardCharsets.UTF_8));
+                result.put(location("models/item/" + id.getPath() + ".json"),
+                        ("{\"parent\":\"gregtech:" + model + "\"}").getBytes(StandardCharsets.UTF_8));
+                continue;
+            }
             if (!id.getNamespace().equals("gregtech") || SharedInventoryModelPack.class.getResource(
                     "/assets/gregtech/models/item/" + id.getPath() + ".json") != null) continue;
             ResourceLocation parent = null;
