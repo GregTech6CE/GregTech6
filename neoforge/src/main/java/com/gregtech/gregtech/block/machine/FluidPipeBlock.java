@@ -42,7 +42,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 /** GT6 fluid pipe block with wrench-toggleable connections and thin-cross collision shape. */
-public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, com.gregtech.gregtech.api.inventory.PipeFormLike {
+public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, com.gregtech.gregtech.api.tool.ToolInteractionTarget, com.gregtech.gregtech.api.inventory.PipeFormLike {
     public static final BooleanProperty UP    = com.gregtech.gregtech.api.transport.PipeConnections.UP;
     public static final BooleanProperty DOWN  = com.gregtech.gregtech.api.transport.PipeConnections.DOWN;
     public static final BooleanProperty NORTH = com.gregtech.gregtech.api.transport.PipeConnections.NORTH;
@@ -66,6 +66,13 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
     }
 
     public PipeSpec spec() { return spec; }
+
+    @Override
+    public com.gregtech.gregtech.api.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
+        return com.gregtech.gregtech.api.tool.GTToolHelper.isMachineWrench(tool)
+            ? com.gregtech.gregtech.api.tool.ToolInteractionSpec.connections(
+                com.gregtech.gregtech.api.tool.ToolInteractionSpec.ConnectionKind.FLUID) : null;
+    }
 
     @Override
     public String pipeSizeName(){return spec.size().name();}
