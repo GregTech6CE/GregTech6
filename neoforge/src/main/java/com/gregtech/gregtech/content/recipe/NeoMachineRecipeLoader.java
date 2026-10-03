@@ -3,6 +3,7 @@ package com.gregtech.gregtech.content.recipe;
 public final class NeoMachineRecipeLoader {
  private static boolean loaded;private NeoMachineRecipeLoader(){}
  public static void load(){if(loaded)throw new IllegalStateException("Neo machine recipes initialized twice");loaded=true;
+  new com.gregtech.gregtech.loaders.c.Loader_Recipes_OreProcessing().run();
   new com.gregtech.gregtech.loaders.c.Loader_Recipes_Parts().run();
   com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe VanillaProcessingRecipes: {}",com.gregtech.gregtech.content.recipe.VanillaProcessingRecipes.register());
   com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe DiggableRecipes: {}",com.gregtech.gregtech.content.recipe.DiggableRecipes.register());
