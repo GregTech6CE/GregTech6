@@ -78,6 +78,8 @@ public final class MaterialBlockClientModels {
             }
             BlockItemClientModels.alias(models, itemId,
                     ResourceLocation.fromNamespaceAndPath("gregtech","block/blocks/" + blockId.getPath()), worldModel, itemModel);
+            for (var state : entry.get().getStateDefinition().getPossibleStates())
+                models.put(net.minecraft.client.renderer.block.BlockModelShaper.stateToModelLocation(blockId, state), worldModel);
             aliased++;
         }
 

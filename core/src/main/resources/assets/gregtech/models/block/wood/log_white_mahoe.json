@@ -1,1 +1,1 @@
-{"parent":"minecraft:block/cube_column","textures":{"end":"gregtech:block/wood/log_white_mahoe_top","side":"gregtech:block/wood/log_white_mahoe"}}
+{"parent":"minecraft:block/cube_column","textures":{"end":"minecraft:block/birch_log_top","side":"minecraft:block/birch_log"}}

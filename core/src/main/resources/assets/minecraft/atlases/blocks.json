@@ -1,6 +1,11 @@
 {
   "sources": [
     {
+      "type": "minecraft:directory",
+      "source": "block/iconsets",
+      "prefix": "block/iconsets/"
+    },
+    {
       "type": "minecraft:single",
       "resource": "gregtech:block/iconsets/void"
     },

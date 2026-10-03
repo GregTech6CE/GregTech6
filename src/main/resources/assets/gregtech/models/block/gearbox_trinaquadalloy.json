@@ -1,12 +1,12 @@
 {
   "parent": "block/cube",
   "textures": {
-    "particle": "block/iconsets/gearbox",
-    "down": "block/iconsets/gearbox",
-    "up": "block/iconsets/gearbox",
-    "north": "block/iconsets/gearbox",
-    "south": "block/iconsets/gearbox",
-    "west": "block/iconsets/gearbox",
-    "east": "block/iconsets/gearbox"
+    "particle": "gregtech:block/iconsets/gearbox",
+    "down": "gregtech:block/iconsets/gearbox",
+    "up": "gregtech:block/iconsets/gearbox",
+    "north": "gregtech:block/iconsets/gearbox",
+    "south": "gregtech:block/iconsets/gearbox",
+    "west": "gregtech:block/iconsets/gearbox",
+    "east": "gregtech:block/iconsets/gearbox"
   }
 }

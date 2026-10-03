@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cross",
   "textures": {
-    "cross": "gregtech:block/iconsets/sapling_small_white_mahoe"
+    "cross": "minecraft:block/birch_sapling"
   }
 }
