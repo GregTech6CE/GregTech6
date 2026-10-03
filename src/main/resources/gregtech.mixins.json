@@ -9,7 +9,12 @@
     "AbstractMinecartSpeedCapMixin",
     "EntityFallingOreDropMixin",
     "BlockEntityPaintMixin",
-    "WolfCollarAccessor"
+    "WolfCollarAccessor",
+    "WaterPlacementMixin",
+    "WaterSurfaceMixin",
+    "WaterContainerMixin",
+    "WaterCandleMixin",
+    "WaterFrogspawnMixin"
   ],
   "injectors": {
     "defaultRequire": 0

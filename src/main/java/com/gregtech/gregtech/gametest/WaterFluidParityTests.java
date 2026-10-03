@@ -945,14 +945,10 @@ public final class WaterFluidParityTests {
                 "a GT stone slab placed into GT6 sea water is waterlogged, got " + placed
                         + " with fluid " + level.getFluidState(pos));
 
-        // (c) The contrast, and the reason the helper exists: a *vanilla* waterloggable block placed
-        // into the same GT6 water still comes out dry. This is vanilla's own hard-coded
-        // `fluid == Fluids.WATER` test and cannot be changed without a mixin, so it is pinned here
-        // as a known difference rather than papered over.
+        // Vanilla waterlogged placement now shares the general water-family identity check.
         BlockState vanillaPlaced = Blocks.OAK_SLAB.getStateForPlacement(inWater);
-        helper.assertTrue(vanillaPlaced != null && !vanillaPlaced.getValue(BlockStateProperties.WATERLOGGED),
-                "vanilla blocks placed into GT6 water stay dry (vanilla hard-codes its own water fluid), got "
-                        + vanillaPlaced);
+        helper.assertTrue(vanillaPlaced != null && vanillaPlaced.getValue(BlockStateProperties.WATERLOGGED),
+                "vanilla slab placed into GT6 water is waterlogged, got " + vanillaPlaced);
 
         // (d) And into air the same slab is dry, so (b) is really reading the fluid.
         level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);

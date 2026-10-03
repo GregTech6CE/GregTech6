@@ -8,7 +8,12 @@
     "BlockEntityPaintMixin",
     "WolfCollarAccessor",
     "WaterFluidMixin",
-    "EntityFallingOreDropMixin"
+    "EntityFallingOreDropMixin",
+    "WaterPlacementMixin",
+    "WaterSurfaceMixin",
+    "WaterContainerMixin",
+    "WaterCandleMixin",
+    "WaterFrogspawnMixin"
   ],
   "injectors": {
     "defaultRequire": 1

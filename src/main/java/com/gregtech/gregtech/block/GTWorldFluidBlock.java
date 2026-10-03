@@ -48,6 +48,17 @@ public class GTWorldFluidBlock extends LiquidBlock {
     }
 
 
+    /** Share vanilla water's general Forge plant-support behavior, including other mods' water plants. */
+    @Override
+    public boolean canSustainPlant(BlockState state, BlockGetter level, BlockPos pos, Direction facing,
+                                   net.minecraftforge.common.IPlantable plant) {
+        if (com.gregtech.gregtech.registry.GTWorldWaterFluid.isWaterFamily(getFluid())) {
+            var water = Blocks.WATER.defaultBlockState().setValue(LEVEL, state.getValue(LEVEL));
+            return Blocks.WATER.canSustainPlant(water, level, pos, facing, plant);
+        }
+        return super.canSustainPlant(state, level, pos, facing, plant);
+    }
+
     /** Loader_Blocks:149-153 assigns 1000 to all four oils and natural gas. */
     @Override
     public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction face) {
