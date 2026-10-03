@@ -24,6 +24,14 @@ public final class GTMaterialRegistration {
         GregTech.LOGGER.info("[{}] Registering GT block item materials for F3+H tooltips", GregTech.NAMESPACE);
 
         int count = 0;
+        // Material items carry their identity on the Item instance. Fuel/ash and recovery
+        // consumers use the same composition registry as block items and vanilla forms.
+        for (var holder : GTItems.allEntries()) {
+            if (holder.isPresent() && holder.get() instanceof com.gregtech.gregtech.item.MaterialItem item) {
+                ItemMaterialRegistry.register(item, item.getPrefix(), item.getMaterial());
+                count++;
+            }
+        }
         // The original GT6 ore unifier treats this placeable block as one
         // plate of WoodTreated. Keep recipes, material tags and recycling aligned.
         ItemMaterialRegistry.register(GTItems.getStack(com.gregtech.gregtech.data.MaterialPrefix.plate,

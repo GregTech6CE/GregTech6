@@ -26,6 +26,8 @@ public final class ImportedMaterialData extends com.gregtech.gregtech.api.materi
     public static void applyPostInitFuelStats() {
         fuel(Coal, GregTechConstants.TICKS_PER_SMELT * 8L, DarkAsh, GregTechConstants.U4);
         fuel(CoalCoke, GregTechConstants.TICKS_PER_SMELT * 16L, DarkAsh, GregTechConstants.U9);
+        fuel(LigniteCoke, GregTechConstants.TICKS_PER_SMELT * 8L, DarkAsh, GregTechConstants.U9);
+        fuel(PetCoke, GregTechConstants.TICKS_PER_SMELT * 32L, DarkAsh, GregTechConstants.U9);
         fuel(Charcoal, GregTechConstants.TICKS_PER_SMELT * 8L, DarkAsh, GregTechConstants.U4);
         applyAcidFlags();
     }
