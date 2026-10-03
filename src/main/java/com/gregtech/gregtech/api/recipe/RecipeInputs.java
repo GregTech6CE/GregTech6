@@ -25,6 +25,7 @@ public final class RecipeInputs {
             for (int slot = 0; slot < remainingItems.size(); slot++) {
                 var available = remainingItems.get(slot);
                 if (!matches(required, available)) continue;
+                if (recipe.mExactItemInputs && !ItemStack.isSameItemSameTags(required, available)) continue;
                 if (recipe.mRequiresEmptyContainerInputs && com.gregtech.gregtech.api.material.ItemMaterialRegistry.hasStoredContents(available)) continue;
                 if (recipe.mMaterialRecovery && (available.isDamaged() || !com.gregtech.gregtech.api.material.ItemMaterialRegistry.canRecover(available))) continue;
                 int take = (int)Math.min(needed, available.getCount());

@@ -27,6 +27,7 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu {
     private final RecipeMap recipeMap;
     private final ContainerData progressData;
     private int firstPlayerSlot;
+    private int programSlot = -1;
 
     /** Server-side constructor. */
     public BasicMachineContainerMenu(int containerId, Inventory playerInv, BasicMachineBlockEntity blockEntity) {
@@ -50,6 +51,8 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu {
                     + recipeMap.mInputFluidCount + recipeMap.mOutputFluidCount;
             addFluidSlots(new ItemStackHandler(totalMachineSlots));
         }
+        if (recipeMap == MachineRecipeMaps.Autocrafter)
+            addProgramSlot(blockEntity.autocraftingProgram());
         addPlayerSlots(playerInv);
     }
 
@@ -67,6 +70,7 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu {
         ItemStackHandler dummy = new ItemStackHandler(totalMachineSlots);
         addMachineSlots(dummy);
         addFluidSlots(dummy);
+        if (recipeMap == MachineRecipeMaps.Autocrafter) addProgramSlot(new ItemStackHandler(1));
         addPlayerSlots(playerInv);
         if (buf != null) {
             readFluidSync(buf);
@@ -125,6 +129,17 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu {
         }
     }
 
+    private void addProgramSlot(net.minecraftforge.items.IItemHandler handler) {
+        programSlot = slots.size();
+        addSlot(new SlotItemHandler(handler, 0,
+                com.gregtech.gregtech.content.recipe.AutocraftingRules.SLOT_X,
+                com.gregtech.gregtech.content.recipe.AutocraftingRules.SLOT_Y) {
+            @Override public boolean mayPlace(ItemStack stack) {
+                return com.gregtech.gregtech.content.recipe.AutocraftingRecipes.isProgram(stack);
+            }
+        });
+    }
+
     private void addPlayerSlots(Inventory playerInv) {
         this.firstPlayerSlot = this.slots.size();
         int playerX = 8;
@@ -145,6 +160,7 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu {
     public BasicMachineBlockEntity blockEntity() { return blockEntity; }
     public String machineName() { return machineName; }
     public RecipeMap recipeMap() { return recipeMap; }
+    public int programSlot() { return programSlot; }
     public int progressPercent() { return progressData.get(0); }
 
     @Override
@@ -196,6 +212,8 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu {
             // Machine slot → player inventory
             if (!moveItemStackTo(stack, firstPlayerSlot, slots.size(), true))
                 return ItemStack.EMPTY;
+        } else if (programSlot >= 0 && com.gregtech.gregtech.content.recipe.AutocraftingRecipes.isProgram(stack)) {
+            if (!moveItemStackTo(stack, programSlot, programSlot + 1, false)) return ItemStack.EMPTY;
         } else {
             // Player inventory → machine input slots (0..inputCount-1)
             int inputCount = recipeMap.mInputItemsCount;

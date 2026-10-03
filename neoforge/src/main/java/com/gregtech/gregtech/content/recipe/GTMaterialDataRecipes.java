@@ -99,6 +99,7 @@ public final class GTMaterialDataRecipes {
         MachineRecipeMaps.ScannerMolecular.dynamicRecipes(GTMaterialDataRecipes::scanner);
         MachineRecipeMaps.Printer.dynamicRecipes(GTMaterialDataRecipes::printer);
         MachineRecipeMaps.Replicator.dynamicRecipes(GTMaterialDataRecipes::replicator);
+        BlueprintRecipes.register();
         return 1;
     }
 

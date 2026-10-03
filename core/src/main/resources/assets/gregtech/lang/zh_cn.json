@@ -9837,5 +9837,6 @@
   "tooltip.gregtech.scanner.energy": "%s / %s EU - 电压：%s",
   "tooltip.gregtech.scanner.infinite": "可作为无限能量电池",
   "tooltip.gregtech.scanner.blocks": "可扫描世界中的方块",
-  "tooltip.gregtech.scanner.crops": "可分析世界中的作物"
+  "tooltip.gregtech.scanner.crops": "可分析世界中的作物",
+  "gt.autocrafting.insert.blueprint": "在此放入可自动合成的蓝图"
 }

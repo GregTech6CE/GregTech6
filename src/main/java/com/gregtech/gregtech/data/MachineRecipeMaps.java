@@ -68,7 +68,7 @@ public class MachineRecipeMaps {
     , Injector                 = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Injector)
     , Printer                  = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Printer)
     , ScannerVisuals           = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.ScannerVisuals)
-    , Autocrafter              = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Autocrafter)
+    , Autocrafter              = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Autocrafter).contextualRecipes(com.gregtech.gregtech.content.recipe.AutocraftingRecipes::find)
     , Slicer                   = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Slicer)
     , Nanofab                  = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Nanofab)
     , Plantalyzer              = fromDefinition(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.Plantalyzer)

@@ -47,6 +47,9 @@ public class BasicMachineScreen extends AbstractContainerScreen<BasicMachineCont
         renderFluidSlots(graphics);
         renderFluidTooltip(graphics, mouseX, mouseY);
         renderTooltip(graphics, mouseX, mouseY);
+        if (hoveredSlot != null && !hoveredSlot.hasItem() && menu.programSlot() >= 0
+                && hoveredSlot.index == menu.programSlot())
+            graphics.renderTooltip(font, Component.translatable("gt.autocrafting.insert.blueprint"), mouseX, mouseY);
     }
 
     private void renderFluidTooltip(GuiGraphics graphics, int mouseX, int mouseY) {

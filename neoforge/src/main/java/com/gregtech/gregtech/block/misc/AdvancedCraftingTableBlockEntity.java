@@ -75,18 +75,18 @@ public class AdvancedCraftingTableBlockEntity extends BlockEntity implements Blo
         var id=net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(blank.getItem());
         if(id==null || !id.toString().equals("gregtech:empty_blueprint"))return false;
         ItemStack written=new ItemStack(java.util.Objects.requireNonNull(net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","blueprint"))));
-        net.minecraft.nbt.ListTag pattern=new net.minecraft.nbt.ListTag();
-        for(int i=21;i<30;i++) pattern.add(inventory.getStackInSlot(i).copyWithCount(1).save(level.registryAccess()));
-        net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA,written,tag->tag.put("gt.CraftingPattern",pattern));
+        ItemStack[] pattern = new ItemStack[9];
+        for (int i = 0; i < pattern.length; i++) pattern[i] = inventory.getStackInSlot(i + 21).copyWithCount(1);
+        com.gregtech.gregtech.content.data.CraftingBlueprintData.writeItem(level, written, pattern);
         ItemStack result=preview();if(!result.isEmpty())written.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME,result.getHoverName());
         inventory.setStackInSlot(30,written);return true;
     }
     private ItemStack[] pattern() {
         ItemStack[] result=new ItemStack[9];
         var blueprint=inventory.getStackInSlot(30);
-        var list=blueprint.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA,net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getList("gt.CraftingPattern",10);
+        var cells = com.gregtech.gregtech.content.data.CraftingBlueprintData.readItem(level, blueprint);
         for(int i=0;i<9;i++) result[i]=!inventory.getStackInSlot(i+21).isEmpty()?inventory.getStackInSlot(i+21).copyWithCount(1)
-                :i<list.size()?ItemStack.parseOptional(level.registryAccess(),list.getCompound(i)):ItemStack.EMPTY;
+                :i<cells.length?cells[i]:ItemStack.EMPTY;
         return result;
     }
     private static CraftingContainer grid(ItemStack[] stacks) {

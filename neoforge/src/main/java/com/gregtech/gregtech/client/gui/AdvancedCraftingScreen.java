@@ -13,10 +13,10 @@ public final class AdvancedCraftingScreen extends AbstractContainerScreen<Advanc
     @Override protected void renderBg(GuiGraphics graphics,float tick,int x,int y){
         graphics.blit(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",(menu.modes()&32)!=0?"textures/gui/machines/advanced_crafting_table_charging.png":"textures/gui/machines/advanced_crafting_table.png"),leftPos,topPos,0,0,imageWidth,imageHeight);
         var blueprint=menu.getSlot(0).getItem();
-        if(blueprint.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA)){
-            var pattern=blueprint.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA).copyTag().getList("gt.CraftingPattern",10);
-            for(int i=0;i<Math.min(9,pattern.size());i++)if(!menu.getSlot(22+i).hasItem()){
-                var ghost=net.minecraft.world.item.ItemStack.parseOptional(minecraft.level.registryAccess(),pattern.getCompound(i));
+        if(minecraft != null && minecraft.level != null){
+            var pattern=com.gregtech.gregtech.content.data.CraftingBlueprintData.readItem(minecraft.level,blueprint);
+            for(int i=0;i<pattern.length;i++)if(!pattern[i].isEmpty()&&!menu.getSlot(22+i).hasItem()){
+                var ghost=pattern[i];
                 int sx=leftPos+80+i%3*18,sy=topPos+28+i/3*18;
                 graphics.renderItem(ghost,sx,sy);graphics.fill(sx,sy,sx+16,sy+16,0x664080FF);
             }

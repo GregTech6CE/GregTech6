@@ -39,8 +39,45 @@ public final class CoreBehaviorContracts {
         miniaturePortalSignals();
         bedrockAndBoilerSourceSamples();
         scannerEnergySourceSamples();
+        autocraftingSourceSamples();
         assertions += OriginWorldgenSamples.verify();
-        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 18 groups (Java 17; no game dependencies)");
+        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 19 groups (Java 17; no game dependencies)");
+    }
+
+    private static void autocraftingSourceSamples() {
+        // RecipeMapAutocrafting:73-129 and Recipe:904-939: fixed source counts, not a copied oracle.
+        var cells = List.of("wood", "wood", "tip", "tip", "", "", "", "", "");
+        var grouped = com.gregtech.gregtech.content.recipe.AutocraftingRules.inputs(cells,
+                String::isEmpty, "handtool"::equals, String::equals, "tip"::equals);
+        equal(2, grouped.size(), "equal blueprint cells combine by exact identity");
+        equal(2, grouped.get(0).count(), "two wood cells require two items before optimization");
+        equal(2, grouped.get(1).count(), "repeated tip cells combine before becoming a zero-size input");
+        check(grouped.get(1).retained(), "source infinite tool heads are retained");
+        var plan = com.gregtech.gregtech.content.recipe.AutocraftingRules.optimize(grouped,
+                List.of(new com.gregtech.gregtech.content.recipe.AutocraftingRules.Amount<>("sticks",4)), String::equals);
+        equal(1, plan.inputs().get(0).count(), "two planks and four sticks optimize to one plank");
+        equal(0, plan.inputs().get(1).count(), "the source retains one presence requirement, not one per tip cell");
+        equal(2, plan.outputs().get(0).count(), "optimized stick yield is two");
+        equal(512L, plan.duration(), "source whole-recipe optimization halves 1024 ticks");
+        var withContainer = com.gregtech.gregtech.content.recipe.AutocraftingRules.optimize(grouped,
+                List.of(new com.gregtech.gregtech.content.recipe.AutocraftingRules.Amount<>("sticks",4),
+                        new com.gregtech.gregtech.content.recipe.AutocraftingRules.Amount<>("bucket",1)), String::equals);
+        equal(1024L, withContainer.duration(), "a single returned container prevents count division");
+        equal(2, withContainer.outputs().size(), "crafted output and container remain separate source entries");
+        var distinct = com.gregtech.gregtech.content.recipe.AutocraftingRules.inputs(
+                List.of("wood/plain", "wood/named", "", "", "", "", "", "", ""),
+                String::isEmpty, "handtool"::equals, String::equals, "tip"::equals);
+        equal(2, distinct.size(), "different stack data never merges into the same blueprint input");
+        check(com.gregtech.gregtech.content.recipe.AutocraftingRules.inputs(
+                List.of("handtool", "wood", "", "", "", "", "", "", ""),
+                String::isEmpty, "handtool"::equals, String::equals, "tip"::equals) == null,
+                "a real GT hand tool prevents autocrafting before recipe selection");
+        check(com.gregtech.gregtech.content.recipe.AutocraftingRules.inputs(
+                List.of("wood"), String::isEmpty, "handtool"::equals, String::equals, "tip"::equals) == null,
+                "serialized patterns must describe all nine grid cells");
+        equal(16L, com.gregtech.gregtech.content.recipe.AutocraftingRules.POWER, "source dynamic row uses sixteen EU per tick");
+        equal(80, com.gregtech.gregtech.content.recipe.AutocraftingRules.SLOT_X, "source special slot x");
+        equal(43, com.gregtech.gregtech.content.recipe.AutocraftingRules.SLOT_Y, "source special slot y");
     }
 
     private static void scannerEnergySourceSamples() {

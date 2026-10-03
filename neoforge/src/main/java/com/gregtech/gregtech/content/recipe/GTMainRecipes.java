@@ -30,7 +30,7 @@ import java.util.List;
  *       now visible in JEI.</li>
  * </ul>
  *
- * <p>Rows whose content the port does not register (printed pages, blueprints, Twilight Forest and
+ * <p>Rows whose content the port does not register (printed pages, Twilight Forest and
  * Galacticraft maps, Thaumcraft loot bags) are recorded in {@link #skipped()} with their reason
  * instead of being invented. The material dictionary book ({@code GT6_Main:388}) also needs the NBT
  * of a scanned USB stick, so it is printed by {@link GTMaterialDataRecipes} rather than from a static
@@ -44,6 +44,20 @@ public final class GTMainRecipes {
 
     private static final List<Row> ROWS = List.of(
             // ---- real recipes (the machine consumes them) ----
+            new Row("Bath", false, 0, 16, "v:paper:1", "tech:empty_blueprint:1",
+                    "f:Indigo:144", "", "MultiItemRandomTools:436-437"),
+            new Row("Bath", false, 0, 16, "v:paper:1", "tech:empty_blueprint:1",
+                    "f:Dye_Water_Blue:144", "", "MultiItemRandomTools:436-437"),
+            new Row("Bath", false, 0, 16, "v:paper:1", "tech:empty_blueprint:1",
+                    "f:Dye_Flower_Blue:144", "", "MultiItemRandomTools:436-437"),
+            new Row("Bath", false, 0, 16, "v:paper:1", "tech:empty_blueprint:1",
+                    "f:Dye_Chemical_Blue:144", "", "MultiItemRandomTools:436-437"),
+            new Row("ScannerVisuals", true, 16, 64, "tech:blueprint:1;tech:usb1_stick:1",
+                    "tech:usb1_stick:1|Containing scanned Blueprint;tech:blueprint:1", "", "", "GT6_Main:339"),
+            new Row("Printer", true, 16, 32, "tech:empty_blueprint:1;tech:usb1_stick:1",
+                    "tech:blueprint:1", "f:Dye_Chemical_White:16", "", "GT6_Main:357"),
+            new Row("Printer", true, 16, 128, "v:paper:1;tech:usb1_stick:1",
+                    "tech:blueprint:1", "f:Dye_Chemical_Blue:144", "", "GT6_Main:358"),
             new Row("Printer", false, 16, 256, "v:book:1", "book:Manual_Printer",
                     "f:Dye_Chemical_Black:144", "", "GT6_Main:352"),
             new Row("Boxinator", false, 16, 16, "v:paper:8;v:compass:1", "v:map:1", "", "",
@@ -126,6 +140,7 @@ public final class GTMainRecipes {
 
     private static RecipeMap map(String name) {
         return switch (name) {
+            case "Bath" -> MachineRecipeMaps.Bath;
             case "Printer" -> MachineRecipeMaps.Printer;
             case "Boxinator" -> MachineRecipeMaps.Boxinator;
             case "Unboxinator" -> MachineRecipeMaps.Unboxinator;
@@ -163,12 +178,12 @@ public final class GTMainRecipes {
                 SKIPPED.add(row.source() + ": rejected by " + row.map());
                 continue;
             }
+            if (row.source().equals("GT6_Main:357") || row.source().equals("GT6_Main:358")) recipe.withCatalystInputs(1);
             ENTRIES.add(row.map() + "|" + (row.fake() ? "display" : "recipe") + "|" + row.source());
         }
         // GT6_Main rows whose content the port does not register, kept as a checklist.
         for (String reason : new String[]{
                 "GT6_Main:327-328 printed pages (the port registers no IL.Paper_Printed_Pages items)",
-                "GT6_Main:339/357-358 blueprints (no IL.Paper_Blueprint_* items)",
                 "GT6_Main:334-338/161 Twilight Forest maps (another mod)",
                 "GT6_Main:341-345/369-371 Galacticraft schematics (another mod)",
                 "GT6_Main:347/372 IndustrialCraft blueprint (another mod)",

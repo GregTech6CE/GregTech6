@@ -9837,5 +9837,6 @@
   "tooltip.gregtech.scanner.energy": "%s / %s EU - Size: %s",
   "tooltip.gregtech.scanner.infinite": "Works as Infinite Energy Battery",
   "tooltip.gregtech.scanner.blocks": "Can scan Blocks in World",
-  "tooltip.gregtech.scanner.crops": "Can scan Crops in World"
+  "tooltip.gregtech.scanner.crops": "Can scan Crops in World",
+  "gt.autocrafting.insert.blueprint": "Insert an autocraftable Blueprint here"
 }

@@ -35,6 +35,17 @@ public class RecipeMap {
     @javax.annotation.Nullable
     private DynamicRecipes mDynamicRecipes;
 
+    /** Original findRecipe overrides that also need the machine world and special slot. */
+    @FunctionalInterface
+    public interface ContextRecipes {
+        Recipe find(net.minecraft.world.level.Level level,
+                net.minecraft.world.level.block.entity.BlockEntity machine, ItemStack special,
+                List<ItemStack> items, List<FluidStack> fluids);
+    }
+    private ContextRecipes mContextRecipes;
+    public RecipeMap contextualRecipes(ContextRecipes provider) { mContextRecipes = provider; return this; }
+
+
     /**
      * Installs GT6's per-map {@code findRecipe()} override. One provider per map (GT6 has one
      * subclass per map); calling it again replaces the previous provider.
@@ -45,7 +56,7 @@ public class RecipeMap {
     }
 
     /** Whether this map computes rows from input NBT (reported by the start-up log line). */
-    public boolean hasDynamicRecipes() { return mDynamicRecipes != null; }
+    public boolean hasDynamicRecipes() { return mDynamicRecipes != null || mContextRecipes != null; }
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public static final Map<String, RecipeMap> RECIPE_MAPS = new LinkedHashMap<>();
@@ -581,6 +592,14 @@ public class RecipeMap {
     @javax.annotation.Nullable
     public Recipe findRecipe(Iterable<ItemStack> items, Iterable<FluidStack> fluids,
                              boolean needsOutputs, int inputSlotCount, int outputSlotCount) {
+        return findRecipe(items, fluids, needsOutputs, inputSlotCount, outputSlotCount, null, null, ItemStack.EMPTY);
+    }
+
+    @javax.annotation.Nullable
+    public Recipe findRecipe(Iterable<ItemStack> items, Iterable<FluidStack> fluids,
+            boolean needsOutputs, int inputSlotCount, int outputSlotCount,
+            net.minecraft.world.level.Level level, net.minecraft.world.level.block.entity.BlockEntity machine,
+            ItemStack special) {
         var inputItems = new ArrayList<ItemStack>();
         for (var item : items) { if (inputItems.size() >= inputSlotCount) break; inputItems.add(item); }
         var inputFluids = new ArrayList<FluidStack>();
@@ -601,6 +620,13 @@ public class RecipeMap {
                         && !allOutputSlotsEmpty(items, inputSlotCount, outputSlotCount)) return null;
                 if (RecipeInputs.consume(dynamic, inputItems, inputFluids, 1) != null) return dynamic;
             }
+        }
+        if (mContextRecipes != null && level != null) {
+            Recipe dynamic = mContextRecipes.find(level, machine, special, inputItems, inputFluids);
+            if (dynamic != null && dynamic.mEnabled && !dynamic.mFakeRecipe
+                    && (!needsOutputs || !dynamic.mNeedsEmptyOutput
+                            || allOutputSlotsEmpty(items, inputSlotCount, outputSlotCount))
+                    && RecipeInputs.consume(dynamic, inputItems, inputFluids, 1) != null) return dynamic;
         }
         return null;
     }

@@ -45,7 +45,7 @@ public final class MachineRecipeMaps {
     public static final RecipeMap Injector=fromDefinition(MachineRecipeMapDefinitions.Injector);
     public static final RecipeMap Printer=fromDefinition(MachineRecipeMapDefinitions.Printer);
     public static final RecipeMap ScannerVisuals=fromDefinition(MachineRecipeMapDefinitions.ScannerVisuals);
-    public static final RecipeMap Autocrafter=fromDefinition(MachineRecipeMapDefinitions.Autocrafter);
+    public static final RecipeMap Autocrafter=fromDefinition(MachineRecipeMapDefinitions.Autocrafter).contextualRecipes(com.gregtech.gregtech.content.recipe.AutocraftingRecipes::find);
     public static final RecipeMap Slicer=fromDefinition(MachineRecipeMapDefinitions.Slicer);
     public static final RecipeMap Nanofab=fromDefinition(MachineRecipeMapDefinitions.Nanofab);
     public static final RecipeMap Plantalyzer=fromDefinition(MachineRecipeMapDefinitions.Plantalyzer);

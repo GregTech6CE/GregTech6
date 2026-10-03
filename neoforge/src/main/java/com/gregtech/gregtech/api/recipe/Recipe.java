@@ -28,6 +28,8 @@ public class Recipe {
     public boolean mNeedsEmptyOutput;
     public boolean mMaterialRecovery;
     public boolean mRequiresEmptyContainerInputs;
+    /** Blueprint recipes require exact stack data and only their explicit retained inputs. */
+    public boolean mExactItemInputs, mExplicitCatalystsOnly;
     public Recipe withMaterialRecovery() { mMaterialRecovery = true; mRequiresEmptyContainerInputs = true; return this; }
     public Recipe withEmptyContainerInputs() { mRequiresEmptyContainerInputs = true; return this; }
 
@@ -61,7 +63,7 @@ public class Recipe {
         return this;
     }
     public boolean isCatalystInput(int index) {
-        return catalystInputs.get(index) || mInputs[index].getItem() instanceof com.gregtech.gregtech.api.recipe.RecipeCatalystLike tool && tool.isCatalyst();
+        return catalystInputs.get(index) || !mExplicitCatalystsOnly && mInputs[index].getItem() instanceof com.gregtech.gregtech.api.recipe.RecipeCatalystLike tool && tool.isCatalyst();
     }
 
     // ── Output helpers ───────────────────────────────────────────────────

@@ -53,6 +53,14 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     private BasicMachineSpec spec;
     private RecipeMap recipeMap;
     private MachineItemHandler itemHandler;
+    private final net.neoforged.neoforge.items.ItemStackHandler autocraftingProgram = new net.neoforged.neoforge.items.ItemStackHandler(1) {
+        @Override public boolean isItemValid(int slot, ItemStack stack) {
+            return com.gregtech.gregtech.content.recipe.AutocraftingRecipes.isProgram(stack);
+        }
+        @Override protected void onContentsChanged(int slot) { setChanged(); mInventoryChanged = true; }
+    };
+    public net.neoforged.neoforge.items.IItemHandler autocraftingProgram() { return autocraftingProgram; }
+
     private FluidTankGT[] tanksInput;
     private FluidTankGT[] tanksOutput;
     private FaceConfig faceConfig = FaceConfig.ALL_SIDES;
@@ -408,6 +416,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         for (int srcSlot = 0; srcSlot < source.getSlots(); srcSlot++) {
             ItemStack stack = source.getStackInSlot(srcSlot);
             if (stack.isEmpty()) continue;
+            if (!acceptsAutomaticInput(stack)) continue;
             for (int i = 0; i < inputCount; i++) {
                 ItemStack remaining = itemHandler.insertItem(i, stack.copy(), true);
                 int toTake = stack.getCount() - remaining.getCount();
@@ -645,7 +654,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     private Recipe findRecipeWithUsbPort() {
         if(recipeMap==null||itemHandler==null)return null;
         var items=itemHandler.stacks();var fluids=tanksToList(tanksInput);
-        Recipe direct=recipeMap.findRecipe(items,fluids,recipeMap.mNeedsOutputs,recipeMap.mInputItemsCount,recipeMap.mOutputItemsCount);
+        Recipe direct=recipeMap.findRecipe(items,fluids,recipeMap.mNeedsOutputs,recipeMap.mInputItemsCount,recipeMap.mOutputItemsCount, level, this, autocraftingProgram.getStackInSlot(0));
         return direct!=null?direct:com.gregtech.gregtech.content.recipe.MachineContextRecipes.find(this,recipeMap,recipeInputItems(),recipeInputFluids());
     }
 
@@ -830,6 +839,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         for (int srcSlot = 0; srcSlot < source.getSlots(); srcSlot++) {
             ItemStack stack = source.getStackInSlot(srcSlot);
             if (stack.isEmpty()) continue;
+            if (!acceptsAutomaticInput(stack)) continue;
             for (int i = 0; i < inputCount; i++) {
                 ItemStack remaining = itemHandler.insertItem(i, stack.copy(), true);
                 int toTake = stack.getCount() - remaining.getCount();
@@ -1214,6 +1224,8 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         tag.putLong("gt.cover_ticks",coverTicks);
         if (itemHandler != null)
             tag.put(NBT_INVENTORY, itemHandler.serializeNBT(lookup));
+        if (recipeMap == MachineRecipeMaps.Autocrafter || !autocraftingProgram.getStackInSlot(0).isEmpty())
+            tag.put("gt.autocrafting.program", autocraftingProgram.serializeNBT(lookup));
         tag.putLong(NBT_ENERGY, mEnergy);
         tag.putLong(NBT_PROGRESS, mProgress);
         tag.putLong(NBT_MAX_PROGRESS, mMaxProgress);
@@ -1281,6 +1293,11 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     @Override
     public void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
         super.loadAdditional(tag,lookup);
+        if (tag.contains("gt.autocrafting.program", 10)) {
+            CompoundTag savedProgram = tag.getCompound("gt.autocrafting.program").copy();
+            savedProgram.putInt("Size", 1);
+            autocraftingProgram.deserializeNBT(lookup, savedProgram);
+        }
         controlStopped=tag.getBoolean("gt.control_stopped");
         coverTicks=Math.max(0,tag.getLong("gt.cover_ticks"));successful=false;workPossible=false;mInventoryChanged=true;
         if (tag.contains(NBT_ENERGY)) mEnergy = tag.getLong(NBT_ENERGY);
@@ -1321,7 +1338,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         // machine behaving exactly as before this batch.
         @Override public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
             Direction side = be.relativeToAbsolute(relativeSide);
-            return canInsert && !be.isRemoved() && !be.isFaceShuttered(side)
+            return canInsert && be.acceptsAutomaticInput(stack) && !be.isRemoved() && !be.isFaceShuttered(side)
                     && !be.coverBlocksItemTraffic(side) && be.coverFilterPermits(side, stack)
                     ? inner.insertItem(slot, stack, simulate) : stack;
         }
@@ -1335,7 +1352,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         @Override public int getSlotLimit(int slot) { return inner.getSlotLimit(slot); }
         @Override public boolean isItemValid(int slot, ItemStack stack) {
             Direction side = be.relativeToAbsolute(relativeSide);
-            return canInsert && !be.isRemoved() && !be.isFaceShuttered(side)
+            return canInsert && be.acceptsAutomaticInput(stack) && !be.isRemoved() && !be.isFaceShuttered(side)
                     && !be.coverBlocksItemTraffic(side) && be.coverFilterPermits(side, stack)
                     && inner.isItemValid(slot, stack);
         }
@@ -1377,6 +1394,11 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     // ── Machine item handler ──────────────────────────────────────────────
 
+    private boolean acceptsAutomaticInput(ItemStack stack) {
+        return recipeMap != MachineRecipeMaps.Autocrafter || level != null
+                && (recipeMap.containsInput(stack) || com.gregtech.gregtech.content.recipe.AutocraftingRecipes.containsInput(
+                        level, this, autocraftingProgram.getStackInSlot(0), stack));
+    }
     public IItemHandlerModifiable inventory() { return itemHandler; }
     public int inputSlots() { return recipeMap != null ? recipeMap.mInputItemsCount : 0; }
     public int outputSlots() { return recipeMap != null ? recipeMap.mOutputItemsCount : 0; }
@@ -1438,6 +1460,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     @Override public void dropContents() {
         if (level == null || level.isClientSide) return;
         com.gregtech.gregtech.api.inventory.BlockContents.drop(this, itemHandler);
+        com.gregtech.gregtech.api.inventory.BlockContents.drop(this, autocraftingProgram);
         for (int i = 0; i < covers.length; i++) { com.gregtech.gregtech.api.inventory.BlockContents.drop(this, covers[i]); covers[i] = ItemStack.EMPTY; }
         setChanged();
     }
