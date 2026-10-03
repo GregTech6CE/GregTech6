@@ -32,6 +32,17 @@ final class EmiMachineSmoke {
             if (!manager.getRecipesByOutput(plate).contains(recipe))
                 throw new IllegalStateException("EMI plate output search omits " + machine);
         }
+        for (String machine : new String[]{"crusher", "bath", "centrifuge", "shredder", "sluice", "magneticseparator", "sifting"}) {
+            var ore = nativeRecipes.stream().filter(r -> r.getCategory().getId().getPath().contains(machine))
+                .filter(r -> r.getInputs().stream().anyMatch(s -> s.getEmiStacks().stream().anyMatch(t ->
+                    t.getId().getPath().startsWith("ore_") || t.getId().getPath().startsWith("crushed_") || t.getId().getPath().startsWith("crushed_purified_"))))
+                .findFirst().orElseThrow(() -> new IllegalStateException("Installed EMI missing ore rows: " + machine));
+            var input = ore.getInputs().stream().filter(s -> !s.getEmiStacks().isEmpty()).findFirst().orElseThrow().getEmiStacks().get(0);
+            if (!manager.getRecipesByInput(input).contains(ore)) throw new IllegalStateException("EMI ore input search omits " + machine);
+            var output = ore.getOutputs().stream().filter(s -> !s.isEmpty()).findFirst().orElseThrow();
+            if (!manager.getRecipesByOutput(output).contains(ore)) throw new IllegalStateException("EMI ore output search omits " + machine);
+            com.mojang.logging.LogUtils.getLogger().info("EMI_ORE_LOOKUP_SUCCESS {} {}", machine, ore.getId());
+        }
         com.mojang.logging.LogUtils.getLogger().info("EMI_INSTALLED_SMOKE_SUCCESS {} native recipes, plate output lookups work, JEI absent", nativeRecipes.size());
         return nativeRecipes.stream().filter(r -> r.getCategory().getId().getPath().contains("extruder"))
                 .filter(r -> r.getOutputs().stream().anyMatch(s -> s.getId().getPath().startsWith("plate_")))

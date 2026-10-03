@@ -200,7 +200,8 @@ public final class NeoForgeClientSmoke {
             LayeredItemSmoke.check(minecraft, gallery);
             var plants = new java.util.ArrayList<net.minecraft.world.item.ItemStack>();
             PlantIconSmoke.check(minecraft, plants);
-            gallery = plants;
+            gallery = new java.util.ArrayList<>();
+            MachineModelSmoke.check(minecraft, gallery);
             ids = new com.google.gson.JsonArray();
             for (var stack : gallery) ids.add(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());
             if (net.neoforged.fml.ModList.get().isLoaded("emi")) EmiMachineSmoke.check();

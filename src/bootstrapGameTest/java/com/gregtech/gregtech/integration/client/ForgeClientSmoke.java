@@ -106,11 +106,12 @@ public final class ForgeClientSmoke {
                 renderedFrames = 0;
                 MaterialTooltipSmoke.check();
                 gallery = new java.util.ArrayList<>();
-                PlantIconSmoke.check(minecraft, gallery);
+                PlantIconSmoke.check(minecraft, new java.util.ArrayList<>());
+                MachineModelSmoke.check(minecraft, gallery);
             }
             var graphics = event.getGuiGraphics();
             graphics.fill(10, 60, 270, 85 + ((gallery.size() + 5) / 6) * 38, 0xD0000000);
-            graphics.drawString(minecraft.font, "GT plant models", 16, 66, 0xFFFFFF);
+            graphics.drawString(minecraft.font, "GT machine models", 16, 66, 0xFFFFFF);
             for (int i = 0; i < gallery.size(); i++) {
                 graphics.pose().pushPose();
                 graphics.pose().translate(18 + (i % 6) * 42, 84 + (i / 6) * 38, 0);
