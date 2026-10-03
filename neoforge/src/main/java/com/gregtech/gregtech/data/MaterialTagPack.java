@@ -92,6 +92,14 @@ public final class MaterialTagPack extends AbstractPackResources {
                 }
                 continue;
             }
+            if(item instanceof BlockItem b && b.getBlock() instanceof com.gregtech.gregtech.block.BlackSandBlock sand) {
+                String name=MaterialEquivalence.materialName(sand.material());
+                for(String kind:List.of("item","block")) {
+                    add(tags,"gregtech",kind,"block_dust/"+name,id.toString());
+                    add(tags,"forge",kind,"storage_blocks/"+name,id.toString());
+                }
+                addMaterial(blocksByMaterial,sand.material(),id.toString());
+            }
             if(item instanceof BlockItem b && b.getBlock() instanceof MaterialBlockLike m) {
                 String name=MaterialEquivalence.materialName(m.material());
                 String group=switch(m.prefix().getName()) {

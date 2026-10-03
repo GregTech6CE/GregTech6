@@ -63,6 +63,9 @@ public final class GTIconSetBlocks {
             if (SKIP_IDS.contains(blockId)) continue;
             RegistryObject<Block> block = GTBlocks.BLOCKS.register(blockId, () -> createBlock(iconName));
             if (iconName.equals("logistics_wire")) LOGISTICS_WIRE = block;
+            var sandSpec = com.gregtech.gregtech.block.BlackSandBlock.spec(iconName);
+            if (sandSpec != null) GTBlocks.bind(com.gregtech.gregtech.api.prefix.BlockMaterialPrefix.blockDust,
+                    com.gregtech.gregtech.api.material.GTMaterialRegistry.get(sandSpec.material()), block);
             RegistryObject<Item> item = GTBlocks.BLOCK_ITEMS.register(blockId,
                     () -> block.get() instanceof net.minecraft.world.level.block.WaterlilyBlock
                             ? new net.minecraft.world.item.PlaceOnWaterBlockItem(block.get(), new Item.Properties())
@@ -299,7 +302,7 @@ public final class GTIconSetBlocks {
 
     private static final String[] ICON_NAMES = buildIconNames();
 
-    private static String[] buildIconNames(){return com.gregtech.gregtech.content.plant.IconPlantCatalog.ICON_NAMES.clone();}
+    private static String[] buildIconNames(){return com.gregtech.gregtech.content.plant.IconPlantCatalog.BLOCK_ICONS.toArray(String[]::new);}
 
     static {
         // Validation: every icon name must have a corresponding texture

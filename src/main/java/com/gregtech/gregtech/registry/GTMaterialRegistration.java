@@ -112,6 +112,7 @@ public final class GTMaterialRegistration {
         count += registerSmelteryList(MachineRegistry.crucibleFaucets(), CrucibleSpec.FAUCET_HULL_UNITS);
 
         com.gregtech.gregtech.content.recipe.DiggableRecipes.registerMaterials();
+        com.gregtech.gregtech.content.recipe.RegisteredWoodSurvivalRecipes.registerMaterials();
         count += 8; // Five clay blocks, turf, and two legacy ids; five clay balls are items.
 
         // GT6 BlockSands metas 0..2 are OP.blockDust forms: one placed sand is nine dust units.

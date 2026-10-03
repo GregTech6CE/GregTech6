@@ -53,8 +53,9 @@ public final class WoodCraftingRecipePack extends AbstractPackResources {
         if(resources!=null)return resources;
         Map<ResourceLocation,byte[]> generated=new HashMap<>();
         for(String row:com.gregtech.gregtech.content.recipe.GTWoodRecipes.CRAFT_ROWS)addRow(generated,row);
+        for(String row:com.gregtech.gregtech.content.recipe.NaturalWoodCraftingRows.ROWS)addRow(generated,row);
         for(String row:com.gregtech.gregtech.content.recipe.TreatedWoodCraftingRows.ROWS)addRow(generated,row);
-        com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original wood crafting datapack: {} rows; source-explicit skipped cinnamonwood rod rows={}",generated.size(),com.gregtech.gregtech.content.recipe.GTWoodRecipes.SKIPPED_CRAFT_ROWS.length);
+        com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original wood crafting datapack: {} rows; source-explicit skipped tree rod rows={}",generated.size(),com.gregtech.gregtech.content.recipe.GTWoodRecipes.SKIPPED_CRAFT_ROWS.length);
         resources=Map.copyOf(generated);return resources;
     }
     private static net.minecraft.world.item.ItemStack resolve(String spec){

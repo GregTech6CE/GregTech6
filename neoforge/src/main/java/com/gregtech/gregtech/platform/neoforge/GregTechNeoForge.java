@@ -125,6 +125,8 @@ public final class GregTechNeoForge {
         com.gregtech.gregtech.platform.neoforge.machine.BasicMachineRegistries.registerCompositions();
         com.gregtech.gregtech.registry.GTSpecialOreBlocks.registerCompositions();
         com.gregtech.gregtech.content.recipe.DiggableRecipes.registerMaterials();
+        com.gregtech.gregtech.content.recipe.RegisteredWoodSurvivalRecipes.registerMaterials();
+        com.gregtech.gregtech.registry.GTBlackSands.registerCompositions();
         VanillaUnificationLoader.register();
         VanillaCompositionLoader.register();
         com.gregtech.gregtech.data.MachineRecipeMaps.bootstrap();

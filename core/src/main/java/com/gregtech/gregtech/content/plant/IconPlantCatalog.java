@@ -61,4 +61,12 @@ public final class IconPlantCatalog {private IconPlantCatalog(){}public static f
             "sapling_small_coconut", "sapling_small_hazel", "sapling_small_maple",
             "sapling_small_rainbowood", "sapling_small_rubber", "sapling_small_willow",
             "turf",
-        };public static final java.util.List<String> IDS=java.util.Arrays.stream(ICON_NAMES).filter(id->id.startsWith("flower_")||id.startsWith("glowtus_")||id.startsWith("sapling_large_")||id.startsWith("sapling_small_")).toList();public static boolean lily(String id){return id.equals("flower_hexalily")||id.startsWith("glowtus_");}public static int light(String id){return id.startsWith("glowtus_")?15:0;}}
+        };
+    /** Renderer sprites from Textures.BlockIcons, never standalone GT6 block identities. */
+    public static final java.util.Set<String> RENDERER_ONLY = java.util.Set.of(
+            "gear", "gear_clockwise", "gear_counterclockwise", "gearbox", "gearbox_axle",
+            "crate", "hatch", "machine", "piston_idle", "piston_moving",
+            "rendering_error", "greg_o_lantern");
+    public static final java.util.List<String> BLOCK_ICONS = java.util.Arrays.stream(ICON_NAMES)
+            .filter(id -> !RENDERER_ONLY.contains(id)).toList();
+    public static final java.util.List<String> IDS=java.util.Arrays.stream(ICON_NAMES).filter(id->id.startsWith("flower_")||id.startsWith("glowtus_")||id.startsWith("sapling_large_")||id.startsWith("sapling_small_")).toList();public static boolean lily(String id){return id.equals("flower_hexalily")||id.startsWith("glowtus_");}public static int light(String id){return id.startsWith("glowtus_")?15:0;}}

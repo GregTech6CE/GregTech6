@@ -61,7 +61,7 @@ public final class Loader_WoodCraftingRecipes {
     private Loader_WoodCraftingRecipes() {}
 
     /** Recipe ids the last server start added, for tests and reports. */
-    public static List<String> registeredIds() { return List.copyOf(REGISTERED); }
+    public static List<String> registeredIds() { return REGISTERED.stream().filter(id -> !id.startsWith("gregtech:wood/natural/")).toList(); }
     public static List<String> treatedRegisteredIds() { return List.copyOf(TREATED_REGISTERED); }
 
     /** Rows whose specs did not resolve in this port, with the reason. */
@@ -100,6 +100,7 @@ public final class Loader_WoodCraftingRecipes {
         TREATED_REGISTERED.clear();
         int added = 0;
         for (String row : GTWoodRecipes.CRAFT_ROWS) added += row(recipes, row);
+        for (String row : com.gregtech.gregtech.content.recipe.NaturalWoodCraftingRows.ROWS) added += row(recipes, row);
         added += treatedWoodRows(recipes);
         if (added > 0) com.gregtech.gregtech.recipe.RuntimeRecipeLifecycle.replaceGenerated(manager, recipes);
         GregTech.LOGGER.info("Registered {} GT6 wood dictionary crafting rows for {} species ({} skipped)",
@@ -267,6 +268,7 @@ public final class Loader_WoodCraftingRecipes {
         String kind = spec.substring(0, colon);
         String argument = spec.substring(colon + 1);
         switch (kind) {
+            case "item": return new ItemStack(net.minecraft.core.registries.BuiltInRegistries.ITEM.get(ResourceLocation.parse(argument)));
             case "log", "planks", "beam":
                 return block(kind, argument);
             case "rod":

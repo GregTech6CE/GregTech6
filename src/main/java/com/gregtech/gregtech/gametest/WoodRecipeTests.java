@@ -66,7 +66,7 @@ public final class WoodRecipeTests {
      * cinnamon rows, whose plank material {@code MT.WOODS.Cinnamon} (id 9317) the port does not
      * register.
      */
-    private static final int ROWS = 68;
+    private static final int ROWS = 72;
 
     /** The species the generator mapped, in {@code LoaderWoodDictionary.java} order. */
     private static final String[] SPECIES = {
@@ -223,7 +223,7 @@ public final class WoodRecipeTests {
                 "generated rows plus documented row skips are the dictionary's " + dictionaryRows
                         + " rows: " + GTWoodRecipes.craftRowCount() + " + "
                         + GTWoodRecipes.SKIPPED_CRAFT_ROWS.length);
-        h.assertTrue(GTWoodRecipes.SKIPPED_CRAFT_ROWS.length == 4,
+        h.assertTrue(GTWoodRecipes.SKIPPED_CRAFT_ROWS.length == 0,
                 "rows the port cannot express: " + GTWoodRecipes.SKIPPED_CRAFT_ROWS.length);
         for (String skipped : GTWoodRecipes.SKIPPED_CRAFT_ROWS) {
             h.assertTrue(skipped.startsWith("cinnamon/")
@@ -534,12 +534,9 @@ public final class WoodRecipeTests {
             h.assertTrue(resolved != null && resolved.isValid(),
                     entry.getValue() + " is registered in the port");
         }
-        // The one gap: MT.WOODS.Cinnamon is GT6 material 9317, which the port does not have (its only
-        // Cinnamon is the spice, 9785), so the generator had to skip the four cinnamon rod rows.
-        h.assertTrue(material("cinnamon") == null,
-                "the port has no Cinnamonwood material, so no cinnamon rod row is generated");
-        h.assertTrue(GTMaterialRegistry.get(9317) == null || !GTMaterialRegistry.get(9317).isValid(),
-                "GT6 material 9317 stays unregistered");
+        h.assertTrue("Cinnamonwood".equals(material("cinnamon")), "cinnamon uses the qualified wood identity");
+        h.assertTrue(GTMaterialRegistry.get(9317) == GTMaterialRegistry.get("Cinnamonwood"),
+                "original material 9317 is the wood, distinct from the spice");
         h.succeed();
     }
 }

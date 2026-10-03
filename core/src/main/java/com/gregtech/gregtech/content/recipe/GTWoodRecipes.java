@@ -31,10 +31,10 @@ package com.gregtech.gregtech.content.recipe;
  *       per-species log rows would only duplicate {@code minecraft:oak_planks} and friends.</li>
  *   <li>Other mods' wood (IC2/MFR/Atum/Fossil/BoP/TC/TF/BTL/Aether/Botania/Witchery/AbyssalCraft/
  *       Steamcraft/EBXL/Bamboo/Caveworld/TCFM/Forestry) is absent from 1.20.1.</li>
- *   <li>{@code MT.WOODS.Cinnamon} (GT6 material id 9317, "Cinnamonwood") is not registered by the port -
- *       it has only the Cinnamon <i>spice</i> (9785) - so the cinnamon entry contributes its four plank
- *       rows but not its four rod rows; those are listed in {@code SKIPPED_CRAFT_ROWS}, which together
- *       with {@code CRAFT_ROWS} accounts for the dictionary's {@code 9 x 8} rows.</li>
+ *   <li>{@code MT.WOODS.Cinnamon} is the registered Cinnamonwood material (9317), separate from
+ *       Cinnamon spice (9785). All eight dictionary rows are emitted for this species.</li>
+ *   <li>The four fallen Log1 entries are registered separately by {@code NaturalWoodCraftingRows};
+ *       this generated tree-species table does not duplicate those rows.</li>
  * </ul>
  *
  * <p>{@code CRAFT_ROWS} entries are {@code path|shape|mirror|pattern|keys|result|gt6}: pattern rows are
@@ -54,7 +54,7 @@ public final class GTWoodRecipes {
             "willow|log_willow|planks_willow|beam_willow|Willow|LoaderWoodDictionary.java:73|BlocksGT.Planks/2",
             "blue_mahoe|log_blue_mahoe|planks_blue_mahoe|beam_blue_mahoe|BlueMahoe|LoaderWoodDictionary.java:75|BlocksGT.Planks/3",
             "hazel|log_hazel|planks_hazel|beam_hazel|Hazel|LoaderWoodDictionary.java:91|BlocksGT.Planks/4",
-            "cinnamon|log_cinnamon|planks_cinnamon|beam_cinnamon|-|LoaderWoodDictionary.java:93|BlocksGT.Planks/5",
+            "cinnamon|log_cinnamon|planks_cinnamon|beam_cinnamon|Cinnamonwood|LoaderWoodDictionary.java:93|BlocksGT.Planks/5",
             "coconut|log_coconut|planks_coconut|beam_coconut|Coconutwood|LoaderWoodDictionary.java:95|BlocksGT.Planks/6",
             "rainbowood|log_rainbowood|planks_rainbowood|beam_rainbowood|Rainbowood|LoaderWoodDictionary.java:97|BlocksGT.Planks/7",
             "bluespruce|log_bluespruce|planks_bluespruce|beam_bluespruce|BlueSpruce|LoaderWoodDictionary.java:113|BlocksGT.Planks2/0",
@@ -102,10 +102,14 @@ public final class GTWoodRecipes {
             "hazel/beam_to_planks_hand|shapeless|nomirror||B=beam:hazel|planks:hazel*3|Loader_Recipes_Woods.java:205",
             "hazel/planks_to_sticks_hand|shaped|nomirror|P/P|P=planks:hazel|rod:Hazel*2|Loader_Recipes_Woods.java:243",
             "hazel/planks_to_sticks_saw|shaped|nomirror|s/P|s=tool:saw;P=planks:hazel|rod:Hazel*2|Loader_Recipes_Woods.java:244",
+            "cinnamon/log_to_sticks|shaped|nomirror|sLf|s=tool:saw;L=log:cinnamon;f=tool:file|rodlong:Cinnamonwood*2|Loader_Recipes_Woods.java:183",
             "cinnamon/log_to_planks_saw|shaped|nomirror|s/L|s=tool:saw;L=log:cinnamon|planks:cinnamon*4|Loader_Recipes_Woods.java:184",
             "cinnamon/log_to_planks_hand|shapeless|nomirror||L=log:cinnamon|planks:cinnamon*2|Loader_Recipes_Woods.java:185",
+            "cinnamon/beam_to_sticks|shaped|nomirror|sBf|s=tool:saw;B=beam:cinnamon;f=tool:file|rodlong:Cinnamonwood*3|Loader_Recipes_Woods.java:203",
             "cinnamon/beam_to_planks_saw|shaped|nomirror|s/B|s=tool:saw;B=beam:cinnamon|planks:cinnamon*5|Loader_Recipes_Woods.java:204",
             "cinnamon/beam_to_planks_hand|shapeless|nomirror||B=beam:cinnamon|planks:cinnamon*3|Loader_Recipes_Woods.java:205",
+            "cinnamon/planks_to_sticks_hand|shaped|nomirror|P/P|P=planks:cinnamon|rod:Cinnamonwood*2|Loader_Recipes_Woods.java:243",
+            "cinnamon/planks_to_sticks_saw|shaped|nomirror|s/P|s=tool:saw;P=planks:cinnamon|rod:Cinnamonwood*2|Loader_Recipes_Woods.java:244",
             "coconut/log_to_sticks|shaped|nomirror|sLf|s=tool:saw;L=log:coconut;f=tool:file|rodlong:Coconutwood*2|Loader_Recipes_Woods.java:183",
             "coconut/log_to_planks_saw|shaped|nomirror|s/L|s=tool:saw;L=log:coconut|planks:coconut*4|Loader_Recipes_Woods.java:184",
             "coconut/log_to_planks_hand|shapeless|nomirror||L=log:coconut|planks:coconut*2|Loader_Recipes_Woods.java:185",
@@ -262,10 +266,7 @@ public final class GTWoodRecipes {
      * length of this array is the full {@code 9 x 8} the dictionary has for the mapped species.
      */
     public static final String[] SKIPPED_CRAFT_ROWS = {
-            "cinnamon/log_to_sticks|Loader_Recipes_Woods.java:183|the port has no MT.WOODS.Cinnamon (GT6 material 9317), so GT6's OP.stickLong of the plank material cannot be built",
-            "cinnamon/beam_to_sticks|Loader_Recipes_Woods.java:203|the port has no MT.WOODS.Cinnamon (GT6 material 9317), so GT6's OP.stickLong of the beam material cannot be built",
-            "cinnamon/planks_to_sticks_hand|Loader_Recipes_Woods.java:243|the port has no MT.WOODS.Cinnamon (GT6 material 9317), so GT6's OP.stick of the plank material cannot be built",
-            "cinnamon/planks_to_sticks_saw|Loader_Recipes_Woods.java:244|the port has no MT.WOODS.Cinnamon (GT6 material 9317), so GT6's OP.stick of the plank material cannot be built",
+
     };
 
     /** GT6 wood-dictionary entries with no port species, with the GT6 line and the reason. */
