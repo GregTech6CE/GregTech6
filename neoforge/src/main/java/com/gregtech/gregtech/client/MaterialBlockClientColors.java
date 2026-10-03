@@ -27,7 +27,7 @@ public final class MaterialBlockClientColors {
     public static void items(RegisterColorHandlersEvent.Item event) {
         for (var entry : GTBlocks.BLOCK_ITEMS.getEntries()) {
             if (entry.get() instanceof MaterialBlockItem blockItem && blockItem.material() != null) {
-                event.register((stack, layer) -> layer == 0 ? blockItem.getTintColor() : 0xFFFFFF, blockItem);
+                event.register(ItemColorARGB.opaque((stack, layer) -> layer == 0 ? blockItem.getTintColor() : 0xFFFFFF), blockItem);
             }
         }
     }

@@ -25,8 +25,8 @@ public final class FluidTransportClientSetup {
         for(var entry:FluidTransportRegistries.tanks()){var block=entry.get();event.register((state,level,pos,layer)->layer==0?block.spec().tintRgb():0xFFFFFF,block);}
     }
     @SubscribeEvent public static void items(RegisterColorHandlersEvent.Item event){
-        for(var entry:FluidTransportRegistries.pipes()){var block=entry.get();event.register((stack,layer)->layer==0?block.spec().tintRgb():0xFFFFFF,block.asItem());}
-        for(var entry:FluidTransportRegistries.tanks()){var block=entry.get();event.register((stack,layer)->layer==0?block.spec().tintRgb():0xFFFFFF,block.asItem());}
+        for(var entry:FluidTransportRegistries.pipes()){var block=entry.get();event.register(ItemColorARGB.opaque((stack,layer)->layer==0?block.spec().tintRgb():0xFFFFFF),block.asItem());}
+        for(var entry:FluidTransportRegistries.tanks()){var block=entry.get();event.register(ItemColorARGB.opaque((stack,layer)->layer==0?block.spec().tintRgb():0xFFFFFF),block.asItem());}
     }
     @SubscribeEvent public static void models(ModelEvent.ModifyBakingResult event){
         var models=event.getModels();ItemTransforms transforms=ItemTransforms.NO_TRANSFORMS;

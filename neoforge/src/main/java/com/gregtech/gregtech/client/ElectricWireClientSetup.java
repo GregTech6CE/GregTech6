@@ -14,7 +14,7 @@ public final class ElectricWireClientSetup {
  private ElectricWireClientSetup(){}
  private static int color(com.gregtech.gregtech.block.energy.ElectricWireBlock block,int layer){return layer==0?block.spec().material().getColor():block.spec().insulated()&&layer==1?0x141414:0xFFFFFF;}
  @SubscribeEvent public static void blocks(RegisterColorHandlersEvent.Block event){for(var entry:GTWires.all()){var block=entry.get();event.register((state,level,pos,layer)->color(block,layer),block);}}
- @SubscribeEvent public static void items(RegisterColorHandlersEvent.Item event){for(var entry:GTWires.all()){var block=entry.get();event.register((stack,layer)->color(block,layer),block.asItem());}}
+ @SubscribeEvent public static void items(RegisterColorHandlersEvent.Item event){for(var entry:GTWires.all()){var block=entry.get();event.register(ItemColorARGB.opaque((stack,layer)->color(block,layer)),block.asItem());}}
  @SubscribeEvent public static void models(ModelEvent.ModifyBakingResult event){
   var models=event.getModels();ItemTransforms transforms=ItemTransforms.NO_TRANSFORMS;
   for(String path:new String[]{"iron_block","stone","dirt"}){var model=models.get(ModelResourceLocation.inventory(ResourceLocation.withDefaultNamespace(path)));if(model!=null&&model.isGui3d()&&model.getTransforms()!=ItemTransforms.NO_TRANSFORMS){transforms=model.getTransforms();break;}}

@@ -16,5 +16,5 @@ import java.util.*;
 public final class BurningBoxClientSetup {
  private BurningBoxClientSetup(){}
  @SubscribeEvent public static void blockColors(RegisterColorHandlersEvent.Block event){for(var list:List.of(SmelteryRegistries.solidBoxes(),SmelteryRegistries.fuelBoxes()))for(var holder:list)event.register((state,level,pos,index)->index==0?holder.get().spec().tintRgb():0xFFFFFF,holder.get());}
- @SubscribeEvent public static void itemColors(RegisterColorHandlersEvent.Item event){for(var list:List.of(SmelteryRegistries.solidBoxes(),SmelteryRegistries.fuelBoxes()))for(var holder:list)event.register((stack,index)->index==0?holder.get().spec().tintRgb():0xFFFFFF,holder.get().asItem());}
+ @SubscribeEvent public static void itemColors(RegisterColorHandlersEvent.Item event){for(var list:List.of(SmelteryRegistries.solidBoxes(),SmelteryRegistries.fuelBoxes()))for(var holder:list)event.register(ItemColorARGB.opaque((stack,index)->index==0?holder.get().spec().tintRgb():0xFFFFFF),holder.get().asItem());}
 }

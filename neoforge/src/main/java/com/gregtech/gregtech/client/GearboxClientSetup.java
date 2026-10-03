@@ -14,9 +14,9 @@ public final class GearboxClientSetup {
  private GearboxClientSetup(){}
  private static int color(com.gregtech.gregtech.block.energy.GearboxBlock block,int layer){return layer==0?block.spec().material().getColor():0xFFFFFF;}
  @SubscribeEvent public static void blocks(RegisterColorHandlersEvent.Block event){for(var entry:GTGearboxes.allGearboxes()){var block=entry.get();event.register((state,level,pos,layer)->color(block,layer),block);}}
- @SubscribeEvent public static void items(RegisterColorHandlersEvent.Item event){for(var entry:GTGearboxes.allGearboxes()){var block=entry.get();event.register((stack,layer)->color(block,layer),block.asItem());}}
+ @SubscribeEvent public static void items(RegisterColorHandlersEvent.Item event){for(var entry:GTGearboxes.allGearboxes()){var block=entry.get();event.register(ItemColorARGB.opaque((stack,layer)->color(block,layer)),block.asItem());}}
  @SubscribeEvent public static void transformerBlocks(RegisterColorHandlersEvent.Block event){for(var entry:GTGearboxes.allTransformers()){var block=entry.get();event.register((state,level,pos,layer)->layer==0?block.spec().material().getColor():0xFFFFFF,block);}}
- @SubscribeEvent public static void transformerItems(RegisterColorHandlersEvent.Item event){for(var entry:GTGearboxes.allTransformers()){var block=entry.get();event.register((stack,layer)->layer==0?block.spec().material().getColor():0xFFFFFF,block.asItem());}}
+ @SubscribeEvent public static void transformerItems(RegisterColorHandlersEvent.Item event){for(var entry:GTGearboxes.allTransformers()){var block=entry.get();event.register(ItemColorARGB.opaque((stack,layer)->layer==0?block.spec().material().getColor():0xFFFFFF),block.asItem());}}
  @SubscribeEvent public static void models(ModelEvent.ModifyBakingResult event){
   var models=event.getModels();ItemTransforms transforms=ItemTransforms.NO_TRANSFORMS;
   for(String path:new String[]{"iron_block","stone","dirt"}){var model=models.get(ModelResourceLocation.inventory(ResourceLocation.withDefaultNamespace(path)));if(model!=null&&model.isGui3d()&&model.getTransforms()!=ItemTransforms.NO_TRANSFORMS){transforms=model.getTransforms();break;}}

@@ -29,12 +29,12 @@ public final class RelayFilterClientSetup {
     @SubscribeEvent
     public static void items(RegisterColorHandlersEvent.Item event) {
         for (var holder : GTRelaysFilters.FILTERS) {
-            event.register((stack, layer) -> layer == 0 ? Materials.SteelGalvanized.getColor() : 0xFFFFFF, holder.get().asItem());
+            event.register(ItemColorARGB.opaque((stack, layer) -> layer == 0 ? Materials.SteelGalvanized.getColor() : 0xFFFFFF), holder.get().asItem());
         }
         for (var holder : GTRelaysFilters.EXTENDERS) {
             if (holder.get() instanceof SourceExtenderBlock extender) {
                 int color = extender.spec().material().getColor();
-                event.register((stack, layer) -> layer == 0 ? color : 0xFFFFFF, extender.asItem());
+                event.register(ItemColorARGB.opaque((stack, layer) -> layer == 0 ? color : 0xFFFFFF), extender.asItem());
             }
         }
     }

@@ -59,7 +59,7 @@ public final class MaterialClientModels {
     public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
         for (var entry : GTItems.allEntries()) {
             MaterialItem item = entry.get();
-            event.register((stack, layer) -> layer == 0 ? item.getTintColor() : 0xFFFFFF, item);
+            event.register(ItemColorARGB.opaque((stack, layer) -> layer == 0 ? item.getTintColor() : 0xFFFFFF), item);
         }
     }
 

@@ -28,7 +28,7 @@ public final class StorageClientSetup {
     public static void items(RegisterColorHandlersEvent.Item event) {
         for(var holder:StorageRegistries.all()) {
             MassStorageBlock block=(MassStorageBlock)holder.get();
-            event.register((stack,layer)->layer==0&&block.material()!=null?block.material().getColor():0xFFFFFF,block.asItem());
+            event.register(ItemColorARGB.opaque((stack,layer)->layer==0&&block.material()!=null?block.material().getColor():0xFFFFFF),block.asItem());
         }
     }
 }

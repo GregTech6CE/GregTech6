@@ -38,6 +38,7 @@ final class ToolIconSmoke {
                 quads.addAll(pass.getQuads(null, side, RandomSource.create(42)));
         }
         if (quads.isEmpty()) throw new IllegalStateException("Invisible tool " + stack);
+        LayeredItemSmoke.requireOpaque(client, stack, quads);
         if (woodHandle && quads.stream().noneMatch(q -> q.getSprite().contents().name().getPath().equals("item/material_icons/wood/stick")))
             throw new IllegalStateException("Missing wood handle " + stack + ": " + quads.stream().map(q -> q.getSprite().contents().name()).distinct().toList());
     }
