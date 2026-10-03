@@ -64,6 +64,8 @@ public final class MaterialBehaviorContracts {
         check(com.gregtech.gregtech.content.tool.OriginalToolMaterials.inFamily(GTMaterialRegistry.get("Knightmetal"), "Steel"), "ANY.Steel accepts Knightmetal screws and rings");
         check(com.gregtech.gregtech.content.tool.OriginalToolMaterials.inFamily(GTMaterialRegistry.get("MeteoricSteel"), "Steel"), "ANY.Steel accepts MeteoricSteel screws and rings");
         check(com.gregtech.gregtech.content.tool.OriginalToolMaterials.acceptsHandle(GTMaterialRegistry.get("EnderAmethyst"), GTMaterialRegistry.get("Steel")), "ANY.Iron accepts Steel rods for EnderAmethyst tools");
+        check(!com.gregtech.gregtech.content.tool.OriginalToolMaterials.acceptsHandle(GTMaterialRegistry.get("EnderAmethyst"), GTMaterialRegistry.get("Wood")), "EnderAmethyst does not fall back to a default wooden handle");
+        check(com.gregtech.gregtech.content.tool.OriginalToolMaterials.inFamily(GTMaterialRegistry.get("WoodTainted"), "WoodMagical"), "ANY.WoodMagical includes MT.WOODS.Tainted under its registered name");
         validateCopperTinBronze();
         validateAmountsAndReactions();
         System.out.println("Material behavior contracts passed: " + assertions

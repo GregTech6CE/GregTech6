@@ -23,11 +23,11 @@ public final class OriginalToolMaterials {
         "ElvenElementium", "ElvenDragonstone", "Manasteel", "Terrasteel", "ManaDiamond", "Thaumium");
     private static final Set<String> BLAZE_HEADS = Set.of("FierySteel", "Fireleaf", "MeteoflameSteel", "MeteoflameBlackSteel",
         "MeteoflameBlueSteel", "MeteoflameRedSteel", "FlamascusSteel", "Firestone");
-    private static final Set<String> IRON_HEADS = Set.of("EnderAmethyst", "Meteorite", "Kreknorite", "Sugilite");
+    private static final Set<String> IRON_HEADS = Set.of("AmethystEnder", "Meteorite", "Kreknorite", "Sugilite");
     private static final Set<String> MAGIC_IRON_HEADS = Set.of("VoidMetal", "InfusedAir", "InfusedBalance", "InfusedDull",
         "InfusedEarth", "InfusedEntropy", "InfusedFire", "InfusedOrder", "InfusedWater", "InfusedVis", "DarkThaumium");
     private static final Set<String> MAGIC_WOODS = Set.of("Greatwood", "Silverwood", "Livingwood", "Dreamwood", "Shimmerwood",
-        "Magic", "Tainted", "Witchwood", "Rainbowood");
+        "Magicwood", "WoodTainted", "Witchwood", "Rainbowood");
     private static final Set<String> MAGIC_IRONS = Set.of("Manasteel", "Thaumium", "DarkThaumium", "SpectreIron", "FierySteel", "MeteoflameSteel");
     private static String name(GTMaterial material) { return material.getName().replace(" ", ""); }
     public static boolean inFamily(GTMaterial material, String family) {
