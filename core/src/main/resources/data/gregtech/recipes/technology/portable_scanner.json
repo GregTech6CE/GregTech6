@@ -1,0 +1,37 @@
+{
+  "type": "gregtech:tool_shaped",
+  "_comment": "GT6 Loader_MultiTileEntities:1075",
+  "allow_mirror": false,
+  "pattern": [
+    "EXR",
+    "CPU",
+    "BXB"
+  ],
+  "key": {
+    "B": {
+      "item": "gregtech:battery_alkaline_hv"
+    },
+    "X": {
+      "item": "gregtech:plate_chromium"
+    },
+    "U": {
+      "tag": "gregtech:technology/usb_sticks_tier_3_plus"
+    },
+    "C": {
+      "tag": "gregtech:technology/usb_cables_tier_3_plus"
+    },
+    "E": {
+      "item": "gregtech:compact_signal_emitter_ev"
+    },
+    "R": {
+      "item": "gregtech:compact_sensor_ev"
+    },
+    "P": {
+      "item": "gregtech:crystal_circuit_sapphire"
+    }
+  },
+  "result": {
+    "item": "gregtech:portable_scanner",
+    "count": 1
+  }
+}

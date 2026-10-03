@@ -1,0 +1,37 @@
+{
+  "type": "gregtech:tool_shaped",
+  "_comment": "GT6 Loader_MultiTileEntities:1076",
+  "allow_mirror": false,
+  "pattern": [
+    "EXR",
+    "CPU",
+    "BXB"
+  ],
+  "key": {
+    "B": {
+      "item": "gregtech:battery_alkaline_mv"
+    },
+    "X": {
+      "item": "gregtech:plate_aluminium"
+    },
+    "U": {
+      "tag": "gregtech:technology/usb_sticks_tier_1_plus"
+    },
+    "C": {
+      "tag": "gregtech:technology/usb_cables_tier_1_plus"
+    },
+    "E": {
+      "item": "gregtech:compact_signal_emitter_mv"
+    },
+    "R": {
+      "item": "gregtech:compact_sensor_mv"
+    },
+    "P": {
+      "tag": "gregtech:circuits_tier_6_plus"
+    }
+  },
+  "result": {
+    "item": "gregtech:portable_cropnalyzer",
+    "count": 1
+  }
+}

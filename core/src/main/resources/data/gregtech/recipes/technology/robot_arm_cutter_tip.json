@@ -1,0 +1,37 @@
+{
+  "type": "gregtech:tool_shaped",
+  "_comment": "GT6 MultiItemRandomTools:485",
+  "allow_mirror": false,
+  "pattern": [
+    "wPh",
+    "CMC",
+    "XfX"
+  ],
+  "key": {
+    "w": {
+      "tag": "forge:tools/wrench"
+    },
+    "h": {
+      "tag": "forge:tools/hammer"
+    },
+    "P": {
+      "item": "gregtech:plate_curved_steelgalvanized"
+    },
+    "C": {
+      "tag": "gregtech:circuits_tier_3_plus"
+    },
+    "M": {
+      "item": "gregtech:compact_electric_motor_hv"
+    },
+    "X": {
+      "item": "gregtech:plate_stainlesssteel"
+    },
+    "f": {
+      "tag": "forge:tools/file"
+    }
+  },
+  "result": {
+    "item": "gregtech:robot_arm_cutter_tip",
+    "count": 1
+  }
+}

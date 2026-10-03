@@ -220,9 +220,9 @@ public final class MaterialPrefix {
      * (~25k items) — documented deviation, §24 of {@code docs/PORTING_REMAINING_2026-09-14.md}.</p>
      */
     private static final Predicate<GTMaterial> GT6_TOOL_HEAD = m -> m.getToolQuality() >= 1;
-    /** GT6 {@code OP.java:247}: the hammer additionally accepts {@code WOOD} (whose quality is 0). */
+    /** GT6 OP:247 also accepts wood and Rubber (MT:1301: type 1, BOUNCY/STRETCHY, quality 0). */
     private static final Predicate<GTMaterial> GT6_HAMMER = GT6_TOOL_HEAD
-            .or(m -> m.has(MaterialProperty.WOOD));
+            .or(m -> m.has(MaterialProperty.WOOD) || m.getName().equals("Rubber"));
     private static final Predicate<GTMaterial> HAS_PROJECTILE = m ->
             m.has(MaterialProperty.GENERATE_PROJECTILE);
 

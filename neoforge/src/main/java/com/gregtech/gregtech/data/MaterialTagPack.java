@@ -50,6 +50,9 @@ public final class MaterialTagPack extends AbstractPackResources {
             var id=BuiltInRegistries.ITEM.getKey(item); if(id==null||item==Items.AIR)continue;
             var form=MaterialEquivalence.form(new ItemStack(item));
             if(form!=null) {
+                for(var family:com.gregtech.gregtech.content.recipe.TechnologyIngredients.FAMILIES)
+                    if(family.accepts(form.prefix(),form.material()))
+                        add(tags,"gregtech","item","technology/"+family.tag(),id.toString());
                 if(form.prefix()==MaterialPrefix.stick || form.prefix()==MaterialPrefix.plateTiny) {
                     var material=form.material().resolve();
                     boolean wood=com.gregtech.gregtech.content.tool.OriginalToolMaterials.inFamily(material,"Wood");
@@ -85,6 +88,12 @@ public final class MaterialTagPack extends AbstractPackResources {
                     }
                 }
             }
+            if(id.getNamespace().equals("gregtech"))
+                for(String tag:com.gregtech.gregtech.content.recipe.TechnologyIngredients.usbTags(id.getPath()))
+                    add(tags,"gregtech","item",tag,id.toString());
+            for(var tool:com.gregtech.gregtech.content.tool.CraftingToolDefinitions.ALL)
+                if(id.getNamespace().equals("gregtech") && (tool.tip().equals(id.getPath()) || tool.token().equals(id.getPath())))
+                    for(String toolKind:tool.kinds()) add(tags,"forge","item","tools/"+toolKind,id.toString());
             // GT tools: standard Forge convention, e.g. forge:tools/wrench.
             String toolKind=com.gregtech.gregtech.platform.neoforge.NeoToolBindings.craftKind(new ItemStack(item));
             if(!toolKind.isEmpty()) add(tags,"forge","item","tools/"+toolKind,id.toString());

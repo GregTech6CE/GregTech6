@@ -69,6 +69,7 @@ public final class GTGeneratedChem {
         load("vanilla", GTVanillaGen::load);
         load("temporary", GTTemporaryGen::load);
         load("ores", GTOresGen::load);
+        load("technology", GTTechnologyRecipes::load);
         load("combs", GTCombGen::load);
         LOGGER.info("[gregtech] Transpiled GT6 recipes: {} added, {} skipped (missing content)", added, skipped);
         if (!MISSING.isEmpty()) {

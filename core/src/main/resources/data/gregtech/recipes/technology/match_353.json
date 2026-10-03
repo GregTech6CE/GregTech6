@@ -1,0 +1,21 @@
+{
+  "type": "gregtech:tool_shaped",
+  "_comment": "GT6 MultiItemRandomTools:353",
+  "allow_mirror": false,
+  "pattern": [
+    "P",
+    "S"
+  ],
+  "key": {
+    "P": {
+      "tag": "gregtech:technology/any_phosphorus_dust_small"
+    },
+    "S": {
+      "tag": "gregtech:technology/any_wood_bolt"
+    }
+  },
+  "result": {
+    "item": "gregtech:match",
+    "count": 1
+  }
+}

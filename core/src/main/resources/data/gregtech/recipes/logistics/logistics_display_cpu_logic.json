@@ -16,14 +16,9 @@
     "Q": {
       "item": "gregtech:blank_cover"
     },
-    "C": [
-      {
-        "item": "gregtech:circuit_basic"
-      },
-      {
-        "item": "gregtech:circuit_good"
-      }
-    ]
+    "C": {
+      "tag": "gregtech:circuits_tier_2_plus"
+    }
   },
   "allow_mirror": false,
   "result": {

@@ -1,0 +1,40 @@
+{
+  "type": "gregtech:tool_shaped",
+  "_comment": "GT6 MultiItemRandomTools:483",
+  "allow_mirror": false,
+  "pattern": [
+    "wPh",
+    "CMC",
+    "DXd"
+  ],
+  "key": {
+    "w": {
+      "tag": "forge:tools/wrench"
+    },
+    "h": {
+      "tag": "forge:tools/hammer"
+    },
+    "P": {
+      "item": "gregtech:plate_curved_steelgalvanized"
+    },
+    "C": {
+      "tag": "gregtech:circuits_tier_3_plus"
+    },
+    "M": {
+      "item": "gregtech:compact_electric_motor_hv"
+    },
+    "X": {
+      "item": "gregtech:tool_head_buzz_saw_cobaltbrass"
+    },
+    "D": {
+      "tag": "gregtech:technology/any_diamond_dust"
+    },
+    "d": {
+      "tag": "forge:tools/screwdriver"
+    }
+  },
+  "result": {
+    "item": "gregtech:robot_arm_saw_tip",
+    "count": 1
+  }
+}

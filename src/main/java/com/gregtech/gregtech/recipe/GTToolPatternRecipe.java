@@ -114,7 +114,7 @@ public abstract class GTToolPatternRecipe extends ToolShapedRecipe {
                 if (stack.isEmpty()) return null;
                 var tool = pattern.tools().get(letter);
                 if (tool != null) {
-                    if (!(stack.getItem() instanceof GTToolItem item) || item.toolType() != tool) return null;
+                    if (!CraftingTools.matches(stack, tool)) return null;
                     continue;
                 }
                 var special = specialIngredient(type, pattern, letter);

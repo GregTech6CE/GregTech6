@@ -82,6 +82,13 @@ public class MaterialGroups {
         }
         initialized = true;
 
+        // MT:208 diamond(...) puts every diamond in ANY.Diamond; ANY:97 also adds Diamantine.
+        Diamond.addReRegistrationToThis(GT6Materials.Compounds.Diamond, GT6Materials.Compounds.DiamondBlue,
+                GT6Materials.Compounds.DiamondGreen, GT6Materials.Compounds.DiamondPurple,
+                GT6Materials.Compounds.DiamondRed, GT6Materials.Compounds.DiamondYellow,
+                GT6Materials.Compounds.DiamondPink, GT6Materials.Compounds.DiamondIndustrial);
+        var diamantine = GTMaterialRegistry.get("Diamantine");
+        if (diamantine.isValid()) Diamond.addReRegistrationToThis(diamantine);
         Amber.addReRegistrationToThis(GT6Materials.Compounds.AmberGolden, GT6Materials.Compounds.AmberDominican);
         Amethyst.addReRegistrationToThis(GT6Materials.Compounds.Amethyst, GT6Materials.Compounds.EnderAmethyst);
         Ash.addReRegistrationToThis(GT6Materials.Compounds.Ash, GT6Materials.Compounds.DarkAsh, GT6Materials.Compounds.VolcanicAsh);

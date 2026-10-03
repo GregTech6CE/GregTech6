@@ -1,0 +1,21 @@
+{
+  "type": "gregtech:tool_shaped",
+  "_comment": "GT6 MultiItemRandomTools:398",
+  "allow_mirror": true,
+  "pattern": [
+    "S ",
+    "GS"
+  ],
+  "key": {
+    "S": {
+      "tag": "gregtech:ammunition/sticks_wood"
+    },
+    "G": {
+      "item": "gregtech:dry_bark"
+    }
+  },
+  "result": {
+    "item": "gregtech:fire_starter_2",
+    "count": 1
+  }
+}

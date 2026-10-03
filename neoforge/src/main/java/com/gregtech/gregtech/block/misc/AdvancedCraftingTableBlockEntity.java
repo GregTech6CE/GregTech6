@@ -126,6 +126,8 @@ public class AdvancedCraftingTableBlockEntity extends BlockEntity implements Blo
         if(recipe==null)return null;
         ItemStack result=recipe.value().assemble(grid.asCraftInput(),level.registryAccess());if(result.isEmpty())return null;
         var remains=recipe.value().getRemainingItems(grid.asCraftInput());
+        for(int i=0;i<9;i++)if(com.gregtech.gregtech.recipe.CraftingTools.infinite(used[i]))
+            remains.set(i,used[i].copyWithCount(1));
         for(int i=0;i<9;i++)if(!remains.get(i).isEmpty()) {
             ItemStack rest=remains.get(i).copy();int original=sources[i];
             if(original>=0)rest=put(after,original,rest);

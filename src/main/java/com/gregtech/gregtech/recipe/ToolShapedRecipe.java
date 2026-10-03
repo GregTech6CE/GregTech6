@@ -21,6 +21,7 @@ public class ToolShapedRecipe extends ShapedRecipe {
     }
     public ToolShapedRecipe(ShapedRecipe base, boolean allowMirror, boolean requireEmptyFluidContainers) {
         super(base.getId(),base.getGroup(),base.category(),base.getWidth(),base.getHeight(),base.getIngredients(),base.getResultItem(RegistryAccess.EMPTY));
+        getIngredients().replaceAll(CraftingTools::expand);
         this.allowMirror=allowMirror;
         this.requireEmptyFluidContainers=requireEmptyFluidContainers;
     }

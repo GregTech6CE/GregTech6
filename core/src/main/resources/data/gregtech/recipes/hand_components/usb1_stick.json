@@ -16,17 +16,9 @@
     "W": {
       "item": "gregtech:wire_01_gold"
     },
-    "C": [
-      {
-        "item": "gregtech:circuit_basic"
-      },
-      {
-        "item": "gregtech:circuit_good"
-      },
-      {
-        "item": "gregtech:circuit_advanced"
-      }
-    ],
+    "C": {
+      "tag": "gregtech:circuits_tier_3_plus"
+    },
     "P": {
       "tag": "forge:plates/aluminium"
     },

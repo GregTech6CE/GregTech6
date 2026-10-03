@@ -13,7 +13,7 @@ public class ToolShapedRecipe implements CraftingRecipe {
  private final ShapedRecipe base;
  private final boolean allowMirror,requireEmptyFluidContainers;
  public ToolShapedRecipe(ShapedRecipe base,boolean allowMirror){this(base,allowMirror,false);}
- public ToolShapedRecipe(ShapedRecipe base,boolean allowMirror,boolean requireEmptyFluidContainers){this.base=base;this.allowMirror=allowMirror;this.requireEmptyFluidContainers=requireEmptyFluidContainers;}
+ public ToolShapedRecipe(ShapedRecipe base,boolean allowMirror,boolean requireEmptyFluidContainers){base.getIngredients().replaceAll(CraftingTools::expand);this.base=base;this.allowMirror=allowMirror;this.requireEmptyFluidContainers=requireEmptyFluidContainers;}
  @Override public boolean matches(CraftingInput input,Level level){
   if(!(allowMirror?base.matches(input,level):matchesUnmirrored(input)))return false;
   return toolsUsable(input);

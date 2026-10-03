@@ -26,8 +26,10 @@ public final class MaterialBehaviorContracts {
     // docs/integration/verification/normal-wood-differential-20261003.json.
     // Only five EMPTY ammunition form booleans change; isolated full graph proof:
     // docs/integration/verification/ammunition-differential-20261004.json.
-    private static final String DEFINITIONS_SHA256 = "c9744976f092d8eae2f111d9fdde90e815a308fe40e08efd2b48c10c21f7a368";
-    private static final String POST_INIT_SHA256 = "99a2334097c88fdc89fff7c6a03d75c5022120b2793cc46d8d268fc36b037122";
+    // Eight source Diamond bindings + Rubber hammer-head form; isolated graph proof:
+    // docs/integration/verification/technology-differential-20261004.json.
+    private static final String DEFINITIONS_SHA256 = "0212a1004cbdf43a36f6698e3caa547c7daec3026002f402272667fc8ae3a838";
+    private static final String POST_INIT_SHA256 = "48ddd51177b4873a353441070929c66a2416a3facabec53cedf37b86fe25def0";
     private static int assertions;
     private MaterialBehaviorContracts() {}
 

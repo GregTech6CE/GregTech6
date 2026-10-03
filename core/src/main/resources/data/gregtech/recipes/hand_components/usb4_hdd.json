@@ -25,26 +25,9 @@
     "W": {
       "item": "gregtech:usb4_cable"
     },
-    "C": [
-      {
-        "item": "gregtech:circuit_basic"
-      },
-      {
-        "item": "gregtech:circuit_good"
-      },
-      {
-        "item": "gregtech:circuit_advanced"
-      },
-      {
-        "item": "gregtech:circuit_elite"
-      },
-      {
-        "item": "gregtech:circuit_master"
-      },
-      {
-        "item": "gregtech:circuit_ultimate"
-      }
-    ]
+    "C": {
+      "tag": "gregtech:circuits_tier_6_plus"
+    }
   },
   "allow_mirror": false,
   "result": {

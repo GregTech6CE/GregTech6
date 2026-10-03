@@ -25,23 +25,9 @@
     "W": {
       "item": "gregtech:usb3_cable"
     },
-    "C": [
-      {
-        "item": "gregtech:circuit_basic"
-      },
-      {
-        "item": "gregtech:circuit_good"
-      },
-      {
-        "item": "gregtech:circuit_advanced"
-      },
-      {
-        "item": "gregtech:circuit_elite"
-      },
-      {
-        "item": "gregtech:circuit_master"
-      }
-    ]
+    "C": {
+      "tag": "gregtech:circuits_tier_5_plus"
+    }
   },
   "allow_mirror": false,
   "result": {

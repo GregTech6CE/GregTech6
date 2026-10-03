@@ -13,20 +13,9 @@
     "P": {
       "item": "gregtech:crystal_processor_emerald"
     },
-    "C": [
-      {
-        "item": "gregtech:circuit_basic"
-      },
-      {
-        "item": "gregtech:circuit_good"
-      },
-      {
-        "item": "gregtech:circuit_advanced"
-      },
-      {
-        "item": "gregtech:circuit_elite"
-      }
-    ],
+    "C": {
+      "tag": "gregtech:circuits_tier_4_plus"
+    },
     "W": {
       "item": "gregtech:wire_fine_osmiumelemental"
     },

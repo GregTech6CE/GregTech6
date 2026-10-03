@@ -12,17 +12,9 @@
     "P": {
       "item": "gregtech:compact_electric_piston_lv"
     },
-    "C": [
-      {
-        "item": "gregtech:circuit_basic"
-      },
-      {
-        "item": "gregtech:circuit_good"
-      },
-      {
-        "item": "gregtech:circuit_advanced"
-      }
-    ],
+    "C": {
+      "tag": "gregtech:circuits_tier_3_plus"
+    },
     "Q": {
       "item": "gregtech:item_filter"
     }
