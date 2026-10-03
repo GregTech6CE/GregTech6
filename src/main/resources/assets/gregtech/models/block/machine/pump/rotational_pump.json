@@ -1,119 +1,16 @@
 {
+  "parent": "minecraft:block/block",
   "loader": "forge:composite",
-  "display": {
-    "gui": {
-      "rotation": [
-        30,
-        45,
-        0
-      ],
-      "translation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        0.625,
-        0.625,
-        0.625
-      ]
-    },
-    "ground": {
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "translation": [
-        0,
-        3,
-        0
-      ],
-      "scale": [
-        0.25,
-        0.25,
-        0.25
-      ]
-    },
-    "fixed": {
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "translation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        0.5,
-        0.5,
-        0.5
-      ]
-    },
-    "thirdperson_righthand": {
-      "rotation": [
-        75,
-        45,
-        0
-      ],
-      "translation": [
-        0,
-        2.5,
-        0
-      ],
-      "scale": [
-        0.375,
-        0.375,
-        0.375
-      ]
-    },
-    "firstperson_righthand": {
-      "rotation": [
-        0,
-        45,
-        0
-      ],
-      "translation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        0.4,
-        0.4,
-        0.4
-      ]
-    },
-    "firstperson_lefthand": {
-      "rotation": [
-        0,
-        225,
-        0
-      ],
-      "translation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        0.4,
-        0.4,
-        0.4
-      ]
-    }
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "particle": "gregtech:block/machines/pump/rotation/colored/side"
   },
   "children": {
-    "layer0": {
-      "parent": "minecraft:block/block",
+    "colored": {
       "textures": {
-        "down": "gregtech:block/machines/pump/colored/bottom",
-        "up": "gregtech:block/machines/pump/colored/top",
-        "north": "gregtech:block/machines/pump/colored/front",
-        "south": "gregtech:block/machines/pump/colored/back",
-        "west": "gregtech:block/machines/pump/colored/side",
-        "east": "gregtech:block/machines/pump/colored/side"
+        "front": "gregtech:block/machines/pump/rotation/colored/front",
+        "back": "gregtech:block/machines/pump/rotation/colored/back",
+        "side": "gregtech:block/machines/pump/rotation/colored/side"
       },
       "elements": [
         {
@@ -128,50 +25,45 @@
             16
           ],
           "faces": {
-            "down": {
-              "texture": "#down",
-              "cullface": "down",
-              "tintindex": 0
-            },
-            "up": {
-              "texture": "#up",
-              "cullface": "up",
-              "tintindex": 0
-            },
             "north": {
-              "texture": "#north",
+              "texture": "#front",
               "cullface": "north",
               "tintindex": 0
             },
             "south": {
-              "texture": "#south",
+              "texture": "#back",
               "cullface": "south",
               "tintindex": 0
             },
+            "east": {
+              "texture": "#side",
+              "cullface": "east",
+              "tintindex": 0
+            },
             "west": {
-              "texture": "#west",
+              "texture": "#side",
               "cullface": "west",
               "tintindex": 0
             },
-            "east": {
-              "texture": "#east",
-              "cullface": "east",
+            "up": {
+              "texture": "#side",
+              "cullface": "up",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#side",
+              "cullface": "down",
               "tintindex": 0
             }
           }
         }
-      ],
-      "render_type": "minecraft:solid"
+      ]
     },
-    "layer1": {
-      "parent": "minecraft:block/block",
+    "overlay": {
       "textures": {
-        "down": "gregtech:block/machines/pump/overlay/bottom",
-        "up": "gregtech:block/machines/pump/overlay/top",
-        "north": "gregtech:block/machines/pump/overlay/front",
-        "south": "gregtech:block/machines/pump/overlay/back",
-        "west": "gregtech:block/machines/pump/overlay/side",
-        "east": "gregtech:block/machines/pump/overlay/side"
+        "front": "gregtech:block/machines/pump/rotation/overlay/front",
+        "back": "gregtech:block/machines/pump/rotation/overlay/back",
+        "side": "gregtech:block/machines/pump/rotation/overlay/side"
       },
       "elements": [
         {
@@ -186,38 +78,33 @@
             16
           ],
           "faces": {
-            "down": {
-              "texture": "#down",
-              "cullface": "down"
-            },
-            "up": {
-              "texture": "#up",
-              "cullface": "up"
-            },
             "north": {
-              "texture": "#north",
+              "texture": "#front",
               "cullface": "north"
             },
             "south": {
-              "texture": "#south",
+              "texture": "#back",
               "cullface": "south"
             },
+            "east": {
+              "texture": "#side",
+              "cullface": "east"
+            },
             "west": {
-              "texture": "#west",
+              "texture": "#side",
               "cullface": "west"
             },
-            "east": {
-              "texture": "#east",
-              "cullface": "east"
+            "up": {
+              "texture": "#side",
+              "cullface": "up"
+            },
+            "down": {
+              "texture": "#side",
+              "cullface": "down"
             }
           }
         }
-      ],
-      "render_type": "minecraft:cutout"
+      ]
     }
-  },
-  "parent": "minecraft:block/block",
-  "textures": {
-    "particle": "gregtech:block/machines/pump/colored/bottom"
   }
 }

@@ -1,3 +1,6 @@
 {
-  "parent": "gregtech:block/tracks/track_adamantium_flat"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "gregtech:block/iconsets/rail_straight_adamantium"
+  }
 }

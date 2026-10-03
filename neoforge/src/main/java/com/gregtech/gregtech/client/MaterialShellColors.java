@@ -21,4 +21,14 @@ public final class MaterialShellColors {
                 event.register((state, level, pos, tint) -> tint == 0 ? attachment.spec().material().getColor() : 0xFFFFFF, block);
         }
     }
+    @SubscribeEvent
+    public static void items(RegisterColorHandlersEvent.Item event) {
+        for (var item : BuiltInRegistries.ITEM) {
+            if (item instanceof com.gregtech.gregtech.item.PortableFluidContainerItem container)
+                event.register(ItemColorARGB.opaque((stack, tint) -> tint == 0 ? container.spec().material().getColor() : 0xFFFFFF), item);
+            else if (item instanceof net.minecraft.world.item.BlockItem blockItem
+                    && blockItem.getBlock() instanceof FluidAttachmentBlock attachment)
+                event.register(ItemColorARGB.opaque((stack, tint) -> tint == 0 ? attachment.spec().material().getColor() : 0xFFFFFF), item);
+        }
+    }
 }

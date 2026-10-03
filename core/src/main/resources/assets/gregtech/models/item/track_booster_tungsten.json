@@ -1,3 +1,6 @@
 {
-  "parent": "gregtech:block/tracks/track_booster_tungsten_flat"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "gregtech:block/iconsets/rail_booster_tungsten"
+  }
 }
