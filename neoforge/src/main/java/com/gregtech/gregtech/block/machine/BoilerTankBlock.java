@@ -34,7 +34,25 @@ import java.util.List;
  * material-tinted textures); HU in from any face, steam out the top.
  * The front face shows a pressure gauge; rotate with a wrench.
  */
-public class BoilerTankBlock extends Block implements EntityBlock {
+public class BoilerTankBlock extends Block implements EntityBlock, com.gregtech.gregtech.api.tool.ToolInteractionTarget {
+
+    @Override public com.gregtech.gregtech.api.tool.ToolInteractionSpec toolInteraction(BlockState state,ItemStack tool) {
+        return com.gregtech.gregtech.api.tool.GTToolHelper.isMachineWrench(tool)
+                ? com.gregtech.gregtech.api.tool.ToolInteractionSpec.facing(FACING,MachineRotationType.HORIZONTAL) : null;
+    }
+    /** Source boiler collision bounds are inset two pixels so touching entities enter its heat surface. */
+    @Override public net.minecraft.world.phys.shapes.VoxelShape getCollisionShape(BlockState state,BlockGetter level,BlockPos pos,
+            net.minecraft.world.phys.shapes.CollisionContext context) {
+        return Block.box(2,2,2,14,14,14);
+    }
+    @Override public void entityInside(BlockState state,Level level,BlockPos pos,net.minecraft.world.entity.Entity entity) {
+        if (!level.isClientSide && level.getBlockEntity(pos) instanceof BoilerTankBlockEntity boiler)
+            com.gregtech.gregtech.util.GTEntityHelper.applyHeatDamage(entity,boiler.contactDamage());
+    }
+    @Override public void stepOn(Level level,BlockPos pos,BlockState state,net.minecraft.world.entity.Entity entity) {
+        entityInside(state,level,pos,entity);
+        super.stepOn(level,pos,state,entity);
+    }
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 

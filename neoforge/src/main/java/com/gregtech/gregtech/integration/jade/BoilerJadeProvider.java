@@ -42,6 +42,10 @@ public enum BoilerJadeProvider implements IBlockComponentProvider, IServerDataPr
         tag.putLong(HEAT, boiler.storedHeat());
         if (spec != null) tag.putLong(MAX_HEAT, spec.heatCapacity());
         tag.putShort(EFFICIENCY, boiler.efficiency());
+        tag.putInt("gt_pressure",boiler.barometerValue());
+        tag.putFloat("gt_explosion_power",boiler.explosionPower());
+        tag.putFloat("gt_contact_damage",boiler.contactDamage());
+        tag.putFloat("gt_descaling_damage",boiler.descalingDamage());
     }
 
     @Override
@@ -75,6 +79,15 @@ public enum BoilerJadeProvider implements IBlockComponentProvider, IServerDataPr
             tooltip.add(Component.translatable("jade.gregtech.boiler.calcified",
                     String.format("%.1f", eff / 100.0)));
         }
+
+        int pressure = data.getInt("gt_pressure");
+        float power = data.getFloat("gt_explosion_power");
+        tooltip.add(Component.translatable("jade.gregtech.boiler.pressure",pressure));
+        tooltip.add(Component.translatable(pressure > 4 ? "jade.gregtech.boiler.dismantle_danger" : "jade.gregtech.boiler.dismantle_safe",
+                power, power * 2));
+        tooltip.add(Component.translatable("jade.gregtech.boiler.contact_damage",data.getFloat("gt_contact_damage")));
+        if (eff < 10000) tooltip.add(Component.translatable(pressure > 15 ? "jade.gregtech.boiler.descaling_explosion"
+                : "jade.gregtech.boiler.descaling_damage",data.getFloat("gt_descaling_damage")));
 
         if (steamPct >= 100) {
             tooltip.add(Component.translatable("jade.gregtech.boiler.warn_overpressure"));

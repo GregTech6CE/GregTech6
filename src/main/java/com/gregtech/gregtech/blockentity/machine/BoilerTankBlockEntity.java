@@ -160,12 +160,21 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity {
         steamTank.remove(Math.max(0,Math.min(accepted,offer.getAmount())));
     }
 
+    public float contactDamage() {
+        return com.gregtech.gregtech.content.energy.BoilerHazards.contactDamage(heat,steamTank.getAmount());
+    }
+    public float descalingDamage() {
+        return com.gregtech.gregtech.content.energy.BoilerHazards.descalingDamage(heat,steamTank.getAmount(),efficiency,barometerValue());
+    }
+    public float explosionPower() {
+        return com.gregtech.gregtech.content.energy.BoilerHazards.explosionPower(steamTank.getAmount());
+    }
     public void explode() {
-        if (level == null) return;
-        float power = (float) Math.max(1.0, Math.sqrt(steamTank.getAmount()) / 100.0);
+        if (level == null || level.isClientSide) return;
+        float power = explosionPower();
         level.removeBlock(worldPosition, false);
-        level.explode(null, worldPosition.getX() + 0.5, worldPosition.getY() + 0.5, worldPosition.getZ() + 0.5,
-                Math.min(8.0F, power), Level.ExplosionInteraction.BLOCK);
+        level.explode(null, worldPosition.getX()+.5,worldPosition.getY()+.5,worldPosition.getZ()+.5,
+                power, Level.ExplosionInteraction.BLOCK);
     }
 
     // ── Tool interactions ────────────────────────────────────────────────────
@@ -175,38 +184,24 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity {
 
         ItemStack held = player.getItemInHand(hand);
 
-        // Wrench: rotate facing
-        if (GTToolHelper.matchesTool(held, GTToolType.WRENCH)
-                || GTToolHelper.matchesTool(held, GTToolType.MONKEY_WRENCH)) {
-            Direction current = state.getValue(BoilerTankBlock.FACING);
-            Direction target = current.getClockWise();
-            if (player.isShiftKeyDown()) target = current.getCounterClockWise();
-            level.setBlock(worldPosition, state.setValue(BoilerTankBlock.FACING, target), 3);
-            level.playSound(null, worldPosition,
-                    com.gregtech.gregtech.registry.GTSounds.WRENCH.get(),
-                    SoundSource.BLOCKS, 1.0F, 1.0F);
-            GTToolHelper.damageForToolClickReturn(held, 10000L, player);
+        if (com.gregtech.gregtech.api.tool.ToolInteractions.use(state,level,worldPosition,player,hand,hit))
             return InteractionResult.CONSUME;
-        }
 
-        // Chisel: clean calcification (explodes if steam > ~50%)
+        // Source BoilerTank:165-178: a clean tank is inert; scale removal returns its actual amount.
         if (GTToolHelper.matchesTool(held, GTToolType.CHISEL)) {
+            int removed = 10000 - efficiency;
+            if (removed <= 0) return InteractionResult.PASS;
             if (barometerValue() > 15) {
-                // Too much pressure — cleaning calcite blows up
                 explode();
-            } else {
-                long hot=heat+steamTank.getAmount()/2;
-                efficiency = 10000;
-                steamTank.setEmpty();
-                heat = 0;
-                if (player != null && hot>2000) {
-                    player.hurt(player.damageSources().inFire(), hot / 2000.0F);
-                }
-                setChanged();
-                player.displayClientMessage(Component.literal("Calcification cleaned.")
-                        .withStyle(ChatFormatting.GREEN), false);
+                return InteractionResult.CONSUME;
             }
-            GTToolHelper.damageForToolClickReturn(held, 10000L, player);
+            com.gregtech.gregtech.util.GTEntityHelper.applyHeatDamage(player, descalingDamage());
+            efficiency = 10000;
+            steamTank.setEmpty();
+            heat = 0;
+            setChanged();
+            GTToolHelper.damageForToolClickReturn(held, removed, player,
+                    hand == InteractionHand.MAIN_HAND ? net.minecraft.world.entity.EquipmentSlot.MAINHAND : net.minecraft.world.entity.EquipmentSlot.OFFHAND);
             return InteractionResult.CONSUME;
         }
 
