@@ -22,7 +22,7 @@ public final class AdvancedCraftingScreen extends AbstractContainerScreen<Advanc
             }
         }
     }
-    @Override public void render(GuiGraphics graphics,int x,int y,float tick){renderBackground(graphics,x,y,tick);super.render(graphics,x,y,tick);renderTooltip(graphics,x,y);
+    @Override public void render(GuiGraphics graphics,int x,int y,float tick){super.render(graphics,x,y,tick);renderTooltip(graphics,x,y);
         if(hoveredSlot!=null){int slot=hoveredSlot.index;
             String key=slot==0?"gt.tooltip.advanced_crafting.blueprint":slot==AdvancedCraftingMenu.FLUSH?"gt.tooltip.advanced_crafting.flush":slot==AdvancedCraftingMenu.STORE?"gt.tooltip.advanced_crafting.store":slot==AdvancedCraftingMenu.RESULT?"gt.tooltip.advanced_crafting.craft":null;
             if(key!=null)graphics.renderTooltip(font,Component.translatable(key),x,y);

@@ -42,7 +42,7 @@ public class BasicMachineScreen extends AbstractContainerScreen<BasicMachineCont
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        renderBackground(graphics,mouseX,mouseY,partialTick);
+
         super.render(graphics, mouseX, mouseY, partialTick);
         renderFluidSlots(graphics);
         renderFluidTooltip(graphics, mouseX, mouseY);

@@ -23,5 +23,5 @@ public class FilterScreen extends AbstractContainerScreen<FilterMenu> {
         graphics.blit(texture,leftPos,topPos,0,0,imageWidth,125);
         graphics.blit(texture,leftPos,topPos+125,0,126,imageWidth,96);
     }
-    @Override public void render(GuiGraphics graphics,int mouseX,int mouseY,float partial) { renderBackground(graphics,mouseX,mouseY,partial);mode.setMessage(modeText());super.render(graphics,mouseX,mouseY,partial);renderTooltip(graphics,mouseX,mouseY); }
+    @Override public void render(GuiGraphics graphics,int mouseX,int mouseY,float partial) { mode.setMessage(modeText());super.render(graphics,mouseX,mouseY,partial);renderTooltip(graphics,mouseX,mouseY); }
 }

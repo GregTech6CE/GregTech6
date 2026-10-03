@@ -20,7 +20,6 @@ import java.util.Locale;
 /** The actual GT6 machine panel, with the same slots as the live container. */
 public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
     private final RecipeMap map;
-    private static final String ENERGY_UNIT = "GU";
     private final IDrawable background,icon,slot;
     private final ResourceLocation texture;
     public RecipeMapCategory(IGuiHelper helper,RecipeMap map,ItemStack icon) {
@@ -87,25 +86,7 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
             int fluids=input?map.mInputFluidCount:map.mOutputFluidCount;
             for(int i=0;i<fluids;i++) {var point=MachineGuiLayout.fluid(input,i);slot.draw(graphics,point.x()-1,point.y()-1);}
         }
-        var stats = RecipePowerStats.of(recipe, map.mPower);
-        if (recipe.mEUt != 0) {
-            caption(graphics, Component.translatable(stats.generating() ? "gregtech.jei.gain" : "gregtech.jei.costs", stats.costs().toString(), ENERGY_UNIT), 86);
-            if (!map.mCombinePower)
-                caption(graphics, Component.translatable(stats.generating() ? "gregtech.jei.output" : "gregtech.jei.usage", stats.usage().toString(), ENERGY_UNIT), 98);
-            caption(graphics, Component.translatable("gregtech.jei.tier", stats.tier().toString(), ENERGY_UNIT), 110);
-            if(map!=com.gregtech.gregtech.data.MachineRecipeMaps.Fusion) caption(graphics, Component.translatable("gregtech.jei.power", stats.power()), 122);
-        } else {
-            caption(graphics, Component.translatable("gregtech.jei.tier_unspecified"), 110);
-        }
-        // Instant maps (the crucibles) convert on contact, so a duration line would be a lie.
-        if (!map.mInstantRecipes)
-            caption(graphics, Component.translatable("gregtech.jei.time_" + stats.timeUnit(), stats.time()), 134);
-        if(map==com.gregtech.gregtech.data.MachineRecipeMaps.Fusion)
-            caption(graphics,Component.translatable("gregtech.fusion.startup",recipe.mSpecialValue),122);
-        else if(map.hasSpecialValueLabel() && recipe.mSpecialValue!=0)
-            // GT6 NEI special value, e.g. the crucible's "Temperature: 1811 K".
-            caption(graphics,Component.translatable("gregtech.jei.special_value",
-                    recipe.mSpecialValue*map.mSpecialValueMultiplier,map.mSpecialValuePost.trim()),122);
+        com.gregtech.gregtech.client.RecipeDisplayCaptions.draw(graphics, map, recipe);
     }
     @Override public java.util.List<Component> getTooltipStrings(Recipe recipe,IRecipeSlotsView slots,double mouseX,double mouseY) {
         if(map==com.gregtech.gregtech.data.MachineRecipeMaps.Anvil || map==com.gregtech.gregtech.data.MachineRecipeMaps.AnvilBendBig || map==com.gregtech.gregtech.data.MachineRecipeMaps.AnvilBendSmall) {
@@ -116,11 +97,5 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
             }
         }
         return java.util.List.of();
-    }
-    private void caption(GuiGraphics graphics,Component text,int y) {
-        var font=net.minecraft.client.Minecraft.getInstance().font;
-        float scale=Math.min(1f,168f/Math.max(1,font.width(text)));
-        graphics.pose().pushPose();graphics.pose().translate(4,y,0);graphics.pose().scale(scale,scale,1);
-        graphics.drawString(font,text,0,0,0x555555,false);graphics.pose().popPose();
     }
 }
