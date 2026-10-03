@@ -105,6 +105,9 @@ public final class GTFeatures {
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> DUNGEON =
             FEATURES.register("gt_dungeon", GTDungeonFeature::new);
 
+    public static final RegistryObject<Feature<NoneFeatureConfiguration>> ORIGIN =
+            FEATURES.register("gt_origin", GTOriginFeature::new);
+
     private GTFeatures() {}
 
     public static void register(IEventBus modEventBus) {

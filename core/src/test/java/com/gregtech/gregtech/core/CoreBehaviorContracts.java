@@ -38,7 +38,8 @@ public final class CoreBehaviorContracts {
         addonLifecycle();
         miniaturePortalSignals();
         bedrockAndBoilerSourceSamples();
-        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 16 groups (Java 17; no game dependencies)");
+        assertions += OriginWorldgenSamples.verify();
+        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 17 groups (Java 17; no game dependencies)");
     }
 
     private static void bedrockAndBoilerSourceSamples() {

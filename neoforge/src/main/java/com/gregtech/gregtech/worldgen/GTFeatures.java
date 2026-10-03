@@ -33,6 +33,9 @@ public final class GTFeatures {
     public static final DeferredHolder<Feature<?>,Feature<NoneFeatureConfiguration>> NETHER_DEPOSITS=FEATURES.register("gt_nether_deposits",GTNetherDepositFeature::new);
     public static final DeferredHolder<Feature<?>,Feature<NoneFeatureConfiguration>> FLUID_SPRINGS=FEATURES.register("gt_fluid_springs",GTFluidSpringsFeature::new);
     public static final DeferredHolder<Feature<?>,Feature<NoneFeatureConfiguration>> DUNGEON=FEATURES.register("gt_dungeon",GTDungeonFeature::new);
+    public static final DeferredHolder<Feature<?>, Feature<NoneFeatureConfiguration>> ORIGIN =
+            FEATURES.register("gt_origin", GTOriginFeature::new);
+
     private GTFeatures() {}
     public static void register(IEventBus bus) { GTStructures.register(bus); FEATURES.register(bus); }
 }
