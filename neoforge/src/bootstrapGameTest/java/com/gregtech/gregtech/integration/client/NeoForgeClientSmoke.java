@@ -195,6 +195,7 @@ public final class NeoForgeClientSmoke {
             ids.add(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(crusher).toString());
             ToolIconSmoke.check(minecraft, gallery);
             if (net.neoforged.fml.ModList.get().isLoaded("jei")) JeiToolSlotSmoke.check();
+            SpringIconSmoke.check(minecraft, gallery);
             var result = new JsonObject();
             result.addProperty("materialModels", materials);
             result.addProperty("fluidModels", fluids);

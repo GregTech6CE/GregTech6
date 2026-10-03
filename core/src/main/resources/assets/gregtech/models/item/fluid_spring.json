@@ -1,6 +1,1 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "gregtech:block/iconsets/fluid_spring"
-  }
-}
+{"parent":"gregtech:block/iconsets/fluid_spring"}

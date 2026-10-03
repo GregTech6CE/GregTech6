@@ -51,7 +51,7 @@ public final class FluidItemBakedModel implements BakedModel {
     }
 
     /** Remap UV0 from oldSprite atlas coords to fluidSprite atlas coords. */
-    private static void remapUv(int[] verts, TextureAtlasSprite from, TextureAtlasSprite to) {
+    static void remapUv(int[] verts, TextureAtlasSprite from, TextureAtlasSprite to) {
         float u0 = from.getU0(), u1 = from.getU1(), v0 = from.getV0(), v1 = from.getV1();
         float du = u1 - u0, dv = v1 - v0;
         float tu0 = to.getU0(), tu1 = to.getU1(), tv0 = to.getV0(), tv1 = to.getV1();

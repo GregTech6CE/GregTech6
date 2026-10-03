@@ -1,7 +1,81 @@
 {
-  "parent": "minecraft:block/cross",
+  "parent": "minecraft:block/block",
   "render_type": "minecraft:cutout",
   "textures": {
-    "cross": "gregtech:block/iconsets/fluid_spring"
-  }
+    "particle": "gregtech:block/iconsets/fluid_spring",
+    "fluid": "minecraft:block/water_still",
+    "spring": "gregtech:block/iconsets/fluid_spring"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "down": {
+          "texture": "#fluid",
+          "tintindex": 0
+        },
+        "up": {
+          "texture": "#fluid",
+          "tintindex": 0
+        },
+        "north": {
+          "texture": "#fluid",
+          "tintindex": 0
+        },
+        "south": {
+          "texture": "#fluid",
+          "tintindex": 0
+        },
+        "west": {
+          "texture": "#fluid",
+          "tintindex": 0
+        },
+        "east": {
+          "texture": "#fluid",
+          "tintindex": 0
+        }
+      }
+    },
+    {
+      "from": [
+        -0.01,
+        -0.01,
+        -0.01
+      ],
+      "to": [
+        16.01,
+        16.01,
+        16.01
+      ],
+      "faces": {
+        "down": {
+          "texture": "#spring"
+        },
+        "up": {
+          "texture": "#spring"
+        },
+        "north": {
+          "texture": "#spring"
+        },
+        "south": {
+          "texture": "#spring"
+        },
+        "west": {
+          "texture": "#spring"
+        },
+        "east": {
+          "texture": "#spring"
+        }
+      }
+    }
+  ]
 }

@@ -29,6 +29,8 @@ public class FluidSpringBlockEntity extends BlockEntity {
     /** GT6's fluids per spring kind: oil 6000, gas 3000, geothermal water 500, lava 1000. */
     public static final int DEFAULT_AMOUNT = 1000;
 
+    public static final net.minecraftforge.client.model.data.ModelProperty<Fluid> MODEL_FLUID = new net.minecraftforge.client.model.data.ModelProperty<>();
+
     private String fluidId = "";
     private int amount = DEFAULT_AMOUNT;
     private boolean active;
@@ -125,6 +127,7 @@ public class FluidSpringBlockEntity extends BlockEntity {
         fluidId = tag.getString("spring");
         amount = com.gregtech.gregtech.worldgen.FluidSpringRules.positiveAmount(tag.contains("amount") ? tag.getInt("amount") : DEFAULT_AMOUNT);
         active = tag.getBoolean("active");
+        if(level!=null&&level.isClientSide) { requestModelDataUpdate(); level.sendBlockUpdated(worldPosition,getBlockState(),getBlockState(),3); }
     }
 
     @Override
@@ -133,5 +136,18 @@ public class FluidSpringBlockEntity extends BlockEntity {
         if (!fluidId.isEmpty()) tag.putString("spring", fluidId);
         tag.putInt("amount", amount);
         if (active) tag.putBoolean("active", true);
+    }
+
+    @Override public net.minecraftforge.client.model.data.ModelData getModelData() {
+        Fluid current=fluid();
+        return net.minecraftforge.client.model.data.ModelData.builder().with(MODEL_FLUID,current==null?net.minecraft.world.level.material.Fluids.WATER:current).build();
+    }
+    @Override public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
+    }
+    @Override public CompoundTag getUpdateTag() { return saveWithoutMetadata(); }
+    @Override public void onLoad() {
+        super.onLoad();
+        if(level!=null&&level.isClientSide) requestModelDataUpdate();
     }
 }
