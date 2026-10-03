@@ -81,13 +81,13 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity {
     public int barometerValue() {
         long cap = steamTank.getCapacity();
         if (cap <= 0) return 0;
-        return (int) Math.min(31, steamTank.getAmount() * 32 / cap);
+        return (int) Math.min(31, steamTank.getAmount() * 31 / cap);
     }
 
     /** Exponential-moving-average smoothed frame for the barometer needle.
      *  Call every render frame; returns a damped 0–31 value. */
     public int smoothBarometerFrame(float speed) {
-        float target = Math.min(31f, (float) steamTank.getAmount() * 32f / Math.max(1, steamTank.getCapacity()));
+        float target = Math.min(31f, (float) steamTank.getAmount() * 31f / Math.max(1, steamTank.getCapacity()));
         smoothBarometerFrame += (target - smoothBarometerFrame) * speed;
         return Math.round(Math.min(31, smoothBarometerFrame));
     }
@@ -160,7 +160,7 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity {
         steamTank.remove(Math.max(0,Math.min(accepted,offer.getAmount())));
     }
 
-    private void explode() {
+    public void explode() {
         if (level == null) return;
         float power = (float) Math.max(1.0, Math.sqrt(steamTank.getAmount()) / 100.0);
         level.removeBlock(worldPosition, false);

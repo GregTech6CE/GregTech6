@@ -59,6 +59,22 @@ public class BoilerTankBlock extends Block implements EntityBlock {
 
     public BoilerSpec spec() { return spec; }
 
+    // GT6 MultiTileEntityBoilerTank.removedByPlayer: pressure > 4/31, survival only.
+    @Override
+    public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+        if (!level.isClientSide && !player.isCreative()
+                && level.getBlockEntity(pos) instanceof BoilerTankBlockEntity boiler
+                && boiler.barometerValue() > 4) boiler.explode();
+        super.playerWillDestroy(level, pos, state, player);
+    }
+
+    @Override
+    public List<ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder context) {
+        var entity = context.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY);
+        if (entity instanceof BoilerTankBlockEntity boiler && boiler.barometerValue() > 4) return List.of();
+        return List.of(new ItemStack(this));
+    }
+
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
