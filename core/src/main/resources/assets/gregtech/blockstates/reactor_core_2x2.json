@@ -1,8 +1,112 @@
 {
   "variants": {
-    "facing=north": { "model": "gregtech:block/machine/energy/reactor_core_2x2" },
-    "facing=south": { "model": "gregtech:block/machine/energy/reactor_core_2x2", "y": 180 },
-    "facing=west": { "model": "gregtech:block/machine/energy/reactor_core_2x2", "y": 270 },
-    "facing=east": { "model": "gregtech:block/machine/energy/reactor_core_2x2", "y": 90 }
+    "hot_outlet=down,cold_outlet=down": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2"
+    },
+    "hot_outlet=down,cold_outlet=up": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_down_up"
+    },
+    "hot_outlet=down,cold_outlet=north": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_down_north"
+    },
+    "hot_outlet=down,cold_outlet=south": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_down_south"
+    },
+    "hot_outlet=down,cold_outlet=west": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_down_west"
+    },
+    "hot_outlet=down,cold_outlet=east": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_down_east"
+    },
+    "hot_outlet=up,cold_outlet=down": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_up_down"
+    },
+    "hot_outlet=up,cold_outlet=up": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_up_up"
+    },
+    "hot_outlet=up,cold_outlet=north": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_up_north"
+    },
+    "hot_outlet=up,cold_outlet=south": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_up_south"
+    },
+    "hot_outlet=up,cold_outlet=west": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_up_west"
+    },
+    "hot_outlet=up,cold_outlet=east": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_up_east"
+    },
+    "hot_outlet=north,cold_outlet=down": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_north_down"
+    },
+    "hot_outlet=north,cold_outlet=up": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_north_up"
+    },
+    "hot_outlet=north,cold_outlet=north": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_north_north"
+    },
+    "hot_outlet=north,cold_outlet=south": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_north_south"
+    },
+    "hot_outlet=north,cold_outlet=west": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_north_west"
+    },
+    "hot_outlet=north,cold_outlet=east": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_north_east"
+    },
+    "hot_outlet=south,cold_outlet=down": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_south_down"
+    },
+    "hot_outlet=south,cold_outlet=up": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_south_up"
+    },
+    "hot_outlet=south,cold_outlet=north": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_south_north"
+    },
+    "hot_outlet=south,cold_outlet=south": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_south_south"
+    },
+    "hot_outlet=south,cold_outlet=west": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_south_west"
+    },
+    "hot_outlet=south,cold_outlet=east": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_south_east"
+    },
+    "hot_outlet=west,cold_outlet=down": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_west_down"
+    },
+    "hot_outlet=west,cold_outlet=up": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_west_up"
+    },
+    "hot_outlet=west,cold_outlet=north": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_west_north"
+    },
+    "hot_outlet=west,cold_outlet=south": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_west_south"
+    },
+    "hot_outlet=west,cold_outlet=west": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_west_west"
+    },
+    "hot_outlet=west,cold_outlet=east": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_west_east"
+    },
+    "hot_outlet=east,cold_outlet=down": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_east_down"
+    },
+    "hot_outlet=east,cold_outlet=up": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_east_up"
+    },
+    "hot_outlet=east,cold_outlet=north": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_east_north"
+    },
+    "hot_outlet=east,cold_outlet=south": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_east_south"
+    },
+    "hot_outlet=east,cold_outlet=west": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_east_west"
+    },
+    "hot_outlet=east,cold_outlet=east": {
+      "model": "gregtech:block/machine/energy/reactor_core_2x2_east_east"
+    }
   }
 }

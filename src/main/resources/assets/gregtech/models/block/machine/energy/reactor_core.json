@@ -1,4 +1,5 @@
 {
+  "parent": "minecraft:block/block",
   "loader": "forge:composite",
   "display": {
     "gui": {
@@ -105,15 +106,18 @@
     }
   },
   "children": {
-    "layer0": {
+    "colored": {
       "parent": "minecraft:block/block",
+      "render_type": "minecraft:cutout",
+      "ambientocclusion": false,
       "textures": {
+        "down": "gregtech:block/machines/generators/reactor_core_1x1/colored/face1",
         "up": "gregtech:block/machines/generators/reactor_core_1x1/colored/top",
-        "down": "gregtech:block/machines/generators/reactor_core_1x1/colored/bottom",
-        "north": "gregtech:block/machines/generators/reactor_core_1x1/colored/face1",
-        "south": "gregtech:block/machines/generators/reactor_core_1x1/colored/face2",
+        "north": "gregtech:block/machines/generators/reactor_core_1x1/colored/side1",
+        "south": "gregtech:block/machines/generators/reactor_core_1x1/colored/side1",
         "west": "gregtech:block/machines/generators/reactor_core_1x1/colored/side1",
-        "east": "gregtech:block/machines/generators/reactor_core_1x1/colored/side1"
+        "east": "gregtech:block/machines/generators/reactor_core_1x1/colored/side1",
+        "particle": "gregtech:block/machines/generators/reactor_core_1x1/colored/side1"
       },
       "elements": [
         {
@@ -124,54 +128,216 @@
           ],
           "to": [
             16,
+            2,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#down",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#down",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            14,
+            0
+          ],
+          "to": [
+            16,
             16,
             16
           ],
           "faces": {
             "up": {
               "texture": "#up",
-              "cullface": "up",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ],
               "tintindex": 0
             },
             "down": {
-              "texture": "#down",
-              "cullface": "down",
+              "texture": "#up",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ],
               "tintindex": 0
-            },
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            2
+          ],
+          "faces": {
             "north": {
               "texture": "#north",
-              "cullface": "north",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ],
               "tintindex": 0
             },
             "south": {
+              "texture": "#north",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            0,
+            14
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "south": {
               "texture": "#south",
-              "cullface": "south",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ],
               "tintindex": 0
             },
+            "north": {
+              "texture": "#south",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            2,
+            16,
+            16
+          ],
+          "faces": {
             "west": {
               "texture": "#west",
-              "cullface": "west",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ],
               "tintindex": 0
             },
             "east": {
+              "texture": "#west",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            14,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "east": {
               "texture": "#east",
-              "cullface": "east",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#east",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ],
               "tintindex": 0
             }
           }
         }
-      ],
-      "render_type": "minecraft:cutout"
+      ]
     },
-    "layer1": {
+    "overlay": {
       "parent": "minecraft:block/block",
+      "render_type": "minecraft:cutout",
+      "ambientocclusion": false,
       "textures": {
+        "down": "gregtech:block/machines/generators/reactor_core_1x1/overlay/face1",
         "up": "gregtech:block/machines/generators/reactor_core_1x1/overlay/top",
-        "down": "gregtech:block/machines/generators/reactor_core_1x1/overlay/bottom",
-        "north": "gregtech:block/machines/generators/reactor_core_1x1/overlay/face1",
-        "south": "gregtech:block/machines/generators/reactor_core_1x1/overlay/face2",
+        "north": "gregtech:block/machines/generators/reactor_core_1x1/overlay/side1",
+        "south": "gregtech:block/machines/generators/reactor_core_1x1/overlay/side1",
         "west": "gregtech:block/machines/generators/reactor_core_1x1/overlay/side1",
-        "east": "gregtech:block/machines/generators/reactor_core_1x1/overlay/side1"
+        "east": "gregtech:block/machines/generators/reactor_core_1x1/overlay/side1",
+        "particle": "gregtech:block/machines/generators/reactor_core_1x1/overlay/side1"
       },
       "elements": [
         {
@@ -182,42 +348,191 @@
           ],
           "to": [
             16,
+            2,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#down",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ]
+            },
+            "up": {
+              "texture": "#down",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ]
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            14,
+            0
+          ],
+          "to": [
+            16,
             16,
             16
           ],
           "faces": {
             "up": {
               "texture": "#up",
-              "cullface": "up"
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ]
             },
             "down": {
-              "texture": "#down",
-              "cullface": "down"
-            },
+              "texture": "#up",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ]
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            2
+          ],
+          "faces": {
             "north": {
               "texture": "#north",
-              "cullface": "north"
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ]
             },
             "south": {
+              "texture": "#north",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ]
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            0,
+            14
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "south": {
               "texture": "#south",
-              "cullface": "south"
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ]
             },
+            "north": {
+              "texture": "#south",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ]
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            2,
+            16,
+            16
+          ],
+          "faces": {
             "west": {
               "texture": "#west",
-              "cullface": "west"
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ]
             },
             "east": {
+              "texture": "#west",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ]
+            }
+          }
+        },
+        {
+          "from": [
+            14,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "east": {
               "texture": "#east",
-              "cullface": "east"
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ]
+            },
+            "west": {
+              "texture": "#east",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ]
             }
           }
         }
-      ],
-      "render_type": "minecraft:cutout"
+      ]
     }
-  },
-  "parent": "minecraft:block/block",
-  "textures": {
-    "particle": "gregtech:block/machines/generators/reactor_core_1x1/colored/top"
   }
 }

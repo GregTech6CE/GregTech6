@@ -1,0 +1,538 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:composite",
+  "display": {
+    "gui": {
+      "rotation": [
+        30,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.625,
+        0.625,
+        0.625
+      ]
+    },
+    "ground": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        3,
+        0
+      ],
+      "scale": [
+        0.25,
+        0.25,
+        0.25
+      ]
+    },
+    "fixed": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        75,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        2.5,
+        0
+      ],
+      "scale": [
+        0.375,
+        0.375,
+        0.375
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    },
+    "firstperson_lefthand": {
+      "rotation": [
+        0,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    }
+  },
+  "children": {
+    "colored": {
+      "parent": "minecraft:block/block",
+      "render_type": "minecraft:cutout",
+      "ambientocclusion": false,
+      "textures": {
+        "down": "gregtech:block/machines/generators/reactor_core_1x1/colored/bottom",
+        "up": "gregtech:block/machines/generators/reactor_core_1x1/colored/face2",
+        "north": "gregtech:block/machines/generators/reactor_core_1x1/colored/side1",
+        "south": "gregtech:block/machines/generators/reactor_core_1x1/colored/side1",
+        "west": "gregtech:block/machines/generators/reactor_core_1x1/colored/face1",
+        "east": "gregtech:block/machines/generators/reactor_core_1x1/colored/side1",
+        "particle": "gregtech:block/machines/generators/reactor_core_1x1/colored/side1"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            2,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#down",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#down",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            14,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "up": {
+              "texture": "#up",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#up",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            2
+          ],
+          "faces": {
+            "north": {
+              "texture": "#north",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#north",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            0,
+            14
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "south": {
+              "texture": "#south",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#south",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            2,
+            16,
+            16
+          ],
+          "faces": {
+            "west": {
+              "texture": "#west",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#west",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            14,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "east": {
+              "texture": "#east",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#east",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "tintindex": 0
+            }
+          }
+        }
+      ]
+    },
+    "overlay": {
+      "parent": "minecraft:block/block",
+      "render_type": "minecraft:cutout",
+      "ambientocclusion": false,
+      "textures": {
+        "down": "gregtech:block/machines/generators/reactor_core_1x1/overlay/bottom",
+        "up": "gregtech:block/machines/generators/reactor_core_1x1/overlay/face2",
+        "north": "gregtech:block/machines/generators/reactor_core_1x1/overlay/side1",
+        "south": "gregtech:block/machines/generators/reactor_core_1x1/overlay/side1",
+        "west": "gregtech:block/machines/generators/reactor_core_1x1/overlay/face1",
+        "east": "gregtech:block/machines/generators/reactor_core_1x1/overlay/side1",
+        "particle": "gregtech:block/machines/generators/reactor_core_1x1/overlay/side1"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            2,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#down",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ]
+            },
+            "up": {
+              "texture": "#down",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ]
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            14,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "up": {
+              "texture": "#up",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ]
+            },
+            "down": {
+              "texture": "#up",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ]
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            2
+          ],
+          "faces": {
+            "north": {
+              "texture": "#north",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ]
+            },
+            "south": {
+              "texture": "#north",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ]
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            0,
+            14
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "south": {
+              "texture": "#south",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ]
+            },
+            "north": {
+              "texture": "#south",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ]
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            2,
+            16,
+            16
+          ],
+          "faces": {
+            "west": {
+              "texture": "#west",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ]
+            },
+            "east": {
+              "texture": "#west",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ]
+            }
+          }
+        },
+        {
+          "from": [
+            14,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "east": {
+              "texture": "#east",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ]
+            },
+            "west": {
+              "texture": "#east",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}
