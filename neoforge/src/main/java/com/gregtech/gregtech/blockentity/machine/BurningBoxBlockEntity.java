@@ -228,13 +228,13 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
             for (int slot = 0; slot < inventory.getSlots(); slot++) {
                 ItemStack stack = inventory.getStackInSlot(slot);
                 if (!stack.isEmpty()) {
-                    net.minecraft.world.Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), stack);
+                    com.gregtech.gregtech.util.GTItemDrops.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), stack);
                     inventory.setStackInSlot(slot, ItemStack.EMPTY);
                 }
             }
         }
         if (pendingAsh != null && !pendingAsh.isEmpty()) {
-            net.minecraft.world.Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), pendingAsh);
+            com.gregtech.gregtech.util.GTItemDrops.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), pendingAsh);
             pendingAsh = null;
         }
     }

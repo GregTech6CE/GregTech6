@@ -97,7 +97,7 @@ public class MassStorageBlock extends Block implements EntityBlock, SimpleWaterl
             if (!level.isClientSide) {
                 Direction front = state.getValue(FACING); int left=requested;
                 while(left>0) { ItemStack out=store.extractAmount(left); if(out.isEmpty())break; left-=out.getCount();
-                    Containers.dropItemStack(level,pos.getX()+.5+front.getStepX(),pos.getY()+.5,pos.getZ()+.5+front.getStepZ(),out); }
+                    com.gregtech.gregtech.util.GTItemDrops.dropItemStack(level,pos.getX()+.5+front.getStepX(),pos.getY()+.5,pos.getZ()+.5+front.getStepZ(),out); }
             }
             return true;
         }

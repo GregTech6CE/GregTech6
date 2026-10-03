@@ -688,7 +688,7 @@ public class ItemPipeBlockEntity extends BlockEntity
         for (int slot = 0; slot < inventory.size(); slot++) {
             ItemStack stack = inventory.get(slot);
             if (stack.isEmpty()) continue;
-            net.minecraft.world.Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), stack.copy());
+            com.gregtech.gregtech.util.GTItemDrops.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), stack.copy());
             inventory.set(slot, ItemStack.EMPTY);
         }
     }

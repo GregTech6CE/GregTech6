@@ -105,9 +105,9 @@ public class SafeBlockEntity extends BlockEntity {
     public void dropContents() {
         if (level == null || level.isClientSide) return;
         generateDungeonLoot();
-        net.minecraft.world.Containers.dropContents(level, worldPosition, inventory);
+        com.gregtech.gregtech.util.GTItemDrops.dropContents(level, worldPosition, inventory);
         inventory.clearContent();
-        for (var stack : overflow) net.minecraft.world.Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), stack);
+        for (var stack : overflow) com.gregtech.gregtech.util.GTItemDrops.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), stack);
         overflow.clear(); setChanged();
     }
     @Override protected void saveAdditional(CompoundTag tag) {

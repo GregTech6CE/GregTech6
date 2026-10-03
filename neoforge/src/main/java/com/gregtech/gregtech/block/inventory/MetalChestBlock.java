@@ -154,11 +154,10 @@ public class MetalChestBlock extends HorizontalDirectionalBlock implements Entit
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!state.is(newState.getBlock())
                 && level.getBlockEntity(pos) instanceof MetalChestBlockEntity chest) {
-            chest.generateLootIfNeeded();
             var inv = chest.inventory();
             for (int i = 0; i < inv.getSlots(); i++) {
                 ItemStack stack = inv.getStackInSlot(i);
-                if (!stack.isEmpty()) Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), stack);
+                if (!stack.isEmpty()) com.gregtech.gregtech.util.GTItemDrops.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), stack);
                 inv.setStackInSlot(i, ItemStack.EMPTY);
             }
         }
@@ -170,13 +169,10 @@ public class MetalChestBlock extends HorizontalDirectionalBlock implements Entit
         ItemStack result = new ItemStack(this);
         if (builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY)
                 instanceof MetalChestBlockEntity chest) {
-            chest.generateLootIfNeeded();
-            if (chest.lootGenerated()) {
-                var data = new net.minecraft.nbt.CompoundTag();
-                data.putBoolean("GTLootGenerated", true);
-                data.putString("id","gregtech:metal_chest");
-                result.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(data));
-            }
+            var data = chest.lootItemData();
+            data.putString("id", "gregtech:metal_chest");
+            result.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,
+                    net.minecraft.world.item.component.CustomData.of(data));
         }
         return java.util.List.of(result);
     }

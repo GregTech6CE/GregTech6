@@ -41,7 +41,7 @@ public class LockerBlockEntity extends BlockEntity {
         if (level == null) return;
         for (int i = 0; i < armor.length; i++) {
             if (!armor[i].isEmpty()) {
-                Containers.dropItemStack(level, worldPosition.getX() + 0.5,
+                com.gregtech.gregtech.util.GTItemDrops.dropItemStack(level, worldPosition.getX() + 0.5,
                         worldPosition.getY() + 0.5, worldPosition.getZ() + 0.5, armor[i]);
                 armor[i] = ItemStack.EMPTY;
             }

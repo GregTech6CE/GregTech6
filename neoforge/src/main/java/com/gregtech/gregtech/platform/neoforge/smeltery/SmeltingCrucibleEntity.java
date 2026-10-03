@@ -415,7 +415,7 @@ public class SmeltingCrucibleEntity extends com.gregtech.gregtech.blockentity.GT
 
     public void dropContents() {
         if (level == null || level.isClientSide) return;
-        Containers.dropItemStack(level, worldPosition.getX() + 0.5, worldPosition.getY() + 0.5, worldPosition.getZ() + 0.5, getCacheStack());
+        com.gregtech.gregtech.util.GTItemDrops.dropItemStack(level, worldPosition.getX() + 0.5, worldPosition.getY() + 0.5, worldPosition.getZ() + 0.5, getCacheStack());
         cache.setStackInSlot(0, ItemStack.EMPTY);
     }
     @Override protected void loadAdditional(CompoundTag tag, HolderLookup.Provider lookup) {

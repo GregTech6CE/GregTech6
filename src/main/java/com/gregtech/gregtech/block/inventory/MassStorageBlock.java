@@ -160,7 +160,7 @@ public class MassStorageBlock extends HorizontalDirectionalBlock implements Enti
                     ItemStack out = store.extractAmount(left);
                     if (out.isEmpty()) break;
                     left -= out.getCount();
-                    net.minecraft.world.Containers.dropItemStack(level, pos.getX()+.5+front.getStepX(),
+                    com.gregtech.gregtech.util.GTItemDrops.dropItemStack(level, pos.getX()+.5+front.getStepX(),
                             pos.getY()+.5, pos.getZ()+.5+front.getStepZ(), out);
                 }
             }

@@ -132,6 +132,15 @@ public class MetalChestBlockEntity extends BlockEntity implements MenuProvider {
             }
     }
 
+    /** Loot state carried by a dropped chest; inventory contents drop separately. */
+    public CompoundTag lootItemData() {
+        CompoundTag data = new CompoundTag();
+        data.putBoolean("GTLootGenerated", lootGenerated);
+        if (dungeonLoot != null) data.putString("gt.dungeonloot", dungeonLoot.toString());
+        data.putLong("GTDungeonLootSeed", dungeonLootSeed);
+        return data;
+    }
+
     /** True when the chest still holds loot from its table (tests read it). */
     public boolean lootGenerated() { return lootGenerated; }
 

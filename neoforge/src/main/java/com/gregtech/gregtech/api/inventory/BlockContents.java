@@ -19,6 +19,6 @@ public interface BlockContents {
     static void drop(BlockEntity owner, ItemStack stack) {
         if (owner.getLevel() == null || owner.getLevel().isClientSide || stack == null || stack.isEmpty()) return;
         var pos = owner.getBlockPos();
-        net.minecraft.world.Containers.dropItemStack(owner.getLevel(), pos.getX()+.5, pos.getY()+.5, pos.getZ()+.5, stack.copy());
+        com.gregtech.gregtech.util.GTItemDrops.dropItemStack(owner.getLevel(), pos.getX()+.5, pos.getY()+.5, pos.getZ()+.5, stack.copy());
     }
 }

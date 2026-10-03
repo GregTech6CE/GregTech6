@@ -63,7 +63,7 @@ public final class DungeonChestLifecycleTests {
     }
 
     @GameTest(template = "test_empty")
-    public static void brokenLootChestCannotRerollWhenPlaced(GameTestHelper h) {
+    public static void movedLootChestOnlyGivesExperienceOnFirstOpen(GameTestHelper h) {
         var level = h.getLevel();
         var relative = new BlockPos(1, 1, 1);
         var pos = h.absolutePos(relative);
@@ -78,21 +78,32 @@ public final class DungeonChestLifecycleTests {
         level.destroyBlock(pos, true);
         var drops = level.getEntitiesOfClass(ItemEntity.class, area);
         int papers = drops.stream().filter(e -> e.getItem().is(Items.PAPER)).mapToInt(e -> e.getItem().getCount()).sum();
-        h.assertTrue(papers == 14, "breaking unopened chest drops its contents exactly once");
+        h.assertTrue(papers == 0, "breaking an unopened chest does not roll its table");
         var item = drops.stream().map(ItemEntity::getItem).filter(s -> s.is(block.asItem())).findFirst().orElse(ItemStack.EMPTY).copy();
-        h.assertTrue(!item.isEmpty() && BlockItem.getBlockEntityData(item).getBoolean("GTLootGenerated"), "drop remembers consumed loot");
+        h.assertTrue(!item.isEmpty() && !BlockItem.getBlockEntityData(item).getBoolean("GTLootGenerated")
+                && BlockItem.getBlockEntityData(item).getString("gt.dungeonloot").equals("gregtech_repair:shelf_paper"), "drop preserves its unopened table");
         drops.forEach(ItemEntity::discard);
         int experience = level.getEntitiesOfClass(ExperienceOrb.class, area).stream().mapToInt(ExperienceOrb::getValue).sum();
+        h.assertTrue(experience == 0, "breaking an unopened chest gives no experience");
         var player = h.makeMockPlayer();
         player.setItemInHand(InteractionHand.MAIN_HAND, item);
         var hit = new BlockHitResult(Vec3.atLowerCornerOf(pos).add(.5, 0, .5), Direction.UP, pos.below(), false);
         var result = ((BlockItem) item.getItem()).place(new BlockPlaceContext(level, player, InteractionHand.MAIN_HAND, item, hit));
         h.assertTrue(result.consumesAction(), "actual block item places successfully");
         var replaced = (MetalChestBlockEntity) level.getBlockEntity(pos);
-        h.assertTrue(replaced.lootGenerated() && replaced.generateLootIfNeeded() == 0, "placing and opening cannot reroll");
+        h.assertTrue(!replaced.lootGenerated(), "replacement retains the unopened state");
         for (int i = 0; i < 54; i++) h.assertTrue(replaced.inventory().getStackInSlot(i).isEmpty(), "contents are not duplicated into block item");
         h.assertTrue(experience == level.getEntitiesOfClass(ExperienceOrb.class, area).stream().mapToInt(ExperienceOrb::getValue).sum(),
-                "placing consumed chest does not create more experience");
+                "placing an unopened chest gives no experience");
+        replaced.createMenu(0, player.getInventory(), player);
+        h.assertTrue(replaced.lootGenerated() && count(replaced, Items.PAPER) == 14, "first opening rolls the carried table once");
+        int openedExperience = level.getEntitiesOfClass(ExperienceOrb.class, area).stream().mapToInt(ExperienceOrb::getValue).sum();
+        h.assertTrue(openedExperience > 0 && replaced.generateLootIfNeeded() == 0, "first opening gives experience without allowing a second roll");
+        var builder = new net.minecraft.world.level.storage.loot.LootParams.Builder(level)
+                .withParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY, replaced);
+        var openedDrop = block.getDrops(replaced.getBlockState(), builder).get(0);
+        h.assertTrue(BlockItem.getBlockEntityData(openedDrop).getBoolean("GTLootGenerated"), "an opened chest drop remembers the consumed table");
+        h.assertTrue(openedExperience == level.getEntitiesOfClass(ExperienceOrb.class, area).stream().mapToInt(ExperienceOrb::getValue).sum(), "producing the opened chest drop never gives experience");
         h.succeed();
     }
 

@@ -649,7 +649,7 @@ public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements 
         }
         ItemStack cached = cache.getStackInSlot(CACHE_SLOT);
         if (!cached.isEmpty()) {
-            Containers.dropItemStack(level,
+            com.gregtech.gregtech.util.GTItemDrops.dropItemStack(level,
                     worldPosition.getX() + 0.5D,
                     worldPosition.getY() + 0.5D,
                     worldPosition.getZ() + 0.5D,

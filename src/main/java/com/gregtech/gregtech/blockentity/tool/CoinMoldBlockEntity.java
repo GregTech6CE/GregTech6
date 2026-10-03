@@ -97,7 +97,7 @@ public final class CoinMoldBlockEntity extends BlockEntity {
         if (stored.isEmpty()) return;
         ItemStack drop = stored.copy();
         inventory.setStackInSlot(0, ItemStack.EMPTY);
-        Containers.dropItemStack(level, worldPosition.getX() + .5, worldPosition.getY() + .5,
+        com.gregtech.gregtech.util.GTItemDrops.dropItemStack(level, worldPosition.getX() + .5, worldPosition.getY() + .5,
                 worldPosition.getZ() + .5, drop);
     }
 

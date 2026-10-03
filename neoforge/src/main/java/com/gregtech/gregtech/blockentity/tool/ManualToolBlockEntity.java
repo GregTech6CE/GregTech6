@@ -216,11 +216,11 @@ public class ManualToolBlockEntity extends BlockEntity {
 
     public void dropContents() {
         if (level != null) for (int i = 0; i < outputs.size(); i++) {
-            Containers.dropItemStack(level, worldPosition.getX() + .5, worldPosition.getY() + .5, worldPosition.getZ() + .5, outputs.get(i));
+            com.gregtech.gregtech.util.GTItemDrops.dropItemStack(level, worldPosition.getX() + .5, worldPosition.getY() + .5, worldPosition.getZ() + .5, outputs.get(i));
             outputs.set(i, ItemStack.EMPTY);
         }
         if (level != null && !work.isEmpty()) {
-            Containers.dropItemStack(level, worldPosition.getX() + 0.5,
+            com.gregtech.gregtech.util.GTItemDrops.dropItemStack(level, worldPosition.getX() + 0.5,
                     worldPosition.getY() + 0.5, worldPosition.getZ() + 0.5, work);
             work = ItemStack.EMPTY;
         }
