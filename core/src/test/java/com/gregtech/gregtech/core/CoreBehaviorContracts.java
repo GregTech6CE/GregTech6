@@ -36,7 +36,76 @@ public final class CoreBehaviorContracts {
         definitionIdentityAndSnapshot();
         multiblockOwnershipLifecycle();
         addonLifecycle();
-        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 14 groups (Java 17; no game dependencies)");
+        miniaturePortalSignals();
+        bedrockAndBoilerSourceSamples();
+        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 16 groups (Java 17; no game dependencies)");
+    }
+
+    private static void bedrockAndBoilerSourceSamples() {
+        // WorldgenOresBedrock.generateVein: all 840 cells of the six-layer muffin are filled,
+        // even when every random ore roll is blank. Absolute tail heights adapt the y=0 source.
+        var filled = new HashSet<String>();
+        int[] floorWrites = {0}, highestTail = {Integer.MIN_VALUE};
+        boolean generated = com.gregtech.gregtech.worldgen.MineralWorldgenRules.bedrockVein(
+                0, 0, -64, 63, bound -> bound - 1,
+                new com.gregtech.gregtech.worldgen.MineralWorldgenRules.VeinSink() {
+                    public boolean isBedrockFloor(int x,int y,int z) { return x == 8 && y == -64 && z == 8; }
+                    public void prepareStone(int x,int y,int z) { filled.add(x + "," + y + "," + z); }
+                    public boolean bedrock(int x,int y,int z,boolean small) { floorWrites[0]++; return y == -64; }
+                    public boolean ore(int x,int y,int z,boolean small) { highestTail[0] = Math.max(highestTail[0],y); return true; }
+                });
+        check(generated, "a forced core counts even when all random core rolls are blank");
+        equal(1, floorWrites[0], "blank bedrock rolls leave one forced large ore");
+        equal(840, filled.size(), "GT6 six muffin layers contain 840 cells");
+        check(filled.contains("8,-63,8"), "bedrock directly above the core becomes mother stone");
+        check(!filled.contains("8,-64,8"), "mother stone never overwrites the floor");
+        check(!filled.contains("0,-63,0"), "outside the source muffin remains untouched");
+        check(filled.contains("0,-60,0"), "the fourth source layer spans the whole chunk");
+        equal(62, highestTail[0], "small-ore trails reach one below the absolute sea level");
+
+        // MultiTileEntityBoilerTank:165-175, 202-215, 242: independent threshold/cap samples.
+        check(com.gregtech.gregtech.content.energy.BoilerHazards.contactDamage(2000,0) == 0, "boiler contact threshold is strictly above 2000 HU");
+        check(com.gregtech.gregtech.content.energy.BoilerHazards.contactDamage(0,4002) > 1, "stored steam contributes half its amount to contact heat");
+        check(com.gregtech.gregtech.content.energy.BoilerHazards.contactDamage(50000,0) == 10, "source contact damage caps at ten");
+        check(com.gregtech.gregtech.content.energy.BoilerHazards.descalingDamage(50000,0,9999,15) == 25, "descaling damage has no contact cap");
+        check(com.gregtech.gregtech.content.energy.BoilerHazards.descalingDamage(50000,0,10000,15) == 0, "clean boilers do not descale");
+        check(com.gregtech.gregtech.content.energy.BoilerHazards.descalingDamage(50000,0,9999,16) == 0, "unsafe descaling explodes instead of applying heat");
+        check(com.gregtech.gregtech.content.energy.BoilerHazards.explosionPower(9_000_000) == 30, "source boiler explosion has no invented eight-block strength cap");
+    }
+
+    private static void miniaturePortalSignals() {
+        // MultiTileEntityMiniPortal:113-180: pinned inbox/phase/timeout trace, no game launch.
+        var portal = new com.gregtech.gregtech.content.logistics.MiniPortalSignals();
+        portal.receive(100, 4, 7, 3);
+        portal.receive(100, 4, 11, 2);
+        portal.receive(100, 5, 4, 9);
+        portal.advance(100);
+        equal(0, portal.redstone(4), "a scan never emits its own tick's input");
+        // Receiving before the remote entity's tick must first apply the old inbox.
+        portal.receive(101, 4, 2, 5);
+        equal(11, portal.redstone(4), "same tick senders merge by maximum");
+        equal(3, portal.comparator(4), "comparator merges independently");
+        equal(9, portal.comparator(5), "opposite side inbox remains independent");
+        portal.advance(101);
+        equal(11, portal.redstone(4), "remote tick cannot apply an inbox twice");
+        portal.advance(102);
+        equal(2, portal.redstone(4), "next tick can lower redstone");
+        equal(5, portal.comparator(4), "next tick advances comparator");
+        for (long tick = 103; tick <= 122; tick++) portal.advance(tick);
+        equal(2, portal.redstone(4), "twenty absent scans keep the previous redstone");
+        portal.advance(123);
+        equal(0, portal.redstone(4), "twenty-first absent scan clears disconnected redstone");
+        equal(0, portal.comparator(4), "disconnected comparator also clears");
+        portal.receive(123, 5, 12, 6);
+        portal.disconnect(123);
+        portal.advance(124);
+        equal(0, portal.redstone(5), "counterpart deactivation overwrites a pending high input");
+        portal.receive(124, 0, 15, 8);
+        portal.advance(125);
+        portal.clear();
+        portal.advance(126);
+        equal(0, portal.redstone(0), "deactivation clears outputs and pending inboxes");
+        equal(0, portal.maximumComparator(), "deactivation clears every comparator side");
     }
 
     private static void sourceSteamConversion() {

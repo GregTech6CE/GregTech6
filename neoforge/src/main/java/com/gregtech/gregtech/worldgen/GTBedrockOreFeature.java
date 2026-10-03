@@ -113,6 +113,12 @@ public class GTBedrockOreFeature extends Feature<NoneFeatureConfiguration> {
         if(material==null)return false;
         return MineralWorldgenRules.bedrockVein(minX,minZ,level.getMinBuildHeight(),level.getSeaLevel(),random::nextInt,new MineralWorldgenRules.VeinSink(){
             public boolean isBedrockFloor(int x,int y,int z){return level.getBlockState(new BlockPos(x,y,z)).is(Blocks.BEDROCK);}
+            public void prepareStone(int x, int y, int z) {
+                // WorldgenOresBedrock.generateVein replaces the entire muffin before rolling ores.
+                BlockState host = level.getLevel().dimension() == net.minecraft.world.level.Level.NETHER
+                        ? Blocks.NETHERRACK.defaultBlockState() : Blocks.DEEPSLATE.defaultBlockState();
+                level.setBlock(new BlockPos(x, y, z), host, 2);
+            }
             public boolean bedrock(int x,int y,int z,boolean small){return GTOreBlockResolver.placeBedrockOre(level,new BlockPos(x,y,z),material);}
             public boolean ore(int x,int y,int z,boolean small){if(level.isOutsideBuildHeight(y))return false;return GTOreBlockResolver.placeOre(level,new BlockPos(x,y,z),material,small);}
         });
