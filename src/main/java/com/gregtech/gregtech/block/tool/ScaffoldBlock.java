@@ -75,6 +75,15 @@ public final class ScaffoldBlock extends ShapedToolBlock {
     }
 
     @Override
+    public BlockState updateShape(BlockState state, Direction side, BlockState neighbor,
+                                  net.minecraft.world.level.LevelAccessor level,
+                                  BlockPos pos, BlockPos neighborPos) {
+        // Also called by chunk postprocessing for naturally generated scaffolds.
+        level.scheduleTick(pos, this, 1);
+        return super.updateShape(state, side, neighbor, level, pos, neighborPos);
+    }
+
+    @Override
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (!state.is(this)) return;
         boolean vertical = verticalSupport(level, pos);

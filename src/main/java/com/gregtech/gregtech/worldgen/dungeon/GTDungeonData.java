@@ -999,7 +999,21 @@ public final class GTDungeonData {
     // ── raw block access ──────────────────────────────────────────────────────────────────────
 
     public boolean set(int ax, int ay, int az, BlockState state) {
-        return level.setBlock(new BlockPos(x + ax, y + ay, z + az), state, 2);
+        BlockPos pos = new BlockPos(x + ax, y + ay, z + az);
+        boolean placed = level.setBlock(pos, state, Block.UPDATE_CLIENTS);
+        Block block = state.getBlock();
+        // Shape checks must see the completed room and neighbouring chunks. Vanilla consumes
+        // this queue in LevelChunk.postProcessGeneration after the feature stages finish.
+        if (placed && level instanceof net.minecraft.server.level.WorldGenRegion
+                && (block instanceof net.minecraft.world.level.block.RedStoneWireBlock
+                    || block instanceof net.minecraft.world.level.block.CrossCollisionBlock
+                    || block instanceof net.minecraft.world.level.block.WallBlock
+                    || block instanceof net.minecraft.world.level.block.BaseRailBlock
+                    || block instanceof net.minecraft.world.level.block.ScaffoldingBlock
+                    || block instanceof com.gregtech.gregtech.block.tool.ScaffoldBlock)) {
+            level.getChunk(pos).markPosForPostprocessing(pos);
+        }
+        return placed;
     }
 
     public BlockState get(int ax, int ay, int az) {
