@@ -4,6 +4,7 @@ import com.gregtech.gregtech.data.GregTechConstants;
 import com.gregtech.gregtech.content.material.Materials;
 /** GT6 material family defaults. These factories do not initialize a global alias table. */
 public class MaterialFactories {
+    private static final java.util.List<GTMaterial> NORMAL_WOODS = new java.util.ArrayList<>();
     protected MaterialFactories() {}
     public static GTMaterial create(int id, String name, String localName, int color, MaterialProperty... props) {
         return GTMaterialRegistry.createMaterial(id, name, localName, color).put(props);
@@ -81,6 +82,25 @@ public class MaterialFactories {
                 .setFurnaceBurnTime(GregTechConstants.TICKS_PER_SMELT / 2L)
                 .setBurning(com.gregtech.gregtech.content.material.generated.CompoundMaterials.Ashes, GregTechConstants.U9);
     }
+
+    /** MT.woodnormal: RGB, tool speed and durability are separate from thermal properties. */
+    public static GTMaterial woodNormal(int id, String name, String localName, int color,
+                                        float toolSpeed, long toolDurability, MaterialProperty... props) {
+        var carbon = com.gregtech.gregtech.content.material.generated.ElementMaterials.Carbon;
+        var water = com.gregtech.gregtech.content.material.generated.CompoundMaterials.Water;
+        var ash = com.gregtech.gregtech.content.material.generated.CompoundMaterials.Ashes;
+        var material = wood(id, name, localName, color, props)
+                .setComposition(0, MaterialComponent.of(carbon, 6 * GTValues.U),
+                        MaterialComponent.of(water, 15 * GTValues.U))
+                .setStats(400, 500, (carbon.getDensity() * 6 + water.getDensity() * 15) / 21)
+                .setToolStats(1, toolSpeed, toolDurability, 0)
+                .setSmelting(ash, GregTechConstants.U4)
+                .setTooltipChemical("C₆(H₂O)₁₅");
+        NORMAL_WOODS.add(material);
+        return material;
+    }
+
+    public static java.util.List<GTMaterial> normalWoods() { return java.util.List.copyOf(NORMAL_WOODS); }
 
     public static GTMaterial stone(int id, String name, String localName, int color, MaterialProperty... props) {
         return create(id, name, localName, color, props)

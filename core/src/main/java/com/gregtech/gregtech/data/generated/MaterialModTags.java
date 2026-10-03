@@ -8,6 +8,10 @@ public final class MaterialModTags {
     private MaterialModTags() {}
 
     public static void apply() {
+        ImportedMaterialData.WOODS.Magic.mod(ModReferences.BoP);
+        ImportedMaterialData.WOODS.Cinnamon.mod(ModReferences.HaC);
+        ImportedMaterialData.WOODS.Lime.mod(ModReferences.FR);
+        ImportedMaterialData.WOODS.Ash.mod(ModReferences.BINNIE_TREE);
         ImportedMaterialData.Ad.mod(ModReferences.GT);
         ImportedMaterialData.Adamantine.mod(ModReferences.MET);
         ImportedMaterialData.Adamantite.mod(ModReferences.GC_GALAXYSPACE);

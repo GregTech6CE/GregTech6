@@ -987,6 +987,10 @@ public final class GT6Materials {
     }
 
     public static final class Woods {
+        public static final GTMaterial Cinnamon = com.gregtech.gregtech.content.material.generated.WoodMaterials.Cinnamonwood;
+        public static final GTMaterial Lime = com.gregtech.gregtech.content.material.generated.WoodMaterials.Limewood;
+        public static final GTMaterial Ash = com.gregtech.gregtech.content.material.generated.WoodMaterials.Ashwood;
+        public static final GTMaterial Magic = com.gregtech.gregtech.content.material.generated.WoodMaterials.Magicwood;
         private Woods() {}
         public static final GTMaterial Wood = com.gregtech.gregtech.content.material.generated.WoodMaterials.Wood;
         public static final GTMaterial WoodTreated = com.gregtech.gregtech.content.material.generated.WoodMaterials.WoodTreated;

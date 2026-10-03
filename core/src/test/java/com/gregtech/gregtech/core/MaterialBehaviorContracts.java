@@ -22,8 +22,10 @@ public final class MaterialBehaviorContracts {
     // its isolated differential is recorded in provenance/restored-prefix-baseline.json.
     // MT.java source corrections: PetrifiedWood stone/wood/rod forms; LigniteCoke and PetCoke fuel/ash.
     // See docs/integration/verification/tools-power-issues-20261003.md.
-    private static final String DEFINITIONS_SHA256 = "0d64459f95043a7cad999dfcba86533daa6de81d8756dd48d2d1b87ed9cbce35";
-    private static final String POST_INIT_SHA256 = "c6eed84d0f296b0f9e23189477eba651266f25c82a2ba3d5d2329eb41d94dcdb";
+    // Full 110-row MT.woodnormal source restoration and isolated graph differential:
+    // docs/integration/verification/normal-wood-differential-20261003.json.
+    private static final String DEFINITIONS_SHA256 = "21173e86142600ef6097d3850af04d57989c2c1f4b6f2f7e748197e27b1d9ec8";
+    private static final String POST_INIT_SHA256 = "1472636103bb2605d777847455acb0cf83b80e6c76f56fafae28cac49b6ff2bd";
     private static int assertions;
     private MaterialBehaviorContracts() {}
 
@@ -43,8 +45,8 @@ public final class MaterialBehaviorContracts {
         GTMaterialRegistry.init();
         check(GTMaterialRegistry.registrationPhase() == GTMaterialRegistry.RegistrationPhase.READY,
                 "The complete directory must finish linking");
-        check(GTMaterialRegistry.allMaterials().size() == 1156, "All 1156 original material objects must remain");
-        check(MaterialCatalogSnapshot.aliases().size() == 1519, "All 1519 original name entries must remain");
+        check(GTMaterialRegistry.allMaterials().size() == 1160, "All 1160 original material objects must remain");
+        check(MaterialCatalogSnapshot.aliases().size() == 1523, "All 1523 original name entries must remain");
         check(PrefixRegistry.all().size() == 109, "All 109 original item prefixes must remain");
         check(DEFINITIONS_SHA256.equals(MaterialCatalogSnapshot.sha256()), "Full definitions/aliases/forms must match the Community Edition snapshot");
         GTMaterialRegistry.init();
@@ -59,6 +61,7 @@ public final class MaterialBehaviorContracts {
             check(material.getFurnaceBurnTime() == fuel.getValue(), "MT coke fuel " + fuel.getKey());
             check(material.getTargetBurningMaterial() == GTMaterialRegistry.get("DarkAshes") && material.getTargetBurningAmount() == GregTechConstants.U / 9, "MT coke dark ash " + fuel.getKey());
         }
+        assertions += SourceWoodFixtures.validate();
         validateIdentityGraph();
         validateMetadata();
         check(com.gregtech.gregtech.content.tool.OriginalToolMaterials.inFamily(GTMaterialRegistry.get("Knightmetal"), "Steel"), "ANY.Steel accepts Knightmetal screws and rings");
@@ -69,7 +72,7 @@ public final class MaterialBehaviorContracts {
         validateCopperTinBronze();
         validateAmountsAndReactions();
         System.out.println("Material behavior contracts passed: " + assertions
-                + " assertions; 1156 materials, 1101 positive IDs, 1519 name entries, 109 prefixes, 173 reactions");
+                + " assertions; 1160 materials, 1105 positive IDs, 1523 name entries, 109 prefixes, 173 reactions");
     }
 
     private static void validateIdentityGraph() throws Exception {
@@ -84,7 +87,7 @@ public final class MaterialBehaviorContracts {
                 check(component.material().isValid() && component.amount() > 0, "Composition must retain valid positive inputs: " + material);
             }
         }
-        check(ids.size() == 1101, "All 1101 positive IDs must remain unique");
+        check(ids.size() == 1105, "All 1105 positive IDs must remain unique");
         for (var alias : MaterialCatalogSnapshot.aliases().entrySet())
             check(GTMaterialRegistry.get(alias.getKey()) == alias.getValue().resolve(), "Alias must retain identity: " + alias.getKey());
         check(GTMaterialRegistry.get(-1) == Materials.Invalid && GTMaterialRegistry.get(0) == Materials.Invalid

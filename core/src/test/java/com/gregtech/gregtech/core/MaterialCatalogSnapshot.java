@@ -22,7 +22,7 @@ public final class MaterialCatalogSnapshot {
         return new TreeMap<>((Map<String, GTMaterial>) names.get(null));
     }
 
-    public static String sha256() throws Exception {
+    public static java.util.List<String> rows() throws Exception {
         List<String> rows = new ArrayList<>();
         for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
             StringBuilder row = new StringBuilder("M|").append(materialKey(material))
@@ -63,6 +63,11 @@ public final class MaterialCatalogSnapshot {
             }
         }
         Collections.sort(rows);
+        return java.util.List.copyOf(rows);
+    }
+
+    public static String sha256() throws Exception {
+        var rows = rows();
         return HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256")
                 .digest(String.join("\n", rows).getBytes(StandardCharsets.UTF_8)));
     }

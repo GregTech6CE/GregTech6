@@ -111,10 +111,18 @@ public class MaterialGroups {
         Steel.addReRegistrationToThis(GT6Materials.Compounds.Steel, GT6Materials.Compounds.Knightmetal, GT6Materials.Compounds.MeteoricSteel);
         W.addReRegistrationToThis(GT6Materials.Elements.W, GT6Materials.Compounds.TungstenSintered);
         WoodDefault.addReRegistrationToThis(GT6Materials.Woods.Wood, GT6Materials.Woods.Peanutwood);
-        WoodMagical.addReRegistrationToThis(GT6Materials.Woods.Greatwood, GT6Materials.Woods.Silverwood, GT6Materials.Woods.Livingwood, GT6Materials.Woods.Dreamwood, GT6Materials.Woods.Shimmerwood, ImportedMaterialData.Ma, GT6Materials.Woods.Tainted, GT6Materials.Woods.Witchwood, GT6Materials.Woods.Rainbowood);
+        WoodMagical.addReRegistrationToThis(GT6Materials.Woods.Greatwood, GT6Materials.Woods.Silverwood, GT6Materials.Woods.Livingwood, GT6Materials.Woods.Dreamwood, GT6Materials.Woods.Shimmerwood, GT6Materials.Woods.Magic, GT6Materials.Woods.Tainted, GT6Materials.Woods.Witchwood, GT6Materials.Woods.Rainbowood);
         WoodNormal.addReRegistrationToThis(GT6Materials.Woods.WoodRubber, GT6Materials.Woods.Weedwood, GT6Materials.Woods.Skyroot, GT6Materials.Woods.Bamboo, GT6Materials.Woods.Wood, GT6Materials.Woods.Peanutwood);
         WoodPlastic.addReRegistrationToThis(GT6Materials.Compounds.PetrifiedWood);
         WoodTreated.addReRegistrationToThis(GT6Materials.Woods.WoodTreated, GT6Materials.Woods.WoodPolished);
-        WoodUntreated.addReRegistrationToThis(GT6Materials.Woods.Greatwood, GT6Materials.Woods.Silverwood, GT6Materials.Woods.Livingwood, GT6Materials.Woods.Dreamwood, GT6Materials.Woods.Shimmerwood, ImportedMaterialData.Ma, GT6Materials.Woods.Tainted, GT6Materials.Woods.Witchwood, GT6Materials.Woods.Rainbowood, GT6Materials.Woods.WoodRubber, GT6Materials.Woods.Weedwood, GT6Materials.Woods.Skyroot, GT6Materials.Woods.Bamboo, GT6Materials.Woods.Wood, GT6Materials.Woods.Peanutwood);
+        WoodUntreated.addReRegistrationToThis(GT6Materials.Woods.Greatwood, GT6Materials.Woods.Silverwood, GT6Materials.Woods.Livingwood, GT6Materials.Woods.Dreamwood, GT6Materials.Woods.Shimmerwood, GT6Materials.Woods.Magic, GT6Materials.Woods.Tainted, GT6Materials.Woods.Witchwood, GT6Materials.Woods.Rainbowood, GT6Materials.Woods.WoodRubber, GT6Materials.Woods.Weedwood, GT6Materials.Woods.Skyroot, GT6Materials.Woods.Bamboo, GT6Materials.Woods.Wood, GT6Materials.Woods.Peanutwood);
+        // MT.woodnormal registers these families in its factory, before ANY.init's explicit rows.
+        for (var material : com.gregtech.gregtech.api.material.MaterialFactories.normalWoods()) {
+            Wood.addReRegistrationToThis(material);
+            WoodPlastic.addReRegistrationToThis(material);
+            WoodNormal.addReRegistrationToThis(material);
+            WoodDefault.addReRegistrationToThis(material);
+            WoodUntreated.addReRegistrationToThis(material);
+        }
     }
 }
