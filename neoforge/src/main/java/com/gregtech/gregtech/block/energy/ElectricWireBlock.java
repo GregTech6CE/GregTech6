@@ -1,5 +1,9 @@
 package com.gregtech.gregtech.block.energy;
 
+import com.gregtech.gregtech.api.tool.GTToolHelper;
+import com.gregtech.gregtech.api.tool.ToolInteractions;
+import com.gregtech.gregtech.api.tool.ToolInteractionSpec;
+import com.gregtech.gregtech.api.tool.ToolInteractionTarget;
 
 
 
@@ -41,7 +45,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 /** GT6 electric wire block with pipe-style 6-way BooleanProperty connections and dynamic thickness. */
-public class ElectricWireBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, com.gregtech.gregtech.api.energy.WireMaterialLike {
+public class ElectricWireBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, com.gregtech.gregtech.api.energy.WireMaterialLike, ToolInteractionTarget {
     public static final BooleanProperty UP    = BooleanProperty.create("up");
     public static final BooleanProperty DOWN  = BooleanProperty.create("down");
     public static final BooleanProperty NORTH = BooleanProperty.create("north");
@@ -62,6 +66,12 @@ public class ElectricWireBlock extends Block implements EntityBlock, SimpleWater
 
     private final WireSpec spec;
     private @Nullable Direction placementFace;
+
+    @Override public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
+        return GTToolHelper.isWireCutter(tool)
+                ? ToolInteractionSpec.connections(
+                    ToolInteractionSpec.ConnectionKind.ELECTRIC) : null;
+    }
 
     public ElectricWireBlock(WireSpec spec, Properties properties) {
         super(properties);

@@ -1,5 +1,9 @@
 package com.gregtech.gregtech.block.machine;
 
+import com.gregtech.gregtech.api.tool.GTToolHelper;
+import com.gregtech.gregtech.api.tool.ToolInteractions;
+import com.gregtech.gregtech.api.tool.ToolInteractionSpec;
+import com.gregtech.gregtech.api.tool.ToolInteractionTarget;
 import com.gregtech.gregtech.api.transport.PipeConnections;
 import com.gregtech.gregtech.platform.neoforge.NeoToolBindings;
 import com.gregtech.gregtech.blockentity.machine.LogisticsWireBlockEntity;
@@ -27,7 +31,12 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import java.util.List;
 
 /** GT6 24901: six-way cuttable logistics connector, 6/16 block diameter. */
-public final class LogisticsWireBlock extends Block implements EntityBlock {
+public final class LogisticsWireBlock extends Block implements EntityBlock, ToolInteractionTarget {
+    @Override public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
+        return GTToolHelper.isWireCutter(tool)
+                ? ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.LOGISTICS) : null;
+    }
+
     public LogisticsWireBlock(Properties properties) {
         super(properties.noOcclusion());
         var initial = defaultBlockState();
@@ -57,7 +66,7 @@ public final class LogisticsWireBlock extends Block implements EntityBlock {
         }
         if(!NeoToolBindings.isWireCutter(player.getItemInHand(hand)))return InteractionResult.PASS;
         if(!level.isClientSide) {
-            Direction side=hit.getDirection();var property=PipeConnections.propFor(side);
+            Direction side=ToolInteractions.selectedFace(hit);var property=PipeConnections.propFor(side);
             boolean open=!state.getValue(property);BlockPos next=pos.relative(side);
             if(open&&level.hasChunkAt(next)) {
                 var neighbor=level.getBlockState(next);

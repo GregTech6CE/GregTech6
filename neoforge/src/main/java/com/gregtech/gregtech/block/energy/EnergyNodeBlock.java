@@ -1,5 +1,9 @@
 package com.gregtech.gregtech.block.energy;
 
+import com.gregtech.gregtech.api.tool.GTToolHelper;
+import com.gregtech.gregtech.api.tool.ToolInteractions;
+import com.gregtech.gregtech.api.tool.ToolInteractionSpec;
+import com.gregtech.gregtech.api.tool.ToolInteractionTarget;
 
 
 
@@ -32,9 +36,20 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 /** GT6 energy-net node block (motor/dynamo/transformer/turbine/solar/storage). */
-public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, SimpleWaterloggedBlock {
+public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, SimpleWaterloggedBlock, ToolInteractionTarget {
 
     private final EnergyNodeSpec spec;
+
+    @Override public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
+        boolean fixed = spec.id().startsWith("battery_eu");
+        // GT6's rotational transformer reserves the monkey wrench for mode reversal.
+        // A regular wrench still rotates the block itself.
+        if ((spec.id().startsWith("rotation_transformer_") || spec.id().startsWith("transformer_")) && GTToolHelper.isMonkeyWrench(tool)) return null;
+        return !fixed && GTToolHelper.isMachineWrench(tool)
+                ? ToolInteractionSpec.facing(FACING, spec.kind() == EnergyNodeSpec.Kind.SOLAR
+                    ? com.gregtech.gregtech.block.machine.MachineRotationType.BOTTOM_HORIZONTAL
+                    : com.gregtech.gregtech.block.machine.MachineRotationType.ALL) : null;
+    }
 
     public EnergyNodeBlock(EnergyNodeSpec spec, Properties properties) {
         super(properties);
@@ -53,10 +68,11 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        // solar panels always output downward; other nodes face away from the player
-        Direction facing = spec.kind() == EnergyNodeSpec.Kind.SOLAR || spec.id().startsWith("battery_eu")
-                ? Direction.DOWN
-                : ctx.getNearestLookingDirection();
+        // GT6 solar panels use inverse clicked-side placement; their top is not an output.
+        Direction facing = spec.kind() == EnergyNodeSpec.Kind.SOLAR
+                ? ctx.getClickedFace().getOpposite()
+                : spec.id().startsWith("battery_eu") ? Direction.DOWN : ctx.getNearestLookingDirection();
+        if (spec.kind() == EnergyNodeSpec.Kind.SOLAR && facing == Direction.UP) facing = Direction.DOWN;
         return GTWaterloggable.getStateForPlacement(defaultBlockState().setValue(FACING, facing), ctx);
     }
 
@@ -96,18 +112,6 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
         return (BlockEntityTicker<T>) (BlockEntityTicker<EnergyNodeBlockEntity>) EnergyNodeBlockEntity::serverTick;
     }
 
-    private static final net.minecraft.world.phys.shapes.VoxelShape SOLAR_SHAPE =
-            net.minecraft.world.level.block.Block.box(0, 0, 0, 16, 4, 16);
-
-    @Override
-    public net.minecraft.world.phys.shapes.VoxelShape getShape(BlockState state, BlockGetter level,
-            BlockPos pos, net.minecraft.world.phys.shapes.CollisionContext ctx) {
-        // GT6 solar panels are thin plates; battery boxes are inset appliances
-        if (spec.kind() == EnergyNodeSpec.Kind.SOLAR) return SOLAR_SHAPE;
-
-        return super.getShape(state, level, pos, ctx);
-    }
-
     protected InteractionResult interact(BlockState state, Level level, BlockPos pos,
             net.minecraft.world.entity.player.Player player,
             net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
@@ -123,7 +127,7 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
             var result=com.gregtech.gregtech.content.cover.PanelCoverInteraction.use(node,player,hand,hit,true);
             if(result.consumesAction())return result;
         }
-        if (useOrientation(state,level,pos,player,hand,hit))
+        if (ToolInteractions.use(state,level,pos,player,hand,hit))
             return InteractionResult.sidedSuccess(level.isClientSide);
         // GT6 rotational transformers reverse with a monkey wrench; the other
         // invertible energy nodes keep their existing soft-hammer interaction.
@@ -227,14 +231,10 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
     @Override protected com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
     @Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,net.minecraft.world.entity.player.Player player,net.minecraft.world.InteractionHand hand,net.minecraft.world.phys.BlockHitResult hit){return interact(state,level,pos,player,hand,hit).consumesAction()?net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide):net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;}
     @Override protected InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,net.minecraft.world.entity.player.Player player,net.minecraft.world.phys.BlockHitResult hit){return interact(state,level,pos,player,net.minecraft.world.InteractionHand.MAIN_HAND,hit);}
-    private boolean useOrientation(BlockState state,Level level,BlockPos pos,net.minecraft.world.entity.player.Player player,net.minecraft.world.InteractionHand hand,net.minecraft.world.phys.BlockHitResult hit){
-        var tool=player.getItemInHand(hand);boolean monkey=com.gregtech.gregtech.platform.neoforge.NeoToolBindings.isMonkeyWrench(tool);
-        if(spec.kind()==EnergyNodeSpec.Kind.SOLAR||spec.id().startsWith("battery_eu")||monkey&&(spec.id().startsWith("transformer_")||spec.id().startsWith("rotation_transformer_")||spec.kind()==EnergyNodeSpec.Kind.MAGNET)||!com.gregtech.gregtech.platform.neoforge.NeoToolBindings.isMachineWrench(tool))return false;
-        if(!player.mayBuild()||!level.mayInteract(player,pos)||level.isClientSide)return true;
-        var side=com.gregtech.gregtech.platform.neoforge.transport.FluidPipeToolInteractions.selectedFace(hit);if(state.getValue(FACING)==side)return true;
-        if(!level.setBlockAndUpdate(pos,state.setValue(FACING,side)))return true;
-        level.invalidateCapabilities(pos);level.playSound(null,pos,com.gregtech.gregtech.content.transport.fluid.FluidTransportRegistries.WRENCH.get(),net.minecraft.sounds.SoundSource.BLOCKS,1F,1F);com.gregtech.gregtech.platform.neoforge.NeoToolBindings.damageForUse(tool,1,player);return true;
+    @Override public void toolStateChanged(Level level,BlockPos pos,BlockState state) {
+        level.invalidateCapabilities(pos);
     }
+
     @Override public void onRemove(net.minecraft.world.level.block.state.BlockState state,
             net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos,
             net.minecraft.world.level.block.state.BlockState next, boolean moving) {

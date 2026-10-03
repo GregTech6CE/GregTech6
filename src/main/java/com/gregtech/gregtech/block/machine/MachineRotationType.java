@@ -27,6 +27,10 @@ public enum MachineRotationType {
             return facing.getAxis().isHorizontal();
         }
     },
+    /** GT6 solar panels: bottom and horizontal output faces, never the top. */
+    BOTTOM_HORIZONTAL {
+        @Override public boolean isValid(Direction facing) { return facing != Direction.UP; }
+    },
     /** 6-way: all directions are valid. */
     ALL {
         @Override

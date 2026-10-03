@@ -1,21 +1,21 @@
 {
   "variants": {
-    "facing=north": {
+    "facing=down": {
       "model": "gregtech:block/machine/energy/solar_panel_silicon"
     },
-    "facing=east": {
-      "model": "gregtech:block/machine/energy/solar_panel_silicon"
+    "facing=north": {
+      "model": "gregtech:block/machine/energy/solar_panel_silicon_north"
     },
     "facing=south": {
-      "model": "gregtech:block/machine/energy/solar_panel_silicon"
+      "model": "gregtech:block/machine/energy/solar_panel_silicon_south"
     },
     "facing=west": {
-      "model": "gregtech:block/machine/energy/solar_panel_silicon"
+      "model": "gregtech:block/machine/energy/solar_panel_silicon_west"
+    },
+    "facing=east": {
+      "model": "gregtech:block/machine/energy/solar_panel_silicon_east"
     },
     "facing=up": {
-      "model": "gregtech:block/machine/energy/solar_panel_silicon"
-    },
-    "facing=down": {
       "model": "gregtech:block/machine/energy/solar_panel_silicon"
     }
   }

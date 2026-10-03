@@ -1,5 +1,9 @@
 package com.gregtech.gregtech.block.energy;
 
+import com.gregtech.gregtech.api.tool.GTToolHelper;
+import com.gregtech.gregtech.api.tool.ToolInteractions;
+import com.gregtech.gregtech.api.tool.ToolInteractionSpec;
+import com.gregtech.gregtech.api.tool.ToolInteractionTarget;
 
 
 
@@ -38,7 +42,7 @@ import java.util.List;
 import java.util.Map;
 
 /** GT6 rotational axle block — RU conductor with pipe-style 6-way connections. */
-public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, com.gregtech.gregtech.api.machine.PipeGeometry.AxleConnectorGeometry {
+public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, com.gregtech.gregtech.api.machine.PipeGeometry.AxleConnectorGeometry, ToolInteractionTarget {
     public static final BooleanProperty UP    = BooleanProperty.create("up");
     public static final BooleanProperty DOWN  = BooleanProperty.create("down");
     public static final BooleanProperty NORTH = BooleanProperty.create("north");
@@ -59,6 +63,11 @@ public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBl
 
     private final AxleSpec spec;
     private @Nullable Direction placementFace;
+
+    @Override public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
+        return GTToolHelper.isMachineWrench(tool)
+                ? ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.AXLE) : null;
+    }
 
     public AxleBlock(AxleSpec spec, Properties properties) {
         super(properties);

@@ -45,12 +45,14 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
     }
 
     @Override public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
-        boolean fixed = spec.kind() == EnergyNodeSpec.Kind.SOLAR || spec.id().startsWith("battery_eu");
+        boolean fixed = spec.id().startsWith("battery_eu");
         // GT6's rotational transformer reserves the monkey wrench for mode reversal.
         // A regular wrench still rotates the block itself.
         if ((spec.id().startsWith("rotation_transformer_") || spec.id().startsWith("transformer_")) && GTToolHelper.isMonkeyWrench(tool)) return null;
         return !fixed && GTToolHelper.isMachineWrench(tool)
-                ? ToolInteractionSpec.facing(FACING, com.gregtech.gregtech.block.machine.MachineRotationType.ALL) : null;
+                ? ToolInteractionSpec.facing(FACING, spec.kind() == EnergyNodeSpec.Kind.SOLAR
+                    ? com.gregtech.gregtech.block.machine.MachineRotationType.BOTTOM_HORIZONTAL
+                    : com.gregtech.gregtech.block.machine.MachineRotationType.ALL) : null;
     }
 
     public EnergyNodeSpec spec() { return spec; }
@@ -62,10 +64,11 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        // solar panels always output downward; other nodes face away from the player
-        Direction facing = spec.kind() == EnergyNodeSpec.Kind.SOLAR || spec.id().startsWith("battery_eu")
-                ? Direction.DOWN
-                : ctx.getNearestLookingDirection();
+        // GT6 solar panels use inverse clicked-side placement; their top is not an output.
+        Direction facing = spec.kind() == EnergyNodeSpec.Kind.SOLAR
+                ? ctx.getClickedFace().getOpposite()
+                : spec.id().startsWith("battery_eu") ? Direction.DOWN : ctx.getNearestLookingDirection();
+        if (spec.kind() == EnergyNodeSpec.Kind.SOLAR && facing == Direction.UP) facing = Direction.DOWN;
         return GTWaterloggable.getStateForPlacement(defaultBlockState().setValue(FACING, facing), ctx);
     }
 
@@ -103,18 +106,6 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide || type != GTBlockEntities.ENERGY_NODE.get()) return null;
         return (BlockEntityTicker<T>) (BlockEntityTicker<EnergyNodeBlockEntity>) EnergyNodeBlockEntity::serverTick;
-    }
-
-    private static final net.minecraft.world.phys.shapes.VoxelShape SOLAR_SHAPE =
-            net.minecraft.world.level.block.Block.box(0, 0, 0, 16, 4, 16);
-
-    @Override
-    public net.minecraft.world.phys.shapes.VoxelShape getShape(BlockState state, BlockGetter level,
-            BlockPos pos, net.minecraft.world.phys.shapes.CollisionContext ctx) {
-        // GT6 solar panels are thin plates; battery boxes are inset appliances
-        if (spec.kind() == EnergyNodeSpec.Kind.SOLAR) return SOLAR_SHAPE;
-
-        return super.getShape(state, level, pos, ctx);
     }
 
     @Override

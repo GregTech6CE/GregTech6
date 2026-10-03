@@ -16,7 +16,11 @@ import net.minecraft.world.phys.BlockHitResult;
 import java.util.List;
 
 /** Shared placement, wrench, stop switch and stored-content drops for axial generators. */
-public abstract class AxialGeneratorBlock extends DirectionalBlock implements EntityBlock {
+public abstract class AxialGeneratorBlock extends DirectionalBlock implements EntityBlock, com.gregtech.gregtech.api.tool.ToolInteractionTarget {
+    @Override public com.gregtech.gregtech.api.tool.ToolInteractionSpec toolInteraction(BlockState state,ItemStack tool) {
+        return com.gregtech.gregtech.api.tool.GTToolHelper.isMachineWrench(tool)
+                ? com.gregtech.gregtech.api.tool.ToolInteractionSpec.facing(FACING,MachineRotationType.ALL) : null;
+    }
     private final AxialGeneratorDefinitions.Grade grade;
     protected AxialGeneratorBlock(AxialGeneratorDefinitions.Grade grade,Properties properties) {
         super(properties);this.grade=grade;registerDefaultState(stateDefinition.any().setValue(FACING,Direction.NORTH));

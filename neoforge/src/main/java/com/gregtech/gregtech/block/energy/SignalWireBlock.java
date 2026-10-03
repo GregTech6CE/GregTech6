@@ -1,5 +1,9 @@
 package com.gregtech.gregtech.block.energy;
 
+import com.gregtech.gregtech.api.tool.GTToolHelper;
+import com.gregtech.gregtech.api.tool.ToolInteractions;
+import com.gregtech.gregtech.api.tool.ToolInteractionSpec;
+import com.gregtech.gregtech.api.tool.ToolInteractionTarget;
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.platform.neoforge.NeoToolBindings;
 import com.gregtech.gregtech.blockentity.energy.SignalWireBlockEntity;
@@ -19,11 +23,15 @@ import net.minecraft.world.phys.shapes.*;
 import java.util.List;
 
 /** Six independent ports; the common cutter spec also drives the client face overlay. */
-public final class SignalWireBlock extends Block implements EntityBlock {
+public final class SignalWireBlock extends Block implements EntityBlock, ToolInteractionTarget {
     public static final IntegerProperty POWER = IntegerProperty.create("power", 0, 15);
     private final GTMaterial material;
     private final int range;
     private final boolean insulated;
+    @Override public ToolInteractionSpec toolInteraction(BlockState state,ItemStack tool){
+        return GTToolHelper.isWireCutter(tool)?ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.REDSTONE):null;
+    }
+
     public SignalWireBlock(GTMaterial material, int range, boolean insulated, boolean luminous, Properties properties) {
         super(properties.lightLevel(state -> luminous ? state.getValue(POWER) : 0));
         this.material=material; this.range=range; this.insulated=insulated;

@@ -109,7 +109,7 @@
       "parent": "minecraft:block/block",
       "textures": {
         "up": "gregtech:block/machines/solarpanels/solarpanel_electric_8eu/colored/top",
-        "down": "gregtech:block/machines/solarpanels/solarpanel_electric_8eu/colored/bottom",
+        "down": "gregtech:block/machines/solarpanels/solarpanel_electric_8eu/colored/bottom_facing",
         "north": "gregtech:block/machines/solarpanels/solarpanel_electric_8eu/colored/side",
         "south": "gregtech:block/machines/solarpanels/solarpanel_electric_8eu/colored/side",
         "west": "gregtech:block/machines/solarpanels/solarpanel_electric_8eu/colored/side",
@@ -124,13 +124,14 @@
           ],
           "to": [
             16,
-            4,
+            16,
             16
           ],
           "faces": {
             "up": {
               "texture": "#up",
-              "tintindex": 0
+              "tintindex": 0,
+              "cullface": "up"
             },
             "down": {
               "texture": "#down",
@@ -139,19 +140,23 @@
             },
             "north": {
               "texture": "#north",
-              "tintindex": 0
+              "tintindex": 0,
+              "cullface": "north"
             },
             "south": {
               "texture": "#south",
-              "tintindex": 0
+              "tintindex": 0,
+              "cullface": "south"
             },
             "west": {
               "texture": "#west",
-              "tintindex": 0
+              "tintindex": 0,
+              "cullface": "west"
             },
             "east": {
               "texture": "#east",
-              "tintindex": 0
+              "tintindex": 0,
+              "cullface": "east"
             }
           }
         }
@@ -162,7 +167,7 @@
       "parent": "minecraft:block/block",
       "textures": {
         "up": "gregtech:block/machines/solarpanels/solarpanel_electric_8eu/overlay/top",
-        "down": "gregtech:block/machines/solarpanels/solarpanel_electric_8eu/overlay/bottom",
+        "down": "gregtech:block/machines/solarpanels/solarpanel_electric_8eu/overlay/bottom_facing",
         "north": "gregtech:block/machines/solarpanels/solarpanel_electric_8eu/overlay/side",
         "south": "gregtech:block/machines/solarpanels/solarpanel_electric_8eu/overlay/side",
         "west": "gregtech:block/machines/solarpanels/solarpanel_electric_8eu/overlay/side",
@@ -177,28 +182,33 @@
           ],
           "to": [
             16,
-            4,
+            16,
             16
           ],
           "faces": {
             "up": {
-              "texture": "#up"
+              "texture": "#up",
+              "cullface": "up"
             },
             "down": {
               "texture": "#down",
               "cullface": "down"
             },
             "north": {
-              "texture": "#north"
+              "texture": "#north",
+              "cullface": "north"
             },
             "south": {
-              "texture": "#south"
+              "texture": "#south",
+              "cullface": "south"
             },
             "west": {
-              "texture": "#west"
+              "texture": "#west",
+              "cullface": "west"
             },
             "east": {
-              "texture": "#east"
+              "texture": "#east",
+              "cullface": "east"
             }
           }
         }
