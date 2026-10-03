@@ -30,8 +30,10 @@ public abstract class EnergyRelayBlockEntity extends CapabilityRelayBlockEntity 
         var visited=ACTIVE.get();if(!visited.add(this))return absent;
         try{
             var destination=target(side);
-            if(destination==null||!level.hasChunkAt(destination.position()))return absent;
-            var entity=level.getBlockEntity(destination.position());
+            if(destination==null)return absent;
+            var destinationLevel=targetLevel(destination);
+            if(!destinationLevel.hasChunkAt(destination.position()))return absent;
+            var entity=destinationLevel.getBlockEntity(destination.position());
             if(entity==null||entity.isRemoved()||!(entity instanceof IEnergyBlock energy))return absent;
             return operation.apply(energy,destination.side());
         }finally{visited.remove(this);if(visited.isEmpty())ACTIVE.remove();}

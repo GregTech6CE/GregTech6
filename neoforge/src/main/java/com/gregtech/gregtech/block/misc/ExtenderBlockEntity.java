@@ -80,6 +80,7 @@ public class ExtenderBlockEntity extends com.gregtech.gregtech.blockentity.Energ
         var state=level.getBlockState(pos);
         if(comparator){
             if(level.getBlockEntity(pos) instanceof ExtenderBlockEntity relay&&relay.universal())return relay.comparator(direction.getOpposite());
+            if(level.getBlockEntity(pos) instanceof DungeonPortalBlockEntity portal)return portal.comparator(direction.getOpposite());
             if(state.hasAnalogOutputSignal())return state.getAnalogOutputSignal(level,pos);
         }
         return level.getSignal(pos,direction);

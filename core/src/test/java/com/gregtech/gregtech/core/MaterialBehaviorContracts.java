@@ -43,6 +43,9 @@ public final class MaterialBehaviorContracts {
         ModReferences.UNKNOWN.getClass();
         com.gregtech.gregtech.data.MaterialGroups.Glowstone.getClass();
         GTMaterialRegistry.init();
+        check(com.gregtech.gregtech.data.MaterialPrefix.stickLong.isValidFor(GTMaterialRegistry.get("Obsidian")), "source miniature Nether recipe has its Obsidian long rod form");
+        check(com.gregtech.gregtech.data.MaterialPrefix.stickLong.isValidFor(GTMaterialRegistry.get("Endstone")), "source miniature End recipe has its Endstone long rod form");
+
         check(GTMaterialRegistry.registrationPhase() == GTMaterialRegistry.RegistrationPhase.READY,
                 "The complete directory must finish linking");
         check(GTMaterialRegistry.allMaterials().size() == 1160, "All 1160 original material objects must remain");

@@ -16,50 +16,18 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Function;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.level.portal.PortalInfo;
-import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.util.ITeleporter;
 
-/**
- * Port of GT6's miniature portals as far as the dungeon needs them
- * ({@code gregtech/tileentity/portals/MultiTileEntityMiniPortal.java} and its two vanilla-dimension
- * subclasses {@code MultiTileEntityMiniPortalNether.java} / {@code MultiTileEntityMiniPortalEnd.java}):
- * the block that remembers which dungeon key opens it, which dimension it leads to, and that moves an
- * entity standing inside it across.
- *
- * <p>GT6's portal is a multi-tile with its own networking, rendering and relay system
- * ({@code MultiTileEntityMiniPortal} alone is 520 lines: 13 render passes, item/fluid/redstone/energy
- * relays into the target portal, a comparator, an inventory delegate). This port keeps only what the
- * dungeon rooms need:</p>
- * <ul>
- *   <li>the key id GT6 stores under {@code NBT_KEY} ({@code MultiTileEntitySafeKeyLocked:56}) and the
- *       active flag of {@code NBT_ACTIVE} ({@code MultiTileEntityMiniPortal:73-79}),</li>
- *   <li>GT6's key rule ({@code Behavior_Key:44-64} with
- *       {@code MultiTileEntitySafeKeyLocked.useKey:79-91}): an unkeyed portal adopts the id of the key
- *       used on it, a keyed one only opens for a key with the same id,</li>
- *   <li>GT6's igniter toggle ({@code MultiTileEntityMiniPortalNether:116-128}, {@code TOOL_igniter}),</li>
- *   <li>GT6's portal lists and target search ({@code MultiTileEntityMiniPortalNether:42-113}): the
- *       nearest portal of the same kind on the other side, within GT6's margin of error and with
- *       GT6's distance factor,</li>
- *   <li>and a cross dimension move, which GT6's portal does <b>not</b> have: the original relays items,
- *       fluids, redstone and energy through the target portal and never teleports an entity. The port
- *       adds it because a dungeon portal without it would be a decoration - see
- *       {@link #teleport(ServerLevel, BlockPos, Entity)}.</li>
- * </ul>
- *
- * <p>Skipped from GT6 (with the reason): the twelve frame render passes and the portal texture
- * animation of {@code MultiTileEntityMiniPortal:272-323} (the port's block model carries GT6's frame
- * box from {@code sBlockBounds} and the portal plane as static quads), the item/fluid/redstone/energy
- * relaying and the comparator of {@code :325-519} (they need the multi-tile's delegates), and the
- * client side activation sound packet of {@code :244-257}. GT6 disables a portal when its chunk
- * unloads ({@code onChunkUnload:203-207}); the port keeps the active flag, so a portal still works
- * after its chunk is reloaded.</p>
+/** GT6 miniature cross-dimension relay (MultiTileEntityMiniPortal:325-519).
+ * Items, fluids, FE and GT packets address the loaded opposite neighbour of the linked
+ * portal; six sided redstone/comparator inboxes follow the original tick phases.
+ * Legacy key data is retained for saves, but keys do not activate the source machine.
  */
-public class DungeonPortalBlockEntity extends BlockEntity {
+public class DungeonPortalBlockEntity extends com.gregtech.gregtech.blockentity.EnergyRelayBlockEntity
+        implements com.gregtech.gregtech.item.behavior.ItemBehaviors.Ignitable,
+        com.gregtech.gregtech.item.behavior.BehaviorSprayExtinguisher.Extinguishable {
 
-    /** GT6's {@code NBT_KEY} ({@code gregapi/data/CS.java:1169}), the id the matching key must carry. */
+    /** GT6's {@code NBT_KEY} ({@code gregapi/data/CS.java:1169}), legacy key data retained for old saves. */
     public static final String NBT_KEY = GTDungeonKeyItem.NBT_KEY;
     /** GT6's {@code NBT_ACTIVE} ({@code CS.java:1172}). */
     public static final String NBT_ACTIVE = "gt.active";
@@ -68,24 +36,24 @@ public class DungeonPortalBlockEntity extends BlockEntity {
      * GT6's {@code sListWorldSide} / {@code sListNetherSide} / {@code sListEndSide}
      * ({@code MultiTileEntityMiniPortalNether:42-47}, {@code MultiTileEntityMiniPortalEnd:42-47}):
      * the active portals of each kind, so a portal can find its counterpart on the other side. GT6
-     * keeps live tile entities; the port keeps positions and validates them while scanning, which
-     * survives a chunk unload ({@code MultiTileEntityMiniPortal:203-207} cleared GT6's lists there).
+     * keeps live tile entities; the port keeps positions and validates them while scanning, with entries removed on chunk unload as in {@code MultiTileEntityMiniPortal:203-207}.
      */
     private static final Map<Block, Set<GlobalPos>> ACTIVE = new LinkedHashMap<>();
 
     private long keyId;
     private boolean active;
+    private final com.gregtech.gregtech.content.logistics.MiniPortalSignals signals = new com.gregtech.gregtech.content.logistics.MiniPortalSignals();
 
     public DungeonPortalBlockEntity(BlockPos pos, BlockState state) {
         super(com.gregtech.gregtech.registry.GTBlockEntities.DUNGEON_PORTAL.get(), pos, state);
     }
 
-    /** The key id this portal accepts, {@code 0} while it has none. */
+    /** Legacy key id, retained only for save compatibility. */
     public long keyId() {
         return keyId;
     }
 
-    /** GT6's {@code MultiTileEntitySafeKeyLocked:56} read of its {@code mID}. */
+    /** Preserves the superseded port's key data without granting key activation. */
     public void setKeyId(long keyId) {
         this.keyId = keyId;
         setChanged();
@@ -95,21 +63,40 @@ public class DungeonPortalBlockEntity extends BlockEntity {
         return active;
     }
 
-    /**
-     * GT6's {@code Behavior_Key:50-61} on the lock side, i.e. {@code MultiTileEntitySafeKeyLocked:79-91}:
-     * a portal without an id adopts the id of the key that is used on it, and a keyed portal only
-     * opens for a key that carries the same id.
-     */
-    public boolean useKey(long keyId) {
-        if (active || keyId == 0) return false;
-        if (this.keyId == 0) this.keyId = keyId;
-        if (this.keyId != keyId) return false;
-        return activate();
+    /** Legacy key activation was a port invention; the source uses igniters/Ender Eyes. */
+    @Deprecated
+    public boolean useKey(long keyId) { return false; }
+
+    /** MultiTileEntityMiniPortalNether:116-128: all GT igniters toggle; extinguishers close. */
+    @Override
+    public long onIgnite(Level world, BlockPos pos, net.minecraft.core.Direction side,
+                         @Nullable net.minecraft.world.entity.player.Player player,
+                         net.minecraft.world.item.ItemStack igniter, boolean sneaking,
+                         float hitX, float hitY, float hitZ) {
+        if (world.isClientSide || !(getBlockState().getBlock() instanceof DungeonPortalBlock block)
+                || block.target() != DungeonPortalBlock.Target.NETHER) return 0L;
+        if (active) deactivate(); else activate();
+        var remote = linkedPortal();
+        if (remote != null && player != null) player.displayClientMessage(net.minecraft.network.chat.Component.literal(
+                "X: " + remote.worldPosition.getX() + "   Y: " + remote.worldPosition.getY()
+                        + "   Z: " + remote.worldPosition.getZ()), false);
+        return 10000L;
+    }
+    @Override
+    public long onExtinguish(Level world, BlockPos pos, net.minecraft.core.Direction side,
+                            @Nullable net.minecraft.world.entity.player.Player player,
+                            net.minecraft.world.item.ItemStack can, boolean sneaking,
+                            float hitX, float hitY, float hitZ) {
+        if (world.isClientSide || !(getBlockState().getBlock() instanceof DungeonPortalBlock block)
+                || block.target() != DungeonPortalBlock.Target.NETHER) return 0L;
+        deactivate();
+        return 10000L;
     }
 
     /** GT6's {@code setPortalActive} ({@code MultiTileEntityMiniPortal:183}). */
     public boolean activate() {
-        if (active) return false;
+        if (active || !(getBlockState().getBlock() instanceof DungeonPortalBlock portal)
+                || level == null || portal.targetLevel(level) == null) return false;
         active = true;
         if (level != null && !level.isClientSide) {
             level.setBlock(worldPosition, getBlockState().setValue(DungeonPortalBlock.ACTIVE, true), 3);
@@ -122,13 +109,21 @@ public class DungeonPortalBlockEntity extends BlockEntity {
     /** GT6's {@code setPortalInactive} ({@code MultiTileEntityMiniPortal:184}). */
     public boolean deactivate() {
         if (!active) return false;
+        clearLinkedSignals();
         active = false;
+        signals.clear();
         removeFromPortalList();
         if (level != null && !level.isClientSide) {
             level.setBlock(worldPosition, getBlockState().setValue(DungeonPortalBlock.ACTIVE, false), 3);
         }
         setChanged();
         return true;
+    }
+
+    private void clearLinkedSignals() {
+        var remote = linkedPortal();
+        if (remote != null && level instanceof ServerLevel server)
+            remote.signals.disconnect(server.getServer().getTickCount());
     }
 
     @Override
@@ -220,96 +215,79 @@ public class DungeonPortalBlockEntity extends BlockEntity {
         return best;
     }
 
-    /**
-     * Moves an entity that stands in this portal to the other side, GT6's
-     * {@code MultiTileEntityMiniPortalNether:67-96} target search included.
-     *
-     * <p>GT6's portal never moves an entity: it relays what is piped into it. The port's dungeon portal
-     * teleports, because that is the point of a dungeon portal for a player:</p>
-     * <ul>
-     *   <li>an active portal of the same kind inside GT6's margin of error is the destination (the
-     *       entity arrives in the middle of that portal block),</li>
-     *   <li>without one the entity arrives at the scaled coordinate (nether: an eighth, End: a
-     *       hundred-and-twenty-eighth) on a small obsidian platform, because a dungeon portal that
-     *       leads nowhere would be useless. Vanilla builds a whole portal there; the port only lays the
-     *       platform, the matching portal has to be built by the player, exactly like GT6's relay needs
-     *       a counterpart.</li>
-     *   <li>Vanilla's portal cooldown ({@code Entity#setPortalCooldown}) keeps an entity from bouncing
-     *       back and forth between an arrival portal and the one it came from, and it is also what makes
-     *       a second call in the same movement tick harmless: the moved entity is gone and the new one
-     *       carries the cooldown.</li>
-     * </ul>
-     *
-     * <p>{@code DungeonPortalBlock#entityInside} calls this directly, the way vanilla's end portal did
-     * before 1.16 deferred its teleport ({@code Entity#setAsInsidePortal}); 1.20.1 has no deferred hook
-     * a mod block can use. A moved entity is removed, so the block loop that called it cannot teleport
-     * it twice.</p>
-     *
-     * @return the moved entity (a dimension change replaces it), or {@code null} when nothing happened
-     */
+    /** Source MiniPortal.getDelegateTileEntity: the remote opposite neighbour faces this input side. */
+    @Override
+    protected Target target(net.minecraft.core.Direction side) {
+        if (side == null) return null;
+        var portal = linkedPortal();
+        if (portal == null || portal.level == null) return null;
+        return new Target(portal.worldPosition.relative(side.getOpposite()), side, portal.level);
+    }
+    @Override protected boolean supportsEnergy() { return true; }
+    @Override protected boolean supportsItems() { return true; }
+    @Override protected boolean supportsFluids() { return true; }
+
     @Nullable
-    public static Entity teleport(ServerLevel level, BlockPos pos, Entity entity) {
-        if (entity.isRemoved() || entity.isPassenger() || entity.isVehicle() || !entity.canChangeDimensions()
-                || entity.isOnPortalCooldown()) {
-            return null;
-        }
-        if (!(level.getBlockState(pos).getBlock() instanceof DungeonPortalBlock portal)) return null;
-        if (!(level.getBlockEntity(pos) instanceof DungeonPortalBlockEntity self) || !self.isActive()) return null;
-        ServerLevel target = portal.targetLevel(level);
-        if (target == null) return null;
-
-        GlobalPos destination = findTarget(pos, level.dimension() == Level.OVERWORLD, portal, target,
-                portal.distanceFactor(), portal.margin());
-        Vec3 arrival = destination != null
-                ? new Vec3(destination.pos().getX() + 0.5D, destination.pos().getY(), destination.pos().getZ() + 0.5D)
-                : arrivalPlatform(level, pos, target, portal);
-        Entity moved = entity.changeDimension(target, new Arrival(arrival));
-        if (moved != null) {
-            moved.setDeltaMovement(Vec3.ZERO);
-            moved.setPortalCooldown();
-        }
-        return moved;
+    public DungeonPortalBlockEntity linkedPortal() {
+        if (!active || isRemoved() || !(level instanceof ServerLevel server)
+                || !(getBlockState().getBlock() instanceof DungeonPortalBlock block)) return null;
+        ServerLevel remote = block.targetLevel(server);
+        if (remote == null) return null;
+        GlobalPos pos = findTarget(worldPosition, server.dimension() == Level.OVERWORLD, block, remote,
+                block.distanceFactor(), block.margin());
+        return pos != null && remote.getBlockEntity(pos.pos()) instanceof DungeonPortalBlockEntity portal ? portal : null;
     }
 
-    /** The scaled arrival coordinate (GT6's factor) with a small platform under it. */
-    private static Vec3 arrivalPlatform(ServerLevel level, BlockPos pos, ServerLevel target, DungeonPortalBlock portal) {
-        int factor = portal.distanceFactor();
-        boolean fromOverworld = level.dimension() == Level.OVERWORLD;
-        int x = fromOverworld ? Math.floorDiv(pos.getX(), factor) : pos.getX() * factor;
-        int z = fromOverworld ? Math.floorDiv(pos.getZ(), factor) : pos.getZ() * factor;
-        int y = net.minecraft.util.Mth.clamp(pos.getY(), target.getMinBuildHeight() + 1, target.getMaxBuildHeight() - 2);
-        BlockPos centre = new BlockPos(x, y, z);
-        target.getChunkAt(centre);
-        for (int dx = -1; dx <= 1; dx++) {
-            for (int dz = -1; dz <= 1; dz++) {
-                target.setBlock(centre.offset(dx, -1, dz),
-                        net.minecraft.world.level.block.Blocks.OBSIDIAN.defaultBlockState(), 3);
-            }
-        }
-        for (int dy = 0; dy <= 1; dy++) {
-            target.setBlock(centre.above(dy),
-                    net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), 3);
-        }
-        return new Vec3(x + 0.5D, y, z + 0.5D);
+    /** Vanilla queries the opposite of the actual output face, matching source OPOS[query]. */
+    public int signal(net.minecraft.core.Direction query) {
+        return active ? signals.redstone(query.getOpposite().ordinal()) : 0;
     }
-
-    /** Forge's teleporter hook: it puts the entity where this port decided, not where vanilla would. */
-    private record Arrival(Vec3 position) implements ITeleporter {
-        @Override
-        public PortalInfo getPortalInfo(Entity entity, ServerLevel destination,
-                                        Function<ServerLevel, PortalInfo> defaultPortalInfo) {
-            return new PortalInfo(position, Vec3.ZERO, entity.getYRot(), entity.getXRot());
+    public int comparator(net.minecraft.core.Direction output) {
+        return !active ? 0 : output == null ? signals.maximumComparator() : signals.comparator(output.ordinal());
+    }
+    private int incoming(net.minecraft.core.Direction side, boolean comparator) {
+        BlockPos pos = worldPosition.relative(side);
+        if (level == null || !level.hasChunkAt(pos)) return 0;
+        var state = level.getBlockState(pos);
+        if (comparator) {
+            var entity = level.getBlockEntity(pos);
+            if (entity instanceof DungeonPortalBlockEntity portal) return portal.comparator(side.getOpposite());
+            if (entity instanceof ExtenderBlockEntity extender) return extender.comparator(side.getOpposite());
+            if (state.hasAnalogOutputSignal()) return state.getAnalogOutputSignal(level, pos);
         }
-
-        @Override
-        public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destination, float yaw,
-                                  Function<Boolean, Entity> repositionEntity) {
-            Entity moved = repositionEntity.apply(false);
-            if (moved != null) {
-                moved.moveTo(position.x, position.y, position.z, yaw, moved.getXRot());
-                moved.setDeltaMovement(Vec3.ZERO);
-            }
-            return moved;
+        return level.getSignal(pos, side);
+    }
+    public void tickRelay() {
+        if (!(level instanceof ServerLevel server)) return;
+        long tick = server.getServer().getTickCount();
+        if (!active) signals.clear();
+        else {
+            signals.advance(tick);
+            var remote = linkedPortal();
+            if (remote != null) for (var side : net.minecraft.core.Direction.values())
+                remote.signals.receive(tick, side.getOpposite().ordinal(), incoming(side, false), incoming(side, true));
+        }
+        if (signals.consumeChanged()) {
+            level.updateNeighborsAt(worldPosition, getBlockState().getBlock());
+            level.updateNeighbourForOutputSignal(worldPosition, getBlockState().getBlock());
         }
     }
+    @Override public void onLoad() {
+        super.onLoad();
+        if (active) addToPortalList();
+        if (level != null && !level.isClientSide && getBlockState().getValue(DungeonPortalBlock.ACTIVE) != active)
+            level.setBlock(worldPosition, getBlockState().setValue(DungeonPortalBlock.ACTIVE, active), Block.UPDATE_CLIENTS);
+    }
+    @Override public void onChunkUnloaded() {
+        // Source onChunkUnload disables the relay; never load chunks or change remote terrain.
+        clearLinkedSignals();
+        active = false;
+        signals.clear();
+        removeFromPortalList();
+        setChanged();
+        super.onChunkUnloaded();
+    }
+    /** Kept only for source compatibility with the superseded port API. Mini portals do not move entities. */
+    @Deprecated @Nullable
+    public static Entity teleport(ServerLevel level, BlockPos pos, Entity entity) { return null; }
 }

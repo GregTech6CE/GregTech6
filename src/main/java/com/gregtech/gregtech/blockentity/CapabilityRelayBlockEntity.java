@@ -14,7 +14,12 @@ import java.util.function.Function;
 
 /** Live, sided forwarding without local storage, chunk loading or recursive capability loops. */
 public abstract class CapabilityRelayBlockEntity extends BlockEntity {
-    public record Target(BlockPos position,Direction side) {}
+    public record Target(BlockPos position,Direction side,net.minecraft.world.level.Level level) {
+        public Target(BlockPos position,Direction side) { this(position,side,null); }
+    }
+    protected final net.minecraft.world.level.Level targetLevel(Target target) {
+        return target.level()==null?level:target.level();
+    }
     private static final com.gregtech.gregtech.content.logistics.RelayVisitSet<CapabilityRelayBlockEntity> ACTIVE=new com.gregtech.gregtech.content.logistics.RelayVisitSet<>();
     private final Map<Direction,LazyOptional<IItemHandler>> itemCaps=new EnumMap<>(Direction.class);
     private final Map<Direction,LazyOptional<IFluidHandler>> fluidCaps=new EnumMap<>(Direction.class);
@@ -32,8 +37,10 @@ public abstract class CapabilityRelayBlockEntity extends BlockEntity {
         if(level==null || isRemoved() || !active.add(this)) return unavailable;
         try {
             var target=target(side);
-            if(target==null || !level.hasChunkAt(target.position())) return unavailable;
-            var entity=level.getBlockEntity(target.position());
+            if(target==null) return unavailable;
+            var destinationLevel=targetLevel(target);
+            if(!destinationLevel.hasChunkAt(target.position())) return unavailable;
+            var entity=destinationLevel.getBlockEntity(target.position());
             if(entity==null || entity==this || entity.isRemoved()) return unavailable;
             return entity.getCapability(capability,target.side()).map(operation::apply).orElse(unavailable);
         } finally { active.remove(this);if(active.isEmpty()) ACTIVE.remove(); }

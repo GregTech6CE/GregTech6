@@ -422,5 +422,6 @@
         }
       }
     }
-  ]
+  ],
+  "parent": "minecraft:block/block"
 }

@@ -1,6 +1,5 @@
 package com.gregtech.gregtech.block.misc;
 
-import com.gregtech.gregtech.item.GTDungeonKeyItem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -26,51 +25,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-/**
- * The dungeon portal of GT6's two portal rooms
- * ({@code gregapi/worldgen/dungeon/DungeonChunkRoomPortalNether.java} and
- * {@code DungeonChunkRoomPortalEnd.java}): the block that fills the portal frame those rooms build.
- *
- * <p>GT6 has no such block - its rooms leave the obsidian frame of the Nether room empty (the player
- * lights it with flint and steel, i.e. a vanilla nether portal) and place the vanilla
- * {@code Blocks.end_portal} in the End room - and its own portals are the craftable miniature portal
- * multi-tiles ({@code MultiTileEntityMiniPortalNether}, id 32766, and {@code MultiTileEntityMiniPortalEnd},
- * id 32000) that a player builds somewhere else. This block is the port's answer to the same job: it
- * carries GT6's portal state ({@link DungeonPortalBlockEntity}) and is what the two rooms place.</p>
- *
- * <h2>Activation rule</h2>
- * <p>Following GT6's key handling ({@code gregtech/items/behaviors/Behavior_Key.java:44-64} and
- * {@code MultiTileEntitySafeKeyLocked.useKey:79-91}):</p>
- * <ul>
- *   <li>every portal of a dungeon room is built with one of the dungeon's key ids
- *       ({@link com.gregtech.gregtech.worldgen.dungeon.GTDungeonChunkRoomPortal}),</li>
- *   <li>right-clicking it with a dungeon key whose {@code gt.key} id matches opens it,</li>
- *   <li>a key with a different id does nothing, and a portal without an id (a hand-placed block, or a
- *       cell built without key ids) adopts the id of the first key used on it - GT6's
- *       {@code if (mID == 0) mID = tID;} of the safe,</li>
- *   <li>an open portal is closed again with flint and steel, GT6's {@code TOOL_igniter} toggle
- *       ({@code MultiTileEntityMiniPortalNether:116-128}); a key does not close it.</li>
- * </ul>
- *
- * <h2>Port differences (rendering and behaviour)</h2>
- * <ul>
- *   <li>GT6's portal is a multi-tile with thirteen render passes
- *       ({@code MultiTileEntityMiniPortal:272-323}): the inner portal cube of
- *       {@code sBlockBounds[0]} plus the twelve two-pixel frame bars of {@code sBlockBounds[1..12]}.
- *       The port's block model has the same shapes (see
- *       {@code assets/gregtech/models/block/dungeon/portal_*}), but they are static quads and the
- *       frame bars only show while the portal is closed, because 1.20.1 models cannot switch a part of
- *       a model on a block state.</li>
- *   <li>GT6's portal texture is the vanilla portal texture (untinted for the Nether, tinted black for
- *       the End, {@code MultiTileEntityMiniPortalEnd:128}); the port's Nether portal uses
- *       {@code minecraft:block/nether_portal} and its End portal a black copy of GT6's own portal
- *       texture, {@code gregtech:block/dungeon/portal_end}.</li>
- *   <li>The particle effect of GT6's {@code randomDisplayTick} ({@code MultiTileEntityMiniPortalNether:62-64})
- *       and its activation sound ({@code MultiTileEntityMiniPortal:254}) are not ported.</li>
- *   <li>GT6's portal hardness is the one of obsidian (Nether) and end stone (End)
- *       ({@code MultiTileEntityMiniPortalNether:130-131}, {@code ...End:125-126}), which the port's two
- *       blocks copy.</li>
- * </ul>
+/** GT6 craftable miniature portal: cross-dimension items, fluids, GT/FE energy and signals.
+ * Existing registry ids are retained. Dungeon rooms use vanilla portals separately.
  */
 public class DungeonPortalBlock extends Block implements EntityBlock {
 
@@ -141,33 +97,29 @@ public class DungeonPortalBlock extends Block implements EntityBlock {
         return new DungeonPortalBlockEntity(pos, state);
     }
 
-    /**
-     * GT6's mini portals teleport nothing (they relay); the port's dungeon portal moves an entity that
-     * is inside it, which is checked here the way vanilla's portals check it - the game calls this for
-     * every block an entity's bounding box touches. See
-     * {@link DungeonPortalBlockEntity#teleport(ServerLevel, BlockPos, Entity)}, which is also what the
-     * tests drive directly.
-     */
     @Override
-    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-        if (level.isClientSide || !state.getValue(ACTIVE)) return;
-        DungeonPortalBlockEntity.teleport((ServerLevel) level, pos, entity);
-    }
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) { }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand,
-                                 BlockHitResult hit) {
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+                                 InteractionHand hand, BlockHitResult hit) {
         ItemStack held = player.getItemInHand(hand);
-        boolean igniter = held.is(Items.FLINT_AND_STEEL);
-        if (!igniter && !(held.getItem() instanceof GTDungeonKeyItem)) return InteractionResult.PASS;
+        boolean igniter = target == Target.NETHER && held.is(Items.FLINT_AND_STEEL);
+        boolean eye = target == Target.END && held.is(Items.ENDER_EYE);
+        if (!igniter && !eye) return InteractionResult.PASS;
         if (level.isClientSide) return InteractionResult.SUCCESS;
         if (!(level.getBlockEntity(pos) instanceof DungeonPortalBlockEntity portal)) return InteractionResult.PASS;
         if (igniter) {
-            // GT6's TOOL_igniter: an active portal is extinguished, an inactive one lit.
-            if (portal.isActive()) portal.deactivate(); else portal.activate();
-            return InteractionResult.CONSUME;
+            portal.onIgnite(level, pos, hit.getDirection(), player, held, player.isShiftKeyDown(), 0.5F, 0.5F, 0.5F);
+            if (!player.isCreative()) held.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(hand));
+        } else {
+            portal.activate();
+            if (!player.isCreative()) held.shrink(1);
         }
-        return portal.useKey(GTDungeonKeyItem.keyId(held)) ? InteractionResult.CONSUME : InteractionResult.PASS;
+        var remote = portal.linkedPortal();
+        if (eye && remote != null) player.displayClientMessage(Component.literal("X: " + remote.getBlockPos().getX()
+                + "   Y: " + remote.getBlockPos().getY() + "   Z: " + remote.getBlockPos().getZ()), false);
+        return InteractionResult.CONSUME;
     }
 
     /** GT6's portal tooltips ({@code MultiTileEntityMiniPortalNether:49-59}, {@code ...End:49-60}). */
@@ -185,9 +137,24 @@ public class DungeonPortalBlock extends Block implements EntityBlock {
             tooltip.add(Component.translatable("tooltip.gregtech.portal.end.margin")
                     .withStyle(ChatFormatting.AQUA));
         }
-        // GT6 asks for flint and steel or an Ender Eye here; the port's dungeon portal needs a key.
-        tooltip.add(Component.translatable("tooltip.gregtech.portal.key").withStyle(ChatFormatting.GOLD));
-        tooltip.add(Component.translatable("tooltip.gregtech.portal.ignite").withStyle(ChatFormatting.DARK_GRAY));
+        tooltip.add(Component.translatable("tooltip.gregtech.portal.relay").withStyle(ChatFormatting.AQUA));
+        tooltip.add(Component.translatable(target == Target.NETHER ? "tooltip.gregtech.portal.ignite" : "tooltip.gregtech.portal.eye")
+                .withStyle(ChatFormatting.DARK_GRAY));
+    }
+
+    @Override
+    public <T extends BlockEntity> net.minecraft.world.level.block.entity.BlockEntityTicker<T> getTicker(
+            Level level, BlockState state, net.minecraft.world.level.block.entity.BlockEntityType<T> type) {
+        return level.isClientSide || type != com.gregtech.gregtech.registry.GTBlockEntities.DUNGEON_PORTAL.get()
+                ? null : (world, pos, blockState, entity) -> ((DungeonPortalBlockEntity)entity).tickRelay();
+    }
+    @Override public boolean isSignalSource(BlockState state) { return true; }
+    @Override public int getSignal(BlockState state, BlockGetter level, BlockPos pos, net.minecraft.core.Direction side) {
+        return level.getBlockEntity(pos) instanceof DungeonPortalBlockEntity portal ? portal.signal(side) : 0;
+    }
+    @Override public boolean hasAnalogOutputSignal(BlockState state) { return true; }
+    @Override public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+        return level.getBlockEntity(pos) instanceof DungeonPortalBlockEntity portal ? portal.comparator(null) : 0;
     }
 
     /** The portal is not pushed around, so an active one cannot lose its place in the portal list. */

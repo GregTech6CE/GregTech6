@@ -21,23 +21,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-/**
- * The two dungeon portal blocks the ported portal rooms build
- * ({@code gregapi/worldgen/dungeon/DungeonChunkRoomPortalNether.java} and
- * {@code DungeonChunkRoomPortalEnd.java}).
- *
- * <p>GT6 has no blocks for these: its rooms leave the Nether room's obsidian frame to be lit by the
- * player and place the vanilla end portal in the End room, while its own miniature portals
- * (multi-tiles 32766 and 32000) are built by the player. The port's blocks are the substitution
- * described in {@link DungeonPortalBlock}; their hardness is GT6's (obsidian for the Nether portal,
- * end stone for the End one) and their stack size is GT6's multi-tile stack size of 16
- * ({@code Loader_MultiTileEntities:2002-2003}).</p>
+/** Craftable GT6 miniature portals (source multi-tiles 32766/32000).
+ * These relay to another dimension; dungeon rooms separately use vanilla Nether/End portals.
+ * Existing registry ids preserve saves. Source hardness and sixteen-item stack size are retained.
  */
 public final class GTDungeonBlocks {
 
-    /** GT6's {@code MultiTileEntityMiniPortalNether} (32766) as a dungeon room's portal. */
+    /** GT6's {@code MultiTileEntityMiniPortalNether} (32766) as a craftable cross-dimension relay. */
     public static RegistryObject<DungeonPortalBlock> PORTAL_NETHER;
-    /** GT6's {@code MultiTileEntityMiniPortalEnd} (32000) as a dungeon room's portal. */
+    /** GT6's {@code MultiTileEntityMiniPortalEnd} (32000) as a craftable cross-dimension relay. */
     public static RegistryObject<DungeonPortalBlock> PORTAL_END;
 
     private static final List<RegistryObject<? extends Block>> ALL = new ArrayList<>();

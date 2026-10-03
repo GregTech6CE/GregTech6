@@ -53,26 +53,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/**
- * GT6's five dungeon keys ({@code WorldgenDungeonGT:169-173}, the ten key items of
- * {@code gregtech/items/MultiItemRandomTools.java:589-598}) and its two ported portal rooms
- * ({@code DungeonChunkRoomPortalNether} and {@code DungeonChunkRoomPortalEnd}).
- *
- * <p>The tests build the rooms' cells directly - the way {@code DungeonTests} does - from a
- * {@link GTDungeonData} of their own, so every key id, every block and every refusal is under the
- * test's control. The teleport is driven through
- * {@link DungeonPortalBlockEntity#teleport(ServerLevel, BlockPos, Entity)} instead of by waiting for
- * an entity to be ticked, because the game only calls the block's {@code entityInside} while an entity
- * moves, which a GameTest cannot wait for.</p>
- *
- * <h2>The suite's own area ({@link #BASE_X}, {@link #BASE_Z})</h2>
- * <p>Everything this file places lives in its own area at 62000/62000: the dungeon cells sit on the
- * first four of the six 32-block sites of {@link #site(int)} (a cell is 16 blocks wide and 12 tall),
- * and the two portal pairs of the teleport tests use the last two. Every other gametest suite keeps to
- * a base of its own, two thousand blocks apart (the highest is 60000, see {@code BumbliaryTests}), so
- * 62000 is clear of all of them at every height. {@link #reset} wipes the area before every test -
- * including the two spots the teleport targets in the Nether and the End - so this file is re-runnable
- * against a world it already ran in.</p>
+/** Original dungeon key/room contracts and craftable miniature portal relays.
+ * The six sites at 62000/62000 are isolated from other suites; reset clears both dimensions.
+ * Miniature portal capabilities are driven directly, independently of entity movement.
+ * These optional game contracts are compiled but need not run for every development batch.
  */
 @GameTestHolder("gregtech")
 @PrefixGameTestTemplate(false)
@@ -83,7 +67,7 @@ public final class DungeonKeysAndPortalsTests {
     private static final int BASE_Z = 62000;
     private static final int BASE_Y = 200;
 
-    /** Six 32-block sites: four dungeon cells, then the overworld portals of the teleport tests. */
+    /** Six 32-block sites: four dungeon cells, then the overworld portals of the relay tests. */
     private static final int SITES = 6;
     private static final int SITE_NETHER_ROOM = 0, SITE_END_ROOM = 1, SITE_REFUSED = 2, SITE_ACTIVATION = 3;
     private static final int SITE_PORTAL_NETHER = 4, SITE_PORTAL_END = 5;
@@ -198,7 +182,7 @@ public final class DungeonKeysAndPortalsTests {
         }
     }
 
-    /** Places a portal of the given kind with GT6's key id, loading its chunk first. */
+    /** Places a portal of the given kind with a legacy key id, loading its chunk first. */
     private static DungeonPortalBlockEntity placePortal(ServerLevel level, BlockPos pos, Block block, long keyId) {
         level.getChunkAt(pos);
         level.setBlock(pos, block.defaultBlockState(), 3);
@@ -515,160 +499,80 @@ public final class DungeonKeysAndPortalsTests {
         helper.succeed();
     }
 
-    /** GT6's key rule: only the key with the portal's own id opens it, and flint and steel toggles it. */
+    /** Source Nether ignition toggles, Ender Eye activation, and legacy key save compatibility. */
     @GameTest(template = "test_empty", timeoutTicks = 200)
-    public static void portalOpensWithTheMatchingKeyOnly(GameTestHelper helper) {
+    public static void miniPortalSourceActivation(GameTestHelper helper) {
         reset(helper);
         BlockPos pos = site(SITE_ACTIVATION);
         ServerLevel level = helper.getLevel();
         Block block = GTDungeonBlocks.PORTAL_NETHER.get();
         DungeonPortalBlockEntity portal = placePortal(level, pos, block, TEST_KEY);
         Player player = helper.makeMockPlayer();
+        player.getAbilities().instabuild = false;
         List<String> problems = new ArrayList<>();
-
-        // GT6's Behavior_Key:50-51 / MultiTileEntitySafeKeyLocked.useKey:79-91.
-        player.setItemInHand(InteractionHand.MAIN_HAND, GTDungeonKeyItem.key(GTDungeonKeys.byIndex(0),
-                TEST_KEY + 1, 0));
+        player.setItemInHand(InteractionHand.MAIN_HAND, GTDungeonKeyItem.key(GTDungeonKeys.byIndex(1), TEST_KEY, 0));
         block.use(level.getBlockState(pos), level, pos, player, InteractionHand.MAIN_HAND, hit(pos));
-        check(problems, !portal.isActive(), "a key with another id must not open the portal");
-
-        player.setItemInHand(InteractionHand.MAIN_HAND, GTDungeonKeyItem.key(GTDungeonKeys.byIndex(1),
-                TEST_KEY, 0));
-        block.use(level.getBlockState(pos), level, pos, player, InteractionHand.MAIN_HAND, hit(pos));
-        check(problems, portal.isActive(), "the key with the portal's id opens it");
-        check(problems, level.getBlockState(pos).getValue(DungeonPortalBlock.ACTIVE),
-                "the active portal says so in its block state");
-
-        // GT6's TOOL_igniter toggle (MultiTileEntityMiniPortalNether:116-128).
+        check(problems, !portal.isActive() && !portal.useKey(TEST_KEY), "matching keys do not operate mini portals");
         player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.FLINT_AND_STEEL));
         block.use(level.getBlockState(pos), level, pos, player, InteractionHand.MAIN_HAND, hit(pos));
-        check(problems, !portal.isActive(), "flint and steel closes the portal again");
-
-        // A portal without an id adopts the id of the key that is used on it (Behavior_Key:53-57).
-        BlockPos blankPos = pos.offset(0, 0, 2);
-        DungeonPortalBlockEntity blank = placePortal(level, blankPos, block, 0L);
-        ItemStack blankKey = GTDungeonKeyItem.key(GTDungeonKeys.byIndex(2), TEST_KEY + 7, 0);
-        player.setItemInHand(InteractionHand.MAIN_HAND, blankKey);
-        block.use(level.getBlockState(blankPos), level, blankPos, player, InteractionHand.MAIN_HAND, hit(blankPos));
-        check(problems, blank.isActive() && blank.keyId() == GTDungeonKeyItem.keyId(blankKey),
-                "a portal without an id adopts the key it is used with");
-
-        // The portal's state and id survive a save and a load.
-        CompoundTag tag = blank.saveWithoutMetadata();
+        check(problems, portal.isActive() && level.getBlockState(pos).getValue(DungeonPortalBlock.ACTIVE), "ignition activates the Nether relay");
+        block.use(level.getBlockState(pos), level, pos, player, InteractionHand.MAIN_HAND, hit(pos));
+        check(problems, !portal.isActive(), "a second ignition closes it");
+        check(problems, portal.onIgnite(level, pos, Direction.UP, player, ItemStack.EMPTY, false, 0, 0, 0) == 10000L
+                && portal.isActive(), "GT igniter hook toggles and reports the source tool cost");
+        check(problems, portal.onExtinguish(level, pos, Direction.UP, player, ItemStack.EMPTY, false, 0, 0, 0) == 10000L
+                && !portal.isActive(), "GT extinguisher hook closes and reports the source tool cost");
+        portal.activate();
+        CompoundTag tag = portal.saveWithoutMetadata();
         DungeonPortalBlockEntity reloaded = placePortal(level, pos.offset(0, 0, 4), block, 0L);
-        reloaded.deactivate();
         reloaded.load(tag);
-        check(problems, reloaded.isActive() && reloaded.keyId() == blank.keyId(),
-                "the portal state survives a reload");
+        check(problems, reloaded.isActive() && reloaded.keyId() == TEST_KEY, "active state and legacy key data survive reload");
+        BlockPos endPos = pos.offset(0, 0, 2);
+        Block endBlock = GTDungeonBlocks.PORTAL_END.get();
+        DungeonPortalBlockEntity end = placePortal(level, endPos, endBlock, 0L);
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.ENDER_EYE, 2));
+        endBlock.use(level.getBlockState(endPos), level, endPos, player, InteractionHand.MAIN_HAND, hit(endPos));
+        check(problems, end.isActive() && player.getMainHandItem().getCount() == 1, "Ender Eye activates and consumes one eye");
         helper.assertTrue(problems.isEmpty(), String.join("; ", problems));
         helper.succeed();
     }
 
-    /**
-     * The teleport itself: an entity inside an open Nether portal arrives in the matching portal of the
-     * Nether and comes back through it. Both trips are driven through
-     * {@link DungeonPortalBlockEntity#teleport(ServerLevel, BlockPos, Entity)}, because the game only
-     * calls the block's {@code entityInside} while an entity moves.
-     */
     @GameTest(template = "test_empty", timeoutTicks = 400)
-    public static void netherPortalTeleportsThereAndBack(GameTestHelper helper) {
-        reset(helper);
-        ServerLevel overworld = helper.getLevel();
-        ServerLevel nether = overworld.getServer().getLevel(Level.NETHER);
-        helper.assertTrue(nether != null, "the GameTest server runs a Nether dimension");
-
-        BlockPos origin = site(SITE_PORTAL_NETHER);
-        BlockPos target = scaled(origin, NETHER_FACTOR);
-        Block block = GTDungeonBlocks.PORTAL_NETHER.get();
-        openPortal(overworld, origin, block, TEST_KEY);
-        DungeonPortalBlockEntity netherPortal = openPortal(nether, target, block, TEST_KEY);
-
-        List<String> problems = new ArrayList<>();
-        ArmorStand traveller = traveller(overworld, origin);
-        Entity moved = DungeonPortalBlockEntity.teleport(overworld, origin, traveller);
-        if (moved == null) {
-            problems.add("the open portal moved the entity");
-        } else {
-            check(problems, moved.level().dimension() == Level.NETHER,
-                    "the entity is in the Nether, got " + moved.level().dimension().location());
-            check(problems, moved.blockPosition().equals(target),
-                    "the entity arrived in the matching portal at " + target + ", got " + moved.blockPosition());
-            // Vanilla's portal cooldown keeps it from bouncing straight back out of the arrival portal.
-            check(problems, moved.isOnPortalCooldown(), "the arrival sets vanilla's portal cooldown");
-            check(problems, DungeonPortalBlockEntity.teleport(nether, target, moved) == null,
-                    "the cooldown blocks the immediate return");
-            moved.setPortalCooldown(0);
-            Entity returned = DungeonPortalBlockEntity.teleport(nether, target, moved);
-            if (returned == null) {
-                problems.add("the return trip works");
-            } else {
-                check(problems, returned.level().dimension() == Level.OVERWORLD,
-                        "the return trip lands in the overworld, got "
-                                + returned.level().dimension().location());
-                check(problems, returned.blockPosition().equals(origin),
-                        "the return trip lands in the origin portal at " + origin + ", got "
-                                + returned.blockPosition());
-                returned.discard();
-            }
-        }
-        // A closed portal is inert, which is what keeps a built frame harmless until it is opened.
-        BlockPos closedPos = origin.offset(0, 0, 2);
-        DungeonPortalBlockEntity closed = openPortal(overworld, closedPos, block, TEST_KEY);
-        closed.deactivate();
-        ArmorStand idle = traveller(overworld, closedPos);
-        check(problems, DungeonPortalBlockEntity.teleport(overworld, closedPos, idle) == null,
-                "a closed portal moves nobody");
-        idle.discard();
-        // A portal without a counterpart still takes the entity across, onto the platform the port lays.
-        netherPortal.deactivate();
-        Entity fell = DungeonPortalBlockEntity.teleport(overworld, origin, traveller(overworld, origin));
-        if (fell == null) {
-            problems.add("a portal without a counterpart still teleports");
-        } else {
-            check(problems, fell.level().dimension() == Level.NETHER,
-                    "the entity without a counterpart arrives in the Nether, got "
-                            + fell.level().dimension().location());
-            check(problems, fell.blockPosition().equals(target),
-                    "it arrives at the scaled coordinate " + target + ", got " + fell.blockPosition());
-            check(problems, nether.getBlockState(target.below()).is(Blocks.OBSIDIAN),
-                    "the port lays an obsidian platform under the arrival");
-            fell.discard();
-        }
-        helper.assertTrue(problems.isEmpty(), String.join("; ", problems));
-        helper.succeed();
+    public static void miniNetherPortalRelaysOppositeNeighbour(GameTestHelper helper) {
+        miniatureItemRelay(helper, Level.NETHER, SITE_PORTAL_NETHER, NETHER_FACTOR, GTDungeonBlocks.PORTAL_NETHER.get());
     }
-
-    /** The End portal pair of the same mechanism, which uses GT6's 128 factor and 512 margin. */
     @GameTest(template = "test_empty", timeoutTicks = 400)
-    public static void endPortalTeleportsThereAndBack(GameTestHelper helper) {
+    public static void miniEndPortalRelaysOppositeNeighbour(GameTestHelper helper) {
+        miniatureItemRelay(helper, Level.END, SITE_PORTAL_END, END_FACTOR, GTDungeonBlocks.PORTAL_END.get());
+    }
+    private static void miniatureItemRelay(GameTestHelper helper, net.minecraft.resources.ResourceKey<Level> dimension,
+                                           int site, int factor, Block block) {
         reset(helper);
-        ServerLevel overworld = helper.getLevel();
-        ServerLevel end = overworld.getServer().getLevel(Level.END);
-        helper.assertTrue(end != null, "the GameTest server runs an End dimension");
-
-        BlockPos origin = site(SITE_PORTAL_END);
-        BlockPos target = scaled(origin, END_FACTOR);
-        Block block = GTDungeonBlocks.PORTAL_END.get();
-        openPortal(overworld, origin, block, TEST_KEY);
-        openPortal(end, target, block, TEST_KEY);
-
-        List<String> problems = new ArrayList<>();
-        Entity moved = DungeonPortalBlockEntity.teleport(overworld, origin, traveller(overworld, origin));
-        if (moved == null) {
-            problems.add("the open End portal moved the entity");
-        } else {
-            check(problems, moved.level().dimension() == Level.END,
-                    "the entity is in the End, got " + moved.level().dimension().location());
-            check(problems, moved.blockPosition().equals(target),
-                    "it arrived in the matching portal at " + target + ", got " + moved.blockPosition());
-            moved.setPortalCooldown(0);
-            Entity returned = DungeonPortalBlockEntity.teleport(end, target, moved);
-            check(problems, returned != null && returned.level().dimension() == Level.OVERWORLD
-                            && returned.blockPosition().equals(origin),
-                    "the return trip lands in the origin portal at " + origin);
-            if (returned != null) returned.discard();
-        }
-        helper.assertTrue(problems.isEmpty(), String.join("; ", problems));
+        ServerLevel world = helper.getLevel(), remote = world.getServer().getLevel(dimension);
+        helper.assertTrue(remote != null, "the corresponding dimension exists");
+        BlockPos origin = site(site), target = scaled(origin, factor);
+        DungeonPortalBlockEntity local = openPortal(world, origin, block, TEST_KEY);
+        DungeonPortalBlockEntity other = openPortal(remote, target, block, TEST_KEY);
+        BlockPos chest = target.west();
+        remote.getChunkAt(chest);
+        remote.setBlock(chest, Blocks.CHEST.defaultBlockState(), 3);
+        var handler = local.getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.ITEM_HANDLER, Direction.EAST).orElse(null);
+        helper.assertTrue(handler != null && handler.getSlots() == 27, "east input reaches the remote west chest");
+        var diamond = new ItemStack(Items.DIAMOND, 3);
+        helper.assertTrue(handler.insertItem(0, diamond, true).isEmpty() && handler.getStackInSlot(0).isEmpty(), "simulation does not mutate remote inventory");
+        helper.assertTrue(handler.insertItem(0, diamond, false).isEmpty() && handler.getStackInSlot(0).getCount() == 3, "real insertion reaches the remote inventory");
+        helper.assertTrue(handler.extractItem(0, 2, false).getCount() == 2 && handler.getStackInSlot(0).getCount() == 1, "remote extraction preserves counts");
+        BlockPos localChest = origin.east();
+        world.getChunkAt(localChest);
+        world.setBlock(localChest, Blocks.CHEST.defaultBlockState(), 3);
+        var reverse = other.getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.ITEM_HANDLER, Direction.WEST).orElse(null);
+        helper.assertTrue(reverse != null && reverse.insertItem(0, new ItemStack(Items.STICK), false).isEmpty(), "return direction reaches the local east chest");
+        other.deactivate();
+        helper.assertTrue(handler.getSlots() == 0 && handler.insertItem(0, diamond, false).getCount() == 3, "cached handler refuses a closed counterpart without consuming items");
+        ArmorStand entity = traveller(world, origin);
+        block.entityInside(world.getBlockState(origin), world, origin, entity);
+        helper.assertTrue(entity.level() == world && entity.blockPosition().equals(origin), "mini portals leave entities in place");
+        entity.discard();
         helper.succeed();
     }
 

@@ -92,7 +92,7 @@ import java.util.Set;
  *   <li>Keys: GT6 hands out five named dungeon keys, one per dungeon ({@code WorldgenDungeonGT:169-173}).
  *       The port registers the ten key items ({@code GTDungeonKeys}) and builds the five stacks
  *       ({@code GTDungeonFeature.keyStack}); the barracks, the workshop and the library put them into a
- *       container slot, and the portal rooms key their portals with them.</li>
+ *       container slot, and the dungeon loot containers carry matching key ids.</li>
  *   <li>Slabs: GT6's rooms use half blocks of their two rocks for the farm rims, the barracks walls, the
  *       entrance's staircase and the portal rooms' kerbs ({@code mSlabs[SIDE_*]}, see {@link #slab}).
  *       The port's stone family carries the same half blocks with the same six orientations
@@ -919,11 +919,8 @@ public final class GTDungeonData {
         return true;
     }
 
-    /**
-     * One of the portal rooms' portal blocks (GT6's miniature portal multi-tiles 32766 and 32000 as the
-     * port's own block, see {@code DungeonPortalBlock}): the block remembers the id of the dungeon key
-     * that opens it, which is what GT6's portal multi-tile would carry in its own predecessor's
-     * {@code gt.key} tag.
+    /** Legacy helper for scripts placing the miniature relay. Dungeon rooms use vanilla portals.
+     * The key id is retained as old save data and does not activate the relay.
      */
     public boolean portal(int ax, int ay, int az, Block block, long keyId) {
         if (!set(ax, ay, az, block.defaultBlockState())) return false;

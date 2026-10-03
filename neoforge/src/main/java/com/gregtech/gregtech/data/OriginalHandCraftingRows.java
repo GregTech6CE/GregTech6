@@ -532,6 +532,18 @@ public final class OriginalHandCraftingRows {
 
     private static int storage(Map<ResourceLocation, byte[]> recipes) {
         int added = 0;
+        // Loader_MultiTileEntities:2003-2004, source craftable miniature relays.
+        ItemStack obsidianRod = GTItems.getStack(MaterialPrefix.stickLong,
+                com.gregtech.gregtech.api.material.GTMaterialRegistry.get("Obsidian"),1);
+        ItemStack endstoneRod = GTItems.getStack(MaterialPrefix.stickLong,
+                com.gregtech.gregtech.api.material.GTMaterialRegistry.get("Endstone"),1);
+        added += register(recipes,"portals/mini_nether",new String[]{"SSS","SsS","SSS"},
+                Map.of('S',Ingredient.of(obsidianRod),'s',Ingredient.of(tool(GTToolType.SAW))),
+                new ItemStack(GTDungeonBlocks.PORTAL_NETHER.get()));
+        added += register(recipes,"portals/mini_end",new String[]{"ESE","SGS","ESE"},
+                Map.of('S',Ingredient.of(endstoneRod),'E',Ingredient.of(Items.ENDER_EYE),'G',Ingredient.of(Items.GHAST_TEAR)),
+                new ItemStack(GTDungeonBlocks.PORTAL_END.get()));
+
         // GT6 Loader_MultiTileEntities:184, treated-plank bottle crate 8762.
         var woodBolts=GTItems.creativeEntries(MaterialPrefix.bolt).stream()
                 .filter(entry->entry.material().has(com.gregtech.gregtech.api.material.MaterialProperty.WOOD))
