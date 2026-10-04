@@ -10,6 +10,8 @@ import java.util.*;
 public final class MaterialDisplayBinding {
     private static Map<GTMaterial,List<ItemStack>> aliases;
     private MaterialDisplayBinding() {}
+    /** Tag-bound compositions may change on reload or when joining another server. */
+    public static synchronized void invalidate() { aliases = null; }
     public static synchronized List<ItemStack> alternatives(ItemStack display) {
         if (!(display.getItem() instanceof com.gregtech.gregtech.api.material.MaterialFormItem item) || item.getPrefix()!=MaterialPrefix.unit) return List.of();
         if (aliases==null) {

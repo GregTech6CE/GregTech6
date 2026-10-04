@@ -13,8 +13,14 @@ public final class ExternalOreRecipeLifecycle {
     private ExternalOreRecipeLifecycle() {}
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void tags(TagsUpdatedEvent event) {
-        if (event.shouldUpdateStaticData()) ExternalOreProcessing.rebuild();
+        if (event.shouldUpdateStaticData()) {
+            ExternalOreProcessing.rebuild();
+            com.gregtech.gregtech.api.material.MaterialDisplayBinding.invalidate();
+        }
     }
     @SubscribeEvent
-    public static void stopped(ServerStoppedEvent event) { ExternalOreProcessing.clear(); }
+    public static void stopped(ServerStoppedEvent event) {
+        ExternalOreProcessing.clear();
+        com.gregtech.gregtech.api.material.MaterialDisplayBinding.invalidate();
+    }
 }
