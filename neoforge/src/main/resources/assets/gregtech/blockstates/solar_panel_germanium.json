@@ -1,22 +1,40 @@
 {
   "variants": {
-    "facing=down": {
+    "facing=down,solar_active=false": {
       "model": "gregtech:block/machine/energy/solar_panel_germanium"
     },
-    "facing=north": {
+    "facing=down,solar_active=true": {
+      "model": "gregtech:block/machine/energy/solar_panel_germanium_active"
+    },
+    "facing=north,solar_active=false": {
       "model": "gregtech:block/machine/energy/solar_panel_germanium_north"
     },
-    "facing=south": {
+    "facing=north,solar_active=true": {
+      "model": "gregtech:block/machine/energy/solar_panel_germanium_north_active"
+    },
+    "facing=south,solar_active=false": {
       "model": "gregtech:block/machine/energy/solar_panel_germanium_south"
     },
-    "facing=west": {
-      "model": "gregtech:block/machine/energy/solar_panel_germanium_west"
+    "facing=south,solar_active=true": {
+      "model": "gregtech:block/machine/energy/solar_panel_germanium_south_active"
     },
-    "facing=east": {
+    "facing=east,solar_active=false": {
       "model": "gregtech:block/machine/energy/solar_panel_germanium_east"
     },
-    "facing=up": {
+    "facing=east,solar_active=true": {
+      "model": "gregtech:block/machine/energy/solar_panel_germanium_east_active"
+    },
+    "facing=west,solar_active=false": {
+      "model": "gregtech:block/machine/energy/solar_panel_germanium_west"
+    },
+    "facing=west,solar_active=true": {
+      "model": "gregtech:block/machine/energy/solar_panel_germanium_west_active"
+    },
+    "facing=up,solar_active=false": {
       "model": "gregtech:block/machine/energy/solar_panel_germanium"
+    },
+    "facing=up,solar_active=true": {
+      "model": "gregtech:block/machine/energy/solar_panel_germanium_active"
     }
   }
 }

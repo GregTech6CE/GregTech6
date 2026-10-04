@@ -43,7 +43,7 @@ public final class GTEnergyNodes {
                             ? new MagnetMachineBlock(spec, props)
                             : spec.batterySlots() > 0
                                 ? new com.gregtech.gregtech.block.energy.BatteryBoxBlock(spec, props)
-                                : spec.id().startsWith("transformer_") ? new com.gregtech.gregtech.block.energy.ElectricTransformerBlock(spec,props) : new EnergyNodeBlock(spec, props);
+                                : spec.id().startsWith("transformer_") ? new com.gregtech.gregtech.block.energy.ElectricTransformerBlock(spec,props) : spec.kind() == Kind.SOLAR ? new com.gregtech.gregtech.block.energy.SolarPanelBlock(spec, props) : new EnergyNodeBlock(spec, props);
                 });
         ALL.add(block);
         GTBlocks.BLOCK_ITEMS.register(spec.id(), () -> new BlockItem(block.get(), new Item.Properties()));

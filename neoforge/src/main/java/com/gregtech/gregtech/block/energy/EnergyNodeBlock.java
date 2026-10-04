@@ -193,9 +193,9 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
                         .withStyle(net.minecraft.ChatFormatting.GRAY));
             }
             case SOLAR -> {
-                tooltip.add(com.gregtech.gregtech.client.TooltipHelper.energyOutLine(spec.outputRate(), outUnit));
-                tooltip.add(Component.translatable("tooltip.gregtech.node.solar")
-                        .withStyle(net.minecraft.ChatFormatting.GRAY));
+                tooltip.add(com.gregtech.gregtech.client.TooltipHelper.energyOutLine(spec.outputRate(), outUnit)
+                        .append(Component.translatable("tooltip.gregtech.solar.output_range", spec.outputRate() / 8, spec.outputRate())
+                                .withStyle(net.minecraft.ChatFormatting.WHITE)));
             }
             case TURBINE -> {
                 tooltip.add(Component.translatable("tooltip.gregtech.machine.energy_in")

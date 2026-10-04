@@ -1,0 +1,219 @@
+{
+  "loader": "neoforge:composite",
+  "display": {
+    "gui": {
+      "rotation": [
+        30,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.625,
+        0.625,
+        0.625
+      ]
+    },
+    "ground": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        3,
+        0
+      ],
+      "scale": [
+        0.25,
+        0.25,
+        0.25
+      ]
+    },
+    "fixed": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        75,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        2.5,
+        0
+      ],
+      "scale": [
+        0.375,
+        0.375,
+        0.375
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    },
+    "firstperson_lefthand": {
+      "rotation": [
+        0,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    }
+  },
+  "children": {
+    "layer0": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "up": "gregtech:block/machines/solarpanels/solarpanel_electric_8eu/colored/top",
+        "down": "gregtech:block/machines/solarpanels/solarpanel_electric_8eu/colored/bottom",
+        "north": "gregtech:block/machines/solarpanels/solarpanel_electric_8eu/colored/side",
+        "south": "gregtech:block/machines/solarpanels/solarpanel_electric_8eu/colored/side",
+        "west": "gregtech:block/machines/solarpanels/solarpanel_electric_8eu/colored/side_facing",
+        "east": "gregtech:block/machines/solarpanels/solarpanel_electric_8eu/colored/side"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "up": {
+              "texture": "#up",
+              "tintindex": 0,
+              "cullface": "up"
+            },
+            "down": {
+              "texture": "#down",
+              "tintindex": 0,
+              "cullface": "down"
+            },
+            "north": {
+              "texture": "#north",
+              "tintindex": 0,
+              "cullface": "north"
+            },
+            "south": {
+              "texture": "#south",
+              "tintindex": 0,
+              "cullface": "south"
+            },
+            "west": {
+              "texture": "#west",
+              "tintindex": 0,
+              "cullface": "west"
+            },
+            "east": {
+              "texture": "#east",
+              "tintindex": 0,
+              "cullface": "east"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:solid"
+    },
+    "layer1": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "up": "gregtech:block/machines/solarpanels/solarpanel_electric_8eu/overlay_active/top",
+        "down": "gregtech:block/machines/solarpanels/solarpanel_electric_8eu/overlay_active/bottom",
+        "north": "gregtech:block/machines/solarpanels/solarpanel_electric_8eu/overlay_active/side",
+        "south": "gregtech:block/machines/solarpanels/solarpanel_electric_8eu/overlay_active/side",
+        "west": "gregtech:block/machines/solarpanels/solarpanel_electric_8eu/overlay_active/side_facing",
+        "east": "gregtech:block/machines/solarpanels/solarpanel_electric_8eu/overlay_active/side"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "up": {
+              "texture": "#up",
+              "cullface": "up"
+            },
+            "down": {
+              "texture": "#down",
+              "cullface": "down"
+            },
+            "north": {
+              "texture": "#north",
+              "cullface": "north"
+            },
+            "south": {
+              "texture": "#south",
+              "cullface": "south"
+            },
+            "west": {
+              "texture": "#west",
+              "cullface": "west"
+            },
+            "east": {
+              "texture": "#east",
+              "cullface": "east"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    }
+  }
+}

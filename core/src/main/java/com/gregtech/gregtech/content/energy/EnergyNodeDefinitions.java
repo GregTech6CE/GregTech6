@@ -101,15 +101,15 @@ public final class EnergyNodeDefinitions {
         }
 
         // Solar panels (GT6 10050/10051): silicon is the ULV panel (Electric_T[0] = tin alloy),
-        // germanium the HV one (Electric_T[2] = aluminium).
+        // germanium uses Electric_T[2] = aluminium. Both keep only the current tick's output.
         result.add(EnergyNodeSpec.builder("solar_panel_silicon", Materials.TinAlloy)
                     .kind(Kind.SOLAR).texture("solarpanels/solarpanel_electric_8eu")
                     .input(GregTechTags.Energy.EU, 0).output(GregTechTags.Energy.EU, 8)
-                    .capacity(8 * 32).names("Solar Panel (Silicon)", "太阳能板(硅)").build());
+                    .capacity(8).names("Solar Panel (Silicon)", "太阳能板(硅)").build());
         result.add(EnergyNodeSpec.builder("solar_panel_germanium", Materials.Aluminium)
                     .kind(Kind.SOLAR).texture("solarpanels/solarpanel_electric_8eu")
                     .input(GregTechTags.Energy.EU, 0).output(GregTechTags.Energy.EU, 16)
-                    .capacity(16 * 32).names("Solar Panel (Germanium)", "太阳能板(锗)").build());
+                    .capacity(16).names("Solar Panel (Germanium)", "太阳能板(锗)").build());
 
         result.addAll(BatteryBoxDefinitions.specifications());
 
