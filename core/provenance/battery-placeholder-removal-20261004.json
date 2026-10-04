@@ -1,0 +1,69 @@
+{
+  "change": "Remove port-only voltage batteries; native registry aliases preserve old item data and legal charge.",
+  "source": "GregTech6 original Loader_MultiTileEntities 14000..14044 and Loader_Tools rechargeable groups",
+  "original_source_sha256": {
+    "gregtech/loaders/b/Loader_MultiTileEntities.java": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+    "gregtech/loaders/a/Loader_Tools.java": "e791f2cd6972bfa10767663f78557d2722cac2b7c80f29595815b4a520577b6e",
+    "gregapi/tileentity/energy/TileEntityBase08Battery.java": "4db1df818cd2ef2dbf0ae167af3ed15f9993741380ea67ebc4db9bdc1d170d33"
+  },
+  "replaces_port_only_items": [
+    "battery_lv",
+    "battery_mv",
+    "battery_hv",
+    "battery_ev",
+    "battery_iv"
+  ],
+  "chemical_batteries": 25,
+  "retained_placed_ids": 5,
+  "migration": [
+    {
+      "old_id": "battery_lv",
+      "target": "battery_nickel_cadmium_lv",
+      "old_capacity": 100000,
+      "new_capacity": 128000,
+      "old_voltage": 32,
+      "new_voltage": 32
+    },
+    {
+      "old_id": "battery_mv",
+      "target": "battery_nickel_cadmium_mv",
+      "old_capacity": 400000,
+      "new_capacity": 512000,
+      "old_voltage": 128,
+      "new_voltage": 128
+    },
+    {
+      "old_id": "battery_hv",
+      "target": "battery_nickel_cadmium_hv",
+      "old_capacity": 1600000,
+      "new_capacity": 2048000,
+      "old_voltage": 512,
+      "new_voltage": 512
+    },
+    {
+      "old_id": "battery_ev",
+      "target": "battery_nickel_cadmium_ev",
+      "old_capacity": 6400000,
+      "new_capacity": 8192000,
+      "old_voltage": 2048,
+      "new_voltage": 2048
+    },
+    {
+      "old_id": "battery_iv",
+      "target": "battery_lithium_cobalt_ev",
+      "old_capacity": 25600000,
+      "new_capacity": 131072000,
+      "old_voltage": 8192,
+      "new_voltage": 2048,
+      "reason": "The source chemical batteries stop at EV; preserve legal old charge without adding a fabricated IV chemistry."
+    }
+  ],
+  "platform_adapters": {
+    "forge": "ForgeRegistry.addAlias during item registration; MissingMappingsEvent on Forge bus for old registry snapshots.",
+    "neoforge": "DeferredRegister.addAlias before RegisterEvent; native item/component decoding and chemical stack-size normalization."
+  },
+  "license_and_attribution": "Existing NOTICE and source/license records retained; historical item-battery-source-integration.json records are not rewritten as new evidence.",
+  "verification_record": "docs/integration/verification/battery-cleanup-20261004.md",
+  "status": "Source, actual development-world item migration/recipe outputs and final packaging passed; user old world registry snapshots and full battery gameplay were not executed.",
+  "verified_source_commit": "e70e7f95937b1999305b866660a11d2f6780cc43"
+}
