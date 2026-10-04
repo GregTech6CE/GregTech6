@@ -1,15 +1,13 @@
 package com.gregtech.gregtech.client;
-
 import com.gregtech.gregtech.content.loot.LootViewerData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import java.util.*;
-
-/** Shared captions used by the actual JEI and EMI widgets. */
+/** Both browsers show the same source header and per-output rule metadata. */
 public final class LootPageCaptions {
     private LootPageCaptions() {}
-    public static final int WIDTH = 176, HEIGHT = 112;
+    public static final int WIDTH = 176, HEIGHT = 144, COLUMNS = 9, VISIBLE_ROWS = 5, GRID_X = 2, GRID_Y = 40;
     public static List<Component> lines(LootViewerData.Row row) {
         var result = new ArrayList<Component>();
         result.add(Component.translatable("gregtech.loot.amount", row.min(), row.max()));
@@ -18,15 +16,11 @@ public final class LootPageCaptions {
         result.addAll(row.notes());
         return List.copyOf(result);
     }
-    public static void draw(GuiGraphics graphics, LootViewerData.Row row) {
+    public static void draw(GuiGraphics graphics, LootViewerData.Group group) {draw(graphics,group,HEIGHT);}
+    public static void draw(GuiGraphics graphics, LootViewerData.Group group,int height) {
         var font = Minecraft.getInstance().font;
-        graphics.drawString(font, font.plainSubstrByWidth(row.source().getString(), WIDTH - 4), 2, 2, 0xff404040, false);
-        graphics.drawString(font, "→", 80, 24, 0xff404040, false);
-        int y = 48;
-        for (var line : lines(row)) {
-            if (y > HEIGHT - 10) break;
-            graphics.drawString(font, font.plainSubstrByWidth(line.getString(), WIDTH - 4), 2, y, 0xff404040, false);
-            y += 10;
-        }
+        graphics.drawString(font, font.plainSubstrByWidth(group.source().getString(), WIDTH - 4), 2, 2, 0xff404040, false);
+        graphics.drawString(font, Component.translatable("gregtech.loot.entries", group.rows().size()), 24, 22, 0xff404040, false);
+        graphics.drawString(font, Component.translatable("gregtech.loot.grid_help"), 2, height-10, 0xff555555, false);
     }
 }

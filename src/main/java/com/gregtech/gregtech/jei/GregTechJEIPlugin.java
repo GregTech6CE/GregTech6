@@ -77,8 +77,8 @@ public final class GregTechJEIPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
         // EMI has its own native pages. Its JEI bridge must not import a second copy.
         if (!net.minecraftforge.fml.ModList.get().isLoaded("emi")) {
-            registration.addRecipes(LootInfoCategories.LOOT, com.gregtech.gregtech.content.loot.LootViewerData.lootTables());
-            registration.addRecipes(LootInfoCategories.MOBS, com.gregtech.gregtech.content.loot.LootViewerData.mobDrops());
+            registration.addRecipes(LootInfoCategories.LOOT, com.gregtech.gregtech.content.loot.LootViewerData.lootGroups());
+            registration.addRecipes(LootInfoCategories.MOBS, com.gregtech.gregtech.content.loot.LootViewerData.mobGroups());
         }
         if (!net.minecraftforge.fml.ModList.get().isLoaded("emi")) {
         registration.addRecipes(MultiblockInfoCategory.TYPE,MultiblockInfoCategory.recipes());

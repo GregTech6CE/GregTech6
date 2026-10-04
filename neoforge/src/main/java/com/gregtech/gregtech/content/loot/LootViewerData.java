@@ -11,6 +11,18 @@ public final class LootViewerData {
     private LootViewerData() {}
     public record Row(String id, Component source, List<ItemStack> inputs, ItemStack output,
                       int min, int max, double chance, List<Component> notes) {}
+    /** One page per source; preserve individual rules, including duplicate items with different conditions. */
+    public record Group(String id, Component source, List<ItemStack> inputs, List<Row> rows) {}
+    private static List<Group> groups(List<Row> rows) {
+        var grouped = new LinkedHashMap<String, List<Row>>();
+        for (var row : rows) grouped.computeIfAbsent(row.id().substring(0, row.id().lastIndexOf('/')), key -> new ArrayList<>()).add(row);
+        return grouped.entrySet().stream().map(entry -> {
+            var first = entry.getValue().get(0);
+            return new Group(entry.getKey(), first.source(), first.inputs(), List.copyOf(entry.getValue()));
+        }).toList();
+    }
+    public static List<Group> lootGroups() { return groups(lootTables()); }
+    public static List<Group> mobGroups() { return groups(mobDrops()); }
     private static Component text(String key, Object... args) { return Component.translatable("gregtech.loot." + key, args); }
     private static ItemStack item(String id) {
         var item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(id));

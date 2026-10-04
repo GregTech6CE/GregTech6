@@ -103,6 +103,7 @@ minecraft {
 
         client {
             property 'gregtech.integration.clientCreateWorldSmoke', (project.findProperty('clientCreateWorldSmoke') ?: 'false').toString()
+            property 'gregtech.integration.viewerFeedbackOnly', (project.findProperty('viewerFeedbackOnly') ?: 'false').toString()
             property 'gregtech.integration.clientSmoke', (project.findProperty('clientSmoke') ?: 'false').toString()
             property 'gregtech.integration.clientSmokeTimeoutSeconds', (project.findProperty('clientSmokeTimeout') ?: '120').toString()
             if (project.findProperty('clientSmoke') == 'true') {

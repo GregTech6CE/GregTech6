@@ -151,7 +151,7 @@ public final class GTDecorBlocks {
 
     public static net.minecraftforge.registries.RegistryObject<com.gregtech.gregtech.block.misc.CFoamSlabBlock> GLOW_GLASS_SLAB;
     public static void registerAll() {
-        GLOW_GLASS_SLAB = reg("glass_glow_slab", () -> new com.gregtech.gregtech.block.misc.CFoamSlabBlock(props(MapColor.NONE, 0.5f).sound(SoundType.GLASS).noOcclusion().lightLevel(state -> 15)));
+        GLOW_GLASS_SLAB = reg("glass_glow_slab", () -> new com.gregtech.gregtech.block.misc.ColoredGlassSlabBlock(props(MapColor.NONE, 0.5f).sound(SoundType.GLASS).noOcclusion().lightLevel(state -> 15)));
         CFOAM_SLAB = reg("cfoam_slab", () -> new com.gregtech.gregtech.block.misc.CFoamSlabBlock(props(MapColor.WOOL, 1f).sound(SoundType.WOOL)));
         // N11: Asphalt
         ASPHALT = reg("asphalt", () -> new AsphaltBlock(props(MapColor.COLOR_BLACK, 3f).sound(SoundType.STONE)));

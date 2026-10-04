@@ -10009,5 +10009,7 @@
   "block.gregtech.fluid_spring_lava": "Lava Spring",
   "tooltip.gregtech.food.rotten": "smells rotten",
   "tooltip.gregtech.food.cat": "Is usable as Cat Food",
-  "tooltip.gregtech.food.dog": "Is usable as Dog Food"
+  "tooltip.gregtech.food.dog": "Is usable as Dog Food",
+  "gregtech.loot.entries": "%s drop rules",
+  "gregtech.loot.grid_help": "Scroll; hover for drop details"
 }

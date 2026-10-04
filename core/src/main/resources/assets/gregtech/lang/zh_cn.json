@@ -10009,5 +10009,7 @@
   "block.gregtech.fluid_spring_lava": "熔岩泉",
   "tooltip.gregtech.food.rotten": "散发腐臭",
   "tooltip.gregtech.food.cat": "可作为猫粮",
-  "tooltip.gregtech.food.dog": "可作为狗粮"
+  "tooltip.gregtech.food.dog": "可作为狗粮",
+  "gregtech.loot.entries": "共 %s 项掉落",
+  "gregtech.loot.grid_help": "滚动浏览；悬停查看概率和条件"
 }

@@ -21,6 +21,7 @@ import org.slf4j.Logger;
 /** Opt-in fresh normal-world preflight. Bootstrap sources never enter the production jar. */
 public final class WorldCreationSmoke {
     private static final boolean ENABLED = Boolean.getBoolean("gregtech.integration.clientCreateWorldSmoke");
+    private static final boolean VIEWER_ONLY=Boolean.getBoolean("gregtech.integration.viewerFeedbackOnly");
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final AtomicBoolean TERMINAL = new AtomicBoolean();
     private static final String ID = UUID.randomUUID().toString();
@@ -47,6 +48,7 @@ public final class WorldCreationSmoke {
         observedScreen = event.getScreen().getClass().getName();
         try {
             if (minecraft.getOverlay() != null) return;
+            event.getGuiGraphics().flush();
             LootBrowserSmoke.frame(event.getScreen());
             if (stage == 0 && event.getScreen() instanceof TitleScreen) {
                 minecraft.options.pauseOnLostFocus = false;
@@ -109,6 +111,7 @@ public final class WorldCreationSmoke {
                         throw new IllegalStateException("Known iron form no longer unifies");
                     int recipes = server.getRecipeManager().getRecipes().size();
                     if (recipes < 1000) throw new IllegalStateException("Incomplete actual recipe registry: " + recipes);
+                    if(!VIEWER_ONLY) {
                     checkBatteries(server,result);
                     OriginFeedbackChecks.server(server,result);
                     LootFeedbackChecks.server(server,result);
@@ -116,6 +119,8 @@ public final class WorldCreationSmoke {
                     SurfaceFeedbackChecks.server(server,result);
                     SandwichFeedbackChecks.server(server,result);
                     CannedFoodFeedbackChecks.server(server,result);
+                    }
+                    result.addProperty("viewerFeedbackOnly",VIEWER_ONLY);
                     result.addProperty("canonicalItemsChecked",checked);
                     result.addProperty("recipes",recipes);
                     result.addProperty("serverTicks",server.getTickCount());
@@ -126,20 +131,25 @@ public final class WorldCreationSmoke {
             if (++frames < 30 || !probe.isDone() || !emiReady()) return;
             var result = probe.join();
             if (!LootBrowserSmoke.start(result)) return;
+            if(!VIEWER_ONLY) {
             MachineFeedbackChecks.client(minecraft,result);
             SurfaceFeedbackChecks.client(minecraft,result);
             SandwichFeedbackChecks.client(minecraft,result);
             CannedFoodFeedbackChecks.client(minecraft,result);
             OriginFeedbackChecks.client(minecraft,result);
+            }
+            if(!ViewerGlassChecks.capture(minecraft,result))return;
             result.addProperty("renderedWorldFrames",frames);
             result.addProperty("emiLoaded",EMI_PRESENT);
             if (!Files.isRegularFile(minecraft.gameDirectory.toPath().resolve("saves").resolve(WORLD).resolve("level.dat")))
                 throw new IllegalStateException("Fresh world has no level.dat");
             stage = 4;
             String file = "world-creation-forge-" + ID + ".png";
+            if(!VIEWER_ONLY) {
             OriginFeedbackChecks.renderInventory(event.getGuiGraphics(),minecraft,result);
             SurfaceFeedbackChecks.render(event.getGuiGraphics(),minecraft,result);
             SandwichFeedbackChecks.render(event.getGuiGraphics(),minecraft,result);
+            }
             event.getGuiGraphics().flush();
             Screenshot.grab(minecraft.gameDirectory,file,minecraft.getMainRenderTarget(),message -> {
                 try {
