@@ -28,8 +28,10 @@ public final class MaterialBehaviorContracts {
     // docs/integration/verification/ammunition-differential-20261004.json.
     // Eight source Diamond bindings + Rubber hammer-head form; isolated graph proof:
     // docs/integration/verification/technology-differential-20261004.json.
-    private static final String DEFINITIONS_SHA256 = "0212a1004cbdf43a36f6698e3caa547c7daec3026002f402272667fc8ae3a838";
-    private static final String POST_INIT_SHA256 = "48ddd51177b4873a353441070929c66a2416a3facabec53cedf37b86fe25def0";
+    // Only Gunpowder/Dynamite source reaction flags changed; full graph differential:
+    // docs/integration/verification/explosive-material-differential-20261004.json.
+    private static final String DEFINITIONS_SHA256 = "b9b3a70094c6c0c10c3ce04c05ddeda63db5f5ab5e57644dd1b569bd853463b3";
+    private static final String POST_INIT_SHA256 = "f417a3ecf42ceefe2ae76712cdee4d8da3b7ecb087270d544fc7cc2683de1278";
     private static int assertions;
     private MaterialBehaviorContracts() {}
 

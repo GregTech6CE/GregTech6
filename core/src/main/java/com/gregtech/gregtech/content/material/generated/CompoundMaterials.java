@@ -196,8 +196,8 @@ public final class CompoundMaterials {
     public static final GTMaterial Bakelite = dust(8198, "Bakelite", 0xC93940).setTextureSet(MaterialTextureSet.DULL).setStats(423, 846, 0.755727F).setTooltipChemical("CH₂").setToolStats(1, 3F, 256, 1);
     public static final GTMaterial HardPlastic = dust(8199, "Hard Plastic", 0xB4B4B4).setTextureSet(MaterialTextureSet.DULL).setLocalName("Polycarbonate").setStats(423, 846, 0.755727F).setTooltipChemical("CH₂").setToolStats(1, 3F, 256, 1);
     public static final GTMaterial SlimyBone = gem(8287, "Slimy Bone", 0xE6FAE6, MaterialTextureSet.DULL).setStats(1115, 1757, 1.54F).setTooltipChemical("Ca").setToolStats(1, 5F, 128, 1);
-    public static final GTMaterial Gunpowder = dust(8220, "Gunpowder", 0x808080).setTextureSet(MaterialTextureSet.DULL).setStats(2148, 2632, 1.69908F).setTooltipChemical("C₂SNaNO3");
-    public static final GTMaterial Dynamite = dust(8249, "Dynamite", 0x6F836F).setTextureSet(MaterialTextureSet.ROUGH).setStats(343, 411, 1.431F).setTooltipChemical("GlycerylWood");
+    public static final GTMaterial Gunpowder = dust(8220, "Gunpowder", 0x808080).put(MaterialProperty.EXPLOSIVE, MaterialProperty.FLAMMABLE).setTextureSet(MaterialTextureSet.DULL).setStats(2148, 2632, 1.69908F).setTooltipChemical("C₂SNaNO3");
+    public static final GTMaterial Dynamite = dust(8249, "Dynamite", 0x6F836F).put(MaterialProperty.EXPLOSIVE, MaterialProperty.FLAMMABLE).setTextureSet(MaterialTextureSet.ROUGH).setStats(343, 411, 1.431F).setTooltipChemical("GlycerylWood");
     public static final GTMaterial Asphalt = dust(8266, "Asphalt", 0x585863).setTextureSet(MaterialTextureSet.ROUGH).setStats(1000, 3000, 1.0F);
     public static final GTMaterial Tallow = dust(8244, "Tallow", 0xDCC864).setTextureSet(MaterialTextureSet.FOOD).setStats(350, 700, 1.0F);
     public static final GTMaterial Leather = dust(8241, "Leather", 0x8D4125).setTextureSet(MaterialTextureSet.ROUGH).setStats(1000, 3000, 1.0F);

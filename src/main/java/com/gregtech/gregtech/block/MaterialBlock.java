@@ -66,6 +66,42 @@ public class MaterialBlock extends Block implements MaterialBlockLike {
 
 
 
+
+    @Override public float getExplosionResistance(BlockState state, BlockGetter level, BlockPos pos,
+                                                  net.minecraft.world.level.Explosion explosion) {
+        return com.gregtech.gregtech.content.hazard.MaterialBlockHazards.chainPower(prefix, material) > 0
+                ? 0 : super.getExplosionResistance(state, level, pos, explosion);
+    }
+    @Override public boolean dropFromExplosion(net.minecraft.world.level.Explosion explosion) {
+        return com.gregtech.gregtech.content.hazard.MaterialBlockHazards.chainPower(prefix, material) <= 0;
+    }
+    @Override public void onBlockExploded(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
+                                          net.minecraft.world.level.Explosion explosion) {
+        float power = com.gregtech.gregtech.content.hazard.MaterialBlockHazards.chainPower(prefix, material);
+        if (power > 0) com.gregtech.gregtech.content.hazard.MaterialBlockIgnition.detonate(level, pos, power);
+        else super.onBlockExploded(state, level, pos, explosion);
+    }
+    @Override public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, net.minecraft.core.Direction side) {
+        return com.gregtech.gregtech.content.hazard.MaterialBlockHazards.ignitionPower(prefix, material) > 0 ? 300 : 0;
+    }
+    @Override public void onCaughtFire(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
+                                      net.minecraft.core.Direction side, net.minecraft.world.entity.LivingEntity igniter) {
+        com.gregtech.gregtech.content.hazard.MaterialBlockIgnition.detonate(level, pos,
+                com.gregtech.gregtech.content.hazard.MaterialBlockHazards.ignitionPower(prefix, material));
+    }
+    @Override public void onPlace(BlockState state, net.minecraft.world.level.Level level, BlockPos pos, BlockState previous, boolean moved) {
+        super.onPlace(state, level, pos, previous, moved);
+        com.gregtech.gregtech.content.hazard.MaterialBlockIgnition.schedule(level, pos, state, this);
+    }
+    @Override public void neighborChanged(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
+                                          Block neighbor, BlockPos from, boolean moved) {
+        super.neighborChanged(state, level, pos, neighbor, from, moved);
+        com.gregtech.gregtech.content.hazard.MaterialBlockIgnition.schedule(level, pos, state, this);
+    }
+    @Override public void tick(BlockState state, net.minecraft.server.level.ServerLevel level, BlockPos pos, net.minecraft.util.RandomSource random) {
+        if (!com.gregtech.gregtech.content.hazard.MaterialBlockIgnition.tick(level, pos, this)) super.tick(state, level, pos, random);
+    }
+
     /** Falling dust blocks (GT6 {@code blockDust}). */
     public static Block falling(Properties properties, BlockMaterialPrefix prefix, GTMaterial material) {
         return new FallingMaterialBlock(properties, prefix, material);
@@ -104,6 +140,41 @@ public class MaterialBlock extends Block implements MaterialBlockLike {
         @Override
         public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
             return Collections.singletonList(new ItemStack(this));
+        }
+
+        @Override public float getExplosionResistance(BlockState state, BlockGetter level, BlockPos pos,
+                                                      net.minecraft.world.level.Explosion explosion) {
+            return com.gregtech.gregtech.content.hazard.MaterialBlockHazards.chainPower(prefix, material) > 0
+                    ? 0 : super.getExplosionResistance(state, level, pos, explosion);
+        }
+        @Override public boolean dropFromExplosion(net.minecraft.world.level.Explosion explosion) {
+            return com.gregtech.gregtech.content.hazard.MaterialBlockHazards.chainPower(prefix, material) <= 0;
+        }
+        @Override public void onBlockExploded(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
+                                              net.minecraft.world.level.Explosion explosion) {
+            float power = com.gregtech.gregtech.content.hazard.MaterialBlockHazards.chainPower(prefix, material);
+            if (power > 0) com.gregtech.gregtech.content.hazard.MaterialBlockIgnition.detonate(level, pos, power);
+            else super.onBlockExploded(state, level, pos, explosion);
+        }
+        @Override public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, net.minecraft.core.Direction side) {
+            return com.gregtech.gregtech.content.hazard.MaterialBlockHazards.ignitionPower(prefix, material) > 0 ? 300 : 0;
+        }
+        @Override public void onCaughtFire(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
+                                          net.minecraft.core.Direction side, net.minecraft.world.entity.LivingEntity igniter) {
+            com.gregtech.gregtech.content.hazard.MaterialBlockIgnition.detonate(level, pos,
+                    com.gregtech.gregtech.content.hazard.MaterialBlockHazards.ignitionPower(prefix, material));
+        }
+        @Override public void onPlace(BlockState state, net.minecraft.world.level.Level level, BlockPos pos, BlockState previous, boolean moved) {
+            super.onPlace(state, level, pos, previous, moved);
+            com.gregtech.gregtech.content.hazard.MaterialBlockIgnition.schedule(level, pos, state, this);
+        }
+        @Override public void neighborChanged(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
+                                              Block neighbor, BlockPos from, boolean moved) {
+            super.neighborChanged(state, level, pos, neighbor, from, moved);
+            com.gregtech.gregtech.content.hazard.MaterialBlockIgnition.schedule(level, pos, state, this);
+        }
+        @Override public void tick(BlockState state, net.minecraft.server.level.ServerLevel level, BlockPos pos, net.minecraft.util.RandomSource random) {
+            if (!com.gregtech.gregtech.content.hazard.MaterialBlockIgnition.tick(level, pos, this)) super.tick(state, level, pos, random);
         }
     }
 }

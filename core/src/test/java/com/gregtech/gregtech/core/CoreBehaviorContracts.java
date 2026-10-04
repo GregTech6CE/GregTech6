@@ -42,8 +42,32 @@ public final class CoreBehaviorContracts {
         autocraftingSourceSamples();
         conversionPermissionSourceSamples();
         formConversionSourcePositions();
+        explosiveStorageSourceSamples();
         assertions += OriginWorldgenSamples.verify();
-        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 21 groups (Java 17; no game dependencies)");
+        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 22 groups (Java 17; no game dependencies)");
+    }
+
+    private static void explosiveStorageSourceSamples() {
+        // Original PrefixBlock :399 and :540, OP weights 9/16/64 units, MT :1309-1310 flags.
+        com.gregtech.gregtech.data.MaterialPrefixes.bootstrap();
+        var material = com.gregtech.gregtech.content.material.generated.CompoundMaterials.Dynamite;
+        check(material.has(com.gregtech.gregtech.api.material.MaterialProperty.EXPLOSIVE)
+                && material.has(com.gregtech.gregtech.api.material.MaterialProperty.FLAMMABLE), "source dynamite has both reaction flags");
+        var prefixes = new com.gregtech.gregtech.api.prefix.BlockMaterialPrefix[]{
+                com.gregtech.gregtech.api.prefix.BlockMaterialPrefix.blockDust,
+                com.gregtech.gregtech.api.prefix.BlockMaterialPrefix.crateGtDust,
+                com.gregtech.gregtech.api.prefix.BlockMaterialPrefix.crateGt64Dust};
+        float[] ignition = {4.5F, 8F, 32F}, chain = {6.3F, 11.2F, 44.8F};
+        for (int i = 0; i < prefixes.length; i++) {
+            check(Math.abs(com.gregtech.gregtech.content.hazard.MaterialBlockHazards.ignitionPower(prefixes[i], material) - ignition[i]) < .0001F,
+                    "source ignition strength follows contents " + prefixes[i].getName());
+            check(Math.abs(com.gregtech.gregtech.content.hazard.MaterialBlockHazards.chainPower(prefixes[i], material) - chain[i]) < .0001F,
+                    "source chain strength follows contents " + prefixes[i].getName());
+        }
+        check(com.gregtech.gregtech.content.hazard.MaterialBlockHazards.chainPower(prefixes[0], com.gregtech.gregtech.content.material.generated.ElementMaterials.Iron) == 0,
+                "ordinary metal dust storage does not explode");
+        check(com.gregtech.gregtech.content.hazard.MaterialBlockHazards.chainPower(com.gregtech.gregtech.api.prefix.BlockMaterialPrefix.ore, material) == 0,
+                "ore registration does not inherit storage reactions");
     }
 
     private static void formConversionSourcePositions() {

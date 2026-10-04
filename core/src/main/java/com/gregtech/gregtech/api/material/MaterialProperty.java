@@ -21,6 +21,8 @@ public enum MaterialProperty {
     WOOD,
     STONE,
     FLAMMABLE,
+    /** GT6 TD.Properties.EXPLOSIVE: storage forms react to ignition and other explosions. */
+    EXPLOSIVE,
     /** GT6 {@code TD.Processing.MELTING} — exempts low-temp flammable burnoff in crucibles. */
     MELTING,
     /** GT6 {@code TD.Properties.UNBURNABLE}. */
