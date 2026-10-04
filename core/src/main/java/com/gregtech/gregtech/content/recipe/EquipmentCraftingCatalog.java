@@ -4,6 +4,7 @@ package com.gregtech.gregtech.content.recipe;
 public final class EquipmentCraftingCatalog {
     private EquipmentCraftingCatalog() {}
     public static final java.util.List<String> FILES = java.util.List.of(
+            "food/empty_food_can.json",
             "technology/remote_activator.json",
             "technology/portable_cropnalyzer.json",
             "technology/portable_scanner.json",

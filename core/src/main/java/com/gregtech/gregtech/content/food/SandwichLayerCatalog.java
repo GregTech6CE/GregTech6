@@ -103,5 +103,6 @@ public final class SandwichLayerCatalog {
         register("gregtech:scrambled_egg", 211);
         // Source rows override historical guessed aliases, including sauce and pill colors.
         for (var row : SandwichSourceIngredients.ROWS) register(row.item(), row.layer());
+        for (var can : CannedFoodCatalog.ROWS) if (can.layer() > 0) register("gregtech:" + can.id(), can.layer());
     }
 }

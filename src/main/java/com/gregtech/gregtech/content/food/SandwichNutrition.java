@@ -39,6 +39,8 @@ public final class SandwichNutrition {
     public static void apply(ItemStack stack, Player player) {
         String item = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).toString();
         var bottle = bottleFood(stack);
+        var can = item.startsWith("gregtech:") ? CannedFoodCatalog.forId(item.substring(9)) : null;
+        if (can != null && can.rebreathe() > 0) player.setAirSupply(player.getAirSupply() + can.rebreathe());
         if (item.equals("gregtech:cure_all") || bottle != null && bottle.extinguish()) player.clearFire();
         if (item.equals("gregtech:cure_all") || bottle != null && bottle.milk()) {
             player.curePotionEffects(new ItemStack(net.minecraft.world.item.Items.MILK_BUCKET));

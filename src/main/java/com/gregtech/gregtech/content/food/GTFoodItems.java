@@ -93,7 +93,9 @@ public final class GTFoodItems {
 
     /** The row of a port item id (GT6's display name spelled the way the port registers it), or null. */
     public static Entry entryFor(String id) {
-        return id == null ? null : BY_ID.get(id);
+        Entry entry = id == null ? null : BY_ID.get(id);
+        var can = CannedFoodCatalog.forId(id);
+        return entry != null ? entry : can == null ? null : fromShared(can.food());
     }
 
     /** The row of an item, or null when GT6 never declared it as food. */
@@ -186,6 +188,8 @@ public final class GTFoodItems {
                 || player.getAbilities().instabuild) {
             return;
         }
+        // CannedFoodItem owns its complete FoodStat callback, including the container.
+        if (event.getItem().getItem() instanceof com.gregtech.gregtech.item.CannedFoodItem) return;
         Entry entry = entryFor(event.getItem().getItem());
         if (entry == null || entry.container().isEmpty() || entry.containerCount() <= 0) {
             return;

@@ -1,0 +1,27 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "fh",
+    "oP"
+  ],
+  "key": {
+    "f": {
+      "item": "gregtech:tool_file"
+    },
+    "h": {
+      "item": "gregtech:tool_hammer"
+    },
+    "o": {
+      "item": "gregtech:tool_small_bending_cylinder"
+    },
+    "P": {
+      "item": "gregtech:plate_curved_tinalloy"
+    }
+  },
+  "result": {
+    "item": "gregtech:empty_food_can",
+    "count": 1
+  },
+  "allow_mirror": false,
+  "_comment": "MultiItemRandomTools.java:239, GregTech-6 Team / LGPL-3.0-or-later"
+}

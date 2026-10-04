@@ -261,6 +261,7 @@ def deliveryProbeJar = tasks.register('productionSmokeJar', Jar) {
         include 'com/gregtech/gregtech/integration/client/ProductionClientSmoke*.class'
         include 'com/gregtech/gregtech/integration/client/SurfaceDeliveryChecks*.class'
         include 'com/gregtech/gregtech/integration/client/SandwichDeliveryChecks*.class'
+        include 'com/gregtech/gregtech/integration/client/CannedFoodDeliveryChecks*.class'
     }
     from('tools/integration/production-probe/forge')
     // The probe must not supply the production mod's mapping or Mixin discovery.

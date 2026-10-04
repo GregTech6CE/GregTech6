@@ -70,6 +70,7 @@ public final class FoodItemRecipes {
         slicing();
         mixing();
         packaging();
+        registered += CannedFoodRecipes.register();
         GregTech.LOGGER.info("Registered {} GT6 food item recipes ({} rows recorded as not expressible: {})",
                 registered, SKIPPED.size(), SKIPPED);
         return registered;

@@ -115,6 +115,7 @@ public final class WorldCreationSmoke {
                     MachineFeedbackChecks.server(server,result);
                     SurfaceFeedbackChecks.server(server,result);
                     SandwichFeedbackChecks.server(server,result);
+                    CannedFoodFeedbackChecks.server(server,result);
                     result.addProperty("canonicalItemsChecked",checked);
                     result.addProperty("recipes",recipes);
                     result.addProperty("serverTicks",server.getTickCount());
@@ -128,6 +129,7 @@ public final class WorldCreationSmoke {
             MachineFeedbackChecks.client(minecraft,result);
             SurfaceFeedbackChecks.client(minecraft,result);
             SandwichFeedbackChecks.client(minecraft,result);
+            CannedFoodFeedbackChecks.client(minecraft,result);
             OriginFeedbackChecks.client(minecraft,result);
             result.addProperty("renderedWorldFrames",frames);
             result.addProperty("emiLoaded",EMI_PRESENT);

@@ -29,6 +29,6 @@ final class SandwichDeliveryChecks {
   graphics.pose().popPose();for(var texture:textures)require(minecraft.getResourceManager().getResource(texture).isPresent(),"missing layer texture "+texture);
   require(counts.get(0).getAsInt()==10&&counts.get(1).getAsInt()==4&&counts.get(2).getAsInt()==6,"actual composition");
   require(SandwichIngredients.forItem(item("olive_oil")).tint()==0x80ff80&&SandwichIngredients.forItem(item("tomato_ketchup")).tint()==0xff0000,"source sauce tint");
-  var result=new JsonObject();result.addProperty("customInventoryModelsChecked",3);result.add("ingredientLayerCounts",counts);result.addProperty("sourceLayerTexturesChecked",textures.size());result.addProperty("sourceSauceColorsChecked",2);return result;
+  var result=new JsonObject();result.addProperty("customInventoryModelsChecked",3);result.add("ingredientLayerCounts",counts);result.addProperty("sourceLayerTexturesChecked",textures.size());result.addProperty("sourceSauceColorsChecked",2);result.add("cans",CannedFoodDeliveryChecks.render(minecraft,graphics));return result;
  }
 }

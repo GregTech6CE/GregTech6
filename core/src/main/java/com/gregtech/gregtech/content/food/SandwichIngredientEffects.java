@@ -115,8 +115,28 @@ public final class SandwichIngredientEffects {
         new Effect("rainbow_sap", "minecraft:haste", 900, 2, 100, false),
         new Effect("bottle_of_poison", "minecraft:poison", 450, 1, 100, false)
     );
+    private static final List<Effect> CANNED = List.of(
+        new Effect("tiny_food_can_rotten", "minecraft:hunger", 300, 0, 40, false),
+        new Effect("small_food_can_rotten", "minecraft:hunger", 300, 0, 50, false),
+        new Effect("tall_food_can_rotten", "minecraft:hunger", 300, 0, 60, false),
+        new Effect("wide_food_can_rotten", "minecraft:hunger", 300, 0, 70, false),
+        new Effect("large_food_can_rotten", "minecraft:hunger", 300, 0, 80, false),
+        new Effect("huge_food_can_rotten", "minecraft:hunger", 300, 0, 90, false),
+        new Effect("tiny_food_can_chum", "minecraft:hunger", 1000, 4, 100, false),
+        new Effect("tiny_food_can_chum", "minecraft:nausea", 300, 1, 80, false),
+        new Effect("small_food_can_chum", "minecraft:hunger", 1000, 4, 100, false),
+        new Effect("small_food_can_chum", "minecraft:nausea", 300, 1, 80, false),
+        new Effect("tall_food_can_chum", "minecraft:hunger", 1000, 4, 100, false),
+        new Effect("tall_food_can_chum", "minecraft:nausea", 300, 1, 80, false),
+        new Effect("wide_food_can_chum", "minecraft:hunger", 1000, 4, 100, false),
+        new Effect("wide_food_can_chum", "minecraft:nausea", 300, 1, 80, false),
+        new Effect("large_food_can_chum", "minecraft:hunger", 1000, 4, 100, false),
+        new Effect("large_food_can_chum", "minecraft:nausea", 300, 1, 80, false),
+        new Effect("huge_food_can_chum", "minecraft:hunger", 1000, 4, 100, false),
+        new Effect("huge_food_can_chum", "minecraft:nausea", 300, 1, 80, false)
+    );
     public static List<Effect> forItem(String item) {
         return item.startsWith("gregtech:")
-                ? ROWS.stream().filter(row -> row.item().equals(item.substring(9))).toList() : List.of();
+                ? java.util.stream.Stream.concat(ROWS.stream(), CANNED.stream()).filter(row -> row.item().equals(item.substring(9))).toList() : List.of();
     }
 }

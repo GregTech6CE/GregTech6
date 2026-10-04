@@ -81,6 +81,7 @@ public final class OriginCreativeContents {
             if(item instanceof BlockItem b && b.getBlock() instanceof MaterialBlockLike)continue;
             if(java.util.Set.of("fluid_spring","bumble_hive","tap","fluid_funnel","cap_nozzle","nozzle","cure_all").contains(BuiltInRegistries.ITEM.getKey(item).getPath()))continue;
             if(item instanceof com.gregtech.gregtech.item.FluidItem fluid && fluid.fluidEntry().isHidden())continue;
+            if (item instanceof CannedFoodItem can && can.spec().hidden()) continue;
             items.add(item);
         }
         // Source registration order within a category; newly ported entries follow by stable ID.

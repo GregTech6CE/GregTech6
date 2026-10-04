@@ -10006,5 +10006,8 @@
   "block.gregtech.fluid_spring_liquid_light_oil": "Light Oil Spring",
   "block.gregtech.fluid_spring_gas_natural_gas": "Natural Gas Spring",
   "block.gregtech.fluid_spring_watergeothermal": "Geothermal Water Spring",
-  "block.gregtech.fluid_spring_lava": "Lava Spring"
+  "block.gregtech.fluid_spring_lava": "Lava Spring",
+  "tooltip.gregtech.food.rotten": "smells rotten",
+  "tooltip.gregtech.food.cat": "Is usable as Cat Food",
+  "tooltip.gregtech.food.dog": "Is usable as Dog Food"
 }
