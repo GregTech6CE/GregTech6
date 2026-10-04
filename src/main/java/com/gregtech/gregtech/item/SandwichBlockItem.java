@@ -23,6 +23,14 @@ import java.util.List;
 public final class SandwichBlockItem extends BlockItem {
     public SandwichBlockItem(Block block, Properties properties) { super(block, properties.stacksTo(16)); }
 
+    @Override public void initializeClient(java.util.function.Consumer<net.minecraftforge.client.extensions.common.IClientItemExtensions> consumer) {
+        consumer.accept(new net.minecraftforge.client.extensions.common.IClientItemExtensions() {
+            @Override public net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                return com.gregtech.gregtech.client.SandwichItemRenderer.instance();
+            }
+        });
+    }
+
     @Override public InteractionResult useOn(UseOnContext context) {
         return context.getPlayer() != null && !context.getPlayer().isShiftKeyDown()
                 ? InteractionResult.PASS : super.useOn(context);
@@ -45,6 +53,10 @@ public final class SandwichBlockItem extends BlockItem {
     @Override public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
         if (!level.isClientSide && entity instanceof Player player) {
             player.getFoodData().eat(SandwichBlockEntity.itemFood(stack), SandwichBlockEntity.itemSaturation(stack));
+            for (var ingredient : SandwichBlockEntity.readItemIngredients(stack))
+                if (!ingredient.isEmpty()) com.gregtech.gregtech.content.food.SandwichNutrition.apply(ingredient, player);
+            level.playSound(null, player.blockPosition(), net.minecraft.sounds.SoundEvents.PLAYER_BURP,
+                    net.minecraft.sounds.SoundSource.PLAYERS, .5f, .9f + level.random.nextFloat() * .1f);
             if (!player.getAbilities().instabuild) stack.shrink(1);
         }
         return stack;
@@ -55,6 +67,9 @@ public final class SandwichBlockItem extends BlockItem {
         super.appendHoverText(stack, level, tooltip, flag);
         tooltip.add(Component.translatable("tooltip.gregtech.sandwich.food",
                 SandwichBlockEntity.itemFood(stack), SandwichBlockEntity.itemSaturation(stack))
-                .withStyle(ChatFormatting.GRAY));
+                .withStyle(ChatFormatting.RED));
+        var layers = SandwichBlockEntity.readItemIngredients(stack);
+        for (int slot = layers.length - 1; slot >= 0; slot--) if (!layers[slot].isEmpty())
+            tooltip.add(layers[slot].getHoverName().copy().withStyle(ChatFormatting.GRAY));
     }
 }

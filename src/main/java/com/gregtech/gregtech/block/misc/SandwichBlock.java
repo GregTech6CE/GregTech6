@@ -76,16 +76,26 @@ public final class SandwichBlock extends Block implements EntityBlock {
         ItemStack container = held.getCraftingRemainingItem();
         int amount = sandwich.addIngredient(held);
         if (amount > 0) {
-            if (!player.getAbilities().instabuild) {
-                held.shrink(amount);
-                if (!container.isEmpty()) {
-                    ItemStack remainder = container.copyWithCount(container.getCount() * amount);
-                    if (!player.getInventory().add(remainder)) player.drop(remainder, false);
-                }
+            if (!player.getAbilities().instabuild) held.shrink(amount);
+            // GT6 returns the container even when ST.use preserves a creative player's ingredient.
+            if (!container.isEmpty()) {
+                ItemStack remainder = container.copyWithCount(container.getCount() * amount);
+                if (!player.getInventory().add(remainder)) player.drop(remainder, false);
             }
             level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.4f, 1f);
         }
         return InteractionResult.CONSUME;
+    }
+
+    @Override public void setPlacedBy(Level level, BlockPos pos, BlockState state,
+            @Nullable net.minecraft.world.entity.LivingEntity player, ItemStack stack) {
+        super.setPlacedBy(level, pos, state, player, stack);
+        if (level.getBlockEntity(pos) instanceof SandwichBlockEntity sandwich) sandwich.normalizePlacedItem();
+    }
+
+    @Override public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
+        return level.getBlockEntity(pos) instanceof SandwichBlockEntity sandwich
+                ? sandwich.sandwichItem(1) : new ItemStack(this);
     }
 
     @Override public boolean isSignalSource(BlockState state) { return true; }

@@ -101,5 +101,7 @@ public final class SandwichLayerCatalog {
         register("gregtech:egg_yolk", 211);
         register("gregtech:egg_white", 215);
         register("gregtech:scrambled_egg", 211);
+        // Source rows override historical guessed aliases, including sauce and pill colors.
+        for (var row : SandwichSourceIngredients.ROWS) register(row.item(), row.layer());
     }
 }

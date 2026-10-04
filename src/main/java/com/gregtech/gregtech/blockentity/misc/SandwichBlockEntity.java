@@ -2,6 +2,7 @@ package com.gregtech.gregtech.blockentity.misc;
 
 import com.gregtech.gregtech.GregTech;
 import com.gregtech.gregtech.content.food.SandwichIngredients;
+import com.gregtech.gregtech.content.food.SandwichNutrition;
 import com.gregtech.gregtech.registry.GTBlockEntities;
 import com.gregtech.gregtech.registry.GTDecorBlocks;
 import net.minecraft.core.BlockPos;
@@ -46,11 +47,26 @@ public final class SandwichBlockEntity extends BlockEntity {
         ingredients[4] = gt("cucumber_slice");
         ingredients[5] = gt("cheese_slice");
         ingredients[6] = gt("onion_slice");
-        ingredients[7] = gt("dressing");
+        ingredients[7] = gt("tomato_ketchup");
         ingredients[8] = gt("tomato_slice");
         ingredients[9] = gt("mayo");
         ingredients[10] = gt("pickle_slice");
         ingredients[11] = gt("toast");
+    }
+
+    /** GT_Proxy's initial batch: this path never seeds the creative sample layers. */
+    public void seedBase(ItemStack base) {
+        Arrays.fill(ingredients, ItemStack.EMPTY);
+        ingredients[0] = base.copy();
+        redstone = false;
+        dropped = false;
+        changed();
+    }
+
+    /** One placed sandwich item is one serving, even when old item metadata stored batch counts. */
+    public void normalizePlacedItem() {
+        for (int i = 0; i < SLOTS; i++) if (!ingredients[i].isEmpty()) ingredients[i].setCount(1);
+        changed();
     }
 
     public ItemStack ingredient(int slot) {
@@ -122,8 +138,7 @@ public final class SandwichBlockEntity extends BlockEntity {
     private static int totalFood(ItemStack[] stacks) {
         int food = 0;
         for (ItemStack stack : stacks) if (!stack.isEmpty()) {
-            FoodProperties props = stack.getFoodProperties(null);
-            food += props == null ? 1 : Math.max(1, props.getNutrition());
+            food += SandwichNutrition.food(stack);
         }
         return food;
     }
@@ -131,8 +146,7 @@ public final class SandwichBlockEntity extends BlockEntity {
     private static float totalSaturation(ItemStack[] stacks) {
         float saturation = 0;
         for (ItemStack stack : stacks) if (!stack.isEmpty()) {
-            FoodProperties props = stack.getFoodProperties(null);
-            if (props != null) saturation = Math.max(saturation, props.getSaturationModifier());
+            saturation = Math.max(saturation, SandwichNutrition.saturation(stack));
         }
         return com.gregtech.gregtech.content.food.SandwichRules.saturation(saturation);
     }
@@ -140,7 +154,7 @@ public final class SandwichBlockEntity extends BlockEntity {
     public static int itemFood(ItemStack stack) { return totalFood(readItemIngredients(stack)); }
     public static float itemSaturation(ItemStack stack) { return totalSaturation(readItemIngredients(stack)); }
 
-    private static ItemStack[] readItemIngredients(ItemStack stack) {
+    public static ItemStack[] readItemIngredients(ItemStack stack) {
         ItemStack[] result = new ItemStack[SLOTS];
         Arrays.fill(result, ItemStack.EMPTY);
         CompoundTag be = stack.getTagElement("BlockEntityTag");
@@ -148,7 +162,7 @@ public final class SandwichBlockEntity extends BlockEntity {
         else {
             result[0] = gt("toast"); result[2] = gt("cooked_meat_bar");
             result[4] = gt("cucumber_slice"); result[5] = gt("cheese_slice");
-            result[6] = gt("onion_slice"); result[7] = gt("dressing");
+            result[6] = gt("onion_slice"); result[7] = gt("tomato_ketchup");
             result[8] = gt("tomato_slice"); result[9] = gt("mayo");
             result[10] = gt("pickle_slice"); result[11] = gt("toast");
         }
@@ -180,9 +194,14 @@ public final class SandwichBlockEntity extends BlockEntity {
         ItemStack only = ItemStack.EMPTY;
         for (ItemStack stack : ingredients) if (!stack.isEmpty()) { occupied++; only = stack; }
         if (occupied == 1 && only.getCraftingRemainingItem().isEmpty()) return only.copy();
-        ItemStack result = new ItemStack(GTDecorBlocks.SANDWICH_BLOCK.get().asItem(), baseQuantity());
+        return sandwichItem(baseQuantity());
+    }
+
+    /** Original writeItemNBT stores each ingredient at count one; outer stack carries the batch. */
+    public ItemStack sandwichItem(int count) {
+        ItemStack result = new ItemStack(GTDecorBlocks.SANDWICH_BLOCK.get().asItem(), count);
         CompoundTag tag = new CompoundTag();
-        writeFields(tag);
+        writeFields(tag, true);
         result.getOrCreateTag().put("BlockEntityTag", tag);
         return result;
     }
@@ -206,12 +225,12 @@ public final class SandwichBlockEntity extends BlockEntity {
         dropped = false;
     }
 
-    private void writeFields(CompoundTag tag) {
+    private void writeFields(CompoundTag tag, boolean item) {
         ListTag list = new ListTag();
         for (int i = 0; i < SLOTS; i++) if (!ingredients[i].isEmpty()) {
             CompoundTag row = new CompoundTag();
             row.putByte("Slot", (byte) i);
-            row.put("Stack", ingredients[i].save(new CompoundTag()));
+            row.put("Stack", (item ? ingredients[i].copyWithCount(1) : ingredients[i]).save(new CompoundTag()));
             list.add(row);
         }
         tag.put("Ingredients", list);
@@ -220,7 +239,7 @@ public final class SandwichBlockEntity extends BlockEntity {
 
     @Override protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        writeFields(tag);
+        writeFields(tag,false);
     }
 
     @Override public CompoundTag getUpdateTag() { return saveWithoutMetadata(); }

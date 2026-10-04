@@ -45,6 +45,10 @@ public final class SandwichBlockItem extends BlockItem {
     @Override public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
         if (!level.isClientSide && entity instanceof Player player) {
             player.getFoodData().eat(SandwichBlockEntity.itemFood(stack,entity.level().registryAccess()), SandwichBlockEntity.itemSaturation(stack,entity.level().registryAccess()));
+            for (var ingredient : SandwichBlockEntity.readItemIngredients(stack,entity.level().registryAccess()))
+                if (!ingredient.isEmpty()) com.gregtech.gregtech.content.food.SandwichNutrition.apply(ingredient, player);
+            level.playSound(null, player.blockPosition(), net.minecraft.sounds.SoundEvents.PLAYER_BURP,
+                    net.minecraft.sounds.SoundSource.PLAYERS, .5f, .9f + level.random.nextFloat() * .1f);
             if (!player.getAbilities().instabuild) stack.shrink(1);
         }
         return stack;
@@ -55,6 +59,9 @@ public final class SandwichBlockItem extends BlockItem {
         super.appendHoverText(stack,context,tooltip,flag);
         tooltip.add(Component.translatable("tooltip.gregtech.sandwich.food",
                 SandwichBlockEntity.itemFood(stack,context.registries()), SandwichBlockEntity.itemSaturation(stack,context.registries()))
-                .withStyle(ChatFormatting.GRAY));
+                .withStyle(ChatFormatting.RED));
+        var layers = SandwichBlockEntity.readItemIngredients(stack,context.registries());
+        for (int slot = layers.length - 1; slot >= 0; slot--) if (!layers[slot].isEmpty())
+            tooltip.add(layers[slot].getHoverName().copy().withStyle(ChatFormatting.GRAY));
     }
 }
