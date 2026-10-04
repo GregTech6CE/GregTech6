@@ -3,6 +3,8 @@ package com.gregtech.gregtech.worldgen;
 import com.gregtech.gregtech.worldgen.center.NativeOriginWorld;
 import com.gregtech.gregtech.worldgen.center.OriginWorld;
 import com.gregtech.gregtech.worldgen.center.SourceNexus;
+import com.gregtech.gregtech.worldgen.center.SourceCenterBiomes;
+import com.gregtech.gregtech.worldgen.center.SourceTesting;
 import com.gregtech.gregtech.worldgen.center.SourceStreets;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
@@ -23,7 +25,9 @@ public final class GTOriginFeature extends Feature<NoneFeatureConfiguration> {
         boolean plaza = minX >= -32 && minX <= 16 && minZ >= -32 && minZ <= 16;
         boolean nexus = minX == 16 && minZ == -48;
         boolean road = minX == -16 || minX == 0 || minZ == -16 || minZ == 0;
-        if (!plaza && !nexus && !road) return false;
+        boolean center = minX >= -96 && minX <= 80 && minZ >= -96 && minZ <= 80;
+        boolean testing = (minX == 32 || minX == 48) && (minZ == -32 || minZ == -48);
+        if (!center && !plaza && !nexus && !road) return false;
         // WD.waterLevel() is 62 in GT6, while the modern sea-level parameter is 63.
         int height = level.getSeaLevel()+3;
         NativeOriginWorld world = new NativeOriginWorld(level,chunk,height);
@@ -36,13 +40,17 @@ public final class GTOriginFeature extends Feature<NoneFeatureConfiguration> {
                 biomes.add(world.getBiomeGenForCoords(northSouth ? across : minX+along,
                         northSouth ? minZ+along : across).biomeName());
         }
-        SourceStreets streets = new SourceStreets(height,false,false,true,false);
+        var planChunk = new OriginWorld.Chunk(world,minX,minZ);
+        boolean placed = center && new SourceCenterBiomes(height).generate(world,planChunk,minX,minZ,
+                new Random(level.getSeed() ^ chunk.toLong()));
+        SourceStreets streets = new SourceStreets(height,true,true,true,true);
         // The old generator writes a 64x64 plaza from its four centre chunks. Replaying that plan
         // per intersecting chunk with clipped writes preserves all 16 chunks in any generation order.
-        boolean placed = plaza ? streets.generate(world,-16,-16,-1,-1,biomes)
+        placed |= plaza ? streets.generate(world,-16,-16,-1,-1,biomes)
                 : road && streets.generate(world,minX,minZ,minX+15,minZ+15,biomes);
         if (nexus) placed |= new SourceNexus(height,true).generate(world,new OriginWorld.Chunk(world,minX,minZ),
                 minX,minZ,new Random(level.getSeed() ^ chunk.toLong()));
+        if (testing) placed |= new SourceTesting(height).generate(world,planChunk,minX,minZ);
         return placed;
     }
 }

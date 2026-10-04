@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "gregtech:block/iconsets/cfoam_fresh"
+      "model": "gregtech:block/decoration/cfoam_fresh"
     }
   }
 }

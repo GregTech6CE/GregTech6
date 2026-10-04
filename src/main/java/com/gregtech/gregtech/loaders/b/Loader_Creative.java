@@ -62,6 +62,12 @@ public class Loader_Creative implements IGTLoader {
     }
 
     private static void populateContents(BuildCreativeModeTabContentsEvent event) {
+        String family=event.getTabKey().location().getPath();
+        if(com.gregtech.gregtech.content.creative.CreativeTabCatalog.FAMILIES.contains(family)) {
+            for(var stack:OriginCreativeContents.contents(family))event.accept(stack.copyWithCount(1));
+            return;
+        }
+
         if (GTCreativeTabs.TOOLS_TAB != null && event.getTabKey().equals(GTCreativeTabs.TOOLS_TAB.getKey())) {
             for (var suit : com.gregtech.gregtech.registry.GTRadiationProtection.SUIT.values()) event.accept(suit.get());
             for (var entry : com.gregtech.gregtech.registry.GTToolBlocks.manual()) {
@@ -105,7 +111,8 @@ public class Loader_Creative implements IGTLoader {
                 if (!entry.isPresent()) continue;
                 if (entry.getId().getPath().equals("bumble_hive")) continue;
                 var block = entry.get();
-                if (block instanceof com.gregtech.gregtech.block.misc.ConcreteBlock) {
+                if (block instanceof com.gregtech.gregtech.block.misc.ConcreteBlock
+                        || block instanceof com.gregtech.gregtech.block.misc.ColoredConstructionBlock) {
                     for (var color : net.minecraft.world.item.DyeColor.values())
                         event.accept(com.gregtech.gregtech.block.misc.ConcreteBlock.coloredItem(block, color));
                 } else if (block instanceof com.gregtech.gregtech.block.misc.ColoredGlassBlock) {

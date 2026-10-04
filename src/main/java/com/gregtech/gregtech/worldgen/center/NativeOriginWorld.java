@@ -57,15 +57,28 @@ public final class NativeOriginWorld implements OriginWorld {
     }
     private static ResourceLocation id(String value) { return new ResourceLocation(value); }
     private BlockState state(StateKey key) {
-        String blockId = key.side >= 0 ? "gregtech:cfoam_slab" : key.id;
+        String blockId = key.side >= 0 ? (key.id.equals("gregtech:glass_glow") ? "gregtech:glass_glow_slab" : "gregtech:cfoam_slab") : key.id;
+        if(blockId.equals("source:river")) {
+            var fluid=BuiltInRegistries.FLUID.get(id("gregtech:riverwater"));
+            if(fluid==net.minecraft.world.level.material.Fluids.EMPTY) throw new IllegalStateException("Missing original river water");
+            return fluid.defaultFluidState().createLegacyBlock();
+        }
+        if(blockId.equals("source:sands")) blockId="gregtech:block_dust_"+new String[]{"magnetite","basalticmineralsand","graniticmineralsand"}[key.metadata%3];
+        if(blockId.equals("source:diggables")) blockId="gregtech:"+new String[]{"mud","clay_brown","turf","clay_red","clay_yellow","clay_blue","clay_white"}[key.metadata];
+        if(blockId.equals("source:glowtus")) blockId="gregtech:glowtus_"+DyeColor.byId(15-key.metadata).getName();
+        if(blockId.equals("source:flower")) blockId="minecraft:"+new String[]{"poppy","blue_orchid","allium","azure_bluet","red_tulip","orange_tulip","white_tulip","pink_tulip","oxeye_daisy"}[key.metadata%9];
+        if(blockId.equals("minecraft:short_grass") && !BuiltInRegistries.BLOCK.containsKey(id(blockId))) blockId="minecraft:grass";
+        if(blockId.equals("minecraft:sand") && key.metadata==1) blockId="minecraft:red_sand";
+        if(blockId.equals("minecraft:dirt") && key.metadata==2) blockId="minecraft:podzol";
         if (blockId.startsWith("gregtech:stone_")) blockId += "_" + StoneVariant.byMeta(key.metadata).registrySuffix();
-        if (blockId.equals("minecraft:terracotta")) blockId = "minecraft:" + DyeColor.byId(15-key.metadata).getName() + "_terracotta";
+        if (blockId.equals("source:stained_terracotta")) blockId = "minecraft:" + DyeColor.byId(15-key.metadata).getName() + "_terracotta";
         if (blockId.equals("minecraft:sandstone")) blockId = switch(key.metadata) {
             case 1 -> "minecraft:chiseled_sandstone"; case 2 -> "minecraft:cut_sandstone"; default -> blockId;
         };
         ResourceLocation location = id(blockId);
         if (!BuiltInRegistries.BLOCK.containsKey(location)) throw new IllegalStateException("Missing original origin block: " + blockId);
         BlockState state = BuiltInRegistries.BLOCK.get(location).defaultBlockState();
+        if(state.is(net.minecraft.world.level.block.Blocks.SNOW))state=state.setValue(net.minecraft.world.level.block.SnowLayerBlock.LAYERS,key.metadata+1);
         if (state.hasProperty(ConcreteBlock.COLOR)) state = state.setValue(ConcreteBlock.COLOR,DyeColor.byId(15-key.metadata));
         if (key.side >= 0) state = state.setValue(CFoamSlabBlock.FACING,Direction.from3DDataValue(key.side));
         if (state.getBlock() instanceof RoadStripeRailBlock) state = state
@@ -140,4 +153,39 @@ public final class NativeOriginWorld implements OriginWorld {
                 Math.min(maxX,chunk.getMinBlockX()+16),maxY,Math.min(maxZ,chunk.getMinBlockZ()+16));
         onServer(() -> level.getLevel().getEntitiesOfClass(LivingEntity.class,box,entity -> !(entity instanceof Player)).forEach(LivingEntity::discard));
     }
+    @Override public int maxY() { return level.getMaxBuildHeight(); }
+    @Override public void biome(OriginWorld.Chunk planChunk,String name) {
+        var key=net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.BIOME,id("minecraft:"+name));
+        var biome=level.registryAccess().registryOrThrow(net.minecraft.core.registries.Registries.BIOME).getHolderOrThrow(key);
+        level.getChunk(chunk.x,chunk.z).fillBiomesFromNoise((x,y,z,sampler)->biome,
+                level.getLevel().getChunkSource().randomState().sampler());
+    }
+    @Override public void tree(int x,int y,int z,int wood,int treeHeight,java.util.Random random) {
+        var log=switch(wood) {case 1->Blocks.SPRUCE_LOG;case 2->Blocks.BIRCH_LOG;case 3->Blocks.JUNGLE_LOG;default->Blocks.OAK_LOG;};
+        var leaves=switch(wood) {case 1->Blocks.SPRUCE_LEAVES;case 2->Blocks.BIRCH_LEAVES;case 3->Blocks.JUNGLE_LEAVES;default->Blocks.OAK_LEAVES;};
+        for(int yy=y+treeHeight-3;yy<=y+treeHeight;yy++) {
+            int offset=yy-(y+treeHeight),radius=1-offset/2;
+            for(int xx=x-radius;xx<=x+radius;xx++) for(int zz=z-radius;zz<=z+radius;zz++) {
+                if(Math.abs(xx-x)==radius && Math.abs(zz-z)==radius && (random.nextInt(2)==0 || offset==0)) continue;
+                if(canWrite(xx,yy,zz)) level.setBlock(new BlockPos(xx,yy,zz),leaves.defaultBlockState(),2);
+            }
+        }
+        for(int yy=y;yy<y+treeHeight;yy++) if(canWrite(x,yy,z)) level.setBlock(new BlockPos(x,yy,z),log.defaultBlockState(),2);
+    }
+    @Override public void litter(int x,int y,int z,int legacyId,boolean flint) {
+        if(!canWrite(x,y,z)) return;
+        var pos=new BlockPos(x,y,z);
+        if(legacyId==32756) level.setBlock(pos,com.gregtech.gregtech.registry.GTBlocks.TWIGS.get().defaultBlockState(),2);
+        else com.gregtech.gregtech.worldgen.GTRockPlacement.place(level,pos,flint?null:"Stone",flint?"minecraft:flint":null,false);
+    }
+    @Override public void tile(int x,int y,int z,int legacyId,String data) {
+        NativeOriginFacilities.place(this,level,x,y,z,legacyId,data);
+    }
+    @Override public void drain(int x,int y,int z,int side) {
+        if(!canWrite(x,y,z)) return;
+        if(level.getBlockEntity(new BlockPos(x,y,z)) instanceof com.gregtech.gregtech.content.cover.PanelCoverHost host)
+            host.attachCover(Direction.from3DDataValue(side),new net.minecraft.world.item.ItemStack(
+                    BuiltInRegistries.ITEM.get(id("gregtech:drain"))));
+    }
+
 }

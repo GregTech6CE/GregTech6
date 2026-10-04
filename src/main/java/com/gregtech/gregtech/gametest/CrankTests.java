@@ -44,12 +44,8 @@ import java.util.UUID;
  * <ul>
  *   <li>every right click turns the crank, with or without a machine
  *       ({@code MultiTileEntityCrank:103-112}),</li>
- *   <li>a turned crank supplies {@code 15} towards the side {@code OPOS[mFacing]} - the handle side,
- *       the one this port calls {@link CrankBlock#FACING} - and nothing on the mounting side
- *       ({@code :115-122}). 1.20.1 asks an emitter with the direction pointing back at the asking block
- *       ({@code SignalGetter.getBestNeighborSignal}), so the block in front of the handle queries with
- *       {@code FACING.getOpposite()}: that is the query asserted here, and the neighbour in front is
- *       checked through {@code getBestNeighborSignal}/{@code hasNeighborSignal} as well,</li>
+ *   <li>a turned crank powers its mount with weak and strong signal 15; the original
+ *       OPOS[mFacing] is a query side (TileEntityBase06Covers:405), not an emission direction,</li>
  *   <li>a crank on an RU machine hands the machine GT6's {@code -divup(8L * pot2Strength, pot1Weakness)}
  *       packet ({@code :78}); a bare player has strength {@code 2} and weakness {@code 1}, i.e. -16 RU,</li>
  *   <li>GT6 shows no chat message for any of this, so neither does the port.</li>
@@ -104,7 +100,7 @@ public final class CrankTests {
     }
 
     /**
-     * A crank on a plain stone wall turns and powers the block in front of its handle: GT6's
+     * A crank on a plain stone wall turns and powers its mounting block: GT6's
      * {@code onBlockActivated3} + {@code isProvidingWeakPower2} on a crank that is on no machine at
      * all, which is the case the bug report was about.
      */
@@ -137,21 +133,14 @@ public final class CrankTests {
 
         helper.assertTrue(level.getBlockState(crank).getValue(CrankBlock.ACTIVE),
                 "the crank is turning (GT6's mActive)");
-        // 1.20.1 asks an emitter with the direction pointing back at the asking block
-        // (SignalGetter.getBestNeighborSignal), so a block in front of the handle - in the world
-        // direction FACING from the crank - queries with FACING.getOpposite().
-        helper.assertTrue(level.getSignal(crank, HANDLE.getOpposite()) == CrankBlock.ACTIVE_SIGNAL,
-                "GT6 MultiTileEntityCrank:115-122 powers OPOS[mFacing] = the handle side; the query of a "
-                        + "block in front of the handle is FACING.getOpposite(), got "
-                        + level.getSignal(crank, HANDLE.getOpposite()));
-        helper.assertTrue(level.getSignal(crank, HANDLE) == 0,
-                "the mounting side gets no signal, as in GT6");
-        helper.assertTrue(level.getBestNeighborSignal(front) == CrankBlock.ACTIVE_SIGNAL,
-                "the block in front of the handle receives 15, got " + level.getBestNeighborSignal(front));
-        helper.assertTrue(level.hasNeighborSignal(front),
-                "a lamp or piston in front of the handle sees the signal");
-        helper.assertTrue(level.getBestNeighborSignal(mount) == 0,
-                "the block the crank is mounted on is not powered, exactly like GT6's one sided output");
+        helper.assertTrue(level.getSignal(crank, HANDLE) == CrankBlock.ACTIVE_SIGNAL,
+                "the original opposite-side query powers the mounting block");
+        helper.assertTrue(level.getSignal(crank, HANDLE.getOpposite()) == 0,
+                "the handle neighbour receives no signal");
+        helper.assertTrue(level.getBestNeighborSignal(mount) == CrankBlock.ACTIVE_SIGNAL,
+                "the real mounting neighbour receives 15");
+        helper.assertTrue(level.getBestNeighborSignal(front) == 0,
+                "the real handle neighbour stays unpowered");
 
         // GT6 clears mActive once the crank is not turned any more (:74-96); the port's pulse does the
         // same on its scheduled tick.
@@ -183,8 +172,8 @@ public final class CrankTests {
         helper.assertTrue(player.messages.isEmpty(), "the machine takes the packet, so nothing complains");
         helper.assertTrue(machine.getEnergyTick() == CRANK_RU,
                 "GT6's -divup(8 * 2, 1) = 16 RU packet arrives, got " + machine.getEnergyTick());
-        helper.assertTrue(level.getBestNeighborSignal(crank.relative(HANDLE)) == CrankBlock.ACTIVE_SIGNAL,
-                "a mounted crank powers the block in front of its handle as well");
+        helper.assertTrue(level.getBestNeighborSignal(mount) == CrankBlock.ACTIVE_SIGNAL,
+                "a mounted crank powers its mount as well");
         helper.succeed();
     }
 
@@ -223,7 +212,7 @@ public final class CrankTests {
         helper.assertTrue(player.messages.isEmpty(),
                 "GT6 does not tell the player that the machine is full: " + player.messages);
         helper.assertTrue(level.getBlockState(crank).getValue(CrankBlock.ACTIVE), "the crank turns anyway");
-        helper.assertTrue(level.getBestNeighborSignal(crank.relative(HANDLE)) == CrankBlock.ACTIVE_SIGNAL,
+        helper.assertTrue(level.getBestNeighborSignal(mount) == CrankBlock.ACTIVE_SIGNAL,
                 "the crank is still a redstone source");
         helper.succeed();
     }

@@ -55,13 +55,9 @@ import java.util.List;
  *       looking for a machine; {@code onTick2} ({@code :72-96}) repeats that while somebody still
  *       targets the crank. {@link #use} does the same: it always turns, and it only tries to push the
  *       packet into a machine if there happens to be one.</li>
- *   <li><b>Redstone.</b> {@code isProvidingWeakPower2} and {@code isProvidingStrongPower2}
- *       ({@code :115-122}) return {@code 15} for {@code OPOS[mFacing]} - the handle side - while
- *       {@code mActive}, and {@code 0} everywhere else. That is {@link #getSignal} and
- *       {@link #getDirectSignal} here: dust and lamps placed in front of the handle are powered while
- *       the crank turns, no matter what the crank is mounted on. The direction of that query is
- *       {@code FACING.getOpposite()} in 1.20.1 terms, because the engine asks an emitter about the
- *       direction pointing back at the asking block (see {@link #isProvidingPower}).</li>
+ *   <li><b>Redstone.</b> The original opposite-side query returns 15 towards the mounting
+ *       block while active. The same block receives RU. The handle's neighbour is not powered.
+ *       See {@link #isProvidingPower} and TileEntityBase06Covers:405-416.</li>
  *   <li><b>The packet.</b> One turn offers GT6's
  *       {@code -divup(8L * pot2Strength, pot1Weakness)} RU at {@code pot1Haste} packets
  *       ({@code :78}, strength {@code 2 + level}, weakness {@code 1 + level}), which is what
@@ -92,6 +88,8 @@ import java.util.List;
  * </ul>
  */
 public class CrankBlock extends DirectionalBlock {
+    /** Loader_MultiTileEntities 32111 uses ANY.Iron, whose appearance is MT.Fe. */
+    public static int tintRgb() { return com.gregtech.gregtech.content.material.Materials.Iron.getColor(); }
 
     /** GT6 {@code mActive} ({@code MultiTileEntityCrank:52}): the crank is being turned right now. */
     public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
@@ -167,20 +165,12 @@ public class CrankBlock extends DirectionalBlock {
     }
 
     /**
-     * GT6's {@code aSide == OPOS[mFacing] && mActive} test ({@code MultiTileEntityCrank:116}, {@code :121}):
-     * the signal leaves the crank towards the side the handle points to - the side away from the block
-     * the crank is mounted on - which is this block's {@link #FACING}.
-     *
-     * <p>Side convention: 1.20.1 hands {@code getSignal} the direction <em>from the asking block towards
-     * this one</em> - {@code SignalGetter.getBestNeighborSignal} calls
-     * {@code getSignal(pos.relative(direction), direction)}, and {@code hasNeighborSignal} and
-     * {@code PistonBaseBlock.getNeighborSignal} do the same. A block in front of the handle, i.e. in the
-     * world direction {@link #FACING} from the crank, therefore asks with {@code FACING.getOpposite()},
-     * which is the value answered here; {@code level.getSignal(crank, FACING)} is the query of a block on
-     * the mounting side and stays 0, exactly like GT6's {@code 0} for every side but its one.</p>
+     * GT6 receives the opposite/query side already (TileEntityBase06Covers:405-416).
+     * OPOS[mFacing] therefore powers the mounting block, rather than the handle's neighbour.
+     * This port stores the handle in FACING, the same query value as OPOS[mFacing].
      */
     private static boolean isProvidingPower(BlockState state, Direction side) {
-        return state.getValue(ACTIVE) && side == state.getValue(FACING).getOpposite();
+        return state.getValue(ACTIVE) && side == state.getValue(FACING);
     }
 
     /** GT6's {@code causeBlockUpdate} after the state changed, plus the end of the pulse. */

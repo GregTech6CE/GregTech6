@@ -101,7 +101,10 @@ public final class GTToolBlocks {
         };
     }
 
+    public static RegistryObject<com.gregtech.gregtech.block.misc.SupporterCertificateBlock> SUPPORTER_CERTIFICATE;
     public static void registerAll() {
+        SUPPORTER_CERTIFICATE=GTBlocks.BLOCKS.register("supporter_certificate",()->new com.gregtech.gregtech.block.misc.SupporterCertificateBlock(BlockBehaviour.Properties.of().strength(.5f,.3f).noOcclusion()));
+        GTBlocks.BLOCK_ITEMS.register("supporter_certificate",()->new BlockItem(SUPPORTER_CERTIFICATE.get(),new Item.Properties()));
         add("mortar_block", ManualToolBlockEntity.Kind.MORTAR, BlockBehaviour.Properties.of()
                 .mapColor(MapColor.STONE).strength(2.0f, 6.0f).requiresCorrectToolForDrops().noOcclusion());
         for (String material : new String[]{"Netherite", "Sapphire", "Diamond", "Amethyst"}) {
@@ -116,7 +119,7 @@ public final class GTToolBlocks {
         add("sifting_table", ManualToolBlockEntity.Kind.SIFTING, BlockBehaviour.Properties.of()
                 .mapColor(MapColor.METAL).strength(2.0f, 2.0f).sound(SoundType.METAL).noOcclusion());
         CRANK = GTBlocks.BLOCKS.register("crank", () -> new CrankBlock(BlockBehaviour.Properties.of()
-                .mapColor(MapColor.WOOD).strength(1.0f, 1.0f).sound(SoundType.WOOD).noOcclusion()));
+                .mapColor(MapColor.METAL).strength(1.0f, 6.0f).sound(SoundType.METAL).noOcclusion()));
         GTBlocks.BLOCK_ITEMS.register("crank", () -> new BlockItem(CRANK.get(), new Item.Properties().stacksTo(16)));   // GT6 Hand Crank: 16
         ROPE = GTBlocks.BLOCKS.register("rope", () -> new com.gregtech.gregtech.block.tool.RopeBlock(
                 BlockBehaviour.Properties.of().mapColor(MapColor.WOOL)
@@ -203,7 +206,7 @@ public final class GTToolBlocks {
             var block=GTBlocks.BLOCKS.register(spec.id(),()->new com.gregtech.gregtech.block.tool.FluidAttachmentBlock(spec,
                     BlockBehaviour.Properties.of().strength(0.5f,6).noOcclusion()));
             ALL_SIMPLE.add((RegistryObject)block);
-            GTBlocks.BLOCK_ITEMS.register(spec.id(),()->new BlockItem(block.get(),new Item.Properties().stacksTo(16)));   // GT6 Fluid Containers: 16
+            GTBlocks.BLOCK_ITEMS.register(spec.id(),()->new BlockItem(block.get(),new Item.Properties().stacksTo(64)));   // Original taps, funnels and gas nozzles: 64
         }
         // Preserve existing IDs while replacing placeholder items with finite fluid handlers.
         for (var spec : com.gregtech.gregtech.api.fluid.PortableFluidContainerSpec.values()) {

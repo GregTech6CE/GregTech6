@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "gregtech:block/decoration/glass_glow_slab_down"
+    },
+    "facing=up": {
+      "model": "gregtech:block/decoration/glass_glow_slab_up"
+    },
+    "facing=north": {
+      "model": "gregtech:block/decoration/glass_glow_slab_north"
+    },
+    "facing=south": {
+      "model": "gregtech:block/decoration/glass_glow_slab_south"
+    },
+    "facing=west": {
+      "model": "gregtech:block/decoration/glass_glow_slab_west"
+    },
+    "facing=east": {
+      "model": "gregtech:block/decoration/glass_glow_slab_east"
+    }
+  }
+}

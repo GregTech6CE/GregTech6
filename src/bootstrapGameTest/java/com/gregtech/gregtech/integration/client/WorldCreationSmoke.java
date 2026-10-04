@@ -52,6 +52,7 @@ public final class WorldCreationSmoke {
                 var root = minecraft.gameDirectory.toPath().toAbsolutePath().normalize();
                 if (!root.endsWith("world-creation-smoke-run") || Files.exists(root.resolve("saves").resolve(WORLD)))
                     throw new IllegalStateException("Preflight needs an isolated fresh save");
+                OriginFeedbackChecks.registry();
                 stage = 1;
                 CreateWorldScreen.openFresh(minecraft,event.getScreen());
             } else if (stage == 1 && event.getScreen() instanceof CreateWorldScreen creation) {
@@ -108,6 +109,7 @@ public final class WorldCreationSmoke {
                     int recipes = server.getRecipeManager().getRecipes().size();
                     if (recipes < 1000) throw new IllegalStateException("Incomplete actual recipe registry: " + recipes);
                     checkBatteries(server,result);
+                    OriginFeedbackChecks.server(server,result);
                     result.addProperty("canonicalItemsChecked",checked);
                     result.addProperty("recipes",recipes);
                     result.addProperty("serverTicks",server.getTickCount());
@@ -117,6 +119,7 @@ public final class WorldCreationSmoke {
             }
             if (++frames < 30 || !probe.isDone() || !emiReady()) return;
             var result = probe.join();
+            OriginFeedbackChecks.client(minecraft,result);
             result.addProperty("renderedWorldFrames",frames);
             result.addProperty("emiLoaded",EMI_PRESENT);
             if (!Files.isRegularFile(minecraft.gameDirectory.toPath().resolve("saves").resolve(WORLD).resolve("level.dat")))

@@ -13,7 +13,7 @@ public class AsphaltBlock extends ColoredConstructionBlock {
 
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
-        if (entity instanceof LivingEntity) {
+        if (entity instanceof LivingEntity && !entity.isInWater() && !entity.isShiftKeyDown()) {
             entity.setDeltaMovement(entity.getDeltaMovement().multiply(com.gregtech.gregtech.block.ConstructionRules.ASPHALT_SPEED,1.0,com.gregtech.gregtech.block.ConstructionRules.ASPHALT_SPEED));
         }
         super.stepOn(level, pos, state, entity);

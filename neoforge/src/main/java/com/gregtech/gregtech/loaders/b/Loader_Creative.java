@@ -6,7 +6,7 @@ public static void register(net.neoforged.bus.api.IEventBus bus){GTCreativeTabIc
 @SubscribeEvent public static void populateTabs(BuildCreativeModeTabContentsEvent event){if(!event.getTabKey().location().getNamespace().equals("gregtech"))return;
  for(var prefix:PrefixRegistry.all()){var key=GTCreativeTabs.keyFor(prefix);if(key!=null&&key.equals(event.getTabKey())){populatePrefix(event,prefix);return;}}
  for(var prefix:BlockPrefixRegistry.all()){var key=GTCreativeTabs.keyFor(prefix);if(key!=null&&key.equals(event.getTabKey())){populateBlockPrefix(event,prefix);return;}}
- for(var stack:NeoCreativeContents.contents(event.getTabKey().location().getPath()))event.accept(stack.copyWithCount(1));
+ for(var stack:OriginCreativeContents.contents(event.getTabKey().location().getPath()))event.accept(stack.copyWithCount(1));
 }
     private static void populatePrefix(BuildCreativeModeTabContentsEvent event, MaterialPrefix prefix) {
         for (var binding : GTItems.creativeEntries(prefix)) {

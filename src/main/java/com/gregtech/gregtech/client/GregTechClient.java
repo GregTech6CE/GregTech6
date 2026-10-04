@@ -216,7 +216,7 @@ public final class GregTechClient {
                 event.register((stack, tintIndex) -> toolBlock.tint(tintIndex), toolItem);
             } else if (entry.get() instanceof net.minecraft.world.item.BlockItem crankItem
                     && crankItem.getBlock() instanceof com.gregtech.gregtech.block.tool.CrankBlock) {
-                event.register((stack, tintIndex) -> tintIndex == 0 ? 0x8F6B3E : 0xFFFFFF, crankItem);
+                event.register((stack, tintIndex) -> tintIndex == 0 ? com.gregtech.gregtech.block.tool.CrankBlock.tintRgb() : 0xFFFFFF, crankItem);
             } else if (entry.get() instanceof net.minecraft.world.item.BlockItem storageItem
                     && storageItem.getBlock() instanceof com.gregtech.gregtech.block.inventory.MassStorageBlock storageBlock
                     && storageBlock.material() != null) {
@@ -468,7 +468,7 @@ public final class GregTechClient {
         if (com.gregtech.gregtech.registry.GTToolBlocks.CRANK != null
                 && com.gregtech.gregtech.registry.GTToolBlocks.CRANK.isPresent()) {
             event.register((state, level, pos, tintIndex) ->
-                    tintIndex == 0 ? 0x8F6B3E : 0xFFFFFF, com.gregtech.gregtech.registry.GTToolBlocks.CRANK.get());
+                    tintIndex == 0 ? com.gregtech.gregtech.block.tool.CrankBlock.tintRgb() : 0xFFFFFF, com.gregtech.gregtech.registry.GTToolBlocks.CRANK.get());
         }
         GTEnergyNodes.all().forEach(entry -> {
             if (entry.isPresent()) {

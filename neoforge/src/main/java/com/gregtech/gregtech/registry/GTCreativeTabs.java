@@ -53,7 +53,18 @@ public final class GTCreativeTabs {
     public static DeferredHolder<CreativeModeTab,CreativeModeTab> MULTI_ITEMS_TAB;
     private static boolean registered = false;
 
-    private GTCreativeTabs() {}
+
+    private static final Map<String,DeferredHolder<CreativeModeTab,CreativeModeTab>> SOURCE_PAGES=new java.util.LinkedHashMap<>();
+    private static DeferredHolder<CreativeModeTab,CreativeModeTab> registerFamily(String family) {
+        if(!com.gregtech.gregtech.content.creative.CreativeTabCatalog.FAMILIES.contains(family))return null;
+        if(SOURCE_PAGES.isEmpty())for(String id:com.gregtech.gregtech.content.creative.CreativeTabCatalog.FAMILIES)
+            SOURCE_PAGES.put(id,TABS.register(id,()->CreativeModeTab.builder()
+                .title(Component.translatable(com.gregtech.gregtech.content.creative.CreativeTabCatalog.title(id)))
+                .withSearchBar().icon(()->com.gregtech.gregtech.loaders.b.OriginCreativeContents.icon(id))
+                .displayItems((params,output)->{}).build()));
+        return SOURCE_PAGES.get(family);
+    }
+private GTCreativeTabs() {}
 
     /** Call once before {@link #TABS#register(net.neoforged.neoforge.eventbus.api.IEventBus)}. */
     public static void registerTabs() {
@@ -81,14 +92,7 @@ public final class GTCreativeTabs {
             BY_PREFIX.put(prefix, tab);
         }
 
-        TOOLS_TAB = TABS.register("tools", () -> CreativeModeTab.builder()
-                .title(Component.translatable(com.gregtech.gregtech.content.creative.CreativeTabCatalog.title("tools")))
-                .withSearchBar()
-                .icon(GTCreativeTabIcons::toolsStack)
-                .displayItems((params, output) -> {
-                    // Populated in CreativeTabHandler.
-                })
-                .build());
+        TOOLS_TAB = registerFamily("tools");
 
         BlockPrefixRegistry.ensurePrefixesLoaded();
         for (BlockMaterialPrefix prefix : BlockPrefixRegistry.all()) {
@@ -106,126 +110,40 @@ public final class GTCreativeTabs {
             BY_BLOCK_PREFIX.put(prefix, tab);
         }
 
-        STONES_TAB = TABS.register("stones", () -> CreativeModeTab.builder()
-                .title(Component.translatable(com.gregtech.gregtech.content.creative.CreativeTabCatalog.title("stones")))
-                .withSearchBar()
-                .icon(GTCreativeTabIcons::stonesStack)
-                .displayItems((params, output) -> {})
-                .build());
+        STONES_TAB = registerFamily("stones");
 
-        CRUCIBLES_TAB = TABS.register("smelting_crucibles", () -> CreativeModeTab.builder()
-                .title(Component.translatable(com.gregtech.gregtech.content.creative.CreativeTabCatalog.title("smelting_crucibles")))
-                .withSearchBar()
-                .icon(GTCreativeTabs::cruciblesStack)
-                .displayItems((params, output) -> {})
-                .build());
+        CRUCIBLES_TAB = registerFamily("smelting_crucibles");
 
-        BURNING_BOXES_TAB = TABS.register("burning_boxes", () -> CreativeModeTab.builder()
-                .title(Component.translatable(com.gregtech.gregtech.content.creative.CreativeTabCatalog.title("burning_boxes")))
-                .withSearchBar()
-                .icon(GTCreativeTabs::burningBoxesStack)
-                .displayItems((params, output) -> {})
-                .build());
+        BURNING_BOXES_TAB = registerFamily("burning_boxes");
 
-        BASIC_MACHINES_TAB = TABS.register("basic_machines", () -> CreativeModeTab.builder()
-                .title(Component.translatable(com.gregtech.gregtech.content.creative.CreativeTabCatalog.title("basic_machines")))
-                .withSearchBar()
-                .icon(GTCreativeTabs::basicMachinesStack)
-                .displayItems((params, output) -> {})
-                .build());
+        BASIC_MACHINES_TAB = registerFamily("basic_machines");
 
-        FLUIDS_TAB = TABS.register("fluids", () -> CreativeModeTab.builder()
-                .title(Component.translatable(com.gregtech.gregtech.content.creative.CreativeTabCatalog.title("fluids")))
-                .withSearchBar()
-                .icon(GTCreativeTabs::fluidsStack)
-                .displayItems((params, output) -> {})
-                .build());
+        FLUIDS_TAB = registerFamily("fluids");
 
-        PIPES_TAB = TABS.register("pipes", () -> CreativeModeTab.builder()
-                .title(Component.translatable(com.gregtech.gregtech.content.creative.CreativeTabCatalog.title("pipes")))
-                .withSearchBar()
-                .icon(GTCreativeTabs::pipesStack)
-                .displayItems((params, output) -> {})
-                .build());
+        PIPES_TAB = registerFamily("pipes");
 
-        ITEM_PIPES_TAB = TABS.register("item_pipes", () -> CreativeModeTab.builder()
-                .title(Component.translatable(com.gregtech.gregtech.content.creative.CreativeTabCatalog.title("item_pipes")))
-                .withSearchBar()
-                .icon(GTCreativeTabs::itemPipesStack)
-                .displayItems((params, output) -> {})
-                .build());
+        ITEM_PIPES_TAB = registerFamily("item_pipes");
 
-        FLUID_CONTAINERS_TAB = TABS.register("fluid_containers", () -> CreativeModeTab.builder()
-                .title(Component.translatable(com.gregtech.gregtech.content.creative.CreativeTabCatalog.title("fluid_containers")))
-                .withSearchBar()
-                .icon(GTCreativeTabs::fluidContainersStack)
-                .displayItems((params, output) -> {})
-                .build());
+        FLUID_CONTAINERS_TAB = registerFamily("fluid_containers");
 
-        HOPPERS_TAB = TABS.register("hoppers", () -> CreativeModeTab.builder()
-                .title(Component.translatable(com.gregtech.gregtech.content.creative.CreativeTabCatalog.title("hoppers")))
-                .withSearchBar()
-                .icon(GTCreativeTabs::hoppersStack)
-                .displayItems((params, output) -> {})
-                .build());
+        HOPPERS_TAB = registerFamily("hoppers");
 
-        WIRES_TAB = TABS.register("wires", () -> CreativeModeTab.builder()
-                .title(Component.translatable(com.gregtech.gregtech.content.creative.CreativeTabCatalog.title("wires")))
-                .withSearchBar()
-                .icon(GTCreativeTabs::wiresStack)
-                .displayItems((params, output) -> {})
-                .build());
+        WIRES_TAB = registerFamily("wires");
 
-        ENGINES_TAB = TABS.register("engines", () -> CreativeModeTab.builder()
-                .title(Component.translatable(com.gregtech.gregtech.content.creative.CreativeTabCatalog.title("engines")))
-                .withSearchBar()
-                .icon(GTCreativeTabs::enginesStack)
-                .displayItems((params, output) -> {})
-                .build());
+        ENGINES_TAB = registerFamily("engines");
 
-        AXLES_TAB = TABS.register("axles", () -> CreativeModeTab.builder()
-                .title(Component.translatable(com.gregtech.gregtech.content.creative.CreativeTabCatalog.title("axles")))
-                .withSearchBar()
-                .icon(GTCreativeTabs::axlesStack)
-                .displayItems((params, output) -> {})
-                .build());
+        AXLES_TAB = registerFamily("axles");
 
-        TECHNOLOGY_TAB = TABS.register("technology", () -> CreativeModeTab.builder()
-                .title(Component.translatable(com.gregtech.gregtech.content.creative.CreativeTabCatalog.title("technology")))
-                .withSearchBar()
-                .icon(GTCreativeTabs::technologyStack)
-                .displayItems((params, output) -> {})
-                .build());
+        TECHNOLOGY_TAB = registerFamily("technology");
 
-        ICONSETS_TAB = TABS.register("iconsets", () -> CreativeModeTab.builder()
-                .title(Component.translatable(com.gregtech.gregtech.content.creative.CreativeTabCatalog.title("iconsets")))
-                .withSearchBar()
-                .icon(GTCreativeTabs::iconSetsStack)
-                .displayItems((params, output) -> {})
-                .build());
+        ICONSETS_TAB = registerFamily("iconsets");
 
-        STORAGE_TAB = TABS.register("storage", () -> CreativeModeTab.builder()
-                .title(Component.translatable(com.gregtech.gregtech.content.creative.CreativeTabCatalog.title("storage")))
-                .icon(GTCreativeTabs::storageStack)
-                .displayItems((params, output) -> {})
-                .build());
-        ENERGY_NODES_TAB = TABS.register("energy_nodes", () -> CreativeModeTab.builder()
-                .title(Component.translatable(com.gregtech.gregtech.content.creative.CreativeTabCatalog.title("energy_nodes")))
-                .icon(GTCreativeTabs::energyNodeStack)
-                .displayItems((params, output) -> {})
-                .build());
-        MULTIBLOCKS_TAB = TABS.register("multiblocks", () -> CreativeModeTab.builder()
-                .title(Component.translatable(com.gregtech.gregtech.content.creative.CreativeTabCatalog.title("multiblocks")))
-                .icon(GTCreativeTabs::multiblockStack)
-                .displayItems((params, output) -> {})
-                .build());
-        MULTI_ITEMS_TAB = TABS.register("multi_items", () -> CreativeModeTab.builder()
-                .title(Component.translatable(com.gregtech.gregtech.content.creative.CreativeTabCatalog.title("multi_items")))
-                .withSearchBar()
-                .icon(GTCreativeTabs::multiItemsStack)
-                .displayItems((params, output) -> {})
-                .build());
-    }
+        STORAGE_TAB = registerFamily("storage");
+        ENERGY_NODES_TAB = registerFamily("energy_nodes");
+        MULTIBLOCKS_TAB = registerFamily("multiblocks");
+        MULTI_ITEMS_TAB = registerFamily("multi_items");
+            for(String family:com.gregtech.gregtech.content.creative.CreativeTabCatalog.FAMILIES)registerFamily(family);
+}
 
     private static ItemStack storageStack(){return com.gregtech.gregtech.loaders.b.NeoCreativeContents.icon("storage");}
 

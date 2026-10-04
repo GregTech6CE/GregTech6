@@ -52,10 +52,10 @@ public class FluidAttachmentBlock extends net.minecraft.world.level.block.Block 
         // FluidType (see GTWorldWaterFluid), so the type key would lose their GT6 entry.
         var entry=GTFluids.entryForFluid(fluid.getFluid());
         if(entry!=null){gas|=entry.gas();if(entry.materialKey()!=null)acid=GTMaterialRegistry.get(entry.materialKey()).resolve().has(MaterialProperty.ACID);}
-        return gas==spec.shape().equals("cap_nozzle")&&(!acid||spec.acidProof());
+        return gas==(spec.shape().equals("cap_nozzle")||spec.shape().equals("nozzle"))&&(!acid||spec.acidProof());
     }
     public IFluidHandler access(IFluidHandler tank){
-        boolean funnel=spec.shape().equals("fluid_funnel");
+        boolean funnel=spec.shape().equals("fluid_funnel")||spec.shape().equals("cap_nozzle");
         return new IFluidHandler(){
             public int getTanks(){return tank.getTanks();}
             public FluidStack getFluidInTank(int slot){return tank.getFluidInTank(slot).copy();}

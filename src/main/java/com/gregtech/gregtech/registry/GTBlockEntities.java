@@ -39,6 +39,7 @@ public final class GTBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES =
             DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, GregTech.NAMESPACE);
 
+    public static final RegistryObject<BlockEntityType<com.gregtech.gregtech.blockentity.misc.SupporterCertificateBlockEntity>> SUPPORTER_CERTIFICATE=BLOCK_ENTITY_TYPES.register("supporter_certificate",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.misc.SupporterCertificateBlockEntity::new,GTToolBlocks.SUPPORTER_CERTIFICATE.get()).build(null));
     public static final RegistryObject<BlockEntityType<com.gregtech.gregtech.blockentity.energy.SignalWireBlockEntity>> SIGNAL_WIRE =
             BLOCK_ENTITY_TYPES.register("signal_wire", () -> BlockEntityType.Builder.of(
                     com.gregtech.gregtech.blockentity.energy.SignalWireBlockEntity::new,

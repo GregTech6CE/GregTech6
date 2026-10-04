@@ -10,6 +10,17 @@ public final class OriginSupport {
     public static final OriginWorld.Block NB = new OriginWorld.Block("minecraft:air",-1,false,false,false,false,false);
     public static final class Blocks {
         private Blocks() {}
+        public static final OriginWorld.Block coarse_dirt=new OriginWorld.Block("minecraft:coarse_dirt"),
+                ice=new OriginWorld.Block("minecraft:ice"), packed_ice=new OriginWorld.Block("minecraft:packed_ice"),
+                clay=new OriginWorld.Block("minecraft:clay"), snow_layer=new OriginWorld.Block("minecraft:snow"),
+                pumpkin=new OriginWorld.Block("minecraft:pumpkin"), mossy_cobblestone=new OriginWorld.Block("minecraft:mossy_cobblestone"),
+                tallgrass=new OriginWorld.Block("minecraft:short_grass"), red_flower=new OriginWorld.Block("source:flower"),
+                sand=new OriginWorld.Block("minecraft:sand"), hardened_clay=new OriginWorld.Block("minecraft:terracotta"),
+                cactus=new OriginWorld.Block("minecraft:cactus"), melon_block=new OriginWorld.Block("minecraft:melon"),
+                waterlily=new OriginWorld.Block("minecraft:lily_pad"), stone=new OriginWorld.Block("minecraft:stone"),
+                crafting_table=new OriginWorld.Block("minecraft:crafting_table"), cauldron=new OriginWorld.Block("minecraft:cauldron"),
+                ender_chest=new OriginWorld.Block("minecraft:ender_chest"), brewing_stand=new OriginWorld.Block("minecraft:brewing_stand"),
+                anvil=new OriginWorld.Block("minecraft:anvil");
         public static final OriginWorld.Block obsidian=new OriginWorld.Block("minecraft:obsidian"),
                 glowstone=new OriginWorld.Block("minecraft:glowstone"),
                 end_portal_frame=new OriginWorld.Block("minecraft:end_portal_frame"),
@@ -17,7 +28,7 @@ public final class OriginSupport {
                 water=new OriginWorld.Block("minecraft:water",-1,false,true,false,false,true),
                 yellow_flower=new OriginWorld.Block("minecraft:dandelion",-1,false,false,false,false,false),
                 sandstone=new OriginWorld.Block("minecraft:sandstone"),
-                stained_hardened_clay=new OriginWorld.Block("minecraft:terracotta"),
+                stained_hardened_clay=new OriginWorld.Block("source:stained_terracotta"),
                 glass_pane=new OriginWorld.Block("minecraft:glass_pane",-1,false,false,false,false,false),
                 cobblestone=new OriginWorld.Block("minecraft:cobblestone"),gravel=new OriginWorld.Block("minecraft:gravel"),
                 iron_block=new OriginWorld.Block("minecraft:iron_block"),beacon=new OriginWorld.Block("minecraft:beacon");
@@ -28,6 +39,15 @@ public final class OriginSupport {
                 CFoam=new OriginWorld.Block("gregtech:cfoam"),Asphalt=new OriginWorld.Block("gregtech:asphalt"),
                 Glass=new OriginWorld.Block("gregtech:glass_clear",-1,false,false,false,false,false),
                 RailRoad=new OriginWorld.Block("gregtech:railroad",-1,false,false,false,false,false);
+        public static final OriginWorld.Block GlowGlass=new OriginWorld.Block("gregtech:glass_glow"),
+                River=new OriginWorld.Block("source:river"), Sands=new OriginWorld.Block("source:sands"),
+                Diggables=new OriginWorld.Block("source:diggables"), Glowtus=new OriginWorld.Block("source:glowtus"),
+                SchistGreen=new OriginWorld.Block("gregtech:stone_greenschist"), SchistBlue=new OriginWorld.Block("gregtech:stone_blueschist"),
+                Kimberlite=new OriginWorld.Block("gregtech:stone_kimberlite"), Quartzite=new OriginWorld.Block("gregtech:stone_quartzite"),
+                Limestone=new OriginWorld.Block("gregtech:stone_limestone"), Marble=new OriginWorld.Block("gregtech:stone_marble"),
+                GraniteRed=new OriginWorld.Block("gregtech:stone_granite_red"), GraniteBlack=new OriginWorld.Block("gregtech:stone_granite_black"),
+                Komatiite=new OriginWorld.Block("gregtech:stone_komatiite"), Basalt=new OriginWorld.Block("gregtech:stone_basalt");
+        public static final OriginWorld.Block[] GLOW_GLASS_SLABS={GlowGlass.slab(0),GlowGlass.slab(1),GlowGlass.slab(2),GlowGlass.slab(3),GlowGlass.slab(4),GlowGlass.slab(5)};
         public static final OriginWorld.Block[] FOAM_SLABS={CFoam.slab(0),CFoam.slab(1),CFoam.slab(2),CFoam.slab(3),CFoam.slab(4),CFoam.slab(5)};
         public static final OriginWorld.Block[] stones=java.util.Arrays.stream(new String[]{"granite_black","granite_red","basalt","marble","limestone","granite","diorite","andesite","komatiite","greenschist","blueschist","kimberlite","quartzite","prismarine_light","prismarine_dark","slate","shale"}).map(name->new OriginWorld.Block("gregtech:stone_"+name)).toArray(OriginWorld.Block[]::new);
     }

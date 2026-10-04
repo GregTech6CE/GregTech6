@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "gregtech:block/misc/supporter_certificate_north"
+    },
+    "facing=south": {
+      "model": "gregtech:block/misc/supporter_certificate_south"
+    },
+    "facing=west": {
+      "model": "gregtech:block/misc/supporter_certificate_west"
+    },
+    "facing=east": {
+      "model": "gregtech:block/misc/supporter_certificate_east"
+    },
+    "facing=down": {
+      "model": "gregtech:block/misc/supporter_certificate_down"
+    },
+    "facing=up": {
+      "model": "gregtech:block/misc/supporter_certificate_up"
+    }
+  }
+}

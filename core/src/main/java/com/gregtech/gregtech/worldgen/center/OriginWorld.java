@@ -9,6 +9,7 @@ public interface OriginWorld {
     record Biome(String biomeName, String displayName) {}
     record Chunk(OriginWorld world, int minX, int minZ) {}
     int minY();
+    default int maxY() { return 320; }
     default boolean canWrite(int x, int y, int z) { return true; }
     Block getBlock(int x, int y, int z);
     boolean setBlock(int x, int y, int z, Block block, int metadata, int flags);
@@ -18,4 +19,9 @@ public interface OriginWorld {
     void sign(int x, int y, int z, int side, int rotation, String... lines);
     void beacon(int x, int y, int z, String primary, String secondary);
     void clearNonPlayerEntities(int minX, int minY, int minZ, int maxX, int maxY, int maxZ);
+    default void biome(Chunk chunk, String name) { throw new UnsupportedOperationException("biome"); }
+    default void tree(int x, int y, int z, int wood, int height, java.util.Random random) { throw new UnsupportedOperationException("tree"); }
+    default void litter(int x, int y, int z, int legacyId, boolean flint) { throw new UnsupportedOperationException("litter"); }
+    default void tile(int x, int y, int z, int legacyId, String sourceData) { throw new UnsupportedOperationException("tile"); }
+    default void drain(int x, int y, int z, int side) { throw new UnsupportedOperationException("drain"); }
 }
