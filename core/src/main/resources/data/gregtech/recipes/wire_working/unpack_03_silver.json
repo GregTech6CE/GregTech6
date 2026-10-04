@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:crafting_shapeless",
+  "type": "gregtech:tool_shapeless",
   "ingredients": [
     {
       "item": "gregtech:wire_03_silver"
@@ -10,5 +10,7 @@
     "count": 3
   },
   "gregtech_autocraftable": false,
-  "_autocrafting_source": "GT6 Loader_Recipes_Handlers:625 (disabled)"
+  "_autocrafting_source": "GT6 Loader_Recipes_Handlers:625 (disabled)",
+  "gregtech_form_variants": 1,
+  "gregtech_form_offset": 0
 }

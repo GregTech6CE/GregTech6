@@ -41,37 +41,71 @@ public final class CoreBehaviorContracts {
         scannerEnergySourceSamples();
         autocraftingSourceSamples();
         conversionPermissionSourceSamples();
+        formConversionSourcePositions();
         assertions += OriginWorldgenSamples.verify();
-        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 20 groups (Java 17; no game dependencies)");
+        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 21 groups (Java 17; no game dependencies)");
+    }
+
+    private static void formConversionSourcePositions() {
+        // Loader_Recipes_Handlers:560-564: row-major positions select nuggets/tiny vs chunks/small.
+        var first = new com.gregtech.gregtech.content.recipe.FormConversionSelector(2, 0);
+        var second = new com.gregtech.gregtech.content.recipe.FormConversionSelector(2, 1);
+        for (int slot : new int[]{0, 2, 4, 6, 8}) {
+            check(first.matches(9, slot, 1), "source first variant selects even nine-grid slot " + slot);
+            check(!second.matches(9, slot, 1), "second variant cannot compete at even slot " + slot);
+        }
+        for (int slot : new int[]{1, 3, 5, 7}) {
+            check(second.matches(9, slot, 1), "source alternate selects odd nine-grid slot " + slot);
+            check(!first.matches(9, slot, 1), "first variant cannot compete at odd slot " + slot);
+        }
+        check(second.matches(4, 3, 1), "two-by-two bottom-right selects the alternate");
+        check(first.matches(4, 2, 1), "two-by-two bottom-left selects the first variant");
+        check(!second.matches(1, 0, 1), "one-cell grid cannot select a reserved second offset");
+        check(!first.matches(9, 0, 2), "a stack count does not replace the one occupied-cell requirement");
+        check(!first.matches(9, -1, 0), "empty input cannot select a variant");
+        check(!first.matches(9, 9, 1), "out-of-grid source slot is invalid");
+        // Source wireGt16 registers divisors 1,2,4,8 in this order, even if a form is absent.
+        var wireTo4 = new com.gregtech.gregtech.content.recipe.FormConversionSelector(4, 2);
+        check(wireTo4.matches(9, 2, 1), "wire16 to four wire4 first source position");
+        check(wireTo4.matches(9, 6, 1), "wire16 to four wire4 repeats after four empty cells");
+        check(!wireTo4.matches(9, 1, 1), "absent earlier wire form does not shift source offsets");
+        check(!wireTo4.matches(2, 1, 1), "small custom grid lacks the third source offset");
+        equal(3, wireTo4.minimumGridSize(), "recipe dimension guard preserves source offset");
+        check(com.gregtech.gregtech.content.recipe.FormConversionSelector.NONE.matches(9, 8, 4),
+                "ordinary shapeless rows have no positional selector");
     }
 
     private static void conversionPermissionSourceSamples() {
-        // Loader_Recipes_Handlers:560,570,599: occupied cells, one material, canonical aliases.
+        // Source constructors also check the output form before replacing ordinary recipes.
         Object iron = new Object(), canonicalIron = new Object(), copper = new Object(), nuggets = new Object();
-        Object wire = new Object(), pipe = new Object();
+        Object block = new Object(), canonicalBlock = new Object(), copperBlock = new Object(), unrelated = new Object();
+        Object wire = new Object(), wireSmall = new Object(), pipe = new Object();
         var builder = new com.gregtech.gregtech.content.recipe.CraftingConversionPermissions.Builder<Object>();
-        builder.add(iron, canonicalIron, 1); builder.add(iron, canonicalIron, 9);
-        builder.add(copper, null, 9); builder.add(nuggets, null, 9); builder.add(wire, null, 1);
+        builder.add(iron, canonicalIron, 1, nuggets, null); builder.add(iron, canonicalIron, 9, block, canonicalBlock);
+        builder.add(copper, null, 9, copperBlock, null); builder.add(nuggets, null, 9, iron, canonicalIron);
+        builder.add(wire, null, 1, wireSmall, null);
         var rules = builder.build();
-        check(rules.disallows(java.util.Collections.nCopies(9, iron)), "source forbids nine ingots to block");
-        check(rules.disallows(java.util.Collections.nCopies(9, canonicalIron)), "vanilla canonical ingots cannot bypass conversion permission");
-        check(rules.disallows(List.of(iron, canonicalIron, iron, canonicalIron, iron, canonicalIron, iron, canonicalIron, iron)), "same-material canonical aliases remain one input form");
-        check(!rules.disallows(List.of(iron, iron, iron, iron, iron, iron, iron, iron, copper)), "different materials do not match one source conversion");
-        check(rules.disallows(List.of(canonicalIron)), "single ingot split is also forbidden");
-        check(!rules.disallows(java.util.Collections.nCopies(4, iron)), "unregistered source count does not inherit a nine-cell restriction");
-        check(rules.disallows(java.util.Collections.nCopies(9, nuggets)), "nine nuggets convert with source F permission");
-        check(!rules.disallows(java.util.Collections.nCopies(4, nuggets)), "four nuggets are not the source nine-nugget row");
-        check(rules.disallows(List.of(wire)), "wire splitting has source F permission");
-        check(!rules.disallows(List.of(pipe)), "CR.DEF_NCC pipe disassembly remains allowed");
-        check(!rules.disallows(List.of()), "empty blueprint has no conversion");
-        check(!rules.disallows(java.util.Collections.nCopies(10, iron)), "ten occupied cells exceed the crafting grid");
-        builder.add(nuggets, null, 4);
-        check(!rules.disallows(java.util.Collections.nCopies(4, nuggets)), "published reload snapshot stays immutable");
-        check(builder.build().disallows(java.util.Collections.nCopies(4, nuggets)), "replacement snapshot contains newly bound count");
+        check(rules.disallows(java.util.Collections.nCopies(9, iron), block), "source forbids nine ingots to block");
+        check(rules.disallows(java.util.Collections.nCopies(9, canonicalIron), canonicalBlock), "canonical inputs and outputs cannot bypass permission");
+        check(rules.disallows(List.of(iron, canonicalIron, iron, canonicalIron, iron, canonicalIron, iron, canonicalIron, iron), block), "same-material aliases remain one input form");
+        check(!rules.disallows(List.of(iron, iron, iron, iron, iron, iron, iron, iron, copper), block), "different input materials do not match");
+        check(rules.disallows(List.of(canonicalIron), nuggets), "single ingot split is forbidden");
+        check(!rules.disallows(java.util.Collections.nCopies(4, iron), block), "unregistered count does not inherit restriction");
+        check(rules.disallows(java.util.Collections.nCopies(9, nuggets), canonicalIron), "nine nuggets convert with source F permission");
+        check(!rules.disallows(java.util.Collections.nCopies(4, nuggets), iron), "four nuggets are not the source row");
+        check(rules.disallows(List.of(wire), wireSmall), "wire splitting has source F permission");
+        check(!rules.disallows(List.of(pipe), wireSmall), "CR.DEF_NCC pipe disassembly remains allowed");
+        check(!rules.disallows(List.of(), iron), "empty blueprint has no conversion");
+        check(!rules.disallows(java.util.Collections.nCopies(10, iron), block), "ten cells exceed crafting grid");
+        check(!rules.disallows(java.util.Collections.nCopies(9, iron), unrelated), "unrelated output is not denied merely for using nine ingots");
+        check(!rules.disallows(java.util.Collections.nCopies(9, iron), copperBlock), "XToY does not replace another material's output");
+        builder.add(nuggets, null, 4, iron, null);
+        check(!rules.disallows(java.util.Collections.nCopies(4, nuggets), iron), "published reload snapshot stays immutable");
+        check(builder.build().disallows(java.util.Collections.nCopies(4, nuggets), iron), "replacement snapshot contains new count");
         var identities = new com.gregtech.gregtech.content.recipe.CraftingConversionPermissions.Builder<String>();
-        String a = new String("same name"), b = new String("same name");
-        identities.add(a, null, 9); identities.add(b, null, 9);
-        check(!identities.build().disallows(List.of(a,a,a,a,a,a,a,a,b)), "equal labels do not merge distinct registered item identities");
+        String a = new String("same name"), b = new String("same name"), output = "block";
+        identities.add(a, null, 9, output, null); identities.add(b, null, 9, output, null);
+        check(!identities.build().disallows(List.of(a,a,a,a,a,a,a,a,b), output), "equal labels do not merge distinct item identities");
     }
 
     private static void autocraftingSourceSamples() {

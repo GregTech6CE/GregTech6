@@ -30,11 +30,28 @@ public final class OriginalCraftingJson {
                                  boolean autocraftable) {
         shapeless(data, id, group, category, output, ingredients, autocraftable, true);
     }
+    /** Original single-input variants retain their grid position through JSON and network sync. */
+    public static void formConversion(Map<ResourceLocation, byte[]> data, ResourceLocation id, String group,
+                                     CraftingBookCategory category, ItemStack output, List<Ingredient> ingredients,
+                                     com.gregtech.gregtech.content.recipe.FormConversionSelector selector) {
+        shapeless(data, id, group, category, output, ingredients, false, true, selector);
+    }
     private static void shapeless(Map<ResourceLocation, byte[]> data, ResourceLocation id, String group,
                                  CraftingBookCategory category, ItemStack output, List<Ingredient> ingredients,
                                  boolean autocraftable, boolean sourcePermission) {
+        shapeless(data, id, group, category, output, ingredients, autocraftable, sourcePermission,
+                com.gregtech.gregtech.content.recipe.FormConversionSelector.NONE);
+    }
+    private static void shapeless(Map<ResourceLocation, byte[]> data, ResourceLocation id, String group,
+                                 CraftingBookCategory category, ItemStack output, List<Ingredient> ingredients,
+                                 boolean autocraftable, boolean sourcePermission,
+                                 com.gregtech.gregtech.content.recipe.FormConversionSelector selector) {
         var json = recipe(sourcePermission ? "gregtech:tool_shapeless" : "minecraft:crafting_shapeless", group, category, output); var values = new JsonArray();
         if (sourcePermission) json.addProperty("gregtech_autocraftable", autocraftable);
+        if (selector.variants() > 0) {
+            json.addProperty("gregtech_form_variants", selector.variants());
+            json.addProperty("gregtech_form_offset", selector.offset());
+        }
         for (var ingredient : ingredients) values.add(Ingredient.CODEC.encodeStart(JsonOps.INSTANCE, ingredient).getOrThrow());
         json.add("ingredients", values); put(data, id, json);
     }

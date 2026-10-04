@@ -4,6 +4,7 @@
   "package": "com.gregtech.gregtech.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "CraftingFormPositionMixin",
     "AbstractMinecartSpeedCapMixin",
     "BlockEntityPaintMixin",
     "WolfCollarAccessor",
