@@ -118,7 +118,8 @@ public final class MaterialBehaviorContracts {
         validateCopperTinBronze();
         validateAmountsAndReactions();
         System.out.println("Material behavior contracts passed: " + assertions
-                + " assertions; 1160 materials, 1105 positive IDs, 1523 name entries, 122 prefixes, 173 reactions");
+                + " assertions; 1160 materials, 1105 positive IDs, 1523 name entries, 122 prefixes, "
+                + CrucibleReactions.allRecipes().size() + " reactions");
     }
 
     private static void validateIdentityGraph() throws Exception {
@@ -202,8 +203,15 @@ public final class MaterialBehaviorContracts {
     }
 
     private static void validateAmountsAndReactions() {
-        check(CrucibleReactions.recipes().size() == 42 && CrucibleReactions.allRecipes().size() == 173,
-                "All explicit and derived original reactions must remain");
+        // MT.java's 91 setAloy/uumAloy/alloySimple declarations, plus 46 explicit
+        // rows including purification and air-blown steel. ALLOY chemistry alone
+        // does not declare a crucible recipe (notably Steel.uumMcfg).
+        // Source and IDs: verification/origin-crucible-compositions-20261004.json.
+        check(CrucibleReactions.recipes().size() == 46,
+                "Original explicit crucible rows: expected 46, actual " + CrucibleReactions.recipes().size());
+        check(CrucibleReactions.allRecipes().size() == 137,
+                "46 explicit and 91 declared composition rows: expected 137, actual " + CrucibleReactions.allRecipes().size());
+        validateIronSteelReactions();
         var content = stacks(Materials.Copper, 3 * GTValues.U + GTValues.U2, Materials.Tin, GTValues.U);
         long originalAmount = CrucibleMaterialStack.total(content);
         check(!CrucibleReactions.react(content, 1356), "Copper/tin below bronze melting point must not react");
@@ -233,6 +241,43 @@ public final class MaterialBehaviorContracts {
         copy.amount = 0;
         check(merged.get(0).amount == GTValues.U && copy.material == merged.get(0).material,
                 "Copies retain material identity while isolating mutable amount");
+    }
+
+    private static void validateIronSteelReactions() {
+        var iron = GT6Materials.Elements.Fe;
+        var wrought = GT6Materials.Elements.WroughtIron;
+        var steel = GT6Materials.Compounds.Steel;
+        var air = GT6Materials.Compounds.Air;
+        check(wrought.getMeltingPoint() == 2011 && steel.getMeltingPoint() == 2046,
+                "Original wrought/steel reaction thresholds are 2011K/2046K");
+        var ironCharge = new ArrayList<>(List.of(CrucibleMaterialStack.of(iron, 3 * GTValues.U)));
+        check(!CrucibleReactions.react(ironCharge, 2010) && amountOf(ironCharge, iron) == 3 * GTValues.U,
+                "Iron below 2011K cannot purify and must retain its charge");
+        check(CrucibleReactions.react(ironCharge, 2011) && ironCharge.size() == 1
+                        && amountOf(ironCharge, wrought) == 3 * GTValues.U,
+                "Single-material iron charge purifies to wrought iron with source yield one");
+        check(!CrucibleReactions.react(ironCharge, 2046) && amountOf(ironCharge, steel) == 0,
+                "Steel chemistry must not fabricate an airless wrought-iron recipe");
+        var coldSteel = stacks(wrought, 3 * GTValues.U, air, GTValues.U);
+        check(!CrucibleReactions.react(coldSteel, 2045)
+                        && amountOf(coldSteel, wrought) == 3 * GTValues.U && amountOf(coldSteel, air) == GTValues.U,
+                "Air-blown steel below 2046K cannot consume either reagent");
+        // Exercise the actual phase order: air must react before gas removal.
+        var steelCharge = stacks(wrought, 3 * GTValues.U, air, GTValues.U);
+        com.gregtech.gregtech.api.machine.crucible.CrucibleProcess.process(steelCharge, 2046, 2045, true, true);
+        check(steelCharge.size() == 2 && amountOf(steelCharge, steel) == GTValues.U
+                        && amountOf(steelCharge, wrought) == 2 * GTValues.U && amountOf(steelCharge, air) == 0,
+                "One U air converts one U wrought iron to steel and retains two U excess wrought iron");
+        var meteoric = stacks(GT6Materials.Compounds.MeteoricIron, GTValues.U, air, GTValues.U);
+        check(CrucibleReactions.react(meteoric, GT6Materials.Compounds.MeteoricSteel.getMeltingPoint())
+                        && meteoric.size() == 1 && amountOf(meteoric, GT6Materials.Compounds.MeteoricSteel) == GTValues.U,
+                "Meteoric steel also consumes air with source yield one");
+        var copper = new ArrayList<>(List.of(CrucibleMaterialStack.of(Materials.Copper, GTValues.U)));
+        check(!CrucibleReactions.react(copper, 2799) && amountOf(copper, Materials.Copper) == GTValues.U,
+                "Annealed copper purification cannot bypass the original 2800K threshold");
+        check(CrucibleReactions.react(copper, 2800) && copper.size() == 1
+                        && amountOf(copper, Materials.AnnealedCopper) == GTValues.U,
+                "Copper anneals at 2800K with source yield one");
     }
 
     private static ArrayList<CrucibleMaterialStack> stacks(GTMaterial a, long amountA, GTMaterial b, long amountB) {
