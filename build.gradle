@@ -235,6 +235,28 @@ mixin {
     config 'gregtech.mixins.json'
 }
 
+// The refmap aggregates every mixin. A partial Java compile can remove it or
+// regenerate only the changed mixins, although development launches still work.
+tasks.named('compileJava', JavaCompile).configure {
+    options.incremental = false
+    outputs.file(layout.buildDirectory.file('tmp/compileJava/gregtech.refmap.json'))
+}
+
+def deliveryProbeJar = tasks.register('productionSmokeJar', Jar) {
+    dependsOn tasks.named('bootstrapGameTestClasses')
+    archiveBaseName = 'gregtech-delivery-probe'
+    destinationDirectory = layout.buildDirectory.dir('production-probe')
+    from(sourceSets.bootstrapGameTest.output) {
+        include 'com/gregtech/gregtech/integration/client/ProductionClientSmoke*.class'
+    }
+    from('tools/integration/production-probe/forge')
+    // The probe must not supply the production mod's mapping or Mixin discovery.
+    exclude 'gregtech.refmap.json'
+    doFirst { manifest.attributes.remove('MixinConfigs') }
+    finalizedBy 'reobfProductionSmokeJar'
+}
+reobf { productionSmokeJar {} }
+
 // This block of code expands all declared replace properties in the specified resource targets.
 // A missing property will result in an error. Properties are expanded using ${} Groovy notation.
 // When "copyIdeResources" is enabled, this will also run before the game launches in IDE environments.

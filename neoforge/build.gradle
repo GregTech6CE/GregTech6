@@ -158,3 +158,14 @@ tasks.named('jar', Jar).configure {
     reproducibleFileOrder = true
     manifest.attributes('Implementation-Version': project.version.toString())
 }
+
+// Separate test mod for launching the actual distribution in an isolated instance.
+tasks.register("productionSmokeJar", Jar) {
+    dependsOn tasks.named("bootstrapGameTestClasses")
+    archiveBaseName = "gregtech-delivery-probe"
+    destinationDirectory = layout.buildDirectory.dir("production-probe")
+    from(sourceSets.bootstrapGameTest.output) {
+        include "com/gregtech/gregtech/integration/client/ProductionClientSmoke*.class"
+    }
+    from(rootProject.file("tools/integration/production-probe/neoforge"))
+}

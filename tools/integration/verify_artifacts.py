@@ -145,6 +145,9 @@ def inspect(path, platform, required_core, properties, forbidden_tests):
         raise ValueError(f'Expected a .jar artifact: {path}')
     metadata_path = PLATFORMS[platform]['metadata']
     with zipfile.ZipFile(path) as archive:
+        bad_entry = archive.testzip()
+        if bad_entry:
+            raise ValueError(f'{path}: corrupt ZIP entry: {bad_entry}')
         counts = Counter(archive.namelist())
         duplicates = [name for name, count in counts.items() if count > 1]
         if duplicates:
@@ -176,6 +179,34 @@ def inspect(path, platform, required_core, properties, forbidden_tests):
                              name == stem + '.class' or name.startswith(stem + '$') for stem in stems))]
         if contamination:
             raise ValueError(f'{path}: test-only entries: {contamination[:10]}')
+        mixin_verification = None
+        if platform == 'forge':
+            config = json.loads(archive.read('gregtech.mixins.json'))
+            refmap_name = config['refmap']
+            if counts.get(refmap_name) != 1:
+                raise ValueError(f'{path}: missing Mixin refmap {refmap_name}')
+            refmap = json.loads(archive.read(refmap_name))
+            current = Path(__file__).resolve().parents[2] / 'build/tmp/compileJava' / refmap_name
+            if archive.read(refmap_name) != current.read_bytes():
+                raise ValueError(f'{path}: Mixin refmap differs from current compiler output')
+            mappings = refmap.get('mappings', {})
+            if not mappings or mappings != refmap.get('data', {}).get('searge'):
+                raise ValueError(f'{path}: incomplete named-to-SRG Mixin mappings')
+            # WaterContainerMixin only targets the Forge API with remap=false.
+            required_mappings = {config['package'].replace('.', '/') + '/' + name
+                                 for name in config['mixins'] + config.get('client', [])
+                                 if name != 'WaterContainerMixin'}
+            if not required_mappings.issubset(mappings):
+                raise ValueError(f'{path}: missing complete Mixin mappings: {sorted(required_mappings - mappings.keys())}')
+            target = 'spawnAtLocation(Lnet/minecraft/world/level/ItemLike;)Lnet/minecraft/world/entity/item/ItemEntity;'
+            expected = 'Lnet/minecraft/world/entity/Entity;m_19998_(Lnet/minecraft/world/level/ItemLike;)Lnet/minecraft/world/entity/item/ItemEntity;'
+            if mappings.get('com/gregtech/gregtech/mixin/EntityFallingOreDropMixin', {}).get(target) != expected:
+                raise ValueError(f'{path}: missing falling-ore production mapping')
+            manifest = archive.read('META-INF/MANIFEST.MF').decode('utf-8').replace('\r\n ', '')
+            if 'MixinConfigs: gregtech.mixins.json' not in manifest:
+                raise ValueError(f'{path}: missing production Mixin manifest registration')
+            mixin_verification = {'refmap': refmap_name, 'mapped_classes': len(mappings),
+                                  'sha256': hashlib.sha256(archive.read(refmap_name)).hexdigest()}
         hashes = {}
         for name, expected_hash in required_core.items():
             if counts.get(name) != 1:
@@ -188,6 +219,7 @@ def inspect(path, platform, required_core, properties, forbidden_tests):
             'path': str(path.resolve()), 'sha256': hashlib.sha256(path.read_bytes()).hexdigest(),
             'bytes': path.stat().st_size, 'zip_entries': len(counts),
             'metadata_path': metadata_path, 'metadata': metadata, 'core_class_sha256': hashes,
+            'zip_crc_checked': True, 'mixin_verification': mixin_verification,
         }
 
 
