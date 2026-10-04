@@ -156,7 +156,9 @@ public final class CraftingMaterialForms {
     public static ItemStack canonical(ItemStack output) {
         ensureInitialized();
         if (output.isEmpty() || output.hasTag() || output.isDamaged()) return output;
-        var target = preferred.get(direct(output));
+        var form = direct(output);
+        // Ordinary recipe outputs need not have a material form; Map.copyOf rejects null keys.
+        var target = form == null ? null : preferred.get(form);
         return target == null ? MaterialUnification.canonical(output) : new ItemStack(target, output.getCount());
     }
     private static void ensureInitialized() { if (aliases.isEmpty()) rebuild(); }

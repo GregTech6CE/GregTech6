@@ -98,11 +98,17 @@ minecraft {
         }
 
         client {
+            property 'gregtech.integration.clientCreateWorldSmoke', (project.findProperty('clientCreateWorldSmoke') ?: 'false').toString()
             property 'gregtech.integration.clientSmoke', (project.findProperty('clientSmoke') ?: 'false').toString()
             property 'gregtech.integration.clientSmokeTimeoutSeconds', (project.findProperty('clientSmokeTimeout') ?: '120').toString()
             if (project.findProperty('clientSmoke') == 'true') {
                 workingDirectory project.file('build/client-smoke-run')
                 jvmArgs '-Xmx6g', '-XX:+UseSerialGC'
+                args '--width', '1280', '--height', '720'
+            }
+            if (project.findProperty('clientCreateWorldSmoke') == 'true') {
+                workingDirectory project.file('build/world-creation-smoke-run')
+                jvmArgs '-Xmx' + (project.findProperty('clientSmokeHeap') ?: '4g').toString()
                 args '--width', '1280', '--height', '720'
             }
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.

@@ -55,6 +55,7 @@ neoForge {
 
     runs {
         client {
+            systemProperty 'gregtech.integration.clientCreateWorldSmoke', (rootProject.findProperty('clientCreateWorldSmoke') ?: 'false').toString()
             client()
             gameDirectory = project.file('run-client')
             systemProperty 'gregtech.integration.clientSmoke', (rootProject.findProperty('clientSmoke') ?: 'false').toString()
@@ -64,10 +65,11 @@ neoForge {
             systemProperty 'gregtech.integration.clientWorldPhase', (rootProject.findProperty('clientWorldPhase') ?: '').toString()
             systemProperty 'gregtech.integration.clientWorldName', (rootProject.findProperty('clientWorldName') ?: '').toString()
             systemProperty 'gregtech.integration.clientWorldId', (rootProject.findProperty('clientWorldId') ?: '').toString()
-            if (rootProject.findProperty('clientSmoke') == 'true' || rootProject.findProperty('clientWorldSmoke') == 'true') {
+            if (rootProject.findProperty('clientSmoke') == 'true' || rootProject.findProperty('clientWorldSmoke') == 'true' || rootProject.findProperty('clientCreateWorldSmoke') == 'true') {
                 sourceSet = sourceSets.bootstrapGameTest
                 gameDirectory = project.file(rootProject.findProperty('clientWorldSmoke') == 'true'
                         ? 'build/client-world-smoke-run' : 'build/client-smoke-run')
+                if (rootProject.findProperty('clientCreateWorldSmoke') == 'true') gameDirectory = project.file('build/world-creation-smoke-run')
                 jvmArgument '-Xmx' + (rootProject.findProperty('clientSmokeHeap') ?: '2g').toString()
                 programArguments.addAll('--width', '1280', '--height', '720')
             }

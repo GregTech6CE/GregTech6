@@ -117,7 +117,12 @@ public final class NativeOriginWorld implements OriginWorld {
         if (level.getBlockEntity(pos) instanceof SignBlockEntity sign) {
             var text = sign.getFrontText();
             for (int i=0;i<Math.min(4,lines.length);i++) text = text.setMessage(i,Component.literal(lines[i]));
-            sign.setText(text,true);
+            // Proto-chunk block entities have no Level yet; setText sends a live world update.
+            CompoundTag tag = sign.saveWithoutMetadata();
+            tag.put("front_text", net.minecraft.world.level.block.entity.SignText.DIRECT_CODEC
+                    .encodeStart(net.minecraft.nbt.NbtOps.INSTANCE,text).result()
+                    .orElseThrow(() -> new IllegalStateException("Cannot encode generated road sign")));
+            sign.load(tag);
             sign.setChanged();
         }
     }
