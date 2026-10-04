@@ -35,6 +35,16 @@ public final class ExternalOreProcessing {
         CraftingMaterialForms.rebuild(true);
         var forms = CraftingMaterialForms.nativeAliases();
         var materialData = new IdentityHashMap<Item, ItemComposition>();
+        for (var prefix : ExternalOreProcessingRules.EXTERNAL_FORMS) for (var entry : forms.entrySet()) {
+            if (!entry.getKey().prefix().equals(prefix.getName())) continue;
+            var material = GTMaterialRegistry.get(entry.getKey().material()).resolve();
+            if (!material.isValid()) continue;
+            for (var item : entry.getValue()) if (ItemMaterialRegistry.base(item).isEmpty())
+                materialData.put(item, new ItemComposition(prefix,
+                        List.of(MaterialComponent.of(material, prefix.getMaterialWeight())),
+                        "GT6 OP external ore-prefix tags", true));
+        }
+        compositions = Collections.unmodifiableMap(materialData);
         int added = 0;
         for (var route : ExternalOreProcessingRules.ROUTES) {
             var map = map(route.map());
@@ -44,11 +54,6 @@ public final class ExternalOreProcessing {
                 if (!material.isValid()) continue;
                 var output = output(route.output(), material, route.count());
                 for (var item : entry.getValue()) {
-                    if (ItemMaterialRegistry.base(item).isEmpty()) {
-                        materialData.put(item, new ItemComposition(route.input(),
-                                List.of(MaterialComponent.of(material, route.input().getMaterialWeight())),
-                                "GT6 OP external ore-prefix tags", true));
-                    }
                     if (!ExternalOreProcessingRules.allows(material) || output.isEmpty()) continue;
                     // Prefix handlers disable optimizing; costs use the larger input/output unit amount.
                     var recipe = map.addRecipe1(false, 16, route.duration(material.getToolQuality()),
@@ -67,11 +72,12 @@ public final class ExternalOreProcessing {
                 var material = GTMaterialRegistry.get(entry.getKey().material()).resolve();
                 if (!route.allows(material)) continue;
                 var target = route.outputMaterial(material);
-                var dust = output(MaterialPrefix.dust, target, route.dustCount());
-                var fines = output(MaterialPrefix.dustTiny, target, 1);
-                if (dust.isEmpty() || fines.isEmpty()) continue;
+                var dust = route.pulverizedRemains() ? MortarGrindingRecipes.pulverize(material, route.input().getMaterialWeight())
+                        : output(MaterialPrefix.dust, target, route.dustCount());
+                var fines = route.fines() ? output(MaterialPrefix.dustTiny, target, 1) : ItemStack.EMPTY;
+                if (dust.isEmpty() || (route.fines() && fines.isEmpty())) continue;
                 for (var item : entry.getValue()) {
-                    var outputs = new ItemStack[]{dust.copy(), fines.copy()};
+                    var outputs = fines.isEmpty() ? new ItemStack[]{dust.copy()} : new ItemStack[]{dust.copy(), fines.copy()};
                     var recipe = route.requiresEmptySlot()
                             ? map.addRecipe(new Recipe(new ItemStack[]{new ItemStack(item), ItemStack.EMPTY},
                                     outputs, null, null, null, null, route.duration(material), 16, 0))
@@ -83,7 +89,6 @@ public final class ExternalOreProcessing {
                 }
             }
         }
-        compositions = Collections.unmodifiableMap(materialData);
         LogUtils.getLogger().info("[gregtech] Bound {} external ore processing rows and {} material compositions from loaded tags",
                 added, compositions.size());
         return added;
@@ -95,6 +100,7 @@ public final class ExternalOreProcessing {
             case "Sifting" -> MachineRecipeMaps.Sifting;
             case "Shredder" -> MachineRecipeMaps.Shredder;
             case "Anvil" -> MachineRecipeMaps.Anvil;
+            case "Mortar" -> MachineRecipeMaps.Mortar;
             default -> throw new IllegalArgumentException("Unknown source external ore map " + name);
         };
     }

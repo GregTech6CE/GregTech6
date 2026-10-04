@@ -11,6 +11,10 @@ import java.util.List;
 /** Loader_Recipes_Handlers external-prefix rows; RecipeMapHandlerPrefix:getCosts and Shredding targets. */
 public final class ExternalOreProcessingRules {
     private ExternalOreProcessingRules() {}
+    /** Explicit external metadata forms; this list never registers GT-owned items. */
+    public static final List<MaterialPrefix> EXTERNAL_FORMS = List.of(
+            MaterialPrefix.rawOreChunk, MaterialPrefix.chunk, MaterialPrefix.rubble, MaterialPrefix.pebbles,
+            MaterialPrefix.clump, MaterialPrefix.reduced, MaterialPrefix.crystalline, MaterialPrefix.cleanGravel, MaterialPrefix.cluster);
     public record Route(String map, MaterialPrefix input, MaterialPrefix output, int count, long multiplier) {
         public long duration(int toolQuality) {
             long units = Math.max(input.getMaterialWeight(), output.getMaterialWeight() * count);
@@ -25,16 +29,18 @@ public final class ExternalOreProcessingRules {
             new Route("Sifting", MaterialPrefix.pebbles, MaterialPrefix.dust, 3, 512));
 
     /** Source :117-119/:129-131 select two Shredder speeds; :158-160 require an empty Anvil workpiece. */
-    public record GrindingRoute(String map, MaterialPrefix input, int dustCount) {
+    public record GrindingRoute(String map, MaterialPrefix input, int dustCount, boolean fines) {
+        public GrindingRoute(String map, MaterialPrefix input, int dustCount) { this(map, input, dustCount, true); }
         public boolean requiresEmptySlot() { return map.equals("Anvil"); }
+        public boolean pulverizedRemains() { return map.equals("Mortar"); }
         public boolean allows(GTMaterial material) {
             return ExternalOreProcessingRules.allows(material)
-                    && (!requiresEmptySlot() || MaterialWorkability.isMortarGrindable(material));
+                    && (!(requiresEmptySlot() || pulverizedRemains()) || MaterialWorkability.isMortarGrindable(material));
         }
         public GTMaterial outputMaterial(GTMaterial material) { return material.getTargetPulverMaterial().resolve(); }
         public long duration(int quality, boolean mortarGrindable) {
-            long units = Math.max(input.getMaterialWeight(), dustCount * GTValues.U + GTValues.U9);
-            long multiplier = requiresEmptySlot() || mortarGrindable ? 16 : 256;
+            long units = Math.max(input.getMaterialWeight(), dustCount * GTValues.U + (fines ? GTValues.U9 : 0));
+            long multiplier = requiresEmptySlot() || pulverizedRemains() || mortarGrindable ? 16 : 256;
             long cost = Math.multiplyExact(Math.multiplyExact(units, multiplier), quality + 1L);
             return Math.max(1, (cost + GTValues.U - 1) / GTValues.U);
         }
@@ -48,7 +54,23 @@ public final class ExternalOreProcessingRules {
             new GrindingRoute("Shredder", MaterialPrefix.pebbles, 3),
             new GrindingRoute("Anvil", MaterialPrefix.chunk, 2),
             new GrindingRoute("Anvil", MaterialPrefix.rubble, 2),
-            new GrindingRoute("Anvil", MaterialPrefix.pebbles, 2));
+            new GrindingRoute("Anvil", MaterialPrefix.pebbles, 2),
+            // Source :120-124/:132-136 and :161-165 have no fines at all.
+            new GrindingRoute("Shredder", MaterialPrefix.clump, 1, false),
+            new GrindingRoute("Shredder", MaterialPrefix.reduced, 1, false),
+            new GrindingRoute("Shredder", MaterialPrefix.crystalline, 1, false),
+            new GrindingRoute("Shredder", MaterialPrefix.cleanGravel, 1, false),
+            new GrindingRoute("Shredder", MaterialPrefix.cluster, 3, false),
+            new GrindingRoute("Anvil", MaterialPrefix.clump, 1, false),
+            new GrindingRoute("Anvil", MaterialPrefix.reduced, 1, false),
+            new GrindingRoute("Anvil", MaterialPrefix.crystalline, 1, false),
+            new GrindingRoute("Anvil", MaterialPrefix.cleanGravel, 1, false),
+            new GrindingRoute("Anvil", MaterialPrefix.cluster, 3, false),
+            // :84/:86/:87/:89 use OM.pulverize(target amount), not a fixed dust count.
+            new GrindingRoute("Mortar", MaterialPrefix.cleanGravel, 0, false),
+            new GrindingRoute("Mortar", MaterialPrefix.crystalline, 0, false),
+            new GrindingRoute("Mortar", MaterialPrefix.reduced, 0, false),
+            new GrindingRoute("Mortar", MaterialPrefix.clump, 0, false));
     public static boolean allows(GTMaterial material) {
         return material.isValid() && !material.has(MaterialProperty.ANTIMATTER);
     }

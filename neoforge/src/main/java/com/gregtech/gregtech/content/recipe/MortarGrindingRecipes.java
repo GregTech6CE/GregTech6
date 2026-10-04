@@ -38,8 +38,8 @@ public final class MortarGrindingRecipes {
 
     private static final List<Entry> ENTRIES = new ArrayList<>();
     private static final List<String> SKIPPED = List.of(
-            "cleanGravel / dirtyGravel / crystalline / reduced / crystal / clump (Loader_Recipes_Handlers:84-89):"
-                    + " the port has no such prefixes");
+            "cleanGravel/crystalline/reduced/clump (:84/:86/:87/:89) bind external items after tags",
+            "dirtyGravel/crystal (:85/:88): no typed source prefixes yet");
 
     /** Rows gated only on {@code MORTAR}. */
     private static final List<String> PLAIN_ROWS = List.of(
@@ -107,9 +107,8 @@ public final class MortarGrindingRecipes {
     /** GT6 {@code OM.pulverize(material, amount)} (OM.java:370-372): dust of the pulverization target. */
     public static ItemStack pulverize(GTMaterial material, long amount) {
         GTMaterial target = material.getTargetPulverMaterial();
-        if (target == null || !target.isValid()) target = material;
-        long targetAmount = Math.max(1, material.getTargetPulverAmount());
-        return OM.dust(target, amount * GTValues.U / targetAmount);
+        if (target == null || !target.isValid()) return ItemStack.EMPTY;
+        return OM.dust(target, PulverizationRules.amount(amount, material.getTargetPulverAmount()));
     }
 
     /** Port prefix by GT6 name; null when the port has no such form (recorded in {@link #SKIPPED}). */

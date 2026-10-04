@@ -21,9 +21,8 @@ import java.util.List;
  * ({@code RecipeMapHandlerPrefixShredding} in {@code RM.Anvil}).
  * <p>
  * These are the hand-grinding rows of the ore chain: an anvil (hammer) turns rock and ore chunks into
- * dust and dust piles before any machine exists. Rows GT6 registers for prefixes the port does not have
- * ({@code clump}, {@code reduced}, {@code crystalline},
- * {@code cleanGravel}, {@code cluster}) stay recorded in {@link #skipped()}.
+ * dust and dust piles before any machine exists. Eight external-prefix rows bind actual tagged items
+ * through {@link ExternalOreProcessing} after tags load, rather than creating GT-owned items.
  * <p>
  * The {@code selfcrush()} condition is GT6's
  * {@code aMaterial.mTargetCrushing.mMaterial == aMaterial} ({@code OreDictMaterialCondition.java:47-50}),
@@ -40,8 +39,7 @@ public final class AnvilShreddingRecipes {
 
     private static final List<Entry> ENTRIES = new ArrayList<>();
     private static final List<String> SKIPPED = List.of(
-            "chunk/rubble/pebbles (:158-160) bind actual external items through ExternalOreProcessing after tags",
-            "clump / reduced / crystalline / cleanGravel / cluster rows (:161-165): no typed source prefixes yet");
+            "eight external-prefix rows (:158-165) bind actual external items through ExternalOreProcessing after tags");
 
     /** GT6 row; {@code selfCrush} mirrors GT6's selfcrush() condition, {@code mortar} its MORTAR flag. */
     private record Row(MaterialPrefix input, MaterialPrefix output, int outCount,

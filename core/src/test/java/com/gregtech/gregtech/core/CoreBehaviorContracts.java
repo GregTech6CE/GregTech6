@@ -45,14 +45,15 @@ public final class CoreBehaviorContracts {
         explosiveStorageSourceSamples();
         externalOreSourceSamples();
         externalGrindingSourceSamples();
+        externalAdditionalGrindingSourceSamples();
         assertions += OriginWorldgenSamples.verify();
-        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 24 groups (Java 17; no game dependencies)");
+        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 25 groups (Java 17; no game dependencies)");
     }
 
     private static void externalGrindingSourceSamples() {
         // Handler:117-119,129-131,158-160; costs round after multiplying, not before.
         var rows = com.gregtech.gregtech.content.recipe.ExternalOreProcessingRules.GRINDING;
-        equal(6, rows.size(), "three Shredder routes with both speeds and three Anvil routes");
+        equal(20, rows.size(), "eight adaptive Shredder, eight Anvil and four Mortar routes");
         long[] soft0 = {34, 34, 50}, hard0 = {541, 541, 797};
         long[] soft2 = {102, 102, 150}, hard2 = {1622, 1622, 2390};
         long[] anvil0 = {34, 34, 48}, anvil2 = {102, 102, 144};
@@ -70,6 +71,58 @@ public final class CoreBehaviorContracts {
         }
         equal(3, rows.get(2).dustCount(), "pebbles yield three dust in the Shredder");
         equal(2, rows.get(5).dustCount(), "pebbles yield only two dust in the source Anvil row");
+    }
+
+    private static void externalAdditionalGrindingSourceSamples() {
+        // OP:143-144,149-151; Handler:84,86-87,89,120-124,132-136,161-165.
+        var rows = com.gregtech.gregtech.content.recipe.ExternalOreProcessingRules.GRINDING;
+        var forms = new com.gregtech.gregtech.data.MaterialPrefix[]{
+                com.gregtech.gregtech.data.MaterialPrefix.clump, com.gregtech.gregtech.data.MaterialPrefix.reduced,
+                com.gregtech.gregtech.data.MaterialPrefix.crystalline, com.gregtech.gregtech.data.MaterialPrefix.cleanGravel,
+                com.gregtech.gregtech.data.MaterialPrefix.cluster};
+        long[] weights = {648_648_000L, 648_648_000L, 648_648_000L, 648_648_000L, 1_945_944_000L};
+        long[] soft0 = {16, 16, 16, 16, 48}, hard0 = {256, 256, 256, 256, 768};
+        long[] soft2 = {48, 48, 48, 48, 144}, hard2 = {768, 768, 768, 768, 2304};
+        int[] dustCounts = {1, 1, 1, 1, 3};
+        for (int i = 0; i < forms.length; i++) {
+            equal(weights[i], forms[i].getMaterialWeight(), "source external form weight " + forms[i].getName());
+            var shredder = rows.get(i + 6);
+            var anvil = rows.get(i + 11);
+            check(shredder.map().equals("Shredder") && shredder.input() == forms[i], "source additional Shredder input " + i);
+            check(anvil.map().equals("Anvil") && anvil.input() == forms[i], "source additional Anvil input " + i);
+            equal(dustCounts[i], shredder.dustCount(), "source fixed Shredder dust count " + i);
+            equal(dustCounts[i], anvil.dustCount(), "source fixed Anvil dust count " + i);
+            check(!shredder.fines() && !anvil.fines(), "source rows produce no invented fines " + i);
+            equal(soft0[i], shredder.duration(0, true), "source additional mortar Shredder duration " + i);
+            equal(hard0[i], shredder.duration(0, false), "source additional hard Shredder duration " + i);
+            equal(soft2[i], shredder.duration(2, true), "source additional quality-scaled mortar Shredder " + i);
+            equal(hard2[i], shredder.duration(2, false), "source additional quality-scaled hard Shredder " + i);
+            equal(soft0[i], anvil.duration(0, true), "source additional Anvil duration " + i);
+            equal(soft2[i], anvil.duration(2, true), "source additional quality-scaled Anvil " + i);
+            check(anvil.requiresEmptySlot() && !shredder.requiresEmptySlot(), "source additional Anvil empty workpiece " + i);
+            check(!anvil.pulverizedRemains() && !shredder.pulverizedRemains(), "explicit source dust counts stay explicit " + i);
+        }
+        var mortarForms = new com.gregtech.gregtech.data.MaterialPrefix[]{
+                com.gregtech.gregtech.data.MaterialPrefix.cleanGravel, com.gregtech.gregtech.data.MaterialPrefix.crystalline,
+                com.gregtech.gregtech.data.MaterialPrefix.reduced, com.gregtech.gregtech.data.MaterialPrefix.clump};
+        for (int i = 0; i < mortarForms.length; i++) {
+            var row = rows.get(i + 16);
+            check(row.map().equals("Mortar") && row.input() == mortarForms[i], "source Mortar input; no cluster Mortar route " + i);
+            check(row.pulverizedRemains() && !row.fines() && !row.requiresEmptySlot(), "source Mortar uses OM remains without Anvil workpiece " + i);
+            equal(16, row.duration(0, true), "source one-unit Mortar duration " + i);
+            equal(48, row.duration(2, true), "source quality-scaled Mortar duration " + i);
+        }
+        var external = com.gregtech.gregtech.content.recipe.ExternalOreProcessingRules.EXTERNAL_FORMS;
+        equal(9, external.size(), "nine typed external forms");
+        for (var form : external) check(!com.gregtech.gregtech.api.material.MaterialItemDefinitions.candidatePrefixes().contains(form),
+                "external metadata creates no GT-owned items " + form.getName());
+        // OM:370-371 / UT.Code.units:1677-1687, target amount multiplies the input then floors.
+        equal(972_972_000L, com.gregtech.gregtech.content.recipe.PulverizationRules.amount(1_945_944_000L, 324_324_000L), "three input units at a half-unit pulver target");
+        equal(648_648_000L, com.gregtech.gregtech.content.recipe.PulverizationRules.amount(324_324_000L, 1_297_296_000L), "half input unit at a double-unit pulver target");
+        equal(0, com.gregtech.gregtech.content.recipe.PulverizationRules.amount(1, 324_324_000L), "source pulver target rounds down fractional atoms");
+        equal(41_513_472_000L, com.gregtech.gregtech.content.recipe.PulverizationRules.amount(41_513_472_000L, 648_648_000L), "64-unit identity pulverization avoids overflowing an intermediate product");
+        equal(20_756_736_000L, com.gregtech.gregtech.content.recipe.PulverizationRules.amount(41_513_472_000L, 324_324_000L), "64-unit half target avoids overflowing an intermediate product");
+        equal(0, com.gregtech.gregtech.content.recipe.PulverizationRules.amount(648_648_000L, 0), "source zero target yields zero");
     }
 
     private static void externalOreSourceSamples() {

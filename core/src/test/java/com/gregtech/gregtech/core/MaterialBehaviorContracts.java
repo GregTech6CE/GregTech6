@@ -32,8 +32,10 @@ public final class MaterialBehaviorContracts {
     // docs/integration/verification/explosive-material-differential-20261004.json.
     // Four original external ore-prefix metadata entries; all prior graph rows unchanged:
     // docs/integration/verification/external-ore-material-differential-20261004.json.
-    private static final String DEFINITIONS_SHA256 = "5a76a35f681c54cb18c213bcab90615a62f6bc2f5b70738753e997e358d77c6c";
-    private static final String POST_INIT_SHA256 = "85227d4dfc85c2f5e85d954e3cd538fe27c9ccdf9e14d9257e3cafdd829cbc74";
+    // Five further source external forms; all 133876 prior observations per stage remain:
+    // docs/integration/verification/external-rest-material-differential-20261004.json.
+    private static final String DEFINITIONS_SHA256 = "92765dc102da5275bd5a7080c0ef0d15f5bef194df99fd4193288dd786035ba5";
+    private static final String POST_INIT_SHA256 = "5e0a71529936d275af1b1c4f134e24cedf14070959c4f15f17e3ba97bc053b0a";
     private static int assertions;
     private MaterialBehaviorContracts() {}
 
@@ -58,7 +60,7 @@ public final class MaterialBehaviorContracts {
                 "The complete directory must finish linking");
         check(GTMaterialRegistry.allMaterials().size() == 1160, "All 1160 original material objects must remain");
         check(MaterialCatalogSnapshot.aliases().size() == 1523, "All 1523 original name entries must remain");
-        check(PrefixRegistry.all().size() == 113, "109 prior prefixes plus four source external ore forms must remain");
+        check(PrefixRegistry.all().size() == 118, "109 prior prefixes plus nine source external ore forms must remain");
         check(DEFINITIONS_SHA256.equals(MaterialCatalogSnapshot.sha256()), "Full definitions/aliases/forms must match the Community Edition snapshot");
         GTMaterialRegistry.init();
         check(DEFINITIONS_SHA256.equals(MaterialCatalogSnapshot.sha256()), "Repeated init must not mutate or duplicate definitions");
@@ -70,6 +72,8 @@ public final class MaterialBehaviorContracts {
         var hardGrinding = GTMaterialRegistry.get("Tungstensteel");
         check(sourceGrinding.get(3).allows(wrought), "source MORTAR WroughtIron permits Anvil external grinding");
         check(!sourceGrinding.get(3).allows(hardGrinding), "source non-MORTAR Tungstensteel rejects Anvil external grinding");
+        check(sourceGrinding.get(16).allows(wrought), "source MORTAR WroughtIron permits external Mortar grinding");
+        check(!sourceGrinding.get(16).allows(hardGrinding), "source non-MORTAR Tungstensteel rejects external Mortar grinding");
         check(sourceGrinding.get(0).allows(hardGrinding), "source non-MORTAR Tungstensteel still has its hard Shredder branch");
         check(sourceGrinding.get(0).outputMaterial(wrought) == iron, "source shredding turns WroughtIron into its Iron pulver target");
         var petrified = GTMaterialRegistry.get("PetrifiedWood");
@@ -92,7 +96,7 @@ public final class MaterialBehaviorContracts {
         validateCopperTinBronze();
         validateAmountsAndReactions();
         System.out.println("Material behavior contracts passed: " + assertions
-                + " assertions; 1160 materials, 1105 positive IDs, 1523 name entries, 113 prefixes, 173 reactions");
+                + " assertions; 1160 materials, 1105 positive IDs, 1523 name entries, 118 prefixes, 173 reactions");
     }
 
     private static void validateIdentityGraph() throws Exception {
