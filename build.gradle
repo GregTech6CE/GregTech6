@@ -29,6 +29,10 @@ sourceSets {
         compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
         runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
     }
+    productionSmoke {
+        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+        runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
+    }
 }
 minecraft {
     // The mappings can be changed at any time and must be in the following format.
@@ -243,10 +247,10 @@ tasks.named('compileJava', JavaCompile).configure {
 }
 
 def deliveryProbeJar = tasks.register('productionSmokeJar', Jar) {
-    dependsOn tasks.named('bootstrapGameTestClasses')
+    dependsOn tasks.named('productionSmokeClasses')
     archiveBaseName = 'gregtech-delivery-probe'
     destinationDirectory = layout.buildDirectory.dir('production-probe')
-    from(sourceSets.bootstrapGameTest.output) {
+    from(sourceSets.productionSmoke.output) {
         include 'com/gregtech/gregtech/integration/client/ProductionClientSmoke*.class'
     }
     from('tools/integration/production-probe/forge')

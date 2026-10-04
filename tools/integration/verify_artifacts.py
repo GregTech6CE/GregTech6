@@ -71,7 +71,8 @@ def compiled_core_hashes(core_output):
 def test_only_entries(repo):
     """Only forbid explicitly separate test source sets, preserving baseline main GameTests."""
     roots = (repo / 'core/src/test', repo / 'src/bootstrapGameTest',
-             repo / 'neoforge/src/bootstrapGameTest')
+             repo / 'neoforge/src/bootstrapGameTest', repo / 'src/productionSmoke',
+             repo / 'neoforge/src/productionSmoke')
     class_stems, resources = set(), set()
     for root in roots:
         java = root / 'java'
