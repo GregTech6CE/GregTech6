@@ -1,0 +1,12 @@
+{
+  "type": "gregtech:tool_shaped",
+  "allow_mirror": false,
+  "pattern": ["Ts", "Pd"],
+  "key": {
+    "T": {"tag": "gregtech:crates/screws"},
+    "P": {"tag": "minecraft:planks"},
+    "s": {"item": "gregtech:tool_saw"},
+    "d": {"item": "gregtech:tool_screwdriver"}
+  },
+  "result": {"item": "gregtech:crate"}
+}

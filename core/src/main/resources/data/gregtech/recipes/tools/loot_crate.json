@@ -1,0 +1,17 @@
+{
+  "type": "gregtech:tool_shaped",
+  "allow_mirror": false,
+  "pattern": ["wrd", "FGT", "SLC"],
+  "key": {
+    "w": {"item": "gregtech:tool_wrench"},
+    "r": {"item": "gregtech:tool_soft_hammer"},
+    "d": {"item": "gregtech:tool_screwdriver"},
+    "F": {"item": "gregtech:foil_gold"},
+    "G": {"item": "gregtech:gear_gt_small_gold"},
+    "T": {"item": "gregtech:screw_gold"},
+    "S": {"item": "gregtech:spring_gold"},
+    "L": {"item": "gregtech:crate"},
+    "C": {"item": "gregtech:item_casing_gold"}
+  },
+  "result": {"item": "gregtech:loot_crate"}
+}

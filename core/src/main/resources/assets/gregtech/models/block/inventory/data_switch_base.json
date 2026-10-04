@@ -1,28 +1,84 @@
 {
   "render_type": "minecraft:cutout",
   "parent": "minecraft:block/block",
-  "textures": {"particle": "#colored_side"},
+  "textures": {
+    "particle": "#colored_side"
+  },
   "elements": [
     {
-      "from": [0, 0, 0], "to": [16, 16, 16],
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
       "faces": {
-        "down": {"texture": "#colored_bottom", "cullface": "down"},
-        "up": {"texture": "#colored_top", "cullface": "up"},
-        "north": {"texture": "#colored_side", "cullface": "north"},
-        "south": {"texture": "#colored_side", "cullface": "south"},
-        "east": {"texture": "#colored_side", "cullface": "east"},
-        "west": {"texture": "#colored_side", "cullface": "west"}
+        "down": {
+          "texture": "#colored_bottom",
+          "cullface": "down",
+          "tintindex": 0
+        },
+        "up": {
+          "texture": "#colored_top",
+          "cullface": "up",
+          "tintindex": 0
+        },
+        "north": {
+          "texture": "#colored_side",
+          "cullface": "north",
+          "tintindex": 0
+        },
+        "south": {
+          "texture": "#colored_side",
+          "cullface": "south",
+          "tintindex": 0
+        },
+        "east": {
+          "texture": "#colored_side",
+          "cullface": "east",
+          "tintindex": 0
+        },
+        "west": {
+          "texture": "#colored_side",
+          "cullface": "west",
+          "tintindex": 0
+        }
       }
     },
     {
-      "from": [-0.01, -0.01, -0.01], "to": [16.01, 16.01, 16.01],
+      "from": [
+        -0.01,
+        -0.01,
+        -0.01
+      ],
+      "to": [
+        16.01,
+        16.01,
+        16.01
+      ],
       "faces": {
-        "down": {"texture": "#overlay_bottom"},
-        "up": {"texture": "#overlay_top"},
-        "north": {"texture": "#overlay_side"},
-        "south": {"texture": "#overlay_side"},
-        "east": {"texture": "#overlay_side"},
-        "west": {"texture": "#overlay_side"}
+        "down": {
+          "texture": "#overlay_bottom"
+        },
+        "up": {
+          "texture": "#overlay_top"
+        },
+        "north": {
+          "texture": "#overlay_side"
+        },
+        "south": {
+          "texture": "#overlay_side"
+        },
+        "east": {
+          "texture": "#overlay_side"
+        },
+        "west": {
+          "texture": "#overlay_side"
+        }
       }
     }
   ]

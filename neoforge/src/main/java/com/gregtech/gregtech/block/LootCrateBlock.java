@@ -66,7 +66,9 @@ public class LootCrateBlock extends Block {
                         .withParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.ORIGIN,
                                 net.minecraft.world.phys.Vec3.atCenterOf(pos))
                         .create(net.minecraft.world.level.storage.loot.parameters.LootContextParamSets.CHEST);
-        return table.getRandomItems(params).stream().filter(stack -> !stack.isEmpty()).toList();
+        var candidates = table.getRandomItems(params).stream().filter(stack -> !stack.isEmpty()).toList();
+        // GT6 returns one generated stack, rather than all contents of a chest.
+        return candidates.isEmpty() ? List.of() : List.of(candidates.get(random.nextInt(candidates.size())));
     }
 
     /** GT6 {@code onToolClick}: a crowbar pries the crate open. */
@@ -82,7 +84,7 @@ public class LootCrateBlock extends Block {
         // GT6 also hands the crate itself back (IL.Crate, the port's icon set "crate" block).
         ItemStack crate = crateStack();
         if (!crate.isEmpty()) popResource(level, pos, crate);
-        if (!player.isCreative()) held.hurtAndBreak(1, player,net.minecraft.world.entity.LivingEntity.getSlotForHand(hand));
+        GTToolHelper.damageForToolClickReturn(held, 500, player);
         return InteractionResult.CONSUME;
     }
 

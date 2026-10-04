@@ -48,6 +48,7 @@ public final class GregTechJEIPlugin implements IModPlugin {
             registration.addRecipeCategories(category);
             categories.put(map, category);
         }
+        registration.addRecipeCategories(new LootInfoCategories.Category(guiHelper, false), new LootInfoCategories.Category(guiHelper, true));
         registration.addRecipeCategories(new MultiblockInfoCategory(guiHelper));
         registration.addRecipeCategories(new ToolAssemblyCategory.Category(guiHelper));
         registration.addRecipeCategories(
@@ -74,12 +75,19 @@ public final class GregTechJEIPlugin implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
+        // EMI has its own native pages. Its JEI bridge must not import a second copy.
+        if (!net.minecraftforge.fml.ModList.get().isLoaded("emi")) {
+            registration.addRecipes(LootInfoCategories.LOOT, com.gregtech.gregtech.content.loot.LootViewerData.lootTables());
+            registration.addRecipes(LootInfoCategories.MOBS, com.gregtech.gregtech.content.loot.LootViewerData.mobDrops());
+        }
+        if (!net.minecraftforge.fml.ModList.get().isLoaded("emi")) {
         registration.addRecipes(MultiblockInfoCategory.TYPE,MultiblockInfoCategory.recipes());
-        registration.addRecipes(ToolAssemblyCategory.TYPE, com.gregtech.gregtech.recipe.ToolAssemblyCatalog.build());
         registration.addRecipes(WorldgenInfoCategories.VEIN_TYPE, WorldgenInfoCategories.buildVeins());
         registration.addRecipes(WorldgenInfoCategories.SMALL_ORE_TYPE, WorldgenInfoCategories.buildSmallOres());
         registration.addRecipes(WorldgenInfoCategories.LAYER_TYPE, WorldgenInfoCategories.buildLayers());
         registration.addRecipes(WorldgenInfoCategories.BEDROCK_TYPE, WorldgenInfoCategories.buildBedrockOres());
+        }
+        registration.addRecipes(ToolAssemblyCategory.TYPE, com.gregtech.gregtech.recipe.ToolAssemblyCatalog.build());
         for (Map.Entry<RecipeMap, RecipeMapCategory> entry : categories.entrySet()) {
             List<Recipe> recipes = new ArrayList<>();
             for (Recipe recipe : entry.getKey().mRecipeList) {

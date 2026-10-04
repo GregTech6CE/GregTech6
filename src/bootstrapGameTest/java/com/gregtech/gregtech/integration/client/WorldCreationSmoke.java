@@ -47,6 +47,7 @@ public final class WorldCreationSmoke {
         observedScreen = event.getScreen().getClass().getName();
         try {
             if (minecraft.getOverlay() != null) return;
+            LootBrowserSmoke.frame(event.getScreen());
             if (stage == 0 && event.getScreen() instanceof TitleScreen) {
                 minecraft.options.pauseOnLostFocus = false;
                 var root = minecraft.gameDirectory.toPath().toAbsolutePath().normalize();
@@ -110,6 +111,7 @@ public final class WorldCreationSmoke {
                     if (recipes < 1000) throw new IllegalStateException("Incomplete actual recipe registry: " + recipes);
                     checkBatteries(server,result);
                     OriginFeedbackChecks.server(server,result);
+                    LootFeedbackChecks.server(server,result);
                     result.addProperty("canonicalItemsChecked",checked);
                     result.addProperty("recipes",recipes);
                     result.addProperty("serverTicks",server.getTickCount());
@@ -119,6 +121,7 @@ public final class WorldCreationSmoke {
             }
             if (++frames < 30 || !probe.isDone() || !emiReady()) return;
             var result = probe.join();
+            if (!LootBrowserSmoke.start(result)) return;
             OriginFeedbackChecks.client(minecraft,result);
             result.addProperty("renderedWorldFrames",frames);
             result.addProperty("emiLoaded",EMI_PRESENT);

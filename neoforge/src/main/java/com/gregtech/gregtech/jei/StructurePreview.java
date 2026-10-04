@@ -13,10 +13,15 @@ import net.minecraft.world.item.ItemStack;
 import java.util.Map;
 
 /** Renders actual baked block models without creating a client world or ticking block entities. */
-final class StructurePreview {
+public final class StructurePreview {
     private StructurePreview() {}
 
-    static void draw(GuiGraphics graphics, Map<BlockPos, ItemStack> blocks, PreviewCamera camera, Integer layer) {
+    public static void draw(GuiGraphics graphics, Map<BlockPos, ItemStack> blocks, PreviewCamera camera, Integer layer) {
+        draw(graphics, blocks, camera, layer, 0, 20, 176, 128);
+    }
+
+    public static void draw(GuiGraphics graphics, Map<BlockPos, ItemStack> blocks, PreviewCamera camera, Integer layer,
+                            int left, int top, int right, int bottom) {
         if (blocks.isEmpty()) return;
         int minX = blocks.keySet().stream().mapToInt(BlockPos::getX).min().orElse(0);
         int maxX = blocks.keySet().stream().mapToInt(BlockPos::getX).max().orElse(0);
@@ -26,15 +31,15 @@ final class StructurePreview {
         int maxZ = blocks.keySet().stream().mapToInt(BlockPos::getZ).max().orElse(0);
         float width = (maxX - minX + maxZ - minZ + 2) * 0.7072f;
         float height = (maxY - minY + 1) * 0.8661f + width * 0.5f;
-        float scale = Math.min(138f / width, 91f / height) * (float)camera.scale();
+        float scale = Math.min((right - left - 38f) / width, (bottom - top - 17f) / height) * (float)camera.scale();
         var client = Minecraft.getInstance();
         graphics.flush();
-        var viewport = PreviewViewport.screenBounds(graphics.pose().last().pose());
+        var viewport = PreviewViewport.screenBounds(graphics.pose().last().pose(), left, top, right, bottom);
         graphics.enableScissor(viewport.left(), viewport.top(), viewport.right(), viewport.bottom());
         var pose = graphics.pose();
         pose.pushPose();
         try {
-            pose.translate(88 + camera.x(), 77 + camera.y(), 150);
+            pose.translate((left + right) / 2f + camera.x(), (top + bottom) / 2f + 3 + camera.y(), 150);
             PreviewTransforms.scaleForGui(pose, scale);
             pose.mulPose(Axis.XP.rotationDegrees((float)camera.pitch()));
             pose.mulPose(Axis.YP.rotationDegrees((float)camera.yaw()));

@@ -73,6 +73,7 @@ public final class GTDecorBlocks {
 
     // N12: Misc placeables
     public static RegistryObject<Block> LOOT_CRATE;
+    public static RegistryObject<Block> CRATE;
     /** GT6's book shelf (MultiTileEntityBookShelf, LoaderBookList). */
     public static RegistryObject<com.gregtech.gregtech.block.BookShelfBlock> BOOKSHELF;
     private static final java.util.Map<String, RegistryObject<com.gregtech.gregtech.block.BookShelfBlock>> BOOKSHELVES =
@@ -230,6 +231,8 @@ public final class GTDecorBlocks {
                 props(MapColor.GOLD, 3f).sound(SoundType.METAL).noOcclusion()));
 
         // N12: Misc
+        CRATE = reg("crate", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD)
+                .strength(1f, 3f).sound(SoundType.WOOD).ignitedByLava()));
         LOOT_CRATE = reg("loot_crate", () -> new com.gregtech.gregtech.block.LootCrateBlock(
                 props(MapColor.WOOD, 4f).sound(SoundType.WOOD)));
         for (var variant : com.gregtech.gregtech.content.book.BookShelfVariants.all()) {

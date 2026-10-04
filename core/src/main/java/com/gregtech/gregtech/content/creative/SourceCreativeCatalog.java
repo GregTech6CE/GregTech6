@@ -1371,6 +1371,7 @@ ITEMS.put("loom_steel",new Entry("basic_machines",763));
 ITEMS.put("loom_titanium",new Entry("basic_machines",763));
 ITEMS.put("loom_tungsten_steel",new Entry("basic_machines",763));
 ITEMS.put("loot_crate",new Entry("untyped",1119));
+ITEMS.put("crate",new Entry("woods",11));
 ITEMS.put("loot_pouch",new Entry("equipment",134));
 ITEMS.put("low_heat_extruder_shape_axehead",new Entry("basic_machines",759));
 ITEMS.put("low_heat_extruder_shape_block",new Entry("basic_machines",759));

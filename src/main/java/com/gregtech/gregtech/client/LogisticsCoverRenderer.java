@@ -30,20 +30,9 @@ public final class LogisticsCoverRenderer<T extends BlockEntity & LogisticsCover
             int light = be.getLevel() == null ? packedLight
                     : LevelRenderer.getLightColor(be.getLevel(), be.getBlockPos().relative(side));
             var vc = buffers.getBuffer(RenderType.cutout());
-            float out = 1 / 16f;
-            float x0 = 0, y0 = 0, z0 = 0, x1 = 1, y1 = 1, z1 = 1;
-            switch (side) {
-                case NORTH -> { z0 = -out; z1 = -.0005f; }
-                case SOUTH -> { z0 = 1.0005f; z1 = 1 + out; }
-                case WEST -> { x0 = -out; x1 = -.0005f; }
-                case EAST -> { x0 = 1.0005f; x1 = 1 + out; }
-                case DOWN -> { y0 = -out; y1 = -.0005f; }
-                case UP -> { y0 = 1.0005f; y1 = 1 + out; }
-            }
-            var base = ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gregtech",
-                    "block/machines/covers/logistics/base"));
-            ArmRenderHelper.drawCuboid(pose.last().pose(), vc, x0, y0, z0, x1, y1, z1,
-                    1, 1, 1, base, light);
+            double out = 0;
+            var base = ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gregtech", "block/machines/covers/logistics/base"));
+            CoverSurfaceRenderer.draw(pose,vc,side,base,light,0);
             if (type.role() == LogisticsCoverType.Role.DISPLAY) {
                 String name = switch (type) {
                     case CPU_LOGIC -> "cpu_logic";

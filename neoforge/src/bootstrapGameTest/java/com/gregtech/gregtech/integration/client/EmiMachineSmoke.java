@@ -64,7 +64,7 @@ final class EmiMachineSmoke {
         }
         long expected = com.gregtech.gregtech.api.recipe.RecipeMap.RECIPE_MAP_LIST.stream()
                 .flatMap(m -> m.mRecipeList.stream()).filter(r -> r.mEnabled && !r.mHidden).count();
-        if (recipes.size() != expected) throw new IllegalStateException("EMI omitted enabled machine recipes");
+        if (recipes.stream().filter(r -> r instanceof com.gregtech.gregtech.emi.MachineEmiRecipe).count() != expected) throw new IllegalStateException("EMI omitted enabled machine recipes");
         com.mojang.logging.LogUtils.getLogger().info("EMI_MACHINE_SMOKE_SUCCESS {} registered recipes; rolling mill and extruder plate outputs present", recipes.size());
     }
 }

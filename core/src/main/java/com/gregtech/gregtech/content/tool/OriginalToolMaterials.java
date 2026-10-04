@@ -35,6 +35,8 @@ public final class OriginalToolMaterials {
         String name = name(material);
         if (name.equals(family)) return true;
         if (material.getReRegistrations().stream().anyMatch(m -> name(m).equals(family))) return true;
+        // A group stores its members; a concrete material stores its parent groups.
+        if (material.getAliasesToThis().stream().anyMatch(m -> name(m).equals(family))) return true;
         return switch (family) {
             case "WoodPlastic" -> material.has(MaterialProperty.WOOD) || name.equals("PetrifiedWood") || inFamily(material, "Plastic");
             case "Plastic" -> Set.of("Plastic", "HardPlastic", "Polycarbonate", "PVC", "Teflon", "Bakelite").contains(name);

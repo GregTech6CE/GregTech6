@@ -1,0 +1,11 @@
+{
+  "type": "gregtech:tool_shaped",
+  "allow_mirror": false,
+  "pattern": [" f ", "PhP", "PPP"],
+  "key": {
+    "f": {"item": "gregtech:tool_file"},
+    "h": {"item": "gregtech:tool_hammer"},
+    "P": {"item": "gregtech:plate_stainlesssteel"}
+  },
+  "result": {"item": "gregtech:bathing_pot"}
+}

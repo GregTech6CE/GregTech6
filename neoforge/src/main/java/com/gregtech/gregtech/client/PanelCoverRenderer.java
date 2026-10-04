@@ -37,21 +37,12 @@ public final class PanelCoverRenderer {
         var owner=host.coverOwner();var level=owner.getLevel();
         int light=level==null?fallbackLight:LevelRenderer.getLightColor(level,owner.getBlockPos().relative(side));
         var vc=buffers.getBuffer(RenderType.cutout());var matrix=pose.last().pose();
-        float x0=0,y0=0,z0=0,x1=1,y1=1,z1=1,out=1/16f;
-        switch(side){case NORTH->{z0=-out;z1=-.0005f;}case SOUTH->{z0=1.0005f;z1=1+out;}
-            case WEST->{x0=-out;x1=-.0005f;}case EAST->{x0=1.0005f;x1=1+out;}
-            case DOWN->{y0=-out;y1=-.0005f;}case UP->{y0=1.0005f;y1=1+out;}}
         var base=ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gregtech","block/machines/covers/base"));
-        ArmRenderHelper.drawCuboid(matrix,vc,x0,y0,z0,x1,y1,z1,1,1,1,base,light);
-        int layer=0;
+        CoverSurfaceRenderer.draw(pose,vc,side,base,light,0);
+        int layer=1;
         for(String texture:layers(stack)){
             var sprite=ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gregtech","block/machines/covers/"+texture));
-            double distance=out+.0005+(layer++)*.0001;
-            for(int corner=0;corner<4;corner++){
-                double u=corner>=2?1:0,v=corner==1||corner==2?1:0;var pos=CoverFaceCoordinates.to(side,u,v,distance);
-                vc.addVertex(matrix,(float)pos.x,(float)pos.y,(float)pos.z).setColor(1f,1f,1f,1f).setUv(sprite.getU((float)u),sprite.getV((float)v))
-                    .setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose.last(),side.getStepX(),side.getStepY(),side.getStepZ());
-            }
+            CoverSurfaceRenderer.draw(pose,vc,side,sprite,light,layer++);
         }
         return true;
     }

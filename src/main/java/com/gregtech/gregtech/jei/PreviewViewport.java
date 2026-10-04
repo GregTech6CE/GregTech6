@@ -12,11 +12,15 @@ public final class PreviewViewport {
     public record Bounds(int left, int top, int right, int bottom) {}
 
     public static Bounds screenBounds(Matrix4fc recipePose) {
+        return screenBounds(recipePose, LEFT, TOP, RIGHT, BOTTOM);
+    }
+
+    public static Bounds screenBounds(Matrix4fc recipePose, int left, int top, int right, int bottom) {
         float minX = Float.POSITIVE_INFINITY, minY = Float.POSITIVE_INFINITY;
         float maxX = Float.NEGATIVE_INFINITY, maxY = Float.NEGATIVE_INFINITY;
         var corner = new Vector3f();
-        for (int x : new int[]{LEFT, RIGHT}) {
-            for (int y : new int[]{TOP, BOTTOM}) {
+        for (int x : new int[]{left, right}) {
+            for (int y : new int[]{top, bottom}) {
                 recipePose.transformPosition(corner.set(x, y, 0));
                 minX = Math.min(minX, corner.x);
                 minY = Math.min(minY, corner.y);

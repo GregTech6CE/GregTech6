@@ -178,6 +178,7 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 repositories {
     // Put repositories for dependencies here
     // ForgeGradle automatically adds the Forge maven and Maven Central for you
+    maven { name = 'EMI'; url = 'https://maven.terraformersmc.com/releases' }
     maven {
         name = "BlameJared"
         url = "https://maven.blamejared.com"
@@ -210,7 +211,13 @@ dependencies {
 
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
-    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
+    if (project.findProperty('emiOnlySmoke') != 'true') {
+        runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
+    }
+    compileOnly fg.deobf('dev.emi:emi-forge:1.1.24+1.20.1:api')
+    if (project.findProperty('emiSmoke') == 'true') {
+        runtimeOnly fg.deobf('dev.emi:emi-forge:1.1.24+1.20.1')
+    }
 
     compileOnly fg.deobf("maven.modrinth:jade:${jade_version}")
     runtimeOnly fg.deobf("maven.modrinth:jade:${jade_version}")

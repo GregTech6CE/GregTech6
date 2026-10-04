@@ -18,6 +18,9 @@ import java.util.Locale;
 public final class GregTechEMIPlugin implements EmiPlugin {
     @Override
     public void register(EmiRegistry registry) {
+        LootEmiRecipe.register(registry);
+        StructureEmiRecipe.register(registry);
+        WorldgenEmiRecipe.register(registry);
         // Rebuild aliases from this reload's compositions before creating ingredient templates.
         com.gregtech.gregtech.api.material.MaterialDisplayBinding.invalidate();
         var machines = RecipeMachines.collect();

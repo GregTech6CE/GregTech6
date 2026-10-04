@@ -1,0 +1,489 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "gregtech:screw_acacia",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_alder",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_applewood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_ashwood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_aspen",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_autumnwood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_balsa",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_baobab",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_beech",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_birch",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_bluemahoe",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_bluespruce",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_boxwood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_brazilwood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_butternutwood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_castiron",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_cedar",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_cherrywood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_chestnutwood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_cinnamonwood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_citruswood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_cocobolowood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_coconutwood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_crimsonwood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_cypress",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_darkoak",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_darkwood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_douglasfir",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_ebony",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_elderwood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_elm",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_etherealwood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_eucalyptus",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_figwood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_fir",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_foxfirewood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_giganteumwood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_gingko",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_goldwood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_greenheart",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_hawthorn",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_hazel",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_hellbark",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_hemlock",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_hickory",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_holly",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_hornbeam",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_ipe",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_iroko",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_iron",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_ironcompressed",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_jacaranda",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_japanesemaple",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_junglewood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_kapok",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_knightmetal",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_larch",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_limewood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_locust",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_logwood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_maclura",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_magicwood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_mahoe",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_mahogany",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_mangrove",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_maple",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_meteoriciron",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_meteoricsteel",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_meteorite",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_oak",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_ogrewood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_olivewood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_padauk",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_palm",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_papayawood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_pearwood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_petrifiedwood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_pigiron",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_pine",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_pinkivory",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_plumwood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_poplar",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_purpleheart",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_rainboweucalyptus",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_rainbowood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_redwood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_rosewood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_rowan",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_sacredoak",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_sakura",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_sequoia",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_silverpine",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_spruce",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_steel",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_sweetgum",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_sycamore",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_syzgium",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_teak",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_thorntree",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_towerwood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_walnutwood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_warpedwood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_wenge",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_whitebeam",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_whitecedar",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_whiteelm",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_willow",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_witchwood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_woodbleached",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_woodcompressed",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_wooddead",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_woodfrozen",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_woodmossy",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_woodrotten",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_woodscorched",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_woodtainted",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_woodvarnished",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_wroughtiron",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_wyvernwood",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_yew",
+      "required": false
+    },
+    {
+      "id": "gregtech:screw_zebrawood",
+      "required": false
+    }
+  ]
+}

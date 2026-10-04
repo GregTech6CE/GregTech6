@@ -162,6 +162,7 @@ public final class OriginFeedbackChecks {
         for(var entry:com.gregtech.gregtech.registry.GTGearboxes.allGearboxes()){checkModel(minecraft,new ItemStack(entry.get()),true);gearboxes++;}
         require(gearboxes==13,"Native original gearbox count mismatch");
         receipt.addProperty("gearboxInventoryModelsChecked",gearboxes);
+        checkModel(minecraft,new ItemStack(BuiltInRegistries.ITEM.get(id("loot_crate"))),false);
         int nativeTools=0;for(String row:OriginTestInventory.ROWS)if(row.contains("getToolWithStats")){var stack=NativeOriginItems.stack(row);require(!stack.isEmpty(),"Nexus tool still absent: "+row);if(!stack.isEmpty()){checkModel(minecraft,stack,true);nativeTools++;}}
         receipt.addProperty("nexusToolInventoryModelsChecked",nativeTools);
         int ropes=0,filters=0;
@@ -176,6 +177,18 @@ public final class OriginFeedbackChecks {
             checkTint(minecraft,stack,com.gregtech.gregtech.content.material.Materials.SteelGalvanized.getColor(),colors);
             checkModel(minecraft,stack,true);filters++;
         }
+        int automatic=0;
+        for(var spec:com.gregtech.gregtech.content.tool.AutomaticToolRules.ALL) {
+            var stack=new ItemStack(BuiltInRegistries.ITEM.get(id(spec.id())));
+            checkTint(minecraft,stack,com.gregtech.gregtech.content.tool.AutomaticToolRules.material(spec).getColor(),colors);
+            checkModel(minecraft,stack,true);automatic++;
+        }
+        for(String name:java.util.List.of("usb_switch","hdd_switch")) {
+            var stack=new ItemStack(BuiltInRegistries.ITEM.get(id(name)));
+            checkTint(minecraft,stack,com.gregtech.gregtech.content.material.Materials.SteelGalvanized.getColor(),colors);
+            checkModel(minecraft,stack,true);automatic++;
+        }
+        receipt.addProperty("automaticAndDataSwitchColorsChecked",automatic);
         receipt.addProperty("ropeInventoryModelsChecked",ropes);
         receipt.addProperty("filterInventoryModelsChecked",filters);
         receipt.add("inventoryMaterialRgb",colors);
@@ -218,16 +231,20 @@ public final class OriginFeedbackChecks {
         for(String name:java.util.List.of("filter_items","filter_fluids","filter_items_fluids","filter_oredict","crank","asphalt"))
             stacks.add(new ItemStack(BuiltInRegistries.ITEM.get(id(name))));
         for(String row:OriginTestInventory.ROWS)if(row.contains("POCKET_MULTITOOL")||row.contains("ToolsGT.PISTOL")||row.contains("ToolsGT.CARBINE")||row.contains("ToolsGT.RIFLE")||row.contains("MININGDRILL_")||row.contains("MIXER_LV")||row.contains("BUZZSAW_LV")||row.contains("TRIMMER_LV")||row.contains("WRENCH_MV")||row.contains("WRENCH_HV")||row.contains("CHAINSAW_MV")||row.contains("CHAINSAW_HV")||row.contains("OP.cableGt01.mat(MT.Signalum")||row.contains("OP.wireGt01.mat(MT.Lumium"))stacks.add(NativeOriginItems.stack(row));
+        for(var spec:com.gregtech.gregtech.content.tool.AutomaticToolRules.ALL)stacks.add(new ItemStack(BuiltInRegistries.ITEM.get(id(spec.id()))));
+        for(String name:java.util.List.of("usb_switch","hdd_switch"))stacks.add(new ItemStack(BuiltInRegistries.ITEM.get(id(name))));
+        stacks.add(new ItemStack(BuiltInRegistries.ITEM.get(id("loot_crate"))));
+        stacks.add(new ItemStack(BuiltInRegistries.ITEM.get(id("crate"))));
         var sampled=new JsonArray();var untranslated=new JsonArray();
-        graphics.fill(4,4,330,240,0xff121216);
+        graphics.fill(4,4,410,24+((stacks.size()+10)/11)*28,0xff121216);
         graphics.drawString(minecraft.font,"GT inventory + original Nexus tools",8,8,0xffffff,false);
         for(int i=0;i<stacks.size();i++) {
             var stack=stacks.get(i);String name=BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath();
-            int x=8+(i%8)*40,y=24+(i/8)*35;
-            graphics.fill(x,y,x+38,y+33,0xff30303a);
-            graphics.renderItem(stack,x+11,y+2);
+            int x=8+(i%11)*36,y=24+(i/11)*28;
+            graphics.fill(x,y,x+34,y+27,0xff30303a);
+            graphics.renderItem(stack,x+9,y+2);
             String label=name.replace("gearbox_","").replace("rope_","R:").replace("filter_","F:");
-            graphics.drawString(minecraft.font,minecraft.font.plainSubstrByWidth(label,35),x+2,y+22,0xffffff,false);
+            graphics.drawString(minecraft.font,minecraft.font.plainSubstrByWidth(label,31),x+2,y+19,0xffffff,false);
             sampled.add(name);
             var hover=stack.getHoverName();
             if(hover.getContents() instanceof net.minecraft.network.chat.contents.TranslatableContents translated

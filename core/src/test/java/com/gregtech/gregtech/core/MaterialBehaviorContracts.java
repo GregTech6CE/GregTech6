@@ -45,6 +45,7 @@ public final class MaterialBehaviorContracts {
 
     public static void main(String[] args) throws Exception {
         Locale.setDefault(Locale.ROOT);
+        checkMobDropSourceBoundaries();
         expectThrows(IllegalStateException.class, () -> new ModData("unbound", "Unbound"),
                 "The platform must bind presence before creating metadata");
         check(ModData.MODS.isEmpty(), "Failed unbound construction must not publish metadata");
@@ -78,6 +79,8 @@ public final class MaterialBehaviorContracts {
         var sourceGrinding = com.gregtech.gregtech.content.recipe.ExternalOreProcessingRules.GRINDING;
         var wrought = GTMaterialRegistry.get("WroughtIron");
         var iron = GTMaterialRegistry.get("Iron");
+        check(com.gregtech.gregtech.content.tool.OriginalToolMaterials.inFamily(iron, "AnyIronOrSteel"),
+                "Concrete Iron recognizes its source parent group, not the group's member list");
         check(MaterialPrefix.crystal.isValidFor(GTMaterialRegistry.get("Diamond")), "source OP.crystal accepts a gem material");
         check(!MaterialPrefix.crystal.isValidFor(iron), "source OP.crystal does not become an ordinary ore form");
         check(MaterialPrefix.dirtyGravel.isValidFor(iron), "source OP.dirtyGravel accepts an ore material");
@@ -290,6 +293,31 @@ public final class MaterialBehaviorContracts {
     }
     private static long amountOf(List<CrucibleMaterialStack> contents, GTMaterial material) {
         return contents.stream().filter(s -> s.material == material).mapToLong(s -> s.amount).sum();
+    }
+    private static void checkMobDropSourceBoundaries() {
+        check(com.gregtech.gregtech.content.loot.MobDropRules.rareBound(0) == 144
+                && com.gregtech.gregtech.content.loot.MobDropRules.rareBound(3) == 135
+                && com.gregtech.gregtech.content.loot.MobDropRules.rareBound(100) == 36,
+                "Original rare mob drops clamp at 1/36 and include Looting");
+        check(com.gregtech.gregtech.content.loot.MobDropRules.partChance(0, 100) == 26
+                && com.gregtech.gregtech.content.loot.MobDropRules.partChance(0, 200) == 26,
+                "Original <=25 comparison is 26 outcomes, including undead /200 parts");
+        check(com.gregtech.gregtech.content.loot.MobDropRules.partChance(100, 100) == 100,
+                "Inclusive part probability saturates at 100 percent");
+        check(com.gregtech.gregtech.content.loot.MobDropRules.COOKIES.size() == 2
+                && !com.gregtech.gregtech.content.loot.MobDropRules.COOKIES.contains("chocolate_raisin_cookie"),
+                "UT.Code.select ignores its fallback when choices exist");
+        check(com.gregtech.gregtech.content.loot.MobDropRules.SKELETON_RARE.size() == 7,
+                "Original skeleton choices retain 3:3:1 weighting");
+        var bacon = com.gregtech.gregtech.content.loot.MobDropRules.meatReplacement(
+                com.gregtech.gregtech.content.loot.MobDropRules.Meat.PORK, 32, false, 1, bound -> 2);
+        check(bacon.count() == 64, "Original bacon multiplication is capped at 64 items");
+        check(com.gregtech.gregtech.content.loot.MobDropRules.meatReplacement(
+                com.gregtech.gregtech.content.loot.MobDropRules.Meat.BEEF, 4, false, 2, bound -> 0) == null,
+                "Third beef stack keeps the original meat and its metadata");
+        check(com.gregtech.gregtech.content.loot.MobDropRules.meatReplacement(
+                com.gregtech.gregtech.content.loot.MobDropRules.Meat.HORSE, 1, true, 1, bound -> 0) == null,
+                "Every second horse meat stack remains horse meat");
     }
     private static void check(boolean valid, String message) {
         assertions++;

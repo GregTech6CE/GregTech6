@@ -8,9 +8,9 @@ import net.minecraft.world.item.ItemStack;
 import java.util.*;
 
 /** One machine-to-recipe index feeds both category icons and JEI catalysts. */
-final class RecipeMachines {
+public final class RecipeMachines {
     private RecipeMachines() {}
-    static Map<RecipeMap,List<ItemStack>> collect() {
+    public static Map<RecipeMap,List<ItemStack>> collect() {
         Map<RecipeMap,List<ItemStack>> result=new LinkedHashMap<>();
         for (var entry:MachineRegistry.basicMachines()) if(entry.isPresent() && !entry.get().basicSpec().machineName().equals("fusionreactor"))
             add(result,MachineRecipeMaps.byMachineName(entry.get().basicSpec().machineName()),new ItemStack(entry.get()));

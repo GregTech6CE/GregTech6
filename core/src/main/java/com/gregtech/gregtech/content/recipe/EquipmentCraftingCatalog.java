@@ -2204,6 +2204,9 @@ public final class EquipmentCraftingCatalog {
             "tool_blocks/rope_silk.json",
             "tool_blocks/rope_steel.json",
             "tool_blocks/rope_vine.json",
+            "tools/bathing_pot.json",
+            "tools/loot_crate.json",
+            "tools/crate.json",
             "tools/bathing_pot_table.json",
             "tools/bathing_pot_table_wood.json",
             "tools/bathing_pot_wood.json",
@@ -2218,6 +2221,7 @@ public final class EquipmentCraftingCatalog {
             "wood/slab_bluespruce.json"
     );
     public static final java.util.List<String> TAGS = java.util.List.of(
+            "gregtech:crates/screws",
             "gregtech:engines/casing_machine_double/any_steel",
             "gregtech:engines/plate_curved/any_steel",
             "gregtech:engines/gear_gt/any_steel",

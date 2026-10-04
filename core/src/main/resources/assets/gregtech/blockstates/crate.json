@@ -1,7 +1,3 @@
 {
-  "variants": {
-    "": {
-      "model": "gregtech:block/iconsets/crate"
-    }
-  }
+  "variants": {"": {"model": "gregtech:block/decoration/crate"}}
 }
