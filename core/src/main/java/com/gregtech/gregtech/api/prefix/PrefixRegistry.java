@@ -22,6 +22,12 @@ public final class PrefixRegistry {
 
     private PrefixRegistry() {}
 
+    /** Source spelling for an identical renamed form, without loading material definitions. */
+    public static String sourceName(String name) {
+        for (var alias : ALIASES.entrySet()) if (alias.getValue().equals(name)) return alias.getKey();
+        return name;
+    }
+
     public static void register(MaterialPrefix prefix) {
         ALL.add(prefix);
     }

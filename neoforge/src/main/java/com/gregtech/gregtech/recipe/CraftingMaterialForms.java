@@ -22,14 +22,17 @@ public final class CraftingMaterialForms {
     private static final Map<String, String> COMMON = Map.ofEntries(
             Map.entry("ingot", "ingots"), Map.entry("nugget", "nuggets"), Map.entry("gem", "gems"),
             Map.entry("dust", "dusts"), Map.entry("dustSmall", "small_dusts"), Map.entry("dustTiny", "tiny_dusts"),
-            Map.entry("plate", "plates"), Map.entry("oreRaw", "raw_materials"), Map.entry("ore", "ores"));
+            Map.entry("plate", "plates"), Map.entry("oreRaw", "raw_materials"), Map.entry("ore", "ores"),
+            Map.entry("rawOreChunk", "raw_ore_chunks"));
     private static Map<Form, List<Item>> aliases = Map.of();
     private static Map<String, String> materialNames = Map.of();
     private static Map<String, String> prefixNames = Map.of();
     private static Map<Item, Form> vanilla = Map.of();
     private static Map<Form, Item> preferred = Map.of();
 
-    public static synchronized void rebuild() {
+    public static void rebuild() { rebuild(false); }
+    /** Tag-backed aliases are indexed only after the server has bound this reload's tags. */
+    public static synchronized void rebuild(boolean taggedItems) {
         var materials = new HashMap<String, String>();
         for (var material : GTMaterialRegistry.allMaterials()) if (material.isValid()) {
             String name = material.resolve().getName();
@@ -44,6 +47,9 @@ public final class CraftingMaterialForms {
         }
         for (String prefix : OriginalFormConversions.STANDARD_ORES) prefixes.put(MaterialPrefix.camelToSnake(prefix), prefix);
         for (String prefix : OriginalFormConversions.DENSE_ORES) prefixes.put(MaterialPrefix.camelToSnake(prefix), prefix);
+        // Both the source spelling and the port's identical renamed form tags are accepted.
+        for (var prefix : PrefixRegistry.all()) prefixes.put(MaterialPrefix.camelToSnake(prefix.getName()),
+                PrefixRegistry.sourceName(prefix.getName()));
         for (int size = 1; size <= 16; size++) prefixes.put(String.format(Locale.ROOT, "wire_%02d", size),
                 String.format(Locale.ROOT, "wireGt%02d", size));
         prefixNames = Map.copyOf(prefixes);
@@ -69,7 +75,9 @@ public final class CraftingMaterialForms {
         preferred = Map.copyOf(targets);
         var indexed = new HashMap<Form, List<Item>>();
         for (var item : BuiltInRegistries.ITEM) {
-            var form = direct(new ItemStack(item));
+            var stack = new ItemStack(item);
+            var form = direct(stack);
+            if (form == null && taggedItems) form = tagged(stack);
             if (form != null) indexed.computeIfAbsent(form, unused -> new ArrayList<>()).add(item);
         }
         indexed.replaceAll((form, values) -> List.copyOf(values));
@@ -100,6 +108,9 @@ public final class CraftingMaterialForms {
         ensureInitialized();
         var known = direct(stack);
         if (known != null) return known;
+        return tagged(stack);
+    }
+    private static Form tagged(ItemStack stack) {
         // Prefer explicit GT prefix tags over common tags (dense ores can also be in ordinary ores tags).
         var tags = stack.getTags().map(tag -> tag.location()).sorted(Comparator.comparing(id -> id.getNamespace().equals("gregtech") ? 0 : 1)).toList();
         for (var tag : tags) {
@@ -109,7 +120,7 @@ public final class CraftingMaterialForms {
             if (slash < 0) continue;
             String material = materialNames.get(path.substring(slash + 1));
             if (material == null) continue;
-            String group = path.substring(0, slash), prefix = namespace.equals("gregtech") ? prefixNames.get(group) : null;
+            String group = path.substring(0, slash), prefix = prefixNames.get(group);
             if (prefix == null) for (var entry : COMMON.entrySet()) if (entry.getValue().equals(group)) { prefix = entry.getKey(); break; }
             if (prefix != null) return new Form(prefix, material);
         }
@@ -118,7 +129,7 @@ public final class CraftingMaterialForms {
 
     public static Ingredient ingredient(ItemStack input) {
         ensureInitialized();
-        var expected = direct(input);
+        var expected = form(input);
         if (expected == null) return Ingredient.of(input);
         var choices = new JsonArray();
         for (var item : aliases.getOrDefault(expected, List.of(input.getItem()))) {
@@ -126,6 +137,9 @@ public final class CraftingMaterialForms {
         }
         String material = MaterialEquivalence.materialName(GTMaterialRegistry.get(expected.material()));
         addTag(choices, "gregtech:" + MaterialPrefix.camelToSnake(expected.prefix()) + "/" + material);
+        var nativePrefix = PrefixRegistry.byName(expected.prefix());
+        if (nativePrefix != null && !nativePrefix.getName().equals(expected.prefix()))
+            addTag(choices, "gregtech:" + MaterialPrefix.camelToSnake(nativePrefix.getName()) + "/" + material);
         String common = COMMON.get(expected.prefix());
         if (common != null) {
             addTag(choices, "forge:" + common + "/" + material);
@@ -147,6 +161,15 @@ public final class CraftingMaterialForms {
     }
     private static void ensureInitialized() { if (aliases.isEmpty()) rebuild(); }
     public static Map<Form, List<Item>> nativeAliases() { ensureInitialized(); return aliases; }
+    /** Optional source forms supplied by another mod; never manufacture a new GT item for them. */
+    public static ItemStack stack(String prefix, GTMaterial material, int count) {
+        ensureInitialized();
+        var items = aliases.get(new Form(prefix, material.resolve().getName()));
+        return items == null || items.isEmpty() ? ItemStack.EMPTY : new ItemStack(items.get(0), count);
+    }
+    public static boolean contains(String prefix) {
+        ensureInitialized(); return aliases.keySet().stream().anyMatch(form -> form.prefix().equals(prefix));
+    }
 
     public static boolean replaces(CraftingRecipe recipe, RegistryAccess access) {
         if (recipe instanceof com.gregtech.gregtech.api.recipe.AutocraftableCraftingRecipe) return false;

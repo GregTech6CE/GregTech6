@@ -36,11 +36,6 @@ public final class Loader_FormConversionCraftingRecipes {
     private static final List<Conversion> ONE_TO_MANY = OriginalFormConversions.FIXED.stream().filter(Conversion::single).toList();
     private static final List<Conversion> MANY_TO_MANY = OriginalFormConversions.FIXED.stream().filter(c -> !c.single()).toList();
 
-    /** Missing forms stay explicit; their single-input offsets are nevertheless retained. */
-    private static final List<String> SKIPPED = List.of(
-            "oreRaw 1 -> rawOreChunk 3 (:553), rawOreChunk 3 -> oreRaw 1 (:576): no rawOreChunk prefix",
-            "plateTiny/plateGemTiny 5/9 -> casingSmall 1/2 (:609-612): no casingSmall prefix");
-
     private static final List<String> REGISTERED = new ArrayList<>();
     /** Source constructor replacement rules also guard plain recipes added after the reload lifecycle. */
     public static boolean disallowsPlainRecipe(net.minecraft.world.item.crafting.CraftingRecipe recipe,
@@ -53,12 +48,15 @@ public final class Loader_FormConversionCraftingRecipes {
     /** Recipe ids registered by the last server start, for diagnostics and tests. */
     public static List<String> registeredIds() { return List.copyOf(REGISTERED); }
 
-    public static List<String> skipped() { return SKIPPED; }
+    public static List<String> skipped() {
+        return CraftingMaterialForms.contains("rawOreChunk") ? List.of() : List.of(
+                "rawOreChunk (:553/:576): no external tagged item; GT6 registers no item for this Harder Ores prefix");
+    }
 
     public static synchronized void apply(RecipeManager manager, net.minecraft.core.RegistryAccess access) {
         List<Recipe<?>> recipes = new ArrayList<>(manager.getRecipes());
         REGISTERED.clear();
-        CraftingMaterialForms.rebuild();
+        CraftingMaterialForms.rebuild(true);
         int before = recipes.size();
         recipes.removeIf(recipe -> recipe instanceof net.minecraft.world.item.crafting.CraftingRecipe crafting
                 && disallowsPlainRecipe(crafting, access));
@@ -87,7 +85,7 @@ public final class Loader_FormConversionCraftingRecipes {
         if (!REGISTERED.isEmpty() || wireSizes > 0 || pipeSizes > 0) com.gregtech.gregtech.recipe.RuntimeRecipeLifecycle.replaceGenerated(manager, recipes);
         GregTech.LOGGER.info("Registered {} crafting-grid material form conversions from GT6"
                 + " AdvancedCraftingXToY/1ToY ({} GT6 pairs skipped: {})",
-                REGISTERED.size(), SKIPPED.size(), SKIPPED);
+                REGISTERED.size(), skipped().size(), skipped());
     }
 
     /** Source :615-616: all standard/dense prefix aliases, including actual vanilla ore blocks. */
@@ -226,13 +224,16 @@ public final class Loader_FormConversionCraftingRecipes {
 
     private static ItemStack item(String prefixName, GTMaterial material, int count) {
         MaterialPrefix prefix = PrefixRegistry.byName(prefixName);
-        if (prefix != null) return GTItems.getStack(prefix, material, count);
+        if (prefix != null) {
+            var stack = GTItems.getStack(prefix, material, count);
+            if (!stack.isEmpty()) return stack;
+        }
         BlockMaterialPrefix block = BlockPrefixRegistry.byName(prefixName);
-        if (block == null) return ItemStack.EMPTY;
-        ItemStack stack = GTBlocks.getStack(block, material);
-        if (stack.isEmpty()) return ItemStack.EMPTY;
-        stack.setCount(count);
-        return stack;
+        if (block != null) {
+            var stack = GTBlocks.getStack(block, material);
+            if (!stack.isEmpty()) { stack.setCount(count); return stack; }
+        }
+        return CraftingMaterialForms.stack(prefixName, material, count);
     }
 
     private static String sanitize(String name) {

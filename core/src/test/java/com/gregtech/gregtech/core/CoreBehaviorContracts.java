@@ -134,6 +134,29 @@ public final class CoreBehaviorContracts {
         for (String prefix : new String[]{"oreSmall", "oreBedrock", "oreDust", "oreRaw"})
             check(!com.gregtech.gregtech.content.recipe.OriginalFormConversions.replaces(List.of(new com.gregtech.gregtech.content.recipe.OriginalFormConversions.Form(prefix, "Iron")),1,1,true,false,raw),
                     "source excludes nonstandard ore " + prefix);
+        var tinyPlate = new com.gregtech.gregtech.content.recipe.OriginalFormConversions.Form("plateTiny", "Iron");
+        var casing = new com.gregtech.gregtech.content.recipe.OriginalFormConversions.Form("itemCasing", "Iron");
+        check(com.gregtech.gregtech.content.recipe.OriginalFormConversions.replaces(java.util.Collections.nCopies(5, tinyPlate),5,1,true,false,casing),
+                "source five tiny plates match the port's identical casingSmall alias");
+        check(com.gregtech.gregtech.content.recipe.OriginalFormConversions.replaces(java.util.Collections.nCopies(9, tinyPlate),3,3,false,false,casing),
+                "source nine tiny plates match the renamed casing output");
+        check(!com.gregtech.gregtech.content.recipe.OriginalFormConversions.replaces(java.util.Collections.nCopies(5, tinyPlate),5,1,true,false,
+                new com.gregtech.gregtech.content.recipe.OriginalFormConversions.Form("itemCasing", "Copper")),
+                "source casing aliases never merge different materials");
+        check(!com.gregtech.gregtech.content.recipe.OriginalFormConversions.replaces(java.util.Collections.nCopies(5, tinyPlate),5,1,true,true,casing),
+                "GT casing recipes keep the source interface exemption");
+        var chunks = new com.gregtech.gregtech.content.recipe.OriginalFormConversions.Form("rawOreChunk", "Iron");
+        check(com.gregtech.gregtech.content.recipe.OriginalFormConversions.replaces(java.util.Collections.nCopies(3,chunks),3,1,true,false,raw),
+                "source external raw chunk reverse conversion needs three separate inputs");
+        check(!com.gregtech.gregtech.content.recipe.OriginalFormConversions.replaces(java.util.Collections.nCopies(2,chunks),2,1,true,false,raw),
+                "source external raw chunk count is not inferred from approximate weights");
+        var sourceChunk = com.gregtech.gregtech.content.recipe.OriginalFormConversions.FIXED.get(1);
+        check(com.gregtech.gregtech.content.recipe.OriginalFormConversions.selector(sourceChunk).matches(9,1,1),
+                "source external raw chunks retain the oreRaw alternate grid position");
+        check(!com.gregtech.gregtech.content.recipe.OriginalFormConversions.selector(sourceChunk).matches(9,0,1),
+                "raw chunk availability never overrides the first oreRaw result");
+        check(com.gregtech.gregtech.api.material.MaterialItemDefinitions.candidatePrefixes().stream()
+                .noneMatch(prefix -> prefix.getName().equals("rawOreChunk")), "source external chunk prefix gets no fabricated GT item");
         equal(60, com.gregtech.gregtech.content.recipe.OriginalFormConversions.FIXED.size(), "all fixed source constructors retained");
     }
 

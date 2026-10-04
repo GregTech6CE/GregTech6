@@ -37,11 +37,6 @@ public final class Loader_FormConversionCraftingRecipes {
     private static final List<Conversion> ONE_TO_MANY = OriginalFormConversions.FIXED.stream().filter(Conversion::single).toList();
     private static final List<Conversion> MANY_TO_MANY = OriginalFormConversions.FIXED.stream().filter(c -> !c.single()).toList();
 
-    /** Missing forms stay explicit; their single-input offsets are nevertheless retained. */
-    private static final List<String> SKIPPED = List.of(
-            "oreRaw 1 -> rawOreChunk 3 (:553), rawOreChunk 3 -> oreRaw 1 (:576): no rawOreChunk prefix",
-            "plateTiny/plateGemTiny 5/9 -> casingSmall 1/2 (:609-612): no casingSmall prefix");
-
     private static final List<String> REGISTERED = new ArrayList<>();
     /** Source constructor replacement rules also guard plain recipes added after the reload lifecycle. */
     public static boolean disallowsPlainRecipe(net.minecraft.world.item.crafting.CraftingRecipe recipe,
@@ -54,7 +49,10 @@ public final class Loader_FormConversionCraftingRecipes {
     /** Recipe ids registered by the last server start, for diagnostics and tests. */
     public static List<String> registeredIds() { return List.copyOf(REGISTERED); }
 
-    public static List<String> skipped() { return SKIPPED; }
+    public static List<String> skipped() {
+        return CraftingMaterialForms.contains("rawOreChunk") ? List.of() : List.of(
+                "rawOreChunk (:553/:576): no external tagged item; GT6 registers no item for this Harder Ores prefix");
+    }
 
     public static void add(Map<ResourceLocation, byte[]> recipes) {
         int before = recipes.size();
@@ -84,16 +82,50 @@ public final class Loader_FormConversionCraftingRecipes {
         com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native material grid recipes generated={} wire-size={} pipe-size={}", recipes.size()-before, wireSizes, pipeSizes);
         com.mojang.logging.LogUtils.getLogger().info("Registered {} crafting-grid material form conversions from GT6"
                 + " AdvancedCraftingXToY/1ToY ({} GT6 pairs skipped: {})",
-                REGISTERED.size(), SKIPPED.size(), SKIPPED);
+                REGISTERED.size(), skipped().size(), skipped());
     }
 
     public static void replacePlain(RecipeManager manager, net.minecraft.core.RegistryAccess access) {
+        CraftingMaterialForms.rebuild(true);
         var recipes = new ArrayList<>(manager.getRecipes());
         int before = recipes.size();
         recipes.removeIf(holder -> holder.value() instanceof net.minecraft.world.item.crafting.CraftingRecipe crafting
                 && disallowsPlainRecipe(crafting, access));
-        if (before != recipes.size()) manager.replaceRecipes(recipes);
-        com.mojang.logging.LogUtils.getLogger().info("[gregtech] Replaced {} plain source-equivalent crafting rows", before - recipes.size());
+        int removed = before - recipes.size();
+        var ids = new java.util.HashSet<ResourceLocation>();
+        for (var holder : recipes) ids.add(holder.id());
+        int added = 0;
+        // Generated JSON is built before this reload's tags exist. Complete optional forms now,
+        // including Harder Ores raw chunks, without creating a GT-owned item for the prefix.
+        for (var material : GTMaterialRegistry.allMaterials()) if (material.isValid()) {
+            for (var conversion : OriginalFormConversions.FIXED) {
+                added += addBoundConversion(recipes, ids, conversion, material);
+            }
+        }
+        for (var entry : CraftingMaterialForms.nativeAliases().keySet()) {
+            int count = OriginalFormConversions.STANDARD_ORES.contains(entry.prefix()) ? 1
+                    : OriginalFormConversions.DENSE_ORES.contains(entry.prefix()) ? 2 : 0;
+            if (count > 0) added += addBoundConversion(recipes, ids,
+                    new Conversion(entry.prefix(), 1, "oreRaw", count, true), GTMaterialRegistry.get(entry.material()).resolve());
+        }
+        if (removed > 0 || added > 0) manager.replaceRecipes(recipes);
+        com.mojang.logging.LogUtils.getLogger().info("[gregtech] Replaced {} plain source-equivalent crafting rows; added {} tag-backed conversions", removed, added);
+    }
+
+    private static int addBoundConversion(List<net.minecraft.world.item.crafting.RecipeHolder<?>> recipes,
+                                          java.util.Set<ResourceLocation> ids, Conversion conversion, GTMaterial material) {
+        var id = conversionId(conversion, material);
+        if (ids.contains(id)) return 0;
+        var input = item(conversion.input(), material, 1);
+        var output = item(conversion.output(), material, conversion.outputCount());
+        if (input.isEmpty() || output.isEmpty()) return 0;
+        var ingredients = NonNullList.withSize(conversion.inputCount(), formIngredient(input));
+        var base = new ShapelessRecipe("gt.form_conversion", CraftingBookCategory.MISC,
+                CraftingMaterialForms.canonical(output.copy()), ingredients);
+        var recipe = new com.gregtech.gregtech.recipe.ToolShapelessRecipe(base, false,
+                OriginalFormConversions.selector(conversion), conversion.input(), material.resolve().getName());
+        recipes.add(new net.minecraft.world.item.crafting.RecipeHolder<>(id, recipe));
+        ids.add(id); REGISTERED.add(id.toString()); return 1;
     }
 
     /** Source :615-616: all standard/dense prefix aliases, including actual vanilla ore blocks. */
@@ -220,25 +252,32 @@ public final class Loader_FormConversionCraftingRecipes {
         NonNullList<Ingredient> ingredients = NonNullList.withSize(conversion.inputCount(),
                 formIngredient(input));
         ItemStack result = CraftingMaterialForms.canonical(output.copy());
-        ResourceLocation id = ResourceLocation.fromNamespaceAndPath("gregtech",
-                "form_conversion/" + sanitize(conversion.input()) + "_to_" + sanitize(conversion.output()) + "/"
-                        + sanitize(material.getName()) + "_" + conversion.inputCount());
+        ResourceLocation id = conversionId(conversion, material);
         OriginalCraftingJson.formConversion(recipes, id, "gt.form_conversion", CraftingBookCategory.MISC, result, ingredients, OriginalFormConversions.selector(conversion),
                 conversion.input(), material.resolve().getName());
         REGISTERED.add(id.toString());
+    }
+
+    private static ResourceLocation conversionId(Conversion conversion, GTMaterial material) {
+        return ResourceLocation.fromNamespaceAndPath("gregtech",
+                "form_conversion/" + sanitize(conversion.input()) + "_to_" + sanitize(conversion.output()) + "/"
+                        + sanitize(material.getName()) + "_" + conversion.inputCount());
     }
 
     private static Ingredient formIngredient(ItemStack form) { return CraftingMaterialForms.ingredient(form); }
 
     private static ItemStack item(String prefixName, GTMaterial material, int count) {
         MaterialPrefix prefix = PrefixRegistry.byName(prefixName);
-        if (prefix != null) return GTItems.getStack(prefix, material, count);
+        if (prefix != null) {
+            var stack = GTItems.getStack(prefix, material, count);
+            if (!stack.isEmpty()) return stack;
+        }
         BlockMaterialPrefix block = BlockPrefixRegistry.byName(prefixName);
-        if (block == null) return ItemStack.EMPTY;
-        ItemStack stack = GTBlocks.getStack(block, material);
-        if (stack.isEmpty()) return ItemStack.EMPTY;
-        stack.setCount(count);
-        return stack;
+        if (block != null) {
+            var stack = GTBlocks.getStack(block, material);
+            if (!stack.isEmpty()) { stack.setCount(count); return stack; }
+        }
+        return CraftingMaterialForms.stack(prefixName, material, count);
     }
 
     private static String sanitize(String name) {
