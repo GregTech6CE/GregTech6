@@ -92,10 +92,18 @@ public final class Loader_FormConversionCraftingRecipes {
         recipes.removeIf(holder -> holder.value() instanceof net.minecraft.world.item.crafting.CraftingRecipe crafting
                 && disallowsPlainRecipe(crafting, access));
         int removed = before - recipes.size();
+        // Rebind existing generated rows too: their JSON ingredient aliases were indexed before
+        // this reload's tags existed. Only this loader's own form-conversion rows are rebuilt.
+        int beforeRebind = recipes.size();
+        recipes.removeIf(holder -> holder.id().getNamespace().equals("gregtech")
+                && holder.id().getPath().startsWith("form_conversion/")
+                && holder.value() instanceof com.gregtech.gregtech.recipe.ToolShapelessRecipe);
+        int rebound = beforeRebind - recipes.size();
+        REGISTERED.removeIf(id -> id.startsWith("gregtech:form_conversion/"));
         var ids = new java.util.HashSet<ResourceLocation>();
         for (var holder : recipes) ids.add(holder.id());
         int added = 0;
-        // Generated JSON is built before this reload's tags exist. Complete optional forms now,
+        // Generated JSON is built before this reload's tags exist. Bind all source forms now,
         // including Harder Ores raw chunks, without creating a GT-owned item for the prefix.
         for (var material : GTMaterialRegistry.allMaterials()) if (material.isValid()) {
             for (var conversion : OriginalFormConversions.FIXED) {
@@ -108,8 +116,8 @@ public final class Loader_FormConversionCraftingRecipes {
             if (count > 0) added += addBoundConversion(recipes, ids,
                     new Conversion(entry.prefix(), 1, "oreRaw", count, true), GTMaterialRegistry.get(entry.material()).resolve());
         }
-        if (removed > 0 || added > 0) manager.replaceRecipes(recipes);
-        com.mojang.logging.LogUtils.getLogger().info("[gregtech] Replaced {} plain source-equivalent crafting rows; added {} tag-backed conversions", removed, added);
+        if (removed > 0 || rebound > 0 || added > 0) manager.replaceRecipes(recipes);
+        com.mojang.logging.LogUtils.getLogger().info("[gregtech] Replaced {} plain source-equivalent crafting rows; rebuilt {} tag-bound conversions ({} prior rows)", removed, added, rebound);
     }
 
     private static int addBoundConversion(List<net.minecraft.world.item.crafting.RecipeHolder<?>> recipes,
