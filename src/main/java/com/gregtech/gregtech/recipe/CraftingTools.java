@@ -46,6 +46,8 @@ public final class CraftingTools {
                 if(stacks.stream().noneMatch(s -> s.is(item))) stacks.add(new ItemStack(item));
             }
         }
+        for(var holder:com.gregtech.gregtech.registry.GTToolItems.all().values())if(holder.get() instanceof com.gregtech.gregtech.item.PocketToolItem pocket&&kinds.contains(pocket.activeType().id()))stacks.add(new ItemStack(pocket));
+        for(var spec:com.gregtech.gregtech.content.tool.ElectricToolCatalog.ALL){var item=com.gregtech.gregtech.registry.GTElectricItems.get(spec.id());var sample=new ItemStack(item);var active=item.interactionType(sample);if(active!=null&&kinds.contains(active.id()))stacks.add(sample);}
         return Ingredient.of(stacks.stream());
     }
 }

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "gregtech:item/iconsets/pocket_multitool_knife_overlay"
+  }
+}

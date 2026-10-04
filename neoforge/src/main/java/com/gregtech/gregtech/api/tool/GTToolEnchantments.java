@@ -27,7 +27,7 @@ public final class GTToolEnchantments {
         var material=GTToolHelper.getHead(stack);
         java.util.Map<String,Integer> applicable;
         if(stack.getItem() instanceof com.gregtech.gregtech.item.ElectricToolItem electric) {
-            String original=switch(electric.toolName()){case "Drill"->"DRILL_LV";case "Chainsaw"->"CHAINSAW_LV";case "Wrench"->"WRENCH_LV";case "Screwdriver"->"SCREWDRIVER_LV";default->throw new IllegalStateException("Unknown electric tool classification");};
+            String original=electric.definition().original();
             var flags=com.gregtech.gregtech.content.tool.OriginalToolFlags.of(original);
             applicable=MaterialToolEnchantments.of(flags.mining(),flags.weapon(),flags.ranged(),material);
         } else applicable=MaterialToolEnchantments.of(GTToolHelper.getType(stack).definition(),material);

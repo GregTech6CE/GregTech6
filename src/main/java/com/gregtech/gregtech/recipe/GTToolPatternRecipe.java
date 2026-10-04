@@ -179,6 +179,7 @@ public abstract class GTToolPatternRecipe extends ToolShapedRecipe {
             GTMaterial forced = fixedMaterial();
             return forced != null ? forced : material;
         }
+        if (letter == 'A' && type==GTToolType.POCKET_MULTITOOL) {var form=MaterialEquivalence.form(stack);return form!=null&&form.prefix()==com.gregtech.gregtech.data.MaterialPrefix.toolHeadScrewdriver&&(material==null||material==form.material().resolve())?form.material().resolve():null;}
         if (letter == 'A') {
             if (type.headPrefix() == null) return null;
             var form = MaterialEquivalence.form(stack);
@@ -249,7 +250,7 @@ public abstract class GTToolPatternRecipe extends ToolShapedRecipe {
         if (!gate.skipHeadGate() && (!type.canUseHead(material) || !OriginalToolMaterials.acceptsHead(type.definition(), material))) return false;
         for (var entry : pattern.forms().entrySet()) {
             if (entry.getKey() == 'H' || specialIngredient(type, pattern, entry.getKey()) != null) continue;
-            if (entry.getKey() == 'A') {
+            if (entry.getKey() == 'A' && type.headPrefix()!=null) {
                 if (type.headPrefix() == null || !type.headPrefix().isValidFor(material)) return false;
                 continue;
             }
@@ -293,7 +294,7 @@ public abstract class GTToolPatternRecipe extends ToolShapedRecipe {
             ItemStack stick = GTItems.getStack(MaterialPrefix.stick, handle, 1);
             return stick.isEmpty() ? Ingredient.EMPTY : Ingredient.of(stick);
         }
-        MaterialPrefix prefix = letter == 'A' ? type.headPrefix() : pattern.forms().get(letter);
+        MaterialPrefix prefix = letter == 'A' && type.headPrefix()!=null ? type.headPrefix() : pattern.forms().get(letter);
         if (prefix == null) return Ingredient.EMPTY;
         ItemStack stack = GTItems.getStack(prefix, material, 1);
         return stack.isEmpty() ? Ingredient.EMPTY : Ingredient.of(stack);
@@ -327,7 +328,7 @@ public abstract class GTToolPatternRecipe extends ToolShapedRecipe {
     private static ItemStack displayResult(GTToolType type, GTToolRecipes.Pattern pattern, boolean head) {
         GTMaterial material = displayMaterial(type, pattern);
         return head ? GTItems.getStack(GTToolRecipes.headPrefix(type), material, 1)
-                : GTToolItem.create(type, material, type == GTToolType.FLINT_AND_TINDER
+                : GTToolItem.create(type, material, type==GTToolType.POCKET_MULTITOOL?GTMaterialRegistry.get("Blue"):type == GTToolType.FLINT_AND_TINDER
                         ? com.gregtech.gregtech.content.material.Materials.Flint : handleMaterial(material, pattern));
     }
 }

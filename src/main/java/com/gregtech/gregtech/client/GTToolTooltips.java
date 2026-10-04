@@ -23,6 +23,7 @@ public final class GTToolTooltips {
             return;
         }
         GTToolType type = GTToolHelper.getType(stack);
+        GTToolType statsType = stack.getItem() instanceof com.gregtech.gregtech.item.PocketToolItem pocket ? pocket.toolType() : type;
         GTMaterial head = GTToolHelper.getHead(stack);
         if (!head.isValid()) {
             return;
@@ -37,29 +38,29 @@ public final class GTToolTooltips {
                         Component.literal(GTCodeFormat.makeString(max)).withStyle(ChatFormatting.GREEN))
                 .withStyle(ChatFormatting.WHITE));
 
-        int level = type.baseQuality() + head.getToolQuality();
+        int level = statsType.baseQuality() + head.getToolQuality();
         tooltip.add(Component.empty()
                 .append(MaterialPresentation.name(head))
                 .append(Component.literal(" Level: " + level).withStyle(ChatFormatting.YELLOW)));
 
-        float combat = type.baseDamage() + head.getToolQuality();
+        float combat = statsType.baseDamage() + head.getToolQuality();
         float hearts = (combat + 1.0F) / 2.0F;
         tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tool_melee_damage",
                         Component.literal(String.format(Locale.ROOT, "+%.1f", combat)).withStyle(ChatFormatting.BLUE),
                         Component.literal(String.format(Locale.ROOT, "(= %.1f Hearts)", hearts)).withStyle(ChatFormatting.RED))
                 .withStyle(ChatFormatting.WHITE));
 
-        float attackSpeed = type.attackSpeed();
+        float attackSpeed = statsType.attackSpeed();
         tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tool_attack_speed",
                         Component.literal(String.format(Locale.ROOT, "%.1f", attackSpeed)).withStyle(ChatFormatting.GREEN))
                 .withStyle(ChatFormatting.WHITE));
 
-        float miningSpeed = Math.max(Float.MIN_NORMAL, type.speedMultiplier() * head.getToolSpeed());
+        float miningSpeed = Math.max(Float.MIN_NORMAL, statsType.speedMultiplier() * head.getToolSpeed());
         tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tool_mining_speed",
                         Component.literal(String.format(Locale.ROOT, "%.1f", miningSpeed)).withStyle(ChatFormatting.LIGHT_PURPLE))
                 .withStyle(ChatFormatting.WHITE));
 
-        long craftingUses = GTCodeFormat.divUp(remaining, type.damagePerCraft());
+        long craftingUses = GTCodeFormat.divUp(remaining, statsType.damagePerCraft());
         tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tool_crafting_uses",
                         Component.literal(GTCodeFormat.makeString(craftingUses)).withStyle(ChatFormatting.GREEN))
                 .withStyle(ChatFormatting.WHITE));

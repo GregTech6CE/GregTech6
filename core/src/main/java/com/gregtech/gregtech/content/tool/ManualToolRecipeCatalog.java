@@ -164,6 +164,17 @@ public final class ManualToolRecipeCatalog {
     // ── data ──────────────────────────────────────────────────────────────
 
     static {
+        // Loader_Tools:317-319. Flint is the striker; H uses the normal material handle.
+        var gunForms=forms('X',MaterialPrefix.plateCurved,'T',MaterialPrefix.screw);
+        var gunTools=tools('d',ToolDefinition.SCREWDRIVER,'h',ToolDefinition.HARD_HAMMER);
+        var gunGate=new Gate(Map.of('V',"minecraft:flint"),null,null,false,false);
+        SHAPED.put(ToolDefinition.PISTOL,List.of(new Pattern(new String[]{"XXV"," TH","d h"},gunForms,gunTools,false,true,gunGate)));
+        SHAPED.put(ToolDefinition.CARBINE,List.of(new Pattern(new String[]{"XXV","THH","d h"},gunForms,gunTools,false,true,gunGate)));
+        SHAPED.put(ToolDefinition.RIFLE,List.of(new Pattern(new String[]{"XXX","HHV","dTh"},gunForms,gunTools,false,true,gunGate)));
+        // Loader_Tools:354; all seven blades and rings share one primary material, handle Blue.
+        SHAPED.put(ToolDefinition.POCKET_MULTITOOL,List.of(tool(new String[]{"AXO","ZPV","OWY"},
+            forms('A',MaterialPrefix.toolHeadScrewdriver,'X',MaterialPrefix.toolHeadSaw,'Y',MaterialPrefix.toolHeadChisel,
+                'Z',MaterialPrefix.toolHeadFile,'V',MaterialPrefix.toolHeadSword,'W',MaterialPrefix.toolHeadSword,'P',MaterialPrefix.plate,'O',MaterialPrefix.ring),Map.of())));
         // Loader_Tools:305-320 — the one-piece tools, both the metal and the gem variant.
         SHAPED.put(ToolDefinition.WRENCH, List.of(
                 tool(new String[]{"PhP", " P ", " P "}, forms('P', MaterialPrefix.plate),

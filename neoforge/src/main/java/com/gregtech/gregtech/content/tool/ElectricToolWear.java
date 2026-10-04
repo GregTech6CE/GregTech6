@@ -8,7 +8,7 @@ import java.util.function.IntUnaryOperator;
 public final class ElectricToolWear {
     private ElectricToolWear() {}
     public static long maximum(ElectricToolItem tool, ItemStack stack) {
-        return ElectricToolWearRules.maximum(tool.headMaterial(stack).getToolDurability());
+        return ElectricToolWearRules.maximum(tool.headMaterial(stack).getToolDurability()) * tool.definition().durabilityMultiplier();
     }
     public static long damage(ItemStack stack) {
         var stats = com.gregtech.gregtech.platform.neoforge.StackCustomData.read(stack).getCompound("GT.ToolStats");

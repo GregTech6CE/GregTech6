@@ -55,7 +55,7 @@ public final class GTToolBakedModel implements BakedModel {
     private List<BakedQuad> quadsForStack(ItemStack effective, @Nullable BlockState state, @Nullable Direction direction,
                                           RandomSource random, @Nullable net.minecraft.client.renderer.RenderType renderType,
                                           ModelData data) {
-        if (effective.isEmpty() || !(effective.getItem() instanceof GTToolItem)) {
+        if (effective.isEmpty() || !(effective.getItem() instanceof GTToolItem)&&!(effective.getItem() instanceof com.gregtech.gregtech.item.ElectricToolItem)) {
             return base.getQuads(state, direction, random, data, renderType);
         }
         List<BakedQuad> quads = buildQuads(effective, direction, random, renderType);
@@ -64,7 +64,14 @@ public final class GTToolBakedModel implements BakedModel {
 
     private List<BakedQuad> buildQuads(ItemStack stack, @Nullable Direction direction, RandomSource random,
                                        @Nullable net.minecraft.client.renderer.RenderType renderType) {
-        GTToolType type = GTToolHelper.getType(stack);
+        if(stack.getItem() instanceof com.gregtech.gregtech.item.ElectricToolItem electric){
+            var spec=electric.definition();String body=switch(spec.name()){case "Drill"->"handle_electric_drill";case "Mixer"->"handle_electric_mixer";case "Trimmer"->"handle_electric_trimmer";case "BuzzSaw"->"handle_buzzsaw";default->"power_unit_"+spec.tierName();};
+            var out=new ArrayList<BakedQuad>();appendIconsetQuads(out,ToolIconSets.icon(body),0,direction,random,renderType);
+            if(java.util.Set.of("Drill","Mixer","Trimmer").contains(spec.name()))appendIconsetQuads(out,ToolIconSets.icon("tip_electric_"+spec.name().toLowerCase(java.util.Locale.ROOT)),1,direction,random,renderType);
+            else appendMaterialQuads(out,electric.headMaterial(stack),com.gregtech.gregtech.api.prefix.PrefixRegistry.byName(spec.headPrefix()),1,direction,random,renderType);
+            return out;
+        }
+        GTToolType type = ((GTToolItem)stack.getItem()).toolType();
         GTMaterial head = GTToolHelper.getHead(stack);
         GTMaterial handle = GTToolHelper.getHandle(stack);
 
@@ -90,6 +97,7 @@ public final class GTToolBakedModel implements BakedModel {
             }
         } else if (type.headlessIcon() != null) {
             appendIconsetQuads(quads, type.headlessIcon(), 0, direction, random, renderType);
+            if(type.definition().isGun())appendIconsetQuads(quads,type.handleIcon(),1,direction,random,renderType);
         }
         return quads;
     }
@@ -102,7 +110,7 @@ public final class GTToolBakedModel implements BakedModel {
             return;
         }
         for (BakedQuad quad : model.getQuads(null, direction, random, ModelData.EMPTY, renderType)) {
-            out.add(retint(quad, tintIndex));
+            out.add(retint(quad,quad.getTintIndex()==0?tintIndex:ToolIconSets.OVERLAY_TINT));
         }
     }
 
@@ -177,7 +185,7 @@ public final class GTToolBakedModel implements BakedModel {
         @Override
         public BakedModel resolve(BakedModel model, ItemStack stack, @Nullable ClientLevel level,
                                   @Nullable LivingEntity entity, int seed) {
-            if (!(stack.getItem() instanceof GTToolItem) || !GTToolHelper.isTool(stack)) {
+            if (!(stack.getItem() instanceof com.gregtech.gregtech.item.ElectricToolItem) && (!(stack.getItem() instanceof GTToolItem) || !GTToolHelper.isTool(stack))) {
                 return base;
             }
             return new GTToolBakedModel(base, stack);

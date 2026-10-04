@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "gregtech:item/iconsets/handle_electric_mixer",
+    "layer1": "gregtech:item/iconsets/handle_electric_mixer_overlay",
+    "layer2": "gregtech:item/iconsets/tip_electric_mixer",
+    "layer3": "gregtech:item/iconsets/tip_electric_mixer_overlay"
+  }
+}

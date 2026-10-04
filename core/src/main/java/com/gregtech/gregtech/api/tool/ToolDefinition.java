@@ -44,6 +44,17 @@ public enum ToolDefinition {
     GEM_PICK(70, "gem_tipped_pickaxe", MaterialPrefix.toolHeadPickaxeGem, null, null, 0.25F, 3.0F, 0, 1.0F, 100, 2, "minecraft:mineable/pickaxe", true, true, false, "gem_pick"),
     HAND_DRILL(72, "hand_drill", null, "gregtech:item/iconsets/hand_drill", null, 0.25F, 0.5F, 0, 0.5F, 100, 2, null, false, false, true, null),
     BUILDER_WAND(74, "builder_wand", MaterialPrefix.toolHeadBuilderwand, null, null, 0.1F, 1.0F, 0, 1.0F, 100, 1, null, false, false, true, "builder_wand"),
+    PISTOL(5000, "pistol", null, "gregtech:item/iconsets/pistol", "gregtech:item/iconsets/handle_pistol", 1.0F, 0.0F, 0, 0.25F, 200, 2, null, false, false, false, null),
+    CARBINE(5002, "carbine", null, "gregtech:item/iconsets/carbine", "gregtech:item/iconsets/handle_carbine", 1.0F, 0.0F, 0, 0.25F, 200, 2, null, false, false, false, null),
+    RIFLE(5004, "rifle", null, "gregtech:item/iconsets/rifle", "gregtech:item/iconsets/handle_rifle", 1.0F, 0.0F, 0, 0.25F, 200, 2, null, false, false, false, null),
+    POCKET_MULTITOOL(1000, "pocket_multitool", null, "gregtech:item/iconsets/pocket_multitool_closed", null, 4.0F, 0.0F, 0, 1.0F, 100, 2, null, false, false, false, null),
+    POCKET_KNIFE(1002, "pocket_knife", null, "gregtech:item/iconsets/pocket_multitool_knife", null, 4.0F, 2F, 0, 0.5F, 100, 2, null, false, false, false, null),
+    POCKET_SAW(1004, "pocket_saw", null, "gregtech:item/iconsets/pocket_multitool_saw", null, 4.0F, 1.75F, 0, 1F, 100, 2, null, false, false, false, null),
+    POCKET_FILE(1006, "pocket_file", null, "gregtech:item/iconsets/pocket_multitool_file", null, 4.0F, 1.5F, 0, 1F, 100, 2, null, false, false, false, null),
+    POCKET_SCREWDRIVER(1008, "pocket_screwdriver", null, "gregtech:item/iconsets/pocket_multitool_screwdriver", null, 4.0F, 1.5F, 0, 1F, 100, 2, null, false, false, false, null),
+    POCKET_WIRE_CUTTER(1010, "pocket_wire_cutter", null, "gregtech:item/iconsets/pocket_multitool_cutter", null, 4.0F, 1.25F, 0, 1.0F, 400, 2, null, false, false, false, null),
+    POCKET_SCISSORS(1012, "pocket_scissors", null, "gregtech:item/iconsets/pocket_multitool_scissors", null, 4.0F, 1.0F, 0, 1.0F, 100, 2, null, false, false, false, null),
+    POCKET_CHISEL(1014, "pocket_chisel", null, "gregtech:item/iconsets/pocket_multitool_chisel", null, 4.0F, 1.5F, 0, 1.0F, 400, 2, null, false, false, false, null),
     ;
 
     private final int gt6Id;
@@ -124,6 +135,9 @@ public enum ToolDefinition {
     /** GT6 {@code getToolDamagePerBlockBreak} default is 100; mining tools often use 25; wrench is 50. */
     public int damagePerBlockBreak() {
         return switch (this) {
+            case POCKET_SAW,POCKET_FILE,POCKET_CHISEL -> 50;
+            case POCKET_SCREWDRIVER,POCKET_SCISSORS -> 200;
+            case POCKET_MULTITOOL,POCKET_KNIFE,POCKET_WIRE_CUTTER -> 100;
             case AXE, DOUBLE_AXE -> 50;
             case WRENCH, MONKEY_WRENCH, WIRE_CUTTER, CROWBAR, PLUNGER, SCOOP, BRANCH_CUTTER, KNIFE, SCISSORS,
                  PINCERS, HAND_DRILL, BUILDER_WAND -> 50;
@@ -133,9 +147,11 @@ public enum ToolDefinition {
 
     /** GT6 default {@code getToolDamagePerEntityAttack}. */
     public int damagePerEntityAttack() {
-        return 100;
+        return isGun()||isPocket()&&this!=POCKET_MULTITOOL?200:100;
     }
 
+    public boolean isGun(){return this==PISTOL||this==CARBINE||this==RIFLE;}
+    public boolean isPocket(){return name().startsWith("POCKET_");}
     public boolean canUseHead(GTMaterial head) {
         if (head == null || !head.isValid()) return false;
         if (head.getToolTypes() < minToolTypes) return false;

@@ -36,10 +36,10 @@ public final class ElectricChainsawHarvest {
     }
     public static boolean canHarvest(ElectricToolItem tool, ItemStack stack, BlockState state) {
         return tool.toolName().equals("Chainsaw") && tool.isPoweredUsable(stack) && target(state)
-                && (long)tool.headMaterial(stack).getToolQuality()+1 >= ElectricWrenchHarvest.requiredQuality(state);
+                && (long)tool.headMaterial(stack).getToolQuality()+tool.definition().quality() >= ElectricWrenchHarvest.requiredQuality(state);
     }
     public static float speed(ElectricToolItem tool, ItemStack stack) {
-        return Math.max(Float.MIN_NORMAL,2*tool.headMaterial(stack).getToolSpeed());
+        return Math.max(Float.MIN_NORMAL,tool.definition().speed()*tool.headMaterial(stack).getToolSpeed());
     }
     /** Called by ServerPlayerGameMode after Forge's cancellable break event. */
     public static boolean convertDrops(ElectricToolItem tool, ItemStack stack, BlockPos pos, Player player) {

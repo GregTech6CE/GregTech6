@@ -126,6 +126,7 @@ public final class WorldCreationSmoke {
                 throw new IllegalStateException("Fresh world has no level.dat");
             stage = 4;
             String file = "world-creation-forge-" + ID + ".png";
+            OriginFeedbackChecks.renderInventory(event.getGuiGraphics(),minecraft,result);
             event.getGuiGraphics().flush();
             Screenshot.grab(minecraft.gameDirectory,file,minecraft.getMainRenderTarget(),message -> {
                 try {
@@ -186,8 +187,9 @@ public final class WorldCreationSmoke {
             var tag=net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM,
                     net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","rechargeable_batteries/"+new String[]{"ulv","lv","mv","hv","ev"}[spec.tier()]));
             if(!new ItemStack(item).is(tag))throw new IllegalStateException("Source chemical battery missing from exact-tier group: "+spec.id());
-            if(spec.tier()!=1)continue;
+
             for(var tool:com.gregtech.gregtech.content.tool.ElectricToolAssembly.values()) {
+                if(tool.definition().tier()!=spec.tier())continue;
                 var id=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","electric_tools/"+tool.id+"/steel/"+spec.id());
                 var holder=server.getRecipeManager().byKey(id).orElseThrow(()->new IllegalStateException("Missing actual chemical assembly "+id));
                 var recipe=holder;
@@ -203,7 +205,7 @@ public final class WorldCreationSmoke {
         receipt.addProperty("legacyBatteryAliasesChecked",com.gregtech.gregtech.content.energy.BatteryItemMigration.ALIASES.size());
         receipt.addProperty("chemicalBatteryStackRoundTrips",decoded);
         receipt.addProperty("sourceChemicalBatteriesChecked",com.gregtech.gregtech.content.energy.ChemicalBatterySpec.all().size());
-        receipt.addProperty("sourceLvPoweredAssemblyRowsChecked",assemblies);
+        receipt.addProperty("sourcePoweredAssemblyRowsChecked",assemblies);
     }
     private static JsonObject receipt() {
         var result = new JsonObject(); result.addProperty("platform","forge"); result.addProperty("id",ID);
@@ -214,6 +216,15 @@ public final class WorldCreationSmoke {
         if (!TERMINAL.compareAndSet(false,true)) return;
         if (WATCHDOG != null) WATCHDOG.shutdownNow();
         LOGGER.error("WORLD_CREATION_SMOKE_FAILED {}",receipt(),failure);
-        Minecraft.getInstance().execute(() -> Minecraft.getInstance().stop());
+        var minecraft=Minecraft.getInstance();
+        minecraft.execute(minecraft::stop);
+        if(ENABLED&&minecraft.gameDirectory.toPath().toAbsolutePath().normalize().endsWith("world-creation-smoke-run")) {
+            var fallback=new Thread(() -> {
+                try { Thread.sleep(15000); } catch(InterruptedException interrupted) { return; }
+                LOGGER.error("WORLD_CREATION_SMOKE_FAILED_EXIT: normal shutdown was blocked after a failed isolated probe");
+                Runtime.getRuntime().halt(1);
+            },"failed-isolated-preflight-exit");
+            fallback.setDaemon(true);fallback.start();
+        }
     }
 }

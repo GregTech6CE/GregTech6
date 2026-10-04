@@ -40,7 +40,7 @@ public class ToolShapedRecipe extends ShapedRecipe implements com.gregtech.gregt
         for(int slot=0;slot<inventory.getContainerSize();slot++) {
             var stack=inventory.getItem(slot);
             if(requireEmptyFluidContainers&&net.minecraftforge.fluids.FluidUtil.getFluidContained(stack).filter(f->!f.isEmpty()).isPresent())return false;
-            if(stack.getItem() instanceof GTToolItem&&!GTToolHelper.matchesTool(stack,GTToolHelper.getType(stack)))return false;
+            if((stack.getItem() instanceof GTToolItem||stack.getItem() instanceof com.gregtech.gregtech.item.ElectricToolItem)&&!GTToolHelper.matchesTool(stack,GTToolHelper.getType(stack)))return false;
         }
         return true;
     }
@@ -61,9 +61,10 @@ public class ToolShapedRecipe extends ShapedRecipe implements com.gregtech.gregt
         var result=super.getRemainingItems(inventory);
         for(int slot=0;slot<inventory.getContainerSize();slot++) {
             var original=inventory.getItem(slot);
+            if(original.getItem() instanceof com.gregtech.gregtech.item.ElectricToolItem electric){var copy=original.copyWithCount(1);electric.consumeInteractionEnergy(copy,electric.definition().name().equals("Chainsaw")?200:electric.definition().name().equals("Wrench")?800L*(1L<<(2*(electric.energyTier()-1))):electric.definition().name().equals("Screwdriver")?200:100,null);result.set(slot,com.gregtech.gregtech.content.tool.ElectricToolWear.broken(electric,copy)?ItemStack.EMPTY:copy);continue;}
             if(!(original.getItem() instanceof GTToolItem))continue;
             var copy=original.copy();copy.setCount(1);
-            long damage=(long)copy.getDamageValue()+GTToolHelper.getType(copy).damagePerCraft();
+            long damage=(long)copy.getDamageValue()+((GTToolItem)copy.getItem()).toolType().damagePerCraft();
             if(damage>=copy.getMaxDamage())result.set(slot,ItemStack.EMPTY);
             else {copy.setDamageValue((int)damage);result.set(slot,copy);}
         }

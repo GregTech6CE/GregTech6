@@ -21,7 +21,7 @@ public final class GTToolItems {
     static {
         for (GTToolType type : GTToolType.values()) {
             String id = "tool_" + type.id();
-            RegistryObject<GTToolItem> holder = ITEMS.register(id, () -> new GTToolItem(new Item.Properties().stacksTo(1), type));
+            RegistryObject<GTToolItem> holder = ITEMS.register(id, () -> type.definition().isGun()?new com.gregtech.gregtech.item.GunToolItem(new Item.Properties().stacksTo(1),type):type.definition().isPocket()?new com.gregtech.gregtech.item.PocketToolItem(new Item.Properties().stacksTo(1),type):new GTToolItem(new Item.Properties().stacksTo(1), type));
             BY_TYPE.put(type, holder);
         }
     }

@@ -40,6 +40,9 @@ public final class ToolCraftingRules {
   case "gem_tipped_pickaxe" -> 100;
   case "hand_drill" -> 100;
   case "builder_wand" -> 100;
+  case "pistol","carbine","rifle" -> 200;
+  case "pocket_wire_cutter","pocket_chisel","pocket_file","pocket_screwdriver" -> 400;
+  case "pocket_multitool","pocket_knife","pocket_saw","pocket_scissors" -> 100;
   default -> 0;
  };}
 }

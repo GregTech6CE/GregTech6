@@ -66,7 +66,7 @@ public final class ManualToolRecipePack extends AbstractPackResources {
         int powered=0;
         for(var material:com.gregtech.gregtech.api.material.GTMaterialRegistry.allMaterials())for(var spec:com.gregtech.gregtech.content.tool.ElectricToolAssembly.values()){
          java.util.List<net.minecraft.world.item.ItemStack> batteries=new ArrayList<>();
-         for(var entry:com.gregtech.gregtech.registry.GTChemicalBatteries.all())if(entry.get().spec().tier()==1)batteries.add(new net.minecraft.world.item.ItemStack(entry.get().asItem()));
+         for(var entry:com.gregtech.gregtech.registry.GTChemicalBatteries.all())if(entry.get().spec().tier()==spec.definition().tier())batteries.add(new net.minecraft.world.item.ItemStack(entry.get().asItem()));
          for(var battery:batteries){if(spec.recipe(material,battery,"")==null)continue;
           var batteryId=BuiltInRegistries.ITEM.getKey(battery.getItem());String suffix="/"+batteryId.getPath();
           var id=ResourceLocation.fromNamespaceAndPath("gregtech","recipe/electric_tools/"+spec.id+"/"+material.getName().toLowerCase(java.util.Locale.ROOT)+suffix+".json");

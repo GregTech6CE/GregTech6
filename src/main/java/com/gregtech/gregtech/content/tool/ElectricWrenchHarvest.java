@@ -36,9 +36,9 @@ public final class ElectricWrenchHarvest {
     }
     public static boolean canHarvest(ElectricToolItem tool, ItemStack stack, BlockState state) {
         return tool.toolName().equals("Wrench") && tool.canInteract(stack) && target(state)
-                && tool.headMaterial(stack).getToolQuality()>=requiredQuality(state);
+                && (tool.headMaterial(stack).getToolQuality()+tool.definition().quality())>=requiredQuality(state);
     }
     public static float speed(ElectricToolItem tool, ItemStack stack) {
-        return Math.max(Float.MIN_NORMAL,2*tool.headMaterial(stack).getToolSpeed());
+        return Math.max(Float.MIN_NORMAL,tool.definition().speed()*tool.headMaterial(stack).getToolSpeed());
     }
 }

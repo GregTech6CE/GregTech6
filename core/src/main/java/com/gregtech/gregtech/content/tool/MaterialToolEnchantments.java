@@ -11,7 +11,7 @@ import java.util.Map;
 public final class MaterialToolEnchantments {
     private MaterialToolEnchantments() {}
     public static Map<String, Integer> of(ToolDefinition type, GTMaterial material) {
-        Map<String, Integer> result = of(type.isMiningTool(),type.isWeapon(),false,material);
+        Map<String, Integer> result = of(type.isMiningTool(),type.isWeapon(),OriginalToolFlags.of(type.name()).ranged(),material);
         if (type == ToolDefinition.BUTCHERY_KNIFE) {
             int looting = material.getToolQuality()/2+1;
             result.compute("looting", (key, existing) -> existing == null ? looting : 1+Math.max(existing,looting));
@@ -29,6 +29,17 @@ public final class MaterialToolEnchantments {
                         || entry.kind().equals("Ranged") && ranged;
                 if (applies) result.merge(entry.enchantment(), entry.level(), Math::max);
             }
+        }
+        return result;
+    }
+    /** Original ammo receives Damage and Ammo enchants, not the Weapons looting row. */
+    public static Map<String,Integer> ammunition(GTMaterial material) {
+        var result=new LinkedHashMap<String,Integer>();
+        for(var row:GTEnchantmentTable.MATERIALS) {
+            var resolved=GTMaterialEnchants.resolve(row.material());
+            if(resolved==null||resolved.resolve()!=material.resolve())continue;
+            for(var entry:row.entries())if(entry.kind().equals("Damage")||entry.kind().equals("Ammo"))
+                result.merge(entry.enchantment(),entry.level(),Math::max);
         }
         return result;
     }

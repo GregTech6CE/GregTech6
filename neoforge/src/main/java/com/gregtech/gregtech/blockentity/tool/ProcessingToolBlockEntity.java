@@ -105,7 +105,9 @@ public final class ProcessingToolBlockEntity extends BlockEntity implements Bloc
     }
     private List<FluidStack> inputFluids() { return Arrays.stream(inputs).map(t -> t.getFluidInTank(0)).toList(); }
     /** Output capacity is checked at worst-case yields before inputs or RNG are touched. */
-    public boolean process(Player player) {
+    public boolean process(Player player){return process(player,ItemStack.EMPTY);}
+    public boolean processMixer(Player player,ItemStack stack){return player!=null&&player.mayBuild()&&level.mayInteract(player,worldPosition)&&bowl&&stack.getItem() instanceof com.gregtech.gregtech.item.ElectricToolItem electric&&electric.toolName().equals("Mixer")&&electric.isPoweredUsable(stack)&&process(player,stack);}
+    private boolean process(Player player,ItemStack powered) {
         if (juicer || level == null || level.isClientSide) return false;
         for (var recipe : recipes.mRecipeList) {
             if (!recipe.mEnabled || recipe.mFakeRecipe || !com.gregtech.gregtech.content.tool.OpenVesselRules.recipePower(recipe.mEUt)) continue;
@@ -119,7 +121,8 @@ public final class ProcessingToolBlockEntity extends BlockEntity implements Bloc
                 if (count > 0) mergeOutput(i, out.copyWithCount((int)count));
             }
             for (int i=0;i<recipe.mFluidOutputs.length;i++) outputs[i].fill(recipe.mFluidOutputs[i], IFluidHandler.FluidAction.EXECUTE);
-            if (player != null) {
+            if(powered.getItem() instanceof com.gregtech.gregtech.item.ElectricToolItem electric){long total=Math.max(1,Math.abs(recipe.mEUt)*(long)recipe.mDuration);electric.consumeInteractionEnergy(powered,Math.max(1,(total+3)/4),player);}
+            else if (player != null) {
                 double divisor = com.gregtech.gregtech.content.tool.OpenVesselRules.exhaustionDivisor(juicer,recipes==MachineRecipeMaps.Bath);
                 player.causeFoodExhaustion((float)Math.min(Float.MAX_VALUE, Math.abs((double)recipe.mEUt)*recipe.mDuration/divisor));
             }
@@ -156,6 +159,7 @@ public final class ProcessingToolBlockEntity extends BlockEntity implements Bloc
     public void interact(Player player, InteractionHand hand, Direction side) {
         if (level == null || level.isClientSide || !player.mayBuild() || !level.mayInteract(player,worldPosition)) return;
         var held=player.getItemInHand(hand);
+        if(held.getItem() instanceof com.gregtech.gregtech.item.ElectricToolItem electric&&electric.toolName().equals("Mixer")){if(side==Direction.UP)processMixer(player,held);return;}
         if (com.gregtech.gregtech.api.tool.GTToolHelper.matchesTool(held,com.gregtech.gregtech.api.tool.GTToolType.PLUNGER)) {
             for (var tank : allTanks()) if (!tank.drain(1000,IFluidHandler.FluidAction.EXECUTE).isEmpty()) {
                 com.gregtech.gregtech.api.tool.GTToolHelper.damageForUse(held,1,player); return;

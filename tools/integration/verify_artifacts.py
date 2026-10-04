@@ -25,6 +25,11 @@ GAMEPLAY_CLASSES = (
     'com/gregtech/gregtech/registry/GTBlocks.class',
     'com/gregtech/gregtech/registry/GTBlockEntities.class',
     'com/gregtech/gregtech/worldgen/GTFeatures.class',
+    'com/gregtech/gregtech/item/GunToolItem.class',
+    'com/gregtech/gregtech/item/PocketToolItem.class',
+    'com/gregtech/gregtech/item/ElectricToolItem.class',
+    'com/gregtech/gregtech/content/tool/ElectricUtilityHarvest.class',
+    'com/gregtech/gregtech/item/behavior/BehaviorPlugLeak.class',
 )
 PLATFORM_GAMEPLAY_CLASSES = {
     'forge': (
@@ -34,6 +39,7 @@ PLATFORM_GAMEPLAY_CLASSES = {
     'neoforge': (
         'com/gregtech/gregtech/platform/neoforge/machine/BasicMachineRegistries.class',
         'com/gregtech/gregtech/platform/neoforge/smeltery/SmeltingCrucibleEntity.class',
+        'com/gregtech/gregtech/client/RopeClientColors.class',
     ),
 }
 
@@ -66,6 +72,25 @@ def compiled_core_hashes(core_output):
         raise ValueError('No compiled shared-core classes; build :core:classes first')
     return {path.relative_to(core_output).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
             for path in classes}
+
+
+def current_platform_hashes(repo, platform, artifact, required_core):
+    """Forge uses current SRG output; NeoForge ships the named compiler output."""
+    if platform == 'forge':
+        mapped = repo / 'build/forge-intermediates' / artifact.name
+        if not mapped.is_file():
+            raise ValueError(f'Missing current Forge reobfuscated input: {mapped}; run :assemble')
+        with zipfile.ZipFile(mapped) as archive:
+            return {name: hashlib.sha256(archive.read(name)).hexdigest()
+                    for name in archive.namelist()
+                    if name.endswith('.class') and name not in required_core}
+    output = repo / 'neoforge/build/classes/java/main'
+    result = {path.relative_to(output).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
+              for path in output.rglob('*.class')
+              if path.relative_to(output).as_posix() not in required_core}
+    if not result:
+        raise ValueError('No current NeoForge platform compilation output')
+    return result
 
 
 def test_only_entries(repo):
@@ -157,6 +182,11 @@ def inspect(path, platform, required_core, properties, forbidden_tests):
         missing_gameplay = [name for name in required_gameplay if counts.get(name) != 1]
         if missing_gameplay:
             raise ValueError(f'{path}: incomplete platform gameplay content: {missing_gameplay}')
+        repo = Path(__file__).resolve().parents[2]
+        native_hashes = current_platform_hashes(repo, platform, path, required_core)
+        for name, expected in native_hashes.items():
+            if counts.get(name) != 1 or hashlib.sha256(archive.read(name)).hexdigest() != expected:
+                raise ValueError(f'{path}: platform class differs from current mapped/compiler output: {name}; run :assemble')
         if metadata_path not in counts:
             raise ValueError(f'{path}: missing {metadata_path}')
         other_descriptors = {spec['metadata'] for spec in PLATFORMS.values()} - {metadata_path}
@@ -221,6 +251,9 @@ def inspect(path, platform, required_core, properties, forbidden_tests):
             'bytes': path.stat().st_size, 'zip_entries': len(counts),
             'metadata_path': metadata_path, 'metadata': metadata, 'core_class_sha256': hashes,
             'zip_crc_checked': True, 'mixin_verification': mixin_verification,
+            'current_platform_classes_checked': len(native_hashes),
+            'current_platform_classes_sha256': hashlib.sha256(
+                json.dumps(native_hashes, sort_keys=True).encode('utf-8')).hexdigest(),
         }
 
 

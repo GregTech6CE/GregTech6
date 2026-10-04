@@ -50,4 +50,5 @@ public final class BehaviorPlaceWoodworkingSupplies {
         }
         return InteractionResult.PASS;
     }
+    public static net.minecraft.world.InteractionResult placeTorch(net.minecraft.world.item.context.UseOnContext context,boolean usable){var player=context.getPlayer();if(player==null||!usable)return net.minecraft.world.InteractionResult.PASS;for(int slot=player.getInventory().getContainerSize()-1;slot>=0;slot--){var item=player.getInventory().getItem(slot);if(!item.is(net.minecraft.world.item.Items.TORCH))continue;var copy=item.copyWithCount(1);var placement=new net.minecraft.world.item.context.BlockPlaceContext(context.getLevel(),player,context.getHand(),copy,new net.minecraft.world.phys.BlockHitResult(context.getClickLocation(),context.getClickedFace(),context.getClickedPos(),context.isInside()));var result=((net.minecraft.world.item.BlockItem)item.getItem()).place(placement);if(result.consumesAction()&&!context.getLevel().isClientSide&&!player.getAbilities().instabuild)item.shrink(1);return result;}return net.minecraft.world.InteractionResult.PASS;}
 }

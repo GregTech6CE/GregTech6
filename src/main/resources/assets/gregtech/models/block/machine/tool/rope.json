@@ -21,22 +21,28 @@
           ],
           "faces": {
             "north": {
-              "texture": "#all"
+              "texture": "#all",
+              "tintindex": 0
             },
             "south": {
-              "texture": "#all"
+              "texture": "#all",
+              "tintindex": 0
             },
             "west": {
-              "texture": "#all"
+              "texture": "#all",
+              "tintindex": 0
             },
             "east": {
-              "texture": "#all"
+              "texture": "#all",
+              "tintindex": 0
             },
             "up": {
-              "texture": "#all"
+              "texture": "#all",
+              "tintindex": 0
             },
             "down": {
-              "texture": "#all"
+              "texture": "#all",
+              "tintindex": 0
             }
           }
         }

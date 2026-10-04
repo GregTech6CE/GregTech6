@@ -17,35 +17,41 @@ import java.util.*;
 /** GT6 Loader_Tools:354-359, concrete material/battery rows, like OreProcessing_Tool.
  * LV Drill deliberately uses a rod, unlike the separate Mining Drill's tool head. */
 public enum ElectricToolAssembly {
-    DRILL("electric_drill", MaterialPrefix.toolHeadDrill, "fSY", "TXW", "dVZ"),
-    CHAINSAW("electric_chainsaw", MaterialPrefix.toolHeadChainsaw, "dAT", "XWX", "XVX"),
-    WRENCH("electric_wrench", MaterialPrefix.toolHeadWrench, "dAT", "XWX", "XVX"),
-    SCREWDRIVER("electric_screwdriver", MaterialPrefix.toolHeadScrewdriver, "XdA", "TWY", "VYX");
+    DRILL("electric_drill"),
+    CHAINSAW("electric_chainsaw"),
+    WRENCH("electric_wrench"),
+    SCREWDRIVER("electric_screwdriver"),
+    MINING_DRILL("electric_mining_drill"),
+    MIXER("electric_mixer"),
+    BUZZSAW("electric_buzzsaw"),
+    TRIMMER("electric_trimmer"),
+    WRENCH_MV("electric_wrench_mv"),
+    MINING_DRILL_MV("electric_mining_drill_mv"),
+    CHAINSAW_MV("electric_chainsaw_mv"),
+    WRENCH_HV("electric_wrench_hv"),
+    MINING_DRILL_HV("electric_mining_drill_hv"),
+    CHAINSAW_HV("electric_chainsaw_hv");
 
     public final String id;
     private final MaterialPrefix head;
     private final String[] rows;
-    ElectricToolAssembly(String id, MaterialPrefix head, String... rows) {
-        this.id=id; this.head=head; this.rows=ElectricToolCatalog.get(id).rows().toArray(String[]::new);
+    ElectricToolAssembly(String id) {
+        this.id=id;var spec=ElectricToolCatalog.get(id);
+        this.head=com.gregtech.gregtech.api.prefix.PrefixRegistry.byName(spec.headPrefix());
+        this.rows=spec.rows().toArray(String[]::new);
     }
-    public ElectricToolItem item() {
-        return switch(this) {
-            case DRILL -> GTElectricItems.ELECTRIC_DRILL.get();
-            case CHAINSAW -> GTElectricItems.ELECTRIC_CHAINSAW.get();
-            case WRENCH -> GTElectricItems.ELECTRIC_WRENCH.get();
-            case SCREWDRIVER -> GTElectricItems.ELECTRIC_SCREWDRIVER.get();
-        };
-    }
+    public ElectricToolCatalog.Definition definition(){return ElectricToolCatalog.get(id);}
+    public ElectricToolItem item(){return GTElectricItems.get(id);}
     public static boolean validMaterial(GTMaterial material) {
         return ElectricToolCatalog.validMaterial(material);
     }
     public ToolShapedRecipe recipe(GTMaterial material) {
-        var battery=GTChemicalBatteries.item(com.gregtech.gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,1);
+        var battery=GTChemicalBatteries.item(com.gregtech.gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,definition().tier());
         return recipe(material,new ItemStack(battery),"/"+battery.spec().id());
     }
     public ToolShapedRecipe recipe(GTMaterial material,ItemStack battery,String suffix) {
         if(!(battery.getItem() instanceof com.gregtech.gregtech.item.ChemicalBatteryItem energy)
-                ||energy.spec().tier()!=1)return null;
+                ||energy.spec().tier()!=definition().tier())return null;
         if (!validMaterial(material) || GTItems.getStack(head,material,1).isEmpty()) return null;
         var ingredients=NonNullList.withSize(9,Ingredient.EMPTY);
         for(int i=0;i<9;i++) {
@@ -64,14 +70,15 @@ public enum ElectricToolAssembly {
     private Ingredient ingredient(char symbol,GTMaterial material) {
         return switch(symbol) {
             case 'd' -> Ingredient.of(GTToolHelper.displayTool(GTToolType.SCREWDRIVER));
+            case 'h' -> Ingredient.of(GTToolHelper.displayTool(GTToolType.HARD_HAMMER));
             case 'f' -> Ingredient.of(GTToolHelper.displayTool(GTToolType.FILE));
             case 'A' -> form(head,material);
             case 'S' -> form(MaterialPrefix.stick,material);
             case 'T' -> form(MaterialPrefix.screw,material);
-            case 'X' -> form(MaterialPrefix.plateCurved,Materials.SteelGalvanized);
-            case 'Y' -> form(MaterialPrefix.ring,Materials.SteelGalvanized);
-            case 'Z' -> form(MaterialPrefix.plate,Materials.SteelGalvanized);
-            case 'W' -> Ingredient.of(Objects.requireNonNull(GTTechnological.get("compact_electric_motor_lv")));
+            case 'X' -> form(MaterialPrefix.plateCurved,GTMaterialRegistry.get(definition().chassisMaterial()));
+            case 'Y' -> form(id.equals("electric_buzzsaw")?MaterialPrefix.plate:MaterialPrefix.ring,GTMaterialRegistry.get(definition().chassisMaterial()));
+            case 'Z' -> form(id.equals("electric_trimmer")?MaterialPrefix.stickLong:MaterialPrefix.plate,GTMaterialRegistry.get(definition().chassisMaterial()));
+            case 'W' -> Ingredient.of(Objects.requireNonNull(GTTechnological.get("compact_electric_"+(id.equals("electric_trimmer")?"piston_":"motor_")+definition().tierName())));
             default -> Ingredient.EMPTY;
         };
     }
@@ -85,7 +92,7 @@ public enum ElectricToolAssembly {
     public static List<ToolShapedRecipe> build() {
         List<ToolShapedRecipe> result=new ArrayList<>();
         for(var material:GTMaterialRegistry.allMaterials()) for(var spec:values()) {
-            for(var entry:GTChemicalBatteries.all())if(entry.get().spec().tier()==1) {
+            for(var entry:GTChemicalBatteries.all())if(entry.get().spec().tier()==spec.definition().tier()) {
                 var chemical=spec.recipe(material,new ItemStack(entry.get().asItem()),"/"+entry.getId().getPath());
                 if(chemical!=null)result.add(chemical);
             }

@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "gregtech:item/iconsets/power_unit_mv",
+    "layer1": "gregtech:item/iconsets/power_unit_mv_overlay",
+    "layer2": "gregtech:item/material_icons/metallic/toolheadchainsaw",
+    "layer3": "gregtech:item/material_icons/metallic/toolheadchainsaw_overlay"
+  }
+}

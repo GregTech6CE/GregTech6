@@ -17,6 +17,6 @@ public final class NeoToolBindings {
  public static void damageForToolClickReturn(ItemStack stack,long returned,LivingEntity user){GTToolHelper.damageForToolClickReturn(stack,returned,user);}
  public static void damageForUse(ItemStack stack,int amount,LivingEntity user){GTToolHelper.damageForUse(stack,amount,user);}
  public static void damageForUse(ItemStack stack,int amount,LivingEntity user,EquipmentSlot slot){GTToolHelper.damageForUse(stack,amount,user,slot);}
- public static String craftKind(ItemStack stack){return GTToolHelper.isTool(stack)?GTToolHelper.getType(stack).id():"";}
+ public static String craftKind(ItemStack stack){return GTToolHelper.isTool(stack)?((com.gregtech.gregtech.item.GTToolItem)stack.getItem()).toolType().id():"";}
  public static int craftDamage(ItemStack stack){return com.gregtech.gregtech.api.tool.ToolCraftingRules.damage(craftKind(stack));}
 }

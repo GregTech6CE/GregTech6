@@ -57,7 +57,7 @@ public final class GTToolHelper {
         if (stack.getItem() instanceof com.gregtech.gregtech.item.ElectricToolItem electric
                 && electric.interactionType(stack) != null) return electric.interactionType(stack);
         if (stack.getItem() instanceof GTToolItem toolItem) {
-            return toolItem.toolType();
+            return toolItem instanceof com.gregtech.gregtech.item.PocketToolItem pocket?pocket.activeType():toolItem.toolType();
         }
         return GTToolType.PICKAXE;
     }
@@ -71,7 +71,7 @@ public final class GTToolHelper {
             return electric.interactionType(stack) == type && electric.canInteract(stack);
         }
         if (stack.getItem() instanceof GTToolItem toolItem) {
-            if (toolItem.toolType() != type) {
+            if (getType(stack) != type) {
                 return false;
             }
             if (!type.requiresHeadAssembly()) {
@@ -180,7 +180,7 @@ public final class GTToolHelper {
         if (!isTool(stack)) {
             return 1;
         }
-        return computeMaxDurability(getType(stack), getStatMaterial(stack));
+        return computeMaxDurability(((GTToolItem)stack.getItem()).toolType(), getStatMaterial(stack));
     }
 
     /**
@@ -198,7 +198,7 @@ public final class GTToolHelper {
     }
 
     public static float getCombatDamage(ItemStack stack) {
-        GTToolType type = getType(stack);
+        GTToolType type = stack.getItem() instanceof com.gregtech.gregtech.item.PocketToolItem pocket?pocket.toolType():getType(stack);
         GTMaterial stat = getStatMaterial(stack);
         return type.baseDamage() + stat.getToolQuality();
     }
@@ -356,7 +356,7 @@ public final class GTToolHelper {
             return;
         }
         GTToolType type = getType(stack);
-        int perBreak = type.damagePerBlockBreak();
+        int perBreak = (stack.getItem() instanceof com.gregtech.gregtech.item.PocketToolItem pocket?pocket.toolType():type).damagePerBlockBreak();
         if (state.getBlock() instanceof com.gregtech.gregtech.api.machine.GTMachineBlock && isMachineWrench(stack)) {
             perBreak = GTToolType.WRENCH.damagePerBlockBreak();
         }
@@ -368,7 +368,7 @@ public final class GTToolHelper {
         if (!isTool(stack) || user != null && isCreative(user)) {
             return;
         }
-        hurt(stack, getType(stack).damagePerEntityAttack(), user);
+        hurt(stack, (stack.getItem() instanceof com.gregtech.gregtech.item.PocketToolItem pocket?pocket.toolType():getType(stack)).damagePerEntityAttack(), user);
     }
 
     private static void hurt(ItemStack stack, int amount, @Nullable LivingEntity user) {

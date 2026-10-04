@@ -45,6 +45,10 @@ public final class GTToolModel {
                 models.put(inventory, new GTToolBakedModel(base));
             }
         }
+        for(var holder:com.gregtech.gregtech.registry.GTElectricItems.tools()) {
+            var id=BuiltInRegistries.ITEM.getKey(holder.get());var inventory=ModelResourceLocation.inventory(id);
+            var base=models.get(inventory);if(base!=null)models.put(inventory,new GTToolBakedModel(base));
+        }
     }
 
     public static ModelData data(ItemStack stack) {

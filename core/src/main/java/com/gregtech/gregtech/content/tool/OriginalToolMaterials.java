@@ -83,6 +83,7 @@ public final class OriginalToolMaterials {
     public static boolean acceptsHead(ToolDefinition type, GTMaterial material) {
         if (material == null || material.has(MaterialProperty.ANTIMATTER)) return false;
         if (material.getToolTypes() < type.minToolTypes()) return false;
+        if(type.isGun()||type.isPocket())return !material.has(MaterialProperty.WOOD)&&!inFamily(material,"Rubber")&&!inFamily(material,"Plastic")&&(!type.isPocket()||ElectricToolCatalog.validMaterial(material));
         // Loader_Tools excludes the generic Wood material; named woods still make soft hammers.
         if (type != ToolDefinition.BUILDER_WAND && name(material).equals("Wood")) return false;
         if (switch (type) {

@@ -104,7 +104,7 @@ public final class ToolAssemblyCatalog {
                     slots.add(List.of(stack));
                 } else slots.add(options);
             }
-            if (valid) out.add(new ToolAssemblyInfo(type,List.copyOf(slots),GTToolItem.create(type,material,handle),false,pattern));
+            if (valid) out.add(new ToolAssemblyInfo(type,List.copyOf(slots),GTToolItem.create(type,material,type==GTToolType.POCKET_MULTITOOL?GTMaterialRegistry.get("Blue"):handle),false,pattern));
         }
         return out;
     }
@@ -165,7 +165,7 @@ public final class ToolAssemblyCatalog {
                 listsHandle(inputs.get(i), target);
             }
         }
-        ItemStack output = GTToolItem.create(type, sample, handle);
+        ItemStack output = GTToolItem.create(type, sample, type==GTToolType.POCKET_MULTITOOL?GTMaterialRegistry.get("Blue"):handle);
         if (output.isEmpty()) return null;
         return new ToolAssemblyInfo(type, List.copyOf(inputs), output, false, pattern);
     }
@@ -178,7 +178,7 @@ public final class ToolAssemblyCatalog {
 
     /** A slot that a material form fills: everything but the fixed vanilla items and the tools. */
     private static boolean isMaterialCell(GTToolRecipes.Pattern pattern, char letter) {
-        return letter != 'F' && letter != 'V' && letter != 'W' && pattern.tools().get(letter) == null
+        return letter != 'F' && ((letter != 'V' && letter != 'W') || pattern.forms().get(letter)==MaterialPrefix.toolHeadSword) && pattern.tools().get(letter) == null
                 && !pattern.gate().items().containsKey(letter);
     }
 
@@ -235,7 +235,7 @@ public final class ToolAssemblyCatalog {
         var fixed = pattern.gate().items().get(letter);
         if (fixed != null) return List.of(new ItemStack(fixed));
         if (letter == 'H') return sticks();
-        MaterialPrefix prefix = letter == 'A' ? type.headPrefix() : pattern.forms().get(letter);
+        MaterialPrefix prefix = letter == 'A' && type.headPrefix()!=null ? type.headPrefix() : pattern.forms().get(letter);
         if (prefix == null) return List.of();
         // The early rows take any rock, which no stone has as a tool head, so their gate is skipped.
         var gate = pattern.gate();

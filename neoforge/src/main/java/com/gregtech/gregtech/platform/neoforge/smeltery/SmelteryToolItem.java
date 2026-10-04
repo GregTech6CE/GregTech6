@@ -24,7 +24,7 @@ public final class SmelteryToolItem extends com.gregtech.gregtech.item.GTToolIte
         return com.gregtech.gregtech.api.tool.GTToolHelper.write(new ItemStack(this),head,handle);
     }
     public static boolean matches(ItemStack stack, Kind kind) {
-        if (!(stack.getItem() instanceof SmelteryToolItem tool) || tool.kind != kind || !stack.has(DataComponents.MAX_DAMAGE)) return false;
+        if (!com.gregtech.gregtech.api.tool.GTToolHelper.matchesTool(stack,com.gregtech.gregtech.api.tool.GTToolType.valueOf(kind.name())) || !stack.has(DataComponents.MAX_DAMAGE)) return false;
         var data = stack.get(DataComponents.CUSTOM_DATA);
         if (data == null || !data.copyTag().contains("GT.ToolStats")) return false;
         var stats = data.copyTag().getCompound("GT.ToolStats");

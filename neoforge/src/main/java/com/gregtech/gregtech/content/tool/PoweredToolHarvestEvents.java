@@ -6,6 +6,7 @@ public final class PoweredToolHarvestEvents {
  private PoweredToolHarvestEvents(){}
  @SubscribeEvent(priority=EventPriority.LOWEST) public static void breaking(BlockEvent.BreakEvent event){
   if(event.isCanceled())return;var player=event.getPlayer();var stack=player.getMainHandItem();
+  if(stack.getItem() instanceof com.gregtech.gregtech.item.PocketToolItem pocket&&pocket.onBlockStartBreak(stack,event.getPos(),player)){event.setCanceled(true);return;}
   if(stack.getItem() instanceof com.gregtech.gregtech.item.ElectricToolItem tool&&tool.onBlockStartBreak(stack,event.getPos(),player))event.setCanceled(true);
  }
 }

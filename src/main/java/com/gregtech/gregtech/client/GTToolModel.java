@@ -46,6 +46,10 @@ public final class GTToolModel {
                 models.put(inventory, new GTToolBakedModel(base));
             }
         }
+        for(var holder:com.gregtech.gregtech.registry.GTElectricItems.all()) {
+            var id=net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(holder.get());var inventory=new ModelResourceLocation(id,"inventory");
+            var base=models.get(inventory);if(base!=null)models.put(inventory,new GTToolBakedModel(base));
+        }
     }
 
     public static ModelData data(ItemStack stack) {

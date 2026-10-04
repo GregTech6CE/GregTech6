@@ -89,7 +89,9 @@ FLAGS.put("POCKETSCREWDRIVER",new Flags(false,false,false));
 FLAGS.put("POCKETWIRECUTTER",new Flags(true,false,false));
 FLAGS.put("POCKETSCISSORS",new Flags(true,false,false));
 FLAGS.put("POCKETCHISEL",new Flags(true,false,false));
+FLAGS.put("PISTOL",new Flags(false,false,true));
 FLAGS.put("CARBINE",new Flags(false,false,true));
+FLAGS.put("RIFLE",new Flags(false,false,true));
 }
 public static Flags of(String name){var flags=FLAGS.get(name.replace("_",""));if(flags==null)throw new IllegalArgumentException("Unknown original tool "+name);return flags;}
 }

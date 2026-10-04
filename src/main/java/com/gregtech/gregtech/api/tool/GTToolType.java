@@ -45,7 +45,18 @@ public enum GTToolType {
     SPADE,
     GEM_PICK,
     HAND_DRILL,
-    BUILDER_WAND;
+    BUILDER_WAND,
+    PISTOL,
+    CARBINE,
+    RIFLE,
+    POCKET_MULTITOOL,
+    POCKET_KNIFE,
+    POCKET_SAW,
+    POCKET_FILE,
+    POCKET_SCREWDRIVER,
+    POCKET_WIRE_CUTTER,
+    POCKET_SCISSORS,
+    POCKET_CHISEL;
     private final ToolDefinition definition = ToolDefinition.valueOf(name());
     public ToolDefinition definition(){return definition;}
     public int gt6Id(){return definition.gt6Id();}

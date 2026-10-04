@@ -57,6 +57,11 @@ public final class MaterialBehaviorContracts {
         ModReferences.UNKNOWN.getClass();
         com.gregtech.gregtech.data.MaterialGroups.Glowstone.getClass();
         GTMaterialRegistry.init();
+        for(var type:com.gregtech.gregtech.api.tool.ToolDefinition.values())
+            check(com.gregtech.gregtech.content.tool.OriginalToolFlags.of(type.name())!=null,"Every native Nexus tool has its source classification: "+type);
+        for(var tool:com.gregtech.gregtech.content.tool.ElectricToolCatalog.ALL)
+            check(com.gregtech.gregtech.content.tool.OriginalToolFlags.of(tool.original())!=null,"Every powered Nexus tool has its source classification: "+tool.id());
+        check(com.gregtech.gregtech.content.tool.MaterialToolEnchantments.ammunition(GTMaterialRegistry.get("DarkMatter")).getOrDefault("looting",0)==6,"Source ammunition uses Ammo looting, twice its Weapons level");
         check(com.gregtech.gregtech.data.MaterialPrefix.stickLong.isValidFor(GTMaterialRegistry.get("Obsidian")), "source miniature Nether recipe has its Obsidian long rod form");
         check(com.gregtech.gregtech.data.MaterialPrefix.stickLong.isValidFor(GTMaterialRegistry.get("Endstone")), "source miniature End recipe has its Endstone long rod form");
 

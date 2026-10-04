@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 /** Resolves the fixed original test-drawer rows; never evaluates their Java expressions. */
 public final class NativeOriginItems {
     private NativeOriginItems() {}
-    private static final Pattern TOOL=Pattern.compile("getToolWithStats\\(ToolsGT\\.([A-Z_]+)\\s*,\\s*(?:1,\\s*)?MT\\.([\\w.]+),\\s*MT\\.([\\w.]+)");
+    private static final Pattern TOOL=Pattern.compile("getToolWithStats\\(ToolsGT\\.([A-Z_]+)\\s*,\\s*(?:1,\\s*)?MT\\.([\\w.]+)\\s*,\\s*MT\\.([\\w.]+)");
     private static final Pattern VANILLA=Pattern.compile("ST.make\\((?:Items|Blocks)\\.(\\w+)\\s*,\\s*(\\d+)");
     private static final Pattern FORM=Pattern.compile("OP\\.(\\w+)\\.mat\\(MT\\.(\\w+),\\s*(\\d+)\\)");
     private static ResourceLocation id(String name) { return ResourceLocation.parse(name); }
@@ -33,12 +33,14 @@ public final class NativeOriginItems {
                 return GTToolItem.create(type,head,handle);
             String electric=switch(original.replaceAll("_(LV|MV|HV)$","")) {
                 case "WRENCH" -> "electric_wrench"; case "DRILL" -> "electric_drill";
-                case "CHAINSAW" -> "electric_chainsaw"; case "SCREWDRIVER" -> "electric_screwdriver"; default -> null;
+                case "MININGDRILL" -> "electric_mining_drill"; case "MIXER" -> "electric_mixer"; case "BUZZSAW" -> "electric_buzzsaw"; case "TRIMMER" -> "electric_trimmer"; case "CHAINSAW" -> "electric_chainsaw"; case "SCREWDRIVER" -> "electric_screwdriver"; default -> null;
             };
-            if(electric!=null && original.endsWith("_LV") && BuiltInRegistries.ITEM.get(id("gregtech:"+electric)) instanceof ElectricToolItem item) {
-                var stack=item.assembled(head,32000);
-                com.gregtech.gregtech.api.tool.GTToolHelper.write(stack,head,handle);
-                com.gregtech.gregtech.platform.neoforge.StackCustomData.update(stack,tag->tag.putLong("gt.charge",32000));
+            int tier=original.endsWith("_HV")?3:original.endsWith("_MV")?2:1;
+            if(electric!=null&&tier>1)electric+="_"+(tier==2?"mv":"hv");
+            if(electric!=null && BuiltInRegistries.ITEM.get(id("gregtech:"+electric)) instanceof ElectricToolItem item) {
+                long capacity=(8L<<(2*tier))*1000;var stack=item.assembled(head,capacity);
+                com.gregtech.gregtech.api.tool.GTToolHelper.write(stack,head,handle);stack.remove(net.minecraft.core.component.DataComponents.MAX_DAMAGE);stack.remove(net.minecraft.core.component.DataComponents.DAMAGE);
+                com.gregtech.gregtech.platform.neoforge.StackCustomData.update(stack,tag->tag.putLong("gt.charge",capacity));
                 return stack;
             }
             return ItemStack.EMPTY;
@@ -54,6 +56,8 @@ public final class NativeOriginItems {
             if(selected==null || !selected.isValid())return ItemStack.EMPTY;
             if(form.group(1).equals("wireGt01") || form.group(1).equals("cableGt01")) {
                 boolean insulated=form.group(1).equals("cableGt01");
+                for(var family:com.gregtech.gregtech.content.energy.SignalWireCatalog.families())
+                    if(family.material()==selected)return new ItemStack(BuiltInRegistries.ITEM.get(id("gregtech:"+(insulated?"cable_01_":"wire_01_")+family.name())),count);
                 for(var entry:com.gregtech.gregtech.registry.GTWires.all()) {
                     var spec=entry.get().spec();
                     if(spec.material()==selected && spec.size()==1 && spec.insulated()==insulated)return new ItemStack(entry.get(),count);

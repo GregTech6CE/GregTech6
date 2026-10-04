@@ -24,7 +24,7 @@ public class ToolShapedRecipe implements CraftingRecipe, com.gregtech.gregtech.a
  protected boolean toolsUsable(CraftingInput input){
   for(int i=0;i<input.size();i++){var stack=input.getItem(i);
    if(requireEmptyFluidContainers&&net.neoforged.neoforge.fluids.FluidUtil.getFluidContained(stack).filter(fluid->!fluid.isEmpty()).isPresent())return false;
-   if(stack.getItem() instanceof com.gregtech.gregtech.item.GTToolItem&&!com.gregtech.gregtech.api.tool.GTToolHelper.matchesTool(stack,com.gregtech.gregtech.api.tool.GTToolHelper.getType(stack)))return false;
+   if((stack.getItem() instanceof com.gregtech.gregtech.item.GTToolItem||stack.getItem() instanceof com.gregtech.gregtech.item.ElectricToolItem)&&!com.gregtech.gregtech.api.tool.GTToolHelper.matchesTool(stack,com.gregtech.gregtech.api.tool.GTToolHelper.getType(stack)))return false;
   }return true;
  }
  private boolean matchesUnmirrored(CraftingInput input){
@@ -38,7 +38,7 @@ public class ToolShapedRecipe implements CraftingRecipe, com.gregtech.gregtech.a
  }
  @Override public NonNullList<ItemStack> getRemainingItems(CraftingInput input){
   var result=base.getRemainingItems(input);
-  for(int i=0;i<input.size();i++){var original=input.getItem(i);int cost=NeoToolBindings.craftDamage(original);if(cost<=0)continue;
+  for(int i=0;i<input.size();i++){var original=input.getItem(i);if(original.getItem() instanceof com.gregtech.gregtech.item.ElectricToolItem electric){var copy=original.copyWithCount(1);electric.consumeInteractionEnergy(copy,electric.toolName().equals("Chainsaw")?200:electric.toolName().equals("Wrench")?800L*(1L<<(2*(electric.energyTier()-1))):electric.toolName().equals("Screwdriver")?200:100,null);result.set(i,com.gregtech.gregtech.content.tool.ElectricToolWear.broken(electric,copy)?ItemStack.EMPTY:copy);continue;}int cost=NeoToolBindings.craftDamage(original);if(cost<=0)continue;
    var copy=original.copyWithCount(1);long damage=(long)copy.getDamageValue()+cost;
    if(damage>=copy.getMaxDamage())result.set(i,ItemStack.EMPTY);else{copy.setDamageValue((int)damage);result.set(i,copy);}
   }

@@ -28,7 +28,7 @@ public final class GTToolCraftingRecipe extends GTToolPatternRecipe {
 
     @Override
     protected ItemStack assembleFrom(Match match) {
-        return GTToolItem.create(type, match.material(), match.handle());
+        return GTToolItem.create(type, match.material(),type==GTToolType.POCKET_MULTITOOL?com.gregtech.gregtech.api.material.GTMaterialRegistry.get("Blue"):match.handle());
     }
 
     @Override

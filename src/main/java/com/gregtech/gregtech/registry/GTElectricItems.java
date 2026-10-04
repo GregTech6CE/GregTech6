@@ -43,12 +43,12 @@ public final class GTElectricItems {
         return () -> GTChemicalBatteries.item(spec.chemistry(), spec.tier());
     }
 
-    private static ElectricToolItem electric(String id){var spec=com.gregtech.gregtech.content.tool.ElectricToolCatalog.get(id);return new ElectricToolItem(spec.name(),Tiers.IRON,spec.capacity(),1,spec.energyPerUse(),new Item.Properties().stacksTo(1));}
+    private static ElectricToolItem electric(String id){var spec=com.gregtech.gregtech.content.tool.ElectricToolCatalog.get(id);return new ElectricToolItem(spec.name(),Tiers.IRON,spec.capacity(),spec.tier(),spec.energyPerUse(),new Item.Properties().stacksTo(1));}
+    private static final java.util.Map<String,RegistryObject<ElectricToolItem>> BY_ID=new java.util.LinkedHashMap<>();
+    public static ElectricToolItem get(String id){return BY_ID.get(id).get();}
     public static void registerAll() {
-        // Electric tools
-        ELECTRIC_DRILL = reg("electric_drill", () -> electric("electric_drill"));
-        ELECTRIC_CHAINSAW = reg("electric_chainsaw", () -> electric("electric_chainsaw"));
-        ELECTRIC_WRENCH = reg("electric_wrench", () -> electric("electric_wrench"));
-        ELECTRIC_SCREWDRIVER = reg("electric_screwdriver", () -> electric("electric_screwdriver"));
+        for(var spec:com.gregtech.gregtech.content.tool.ElectricToolCatalog.ALL)BY_ID.put(spec.id(),reg(spec.id(),()->electric(spec.id())));
+        ELECTRIC_DRILL=BY_ID.get("electric_drill");ELECTRIC_CHAINSAW=BY_ID.get("electric_chainsaw");
+        ELECTRIC_WRENCH=BY_ID.get("electric_wrench");ELECTRIC_SCREWDRIVER=BY_ID.get("electric_screwdriver");
     }
 }
