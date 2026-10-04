@@ -1,8 +1,10 @@
 package com.gregtech.gregtech.content.recipe;
 /** Forge Source1 named recipe order over the same materials/maps; native boundaries only. */
 public final class NeoMachineRecipeLoader {
- private static boolean loaded;private NeoMachineRecipeLoader(){}
- public static void load(){if(loaded)throw new IllegalStateException("Neo machine recipes initialized twice");loaded=true;
+ private static final com.gregtech.gregtech.api.mod.SetupOnce SETUP = new com.gregtech.gregtech.api.mod.SetupOnce();
+ private NeoMachineRecipeLoader(){}
+ public static void load(){SETUP.run(NeoMachineRecipeLoader::loadRecipes);}
+ private static void loadRecipes(){
   new com.gregtech.gregtech.loaders.c.Loader_Recipes_OreProcessing().run();
   new com.gregtech.gregtech.loaders.c.Loader_Recipes_Parts().run();
   com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe VanillaProcessingRecipes: {}",com.gregtech.gregtech.content.recipe.VanillaProcessingRecipes.register());

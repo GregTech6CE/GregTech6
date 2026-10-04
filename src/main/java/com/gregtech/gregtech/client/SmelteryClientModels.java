@@ -99,7 +99,11 @@ public final class SmelteryClientModels {
             }
             BakedModel worldModel = new CrucibleBlockBakedModel(shared);
             BakedModel itemModel = BlockItemClientModels.asBlockItem(shared);
-            if (block instanceof MoldBlock) itemModel = new MoldItemBakedModel(itemModel);
+            if (block instanceof MoldBlock) {
+                BakedModel gridTemplate = lookupModel(models, CrucibleMoldIcons.sharedModelLocation(MaterialTextureSet.METALLIC));
+                itemModel = new MoldItemBakedModel(itemModel,
+                        MoldItemBakedModel.gridSprite(gridTemplate == null ? shared : gridTemplate));
+            }
             BlockItemClientModels.alias(models, blockId, blockModelId, worldModel, itemModel);
             BlockItemClientModels.aliasItemInventory(models, itemId, itemModel);
             aliased++;

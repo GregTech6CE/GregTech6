@@ -25,6 +25,7 @@ public final class GregTechNeoForge {
     public static final String MOD_ID = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID;
     public static final String NAMESPACE = com.gregtech.gregtech.api.mod.GregTechIdentity.REGISTRY_NAMESPACE;
     private static final Logger LOGGER = LogUtils.getLogger();
+    private static final com.gregtech.gregtech.api.mod.SetupOnce SHARED_SETUP = new com.gregtech.gregtech.api.mod.SetupOnce();
 
     public GregTechNeoForge(IEventBus modEventBus, net.neoforged.fml.ModContainer modContainer) {
         modContainer.registerConfig(net.neoforged.fml.config.ModConfig.Type.COMMON,com.gregtech.gregtech.GregTechConfig.SPEC);
@@ -113,10 +114,10 @@ public final class GregTechNeoForge {
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
-        event.enqueueWork(this::finishSharedSetup);
+        event.enqueueWork(() -> SHARED_SETUP.run(GregTechNeoForge::finishSharedSetup));
     }
 
-    private void finishSharedSetup() {
+    private static void finishSharedSetup() {
         com.gregtech.gregtech.registry.GTProjectiles.registerDispensers();
         for (var holder : GTItems.allEntries()) {
             var item = holder.get();

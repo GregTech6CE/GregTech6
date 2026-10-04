@@ -30,7 +30,7 @@ public final class MaterialClientModels {
         PrefixRegistry.ensurePrefixesLoaded();
         for (MaterialTextureSet set : MaterialTextureSet.MODELED) {
             for (MaterialPrefix prefix : PrefixRegistry.all()) {
-                if (prefix.isHiddenFromCreative() && !GTItems.hasBoundItems(prefix)) continue;
+                if (!GTItems.hasBoundItems(prefix)) continue;
                 // Neo 1.21 requires side-loaded models to use the standalone variant.
                 event.register(MaterialIcons.sharedModelStandalone(set, prefix));
             }

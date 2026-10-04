@@ -2,10 +2,9 @@ package com.gregtech.gregtech.client;
 
 import com.gregtech.gregtech.block.machine.MoldItemData;
 import com.gregtech.gregtech.api.machine.crucible.MoldShapes;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.block.model.*;
-import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.BlockModelRotation;
 import net.minecraft.core.Direction;
@@ -23,11 +22,13 @@ import java.util.*;
 /** The same 5x5 cavity grid as the world mold, selected from the native block-item shape data. */
 public final class MoldItemBakedModel extends BakedModelWrapper<BakedModel> {
     private final List<BakedQuad> grid;
+    private final TextureAtlasSprite gridSprite;
     private final ItemOverrides overrides;
-    public MoldItemBakedModel(BakedModel hull) { this(hull,0,false); }
-    private MoldItemBakedModel(BakedModel hull,int shape,boolean fixed) {
+    public MoldItemBakedModel(BakedModel hull, TextureAtlasSprite sprite) { this(hull,sprite,0,false); }
+    private MoldItemBakedModel(BakedModel hull,TextureAtlasSprite sprite,int shape,boolean fixed) {
         super(hull);
-        grid=grid(shape);
+        gridSprite=Objects.requireNonNull(sprite,"Baked mold grid sprite");
+        grid=grid(shape,gridSprite);
         var variants=new LinkedHashMap<Integer,BakedModel>(16,0.75f,true) {
             @Override protected boolean removeEldestEntry(Map.Entry<Integer,BakedModel> entry) {return size()>32;}
         };
@@ -36,13 +37,19 @@ public final class MoldItemBakedModel extends BakedModelWrapper<BakedModel> {
                                                 @Nullable LivingEntity entity,int seed) {
                 int shape=MoldItemData.shape(stack)&MoldShapes.SHAPE_MASK;
                 if(shape==0)return original;
-                return variants.computeIfAbsent(shape,key->new MoldItemBakedModel(hull,key,true));
+                return variants.computeIfAbsent(shape,key->new MoldItemBakedModel(hull,gridSprite,key,true));
             }
         };
     }
-    private static List<BakedQuad> grid(int shape) {
-        var sprite=Minecraft.getInstance().getModelManager().getAtlas(TextureAtlas.LOCATION_BLOCKS)
-                .getSprite(ResourceLocation.fromNamespaceAndPath("gregtech","block/material_icons/metallic/blocksolid"));
+    // Borrow the sprite from this reload's baked template; ModelManager's atlas is not ready here.
+    static TextureAtlasSprite gridSprite(BakedModel template) {
+        var random=RandomSource.create(0);
+        var quads=new ArrayList<>(template.getQuads(null,null,random));
+        for(var side:Direction.values()) quads.addAll(template.getQuads(null,side,random));
+        for(var quad:quads) if(quad.getTintIndex()==0) return quad.getSprite();
+        return template.getParticleIcon();
+    }
+    private static List<BakedQuad> grid(int shape,TextureAtlasSprite sprite) {
         var bakery=new FaceBakery();
         var quads=new ArrayList<BakedQuad>();
         // Existing world mold geometry: 12px square, 2.4px cells, y=1..3px; bit 1 is a cavity.
