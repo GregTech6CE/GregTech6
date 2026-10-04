@@ -95,7 +95,7 @@ public final class FluidSpringTests {
                 problems.add(spring.name() + ": the spring was not placed");
                 continue;
             }
-            var springBlock = GTDecorBlocks.FLUID_SPRING.get();
+            var springBlock = com.gregtech.gregtech.registry.GTFluidSprings.byFluid(spring.fluidId());
             if (!level.getBlockState(pos).is(springBlock)) {
                 problems.add(spring.name() + ": fluid_spring block missing");
                 continue;

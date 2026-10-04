@@ -24,6 +24,7 @@ public final class ProductionClientSmoke {
     private long titleAt;
     private int frames;
     private boolean capturing;
+    private JsonObject surfaceChecks;
     private String lastState = "";
     private int loaderWarnings;
 
@@ -72,6 +73,8 @@ public final class ProductionClientSmoke {
         if (titleAt == 0) titleAt = System.nanoTime();
         if (++frames < 5 || System.nanoTime() - titleAt < TimeUnit.SECONDS.toNanos(3)) return;
         capturing = true;
+        try { surfaceChecks=SurfaceDeliveryChecks.capture(client,event.getGuiGraphics()); }
+        catch(Throwable error){terminal.set(true);LogUtils.getLogger().error("PRODUCTION_SMOKE_FAILED",error);client.execute(client::stop);return;}
         String name = "production-forge-" + UUID.randomUUID() + ".png";
         var screenshot = client.gameDirectory.toPath().resolve("screenshots").resolve(name).toAbsolutePath();
         event.getGuiGraphics().flush();
@@ -81,6 +84,7 @@ public final class ProductionClientSmoke {
                 var image = ImageIO.read(screenshot.toFile());
                 if (image == null) throw new IllegalStateException("Undecodable screenshot");
                 JsonObject receipt = new JsonObject();
+                receipt.add("surfaceChecks",surfaceChecks);
                 receipt.addProperty("platform", "forge");
                 receipt.addProperty("screen", TitleScreen.class.getName());
                 receipt.addProperty("screenshot", screenshot.toString());

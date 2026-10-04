@@ -15,7 +15,7 @@ public final class OriginFeedbackChecks {
     private static final java.util.List<String> failures=new java.util.concurrent.CopyOnWriteArrayList<>();
     private static void require(boolean value,String message){if(!value)failures.add(message);}
     public static void registry() {
-        int[] facilities={7133,4033,6033,5033,8033,14999,26304,32048,32057,32062,32702,32703,32705,32707,32709,32711,32719,32722,32727,32732,32735,32737,32739,32744,32750,32764};
+        int[] facilities={7133,4033,6033,5033,8033,14999,26304,32048,32057,32062,32702,32703,32705,32707,32709,32711,32719,32722,32727,32732,32735,32737,32739,32744,32750};
         var missing=new java.util.ArrayList<String>();
         for(int legacy:facilities)if(!BuiltInRegistries.BLOCK.containsKey(id(NativeOriginFacilities.block(legacy))))missing.add(legacy+":"+NativeOriginFacilities.block(legacy));
         if(!missing.isEmpty())throw new IllegalStateException("Missing original origin facilities: "+missing);
@@ -34,7 +34,7 @@ public final class OriginFeedbackChecks {
         var road=level.getBlockState(new BlockPos(-4,height,64));
         require(road.is(asphalt)&&road.getValue(com.gregtech.gregtech.block.misc.ConcreteBlock.COLOR)==DyeColor.GRAY,"Road is not source gray asphalt");
         require(level.getBlockState(new BlockPos(72,height-10,-72)).is(Blocks.TERRACOTTA),"Original uncolored mesa terracotta was dyed");
-        int[] facilities={7133,4033,6033,5033,8033,14999,26304,32048,32057,32062,32702,32703,32705,32707,32709,32711,32719,32722,32727,32732,32735,32737,32739,32744,32750,32764};
+        int[] facilities={7133,4033,6033,5033,8033,14999,26304,32048,32057,32062,32702,32703,32705,32707,32709,32711,32719,32722,32727,32732,32735,32737,32739,32744,32750};
         for(int legacy:facilities)require(BuiltInRegistries.BLOCK.containsKey(id(NativeOriginFacilities.block(legacy))),"Missing source facility "+legacy);
         require(level.getBlockState(new BlockPos(17,height+1,-46)).is(Blocks.END_PORTAL_FRAME),"Original Nexus portal frame was not generated");
         require(level.getBlockState(new BlockPos(34,height+15,-30)).is(BuiltInRegistries.BLOCK.get(id("glass_glow_slab"))),"Source test roof glow-glass slab missing");
@@ -42,8 +42,7 @@ public final class OriginFeedbackChecks {
         require(grind instanceof com.gregtech.gregtech.blockentity.tool.ManualToolBlockEntity station&&station.stoneUses()==4,"Source grindstone not preloaded");
         var button=level.getBlockEntity(new BlockPos(44,height+2,-20));
         require(button instanceof com.gregtech.gregtech.blockentity.tool.AdvancedButtonBlockEntity b&&b.isInverted()&&!b.isLampMode(),"Source inverted test button config lost");
-        var certificate=level.getBlockEntity(new BlockPos(41,height+4,-18));
-        require(certificate instanceof com.gregtech.gregtech.blockentity.misc.SupporterCertificateBlockEntity c&&c.owner().equals("Bear989Sr"),"Native certificate owner missing");
+        require(level.getBlockState(new BlockPos(41,height+4,-18)).isAir(),"Removed certificate still generated");
         var drawer=level.getBlockEntity(new BlockPos(39,height+2,-18));
         require(drawer instanceof com.gregtech.gregtech.blockentity.inventory.DrawerQuadBlockEntity,"Source test drawer was not generated");
         if(!(drawer instanceof com.gregtech.gregtech.blockentity.inventory.DrawerQuadBlockEntity))throw new IllegalStateException("Missing actual test drawer");

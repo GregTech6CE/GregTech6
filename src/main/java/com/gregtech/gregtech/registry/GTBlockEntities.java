@@ -39,7 +39,6 @@ public final class GTBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES =
             DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, GregTech.NAMESPACE);
 
-    public static final RegistryObject<BlockEntityType<com.gregtech.gregtech.blockentity.misc.SupporterCertificateBlockEntity>> SUPPORTER_CERTIFICATE=BLOCK_ENTITY_TYPES.register("supporter_certificate",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.misc.SupporterCertificateBlockEntity::new,GTToolBlocks.SUPPORTER_CERTIFICATE.get()).build(null));
     public static final RegistryObject<BlockEntityType<com.gregtech.gregtech.blockentity.energy.SignalWireBlockEntity>> SIGNAL_WIRE =
             BLOCK_ENTITY_TYPES.register("signal_wire", () -> BlockEntityType.Builder.of(
                     com.gregtech.gregtech.blockentity.energy.SignalWireBlockEntity::new,
@@ -451,13 +450,13 @@ public final class GTBlockEntities {
     public static final RegistryObject<BlockEntityType<com.gregtech.gregtech.blockentity.FluidSpringBlockEntity>> FLUID_SPRING =
             BLOCK_ENTITY_TYPES.register("fluid_spring", () ->
                     BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.FluidSpringBlockEntity::new,
-                            GTDecorBlocks.FLUID_SPRING.get()).build(null));
+                            GTFluidSprings.allBlocks()).build(null));
 
     /** GT6's berry bush (WorldgenBushes places it, players set its berry type). */
     public static final RegistryObject<BlockEntityType<com.gregtech.gregtech.blockentity.BushBlockEntity>> BUSH =
             BLOCK_ENTITY_TYPES.register("bush", () ->
                     BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.BushBlockEntity::new,
-                            GTBushes.BUSH.get()).build(null));
+                            GTBushes.allBlocks()).build(null));
 
     /** GT6's wild bumblebee hive (WorldgenHives fills it with a comb, a princess and drones). */
     public static final RegistryObject<BlockEntityType<com.gregtech.gregtech.blockentity.misc.BumbleHiveBlockEntity>> BUMBLE_HIVE =

@@ -113,6 +113,7 @@ public final class WorldCreationSmoke {
                     OriginFeedbackChecks.server(server,result);
                     LootFeedbackChecks.server(server,result);
                     MachineFeedbackChecks.server(server,result);
+                    SurfaceFeedbackChecks.server(server,result);
                     result.addProperty("canonicalItemsChecked",checked);
                     result.addProperty("recipes",recipes);
                     result.addProperty("serverTicks",server.getTickCount());
@@ -123,8 +124,9 @@ public final class WorldCreationSmoke {
             if (++frames < 30 || !probe.isDone() || !emiReady()) return;
             var result = probe.join();
             if (!LootBrowserSmoke.start(result)) return;
-            OriginFeedbackChecks.client(minecraft,result);
             MachineFeedbackChecks.client(minecraft,result);
+            SurfaceFeedbackChecks.client(minecraft,result);
+            OriginFeedbackChecks.client(minecraft,result);
             result.addProperty("renderedWorldFrames",frames);
             result.addProperty("emiLoaded",EMI_PRESENT);
             if (!Files.isRegularFile(minecraft.gameDirectory.toPath().resolve("saves").resolve(WORLD).resolve("level.dat")))
@@ -132,6 +134,7 @@ public final class WorldCreationSmoke {
             stage = 4;
             String file = "world-creation-forge-" + ID + ".png";
             OriginFeedbackChecks.renderInventory(event.getGuiGraphics(),minecraft,result);
+            SurfaceFeedbackChecks.render(event.getGuiGraphics(),minecraft,result);
             event.getGuiGraphics().flush();
             Screenshot.grab(minecraft.gameDirectory,file,minecraft.getMainRenderTarget(),message -> {
                 try {

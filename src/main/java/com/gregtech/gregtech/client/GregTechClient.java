@@ -75,12 +75,8 @@ public final class GregTechClient {
 
     @SubscribeEvent
     public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
-        event.register((stack, tint) -> {
-            var data = stack.getTagElement("BlockEntityTag");
-            var type = data == null ? null : com.gregtech.gregtech.content.plant.GTBerryBushes.byId(data.getString("berry"));
-            return tint == 0 ? type == null ? com.gregtech.gregtech.content.plant.GTBerryBushes.NO_BERRY_COLOUR : type.bush()
-                    : com.gregtech.gregtech.content.plant.GTBerryBushes.stageColour(type, 3);
-        }, com.gregtech.gregtech.registry.GTBushes.BUSH.get().asItem());
+        event.register((stack,tint)->((com.gregtech.gregtech.block.plant.BushBlock)((net.minecraft.world.item.BlockItem)stack.getItem()).getBlock()).tintColour(tint,3),
+                java.util.Arrays.stream(com.gregtech.gregtech.registry.GTBushes.allBlocks()).map(Block::asItem).toArray(net.minecraft.world.item.Item[]::new));
         com.gregtech.gregtech.registry.GTChemicalBatteries.allRegistered().forEach(entry->
                 event.register((stack,index)->index==0?entry.get().spec().chemistry().color:0xFFFFFF,entry.get().asItem()));
         java.util.stream.Stream.concat(com.gregtech.gregtech.registry.GTMiscBlocks.ADVANCED_CRAFTING_TABLES.stream(),com.gregtech.gregtech.registry.GTMiscBlocks.CHARGING_CRAFTING_TABLES.stream()).forEach(entry -> event.register((stack,index) -> index==0?entry.get().material().getColor():0xFFFFFF,entry.get().asItem()));
@@ -303,15 +299,8 @@ public final class GregTechClient {
         GTBlocks.BLOCKS.getEntries().forEach(entry -> {
             Block block = entry.get();
             if (block instanceof com.gregtech.gregtech.block.plant.BushBlock) {
-                // GT6's BushArray colours per stage; a bush without a berry uses GT6's placeholder.
-                event.register((state, level, pos, tintIndex) -> {
-                    if (level != null && pos != null
-                            && level.getBlockEntity(pos) instanceof com.gregtech.gregtech.blockentity.BushBlockEntity bush) {
-                        return bush.tintColour(tintIndex);
-                    }
-                    return tintIndex == 0 ? com.gregtech.gregtech.content.plant.GTBerryBushes.NO_BERRY_COLOUR
-                            : com.gregtech.gregtech.content.plant.GTBerryBushes.stageColour(null, 3);
-                }, block);
+                event.register((state,level,pos,tint)->((com.gregtech.gregtech.block.plant.BushBlock)state.getBlock()).tintColour(tint,state.getValue(com.gregtech.gregtech.block.plant.BushBlock.STAGE)),
+                        block);
             } else if (block instanceof com.gregtech.gregtech.block.tool.PortableContainerBlock vessel) {
                 event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? vessel.spec().material().getColor() : 0xFFFFFF, block);
             } else if (block instanceof com.gregtech.gregtech.block.energy.ZpmModuleBlock) {

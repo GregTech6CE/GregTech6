@@ -151,7 +151,6 @@ private final int mHeight; public SourceTesting(int height) {mHeight=height;}
 			aWorld.tile(40, mHeight+3, -18, 32735, "null");
 
 			aWorld.tile(41, mHeight+2, -18, 5033, "UT.NBT.make(NBT_FACING, SIDE_Z_NEG)");
-			aWorld.tile(41, mHeight+4, -18, 32764, "UT.NBT.make(NBT_FACING, SIDE_Z_NEG, \"display\", UT.NBT.makeString(\"Name\", \"Bear989Sr\"))");
 
 
 			aWorld.tile(42, mHeight+2, -18, 32703, "UT.NBT.make(NBT_FACING, SIDE_Z_NEG, NBT_STATE, 4)");

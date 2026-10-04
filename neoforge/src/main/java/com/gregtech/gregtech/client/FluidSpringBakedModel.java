@@ -24,7 +24,7 @@ public final class FluidSpringBakedModel implements BakedModel {
     private final BakedModel inner;
     private final Fluid itemFluid;
     public FluidSpringBakedModel(BakedModel inner) { this(inner, Fluids.WATER); }
-    private FluidSpringBakedModel(BakedModel inner, Fluid fluid) { this.inner=inner; this.itemFluid=fluid; }
+    public FluidSpringBakedModel(BakedModel inner, Fluid fluid) { this.inner=inner; this.itemFluid=fluid; }
     @Override public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction face, RandomSource random) {
         return remap(inner.getQuads(state, face, random), itemFluid);
     }

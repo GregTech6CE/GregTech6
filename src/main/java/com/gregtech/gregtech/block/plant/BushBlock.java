@@ -65,9 +65,19 @@ public class BushBlock extends Block implements EntityBlock {
         };
     }
 
-    public BushBlock(Properties properties) {
+    private final String berryId;
+    public BushBlock(Properties properties) { this("",properties); }
+    public BushBlock(String berryId,Properties properties) {
         super(properties);
+        this.berryId=berryId;
+
         registerDefaultState(stateDefinition.any().setValue(STAGE, 0).setValue(SUPPORT, 6));
+    }
+
+    public String berryId() { return berryId; }
+    public int tintColour(int tint, int stage) {
+        var type=GTBerryBushes.byId(berryId);
+        return tint==0 ? type==null?GTBerryBushes.NO_BERRY_COLOUR:type.bush() : GTBerryBushes.stageColour(type,stage);
     }
 
     @Override
@@ -104,9 +114,10 @@ public class BushBlock extends Block implements EntityBlock {
         BlockState parent = context.getLevel().getBlockState(parentPos);
         if (parent.getBlock() instanceof BushBlock && isCore(parent)
                 && context.getLevel().getBlockEntity(parentPos) instanceof BushBlockEntity bush) {
-            String planted = packedBerry(context.getItemInHand());
-            if (planted.isEmpty() || planted.equals(bush.berryId()))
-                return defaultBlockState().setValue(SUPPORT, support.get3DDataValue());
+            String planted = berryId.isEmpty() ? packedBerry(context.getItemInHand()) : berryId;
+            if ((planted.isEmpty() || planted.equals(bush.berryId()))
+                    && com.gregtech.gregtech.registry.GTBushes.byBerry(bush.berryId())!=null)
+                return com.gregtech.gregtech.registry.GTBushes.byBerry(bush.berryId()).defaultBlockState().setValue(SUPPORT, support.get3DDataValue());
         }
         return defaultBlockState().canSurvive(context.getLevel(), context.getClickedPos()) ? defaultBlockState() : null;
     }
@@ -121,15 +132,18 @@ public class BushBlock extends Block implements EntityBlock {
         return new BushBlockEntity(pos, state);
     }
 
-    /** GT6 {@code MultiTileEntityBush.writeItemNBT2} carries the chosen berry, not its growth. */
+    /** New drops are ordinary variant items. Decode old stacks only at the legacy boundary. */
     private ItemStack packed(@Nullable BlockEntity entity) {
-        ItemStack stack = new ItemStack(this);
-        if (entity instanceof BushBlockEntity bush && !bush.berryId().isEmpty()) {
-            CompoundTag data = new CompoundTag();
-            data.putString("berry", bush.berryId());
-            stack.addTagElement("BlockEntityTag", data);
+        if(berryId.isEmpty() && entity instanceof BushBlockEntity bush) {
+            var variant=com.gregtech.gregtech.registry.GTBushes.byBerry(bush.berryId());
+            if(variant!=null)return new ItemStack(variant);
+            if(!bush.berryId().isEmpty()) {
+                // Preserve an unmapped legacy/external output rather than silently changing it.
+                var data=new CompoundTag();data.putString("berry",bush.berryId());
+                var stack=new ItemStack(this);stack.addTagElement("BlockEntityTag",data);return stack;
+            }
         }
-        return stack;
+        return new ItemStack(this);
     }
 
     @Override
@@ -146,11 +160,14 @@ public class BushBlock extends Block implements EntityBlock {
     public void setPlacedBy(Level level, BlockPos pos, BlockState state,
                             @Nullable LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(level, pos, state, placer, stack);
-        if (level.getBlockEntity(pos) instanceof BushBlockEntity bush) bush.refreshSupport();
+        if (!berryId.isEmpty()) {
+            if (level.getBlockEntity(pos) instanceof BushBlockEntity bush) bush.refreshSupport();
+            return;
+        }
         CompoundTag data = stack.getTagElement("BlockEntityTag");
         if (data == null || !data.contains("berry", Tag.TAG_STRING)) return;
         String berryId = data.getString("berry");
-        if (GTBerryBushes.byId(berryId) == null) return;
+        if (com.gregtech.gregtech.registry.GTBushes.byBerry(berryId) == null) return;
         if (level.getBlockEntity(pos) instanceof BushBlockEntity bush) bush.setBerry(berryId);
     }
 
@@ -180,7 +197,7 @@ public class BushBlock extends Block implements EntityBlock {
         }
         // A berryless bush adopts the berry the player is holding (GT6 accepts any plantGtBerry).
         BerryLookup lookup = BerryLookup.current(player.getItemInHand(hand));
-        if (lookup == null) return InteractionResult.PASS;
+        if (lookup == null || com.gregtech.gregtech.registry.GTBushes.byBerry(lookup.id())==null) return InteractionResult.PASS;
         bush.setBerry(lookup.id());
         return InteractionResult.CONSUME;
     }

@@ -39,28 +39,38 @@ public class FluidSpringBlockEntity extends BlockEntity {
         super(GTBlockEntities.FLUID_SPRING.get(), pos, state);
     }
 
-    public String fluidId() { return fluidId; }
+    private com.gregtech.gregtech.worldgen.FluidSpringRules.Spring definition() {
+        return ((com.gregtech.gregtech.block.FluidSpringBlock)getBlockState().getBlock()).spring();
+    }
+    public String fluidId() { return definition()==null?fluidId:definition().fluidId(); }
 
-    public int amount() { return amount; }
+    public int amount() { return definition()==null?amount:definition().amount(); }
 
     public boolean active() { return active; }
 
     /** GT6 {@code mFluid} — the fluid this spring pushes up, as a stack of its stored amount. */
     public FluidStack springFluid() {
         Fluid fluid = fluid();
-        return fluid == null ? FluidStack.EMPTY : new FluidStack(fluid, amount);
+        return fluid == null ? FluidStack.EMPTY : new FluidStack(fluid, amount());
     }
 
     public Fluid fluid() {
-        return fluidId.isEmpty() ? null : BuiltInRegistries.FLUID.get(ResourceLocation.parse(fluidId));
+        return fluidId().isEmpty() ? null : BuiltInRegistries.FLUID.get(ResourceLocation.parse(fluidId()));
     }
 
+    /** Upgrade recognized legacy spring metadata to the fixed source variant/rate. */
     public void setSpring(String fluidId, int amount) {
-        this.fluidId = fluidId == null ? "" : fluidId;
-        this.amount = com.gregtech.gregtech.worldgen.FluidSpringRules.positiveAmount(amount);
-        setChanged();
-        if (level != null && !level.isClientSide) {
-            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+        var variant=com.gregtech.gregtech.registry.GTFluidSprings.byFluid(fluidId);
+        if(variant==null) {
+            if(definition()==null){this.fluidId=fluidId==null?"":fluidId;this.amount=Math.max(1,amount);setChanged();}
+            return;
+        }
+        if(level==null){setBlockState(variant.defaultBlockState());this.fluidId="";return;}
+        if(level.isClientSide)return;
+        boolean wasActive=active;
+        level.setBlock(worldPosition,variant.defaultBlockState(),3);
+        if(level.getBlockEntity(worldPosition) instanceof FluidSpringBlockEntity next) {
+            next.fluidId="";next.active=wasActive;next.setChanged();
         }
     }
 
@@ -71,6 +81,7 @@ public class FluidSpringBlockEntity extends BlockEntity {
     /** GT6's {@code onTick2}: activate when the space above frees up, then emit at {@code 1/amount}. */
     public void tick() {
         if (level == null || level.isClientSide) return;
+        if(definition()==null && !fluidId.isEmpty() && com.gregtech.gregtech.registry.GTFluidSprings.byFluid(fluidId)!=null){setSpring(fluidId,amount);return;}
         BlockState above = level.getBlockState(worldPosition.above());
         Fluid fluid = fluid();
         if (fluid == null) return;
@@ -80,7 +91,7 @@ public class FluidSpringBlockEntity extends BlockEntity {
             if (above.isAir() || above.canBeReplaced()) { active = true; setChanged(); }
             else return;
         }
-        if (!com.gregtech.gregtech.worldgen.FluidSpringRules.rolls(level.random::nextInt,amount)) return;
+        if (!com.gregtech.gregtech.worldgen.FluidSpringRules.rolls(level.random::nextInt,amount())) return;
         emit();
     }
 
@@ -124,7 +135,7 @@ public class FluidSpringBlockEntity extends BlockEntity {
     @Override
     protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
         super.loadAdditional(tag,lookup);
-        fluidId = tag.getString("spring");
+        fluidId = definition()==null?tag.getString("spring"):"";
         amount = com.gregtech.gregtech.worldgen.FluidSpringRules.positiveAmount(tag.contains("amount") ? tag.getInt("amount") : DEFAULT_AMOUNT);
         active = tag.getBoolean("active");
         if(level!=null&&level.isClientSide) { requestModelDataUpdate(); level.sendBlockUpdated(worldPosition,getBlockState(),getBlockState(),3); }
@@ -133,8 +144,10 @@ public class FluidSpringBlockEntity extends BlockEntity {
     @Override
     protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
         super.saveAdditional(tag,lookup);
-        if (!fluidId.isEmpty()) tag.putString("spring", fluidId);
-        tag.putInt("amount", amount);
+        if(definition()==null) {
+            if (!fluidId.isEmpty()) tag.putString("spring", fluidId);
+            tag.putInt("amount", amount);
+        }
         if (active) tag.putBoolean("active", true);
     }
 

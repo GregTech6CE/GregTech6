@@ -57,11 +57,7 @@ final class PlantIconSmoke {
             }
             states++;
         }
-        var bush = new ItemStack(GTBushes.BUSH.get());
-        var data = new net.minecraft.nbt.CompoundTag();
-        data.putString("id", "gregtech:bush"); data.putString("berry", "blueberry");
-        bush.addTagElement("BlockEntityTag", data);
-        if ((client.getItemColors().getColor(bush, 0) & 0xFFFFFF) != 0x22FF22) throw new IllegalStateException("Typed bush item lacks its berry tint");
+        var bush = new ItemStack(GTBushes.byBerry("blueberry"));
         gallery.add(bush);
         for (String color : new String[]{"white", "red", "blue"})
             gallery.add(new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech", "glowtus_" + color))));

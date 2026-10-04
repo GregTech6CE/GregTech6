@@ -78,7 +78,7 @@ public final class GTDecorBlocks {
     public static RegistryObject<com.gregtech.gregtech.block.BookShelfBlock> BOOKSHELF;
     private static final java.util.Map<String, RegistryObject<com.gregtech.gregtech.block.BookShelfBlock>> BOOKSHELVES =
             new java.util.LinkedHashMap<>();
-    public static RegistryObject<Block> FLUID_SPRING;
+    public static RegistryObject<com.gregtech.gregtech.block.FluidSpringBlock> FLUID_SPRING;
     public static RegistryObject<GregLanternBlock> GREG_LANTERN;
     public static RegistryObject<SandwichBlock> SANDWICH_BLOCK;
 
@@ -250,8 +250,8 @@ public final class GTDecorBlocks {
                             new Item.Properties().stacksTo(16)));
             if (variant.path().equals("bookshelf")) BOOKSHELF = block;
         }
-        FLUID_SPRING = reg("fluid_spring", () -> new com.gregtech.gregtech.block.FluidSpringBlock(
-                props(MapColor.WATER, 3f).sound(SoundType.STONE)));
+        GTFluidSprings.initialize();
+        FLUID_SPRING = GTFluidSprings.FLUID_SPRING;
         GREG_LANTERN = reg("greg_lantern", () -> new GregLanternBlock(
                 BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).strength(1f, 1f)
                         .sound(SoundType.WOOD).lightLevel(s -> 15).noOcclusion()));

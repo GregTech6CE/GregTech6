@@ -139,6 +139,7 @@ public final class BushTests {
         var onStone = (BushBlockEntity) level.getBlockEntity(stone);
         helper.assertTrue(onStone != null, "the bush on stone has a block entity");
         onStone.setBerry("raspberry");
+        onStone=(BushBlockEntity)level.getBlockEntity(stone);
         helper.assertTrue(onStone.speed() == 0, "GT6's mSpeed is 0 on stone");
         helper.assertTrue(onStone.grow() == 0, "no growth on stone");
         helper.succeed();
@@ -179,6 +180,7 @@ public final class BushTests {
         InteractionResult planted = GTBushes.BUSH.get().use(level.getBlockState(bare), level, bare, planter,
                 InteractionHand.MAIN_HAND, hit(bare));
         helper.assertTrue(planted.consumesAction(), "setting the berry type is an interaction");
+        bareBush=(BushBlockEntity)level.getBlockEntity(bare);
         helper.assertTrue("cranberry".equals(bareBush.berryId()),
                 "the bush adopted the cranberry, got " + bareBush.berryId());
         helper.succeed();

@@ -171,6 +171,7 @@ tasks.register("productionSmokeJar", Jar) {
     destinationDirectory = layout.buildDirectory.dir("production-probe")
     from(sourceSets.productionSmoke.output) {
         include "com/gregtech/gregtech/integration/client/ProductionClientSmoke*.class"
+        include "com/gregtech/gregtech/integration/client/SurfaceDeliveryChecks*.class"
     }
     from(rootProject.file("tools/integration/production-probe/neoforge"))
 }

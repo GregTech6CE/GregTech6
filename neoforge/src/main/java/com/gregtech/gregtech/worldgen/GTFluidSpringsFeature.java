@@ -111,13 +111,9 @@ public class GTFluidSpringsFeature extends Feature<NoneFeatureConfiguration> {
 
     /** Places GT6's spring tile entity on a bedrock column. */
     public static boolean placeSpring(WorldGenLevel level, BlockPos pos, Spring spring) {
-        BlockState springBlock = GTFluidSprings.FLUID_SPRING.get().defaultBlockState();
-        if (!level.setBlock(pos, springBlock, 2)) return false;
-        if (level.getBlockEntity(pos) instanceof FluidSpringBlockEntity be) {
-            be.setSpring(spring.fluidId(), spring.amount());
-            return true;
-        }
-        return false;
+        var variant=com.gregtech.gregtech.registry.GTFluidSprings.byFluid(spring.fluidId());
+        return variant!=null && level.setBlock(pos,variant.defaultBlockState(),2);
+
     }
 
     /** GT6's surface indicator: up to six patches of GT6 grass above the field. */

@@ -21,6 +21,7 @@ import java.util.List;
  */
 public final class BlockItemDisplayBakedModel implements BakedModel {
     private final BakedModel inner;
+    private final BoundedCache<BakedModel, BakedModel> itemPasses = new BoundedCache<>(8);
 
     public BlockItemDisplayBakedModel(BakedModel inner) {
         this.inner = inner;
@@ -40,6 +41,17 @@ public final class BlockItemDisplayBakedModel implements BakedModel {
     @Override
     public ChunkRenderTypeSet getRenderTypes(BlockState state, RandomSource rand, ModelData data) {
         return inner.getRenderTypes(state, rand, data);
+    }
+
+    @Override
+    public List<RenderType> getRenderTypes(net.minecraft.world.item.ItemStack stack, boolean fabulous) {
+        return inner.getRenderTypes(stack, fabulous);
+    }
+
+    @Override
+    public List<BakedModel> getRenderPasses(net.minecraft.world.item.ItemStack stack, boolean fabulous) {
+        return inner.getRenderPasses(stack, fabulous).stream()
+                .map(pass -> pass == inner ? this : itemPasses.computeIfAbsent(pass, BlockItemDisplayBakedModel::new)).toList();
     }
 
     @Override

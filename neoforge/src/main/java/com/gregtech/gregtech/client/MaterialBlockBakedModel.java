@@ -25,6 +25,7 @@ import java.util.List;
 public final class MaterialBlockBakedModel implements BakedModel {
     private final BakedModel inner;
     private final BoundedCache<BakedQuad, BakedQuad> tintedQuads = new BoundedCache<>(128);
+    private final BoundedCache<BakedModel, BakedModel> itemPasses = new BoundedCache<>(8);
 
     public MaterialBlockBakedModel(BakedModel inner) {
         this.inner = inner;
@@ -44,6 +45,17 @@ public final class MaterialBlockBakedModel implements BakedModel {
     @Override
     public ChunkRenderTypeSet getRenderTypes(BlockState state, RandomSource rand, ModelData data) {
         return inner.getRenderTypes(state, rand, data);
+    }
+
+    @Override
+    public List<net.minecraft.client.renderer.RenderType> getRenderTypes(net.minecraft.world.item.ItemStack stack, boolean fabulous) {
+        return inner.getRenderTypes(stack, fabulous);
+    }
+
+    @Override
+    public List<BakedModel> getRenderPasses(net.minecraft.world.item.ItemStack stack, boolean fabulous) {
+        return inner.getRenderPasses(stack, fabulous).stream()
+                .map(pass -> pass == inner ? this : itemPasses.computeIfAbsent(pass, MaterialBlockBakedModel::new)).toList();
     }
 
     private List<BakedQuad> tintQuads(List<BakedQuad> source) {

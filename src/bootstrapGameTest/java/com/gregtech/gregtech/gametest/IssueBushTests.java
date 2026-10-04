@@ -24,7 +24,7 @@ public final class IssueBushTests {
         h.getLevel().setBlockAndUpdate(pos, GTBushes.BUSH.get().defaultBlockState());
         var bush = (BushBlockEntity)h.getLevel().getBlockEntity(pos);
         bush.setBerry("blueberry");
-        return bush;
+        return (BushBlockEntity)h.getLevel().getBlockEntity(pos);
     }
 
     @GameTest(template="test_empty", timeoutTicks=40)
@@ -32,10 +32,12 @@ public final class IssueBushTests {
         var pos = h.absolutePos(new BlockPos(2, 2, 2));
         var bush = core(h, pos);
         bush.setBerry("");
+        bush=(BushBlockEntity)h.getLevel().getBlockEntity(pos);
         var player = h.makeMockPlayer();
         player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(net.minecraft.world.item.Items.STRING, 4));
         var hit = new BlockHitResult(Vec3.atCenterOf(pos), Direction.UP, pos, false);
         var result = GTBushes.BUSH.get().use(bush.getBlockState(), h.getLevel(), pos, player, InteractionHand.MAIN_HAND, hit);
+        bush=(BushBlockEntity)h.getLevel().getBlockEntity(pos);
         h.assertTrue(result.consumesAction() && bush.berryId().equals("minecraft:string"), "original default cotton adopts string");
         h.assertTrue(player.getItemInHand(InteractionHand.MAIN_HAND).getCount() == 4, "setting output does not consume its specimen");
         h.getLevel().setBlockAndUpdate(pos, bush.getBlockState().setValue(BushBlock.STAGE, 3));
@@ -43,7 +45,7 @@ public final class IssueBushTests {
         GTBushes.BUSH.get().use(bush.getBlockState(), h.getLevel(), pos, player, InteractionHand.MAIN_HAND, hit);
         int harvested = player.getInventory().countItem(net.minecraft.world.item.Items.STRING);
         h.assertTrue(harvested >= 1 && harvested <= 2 && bush.stage() == 0, "cotton hands out 1-2 string and resets");
-        h.assertTrue(bush.saveWithoutMetadata().getString("berry").equals("minecraft:string"), "namespaced cotton identity is saved");
+        h.assertTrue(!bush.saveWithoutMetadata().contains("berry"), "cotton identity is the registered block, not BE data");
         var remainder = com.gregtech.gregtech.content.plant.BushGrowthRules.advance(255, 2, 2);
         h.assertTrue(remainder.stage() == 3 && remainder.counter() == 1, "rain growth after maturation remains in byte counter");
         h.assertTrue(com.gregtech.gregtech.content.plant.GTBerryBushes.worldgenSize() == 9, "cotton plus eight berries in generation pool");
@@ -65,7 +67,7 @@ public final class IssueBushTests {
             var hit = new BlockHitResult(Vec3.atCenterOf(pos).add(Vec3.atLowerCornerOf(face.getNormal()).scale(0.5)), face, pos, false);
             var result = ((net.minecraft.world.item.BlockItem)stack.getItem()).place(new BlockPlaceContext(player, InteractionHand.MAIN_HAND, stack, hit));
             var state = h.getLevel().getBlockState(adjacent);
-            h.assertTrue(result.consumesAction() && state.is(GTBushes.BUSH.get()) && state.getValue(BushBlock.SUPPORT) == face.getOpposite().get3DDataValue(), "item attaches to root face " + face);
+            h.assertTrue(result.consumesAction() && state.is(GTBushes.byBerry("blueberry")) && state.getValue(BushBlock.SUPPORT) == face.getOpposite().get3DDataValue(), "item attaches to root face " + face);
             var bush = (BushBlockEntity)h.getLevel().getBlockEntity(adjacent);
             h.assertTrue(bush.berryId().equals("blueberry"), "branch inherits berry");
             var outline = state.getShape(h.getLevel(), adjacent).bounds();
@@ -85,8 +87,10 @@ public final class IssueBushTests {
         h.getLevel().setBlockAndUpdate(adjacent, state);
         var branch = (BushBlockEntity)h.getLevel().getBlockEntity(adjacent);
         branch.refreshSupport();
+        branch=(BushBlockEntity)h.getLevel().getBlockEntity(adjacent);
         h.assertTrue(branch.berryId().equals("blueberry") && branch.speed() == 1, "root supplies berry and speed without dirt below branch");
         root.setBerry("cranberry"); branch.refreshSupport();
+        branch=(BushBlockEntity)h.getLevel().getBlockEntity(adjacent);
         h.assertTrue(branch.berryId().equals("cranberry"), "branch follows later core type change");
         h.getLevel().setBlockAndUpdate(pos.below(), Blocks.STONE.defaultBlockState());
         h.assertTrue(branch.speed() == 0 && branch.grow() == 0, "invalid root soil stops attached growth");
@@ -105,7 +109,7 @@ public final class IssueBushTests {
         for (var face : Direction.values()) {
             if(face == Direction.DOWN)continue;
             var state = h.getLevel().getBlockState(pos.relative(face));
-            h.assertTrue(state.is(GTBushes.BUSH.get()) && state.getValue(BushBlock.STAGE) == 3 && state.getValue(BushBlock.SUPPORT) == face.getOpposite().get3DDataValue(), "ripe generated branch " + face);
+            h.assertTrue(state.is(GTBushes.byBerry("blueberry")) && state.getValue(BushBlock.STAGE) == 3 && state.getValue(BushBlock.SUPPORT) == face.getOpposite().get3DDataValue(), "ripe generated branch " + face);
         }
         h.getLevel().setBlockAndUpdate(pos.above(), Blocks.SNOW.defaultBlockState());
         root.refreshSupport();

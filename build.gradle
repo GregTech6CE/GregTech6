@@ -259,6 +259,7 @@ def deliveryProbeJar = tasks.register('productionSmokeJar', Jar) {
     destinationDirectory = layout.buildDirectory.dir('production-probe')
     from(sourceSets.productionSmoke.output) {
         include 'com/gregtech/gregtech/integration/client/ProductionClientSmoke*.class'
+        include 'com/gregtech/gregtech/integration/client/SurfaceDeliveryChecks*.class'
     }
     from('tools/integration/production-probe/forge')
     // The probe must not supply the production mod's mapping or Mixin discovery.
@@ -267,6 +268,11 @@ def deliveryProbeJar = tasks.register('productionSmokeJar', Jar) {
     finalizedBy 'reobfProductionSmokeJar'
 }
 reobf { productionSmokeJar {} }
+// Resolve inherited Minecraft methods called through the mod's block/model types.
+// The probe is a separate jar, so those parents must be provided as rename libraries.
+tasks.named('reobfProductionSmokeJar').configure {
+    libraries.from(sourceSets.main.output.classesDirs)
+}
 
 // This block of code expands all declared replace properties in the specified resource targets.
 // A missing property will result in an error. Properties are expanded using ${} Groovy notation.

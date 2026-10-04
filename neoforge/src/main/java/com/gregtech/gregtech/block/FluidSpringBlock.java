@@ -30,26 +30,33 @@ import java.util.List;
  * way, so a spring head plus a pump is a real (if slow) infinite fluid source.
  */
 public class FluidSpringBlock extends Block implements EntityBlock {
-    public FluidSpringBlock(Properties properties) {
-        super(properties);
+    private final com.gregtech.gregtech.worldgen.FluidSpringRules.Spring spring;
+    public FluidSpringBlock(Properties properties) { this(null,properties); }
+    public FluidSpringBlock(com.gregtech.gregtech.worldgen.FluidSpringRules.Spring spring,Properties properties) {
+        super(properties);this.spring=spring;
     }
+
+    public com.gregtech.gregtech.worldgen.FluidSpringRules.Spring spring() { return spring; }
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new FluidSpringBlockEntity(pos, state);
     }
 
-    /** GT6 {@code MultiTileEntityFluidSpring.writeItemNBT} keeps the source fluid and amount. */
+    /** A spring's output and rate are part of its registered block identity. */
     private ItemStack packed(@Nullable BlockEntity entity) {
-        ItemStack stack = new ItemStack(this);
-        if (entity instanceof FluidSpringBlockEntity spring && !spring.fluidId().isEmpty()) {
-            CompoundTag data = new CompoundTag();
-            data.putString("id", net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(spring.getType()).toString());
-            data.putString("spring", spring.fluidId());
-            data.putInt("amount", spring.amount());
-            stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(data));
+        if(spring==null && entity instanceof FluidSpringBlockEntity be) {
+            var variant=com.gregtech.gregtech.registry.GTFluidSprings.byFluid(be.fluidId());
+            if(variant!=null)return new ItemStack(variant);
+            if(!be.fluidId().isEmpty()) {
+                // Preserve an unmapped legacy/external output rather than silently changing it.
+                var data=new CompoundTag();data.putString("spring",be.fluidId());
+                data.putInt("amount",be.amount());
+                data.putString("id",net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(be.getType()).toString());
+                var stack=new ItemStack(this);stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(data));return stack;
+            }
         }
-        return stack;
+        return new ItemStack(this);
     }
 
     @Override
@@ -66,6 +73,7 @@ public class FluidSpringBlock extends Block implements EntityBlock {
     public void setPlacedBy(Level level, BlockPos pos, BlockState state,
                             @Nullable LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(level, pos, state, placer, stack);
+        if(spring!=null)return;
         var packedData=stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
         CompoundTag data=packedData==null?null:packedData.copyTag();
         if (data == null || !data.contains("spring", Tag.TAG_STRING)

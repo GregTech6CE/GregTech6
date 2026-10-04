@@ -101,10 +101,7 @@ public final class GTToolBlocks {
         };
     }
 
-    public static RegistryObject<com.gregtech.gregtech.block.misc.SupporterCertificateBlock> SUPPORTER_CERTIFICATE;
     public static void registerAll() {
-        SUPPORTER_CERTIFICATE=GTBlocks.BLOCKS.register("supporter_certificate",()->new com.gregtech.gregtech.block.misc.SupporterCertificateBlock(BlockBehaviour.Properties.of().strength(.5f,.3f).noOcclusion()));
-        GTBlocks.BLOCK_ITEMS.register("supporter_certificate",()->new BlockItem(SUPPORTER_CERTIFICATE.get(),new Item.Properties()));
         add("mortar_block", ManualToolBlockEntity.Kind.MORTAR, BlockBehaviour.Properties.of()
                 .mapColor(MapColor.STONE).strength(2.0f, 6.0f).requiresCorrectToolForDrops().noOcclusion());
         for (String material : new String[]{"Netherite", "Sapphire", "Diamond", "Amethyst"}) {

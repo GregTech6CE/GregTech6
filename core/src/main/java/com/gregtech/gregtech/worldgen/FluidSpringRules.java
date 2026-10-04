@@ -17,6 +17,8 @@ public final class FluidSpringRules {
             new Spring("overworld.fluid.water", "gregtech:watergeothermal",
                     "gregtech:watergeothermal", 100, 3, 500),
             new Spring("overworld.fluid.lava", "minecraft:lava", "minecraft:lava", 200, 1, 1000));
+ public static Spring byFluid(String id){return SPRINGS.stream().filter(s->s.fluidId().equals(id)).findFirst().orElse(null);}
+ public static String blockPath(Spring spring){return "fluid_spring_"+spring.fluidId().substring(spring.fluidId().indexOf(':')+1);}
  public static int positiveAmount(int amount){return Math.max(1,amount);}
  public static boolean rolls(java.util.function.IntUnaryOperator random,int amount){return random.applyAsInt(positiveAmount(amount))==0;}
  public interface CraterSink {void filler(int x,int relativeY,int z);void fluid(int x,int relativeY,int z);boolean bedrock(int x,int z);boolean spring(int x,int z);}

@@ -104,9 +104,8 @@ public class GTBushesFeature extends Feature<NoneFeatureConfiguration> {
         if (!level.getBlockState(pos).canBeReplaced()) return false;
         if (level.getBlockState(pos.below()).is(net.minecraft.world.level.block.Blocks.GRASS_BLOCK))
             level.setBlock(pos.below(), net.minecraft.world.level.block.Blocks.DIRT.defaultBlockState(), 2);
-        BlockState state = GTBushes.BUSH.get().defaultBlockState().setValue(BushBlock.STAGE, 3);
+        BlockState state = GTBushes.byBerry(berry).defaultBlockState().setValue(BushBlock.STAGE, 3);
         if (!level.setBlock(pos, state, 2)) return false;
-        if (level.getBlockEntity(pos) instanceof BushBlockEntity bush) bush.setBerry(berry);
         return true;
     }
 
@@ -116,10 +115,9 @@ public class GTBushesFeature extends Feature<NoneFeatureConfiguration> {
             if (direction == net.minecraft.core.Direction.DOWN) continue;
             BlockPos pos = core.relative(direction);
             if (!level.getBlockState(pos).canBeReplaced()) continue;
-            var state = GTBushes.BUSH.get().defaultBlockState().setValue(BushBlock.STAGE, 3)
+            var state = GTBushes.byBerry(berry).defaultBlockState().setValue(BushBlock.STAGE, 3)
                     .setValue(BushBlock.SUPPORT, direction.getOpposite().get3DDataValue());
-            if (level.setBlock(pos, state, 2) && level.getBlockEntity(pos) instanceof BushBlockEntity bush)
-                bush.setBerry(berry);
+            level.setBlock(pos, state, 2);
         }
     }
 

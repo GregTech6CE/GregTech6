@@ -24,8 +24,7 @@ final class SpringIconSmoke {
             }
             level.setBlockAndUpdate(pos.below(),net.minecraft.world.level.block.Blocks.STONE.defaultBlockState());
             level.setBlockAndUpdate(pos.above(),net.minecraft.world.level.block.Blocks.STONE.defaultBlockState());
-            level.setBlockAndUpdate(pos,com.gregtech.gregtech.registry.GTFluidSprings.FLUID_SPRING.get().defaultBlockState());
-            ((com.gregtech.gregtech.blockentity.FluidSpringBlockEntity)level.getBlockEntity(pos)).setSpring("gregtech:"+WORLD_FLUIDS[i],6000);
+            level.setBlockAndUpdate(pos,com.gregtech.gregtech.registry.GTFluidSprings.byFluid("gregtech:"+WORLD_FLUIDS[i]).defaultBlockState());
         }
         player.connection.teleport(6.5,201,6.5,145,20);
     }
@@ -47,9 +46,7 @@ final class SpringIconSmoke {
 
     static void check(Minecraft client, List<ItemStack> gallery) {
         for (String fluid : new String[]{"liquid_light_oil", "gas_natural_gas", "watergeothermal"}) {
-            var stack = new ItemStack(com.gregtech.gregtech.registry.GTFluidSprings.FLUID_SPRING.get());
-            var tag = new CompoundTag(); tag.putString("id", "gregtech:fluid_spring"); tag.putString("spring", "gregtech:"+fluid);
-            stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA, net.minecraft.world.item.component.CustomData.of(tag));
+            var stack = new ItemStack(com.gregtech.gregtech.registry.GTFluidSprings.byFluid("gregtech:"+fluid));
             var model = client.getItemRenderer().getModel(stack, null, null, 0);
             var quads = model.getQuads(null, null, RandomSource.create(42));
             if (quads.size() != 12 || quads.stream().map(q -> q.getDirection()).distinct().count() != 6)

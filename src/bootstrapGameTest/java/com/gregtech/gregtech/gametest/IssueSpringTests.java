@@ -22,8 +22,8 @@ public final class IssueSpringTests {
         var pos=h.absolutePos(new BlockPos(2,2,2));var block=BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech","fluid_spring"));
         h.getLevel().setBlockAndUpdate(pos,block.defaultBlockState());
         var spring=(com.gregtech.gregtech.blockentity.FluidSpringBlockEntity)h.getLevel().getBlockEntity(pos);
-        spring.setSpring("gregtech:liquid_light_oil",6000);var tag=spring.getUpdateTag();
-        h.assertTrue(tag.getString("spring").equals("gregtech:liquid_light_oil")&&tag.getInt("amount")==6000,"stored fluid reaches client packet");
+        spring.setSpring("gregtech:liquid_light_oil",6000);spring=(com.gregtech.gregtech.blockentity.FluidSpringBlockEntity)h.getLevel().getBlockEntity(pos);var tag=spring.getUpdateTag();
+        h.assertTrue(!tag.contains("spring")&&!tag.contains("amount")&&spring.fluidId().equals("gregtech:liquid_light_oil")&&spring.amount()==6000,"block identity defines the client fluid and rate");
         h.assertTrue(spring.getUpdatePacket()!=null&&spring.getModelData().get(com.gregtech.gregtech.blockentity.FluidSpringBlockEntity.MODEL_FLUID)==spring.fluid(),"actual model data uses stored fluid");h.succeed();
     }
 }

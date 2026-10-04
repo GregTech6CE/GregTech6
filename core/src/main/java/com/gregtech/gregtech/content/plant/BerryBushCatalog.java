@@ -53,6 +53,14 @@ public class BerryBushCatalog {
 
     public static int size() { return TYPES.size(); }
 
+    /** Stable block identity; cotton is the original string-producing default bush. */
+    public static String blockPath(String id) {
+        if (id == null || id.isEmpty()) return "bush";
+        if (id.startsWith("gregtech:")) id = id.substring("gregtech:".length());
+        BerryType type = byId(id);
+        return type == null ? null : type == DEFAULT ? "bush_cotton" : "bush_" + type.id();
+    }
+
     public static BerryType byIndex(int index) {
         var list = types();
         return list.get(Math.floorMod(index, list.size()));

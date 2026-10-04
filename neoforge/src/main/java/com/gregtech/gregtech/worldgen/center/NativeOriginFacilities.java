@@ -24,7 +24,7 @@ public final class NativeOriginFacilities {
         case 32711 -> "advanced_button"; case 32719 -> "drum_adamantium"; case 32722 -> "juicer";
         case 32727 -> "fluid_funnel_adamantium"; case 32732 -> "tap_adamantium"; case 32735 -> "mortar_block";
         case 32737 -> "fluid_thermos"; case 32739 -> "fluid_cup"; case 32744 -> "fluid_measuring_pot_tungsten";
-        case 32750 -> "nozzle_adamantium"; case 32764 -> "supporter_certificate"; default -> throw new IllegalArgumentException("Unknown source origin tile "+legacyId);
+        case 32750 -> "nozzle_adamantium"; default -> throw new IllegalArgumentException("Unknown source origin tile "+legacyId);
     }; }
     public static void place(NativeOriginWorld world, WorldGenLevel level, int x,int y,int z,int legacy,String data) {
         if(!world.canWrite(x,y,z)) return;
@@ -64,7 +64,5 @@ public final class NativeOriginFacilities {
         if(entity instanceof com.gregtech.gregtech.blockentity.tool.AdvancedButtonBlockEntity button && data.contains("NBT_MODE, T")) {
             var config=button.saveItemConfig();config.putBoolean("Inverted",true);button.loadItemConfig(config);
         }
-        if(entity instanceof com.gregtech.gregtech.blockentity.misc.SupporterCertificateBlockEntity certificate)
-            certificate.setOwner("Bear989Sr");
     }
 }

@@ -35,6 +35,13 @@ public final class MachineBlockClientModels {
     @SubscribeEvent
     public static void registerSharedModels(ModelEvent.RegisterAdditional event) {
         event.register(BAROMETER_MODEL);
+        java.util.Set<ResourceLocation> shared = new java.util.HashSet<>();
+        for (var entry : MachineRegistry.basicMachines()) {
+            for (String suffix : new String[]{"", "_running", "_active"}) {
+                var id = GregTech.id("block/machine/basic/" + entry.get().basicSpec().machineName() + suffix);
+                if (shared.add(id)) event.register(id);
+            }
+        }
         for (Direction facing : Direction.Plane.HORIZONTAL) {
             event.register(MachineBlockIcons.burningBoxVariant(facing, false, false));
             event.register(MachineBlockIcons.burningBoxVariant(facing, true, false));

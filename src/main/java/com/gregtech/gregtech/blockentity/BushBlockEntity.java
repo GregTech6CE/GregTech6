@@ -31,7 +31,7 @@ public class BushBlockEntity extends BlockEntity {
     /** GT6's light gate when the bush cannot see the sky. */
     public static final int LIGHT_GATE = com.gregtech.gregtech.content.plant.BushGrowthRules.LIGHT_GATE;
 
-    private String berryId = "";
+    private String legacyBerry = "";
     private int growth;
     private boolean supportChecked;
 
@@ -39,19 +39,29 @@ public class BushBlockEntity extends BlockEntity {
         super(GTBlockEntities.BUSH.get(), pos, state);
     }
 
-    public String berryId() { return berryId; }
+    public String berryId() {
+        var block=(BushBlock)getBlockState().getBlock();
+        return block.berryId().isEmpty()?legacyBerry:block.berryId();
+    }
 
+    /** Change the registered species; only the old untyped ID reads a legacy berry key. */
     public void setBerry(String id) {
-        berryId = id == null ? "" : id;
-        setChanged();
-        if (level != null && !level.isClientSide) {
-            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+        var variant=com.gregtech.gregtech.registry.GTBushes.byBerry(id);
+        if(variant==null)return;
+        var state=variant.defaultBlockState().setValue(BushBlock.STAGE,stage())
+                .setValue(BushBlock.SUPPORT,getBlockState().getValue(BushBlock.SUPPORT));
+        if(level==null) { setBlockState(state);legacyBerry="";return; }
+        if(level.isClientSide)return;
+        int savedGrowth=growth;
+        level.setBlock(worldPosition,state,3);
+        if(level.getBlockEntity(worldPosition) instanceof BushBlockEntity next) {
+            next.legacyBerry="";next.growth=savedGrowth;next.setChanged();
         }
     }
 
     /** The berries this bush hands out (GT6 keeps the item stack it was planted with). */
     public ItemStack berryStack(int count) {
-        var key = GTBerryBushes.itemId(berryId);
+        var key = GTBerryBushes.itemId(berryId());
         if (key == null) return ItemStack.EMPTY;
         var item = ForgeRegistries.ITEMS.getValue(key);
         return item == null ? ItemStack.EMPTY : new ItemStack(item, count);
@@ -65,6 +75,8 @@ public class BushBlockEntity extends BlockEntity {
 
     public void tick() {
         if (level == null || level.isClientSide) return;
+        if(!legacyBerry.isEmpty() && ((BushBlock)getBlockState().getBlock()).berryId().isEmpty()
+                && com.gregtech.gregtech.registry.GTBushes.byBerry(legacyBerry)!=null) {setBerry(legacyBerry);return;}
         if (!supportChecked || level.getGameTime() % CYCLE_TICKS == 64) {
             supportChecked = true;
             if (!refreshSupport()) return;
@@ -83,7 +95,8 @@ public class BushBlockEntity extends BlockEntity {
         if (level == null) return 0;
         BlockState state = getBlockState();
         if (!(state.getBlock() instanceof BushBlock)) return 0;
-        if (!refreshSupport() || berryId.isEmpty()) return 0;
+        if (!refreshSupport() || berryId().isEmpty()) return 0;
+        state=getBlockState();
         int speed = speed();
         if (speed <= 0) return 0;
         if (state.getValue(BushBlock.STAGE) >= 3) return 0;
@@ -133,7 +146,7 @@ public class BushBlockEntity extends BlockEntity {
         if (BushBlock.isCore(state)) return true;
         BlockPos parentPos = worldPosition.relative(net.minecraft.core.Direction.from3DDataValue(state.getValue(BushBlock.SUPPORT)));
         if (level.getBlockEntity(parentPos) instanceof BushBlockEntity parent) {
-            if (!berryId.equals(parent.berryId())) setBerry(parent.berryId());
+            if (!berryId().equals(parent.berryId())) {setBerry(parent.berryId());return false;}
             return true;
         }
         if (!(level.getBlockState(parentPos).getBlock() instanceof BushBlock)) {
@@ -146,14 +159,14 @@ public class BushBlockEntity extends BlockEntity {
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
-        berryId = tag.getString("berry");
+        legacyBerry = ((BushBlock)getBlockState().getBlock()).berryId().isEmpty()?tag.getString("berry"):"";
         growth = tag.getInt("growth");
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        if (!berryId.isEmpty()) tag.putString("berry", berryId);
+        if (((BushBlock)getBlockState().getBlock()).berryId().isEmpty() && !legacyBerry.isEmpty()) tag.putString("berry", legacyBerry);
         tag.putInt("growth", growth);
     }
 
@@ -170,7 +183,7 @@ public class BushBlockEntity extends BlockEntity {
 
     /** Client-side tint helper: GT6's colour for this bush at its current stage. */
     public int tintColour(int tintIndex) {
-        GTBerryBushes.BerryType type = berryId.isEmpty() ? null : GTBerryBushes.byId(berryId);
+        GTBerryBushes.BerryType type = berryId().isEmpty() ? null : GTBerryBushes.byId(berryId());
         if (tintIndex == 0) {
             return type == null ? GTBerryBushes.NO_BERRY_COLOUR : type.bush();
         }
