@@ -37,7 +37,7 @@ public final class ExternalOreProcessing {
         var materialData = new IdentityHashMap<Item, ItemComposition>();
         int added = 0;
         for (var route : ExternalOreProcessingRules.ROUTES) {
-            var map = route.map().equals("Crusher") ? MachineRecipeMaps.Crusher : MachineRecipeMaps.Sifting;
+            var map = map(route.map());
             for (var entry : forms.entrySet()) {
                 if (!entry.getKey().prefix().equals(route.input().getName())) continue;
                 var material = GTMaterialRegistry.get(entry.getKey().material()).resolve();
@@ -60,10 +60,43 @@ public final class ExternalOreProcessing {
                 }
             }
         }
+        for (var route : ExternalOreProcessingRules.GRINDING) {
+            var map = map(route.map());
+            for (var entry : forms.entrySet()) {
+                if (!entry.getKey().prefix().equals(route.input().getName())) continue;
+                var material = GTMaterialRegistry.get(entry.getKey().material()).resolve();
+                if (!route.allows(material)) continue;
+                var target = route.outputMaterial(material);
+                var dust = output(MaterialPrefix.dust, target, route.dustCount());
+                var fines = output(MaterialPrefix.dustTiny, target, 1);
+                if (dust.isEmpty() || fines.isEmpty()) continue;
+                for (var item : entry.getValue()) {
+                    var outputs = new ItemStack[]{dust.copy(), fines.copy()};
+                    var recipe = route.requiresEmptySlot()
+                            ? map.addRecipe(new Recipe(new ItemStack[]{new ItemStack(item), ItemStack.EMPTY},
+                                    outputs, null, null, null, null, route.duration(material), 16, 0))
+                            : map.addRecipe1(false, 16, route.duration(material), new ItemStack(item), outputs);
+                    if (recipe != null) {
+                        OWNED.computeIfAbsent(map, unused -> Collections.newSetFromMap(new IdentityHashMap<>())).add(recipe);
+                        added++;
+                    }
+                }
+            }
+        }
         compositions = Collections.unmodifiableMap(materialData);
         LogUtils.getLogger().info("[gregtech] Bound {} external ore processing rows and {} material compositions from loaded tags",
                 added, compositions.size());
         return added;
+    }
+
+    private static RecipeMap map(String name) {
+        return switch (name) {
+            case "Crusher" -> MachineRecipeMaps.Crusher;
+            case "Sifting" -> MachineRecipeMaps.Sifting;
+            case "Shredder" -> MachineRecipeMaps.Shredder;
+            case "Anvil" -> MachineRecipeMaps.Anvil;
+            default -> throw new IllegalArgumentException("Unknown source external ore map " + name);
+        };
     }
 
     private static ItemStack output(MaterialPrefix prefix, GTMaterial material, int count) {

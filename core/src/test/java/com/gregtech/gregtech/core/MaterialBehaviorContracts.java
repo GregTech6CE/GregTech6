@@ -64,6 +64,14 @@ public final class MaterialBehaviorContracts {
         check(DEFINITIONS_SHA256.equals(MaterialCatalogSnapshot.sha256()), "Repeated init must not mutate or duplicate definitions");
         GTMaterialRegistry.postInit();
         check(POST_INIT_SHA256.equals(MaterialCatalogSnapshot.sha256()), "Full domain post-init must match the Community Edition snapshot");
+        var sourceGrinding = com.gregtech.gregtech.content.recipe.ExternalOreProcessingRules.GRINDING;
+        var wrought = GTMaterialRegistry.get("WroughtIron");
+        var iron = GTMaterialRegistry.get("Iron");
+        var hardGrinding = GTMaterialRegistry.get("Tungstensteel");
+        check(sourceGrinding.get(3).allows(wrought), "source MORTAR WroughtIron permits Anvil external grinding");
+        check(!sourceGrinding.get(3).allows(hardGrinding), "source non-MORTAR Tungstensteel rejects Anvil external grinding");
+        check(sourceGrinding.get(0).allows(hardGrinding), "source non-MORTAR Tungstensteel still has its hard Shredder branch");
+        check(sourceGrinding.get(0).outputMaterial(wrought) == iron, "source shredding turns WroughtIron into its Iron pulver target");
         var petrified = GTMaterialRegistry.get("PetrifiedWood");
         check(petrified.has(MaterialProperty.STONE) && petrified.has(MaterialProperty.WOOD), "MT 1259 PetrifiedWood is stone and wood");
         check(MaterialPrefix.rockGt.isValidFor(petrified) && MaterialPrefix.stick.isValidFor(petrified), "PetrifiedWood early rock and rod forms");

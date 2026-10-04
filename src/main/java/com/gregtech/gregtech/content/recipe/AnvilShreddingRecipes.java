@@ -22,7 +22,7 @@ import java.util.List;
  * <p>
  * These are the hand-grinding rows of the ore chain: an anvil (hammer) turns rock and ore chunks into
  * dust and dust piles before any machine exists. Rows GT6 registers for prefixes the port does not have
- * ({@code chunk}, {@code rubble}, {@code pebbles}, {@code clump}, {@code reduced}, {@code crystalline},
+ * ({@code clump}, {@code reduced}, {@code crystalline},
  * {@code cleanGravel}, {@code cluster}) stay recorded in {@link #skipped()}.
  * <p>
  * The {@code selfcrush()} condition is GT6's
@@ -40,8 +40,8 @@ public final class AnvilShreddingRecipes {
 
     private static final List<Entry> ENTRIES = new ArrayList<>();
     private static final List<String> SKIPPED = List.of(
-            "chunk / rubble / pebbles / clump / reduced / crystalline / cleanGravel / cluster rows"
-                    + " (:158-165): the port has no such prefixes");
+            "chunk/rubble/pebbles (:158-160) bind actual external items through ExternalOreProcessing after tags",
+            "clump / reduced / crystalline / cleanGravel / cluster rows (:161-165): no typed source prefixes yet");
 
     /** GT6 row; {@code selfCrush} mirrors GT6's selfcrush() condition, {@code mortar} its MORTAR flag. */
     private record Row(MaterialPrefix input, MaterialPrefix output, int outCount,
@@ -81,9 +81,10 @@ public final class AnvilShreddingRecipes {
         if (row.mortar() && !MaterialWorkability.isMortarGrindable(material)) return;
         if (row.selfCrush() && material.getTargetCrushingMaterial() != material) return;
         ItemStack input = GTItems.getStack(row.input(), material, 1);
-        ItemStack output = GTItems.getStack(row.output(), material, row.outCount());
+        GTMaterial target = material.getTargetPulverMaterial().resolve();
+        ItemStack output = GTItems.getStack(row.output(), target, row.outCount());
         ItemStack byproduct = row.byproduct() == null ? ItemStack.EMPTY
-                : GTItems.getStack(row.byproduct(), material, row.byproductCount());
+                : GTItems.getStack(row.byproduct(), target, row.byproductCount());
         if (input.isEmpty() || output.isEmpty()) return;
         if (row.byproduct() != null && byproduct.isEmpty()) return;
         long units = Math.max(row.input().getMaterialWeight(),

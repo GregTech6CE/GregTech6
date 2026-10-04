@@ -44,8 +44,32 @@ public final class CoreBehaviorContracts {
         formConversionSourcePositions();
         explosiveStorageSourceSamples();
         externalOreSourceSamples();
+        externalGrindingSourceSamples();
         assertions += OriginWorldgenSamples.verify();
-        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 23 groups (Java 17; no game dependencies)");
+        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 24 groups (Java 17; no game dependencies)");
+    }
+
+    private static void externalGrindingSourceSamples() {
+        // Handler:117-119,129-131,158-160; costs round after multiplying, not before.
+        var rows = com.gregtech.gregtech.content.recipe.ExternalOreProcessingRules.GRINDING;
+        equal(6, rows.size(), "three Shredder routes with both speeds and three Anvil routes");
+        long[] soft0 = {34, 34, 50}, hard0 = {541, 541, 797};
+        long[] soft2 = {102, 102, 150}, hard2 = {1622, 1622, 2390};
+        long[] anvil0 = {34, 34, 48}, anvil2 = {102, 102, 144};
+        for (int i = 0; i < 3; i++) {
+            var shredder = rows.get(i);
+            equal(soft0[i], shredder.duration(0, true), "source mortar Shredder cost including fines " + i);
+            equal(hard0[i], shredder.duration(0, false), "source hard Shredder cost including fines " + i);
+            equal(soft2[i], shredder.duration(2, true), "source quality multiplication before rounding " + i);
+            equal(hard2[i], shredder.duration(2, false), "source hard quality multiplication before rounding " + i);
+            var anvil = rows.get(i + 3);
+            equal(anvil0[i], anvil.duration(0, true), "source Anvil uses max of input and output weights " + i);
+            equal(anvil2[i], anvil.duration(2, true), "source quality-scaled Anvil cost " + i);
+            check(anvil.requiresEmptySlot(), "source Anvil preserves the empty workpiece " + i);
+            check(!shredder.requiresEmptySlot(), "Shredder has no Anvil empty workpiece " + i);
+        }
+        equal(3, rows.get(2).dustCount(), "pebbles yield three dust in the Shredder");
+        equal(2, rows.get(5).dustCount(), "pebbles yield only two dust in the source Anvil row");
     }
 
     private static void externalOreSourceSamples() {
