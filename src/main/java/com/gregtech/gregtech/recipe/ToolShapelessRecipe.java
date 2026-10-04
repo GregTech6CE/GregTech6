@@ -18,15 +18,23 @@ import net.minecraft.world.level.Level;
 public final class ToolShapelessRecipe extends ShapelessRecipe implements com.gregtech.gregtech.api.recipe.AutocraftableCraftingRecipe {
     private final boolean autocraftable;
     private final FormConversionSelector formSelector;
+    private final String conversionInput, conversionMaterial;
     @Override public boolean isAutocraftableByGT() { return autocraftable; }
     public ToolShapelessRecipe(ShapelessRecipe base) { this(base, true); }
     public ToolShapelessRecipe(ShapelessRecipe base, boolean autocraftable) {
         this(base, autocraftable, FormConversionSelector.NONE);
     }
     public ToolShapelessRecipe(ShapelessRecipe base, boolean autocraftable, FormConversionSelector formSelector) {
+        this(base, autocraftable, formSelector, "", "");
+    }
+    public ToolShapelessRecipe(ShapelessRecipe base, boolean autocraftable, FormConversionSelector formSelector,
+                               String conversionInput, String conversionMaterial) {
         super(base.getId(), base.getGroup(), base.category(), base.getResultItem(RegistryAccess.EMPTY), base.getIngredients());
         this.autocraftable = autocraftable;
         this.formSelector = formSelector;
+        if (conversionInput.isEmpty() != conversionMaterial.isEmpty()) throw new IllegalArgumentException("Incomplete source conversion form");
+        this.conversionInput = conversionInput;
+        this.conversionMaterial = conversionMaterial;
     }
     @Override public boolean matches(CraftingContainer grid, Level level) {
         if (!super.matches(grid, level)) return false;
@@ -34,6 +42,8 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements com.gr
         for (int i=0; i<grid.getContainerSize(); i++) {
             var stack=grid.getItem(i);
             if (!stack.isEmpty()) { if (first < 0) first = i; occupied++; }
+            if (!stack.isEmpty() && !conversionInput.isEmpty()
+                    && !CraftingMaterialForms.matches(conversionInput, conversionMaterial, stack)) return false;
             if (stack.getItem() instanceof GTToolItem && !GTToolHelper.isUsable(stack)) return false;
         }
         return formSelector.matches(grid.getContainerSize(), first, occupied);
@@ -60,15 +70,18 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements com.gr
             return new ToolShapelessRecipe(vanilla.fromJson(id,json),
                     !json.has("gregtech_autocraftable") || json.get("gregtech_autocraftable").getAsBoolean(),
                     new FormConversionSelector(json.has("gregtech_form_variants") ? json.get("gregtech_form_variants").getAsInt() : 0,
-                            json.has("gregtech_form_offset") ? json.get("gregtech_form_offset").getAsInt() : 0));
+                            json.has("gregtech_form_offset") ? json.get("gregtech_form_offset").getAsInt() : 0),
+                    json.has("gregtech_form_input") ? json.get("gregtech_form_input").getAsString() : "",
+                    json.has("gregtech_form_material") ? json.get("gregtech_form_material").getAsString() : "");
         }
         @Override public ToolShapelessRecipe fromNetwork(ResourceLocation id,FriendlyByteBuf buffer) {
             return new ToolShapelessRecipe(vanilla.fromNetwork(id,buffer), buffer.readBoolean(),
-                    new FormConversionSelector(buffer.readVarInt(), buffer.readVarInt()));
+                    new FormConversionSelector(buffer.readVarInt(), buffer.readVarInt()), buffer.readUtf(), buffer.readUtf());
         }
         @Override public void toNetwork(FriendlyByteBuf buffer,ToolShapelessRecipe recipe) {
             vanilla.toNetwork(buffer,recipe); buffer.writeBoolean(recipe.autocraftable);
             buffer.writeVarInt(recipe.formSelector.variants()); buffer.writeVarInt(recipe.formSelector.offset());
+            buffer.writeUtf(recipe.conversionInput); buffer.writeUtf(recipe.conversionMaterial);
         }
     };
 }

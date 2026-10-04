@@ -79,7 +79,7 @@ public final class AutocraftingRecipes {
     private static boolean permitted(Level level, Cache cache, ResourceLocation id, CraftingRecipe recipe, ItemStack[] pattern) {
         if (recipe instanceof AutocraftableCraftingRecipe gt && !gt.isAutocraftableByGT()) return false;
         if (!(recipe instanceof AutocraftableCraftingRecipe)
-                && com.gregtech.gregtech.loaders.Loader_FormConversionCraftingRecipes.disallowsPlainPlan(pattern, recipe.getResultItem(level.registryAccess()))) return false;
+                && com.gregtech.gregtech.loaders.Loader_FormConversionCraftingRecipes.disallowsPlainRecipe(recipe, level.registryAccess())) return false;
         return cache.permissions.computeIfAbsent(id, unused -> {
             if (level.getServer() == null) return true;
             var location = new ResourceLocation(id.getNamespace(), "recipes/" + id.getPath() + ".json");

@@ -17,6 +17,7 @@ import net.minecraft.world.level.Level;
 public final class ToolShapelessRecipe extends ShapelessRecipe implements com.gregtech.gregtech.api.recipe.AutocraftableCraftingRecipe {
     private final boolean autocraftable;
     private final FormConversionSelector formSelector;
+    private final String conversionInput, conversionMaterial;
     @Override public boolean isAutocraftableByGT() { return autocraftable; }
     private final ShapelessRecipe base;
     public ToolShapelessRecipe(ShapelessRecipe base) { this(base, true); }
@@ -24,15 +25,25 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements com.gr
         this(base, autocraftable, FormConversionSelector.NONE);
     }
     public ToolShapelessRecipe(ShapelessRecipe base, boolean autocraftable, FormConversionSelector formSelector) {
+        this(base, autocraftable, formSelector, "", "");
+    }
+    public ToolShapelessRecipe(ShapelessRecipe base, boolean autocraftable, FormConversionSelector formSelector,
+                               String conversionInput, String conversionMaterial) {
         super(base.getGroup(),base.category(),base.getResultItem(net.minecraft.core.RegistryAccess.EMPTY),base.getIngredients());
         this.base=base;
         this.autocraftable=autocraftable;
         this.formSelector=formSelector;
+        if (conversionInput.isEmpty() != conversionMaterial.isEmpty()) throw new IllegalArgumentException("Incomplete source conversion form");
+        this.conversionInput=conversionInput;
+        this.conversionMaterial=conversionMaterial;
     }
     @Override public boolean matches(CraftingInput grid,Level level) {
         if (!base.matches(grid,level)) return false;
-        for (var stack:grid.items())
+        for (var stack:grid.items()) {
+            if (!stack.isEmpty() && !conversionInput.isEmpty()
+                    && !CraftingMaterialForms.matches(conversionInput, conversionMaterial, stack)) return false;
             if (stack.getItem() instanceof GTToolItem && !GTToolHelper.isUsable(stack)) return false;
+        }
         if (formSelector.variants() == 0) return true;
         var position = (CraftingFormPosition) grid;
         return formSelector.matches(position.gregtech$formGridSize(), position.gregtech$formFirstSlot(), grid.ingredientCount());
@@ -60,8 +71,10 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements com.gr
             new ShapelessRecipe.Serializer().codec().forGetter((ToolShapelessRecipe recipe) -> recipe.base),
             com.mojang.serialization.Codec.BOOL.optionalFieldOf("gregtech_autocraftable", true).forGetter((ToolShapelessRecipe recipe) -> recipe.autocraftable),
             com.mojang.serialization.Codec.intRange(0, Integer.MAX_VALUE).optionalFieldOf("gregtech_form_variants", 0).forGetter((ToolShapelessRecipe recipe) -> recipe.formSelector.variants()),
-            com.mojang.serialization.Codec.intRange(0, Integer.MAX_VALUE).optionalFieldOf("gregtech_form_offset", 0).forGetter((ToolShapelessRecipe recipe) -> recipe.formSelector.offset())
-            ).apply(instance, (base, auto, variants, offset) -> new ToolShapelessRecipe(base, auto, new FormConversionSelector(variants, offset))));
+            com.mojang.serialization.Codec.intRange(0, Integer.MAX_VALUE).optionalFieldOf("gregtech_form_offset", 0).forGetter((ToolShapelessRecipe recipe) -> recipe.formSelector.offset()),
+            com.mojang.serialization.Codec.STRING.optionalFieldOf("gregtech_form_input", "").forGetter((ToolShapelessRecipe recipe) -> recipe.conversionInput),
+            com.mojang.serialization.Codec.STRING.optionalFieldOf("gregtech_form_material", "").forGetter((ToolShapelessRecipe recipe) -> recipe.conversionMaterial)
+            ).apply(instance, (base, auto, variants, offset, input, material) -> new ToolShapelessRecipe(base, auto, new FormConversionSelector(variants, offset), input, material)));
     public static final RecipeSerializer<ToolShapelessRecipe> SERIALIZER=new RecipeSerializer<>() {
         @Override public MapCodec<ToolShapelessRecipe> codec(){return CODEC;}
         @Override public StreamCodec<RegistryFriendlyByteBuf,ToolShapelessRecipe> streamCodec(){return ByteBufCodecs.fromCodecWithRegistries(CODEC.codec());}

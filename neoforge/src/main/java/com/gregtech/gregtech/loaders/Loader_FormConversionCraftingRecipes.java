@@ -5,6 +5,9 @@ import com.gregtech.gregtech.data.OriginalCraftingJson;
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
 import com.gregtech.gregtech.content.recipe.FormConversionSelector;
+import com.gregtech.gregtech.content.recipe.OriginalFormConversions;
+import com.gregtech.gregtech.content.recipe.OriginalFormConversions.Conversion;
+import com.gregtech.gregtech.recipe.CraftingMaterialForms;
 import com.gregtech.gregtech.api.material.MaterialUnification;
 import com.gregtech.gregtech.api.prefix.BlockMaterialPrefix;
 import com.gregtech.gregtech.api.prefix.BlockPrefixRegistry;
@@ -31,65 +34,8 @@ import java.util.Locale;
  * still reserve their source offset. XToY requires exactly the same material in every occupied cell.
  */
 public final class Loader_FormConversionCraftingRecipes {
-    /** GT6 prefix pairs, in GT6 registration order, as (input, inputCount, output, outputCount). */
-    private static final List<Conversion> ONE_TO_MANY = List.of(
-            new Conversion("oreRaw", 1, "gem", 1),                                  // Loader_Recipes_Handlers:552
-            new Conversion("oreRaw", 1, "rawOreChunk", 3), // :553
-            new Conversion("crushed", 1, "crushedTiny", 9),                         // :554
-            new Conversion("crushed", 1, "gemFlawed", 1),                           // :555
-            new Conversion("crushedPurified", 1, "crushedPurifiedTiny", 9),         // :556
-            new Conversion("crushedPurified", 1, "gemFlawed", 1),                   // :557
-            new Conversion("crushedCentrifuged", 1, "crushedCentrifugedTiny", 9),   // :558
-            new Conversion("crushedCentrifuged", 1, "gemFlawed", 1),                // :559
-            new Conversion("ingot", 1, "nugget", 9),                                // :560
-            new Conversion("ingot", 1, "chunkGt", 4), // :561
-            new Conversion("billet", 1, "nugget", 6),                               // :562
-            new Conversion("dust", 1, "dustTiny", 9),                               // :563
-            new Conversion("dust", 1, "dustSmall", 4), // :564
-            new Conversion("dustTiny", 1, "dustDiv72", 8),                          // :565
-            new Conversion("dustSmall", 1, "dustDiv72", 18),                        // :566
-            new Conversion("blockRaw", 1, "oreRaw", 9),                             // :567
-            new Conversion("blockDust", 1, "dust", 9),                              // :568
-            new Conversion("blockDust", 1, "dustSmall", 36), // :569
-            new Conversion("blockIngot", 1, "ingot", 9),                            // :570
-            new Conversion("blockIngot", 1, "chunkGt", 36), // :571
-            new Conversion("blockGem", 1, "gem", 9),                                // :572
-            new Conversion("blockPlate", 1, "plate", 9),                            // :573
-            new Conversion("blockPlateGem", 1, "plateGem", 9));                     // :574
-
-    private static final List<Conversion> MANY_TO_MANY = List.of(
-            new Conversion("crushedTiny", 9, "crushed", 1),                         // :577
-            new Conversion("crushedPurifiedTiny", 9, "crushedPurified", 1),         // :578
-            new Conversion("crushedCentrifugedTiny", 9, "crushedCentrifuged", 1),   // :579
-            new Conversion("ingot", 2, "billet", 3),                                // :580
-            new Conversion("ingot", 3, "nugget", 27),                               // :581
-            new Conversion("ingot", 4, "billet", 6),                                // :582
-            new Conversion("ingot", 5, "nugget", 45),                               // :583
-            new Conversion("ingot", 6, "billet", 9),                                // :584
-            new Conversion("ingot", 7, "nugget", 63),                               // :585
-            new Conversion("ingot", 8, "billet", 12),                               // :586
-            new Conversion("ingot", 9, "blockIngot", 1),                            // :587
-            new Conversion("billet", 2, "nugget", 12),                              // :588
-            new Conversion("billet", 3, "ingot", 2),                                // :589
-            new Conversion("billet", 4, "nugget", 24),                              // :590
-            new Conversion("billet", 5, "nugget", 30),                              // :591
-            new Conversion("billet", 6, "ingot", 4),                                // :592
-            new Conversion("billet", 7, "nugget", 42),                              // :593
-            new Conversion("billet", 8, "nugget", 48),                              // :594
-            new Conversion("billet", 9, "ingot", 6),                                // :595
-            new Conversion("chunkGt", 4, "ingot", 1),                               // :596
-            new Conversion("chunkGt", 8, "billet", 3),                              // :597
-            new Conversion("nugget", 6, "billet", 1),                               // :598
-            new Conversion("nugget", 9, "ingot", 1),                                // :599
-            new Conversion("dustDiv72", 8, "dustTiny", 1),                          // :600
-            new Conversion("dustTiny", 9, "dust", 1),                               // :601
-            new Conversion("dustSmall", 4, "dust", 1),                              // :602
-            new Conversion("dustSmall", 8, "dust", 2),                              // :603
-            new Conversion("oreRaw", 9, "blockRaw", 1),                             // :604
-            new Conversion("dust", 9, "blockDust", 1),                              // :605
-            new Conversion("gem", 9, "blockGem", 1),                                // :606
-            new Conversion("plate", 9, "blockPlate", 1),                            // :607
-            new Conversion("plateGem", 9, "blockPlateGem", 1));                     // :608
+    private static final List<Conversion> ONE_TO_MANY = OriginalFormConversions.FIXED.stream().filter(Conversion::single).toList();
+    private static final List<Conversion> MANY_TO_MANY = OriginalFormConversions.FIXED.stream().filter(c -> !c.single()).toList();
 
     /** Missing forms stay explicit; their single-input offsets are nevertheless retained. */
     private static final List<String> SKIPPED = List.of(
@@ -97,21 +43,11 @@ public final class Loader_FormConversionCraftingRecipes {
             "plateTiny/plateGemTiny 5/9 -> casingSmall 1/2 (:609-612): no casingSmall prefix");
 
     private static final List<String> REGISTERED = new ArrayList<>();
-    private static volatile com.gregtech.gregtech.content.recipe.CraftingConversionPermissions<net.minecraft.world.item.Item> nativePermissions =
-            new com.gregtech.gregtech.content.recipe.CraftingConversionPermissions.Builder<net.minecraft.world.item.Item>().build();
-    private static com.gregtech.gregtech.content.recipe.CraftingConversionPermissions.Builder<net.minecraft.world.item.Item> pendingPermissions;
-
-    /** Original constructors replace plain recipes for the matching input form/count and a conversion output, rather than every recipe using the input. */
-    public static boolean disallowsPlainPlan(ItemStack[] pattern, ItemStack output) {
-        var cells = new ArrayList<net.minecraft.world.item.Item>();
-        for (var cell : pattern) if (!cell.isEmpty()) cells.add(cell.getItem());
-        return !output.isEmpty() && nativePermissions.disallows(cells, output.getItem());
+    /** Source constructor replacement rules also guard plain recipes added after the reload lifecycle. */
+    public static boolean disallowsPlainRecipe(net.minecraft.world.item.crafting.CraftingRecipe recipe,
+                                               net.minecraft.core.RegistryAccess access) {
+        return CraftingMaterialForms.replaces(recipe, access);
     }
-    private static void captureInput(ItemStack input, int cells, ItemStack output) {
-        pendingPermissions.add(input.getItem(), MaterialUnification.canonical(input.copy()).getItem(), cells,
-                output.getItem(), MaterialUnification.canonical(output.copy()).getItem());
-    }
-
 
     private Loader_FormConversionCraftingRecipes() {}
 
@@ -123,7 +59,7 @@ public final class Loader_FormConversionCraftingRecipes {
     public static void add(Map<ResourceLocation, byte[]> recipes) {
         int before = recipes.size();
         REGISTERED.clear();
-        pendingPermissions = new com.gregtech.gregtech.content.recipe.CraftingConversionPermissions.Builder<>();
+        CraftingMaterialForms.rebuild();
 
         for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
             if (!material.isValid()) continue; // Both source crafting constructors default to MT.NULL.NOT.
@@ -141,30 +77,37 @@ public final class Loader_FormConversionCraftingRecipes {
             }
         }
 
-        registerDenseOreConversions(recipes);
+        registerOreConversions(recipes);
 
         int wireSizes = registerWireSizes(recipes);
         int pipeSizes = registerPipeSizes(recipes);
-        nativePermissions = pendingPermissions.build();
-        pendingPermissions = null;
         com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native material grid recipes generated={} wire-size={} pipe-size={}", recipes.size()-before, wireSizes, pipeSizes);
         com.mojang.logging.LogUtils.getLogger().info("Registered {} crafting-grid material form conversions from GT6"
                 + " AdvancedCraftingXToY/1ToY ({} GT6 pairs skipped: {})",
                 REGISTERED.size(), SKIPPED.size(), SKIPPED);
     }
 
-    /** GT6 Loader_Recipes_Handlers:616, {@code oreDense 1 -> oreRaw 2} for both ore block families. */
-    private static void registerDenseOreConversions(Map<ResourceLocation, byte[]> recipes) {
-        Conversion conversion = new Conversion("oreDense", 1, "oreRaw", 2);
-        for (var entry : com.gregtech.gregtech.registry.GTSpecialOreBlocks.all()) {
-            if (!entry.isBound() || !(entry.get() instanceof com.gregtech.gregtech.block.DenseOreBlock denseOre))
-                continue;
-            var block = entry.get();
-            GTMaterial material = denseOre.material();
-            if (material == null || !material.isValid()) continue;
-            ItemStack output = GTItems.getStack(MaterialPrefix.oreRaw, material.resolve(), 2);
+    public static void replacePlain(RecipeManager manager, net.minecraft.core.RegistryAccess access) {
+        var recipes = new ArrayList<>(manager.getRecipes());
+        int before = recipes.size();
+        recipes.removeIf(holder -> holder.value() instanceof net.minecraft.world.item.crafting.CraftingRecipe crafting
+                && disallowsPlainRecipe(crafting, access));
+        if (before != recipes.size()) manager.replaceRecipes(recipes);
+        com.mojang.logging.LogUtils.getLogger().info("[gregtech] Replaced {} plain source-equivalent crafting rows", before - recipes.size());
+    }
+
+    /** Source :615-616: all standard/dense prefix aliases, including actual vanilla ore blocks. */
+    private static void registerOreConversions(Map<ResourceLocation, byte[]> recipes) {
+        for (var entry : CraftingMaterialForms.nativeAliases().entrySet()) {
+            var form = entry.getKey();
+            int count = OriginalFormConversions.STANDARD_ORES.contains(form.prefix()) ? 1
+                    : OriginalFormConversions.DENSE_ORES.contains(form.prefix()) ? 2 : 0;
+            if (count == 0 || entry.getValue().isEmpty()) continue;
+            var material = GTMaterialRegistry.get(form.material()).resolve();
+            var output = GTItems.getStack(MaterialPrefix.oreRaw, material, count);
             if (output.isEmpty()) continue;
-            register(recipes, conversion, material.resolve(), new ItemStack(block), output);
+            register(recipes, new Conversion(form.prefix(), 1, "oreRaw", count, true), material,
+                    new ItemStack(entry.getValue().get(0)), output);
         }
     }
 
@@ -259,14 +202,15 @@ public final class Loader_FormConversionCraftingRecipes {
 
     private static int recipe(Map<ResourceLocation, byte[]> recipes, ItemStack input, ItemStack output, String path,
                               boolean autocraftable, FormConversionSelector selector) {
-        NonNullList<Ingredient> ingredients = NonNullList.withSize(input.getCount(), Ingredient.of(input));
-        if (!autocraftable) captureInput(input, input.getCount(), output);
+        NonNullList<Ingredient> ingredients = NonNullList.withSize(input.getCount(),
+                autocraftable ? Ingredient.of(input) : CraftingMaterialForms.ingredient(input));
+        var inputForm = autocraftable ? null : CraftingMaterialForms.form(input);
         ResourceLocation id = ResourceLocation.fromNamespaceAndPath("gregtech", path);
-        if (selector.variants() > 0)
+        if (!autocraftable && inputForm != null)
             OriginalCraftingJson.formConversion(recipes, id, "gt.wire_sizes", CraftingBookCategory.MISC,
-                    MaterialUnification.canonical(output.copy()), ingredients, selector);
+                    CraftingMaterialForms.canonical(output.copy()), ingredients, selector, inputForm.prefix(), inputForm.material());
         else OriginalCraftingJson.shapeless(recipes, id, "gt.wire_sizes", CraftingBookCategory.MISC,
-                    MaterialUnification.canonical(output.copy()), ingredients, autocraftable);
+                    CraftingMaterialForms.canonical(output.copy()), ingredients, autocraftable);
         REGISTERED.add(id.toString());
         return 1;
     }
@@ -275,41 +219,16 @@ public final class Loader_FormConversionCraftingRecipes {
                                  ItemStack input, ItemStack output) {
         NonNullList<Ingredient> ingredients = NonNullList.withSize(conversion.inputCount(),
                 formIngredient(input));
-        ItemStack result = MaterialUnification.canonical(output.copy());
-        captureInput(input, conversion.inputCount(), output);
+        ItemStack result = CraftingMaterialForms.canonical(output.copy());
         ResourceLocation id = ResourceLocation.fromNamespaceAndPath("gregtech",
                 "form_conversion/" + sanitize(conversion.input()) + "_to_" + sanitize(conversion.output()) + "/"
                         + sanitize(material.getName()) + "_" + conversion.inputCount());
-        OriginalCraftingJson.formConversion(recipes, id, "gt.form_conversion", CraftingBookCategory.MISC, result, ingredients, selector(conversion));
+        OriginalCraftingJson.formConversion(recipes, id, "gt.form_conversion", CraftingBookCategory.MISC, result, ingredients, OriginalFormConversions.selector(conversion),
+                conversion.input(), material.resolve().getName());
         REGISTERED.add(id.toString());
     }
 
-    /**
-     * The ingredient is the GT item only — deliberately, not the unified vanilla item as well.
-     * <p>
-     * GT6 identified forms through the ore dictionary, so its {@code AdvancedCraftingXToY} matched any
-     * copper ingot. The port instead has two items for the unified forms (the GT material item and the
-     * vanilla one its recipe outputs are rewritten onto by {@link MaterialUnification#canonical}), and
-     * vanilla ships its own 9 ingots &harr; block recipes for iron, gold, copper and the unified gems.
-     * Accepting both items here would make those two recipe sets compete for the same grid with no
-     * defined winner. Matching only the GT item keeps vanilla's own recipes in charge of the vanilla
-     * items and leaves every other material to this table.
-     */
-    private static Ingredient formIngredient(ItemStack form) {
-        return Ingredient.of(form);
-    }
-
-    private static FormConversionSelector selector(Conversion conversion) {
-        if (conversion.inputCount() != 1) return FormConversionSelector.NONE;
-        int variants = 0, offset = 0;
-        for (Conversion candidate : ONE_TO_MANY) {
-            if (!candidate.input().equals(conversion.input())) continue;
-            if (candidate.equals(conversion)) offset = variants;
-            variants++;
-        }
-        // The source ore-prefix loop adds one output to each ordinary/dense ore prefix.
-        return new FormConversionSelector(Math.max(1, variants), offset);
-    }
+    private static Ingredient formIngredient(ItemStack form) { return CraftingMaterialForms.ingredient(form); }
 
     private static ItemStack item(String prefixName, GTMaterial material, int count) {
         MaterialPrefix prefix = PrefixRegistry.byName(prefixName);
@@ -332,5 +251,4 @@ public final class Loader_FormConversionCraftingRecipes {
         return builder.toString();
     }
 
-    private record Conversion(String input, int inputCount, String output, int outputCount) {}
 }

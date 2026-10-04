@@ -33,21 +33,27 @@ public final class OriginalCraftingJson {
     /** Original single-input variants retain their grid position through JSON and network sync. */
     public static void formConversion(Map<ResourceLocation, byte[]> data, ResourceLocation id, String group,
                                      CraftingBookCategory category, ItemStack output, List<Ingredient> ingredients,
-                                     com.gregtech.gregtech.content.recipe.FormConversionSelector selector) {
-        shapeless(data, id, group, category, output, ingredients, false, true, selector);
+                                     com.gregtech.gregtech.content.recipe.FormConversionSelector selector,
+                                     String input, String material) {
+        shapeless(data, id, group, category, output, ingredients, false, true, selector, input, material);
     }
     private static void shapeless(Map<ResourceLocation, byte[]> data, ResourceLocation id, String group,
                                  CraftingBookCategory category, ItemStack output, List<Ingredient> ingredients,
                                  boolean autocraftable, boolean sourcePermission) {
         shapeless(data, id, group, category, output, ingredients, autocraftable, sourcePermission,
-                com.gregtech.gregtech.content.recipe.FormConversionSelector.NONE);
+                com.gregtech.gregtech.content.recipe.FormConversionSelector.NONE, "", "");
     }
     private static void shapeless(Map<ResourceLocation, byte[]> data, ResourceLocation id, String group,
                                  CraftingBookCategory category, ItemStack output, List<Ingredient> ingredients,
                                  boolean autocraftable, boolean sourcePermission,
-                                 com.gregtech.gregtech.content.recipe.FormConversionSelector selector) {
+                                 com.gregtech.gregtech.content.recipe.FormConversionSelector selector,
+                                 String input, String material) {
         var json = recipe(sourcePermission ? "gregtech:tool_shapeless" : "minecraft:crafting_shapeless", group, category, output); var values = new JsonArray();
         if (sourcePermission) json.addProperty("gregtech_autocraftable", autocraftable);
+        if (!input.isEmpty()) {
+            json.addProperty("gregtech_form_input", input);
+            json.addProperty("gregtech_form_material", material);
+        }
         if (selector.variants() > 0) {
             json.addProperty("gregtech_form_variants", selector.variants());
             json.addProperty("gregtech_form_offset", selector.offset());

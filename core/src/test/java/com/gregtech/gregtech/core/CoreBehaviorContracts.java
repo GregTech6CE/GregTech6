@@ -76,36 +76,41 @@ public final class CoreBehaviorContracts {
     }
 
     private static void conversionPermissionSourceSamples() {
-        // Source constructors also check the output form before replacing ordinary recipes.
-        Object iron = new Object(), canonicalIron = new Object(), copper = new Object(), nuggets = new Object();
-        Object block = new Object(), canonicalBlock = new Object(), copperBlock = new Object(), unrelated = new Object();
-        Object wire = new Object(), wireSmall = new Object(), pipe = new Object();
-        var builder = new com.gregtech.gregtech.content.recipe.CraftingConversionPermissions.Builder<Object>();
-        builder.add(iron, canonicalIron, 1, nuggets, null); builder.add(iron, canonicalIron, 9, block, canonicalBlock);
-        builder.add(copper, null, 9, copperBlock, null); builder.add(nuggets, null, 9, iron, canonicalIron);
-        builder.add(wire, null, 1, wireSmall, null);
-        var rules = builder.build();
-        check(rules.disallows(java.util.Collections.nCopies(9, iron), block), "source forbids nine ingots to block");
-        check(rules.disallows(java.util.Collections.nCopies(9, canonicalIron), canonicalBlock), "canonical inputs and outputs cannot bypass permission");
-        check(rules.disallows(List.of(iron, canonicalIron, iron, canonicalIron, iron, canonicalIron, iron, canonicalIron, iron), block), "same-material aliases remain one input form");
-        check(!rules.disallows(List.of(iron, iron, iron, iron, iron, iron, iron, iron, copper), block), "different input materials do not match");
-        check(rules.disallows(List.of(canonicalIron), nuggets), "single ingot split is forbidden");
-        check(!rules.disallows(java.util.Collections.nCopies(4, iron), block), "unregistered count does not inherit restriction");
-        check(rules.disallows(java.util.Collections.nCopies(9, nuggets), canonicalIron), "nine nuggets convert with source F permission");
-        check(!rules.disallows(java.util.Collections.nCopies(4, nuggets), iron), "four nuggets are not the source row");
-        check(rules.disallows(List.of(wire), wireSmall), "wire splitting has source F permission");
-        check(!rules.disallows(List.of(pipe), wireSmall), "CR.DEF_NCC pipe disassembly remains allowed");
-        check(!rules.disallows(List.of(), iron), "empty blueprint has no conversion");
-        check(!rules.disallows(java.util.Collections.nCopies(10, iron), block), "ten cells exceed crafting grid");
-        check(!rules.disallows(java.util.Collections.nCopies(9, iron), unrelated), "unrelated output is not denied merely for using nine ingots");
-        check(!rules.disallows(java.util.Collections.nCopies(9, iron), copperBlock), "XToY does not replace another material's output");
-        builder.add(nuggets, null, 4, iron, null);
-        check(!rules.disallows(java.util.Collections.nCopies(4, nuggets), iron), "published reload snapshot stays immutable");
-        check(builder.build().disallows(java.util.Collections.nCopies(4, nuggets), iron), "replacement snapshot contains new count");
-        var identities = new com.gregtech.gregtech.content.recipe.CraftingConversionPermissions.Builder<String>();
-        String a = new String("same name"), b = new String("same name"), output = "block";
-        identities.add(a, null, 9, output, null); identities.add(b, null, 9, output, null);
-        check(!identities.build().disallows(List.of(a,a,a,a,a,a,a,a,b), output), "equal labels do not merge distinct item identities");
+        // AdvancedCrafting1ToY/XToY constructor removal rules, independent fixed source cases.
+        var ingot = new com.gregtech.gregtech.content.recipe.OriginalFormConversions.Form("ingot", "Iron");
+        var nugget = new com.gregtech.gregtech.content.recipe.OriginalFormConversions.Form("nugget", "Copper");
+        var block = new com.gregtech.gregtech.content.recipe.OriginalFormConversions.Form("blockIngot", "Iron");
+        check(com.gregtech.gregtech.content.recipe.OriginalFormConversions.replaces(List.of(ingot), 1, 1, true, false, nugget),
+                "source single conversion checks output prefix even with another material");
+        check(!com.gregtech.gregtech.content.recipe.OriginalFormConversions.replaces(List.of(ingot), 1, 1, true, true, nugget),
+                "source GT recipe interface is exempt from plain replacement");
+        var nine = java.util.Collections.nCopies(9, ingot);
+        check(com.gregtech.gregtech.content.recipe.OriginalFormConversions.replaces(nine, 3, 3, false, false, block),
+                "source nine-ingot shaped block conversion is replaced");
+        check(!com.gregtech.gregtech.content.recipe.OriginalFormConversions.replaces(nine, 3, 3, false, false,
+                new com.gregtech.gregtech.content.recipe.OriginalFormConversions.Form("blockIngot", "Copper")),
+                "source many-input conversion checks output material");
+        var mixed = new ArrayList<>(nine); mixed.set(8, new com.gregtech.gregtech.content.recipe.OriginalFormConversions.Form("ingot", "Copper"));
+        check(!com.gregtech.gregtech.content.recipe.OriginalFormConversions.replaces(mixed, 3, 3, true, false, block),
+                "source many-input conversion requires one material");
+        var small = new com.gregtech.gregtech.content.recipe.OriginalFormConversions.Form("dustSmall", "Iron");
+        var dust = new com.gregtech.gregtech.content.recipe.OriginalFormConversions.Form("dust", "Iron");
+        check(!com.gregtech.gregtech.content.recipe.OriginalFormConversions.replaces(java.util.Collections.nCopies(4, small), 2, 2, false, false, dust),
+                "source shaped four-input removal requires the full nine-slot array");
+        var full = new ArrayList<com.gregtech.gregtech.content.recipe.OriginalFormConversions.Form>(java.util.Collections.nCopies(9, null));
+        for (int i : new int[]{0,1,3,4}) full.set(i, small);
+        check(com.gregtech.gregtech.content.recipe.OriginalFormConversions.replaces(full, 3, 3, false, false, dust),
+                "source upper-left four-input array is replaced");
+        check(com.gregtech.gregtech.content.recipe.OriginalFormConversions.replaces(java.util.Collections.nCopies(4, small), 4, 1, true, false, dust),
+                "source shapeless four-input conversion is replaced");
+        var raw = new com.gregtech.gregtech.content.recipe.OriginalFormConversions.Form("oreRaw", "Iron");
+        for (String prefix : new String[]{"ore", "oreDeepslate", "oreDense"})
+            check(com.gregtech.gregtech.content.recipe.OriginalFormConversions.replaces(List.of(new com.gregtech.gregtech.content.recipe.OriginalFormConversions.Form(prefix, "Iron")),1,1,true,false,raw),
+                    "source ordinary or dense ore conversion " + prefix);
+        for (String prefix : new String[]{"oreSmall", "oreBedrock", "oreDust", "oreRaw"})
+            check(!com.gregtech.gregtech.content.recipe.OriginalFormConversions.replaces(List.of(new com.gregtech.gregtech.content.recipe.OriginalFormConversions.Form(prefix, "Iron")),1,1,true,false,raw),
+                    "source excludes nonstandard ore " + prefix);
+        equal(60, com.gregtech.gregtech.content.recipe.OriginalFormConversions.FIXED.size(), "all fixed source constructors retained");
     }
 
     private static void autocraftingSourceSamples() {
