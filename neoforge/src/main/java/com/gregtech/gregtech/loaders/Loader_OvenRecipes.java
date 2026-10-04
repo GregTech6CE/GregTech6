@@ -196,7 +196,10 @@ public final class Loader_OvenRecipes {
             var remaining = java.util.Arrays.stream(choices).filter(stack -> !source.contains(stack.getItem())).toArray(ItemStack[]::new);
             if (remaining.length == choices.length) { filtered.add(holder); continue; }
             if (remaining.length == 0) continue;
-            var id = holder.id(); var ingredient = Ingredient.of(remaining);
+            var id = holder.id();
+            var excluded = java.util.Arrays.stream(choices).filter(stack -> source.contains(stack.getItem())).toArray(ItemStack[]::new);
+            var ingredient = net.neoforged.neoforge.common.crafting.DifferenceIngredient.of(
+                    row.getIngredients().get(0), Ingredient.of(excluded));
             var result = row.getResultItem(RegistryAccess.EMPTY).copy();
             Recipe<?> replacement = recipe.getType() == RecipeType.SMOKING
                     ? new net.minecraft.world.item.crafting.SmokingRecipe(row.getGroup(), row.category(), ingredient, result, row.getExperience(), row.getCookingTime())
