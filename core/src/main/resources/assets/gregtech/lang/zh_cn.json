@@ -5023,6 +5023,7 @@
   "gt.axial.state.enabled": "已启用",
   "gt.axial.state.overloaded": "过载停机：潜行空手右键复位",
   "gt.axial.state.stopped": "已停机",
+  "gt.behaviour.washing": "扔进炼药锅中清洗此物品",
   "gt.behaviour.placedynamite": "放置炸药并绑定到快捷栏中的远程激活器",
   "gt.jei.fluid.boiling_point": "沸点: %s",
   "gt.jei.fluid.buoyancy": "%s",

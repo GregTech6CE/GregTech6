@@ -17,7 +17,11 @@ public final class MaterialTooltipHandler {
     @SubscribeEvent
     public static void onItemTooltip(ItemTooltipEvent event) {
         ItemStack stack = event.getItemStack();
-        if (stack.isEmpty() || stack.getItem() instanceof com.gregtech.gregtech.api.material.MaterialFormItem
+        if (stack.isEmpty()) return;
+        var form = com.gregtech.gregtech.api.material.MaterialEquivalence.form(stack);
+        if (form != null && com.gregtech.gregtech.content.recipe.MaterialWashingRules.row(form.prefix()) != null)
+            event.getToolTip().add(net.minecraft.network.chat.Component.translatable("gt.behaviour.washing"));
+        if (stack.getItem() instanceof com.gregtech.gregtech.api.material.MaterialFormItem
                 || stack.getItem() instanceof MaterialBlockItem blockItem && blockItem.material() != null) {
             return;
         }

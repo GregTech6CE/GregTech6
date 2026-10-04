@@ -36,8 +36,10 @@ public final class MaterialBehaviorContracts {
     // docs/integration/verification/external-rest-material-differential-20261004.json.
     // dirtyGravel/crystal source metadata only; 139681 prior observations per stage retained:
     // docs/integration/verification/external-thermal-material-differential-20261004.json.
-    private static final String DEFINITIONS_SHA256 = "67d968260dd9f41fa893bb267e6a99a144a4338f1583f075709a8ce8690c93b9";
-    private static final String POST_INIT_SHA256 = "a8ed3aa61fb2cb27c5e6775181fa24e6971084ef01fddf46c2bafd4447948905";
+    // dustPure/refined metadata plus source dustImpure weight correction; full delta audited:
+    // docs/integration/verification/dust-listeners-material-differential-20261004.json.
+    private static final String DEFINITIONS_SHA256 = "842079f4654e2eb389117406b4eeef2a564460b4142705dd62adf4d06d1daa74";
+    private static final String POST_INIT_SHA256 = "0a3828a8b07715e8ef8c432572756033c0101eec00ea70657d0f750bcd603b6e";
     private static int assertions;
     private MaterialBehaviorContracts() {}
 
@@ -62,7 +64,7 @@ public final class MaterialBehaviorContracts {
                 "The complete directory must finish linking");
         check(GTMaterialRegistry.allMaterials().size() == 1160, "All 1160 original material objects must remain");
         check(MaterialCatalogSnapshot.aliases().size() == 1523, "All 1523 original name entries must remain");
-        check(PrefixRegistry.all().size() == 120, "109 prior prefixes plus eleven source external forms must remain");
+        check(PrefixRegistry.all().size() == 122, "109 prior prefixes plus thirteen source external forms must remain");
         check(DEFINITIONS_SHA256.equals(MaterialCatalogSnapshot.sha256()), "Full definitions/aliases/forms must match the Community Edition snapshot");
         GTMaterialRegistry.init();
         check(DEFINITIONS_SHA256.equals(MaterialCatalogSnapshot.sha256()), "Repeated init must not mutate or duplicate definitions");
@@ -80,6 +82,15 @@ public final class MaterialBehaviorContracts {
                 "full Cassiterite directory keeps source three-quarter Tin yield");
         check(com.gregtech.gregtech.content.recipe.FurnaceSmeltingRules.amount(GTValues.U, GTMaterialRegistry.get("Malachite").getTargetSmeltingAmount()) == 108_108_000L,
                 "full Malachite directory keeps source one-sixth Copper yield");
+        check(sourceGrinding.get(22).allows(wrought), "source impure dust has a soft Shredder branch");
+        check(sourceGrinding.get(23).allows(iron), "source foreign pure dust processing is allowed when an actual input exists");
+        check(!sourceGrinding.get(24).allows(GTMaterialRegistry.get("Bedrock")), "source refined Bedrock dust is excluded");
+        check(!MaterialPrefix.dustPure.isValidFor(iron), "source Iron has ORES but no DIRTY_DUSTS generation flag");
+        check(!MaterialPrefix.dustRefined.isValidFor(GTMaterialRegistry.get("Obsidian"))
+                && !MaterialPrefix.dustRefined.isValidFor(GTMaterialRegistry.get("Glowstone")), "source disables refined Obsidian and Glowstone item generation");
+        check(com.gregtech.gregtech.content.recipe.MaterialWashingRules.ROWS.get(1).outputMaterial(wrought) == wrought,
+                "source washing retains WroughtIron instead of using its Iron pulver target");
+        check(sourceGrinding.get(22).outputMaterial(wrought) == iron, "source impure-dust shredding uses the Iron pulver target");
         var hardGrinding = GTMaterialRegistry.get("Tungstensteel");
         check(sourceGrinding.get(3).allows(wrought), "source MORTAR WroughtIron permits Anvil external grinding");
         check(!sourceGrinding.get(3).allows(hardGrinding), "source non-MORTAR Tungstensteel rejects Anvil external grinding");
@@ -107,7 +118,7 @@ public final class MaterialBehaviorContracts {
         validateCopperTinBronze();
         validateAmountsAndReactions();
         System.out.println("Material behavior contracts passed: " + assertions
-                + " assertions; 1160 materials, 1105 positive IDs, 1523 name entries, 120 prefixes, 173 reactions");
+                + " assertions; 1160 materials, 1105 positive IDs, 1523 name entries, 122 prefixes, 173 reactions");
     }
 
     private static void validateIdentityGraph() throws Exception {

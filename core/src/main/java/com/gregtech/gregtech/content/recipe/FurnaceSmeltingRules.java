@@ -10,7 +10,8 @@ import java.util.List;
 /** Loader_Recipes_Furnace:151-160,190-201; all source FURNACE targets solidify with an identity U ratio. */
 public final class FurnaceSmeltingRules {
     private FurnaceSmeltingRules() {}
-    public record ExternalRow(MaterialPrefix input, long fixedAmount) {
+    public record ExternalRow(MaterialPrefix input, long fixedAmount, boolean experience) {
+        public ExternalRow(MaterialPrefix input, long fixedAmount) { this(input, fixedAmount, true); }
         public long amount() { return fixedAmount < 0 ? input.getMaterialWeight() : fixedAmount; }
     }
     public static final List<ExternalRow> EXTERNAL = List.of(
@@ -22,7 +23,11 @@ public final class FurnaceSmeltingRules {
             new ExternalRow(MaterialPrefix.cleanGravel, -1),
             new ExternalRow(MaterialPrefix.dirtyGravel, -1),
             new ExternalRow(MaterialPrefix.crystalline, -1),
-            new ExternalRow(MaterialPrefix.reduced, -1));
+            new ExternalRow(MaterialPrefix.reduced, -1),
+            // Source :142-143 inherits the prefix weight and deliberately grants no experience.
+            new ExternalRow(MaterialPrefix.dustPure, -1, false),
+            new ExternalRow(MaterialPrefix.dustRefined, -1, false),
+            new ExternalRow(MaterialPrefix.dustImpure, -1, false));
     public static boolean allows(GTMaterial material) {
         return material.isValid() && !material.has(MaterialProperty.HIDDEN) && MaterialWorkability.isFurnace(material);
     }

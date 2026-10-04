@@ -5023,6 +5023,7 @@
   "gt.axial.state.enabled": "Enabled",
   "gt.axial.state.overloaded": "Overload shutdown: sneak + empty-hand right-click to reset",
   "gt.axial.state.stopped": "Stopped",
+  "gt.behaviour.washing": "Throw into Cauldron to clean this Item",
   "gt.behaviour.placedynamite": "Places Dynamite and links it to Remote Activators in Hotbar",
   "gt.jei.fluid.boiling_point": "Boiling: %s",
   "gt.jei.fluid.buoyancy": "%s",

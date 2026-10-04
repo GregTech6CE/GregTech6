@@ -47,14 +47,15 @@ public final class CoreBehaviorContracts {
         externalGrindingSourceSamples();
         externalAdditionalGrindingSourceSamples();
         externalThermalSourceSamples();
+        dustListenerSourceSamples();
         assertions += OriginWorldgenSamples.verify();
-        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 26 groups (Java 17; no game dependencies)");
+        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 27 groups (Java 17; no game dependencies)");
     }
 
     private static void externalGrindingSourceSamples() {
         // Handler:117-119,129-131,158-160; costs round after multiplying, not before.
         var rows = com.gregtech.gregtech.content.recipe.ExternalOreProcessingRules.GRINDING;
-        equal(22, rows.size(), "eight adaptive Shredder, eight Anvil and six Mortar routes");
+        equal(25, rows.size(), "eleven adaptive Shredder, eight Anvil and six Mortar routes");
         long[] soft0 = {34, 34, 50}, hard0 = {541, 541, 797};
         long[] soft2 = {102, 102, 150}, hard2 = {1622, 1622, 2390};
         long[] anvil0 = {34, 34, 48}, anvil2 = {102, 102, 144};
@@ -114,7 +115,7 @@ public final class CoreBehaviorContracts {
             equal(48, row.duration(2, true), "source quality-scaled Mortar duration " + i);
         }
         var external = com.gregtech.gregtech.content.recipe.ExternalOreProcessingRules.EXTERNAL_FORMS;
-        equal(11, external.size(), "eleven typed external forms");
+        equal(13, external.size(), "thirteen typed external forms");
         for (var form : external) check(!com.gregtech.gregtech.api.material.MaterialItemDefinitions.candidatePrefixes().contains(form),
                 "external metadata creates no GT-owned items " + form.getName());
         // OM:370-371 / UT.Code.units:1677-1687, target amount multiplies the input then floors.
@@ -141,7 +142,7 @@ public final class CoreBehaviorContracts {
         var furnace = com.gregtech.gregtech.content.recipe.FurnaceSmeltingRules.EXTERNAL;
         String[] furnaceInputs = {"rawOreChunk", "chunk", "rubble", "pebbles", "cluster", "cleanGravel", "dirtyGravel", "crystalline", "reduced"};
         long[] amounts = {243_243_000L, 1_297_296_000L, 1_297_296_000L, 1_945_944_000L, 1_945_944_000L, 648_648_000L, 648_648_000L, 648_648_000L, 648_648_000L};
-        equal(9, furnace.size(), "source nine external furnace listeners; no clump or crystal listener");
+        equal(12, furnace.size(), "source nine ore and three dirty-dust furnace listeners; no clump or crystal listener");
         for (int i = 0; i < furnaceInputs.length; i++) {
             check(furnace.get(i).input().getName().equals(furnaceInputs[i]), "source external furnace listener " + i);
             equal(amounts[i], furnace.get(i).amount(), "source furnace fixed/prefix amount " + i);
@@ -157,6 +158,74 @@ public final class CoreBehaviorContracts {
         String[] crucibleInputs = {"chunk", "rubble", "pebbles", "cluster", "cleanGravel", "dirtyGravel", "crystalline", "reduced"};
         equal(8, crucible.size(), "source eight external crucible display forms");
         for (int i = 0; i < crucibleInputs.length; i++) check(crucible.get(i).getName().equals(crucibleInputs[i]), "source crucible form " + i);
+    }
+
+    private static void dustListenerSourceSamples() {
+        // OP:158-160,570-573; Handler:114-116/126-128; Furnace:141-143; Washing:64-89.
+        var grinding = com.gregtech.gregtech.content.recipe.ExternalOreProcessingRules.GRINDING;
+        String[] names = {"dustImpure", "dustPure", "dustRefined"};
+        long[] weights = {720_720_000L, 792_792_000L, 864_864_000L};
+        long[] soft0 = {18, 20, 22}, hard0 = {285, 313, 342};
+        long[] soft2 = {54, 59, 64}, hard2 = {854, 939, 1024};
+        for (int i = 0; i < 3; i++) {
+            var row = grinding.get(i + 22);
+            check(row.map().equals("Shredder") && row.input().getName().equals(names[i]), "source dirty dust Shredder input " + i);
+            equal(weights[i], row.input().getMaterialWeight(), "source dirty dust weight includes impurities " + i);
+            equal(1, row.dustCount(), "source dirty dust main output " + i);
+            equal(i + 1, row.fineCount(), "source dirty dust explicit fine count " + i);
+            check(row.excludesBedrock() && !row.requiresEmptySlot() && !row.pulverizedRemains(), "source dirty dust flags " + i);
+            check(!row.allows(com.gregtech.gregtech.content.material.generated.CompoundMaterials.Bedrock), "source dirty dust rejects Bedrock " + i);
+            equal(soft0[i], row.duration(0, true), "source dirty dust mortar speed " + i);
+            equal(hard0[i], row.duration(0, false), "source dirty dust hard speed " + i);
+            equal(soft2[i], row.duration(2, true), "source dirty dust quality and rounding " + i);
+            equal(hard2[i], row.duration(2, false), "source dirty dust hard quality and rounding " + i);
+        }
+        var furnace = com.gregtech.gregtech.content.recipe.FurnaceSmeltingRules.EXTERNAL;
+        check(furnace.get(9).input() == com.gregtech.gregtech.data.MaterialPrefix.dustPure && !furnace.get(9).experience(), "source pure dust smelting grants no XP");
+        check(furnace.get(10).input() == com.gregtech.gregtech.data.MaterialPrefix.dustRefined && !furnace.get(10).experience(), "source refined dust smelting grants no XP");
+        check(furnace.get(11).input() == com.gregtech.gregtech.data.MaterialPrefix.dustImpure && !furnace.get(11).experience(), "source foreign impure dust smelting grants no XP");
+        equal(792_792_000L, furnace.get(9).amount(), "source pure dust furnace uses 11/9 U");
+        equal(864_864_000L, furnace.get(10).amount(), "source refined dust furnace uses 12/9 U");
+        equal(720_720_000L, furnace.get(11).amount(), "source impure dust furnace uses 10/9 U");
+        var washing = com.gregtech.gregtech.content.recipe.MaterialWashingRules.ROWS;
+        equal(4, washing.size(), "four source cauldron listeners");
+        check(washing.get(0).input() == com.gregtech.gregtech.data.MaterialPrefix.crushed
+                && washing.get(0).output() == com.gregtech.gregtech.data.MaterialPrefix.crushedPurified
+                && washing.get(0).byproduct() == com.gregtech.gregtech.data.MaterialPrefix.crushedPurifiedTiny,
+                "source crushed washing output and optional tiny byproduct");
+        check(!washing.get(0).givesByproduct(0) && washing.get(0).givesByproduct(1), "source crushed washing accepts one of two random outcomes");
+        for (int i = 1; i < 4; i++) {
+            check(washing.get(i).input().getName().equals(names[i - 1]) && washing.get(i).output() == com.gregtech.gregtech.data.MaterialPrefix.dust,
+                    "source dust washing returns clean dust " + i);
+            check(washing.get(i).byproduct() == null && !washing.get(i).givesByproduct(0), "source dust washing discards impurities " + i);
+        }
+        check(com.gregtech.gregtech.content.recipe.MaterialWashingRules.row(com.gregtech.gregtech.data.MaterialPrefix.dust) == null,
+                "clean dust has no repeated washing listener");
+        var step = com.gregtech.gregtech.content.recipe.MaterialWashingRules.step(64, 3, true);
+        equal(63, step.remainingCount(), "one washing tick consumes one item from a full stack");
+        equal(2, step.remainingWater(), "one washing tick consumes one water level");
+        var last = com.gregtech.gregtech.content.recipe.MaterialWashingRules.step(1, 1, true);
+        equal(0, last.remainingCount(), "last source item is removed");
+        equal(0, last.remainingWater(), "last water level empties the cauldron");
+        check(com.gregtech.gregtech.content.recipe.MaterialWashingRules.step(64, 0, true) == null, "dry cauldron does not consume input");
+        check(com.gregtech.gregtech.content.recipe.MaterialWashingRules.step(64, 3, false) == null, "missing main output preserves water and input");
+        check(com.gregtech.gregtech.content.recipe.MaterialWashingRules.step(0, 3, true) == null, "empty input does not consume water");
+        var negative = com.gregtech.gregtech.content.recipe.MaterialWashingRules.cell(-.01, 64.2, -1.01);
+        equal(-1, negative.x(), "washing floors negative X");
+        equal(63, negative.y(), "washing checks one quarter block below the item");
+        equal(-2, negative.z(), "washing floors negative Z");
+        equal(-1, com.gregtech.gregtech.content.recipe.MaterialWashingRules.cell(0, -.1, 0).y(), "washing floors negative Y after the quarter offset");
+        equal(0, com.gregtech.gregtech.content.recipe.MaterialWashingRules.cell(0, .25, 0).y(), "washing includes the exact quarter-block boundary");
+        var iron = com.gregtech.gregtech.content.material.generated.ElementMaterials.Iron;
+        var noByproducts = com.gregtech.gregtech.api.material.GTMaterialRegistry.createMaterial(-1, "WashingEmptyFixture", "Washing Empty Fixture", 0);
+        check(com.gregtech.gregtech.content.recipe.MaterialWashingRules.byproductMaterial(noByproducts, 0) == noByproducts,
+                "source byproduct selection falls back to the input when none exist");
+        var weighted = com.gregtech.gregtech.api.material.GTMaterialRegistry.createMaterial(-1, "WashingFixture", "Washing Fixture", 0)
+                .ores(iron, iron, com.gregtech.gregtech.content.material.generated.ElementMaterials.Copper);
+        check(com.gregtech.gregtech.content.recipe.MaterialWashingRules.byproductMaterial(weighted, 1) == iron, "source byproduct duplicates preserve selection weight");
+        check(com.gregtech.gregtech.content.recipe.MaterialWashingRules.byproductMaterial(weighted, 2)
+                == com.gregtech.gregtech.content.material.generated.ElementMaterials.Copper, "source byproduct selection retains the final candidate");
+        equal(15, com.gregtech.gregtech.content.recipe.ExternalOreProcessingRules.COMPOSITION_FORMS.size(), "source world listeners bind foreign crushed and impure dust alongside external forms");
     }
 
     private static void externalOreSourceSamples() {

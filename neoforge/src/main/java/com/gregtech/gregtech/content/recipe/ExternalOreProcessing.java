@@ -41,7 +41,7 @@ public final class ExternalOreProcessing {
         CraftingMaterialForms.rebuild(true);
         var forms = CraftingMaterialForms.nativeAliases();
         var materialData = new IdentityHashMap<Item, ItemComposition>();
-        for (var prefix : ExternalOreProcessingRules.EXTERNAL_FORMS) for (var entry : forms.entrySet()) {
+        for (var prefix : ExternalOreProcessingRules.COMPOSITION_FORMS) for (var entry : forms.entrySet()) {
             if (!entry.getKey().prefix().equals(prefix.getName())) continue;
             var material = GTMaterialRegistry.get(entry.getKey().material()).resolve();
             if (!material.isValid()) continue;
@@ -80,7 +80,7 @@ public final class ExternalOreProcessing {
                 var target = route.outputMaterial(material);
                 var dust = route.pulverizedRemains() ? MortarGrindingRecipes.pulverize(material, route.input().getMaterialWeight())
                         : output(MaterialPrefix.dust, target, route.dustCount());
-                var fines = route.fines() ? output(MaterialPrefix.dustTiny, target, 1) : ItemStack.EMPTY;
+                var fines = route.fines() ? output(MaterialPrefix.dustTiny, target, route.fineCount()) : ItemStack.EMPTY;
                 if (dust.isEmpty() || (route.fines() && fines.isEmpty())) continue;
                 for (var item : entry.getValue()) {
                     var outputs = fines.isEmpty() ? new ItemStack[]{dust.copy()} : new ItemStack[]{dust.copy(), fines.copy()};
@@ -111,7 +111,7 @@ public final class ExternalOreProcessing {
                 if (recipe == null) continue;
                 OWNED.computeIfAbsent(map, unused -> Collections.newSetFromMap(new IdentityHashMap<>())).add(recipe);
                 cookingData.put(item, new FurnaceSmeltingRecipes.CookingData(
-                        FurnaceSmeltingRules.experience(amount, material.getToolQuality()),
+                        row.experience() ? FurnaceSmeltingRules.experience(amount, material.getToolQuality()) : 0,
                         com.gregtech.gregtech.data.generated.MaterialWorkability.isFood(material)));
                 added++;
             }

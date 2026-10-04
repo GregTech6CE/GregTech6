@@ -22,6 +22,8 @@ public final class MaterialPrefix {
     public static final MaterialPrefix dustTiny;
     public static final MaterialPrefix dustDiv72;
     public static final MaterialPrefix dustImpure;
+    /** Source metadata only: Loader_Items does not create these two GT-owned forms. */
+    public static final MaterialPrefix dustPure, dustRefined;
     public static final MaterialPrefix unit;
     public static final MaterialPrefix crushed;
     public static final MaterialPrefix crushedTiny;
@@ -305,6 +307,9 @@ public final class MaterialPrefix {
         dustTiny = child("dustTiny", "Tiny Dust", dust);
         dustDiv72 = child("dustDiv72", "1/72 Dust", dust);
         dustImpure = tex("dustImpure", "Impure Dust", "dust", HAS_DIRTY_DUST);
+        dustPure = tex("dustPure", "Purified Dust", "dust", m -> MaterialForms.has(m, "DIRTY_DUSTS"));
+        dustRefined = tex("dustRefined", "Refined Dust", "dust", m -> MaterialForms.has(m, "DIRTY_DUSTS")
+                && !m.getName().equals("Obsidian") && !m.getName().equals("Glowstone"));
         // Unit marker items exist for every material (recipe display / JEI bookkeeping).
         unit = def("unit", "Unit", m -> true);
         crushed = def("crushed", "Crushed Ore", HAS_ORE_PROCESSING);
@@ -548,6 +553,10 @@ private final String name;
             case "dust_small" -> GTValues.U4;
             case "dust_tiny", "nugget" -> GTValues.U9;
             case "dust_div72" -> GTValues.U72;
+            // OP:158-160 includes one, two or three ninths of impurities.
+            case "dust_impure" -> GTValues.U9 * 10;
+            case "dust_pure" -> GTValues.U9 * 11;
+            case "dust_refined" -> GTValues.U9 * 12;
             // GT6's coin is the only form whose amount is written down outside the prefix table: the
             // coin multi-tile recycles itself as one ninth of a unit
             // (`OM.stack(mMaterial, U9)`, MultiTileEntityCoin.java:99).

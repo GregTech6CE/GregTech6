@@ -44,7 +44,7 @@ import java.util.List;
  * a nugget stays a nugget, exactly as in the original.</p>
  *
  * <p>External listener rows bind actual tagged items through ExternalOreProcessing after tags load.
- * dustPure/dustRefined remain unresolved typed forms. Cooking metadata retains source experience
+ * dustPure/dustRefined bind external items without adding GT-owned forms. Cooking metadata retains source experience
  * and smoker/blast selection for the native oven bridge.</p>
  */
 public final class FurnaceSmeltingRecipes {
