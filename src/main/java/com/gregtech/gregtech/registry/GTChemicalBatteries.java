@@ -13,6 +13,12 @@ public final class GTChemicalBatteries {
     public static List<RegistryObject<ChemicalBatteryBlock>> legacy(){return Collections.unmodifiableList(LEGACY);}
     public static List<RegistryObject<ChemicalBatteryBlock>> allRegistered(){return java.util.stream.Stream.concat(ALL.stream(),LEGACY.stream()).toList();}
     public static List<RegistryObject<ChemicalBatteryBlock>> all(){return Collections.unmodifiableList(ALL);}
+    public static ChemicalBatteryItem item(ChemicalBatterySpec.Chemistry chemistry,int tier){
+        var id=com.gregtech.gregtech.GregTech.id(new ChemicalBatterySpec(chemistry,tier).id());
+        var item=net.minecraft.core.registries.BuiltInRegistries.ITEM.get(id);
+        if(!(item instanceof ChemicalBatteryItem battery))throw new IllegalStateException("Missing chemical battery "+id);
+        return battery;
+    }
     public static void registerAll(){
         for(var spec:ChemicalBatterySpec.all()) {
             var block=GTBlocks.BLOCKS.register(spec.id(),()->new ChemicalBatteryBlock(spec));

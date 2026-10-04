@@ -2,7 +2,7 @@ package com.gregtech.gregtech.gametest;
 
 import com.gregtech.gregtech.content.energy.BatteryBoxEnergy;
 import com.gregtech.gregtech.data.GregTechTags;
-import com.gregtech.gregtech.item.BatteryItem;
+import com.gregtech.gregtech.item.ChemicalBatteryItem;
 import com.gregtech.gregtech.registry.GTElectricItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
@@ -16,13 +16,13 @@ import java.util.List;
 @PrefixGameTestTemplate(false)
 public final class LegacyBatteryVoltageTests {
     @GameTest(template = "test_empty")
-    public static void everyLegacyTierHonorsVoltagePacketLimitsAndSimulation(GameTestHelper h) {
+    public static void migratedHandlesHonorChemicalPacketLimitsAndSimulation(GameTestHelper h) {
         var batteries = List.of(GTElectricItems.BATTERY_LV.get(), GTElectricItems.BATTERY_MV.get(),
                 GTElectricItems.BATTERY_HV.get(), GTElectricItems.BATTERY_EV.get(), GTElectricItems.BATTERY_IV.get());
         var eu = GregTechTags.Energy.EU;
-        for (BatteryItem battery : batteries) {
+        for (ChemicalBatteryItem battery : batteries) {
             var stack = new ItemStack(battery);
-            long v = 8L << (battery.tier() * 2), capacity = battery.getEnergyCapacity(stack, eu);
+            long v = 8L << (battery.spec().tier() * 2), capacity = battery.getEnergyCapacity(stack, eu);
             long packets = Math.min(v, capacity / v);
             h.assertTrue(battery.canEnergyInjection(stack, eu, v / 2) && battery.canEnergyExtraction(stack, eu, v * 2),
                     "theoretical range is inclusive and independent of charge");
@@ -43,7 +43,7 @@ public final class LegacyBatteryVoltageTests {
                     && battery.getEnergyStored(stack, eu) == 0, "extraction consumes complete packets");
             stack.getOrCreateTag().putLong("gt.charge", capacity - 1);
             h.assertTrue(battery.doEnergyInjection(eu, stack, v, 1, h.getLevel(), BlockPos.ZERO, true) == 1
-                    && battery.getEnergyStored(stack, eu) == capacity, "last packet clamps stored charge to original capacity");
+                    && battery.getEnergyStored(stack, eu) == capacity, "last packet clamps stored charge to chemical capacity");
             stack.setCount(2);
             var before = stack.getTag().copy();
             h.assertTrue(!battery.canEnergyExtraction(stack, eu, v)

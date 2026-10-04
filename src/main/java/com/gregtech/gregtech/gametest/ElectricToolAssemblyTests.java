@@ -31,7 +31,7 @@ public final class ElectricToolAssemblyTests {
             h.assertTrue(recipe.matches(grid,h.getLevel()),"GT6 pattern matches: "+spec);
             var result=recipe.assemble(grid,h.getLevel().registryAccess());
             h.assertTrue(result.is(spec.item())&&spec.item().headMaterial(result)==Materials.Steel,"head retained");
-            h.assertTrue(spec.item().getEnergyCapacity(result,GregTechTags.Energy.EU)==100000,"LV battery capacity retained even for wrench/screwdriver");
+            h.assertTrue(spec.item().getEnergyCapacity(result,GregTechTags.Energy.EU)==128000,"source nickel-cadmium LV capacity retained even for wrench/screwdriver");
             h.assertTrue(spec.item().getEnergyStored(result,GregTechTags.Energy.EU)==0,"assembly starts uncharged");
             var remaining=recipe.getRemainingItems(grid);
             int returned=0;

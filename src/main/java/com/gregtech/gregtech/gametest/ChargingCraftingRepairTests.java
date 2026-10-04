@@ -45,7 +45,7 @@ public final class ChargingCraftingRepairTests {
     }
     @GameTest(template="test_empty")
     public static void skipsFullItemsAndSynchronizesChargeToOpenCraftingMenu(GameTestHelper h){
-        var table=place(h,new BlockPos(1,1,1));var battery=new ItemStack(GTElectricItems.BATTERY_LV.get());battery.getOrCreateTag().putLong("gt.charge",100000);table.items().setStackInSlot(16,battery);
+        var table=place(h,new BlockPos(1,1,1));var battery=new ItemStack(GTElectricItems.BATTERY_LV.get());GTElectricItems.BATTERY_LV.get().setCharge(battery,GTElectricItems.BATTERY_LV.get().spec().capacity());table.items().setStackInSlot(16,battery);
         table.items().setStackInSlot(17,new ItemStack(Items.STICK));table.items().setStackInSlot(18,new ItemStack(GTElectricItems.ELECTRIC_DRILL.get()));
         table.items().setStackInSlot(0,new ItemStack(GTElectricItems.BATTERY_LV.get()));table.items().setStackInSlot(70,new ItemStack(GTElectricItems.BATTERY_LV.get()));
         var player=h.makeMockSurvivalPlayer();var menu=new AdvancedCraftingMenu(1,player.getInventory(),table);long[] synced={-1};

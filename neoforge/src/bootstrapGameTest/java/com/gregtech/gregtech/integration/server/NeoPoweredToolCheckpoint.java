@@ -16,7 +16,7 @@ public final class NeoPoweredToolCheckpoint {
  @SuppressWarnings({"unchecked","rawtypes"})
  @SubscribeEvent public static void started(ServerStartedEvent event){
   if(!Boolean.getBoolean("gregtech.integration.poweredToolSmoke"))return;
-  var level=event.getServer().overworld();var id=ResourceLocation.fromNamespaceAndPath("gregtech","electric_tools/electric_wrench/bronze");
+  var level=event.getServer().overworld();var id=ResourceLocation.fromNamespaceAndPath("gregtech","electric_tools/electric_wrench/bronze/battery_nickel_cadmium_lv");
   var recipe=(CraftingRecipe)level.getRecipeManager().byKey(id).orElseThrow(()->new IllegalStateException("Missing actual powered recipe "+id)).value();
   var parts=new java.util.ArrayList<ItemStack>();for(var ingredient:recipe.getIngredients()){require(ingredient.getItems().length>0,"resolved assembly ingredient");parts.add(ingredient.getItems()[0].copy());}
   var input=CraftingInput.of(3,3,parts);require(recipe.matches(input,level),"original powered wrench shape");

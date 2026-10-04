@@ -23,6 +23,8 @@ public final class ChemicalBatteryItem extends BlockItem implements IItemEnergy 
         com.gregtech.gregtech.platform.neoforge.StackCustomData.update(stack,tag->{if(charge==0)tag.remove(CHARGE);else tag.putLong(CHARGE,charge);});
         stack.set(net.minecraft.core.component.DataComponents.MAX_STACK_SIZE,charge>0?1:16);
     }
+    @Override public int getMaxStackSize(ItemStack stack){return stored(stack)>0?1:Math.min(16,stack.getOrDefault(net.minecraft.core.component.DataComponents.MAX_STACK_SIZE,16));}
+    @Override public void verifyComponentsAfterLoad(ItemStack stack){setCharge(stack,stored(stack));}
     @Override public InteractionResult place(BlockPlaceContext ctx){
         return ctx.getPlayer()!=null&&ctx.getPlayer().isShiftKeyDown()?super.place(ctx):InteractionResult.PASS;
     }

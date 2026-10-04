@@ -107,6 +107,7 @@ public final class WorldCreationSmoke {
                         throw new IllegalStateException("Known iron form no longer unifies");
                     int recipes = server.getRecipeManager().getRecipes().size();
                     if (recipes < 1000) throw new IllegalStateException("Incomplete actual recipe registry: " + recipes);
+                    checkBatteries(server,result);
                     result.addProperty("canonicalItemsChecked",checked);
                     result.addProperty("recipes",recipes);
                     result.addProperty("serverTicks",server.getTickCount());
@@ -114,9 +115,10 @@ public final class WorldCreationSmoke {
                     return result;
                 });
             }
-            if (++frames < 30 || !probe.isDone()) return;
+            if (++frames < 30 || !probe.isDone() || !emiReady()) return;
             var result = probe.join();
             result.addProperty("renderedWorldFrames",frames);
+            result.addProperty("emiLoaded",EMI_PRESENT);
             if (!Files.isRegularFile(minecraft.gameDirectory.toPath().resolve("saves").resolve(WORLD).resolve("level.dat")))
                 throw new IllegalStateException("Fresh world has no level.dat");
             stage = 4;
@@ -136,6 +138,71 @@ public final class WorldCreationSmoke {
                 } catch (Throwable failure) { fail(failure); }
             });
         } catch (Throwable failure) { fail(failure); }
+    }
+    private static final boolean EMI_PRESENT = net.neoforged.fml.ModList.get().isLoaded("emi");
+    private static boolean emiReady() throws ReflectiveOperationException {
+        if (!EMI_PRESENT) return true;
+        var manager=Class.forName("dev.emi.emi.runtime.EmiReloadManager");
+        if (((Number)manager.getMethod("getStatus").invoke(null)).intValue()==-1)
+            throw new IllegalStateException("EMI reload failed before preflight completion");
+        // isLoaded also requires its reload worker to have stopped; do not unload its world early.
+        return (boolean)manager.getMethod("isLoaded").invoke(null);
+    }
+    /** Checks actual loader aliases and stack decoding; it never reads a user save. */
+    private static void checkBatteries(net.minecraft.server.MinecraftServer server,JsonObject receipt) {
+        var registry=net.minecraft.core.registries.BuiltInRegistries.ITEM;
+        int decoded=0,assemblies=0;
+        for(var alias:com.gregtech.gregtech.content.energy.BatteryItemMigration.ALIASES) {
+            var oldId=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",alias.oldId());
+            var targetId=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",alias.target().id());
+            var item=registry.get(oldId);
+            if(!(item instanceof com.gregtech.gregtech.item.ChemicalBatteryItem battery)
+                    ||!registry.getKey(item).equals(targetId)||registry.keySet().contains(oldId))
+                throw new IllegalStateException("Placeholder is still registered or alias missing: "+oldId);
+            if(battery.spec().capacity()<alias.oldCapacity())throw new IllegalStateException("Migration truncates legal old charge: "+oldId);
+            for(long charge:new long[]{0,alias.oldCapacity()}) {
+                var stack=new ItemStack(item,1);
+                battery.setCharge(stack,charge);
+                stack.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME,Component.literal("migration checkpoint"));
+                com.gregtech.gregtech.platform.neoforge.StackCustomData.update(stack,tag->tag.putString("migration_probe","keep me"));
+                var encoded=(net.minecraft.nbt.CompoundTag)stack.saveOptional(server.registryAccess());
+                encoded.putString("id",oldId.toString());
+                // Older port items did not write the new chemical max-stack component.
+                encoded.getCompound("components").remove("minecraft:max_stack_size");
+                var restored=ItemStack.parseOptional(server.registryAccess(),encoded);
+                if(!restored.is(item)||restored.getCount()!=1||battery.stored(restored)!=charge
+                        ||!restored.getHoverName().equals(stack.getHoverName())
+                        ||!com.gregtech.gregtech.platform.neoforge.StackCustomData.read(restored).getString("migration_probe").equals("keep me")
+                        ||restored.getMaxStackSize()!=(charge>0?1:16))
+                    throw new IllegalStateException("Old battery lost identity/charge/data/stack rules: "+oldId);
+                if(!((net.minecraft.nbt.CompoundTag)restored.saveOptional(server.registryAccess())).getString("id").equals(targetId.toString()))
+                    throw new IllegalStateException("Migrated battery did not save its canonical ID: "+oldId);
+                decoded++;
+            }
+        }
+        for(var spec:com.gregtech.gregtech.content.energy.ChemicalBatterySpec.all()) {
+            var item=com.gregtech.gregtech.registry.GTChemicalBatteries.item(spec.chemistry(),spec.tier());
+            var tag=net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM,
+                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","rechargeable_batteries/"+new String[]{"ulv","lv","mv","hv","ev"}[spec.tier()]));
+            if(!new ItemStack(item).is(tag))throw new IllegalStateException("Source chemical battery missing from exact-tier group: "+spec.id());
+            if(spec.tier()!=1)continue;
+            for(var tool:com.gregtech.gregtech.content.tool.ElectricToolAssembly.values()) {
+                var id=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","electric_tools/"+tool.id+"/steel/"+spec.id());
+                var holder=server.getRecipeManager().byKey(id).orElseThrow(()->new IllegalStateException("Missing actual chemical assembly "+id));
+                var recipe=holder.value();
+                var output=recipe.getResultItem(server.registryAccess());
+                if(!(output.getItem() instanceof com.gregtech.gregtech.item.ElectricToolItem electric)
+                        ||electric.getEnergyCapacity(output,com.gregtech.gregtech.data.GregTechTags.Energy.EU)!=spec.capacity())
+                    throw new IllegalStateException("Assembly lost source chemical capacity: "+id);
+                var obsolete=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","electric_tools/"+tool.id+"/steel");
+                if(server.getRecipeManager().byKey(obsolete).isPresent())throw new IllegalStateException("Placeholder assembly survived: "+obsolete);
+                assemblies++;
+            }
+        }
+        receipt.addProperty("legacyBatteryAliasesChecked",com.gregtech.gregtech.content.energy.BatteryItemMigration.ALIASES.size());
+        receipt.addProperty("chemicalBatteryStackRoundTrips",decoded);
+        receipt.addProperty("sourceChemicalBatteriesChecked",com.gregtech.gregtech.content.energy.ChemicalBatterySpec.all().size());
+        receipt.addProperty("sourceLvPoweredAssemblyRowsChecked",assemblies);
     }
     private static JsonObject receipt() {
         var result = new JsonObject(); result.addProperty("platform","neoforge"); result.addProperty("id",ID);

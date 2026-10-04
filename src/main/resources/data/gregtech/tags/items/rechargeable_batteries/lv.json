@@ -6,7 +6,6 @@
     "gregtech:battery_nickel_cadmium_lv",
     "gregtech:battery_lithium_cobalt_lv",
     "gregtech:battery_lithium_manganese_lv",
-    "gregtech:battery_eu_32",
-    "gregtech:battery_lv"
+    "gregtech:battery_eu_32"
   ]
 }

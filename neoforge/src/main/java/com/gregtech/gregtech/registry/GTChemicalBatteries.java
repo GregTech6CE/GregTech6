@@ -23,7 +23,16 @@ public final class GTChemicalBatteries {
     public static List<DeferredHolder<Block,ChemicalBatteryBlock>> legacy(){return Collections.unmodifiableList(LEGACY);}
     public static List<DeferredHolder<Block,ChemicalBatteryBlock>> allRegistered(){return java.util.stream.Stream.concat(ALL.stream(),LEGACY.stream()).toList();}
     public static List<DeferredHolder<Block,ChemicalBatteryBlock>> all(){return Collections.unmodifiableList(ALL);}
+    public static ChemicalBatteryItem item(ChemicalBatterySpec.Chemistry chemistry,int tier){
+        var id=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",new ChemicalBatterySpec(chemistry,tier).id());
+        var item=net.minecraft.core.registries.BuiltInRegistries.ITEM.get(id);
+        if(!(item instanceof ChemicalBatteryItem battery))throw new IllegalStateException("Missing chemical battery "+id);
+        return battery;
+    }
     public static void registerAll(){
+        for(var alias:com.gregtech.gregtech.content.energy.BatteryItemMigration.ALIASES)
+            ITEMS.addAlias(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",alias.oldId()),
+                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",alias.target().id()));
         for(var spec:ChemicalBatterySpec.all()) {
             var block=BLOCKS.register(spec.id(),()->new ChemicalBatteryBlock(spec));
             ALL.add(block);

@@ -1,6 +1,6 @@
 package com.gregtech.gregtech.registry;
 
-import com.gregtech.gregtech.item.BatteryItem;
+import com.gregtech.gregtech.item.ChemicalBatteryItem;
 import com.gregtech.gregtech.item.ElectricToolItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Tiers;
@@ -11,16 +11,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
 
-/** Wave 47: Batteries and electric tools implementing IItemEnergy. */
+/** Electric tools; old Java battery handles resolve to real chemical items without registration. */
 public final class GTElectricItems {
     private static final List<RegistryObject<? extends Item>> ALL = new ArrayList<>();
 
-    // Batteries
-    public static RegistryObject<BatteryItem> BATTERY_LV;
-    public static RegistryObject<BatteryItem> BATTERY_MV;
-    public static RegistryObject<BatteryItem> BATTERY_HV;
-    public static RegistryObject<BatteryItem> BATTERY_EV;
-    public static RegistryObject<BatteryItem> BATTERY_IV;
+    // Compatibility handles only: no port-only item appears in the registry or creative list.
+    @Deprecated public static final Supplier<ChemicalBatteryItem> BATTERY_LV = battery("battery_lv");
+    @Deprecated public static final Supplier<ChemicalBatteryItem> BATTERY_MV = battery("battery_mv");
+    @Deprecated public static final Supplier<ChemicalBatteryItem> BATTERY_HV = battery("battery_hv");
+    @Deprecated public static final Supplier<ChemicalBatteryItem> BATTERY_EV = battery("battery_ev");
+    @Deprecated public static final Supplier<ChemicalBatteryItem> BATTERY_IV = battery("battery_iv");
 
     // Electric tools
     public static RegistryObject<ElectricToolItem> ELECTRIC_DRILL;
@@ -38,20 +38,13 @@ public final class GTElectricItems {
         return ro;
     }
 
-    private static RegistryObject<BatteryItem> regBattery(String id) {
-        var spec=com.gregtech.gregtech.content.energy.LegacyBatteryDefinitions.get(id);
-        return reg(id,()->new BatteryItem(spec.name(),spec.capacity(),spec.tier(),new Item.Properties().stacksTo(1)));
+    private static Supplier<ChemicalBatteryItem> battery(String oldId) {
+        var spec = com.gregtech.gregtech.content.energy.BatteryItemMigration.target(oldId);
+        return () -> GTChemicalBatteries.item(spec.chemistry(), spec.tier());
     }
 
     private static ElectricToolItem electric(String id){var spec=com.gregtech.gregtech.content.tool.ElectricToolCatalog.get(id);return new ElectricToolItem(spec.name(),Tiers.IRON,spec.capacity(),1,spec.energyPerUse(),new Item.Properties().stacksTo(1));}
     public static void registerAll() {
-        // Batteries (name, capacity EU, tier, properties)
-        BATTERY_LV = regBattery("battery_lv");
-        BATTERY_MV = regBattery("battery_mv");
-        BATTERY_HV = regBattery("battery_hv");
-        BATTERY_EV = regBattery("battery_ev");
-        BATTERY_IV = regBattery("battery_iv");
-
         // Electric tools
         ELECTRIC_DRILL = reg("electric_drill", () -> electric("electric_drill"));
         ELECTRIC_CHAINSAW = reg("electric_chainsaw", () -> electric("electric_chainsaw"));

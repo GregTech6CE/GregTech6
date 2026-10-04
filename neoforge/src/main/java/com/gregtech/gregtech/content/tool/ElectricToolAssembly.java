@@ -40,13 +40,12 @@ public enum ElectricToolAssembly {
         return ElectricToolCatalog.validMaterial(material);
     }
     public ToolShapedRecipe recipe(GTMaterial material) {
-        return recipe(material,new ItemStack(GTElectricItems.BATTERY_LV.get()),"");
+        var battery=GTChemicalBatteries.item(com.gregtech.gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,1);
+        return recipe(material,new ItemStack(battery),"/"+battery.spec().id());
     }
     public ToolShapedRecipe recipe(GTMaterial material,ItemStack battery,String suffix) {
-        if(!(battery.getItem() instanceof com.gregtech.gregtech.api.energy.item.IItemEnergy energy))return null;
-        if(battery.getItem() instanceof com.gregtech.gregtech.item.ChemicalBatteryItem chemical) {
-            if(chemical.spec().tier()!=1)return null;
-        } else if(!(battery.getItem() instanceof com.gregtech.gregtech.item.BatteryItem generic)||generic.tier()!=1)return null;
+        if(!(battery.getItem() instanceof com.gregtech.gregtech.item.ChemicalBatteryItem energy)
+                ||energy.spec().tier()!=1)return null;
         if (!validMaterial(material) || GTItems.getStack(head,material,1).isEmpty()) return null;
         var ingredients=NonNullList.withSize(9,Ingredient.EMPTY);
         for(int i=0;i<9;i++) {
@@ -72,7 +71,6 @@ public enum ElectricToolAssembly {
             case 'X' -> form(MaterialPrefix.plateCurved,Materials.SteelGalvanized);
             case 'Y' -> form(MaterialPrefix.ring,Materials.SteelGalvanized);
             case 'Z' -> form(MaterialPrefix.plate,Materials.SteelGalvanized);
-            case 'V' -> Ingredient.of(GTElectricItems.BATTERY_LV.get());
             case 'W' -> Ingredient.of(Objects.requireNonNull(GTTechnological.get("compact_electric_motor_lv")));
             default -> Ingredient.EMPTY;
         };
@@ -87,8 +85,6 @@ public enum ElectricToolAssembly {
     public static List<ToolShapedRecipe> build() {
         List<ToolShapedRecipe> result=new ArrayList<>();
         for(var material:GTMaterialRegistry.allMaterials()) for(var spec:values()) {
-            var recipe=spec.recipe(material);
-            if(recipe!=null) result.add(recipe);
             for(var entry:GTChemicalBatteries.all())if(entry.get().spec().tier()==1) {
                 var chemical=spec.recipe(material,new ItemStack(entry.get().asItem()),"/"+entry.getId().getPath());
                 if(chemical!=null)result.add(chemical);

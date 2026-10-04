@@ -28,7 +28,6 @@ public final class NeoCreativeContents {
         for(String family:com.gregtech.gregtech.content.creative.CreativeTabCatalog.FAMILIES)out.put(family,ItemStackLinkedSet.createTypeAndComponentsSet());
         holders(out,"tools",GTToolBlocks.ITEMS.getEntries());holders(out,"tools",GTElectricItems.ITEMS.getEntries());
         holders(out,"tools",GTRadiationProtection.SUIT.values());holders(out,"tools",GTWoods.all());holders(out,"tools",GTLasers.all());
-        holders(out,"tools",com.gregtech.gregtech.platform.neoforge.energy.LegacyBatteryRegistries.all());
         for(var entry:GTBlocks.BLOCK_ITEMS.getEntries()){
             if(entry.getId().getPath().equals("bumble_hive"))continue;
             Item item=entry.get();if(!(item instanceof BlockItem blockItem))continue;Block block=blockItem.getBlock();
