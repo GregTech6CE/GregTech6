@@ -6,6 +6,17 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 public final class MultiblockPortBlock extends Block implements EntityBlock {
+    @Override
+    public void stepOn(net.minecraft.world.level.Level level, BlockPos pos, BlockState state,
+            net.minecraft.world.entity.Entity entity) {
+        if (!level.isClientSide && !entity.isSpectator() && entity instanceof net.minecraft.world.entity.LivingEntity
+                && level.getBlockEntity(pos) instanceof com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity port) {
+            var crucible = port.crucibleController();
+            if (crucible != null)
+                com.gregtech.gregtech.util.GTEntityHelper.applyTemperatureDamage(entity, crucible.getCrucibleTemperature(), 1F, 10F);
+        }
+        super.stepOn(level, pos, state, entity);
+    }
     @Override public com.mojang.serialization.MapCodec<MultiblockPortBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
     public static final net.minecraft.world.level.block.state.properties.BooleanProperty CRUCIBLE_FORMED =
             net.minecraft.world.level.block.state.properties.BooleanProperty.create("crucible_formed");

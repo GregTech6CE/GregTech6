@@ -10,6 +10,11 @@ public final class CrucibleReactions {
     public record Reaction(GTMaterial output, long yield, List<Part> parts) {}
     private static final List<Reaction> RECIPES = new ArrayList<>();
     static {
+        // MT.java: uumAloy single-material purification and explicit air-blown steel recipes.
+        recipe(Elements.WroughtIron, 1, new Part(Elements.Fe, 1));
+        recipe(Compounds.AnnealedCopper, 1, new Part(Elements.Cu, 1));
+        recipe(Compounds.Steel, 1, new Part(Elements.WroughtIron, 1), new Part(Compounds.Air, 1));
+        recipe(Compounds.MeteoricSteel, 1, new Part(Compounds.MeteoricIron, 1), new Part(Compounds.Air, 1));
         recipe(Elements.Fe, 2, new Part(Ores.Fe2O3, 5), new Part(Elements.C, 1), new Part(Ores.CaCO3, 1));
         recipe(Elements.Fe, 6, new Part(Ores.Magnetite, 14), new Part(Elements.C, 3));
         recipe(Elements.Fe, 6, new Part(Ores.BasalticMineralSand, 14), new Part(Elements.C, 3));
@@ -62,7 +67,7 @@ public final class CrucibleReactions {
         if (all != null) return all;
         List<Reaction> result = new ArrayList<>(RECIPES);
         for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
-            if (material.resolve() != material || !material.has(MaterialProperty.ALLOY) || !material.hasComposition()) continue;
+            if (material.resolve() != material || !OriginalCrucibleCompositions.hasRecipe(material.getId()) || !material.hasComposition()) continue;
             List<Part> parts = material.getCompositionComponents().stream()
                     .map(p -> new Part(p.material(), Math.max(1, p.amount() / GTValues.U))).toList();
             if (parts.stream().anyMatch(p -> p.material() == material)) continue;
@@ -72,7 +77,7 @@ public final class CrucibleReactions {
     }
     /** One winning reaction per tick, with at most one solid ingredient, as in GT6. */
     public static boolean react(List<CrucibleMaterialStack> content, long temperature) {
-        if (content.size() < 2) return false;
+        if (content.isEmpty()) return false;
         Reaction best = null; long bestCount = 0, bestOutput = 0;
         for (Reaction r : allRecipes()) {
             if (temperature < r.output().getMeltingPoint()) continue;
@@ -83,7 +88,7 @@ public final class CrucibleReactions {
                 for (var stack : content) if (stack.material == p.material().resolve()) available += stack.amount;
                 count = Math.min(count, available / p.ratio());
             }
-            if (solid > 1 || solid == r.parts().size() || count <= 0 || count == Long.MAX_VALUE) continue;
+            if (solid > 1 || count <= 0 || count == Long.MAX_VALUE) continue;
             long output = Math.multiplyExact(count, r.yield());
             if (output > bestOutput) { best = r; bestCount = count; bestOutput = output; }
         }

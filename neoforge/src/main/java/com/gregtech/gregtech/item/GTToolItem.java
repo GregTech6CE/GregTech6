@@ -134,6 +134,12 @@ public class GTToolItem extends Item {
     }
 
     @Override
+    public void inventoryTick(ItemStack stack, Level level, net.minecraft.world.entity.Entity entity, int slot, boolean selected) {
+        if (!level.isClientSide) com.gregtech.gregtech.api.tool.GTToolEnchantments.apply(stack, level.registryAccess());
+        super.inventoryTick(stack, level, entity, slot, selected);
+    }
+
+    @Override
     public int getMaxDamage(ItemStack stack) {
         return GTToolHelper.getMaxDurability(stack);
     }
@@ -162,6 +168,8 @@ public class GTToolItem extends Item {
 
     @Override
     public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity entity) {
+        if (GTToolHelper.isUsable(stack))
+            com.gregtech.gregtech.item.behavior.ToolPlantHarvest.harvest(toolType, stack, level, state, pos);
         if (!level.isClientSide && !com.gregtech.gregtech.item.behavior.AxeColumnHarvest.harvesting()) {
             if (state.getDestroySpeed(level, pos) != 0.0F) GTToolHelper.damageForBlockBreak(stack, state, entity);
             if (entity instanceof net.minecraft.server.level.ServerPlayer player)

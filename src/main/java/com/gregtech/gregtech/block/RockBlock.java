@@ -114,17 +114,10 @@ public class RockBlock extends Block implements EntityBlock {
     private static List<ItemStack> yields(@Nullable BlockEntity be) {
         // GT6's item-on-the-ground mode: the rock carries the exact item it hands out.
         if (be instanceof RockBlockEntity rock && !rock.itemId().isEmpty()) {
-            ItemStack explicit = rock.itemStack();
-            java.util.ArrayList<ItemStack> out = new java.util.ArrayList<>(2);
-            if (!explicit.isEmpty()) out.add(explicit);
-            if (rock.hasRawOre()) {
-                GTMaterial material = GTMaterialRegistry.get(rock.getMaterial());
-                if (material != null && material.resolve().isValid()) {
-                    ItemStack raw = MaterialStackItemHelper.mat(MaterialPrefix.oreRaw, material.resolve(), 1);
-                    if (!raw.isEmpty()) out.add(raw);
-                }
-            }
-            return out;
+            ItemStack explicit=rock.itemStack();
+            // The original lying-item mode represents one exact item. Indicator bonuses belong
+            // to the separate material-rock mode; otherwise meteoric raw ore is duplicated.
+            return explicit.isEmpty()?java.util.List.of():java.util.List.of(explicit);
         }
         String materialName = be instanceof RockBlockEntity rock ? rock.getMaterial() : RockBlockEntity.DEFAULT_MATERIAL;
         GTMaterial material = GTMaterialRegistry.get(materialName);

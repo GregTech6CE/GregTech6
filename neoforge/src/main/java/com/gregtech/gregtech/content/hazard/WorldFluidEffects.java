@@ -151,7 +151,7 @@ public final class WorldFluidEffects {
 
     /** {@code BlockBaseFluid:406}: {@code !UT.Entities.isWearingFullChemHazmat(entity)}. */
     public static boolean bathingGatePasses(LivingEntity entity) {
-        return !GTHazmat.isChemProtected(entity);
+        return !entity.isSpectator() && !GTHazmat.isChemProtected(entity);
     }
 
     /**
@@ -226,6 +226,7 @@ public final class WorldFluidEffects {
      * branch always asks the gas suit - including for oils, which are liquids.
      */
     public static boolean headGatePasses(LivingEntity entity, Fluid fluid) {
+        if (entity.isSpectator()) return false;
         if (headGate(fluid) == HeadGate.WATERLIKE) {
             return FluidHazards.isGas(fluid)
                     ? !GTEntityHelper.isImmuneToBreathingGases(entity)

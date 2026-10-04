@@ -26,6 +26,13 @@ import java.util.List;
 /** Large Crucible multiblock controller. 3x3x3 hollow of crucible wall blocks, HU-powered.
  *  27x capacity of single-block crucible. */
 public class LargeCrucibleControllerBlock extends HorizontalDirectionalBlock implements EntityBlock {
+    @Override
+    public void stepOn(Level level, BlockPos pos, BlockState state, net.minecraft.world.entity.Entity entity) {
+        if (!level.isClientSide && !entity.isSpectator() && entity instanceof net.minecraft.world.entity.LivingEntity
+                && level.getBlockEntity(pos) instanceof LargeCrucibleControllerBlockEntity crucible)
+            com.gregtech.gregtech.util.GTEntityHelper.applyTemperatureDamage(entity, crucible.getTemperature(), 1F, 10F);
+        super.stepOn(level, pos, state, entity);
+    }
     @Override public com.mojang.serialization.MapCodec<? extends HorizontalDirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
     private final com.gregtech.gregtech.content.multiblock.LargeCrucibleSpecs.Variant variant;
 

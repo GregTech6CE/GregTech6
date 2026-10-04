@@ -35,6 +35,7 @@ public final class GTToolHelper {
         root.put(ROOT, stats);
         stack.setDamageValue(0);
         stack.hideTooltipPart(ItemStack.TooltipPart.MODIFIERS);
+        GTToolEnchantments.apply(stack);
         return stack;
     }
 

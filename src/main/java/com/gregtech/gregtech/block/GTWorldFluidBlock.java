@@ -177,6 +177,7 @@ public class GTWorldFluidBlock extends LiquidBlock {
      */
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+        if (entity.isSpectator()) return;
         if (!level.isClientSide && WorldFluidEffects.actsLikeWeb(getFluid())) {
             entity.makeStuckInBlock(state, WEB_MOVEMENT_MULTIPLIER);
         }

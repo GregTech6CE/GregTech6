@@ -33,6 +33,7 @@ public final class GTToolHelper {
         stack.set(net.minecraft.core.component.DataComponents.MAX_DAMAGE,computeMaxDurability(getType(stack),head));
         stack.set(net.minecraft.core.component.DataComponents.DAMAGE,0);
         if(stack.getItem() instanceof GTToolItem tool)stack.set(net.minecraft.core.component.DataComponents.ATTRIBUTE_MODIFIERS,tool.getDefaultAttributeModifiers(stack).withTooltip(false));
+        GTToolEnchantments.applyCurrent(stack);
         return stack;
     }
 

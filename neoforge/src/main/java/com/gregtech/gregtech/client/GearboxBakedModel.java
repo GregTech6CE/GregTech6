@@ -45,6 +45,12 @@ public final class GearboxBakedModel implements IDynamicBakedModel {
     /** Only 5 sprites x 6 faces are ever baked, regardless of gear combinations. */
     private final Map<Integer, List<BakedQuad>> faceQuads = new ConcurrentHashMap<>();
 
+    /** ItemRenderer uses the vanilla three-argument entry point, with no block entity data. */
+    @Override
+    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, RandomSource random) {
+        return getQuads(state, side, random, ModelData.EMPTY, null);
+    }
+
     @Override
     public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side,
                                     RandomSource random, ModelData data, @Nullable RenderType layer) {

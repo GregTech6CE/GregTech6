@@ -103,7 +103,8 @@ public enum ToolDefinition {
     public int minToolTypes() { return minToolTypes; }
     public boolean requiresHeadAssembly() { return headPrefix != null; }
     public boolean isHeadless() { return headPrefix == null; }
-    public boolean isMiningTool() { return miningTool; }
+    public boolean isMiningTool() { return com.gregtech.gregtech.content.tool.OriginalToolFlags.of(name()).mining(); }
+    public boolean isWeapon() { return com.gregtech.gregtech.content.tool.OriginalToolFlags.of(name()).weapon(); }
     public boolean canPenetrate() { return canPenetrate; }
     public boolean canCollect() { return canCollect; }
      public String tooltipKey() { return tooltipKey; }

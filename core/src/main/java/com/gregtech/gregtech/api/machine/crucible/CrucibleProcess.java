@@ -22,6 +22,8 @@ public final class CrucibleProcess {
     public static PhaseResult process(List<CrucibleMaterialStack> content, long temperature,
                                       long previousTemperature, boolean newContent, boolean acidProof) {
         int vaporized = 0;
+        // GT6 alloys before discarding gases, so injected air can react with wrought iron.
+        CrucibleReactions.react(content, temperature);
         List<CrucibleMaterialStack> pending = new ArrayList<>();
         for (int i = 0; i < content.size(); i++) {
             CrucibleMaterialStack stack = content.get(i);
@@ -56,7 +58,6 @@ public final class CrucibleProcess {
             }
         }
         for (CrucibleMaterialStack stack : pending) stack.addToList(content);
-        CrucibleReactions.react(content, temperature);
         return new PhaseResult(vaporized, false);
     }
 

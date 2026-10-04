@@ -175,7 +175,10 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy, com.gre
 
     public int tint(ItemStack stack,int layer) {
         if(layer==2) return headMaterial(stack).getColor();
-        if(layer==0) return com.gregtech.gregtech.api.material.GTMaterialRegistry.get("Orange").getColor();
+        if(layer==0) {
+            var handle=com.gregtech.gregtech.api.tool.GTToolHelper.getHandle(stack);
+            return handle!=null && handle.isValid()?handle.getColor():com.gregtech.gregtech.api.material.GTMaterialRegistry.get("Orange").getColor();
+        }
         return 0xFFFFFF;
     }
 
