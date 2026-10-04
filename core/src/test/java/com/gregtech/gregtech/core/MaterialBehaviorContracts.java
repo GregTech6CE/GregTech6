@@ -30,8 +30,10 @@ public final class MaterialBehaviorContracts {
     // docs/integration/verification/technology-differential-20261004.json.
     // Only Gunpowder/Dynamite source reaction flags changed; full graph differential:
     // docs/integration/verification/explosive-material-differential-20261004.json.
-    private static final String DEFINITIONS_SHA256 = "b9b3a70094c6c0c10c3ce04c05ddeda63db5f5ab5e57644dd1b569bd853463b3";
-    private static final String POST_INIT_SHA256 = "f417a3ecf42ceefe2ae76712cdee4d8da3b7ecb087270d544fc7cc2683de1278";
+    // Four original external ore-prefix metadata entries; all prior graph rows unchanged:
+    // docs/integration/verification/external-ore-material-differential-20261004.json.
+    private static final String DEFINITIONS_SHA256 = "5a76a35f681c54cb18c213bcab90615a62f6bc2f5b70738753e997e358d77c6c";
+    private static final String POST_INIT_SHA256 = "85227d4dfc85c2f5e85d954e3cd538fe27c9ccdf9e14d9257e3cafdd829cbc74";
     private static int assertions;
     private MaterialBehaviorContracts() {}
 
@@ -56,7 +58,7 @@ public final class MaterialBehaviorContracts {
                 "The complete directory must finish linking");
         check(GTMaterialRegistry.allMaterials().size() == 1160, "All 1160 original material objects must remain");
         check(MaterialCatalogSnapshot.aliases().size() == 1523, "All 1523 original name entries must remain");
-        check(PrefixRegistry.all().size() == 109, "All 109 original item prefixes must remain");
+        check(PrefixRegistry.all().size() == 113, "109 prior prefixes plus four source external ore forms must remain");
         check(DEFINITIONS_SHA256.equals(MaterialCatalogSnapshot.sha256()), "Full definitions/aliases/forms must match the Community Edition snapshot");
         GTMaterialRegistry.init();
         check(DEFINITIONS_SHA256.equals(MaterialCatalogSnapshot.sha256()), "Repeated init must not mutate or duplicate definitions");
@@ -82,7 +84,7 @@ public final class MaterialBehaviorContracts {
         validateCopperTinBronze();
         validateAmountsAndReactions();
         System.out.println("Material behavior contracts passed: " + assertions
-                + " assertions; 1160 materials, 1105 positive IDs, 1523 name entries, 109 prefixes, 173 reactions");
+                + " assertions; 1160 materials, 1105 positive IDs, 1523 name entries, 113 prefixes, 173 reactions");
     }
 
     private static void validateIdentityGraph() throws Exception {

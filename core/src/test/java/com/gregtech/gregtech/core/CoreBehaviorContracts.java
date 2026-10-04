@@ -43,8 +43,34 @@ public final class CoreBehaviorContracts {
         conversionPermissionSourceSamples();
         formConversionSourcePositions();
         explosiveStorageSourceSamples();
+        externalOreSourceSamples();
         assertions += OriginWorldgenSamples.verify();
-        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 22 groups (Java 17; no game dependencies)");
+        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 23 groups (Java 17; no game dependencies)");
+    }
+
+    private static void externalOreSourceSamples() {
+        // OP:142,146-148; Handler:62,65-67. Independent source weights and getCosts goldens.
+        var rows = com.gregtech.gregtech.content.recipe.ExternalOreProcessingRules.ROUTES;
+        equal(4, rows.size(), "four original optional ore-prefix routes");
+        equal(243_243_000L, com.gregtech.gregtech.data.MaterialPrefix.rawOreChunk.getMaterialWeight(), "source raw chunks weigh 27/72 U");
+        equal(1_297_296_000L, com.gregtech.gregtech.data.MaterialPrefix.chunk.getMaterialWeight(), "source external chunks weigh 2 U");
+        equal(1_297_296_000L, com.gregtech.gregtech.data.MaterialPrefix.rubble.getMaterialWeight(), "source rubble weighs 2 U");
+        equal(1_945_944_000L, com.gregtech.gregtech.data.MaterialPrefix.pebbles.getMaterialWeight(), "source pebbles weigh 3 U");
+        long[] baseTicks = {24, 256, 384, 1536};
+        for (int i = 0; i < rows.size(); i++) {
+            equal(baseTicks[i], rows.get(i).duration(0), "source larger input/output weight cost row " + i);
+            equal(baseTicks[i] * 3, rows.get(i).duration(2), "source material quality scales cost row " + i);
+        }
+        check(rows.get(0).output() == com.gregtech.gregtech.data.MaterialPrefix.crushedTiny && rows.get(0).count() == 3,
+                "raw chunks crush to exactly three tiny crushed ores");
+        check(rows.get(3).map().equals("Sifting") && rows.get(3).output() == com.gregtech.gregtech.data.MaterialPrefix.dust && rows.get(3).count() == 3,
+                "pebbles finish in the sifter with three dust, not the crusher");
+        for (var row : rows) check(!com.gregtech.gregtech.api.material.MaterialItemDefinitions.candidatePrefixes().contains(row.input()),
+                "optional source prefix never creates a GT-owned item " + row.input().getName());
+        check(com.gregtech.gregtech.content.recipe.ExternalOreProcessingRules.allows(
+                com.gregtech.gregtech.content.material.generated.ElementMaterials.Iron), "ordinary source material accepts prefix processing");
+        check(!com.gregtech.gregtech.content.recipe.ExternalOreProcessingRules.allows(
+                com.gregtech.gregtech.api.material.MaterialSentinels.Invalid), "invalid material cannot create an external ore route");
     }
 
     private static void explosiveStorageSourceSamples() {

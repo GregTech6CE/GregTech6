@@ -18,13 +18,13 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * GT6's Crusher handler rows: {@code Loader_Recipes_Handlers:146-157}.
+ * GT6's Crusher handler rows: {@code Loader_Recipes_Handlers:64,69-77}.
  * <p>
  * The gem ladder ({@code gemLegendary → 2 gemExquisite → 2 gemFlawless → 2 gem → 2 gemFlawed →
  * 2 gemChipped → pulverized remains}), the {@code bouleGt → 4 gem} row and the rock row. Every row runs
- * at 16 EU/t with GT6's multiplier (256 for the ladder, 16 for rock). Rows for the port's missing
- * prefixes ({@code rawOreChunk}, {@code chunk}, {@code rubble}, {@code pebbles}) stay recorded in
- * {@link #skipped()}.
+ * at 16 EU/t with GT6's multiplier (256 for the ladder, 16 for rock). Optional source ore forms
+ * ({@code rawOreChunk}, {@code chunk}, {@code rubble}, {@code pebbles}) are handled after tag binding
+ * by {@link ExternalOreProcessing}; they have no GT-owned items.
  */
 public final class CrusherFamilyRecipes {
     /** One registered crushing row, for tests and reports. */
@@ -32,9 +32,8 @@ public final class CrusherFamilyRecipes {
 
     private static final List<Entry> ENTRIES = new ArrayList<>();
     private static final List<String> SKIPPED = List.of(
-            "rawOreChunk 1 -> crushedTiny 3 (:147), chunk 1 -> rubble 1 (:148), rubble 1 -> pebbles 1 (:149),"
-                    + " pebbles 1 -> dust 3 in the Sifter (:146): the port has no such prefixes",
-            "RecipeMapHandlerCrushing() (:157) is the generic crushing handler, already covered by"
+            "Optional rawOreChunk/chunk/rubble/pebbles routes (:62/:65-67) bind actual external items after tag loading",
+            "RecipeMapHandlerCrushing() (:77) is the generic crushing handler, already covered by"
                     + " Loader_Recipes_OreProcessing#pulverizeMulti");
 
     /** GT6 row: input and output pair with the row's material multiplier. */

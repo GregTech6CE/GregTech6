@@ -26,11 +26,14 @@ public final class ItemMaterialRegistry {
     public static void register(Item item, ItemComposition data) {
         if (item != null && data != null) BY_ITEM.put(item, data);
     }
-    public static Optional<ItemComposition> base(Item item) { return Optional.ofNullable(BY_ITEM.get(item)); }
+    public static Optional<ItemComposition> base(Item item) {
+        var data = BY_ITEM.get(item);
+        return data == null ? com.gregtech.gregtech.content.recipe.ExternalOreProcessing.composition(item) : Optional.of(data);
+    }
     public static Map<Item, ItemComposition> entries() { return Collections.unmodifiableMap(BY_ITEM); }
     public static Optional<ItemComposition> get(ItemStack stack) {
         if (stack.isEmpty()) return Optional.empty();
-        var data = BY_ITEM.get(stack.getItem());
+        var data = base(stack.getItem()).orElse(null);
         if (data == null) return Optional.empty();
         if (!stack.isDamaged()) return Optional.of(data);
         long maximum = stack.getMaxDamage();
