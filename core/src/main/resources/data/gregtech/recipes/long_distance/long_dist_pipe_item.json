@@ -1,0 +1,23 @@
+{
+  "type": "gregtech:tool_shaped",
+  "allow_mirror": false,
+  "pattern": [
+    "SPS",
+    "PwP",
+    "SPS"
+  ],
+  "key": {
+    "S": {
+      "tag": "gregtech:long_distance/plate/any_plastic"
+    },
+    "P": {
+      "item": "gregtech:item_pipe_medium_electrum"
+    },
+    "w": {
+      "item": "gregtech:tool_wrench"
+    }
+  },
+  "result": {
+    "item": "gregtech:long_dist_pipe_item"
+  }
+}

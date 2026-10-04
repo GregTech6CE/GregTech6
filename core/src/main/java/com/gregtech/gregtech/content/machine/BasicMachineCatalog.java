@@ -88,7 +88,7 @@ public final class BasicMachineCatalog {
      */
     private static final Set<String> MULTIBLOCK_ONLY = Set.of(
             "distillationtower", "cryodistillationtower", "cokeoven",
-            "fusionreactor", "implosioncompressor", "lightning");
+            "fusionreactor", "implosioncompressor");
 
     /** Casing (8 units) + fixed extras per machine type. */
     private static List<WeightedMaterial> buildMaterials(GTMaterial casing, Object... extras) {
@@ -181,9 +181,9 @@ public final class BasicMachineCatalog {
         MACHINE_DEFS.add(new MachineDef("generifier",     "TU", SS, m -> buildMaterials(m, Materials.Copper, 4L)));
         MACHINE_DEFS.add(new MachineDef("coagulator",     "TU", SS, m -> buildMaterials(m, Materials.Copper, 4L)));
         MACHINE_DEFS.add(new MachineDef("fermenter",      "HU", SS, m -> buildMaterials(m, Materials.ClayBrick, 4L, Materials.Copper, 2L)));
-        MACHINE_DEFS.add(new MachineDef("melter",         "HU", SS, m -> buildMaterials(m, Materials.ClayBrick, 8L)));
+        MACHINE_DEFS.add(new MachineDef("melter",         "HU", new GTMaterial[]{Materials.Iron}, m -> buildMaterials(m, Materials.ClayBrick, 8L)));
         MACHINE_DEFS.add(new MachineDef("cokeoven",       "HU", SS, m -> buildMaterials(m, Materials.ClayBrick, 8L)));
-        MACHINE_DEFS.add(new MachineDef("lightning",      "EU", SS, m -> buildMaterials(m, Materials.Copper, 8L)));
+        MACHINE_DEFS.add(new MachineDef("lightning",      "EU", EU_MU_LU_CU_TIERS, m -> buildMaterials(m, Materials.Iron, 4L)));
         MACHINE_DEFS.add(new MachineDef("implosioncompressor", "HU", SS, m -> buildMaterials(m, Materials.Steel, 8L)));
         MACHINE_DEFS.add(new MachineDef("fusionreactor",  "QU", SS, m -> buildMaterials(m, Materials.Copper, 12L, Materials.Steel, 12L)));
         MACHINE_DEFS.add(new MachineDef("cryodistillationtower", "CU", SS, m -> buildMaterials(m, Materials.Steel, 8L, Materials.Copper, 4L)));
@@ -247,6 +247,8 @@ public final class BasicMachineCatalog {
                 GTMaterial mat = def.tiers()[t];
                 String matName = MAT_SHORT.getOrDefault(mat, mat.getName().toLowerCase(java.util.Locale.ROOT));
                 String id = def.name() + "_" + matName;
+                // Preserve the shipped registry identity while correcting the original iron casing.
+                if (def.name().equals("melter")) id = "melter_stainless_steel";
                 int tierNumber = t + def.tierBase();
                 if(def.name().equals("massfab"))mat=com.gregtech.gregtech.api.material.GTMaterialRegistry.get("Osmiridium");
                 // Original GT6 per-machine/per-tier registration values; the synthetic
@@ -650,7 +652,7 @@ public final class BasicMachineCatalog {
                     .fluidIn(TOP, LEFT).fluidOut(RIGHT, BOTTOM)
                     .energyIn(BACK)
                     .itemAutoIn(LEFT).itemAutoOut(RIGHT)
-                    .fluidAutoIn(LEFT).fluidAutoOut(RIGHT).build();
+                    .fluidAutoIn(TOP).fluidAutoOut(BOTTOM).build();
 
             case "implosioncompressor" -> MachineFaceMasks.builder()
                     .itemIn(TOP).itemOut(BOTTOM)

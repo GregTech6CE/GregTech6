@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#gregtech:plate/plastic",
+      "required": false
+    },
+    {
+      "id": "#gregtech:plate/polycarbonate",
+      "required": false
+    },
+    {
+      "id": "#gregtech:plate/pvc",
+      "required": false
+    },
+    {
+      "id": "#gregtech:plate/teflon",
+      "required": false
+    },
+    {
+      "id": "#gregtech:plate/bakelite",
+      "required": false
+    }
+  ]
+}

@@ -517,7 +517,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         workPossible=false;
         if(recipeMap==null||itemHandler==null)return;
         var recipe=findRecipeWithUsbPort();
-        if(recipe!=null){int parallel=computeParallel(recipe);workPossible=parallel>0&&com.gregtech.gregtech.api.recipe.MachineWorkCost.calculate(recipe.mEUt,recipe.mDuration,parallel,parallelScalesDuration(),efficiency(),inputMinimum(),inputMaximum(),cheapOverclocking())!=null;}
+        if(recipe!=null){int parallel=computeParallel(recipe);workPossible=parallel>0&&com.gregtech.gregtech.api.recipe.MachineWorkCost.calculate(recipe.mEUt,recipe.mDuration,parallel,parallelScalesDuration(),efficiency(),inputMinimum(),inputMaximum(),cheapOverclocking(),usesTimeEnergy())!=null;}
     }
     private void updateCoverSignals(){
         if(level==null||level.isClientSide||isRemoved())return;
@@ -608,8 +608,12 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     protected boolean usesTimeEnergy() { return spec!=null&&spec.energyTag()==GregTechTags.Energy.TU; }
     protected long inputMinimum() { return spec.energyInMin(); }
     protected long inputMaximum() { return spec.energyInMax(); }
-    protected boolean parallelScalesDuration() { return true; }
-    protected boolean cheapOverclocking() { return false; }
+    protected boolean parallelScalesDuration() {
+        var original = spec == null ? null : com.gregtech.gregtech.data.BasicMachineOriginalParams.find(spec.machineName(), spec.tier());
+        return original == null || original.parallelDuration();
+    }
+    // Loader_MultiTileEntities 22010 explicitly enables cheap overclocking for the Melter.
+    protected boolean cheapOverclocking() { return spec != null && spec.machineName().equals("melter"); }
     protected boolean requiresConstantEnergy() { return !usesTimeEnergy(); }
     protected int efficiency() { return 10000; }
 
@@ -632,7 +636,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
         int parallel = computeParallel(recipe);
         var cost=com.gregtech.gregtech.api.recipe.MachineWorkCost.calculate(recipe.mEUt,recipe.mDuration,parallel,
-                parallelScalesDuration(),efficiency(),inputMinimum(),inputMaximum(),cheapOverclocking());
+                parallelScalesDuration(),efficiency(),inputMinimum(),inputMaximum(),cheapOverclocking(),usesTimeEnergy());
         if(cost==null)return;
         mMinEnergy=cost.minimumPower();
         mMaxProgress=cost.totalWork();
@@ -674,6 +678,9 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     }
     private int computeParallel(Recipe recipe) {
         int low=0,high=parallelLimit();
+        // Original BasicMachine:730/743 caps power-scaled parallel batches at nominal input.
+        if(!parallelScalesDuration() && !usesTimeEnergy() && recipe.mEUt>0)
+            high=(int)Math.min(high,Math.max(1,spec.energyIn()/recipe.mEUt));
         for(var fluid:recipe.mFluidOutputs) if(fluid!=null && !fluid.isEmpty()) high=Math.min(high,Integer.MAX_VALUE/fluid.getAmount());
         var items=recipeInputItems(); var fluids=recipeInputFluids();
         while(low<high) {

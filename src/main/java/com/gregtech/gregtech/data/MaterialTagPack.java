@@ -34,6 +34,7 @@ public final class MaterialTagPack extends AbstractPackResources {
         if(resources!=null) return resources;
         var tags=new TreeMap<String,Set<String>>();
         var copperMaterials=MaterialGroups.Cu.getReRegistrations().stream().map(m->m.resolve()).collect(java.util.stream.Collectors.toSet());
+        var ironMaterials=MaterialGroups.Iron.getReRegistrations().stream().map(m->m.resolve()).collect(java.util.stream.Collectors.toSet());
         // Per-material tag: every form of one material (gear, rod, ingot, dust, block, fluid, unit...)
         // shares "gregtech:material/<material>", which is what recipe filtering and pack scripts want.
         // Per-form tags drop the "items" directory from their name: the tag is
@@ -134,6 +135,8 @@ public final class MaterialTagPack extends AbstractPackResources {
                     add(tags,"gregtech",kind,m.prefix().getRegistryName()+"/"+name,id.toString());
                     if(group!=null) add(tags,"forge",kind,group.equals("storage_blocks/raw")?"storage_blocks/raw_"+name:group+"/"+name,id.toString());
                 }
+                if(ironMaterials.contains(m.material().resolve()))
+                    add(tags,"gregtech","items",m.prefix().getRegistryName()+"/any_iron_or_steel",id.toString());
                 addMaterial(blocksByMaterial,m.material(),id.toString());
             }
             if(item instanceof BlockItem b && b.getBlock() instanceof com.gregtech.gregtech.block.BlackSandBlock sand) {
@@ -146,10 +149,18 @@ public final class MaterialTagPack extends AbstractPackResources {
             }
             if(item instanceof BlockItem b) {
                 var block=b.getBlock();
-                if(block instanceof com.gregtech.gregtech.block.energy.ElectricWireBlock wire
-                        && copperMaterials.contains(wire.spec().material().resolve())) {
+                if(block instanceof com.gregtech.gregtech.block.machine.FluidPipeBlock pipe
+                        && ironMaterials.contains(pipe.spec().material().resolve()))
+                    add(tags,"gregtech","items","pipe_"+pipe.spec().size().name().toLowerCase(java.util.Locale.ROOT)+"/any_iron_or_steel",id.toString());
+                if(block instanceof com.gregtech.gregtech.block.machine.ItemPipeBlock pipe
+                        && ironMaterials.contains(pipe.spec().material().resolve()) && !pipe.spec().size().restrictive())
+                    add(tags,"gregtech","items","pipe_"+pipe.spec().size().name().toLowerCase(java.util.Locale.ROOT)+"/any_iron_or_steel",id.toString());
+                if(block instanceof com.gregtech.gregtech.block.energy.ElectricWireBlock wire) {
                     String wireForm=(wire.spec().insulated()?"cable_":"wire_")+String.format(java.util.Locale.ROOT,"%02d",wire.spec().size());
-                    add(tags,"gregtech","items",wireForm+"/any_copper",id.toString());
+                    if(copperMaterials.contains(wire.spec().material().resolve()))
+                        add(tags,"gregtech","items",wireForm+"/any_copper",id.toString());
+                    if(ironMaterials.contains(wire.spec().material().resolve()))
+                        add(tags,"gregtech","items",wireForm+"/any_iron_or_steel",id.toString());
                 }
                 if(block instanceof com.gregtech.gregtech.block.DenseOreBlock denseOre
                         && denseOre.material().isValid()) {

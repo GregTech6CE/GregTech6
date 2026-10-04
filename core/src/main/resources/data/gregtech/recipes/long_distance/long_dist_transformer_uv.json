@@ -1,0 +1,23 @@
+{
+  "type": "gregtech:tool_shaped",
+  "allow_mirror": false,
+  "pattern": [
+    "WMW",
+    "MxM",
+    "WMW"
+  ],
+  "key": {
+    "W": {
+      "item": "gregtech:cable_04_annealed_copper"
+    },
+    "M": {
+      "item": "gregtech:transformer_uv_xv"
+    },
+    "x": {
+      "item": "gregtech:tool_wire_cutter"
+    }
+  },
+  "result": {
+    "item": "gregtech:long_dist_transformer_uv"
+  }
+}

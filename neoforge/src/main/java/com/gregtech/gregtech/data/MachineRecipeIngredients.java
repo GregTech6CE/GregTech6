@@ -368,6 +368,15 @@ public final class MachineRecipeIngredients {
             index.computeIfAbsent(spec.size().name().toLowerCase(java.util.Locale.ROOT), k -> new HashMap<>())
                     .put(spec.material(), block.asItem());
         }
+        // OP.pipeMedium/pipeLarge/pipeHuge also names the original item-pipe forms.
+        for (var item : net.minecraft.core.registries.BuiltInRegistries.ITEM) {
+            if (item instanceof net.minecraft.world.item.BlockItem blockItem
+                    && blockItem.getBlock() instanceof com.gregtech.gregtech.block.machine.ItemPipeBlock pipe
+                    && !pipe.spec().size().restrictive()) {
+                index.computeIfAbsent(pipe.spec().size().name().toLowerCase(java.util.Locale.ROOT), k -> new HashMap<>())
+                        .putIfAbsent(pipe.spec().material(), item);
+            }
+        }
         pipesBySize = index;
     }
 

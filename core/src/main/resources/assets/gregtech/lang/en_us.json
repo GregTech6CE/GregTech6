@@ -1627,7 +1627,7 @@
   "block.gregtech.lightning_rod_main": "Lightning Rod Main",
   "block.gregtech.lightning_rod_pillar": "Lightning Rod",
   "block.gregtech.lightning_rod_wall": "Lightning Rod Wall",
-  "block.gregtech.lightning_stainless_steel": "Lightning Generator (Stainless Steel)",
+  "block.gregtech.lightning_stainless_steel": "Lightning Processor (HV)",
   "block.gregtech.liquid_extra_heavy_oil": "Extra Heavy Oil",
   "block.gregtech.liquid_heavy_oil": "Heavy Oil",
   "block.gregtech.liquid_light_oil": "Light Oil",
@@ -1845,7 +1845,7 @@
   "block.gregtech.massfab_osmiridium_t4": "Matter Fabricator (T4, Osmiridium)",
   "block.gregtech.massfab_osmiridium_t5": "Matter Fabricator (T5, Osmiridium)",
   "block.gregtech.massfab_osmium": "Matter Fabricator (T1, Osmiridium)",
-  "block.gregtech.melter_stainless_steel": "Melter (Stainless Steel)",
+  "block.gregtech.melter_stainless_steel": "Melter",
   "block.gregtech.mixer_bronze": "Mixer (Bronze)",
   "block.gregtech.mixer_steel": "Mixer (Steel)",
   "block.gregtech.mixer_titanium": "Mixer (Titanium)",
@@ -9988,5 +9988,9 @@
   "gregtech.loot.stone_tool": "Replaces dropped stone tools",
   "gregtech.loot.persistent_name": "Persistent named mob; preserves its name",
   "gregtech.loot.any_mob": "Applicable mobs",
-  "gregtech.emi.preview.help": "Rotate / Layer / All / Reset / Zoom"
+  "gregtech.emi.preview.help": "Rotate / Layer / All / Reset / Zoom",
+  "block.gregtech.lightning_galvanized_steel": "Lightning Processor (LV)",
+  "block.gregtech.lightning_aluminium": "Lightning Processor (MV)",
+  "block.gregtech.lightning_chromium": "Lightning Processor (EV)",
+  "block.gregtech.lightning_titanium": "Lightning Processor (IV)"
 }

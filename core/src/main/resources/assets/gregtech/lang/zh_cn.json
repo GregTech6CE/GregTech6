@@ -1627,7 +1627,7 @@
   "block.gregtech.lightning_rod_main": "避雷针主控",
   "block.gregtech.lightning_rod_pillar": "避雷针",
   "block.gregtech.lightning_rod_wall": "避雷针结构壁",
-  "block.gregtech.lightning_stainless_steel": "闪电发生器(不锈钢)",
+  "block.gregtech.lightning_stainless_steel": "闪电处理器 (HV)",
   "block.gregtech.liquid_extra_heavy_oil": "特重油",
   "block.gregtech.liquid_heavy_oil": "重油",
   "block.gregtech.liquid_light_oil": "轻油",
@@ -1845,7 +1845,7 @@
   "block.gregtech.massfab_osmiridium_t4": "物质制造机（T4，锇铱合金）",
   "block.gregtech.massfab_osmiridium_t5": "物质制造机（T5，锇铱合金）",
   "block.gregtech.massfab_osmium": "物质制造机（T1，锇铱合金）",
-  "block.gregtech.melter_stainless_steel": "熔化器(不锈钢)",
+  "block.gregtech.melter_stainless_steel": "熔化器",
   "block.gregtech.mixer_bronze": "搅拌机(青铜)",
   "block.gregtech.mixer_steel": "搅拌机(钢)",
   "block.gregtech.mixer_titanium": "搅拌机(钛)",
@@ -9988,5 +9988,9 @@
   "gregtech.loot.stone_tool": "替换掉落的石制工具",
   "gregtech.loot.persistent_name": "持久命名生物，保留名称",
   "gregtech.loot.any_mob": "适用的生物",
-  "gregtech.emi.preview.help": "旋转 / 分层 / 全部 / 重置 / 缩放"
+  "gregtech.emi.preview.help": "旋转 / 分层 / 全部 / 重置 / 缩放",
+  "block.gregtech.lightning_galvanized_steel": "闪电处理器 (LV)",
+  "block.gregtech.lightning_aluminium": "闪电处理器 (MV)",
+  "block.gregtech.lightning_chromium": "闪电处理器 (EV)",
+  "block.gregtech.lightning_titanium": "闪电处理器 (IV)"
 }

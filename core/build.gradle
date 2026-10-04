@@ -6,6 +6,11 @@ java {
     toolchain.languageVersion = JavaLanguageVersion.of(17)
 }
 
+// Use the same checked resource synchronization as both loader projects. Later local
+// builds only copy changed shared assets instead of replacing the entire catalog.
+apply from: rootProject.file('gradle/incremental-resources.gradle')
+tasks.named('processResources').configure { filteringCharset = 'UTF-8' }
+
 // Optional development launch path: these shared resources are static and need no expansion.
 // Keep normal CI/release behavior; local launches can avoid copying the entire asset catalog.
 if (rootProject.findProperty('directCoreResources')?.toString() == 'true') {

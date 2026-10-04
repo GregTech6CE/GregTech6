@@ -33,11 +33,12 @@ public final class OriginCreativeContents {
             if(id.startsWith("panel_"))return "panels";
             if(id.startsWith("rope"))return "ropes";
             if(id.startsWith("reactor_")||id.startsWith("fuel_rod_")||id.startsWith("reactor_rod_"))return "reactors";
-            if(id.contains("zpm"))return "zpm";
-            if(id.startsWith("battery_box"))return "battery_boxes";
+            if(id.startsWith("long_dist_"))return "long_distance_transport";
+            if(type.equals("ZPMBlock"))return "zpm";
+            if(id.startsWith("battery_box")||id.startsWith("energy_storage_"))return "battery_boxes";
             if(id.startsWith("solar_panel"))return "solar_panels";
-            if(id.startsWith("electric_motor"))return "motors";
-            if(id.startsWith("electric_generator")||id.startsWith("dynamo"))return "dynamos";
+            if(id.startsWith("electric_motor")||id.startsWith("flux_motor"))return "motors";
+            if(id.startsWith("electric_generator")||id.startsWith("electric_dynamo")||id.startsWith("flux_dynamo")||id.startsWith("dynamo"))return "dynamos";
             if(id.startsWith("electric_heater"))return "heaters";
             if(id.startsWith("electric_cooler"))return "coolers";
             if(id.contains("turbine") && !id.startsWith("large_"))return "turbines";

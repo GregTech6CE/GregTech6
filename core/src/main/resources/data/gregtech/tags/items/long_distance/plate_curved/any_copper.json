@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#gregtech:plate_curved/copper",
+      "required": false
+    },
+    {
+      "id": "#gregtech:plate_curved/annealed_copper",
+      "required": false
+    }
+  ]
+}

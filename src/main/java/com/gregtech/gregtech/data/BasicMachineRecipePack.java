@@ -42,7 +42,7 @@ public final class BasicMachineRecipePack extends AbstractPackResources {
     /** Machines whose crafting recipe comes from the multiblock table instead. */
     public static final Set<String> MULTIBLOCK_CONTROLLERS = Set.of(
             "fusionreactor", "cryodistillationtower", "distillationtower",
-            "cokeoven", "lightning", "implosioncompressor",
+            "cokeoven", "implosioncompressor",
             "largecentrifuge", "largeelectrolyzer", "largecoagulator", "largeautoclave",
             "largebath", "largemixer", "largefermenter", "largeoven", "largesluice",
             "largecrusher", "largeshredder", "largesqueezer", "largemassfab");

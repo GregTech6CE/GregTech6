@@ -199,7 +199,7 @@ public final class OriginFeedbackChecks {
             throw new IllegalStateException("Original feedback checks failed: "+failures);
         }
     }
-    private static void checkModel(net.minecraft.client.Minecraft minecraft,ItemStack stack,boolean tinted) {
+    static void checkModel(net.minecraft.client.Minecraft minecraft,ItemStack stack,boolean tinted) {
         var model=minecraft.getItemRenderer().getModel(stack,minecraft.level,minecraft.player,0);
         var random=net.minecraft.util.RandomSource.create(1);int quads=0,tints=0;
         // Match ItemRenderer: query every actual item pass and its entity-format

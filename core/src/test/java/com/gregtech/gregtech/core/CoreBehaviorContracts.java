@@ -685,6 +685,16 @@ public final class CoreBehaviorContracts {
         check(timed != null, "time-based work exists");
         equal(1, timed.minimumPower(), "zero-power timed work minimum");
         equal(256, timed.totalWork(), "TU parallel recipes retain duration");
+        var poweredParallel = MachineWorkCost.calculate(32, 20, 4, false, 10000, 128, 512, false);
+        check(poweredParallel != null, "powered parallel batch exists");
+        equal(128, poweredParallel.minimumPower(), "non-duration parallel scales minimum power");
+        equal(2560, poweredParallel.totalWork(), "non-duration parallel conserves total batch energy");
+        check(MachineWorkCost.calculate(32, 20, 17, false, 10000, 128, 512, false)==null,
+                "parallel power cannot exceed the machine maximum");
+        var positiveTimed = MachineWorkCost.calculate(1, 20, 16, false, 10000, 1, 16, true, true);
+        check(positiveTimed != null, "positive-power TU batch exists");
+        equal(1, positiveTimed.minimumPower(), "TU does not scale power with parallel count");
+        equal(20, positiveTimed.totalWork(), "TU retains source duration with positive power");
         check(MachineWorkCost.calculate(4096, Long.MAX_VALUE, 64, true, 2500, 512, 4096, true) == null,
                 "overflow rejects before a platform consumes recipe ingredients");
         check(MachineWorkCost.calculate(513, 192, 1, true, 10000, 128, 512, false) == null,

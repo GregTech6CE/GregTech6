@@ -1,0 +1,23 @@
+{
+  "type": "gregtech:tool_shaped",
+  "allow_mirror": false,
+  "pattern": [
+    "ZPZ",
+    "PMP",
+    "ZPZ"
+  ],
+  "key": {
+    "Z": {
+      "tag": "gregtech:long_distance/plate/any_plastic"
+    },
+    "P": {
+      "item": "gregtech:pipe_medium_tungsten"
+    },
+    "M": {
+      "item": "gregtech:casing_machine_tungsten"
+    }
+  },
+  "result": {
+    "item": "gregtech:long_dist_endpoint_fluid"
+  }
+}

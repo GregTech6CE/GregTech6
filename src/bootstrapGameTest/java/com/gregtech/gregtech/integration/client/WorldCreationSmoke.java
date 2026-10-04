@@ -112,6 +112,7 @@ public final class WorldCreationSmoke {
                     checkBatteries(server,result);
                     OriginFeedbackChecks.server(server,result);
                     LootFeedbackChecks.server(server,result);
+                    MachineFeedbackChecks.server(server,result);
                     result.addProperty("canonicalItemsChecked",checked);
                     result.addProperty("recipes",recipes);
                     result.addProperty("serverTicks",server.getTickCount());
@@ -123,6 +124,7 @@ public final class WorldCreationSmoke {
             var result = probe.join();
             if (!LootBrowserSmoke.start(result)) return;
             OriginFeedbackChecks.client(minecraft,result);
+            MachineFeedbackChecks.client(minecraft,result);
             result.addProperty("renderedWorldFrames",frames);
             result.addProperty("emiLoaded",EMI_PRESENT);
             if (!Files.isRegularFile(minecraft.gameDirectory.toPath().resolve("saves").resolve(WORLD).resolve("level.dat")))
