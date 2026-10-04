@@ -28,6 +28,7 @@ public final class MaterialPrefix {
     /** Source ore-dictionary forms supplied by other mods; absent from GT's item definition stream. */
     public static final MaterialPrefix rawOreChunk, chunk, rubble, pebbles;
     public static final MaterialPrefix clump, reduced, crystalline, cleanGravel, cluster;
+    public static final MaterialPrefix dirtyGravel, crystal;
     public static final MaterialPrefix crushedPurified;
     public static final MaterialPrefix crushedPurifiedTiny;
     public static final MaterialPrefix crushedCentrifuged;
@@ -317,6 +318,8 @@ public final class MaterialPrefix {
         crystalline = def("crystalline", "Crystallised Metals", HAS_ORE_PROCESSING);
         cleanGravel = def("cleanGravel", "Clean Gravels", HAS_ORE_PROCESSING);
         cluster = def("cluster", "Native Clusters", HAS_ORE_PROCESSING);
+        dirtyGravel = def("dirtyGravel", "Dirty Gravels", HAS_ORE_PROCESSING);
+        crystal = def("crystal", "Crystals", HAS_GEM);
         crushedPurified = child("crushedPurified", "Purified Crushed Ore", crushed);
         crushedPurifiedTiny = child("crushedPurifiedTiny", "Tiny Purified Crushed Ore", crushedPurified);
         crushedCentrifuged = child("crushedCentrifuged", "Refined Crushed Ore", crushedPurified);
@@ -556,7 +559,7 @@ private final String name;
             case "raw_ore_chunk" -> GTValues.U72 * 27;
             case "chunk", "rubble" -> GTValues.U * 2;
             case "pebbles" -> GTValues.U * 3;
-            case "clump", "reduced", "crystalline", "clean_gravel" -> GTValues.U;
+            case "clump", "reduced", "crystalline", "clean_gravel", "dirty_gravel", "crystal" -> GTValues.U;
             case "cluster" -> GTValues.U * 3;
             case "crushed_purified" -> GTValues.U * 5 / 4;
             case "crushed_purified_tiny" -> GTValues.U72 * 10;

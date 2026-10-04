@@ -13,6 +13,7 @@ import com.gregtech.gregtech.data.MaterialPrefix;
 import com.gregtech.gregtech.data.generated.MaterialWorkability;
 import com.gregtech.gregtech.registry.GTItems;
 import com.gregtech.gregtech.util.OM;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
@@ -42,16 +43,9 @@ import java.util.List;
  * (block → ingot → chunk → nugget) is the port's, so a small pile of dust comes back as one chunk and
  * a nugget stays a nugget, exactly as in the original.</p>
  *
- * <p>Deviations, both recorded rather than guessed at:</p>
- * <ul>
- *   <li>{@code dustPure}, {@code dustRefined}, {@code chunk}, {@code rubble}, {@code pebbles},
- *       {@code cluster}, {@code cleanGravel}, {@code dirtyGravel}, {@code crystalline},
- *       {@code reduced} and {@code rawOreChunk} are GT6 prefixes this port does not register; their
- *       rows are listed in {@link #skipped()} instead of being approximated.</li>
- *   <li>GT6 registers food materials as <em>smoker</em> recipes and everything else as blast furnace
- *       recipes; the port's {@code MachineRecipeMaps.add_smelting} keeps one furnace table, so the
- *       smoker/blast distinction is passed through but not materialised.</li>
- * </ul>
+ * <p>External listener rows bind actual tagged items through ExternalOreProcessing after tags load.
+ * dustPure/dustRefined remain unresolved typed forms. Cooking metadata retains source experience
+ * and smoker/blast selection for the native oven bridge.</p>
  */
 public final class FurnaceSmeltingRecipes {
     /** One row of GT6's listener list: prefix, fixed target amount in units (-1 = the prefix's own) and exp flag. */
@@ -84,6 +78,13 @@ public final class FurnaceSmeltingRecipes {
 
     private static final List<String> SKIPPED = new ArrayList<>();
     private static final List<Entry> ENTRIES = new ArrayList<>();
+
+    public record CookingData(float experience, boolean food) {}
+    private static final java.util.Map<Item, CookingData> COOKING = new java.util.IdentityHashMap<>();
+    public static java.util.Optional<CookingData> cooking(Item item) {
+        var own = COOKING.get(item);
+        return own == null ? ExternalOreProcessing.cooking(item) : java.util.Optional.of(own);
+    }
 
     private static boolean registered;
 
@@ -120,31 +121,28 @@ public final class FurnaceSmeltingRecipes {
     /** One {@code <form> -> <metal>} row for one material (GT6 {@code Listener_Furnace_Smelting}). */
     private static void form(GTMaterial material, MaterialPrefix prefix, Row row) {
         // GT6: only materials flagged FURNACE, and never the placeholder materials
-        if (!MaterialWorkability.isFurnace(material)) return;
-        if (material.has(MaterialProperty.HIDDEN)) return;                        // GT6 UNUSED_MATERIAL
+        if (!FurnaceSmeltingRules.allows(material)) return;
         ItemStack input = GTItems.getStack(prefix, material, 1);
         if (input.isEmpty()) return;
 
         GTMaterial smelting = material.getTargetSmeltingMaterial();
-        if (smelting == null || !smelting.isValid()) smelting = material;
+        if (smelting == null || !smelting.isValid()) return;
         long smeltingAmount = Math.max(0, material.getTargetSmeltingAmount());
         if (smeltingAmount <= 0) return;
 
-        long solidAmount = smeltingAmount;                                        // GT6 mTargetSolidifying
         long formAmount = row.fixedAmount() < 0 ? prefix.getMaterialWeight() : row.fixedAmount();
-        long target = CrucibleMath.units(
-                CrucibleMath.units(smeltingAmount, GTValues.U, solidAmount, false),
-                GTValues.U, formAmount, false);
+        long target = FurnaceSmeltingRules.amount(formAmount, smeltingAmount);
         if (target <= 0) return;
 
         ItemStack output = OM.ingot(smelting, target);
         if (output.isEmpty()) return;
         long experience = row.exp()
-                ? CrucibleMath.units(target, GTValues.U, material.getToolQuality() + 1L, true) : 0;
+                ? FurnaceSmeltingRules.experience(target, material.getToolQuality()) : 0;
         boolean food = MaterialWorkability.isFood(material);
         // GT6 passes aRemoveOthers = !RUNNING, and RUNNING is true while the loader registers.
         if (MachineRecipeMaps.add_smelting(input, output, experience, false, food, !food)) {
             ENTRIES.add(new Entry(prefix.getName(), material, input, output));
+            COOKING.put(input.getItem(), new CookingData(experience, food));
         }
     }
 

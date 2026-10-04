@@ -17,10 +17,15 @@ public final class ExternalOreProcessing {
     private static final Map<RecipeMap, Set<Recipe>> OWNED = new IdentityHashMap<>();
     private static volatile Map<Item, ItemComposition> compositions = Map.of();
 
+    private static volatile Map<Item, FurnaceSmeltingRecipes.CookingData> cooking = Map.of();
+    public static Optional<FurnaceSmeltingRecipes.CookingData> cooking(Item item) { return Optional.ofNullable(cooking.get(item)); }
+
     public static Optional<ItemComposition> composition(Item item) { return Optional.ofNullable(compositions.get(item)); }
 
     /** Remove only this adapter's exact rows; other mods' processing rows remain registered. */
     public static synchronized void clear() {
+        // Restore displaced source rows before removing them; otherwise an old mirror can resurrect this reload's predecessors.
+        com.gregtech.gregtech.loaders.Loader_OvenRecipes.clearMirrors();
         OWNED.forEach((map, rows) -> {
             map.mRecipeList.removeAll(rows);
             map.mRecipeItemMap.values().forEach(values -> values.removeAll(rows));
@@ -28,6 +33,7 @@ public final class ExternalOreProcessing {
         });
         OWNED.clear();
         compositions = Map.of();
+        cooking = Map.of();
     }
 
     public static synchronized int rebuild() {
@@ -87,6 +93,44 @@ public final class ExternalOreProcessing {
                         added++;
                     }
                 }
+            }
+        }
+        var cookingData = new IdentityHashMap<Item, FurnaceSmeltingRecipes.CookingData>();
+        for (var row : FurnaceSmeltingRules.EXTERNAL) for (var entry : forms.entrySet()) {
+            if (!entry.getKey().prefix().equals(row.input().getName())) continue;
+            var material = GTMaterialRegistry.get(entry.getKey().material()).resolve();
+            if (!FurnaceSmeltingRules.allows(material)) continue;
+            var target = material.getTargetSmeltingMaterial();
+            if (target == null || !target.isValid()) continue;
+            long amount = FurnaceSmeltingRules.amount(row.amount(), material.getTargetSmeltingAmount());
+            var output = com.gregtech.gregtech.util.OM.ingot(target, amount);
+            if (output.isEmpty()) continue;
+            for (var item : entry.getValue()) {
+                var map = MachineRecipeMaps.Furnace;
+                var recipe = map.addRecipe1(true, 16, 16, new ItemStack(item), MachineRecipeMaps.neverFurnaceOutput(output.copy()));
+                if (recipe == null) continue;
+                OWNED.computeIfAbsent(map, unused -> Collections.newSetFromMap(new IdentityHashMap<>())).add(recipe);
+                cookingData.put(item, new FurnaceSmeltingRecipes.CookingData(
+                        FurnaceSmeltingRules.experience(amount, material.getToolQuality()),
+                        com.gregtech.gregtech.data.generated.MaterialWorkability.isFood(material)));
+                added++;
+            }
+        }
+        cooking = Collections.unmodifiableMap(cookingData);
+        for (var prefix : ExternalOreProcessingRules.CRUCIBLE_FORMS) for (var entry : forms.entrySet()) {
+            if (!entry.getKey().prefix().equals(prefix.getName())) continue;
+            var material = GTMaterialRegistry.get(entry.getKey().material()).resolve();
+            var preview = com.gregtech.gregtech.api.machine.crucible.CrucibleInputRules.smeltingPreview(material, prefix);
+            if (preview == null) continue;
+            var output = com.gregtech.gregtech.util.OM.ingotOrDust(preview.material(), preview.amount());
+            if (output.isEmpty()) continue;
+            for (var item : entry.getValue()) {
+                var map = MachineRecipeMaps.CrucibleSmelting;
+                var recipe = map.addFakeRecipe(false, new ItemStack[]{new ItemStack(item)}, new ItemStack[]{output.copy()},
+                        null, null, null, null, 0, 0, preview.temperatureK());
+                if (recipe == null) continue;
+                OWNED.computeIfAbsent(map, unused -> Collections.newSetFromMap(new IdentityHashMap<>())).add(recipe);
+                added++;
             }
         }
         LogUtils.getLogger().info("[gregtech] Bound {} external ore processing rows and {} material compositions from loaded tags",

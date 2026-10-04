@@ -14,7 +14,12 @@ public final class ExternalOreProcessingRules {
     /** Explicit external metadata forms; this list never registers GT-owned items. */
     public static final List<MaterialPrefix> EXTERNAL_FORMS = List.of(
             MaterialPrefix.rawOreChunk, MaterialPrefix.chunk, MaterialPrefix.rubble, MaterialPrefix.pebbles,
-            MaterialPrefix.clump, MaterialPrefix.reduced, MaterialPrefix.crystalline, MaterialPrefix.cleanGravel, MaterialPrefix.cluster);
+            MaterialPrefix.clump, MaterialPrefix.reduced, MaterialPrefix.crystalline, MaterialPrefix.cleanGravel, MaterialPrefix.cluster,
+            MaterialPrefix.dirtyGravel, MaterialPrefix.crystal);
+    /** RecipeMapCrucible:getNEIRecipes lists these eight external ore forms, not clump/crystal/rawOreChunk. */
+    public static final List<MaterialPrefix> CRUCIBLE_FORMS = List.of(
+            MaterialPrefix.chunk, MaterialPrefix.rubble, MaterialPrefix.pebbles, MaterialPrefix.cluster,
+            MaterialPrefix.cleanGravel, MaterialPrefix.dirtyGravel, MaterialPrefix.crystalline, MaterialPrefix.reduced);
     public record Route(String map, MaterialPrefix input, MaterialPrefix output, int count, long multiplier) {
         public long duration(int toolQuality) {
             long units = Math.max(input.getMaterialWeight(), output.getMaterialWeight() * count);
@@ -70,7 +75,9 @@ public final class ExternalOreProcessingRules {
             new GrindingRoute("Mortar", MaterialPrefix.cleanGravel, 0, false),
             new GrindingRoute("Mortar", MaterialPrefix.crystalline, 0, false),
             new GrindingRoute("Mortar", MaterialPrefix.reduced, 0, false),
-            new GrindingRoute("Mortar", MaterialPrefix.clump, 0, false));
+            new GrindingRoute("Mortar", MaterialPrefix.clump, 0, false),
+            new GrindingRoute("Mortar", MaterialPrefix.dirtyGravel, 0, false),
+            new GrindingRoute("Mortar", MaterialPrefix.crystal, 0, false));
     public static boolean allows(GTMaterial material) {
         return material.isValid() && !material.has(MaterialProperty.ANTIMATTER);
     }

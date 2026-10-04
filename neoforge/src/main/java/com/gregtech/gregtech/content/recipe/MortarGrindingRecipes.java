@@ -38,8 +38,7 @@ public final class MortarGrindingRecipes {
 
     private static final List<Entry> ENTRIES = new ArrayList<>();
     private static final List<String> SKIPPED = List.of(
-            "cleanGravel/crystalline/reduced/clump (:84/:86/:87/:89) bind external items after tags",
-            "dirtyGravel/crystal (:85/:88): no typed source prefixes yet");
+            "six external-form rows (:84-89) bind actual items through ExternalOreProcessing after tags");
 
     /** Rows gated only on {@code MORTAR}. */
     private static final List<String> PLAIN_ROWS = List.of(

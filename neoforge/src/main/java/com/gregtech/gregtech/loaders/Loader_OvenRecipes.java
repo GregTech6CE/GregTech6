@@ -79,7 +79,7 @@ public final class Loader_OvenRecipes {
                 }
                 if (recipe.getType() == RecipeType.SMELTING) {
                     ItemStack input = firstInput(recipe);
-                    if (!input.isEmpty() && MachineRecipeMaps.add_smelting(input, scrap)) mirrored++;
+                    if (!input.isEmpty() && com.gregtech.gregtech.content.recipe.FurnaceSmeltingRecipes.cooking(input.getItem()).isEmpty() && MachineRecipeMaps.add_smelting(input, scrap)) mirrored++;
                 }
                 continue;
             }
@@ -87,7 +87,7 @@ public final class Loader_OvenRecipes {
             rewritten.add(holder);
             if (recipe.getType() == RecipeType.SMELTING) {
                 ItemStack input = firstInput(recipe);
-                if (!input.isEmpty() && !result.isEmpty() && MachineRecipeMaps.add_smelting(input, result)) {
+                if (!input.isEmpty() && !result.isEmpty() && com.gregtech.gregtech.content.recipe.FurnaceSmeltingRecipes.cooking(input.getItem()).isEmpty() && MachineRecipeMaps.add_smelting(input, result)) {
                     mirrored++;
                 }
             }
@@ -107,13 +107,13 @@ public final class Loader_OvenRecipes {
     /**
      * Adds the GT furnace table's rows to the vanilla smelting list. GT6 {@code RM.add_smelting}
      * writes straight into {@code FurnaceRecipes}, a map keyed by input, so a GT row replaces a
-     * vanilla one there; in this port the datapack recipes ({@code data/gregtech/recipes/**}) are the
-     * hand-authored equivalents, so an input that already has a recipe keeps it and only the missing
-     * rows are added.
+     * vanilla one there. Source material listeners keep that priority, quantity, experience and
+     * smoker/blast selection; other GT rows keep existing datapack choices.
      *
      * @return how many recipes were added
      */
     private static int mirrorIntoFurnace(List<RecipeHolder<?>> recipes, RegistryAccess access) {
+        preferMaterialRows(recipes);
         // The mirror runs again on every server start, i.e. once per world load, so this report has to
         // be replaced instead of appended to. Without the clear it kept one ItemStack per mirrored row
         // of every world this JVM had ever loaded (about 2314 stacks per world load, monotonically),
@@ -136,18 +136,22 @@ public final class Loader_OvenRecipes {
             if (!gt.mEnabled || gt.mHidden) continue;
             ItemStack input = firstStack(gt.mInputs);
             ItemStack output = firstStack(gt.mOutputs);
-            if (input.isEmpty() || output.isEmpty()) continue;
+            if (input.isEmpty() || output.isEmpty() || input.getCount() != 1) continue;
             if (!covered.add(input.getItem())) continue;   // the vanilla list already covers this input
+            var cooking = com.gregtech.gregtech.content.recipe.FurnaceSmeltingRecipes.cooking(input.getItem());
+            float experience = cooking.map(data -> data.experience()).orElse(0.0F);
+            var category = cooking.map(data -> data.food()).orElse(false) ? CookingBookCategory.FOOD : CookingBookCategory.MISC;
             var id = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",
                     "furnace/" + BuiltInRegistries.ITEM.getKey(input.getItem()).getNamespace()
                             + "/" + BuiltInRegistries.ITEM.getKey(input.getItem()).getPath());
             recipes.add(new RecipeHolder<>(id, new SmeltingRecipe(
-                    "", CookingBookCategory.MISC, Ingredient.of(input), output.copy(), 0.0F,
+                    "", category, Ingredient.of(input), output.copy(), experience,
                     200)));   // vanilla furnace cooking time, as in GT6's FurnaceRecipes registration
             ADDED_TO_VANILLA.add(input);
             added++;
         }
         mirrorClayMoldBlasting(recipes);
+        mirrorMaterialCooking(recipes);
         return added;
     }
 
@@ -170,6 +174,69 @@ public final class Loader_OvenRecipes {
             added++;
         }
         com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original clay mold blast firing: {} rows",added);
+    }
+
+    /** RM.add_smelting overwrites the same source input; split mixed ingredients so unrelated choices survive. */
+    private static void preferMaterialRows(List<RecipeHolder<?>> recipes) {
+        var source = new java.util.HashSet<Item>();
+        for (var row : MachineRecipeMaps.Furnace.mRecipeList) {
+            if (!row.mEnabled || row.mHidden) continue;
+            var input = firstStack(row.mInputs);
+            if (!input.isEmpty() && input.getCount() == 1
+                    && com.gregtech.gregtech.content.recipe.FurnaceSmeltingRecipes.cooking(input.getItem()).isPresent()) source.add(input.getItem());
+        }
+        List<RecipeHolder<?>> filtered = new ArrayList<>();
+        for (var holder : recipes) {
+            var recipe = holder.value();
+            if (!(recipe instanceof AbstractCookingRecipe row) ||
+                    (recipe.getType() != RecipeType.SMELTING && recipe.getType() != RecipeType.SMOKING && recipe.getType() != RecipeType.BLASTING)) {
+                filtered.add(holder); continue;
+            }
+            var choices = row.getIngredients().isEmpty() ? new ItemStack[0] : row.getIngredients().get(0).getItems();
+            var remaining = java.util.Arrays.stream(choices).filter(stack -> !source.contains(stack.getItem())).toArray(ItemStack[]::new);
+            if (remaining.length == choices.length) { filtered.add(holder); continue; }
+            if (remaining.length == 0) continue;
+            var id = holder.id(); var ingredient = Ingredient.of(remaining);
+            var result = row.getResultItem(RegistryAccess.EMPTY).copy();
+            Recipe<?> replacement = recipe.getType() == RecipeType.SMOKING
+                    ? new net.minecraft.world.item.crafting.SmokingRecipe(row.getGroup(), row.category(), ingredient, result, row.getExperience(), row.getCookingTime())
+                    : recipe.getType() == RecipeType.BLASTING
+                    ? new BlastingRecipe(row.getGroup(), row.category(), ingredient, result, row.getExperience(), row.getCookingTime())
+                    : new SmeltingRecipe(row.getGroup(), row.category(), ingredient, result, row.getExperience(), row.getCookingTime());
+            filtered.add(new RecipeHolder<>(id, replacement));
+        }
+        recipes.clear(); recipes.addAll(filtered);
+    }
+
+    /** Source Listener_Furnace_Smelting sends food to smokers and other source materials to blast furnaces. */
+    private static void mirrorMaterialCooking(List<RecipeHolder<?>> recipes) {
+        var smoked = new java.util.HashSet<Item>();
+        var blasted = new java.util.HashSet<Item>();
+        for (var holder : recipes) {
+            var recipe = holder.value();
+            if (recipe.getType() != RecipeType.SMOKING && recipe.getType() != RecipeType.BLASTING) continue;
+            var covered = recipe.getType() == RecipeType.SMOKING ? smoked : blasted;
+            for (var ingredient : recipe.getIngredients()) for (var stack : ingredient.getItems()) covered.add(stack.getItem());
+        }
+        int added = 0;
+        for (var row : MachineRecipeMaps.Furnace.mRecipeList) {
+            if (!row.mEnabled || row.mHidden) continue;
+            var input = firstStack(row.mInputs); var output = firstStack(row.mOutputs);
+            if (input.isEmpty() || output.isEmpty() || input.getCount() != 1) continue;
+            var metadata = com.gregtech.gregtech.content.recipe.FurnaceSmeltingRecipes.cooking(input.getItem());
+            if (metadata.isEmpty()) continue;
+            var data = metadata.get(); var covered = data.food() ? smoked : blasted;
+            if (!covered.add(input.getItem())) continue;
+            var itemId = BuiltInRegistries.ITEM.getKey(input.getItem());
+            var id = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",
+                    "material_cooking/" + (data.food() ? "smoking/" : "blasting/") + itemId.getNamespace() + "/" + itemId.getPath());
+            Recipe<?> recipe = data.food()
+                    ? new net.minecraft.world.item.crafting.SmokingRecipe("", CookingBookCategory.FOOD, Ingredient.of(input), output.copy(), data.experience(), 100)
+                    : new BlastingRecipe("", CookingBookCategory.MISC, Ingredient.of(input), output.copy(), data.experience(), 100);
+            recipes.add(new RecipeHolder<>(id, recipe));
+            added++;
+        }
+        com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original material smoker/blast rows: {}", added);
     }
 
     private static final List<ItemStack> ADDED_TO_VANILLA = new ArrayList<>();
@@ -198,9 +265,7 @@ public final class Loader_OvenRecipes {
     private static ItemStack firstStack(ItemStack[] stacks) {
         for (ItemStack stack : stacks) {
             if (stack != null && !stack.isEmpty()) {
-                ItemStack copy = stack.copy();
-                copy.setCount(1);
-                return copy;
+                return stack.copy();
             }
         }
         return ItemStack.EMPTY;

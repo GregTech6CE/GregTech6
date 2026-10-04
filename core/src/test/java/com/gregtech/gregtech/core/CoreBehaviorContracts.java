@@ -46,14 +46,15 @@ public final class CoreBehaviorContracts {
         externalOreSourceSamples();
         externalGrindingSourceSamples();
         externalAdditionalGrindingSourceSamples();
+        externalThermalSourceSamples();
         assertions += OriginWorldgenSamples.verify();
-        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 25 groups (Java 17; no game dependencies)");
+        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 26 groups (Java 17; no game dependencies)");
     }
 
     private static void externalGrindingSourceSamples() {
         // Handler:117-119,129-131,158-160; costs round after multiplying, not before.
         var rows = com.gregtech.gregtech.content.recipe.ExternalOreProcessingRules.GRINDING;
-        equal(20, rows.size(), "eight adaptive Shredder, eight Anvil and four Mortar routes");
+        equal(22, rows.size(), "eight adaptive Shredder, eight Anvil and six Mortar routes");
         long[] soft0 = {34, 34, 50}, hard0 = {541, 541, 797};
         long[] soft2 = {102, 102, 150}, hard2 = {1622, 1622, 2390};
         long[] anvil0 = {34, 34, 48}, anvil2 = {102, 102, 144};
@@ -113,7 +114,7 @@ public final class CoreBehaviorContracts {
             equal(48, row.duration(2, true), "source quality-scaled Mortar duration " + i);
         }
         var external = com.gregtech.gregtech.content.recipe.ExternalOreProcessingRules.EXTERNAL_FORMS;
-        equal(9, external.size(), "nine typed external forms");
+        equal(11, external.size(), "eleven typed external forms");
         for (var form : external) check(!com.gregtech.gregtech.api.material.MaterialItemDefinitions.candidatePrefixes().contains(form),
                 "external metadata creates no GT-owned items " + form.getName());
         // OM:370-371 / UT.Code.units:1677-1687, target amount multiplies the input then floors.
@@ -123,6 +124,39 @@ public final class CoreBehaviorContracts {
         equal(41_513_472_000L, com.gregtech.gregtech.content.recipe.PulverizationRules.amount(41_513_472_000L, 648_648_000L), "64-unit identity pulverization avoids overflowing an intermediate product");
         equal(20_756_736_000L, com.gregtech.gregtech.content.recipe.PulverizationRules.amount(41_513_472_000L, 324_324_000L), "64-unit half target avoids overflowing an intermediate product");
         equal(0, com.gregtech.gregtech.content.recipe.PulverizationRules.amount(648_648_000L, 0), "source zero target yields zero");
+    }
+
+    private static void externalThermalSourceSamples() {
+        // OP:152,185; Handler:85,88; Furnace:151-160/190-201 and RecipeMapCrucible:68-76.
+        var grinding = com.gregtech.gregtech.content.recipe.ExternalOreProcessingRules.GRINDING;
+        String[] inputs = {"dirtyGravel", "crystal"};
+        for (int i = 0; i < inputs.length; i++) {
+            var row = grinding.get(i + 20);
+            check(row.map().equals("Mortar") && row.input().getName().equals(inputs[i]), "source last external Mortar input " + i);
+            equal(648_648_000L, row.input().getMaterialWeight(), "source dirty gravel and crystal each weigh U " + i);
+            check(row.pulverizedRemains() && !row.fines() && !row.requiresEmptySlot(), "source Mortar has only pulverized remains " + i);
+            equal(16, row.duration(0, true), "source last Mortar duration " + i);
+            equal(48, row.duration(2, true), "source last Mortar quality duration " + i);
+        }
+        var furnace = com.gregtech.gregtech.content.recipe.FurnaceSmeltingRules.EXTERNAL;
+        String[] furnaceInputs = {"rawOreChunk", "chunk", "rubble", "pebbles", "cluster", "cleanGravel", "dirtyGravel", "crystalline", "reduced"};
+        long[] amounts = {243_243_000L, 1_297_296_000L, 1_297_296_000L, 1_945_944_000L, 1_945_944_000L, 648_648_000L, 648_648_000L, 648_648_000L, 648_648_000L};
+        equal(9, furnace.size(), "source nine external furnace listeners; no clump or crystal listener");
+        for (int i = 0; i < furnaceInputs.length; i++) {
+            check(furnace.get(i).input().getName().equals(furnaceInputs[i]), "source external furnace listener " + i);
+            equal(amounts[i], furnace.get(i).amount(), "source furnace fixed/prefix amount " + i);
+        }
+        equal(486_486_000L, com.gregtech.gregtech.content.recipe.FurnaceSmeltingRules.amount(648_648_000L, 486_486_000L), "Cassiterite dust source 3/4U smelting ratio is applied only once");
+        equal(108_108_000L, com.gregtech.gregtech.content.recipe.FurnaceSmeltingRules.amount(648_648_000L, 108_108_000L), "Malachite dust source 1/6U smelting ratio is applied only once");
+        equal(1_945_944_000L, com.gregtech.gregtech.content.recipe.FurnaceSmeltingRules.amount(1_945_944_000L, 648_648_000L), "three-unit cluster keeps three-unit furnace output");
+        equal(1, com.gregtech.gregtech.content.recipe.FurnaceSmeltingRules.experience(243_243_000L, 0), "fractional raw chunk furnace experience rounds up");
+        equal(3, com.gregtech.gregtech.content.recipe.FurnaceSmeltingRules.experience(1_945_944_000L, 0), "three-unit cluster furnace experience");
+        equal(9, com.gregtech.gregtech.content.recipe.FurnaceSmeltingRules.experience(1_945_944_000L, 2), "cluster furnace experience scales by input tool quality");
+        equal(0, com.gregtech.gregtech.content.recipe.FurnaceSmeltingRules.experience(0, 2), "empty furnace output earns no experience");
+        var crucible = com.gregtech.gregtech.content.recipe.ExternalOreProcessingRules.CRUCIBLE_FORMS;
+        String[] crucibleInputs = {"chunk", "rubble", "pebbles", "cluster", "cleanGravel", "dirtyGravel", "crystalline", "reduced"};
+        equal(8, crucible.size(), "source eight external crucible display forms");
+        for (int i = 0; i < crucibleInputs.length; i++) check(crucible.get(i).getName().equals(crucibleInputs[i]), "source crucible form " + i);
     }
 
     private static void externalOreSourceSamples() {

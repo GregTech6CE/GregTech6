@@ -17,7 +17,7 @@ import java.util.*;
 /** Runtime recipes are rebuilt after tags bind and before PlayerList sends the recipe packet. */
 @Mod.EventBusSubscriber(modid=GregTech.MODID)
 public final class RuntimeRecipeLifecycle {
-    private static final Set<RecipeManager> APPLIED=Collections.newSetFromMap(new WeakHashMap<>());
+    private static final Map<RecipeManager,Set<Recipe<?>>> APPLIED=new WeakHashMap<>();
     private RuntimeRecipeLifecycle() {}
 
     @SubscribeEvent(priority=EventPriority.HIGH)
@@ -34,10 +34,11 @@ public final class RuntimeRecipeLifecycle {
         APPLIED.clear();
     }
 
-    /** A fresh manager on /reload is populated once; login sync does not rerun generators. */
+    /** Compare actual recipe identities: reload can reuse the manager; unchanged login sync stays cheap. */
     public static void rebuild(MinecraftServer server) {
         var manager=server.getRecipeManager();
-        if(APPLIED.contains(manager)) return;
+        var current=manager.getRecipes(); var applied=APPLIED.get(manager);
+        if(applied!=null && applied.size()==current.size() && applied.containsAll(current))return;
         var working=new RecipeManager();
         working.replaceRecipes(manager.getRecipes());
         var access=server.registryAccess();
@@ -52,7 +53,8 @@ public final class RuntimeRecipeLifecycle {
         Loader_OvenRecipes.apply(working,access);
         manager.replaceRecipes(working.getRecipes());
         ShapelessRecipeTooltipIndex.rebuild(manager);
-        APPLIED.add(manager);
+        Set<Recipe<?>> snapshot=Collections.newSetFromMap(new IdentityHashMap<>());
+        snapshot.addAll(manager.getRecipes()); APPLIED.put(manager,snapshot);
         GregTech.LOGGER.info("Rebuilt GT runtime recipes before synchronization: {} recipes",manager.getRecipes().size());
     }
 

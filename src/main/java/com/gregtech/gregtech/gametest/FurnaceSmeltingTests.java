@@ -51,7 +51,7 @@ public final class FurnaceSmeltingTests {
         long smeltingAmount = Math.max(0, material.getTargetSmeltingAmount());
         return com.gregtech.gregtech.api.machine.crucible.CrucibleMath.units(
                 com.gregtech.gregtech.api.machine.crucible.CrucibleMath.units(
-                        smeltingAmount, GTValues.U, smeltingAmount, false),
+                        smeltingAmount, GTValues.U, GTValues.U, false),
                 GTValues.U, prefix.getMaterialWeight(), false);
     }
 
