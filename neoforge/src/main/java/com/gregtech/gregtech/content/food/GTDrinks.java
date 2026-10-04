@@ -98,6 +98,11 @@ public final class GTDrinks {
         if (entry == null) {
             return null;
         }
+        // The catalog binds these entries to vanilla fluids rather than GT deferred holders.
+        if (entry.textureMode() == RegisteredFluids.FluidTextureMode.VANILLA_WATER)
+            return net.minecraft.world.level.material.Fluids.WATER;
+        if (entry.textureMode() == RegisteredFluids.FluidTextureMode.VANILLA_LAVA)
+            return net.minecraft.world.level.material.Fluids.LAVA;
         for (var ro
                 : com.gregtech.gregtech.registry.GTFluids.FLUIDS.getEntries()) {
             if (ro.isBound() && com.gregtech.gregtech.registry.GTFluids.entryForFluid(ro.get()) == entry) {
@@ -133,6 +138,7 @@ public final class GTDrinks {
             }
         }
         Fluid direct = stillFluid(field);
+        if (direct == null) direct = fluidOf(RegisteredFluids.get(field));
         return direct != null ? direct : byRegistryPath(field);
     }
 

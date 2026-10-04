@@ -19,6 +19,8 @@ public final class GregTechEMIPlugin implements EmiPlugin {
     @Override
     public void register(EmiRegistry registry) {
         var machines = RecipeMachines.collect();
+        var ingredients = new MachineEmiIngredients();
+        long started = System.nanoTime();
         int rows = 0, categories = 0;
         for (RecipeMap map : RecipeMap.RECIPE_MAP_LIST) {
             if (map.mRecipeList.stream().noneMatch(r -> r.mEnabled && !r.mHidden)) continue;
@@ -31,16 +33,23 @@ public final class GregTechEMIPlugin implements EmiPlugin {
             registry.addCategory(category);
             for (var station : workstations) registry.addWorkstation(category, EmiStack.of(station));
             int i = 0;
+            int before = rows;
+            long mapStarted = System.nanoTime();
+            com.mojang.logging.LogUtils.getLogger().debug("[gregtech] EMI registering {}", map.mNameInternal);
             for (var recipe : map.mRecipeList) {
                 int recipeIndex = i++;
                 if (!recipe.mEnabled || recipe.mHidden) continue;
                 registry.addRecipe(new MachineEmiRecipe(category, map, recipe,
                         // EMI reserves leading '/' for recipes outside vanilla RecipeManager.
-                        ResourceLocation.fromNamespaceAndPath("gregtech", "/machine/" + id.getPath() + "/" + recipeIndex)));
+                        ResourceLocation.fromNamespaceAndPath("gregtech", "/machine/" + id.getPath() + "/" + recipeIndex), ingredients));
                 rows++;
             }
             categories++;
+            if (rows - before >= 1000) com.mojang.logging.LogUtils.getLogger().info(
+                    "[gregtech] EMI registered {} recipes for {} in {} ms", rows - before, map.mNameInternal,
+                    (System.nanoTime() - mapStarted) / 1_000_000);
         }
-        com.mojang.logging.LogUtils.getLogger().info("[gregtech] EMI registered {} machine recipes in {} categories", rows, categories);
+        com.mojang.logging.LogUtils.getLogger().info("[gregtech] EMI registered {} machine recipes in {} categories in {} ms", rows, categories,
+                (System.nanoTime() - started) / 1_000_000);
     }
 }
