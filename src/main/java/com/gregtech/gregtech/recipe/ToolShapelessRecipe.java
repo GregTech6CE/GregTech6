@@ -14,9 +14,13 @@ import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.world.level.Level;
 
 /** Original CR shapeless rows: ordinary GT tool container crafting wears and returns the tool. */
-public final class ToolShapelessRecipe extends ShapelessRecipe {
-    public ToolShapelessRecipe(ShapelessRecipe base) {
+public final class ToolShapelessRecipe extends ShapelessRecipe implements com.gregtech.gregtech.api.recipe.AutocraftableCraftingRecipe {
+    private final boolean autocraftable;
+    @Override public boolean isAutocraftableByGT() { return autocraftable; }
+    public ToolShapelessRecipe(ShapelessRecipe base) { this(base, true); }
+    public ToolShapelessRecipe(ShapelessRecipe base, boolean autocraftable) {
         super(base.getId(), base.getGroup(), base.category(), base.getResultItem(RegistryAccess.EMPTY), base.getIngredients());
+        this.autocraftable = autocraftable;
     }
     @Override public boolean matches(CraftingContainer grid, Level level) {
         if (!super.matches(grid, level)) return false;
@@ -41,8 +45,8 @@ public final class ToolShapelessRecipe extends ShapelessRecipe {
     @Override public RecipeSerializer<?> getSerializer() { return SERIALIZER; }
     public static final RecipeSerializer<ToolShapelessRecipe> SERIALIZER=new RecipeSerializer<>() {
         private final ShapelessRecipe.Serializer vanilla=new ShapelessRecipe.Serializer();
-        @Override public ToolShapelessRecipe fromJson(ResourceLocation id,JsonObject json) { return new ToolShapelessRecipe(vanilla.fromJson(id,json)); }
-        @Override public ToolShapelessRecipe fromNetwork(ResourceLocation id,FriendlyByteBuf buffer) { return new ToolShapelessRecipe(vanilla.fromNetwork(id,buffer)); }
-        @Override public void toNetwork(FriendlyByteBuf buffer,ToolShapelessRecipe recipe) { vanilla.toNetwork(buffer,recipe); }
+        @Override public ToolShapelessRecipe fromJson(ResourceLocation id,JsonObject json) { return new ToolShapelessRecipe(vanilla.fromJson(id,json), !json.has("gregtech_autocraftable") || json.get("gregtech_autocraftable").getAsBoolean()); }
+        @Override public ToolShapelessRecipe fromNetwork(ResourceLocation id,FriendlyByteBuf buffer) { return new ToolShapelessRecipe(vanilla.fromNetwork(id,buffer), buffer.readBoolean()); }
+        @Override public void toNetwork(FriendlyByteBuf buffer,ToolShapelessRecipe recipe) { vanilla.toNetwork(buffer,recipe); buffer.writeBoolean(recipe.autocraftable); }
     };
 }

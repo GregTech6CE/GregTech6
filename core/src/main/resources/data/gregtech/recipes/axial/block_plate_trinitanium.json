@@ -13,5 +13,7 @@
   "result": {
     "item": "gregtech:block_plate_trinitanium",
     "count": 1
-  }
+  },
+  "gregtech_autocraftable": false,
+  "_autocrafting_source": "GT6 Loader_Recipes_Handlers:607 (disabled)"
 }

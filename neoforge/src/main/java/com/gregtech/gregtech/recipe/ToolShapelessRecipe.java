@@ -13,11 +13,15 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
 /** Original CR shapeless rows: ordinary GT tool container crafting wears and returns the tool. */
-public final class ToolShapelessRecipe extends ShapelessRecipe {
+public final class ToolShapelessRecipe extends ShapelessRecipe implements com.gregtech.gregtech.api.recipe.AutocraftableCraftingRecipe {
+    private final boolean autocraftable;
+    @Override public boolean isAutocraftableByGT() { return autocraftable; }
     private final ShapelessRecipe base;
-    public ToolShapelessRecipe(ShapelessRecipe base) {
+    public ToolShapelessRecipe(ShapelessRecipe base) { this(base, true); }
+    public ToolShapelessRecipe(ShapelessRecipe base, boolean autocraftable) {
         super(base.getGroup(),base.category(),base.getResultItem(net.minecraft.core.RegistryAccess.EMPTY),base.getIngredients());
         this.base=base;
+        this.autocraftable=autocraftable;
     }
     @Override public boolean matches(CraftingInput grid,Level level) {
         if (!base.matches(grid,level)) return false;
@@ -44,8 +48,10 @@ public final class ToolShapelessRecipe extends ShapelessRecipe {
     @Override public CraftingBookCategory category(){return base.category();}
     @Override public NonNullList<Ingredient> getIngredients(){return base.getIngredients();}
     @Override public RecipeSerializer<?> getSerializer(){return SERIALIZER;}
-    public static final MapCodec<ToolShapelessRecipe> CODEC=new ShapelessRecipe.Serializer().codec()
-            .xmap(ToolShapelessRecipe::new,recipe->recipe.base);
+    public static final MapCodec<ToolShapelessRecipe> CODEC=com.mojang.serialization.codecs.RecordCodecBuilder.mapCodec(instance -> instance.group(
+            new ShapelessRecipe.Serializer().codec().forGetter((ToolShapelessRecipe recipe) -> recipe.base),
+            com.mojang.serialization.Codec.BOOL.optionalFieldOf("gregtech_autocraftable", true).forGetter((ToolShapelessRecipe recipe) -> recipe.autocraftable)
+            ).apply(instance, ToolShapelessRecipe::new));
     public static final RecipeSerializer<ToolShapelessRecipe> SERIALIZER=new RecipeSerializer<>() {
         @Override public MapCodec<ToolShapelessRecipe> codec(){return CODEC;}
         @Override public StreamCodec<RegistryFriendlyByteBuf,ToolShapelessRecipe> streamCodec(){return ByteBufCodecs.fromCodecWithRegistries(CODEC.codec());}

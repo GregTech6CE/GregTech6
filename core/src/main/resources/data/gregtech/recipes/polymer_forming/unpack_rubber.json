@@ -8,5 +8,7 @@
   "result": {
     "item": "gregtech:nugget_rubber",
     "count": 9
-  }
+  },
+  "gregtech_autocraftable": false,
+  "_autocrafting_source": "GT6 Loader_Recipes_Handlers:560 (disabled)"
 }

@@ -12,7 +12,9 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
 /** Normal shaped crafting, with usable GT tools returned with the specified GT6 durability cost. */
-public class ToolShapedRecipe extends ShapedRecipe {
+public class ToolShapedRecipe extends ShapedRecipe implements com.gregtech.gregtech.api.recipe.AutocraftableCraftingRecipe {
+    private final boolean autocraftable;
+    @Override public boolean isAutocraftableByGT() { return autocraftable; }
     private final boolean allowMirror;
     private final boolean requireEmptyFluidContainers;
     public ToolShapedRecipe(ShapedRecipe base) { this(base,true); }
@@ -20,10 +22,14 @@ public class ToolShapedRecipe extends ShapedRecipe {
         this(base,allowMirror,false);
     }
     public ToolShapedRecipe(ShapedRecipe base, boolean allowMirror, boolean requireEmptyFluidContainers) {
+        this(base, allowMirror, requireEmptyFluidContainers, true);
+    }
+    public ToolShapedRecipe(ShapedRecipe base, boolean allowMirror, boolean requireEmptyFluidContainers, boolean autocraftable) {
         super(base.getId(),base.getGroup(),base.category(),base.getWidth(),base.getHeight(),base.getIngredients(),base.getResultItem(RegistryAccess.EMPTY));
         getIngredients().replaceAll(CraftingTools::expand);
         this.allowMirror=allowMirror;
         this.requireEmptyFluidContainers=requireEmptyFluidContainers;
+        this.autocraftable=autocraftable;
     }
     @Override public boolean matches(CraftingContainer inventory,Level level) {
         if(!(allowMirror?super.matches(inventory,level):matchesUnmirrored(inventory)))return false;
@@ -92,8 +98,8 @@ public class ToolShapedRecipe extends ShapedRecipe {
     public boolean allowMirror() { return allowMirror; }
     public static final RecipeSerializer<ToolShapedRecipe> SERIALIZER=new RecipeSerializer<>() {
         private final ShapedRecipe.Serializer vanilla=new ShapedRecipe.Serializer();
-        @Override public ToolShapedRecipe fromJson(ResourceLocation id,JsonObject json) { return new ToolShapedRecipe(vanilla.fromJson(id,json),!json.has("allow_mirror")||json.get("allow_mirror").getAsBoolean(),json.has("require_empty_fluid_containers")&&json.get("require_empty_fluid_containers").getAsBoolean()); }
-        @Override public ToolShapedRecipe fromNetwork(ResourceLocation id,FriendlyByteBuf buffer) { return new ToolShapedRecipe(vanilla.fromNetwork(id,buffer),buffer.readBoolean(),buffer.readBoolean()); }
-        @Override public void toNetwork(FriendlyByteBuf buffer,ToolShapedRecipe recipe) { vanilla.toNetwork(buffer,recipe); buffer.writeBoolean(recipe.allowMirror); buffer.writeBoolean(recipe.requireEmptyFluidContainers); }
+        @Override public ToolShapedRecipe fromJson(ResourceLocation id,JsonObject json) { return new ToolShapedRecipe(vanilla.fromJson(id,json),!json.has("allow_mirror")||json.get("allow_mirror").getAsBoolean(),json.has("require_empty_fluid_containers")&&json.get("require_empty_fluid_containers").getAsBoolean(),!json.has("gregtech_autocraftable")||json.get("gregtech_autocraftable").getAsBoolean()); }
+        @Override public ToolShapedRecipe fromNetwork(ResourceLocation id,FriendlyByteBuf buffer) { return new ToolShapedRecipe(vanilla.fromNetwork(id,buffer),buffer.readBoolean(),buffer.readBoolean(),buffer.readBoolean()); }
+        @Override public void toNetwork(FriendlyByteBuf buffer,ToolShapedRecipe recipe) { vanilla.toNetwork(buffer,recipe); buffer.writeBoolean(recipe.allowMirror); buffer.writeBoolean(recipe.requireEmptyFluidContainers); buffer.writeBoolean(recipe.autocraftable); }
     };
 }

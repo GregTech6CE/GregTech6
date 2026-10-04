@@ -34,7 +34,12 @@ public final class AutocraftingRecipes {
         final Map<ResourceLocation,Boolean> permissions = new HashMap<>();
         Cache(List<CraftingRecipe> recipes) {
             anchor = recipes.isEmpty() ? null : recipes.get(0);
-            allowed = new ArrayList<>(recipes);
+            allowed = new ArrayList<>();
+            for (var holder : recipes) {
+                var recipe = holder;
+                if (!(recipe instanceof AutocraftableCraftingRecipe gt) || gt.isAutocraftableByGT())
+                    allowed.add(holder);
+            }
         }
     }
     private static final Map<RecipeManager,Cache> CACHES = new WeakHashMap<>();
@@ -71,8 +76,10 @@ public final class AutocraftingRecipes {
         return false;
     }
 
-    private static boolean permitted(Level level, Cache cache, ResourceLocation id, CraftingRecipe recipe) {
+    private static boolean permitted(Level level, Cache cache, ResourceLocation id, CraftingRecipe recipe, ItemStack[] pattern) {
         if (recipe instanceof AutocraftableCraftingRecipe gt && !gt.isAutocraftableByGT()) return false;
+        if (!(recipe instanceof AutocraftableCraftingRecipe)
+                && com.gregtech.gregtech.loaders.Loader_FormConversionCraftingRecipes.disallowsPlainPlan(pattern)) return false;
         return cache.permissions.computeIfAbsent(id, unused -> {
             if (level.getServer() == null) return true;
             var location = new ResourceLocation(id.getNamespace(), "recipes/" + id.getPath() + ".json");
@@ -112,13 +119,14 @@ public final class AutocraftingRecipes {
         CraftingRecipe chosen = null;
         for (var holder : cache.recent) {
             var candidate = holder;
-            if (candidate.matches(grid, level)) { chosen = candidate; break; }
+            if (candidate.matches(grid, level)
+                    && permitted(level, cache, candidate.getId(), candidate, pattern)) { chosen = candidate; break; }
         }
         if (chosen == null) for (int i = 0; i < cache.allowed.size(); i++) {
             var holder = cache.allowed.get(i);
             var candidate = holder;
             if (!candidate.matches(grid, level)
-                    || !permitted(level, cache, candidate.getId(), candidate)) continue;
+                    || !permitted(level, cache, candidate.getId(), candidate, pattern)) continue;
             chosen = candidate;
             cache.recent.add(holder);
             cache.allowed.remove(i);

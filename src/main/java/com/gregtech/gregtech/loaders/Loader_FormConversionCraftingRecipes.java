@@ -115,6 +115,20 @@ public final class Loader_FormConversionCraftingRecipes {
             "wire size conversions (:624-625): registered per wire size instead, see registerWireSizes()");
 
     private static final List<String> REGISTERED = new ArrayList<>();
+    private static volatile com.gregtech.gregtech.content.recipe.CraftingConversionPermissions<net.minecraft.world.item.Item> nativePermissions =
+            new com.gregtech.gregtech.content.recipe.CraftingConversionPermissions.Builder<net.minecraft.world.item.Item>().build();
+    private static com.gregtech.gregtech.content.recipe.CraftingConversionPermissions.Builder<net.minecraft.world.item.Item> pendingPermissions;
+
+    /** Original constructors replace plain recipes for the same material/form and occupied-cell count. */
+    public static boolean disallowsPlainPlan(ItemStack[] pattern) {
+        var cells = new ArrayList<net.minecraft.world.item.Item>();
+        for (var cell : pattern) if (!cell.isEmpty()) cells.add(cell.getItem());
+        return nativePermissions.disallows(cells);
+    }
+    private static void captureInput(ItemStack input, int cells) {
+        pendingPermissions.add(input.getItem(), MaterialUnification.canonical(input.copy()).getItem(), cells);
+    }
+
 
     private Loader_FormConversionCraftingRecipes() {}
 
@@ -123,9 +137,10 @@ public final class Loader_FormConversionCraftingRecipes {
 
     public static List<String> skipped() { return SKIPPED; }
 
-    public static void apply(RecipeManager manager, net.minecraft.core.RegistryAccess access) {
+    public static synchronized void apply(RecipeManager manager, net.minecraft.core.RegistryAccess access) {
         List<Recipe<?>> recipes = new ArrayList<>(manager.getRecipes());
         REGISTERED.clear();
+        pendingPermissions = new com.gregtech.gregtech.content.recipe.CraftingConversionPermissions.Builder<>();
 
         for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
             if (material.has(MaterialProperty.ANTIMATTER)) continue; // GT6 gates these on ANTIMATTER.NOT
@@ -147,6 +162,8 @@ public final class Loader_FormConversionCraftingRecipes {
 
         int wireSizes = registerWireSizes(recipes);
         int pipeSizes = registerPipeSizes(recipes);
+        nativePermissions = pendingPermissions.build();
+        pendingPermissions = null;
         if (!REGISTERED.isEmpty() || wireSizes > 0 || pipeSizes > 0) com.gregtech.gregtech.recipe.RuntimeRecipeLifecycle.replaceGenerated(manager, recipes);
         GregTech.LOGGER.info("Registered {} crafting-grid material form conversions from GT6"
                 + " AdvancedCraftingXToY/1ToY ({} GT6 pairs skipped: {})",
@@ -170,8 +187,8 @@ public final class Loader_FormConversionCraftingRecipes {
 
     /**
      * GT6 {@code Loader_Recipes_Handlers:619-626}: for every size pair {@code big % small == 0} with
-     * {@code big/small < 10}, the crafting grid converts between wire sizes — {@code tAmount} small
-     * wires into one big wire and one big wire back into {@code tAmount} small ones (the machine
+     * divisible sizes, the crafting grid combines fewer than ten small wires into one big wire
+     * and splits one big wire into all {@code tAmount} small ones (the machine
      * variants run on the Loom and the Unboxinator). The port's wires are blocks, not material-prefix
      * items, so these rows are built from the wire registry instead of the prefix tables.
      */
@@ -194,8 +211,8 @@ public final class Loader_FormConversionCraftingRecipes {
                     var smallItem = sizes.get(small);
                     if (smallItem == null || big % small != 0) continue;
                     int amount = big / small;
-                    if (amount >= 10) continue;                       // GT6: only when tAmount < 10
-                    added += recipe(recipes, new ItemStack(smallItem, amount), new ItemStack(bigItem),
+                    // The source guards only XToY; the reverse 1ToY also allows 10..16 outputs.
+                    if (amount < 10) added += recipe(recipes, new ItemStack(smallItem, amount), new ItemStack(bigItem),
                             "wire_sizes/" + sanitize(family.getKey()) + "_" + small + "_to_" + big);
                     added += recipe(recipes, new ItemStack(bigItem), new ItemStack(smallItem, amount),
                             "wire_sizes/" + sanitize(family.getKey()) + "_" + big + "_to_" + small);
@@ -241,13 +258,19 @@ public final class Loader_FormConversionCraftingRecipes {
         if (big == null || small == null) return 0;
         return recipe(recipes, new ItemStack(big), new ItemStack(small, count),
                 "pipe_sizes/" + sanitize(family.getKey()) + "_" + from.name().toLowerCase() + "_to_" + count
-                        + "x_" + to.name().toLowerCase());
+                        + "x_" + to.name().toLowerCase(), true);
     }
 
-    private static int recipe(List<Recipe<?>> recipes, ItemStack input, ItemStack output, String path) {        NonNullList<Ingredient> ingredients = NonNullList.withSize(input.getCount(), Ingredient.of(input));
+    private static int recipe(List<Recipe<?>> recipes, ItemStack input, ItemStack output, String path) {
+        return recipe(recipes, input, output, path, false);
+    }
+
+    private static int recipe(List<Recipe<?>> recipes, ItemStack input, ItemStack output, String path, boolean autocraftable) {
+        NonNullList<Ingredient> ingredients = NonNullList.withSize(input.getCount(), Ingredient.of(input));
+        if (!autocraftable) captureInput(input, input.getCount());
         ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, path);
-        recipes.add(new ShapelessRecipe(id, "gt.wire_sizes", CraftingBookCategory.MISC,
-                MaterialUnification.canonical(output.copy()), ingredients));
+        recipes.add(new com.gregtech.gregtech.recipe.ToolShapelessRecipe(new ShapelessRecipe(id, "gt.wire_sizes", CraftingBookCategory.MISC,
+                MaterialUnification.canonical(output.copy()), ingredients), autocraftable));
         REGISTERED.add(id.toString());
         return 1;
     }
@@ -257,10 +280,13 @@ public final class Loader_FormConversionCraftingRecipes {
         NonNullList<Ingredient> ingredients = NonNullList.withSize(conversion.inputCount(),
                 formIngredient(input));
         ItemStack result = MaterialUnification.canonical(output.copy());
+        captureInput(input, conversion.inputCount());
         ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE,
                 "form_conversion/" + sanitize(conversion.input()) + "_to_" + sanitize(conversion.output()) + "/"
                         + sanitize(material.getName()) + "_" + conversion.inputCount());
-        recipes.add(new ShapelessRecipe(id, "gt.form_conversion", CraftingBookCategory.MISC, result, ingredients));
+        // Loader_Recipes_Handlers:552-625 passes F to both conversion classes.
+        recipes.add(new com.gregtech.gregtech.recipe.ToolShapelessRecipe(
+                new ShapelessRecipe(id, "gt.form_conversion", CraftingBookCategory.MISC, result, ingredients), false));
         REGISTERED.add(id.toString());
     }
 

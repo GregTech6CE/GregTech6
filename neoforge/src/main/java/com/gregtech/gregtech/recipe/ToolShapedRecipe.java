@@ -9,11 +9,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 /** Original mirror policy and GT tool wear, using native shaped recipe/component codecs. */
-public class ToolShapedRecipe implements CraftingRecipe {
+public class ToolShapedRecipe implements CraftingRecipe, com.gregtech.gregtech.api.recipe.AutocraftableCraftingRecipe {
+ private final boolean autocraftable;
+ @Override public boolean isAutocraftableByGT(){return autocraftable;}
  private final ShapedRecipe base;
  private final boolean allowMirror,requireEmptyFluidContainers;
  public ToolShapedRecipe(ShapedRecipe base,boolean allowMirror){this(base,allowMirror,false);}
- public ToolShapedRecipe(ShapedRecipe base,boolean allowMirror,boolean requireEmptyFluidContainers){base.getIngredients().replaceAll(CraftingTools::expand);this.base=base;this.allowMirror=allowMirror;this.requireEmptyFluidContainers=requireEmptyFluidContainers;}
+ public ToolShapedRecipe(ShapedRecipe base,boolean allowMirror,boolean requireEmptyFluidContainers){this(base,allowMirror,requireEmptyFluidContainers,true);}
+ public ToolShapedRecipe(ShapedRecipe base,boolean allowMirror,boolean requireEmptyFluidContainers,boolean autocraftable){this.autocraftable=autocraftable;base.getIngredients().replaceAll(CraftingTools::expand);this.base=base;this.allowMirror=allowMirror;this.requireEmptyFluidContainers=requireEmptyFluidContainers;}
  @Override public boolean matches(CraftingInput input,Level level){
   if(!(allowMirror?base.matches(input,level):matchesUnmirrored(input)))return false;
   return toolsUsable(input);
@@ -76,7 +79,8 @@ public class ToolShapedRecipe implements CraftingRecipe {
  public static final MapCodec<ToolShapedRecipe> CODEC=RecordCodecBuilder.mapCodec(instance->instance.group(
   new ShapedRecipe.Serializer().codec().forGetter((ToolShapedRecipe recipe)->recipe.base),
   Codec.BOOL.optionalFieldOf("allow_mirror",true).forGetter((ToolShapedRecipe recipe)->recipe.allowMirror),
-  Codec.BOOL.optionalFieldOf("require_empty_fluid_containers",false).forGetter((ToolShapedRecipe recipe)->recipe.requireEmptyFluidContainers)
+  Codec.BOOL.optionalFieldOf("require_empty_fluid_containers",false).forGetter((ToolShapedRecipe recipe)->recipe.requireEmptyFluidContainers),
+  Codec.BOOL.optionalFieldOf("gregtech_autocraftable",true).forGetter((ToolShapedRecipe recipe)->recipe.autocraftable)
  ).apply(instance,ToolShapedRecipe::new));
  public static final RecipeSerializer<ToolShapedRecipe> SERIALIZER=new RecipeSerializer<>(){
   public MapCodec<ToolShapedRecipe> codec(){return CODEC;}

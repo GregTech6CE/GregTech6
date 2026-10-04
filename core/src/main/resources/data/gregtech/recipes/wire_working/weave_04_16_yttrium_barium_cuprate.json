@@ -17,5 +17,7 @@
   "result": {
     "item": "gregtech:wire_16_yttrium_barium_cuprate",
     "count": 1
-  }
+  },
+  "gregtech_autocraftable": false,
+  "_autocrafting_source": "GT6 Loader_Recipes_Handlers:624 (disabled)"
 }

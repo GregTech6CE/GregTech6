@@ -22,7 +22,19 @@ public final class OriginalCraftingJson {
     }
     public static void shapeless(Map<ResourceLocation, byte[]> data, ResourceLocation id, String group,
                                  CraftingBookCategory category, ItemStack output, List<Ingredient> ingredients) {
-        var json = recipe("minecraft:crafting_shapeless", group, category, output); var values = new JsonArray();
+        shapeless(data, id, group, category, output, ingredients, true, false);
+    }
+    /** Source AdvancedCrafting1ToY/XToY permissions survive the reloadable data boundary. */
+    public static void shapeless(Map<ResourceLocation, byte[]> data, ResourceLocation id, String group,
+                                 CraftingBookCategory category, ItemStack output, List<Ingredient> ingredients,
+                                 boolean autocraftable) {
+        shapeless(data, id, group, category, output, ingredients, autocraftable, true);
+    }
+    private static void shapeless(Map<ResourceLocation, byte[]> data, ResourceLocation id, String group,
+                                 CraftingBookCategory category, ItemStack output, List<Ingredient> ingredients,
+                                 boolean autocraftable, boolean sourcePermission) {
+        var json = recipe(sourcePermission ? "gregtech:tool_shapeless" : "minecraft:crafting_shapeless", group, category, output); var values = new JsonArray();
+        if (sourcePermission) json.addProperty("gregtech_autocraftable", autocraftable);
         for (var ingredient : ingredients) values.add(Ingredient.CODEC.encodeStart(JsonOps.INSTANCE, ingredient).getOrThrow());
         json.add("ingredients", values); put(data, id, json);
     }

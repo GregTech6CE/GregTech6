@@ -20,5 +20,7 @@
   "result": {
     "item": "gregtech:wire_15_electrotine_alloy",
     "count": 1
-  }
+  },
+  "gregtech_autocraftable": false,
+  "_autocrafting_source": "GT6 Loader_Recipes_Handlers:624 (disabled)"
 }

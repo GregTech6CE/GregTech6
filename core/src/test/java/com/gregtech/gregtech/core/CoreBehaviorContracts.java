@@ -40,8 +40,38 @@ public final class CoreBehaviorContracts {
         bedrockAndBoilerSourceSamples();
         scannerEnergySourceSamples();
         autocraftingSourceSamples();
+        conversionPermissionSourceSamples();
         assertions += OriginWorldgenSamples.verify();
-        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 19 groups (Java 17; no game dependencies)");
+        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 20 groups (Java 17; no game dependencies)");
+    }
+
+    private static void conversionPermissionSourceSamples() {
+        // Loader_Recipes_Handlers:560,570,599: occupied cells, one material, canonical aliases.
+        Object iron = new Object(), canonicalIron = new Object(), copper = new Object(), nuggets = new Object();
+        Object wire = new Object(), pipe = new Object();
+        var builder = new com.gregtech.gregtech.content.recipe.CraftingConversionPermissions.Builder<Object>();
+        builder.add(iron, canonicalIron, 1); builder.add(iron, canonicalIron, 9);
+        builder.add(copper, null, 9); builder.add(nuggets, null, 9); builder.add(wire, null, 1);
+        var rules = builder.build();
+        check(rules.disallows(java.util.Collections.nCopies(9, iron)), "source forbids nine ingots to block");
+        check(rules.disallows(java.util.Collections.nCopies(9, canonicalIron)), "vanilla canonical ingots cannot bypass conversion permission");
+        check(rules.disallows(List.of(iron, canonicalIron, iron, canonicalIron, iron, canonicalIron, iron, canonicalIron, iron)), "same-material canonical aliases remain one input form");
+        check(!rules.disallows(List.of(iron, iron, iron, iron, iron, iron, iron, iron, copper)), "different materials do not match one source conversion");
+        check(rules.disallows(List.of(canonicalIron)), "single ingot split is also forbidden");
+        check(!rules.disallows(java.util.Collections.nCopies(4, iron)), "unregistered source count does not inherit a nine-cell restriction");
+        check(rules.disallows(java.util.Collections.nCopies(9, nuggets)), "nine nuggets convert with source F permission");
+        check(!rules.disallows(java.util.Collections.nCopies(4, nuggets)), "four nuggets are not the source nine-nugget row");
+        check(rules.disallows(List.of(wire)), "wire splitting has source F permission");
+        check(!rules.disallows(List.of(pipe)), "CR.DEF_NCC pipe disassembly remains allowed");
+        check(!rules.disallows(List.of()), "empty blueprint has no conversion");
+        check(!rules.disallows(java.util.Collections.nCopies(10, iron)), "ten occupied cells exceed the crafting grid");
+        builder.add(nuggets, null, 4);
+        check(!rules.disallows(java.util.Collections.nCopies(4, nuggets)), "published reload snapshot stays immutable");
+        check(builder.build().disallows(java.util.Collections.nCopies(4, nuggets)), "replacement snapshot contains newly bound count");
+        var identities = new com.gregtech.gregtech.content.recipe.CraftingConversionPermissions.Builder<String>();
+        String a = new String("same name"), b = new String("same name");
+        identities.add(a, null, 9); identities.add(b, null, 9);
+        check(!identities.build().disallows(List.of(a,a,a,a,a,a,a,a,b)), "equal labels do not merge distinct registered item identities");
     }
 
     private static void autocraftingSourceSamples() {

@@ -8,5 +8,7 @@
   "result": {
     "item": "gregtech:wire_01_silver",
     "count": 10
-  }
+  },
+  "gregtech_autocraftable": false,
+  "_autocrafting_source": "GT6 Loader_Recipes_Handlers:625 (disabled)"
 }
