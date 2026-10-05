@@ -266,6 +266,9 @@ public final class MaterialTagPack extends AbstractPackResources {
         target.computeIfAbsent(MaterialEquivalence.materialName(material),k->new TreeSet<>()).add(value);
     }
     private static void add(Map<String,Set<String>> tags,String ns,String kind,String path,String value) {
+        // 1.21 registries use singular resource directories. Historical callers still
+        // supply plural Forge names; normalize before both leaf and parent creation.
+        kind = switch (kind) { case "items" -> "item"; case "blocks" -> "block"; default -> kind; };
         tags.computeIfAbsent(ns+":tags/"+kind+"/"+path+".json",k->new TreeSet<>()).add(value);
         int slash=path.indexOf('/');
         if(slash>0) tags.computeIfAbsent(ns+":tags/"+kind+"/"+path.substring(0,slash)+".json",k->new TreeSet<>()).add("#"+ns+":"+path);
