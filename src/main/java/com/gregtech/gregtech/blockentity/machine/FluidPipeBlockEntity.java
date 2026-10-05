@@ -609,26 +609,32 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
         }
     }
 
-    /** Dump fluids to adjacent tanks when pipe is broken (Factorio-style). */
+    /**
+     * Original MultiTileEntityPipeFluid.breakBlock: try each connected face while its covers
+     * still exist, count only delivered fluid, then discard the residual contents.
+     */
     public void dumpFluidsToAdjacent() {
         if (level == null || level.isClientSide) return;
+        for (Direction side : Direction.values()) {
+            if (!connected(side)
+                    || !com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsFluid(getCover(side), false)
+                    || !level.hasChunkAt(worldPosition.relative(side))) continue;
+            BlockEntity be = level.getBlockEntity(worldPosition.relative(side));
+            if (be == null) continue;
+            IFluidHandler target = be.getCapability(ForgeCapabilities.FLUID_HANDLER, side.getOpposite()).orElse(null);
+            if (target == null) continue;
+            for (FluidTankGT tank : tanks) {
+                if (tank.isEmpty() || !coverFluidFilterPermits(side, tank.getFluid())) continue;
+                FluidStack offered = tank.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.SIMULATE);
+                int filled = target.fill(offered, IFluidHandler.FluidAction.EXECUTE);
+                transferredAmount += tank.remove(filled);
+            }
+        }
+        // Original GarbageGT.trash(mTanks): residual fluid goes to the existing server-wide dump.
         for (FluidTankGT tank : tanks) {
             if (tank.isEmpty()) continue;
-            for (Direction side : Direction.values()) {
-                if (tank.isEmpty()) break;
-                if (!connected(side) || !coverFluidFilterPermits(side, tank.getFluid())
-                        || !level.hasChunkAt(worldPosition.relative(side))) continue;
-                BlockEntity be = level.getBlockEntity(worldPosition.relative(side));
-                if (be == null) continue;
-                LazyOptional<IFluidHandler> cap = be.getCapability(ForgeCapabilities.FLUID_HANDLER, side.getOpposite());
-                if (!cap.isPresent()) continue;
-                IFluidHandler target = cap.orElse(null);
-                if (target == null) continue;
-                FluidStack toSend = tank.getFluid();
-                if (toSend.isEmpty()) break;
-                int filled = target.fill(toSend, IFluidHandler.FluidAction.EXECUTE);
-                if (filled > 0) tank.drain(filled, IFluidHandler.FluidAction.EXECUTE);
-            }
+            com.gregtech.gregtech.world.GarbageData.get(level).trash(tank.getFluid());
+            tank.setEmpty();
         }
     }
 

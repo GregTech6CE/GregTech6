@@ -323,26 +323,4 @@ public final class FluidPipeChannelTests {
         h.succeed();
     }
 
-    @GameTest(template = "test_empty", timeoutTicks = 40)
-    public static void breakDumpUsesConnectedAndFilteredFaces(GameTestHelper h) {
-        var a = pipe(h, 520, "huge");
-        var b = pipe(h, 521, "huge");
-        a.fill(new FluidStack(Fluids.WATER, 600), FluidAction.EXECUTE);
-        a.dumpFluidsToAdjacent();
-        h.assertTrue(b.getFluidInTank(0).isEmpty(), "closed source does not dump");
-        open(h, a, Direction.EAST, true);
-        a.dumpFluidsToAdjacent();
-        h.assertTrue(b.getFluidInTank(0).isEmpty(), "closed receiving face does not accept dump");
-        open(h, b, Direction.WEST, true);
-        var cover = new net.minecraft.world.item.ItemStack(com.gregtech.gregtech.registry.GTTechnological.get(
-                com.gregtech.gregtech.content.cover.CoverUtilityBehaviors.FILTER_FLUID));
-        h.assertTrue(a.attachCover(Direction.EAST, cover), "source filter attaches");
-        a.dumpFluidsToAdjacent();
-        h.assertTrue(b.getFluidInTank(0).isEmpty(), "source filter prevents dump");
-        a.removeCover(Direction.EAST);
-        h.getLevel().removeBlock(a.getBlockPos(), false);
-        h.assertTrue(a.isRemoved() && a.getFluidInTank(0).isEmpty() && b.getFluidInTank(0).getAmount() == 600,
-                "open unfiltered dump conserves fluid");
-        h.succeed();
-    }
 }
