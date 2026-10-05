@@ -74,10 +74,21 @@ public class BushBlock extends Block implements EntityBlock {
         registerDefaultState(stateDefinition.any().setValue(STAGE, 0).setValue(SUPPORT, 6));
     }
 
+    @Override public net.minecraft.network.chat.MutableComponent getName() {
+        if (!berryId.startsWith("gregtech:plant_gt_berry_")) return super.getName();
+        var berry=net.minecraft.core.registries.BuiltInRegistries.ITEM.get(GTBerryBushes.itemId(berryId));
+        return net.minecraft.network.chat.Component.translatable("block.gregtech.material_bush",new ItemStack(berry).getHoverName());
+    }
+
     public String berryId() { return berryId; }
     public int tintColour(int tint, int stage) {
         var type=GTBerryBushes.byId(berryId);
         return tint==0 ? type==null?GTBerryBushes.NO_BERRY_COLOUR:type.bush() : GTBerryBushes.stageColour(type,stage);
+    }
+
+    public int inventoryColour(int tint) {
+        var type=GTBerryBushes.byId(berryId);
+        return tint==0 ? type==null?GTBerryBushes.NO_BERRY_COLOUR:type.bush() : GTBerryBushes.inventoryColour(type);
     }
 
     @Override

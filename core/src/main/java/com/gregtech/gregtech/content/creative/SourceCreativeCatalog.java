@@ -2582,5 +2582,5 @@ ITEMS.put("worldgen_debug_wand",new Entry("equipment",114));
 ITEMS.put("yellow_clay",new Entry("nature_foods",476));
 ITEMS.put("zpm",new Entry("zpm",546));
 }
-public static Entry entry(String id){return ITEMS.get(id);}
+public static Entry entry(String id){return ITEMS.get(id.startsWith("bush_plant_gt_berry_")?"bush":id);}
 }

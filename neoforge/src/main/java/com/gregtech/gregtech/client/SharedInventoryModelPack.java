@@ -99,6 +99,17 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
                     MaterialIconDefinitions.sharedInventoryJson(key.toString()).getBytes(StandardCharsets.UTF_8));
             result.put(location("models/item/" + id.getPath() + ".json"), json);
         }
+        // Material bushes share the existing 28 geometries; resource packs can override each identity.
+        byte[] bushStates=com.gregtech.gregtech.content.plant.MaterialBerryBushCatalog.blockstateJson().getBytes(StandardCharsets.UTF_8);
+        byte[] bushItem=MaterialIconDefinitions.sharedInventoryJson("gregtech:block/plants/bush_stage3").getBytes(StandardCharsets.UTF_8);
+        for(var block:com.gregtech.gregtech.registry.GTBushes.allBlocks()) {
+            if(!((com.gregtech.gregtech.block.plant.BushBlock)block).berryId().startsWith("gregtech:plant_gt_berry_"))continue;
+            var id=BuiltInRegistries.BLOCK.getKey(block);
+            if(SharedInventoryModelPack.class.getResource("/assets/gregtech/blockstates/"+id.getPath()+".json")==null)
+                result.put(location("blockstates/"+id.getPath()+".json"),bushStates);
+            if(SharedInventoryModelPack.class.getResource("/assets/gregtech/models/item/"+id.getPath()+".json")==null)
+                result.put(location("models/item/"+id.getPath()+".json"),bushItem);
+        }
         // Registration gained material forms after the original static data generation.
         // Supply only absent states, using the same real template as the existing alias hook.
         int states = 0;

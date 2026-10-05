@@ -19,10 +19,19 @@ final class SurfaceDeliveryChecks {
   for(var berry:BerryBushCatalog.worldgenTypes()) {
    var block=GTBushes.byBerry(berry.id());var stack=new ItemStack(block);stacks.add(stack);
    int color=minecraft.getItemColors().getColor(stack,1);
-   require((color&0xffffff)==berry.berry(),"berry tint "+berry.id());
+   require((color&0xffffff)==BerryBushCatalog.inventoryColour(berry),"berry tint "+berry.id());
    for(int stage=0;stage<4;stage++)require((minecraft.getBlockColors().getColor(block.defaultBlockState().setValue(com.gregtech.gregtech.block.plant.BushBlock.STAGE,stage),null,null,1)&0xffffff)==BerryBushCatalog.stageColour(berry,stage),"berry stage "+berry.id());
    checkMesh(minecraft,stack,null);
   }
+  int materialBushes=0;
+  for(var variant:com.gregtech.gregtech.content.plant.MaterialBerryBushCatalog.variants()) {
+   var block=GTBushes.byBerry(variant.berryItemId());var stack=new ItemStack(block);
+   require(block!=null&&BuiltInRegistries.BLOCK.getKey(block).getPath().equals(variant.blockPath()),"material bush block identity");
+   require((minecraft.getItemColors().getColor(stack,0)&0xffffff)==0x009000&&(minecraft.getItemColors().getColor(stack,1)&0xffffff)==variant.colour(),"material bush inventory RGB");
+   String name=stack.getHoverName().getString();require(!name.contains("block.gregtech.")&&!name.contains("item.gregtech.")&&name.equals(block.getName().getString()),"material bush localized world/item name");
+   checkMesh(minecraft,stack,null);materialBushes++;
+  }
+  require(materialBushes==1034,"complete material berry bush registry");
   for(var spring:FluidSpringRules.SPRINGS) {
    var block=GTFluidSprings.byFluid(spring.fluidId());var stack=new ItemStack(block);stacks.add(stack);
    var fluid=BuiltInRegistries.FLUID.get(ResourceLocation.parse(spring.fluidId()));
@@ -50,7 +59,7 @@ final class SurfaceDeliveryChecks {
    int x=8+i*65,y=110;graphics.fill(x,y,x+62,y+33,0xff30303d);graphics.renderItem(stack,x+22,y+2);graphics.drawString(minecraft.font,minecraft.font.plainSubstrByWidth(stack.getHoverName().getString(),60),x+1,y+21,0xffffff,false);machineIds.add(machineNames[i]);
   }
   graphics.pose().popPose();
-  var result=new JsonObject();result.add("surfaceItems",identities);result.add("machineItems",machineIds);result.addProperty("machineModelsChecked",6);result.addProperty("surfaceItemModelsChecked",stacks.size());result.addProperty("surfaceSpringSpritesChecked",sprites);result.addProperty("surfaceBerryStageColorsChecked",36);return result;
+  var result=new JsonObject();result.addProperty("materialBushInventoryModelsColorsNamesChecked",materialBushes);result.add("surfaceItems",identities);result.add("machineItems",machineIds);result.addProperty("machineModelsChecked",6);result.addProperty("surfaceItemModelsChecked",stacks.size());result.addProperty("surfaceSpringSpritesChecked",sprites);result.addProperty("surfaceBerryStageColorsChecked",36);return result;
  }
  private static void checkMesh(Minecraft minecraft,ItemStack stack,ResourceLocation sprite){
   var model=minecraft.getItemRenderer().getModel(stack,null,null,0);int count=0,tints=0;boolean matched=sprite==null;

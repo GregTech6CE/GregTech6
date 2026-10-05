@@ -116,6 +116,7 @@ public final class MaterialBehaviorContracts {
         }
         assertions += SourceWoodFixtures.validate();
         assertions += AmmunitionSourceSamples.verify();
+        validateMaterialBerryBushes();
         validateIdentityGraph();
         validateMetadata();
         check(com.gregtech.gregtech.content.tool.OriginalToolMaterials.inFamily(GTMaterialRegistry.get("Knightmetal"), "Steel"), "ANY.Steel accepts Knightmetal screws and rings");
@@ -128,6 +129,23 @@ public final class MaterialBehaviorContracts {
         System.out.println("Material behavior contracts passed: " + assertions
                 + " assertions; 1160 materials, 1105 positive IDs, 1523 name entries, 122 prefixes, "
                 + CrucibleReactions.allRecipes().size() + " reactions");
+    }
+
+    private static void validateMaterialBerryBushes() {
+        var variants=com.gregtech.gregtech.content.plant.MaterialBerryBushCatalog.variants();
+        check(com.gregtech.gregtech.content.creative.SourceCreativeCatalog.entry("bush_plant_gt_berry_copper").equals(com.gregtech.gregtech.content.creative.SourceCreativeCatalog.entry("bush")), "material bush variants retain the original bush creative category and order");
+        check(variants.size()==1034, "all existing plantGtBerry definitions acquire a bush identity");
+        check(variants.stream().map(v->v.blockPath()).distinct().count()==variants.size(), "material bushes have no duplicate identities");
+        var copper=com.gregtech.gregtech.content.plant.MaterialBerryBushCatalog.colours("gregtech:plant_gt_berry_copper",GTMaterialRegistry.get("Copper").getColor());
+        check(copper.bush()==0x009000 && copper.bloom()==0xff9090 && copper.immature()==0x80ff80 && copper.berry()==0xff825a,
+                "original MultiTileEntityBush material branch, including MT Copper solid RGB");
+        check(com.gregtech.gregtech.content.plant.BerryBushCatalog.inventoryColour(copper)==0xff825a,"source material inventory shows solid RGB");
+        check(com.gregtech.gregtech.content.plant.BerryBushCatalog.inventoryColour(com.gregtech.gregtech.content.plant.BerryBushCatalog.byId("blueberry"))==0x6666dd,
+                "source food bush inventory shows immature color rather than ripe blue");
+        check(com.gregtech.gregtech.content.plant.BerryBushCatalog.inventoryColour(com.gregtech.gregtech.content.plant.BerryBushCatalog.DEFAULT)==0x44cc44,
+                "source cotton bush inventory also shows immature color");
+        check(com.gregtech.gregtech.content.plant.BerryBushCatalog.worldgenSize()==9,
+                "material plants do not expand the source food/cotton world-generation pool");
     }
 
     private static void validateIdentityGraph() throws Exception {

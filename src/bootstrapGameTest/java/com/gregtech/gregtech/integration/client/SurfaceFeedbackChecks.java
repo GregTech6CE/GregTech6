@@ -27,7 +27,7 @@ public final class SurfaceFeedbackChecks {
   var actor=net.minecraftforge.common.util.FakePlayerFactory.get(level,new com.mojang.authlib.GameProfile(UUID.fromString("44f94c84-852b-4aa0-8aa5-1d04e4e17269"),"SurfaceCheckpoint"));
   actor.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);actor.moveTo(200.5,210,202.5);actor.getInventory().clearContent();
   var bushes=new JsonArray();var springs=new JsonArray();int attachments=0;
-  require(GTBushes.allBlocks().length==10&&GTFluidSprings.allBlocks().length==8,"native variant registry counts");
+  require(GTBushes.allBlocks().length==10+com.gregtech.gregtech.content.plant.MaterialBerryBushCatalog.variants().size()&&GTFluidSprings.allBlocks().length==8,"native variant registry counts");
   var certificate=ResourceLocation.fromNamespaceAndPath("gregtech","supporter_certificate");
   require(!BuiltInRegistries.BLOCK.containsKey(certificate)&&!BuiltInRegistries.ITEM.containsKey(certificate),"certificate remains registered");
   require(!BuiltInRegistries.BLOCK_ENTITY_TYPE.containsKey(certificate),"certificate BE remains registered");
@@ -94,7 +94,7 @@ public final class SurfaceFeedbackChecks {
   int models=0;var colors=new JsonObject();
   for(var berry:BerryBushCatalog.worldgenTypes()) {
    var block=GTBushes.byBerry(berry.id());var stack=new ItemStack(block);OriginFeedbackChecks.checkModel(minecraft,stack,true);
-   int tint=minecraft.getItemColors().getColor(stack,1);require((tint&0xffffff)==berry.berry(),"native bush inventory color");
+   int tint=minecraft.getItemColors().getColor(stack,1);require((tint&0xffffff)==BerryBushCatalog.inventoryColour(berry),"native bush inventory color");
    for(int stage=0;stage<=3;stage++) {var state=block.defaultBlockState().setValue(BushBlock.STAGE,stage);int world=minecraft.getBlockColors().getColor(state,minecraft.level,null,1);require((world&0xffffff)==BerryBushCatalog.stageColour(berry,stage),"native stage color without BE");}
    require(!stack.getHoverName().getString().startsWith("block.gregtech."),"untranslated bush variant");models++;colors.addProperty(BuiltInRegistries.BLOCK.getKey(block).getPath(),Integer.toHexString(tint));
   }

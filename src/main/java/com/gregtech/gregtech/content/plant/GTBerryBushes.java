@@ -24,7 +24,7 @@ public final class GTBerryBushes extends BerryBushCatalog {
         if (known != null) return known;
         var form = com.gregtech.gregtech.api.material.MaterialEquivalence.form(stack);
         if (form == null || form.prefix() != com.gregtech.gregtech.data.MaterialPrefix.plantGtBerry) return null;
-        return new BerryType(id.toString(), DEFAULT.bush(), DEFAULT.bloom(), DEFAULT.immature(), DEFAULT.berry());
+        return MaterialBerryBushCatalog.colours(id.toString(), form.material().getColor());
     }
 
     public static BerryType byId(String id) {

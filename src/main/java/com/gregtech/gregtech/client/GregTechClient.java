@@ -75,7 +75,7 @@ public final class GregTechClient {
 
     @SubscribeEvent
     public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
-        event.register((stack,tint)->((com.gregtech.gregtech.block.plant.BushBlock)((net.minecraft.world.item.BlockItem)stack.getItem()).getBlock()).tintColour(tint,3),
+        event.register((stack,tint)->((com.gregtech.gregtech.block.plant.BushBlock)((net.minecraft.world.item.BlockItem)stack.getItem()).getBlock()).inventoryColour(tint),
                 java.util.Arrays.stream(com.gregtech.gregtech.registry.GTBushes.allBlocks()).map(Block::asItem).toArray(net.minecraft.world.item.Item[]::new));
         com.gregtech.gregtech.registry.GTChemicalBatteries.allRegistered().forEach(entry->
                 event.register((stack,index)->index==0?entry.get().spec().chemistry().color:0xFFFFFF,entry.get().asItem()));

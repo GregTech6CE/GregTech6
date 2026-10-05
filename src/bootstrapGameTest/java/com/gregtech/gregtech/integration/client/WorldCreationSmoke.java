@@ -22,6 +22,7 @@ import org.slf4j.Logger;
 public final class WorldCreationSmoke {
     private static final boolean ENABLED = Boolean.getBoolean("gregtech.integration.clientCreateWorldSmoke");
     private static final boolean VIEWER_ONLY=Boolean.getBoolean("gregtech.integration.viewerFeedbackOnly");
+    private static final boolean MATERIAL_BUSH_ONLY=Boolean.getBoolean("gregtech.integration.materialBushRuntimeOnly");
     private static final boolean LONG_ONLY=Boolean.getBoolean("gregtech.integration.longDistanceRuntimeOnly");
     private static final boolean COKE_ONLY=Boolean.getBoolean("gregtech.integration.cokeRuntimeSmoke");
     private static final boolean BOOKS_ONLY=Boolean.getBoolean("gregtech.integration.booksRuntimeOnly");
@@ -53,7 +54,7 @@ public final class WorldCreationSmoke {
             if (minecraft.getOverlay() != null) return;
             event.getGuiGraphics().flush();
             if(COKE_ONLY){CokeOvenRuntimeSmoke.screen(minecraft,event.getScreen());ColoredBooksRuntimeSmoke.screen(minecraft,event.getScreen());}
-            else if(!LONG_ONLY) LootBrowserSmoke.frame(event.getScreen());
+            else if(!LONG_ONLY&&!MATERIAL_BUSH_ONLY) LootBrowserSmoke.frame(event.getScreen());
             if (stage == 0 && event.getScreen() instanceof TitleScreen) {
                 minecraft.options.pauseOnLostFocus = false;
                 var root = minecraft.gameDirectory.toPath().toAbsolutePath().normalize();
@@ -115,7 +116,7 @@ public final class WorldCreationSmoke {
                         throw new IllegalStateException("Known iron form no longer unifies");
                     int recipes = server.getRecipeManager().getRecipes().size();
                     if (recipes < 1000) throw new IllegalStateException("Incomplete actual recipe registry: " + recipes);
-                    if(!VIEWER_ONLY&&!COKE_ONLY&&!LONG_ONLY) {
+                    if(!VIEWER_ONLY&&!COKE_ONLY&&!LONG_ONLY&&!MATERIAL_BUSH_ONLY) {
                     checkBatteries(server,result);
                     OriginFeedbackChecks.server(server,result);
                     LootFeedbackChecks.server(server,result);
@@ -124,6 +125,8 @@ public final class WorldCreationSmoke {
                     SandwichFeedbackChecks.server(server,result);
                     CannedFoodFeedbackChecks.server(server,result);
                     }
+                    if(MATERIAL_BUSH_ONLY)MaterialBushRuntimeSmoke.server(server,result);
+                    result.addProperty("materialBushRuntimeOnly",MATERIAL_BUSH_ONLY);
                     if(LONG_ONLY) LongDistanceRuntimeSmoke.server(server,result);
                     result.addProperty("longDistanceRuntimeOnly",LONG_ONLY);
                     result.addProperty("viewerFeedbackOnly",VIEWER_ONLY);
@@ -141,28 +144,30 @@ public final class WorldCreationSmoke {
             var result = probe.join();
             if(BOOKS_ONLY){if(!ColoredBooksRuntimeSmoke.frame(minecraft,result))return;}
             else if(COKE_ONLY) {if(!CokeOvenRuntimeSmoke.frame(minecraft,result))return;}
-            else if (!LONG_ONLY && !LootBrowserSmoke.start(result)) return;
+            else if (!LONG_ONLY&&!MATERIAL_BUSH_ONLY && !LootBrowserSmoke.start(result)) return;
+            if(MATERIAL_BUSH_ONLY)MaterialBushRuntimeSmoke.client(minecraft,result);
             if(LONG_ONLY) LongDistanceRuntimeSmoke.client(minecraft,result);
-            if(!VIEWER_ONLY&&!COKE_ONLY&&!LONG_ONLY) {
+            if(!VIEWER_ONLY&&!COKE_ONLY&&!LONG_ONLY&&!MATERIAL_BUSH_ONLY) {
             MachineFeedbackChecks.client(minecraft,result);
             SurfaceFeedbackChecks.client(minecraft,result);
             SandwichFeedbackChecks.client(minecraft,result);
             CannedFoodFeedbackChecks.client(minecraft,result);
             OriginFeedbackChecks.client(minecraft,result);
             }
-            if(!COKE_ONLY&&!LONG_ONLY&&!ViewerGlassChecks.capture(minecraft,result))return;
+            if(!COKE_ONLY&&!LONG_ONLY&&!MATERIAL_BUSH_ONLY&&!ViewerGlassChecks.capture(minecraft,result))return;
             result.addProperty("renderedWorldFrames",frames);
             result.addProperty("emiLoaded",EMI_PRESENT);
             if (!Files.isRegularFile(minecraft.gameDirectory.toPath().resolve("saves").resolve(WORLD).resolve("level.dat")))
                 throw new IllegalStateException("Fresh world has no level.dat");
             stage = 4;
             String file = "world-creation-forge-" + ID + ".png";
-            if(!VIEWER_ONLY&&!COKE_ONLY&&!LONG_ONLY) {
+            if(!VIEWER_ONLY&&!COKE_ONLY&&!LONG_ONLY&&!MATERIAL_BUSH_ONLY) {
             OriginFeedbackChecks.renderInventory(event.getGuiGraphics(),minecraft,result);
             SurfaceFeedbackChecks.render(event.getGuiGraphics(),minecraft,result);
             SandwichFeedbackChecks.render(event.getGuiGraphics(),minecraft,result);
             }
             if(COKE_ONLY)ColoredBooksRuntimeSmoke.renderInventory(event.getGuiGraphics(),minecraft);
+            if(MATERIAL_BUSH_ONLY)MaterialBushRuntimeSmoke.render(event.getGuiGraphics(),minecraft);
             if(LONG_ONLY)LongDistanceRuntimeSmoke.render(event.getGuiGraphics(),minecraft);
             event.getGuiGraphics().flush();
             Screenshot.grab(minecraft.gameDirectory,file,minecraft.getMainRenderTarget(),message -> {

@@ -8,12 +8,15 @@ import net.minecraft.world.level.material.MapColor;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import java.util.*;
 
-/** One registered identity per native berry, plus cotton and the unplanted bush. */
+/** Independent food, cotton and material berry identities, plus the unplanted bush. */
 public final class GTBushes {
     private GTBushes() {}
     private static final Map<String,DeferredHolder<Block,BushBlock>> VARIANTS=new LinkedHashMap<>();
     public static final DeferredHolder<Block,BushBlock> BUSH=register("bush", "");
-    static { for(var type:BerryBushCatalog.worldgenTypes()) register(BerryBushCatalog.blockPath(type.id()),type.id()); }
+    static {
+        for(var type:BerryBushCatalog.worldgenTypes()) register(BerryBushCatalog.blockPath(type.id()),type.id());
+        for(var type:com.gregtech.gregtech.content.plant.MaterialBerryBushCatalog.variants()) register(type.blockPath(),type.berryItemId());
+    }
     private static DeferredHolder<Block,BushBlock> register(String path,String berry) {
         var block=GTBlocks.BLOCKS.register(path,()->new BushBlock(berry,BlockBehaviour.Properties.of()
                 .mapColor(MapColor.PLANT).strength(.2f).sound(SoundType.GRASS).noOcclusion().instabreak()));
@@ -23,5 +26,5 @@ public final class GTBushes {
         var entry=VARIANTS.get(BerryBushCatalog.blockPath(berry));return entry==null?null:entry.get();
     }
     public static Block[] allBlocks() { return VARIANTS.values().stream().map(e->(Block)e.get()).toArray(Block[]::new); }
-    public static void registerAll() { VARIANTS.forEach((path,block)->GTBlocks.BLOCK_ITEMS.register(path,()->new BlockItem(block.get(),new Item.Properties()))); }
+    public static void registerAll() { VARIANTS.forEach((path,block)->GTBlocks.BLOCK_ITEMS.register(path,()->new com.gregtech.gregtech.item.BushBlockItem(block.get(),new Item.Properties()))); }
 }

@@ -57,6 +57,7 @@ public class BerryBushCatalog {
     public static String blockPath(String id) {
         if (id == null || id.isEmpty()) return "bush";
         if (id.startsWith("gregtech:")) id = id.substring("gregtech:".length());
+        if (id.startsWith("plant_gt_berry_")) return "bush_" + id;
         BerryType type = byId(id);
         return type == null ? null : type == DEFAULT ? "bush_cotton" : "bush_" + type.id();
     }
@@ -94,5 +95,11 @@ public class BerryBushCatalog {
             case 3 -> resolved.berry();
             default -> resolved.bush();
         };
+    }
+
+    /** Source inventory pass: food/cotton show immature berries, material berries show solid RGB. */
+    public static int inventoryColour(BerryType type) {
+        if (type == null) return NO_BERRY_COLOUR;
+        return type.id().startsWith("gregtech:plant_gt_berry_") ? type.berry() : type.immature();
     }
 }
