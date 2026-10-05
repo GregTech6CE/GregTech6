@@ -4,11 +4,13 @@
  */
 package com.gregtech.gregtech.content.tool;
 
+import com.gregtech.gregtech.api.crop.CropScanSource;
+import com.gregtech.gregtech.api.crop.CropScanSource.CropScanData;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Optional;
 
-/** Only the original ic2.api.crops.ICropTile contract qualifies; vanilla plants do not. */
+/** Shared addon contract, with the original optional IC2 contract as a fallback. */
 public final class OriginalCropScan {
     private OriginalCropScan() {}
 
@@ -49,13 +51,19 @@ public final class OriginalCropScan {
     };
 
     public static boolean supports(Object tile) {
-        return tile != null && CROPS.get(tile.getClass()).isPresent();
+        return tile instanceof CropScanSource || tile != null && CROPS.get(tile.getClass()).isPresent();
     }
 
     /** Source scan-level promotion precedes payment, including when the scanner lacks charge. */
     public static Result scan(Object tile, int x, int y, int z,
             java.util.function.UnaryOperator<String> translate) {
         if (tile == null) return Result.NONE;
+        if (tile instanceof CropScanSource source) {
+            CropScanData data = source.cropScanData();
+            if (data == null) return Result.NONE;
+            if (data.scanLevel() < 4) source.setCropScanLevel(4);
+            return format(data, x, y, z, translate);
+        }
         var access = CROPS.get(tile.getClass());
         if (access.isEmpty()) return Result.NONE;
         try {
@@ -68,22 +76,33 @@ public final class OriginalCropScan {
             CardAccess c = card.get();
             boolean discovery = ((Number) a.scanLevel.invoke(tile)).intValue() < 4;
             if (discovery) a.setScanLevel.invoke(tile, (byte) 4);
-            String attributes = "";
-            for (String attribute : (String[]) c.attributes.invoke(crop)) attributes += ", " + attribute;
-            return new Result(discovery ? ScannerEnergyRules.CROP_DISCOVERY_COST
-                    : ScannerEnergyRules.CROP_RESCAN_COST, List.of(
-                    "--- X: " + x + " Y: " + y + " Z: " + z + " ---",
-                    "Type -- Name: " + translate.apply((String) c.name.invoke(crop))
-                            + "   Growth: " + a.growth.invoke(tile) + "   Gain: " + a.gain.invoke(tile)
-                            + "   Resistance: " + a.resistance.invoke(tile),
-                    "Plant -- Fertilizer: " + a.fertilizer.invoke(tile) + "   Water: " + a.water.invoke(tile)
-                            + "   Weed-Ex: " + a.weedEx.invoke(tile),
-                    "Environment -- Nutrients: " + a.nutrients.invoke(tile) + "   Humidity: "
-                            + a.humidity.invoke(tile) + "   Air-Quality: " + a.air.invoke(tile),
-                    "Attributes:" + attributes.replaceFirst(",", ""),
-                    "Discovered by: " + c.discoveredBy.invoke(crop)));
+            return format(new CropScanData((String) c.name.invoke(crop),
+                    List.of((String[]) c.attributes.invoke(crop)), (String) c.discoveredBy.invoke(crop),
+                    number(a.growth, tile), number(a.gain, tile), number(a.resistance, tile),
+                    number(a.fertilizer, tile), number(a.water, tile), number(a.weedEx, tile),
+                    number(a.nutrients, tile), number(a.humidity, tile), number(a.air, tile),
+                    discovery ? 0 : 4), x, y, z, translate);
         } catch (ReflectiveOperationException | LinkageError e) {
             return Result.NONE;
         }
+    }
+
+    private static int number(Method method, Object tile) throws ReflectiveOperationException {
+        return ((Number) method.invoke(tile)).intValue();
+    }
+
+    private static Result format(CropScanData data, int x, int y, int z,
+            java.util.function.UnaryOperator<String> translate) {
+        return new Result(data.scanLevel() < 4 ? ScannerEnergyRules.CROP_DISCOVERY_COST
+                : ScannerEnergyRules.CROP_RESCAN_COST, List.of(
+                "--- X: " + x + " Y: " + y + " Z: " + z + " ---",
+                "Type -- Name: " + translate.apply(data.name()) + "   Growth: " + data.growth()
+                        + "   Gain: " + data.gain() + "   Resistance: " + data.resistance(),
+                "Plant -- Fertilizer: " + data.fertilizer() + "   Water: " + data.water()
+                        + "   Weed-Ex: " + data.weedEx(),
+                "Environment -- Nutrients: " + data.nutrients() + "   Humidity: " + data.humidity()
+                        + "   Air-Quality: " + data.airQuality(),
+                "Attributes:" + (data.attributes().isEmpty() ? "" : " " + String.join(", ", data.attributes())),
+                "Discovered by: " + data.discoveredBy()));
     }
 }

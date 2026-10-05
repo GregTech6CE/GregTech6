@@ -433,8 +433,31 @@ public final class CoreBehaviorContracts {
         check(creative.successful() && creative.remaining() == 27, "creative and debug scan without payment");
         equal(32768L, com.gregtech.gregtech.content.tool.ScannerEnergyRules.CROP_DISCOVERY_COST, "first IC2 crop scan uses V[6]");
         equal(512L, com.gregtech.gregtech.content.tool.ScannerEnergyRules.CROP_RESCAN_COST, "subsequent IC2 crop scan uses V[3]");
-        check(debug.scansBlocks() && !crop.scansBlocks(), "debug scans blocks; cropnalyzer only scans IC2 crops");
+        check(debug.scansBlocks() && !crop.scansBlocks(), "debug scans blocks; cropnalyzer scans crop providers");
         check(!com.gregtech.gregtech.content.tool.OriginalCropScan.supports(new Object()), "a non-IC2 object does not invent a crop analysis");
+        // Non-public third-party implementation, with no IC2 API on the classpath.
+        class AddonCrop implements com.gregtech.gregtech.api.crop.CropScanSource {
+            int level = 1;
+            boolean planted = true;
+            public CropScanData cropScanData() {
+                return planted ? new CropScanData("addon.crop", java.util.List.of("Green", "Food"),
+                        "Addon Author", 3, 5, 7, 11, 13, 17, 19, 23, 29, level) : null;
+            }
+            public void setCropScanLevel(int value) { level = value; }
+        }
+        var addon = new AddonCrop();
+        check(com.gregtech.gregtech.content.tool.OriginalCropScan.supports(addon), "addon contract is recognized without IC2");
+        var found = com.gregtech.gregtech.content.tool.OriginalCropScan.scan(addon, 2, 4, 6, key -> "Translated Crop");
+        equal(32768L, found.cost(), "addon first scan has source discovery cost");
+        equal(4, addon.level, "addon discovery promotes the real provider before payment");
+        check(found.lines().equals(java.util.List.of("--- X: 2 Y: 4 Z: 6 ---",
+                "Type -- Name: Translated Crop   Growth: 3   Gain: 5   Resistance: 7",
+                "Plant -- Fertilizer: 11   Water: 13   Weed-Ex: 17",
+                "Environment -- Nutrients: 19   Humidity: 23   Air-Quality: 29",
+                "Attributes: Green, Food", "Discovered by: Addon Author")), "all addon crop data reaches the source formatter");
+        equal(512L, com.gregtech.gregtech.content.tool.OriginalCropScan.scan(addon, 0, 0, 0, key -> key).cost(), "addon rescan cost");
+        addon.planted = false;
+        check(com.gregtech.gregtech.content.tool.OriginalCropScan.scan(addon, 0, 0, 0, key -> key).lines().isEmpty(), "empty crop holder has no scan or cost");
     }
 
     private static void bedrockAndBoilerSourceSamples() {
