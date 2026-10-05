@@ -223,10 +223,13 @@ def inspect(path, platform, required_core, properties, forbidden_tests):
             mappings = refmap.get('mappings', {})
             if not mappings or mappings != refmap.get('data', {}).get('searge'):
                 raise ValueError(f'{path}: incomplete named-to-SRG Mixin mappings')
-            # WaterContainerMixin only targets the Forge API with remap=false.
+            # These two mixins target Forge API methods with remap=false.
+            # ComponentCoverCapabilitiesMixin targets getCapability on GT classes;
+            # neither those classes nor Forge capability method names are obfuscated.
+            api_mixins = {"WaterContainerMixin", "ComponentCoverCapabilitiesMixin"}
             required_mappings = {config['package'].replace('.', '/') + '/' + name
                                  for name in config['mixins'] + config.get('client', [])
-                                 if name != 'WaterContainerMixin'}
+                                 if name not in api_mixins}
             if not required_mappings.issubset(mappings):
                 raise ValueError(f'{path}: missing complete Mixin mappings: {sorted(required_mappings - mappings.keys())}')
             target = 'spawnAtLocation(Lnet/minecraft/world/level/ItemLike;)Lnet/minecraft/world/entity/item/ItemEntity;'
@@ -237,7 +240,8 @@ def inspect(path, platform, required_core, properties, forbidden_tests):
             if 'MixinConfigs: gregtech.mixins.json' not in manifest:
                 raise ValueError(f'{path}: missing production Mixin manifest registration')
             mixin_verification = {'refmap': refmap_name, 'mapped_classes': len(mappings),
-                                  'sha256': hashlib.sha256(archive.read(refmap_name)).hexdigest()}
+                                  'sha256': hashlib.sha256(archive.read(refmap_name)).hexdigest(),
+                                  'unmapped_forge_api_mixins': sorted(api_mixins)}
         hashes = {}
         for name, expected_hash in required_core.items():
             if counts.get(name) != 1:
