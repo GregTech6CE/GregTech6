@@ -264,7 +264,7 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements EntityBlo
     @Override protected ItemStack createMachineDrop(BlockState state, BlockEntity entity) {
         var stack=createMachineDrop(state);
         if(entity instanceof BasicMachineBlockEntity machine) {
-            var data=machine.saveWithoutMetadata();
+            var data=com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(machine,machine.saveWithoutMetadata());
             data.remove("gt.inventory");
             for(int i=0;i<6;i++) data.remove("gt_cover_"+i);
             stack.getOrCreateTag().put("BlockEntityTag",data);

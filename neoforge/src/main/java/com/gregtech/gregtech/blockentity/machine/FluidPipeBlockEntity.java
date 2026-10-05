@@ -334,48 +334,18 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
         if (level != null) level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
     }
 
-    /**
-     * One cover pass over all six faces, run from {@link #tickServer} only when {@link #hasCovers}.
-     *
-     * <p>The order is {@code BasicMachineBlockEntity}'s: the tick counter first (that class's
-     * {@code :162}), then {@code panels.beforeTick()} — the controller cover's {@code aData.mStopped}
-     * and the selector covers' mode sync ({@code PanelCoverRuntime:70-84}) — then the per-face
-     * dispatch, then {@code panels.afterTick()}, which recomputes the emitted signals and the visual
-     * values ({@code :85-119}). {@code BasicMachineBlockEntity.tickCovers:355-373} and
-     * {@code tickUtilityCovers:1537-1569} do the same thing in two methods because the machine also
-     * dispatches pump/conveyor/robot arm; a pipe hosts none of those.</p>
-     *
-     * <p>What is dispatched, and why the rest is not:</p>
-     * <ul>
-     *   <li>{@link CoverUtilityBehaviors#PRESSURE_VALVE} — {@code CoverPressureValve:49-64}. The tank
-     *       is {@code tanks[0]}: the original dereferences {@code mTanks[0]} ({@code :51}) and its
-     *       placement rule only ever lets a one-tank pipe hold it, so index 0 is the whole pipe.</li>
-     *   <li>{@link CoverAttachmentBehaviors#DRAIN} — {@code CoverDrain:68-159}. The sink is
-     *       {@code this}: see the class javadoc, a pipe's faces share one tank list in GT6 too.</li>
-     *   <li>{@link CoverAttachmentBehaviors#AIR_VENT} — {@code CoverVent:40-85}, the same sink.</li>
-     *   <li>Everything else falls through the {@code default} arm on purpose: the pump, conveyor,
-     *       robot arm and retriever move <em>items</em> and a pipe has no slots, and the machine
-     *       switches, detectors and panels need the {@code MachineControl} this host does not
-     *       provide.</li>
-     * </ul>
-     *
-     * <p>The suspend gate sits in front of the whole pass, exactly as {@code tickCovers} and
-     * {@code tickUtilityCovers} gate on it ({@code :356}, {@code :1541}), and {@code coverTicks} only
-     * advances on a tick that actually runs — GT6's {@code aTimer} is a cover's own live counter
-     * ({@code CoverPressureValve:50}), so a suspended cover's clock stands still.
-     * {@code BasicMachineBlockEntity}'s {@code utilityWasStopped}/{@code coverPending} pair
-     * ({@code :1512-1523}) is deliberately <em>not</em> mirrored: it exists only for the retriever's
-     * "run on resume" flag, and a pipe cannot host a working retriever.</p>
-     */
+    /** Refresh the controller before its pause gate, then dispatch valid covers with source cadence. */
     private void tickCovers() {
         PanelCoverRuntime runtime = panels();
-        if (runtime.stopped()) return;
         coverTicks++;
         runtime.beforeTick();
+        if (runtime.stopped()) { runtime.afterTick(); return; }
         for (Direction side : Direction.values()) {
             String id = coverIdOf(side);
             if (id == null) continue;
             switch (id) {
+                case CoverItems.PUMP, CoverItems.CONVEYOR, CoverItems.ROBOT_ARM ->
+                        com.gregtech.gregtech.content.cover.ComponentCoverRuntime.tick(this,side,level.getGameTime());
                 case CoverUtilityBehaviors.PRESSURE_VALVE ->
                         CoverUtilityBehaviors.tickPressureValve(level, worldPosition, side, tanks[0], coverTicks);
                 case CoverAttachmentBehaviors.DRAIN ->
@@ -568,14 +538,14 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
         for (Direction side : Direction.values()) {
             if ((lastReceivedFrom[channel] & (1 << side.ordinal())) != 0
                     || !state.getValue(FluidPipeBlock.propFor(side))
-                    || !coverFluidFilterPermits(side, fluid)) continue;
+                    || !com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsFluid(getCover(side),false) || !coverFluidFilterPermits(side, fluid)) continue;
             BlockPos neighborPos = worldPosition.relative(side);
             if (!level.hasChunkAt(neighborPos)) continue;
             BlockEntity be = level.getBlockEntity(neighborPos);
             if (be instanceof FluidPipeBlockEntity neighbor) {
                 Direction incoming = side.getOpposite();
                 if (!neighbor.getBlockState().getValue(FluidPipeBlock.propFor(incoming))
-                        || !neighbor.coverFluidFilterPermits(incoming, fluid)) continue;
+                        || !com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsFluid(neighbor.getCover(incoming),true) || !neighbor.coverFluidFilterPermits(incoming, fluid)) continue;
                 int targetChannel = neighbor.fillableChannel(fluid);
                 if (targetChannel < 0) continue;
                 FluidTankGT target = neighbor.tanks[targetChannel];
@@ -625,7 +595,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
                 || entry != null && (entry.flags() & com.gregtech.gregtech.data.FluidCatalog.FluidFlags.WATER) != 0;
         if (!water) return;
         for (Direction side : Direction.values()) {
-            if (!state.getValue(FluidPipeBlock.propFor(side)) || !coverFluidFilterPermits(side, fluid)) continue;
+            if (!state.getValue(FluidPipeBlock.propFor(side)) || !com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsFluid(getCover(side),false) || !coverFluidFilterPermits(side, fluid)) continue;
             BlockPos pos = worldPosition.relative(side);
             if (!level.hasChunkAt(pos)) continue;
             BlockState cauldron = level.getBlockState(pos);
@@ -914,6 +884,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
         hasCovers = any;
         // GT6 re-reads each cover's stored values on load; only worth doing when one is there.
         if (any) panels().loaded();
+        for(var side:Direction.values())com.gregtech.gregtech.content.cover.ComponentCoverRuntime.attached(this,side);
     }
 
     @Override
@@ -1018,13 +989,18 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
      * receiving channel for backflow prevention. Unsided internal access remains available.
      * Player container interaction uses this same face view.
      */
+    @Override public IFluidHandler componentFluids(Direction side) { return new FaceFluidHandler(this,side,true); }
+
     private static final class FaceFluidHandler implements IFluidHandler {
+        private final boolean internal;
         private final FluidPipeBlockEntity pipe;
         private final Direction side;
 
         FaceFluidHandler(FluidPipeBlockEntity pipe, Direction side) {
-            this.pipe = pipe;
-            this.side = side;
+            this(pipe,side,false);
+        }
+        FaceFluidHandler(FluidPipeBlockEntity pipe,Direction side,boolean internal) {
+            this.pipe=pipe;this.side=side;this.internal=internal;
         }
 
         @Override public int getTanks() { return pipe.getTanks(); }
@@ -1041,7 +1017,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
         /** GT6 {@code CoverFilterFluid:117-122} {@code interceptFluidFill}: refuse, do not partially fill. */
         @Override
         public int fill(FluidStack resource, FluidAction action) {
-            if (!pipe.connected(side) || !pipe.coverFluidFilterPermits(side, resource)) return 0;
+            if (!internal && (!com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsFluid(pipe.getCover(side),true) || !pipe.connected(side) || !pipe.coverFluidFilterPermits(side, resource))) return 0;
             int channel = pipe.fillableChannel(resource);
             if (channel < 0) return 0;
             int accepted = pipe.tanks[channel].fill(resource, action);
@@ -1052,7 +1028,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
         /** GT6 {@code CoverFilterFluid:124-129} {@code interceptFluidDrain}, asked with the stack offered. */
         @NotNull @Override
         public FluidStack drain(FluidStack resource, FluidAction action) {
-            if (!pipe.connected(side) || !pipe.coverFluidFilterPermits(side, resource)) return FluidStack.EMPTY;
+            if (!internal && (!com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsFluid(pipe.getCover(side),false) || !pipe.connected(side) || !pipe.coverFluidFilterPermits(side, resource))) return FluidStack.EMPTY;
             return pipe.drain(resource, action);
         }
 
@@ -1063,7 +1039,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
          */
         @NotNull @Override
         public FluidStack drain(int maxDrain, FluidAction action) {
-            if (!pipe.connected(side) || !pipe.coverFluidFilterPermits(side, pipe.firstDrainCandidate())) return FluidStack.EMPTY;
+            if (!internal && (!com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsFluid(pipe.getCover(side),false) || !pipe.connected(side) || !pipe.coverFluidFilterPermits(side, pipe.firstDrainCandidate()))) return FluidStack.EMPTY;
             return pipe.drain(maxDrain, action);
         }
     }

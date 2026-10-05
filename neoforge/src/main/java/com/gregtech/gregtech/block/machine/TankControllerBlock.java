@@ -120,14 +120,14 @@ public class TankControllerBlock extends DirectionalBlock implements EntityBlock
         ItemStack result = new ItemStack(this);
         if (context.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY)
                 instanceof MultiblockTankControllerBlockEntity tank)
-            result.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(tank.saveWithId(tank.getLevel().registryAccess())));
+            result.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(tank,tank.saveWithId(tank.getLevel().registryAccess()))));
         return java.util.List.of(result);
     }
 
     @Override public ItemStack getCloneItemStack(BlockState state,net.minecraft.world.phys.HitResult target,net.minecraft.world.level.LevelReader level,BlockPos pos,net.minecraft.world.entity.player.Player player) {
         ItemStack result = new ItemStack(this);
         if (level.getBlockEntity(pos) instanceof MultiblockTankControllerBlockEntity tank)
-            result.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(tank.saveWithId(tank.getLevel().registryAccess())));
+            result.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(tank,tank.saveWithId(tank.getLevel().registryAccess()))));
         return result;
     }
 

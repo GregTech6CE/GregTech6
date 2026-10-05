@@ -11,7 +11,7 @@ public final class EnergyNodeRenderer implements BlockEntityRenderer<EnergyNodeB
     public EnergyNodeRenderer(BlockEntityRendererProvider.Context context){}
     @Override public void render(EnergyNodeBlockEntity be,float partialTick,PoseStack pose,
             MultiBufferSource buffers,int light,int overlay){
-        if(be.spec()==null||!be.hasControlPanels())return;
+        if(be.spec()==null)return;
         for(var side:net.minecraft.core.Direction.values())PanelCoverRenderer.renderFace(be,side,pose,buffers,light);
     }
 }

@@ -105,13 +105,13 @@ public final class OriginalLargeBoilerControllerBlock extends HorizontalDirectio
             return List.of();
         ItemStack drop = new ItemStack(this);
         if (entity instanceof OriginalLargeBoilerControllerBlockEntity boiler)
-            drop.addTagElement("BlockEntityTag", boiler.saveWithoutMetadata());
+            drop.addTagElement("BlockEntityTag", com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(boiler,boiler.saveWithoutMetadata()));
         return List.of(drop);
     }
     @Override public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
         ItemStack stack = new ItemStack(this);
         if (level.getBlockEntity(pos) instanceof OriginalLargeBoilerControllerBlockEntity boiler)
-            stack.addTagElement("BlockEntityTag", boiler.saveWithoutMetadata());
+            stack.addTagElement("BlockEntityTag", com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(boiler,boiler.saveWithoutMetadata()));
         return stack;
     }
     @Override public void setPlacedBy(Level level, BlockPos pos, BlockState state,

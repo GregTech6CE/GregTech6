@@ -36,7 +36,7 @@ public final class ZpmDischargerBlock extends AutoToolBlock {
     }
     @Override public java.util.List<net.minecraft.world.item.ItemStack> getDrops(BlockState s,net.minecraft.world.level.storage.loot.LootParams.Builder b){
         var stack=new net.minecraft.world.item.ItemStack(this);
-        if(b.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof ZpmDischargerBlockEntity z)stack.getOrCreateTag().put("BlockEntityTag",z.saveWithoutMetadata());
+        if(b.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof ZpmDischargerBlockEntity z)stack.getOrCreateTag().put("BlockEntityTag",com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(z,z.saveWithoutMetadata()));
         return java.util.List.of(stack);
     }
     @Override public void appendHoverText(net.minecraft.world.item.ItemStack s,net.minecraft.world.level.BlockGetter w,java.util.List<net.minecraft.network.chat.Component> lines,net.minecraft.world.item.TooltipFlag f){

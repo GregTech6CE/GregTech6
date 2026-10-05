@@ -57,7 +57,7 @@ public class FilterBlock extends net.minecraft.world.level.block.DirectionalBloc
     @Override public java.util.List<net.minecraft.world.item.ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
         var stack=new net.minecraft.world.item.ItemStack(this);
         var entity=builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY);
-        if(entity instanceof FilterBlockEntity) stack.getOrCreateTag().put("BlockEntityTag",entity.saveWithoutMetadata());
+        if(entity instanceof FilterBlockEntity) stack.getOrCreateTag().put("BlockEntityTag",com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(entity,entity.saveWithoutMetadata()));
         return java.util.List.of(stack);
     }
 }

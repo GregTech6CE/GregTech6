@@ -47,7 +47,7 @@ public final class ProcessingToolBlock extends ShapedToolBlock implements Entity
     @Override public java.util.List<net.minecraft.world.item.ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
         var stack=new net.minecraft.world.item.ItemStack(this);
         if(builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof ProcessingToolBlockEntity tool) {
-            var data=tool.saveWithoutMetadata(); data.remove("gt.items");
+            var data=com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(tool,tool.saveWithoutMetadata()); data.remove("gt.items");
             stack.getOrCreateTag().put("BlockEntityTag",data);
         }
         return java.util.List.of(stack);

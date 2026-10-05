@@ -46,14 +46,14 @@ public final class OriginalLightningRodControllerBlock extends Block implements 
     @Override public List<ItemStack> getDrops(BlockState state, LootParams.Builder context) {
         ItemStack stack = new ItemStack(this);
         if (context.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof LightningRodControllerBlockEntity rod)
-            stack.addTagElement("BlockEntityTag", rod.saveWithoutMetadata());
+            stack.addTagElement("BlockEntityTag", com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(rod,rod.saveWithoutMetadata()));
         return List.of(stack);
     }
 
     @Override public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
         ItemStack stack = new ItemStack(this);
         if (level.getBlockEntity(pos) instanceof LightningRodControllerBlockEntity rod)
-            stack.addTagElement("BlockEntityTag", rod.saveWithoutMetadata());
+            stack.addTagElement("BlockEntityTag", com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(rod,rod.saveWithoutMetadata()));
         return stack;
     }
 

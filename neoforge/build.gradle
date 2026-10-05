@@ -66,6 +66,7 @@ neoForge {
             systemProperty 'gregtech.integration.viewerFeedbackOnly', (rootProject.findProperty('viewerFeedbackOnly') ?: 'false').toString()
             systemProperty 'gregtech.integration.recipePresentationRuntimeOnly', (rootProject.findProperty('recipePresentationRuntimeOnly') ?: 'false').toString()
             systemProperty 'gregtech.integration.materialBushRuntimeOnly', (rootProject.findProperty('materialBushRuntimeOnly') ?: 'false').toString()
+            systemProperty 'gregtech.integration.newIssuesRuntimeOnly', (rootProject.findProperty('newIssuesRuntimeOnly') ?: 'false').toString()
             systemProperty 'gregtech.integration.longDistanceRuntimeOnly', (rootProject.findProperty('longDistanceRuntimeOnly') ?: 'false').toString()
             systemProperty 'gregtech.integration.cokeRuntimeSmoke', (rootProject.findProperty('cokeRuntimeSmoke') ?: 'false').toString()
             systemProperty 'gregtech.integration.clientSmoke', (rootProject.findProperty('clientSmoke') ?: 'false').toString()

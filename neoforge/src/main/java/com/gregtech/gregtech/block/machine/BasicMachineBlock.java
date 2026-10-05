@@ -266,7 +266,7 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements EntityBlo
     @Override protected ItemStack createMachineDrop(BlockState state, BlockEntity entity) {
         var stack=createMachineDrop(state);
         if(entity instanceof BasicMachineBlockEntity machine) {
-            var data=machine.saveWithoutMetadata(machine.getLevel().registryAccess());
+            var data=com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(machine,machine.saveWithoutMetadata(machine.getLevel().registryAccess()));
             data.putString("id", net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(machine.getType()).toString());
             data.remove("gt.inventory");
             for(int i=0;i<6;i++) data.remove("gt_cover_"+i);

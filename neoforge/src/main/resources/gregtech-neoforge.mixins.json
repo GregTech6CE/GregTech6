@@ -16,7 +16,10 @@
     "WaterCandleMixin",
     "WaterFrogspawnMixin",
     "ColoredBookUseMixin",
-    "ColoredBookLecternMixin"
+    "ColoredBookLecternMixin",
+    "ComponentCoverHostMixin",
+    "ComponentCoverCapabilitiesMixin",
+    "ComponentCoverRemovalMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -21,7 +21,16 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nullable;
 
 /** GT6 metal chest: a plain 54-slot chest. */
-public class MetalChestBlockEntity extends BlockEntity implements MenuProvider {
+public class MetalChestBlockEntity extends BlockEntity implements MenuProvider, com.gregtech.gregtech.content.cover.PanelCoverHost {    private final java.util.Map<Direction, LazyOptional<IItemHandler>> componentFaceCaps = new java.util.EnumMap<>(Direction.class);
+
+    private final com.gregtech.gregtech.content.cover.ComponentCoverStorage componentCovers = new com.gregtech.gregtech.content.cover.ComponentCoverStorage(this);
+    @Override public net.minecraft.world.item.ItemStack getCover(Direction side) { return componentCovers.get(side); }
+    @Override public boolean attachCover(Direction side, net.minecraft.world.item.ItemStack stack) { return componentCovers.attach(side,stack); }
+    @Override public net.minecraft.world.item.ItemStack removeCover(Direction side) { return componentCovers.remove(side); }
+    @Override public com.gregtech.gregtech.content.cover.PanelCoverRuntime panels() { return componentCovers.panels(); }
+    public void tickComponentCovers() { componentCovers.tick(); }
+    public void dropComponentCovers() { componentCovers.drop(); }
+
 
     private final net.minecraft.world.level.block.entity.ChestLidController lid = new net.minecraft.world.level.block.entity.ChestLidController();
     private final net.minecraft.world.level.block.entity.ContainerOpenersCounter openers = new net.minecraft.world.level.block.entity.ContainerOpenersCounter() {
@@ -50,12 +59,19 @@ public class MetalChestBlockEntity extends BlockEntity implements MenuProvider {
         if (id == 1) { lid.shouldBeOpen(value > 0); return true; }
         return super.triggerEvent(id, value);
     }
+    @Override public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
+    }
     @Override public CompoundTag getUpdateTag() {
         CompoundTag tag = new CompoundTag();
         tag.putBoolean("Open", openers.getOpenerCount() > 0);
+        componentCovers.save(tag);
         return tag;
     }
-    @Override public void handleUpdateTag(CompoundTag tag) { lid.shouldBeOpen(tag.getBoolean("Open")); }
+    @Override public void onDataPacket(net.minecraft.network.Connection connection, net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet) {
+        if(packet.getTag()!=null)handleUpdateTag(packet.getTag());
+    }
+    @Override public void handleUpdateTag(CompoundTag tag) { lid.shouldBeOpen(tag.getBoolean("Open")); componentCovers.load(tag); }
 
     private final ItemStackHandler inventory = new ItemStackHandler(54) {
         @Override
@@ -182,7 +198,7 @@ public class MetalChestBlockEntity extends BlockEntity implements MenuProvider {
     @Override
     public <T> @org.jetbrains.annotations.NotNull LazyOptional<T> getCapability(
             @org.jetbrains.annotations.NotNull Capability<T> capability, @Nullable Direction side) {
-        if (capability == ForgeCapabilities.ITEM_HANDLER) return itemCap.cast();
+        if (capability == ForgeCapabilities.ITEM_HANDLER) return side==null?itemCap.cast():componentFaceCaps.computeIfAbsent(side,face->LazyOptional.of(()->com.gregtech.gregtech.content.cover.ComponentCoverAccess.items(this,face,inventory))).cast();
         return super.getCapability(capability, side);
     }
 
@@ -190,6 +206,7 @@ public class MetalChestBlockEntity extends BlockEntity implements MenuProvider {
     public void invalidateCaps() {
         super.invalidateCaps();
         itemCap.invalidate();
+        componentFaceCaps.values().forEach(LazyOptional::invalidate);componentFaceCaps.clear();
     }
 
     @Override
@@ -201,6 +218,7 @@ public class MetalChestBlockEntity extends BlockEntity implements MenuProvider {
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
+        componentCovers.save(tag);
         tag.put("Inventory", inventory.serializeNBT());
         tag.putBoolean("GTLootGenerated", lootGenerated);
         if (dungeonLoot != null) tag.putString("gt.dungeonloot", dungeonLoot.toString());
@@ -210,6 +228,7 @@ public class MetalChestBlockEntity extends BlockEntity implements MenuProvider {
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
+        componentCovers.load(tag);
         CompoundTag storedInventory = tag.getCompound("Inventory").copy();
         storedInventory.putInt("Size", 54);
         inventory.deserializeNBT(storedInventory);

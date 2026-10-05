@@ -36,7 +36,16 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /** GT6 fluid container tile entity. Handles wood barrels, plastic canisters, and metal drums. */
-public class TankBlockEntity extends BlockEntity implements IFluidHandler {
+public class TankBlockEntity extends BlockEntity implements IFluidHandler, com.gregtech.gregtech.content.cover.PanelCoverHost {    private final java.util.Map<Direction, LazyOptional<IFluidHandler>> componentFaceCaps = new java.util.EnumMap<>(Direction.class);
+
+    private final com.gregtech.gregtech.content.cover.ComponentCoverStorage componentCovers = new com.gregtech.gregtech.content.cover.ComponentCoverStorage(this);
+    @Override public net.minecraft.world.item.ItemStack getCover(Direction side) { return componentCovers.get(side); }
+    @Override public boolean attachCover(Direction side, net.minecraft.world.item.ItemStack stack) { return componentCovers.attach(side,stack); }
+    @Override public net.minecraft.world.item.ItemStack removeCover(Direction side) { return componentCovers.remove(side); }
+    @Override public com.gregtech.gregtech.content.cover.PanelCoverRuntime panels() { return componentCovers.panels(); }
+    public void tickComponentCovers() { componentCovers.tick(); }
+    public void dropComponentCovers() { componentCovers.drop(); }
+
     private final TankSpec spec;
     private final FluidTankGT tank;
     private long temperature = GregTechConstants.DEF_ENV_TEMP;
@@ -86,6 +95,7 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler {
     }
 
     private void tickServer() {
+        tickComponentCovers();
         // Temperature drift toward environment
         long envTemp = environmentTemperature();
         if (temperature > envTemp) {
@@ -359,7 +369,7 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler {
                 if (isGas && side == Direction.UP) return LazyOptional.empty();
                 if (!isGas && side == Direction.DOWN) return LazyOptional.empty();
             }
-            return handler.cast();
+            return side==null?handler.cast():componentFaceCaps.computeIfAbsent(side,face->LazyOptional.of(()->com.gregtech.gregtech.content.cover.ComponentCoverAccess.fluids(this,face,this))).cast();
         }
         return super.getCapability(cap, side);
     }
@@ -368,6 +378,7 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler {
     public void invalidateCaps() {
         super.invalidateCaps();
         handler.invalidate();
+        componentFaceCaps.values().forEach(LazyOptional::invalidate);componentFaceCaps.clear();
     }
 
     // === NBT ===
@@ -375,6 +386,7 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler {
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
+        componentCovers.load(tag);
         temperature = tag.contains(NBT_TEMPERATURE) ? tag.getLong(NBT_TEMPERATURE) : GregTechConstants.DEF_ENV_TEMP;
         autoOutput = tag.contains(NBT_AUTO_OUTPUT) && tag.getBoolean(NBT_AUTO_OUTPUT);
         softHammerState = tag.contains(NBT_SOFT_HAMMER) && tag.getBoolean(NBT_SOFT_HAMMER);
@@ -388,6 +400,7 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler {
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
+        componentCovers.save(tag);
         tag.putLong(NBT_TEMPERATURE, temperature);
         tag.putBoolean(NBT_AUTO_OUTPUT, autoOutput);
         tag.putBoolean(NBT_SOFT_HAMMER, softHammerState);
@@ -409,12 +422,14 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler {
         CompoundTag tankTag = new CompoundTag();
         tank.writeToNBT(tankTag);
         tag.put("gt.tank", tankTag);
+        componentCovers.save(tag);
         return tag;
     }
 
     @Override
     public void handleUpdateTag(CompoundTag tag) {
         super.handleUpdateTag(tag);
+        componentCovers.load(tag);
         if (tag.contains(NBT_TEMPERATURE)) temperature = tag.getLong(NBT_TEMPERATURE);
         if (tag.contains(NBT_AUTO_OUTPUT)) autoOutput = tag.getBoolean(NBT_AUTO_OUTPUT);
         if (tag.contains(NBT_SOFT_HAMMER)) softHammerState = tag.getBoolean(NBT_SOFT_HAMMER);

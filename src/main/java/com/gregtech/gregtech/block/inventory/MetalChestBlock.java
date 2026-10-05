@@ -95,8 +95,8 @@ public class MetalChestBlock extends HorizontalDirectionalBlock implements Entit
             return (world, pos, blockState, be) ->
                     MetalChestBlockEntity.clientTick(world, pos, blockState, (MetalChestBlockEntity) be);
         }
-        // MultiTileEntityChest.onBlockActivated2 generates loot when opening, never on placement.
-        return null;
+        // Cover ticking does not open the chest or roll loot.
+        return (world,pos,blockState,be)->((MetalChestBlockEntity)be).tickComponentCovers();
     }
 
     @Override
@@ -152,6 +152,7 @@ public class MetalChestBlock extends HorizontalDirectionalBlock implements Entit
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!state.is(newState.getBlock())
                 && level.getBlockEntity(pos) instanceof MetalChestBlockEntity chest) {
+            chest.dropComponentCovers();
             var inv = chest.inventory();
             for (int i = 0; i < inv.getSlots(); i++) {
                 ItemStack stack = inv.getStackInSlot(i);

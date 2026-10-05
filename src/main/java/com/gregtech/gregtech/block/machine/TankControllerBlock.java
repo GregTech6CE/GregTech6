@@ -117,14 +117,14 @@ public class TankControllerBlock extends DirectionalBlock implements EntityBlock
         ItemStack result = new ItemStack(this);
         if (context.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY)
                 instanceof MultiblockTankControllerBlockEntity tank)
-            result.addTagElement("BlockEntityTag", tank.saveWithoutMetadata());
+            result.addTagElement("BlockEntityTag", com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(tank,tank.saveWithoutMetadata()));
         return java.util.List.of(result);
     }
 
     @Override public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
         ItemStack result = new ItemStack(this);
         if (level.getBlockEntity(pos) instanceof MultiblockTankControllerBlockEntity tank)
-            result.addTagElement("BlockEntityTag", tank.saveWithoutMetadata());
+            result.addTagElement("BlockEntityTag", com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(tank,tank.saveWithoutMetadata()));
         return result;
     }
 

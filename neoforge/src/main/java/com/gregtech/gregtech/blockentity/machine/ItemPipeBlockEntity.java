@@ -326,44 +326,7 @@ public class ItemPipeBlockEntity extends BlockEntity
         else retrieverPending &= (byte) ~(1 << face);
     }
 
-    /**
-     * One cover pass over all six faces, run from {@link #tickServer} only when {@link #hasCovers}.
-     *
-     * <p>The order is {@code BasicMachineBlockEntity}'s, and it differs from the fluid pipe's
-     * {@code tickCovers} in exactly the two places that the retriever needs: the tick counter advances
-     * <em>before</em> the suspend gate, and {@code panels.afterTick()} runs on every path.</p>
-     * <ul>
-     *   <li>{@code coverTicks++} — {@code BasicMachineBlockEntity:162}. GT6's retriever clock is the
-     *       global {@code SERVER_TIME} ({@code CoverRetrieverItem:61}), not the cover's own
-     *       {@code aTimer}, so suspending the covers does not stop the clock; the fluid pipe's
-     *       pressure valve does use the cover's own {@code aTimer}
-     *       ({@code CoverPressureValve:50}), which is why that class freezes it while suspended.</li>
-     *   <li>{@code panels.beforeTick()} — {@code :163}; the controller cover's {@code aData.mStopped}
-     *       is refreshed inside it ({@code PanelCoverRuntime:70-71}), so it has to run before the gate
-     *       below rather than after it.</li>
-     *   <li>the suspend gate — {@code tickUtilityCovers:1541}, with the machine's
-     *       {@code utilityWasStopped} flag: a retriever that was held back fires immediately on
-     *       resume ({@code CoverRetrieverItem:55-57}) instead of waiting out the rest of its cycle.
-     *       {@code afterTick} still runs, the way {@code BasicMachineBlockEntity:171} and
-     *       {@code :235} call {@code updateCoverSignals()} on every path.</li>
-     *   <li>the per-face dispatch — {@code tickUtilityCovers:1545-1568}. Only
-     *       {@link CoverUtilityBehaviors#RETRIEVER_ITEM} is dispatched: the item filter has no tick
-     *       behaviour ({@code CoverFilterItem} implements {@code interceptItemInsert}/
-     *       {@code interceptItemExtract} and nothing periodic), and everything else falls through on
-     *       purpose — the pump, conveyor and robot arm need a {@code MachineControl} or the machine's
-     *       own slots, and the machine switches, detectors and panels need the
-     *       {@code MachineControl} this host does not provide.</li>
-     * </ul>
-     *
-     * <p>The retriever's target is this pipe, taken through its own {@link IItemHandler}: GT6 hands
-     * {@code tTarget = aData.mTileEntity.getAdjacentTileEntity(aSide)} ({@code CoverRetrieverItem:67})
-     * — the inventory across the cover's face — and {@code CoverUtilityBehaviors.tickRetriever} has
-     * always substituted "the host's own slots" for the network side of that walk (its javadoc says
-     * so). Here the host's own slots are the pipe's one-slot buffer, so a retriever on an item pipe
-     * pulls the filtered items out of the inventory it faces and into the pipe — the reverse of the
-     * original's direction, and the same substitution the machine already makes, now that the host
-     * really has slots to give.</p>
-     */
+    /** Dispatch inventory covers against this pipe; controller pause gates transfer operations. */
     private void tickCovers() {
         PanelCoverRuntime runtime = panels();
         coverTicks++;
@@ -381,6 +344,8 @@ public class ItemPipeBlockEntity extends BlockEntity
             if (id == null) continue;
             int face = side.ordinal();
             switch (id) {
+                case CoverItems.PUMP, CoverItems.CONVEYOR, CoverItems.ROBOT_ARM ->
+                        com.gregtech.gregtech.content.cover.ComponentCoverRuntime.tick(this,side,level.getGameTime());
                 case CoverUtilityBehaviors.RETRIEVER_ITEM -> {
                     ItemStack cover = getCover(side);
                     boolean acted = CoverUtilityBehaviors.tickRetriever(
@@ -642,11 +607,11 @@ public class ItemPipeBlockEntity extends BlockEntity
     }
 
     private boolean canEmitTo(Direction side) {
-        return (disabledOutputs & (1 << side.ordinal())) == 0;
+        return com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsItem(getCover(side),false) && (disabledOutputs & (1 << side.ordinal())) == 0;
     }
 
     private boolean canAcceptFrom(Direction side) {
-        return (disabledInputs & (1 << side.ordinal())) == 0
+        return com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsItem(getCover(side),true) && (disabledInputs & (1 << side.ordinal())) == 0
                 && (lastReceivedFrom < 0 || lastReceivedFrom == side.ordinal());
     }
 
@@ -857,7 +822,7 @@ public class ItemPipeBlockEntity extends BlockEntity
     /** Whether this face's cover gates item traffic — the item filter or the item retriever. */
     private boolean isItemCoverFace(Direction side) {
         String id = coverIdOf(side);
-        return CoverUtilityBehaviors.FILTER_ITEM.equals(id)
+        return com.gregtech.gregtech.content.cover.ComponentCoverRuntime.kind(getCover(side))!=null || CoverUtilityBehaviors.FILTER_ITEM.equals(id)
                 || CoverUtilityBehaviors.RETRIEVER_ITEM.equals(id);
     }
 
@@ -879,6 +844,8 @@ public class ItemPipeBlockEntity extends BlockEntity
      *  Forge's IItemHandler.insertItem() doesn't provide direction info, so external callers
      *  (hoppers, other inventories pushing into pipes) can't set lastReceivedFrom.
      *  This wrapper intercepts insertItem to call setReceivedFrom before delegating. */
+    @Override public IItemHandler componentItems(Direction side) { return new SideAwareItemHandler(side); }
+
     private class SideAwareItemHandler implements IItemHandler {
         private final byte sideOrdinal;
 
@@ -962,7 +929,7 @@ public class ItemPipeBlockEntity extends BlockEntity
         @NotNull
         @Override
         public ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
-            if (!coverPermitsItemTraffic(side, stack)) return stack;
+            if (!com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsItem(getCover(side),true) || !coverPermitsItemTraffic(side, stack)) return stack;
             return super.insertItem(slot, stack, simulate);
         }
 
@@ -975,7 +942,7 @@ public class ItemPipeBlockEntity extends BlockEntity
         @Override
         public ItemStack extractItem(int slot, int amount, boolean simulate) {
             ItemStack present = getStackInSlot(slot);
-            if (present.isEmpty() || !coverPermitsItemTraffic(side, present)) return ItemStack.EMPTY;
+            if (!com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsItem(getCover(side),false) || present.isEmpty() || !coverPermitsItemTraffic(side, present)) return ItemStack.EMPTY;
             return super.extractItem(slot, amount, simulate);
         }
     }
@@ -1050,6 +1017,7 @@ public class ItemPipeBlockEntity extends BlockEntity
         hasCovers = any;
         // GT6 re-reads each cover's stored values on load; only worth doing when one is there.
         if (any) panels().loaded();
+        for(var side:Direction.values())com.gregtech.gregtech.content.cover.ComponentCoverRuntime.attached(this,side);
     }
 
     @Override

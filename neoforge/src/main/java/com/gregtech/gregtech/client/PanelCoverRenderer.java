@@ -14,7 +14,10 @@ public final class PanelCoverRenderer {
     private static final String[] BUTTON_STYLES={"underlay","underlay_0_to_15","underlay_0_to_f","underlay_1_to_16","underlay_16_1_to_15","underlay_keypad_1_to_9","underlay_keypad_9_to_1","underlay_bits"};
     private PanelCoverRenderer(){}
     public static List<String> layers(ItemStack stack){
-        var panel=PanelCover.of(stack);if(panel==null)return List.of();
+        var panel=PanelCover.of(stack);
+        var component=ComponentCoverRuntime.kind(stack);
+        if(component!=null)return List.of(ComponentCoverRules.texture(component,ComponentCoverRuntime.visual(stack)));
+        if(panel==null)return List.of();
         int value=PanelCoverRuntime.value(stack),style=PanelCoverRuntime.style(stack);
         return switch(panel){
             case MANUAL->List.of("manualselector/underlay","manualselector/"+(value&15));
@@ -33,7 +36,7 @@ public final class PanelCoverRenderer {
         };
     }
     public static boolean renderFace(PanelCoverHost host,Direction side,PoseStack pose,MultiBufferSource buffers,int fallbackLight){
-        var stack=host.getCover(side);if(PanelCover.of(stack)==null)return false;
+        var stack=host.getCover(side);if(PanelCover.of(stack)==null&&ComponentCoverRuntime.kind(stack)==null)return false;
         var owner=host.coverOwner();var level=owner.getLevel();
         int light=level==null?fallbackLight:LevelRenderer.getLightColor(level,owner.getBlockPos().relative(side));
         var vc=buffers.getBuffer(RenderType.cutout());var matrix=pose.last().pose();

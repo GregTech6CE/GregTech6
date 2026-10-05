@@ -43,7 +43,7 @@ public class LargeHeatExchangerControllerBlock extends HorizontalDirectionalBloc
     @Override public java.util.List<net.minecraft.world.item.ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
         var stack=new net.minecraft.world.item.ItemStack(this);
         if(builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof LargeHeatExchangerControllerBlockEntity machine)
-            stack.getOrCreateTag().put("BlockEntityTag",machine.saveWithoutMetadata());
+            stack.getOrCreateTag().put("BlockEntityTag",com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(machine,machine.saveWithoutMetadata()));
         return java.util.List.of(stack);
     }
 }

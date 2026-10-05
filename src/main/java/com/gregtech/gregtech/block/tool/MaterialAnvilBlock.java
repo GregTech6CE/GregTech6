@@ -38,7 +38,7 @@ public final class MaterialAnvilBlock extends ShapedToolBlock implements EntityB
     private ItemStack packed(BlockEntity entity) {
         ItemStack stack = new ItemStack(this);
         if (entity instanceof MaterialAnvilBlockEntity anvil) {
-            var data = anvil.saveWithoutMetadata();
+            var data = com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(anvil,anvil.saveWithoutMetadata());
             data.remove("gt.work0"); data.remove("gt.work1");
             stack.getOrCreateTag().put("BlockEntityTag", data);
         }

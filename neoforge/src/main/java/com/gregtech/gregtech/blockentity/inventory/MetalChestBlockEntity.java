@@ -18,7 +18,15 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import javax.annotation.Nullable;
 
 /** GT6 metal chest: a plain 54-slot chest. */
-public class MetalChestBlockEntity extends BlockEntity implements MenuProvider {
+public class MetalChestBlockEntity extends BlockEntity implements MenuProvider, com.gregtech.gregtech.content.cover.PanelCoverHost {
+    private final com.gregtech.gregtech.content.cover.ComponentCoverStorage componentCovers = new com.gregtech.gregtech.content.cover.ComponentCoverStorage(this);
+    @Override public net.minecraft.world.item.ItemStack getCover(Direction side) { return componentCovers.get(side); }
+    @Override public boolean attachCover(Direction side, net.minecraft.world.item.ItemStack stack) { return componentCovers.attach(side,stack); }
+    @Override public net.minecraft.world.item.ItemStack removeCover(Direction side) { return componentCovers.remove(side); }
+    @Override public com.gregtech.gregtech.content.cover.PanelCoverRuntime panels() { return componentCovers.panels(); }
+    public void tickComponentCovers() { componentCovers.tick(); }
+    public void dropComponentCovers() { componentCovers.drop(); }
+
 
     private final net.minecraft.world.level.block.entity.ChestLidController lid = new net.minecraft.world.level.block.entity.ChestLidController();
     private final net.minecraft.world.level.block.entity.ContainerOpenersCounter openers = new net.minecraft.world.level.block.entity.ContainerOpenersCounter() {
@@ -47,12 +55,19 @@ public class MetalChestBlockEntity extends BlockEntity implements MenuProvider {
         if (id == 1) { lid.shouldBeOpen(value > 0); return true; }
         return super.triggerEvent(id, value);
     }
+    @Override public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
+    }
     @Override public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
         CompoundTag tag = new CompoundTag();
         tag.putBoolean("Open", openers.getOpenerCount() > 0);
+        componentCovers.save(tag,lookup);
         return tag;
     }
-    @Override public void handleUpdateTag(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) { lid.shouldBeOpen(tag.getBoolean("Open")); }
+    @Override public void onDataPacket(net.minecraft.network.Connection connection, net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet, net.minecraft.core.HolderLookup.Provider lookup) {
+        if(packet.getTag()!=null)handleUpdateTag(packet.getTag(),lookup);
+    }
+    @Override public void handleUpdateTag(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) { lid.shouldBeOpen(tag.getBoolean("Open")); componentCovers.load(tag,lookup); }
 
     private final ItemStackHandler inventory = new ItemStackHandler(54) {
         @Override
@@ -177,6 +192,7 @@ public class MetalChestBlockEntity extends BlockEntity implements MenuProvider {
     @Override
     protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
         super.saveAdditional(tag,lookup);
+        componentCovers.save(tag,lookup);
         tag.put("Inventory", inventory.serializeNBT(lookup));
         tag.putBoolean("GTLootGenerated", lootGenerated);
         if (dungeonLoot != null) tag.putString("gt.dungeonloot", dungeonLoot.toString());
@@ -186,6 +202,7 @@ public class MetalChestBlockEntity extends BlockEntity implements MenuProvider {
     @Override
     protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
         super.loadAdditional(tag,lookup);
+        componentCovers.load(tag,lookup);
         CompoundTag storedInventory = tag.getCompound("Inventory").copy();
         storedInventory.putInt("Size", 54);
         inventory.deserializeNBT(lookup,storedInventory);
@@ -193,4 +210,6 @@ public class MetalChestBlockEntity extends BlockEntity implements MenuProvider {
         dungeonLoot = tag.contains("gt.dungeonloot") ? net.minecraft.resources.ResourceLocation.tryParse(tag.getString("gt.dungeonloot")) : null;
         dungeonLootSeed = tag.getLong("GTDungeonLootSeed");
     }
+    public net.neoforged.neoforge.items.IItemHandler componentCapability(Direction side) { return side==null?inventory:com.gregtech.gregtech.content.cover.ComponentCoverAccess.items(this,side,inventory); }
+
 }

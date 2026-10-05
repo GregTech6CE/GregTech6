@@ -108,13 +108,13 @@ public final class OriginalLargeBoilerControllerBlock extends HorizontalDirectio
             return List.of();
         ItemStack drop = new ItemStack(this);
         if (entity instanceof OriginalLargeBoilerControllerBlockEntity boiler)
-            drop.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(boiler.saveWithId(boiler.getLevel().registryAccess())));
+            drop.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(boiler,boiler.saveWithId(boiler.getLevel().registryAccess()))));
         return List.of(drop);
     }
     @Override public ItemStack getCloneItemStack(BlockState state,net.minecraft.world.phys.HitResult target,net.minecraft.world.level.LevelReader level,BlockPos pos,Player player) {
         ItemStack stack = new ItemStack(this);
         if (level.getBlockEntity(pos) instanceof OriginalLargeBoilerControllerBlockEntity boiler)
-            stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(boiler.saveWithId(boiler.getLevel().registryAccess())));
+            stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(boiler,boiler.saveWithId(boiler.getLevel().registryAccess()))));
         return stack;
     }
     @Override public void setPlacedBy(Level level, BlockPos pos, BlockState state,

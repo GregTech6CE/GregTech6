@@ -47,7 +47,7 @@ public class ImplosionCompressorControllerBlock extends HorizontalDirectionalBlo
     @Override public java.util.List<net.minecraft.world.item.ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
         var stack=new net.minecraft.world.item.ItemStack(this);
         if(builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof ImplosionCompressorControllerBlockEntity machine) {
-            var data=machine.saveWithoutMetadata();data.remove("gt.inventory");for(int i=0;i<6;i++) data.remove("gt_cover_"+i);
+            var data=com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(machine,machine.saveWithoutMetadata());data.remove("gt.inventory");for(int i=0;i<6;i++) data.remove("gt_cover_"+i);
             stack.getOrCreateTag().put("BlockEntityTag",data);
         }
         return java.util.List.of(stack);

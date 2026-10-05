@@ -386,88 +386,15 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         tickUtilityCovers(level, pos);
     }
 
-    /**
-     * Pump cover: auto-extract fluid from adjacent block into machine input tanks.
-     *
-     * <p>GT6 {@code CoverPump} moves {@code 250 << (2 * tier)} mB per 20-tick operation
-     * ({@code CoverPump.onTickPre}) — the tier comes from the compact electric pump item that carries
-     * the cover.</p>
-     */
+    /** Original component covers share direction, tier cadence and one-operation transfer rules. */
     private void tickPumpCover(Level level, BlockPos pos, Direction side, ItemStack cover) {
-        if (level.getGameTime() % 20 != 0) return;
-        if (tanksInput == null || tanksInput.length == 0) return;
-        int throughput = com.gregtech.gregtech.content.cover.CoverItems.pumpThroughput(cover);
-        BlockPos adj = pos.relative(side);
-        BlockEntity be = level.getBlockEntity(adj);
-        if (be instanceof MultiblockPortBlockEntity part && part.isBoundTo(worldPosition)) return;
-        if (be == null) return;
-        IFluidHandler source = be.getCapability(ForgeCapabilities.FLUID_HANDLER, side.getOpposite()).resolve().orElse(null);
-        if (source == null) return;
-        FluidStack drained = source.drain(throughput, IFluidHandler.FluidAction.SIMULATE);
-        if (drained.isEmpty()) return;
-        int filled = fill(drained, IFluidHandler.FluidAction.SIMULATE);
-        if (filled <= 0) return;
-        FluidStack toDrain = drained.copy();
-        toDrain.setAmount(Math.min(filled, throughput));
-        FluidStack actuallyDrained = source.drain(toDrain, IFluidHandler.FluidAction.EXECUTE);
-        if (!actuallyDrained.isEmpty()) {
-            fill(actuallyDrained, IFluidHandler.FluidAction.EXECUTE);
-        }
+        com.gregtech.gregtech.content.cover.ComponentCoverRuntime.tick(this, side, level.getGameTime());
     }
-
-    /**
-     * Conveyor cover: auto-pull items from adjacent inventory into input slots.
-     *
-     * <p>GT6 {@code CoverConveyor(512 >> i)} moves one stack per {@code 512 >> tier} ticks; the port
-     * keeps that interval and its own import direction (the original toggles the direction with a
-     * screwdriver instead of having two items).</p>
-     */
     private void tickConveyorCover(Level level, BlockPos pos, Direction side, ItemStack cover) {
-        if (level.getGameTime() % com.gregtech.gregtech.content.cover.CoverItems.itemInterval(cover) != 0) return;
-        if (itemHandler == null) return;
-        int inputCount = itemHandler.inputCount();
-        if (inputCount <= 0) return;
-        BlockPos adj = pos.relative(side);
-        BlockEntity be = level.getBlockEntity(adj);
-        if (be instanceof MultiblockPortBlockEntity part && part.isBoundTo(worldPosition)) return;
-        if (be == null) return;
-        IItemHandler source = be.getCapability(ForgeCapabilities.ITEM_HANDLER, side.getOpposite()).resolve().orElse(null);
-        if (source == null) return;
-        for (int srcSlot = 0; srcSlot < source.getSlots(); srcSlot++) {
-            ItemStack stack = source.getStackInSlot(srcSlot);
-            if (stack.isEmpty()) continue;
-            if (!acceptsAutomaticInput(stack)) continue;
-            for (int i = 0; i < inputCount; i++) {
-                ItemStack remaining = itemHandler.insertItem(i, stack.copy(), true);
-                int toTake = stack.getCount() - remaining.getCount();
-                if (toTake <= 0) continue;
-                ItemStack extracted = source.extractItem(srcSlot, toTake, false);
-                if (!extracted.isEmpty()) {
-                    ItemStack leftover = itemHandler.insertItem(i, extracted, false);
-                    returnOrDrop(leftover, source);
-                    if (source.getStackInSlot(srcSlot).isEmpty()) break;
-                    stack = source.getStackInSlot(srcSlot);
-                }
-            }
-        }
+        com.gregtech.gregtech.content.cover.ComponentCoverRuntime.tick(this, side, level.getGameTime());
     }
-
-    /**
-     * Robot arm cover: auto-push output items into adjacent inventory.
-     *
-     * <p>GT6 {@code CoverRobotArm(512 >> i)} has the same timing as the conveyor
-     * ({@code AbstractCoverAttachment} move on a {@code SERVER_TIME % mTiming == 0} boundary).</p>
-     */
     private void tickRobotArmCover(Level level, BlockPos pos, Direction side, ItemStack cover) {
-        if (level.getGameTime() % com.gregtech.gregtech.content.cover.CoverItems.itemInterval(cover) != 0) return;
-        if (itemHandler == null) return;
-        BlockPos adj = pos.relative(side);
-        BlockEntity be = level.getBlockEntity(adj);
-        if (be instanceof MultiblockPortBlockEntity part && part.isBoundTo(worldPosition)) return;
-        if (be == null) return;
-        IItemHandler target = be.getCapability(ForgeCapabilities.ITEM_HANDLER, side.getOpposite()).resolve().orElse(null);
-        if (target == null) return;
-        pushOutputItems(target);
+        com.gregtech.gregtech.content.cover.ComponentCoverRuntime.tick(this, side, level.getGameTime());
     }
 
     /**
@@ -1434,21 +1361,21 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         // machine behaving exactly as before this batch.
         @Override public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
             Direction side = be.relativeToAbsolute(relativeSide);
-            return canInsert && be.acceptsAutomaticInput(stack) && !be.isRemoved() && !be.isFaceShuttered(side)
+            return com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsItem(be.getCover(side),true) && canInsert && be.acceptsAutomaticInput(stack) && !be.isRemoved() && !be.isFaceShuttered(side)
                     && !be.coverBlocksItemTraffic(side) && be.coverFilterPermits(side, stack)
                     ? inner.insertItem(slot, stack, simulate) : stack;
         }
         @Override public ItemStack extractItem(int slot, int amount, boolean simulate) {
             Direction side = be.relativeToAbsolute(relativeSide);
             ItemStack existing = inner.getStackInSlot(slot);
-            return canExtract && !be.isRemoved() && !be.isFaceShuttered(side)
+            return com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsItem(be.getCover(side),false) && canExtract && !be.isRemoved() && !be.isFaceShuttered(side)
                     && !be.coverBlocksItemTraffic(side) && be.coverFilterPermits(side, existing)
                     ? inner.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
         }
         @Override public int getSlotLimit(int slot) { return inner.getSlotLimit(slot); }
         @Override public boolean isItemValid(int slot, ItemStack stack) {
             Direction side = be.relativeToAbsolute(relativeSide);
-            return canInsert && be.acceptsAutomaticInput(stack) && !be.isRemoved() && !be.isFaceShuttered(side)
+            return com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsItem(be.getCover(side),true) && canInsert && be.acceptsAutomaticInput(stack) && !be.isRemoved() && !be.isFaceShuttered(side)
                     && !be.coverBlocksItemTraffic(side) && be.coverFilterPermits(side, stack)
                     && inner.isItemValid(slot, stack);
         }
@@ -1466,24 +1393,24 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         @Override public int getTankCapacity(int tank) { return be.getTankCapacity(tank); }
         @Override public boolean isFluidValid(int tank, @NotNull FluidStack stack) {
             Direction side = be.relativeToAbsolute(relativeSide);
-            return canFill && !be.isRemoved() && !be.isFaceShuttered(side)
+            return com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsFluid(be.getCover(side),true) && canFill && !be.isRemoved() && !be.isFaceShuttered(side)
                     && be.coverFluidFilterPermits(side, stack) && be.isFluidValid(tank, stack);
         }
         // §108: GT6 CoverFilterFluid:117-129 interceptFluidFill / interceptFluidDrain.
         @Override public int fill(FluidStack resource, FluidAction action) {
             Direction side = be.relativeToAbsolute(relativeSide);
-            return canFill && !be.isRemoved() && !be.isFaceShuttered(side)
+            return com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsFluid(be.getCover(side),true) && canFill && !be.isRemoved() && !be.isFaceShuttered(side)
                     && be.coverFluidFilterPermits(side, resource) ? be.fill(resource, action) : 0;
         }
         @Override public @NotNull FluidStack drain(FluidStack resource, FluidAction action) {
             Direction side = be.relativeToAbsolute(relativeSide);
-            return canDrain && !be.isRemoved() && !be.isFaceShuttered(side)
+            return com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsFluid(be.getCover(side),false) && canDrain && !be.isRemoved() && !be.isFaceShuttered(side)
                     && be.coverFluidFilterPermits(side, resource) ? be.drain(resource, action) : FluidStack.EMPTY;
         }
         @Override public @NotNull FluidStack drain(int maxDrain, FluidAction action) {
             Direction side = be.relativeToAbsolute(relativeSide);
             FluidStack existing = be.drain(maxDrain, FluidAction.SIMULATE);
-            return canDrain && !be.isRemoved() && !be.isFaceShuttered(side)
+            return com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsFluid(be.getCover(side),false) && canDrain && !be.isRemoved() && !be.isFaceShuttered(side)
                     && be.coverFluidFilterPermits(side, existing) ? be.drain(maxDrain, action) : FluidStack.EMPTY;
         }
     }
@@ -1494,6 +1421,21 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         return recipeMap != MachineRecipeMaps.Autocrafter || level != null
                 && (recipeMap.containsInput(stack) || com.gregtech.gregtech.content.recipe.AutocraftingRecipes.containsInput(
                         level, this, autocraftingProgram.getStackInSlot(0), stack));
+    }
+    @Override public IItemHandler componentItems(Direction side) {
+        if (itemHandler == null) return null;
+        return new IItemHandler() {
+            public int getSlots() { return itemHandler.getSlots(); }
+            public ItemStack getStackInSlot(int slot) { return itemHandler.getStackInSlot(slot); }
+            public int getSlotLimit(int slot) { return itemHandler.getSlotLimit(slot); }
+            public boolean isItemValid(int slot, ItemStack stack) { return acceptsAutomaticInput(stack) && itemHandler.isItemValid(slot, stack); }
+            public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+                return acceptsAutomaticInput(stack) ? itemHandler.insertItem(slot, stack, simulate) : stack;
+            }
+            public ItemStack extractItem(int slot, int amount, boolean simulate) {
+                return slot < inputSlots() ? ItemStack.EMPTY : itemHandler.extractItem(slot, amount, simulate);
+            }
+        };
     }
     public IItemHandlerModifiable inventory() { return itemHandler; }
     public int inputSlots() { return recipeMap != null ? recipeMap.mInputItemsCount : 0; }

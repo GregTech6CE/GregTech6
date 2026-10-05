@@ -19,7 +19,7 @@ import java.util.Locale;
 public final class FluidTransportClientSetup {
     private FluidTransportClientSetup() {}
     private static ResourceLocation id(String path){return ResourceLocation.fromNamespaceAndPath("gregtech",path);}
-    @SubscribeEvent public static void renderers(EntityRenderersEvent.RegisterRenderers event){event.registerBlockEntityRenderer(FluidTransportRegistries.FLUID_PIPE.get(),PipeCoverRenderer::new);}
+    @SubscribeEvent public static void renderers(EntityRenderersEvent.RegisterRenderers event){event.registerBlockEntityRenderer(FluidTransportRegistries.FLUID_PIPE.get(),PipeCoverRenderer::new);event.registerBlockEntityRenderer(FluidTransportRegistries.TANK.get(),TankCoverRenderer::new);}
     @SubscribeEvent public static void blocks(RegisterColorHandlersEvent.Block event){
         for(var entry:FluidTransportRegistries.pipes()){var block=entry.get();event.register((state,level,pos,layer)->layer==0?block.spec().tintRgb():0xFFFFFF,block);}
         for(var entry:FluidTransportRegistries.tanks()){var block=entry.get();event.register((state,level,pos,layer)->layer==0?block.spec().tintRgb():0xFFFFFF,block);}

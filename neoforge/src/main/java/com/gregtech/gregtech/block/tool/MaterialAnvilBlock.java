@@ -38,7 +38,7 @@ public final class MaterialAnvilBlock extends ShapedToolBlock implements EntityB
     private ItemStack packed(BlockEntity entity,net.minecraft.core.HolderLookup.Provider lookup) {
         ItemStack stack = new ItemStack(this);
         if (entity instanceof MaterialAnvilBlockEntity anvil) {
-            var data = anvil.saveWithId(lookup);
+            var data = com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(anvil,anvil.saveWithId(lookup));
             data.remove("gt.work0"); data.remove("gt.work1");
             stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(data));
         }

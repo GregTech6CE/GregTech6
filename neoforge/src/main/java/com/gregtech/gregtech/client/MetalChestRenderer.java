@@ -13,6 +13,7 @@ public final class MetalChestRenderer implements BlockEntityRenderer<MetalChestB
     public MetalChestRenderer(BlockEntityRendererProvider.Context context) {}
     @Override public void render(MetalChestBlockEntity chest, float partialTick, PoseStack pose,
                                  MultiBufferSource buffers, int light, int overlay) {
+        for(var side:net.minecraft.core.Direction.values())PanelCoverRenderer.renderFace(chest,side,pose,buffers,light);
         if (chest.getBlockState().getBlock() instanceof MetalChestBlock block)
             visuals.render(chest.getBlockState().getValue(MetalChestBlock.FACING), block,
                     chest.openness(partialTick), pose, buffers, light, overlay);

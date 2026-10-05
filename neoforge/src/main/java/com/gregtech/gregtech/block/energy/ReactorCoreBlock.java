@@ -81,7 +81,7 @@ public class ReactorCoreBlock extends Block implements EntityBlock, com.gregtech
     @Override public java.util.List<ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder){
         var stack=new ItemStack(this);
         if(builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof com.gregtech.gregtech.blockentity.energy.ReactorCoreBlockEntity core){
-            var tag=core.saveWithId(builder.getLevel().registryAccess());tag.remove("gt.rods");tag.remove("gt.overflow");tag.remove("gt.neutrons");tag.putBoolean("gt.stopped",true);stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(tag));
+            var tag=com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(core,core.saveWithId(builder.getLevel().registryAccess()));tag.remove("gt.rods");tag.remove("gt.overflow");tag.remove("gt.neutrons");tag.putBoolean("gt.stopped",true);stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(tag));
         }
         ReactorPorts.saveItemState(stack, state);
         return java.util.List.of(stack);

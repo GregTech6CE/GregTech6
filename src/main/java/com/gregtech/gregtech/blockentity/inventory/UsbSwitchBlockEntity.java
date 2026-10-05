@@ -38,6 +38,7 @@ public class UsbSwitchBlockEntity extends BlockEntity
     private final UsbSwitchBlock.Kind kind;
     private int mode;
     private final ItemStackHandler items;
+    private final java.util.Map<Direction,LazyOptional<IItemHandler>> componentCaps=new java.util.EnumMap<>(Direction.class);
     private LazyOptional<IItemHandler> itemCapability;
     private final ItemStack[] covers = new ItemStack[]{
             ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY};
@@ -72,6 +73,7 @@ public class UsbSwitchBlockEntity extends BlockEntity
         this.itemCapability = LazyOptional.of(() -> items);
     }
 
+    @Override public net.minecraftforge.items.IItemHandler componentItems(Direction side) { return items; }
     public UsbSwitchBlock.Kind kind() { return kind; }
     public ItemStackHandler items() { return items; }
     public int mode() { return mode; }
@@ -124,7 +126,8 @@ public class UsbSwitchBlockEntity extends BlockEntity
     @Override public MachineControl machineControl(Direction side) { return control; }
     @Override public boolean attachCover(Direction side, ItemStack stack) {
         PanelCover panel = PanelCover.of(stack);
-        if (panel == null || !panel.selector() || !covers[side.ordinal()].isEmpty()
+        if ((panel == null || !panel.selector()) && com.gregtech.gregtech.content.cover.ComponentCoverRuntime.kind(stack)==null
+                || !covers[side.ordinal()].isEmpty()
                 || !panels.canAttach(side, stack)) return false;
         covers[side.ordinal()] = stack.copyWithCount(1);
         panels.attached(side);
@@ -136,13 +139,14 @@ public class UsbSwitchBlockEntity extends BlockEntity
         if (cover.isEmpty()) return ItemStack.EMPTY;
         covers[side.ordinal()] = ItemStack.EMPTY;
         // GT6's selector attachment resets the shared mode when it is removed.
-        setMode(0);
+        if(PanelCover.of(cover)!=null)setMode(0);
         setChanged();
         sync();
         return cover;
     }
     public void serverTick() {
         panels.beforeTick();
+        for(var side:Direction.values())com.gregtech.gregtech.content.cover.ComponentCoverRuntime.tick(this,side,level.getGameTime());
         panels.afterTick();
     }
 
@@ -184,8 +188,9 @@ public class UsbSwitchBlockEntity extends BlockEntity
         panels.loaded();
     }
     @Override public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction side) {
-        return capability == ForgeCapabilities.ITEM_HANDLER ? itemCapability.cast() : super.getCapability(capability, side);
+        if(capability==ForgeCapabilities.ITEM_HANDLER)return side==null?itemCapability.cast():componentCaps.computeIfAbsent(side,face->LazyOptional.of(()->com.gregtech.gregtech.content.cover.ComponentCoverAccess.items(this,face,items))).cast();
+        return super.getCapability(capability,side);
     }
-    @Override public void invalidateCaps() { super.invalidateCaps(); itemCapability.invalidate(); }
+    @Override public void invalidateCaps() { super.invalidateCaps(); itemCapability.invalidate();componentCaps.values().forEach(LazyOptional::invalidate);componentCaps.clear(); }
     @Override public void reviveCaps() { super.reviveCaps(); itemCapability = LazyOptional.of(() -> items); }
 }

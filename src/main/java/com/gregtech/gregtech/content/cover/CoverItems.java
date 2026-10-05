@@ -115,7 +115,7 @@ public final class CoverItems {
      */
     public static int pumpThroughput(ItemStack stack) {
         int tier = tierIndex(stack);
-        return tier < 0 ? 1000 : 250 << (2 * tier);
+        return ComponentCoverRules.pumpThroughput(tier);
     }
 
     /**
@@ -124,7 +124,7 @@ public final class CoverItems {
      */
     public static int itemInterval(ItemStack stack) {
         int tier = tierIndex(stack);
-        return tier < 0 ? 20 : Math.max(1, 512 >> tier);
+        return ComponentCoverRules.itemInterval(tier);
     }
 
     /**

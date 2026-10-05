@@ -682,6 +682,7 @@ public final class GregTechClient {
         // (pipe/wire arms render via PipeWireBakedModel — no BERs needed)
 
         event.registerBlockEntityRenderer(GTBlockEntities.METAL_CHEST.get(), MetalChestRenderer::new);
+        event.registerBlockEntityRenderer(GTBlockEntities.TANK.get(),TankCoverRenderer::new);
         event.registerBlockEntityRenderer(GTBlockEntities.ENERGY_NODE.get(), EnergyNodeRenderer::new);
         event.registerBlockEntityRenderer(GTBlockEntities.CHEMICAL_BATTERY.get(), ChemicalBatteryRenderer::new);
         event.registerBlockEntityRenderer(GTBlockEntities.MASS_STORAGE.get(), MassStorageRenderer::new);

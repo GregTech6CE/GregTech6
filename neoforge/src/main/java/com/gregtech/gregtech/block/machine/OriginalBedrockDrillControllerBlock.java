@@ -79,7 +79,7 @@ public final class OriginalBedrockDrillControllerBlock extends Block implements 
     @Override public List<ItemStack> getDrops(BlockState state, LootParams.Builder context) {
         ItemStack stack = new ItemStack(this);
         if (context.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof BedrockDrillControllerBlockEntity drill) {
-            var data = drill.saveWithId(drill.getLevel().registryAccess());
+            var data = com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(drill,drill.saveWithId(drill.getLevel().registryAccess()));
             data.remove("gt.output"); // The output slot is dropped separately by onRemove.
             stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(data));
         }
@@ -89,7 +89,7 @@ public final class OriginalBedrockDrillControllerBlock extends Block implements 
     @Override public ItemStack getCloneItemStack(BlockState state,net.minecraft.world.phys.HitResult hit,net.minecraft.world.level.LevelReader level,BlockPos pos,net.minecraft.world.entity.player.Player player) {
         ItemStack stack = new ItemStack(this);
         if (level.getBlockEntity(pos) instanceof BedrockDrillControllerBlockEntity drill)
-            stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(drill.saveWithId(drill.getLevel().registryAccess())));
+            stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(drill,drill.saveWithId(drill.getLevel().registryAccess()))));
         return stack;
     }
 

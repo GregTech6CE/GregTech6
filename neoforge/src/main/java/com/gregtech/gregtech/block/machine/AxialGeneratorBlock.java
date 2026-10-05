@@ -58,7 +58,7 @@ public abstract class AxialGeneratorBlock extends DirectionalBlock implements En
     }
     @Override public List<ItemStack> getDrops(BlockState state,LootParams.Builder builder) {
         var stack=new ItemStack(this);
-        if(builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof AxialGeneratorBlockEntity machine)stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(machine.saveWithId(machine.getLevel().registryAccess())));
+        if(builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof AxialGeneratorBlockEntity machine)stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(machine,machine.saveWithId(machine.getLevel().registryAccess()))));
         return List.of(stack);
     }
     @Override public void appendHoverText(ItemStack stack,net.minecraft.world.item.Item.TooltipContext context,List<net.minecraft.network.chat.Component> lines,TooltipFlag flag) {

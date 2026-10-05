@@ -31,6 +31,7 @@ public final class PanelCoverRuntime {
         return null;
     }
     public boolean canAttach(Direction side,ItemStack stack){
+        if(!ComponentCoverRuntime.canAttach(host,side,stack))return false;
         // GT6 logistics covers only attach to ITileEntityLogistics; ordinary machines and pipes
         // must not accept them merely because they are registered cover items.
         if(com.gregtech.gregtech.content.logistics.LogisticsCoverType.of(stack)!=null)
@@ -45,6 +46,7 @@ public final class PanelCoverRuntime {
         return true;
     }
     public void attached(Direction side){
+        ComponentCoverRuntime.attached(host,side);
         var stack=host.getCover(side);var panel=PanelCover.of(stack);var c=control(side);
         if(panel!=null&&panel.selector()&&c!=null)stack.getOrCreateTag().putInt(VALUE,c.mode()&15);
         refreshStopped();changed();

@@ -54,7 +54,7 @@ public class BedrockDrillControllerBlock extends HorizontalDirectionalBlock impl
     @Override public java.util.List<net.minecraft.world.item.ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
         var stack=new net.minecraft.world.item.ItemStack(this);
         if(builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof BedrockDrillControllerBlockEntity machine) {
-            var data=machine.saveWithoutMetadata();data.remove("gt.output");stack.getOrCreateTag().put("BlockEntityTag",data);
+            var data=com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(machine,machine.saveWithoutMetadata());data.remove("gt.output");stack.getOrCreateTag().put("BlockEntityTag",data);
         }
         return java.util.List.of(stack);
     }

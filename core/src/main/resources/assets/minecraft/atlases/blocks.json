@@ -48,6 +48,21 @@
       "prefix": "block/machines/covers/logistics/"
     },
     {
+      "type": "minecraft:directory",
+      "source": "block/machines/covers/pump",
+      "prefix": "block/machines/covers/pump/"
+    },
+    {
+      "type": "minecraft:directory",
+      "source": "block/machines/covers/conveyor",
+      "prefix": "block/machines/covers/conveyor/"
+    },
+    {
+      "type": "minecraft:directory",
+      "source": "block/machines/covers/robotarm",
+      "prefix": "block/machines/covers/robotarm/"
+    },
+    {
       "type": "minecraft:single",
       "resource": "gregtech:block/iconsets/axle"
     },

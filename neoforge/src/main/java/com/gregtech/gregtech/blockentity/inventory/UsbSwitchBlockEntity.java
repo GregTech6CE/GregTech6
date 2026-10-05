@@ -67,6 +67,7 @@ public class UsbSwitchBlockEntity extends BlockEntity
         };
     }
 
+    @Override public net.neoforged.neoforge.items.IItemHandler componentItems(Direction side) { return items; }
     public UsbSwitchBlock.Kind kind() { return kind; }
     public ItemStackHandler items() { return items; }
     public int mode() { return mode; }
@@ -119,7 +120,8 @@ public class UsbSwitchBlockEntity extends BlockEntity
     @Override public MachineControl machineControl(Direction side) { return control; }
     @Override public boolean attachCover(Direction side, ItemStack stack) {
         PanelCover panel = PanelCover.of(stack);
-        if (panel == null || !panel.selector() || !covers[side.ordinal()].isEmpty()
+        if ((panel == null || !panel.selector()) && com.gregtech.gregtech.content.cover.ComponentCoverRuntime.kind(stack)==null
+                || !covers[side.ordinal()].isEmpty()
                 || !panels.canAttach(side, stack)) return false;
         covers[side.ordinal()] = stack.copyWithCount(1);
         panels.attached(side);
@@ -131,13 +133,14 @@ public class UsbSwitchBlockEntity extends BlockEntity
         if (cover.isEmpty()) return ItemStack.EMPTY;
         covers[side.ordinal()] = ItemStack.EMPTY;
         // GT6's selector attachment resets the shared mode when it is removed.
-        setMode(0);
+        if(PanelCover.of(cover)!=null)setMode(0);
         setChanged();
         sync();
         return cover;
     }
     public void serverTick() {
         panels.beforeTick();
+        for(var side:Direction.values())com.gregtech.gregtech.content.cover.ComponentCoverRuntime.tick(this,side,level.getGameTime());
         panels.afterTick();
     }
 
@@ -178,5 +181,6 @@ public class UsbSwitchBlockEntity extends BlockEntity
         }
         panels.loaded();
     }
-    public IItemHandler itemHandler(){return isRemoved()?null:items;}
+    public IItemHandler itemHandler(){return itemHandler(null);}
+    public IItemHandler itemHandler(Direction side){return isRemoved()?null:side==null?items:com.gregtech.gregtech.content.cover.ComponentCoverAccess.items(this,side,items);}
 }

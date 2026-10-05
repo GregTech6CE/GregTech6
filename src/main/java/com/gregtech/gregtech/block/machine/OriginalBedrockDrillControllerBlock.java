@@ -79,7 +79,7 @@ public final class OriginalBedrockDrillControllerBlock extends Block implements 
     @Override public List<ItemStack> getDrops(BlockState state, LootParams.Builder context) {
         ItemStack stack = new ItemStack(this);
         if (context.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof BedrockDrillControllerBlockEntity drill) {
-            var data = drill.saveWithoutMetadata();
+            var data = com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(drill,drill.saveWithoutMetadata());
             data.remove("gt.output"); // The output slot is dropped separately by onRemove.
             stack.addTagElement("BlockEntityTag", data);
         }
@@ -89,7 +89,7 @@ public final class OriginalBedrockDrillControllerBlock extends Block implements 
     @Override public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
         ItemStack stack = new ItemStack(this);
         if (level.getBlockEntity(pos) instanceof BedrockDrillControllerBlockEntity drill)
-            stack.addTagElement("BlockEntityTag", drill.saveWithoutMetadata());
+            stack.addTagElement("BlockEntityTag", com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(drill,drill.saveWithoutMetadata()));
         return stack;
     }
 

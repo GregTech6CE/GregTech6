@@ -88,7 +88,7 @@ public class TankBlock extends Block implements EntityBlock {
     public java.util.List<ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
         var stack=new ItemStack(this);
         if(builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof TankBlockEntity tank)
-            stack.addTagElement("BlockEntityTag",tank.saveWithoutMetadata());
+            stack.addTagElement("BlockEntityTag",com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(tank,tank.saveWithoutMetadata()));
         return java.util.List.of(stack);
     }
 

@@ -30,7 +30,7 @@ import java.util.List;
  */
 public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gregtech.gregtech.api.inventory.BlockContents, com.gregtech.gregtech.api.machine.MachineControl.Provider, com.gregtech.gregtech.content.cover.PanelCoverHost {
 
-    private java.util.Map<Direction,net.minecraft.world.item.ItemStack> batteryCovers=java.util.Map.of();
+    private java.util.Map<Direction,net.minecraft.world.item.ItemStack> batteryCovers=new java.util.EnumMap<>(Direction.class);
     private com.gregtech.gregtech.content.cover.PanelCoverRuntime batteryPanels;
     private com.gregtech.gregtech.content.energy.ElectricTransformerControl transformerControl;
     public boolean hasControlPanels(){return isBatteryBox()||isElectricTransformer()||isSolar();}
@@ -43,12 +43,11 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
     @Override public boolean coverPossible(Direction side){return isSolar()|| (isBatteryBox()?batteryEnergy.buffer()>spec.outputRate():isElectricTransformer()&&transformerControl.running());}
     @Override public boolean attachCover(Direction side,net.minecraft.world.item.ItemStack stack){
         var panel=com.gregtech.gregtech.content.cover.PanelCover.of(stack);
-        if(!hasControlPanels()||panel==null||(isElectricTransformer()&&panel==com.gregtech.gregtech.content.cover.PanelCover.SHUTTER)
+        if((!hasControlPanels()&&com.gregtech.gregtech.content.cover.ComponentCoverRuntime.kind(stack)==null&&panel!=com.gregtech.gregtech.content.cover.PanelCover.CONTROLLER)||(panel==null&&com.gregtech.gregtech.content.cover.ComponentCoverRuntime.kind(stack)==null)||(isElectricTransformer()&&panel==com.gregtech.gregtech.content.cover.PanelCover.SHUTTER)
                 ||!getCover(side).isEmpty()||!panels().canAttach(side,stack))return false;
         batteryCovers.put(side,stack.copyWithCount(1));panels().attached(side);return true;
     }
     @Override public net.minecraft.world.item.ItemStack removeCover(Direction side){
-        if(!hasControlPanels())return net.minecraft.world.item.ItemStack.EMPTY;
         var removed=batteryCovers.remove(side);
         if(removed==null)return net.minecraft.world.item.ItemStack.EMPTY;
         var panel=com.gregtech.gregtech.content.cover.PanelCover.of(removed);
@@ -77,6 +76,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
     private long turbinePending, steamRemainder;
     private boolean converterStopped;
     @Nullable
+    private final java.util.Map<Direction,LazyOptional<IFluidHandler>> componentSteamCaps=new java.util.EnumMap<>(Direction.class);
     private FluidTankGT steamTank;
     @Nullable
     private LazyOptional<IFluidHandler> steamCap;
@@ -319,10 +319,10 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
             @Override public int getSlots(){return batterySlots.getSlots();}
             @Override public net.minecraft.world.item.ItemStack getStackInSlot(int slot){return batterySlots.getStackInSlot(slot);}
             @Override public net.minecraft.world.item.ItemStack insertItem(int slot,net.minecraft.world.item.ItemStack stack,boolean simulate){
-                return blocked()?stack:batterySlots.insertItem(slot,stack,simulate);
+                return blocked()||!com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsItem(getCover(side),true)?stack:batterySlots.insertItem(slot,stack,simulate);
             }
             @Override public net.minecraft.world.item.ItemStack extractItem(int slot,int amount,boolean simulate){
-                return blocked()?net.minecraft.world.item.ItemStack.EMPTY:batterySlots.extractItem(slot,amount,simulate);
+                return blocked()||!com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsItem(getCover(side),false)?net.minecraft.world.item.ItemStack.EMPTY:batterySlots.extractItem(slot,amount,simulate);
             }
             @Override public int getSlotLimit(int slot){return batterySlots.getSlotLimit(slot);}
             @Override public boolean isItemValid(int slot,net.minecraft.world.item.ItemStack stack){return !blocked()&&batterySlots.isItemValid(slot,stack);}
@@ -347,8 +347,14 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, EnergyNodeBlockEntity be) {
         if (be.spec == null) return;
+        if(!be.isBatteryBox()&&!be.isSolar()&&!be.isElectricTransformer()&&!be.batteryCovers.isEmpty()) {
+            be.panels().beforeTick();
+            for(var side:Direction.values())com.gregtech.gregtech.content.cover.ComponentCoverRuntime.tick(be,side,level.getGameTime());
+            be.panels().afterTick();
+        }
         if (be.isBatteryBox()) {
             be.panels().beforeTick();
+            for(var side:Direction.values())com.gregtech.gregtech.content.cover.ComponentCoverRuntime.tick(be,side,level.getGameTime());
             be.batteryEnergy.tick(level.getGameTime(),level,pos);
             long offered=be.batteryEnergy.offered();
             if(offered>0) be.batteryEnergy.emitted(EnergyTransfer.emitEnergyToSide(
@@ -920,7 +926,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
             if (steamCap == null || !steamCap.isPresent()) {
                 steamCap = LazyOptional.of(this::turbineInlet);
             }
-            return steamCap.cast();
+            return side==null?steamCap.cast():componentSteamCaps.computeIfAbsent(side,face->LazyOptional.of(()->com.gregtech.gregtech.content.cover.ComponentCoverAccess.fluids(this,face,turbineInlet()))).cast();
         }
         return super.getCapability(cap, side);
     }
@@ -930,6 +936,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
         super.invalidateCaps();
         if (batteryCap != null) { batteryCap.invalidate(); batteryCap = null; }
         if(sidedBatteryCaps!=null){sidedBatteryCaps.values().forEach(LazyOptional::invalidate);sidedBatteryCaps.clear();}
+        componentSteamCaps.values().forEach(LazyOptional::invalidate);componentSteamCaps.clear();
         if (steamCap != null) { steamCap.invalidate(); steamCap = null; }
         if (feCap != null) { feCap.invalidate(); feCap = null; }
         magnetFeCaps.values().forEach(LazyOptional::invalidate);
@@ -951,7 +958,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
             batteryEnergy.save(tag);
 
         }
-        if(hasControlPanels())batteryCovers.forEach((side,stack)->tag.put("gt.battery_cover_"+side.ordinal(),stack.save(new CompoundTag())));
+        batteryCovers.forEach((side,stack)->tag.put("gt.battery_cover_"+side.ordinal(),stack.save(new CompoundTag())));
         if(isElectricTransformer())transformerControl.save(tag);
         tag.putBoolean("gt.inverted", inverted);
         if (isMagnet()) {
@@ -988,7 +995,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
             batteryEnergy.load(tag);
         }
         if(isElectricTransformer())transformerControl.load(tag);
-        if(hasControlPanels()){
+        {
             batteryCovers.clear();
             for(var side:Direction.values()){
                 String key="gt.battery_cover_"+side.ordinal();
