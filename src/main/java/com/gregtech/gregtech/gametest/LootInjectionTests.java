@@ -209,7 +209,7 @@ public final class LootInjectionTests {
                         + " (GT6 drops pages of 256 characters or more)");
             }
             ItemStack book = GTBooks.bookStack(name);
-            h.assertTrue(book.is(Items.WRITTEN_BOOK) && WrittenBookItem.makeSureTagIsValid(book.getTag()),
+            h.assertTrue(book.getItem() instanceof com.gregtech.gregtech.item.ColoredBookItem && WrittenBookItem.makeSureTagIsValid(book.getTag()),
                     name + " opens as a valid Minecraft 1.20.1 written book");
         }
         h.assertTrue(GTBooks.pagesOf("Manual_Tools").size() == 43
@@ -257,7 +257,7 @@ public final class LootInjectionTests {
         for (int i = 0; i < 60; i++) {
             ItemStack stack = GTLootTables.roll("gt.books", random);
             h.assertTrue(!stack.isEmpty(), "gt.books roll returned a book");
-            h.assertTrue(stack.is(Items.WRITTEN_BOOK), "gt.books roll is a written book");
+            h.assertTrue(stack.getItem() instanceof com.gregtech.gregtech.item.ColoredBookItem, "gt.books roll uses its original book cover");
             h.assertTrue(stack.getTag() != null && stack.getTag().contains("title"),
                     "the rolled book carries its title in NBT");
             h.assertTrue(!stack.getTag().getList("pages", 8).isEmpty(), "the rolled book carries pages");

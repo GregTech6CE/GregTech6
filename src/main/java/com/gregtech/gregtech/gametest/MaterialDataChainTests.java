@@ -99,7 +99,7 @@ public final class MaterialDataChainTests {
                 List.of(new ItemStack(Items.PAPER, 3), scanned), List.of(dye), false, 2, 1);
         h.assertTrue(printed != null, "a scanned stick plus three paper and dye prints something");
         ItemStack page = printed.getOutput(0);
-        h.assertTrue(page.is(Items.WRITTEN_BOOK), "the printer prints a book: " + page);
+        h.assertTrue(page.getItem() instanceof com.gregtech.gregtech.item.ColoredBookItem, "the printer prints a source dictionary cover: " + page);
         h.assertTrue(GTMaterialDictionary.materialOf(page) == material,
                 "the printed book is the scanned material's dictionary");
         h.assertTrue(page.getTag().getList("pages", 8).size() == GTMaterialDictionary.pages(material).size(),
