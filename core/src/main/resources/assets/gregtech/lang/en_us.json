@@ -10076,5 +10076,7 @@
   "message.gregtech.long_distance.no_target": "Has no loaded Target",
   "message.gregtech.long_distance.target_position": "Target should be around: X: %s Y: %s Z: %s",
   "block.gregtech.material_bush": "%s Bush",
-  "tooltip.gregtech.bush.set_output": "Right-click with a berry to set the output"
+  "tooltip.gregtech.bush.set_output": "Right-click with a berry to set the output",
+  "tag.item.gregtech.written_books_small": "Small Written Books",
+  "tag.item.gregtech.written_books_large": "Large Written Books"
 }

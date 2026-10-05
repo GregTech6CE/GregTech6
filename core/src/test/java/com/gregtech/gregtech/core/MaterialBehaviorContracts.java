@@ -117,6 +117,7 @@ public final class MaterialBehaviorContracts {
         assertions += SourceWoodFixtures.validate();
         assertions += AmmunitionSourceSamples.verify();
         validateMaterialBerryBushes();
+        validateRecipeMapPresentation();
         validateIdentityGraph();
         validateMetadata();
         check(com.gregtech.gregtech.content.tool.OriginalToolMaterials.inFamily(GTMaterialRegistry.get("Knightmetal"), "Steel"), "ANY.Steel accepts Knightmetal screws and rings");
@@ -129,6 +130,29 @@ public final class MaterialBehaviorContracts {
         System.out.println("Material behavior contracts passed: " + assertions
                 + " assertions; 1160 materials, 1105 positive IDs, 1523 name entries, 122 prefixes, "
                 + CrucibleReactions.allRecipes().size() + " reactions");
+    }
+
+    private static void validateRecipeMapPresentation() throws Exception {
+        var maps=new ArrayList<>(com.gregtech.gregtech.data.MachineRecipeMapDefinitions.all());
+        for(var field:com.gregtech.gregtech.data.FuelRecipeMapDefinitions.class.getFields())
+            if(field.getType()==com.gregtech.gregtech.api.recipe.RecipeMapSpec.class)maps.add((com.gregtech.gregtech.api.recipe.RecipeMapSpec)field.get(null));
+        var expected=new HashMap<String,String[]>();
+        try(var stream=MaterialBehaviorContracts.class.getResourceAsStream("/recipe-map-presentation-source.tsv");
+                var reader=new java.io.BufferedReader(new java.io.InputStreamReader(stream,java.nio.charset.StandardCharsets.UTF_8))) {
+            for(String line; (line=reader.readLine())!=null;)if(!line.startsWith("#")&&!line.isBlank()) {var columns=line.split("\\|");expected.put(columns[0],columns);}
+        }
+        check(maps.size()==93&&expected.size()==93,"all 85 machine and eight fuel source viewer flags are covered");
+        for(var map:maps) {
+            var source=expected.remove(map.mNameInternal);check(source!=null,"unique source presentation identity "+map.mNameInternal);
+            check(map.mViewerAllowed==Boolean.parseBoolean(source[1])&&map.mShowVoltageAmperage==Boolean.parseBoolean(source[2]),"original NEI flags "+map.mNameInternal);
+        }
+        check(expected.isEmpty(),"no source presentation map omitted");
+        var one=com.gregtech.gregtech.api.recipe.RecipeCaptionVisibility.of(1,false,false);
+        check(!one.usage()&&!one.tier()&&!one.power(),"source one-unit informational recipes omit voltage/usage");
+        var generator=com.gregtech.gregtech.api.recipe.RecipeCaptionVisibility.of(-32,false,false);
+        check(generator.usage()&&!generator.tier()&&!generator.power(),"source hidden voltage still shows non-unit generation rate");
+        var unspecified=com.gregtech.gregtech.api.recipe.RecipeCaptionVisibility.of(0,false,true);
+        check(!unspecified.usage()&&unspecified.tier()&&!unspecified.power(),"source zero-power tier unspecified only if flag allows it");
     }
 
     private static void validateMaterialBerryBushes() {

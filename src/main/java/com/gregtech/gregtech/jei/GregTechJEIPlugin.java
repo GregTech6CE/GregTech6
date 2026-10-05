@@ -43,7 +43,7 @@ public final class GregTechJEIPlugin implements IModPlugin {
         machines = RecipeMachines.collect();
         IGuiHelper guiHelper = registration.getJeiHelpers().getGuiHelper();
         for (RecipeMap map : RecipeMap.RECIPE_MAP_LIST) {
-            if (map.mRecipeList.stream().noneMatch(recipe -> recipe.mEnabled && !recipe.mHidden)) continue;
+            if (!map.mViewerAllowed || map.mRecipeList.stream().noneMatch(recipe -> recipe.mEnabled && !recipe.mHidden)) continue;
             var category = new RecipeMapCategory(guiHelper, map, iconFor(map));
             registration.addRecipeCategories(category);
             categories.put(map, category);
@@ -88,6 +88,8 @@ public final class GregTechJEIPlugin implements IModPlugin {
         registration.addRecipes(WorldgenInfoCategories.BEDROCK_TYPE, WorldgenInfoCategories.buildBedrockOres());
         }
         registration.addRecipes(ToolAssemblyCategory.TYPE, com.gregtech.gregtech.recipe.ToolAssemblyCatalog.build());
+        // EMI registers these same rows natively; keep JEI's bridge from duplicating them.
+        if (net.minecraftforge.fml.ModList.get().isLoaded("emi")) return;
         for (Map.Entry<RecipeMap, RecipeMapCategory> entry : categories.entrySet()) {
             List<Recipe> recipes = new ArrayList<>();
             for (Recipe recipe : entry.getKey().mRecipeList) {

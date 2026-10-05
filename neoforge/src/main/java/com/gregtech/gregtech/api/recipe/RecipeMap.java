@@ -121,6 +121,11 @@ public class RecipeMap {
     // ── Convenience flags ────────────────────────────────────────────────
     /** GT6 recipe power divisor; all current non-crafting maps use one. */
     public long mPower = 1;
+    /** Original NEI eligibility and caption flags; recipe lookup/storage remain independent. */
+    public boolean mViewerAllowed=true, mShowVoltageAmperage=true;
+    public RecipeMap viewer(boolean allowed,boolean showVoltageAmperage) {
+        mViewerAllowed=allowed;mShowVoltageAmperage=showVoltageAmperage;return this;
+    }
     public final boolean mNeedsOutputs;
     public final boolean mCombinePower;
     public final boolean mUseBucketSizeIn;

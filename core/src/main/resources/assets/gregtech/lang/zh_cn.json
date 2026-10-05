@@ -10076,5 +10076,7 @@
   "message.gregtech.long_distance.no_target": "没有已加载的接收端",
   "message.gregtech.long_distance.target_position": "接收端应位于：X：%s Y：%s Z：%s",
   "block.gregtech.material_bush": "%s灌木丛",
-  "tooltip.gregtech.bush.set_output": "用浆果右键设置产物"
+  "tooltip.gregtech.bush.set_output": "用浆果右键设置产物",
+  "tag.item.gregtech.written_books_small": "小型成书",
+  "tag.item.gregtech.written_books_large": "大型成书"
 }

@@ -97,6 +97,7 @@ public final class MachineRecipeMaps {
                 spec.mInputItemsCount,spec.mOutputItemsCount,spec.mMinimalInputItems,
                 spec.mInputFluidCount,spec.mOutputFluidCount,spec.mMinimalInputFluids,spec.mMinimalInputs,
                 spec.mNeedsOutputs,spec.mCombinePower,spec.mUseBucketSizeIn,spec.mUseBucketSizeOut);
+        map.viewer(spec.mViewerAllowed,spec.mShowVoltageAmperage);
         map.specialValueLabel(spec.mSpecialValuePre,spec.mSpecialValueMultiplier,spec.mSpecialValuePost);
         if(spec.mInstantRecipes)map.instantRecipes();return map;
     }

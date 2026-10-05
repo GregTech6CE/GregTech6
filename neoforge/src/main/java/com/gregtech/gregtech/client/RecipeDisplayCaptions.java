@@ -12,13 +12,14 @@ public final class RecipeDisplayCaptions {
     private RecipeDisplayCaptions() {}
     public static void draw(GuiGraphics graphics, RecipeMap map, Recipe recipe) {
         var stats = RecipePowerStats.of(recipe, map.mPower);
+        var visibility=com.gregtech.gregtech.api.recipe.RecipeCaptionVisibility.of(recipe.mEUt,map.mCombinePower,map.mShowVoltageAmperage);
         if (recipe.mEUt != 0) {
             caption(graphics, Component.translatable(stats.generating() ? "gregtech.jei.gain" : "gregtech.jei.costs", stats.costs().toString(), ENERGY_UNIT), 86);
-            if (!map.mCombinePower)
+            if (visibility.usage())
                 caption(graphics, Component.translatable(stats.generating() ? "gregtech.jei.output" : "gregtech.jei.usage", stats.usage().toString(), ENERGY_UNIT), 98);
-            caption(graphics, Component.translatable("gregtech.jei.tier", stats.tier().toString(), ENERGY_UNIT), 110);
-            if(map!=com.gregtech.gregtech.data.MachineRecipeMaps.Fusion) caption(graphics, Component.translatable("gregtech.jei.power", stats.power()), 122);
-        } else {
+            if (visibility.tier()) caption(graphics, Component.translatable("gregtech.jei.tier", stats.tier().toString(), ENERGY_UNIT), 110);
+            if(visibility.power() && map!=com.gregtech.gregtech.data.MachineRecipeMaps.Fusion) caption(graphics, Component.translatable("gregtech.jei.power", stats.power()), 122);
+        } else if(visibility.tier()) {
             caption(graphics, Component.translatable("gregtech.jei.tier_unspecified"), 110);
         }
         // Instant maps (the crucibles) convert on contact, so a duration line would be a lie.

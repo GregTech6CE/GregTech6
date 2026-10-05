@@ -8,6 +8,8 @@ public final class RecipeMapSpec {
     public String mSpecialValuePre="",mSpecialValuePost="";
     public long mSpecialValueMultiplier;
     public boolean mInstantRecipes;
+    /** Original NEI category eligibility and tier/amperage captions, used by both modern viewers. */
+    public boolean mViewerAllowed=true, mShowVoltageAmperage=true;
     public RecipeMapSpec(Collection<?> aRecipeList,
                      String aNameInternal, String aNameLocal, String aGUIPath,
                      int aInputItemsCount, int aOutputItemsCount, int aMinimalInputItems,
@@ -33,6 +35,9 @@ public final class RecipeMapSpec {
     }
     public RecipeMapSpec specialValueLabel(String prefix,long multiplier,String suffix) {
         mSpecialValuePre=prefix==null?"":prefix;mSpecialValueMultiplier=multiplier;mSpecialValuePost=suffix==null?"":suffix;return this;
+    }
+    public RecipeMapSpec viewer(boolean allowed, boolean showVoltageAmperage) {
+        mViewerAllowed=allowed;mShowVoltageAmperage=showVoltageAmperage;return this;
     }
     public RecipeMapSpec instantRecipes() { mInstantRecipes=true;return this; }
 }
