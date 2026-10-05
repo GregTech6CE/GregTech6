@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:magenta_dye",
+    {
+      "id": "#forge:dyes/magenta",
+      "required": false
+    },
+    {
+      "id": "#c:dyes/magenta",
+      "required": false
+    }
+  ]
+}

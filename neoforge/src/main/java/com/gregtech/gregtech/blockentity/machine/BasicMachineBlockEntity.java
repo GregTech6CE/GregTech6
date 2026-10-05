@@ -160,6 +160,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     private void tickServer(Level level, BlockPos pos) {
         if (faceConfig == null || spec == null) return;
+        beforeMachineTick();
         coverTicks++;
         panels.beforeTick();
         if(!structureComplete()) { successful=false;workPossible=false;if(mActive||mRunning) {mActive=false;mRunning=false;updateBlockStates(false,false);}updateCoverSignals();return; }
@@ -276,6 +277,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
                 return;
             }
             successful=true;
+            onProcessFinished();
             mProgress = 0;
             mMaxProgress = 0;
             mMinEnergy = 0;
@@ -623,7 +625,12 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     private com.gregtech.gregtech.api.recipe.MachineWorkOutputs pendingOutputs;
 
+    protected void beforeMachineTick() {}
+    protected boolean recipeStartAllowed() { return true; }
+    protected void onProcessFinished() {}
+
     private void checkRecipe() {
+        if (!recipeStartAllowed()) return;
         if (recipeMap == null) return;
         if (!switchesAllowRunning()) return;
         if (!structureComplete()) return;
@@ -701,7 +708,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
      * </p>
      */
     private int outputLimitedParallel(Recipe recipe, int maxParallel) {
-        if (maxParallel <= 1 || recipeMap == null || itemHandler == null) return maxParallel;
+        if (maxParallel <= 0 || recipeMap == null || itemHandler == null) return maxParallel;
 
         // Items: simulate the output section using the same slot rules as MachineWorkOutputs#flush.
         int firstOutput = recipeMap.mInputItemsCount;
@@ -709,15 +716,15 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             var present = new net.minecraft.world.item.ItemStack[itemHandler.getSlots()];
             for (int i = firstOutput; i < itemHandler.getSlots(); i++) present[i] = itemHandler.getStackInSlot(i).copy();
             int limit = maxParallel;
-            while (limit > 1 && !itemsFit(recipe, limit, firstOutput, present)) limit--;
-            maxParallel = Math.min(maxParallel, Math.max(1, limit));
+            while (limit > 0 && !itemsFit(recipe, limit, firstOutput, present)) limit--;
+            maxParallel = Math.min(maxParallel, limit);
         }
 
         // Fluids: free capacity of the output tanks, filled the same way flush() does.
         if (recipe.mFluidOutputs.length > 0 && tanksOutput != null && tanksOutput.length > 0) {
             int limit = maxParallel;
-            while (limit > 1 && !fluidsFit(recipe, limit)) limit--;
-            maxParallel = Math.min(maxParallel, Math.max(1, limit));
+            while (limit > 0 && !fluidsFit(recipe, limit)) limit--;
+            maxParallel = Math.min(maxParallel, limit);
         }
         return maxParallel;
     }
@@ -752,7 +759,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     private boolean fluidsFit(Recipe recipe, int parallel) {
         long[] free = new long[tanksOutput.length];
         for (int i = 0; i < tanksOutput.length; i++) {
-            free[i] = Math.max(0, tanksOutput[i].getCapacity() - tanksOutput[i].getAmount());
+            free[i] = Math.max(0, tanksOutput[i].capacity() - tanksOutput[i].getAmount());
         }
         for (var output : recipe.mFluidOutputs) {
             if (output == null || output.isEmpty()) continue;
@@ -918,11 +925,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     private void autoOutputFluids(Level level, BlockPos pos, int relDir) {
         Direction absolute = relativeToAbsolute(relDir);
         if(isFaceShuttered(absolute))return;
-        BlockPos adj = pos.relative(absolute);
-        BlockEntity be = level.getBlockEntity(adj);
-        if (be instanceof com.gregtech.gregtech.api.multiblock.BoundMachinePort part && part.isBoundTo(worldPosition)) return;
-        if (be == null) return;
-        IFluidHandler target = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK, be.getBlockPos(), absolute.getOpposite());
+        IFluidHandler target = automaticFluidOutputTarget(level,pos,absolute);
         if (target == null) return;
         FluidStack drained = drain(1000, IFluidHandler.FluidAction.SIMULATE);
         if (drained.isEmpty()) return;
@@ -937,6 +940,16 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             offered.setAmount(accepted);
             drain(offered, IFluidHandler.FluidAction.EXECUTE);
         }
+    }
+
+    /** Dedicated controllers may output beneath their structure rather than the main block. */
+    protected IFluidHandler automaticFluidOutputTarget(Level level,BlockPos pos,Direction absolute) {
+        BlockPos adj = pos.relative(absolute);
+        BlockEntity be = level.getBlockEntity(adj);
+        if (be instanceof com.gregtech.gregtech.api.multiblock.BoundMachinePort part && part.isBoundTo(worldPosition)) return null;
+        if (be == null) return null;
+        IFluidHandler target = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK, be.getBlockPos(), absolute.getOpposite());
+        return target;
     }
 
     // ── Direction helpers ─────────────────────────────────────────────────

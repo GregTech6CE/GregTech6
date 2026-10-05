@@ -1,0 +1,38 @@
+{
+  "type": "gregtech:book_binding",
+  "category": "misc",
+  "group": "gregtech.books.copy",
+  "ingredients": [
+    {
+      "item": "gregtech:large_book_cyan"
+    },
+    {
+      "item": "minecraft:writable_book"
+    },
+    {
+      "item": "minecraft:writable_book"
+    },
+    {
+      "item": "minecraft:writable_book"
+    },
+    {
+      "item": "minecraft:writable_book"
+    },
+    {
+      "item": "minecraft:writable_book"
+    },
+    {
+      "item": "minecraft:writable_book"
+    },
+    {
+      "item": "minecraft:writable_book"
+    },
+    {
+      "item": "minecraft:writable_book"
+    }
+  ],
+  "result": {
+    "item": "gregtech:large_book_cyan",
+    "count": 8
+  }
+}

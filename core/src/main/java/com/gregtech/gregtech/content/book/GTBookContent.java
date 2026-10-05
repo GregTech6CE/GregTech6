@@ -19,7 +19,7 @@ import java.util.Map;
  * <p>GT6 writes them through {@code UT.Books.createWrittenBook(mapping, title, author, stack, pages)},
  * which fills the vanilla written-book NBT — {@code title}, {@code author} and a {@code pages} list,
  * with {@code ¶} turned into a line break and pages of 256 characters or more dropped. The port
- * therefore keeps vanilla {@code minecraft:written_book} stacks instead of adding a book item, and
+ * uses source cover identities with each platform's native written-book data, and
  * only has to carry the text over (generated into {@link GTBooksGen} by
  * {@code tools/transpile_gt6_books.py}).</p>
  *

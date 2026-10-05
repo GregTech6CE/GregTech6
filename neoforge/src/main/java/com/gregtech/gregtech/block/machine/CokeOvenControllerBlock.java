@@ -1,83 +1,34 @@
 package com.gregtech.gregtech.block.machine;
 
-import com.gregtech.gregtech.blockentity.machine.CokeOvenControllerBlockEntity;
+import com.gregtech.gregtech.api.machine.BasicMachineSpec;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.List;
 
-/** Coke oven multiblock controller. 3x3x3 hollow of coke oven bricks, HU-powered. */
-public class CokeOvenControllerBlock extends HorizontalDirectionalBlock implements EntityBlock {
-
-    public CokeOvenControllerBlock() {
-        this(Properties.of().strength(5.0F, 10.0F).sound(SoundType.STONE).requiresCorrectToolForDrops());
-    }
-
+/** GT6 fire-brick coke oven using the native basic-machine GUI, tools and processing. */
+public class CokeOvenControllerBlock extends BasicMachineBlock {
+    public CokeOvenControllerBlock() {this(Properties.of());}
     public CokeOvenControllerBlock(Properties properties) {
-        super(properties);
-        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
+        super(makeSpec(),properties.strength(5,5).sound(net.minecraft.world.level.block.SoundType.STONE).requiresCorrectToolForDrops());
+        setBeTypeSupplier(()->com.gregtech.gregtech.registry.GTBlockEntities.COKE_OVEN.get());
     }
-
-    @Override protected com.mojang.serialization.MapCodec<? extends HorizontalDirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-    @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
+    public static BasicMachineSpec makeSpec() {
+        var p=com.gregtech.gregtech.content.multiblock.OriginalMultiblockMachineParameters.cokeOven();
+        return new BasicMachineSpec(p.id(),p.material(),p.machineName(),p.energyType(),p.tier(),p.energyIn(),p.energyOut(),
+                p.hardness(),p.blastResistance(),com.gregtech.gregtech.api.energy.FaceConfig.from(p.faceConfig()),p.constructionMaterials(),
+                com.gregtech.gregtech.data.MachineRecipeMaps.CokeOven,p.parallelLimit(),p.energyInMin(),p.energyInMax());
     }
-
-    @Nullable
-    @Override
-    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        return defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
+    @Override public com.gregtech.gregtech.blockentity.machine.BasicMachineBlockEntity createBlockEntity(BlockEntityType<?> type,BlockPos pos,BlockState state) {
+        return new com.gregtech.gregtech.blockentity.machine.CokeOvenControllerBlockEntity(pos,state);
     }
-
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
-        return new CokeOvenControllerBlockEntity(pos, state);
-    }
-
-    @Nullable
-    @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
-            Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
-        if (level.isClientSide) return null;
-        return (lvl, pos, st, be) -> {
-            if (be instanceof CokeOvenControllerBlockEntity ce)
-                CokeOvenControllerBlockEntity.serverTick(lvl, pos, st, ce);
-        };
-    }
-
-    @Override
-    public void appendHoverText(@NotNull ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
-                                @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
-        tooltip.add(Component.literal("Coke Oven — 3x3x3 hollow of coke oven bricks"));
-        tooltip.add(Component.literal("Converts coal/wood into coke/charcoal + creosote"));
-    }
-    @Override public void onRemove(net.minecraft.world.level.block.state.BlockState state,
-            net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos,
-            net.minecraft.world.level.block.state.BlockState next, boolean moving) {
-        if (!state.is(next.getBlock()) && !level.isClientSide
-                && level.getBlockEntity(pos) instanceof com.gregtech.gregtech.api.inventory.BlockContents contents) {
-            contents.dropContents();
-            level.updateNeighbourForOutputSignal(pos, this);
-        }
-        super.onRemove(state, level, pos, next, moving);
+    @Override public void appendHoverText(ItemStack stack,net.minecraft.world.item.Item.TooltipContext context,List<Component> tooltip,TooltipFlag flag) {
+        super.appendHoverText(stack,context,tooltip,flag);
+        tooltip.add(Component.translatable("gregtech.coke.structure"));
+        tooltip.add(Component.translatable("gregtech.coke.controller"));
+        tooltip.add(Component.translatable("gregtech.coke.ignition"));
     }
 }

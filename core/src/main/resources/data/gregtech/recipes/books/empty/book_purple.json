@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "gregtech.books.binding",
+  "ingredients": [
+    {
+      "tag": "gregtech:book_binding/paper"
+    },
+    {
+      "tag": "gregtech:book_binding/paper"
+    },
+    {
+      "tag": "gregtech:book_binding/paper"
+    },
+    {
+      "tag": "gregtech:book_binding/leather"
+    },
+    {
+      "tag": "gregtech:book_binding/dyes/purple"
+    }
+  ],
+  "result": {
+    "item": "gregtech:book_purple",
+    "count": 1
+  }
+}

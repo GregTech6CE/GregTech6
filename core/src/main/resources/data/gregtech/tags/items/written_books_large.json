@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "gregtech:large_book_black",
+    "gregtech:large_book_white",
+    "gregtech:large_book_red",
+    "gregtech:large_book_green",
+    "gregtech:large_book_blue",
+    "gregtech:large_book_cyan",
+    "gregtech:large_book_magenta",
+    "gregtech:large_book_yellow",
+    "gregtech:large_book_brown",
+    "gregtech:large_book_orange",
+    "gregtech:large_book_purple",
+    "gregtech:large_book_bronze",
+    "gregtech:large_book_dictionary",
+    "gregtech:large_book_radiation"
+  ]
+}

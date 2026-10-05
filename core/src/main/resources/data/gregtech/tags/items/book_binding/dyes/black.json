@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:black_dye",
+    {
+      "id": "#forge:dyes/black",
+      "required": false
+    },
+    {
+      "id": "#c:dyes/black",
+      "required": false
+    }
+  ]
+}

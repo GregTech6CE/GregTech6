@@ -1,0 +1,29 @@
+{
+  "type": "gregtech:book_binding",
+  "category": "misc",
+  "group": "gregtech.books.copy",
+  "ingredients": [
+    {
+      "item": "gregtech:large_book_brown"
+    },
+    {
+      "item": "minecraft:writable_book"
+    },
+    {
+      "item": "minecraft:writable_book"
+    },
+    {
+      "item": "minecraft:writable_book"
+    },
+    {
+      "item": "minecraft:writable_book"
+    },
+    {
+      "item": "minecraft:writable_book"
+    }
+  ],
+  "result": {
+    "item": "gregtech:large_book_brown",
+    "count": 5
+  }
+}

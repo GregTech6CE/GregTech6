@@ -1,0 +1,20 @@
+{
+  "type": "gregtech:book_binding",
+  "category": "misc",
+  "group": "gregtech.books.binding",
+  "ingredients": [
+    {
+      "item": "gregtech:many_printed_pages"
+    },
+    {
+      "tag": "gregtech:book_binding/leather"
+    },
+    {
+      "tag": "gregtech:book_binding/dyes/magenta"
+    }
+  ],
+  "result": {
+    "item": "gregtech:large_book_magenta",
+    "count": 1
+  }
+}

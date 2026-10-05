@@ -64,6 +64,7 @@ neoForge {
             client()
             gameDirectory = project.file('run-client')
             systemProperty 'gregtech.integration.viewerFeedbackOnly', (rootProject.findProperty('viewerFeedbackOnly') ?: 'false').toString()
+            systemProperty 'gregtech.integration.cokeRuntimeSmoke', (rootProject.findProperty('cokeRuntimeSmoke') ?: 'false').toString()
             systemProperty 'gregtech.integration.clientSmoke', (rootProject.findProperty('clientSmoke') ?: 'false').toString()
             systemProperty 'gregtech.integration.clientSmokeTimeoutSeconds', (rootProject.findProperty('clientSmokeTimeout') ?: '120').toString()
             systemProperty 'gregtech.integration.clientModelSmoke', (rootProject.findProperty('clientModelSmoke') ?: 'false').toString()

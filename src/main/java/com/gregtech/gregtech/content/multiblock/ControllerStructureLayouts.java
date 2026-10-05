@@ -38,7 +38,9 @@ public final class ControllerStructureLayouts {
     }
     private static Map<Block,Map<BlockPos,Block>> create(){
         var result=new LinkedHashMap<Block,Map<BlockPos,Block>>();
-        result.put(GTMultiblocks.COKE_OVEN_MAIN.get(),hollow(GTMultiblocks.COKE_OVEN_WALL.get(),1,-1,1));
+        var coke=new LinkedHashMap<BlockPos,Block>();
+        for(var cell:LargeMachineLayouts.fromShared(OriginalCokeOvenRules.cells())) coke.put(new BlockPos(cell.right(),cell.up(),cell.back()),cell.block());
+        result.put(GTMultiblocks.COKE_OVEN_MAIN.get(),Map.copyOf(coke));
         for (var valve : TankValveSpec.all())
             result.put(LargeMachineParts.block(valve.originalId()), tank(valve));
         for (var boiler : OriginalLargeBoilerSpecs.all())

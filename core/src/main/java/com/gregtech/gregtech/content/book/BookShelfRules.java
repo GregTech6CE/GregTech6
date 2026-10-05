@@ -5,7 +5,7 @@ public final class BookShelfRules {private BookShelfRules(){}public static final
  private static final java.util.Set<String> NORMAL=java.util.Set.of("minecraft:book","minecraft:writable_book","minecraft:written_book","gregtech:dusty_guide_book","gregtech:dusty_material_dictionary");
  private static final java.util.Set<String> DISPLAY=java.util.Set.of("minecraft:paper","minecraft:map","minecraft:filled_map","minecraft:name_tag","minecraft:item_frame","minecraft:painting","minecraft:oak_button","minecraft:stone_button","minecraft:lever","minecraft:redstone_torch","minecraft:cobblestone");
  private static final java.util.Set<String> CONTROLS=java.util.Set.of("minecraft:oak_button","minecraft:stone_button","minecraft:lever","minecraft:redstone_torch","minecraft:cobblestone");
- public static int enchantPower(String id){return id.equals("minecraft:enchanted_book")?2:NORMAL.contains(id)?1:0;}
+ public static int enchantPower(String id){return id.equals("minecraft:enchanted_book")?2:(NORMAL.contains(id)||ColoredBookRules.isBook(id))?1:0;}
  public static boolean canPlace(String id){return enchantPower(id)>0||DISPLAY.contains(id);}
  public static boolean canAutoExtract(String id){return !CONTROLS.contains(id);}
  public static int slotFor(boolean front,double x,double y){int base=y<.5?(front?6:20):(front?13:27);return base-Math.max(0,Math.min(6,(int)Math.floor(8*(x-1./16))));}

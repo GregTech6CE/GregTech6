@@ -36,7 +36,7 @@ import java.util.Locale;
  * <p>The port generates the same kind of page from its own material data. This is the first slice —
  * identity, composition, the forms the material actually has, tool stats, properties and ore/byproduct
  * links; GT6's alloy/enchantment/target matrices are the documented remainder (see §31 of the porting
- * notes). Pages are plain strings inside a vanilla written book, exactly like {@link GTBooks}, so the
+ * notes). The book uses its source dictionary cover with native written-book content, like {@link GTBooks}, so the
  * player opens them with the vanilla book screen.</p>
  */
 public final class GTMaterialDictionary {
@@ -73,15 +73,18 @@ public final class GTMaterialDictionary {
         if (material == null || !material.isValid()) return ItemStack.EMPTY;
         List<String> pages = pages(material);
         if (pages.isEmpty()) return ItemStack.EMPTY;
-        ItemStack stack = new ItemStack(Items.WRITTEN_BOOK);
+        ItemStack stack = com.gregtech.gregtech.registry.GTColoredBooks.stack(pages.size()>50?32003:32002);
         CompoundTag tag = stack.getOrCreateTag();
-        tag.putString("title", MaterialPresentation.name(material) + " - Material Dictionary");
+        String title=MaterialPresentation.name(material)+" - Material Dictionary";
+        tag.putString("title", title.length()>32?title.substring(0,32):title);
+        tag.putString("gt.book.title",title);
         tag.putString("author", AUTHOR);
         tag.putString("book", mapping(material));
         tag.putString("gt.material", mapping(material));
         ListTag list = new ListTag();
-        for (String page : pages) list.add(StringTag.valueOf(page));
+        for (String page : pages) list.add(StringTag.valueOf(Component.Serializer.toJson(Component.literal(page))));
         tag.put("pages", list);
+        tag.putBoolean("resolved",true);
         stack.setHoverName(Component.literal(MaterialPresentation.name(material) + " - Material Dictionary"));
         return stack;
     }

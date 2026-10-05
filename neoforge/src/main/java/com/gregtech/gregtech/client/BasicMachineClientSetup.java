@@ -11,5 +11,5 @@ public final class BasicMachineClientSetup {
  @SubscribeEvent public static void screens(RegisterMenuScreensEvent event){event.register(BasicMachineRegistries.MENU.get(),BasicMachineScreen::new);}
  @SubscribeEvent public static void blocks(RegisterColorHandlersEvent.Block event){for(var holder:BasicMachineRegistries.all()){var block=holder.get();event.register((state,level,pos,index)->index==0?block.basicSpec().material().getColor():0xFFFFFF,block);}}
  @SubscribeEvent public static void items(RegisterColorHandlersEvent.Item event){for(var holder:BasicMachineRegistries.all()){var block=holder.get();event.register(ItemColorARGB.opaque((stack,index)->index==0?block.basicSpec().material().getColor():0xFFFFFF),block.asItem());}}
- @SubscribeEvent public static void renderers(EntityRenderersEvent.RegisterRenderers event){for(var type:BasicMachineRegistries.types())event.registerBlockEntityRenderer(type.get(),MachineCoverRenderer::new);}
+ @SubscribeEvent public static void renderers(EntityRenderersEvent.RegisterRenderers event){for(var type:BasicMachineRegistries.types())event.registerBlockEntityRenderer(type.get(),MachineCoverRenderer::new);event.registerBlockEntityRenderer(com.gregtech.gregtech.registry.GTBlockEntities.COKE_OVEN.get(),MachineCoverRenderer::new);}
 }

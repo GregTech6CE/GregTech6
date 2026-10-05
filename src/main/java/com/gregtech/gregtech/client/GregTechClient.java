@@ -702,6 +702,7 @@ public final class GregTechClient {
         event.registerBlockEntityRenderer(GTBlockEntities.LARGE_TURBINE.get(), LargeTurbineRotorRenderer::new);
         event.registerBlockEntityRenderer(GTBlockEntities.LARGE_GAS_TURBINE.get(), LargeTurbineRotorRenderer::new);
         event.registerBlockEntityRenderer(GTBlockEntities.FUSION_REACTOR.get(), MachineCoverRenderer::new);
+        event.registerBlockEntityRenderer(GTBlockEntities.COKE_OVEN.get(), MachineCoverRenderer::new);
 
         // Cover plates on basic machine faces
         for (var blockRO : com.gregtech.gregtech.api.machine.MachineRegistry.basicMachines()) {

@@ -45,6 +45,7 @@ public final class GregTechNeoForge {
         com.gregtech.gregtech.registry.GTFuelRods.registerAll();
         com.gregtech.gregtech.registry.GTDungeonKeys.registerAll();
         com.gregtech.gregtech.registry.GTRadiationProtection.MATERIALS.register(modEventBus);
+        com.gregtech.gregtech.registry.GTColoredBooks.registerAll();
         int materialItems = GTItems.register(modEventBus);
         com.gregtech.gregtech.registry.GTProjectiles.register(modEventBus);
         new com.gregtech.gregtech.loaders.a.Loader_Blocks().run();

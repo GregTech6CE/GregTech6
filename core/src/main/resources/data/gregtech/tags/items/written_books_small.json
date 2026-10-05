@@ -1,0 +1,20 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:written_book",
+    "gregtech:book_black",
+    "gregtech:book_white",
+    "gregtech:book_red",
+    "gregtech:book_green",
+    "gregtech:book_blue",
+    "gregtech:book_cyan",
+    "gregtech:book_magenta",
+    "gregtech:book_yellow",
+    "gregtech:book_brown",
+    "gregtech:book_orange",
+    "gregtech:book_purple",
+    "gregtech:book_bronze",
+    "gregtech:book_dictionary",
+    "gregtech:book_radiation"
+  ]
+}

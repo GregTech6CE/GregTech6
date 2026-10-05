@@ -36,7 +36,7 @@ import java.util.Locale;
  * <p>The port generates the same kind of page from its own material data. This is the first slice —
  * identity, composition, the forms the material actually has, tool stats, properties and ore/byproduct
  * links; GT6's alloy/enchantment/target matrices are the documented remainder (see §31 of the porting
- * notes). Pages are plain strings inside a vanilla written book, exactly like {@link GTBooks}, so the
+ * notes). The book uses its source dictionary cover with native written-book content, like {@link GTBooks}, so the
  * player opens them with the vanilla book screen.</p>
  */
 public final class GTMaterialDictionary {
@@ -73,11 +73,11 @@ public final class GTMaterialDictionary {
         if (material == null || !material.isValid()) return ItemStack.EMPTY;
         List<String> pages = pages(material);
         if (pages.isEmpty()) return ItemStack.EMPTY;
-        ItemStack stack = new ItemStack(Items.WRITTEN_BOOK);
+        ItemStack stack = com.gregtech.gregtech.registry.GTColoredBooks.stack(pages.size()>50?32003:32002);
         String title=MaterialPresentation.name(material)+" - Material Dictionary";
         var content=pages.stream().map(page->net.minecraft.server.network.Filterable.<Component>passThrough(Component.literal(page))).toList();
-        stack.set(net.minecraft.core.component.DataComponents.WRITTEN_BOOK_CONTENT,new net.minecraft.world.item.component.WrittenBookContent(net.minecraft.server.network.Filterable.passThrough(title),AUTHOR,0,content,true));
-        var tag=new CompoundTag();tag.putString("book",mapping(material));tag.putString("gt.material",mapping(material));
+        stack.set(net.minecraft.core.component.DataComponents.WRITTEN_BOOK_CONTENT,new net.minecraft.world.item.component.WrittenBookContent(net.minecraft.server.network.Filterable.passThrough(title.length()>32?title.substring(0,32):title),AUTHOR,0,content,true));
+        var tag=new CompoundTag();tag.putString("gt.book.title",title);tag.putString("book",mapping(material));tag.putString("gt.material",mapping(material));
         stack.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA,net.minecraft.world.item.component.CustomData.of(tag));
         stack.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME,Component.literal(title));
 

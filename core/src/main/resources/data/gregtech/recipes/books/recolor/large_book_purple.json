@@ -1,0 +1,17 @@
+{
+  "type": "gregtech:book_binding",
+  "category": "misc",
+  "group": "gregtech.books.binding",
+  "ingredients": [
+    {
+      "tag": "gregtech:written_books_large"
+    },
+    {
+      "tag": "gregtech:book_binding/dyes/purple"
+    }
+  ],
+  "result": {
+    "item": "gregtech:large_book_purple",
+    "count": 1
+  }
+}

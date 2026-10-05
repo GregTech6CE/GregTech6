@@ -43,6 +43,7 @@ public record Loader_Items() implements IGTLoader {
 
         LOGGER.info("Queued {} material items for registration", total);
 
+        com.gregtech.gregtech.registry.GTColoredBooks.registerAll();
         GTTechnological.registerAll();
         LOGGER.info("Queued {} technological items for registration", GTTechnological.all().size());
 

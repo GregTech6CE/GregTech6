@@ -14,7 +14,9 @@
     "WaterSurfaceMixin",
     "WaterContainerMixin",
     "WaterCandleMixin",
-    "WaterFrogspawnMixin"
+    "WaterFrogspawnMixin",
+    "ColoredBookUseMixin",
+    "ColoredBookLecternMixin"
   ],
   "injectors": {
     "defaultRequire": 1

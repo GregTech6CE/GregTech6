@@ -1,0 +1,17 @@
+{
+  "type": "gregtech:book_binding",
+  "category": "misc",
+  "group": "gregtech.books.binding",
+  "ingredients": [
+    {
+      "tag": "gregtech:written_books_small"
+    },
+    {
+      "tag": "gregtech:book_binding/dyes/green"
+    }
+  ],
+  "result": {
+    "item": "gregtech:book_green",
+    "count": 1
+  }
+}

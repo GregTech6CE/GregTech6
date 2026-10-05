@@ -18,7 +18,9 @@ public final class ControllerStructureLayouts {
     public static boolean matches(BlockEntity controller){var level=controller.getLevel();if(level==null)return false;var state=controller.getBlockState();boolean coke=state.is(GTMultiblocks.COKE_OVEN_MAIN.get());if(!coke&&!state.is(GTMultiblocks.CRYO_DISTILLATION_MAIN.get()))return false;var wall=coke?GTMultiblocks.COKE_OVEN_WALL.get():GTMultiblocks.CRYO_DISTILLATION_WALL.get();var front=state.getValue(HorizontalDirectionalBlock.FACING);for(var cell:SharedHollowControllerGeometry.cells(1,coke?-1:0,coke?1:4)){var pos=controller.getBlockPos().relative(front.getClockWise(),cell.x()).above(cell.y()).relative(front.getOpposite(),cell.z());if(!level.hasChunkAt(pos)||!level.getBlockState(pos).is(wall))return false;}return true;}
     private static Map<Block,Map<BlockPos,Block>> create(){
         var result=new LinkedHashMap<Block,Map<BlockPos,Block>>();
-        result.put(GTMultiblocks.COKE_OVEN_MAIN.get(),hollow(GTMultiblocks.COKE_OVEN_WALL.get(),1,-1,1));
+        var coke=new LinkedHashMap<BlockPos,Block>();
+        for(var cell:LargeMachineLayouts.fromShared(OriginalCokeOvenRules.cells())) coke.put(new BlockPos(cell.right(),cell.up(),cell.back()),cell.block());
+        result.put(GTMultiblocks.COKE_OVEN_MAIN.get(),Map.copyOf(coke));
         for (var valve : TankValveSpec.all())
             result.put(LargeMachineParts.block(valve.originalId()), tank(valve));
         for (var boiler : OriginalLargeBoilerSpecs.all())

@@ -14,13 +14,17 @@
     "WaterSurfaceMixin",
     "WaterContainerMixin",
     "WaterCandleMixin",
-    "WaterFrogspawnMixin"
+    "WaterFrogspawnMixin",
+    "ColoredBookUseMixin",
+    "ColoredBookLecternMixin"
   ],
   "injectors": {
     "defaultRequire": 0
   },
   "client": [
     "BlockPaintColorMixin",
-    "ItemPaintColorMixin"
+    "ItemPaintColorMixin",
+    "ColoredBookOpenPacketMixin",
+    "ColoredBookLecternScreenMixin"
   ]
 }
