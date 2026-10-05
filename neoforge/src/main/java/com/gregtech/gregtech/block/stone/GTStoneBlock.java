@@ -58,7 +58,7 @@ public final class GTStoneBlock extends Block {
 
     @Override
     public String getDescriptionId() {
-        return "block." + "gregtech" + ".stone";
+        return "block.gregtech." + registryId();
     }
 
     @Override

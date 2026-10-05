@@ -27,8 +27,9 @@ public class MaterialBlockItem extends BlockItem {
     public Component getName(ItemStack stack) {
         if (getBlock() instanceof OreBlock ore && OreBlock.isBrokenStack(stack))
             return Component.translatable("block.gregtech.ore_broken", name(ore.material()));
-        if (material != null && getBlock() instanceof MaterialBlockLike)
-            return Component.translatable(getDescriptionId(), name(material));
+        if (material != null && getBlock() instanceof MaterialBlockLike form)
+            return Component.translatableWithFallback("oredict." + form.prefix().getName() + material.getName(), "%s",
+                    Component.translatable(getDescriptionId(), name(material)));
         if (getBlock() instanceof GTStoneBlock stone)
             return Component.translatable(getDescriptionId(), name(stone.stoneMaterial()), stone.variant().displayName());
         if (getBlock() instanceof GTStoneSlabBlock stone)
