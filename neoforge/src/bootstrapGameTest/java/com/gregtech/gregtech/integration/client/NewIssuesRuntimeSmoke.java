@@ -239,6 +239,7 @@ final class NewIssuesRuntimeSmoke {
         require(ComponentCoverRuntime.slot(((PanelCoverHost)display).getCover(Direction.SOUTH))==8,"fallback client sync slot");
         require(ComponentCoverFallback.active().contains(display),"fallback renderer missing active client host");
         if(++visibleFrames<20)return false;
+        if(!WorldSaveBarrier.ready(minecraft.getSingleplayerServer(),receipt))return false;
         receipt.addProperty("fallbackClientSync",true);
         return true;
     }
