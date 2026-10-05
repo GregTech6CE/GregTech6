@@ -47,6 +47,10 @@ public final class PilePlacementHandler {
         if (held.isEmpty() || held.getItem() instanceof BlockItem
                 || PileBlockEntity.materialOf(held) == null) return InteractionResult.PASS;
 
+        var rockResult = com.gregtech.gregtech.item.RockItemPlacement.place(
+                new net.minecraft.world.item.context.UseOnContext(player, hand, hit));
+        if (rockResult != InteractionResult.PASS) return rockResult;
+
         var prefix = PileBlockEntity.prefixOf(held);
         PileBlock.Kind kind;
         if (prefix == PileBlock.Kind.INGOT.prefix()) kind = PileBlock.Kind.INGOT;

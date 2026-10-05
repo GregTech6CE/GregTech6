@@ -51,12 +51,19 @@ public class MaterialItem extends Item implements com.gregtech.gregtech.api.mate
     }
 
     @Override
+    public net.minecraft.world.InteractionResult useOn(net.minecraft.world.item.context.UseOnContext context) {
+        return RockItemPlacement.place(context);
+    }
+
+    @Override
     public Component getName(ItemStack stack) {
         if ("Empty".equals(material.getName()) && prefix.hasEmptyAmmunitionForm())
-            return Component.translatable(getDescriptionId() + "_empty");
+            return Component.translatableWithFallback("oredict."+prefix.getName()+material.getName(), "%s",
+                    Component.translatable(getDescriptionId() + "_empty"));
         // Same domain translation data/argument contract as Forge MaterialPresentation.
-        return Component.translatable(getDescriptionId(),
-                Component.translatable(material.getTranslationKey(), material.getDisplayNameFallback()));
+        return Component.translatableWithFallback("oredict." + prefix.getName() + material.getName(), "%s",
+                Component.translatable(getDescriptionId(),
+                        Component.translatable(material.getTranslationKey(), material.getDisplayNameFallback())));
     }
 
     @Override
