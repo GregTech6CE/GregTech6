@@ -10065,5 +10065,14 @@
   "tooltip.gregtech.long_distance.voltage": "Voltage: %s EU",
   "tooltip.gregtech.long_distance.amperage": "Amperage: UNLIMITED",
   "tooltip.gregtech.long_distance.loss": "Loss: 0.125 EU/m",
-  "tooltip.gregtech.long_distance.temperature": "Maximum temperature: %s K"
+  "tooltip.gregtech.long_distance.temperature": "Maximum temperature: %s K",
+  "tooltip.gregtech.long_distance.wrench": "Use a wrench to set facing",
+  "tooltip.gregtech.long_distance.reset": "Use a soft hammer to reset the connection",
+  "tooltip.gregtech.long_distance.inspect": "Use a magnifying glass for details",
+  "tooltip.gregtech.long_distance.transformer": "Input/Output: %s–%s EU (recommended %s EU), front input / back output",
+  "message.gregtech.long_distance.receiver": "Is the Target",
+  "message.gregtech.long_distance.sender": "Sender is at: X: %s Y: %s Z: %s",
+  "message.gregtech.long_distance.target": "Has Target",
+  "message.gregtech.long_distance.no_target": "Has no loaded Target",
+  "message.gregtech.long_distance.target_position": "Target should be around: X: %s Y: %s Z: %s"
 }

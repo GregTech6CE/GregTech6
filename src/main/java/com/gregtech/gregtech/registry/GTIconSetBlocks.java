@@ -68,7 +68,7 @@ public final class GTIconSetBlocks {
                     com.gregtech.gregtech.api.material.GTMaterialRegistry.get(sandSpec.material()), block);
             RegistryObject<Item> item = GTBlocks.BLOCK_ITEMS.register(blockId,
                     () -> com.gregtech.gregtech.content.logistics.LongDistanceCatalog.find(blockId)!=null
-                            ? new com.gregtech.gregtech.item.LongDistanceBlockItem(block.get(),new Item.Properties(),com.gregtech.gregtech.content.logistics.LongDistanceCatalog.get(blockId))
+                            ? new com.gregtech.gregtech.item.LongDistanceBlockItem(block.get(),new Item.Properties().stacksTo(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.get(blockId).stackLimit()),com.gregtech.gregtech.content.logistics.LongDistanceCatalog.get(blockId))
                             : block.get() instanceof net.minecraft.world.level.block.WaterlilyBlock
                             ? new net.minecraft.world.item.PlaceOnWaterBlockItem(block.get(), new Item.Properties())
                             : new BlockItem(block.get(), new Item.Properties().stacksTo(64)));

@@ -10065,5 +10065,14 @@
   "tooltip.gregtech.long_distance.voltage": "电压：%s EU",
   "tooltip.gregtech.long_distance.amperage": "电流：无限制",
   "tooltip.gregtech.long_distance.loss": "损耗：0.125 EU/米",
-  "tooltip.gregtech.long_distance.temperature": "最高温度：%s K"
+  "tooltip.gregtech.long_distance.temperature": "最高温度：%s K",
+  "tooltip.gregtech.long_distance.wrench": "使用扳手设置朝向",
+  "tooltip.gregtech.long_distance.reset": "使用软锤重置连接",
+  "tooltip.gregtech.long_distance.inspect": "使用放大镜查看详细信息",
+  "tooltip.gregtech.long_distance.transformer": "输入/输出：%s–%s EU（建议 %s EU），正面输入／背面输出",
+  "message.gregtech.long_distance.receiver": "此处为接收端",
+  "message.gregtech.long_distance.sender": "发送端位于：X：%s Y：%s Z：%s",
+  "message.gregtech.long_distance.target": "已连接接收端",
+  "message.gregtech.long_distance.no_target": "没有已加载的接收端",
+  "message.gregtech.long_distance.target_position": "接收端应位于：X：%s Y：%s Z：%s"
 }

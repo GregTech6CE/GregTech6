@@ -100,7 +100,9 @@ public final class GregTechClient {
         });
         com.gregtech.gregtech.registry.GTMiscBlocks.all().forEach(entry -> {
             if (!(entry.get() instanceof com.gregtech.gregtech.block.misc.PanelBlock)
-                    && !(entry.get() instanceof com.gregtech.gregtech.block.misc.AutoToolBlock))
+                    && !(entry.get() instanceof com.gregtech.gregtech.block.misc.AutoToolBlock)
+                    && !(entry.get() instanceof com.gregtech.gregtech.block.misc.LongDistEndpointBlock)
+                    && !(entry.get() instanceof com.gregtech.gregtech.block.misc.LongDistanceTransformerBlock))
                 event.register((stack, index) -> index == 0 ? com.gregtech.gregtech.content.tool.MiscBlockAppearance.tint(entry.get()) : 0xFFFFFF, entry.get().asItem());
         });
         var multiblockTintBlocks=com.gregtech.gregtech.registry.GTMultiblocks.texturedBlocks().stream()
@@ -383,7 +385,9 @@ public final class GregTechClient {
         });
         com.gregtech.gregtech.registry.GTMiscBlocks.all().forEach(entry -> {
             if (!(entry.get() instanceof com.gregtech.gregtech.block.misc.PanelBlock)
-                    && !(entry.get() instanceof com.gregtech.gregtech.block.misc.AutoToolBlock))
+                    && !(entry.get() instanceof com.gregtech.gregtech.block.misc.AutoToolBlock)
+                    && !(entry.get() instanceof com.gregtech.gregtech.block.misc.LongDistEndpointBlock)
+                    && !(entry.get() instanceof com.gregtech.gregtech.block.misc.LongDistanceTransformerBlock))
                 event.register((state, level, pos, index) -> index == 0 ? com.gregtech.gregtech.content.tool.MiscBlockAppearance.tint(entry.get()) : 0xFFFFFF, entry.get());
         });
         // Surface rocks: tint from the block entity's material (vein indicators).

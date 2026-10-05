@@ -26,6 +26,7 @@ public final class LongDistanceCatalog {
     private LongDistanceCatalog() {}
     public record Spec(String id, String kind, long voltage, float hardness, float resistance,
                        int sourceMeta, String material, long maximumTemperature, String texture) {
+        public int stackLimit() { return kind.endsWith("ENDPOINT") || kind.equals("TRANSFORMER") ? 16 : 64; }
         public boolean sourceLine() { return sourceMeta >= 0; }
         public String networkIdentity() { return sourceLine() ? kind + ":" + sourceMeta : id; }
     }
@@ -40,7 +41,7 @@ public final class LongDistanceCatalog {
     }
     private static Spec endpoint(String id, String kind, long voltage) {
         return new Spec(id, kind, voltage, kind.equals("TRANSFORMER") ? 4 : 16,
-                kind.equals("TRANSFORMER") ? 4 : 16, -1, "", 0, "");
+                kind.equals("TRANSFORMER") ? 4 : 16, -1, kind.equals("TRANSFORMER") ? transformerMaterial(voltage) : kind.equals("ITEM_ENDPOINT") ? "Platinum" : "Tungsten", 0, "");
     }
     public static final List<Spec> LINES = List.of(
             wire("long_dist_wire_ev", 0, "Tin", 4),
@@ -79,6 +80,9 @@ public final class LongDistanceCatalog {
         entries.add(endpoint("long_dist_transformer_uv", "TRANSFORMER", 524288));
         entries.addAll(LINES);
         ALL = List.copyOf(entries);
+    }
+    public static String transformerMaterial(long voltage) {
+        return switch((int)voltage) { case 2048 -> "Chromium"; case 8192 -> "Titanium"; case 32768 -> "Iridium"; case 131072 -> "Osmium"; case 524288 -> "Trinitanium"; default -> throw new IllegalArgumentException("Unknown transformer voltage: "+voltage); };
     }
     public static Spec find(String id) { return ALL.stream().filter(s -> s.id().equals(id)).findFirst().orElse(null); }
     public static Spec get(String id) {

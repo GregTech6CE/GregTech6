@@ -54,6 +54,7 @@ public class LongDistPipeBlock extends Block {
     public boolean isWire() { return kind == Kind.WIRE; }
     public long maximumVoltage() { return maximumVoltage; }
     public long maximumTemperature() { return maximumTemperature; }
+    public String networkIdentity() { return networkIdentity; }
     public boolean sameLine(LongDistPipeBlock other) { return networkIdentity.equals(other.networkIdentity); }
     /** The old shared block remains a separate unrestricted compatibility network. */
     public boolean acceptsPipeline(boolean fluid) {
@@ -66,5 +67,12 @@ public class LongDistPipeBlock extends Block {
     @Override public int getFireSpreadSpeed(net.minecraft.world.level.block.state.BlockState state,
             net.minecraft.world.level.BlockGetter level, net.minecraft.core.BlockPos pos, net.minecraft.core.Direction side) {
         return isWire() ? 150 : 0;
+    }
+
+    @Override public void onPlace(net.minecraft.world.level.block.state.BlockState state,net.minecraft.world.level.Level level,net.minecraft.core.BlockPos pos,net.minecraft.world.level.block.state.BlockState previous,boolean moving){
+        if(!state.is(previous.getBlock()))LongDistanceTopology.changed(level);super.onPlace(state,level,pos,previous,moving);
+    }
+    @Override public void onRemove(net.minecraft.world.level.block.state.BlockState state,net.minecraft.world.level.Level level,net.minecraft.core.BlockPos pos,net.minecraft.world.level.block.state.BlockState next,boolean moving){
+        if(!state.is(next.getBlock()))LongDistanceTopology.changed(level);super.onRemove(state,level,pos,next,moving);
     }
 }

@@ -8,11 +8,11 @@
     "colored": {
       "textures": {
         "north": "gregtech:block/machines/pipelines/fluid/colored/front",
-        "south": "gregtech:block/machines/pipelines/fluid/colored/back",
-        "up": "gregtech:block/machines/pipelines/fluid/colored/side",
-        "down": "gregtech:block/machines/pipelines/fluid/colored/side",
         "east": "gregtech:block/machines/pipelines/fluid/colored/side",
-        "west": "gregtech:block/machines/pipelines/fluid/colored/side"
+        "south": "gregtech:block/machines/pipelines/fluid/colored/back",
+        "west": "gregtech:block/machines/pipelines/fluid/colored/side",
+        "up": "gregtech:block/machines/pipelines/fluid/colored/side",
+        "down": "gregtech:block/machines/pipelines/fluid/colored/side"
       },
       "elements": [
         {
@@ -32,9 +32,19 @@
               "cullface": "north",
               "tintindex": 0
             },
+            "east": {
+              "texture": "#east",
+              "cullface": "east",
+              "tintindex": 0
+            },
             "south": {
               "texture": "#south",
               "cullface": "south",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#west",
+              "cullface": "west",
               "tintindex": 0
             },
             "up": {
@@ -46,16 +56,6 @@
               "texture": "#down",
               "cullface": "down",
               "tintindex": 0
-            },
-            "east": {
-              "texture": "#east",
-              "cullface": "east",
-              "tintindex": 0
-            },
-            "west": {
-              "texture": "#west",
-              "cullface": "west",
-              "tintindex": 0
             }
           }
         }
@@ -65,11 +65,11 @@
     "overlay": {
       "textures": {
         "north": "gregtech:block/machines/pipelines/fluid/overlay/front",
-        "south": "gregtech:block/machines/pipelines/fluid/overlay/back",
-        "up": "gregtech:block/machines/pipelines/fluid/overlay/side",
-        "down": "gregtech:block/machines/pipelines/fluid/overlay/side",
         "east": "gregtech:block/machines/pipelines/fluid/overlay/side",
-        "west": "gregtech:block/machines/pipelines/fluid/overlay/side"
+        "south": "gregtech:block/machines/pipelines/fluid/overlay/back",
+        "west": "gregtech:block/machines/pipelines/fluid/overlay/side",
+        "up": "gregtech:block/machines/pipelines/fluid/overlay/side",
+        "down": "gregtech:block/machines/pipelines/fluid/overlay/side"
       },
       "elements": [
         {
@@ -88,9 +88,17 @@
               "texture": "#north",
               "cullface": "north"
             },
+            "east": {
+              "texture": "#east",
+              "cullface": "east"
+            },
             "south": {
               "texture": "#south",
               "cullface": "south"
+            },
+            "west": {
+              "texture": "#west",
+              "cullface": "west"
             },
             "up": {
               "texture": "#up",
@@ -99,14 +107,6 @@
             "down": {
               "texture": "#down",
               "cullface": "down"
-            },
-            "east": {
-              "texture": "#east",
-              "cullface": "east"
-            },
-            "west": {
-              "texture": "#west",
-              "cullface": "west"
             }
           }
         }

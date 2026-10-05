@@ -46,6 +46,8 @@ public final class BlockHarvestPolicy {
  }
  public static int level(Block block) {
   if(block instanceof com.gregtech.gregtech.block.misc.LongDistPipeBlock) return 3;
+  if(block instanceof com.gregtech.gregtech.block.misc.LongDistEndpointBlock endpoint) return endpoint.material().getToolQuality();
+  if(block instanceof com.gregtech.gregtech.block.misc.LongDistanceTransformerBlock endpoint) return endpoint.material().getToolQuality();
   if(block instanceof com.gregtech.gregtech.block.BookShelfBlock shelf && shelf.variant().metal())
    return Math.max(0,shelf.variant().material().getToolQuality());
   if(block instanceof com.gregtech.gregtech.block.misc.BarsBlock bars) return bars.harvestLevel();

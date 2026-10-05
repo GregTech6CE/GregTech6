@@ -56,7 +56,7 @@ public final class LongDistancePowerTests {
         h.setBlock(SOURCE.east(),Blocks.AIR);h.assertTrue(source.doEnergyInjection(GregTechTags.Energy.EU,Direction.WEST,2048,1,true)==0&&sink.calls==0,"broken route cannot transfer");
         h.setBlock(SOURCE.east(),GTMiscBlocks.LONG_DIST_WIRE.get());h.assertTrue(source.doEnergyInjection(GregTechTags.Energy.EU,Direction.WEST,2048,1,true)==1,"repair immediately restores route");
         var branch=SOURCE.east().north();h.setBlock(branch,grade.defaultBlockState().setValue(LongDistanceTransformerBlock.FACING,Direction.SOUTH));
-        h.assertTrue(source.doEnergyInjection(GregTechTags.Energy.EU,Direction.WEST,2048,1,true)==0,"new endpoint invalidates cached route and rejects ambiguous fork");
+        h.assertTrue(source.doEnergyInjection(GregTechTags.Energy.EU,Direction.WEST,2048,1,false)==1,"source fork chooses a front-facing target; simulation does not require a downstream sink");
         h.setBlock(branch,Blocks.AIR);h.assertTrue(source.doEnergyInjection(GregTechTags.Energy.EU,Direction.WEST,2048,1,true)==1,"removing fork restores unique destination");h.succeed();
     }
     @GameTest(template="test_blueprint_empty")

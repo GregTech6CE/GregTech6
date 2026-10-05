@@ -96,7 +96,7 @@ public final class GTMiscBlocks {
         RegistryObject<T> ro = GTBlocks.BLOCKS.register(id, blockSupplier);
         ALL.add(ro);
         GTBlocks.BLOCK_ITEMS.register(id, () -> com.gregtech.gregtech.content.logistics.LongDistanceCatalog.find(id)!=null
-                ? new com.gregtech.gregtech.item.LongDistanceBlockItem(ro.get(),new Item.Properties(),com.gregtech.gregtech.content.logistics.LongDistanceCatalog.get(id))
+                ? new com.gregtech.gregtech.item.LongDistanceBlockItem(ro.get(),new Item.Properties().stacksTo(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.get(id).stackLimit()),com.gregtech.gregtech.content.logistics.LongDistanceCatalog.get(id))
                 : new BlockItem(ro.get(), new Item.Properties().stacksTo(ro.get() instanceof FilterBlock || ro.get() instanceof AdvancedCraftingTableBlock?16:64)));
         return ro;
     }
