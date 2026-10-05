@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "gregtech:wire_16_copper",
+      "required": false
+    },
+    {
+      "id": "gregtech:wire_16_annealed_copper",
+      "required": false
+    }
+  ]
+}

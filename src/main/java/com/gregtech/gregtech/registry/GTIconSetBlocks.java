@@ -67,7 +67,9 @@ public final class GTIconSetBlocks {
             if (sandSpec != null) GTBlocks.bind(com.gregtech.gregtech.api.prefix.BlockMaterialPrefix.blockDust,
                     com.gregtech.gregtech.api.material.GTMaterialRegistry.get(sandSpec.material()), block);
             RegistryObject<Item> item = GTBlocks.BLOCK_ITEMS.register(blockId,
-                    () -> block.get() instanceof net.minecraft.world.level.block.WaterlilyBlock
+                    () -> com.gregtech.gregtech.content.logistics.LongDistanceCatalog.find(blockId)!=null
+                            ? new com.gregtech.gregtech.item.LongDistanceBlockItem(block.get(),new Item.Properties(),com.gregtech.gregtech.content.logistics.LongDistanceCatalog.get(blockId))
+                            : block.get() instanceof net.minecraft.world.level.block.WaterlilyBlock
                             ? new net.minecraft.world.item.PlaceOnWaterBlockItem(block.get(), new Item.Properties())
                             : new BlockItem(block.get(), new Item.Properties().stacksTo(64)));
             if (iconName.equals("planks_treated")) {
@@ -188,11 +190,11 @@ public final class GTIconSetBlocks {
             var kind = iconName.equals("long_dist_pipe_item")
                     ? com.gregtech.gregtech.block.misc.LongDistPipeBlock.Kind.ITEM_PIPE
                     : com.gregtech.gregtech.block.misc.LongDistPipeBlock.Kind.FLUID_PIPE;
-            return new com.gregtech.gregtech.block.misc.LongDistPipeBlock(kind, propertiesFor(iconName));
+            return new com.gregtech.gregtech.block.misc.LongDistPipeBlock(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.get(iconName), longDistanceProperties(iconName));
         }
         if(iconName.startsWith("long_dist_wire_")) {
             long maximum=com.gregtech.gregtech.content.logistics.LongDistanceCatalog.voltage(iconName);
-            return new com.gregtech.gregtech.block.misc.LongDistPipeBlock(true,maximum,propertiesFor(iconName));
+            return new com.gregtech.gregtech.block.misc.LongDistPipeBlock(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.get(iconName),longDistanceProperties(iconName));
         }
         if (isLily(iconName)) {
             if (iconName.equals("flower_hexalily"))
@@ -220,6 +222,11 @@ public final class GTIconSetBlocks {
      * GT6-equivalent block properties by icon category (original blocks:
      * BlockBaseWood / BlockConcrete / BlockAsphalt / BlockRail / machine casings etc.).
      */
+    private static BlockBehaviour.Properties longDistanceProperties(String id) {
+        var spec=com.gregtech.gregtech.content.logistics.LongDistanceCatalog.get(id);
+        return BlockBehaviour.Properties.of().strength(spec.hardness(),spec.resistance()).requiresCorrectToolForDrops()
+                .sound(spec.kind().equals("WIRE")?SoundType.WOOL:SoundType.METAL);
+    }
     private static BlockBehaviour.Properties propertiesFor(String n) {
         BlockBehaviour.Properties p = BlockBehaviour.Properties.of();
 

@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "gregtech:pipe_medium_tungsten",
+      "required": false
+    },
+    {
+      "id": "gregtech:pipe_medium_tungsten_sintered",
+      "required": false
+    }
+  ]
+}

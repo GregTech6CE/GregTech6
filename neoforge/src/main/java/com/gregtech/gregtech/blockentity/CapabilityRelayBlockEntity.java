@@ -31,6 +31,7 @@ public abstract class CapabilityRelayBlockEntity extends BlockEntity {
     protected boolean permitsFluid(Direction side,FluidStack stack) { return permitsFluid(stack); }
     protected boolean supportsItems() { return true; }
     protected boolean supportsFluids() { return true; }
+    protected boolean supportsFluidExtraction() { return true; }
     protected boolean exposes(Direction side) { return side!=null; }
     protected final <T,R> R forward(Direction side,BlockCapability<T,Direction> capability,R unavailable,Function<T,R> operation) {
         var active=ACTIVE.get();
@@ -65,7 +66,7 @@ public abstract class CapabilityRelayBlockEntity extends BlockEntity {
         @Override public int getTankCapacity(int tank) { return forward(side,Capabilities.FluidHandler.BLOCK,0,h->tank>=0&&tank<h.getTanks()?h.getTankCapacity(tank):0); }
         @Override public boolean isFluidValid(int tank,FluidStack stack) { return forward(side,Capabilities.FluidHandler.BLOCK,false,h->tank>=0&&tank<h.getTanks()&&permitsFluid(side,stack)&&h.isFluidValid(tank,stack)); }
         @Override public int fill(FluidStack stack,FluidAction action) { return forward(side,Capabilities.FluidHandler.BLOCK,0,h->permitsFluid(side,stack)?h.fill(stack,action):0); }
-        @Override public FluidStack drain(FluidStack stack,FluidAction action) { return forward(side,Capabilities.FluidHandler.BLOCK,FluidStack.EMPTY,h->permitsFluid(side,stack)?h.drain(stack,action):FluidStack.EMPTY); }
-        @Override public FluidStack drain(int amount,FluidAction action) { return forward(side,Capabilities.FluidHandler.BLOCK,FluidStack.EMPTY,h->{var candidate=h.drain(amount,FluidAction.SIMULATE);return permitsFluid(side,candidate)?h.drain(candidate,action):FluidStack.EMPTY;}); }
+        @Override public FluidStack drain(FluidStack stack,FluidAction action) { return supportsFluidExtraction() ? forward(side,Capabilities.FluidHandler.BLOCK,FluidStack.EMPTY,h->permitsFluid(side,stack)?h.drain(stack,action):FluidStack.EMPTY) : FluidStack.EMPTY; }
+        @Override public FluidStack drain(int amount,FluidAction action) { return supportsFluidExtraction() ? forward(side,Capabilities.FluidHandler.BLOCK,FluidStack.EMPTY,h->{var candidate=h.drain(amount,FluidAction.SIMULATE);return permitsFluid(side,candidate)?h.drain(candidate,action):FluidStack.EMPTY;}) : FluidStack.EMPTY; }
     }
 }

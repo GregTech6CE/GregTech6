@@ -1,0 +1,26 @@
+{
+  "type": "gregtech:tool_shaped",
+  "allow_mirror": false,
+  "pattern": [
+    "RSR",
+    "PWP",
+    "RSR"
+  ],
+  "key": {
+    "R": {
+      "tag": "gregtech:plate/rubber"
+    },
+    "S": {
+      "tag": "gregtech:plate_curved/aluminium"
+    },
+    "P": {
+      "tag": "gregtech:long_distance/plate_curved/any_copper"
+    },
+    "W": {
+      "item": "gregtech:wire_16_gold"
+    }
+  },
+  "result": {
+    "item": "gregtech:long_dist_wire_gold"
+  }
+}

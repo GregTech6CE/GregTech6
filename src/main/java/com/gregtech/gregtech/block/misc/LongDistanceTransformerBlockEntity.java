@@ -1,3 +1,22 @@
+/**
+ * Copyright (c) 2021 GregTech-6 Team
+ *
+ * This file is part of GregTech.
+ *
+ * GregTech is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GregTech is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with GregTech. If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.gregtech.gregtech.block.misc;
 
 import net.minecraft.core.BlockPos;
@@ -54,7 +73,7 @@ public class LongDistanceTransformerBlockEntity extends GTEnergyBlockEntity {
                 if(!level.hasChunkAt(next)) return null;
                 watched.put(next,level.getBlockState(next));
                 if(wire(next)) {
-                    if(level.getBlockState(next).getBlock()!=wireBlock) return null;
+                    if(!((LongDistPipeBlock)level.getBlockState(next).getBlock()).sameLine(wireBlock)) continue;
                     if(!distance.containsKey(next)) { distance.put(next,distance.get(pos)+1); queue.add(next); }
                 } else if(level.getBlockEntity(next) instanceof LongDistanceTransformerBlockEntity endpoint) {
                     if(next.relative(endpoint.front().getOpposite()).equals(pos)) sources.add(next);

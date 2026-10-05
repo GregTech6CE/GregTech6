@@ -21,7 +21,7 @@ final class MachineFeedbackChecks {
                 com.gregtech.gregtech.api.material.GTMaterialRegistry.get("Spruce"));
         return stack;
     }
-    private static void craft(net.minecraft.server.MinecraftServer server, String path, String output, JsonArray rows) {
+    static void craft(net.minecraft.server.MinecraftServer server, String path, String output, JsonArray rows) {
         var level=server.overworld();
         var loaded=server.getRecipeManager().byKey(id(path)).orElseThrow(()->new IllegalStateException("Missing native recipe "+path));
         var recipe=(CraftingRecipe)loaded;

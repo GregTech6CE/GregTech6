@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "gregtech:wire_16_steel",
+      "required": false
+    },
+    {
+      "id": "gregtech:wire_16_knightmetal",
+      "required": false
+    },
+    {
+      "id": "gregtech:wire_16_meteoric_steel",
+      "required": false
+    }
+  ]
+}

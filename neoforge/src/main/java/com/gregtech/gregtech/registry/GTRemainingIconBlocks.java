@@ -83,11 +83,11 @@ private static void add(String id,java.util.function.Supplier<Block> factory){va
             var kind = iconName.equals("long_dist_pipe_item")
                     ? com.gregtech.gregtech.block.misc.LongDistPipeBlock.Kind.ITEM_PIPE
                     : com.gregtech.gregtech.block.misc.LongDistPipeBlock.Kind.FLUID_PIPE;
-            return new com.gregtech.gregtech.block.misc.LongDistPipeBlock(kind, propertiesFor(iconName));
+            return new com.gregtech.gregtech.block.misc.LongDistPipeBlock(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.get(iconName), longDistanceProperties(iconName));
         }
         if(iconName.startsWith("long_dist_wire_")) {
             long maximum=com.gregtech.gregtech.content.logistics.LongDistanceCatalog.voltage(iconName);
-            return new com.gregtech.gregtech.block.misc.LongDistPipeBlock(true,maximum,propertiesFor(iconName));
+            return new com.gregtech.gregtech.block.misc.LongDistPipeBlock(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.get(iconName),longDistanceProperties(iconName));
         }
         if (isLily(iconName)) {
             if (iconName.equals("flower_hexalily"))
@@ -115,6 +115,11 @@ private static void add(String id,java.util.function.Supplier<Block> factory){va
      * GT6-equivalent block properties by icon category (original blocks:
      * BlockBaseWood / BlockConcrete / BlockAsphalt / BlockRail / machine casings etc.).
      */
+    private static BlockBehaviour.Properties longDistanceProperties(String id) {
+        var spec=com.gregtech.gregtech.content.logistics.LongDistanceCatalog.get(id);
+        return BlockBehaviour.Properties.of().strength(spec.hardness(),spec.resistance()).requiresCorrectToolForDrops()
+                .sound(spec.kind().equals("WIRE")?SoundType.WOOL:SoundType.METAL);
+    }
     private static BlockBehaviour.Properties propertiesFor(String n) {
         BlockBehaviour.Properties p = BlockBehaviour.Properties.of();
 

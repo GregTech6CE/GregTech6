@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "gregtech:wire_16_tungsten",
+      "required": false
+    },
+    {
+      "id": "gregtech:wire_16_tungsten_sintered",
+      "required": false
+    }
+  ]
+}

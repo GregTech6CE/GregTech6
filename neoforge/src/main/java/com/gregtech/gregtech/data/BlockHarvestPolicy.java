@@ -11,6 +11,8 @@ public final class BlockHarvestPolicy {
  private BlockHarvestPolicy() {}
  public enum Tool { PICKAXE, AXE, SHOVEL, SWORD, WRENCH, CROWBAR, CUTTER, SHEARS, HAND }
  public static Tool tool(Block block) {
+  if(block instanceof com.gregtech.gregtech.block.misc.LongDistPipeBlock line) return line.isWire()?Tool.CUTTER:Tool.WRENCH;
+  if(block instanceof com.gregtech.gregtech.block.misc.LongDistEndpointBlock || block instanceof com.gregtech.gregtech.block.misc.LongDistanceTransformerBlock) return Tool.WRENCH;
   if(block instanceof LiquidBlock || block instanceof BushBlock || block instanceof com.gregtech.gregtech.block.RockBlock || block instanceof com.gregtech.gregtech.block.TwigBlock) return Tool.HAND;
   if(block instanceof com.gregtech.gregtech.block.plant.BaleBlock) return Tool.SWORD;
   if(block instanceof LeavesBlock) return Tool.SHEARS;
@@ -43,6 +45,7 @@ public final class BlockHarvestPolicy {
   return Tool.PICKAXE;
  }
  public static int level(Block block) {
+  if(block instanceof com.gregtech.gregtech.block.misc.LongDistPipeBlock) return 3;
   if(block instanceof com.gregtech.gregtech.block.BookShelfBlock shelf && shelf.variant().metal())
    return Math.max(0,shelf.variant().material().getToolQuality());
   if(block instanceof com.gregtech.gregtech.block.misc.BarsBlock bars) return bars.harvestLevel();

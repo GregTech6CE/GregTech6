@@ -17,7 +17,7 @@
       "tag": "gregtech:long_distance/plate_curved/any_copper"
     },
     "W": {
-      "item": "gregtech:wire_16_steel"
+      "tag": "gregtech:long_distance/wire_16/any_steel"
     }
   },
   "result": {
