@@ -32,6 +32,7 @@ init3();
 init4();
 init5();
 init6();
+initThermal();
 }
 private static void init0(){
 ITEMS.put("abyssal_dough",new Entry("nature_foods",568));
@@ -2584,6 +2585,28 @@ ITEMS.put("wood_wall",new Entry("multiblocks",564));
 ITEMS.put("worldgen_debug_wand",new Entry("equipment",114));
 ITEMS.put("yellow_clay",new Entry("nature_foods",476));
 ITEMS.put("zpm",new Entry("zpm",546));
+}
+private static void initThermal(){
+ITEMS.put("electric_heater_lv",new Entry("heaters",395));
+ITEMS.put("electric_heater_mv",new Entry("heaters",396));
+ITEMS.put("electric_heater_hv",new Entry("heaters",397));
+ITEMS.put("electric_heater_ev",new Entry("heaters",398));
+ITEMS.put("electric_heater_iv",new Entry("heaters",399));
+ITEMS.put("flux_heater_lv",new Entry("heaters",400));
+ITEMS.put("flux_heater_mv",new Entry("heaters",401));
+ITEMS.put("flux_heater_hv",new Entry("heaters",402));
+ITEMS.put("flux_heater_ev",new Entry("heaters",403));
+ITEMS.put("flux_heater_iv",new Entry("heaters",404));
+ITEMS.put("electric_cooler_lv",new Entry("coolers",492));
+ITEMS.put("electric_cooler_mv",new Entry("coolers",493));
+ITEMS.put("electric_cooler_hv",new Entry("coolers",494));
+ITEMS.put("electric_cooler_ev",new Entry("coolers",495));
+ITEMS.put("electric_cooler_iv",new Entry("coolers",496));
+ITEMS.put("flux_cooler_lv",new Entry("coolers",497));
+ITEMS.put("flux_cooler_mv",new Entry("coolers",498));
+ITEMS.put("flux_cooler_hv",new Entry("coolers",499));
+ITEMS.put("flux_cooler_ev",new Entry("coolers",500));
+ITEMS.put("flux_cooler_iv",new Entry("coolers",501));
 }
 public static Entry entry(String id){return ITEMS.get(id.startsWith("bush_plant_gt_berry_")?"bush":id);}
 }

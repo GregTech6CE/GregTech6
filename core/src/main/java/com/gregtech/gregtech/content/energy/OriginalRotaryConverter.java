@@ -56,7 +56,9 @@ public final class OriginalRotaryConverter {
         private int mode;
         private boolean counterClockwise, negativeInput, possible, emitted, fast;
         public State(EnergyNodeSpec spec) {
-            if (!handles(spec)) throw new IllegalArgumentException("Not an original motor/dynamo: " + spec.id());
+            // The same source base conversion also drives thermal devices. Twin outputs use one
+            // native emission callback for both channels, so fixed input waste is applied once.
+            if (!handles(spec) && !OriginalThermalConverter.handles(spec)) throw new IllegalArgumentException("Not an original registered converter: " + spec.id());
             this.spec = spec;
         }
         public int mode() { return mode; }
@@ -105,7 +107,7 @@ public final class OriginalRotaryConverter {
                 emitted = (GregTechTags.Energy.isSizeIrrelevant(spec.outType())
                         ? emit.applyAsLong(negative ? -1 : 1, output) : emit.applyAsLong(size, 1)) > 0;
             }
-            // All original electric/flux motors and dynamos are registered WASTE_ENERGY=T.
+            // These original electric/flux motors, dynamos and thermal devices are WASTE_ENERGY=T.
             // Stopped blocks still convert their remaining buffer; only acceptance/visuals stop.
             energy = Math.max(0, energy - units(spec.inputRate() * 2, 16, 16 - mode, true));
             return finish(energy, stopped, overloaded);

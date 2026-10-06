@@ -113,39 +113,7 @@ public final class EnergyNodeDefinitions {
 
         result.addAll(BatteryBoxDefinitions.specifications());
 
-        // Electric heaters (GT6 10001-10005): EU → HU. GT6 registers them for VN[1..5] only —
-        // there is no ULV heater — and the conversion is 2 EU = 1 HU (32→16, 8192→4096).
-        record Heater(String name, long euIn, long huOut, GTMaterial mat, String zh) {}
-        Heater[] heaters = {
-                new Heater("lv", 32, 16, Materials.SteelGalvanized, "LV"),
-                new Heater("mv", 128, 64, Materials.Aluminium, "MV"),
-                new Heater("hv", 512, 256, Materials.StainlessSteel, "HV"),
-                new Heater("ev", 2048, 1024, Materials.Chromium, "EV"),
-                new Heater("iv", 8192, 4096, Materials.Titanium, "IV"),
-        };
-        for (Heater h : heaters) {
-            result.add(EnergyNodeSpec.builder("electric_heater_" + h.name(), h.mat())
-                    .kind(Kind.CONVERTER).texture("heaters/heat_electric")
-                    .input(GregTechTags.Energy.EU, h.euIn()).output(GregTechTags.Energy.HU, h.huOut())
-                    .capacity(h.euIn() * 4).names("Electric Heater (" + h.zh() + ")", "电加热器(" + h.zh() + ")").build());
-        }
-
-        // Thermoelectric coolers (GT6 10161-10165): EU → CU at 4 EU = 1 CU (32→8, 8192→2048),
-        // with the remainder wasted as HU; the port models the primary CU output only.
-        record Cooler(String name, long euIn, long cuOut, GTMaterial mat, String zh) {}
-        Cooler[] coolers = {
-                new Cooler("lv", 32, 8, Materials.SteelGalvanized, "LV"),
-                new Cooler("mv", 128, 32, Materials.Aluminium, "MV"),
-                new Cooler("hv", 512, 128, Materials.StainlessSteel, "HV"),
-                new Cooler("ev", 2048, 512, Materials.Chromium, "EV"),
-                new Cooler("iv", 8192, 2048, Materials.Titanium, "IV"),
-        };
-        for (Cooler c : coolers) {
-            result.add(EnergyNodeSpec.builder("electric_cooler_" + c.name(), c.mat())
-                    .kind(Kind.CONVERTER).texture("cooler/cryo_electric")
-                    .input(GregTechTags.Energy.EU, c.euIn()).output(GregTechTags.Energy.CU, c.cuOut())
-                    .capacity(c.euIn() * 4).names("Electric Cooler (" + c.zh() + ")", "电冷却器(" + c.zh() + ")").build());
-        }
+        result.addAll(OriginalThermalConverter.specifications());
         return com.gregtech.gregtech.api.definition.DefinitionCatalog.validated(result, EnergyNodeSpec::id);
     }
 }

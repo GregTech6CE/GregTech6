@@ -19,6 +19,20 @@ public final class TransportCraftingInputs {
             var item=BuiltInRegistries.ITEM.get(ResourceLocation.parse(input.name()));
             return item==Items.AIR?Ingredient.EMPTY:Ingredient.of(item);
         }
+        if(input.kind().equals("casing")) {
+            var prefix=input.name().equals("casingMachineDouble") ? com.gregtech.gregtech.api.prefix.BlockMaterialPrefix.casingMachineDouble : com.gregtech.gregtech.api.prefix.BlockMaterialPrefix.casingMachine;
+            var stack=com.gregtech.gregtech.registry.GTBlocks.getStack(prefix,input.material());
+            return stack.isEmpty()?Ingredient.EMPTY:Ingredient.of(stack);
+        }
+        if(input.kind().equals("wire") || input.kind().equals("cable")) {
+            boolean insulated=input.kind().equals("cable");
+            int size=Integer.parseInt(input.name());
+            var material=input.material();
+            var targets=material.getId()<0?material.getReRegistrations():Set.of(material);
+            var wires=com.gregtech.gregtech.registry.GTWires.all().stream().map(v -> v.get()).filter(b -> b.spec().size()==size && b.spec().insulated()==insulated
+                    && targets.contains(b.spec().material())).map(b -> new ItemStack(b)).toList();
+            return wires.isEmpty()?Ingredient.EMPTY:Ingredient.of(wires.stream());
+        }
         var prefix=PrefixRegistry.byName(input.name());
         if(prefix==null)return Ingredient.EMPTY;
         var material=input.material();

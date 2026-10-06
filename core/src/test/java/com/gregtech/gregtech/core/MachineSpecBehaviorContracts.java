@@ -36,6 +36,7 @@ public final class MachineSpecBehaviorContracts {
         originalLargeBoilerTooltipState();
         originalEnergyDeviceTooltips();
         originalMotorDynamoConversion();
+        originalThermalDevices();
         System.out.println("Machine spec behavior contracts passed: " + assertions
                 + " assertions; brick25percent/16HU, ceramic7U/2500K, mold5U, charged45HU/K, original machine CR.REV data; no game runtime");
     }
@@ -279,9 +280,9 @@ public final class MachineSpecBehaviorContracts {
                         && reverse.output().minimum() == 6 && reverse.output().recommended() == 8 && reverse.output().maximum() == 16
                         && reverse.outputFaceKey().equals("gt.lang.face.back"),
                 "Original wood rotational reverse6to16 input recommendation8");
-        var pendingHeater = nodes.stream().filter(s -> s.id().startsWith("electric_heater_")).findFirst().orElseThrow();
-        throwsType(() -> com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.profile(pendingHeater, false),
-                "Incomplete heater conversion is not falsely assigned another device tooltip profile");
+        var pendingTurbine = nodes.stream().filter(s -> s.id().startsWith("steam_turbine_")).findFirst().orElseThrow();
+        throwsType(() -> com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.profile(pendingTurbine, false),
+                "Unported turbine tooltip is not falsely assigned another device profile");
     }
 
     private static void originalMotorDynamoConversion() {
@@ -358,6 +359,80 @@ public final class MachineSpecBehaviorContracts {
                         && com.gregtech.gregtech.content.energy.OriginalRotaryConverter.overloadPower(65, com.gregtech.gregtech.data.GregTechTags.Energy.RU) == 2
                         && com.gregtech.gregtech.content.energy.OriginalRotaryConverter.overloadPower(1000, com.gregtech.gregtech.data.GregTechTags.Energy.RF) == 0.1F,
                 "Source tierMax overcharge power and non-exploding RF break strength");
+    }
+
+    private static void originalThermalDevices() {
+        // Original registrations10001..5/11001..5/10161..5/11161..5, OP amounts and CR.REV.
+        var nodes = com.gregtech.gregtech.content.energy.EnergyNodeDefinitions.specifications();
+        var recipes = com.gregtech.gregtech.content.energy.OriginalThermalCrafting.rows();
+        String[] tiers = {"lv", "mv", "hv", "ev", "iv"};
+        String[] electricMaterials = {"SteelGalvanized", "Aluminium", "StainlessSteel", "Chromium", "Titanium"};
+        String[] fluxMaterials = {"Lead", "Invar", "Electrum", "EnderiumBase", "Enderium"};
+        String[] resistorMaterials = {"Copper", "Constantan", "Kanthal", "Nichrome", "Carborundum"};
+        String[] cableMaterials = {"Tin", "Copper", "Gold", "Aluminium", "Platinum"};
+        long u = GTValues.U;
+        int seen = 0;
+        for (boolean cooler : new boolean[]{false, true}) for (boolean rf : new boolean[]{false, true}) for (int i = 0; i < 5; i++) {
+            String id = (rf ? "flux_" : "electric_") + (cooler ? "cooler_" : "heater_") + tiers[i];
+            var spec = nodes.stream().filter(s -> s.id().equals(id)).findFirst().orElseThrow();
+            long input = (32L << (2*i)) * (rf ? 4 : 1), output = (cooler ? 8L : 16L) << (2*i);
+            var profile = com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.profile(spec, false);
+            check(spec.inputRate() == input && spec.outputRate() == output && spec.capacity() == 2*input
+                            && spec.material() == GTMaterialRegistry.get((rf ? fluxMaterials : electricMaterials)[i]),
+                    "Original thermal source hull/rates/storage " + id);
+            check(spec.inType() == (rf ? com.gregtech.gregtech.data.GregTechTags.Energy.RF : com.gregtech.gregtech.data.GregTechTags.Energy.EU)
+                            && spec.outType() == (cooler ? com.gregtech.gregtech.data.GregTechTags.Energy.CU : com.gregtech.gregtech.data.GregTechTags.Energy.HU)
+                            && com.gregtech.gregtech.data.GregTechTags.Energy.isSizeIrrelevant(spec.outType()),
+                    "Original thermal types and unit packet emission " + id);
+            check(profile.input().minimum() == input/2 && profile.input().maximum() == input*2
+                            && profile.output().minimum() == output/2 && profile.output().maximum() == output*2
+                            && profile.efficiency() == (cooler && !rf ? 2500 : 5000) && !profile.monkeyWrench()
+                            && profile.inputFaceKey().equals(cooler ? "gt.lang.face.any.but.front.back" : "gt.lang.face.any.but.front"),
+                    "Source LH efficiency per channel, range and faces " + id);
+            check(com.gregtech.gregtech.content.energy.OriginalThermalConverter.modeSelectable(spec) == !(cooler && rf),
+                    "Source RF cooler has saved mode but no selector interface " + id);
+            var expected = new java.util.HashMap<String, Long>();
+            if (cooler) {
+                expected.put(electricMaterials[i], 8*u);
+                expected.put("Silicon", 2*(i+1)*u);
+                expected.put("Copper", 2*(i+1)*u);
+                expected.merge(cableMaterials[i], u, Long::sum);
+                expected.put("Rubber", 2*u);
+            } else {
+                expected.put(electricMaterials[i], 14*u + u/3);
+                expected.put(resistorMaterials[i], (2L << i)*u);
+            }
+            if (rf) expected.merge(fluxMaterials[i], 8*u, Long::sum);
+            composition(com.gregtech.gregtech.content.machine.OriginalMachineMaterialData.block(id).orElseThrow(), expected);
+            var recipe = recipes.stream().filter(r -> r.output().equals("gregtech:" + id)).findFirst().orElseThrow();
+            check(recipe.pattern().equals(rf ? (cooler ? java.util.List.of("PSP", "PMP", "PSP") : java.util.List.of("SSS", "SMS", "SSS"))
+                            : (cooler ? java.util.List.of("WPw", "CMC", "xPW") : java.util.List.of("TCT", "CMC", "TCd")))
+                            && recipe.count() == 1 && recipe.empty() && !recipe.unpack(), "Original thermal shaped pattern and stored input protection " + id);
+            if (rf) check(recipe.key().get('M').name().equals("gregtech:" + id.replace("flux_", "electric_")), "Source RF upgrade exact electric tier " + id);
+            else check(recipe.key().get(cooler ? 'W' : 'C').kind().equals(cooler ? "cable" : "wire")
+                            && recipe.key().get(cooler ? 'W' : 'C').name().equals(Integer.toString(cooler ? 1 : 1 << i)),
+                    "Source thermal cable/wire widths " + id);
+            var state = new com.gregtech.gregtech.content.energy.OriginalRotaryConverter.State(spec);
+            var simulation = state.inject(0, input, Long.MAX_VALUE, false);
+            check(simulation.consumed() == 2 && simulation.energy() == 0 && !simulation.overloaded(), "Pure source bounded thermal injection " + id);
+            var calls = new long[2];
+            var step = state.tick(input, false, (size, amount) -> { calls[0] = size; calls[1] = amount; return amount; });
+            check(calls[0] == 1 && calls[1] == output && step.energy() == 0 && step.possible() && step.emitted(),
+                    "Thermal output is HU/CU unit packets, one waste tick " + id);
+            state.mode(1);
+            step = state.tick(2*input, true, (size, amount) -> { calls[0] = size; calls[1] = amount; return amount; });
+            check(calls[0] == 1 && calls[1] == 2*output*15/16 && step.energy() == input/8 && step.visual() == 0,
+                    "Stopped thermal buffer still converts; mode floors output and wastes15/16 once " + id);
+            state.inject(0, -input, 1, true); state.mode(0);
+            state.tick(input, false, (size, amount) -> { calls[0] = size; return amount; });
+            check(calls[0] == 1, "Source thermal output remains positive on negative input " + id);
+            check(com.gregtech.gregtech.content.energy.OriginalThermalConverter.contactDamage(spec) == (cooler ? 0 : Math.min(10F, output/10F)),
+                    "Source heater rated output contact damage " + id);
+            var creative = com.gregtech.gregtech.content.creative.SourceCreativeCatalog.entry(id);
+            check(creative != null && creative.family().equals(cooler ? "coolers" : "heaters"), "Source explicit thermal creative family " + id);
+            seen++;
+        }
+        check(seen == 20 && recipes.size() == 20, "All twenty source thermal registrations and recipes");
     }
 
     private static void brickHeater() {

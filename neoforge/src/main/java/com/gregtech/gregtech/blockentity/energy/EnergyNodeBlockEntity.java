@@ -35,18 +35,20 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
     private com.gregtech.gregtech.content.cover.PanelCoverRuntime batteryPanels;
     private com.gregtech.gregtech.content.energy.ElectricTransformerControl transformerControl;
     private com.gregtech.gregtech.content.energy.OriginalRotaryConverter.State rotaryConverter;
-    public boolean isOriginalRotaryConverter(){return rotaryConverter != null;}
-    public boolean isOriginalMotor(){return isOriginalRotaryConverter() && com.gregtech.gregtech.content.energy.OriginalRotaryConverter.motor(spec);}
+    public boolean hasOriginalConverter(){return rotaryConverter != null;}
+    public boolean isOriginalRotaryConverter(){return hasOriginalConverter() && com.gregtech.gregtech.content.energy.OriginalRotaryConverter.handles(spec);}
+    public boolean isOriginalThermalConverter(){return hasOriginalConverter() && com.gregtech.gregtech.content.energy.OriginalThermalConverter.handles(spec);}
+    public boolean isOriginalMotor(){return hasOriginalConverter() && com.gregtech.gregtech.content.energy.OriginalRotaryConverter.motor(spec);}
     public boolean reverseMotor(){buffer=0;boolean reversed=rotaryConverter.reverse();setChanged();return reversed;}
     public boolean motorCounterClockwise(){return isOriginalMotor() && rotaryConverter.counterClockwise();}
-    public boolean hasControlPanels(){return isOriginalRotaryConverter()||isBatteryBox()||isElectricTransformer()||isSolar();}
+    public boolean hasControlPanels(){return hasOriginalConverter()||isBatteryBox()||isElectricTransformer()||isSolar();}
     @Override public net.minecraft.world.item.ItemStack getCover(Direction side){return batteryCovers.getOrDefault(side,net.minecraft.world.item.ItemStack.EMPTY);}
     @Override public com.gregtech.gregtech.content.cover.PanelCoverRuntime panels(){
         if(batteryPanels==null)batteryPanels=new com.gregtech.gregtech.content.cover.PanelCoverRuntime(this);
         return batteryPanels;
     }
     @Override public boolean coverSupportsPossible(){return hasControlPanels();}
-    @Override public boolean coverPossible(Direction side){return isOriginalRotaryConverter()||isSolar()|| (isBatteryBox()?batteryEnergy.buffer()>spec.outputRate():isElectricTransformer()&&transformerControl.running());}
+    @Override public boolean coverPossible(Direction side){return hasOriginalConverter()||isSolar()|| (isBatteryBox()?batteryEnergy.buffer()>spec.outputRate():isElectricTransformer()&&transformerControl.running());}
     @Override public boolean attachCover(Direction side,net.minecraft.world.item.ItemStack stack){
         var panel=com.gregtech.gregtech.content.cover.PanelCover.of(stack);
         if(!com.gregtech.gregtech.content.cover.CoverItems.isCover(stack)||!getCover(side).isEmpty()||!panels().canAttach(side,stack))return false;
@@ -109,7 +111,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
 
     public void setSpec(EnergyNodeSpec spec) {
         this.spec = spec;
-        rotaryConverter = com.gregtech.gregtech.content.energy.OriginalRotaryConverter.handles(spec)
+        rotaryConverter = com.gregtech.gregtech.content.energy.OriginalRotaryConverter.handles(spec) || com.gregtech.gregtech.content.energy.OriginalThermalConverter.handles(spec)
                 ? new com.gregtech.gregtech.content.energy.OriginalRotaryConverter.State(spec) : null;
         if (isSolar()) {
             solarEnergy = new com.gregtech.gregtech.content.energy.SolarPanelEnergy(spec.outputRate());
@@ -263,7 +265,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
             for (var b : batteries) sum += batteryCapacityOf(b);
             return sum;
         }
-        return isOriginalRotaryConverter() || isSteamConverter() ? spec.inputRate() * 2 : spec.capacity();
+        return hasOriginalConverter() || isSteamConverter() ? spec.inputRate() * 2 : spec.capacity();
     }
 
     // ── Battery box GUI (GT6 TileEntityBase10EnergyBatBox opens one) ────────
@@ -349,7 +351,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, EnergyNodeBlockEntity be) {
         if (be.spec == null) return;
-        if(!be.isOriginalRotaryConverter()&&!be.isBatteryBox()&&!be.isSolar()&&!be.isElectricTransformer()&&!be.batteryCovers.isEmpty()) {
+        if(!be.hasOriginalConverter()&&!be.isBatteryBox()&&!be.isSolar()&&!be.isElectricTransformer()&&!be.batteryCovers.isEmpty()) {
             be.panels().beforeTick();
             for(var side:Direction.values())com.gregtech.gregtech.content.cover.ComponentCoverRuntime.tick(be,side,level.getGameTime());
             be.panels().afterTick();
@@ -375,8 +377,8 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
             be.tickSolar(level, pos);
             return;
         }
-        if (be.isOriginalRotaryConverter()) {
-            be.tickOriginalRotaryConverter();
+        if (be.hasOriginalConverter()) {
+            be.tickOriginalConverter();
             return;
         }
         if (be.isMagnet()) {
@@ -493,13 +495,20 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
         setChanged();
     }
 
-    private void tickOriginalRotaryConverter() {
+    private void tickOriginalConverter() {
         panels().beforeTick();
         for (var side : Direction.values())
             com.gregtech.gregtech.content.cover.ComponentCoverRuntime.tick(this, side, level.getGameTime());
         long before = buffer;
         var step = rotaryConverter.tick(buffer, converterStopped,
-                (size, amount) -> EnergyTransfer.emitEnergyToNetwork(spec.outType(), size, amount, this));
+                (size, amount) -> {
+                    if (isOriginalThermalConverter() && com.gregtech.gregtech.content.energy.OriginalThermalConverter.cooler(spec)) {
+                        long cold = EnergyTransfer.emitEnergyToSide(spec.outType(), facing(), size, amount, this);
+                        long heat = EnergyTransfer.emitEnergyToSide(GregTechTags.Energy.HU, facing().getOpposite(), size, amount, this);
+                        return cold > 0 || heat > 0 ? 1 : 0;
+                    }
+                    return EnergyTransfer.emitEnergyToNetwork(spec.outType(), size, amount, this);
+                });
         buffer = step.energy();
         if (step.overloaded()) rotaryOverload(before, spec.outType());
         if (isRemoved() || level.getBlockEntity(worldPosition) != this) return;
@@ -678,21 +687,23 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
     @Override
     public boolean isEnergyType(GregTechTags.Tag energyType, @Nullable Direction side, boolean emitting) {
         if (spec == null) return false;
-        return emitting ? energyType == spec.outType()
+        return emitting ? energyType == spec.outType() || isOriginalThermalConverter() && com.gregtech.gregtech.content.energy.OriginalThermalConverter.cooler(spec) && energyType == GregTechTags.Energy.HU
                 : (acceptsEnergyInput() && energyType == spec.inType());
     }
 
     @Override
     public java.util.Collection<GregTechTags.Tag> getEnergyTypes(@Nullable Direction side) {
         if (spec == null) return List.of();
+        if (isOriginalThermalConverter() && com.gregtech.gregtech.content.energy.OriginalThermalConverter.cooler(spec)) return List.of(spec.inType(), spec.outType(), GregTechTags.Energy.HU);
         return spec.inType() == spec.outType() ? List.of(spec.outType()) : List.of(spec.inType(), spec.outType());
     }
 
     @Override
     public boolean isEnergyAcceptingFrom(GregTechTags.Tag energyType, @Nullable Direction side, boolean theoretical) {
         if (!acceptsEnergyInput() || energyType != spec.inType()) return false;
-        if (isOriginalRotaryConverter()) return (theoretical || !converterStopped)
-                && (side == null || (isOriginalMotor() ? side != facing() : side == facing().getOpposite()))
+        if (hasOriginalConverter()) return (theoretical || !converterStopped)
+                && (side == null || (isOriginalThermalConverter() ? side != facing() && (!com.gregtech.gregtech.content.energy.OriginalThermalConverter.cooler(spec) || side != facing().getOpposite())
+                    : isOriginalMotor() ? side != facing() : side == facing().getOpposite()))
                 && super.isEnergyAcceptingFrom(energyType, side, theoretical);
         if (isMagnet()) return (theoretical || !magnetStopped)
                 && (side == null || (side != facing() && side != facing().getOpposite()));
@@ -703,7 +714,11 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
 
     @Override
     public boolean isEnergyEmittingTo(GregTechTags.Tag energyType, @Nullable Direction side, boolean theoretical) {
-        if (spec == null || energyType != spec.outType()) return false;
+        if (spec == null) return false;
+        if (isOriginalThermalConverter() && com.gregtech.gregtech.content.energy.OriginalThermalConverter.cooler(spec))
+            return side == null ? energyType == spec.outType() || energyType == GregTechTags.Energy.HU
+                    : energyType == spec.outType() ? side == facing() : energyType == GregTechTags.Energy.HU && side == facing().getOpposite();
+        if (energyType != spec.outType()) return false;
         if (isSolar()) return (side == null || side == facing()) && (theoretical || side == null || !panels().shuttered(side));
         if (isBatteryBox()) return (theoretical || batteryEnergy.enabled()) && (side == null || side == facing());
         if (isMagnet()) return side == null || side == facing() || side == facing().getOpposite();
@@ -714,20 +729,20 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
 
     @Override
     public long getEnergySizeInputRecommended(GregTechTags.Tag energyType, @Nullable Direction side) {
-        if (isOriginalRotaryConverter()) return energyType == spec.inType() ? spec.inputRate() : 0;
+        if (hasOriginalConverter()) return energyType == spec.inType() ? spec.inputRate() : 0;
         return acceptsEnergyInput() && energyType == spec.inType()
                 ? ((isRotationTransformer() || isElectricTransformer()) ? rotationInputRecommended() : inRate()) : 0;
     }
 
     @Override
     public long getEnergySizeOutputRecommended(GregTechTags.Tag energyType, @Nullable Direction side) {
-        if (isOriginalRotaryConverter()) return energyType == spec.outType() ? spec.outputRate() : 0;
+        if (hasOriginalConverter()) return energyType == spec.outType() ? spec.outputRate() : 0;
         return spec != null && energyType == spec.outType() ? outRate() : 0;
     }
 
     @Override
     public long getEnergySizeInputMin(GregTechTags.Tag energyType, @Nullable Direction side) {
-        if(isOriginalRotaryConverter())return energyType==spec.inType()?com.gregtech.gregtech.content.energy.OriginalRotaryConverter.inputMinimum(spec):0;
+        if(hasOriginalConverter())return energyType==spec.inType()?com.gregtech.gregtech.content.energy.OriginalRotaryConverter.inputMinimum(spec):0;
         if(isBatteryBox())return energyType==spec.inType()?com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.batteryInputMinimum(inRate()):0;
         if (!(isRotationTransformer() || isElectricTransformer()) || energyType != spec.inType()) return super.getEnergySizeInputMin(energyType, side);
         if (!inverted) return spec.inputRate() <= 16 ? 1 : spec.inputRate() / 2;
@@ -737,14 +752,14 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
 
     @Override
     public long getEnergySizeInputMax(GregTechTags.Tag energyType, @Nullable Direction side) {
-        if(isOriginalRotaryConverter())return energyType==spec.inType()?spec.inputRate()*2:0;
+        if(hasOriginalConverter())return energyType==spec.inType()?spec.inputRate()*2:0;
         return (isRotationTransformer() || isElectricTransformer()) && energyType == spec.inType()
                 ? rotationInputMaximum() : super.getEnergySizeInputMax(energyType, side);
     }
 
     @Override
     public long getEnergySizeOutputMin(GregTechTags.Tag energyType, @Nullable Direction side) {
-        if(isOriginalRotaryConverter())return energyType==spec.outType()?spec.outputRate()/2:0;
+        if(hasOriginalConverter())return energyType==spec.outType()?spec.outputRate()/2:0;
         if (isSolar()) return energyType == spec.outType() ? spec.outputRate() / 8 : 0;
         if (isBatteryBox()) return energyType==spec.outType()?outRate():0;
         if (!(isRotationTransformer() || isElectricTransformer()) || energyType != spec.outType()) return super.getEnergySizeOutputMin(energyType, side);
@@ -752,14 +767,14 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
     }
 
     @Override public long getEnergySizeOutputMax(GregTechTags.Tag type, @Nullable Direction side) {
-        if (isOriginalRotaryConverter()) return type == spec.outType() ? spec.outputRate() * 2 : 0;
+        if (hasOriginalConverter()) return type == spec.outType() ? spec.outputRate() * 2 : 0;
         if (isSolar()) return type == spec.outType() ? spec.outputRate() : 0;
         return isBatteryBox() ? (type==spec.outType()?outRate():0) : super.getEnergySizeOutputMax(type,side);
     }
 
     @Override
     public long getEnergyDemanded(GregTechTags.Tag energyType, @Nullable Direction side, long size) {
-        if (isOriginalRotaryConverter()) return 0; // Source Root: push-only, discovery is via simulated injection.
+        if (hasOriginalConverter()) return 0; // Source Root: push-only, discovery is via simulated injection.
         if (isBatteryBox()) {
             if(size==Long.MIN_VALUE || !isEnergyAcceptingFrom(energyType,side,false))return 0;
             return batteryEnergy.inject(Math.abs(size),Long.MAX_VALUE,false);
@@ -776,7 +791,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
         if (isSolar()) return isEnergyEmittingTo(energyType, side, false) ? solarEnergy.energy() : 0;
         // GT6 energy converters emit during their own tick. The inherited
         // TileEntityBase01Root.doExtract() returns zero for pull requests.
-        if (isOriginalRotaryConverter() || isSteamConverter() || isRotationTransformer() || isElectricTransformer() || isMagnet() || isBatteryBox()) return 0;
+        if (hasOriginalConverter() || isSteamConverter() || isRotationTransformer() || isElectricTransformer() || isMagnet() || isBatteryBox()) return 0;
         long magnitude = size;
         if (spec == null || energyType != spec.outType() || magnitude <= 0) return 0;
         long packets = buffer / costPerPacket();
@@ -785,7 +800,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
 
     @Override
     public long doInject(GregTechTags.Tag energyType, @Nullable Direction side, long size, long amount, boolean doInject) {
-        if (isOriginalRotaryConverter()) {
+        if (hasOriginalConverter()) {
             if (!isEnergyAcceptingFrom(energyType, side, false)) return 0;
             var step = rotaryConverter.inject(buffer, size, amount, doInject);
             if (doInject) {
@@ -841,7 +856,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
             if (doExtract && extracted > 0) setChanged();
             return extracted;
         }
-        if (isOriginalRotaryConverter() || isSteamConverter() || isRotationTransformer() || isElectricTransformer() || isMagnet() || isBatteryBox()) return 0;
+        if (hasOriginalConverter() || isSteamConverter() || isRotationTransformer() || isElectricTransformer() || isMagnet() || isBatteryBox()) return 0;
         long magnitude = size;
         if (spec == null || energyType != spec.outType() || amount <= 0 || magnitude <= 0) return 0;
         long cost = costPerPacket();
@@ -887,12 +902,12 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
         }
     }
     @Override public com.gregtech.gregtech.api.machine.MachineControl machineControl(Direction side) {
-        if (isOriginalRotaryConverter()) return new com.gregtech.gregtech.api.machine.MachineControl() {
+        if (hasOriginalConverter()) return new com.gregtech.gregtech.api.machine.MachineControl() {
             @Override public boolean available(){return !isRemoved();}
             @Override public boolean supportsProgress(){return false;}
-            @Override public boolean supportsMode(){return isOriginalMotor();}
+            @Override public boolean supportsMode(){return isOriginalMotor() || com.gregtech.gregtech.content.energy.OriginalThermalConverter.modeSelectable(spec);}
             @Override public int mode(){return rotaryConverter.mode();}
-            @Override public int setMode(int value){if(isOriginalMotor())rotaryConverter.mode(value);setChanged();return mode();}
+            @Override public int setMode(int value){if(isOriginalMotor() || com.gregtech.gregtech.content.energy.OriginalThermalConverter.modeSelectable(spec))rotaryConverter.mode(value);setChanged();return mode();}
             @Override public boolean enabled(){return !converterStopped;}
             @Override public boolean setEnabled(boolean value){converterStopped=!value;setChanged();return value;}
             @Override public boolean running(){return rotaryConverter.possible();}
@@ -965,7 +980,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
             new net.neoforged.neoforge.energy.IEnergyStorage() {
         @Override
         public int receiveEnergy(int maxReceive, boolean simulate) {
-            if (isOriginalRotaryConverter()) return (int) doEnergyInjection(GregTechTags.Energy.RF, null, 1, maxReceive, !simulate);
+            if (hasOriginalConverter()) return (int) doEnergyInjection(GregTechTags.Energy.RF, null, 1, maxReceive, !simulate);
             if (isMagnet() && magnetStopped) return 0;
             long space = Math.max(0, capacity() - buffer);
             int accepted = (int) Math.min(maxReceive, space);
@@ -980,12 +995,12 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
         @Override public int getEnergyStored() { return (int) Math.min(Integer.MAX_VALUE, buffer); }
         @Override public int getMaxEnergyStored() { return (int) Math.min(Integer.MAX_VALUE, capacity()); }
         @Override public boolean canExtract() { return false; }
-        @Override public boolean canReceive() { return isOriginalRotaryConverter() ? !converterStopped : !isMagnet() || !magnetStopped; }
+        @Override public boolean canReceive() { return hasOriginalConverter() ? !converterStopped : !isMagnet() || !magnetStopped; }
     };
 
     public net.neoforged.neoforge.energy.IEnergyStorage energyCapability(@Nullable Direction side){
-        if(spec==null||spec.inType()!=GregTechTags.Energy.RF||side!=null&&(side==facing()||isMagnet()&&side==facing().getOpposite()))return null;
-        return isMagnet()&&side!=null?magnetFeStorage(side):feStorage;
+        if(spec==null||spec.inType()!=GregTechTags.Energy.RF||side!=null&&(side==facing()||(isMagnet() || isOriginalThermalConverter() && com.gregtech.gregtech.content.energy.OriginalThermalConverter.cooler(spec))&&side==facing().getOpposite()))return null;
+        return (isMagnet()||hasOriginalConverter())&&side!=null?magnetFeStorage(side):feStorage;
     }
     public net.neoforged.neoforge.items.IItemHandler itemCapability(@Nullable Direction side){return !isBatteryBox()?null:side==null?batterySlots:sidedBatteryInventory(side);}
     public IFluidHandler fluidCapability(@Nullable Direction side){return steamTank!=null&&(side==null||side==facing().getOpposite())?side==null?turbineInlet():com.gregtech.gregtech.content.cover.ComponentCoverAccess.fluids(this,side,turbineInlet()):null;}
@@ -1017,10 +1032,10 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
         tag.putLong("gt.turbine_pending", turbinePending);
         tag.putLong("gt.steam_remainder", steamRemainder);
         tag.putBoolean("gt.converter_stopped", converterStopped);
-        if (isOriginalRotaryConverter()) {
+        if (hasOriginalConverter()) {
             var rotary = rotaryConverter.snapshot();
             tag.putByte("gt.mode", (byte) rotary.mode());
-            tag.putBoolean("gt.reversed", rotary.counterClockwise());
+            if (isOriginalMotor()) tag.putBoolean("gt.reversed", rotary.counterClockwise());
             tag.putBoolean("gt.active.energy", rotary.emitted());
             tag.putBoolean("gt.can.energy", rotary.possible());
             if (isOriginalMotor()) tag.putBoolean("gt.visual", rotary.fast());
@@ -1068,10 +1083,10 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
         turbinePending = Math.max(0, tag.getLong("gt.turbine_pending"));
         steamRemainder = Math.floorMod(tag.getLong("gt.steam_remainder"), com.gregtech.gregtech.api.machine.BoilerSpec.STEAM_PER_WATER);
         converterStopped = tag.getBoolean("gt.converter_stopped");
-        if (isOriginalRotaryConverter())
+        if (hasOriginalConverter())
             rotaryConverter.restore(new com.gregtech.gregtech.content.energy.OriginalRotaryConverter.Snapshot(
-                    tag.getByte("gt.mode"), tag.getBoolean("gt.reversed"), false,
-                    tag.getBoolean("gt.can.energy"), tag.getBoolean("gt.active.energy"), tag.getBoolean("gt.visual")));
+                    tag.getByte("gt.mode"), isOriginalMotor() && tag.getBoolean("gt.reversed"), false,
+                    tag.getBoolean("gt.can.energy"), tag.getBoolean("gt.active.energy"), isOriginalMotor() && tag.getBoolean("gt.visual")));
         rotor = tag.contains("gt.rotor")
                 ? net.minecraft.world.item.ItemStack.parseOptional(lookup,tag.getCompound("gt.rotor"))
                 : net.minecraft.world.item.ItemStack.EMPTY;

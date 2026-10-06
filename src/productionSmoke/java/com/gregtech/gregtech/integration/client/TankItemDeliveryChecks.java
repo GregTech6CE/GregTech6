@@ -70,6 +70,7 @@ final class TankItemDeliveryChecks {
         result.add("originalFunctionalTooltips", verifyFunctionalTooltips());
         result.add("sourceMechanicalTooltips", verifyMechanicalTooltips());
         result.add("sourceEnergyDeviceTooltips", verifyEnergyDeviceTooltips());
+        result.add("sourceThermalConverters", verifyThermalConverterDelivery());
         result.add("sourceRotaryConverters", verifyRotaryConverterDelivery());
         result.add("machineSourceMaterials", verifyMachineMaterials());
         result.addProperty("sourceFluidPipeTooltips", verifyFluidPipeTooltips());
@@ -204,7 +205,8 @@ final class TankItemDeliveryChecks {
         for (var block : BuiltInRegistries.BLOCK) {
             if (!(block instanceof com.gregtech.gregtech.block.energy.EnergyNodeBlock node)
                     || !com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.handles(node.spec())
-                    || com.gregtech.gregtech.content.energy.OriginalRotaryConverter.handles(node.spec())) continue;
+                    || com.gregtech.gregtech.content.energy.OriginalRotaryConverter.handles(node.spec())
+                    || com.gregtech.gregtech.content.energy.OriginalThermalConverter.handles(node.spec())) continue;
             var spec = node.spec();
             var item = new ItemStack(node);
             var source = com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.profile(spec, false);
@@ -353,9 +355,94 @@ final class TankItemDeliveryChecks {
         return result;
     }
 
+    private static JsonObject verifyThermalConverterDelivery() {
+        int heaters = 0, coolers = 0, rf = 0, states = 0;
+        var heat = com.gregtech.gregtech.data.GregTechTags.Energy.HU;
+        for (var block : BuiltInRegistries.BLOCK) {
+            if (!(block instanceof com.gregtech.gregtech.block.energy.EnergyNodeBlock node)
+                    || !com.gregtech.gregtech.content.energy.OriginalThermalConverter.handles(node.spec())) continue;
+            var spec = node.spec();
+            boolean cooler = com.gregtech.gregtech.content.energy.OriginalThermalConverter.cooler(spec);
+            require(block instanceof com.gregtech.gregtech.block.energy.RotaryConverterBlock, "installed thermal trinary states " + spec.id());
+            require((block instanceof com.gregtech.gregtech.block.energy.OriginalHeaterBlock) != cooler, "installed heater contact block only " + spec.id());
+            var item = new ItemStack(block);
+            var lines = tooltip(item, net.minecraft.world.item.TooltipFlag.NORMAL);
+            var source = com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.profile(spec, false);
+            verifySourceEnergyLines(spec, source, lines);
+            String efficiency = tr("gt.lang.efficiency") + ": " + com.gregtech.gregtech.content.machine.OriginalFunctionalTooltipData.efficiencyPercent(source.efficiency()) + "%";
+            require(lines.stream().filter(efficiency::equals).count() == (cooler ? 2 : 1), "installed source LH efficiency per thermal channel " + spec.id());
+            if (cooler) {
+                String secondary = sourceEnergyLine("gt.lang.energy.output", source.output(), tr("gt.td.short.energy.heat"), "gt.lang.face.back", true);
+                require(lines.stream().filter(secondary::equals).count() == 1 && lines.contains(tr("gt.lang.reminder.extenders")), "installed secondary HU and source extender reminder " + spec.id());
+            } else require(lines.contains(tr("gt.lang.hazard.contact") + " (" + tr("gt.lang.face.front") + ")"), "installed source heater contact hazard " + spec.id());
+            require(lines.stream().noneMatch(tr("gt.lang.use.monkey.wrench.to.toggle.direction")::equals), "installed thermal has no motor reversal hint " + spec.id());
+            if (spec.inType() == com.gregtech.gregtech.data.GregTechTags.Energy.RF) {
+                require(lines.contains(tr("gt.lang.accepts.redstoneflux.lossless")), "installed thermal RF hint " + spec.id()); rf++;
+            }
+            verifyComposition(item, com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block(spec.id()).orElseThrow());
+            var sourceCreative = com.gregtech.gregtech.content.creative.SourceCreativeCatalog.entry(spec.id());
+            require(sourceCreative != null && sourceCreative.family().equals(cooler ? "coolers" : "heaters"), "installed original thermal creative binding " + spec.id());
+            require(item.getHoverName().getString().equals(spec.displayEn()), "installed original English thermal name " + spec.id());
+            var tile = (com.gregtech.gregtech.blockentity.energy.EnergyNodeBlockEntity) node.newBlockEntity(BlockPos.ZERO, block.defaultBlockState());
+            require(tile.isOriginalThermalConverter() && !tile.isOriginalMotor() && !tile.isOriginalRotaryConverter(), "installed native common converter with separate thermal identity " + spec.id());
+            verifyNativeEnergyStats(tile, source);
+            require(tile.getEnergyCapacity(spec.inType(), null) == 2*spec.inputRate(), "installed thermal source storage " + spec.id());
+            var front = block.defaultBlockState().getValue(net.minecraft.world.level.block.DirectionalBlock.FACING);
+            for (var face : net.minecraft.core.Direction.values()) {
+                require(tile.isEnergyAcceptingFrom(spec.inType(), face, false) == (face != front && (!cooler || face != front.getOpposite())), "installed thermal real input face " + spec.id());
+                require(tile.isEnergyEmittingTo(spec.outType(), face, false) == (face == front), "installed primary thermal output face " + spec.id());
+                if (cooler) require(tile.isEnergyEmittingTo(heat, face, false) == (face == front.getOpposite()), "installed secondary thermal HU output face " + spec.id());
+            }
+            if (cooler) require(tile.isEnergyType(heat, null, true) && tile.getEnergyTypes(null).contains(heat)
+                    && tile.getEnergySizeOutputMin(heat, null) == 0 && tile.getEnergySizeOutputRecommended(heat, null) == 0
+                    && tile.getEnergySizeOutputMax(heat, null) == 0, "installed source twin API secondary zero-size getters " + spec.id());
+            require(tile.doEnergyInjection(spec.inType(), net.minecraft.core.Direction.UP, spec.inputRate(), Long.MAX_VALUE, false) == 2 && tile.stored() == 0, "installed bounded pure thermal injection " + spec.id());
+            var control = tile.machineControl(null);
+            boolean selectable = com.gregtech.gregtech.content.energy.OriginalThermalConverter.modeSelectable(spec);
+            require(control.supportsMode() == selectable && control.setMode(17) == (selectable ? 1 : 0) && !control.supportsProgress(), "installed thermal source selector interface and four bits " + spec.id());
+            control.setEnabled(false);
+            require(!tile.isEnergyAcceptingFrom(spec.inType(), net.minecraft.core.Direction.UP, false)
+                    && tile.isEnergyAcceptingFrom(spec.inType(), net.minecraft.core.Direction.UP, true), "installed stopped thermal actual/theoretical gate " + spec.id());
+            require(tile.getEnergyDemanded(spec.inType(), null, spec.inputRate()) == 0
+                    && tile.getEnergyOffered(spec.outType(), null, spec.outputRate()) == 0, "installed push-driven thermal getters " + spec.id());
+            for (var state : block.getStateDefinition().getPossibleStates()) {
+                var model = net.minecraft.client.Minecraft.getInstance().getBlockRenderer().getBlockModel(state);
+                require(model != net.minecraft.client.Minecraft.getInstance().getModelManager().getMissingModel(), "installed thermal baked state " + spec.id() + state);
+                var quads = new java.util.ArrayList<net.minecraft.client.renderer.block.model.BakedQuad>();
+                for (var face : net.minecraft.core.Direction.values()) quads.addAll(model.getQuads(state, face, net.minecraft.util.RandomSource.create(0)));
+                quads.addAll(model.getQuads(state, null, net.minecraft.util.RandomSource.create(0)));
+                String folder = state.getValue(com.gregtech.gregtech.block.energy.RotaryConverterBlock.ACTIVITY) > 0 ? "/overlay_active/" : "/overlay/";
+                require(quads.stream().anyMatch(q -> q.getSprite().contents().name().getPath().contains(folder))
+                        && quads.stream().noneMatch(q -> q.getSprite().contents().name().getPath().equals("missingno")), "installed thermal colored/active layers exist " + spec.id());
+                if (!cooler) {
+                    var bounds = state.getCollisionShape(net.minecraft.world.level.EmptyBlockGetter.INSTANCE, BlockPos.ZERO, net.minecraft.world.phys.shapes.CollisionContext.empty()).bounds();
+                    var direction = state.getValue(net.minecraft.world.level.block.DirectionalBlock.FACING);
+                    require(switch (direction) {
+                        case UP -> bounds.maxY == 0.875 && bounds.minY == 0;
+                        case DOWN -> bounds.minY == 0.125 && bounds.maxY == 1;
+                        case NORTH -> bounds.minZ == 0.125 && bounds.maxZ == 1;
+                        case SOUTH -> bounds.maxZ == 0.875 && bounds.minZ == 0;
+                        case EAST -> bounds.maxX == 0.875 && bounds.minX == 0;
+                        case WEST -> bounds.minX == 0.125 && bounds.maxX == 1;
+                    }, "installed source two-pixel front collision inset " + spec.id());
+                }
+                states++;
+            }
+            if (cooler) coolers++; else heaters++;
+        }
+        require(heaters == 10 && coolers == 10 && rf == 10 && states == 720, "installed twenty source thermal devices and720 states");
+        var result = new JsonObject();
+        result.addProperty("heaters", heaters); result.addProperty("coolers", coolers); result.addProperty("rfDevices", rf); result.addProperty("actualBakedStates", states);
+        result.addProperty("sourceMaterialsAndSingleAdvancedSection", true);
+        result.addProperty("scope", "installed title-screen native factories, methods, tooltip events and baked models; world output/contact checked separately");
+        return result;
+    }
+
     private static String sourceEnergyUnit(com.gregtech.gregtech.data.GregTechTags.Tag type) {
         return tr(type == com.gregtech.gregtech.data.GregTechTags.Energy.RU ? "gt.td.short.energy.kinetic_rotation"
-                : type == com.gregtech.gregtech.data.GregTechTags.Energy.RF ? "gt.td.short.energy.redstone_flux" : "gt.td.short.energy.electricity");
+                : type == com.gregtech.gregtech.data.GregTechTags.Energy.RF ? "gt.td.short.energy.redstone_flux"
+                : type == com.gregtech.gregtech.data.GregTechTags.Energy.HU ? "gt.td.short.energy.heat"
+                : type == com.gregtech.gregtech.data.GregTechTags.Energy.CU ? "gt.td.short.energy.cryo" : "gt.td.short.energy.electricity");
     }
 
     private static JsonObject verifyMechanicalTooltips() {

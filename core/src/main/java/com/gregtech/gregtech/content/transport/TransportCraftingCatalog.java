@@ -54,6 +54,7 @@ public final class TransportCraftingCatalog {
                 rows.add(shaped("tank/"+spec.id(),List.of("rGs","PSP","PSP"),Map.of('r',tool("soft_hammer"),'s',tool("saw"),'G',tag("forge:glue"),'P',com.gregtech.gregtech.content.transport.fluid.CheapWoodBarrelCatalog.entry(spec.id()).isPresent()?tag("gregtech:wooden_planks"):form("plate",spec.material()),'S',form("stickLong",TransportMaterialRules.barrelRod(spec))),spec.id(),false));
             // PlasticCan is an existing extruder mold output, not a made-up shaped recipe.
         }
+        rows.addAll(com.gregtech.gregtech.content.energy.OriginalThermalCrafting.rows());
         return List.copyOf(rows);
     }
 }
