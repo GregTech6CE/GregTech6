@@ -38,7 +38,7 @@ public final class CompatSpecs {
 
     public static List<Module> modules() {
         return List.of(ImmersiveEngineeringCompat.module(), MekanismCompat.module(),
-                AppliedEnergisticsCompat.module());
+                AppliedEnergisticsCompat.module(), ProjectRedCompat.module());
     }
 
     /** Structural checks only. A loaded game still has to resolve the registry names. */
@@ -50,13 +50,14 @@ public final class CompatSpecs {
                 throw new IllegalStateException("Duplicate compat module " + module.modernId());
             assertions++;
         }
-        if (byId.size() != 3 || !byId.containsKey("immersiveengineering") || !byId.containsKey("mekanism")
-                || !byId.containsKey("ae2"))
+        if (byId.size() != 4 || !byId.containsKey("immersiveengineering") || !byId.containsKey("mekanism")
+                || !byId.containsKey("ae2") || !byId.containsKey("projectred_core"))
             throw new IllegalStateException("compat modules " + byId.keySet());
         assertions++;
         assertions += immersiveEngineering(byId.get("immersiveengineering"));
         assertions += mekanism(byId.get("mekanism"));
         assertions += appliedEnergistics(byId.get("ae2"));
+        assertions += projectRed(byId.get("projectred_core"));
         return assertions;
     }
 
@@ -138,6 +139,23 @@ public final class CompatSpecs {
             assertions++;
         }
         if (module.deferred().size() < 4) throw new IllegalStateException("deferred AE notes");
+        assertions++;
+        return assertions;
+    }
+
+    private static int projectRed(Module module) {
+        int assertions = 0;
+        if (!module.forge() || !module.neo() || !module.originalClass().equals("Compat_Recipes_ProjectRed"))
+            throw new IllegalStateException(module.originalClass());
+        assertions++;
+        if (!module.crafting().isEmpty() || module.shaped().size() != 3 || module.removals().size() != 1)
+            throw new IllegalStateException("Project Red crafting counts");
+        assertions++;
+        if (module.machines().size() != 1 || module.machines().get(0).op() != Op.SAW
+                || !module.machines().get(0).map().equals("Cutter"))
+            throw new IllegalStateException("Project Red saw");
+        assertions++;
+        if (module.deferred().isEmpty()) throw new IllegalStateException("deferred Project Red notes");
         assertions++;
         return assertions;
     }

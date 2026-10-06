@@ -53,6 +53,11 @@ dependencies {
         runtimeOnly "maven.modrinth:ae2:${rootProject.property('neoforge_ae_version')}"
         runtimeOnly "maven.modrinth:guideme:${rootProject.property('neoforge_guideme_version')}"
     }
+    if (rootProject.findProperty('compatRuntime') == 'pr') {
+        runtimeOnly "maven.modrinth:project-red-core:${rootProject.property('neoforge_pr_version')}"
+        runtimeOnly "maven.modrinth:codechicken-lib:${rootProject.property('neoforge_ccl_version')}"
+        runtimeOnly "maven.modrinth:cb-multipart:${rootProject.property('neoforge_cbm_version')}"
+    }
 
     if (rootProject.findProperty('directCoreClasspath')?.toString() == 'true') {
         // Local development can use the same compiled core output directly.

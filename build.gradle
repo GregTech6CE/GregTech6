@@ -238,6 +238,13 @@ dependencies {
         runtimeOnly fg.deobf("maven.modrinth:ae2:${ae_version}")
         runtimeOnly fg.deobf("maven.modrinth:guideme:${guideme_version}")
     }
+    if (project.findProperty('compatRuntime') == 'pr') {
+        // 4.20.0 is the Forge 1.20.1 jar. 4.21.0 is also published for NeoForge 1.20.4 under the
+        // same Maven version, so this coordinate has to stay on 4.20.0. The jar is SRG and needs deobf.
+        runtimeOnly fg.deobf("maven.modrinth:project-red-core:${pr_version}")
+        runtimeOnly fg.deobf("maven.modrinth:codechicken-lib:${ccl_version}")
+        runtimeOnly fg.deobf("maven.modrinth:cb-multipart:${cbm_version}")
+    }
 
     // §105: the mixin annotation processor generates gregtech.refmap.json (named -> SRG), which is what
     // makes the mixin work in the obfuscated production environment too.
