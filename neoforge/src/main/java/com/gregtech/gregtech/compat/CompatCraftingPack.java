@@ -57,6 +57,7 @@ public final class CompatCraftingPack extends AbstractPackResources {
         for (var module : CompatSpecs.modules()) {
             if (!ModList.get().isLoaded(module.modernId())) continue;
             for (var row : module.crafting()) add(generated, row);
+            for (var row : module.shaped()) addShaped(generated, row);
             for (var removal : module.removals()) disable(generated, removal);
         }
         resources = Map.copyOf(generated);
@@ -77,6 +78,24 @@ public final class CompatCraftingPack extends AbstractPackResources {
         json.put("type", "minecraft:crafting_shapeless");
         json.put("group", "gt.compat");
         json.put("ingredients", ingredients);
+        json.put("result", Map.of("id", result.get("item"), "count", row.output().count()));
+        put(generated, ResourceLocation.fromNamespaceAndPath("gregtech", "recipe/" + row.id() + ".json"), json);
+    }
+
+    private static void addShaped(Map<ResourceLocation, byte[]> generated, CompatSpecs.ShapedRow row) {
+        var key = new LinkedHashMap<String, Object>();
+        for (var entry : row.keys()) {
+            var ingredient = ingredient(entry.stack());
+            if (ingredient == null || entry.symbol().length() != 1) return;
+            key.put(entry.symbol(), ingredient);
+        }
+        var output = ingredient(row.output());
+        if (!(output instanceof Map<?, ?> result)) return;
+        var json = new LinkedHashMap<String, Object>();
+        json.put("type", "minecraft:crafting_shaped");
+        json.put("group", "gt.compat");
+        json.put("pattern", row.pattern());
+        json.put("key", key);
         json.put("result", Map.of("id", result.get("item"), "count", row.output().count()));
         put(generated, ResourceLocation.fromNamespaceAndPath("gregtech", "recipe/" + row.id() + ".json"), json);
     }

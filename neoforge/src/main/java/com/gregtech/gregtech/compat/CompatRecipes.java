@@ -101,6 +101,23 @@ public final class CompatRecipes {
                 for (var first : left) for (var second : right)
                     keep(map, row, map.addRecipe2(row.optimize(), row.eut(), row.duration(), first.copy(), second.copy(), copy(outputs)));
             }
+            case THREE -> {
+                if (row.inputs().size() != 3) {
+                    problem(row.source(), row.id() + " three-input row is malformed");
+                    return;
+                }
+                var first = resolve(row.inputs().get(0), row.source());
+                var second = resolve(row.inputs().get(1), row.source());
+                var third = resolve(row.inputs().get(2), row.source());
+                if (first.isEmpty() || second.isEmpty() || third.isEmpty()) return;
+                if ((long) first.size() * second.size() * third.size() > 4096) {
+                    problem(row.source(), row.id() + " tag expansion exceeds 4096");
+                    return;
+                }
+                for (var a : first) for (var b : second) for (var c : third)
+                    keep(map, row, map.addRecipeX(row.optimize(), row.eut(), row.duration(),
+                            new ItemStack[] {a.copy(), b.copy(), c.copy()}, copy(outputs)));
+            }
             case GENERIFY -> {
                 var from = resolve(row.inputs().get(0), row.source());
                 if (from.size() != 1 || outputs.size() != 1) {
@@ -207,6 +224,9 @@ public final class CompatRecipes {
             case "Loom" -> MachineRecipeMaps.Loom;
             case "Generifier" -> MachineRecipeMaps.Generifier;
             case "Bath" -> MachineRecipeMaps.Bath;
+            case "Press" -> MachineRecipeMaps.Press;
+            case "Hammer" -> MachineRecipeMaps.Hammer;
+            case "Crusher" -> MachineRecipeMaps.Crusher;
             default -> throw new IllegalArgumentException(name);
         };
     }

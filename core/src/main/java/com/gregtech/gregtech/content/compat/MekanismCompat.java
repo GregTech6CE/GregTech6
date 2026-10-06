@@ -13,7 +13,7 @@ public final class MekanismCompat {
 
     public static CompatSpecs.Module module() {
         return new CompatSpecs.Module("mekanism", true, true, "Compat_Recipes_Mekanism",
-                List.of(), List.of(),
+                List.of(), List.of(), List.of(),
                 List.of(new CompatSpecs.Removal("mekanism:storage_blocks/salt", SOURCE + ":41")),
                 List.of(
                         SOURCE + ":44 Balloon is not registered in Mekanism 10.4 or 10.7",

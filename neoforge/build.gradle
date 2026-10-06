@@ -49,6 +49,10 @@ dependencies {
     if (rootProject.findProperty('compatRuntime') == 'mek') {
         runtimeOnly "maven.modrinth:mekanism:${rootProject.property('neoforge_mek_version')}"
     }
+    if (rootProject.findProperty('compatRuntime') == 'ae') {
+        runtimeOnly "maven.modrinth:ae2:${rootProject.property('neoforge_ae_version')}"
+        runtimeOnly "maven.modrinth:guideme:${rootProject.property('neoforge_guideme_version')}"
+    }
 
     if (rootProject.findProperty('directCoreClasspath')?.toString() == 'true') {
         // Local development can use the same compiled core output directly.
