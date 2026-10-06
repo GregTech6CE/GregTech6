@@ -231,6 +231,9 @@ dependencies {
     if (project.findProperty('compatRuntime') == 'ie') {
         runtimeOnly fg.deobf("maven.modrinth:immersiveengineering:${ie_version}")
     }
+    if (project.findProperty('compatRuntime') == 'mek') {
+        runtimeOnly fg.deobf("maven.modrinth:mekanism:${mek_version}")
+    }
 
     // §105: the mixin annotation processor generates gregtech.refmap.json (named -> SRG), which is what
     // makes the mixin work in the obfuscated production environment too.

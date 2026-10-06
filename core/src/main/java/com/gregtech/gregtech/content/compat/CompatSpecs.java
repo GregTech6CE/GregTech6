@@ -32,17 +32,29 @@ public final class CompatSpecs {
                          List<String> deferred) {}
 
     public static List<Module> modules() {
-        return List.of(ImmersiveEngineeringCompat.module());
+        return List.of(ImmersiveEngineeringCompat.module(), MekanismCompat.module());
     }
 
     /** Structural checks only. A loaded game still has to resolve the registry names. */
     public static int check() {
         int assertions = 0;
-        if (modules().size() != 1) throw new IllegalStateException("IE pilot publishes one module");
+        var byId = new java.util.LinkedHashMap<String, Module>();
+        for (var module : modules()) {
+            if (byId.put(module.modernId(), module) != null)
+                throw new IllegalStateException("Duplicate compat module " + module.modernId());
+            assertions++;
+        }
+        if (byId.size() != 2 || !byId.containsKey("immersiveengineering") || !byId.containsKey("mekanism"))
+            throw new IllegalStateException("compat modules " + byId.keySet());
         assertions++;
-        var module = modules().get(0);
-        if (!module.modernId().equals("immersiveengineering") || !module.forge() || !module.neo())
-            throw new IllegalStateException("IE is a dual-loader target");
+        assertions += immersiveEngineering(byId.get("immersiveengineering"));
+        assertions += mekanism(byId.get("mekanism"));
+        return assertions;
+    }
+
+    private static int immersiveEngineering(Module module) {
+        int assertions = 0;
+        if (!module.forge() || !module.neo()) throw new IllegalStateException("IE is a dual-loader target");
         assertions++;
         if (!module.originalClass().equals("Compat_Recipes_ImmersiveEngineering"))
             throw new IllegalStateException(module.originalClass());
@@ -75,6 +87,22 @@ public final class CompatSpecs {
         assertions++;
         long baths = module.machines().stream().filter(row -> row.op() == Op.BATH).count();
         if (baths != 11L * 7 * 2) throw new IllegalStateException("stair/slab oil baths " + baths);
+        assertions++;
+        return assertions;
+    }
+
+    private static int mekanism(Module module) {
+        int assertions = 0;
+        if (!module.forge() || !module.neo() || !module.originalClass().equals("Compat_Recipes_Mekanism"))
+            throw new IllegalStateException(module.originalClass());
+        assertions++;
+        if (!module.machines().isEmpty() || !module.crafting().isEmpty() || module.removals().size() != 1)
+            throw new IllegalStateException("Mekanism publishes one crafting removal");
+        assertions++;
+        if (!module.removals().get(0).recipeId().equals("mekanism:storage_blocks/salt"))
+            throw new IllegalStateException(module.removals().get(0).recipeId());
+        assertions++;
+        if (module.deferred().size() < 8) throw new IllegalStateException("deferred Mekanism dye targets");
         assertions++;
         return assertions;
     }
