@@ -40,6 +40,28 @@ final class CanvasDeliveryChecks {
         CanvasData.write(printed,CanvasData.fromState(Blocks.WATER.defaultBlockState()));var water=CanvasCoverRenderer.imageFace(printed,Direction.NORTH,null,null);require(water!=null&&!water.sprite().contents().name().getPath().contains("missing"),"mapped water bucket has fluid image");
         graphics.blit(102,87,0,22,22,water.sprite());
         CanvasData.write(printed,CanvasData.fromState(Blocks.GLOWSTONE.defaultBlockState()));require(CanvasCoverRenderer.imageFace(printed,Direction.SOUTH,null,null).bright(),"glowstone image retains bright rendering");
-        graphics.pose().popPose();var result=new JsonObject();result.addProperty("originalCanvasItemModels",meshes);result.addProperty("directionalAndFluidFaces",4);result.addProperty("brightImage",true);return result;
+        int pageModels=0;
+        for(String path:java.util.List.of("printed_pages","many_printed_pages")) {
+            var pages=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech",path)));
+            require(pages.getItem() instanceof com.gregtech.gregtech.item.PrintedPagesItem,"native printed-page behavior "+path);
+            var model=client.getItemRenderer().getModel(pages,null,null,0);
+            int count=0;
+            for(var pass:model.getRenderPasses(pages,false))for(var layer:pass.getRenderTypes(pages,false))for(int side=-1;side<6;side++)for(var quad:pass.getQuads(null,side<0?null:Direction.from3DDataValue(side),RandomSource.create(1),net.neoforged.neoforge.client.model.data.ModelData.EMPTY,layer)) {
+                require(quad.getSprite().contents().name().equals(ResourceLocation.fromNamespaceAndPath("gregtech","item/randomtools/"+path)),"original paper bundle sprite "+path);count++;
+            }
+            require(count>0,"visible printed-page item mesh "+path);
+            require(!pages.getHoverName().getString().contains("item.gregtech."),"localized page name "+path);
+            graphics.renderItem(pages,140+pageModels*30,88);pageModels++;
+        }
+        int bookHints=0;
+        for(var variant:com.gregtech.gregtech.content.book.ColoredBookRules.VARIANTS) {
+            var book=com.gregtech.gregtech.registry.GTColoredBooks.stack(variant.originalId());
+            require(com.gregtech.gregtech.data.MachineRecipeMaps.ScannerVisuals.mRecipeList.stream().anyMatch(r->r.mFakeRecipe&&r.mDuration==512&&r.mEUt==16&&r.mInputs.length==2&&r.mInputs[0].is(book.getItem())),"source scanner viewer row "+variant.path());bookHints++;
+        }
+        for(String path:java.util.List.of("printed_pages","many_printed_pages")) {
+            var item=BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech",path));
+            require(com.gregtech.gregtech.data.MachineRecipeMaps.Printer.mRecipeList.stream().anyMatch(r->r.mFakeRecipe&&r.mOutputs.length==1&&r.mOutputs[0].is(item)&&r.mEUt==16&&r.mDuration==(path.equals("printed_pages")?512:1024)),"source printer viewer row "+path);
+        }
+        graphics.pose().popPose();var result=new JsonObject();result.addProperty("originalCanvasItemModels",meshes);result.addProperty("printedPageModels",pageModels);result.addProperty("coloredBookScanHints",bookHints);result.addProperty("directionalAndFluidFaces",4);result.addProperty("brightImage",true);return result;
     }
 }

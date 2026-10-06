@@ -32,7 +32,7 @@ import java.util.List;
  *       becomes that same stick carrying {@code gt.usb.data = {gt.replicator.data: <material id>}} and
  *       {@code gt.usb.tier = 3}; the work is {@code (protons + neutrons) * 512} ticks at 512 QU/t.</li>
  *   <li>{@code RecipeMapPrinter:139-149} — the stick plus paper prints the material's dictionary:
- *       3 paper, or 6 for a book past 50 pages, at 512 / 1024 EU/t for 16 ticks, with black dye
+ *       3 paper, or 6 for a book past 50 pages, at 16 GU/t for 512 / 1024 ticks, with black dye
  *       ({@code FL.mul(DYE_FLUIDS_CHEMICAL[Black], 1, 2 or 1, T)} = 72 / 144 mB in GT6's 144 mB unit).</li>
  *   <li>{@code RecipeMapReplicator:81-84} + {@code getReplicatorRecipe:88-114} — the stick plus
  *       {@code neutralmatter} (the material's neutrons) and {@code chargedmatter} (its protons)
@@ -45,12 +45,8 @@ import java.util.List;
  * machine re-runs the lookup every tick. Scanner, Printer and Replicator rows close over the current
  * medium, so each row is built from that stack's exact item and NBT.</p>
  *
- * <p>Port differences, all deliberate:</p>
+ * <p>Book pages are bound using the original leather/dye recipes. Remaining port differences:</p>
  * <ul>
- *   <li>GT6 prints {@code Paper_Printed_Pages} and the player then binds them into a book with leather
- *       and dye ({@code MultiItemBooks:99-121}). The port represents GT6 books as vanilla written
- *       books (see {@link GTMaterialDictionary}), so the printer hands out the bound dictionary
- *       directly and the port has no printed-pages item family.</li>
  *   <li>GT6 gates replication on {@code TD.Processing.UUM}, a flag the port does not model. The port
  *       replicates every material that is not {@code ANTIMATTER}, has at least one nucleon and has a
  *       form or fluid to hand out.</li>
@@ -77,7 +73,7 @@ public final class GTMaterialDataRecipes {
     private static final long SCANNER_EU = com.gregtech.gregtech.content.data.MaterialDataRules.SCANNER_POWER;
     /** GT6's printer power for a normal / a many-pages book ({@code RecipeMapPrinter:135}). */
     private static final long PRINTER_EU = com.gregtech.gregtech.content.data.MaterialDataRules.PRINTER_POWER;
-    private static final long PRINTER_EU_MANY = com.gregtech.gregtech.content.data.MaterialDataRules.PRINTER_MANY_POWER;
+    private static final long PRINTER_MANY_TICKS = com.gregtech.gregtech.content.data.MaterialDataRules.PRINTER_MANY_TICKS;
     /** GT6's printer duration. */
     private static final long PRINTER_TICKS = com.gregtech.gregtech.content.data.MaterialDataRules.PRINTER_TICKS;
     /** GT6's black dye per print, in the port's 144 mB dye unit. */
@@ -375,8 +371,7 @@ public final class GTMaterialDataRecipes {
 
     /**
      * GT6 {@code RecipeMapPrinter:139-149}: a scanned USB stick plus paper prints the material's
-     * dictionary — 3 paper, or 6 when the dictionary runs past 50 pages. The port prints the bound
-     * written book directly (see the class comment).
+     * dictionary pages — 3 paper, or 6 when the dictionary runs past 50 pages, followed by binding.
      */
     @Nullable
     public static Recipe printer(List<ItemStack> items, List<FluidStack> fluids) {
@@ -420,9 +415,9 @@ public final class GTMaterialDataRecipes {
         // the first stick's tag and reject a second stick carrying the same material.
         return new Recipe(
                 new ItemStack[]{paper.copyWithCount(sheets), usb.copyWithCount(1)},
-                new ItemStack[]{book},
+                new ItemStack[]{com.gregtech.gregtech.content.data.VisualDocumentData.printedPages(book,many)},
                 null, null, new FluidStack[]{dye}, null,
-                PRINTER_TICKS, many ? PRINTER_EU_MANY : PRINTER_EU, 0).withCatalystInputs(1);
+                many ? PRINTER_MANY_TICKS : PRINTER_TICKS, PRINTER_EU, 0).withCatalystInputs(1);
     }
 
     // ── the matter replicator ────────────────────────────────────────────

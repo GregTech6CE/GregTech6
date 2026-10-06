@@ -49,8 +49,8 @@ public final class BehaviorDataStorage {
     }
 
     /**
-     * GT6 {@code UT.NBT.getDataToolTip} ({@code UT.java:2237-2269}), restricted to the one data kind the
-     * port's model produces: {@code gt.replicator.data}, i.e. a material id.
+     * GT6 {@code UT.NBT.getDataToolTip}: image and document details share this entry point with
+     * material replication data; sticks are verbose and HDD file rows are compact.
      *
      * <p>{@code allDetails} is GT6's own switch: a stick passes {@code true} and gets the material plus
      * what replicating it takes, a drive slot passes {@code false} and gets the one-line form
@@ -65,6 +65,7 @@ public final class BehaviorDataStorage {
      */
     public static void dataTooltip(CompoundTag data, List<Component> lines, boolean allDetails) {
         com.gregtech.gregtech.content.cover.CanvasData.tooltip(data,lines);
+        if(com.gregtech.gregtech.content.data.VisualDocumentData.tooltip(data,lines,allDetails))return;
         if (data == null || !data.contains(GTMaterialDataRecipes.NBT_REPLICATOR_DATA)) return;
         GTMaterial material = com.gregtech.gregtech.api.material.GTMaterialRegistry
                 .get(data.getShort(GTMaterialDataRecipes.NBT_REPLICATOR_DATA));

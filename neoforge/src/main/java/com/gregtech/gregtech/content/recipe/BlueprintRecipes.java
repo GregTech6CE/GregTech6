@@ -27,11 +27,15 @@ public final class BlueprintRecipes {
     public static void register() {
         MachineRecipeMaps.ScannerVisuals.contextualRecipes((level,machine,special,items,fluids) -> {
             Recipe recipe = CanvasRecipes.scan(level,machine,special,items,fluids);
-            return recipe != null ? recipe : scan(level,machine,special,items,fluids);
+            if(recipe != null)return recipe;
+            recipe=scan(level,machine,special,items,fluids);
+            return recipe != null ? recipe : VisualDocumentRecipes.scan(level,machine,special,items,fluids);
         });
         MachineRecipeMaps.Printer.contextualRecipes((level,machine,special,items,fluids) -> {
             Recipe recipe = CanvasRecipes.print(level,machine,special,items,fluids);
-            return recipe != null ? recipe : print(level,machine,special,items,fluids);
+            if(recipe != null)return recipe;
+            recipe=print(level,machine,special,items,fluids);
+            return recipe != null ? recipe : VisualDocumentRecipes.print(level,machine,special,items,fluids);
         });
     }
     private static boolean is(ItemStack stack, String path) {
