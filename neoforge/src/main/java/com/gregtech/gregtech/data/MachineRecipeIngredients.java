@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.data;
 
+import com.gregtech.gregtech.content.recipe.ElectricalCraftingRules;
 
 import com.gregtech.gregtech.api.machine.PipeSpec;
 import com.gregtech.gregtech.api.material.GTMaterial;
@@ -46,8 +47,8 @@ import java.util.TreeMap;
  *       matching GT6's cumulative ore-dictionary re-registration chain.</li>
  * </ul>
  * Every resolved form is checked against the live registry. When the exact form does not
- * exist in this port the closest available form is used and the substitution is logged
- * once, so a machine can never end up with an uncraftable recipe.
+ * exist in this port the legacy form fallback is logged once. Electrical tier requirements
+ * retain their exact source grades; missing external circuits are never downgraded.
  */
 public final class MachineRecipeIngredients {
     /** Substitute chains, tried in order when the exact material form is not registered. */
@@ -72,16 +73,8 @@ public final class MachineRecipeIngredients {
             Map.entry("ring", List.of("plate")),
             Map.entry("foil", List.of("plate")));
 
-    /** GT6 cable tiers used by {@code MT.DATA.CABLES_01[n]} (index 0 = lead). */
-    private static final String[] CABLE_TIER_MATERIALS = {
-            "Lead", "Tin", "Copper", "Gold", "Aluminium", "Platinum", "Graphene", "Superconductor"};
-
     /** GT6 {@code IL.*[n]} arrays are ULV-first; recipes use index 1..5 for LV..IV. */
     private static final String[] IL_TIER_SUFFIX = {"ulv", "lv", "mv", "hv", "ev", "iv", "luv", "zpm", "uv", "xv"};
-
-    private static final String[] CIRCUIT_TIERS = {
-            "circuit_basic", "circuit_good", "circuit_advanced",
-            "circuit_elite", "circuit_master", "circuit_ultimate"};
 
     /** GT6 {@code gt:re-batteryN} rechargeable battery keys. */
     private static final java.util.regex.Pattern BATTERY_OREDICT =
@@ -147,7 +140,9 @@ public final class MachineRecipeIngredients {
                     note("cable tier " + argument, "machine casing block");
                     return blockIngredient(BlockMaterialPrefix.casingMachine, material);
                 }
-                return wireIngredient("01", target, material, true);
+                int sourceTier = Integer.parseInt(argument.trim());
+                if (sourceTier == 2) return Map.of("tag", "gregtech:cable_01/any_copper");
+                return wireIngredient("01", target, material, ElectricalCraftingRules.insulatedCable(sourceTier));
             }
             case "wiretier": {
                 GTMaterial target = cableTierMaterial(argument);
@@ -155,6 +150,7 @@ public final class MachineRecipeIngredients {
                     note("wire tier " + argument, "machine casing block");
                     return blockIngredient(BlockMaterialPrefix.casingMachine, material);
                 }
+                if (Integer.parseInt(argument.trim()) == 2) return Map.of("tag", "gregtech:wire_04/any_copper");
                 return wireIngredient("04", target, material, false);
             }
             case "il":
@@ -314,10 +310,7 @@ public final class MachineRecipeIngredients {
     }
 
     private static Object circuitIngredient(int tier) {
-        int required = Math.min(Math.max(tier, 1), CIRCUIT_TIERS.length);
-        // GT6 registers higher circuits under lower requirements, never the reverse.
-        // Share tags with chemical batteries so datapacks and optional Forge tags also apply.
-        return Map.of("tag", "gregtech:circuits_tier_" + required + "_plus");
+        return Map.of("tag", ElectricalCraftingRules.circuitTag(tier));
     }
 
     private static Object byItemId(String id) {
@@ -435,11 +428,7 @@ public final class MachineRecipeIngredients {
     }
 
     private static GTMaterial cableTierMaterial(String tierText) {
-        int tier = Integer.parseInt(tierText.trim());
-        if (tier < 0 || tier >= CABLE_TIER_MATERIALS.length) {
-            throw new IllegalStateException("Unknown GT6 cable tier: " + tier);
-        }
-        return material(CABLE_TIER_MATERIALS[tier]);
+        return material(ElectricalCraftingRules.wireMaterial(Integer.parseInt(tierText.trim())));
     }
 
     private static String[] splitMaterial(String argument) {

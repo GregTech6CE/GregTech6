@@ -3,6 +3,10 @@
   "values": [
     "#gregtech:circuits_tier_1_plus",
     {
+      "id": "#gt:circuit0",
+      "required": false
+    },
+    {
       "id": "#forge:circuits/primitive",
       "required": false
     }

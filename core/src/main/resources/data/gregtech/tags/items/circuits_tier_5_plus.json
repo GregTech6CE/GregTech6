@@ -2,13 +2,13 @@
   "replace": false,
   "values": [
     "gregtech:circuit_master",
-    "gregtech:circuit_ultimate",
+    "#gregtech:circuits_tier_6_plus",
     {
-      "id": "#forge:circuits/master",
+      "id": "#gt:circuit5",
       "required": false
     },
     {
-      "id": "#forge:circuits/ultimate",
+      "id": "#forge:circuits/master",
       "required": false
     }
   ]

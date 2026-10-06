@@ -1,9 +1,9 @@
 {
   "replace": false,
   "values": [
-    "gregtech:circuit_ultimate",
+    "#gregtech:circuits_tier_9_plus",
     {
-      "id": "#forge:circuits/ultimate",
+      "id": "#gt:circuit8",
       "required": false
     }
   ]

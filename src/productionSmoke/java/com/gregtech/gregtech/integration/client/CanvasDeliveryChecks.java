@@ -70,6 +70,30 @@ final class CanvasDeliveryChecks {
         require(!com.gregtech.gregtech.api.material.GTMaterialRegistry.get(8214).has(com.gregtech.gregtech.api.material.MaterialProperty.UUM),"installed obsidian source gate");
         var mercury=com.gregtech.gregtech.registry.GTFluids.stack("GenLiquid_Mercury",1000);
         require(mercury!=null&&!mercury.isEmpty()&&BuiltInRegistries.FLUID.getKey(mercury.getFluid()).getPath().equals("mercury"),"installed ordinary mercury liquid");
-        graphics.pose().popPose();var result=new JsonObject();result.addProperty("originalMolecularDataFields",true);result.addProperty("mercuryAmbientUnitMb",1000);result.addProperty("originalCanvasItemModels",meshes);result.addProperty("printedPageModels",pageModels);result.addProperty("coloredBookScanHints",bookHints);result.addProperty("directionalAndFluidFaces",4);result.addProperty("brightImage",true);return result;
+        int electricalRows=0;
+        for(int tier=0;tier<10;tier++) {
+            var key="gregtech:circuits_tier_"+tier+"_plus";
+            require(com.gregtech.gregtech.data.MachineRecipeIngredients.resolve("circuit:"+tier,iron,1).equals(java.util.Map.of("tag",key)),"installed original circuit grade "+tier);
+            String path="data/gregtech/tags/items/circuits_tier_"+tier+"_plus.json";
+            try(var stream=CanvasDeliveryChecks.class.getClassLoader().getResourceAsStream(path)) {
+                require(stream!=null,"shared installed circuit tag "+tier);
+                var tag=com.google.gson.JsonParser.parseString(new String(stream.readAllBytes(),java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject();
+                require(!tag.get("replace").getAsBoolean(),"external circuit provider can merge");
+                boolean external=false,next=tier==9;
+                for(var value:tag.getAsJsonArray("values")) {
+                    if(value.isJsonObject()&&value.getAsJsonObject().get("id").getAsString().equals("#gt:circuit"+tier))external=true;
+                    if(value.isJsonPrimitive()&&value.getAsString().equals("#gregtech:circuits_tier_"+(tier+1)+"_plus"))next=true;
+                }
+                require(external&&next,"installed external circuit key and cumulative inheritance");
+            }catch(java.io.IOException failure){throw new java.io.UncheckedIOException(failure);}
+        }
+        for(String suffix:java.util.List.of("zpm","uv","xv"))for(boolean large:new boolean[]{false,true}) {
+            if(large&&suffix.equals("xv"))continue;
+            String id=(large?"energy_storage_":"battery_box_")+suffix;
+            require(com.gregtech.gregtech.content.recipe.EquipmentCraftingCatalog.FILES.contains("energy_nodes/"+id+".json"),"native recipe pack includes high box "+id);
+            var stack=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech",id)));
+            require(stack.getItem() instanceof net.minecraft.world.item.BlockItem b&&b.getBlock() instanceof com.gregtech.gregtech.block.energy.EnergyNodeBlock node&&node.spec().batterySlots()==(large?16:4),"installed high box original slots "+id);electricalRows++;
+        }
+        graphics.pose().popPose();var result=new JsonObject();result.addProperty("originalCircuitTagGrades",10);result.addProperty("externalHighBatteryBoxRecipes",electricalRows);result.addProperty("originalMolecularDataFields",true);result.addProperty("mercuryAmbientUnitMb",1000);result.addProperty("originalCanvasItemModels",meshes);result.addProperty("printedPageModels",pageModels);result.addProperty("coloredBookScanHints",bookHints);result.addProperty("directionalAndFluidFaces",4);result.addProperty("brightImage",true);return result;
     }
 }

@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "gregtech:circuit_elite",
+    "#gregtech:circuits_tier_5_plus",
+    {
+      "id": "#gt:circuit4",
+      "required": false
+    },
+    {
+      "id": "#forge:circuits/elite",
+      "required": false
+    }
+  ]
+}
