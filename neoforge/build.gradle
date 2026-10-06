@@ -180,6 +180,7 @@ tasks.register("productionSmokeJar", Jar) {
         include "com/gregtech/gregtech/integration/client/SurfaceDeliveryChecks*.class"
         include "com/gregtech/gregtech/integration/client/SandwichDeliveryChecks*.class"
         include "com/gregtech/gregtech/integration/client/CannedFoodDeliveryChecks*.class"
+        include "com/gregtech/gregtech/integration/client/CanvasDeliveryChecks*.class"
     }
     from(rootProject.file("tools/integration/production-probe/neoforge"))
 }
