@@ -6,6 +6,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 /** Optional machine controls. Relays resolve the target on every operation, never cache a machine. */
 public interface MachineControl {
     default boolean available(){return true;}
+    default boolean supportsSwitch(){return true;}
     default boolean supportsProgress(){return true;}
     default boolean supportsMode(){return false;}
     default int mode(){return 0;}

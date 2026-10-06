@@ -14,132 +14,11 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
-/**
- * The two GUI-less covers the port owns itself: the drain cover ({@code drain}) and the air vent
- * ({@code air_vent}).
- *
- * <p>All work happens here; {@code BasicMachineBlockEntity.tickCovers} only matches the behaviour id
- * and forwards. The methods are static and take the objects they touch, exactly like GT6's
- * {@code AbstractCoverAttachment} subclasses take a {@code CoverData} instead of the tile entity —
- * so the drain only ever sees the {@link IFluidHandler} GT6's own {@code FL.fillAll} sees
- * ({@code CoverDrain:117}).</p>
- *
- * <h2>Both items really are registered</h2>
- *
- * <p>Checked before implementing, as required: {@code drain} and {@code air_vent} are entries of the
- * port's technological item list ({@code GTTechnological} covers block, lines 348-358, both ids
- * literally on line 355) with display names "Drain" and "Air Vent" ({@code GTTechnological:120} and
- * {@code :108}). {@link CoverItems#behavior} therefore returns {@code "drain"} / {@code "air_vent"}
- * for them through its {@code portCoverId} branch ({@code CoverItems:76}), and the ids below are
- * only named constants for those same registry paths.</p>
- *
- * <h2>Drain — ported from {@code CoverDrain:68-159}</h2>
- *
- * <ul>
- *   <li>the operation throttle {@code SERVER_TIME % 20 == 5} ({@code CoverDrain:109});</li>
- *   <li>the fluid block in front of the cover ({@code CoverDrain:110,124-155}): a source block of
- *       any fluid becomes a {@code 1000 mB} {@link FluidStack} ({@code FL.Water.make(1000)} /
- *       {@code FL.Lava.make(1000)}, {@code CoverDrain:129,134}), is offered to the machine, and is
- *       only removed once the machine accepted <em>all</em> of it — GT6's {@code FL.fillAll}
- *       all-or-nothing rule ({@code CoverDrain:148}), followed by
- *       {@code setBlockToAir} ({@code CoverDrain:152});</li>
- *   <li>the gravity gate ({@code CoverDrain:147}): {@code SIDES_HORIZONTAL[aCoverSide] ||
- *       FL.gas(tFluid) || (FL.lighter(tFluid) ? SIDES_BOTTOM : SIDES_TOP)[aCoverSide]} — a heavy
- *       liquid is skipped when the cover faces down, "if not against Gravity" from the tooltip
- *       ({@code CoverDrain:229});</li>
- *   <li>rain water ({@code CoverDrain:70-84}): every 100 ticks, for the up face and the four
- *       horizontal ones, when it rains, the biome is not dry and not cold
- *       ({@code rainfall > 0 && temperature >= 0.2}, {@code CoverDrain:72}), the face is open to the
- *       sky ({@code getRainOffset}, {@code CoverDrain:77-79} — the port asks
- *       {@link Level#canSeeSky}) and no fluid block sits in the way
- *       ({@code CoverDrain:74}), the machine receives
- *       {@code max(1, rainfall * 10000) * (thundering ? 2 : 1)} mB of water
- *       ({@code CoverDrain:81}, {@link #rainAmount}).</li>
- * </ul>
- *
- * <p><b>Deliberately not ported from the drain:</b></p>
- *
- * <ul>
- *   <li>the {@code BlockBaseFluid} quanta branch ({@code CoverDrain:113-122}): it decrements GT6's
- *       own block metadata one quantum at a time. The port has no quanta — its GT6 fluid blocks are
- *       {@code GTWorldFluidBlock}s, i.e. ordinary {@code LiquidBlock}s where one block is exactly
- *       one bucket — so the flat 1000 mB source rule above replaces it. Flowing levels
- *       ({@code LEVEL != 0}) are therefore left alone, which is the same gate GT6 applies to vanilla
- *       water and lava ({@code CoverDrain:125,134}).</li>
- *   <li>the infinite-water and river/lake/ocean/swamp "16000 mB" shortcuts
- *       ({@code CoverDrain:126-128,136-143}): the port drains 1000 mB per source block instead.
- *       The ocean half of that rule is not even needed here, because the port places GT6's real
- *       {@code gregtech:seawater} / {@code riverwater} / {@code swampwater} blocks in the world
- *       ({@code Loader_Fluids:39-42}), so draining an ocean already yields seawater without a
- *       special case.</li>
- *   <li>XP orbs to liquid XP / Mob Essence ({@code CoverDrain:85-108}): needs {@code FL.XP} or
- *       {@code FL.Mob} and, for the better ratio, OpenBlocks' {@code MD.OB} ({@code CoverDrain:89-98}).
- *       The port has neither fluid, so there is nothing to fill with.</li>
- *   <li>{@code onWalkOver} ({@code CoverDrain:161-224}): player XP draining, squid ink, slime, magma
- *       cube and animal sewage — each one needs a fluid the port does not have (and the squid/slime
- *       branches need GT6's entity-width based amounts).</li>
- *   <li>the tooltips ({@code CoverDrain:226-241}) are GUI text, and the drain is a GUI-less cover.</li>
- * </ul>
- *
- * <h2>Air vent — ported from {@code CoverVent:40-85}</h2>
- *
- * <p>GT6's vent is an air <em>intake</em>: once per side per 360 ticks
- * ({@code SERVER_TIME % 360 == 30 + 60 * aSide}, {@code CoverVent:45}) and only when the block in
- * front of it is collectable air ({@code WD.collectable_air}, {@code CoverVent:46}), it pours
- * {@code 256000 mB} of air into the fluid handler — {@code FL.Air} in the overworld,
- * {@code FL.Air_Nether} in the nether and {@code FL.Air_End} in the end ({@code CoverVent:47-51}),
- * with GT6's biome sets as the fallback for every other dimension ({@code CoverVent:52-62}). All of
- * that is ported here: {@link #ventPhase} is the original's {@code 30 + 60 * aSide},
- * {@link #VENT_AIR_AMOUNT} is its {@code 256000}, and {@link #ventAirField} is its dimension
- * selection.</p>
- *
- * <p><b>Partial fill, not all-or-nothing.</b> The original calls {@code FL.fill_} at all six fill
- * sites ({@code CoverVent:48,49,50,55,59,62}), and that is the lenient variant:
- * {@code FL.java:826-828} hands {@code aFluidHandler.fill(...)} straight back, so it returns the
- * amount that actually fit and every caller discards it. The strict variant is {@code FL.fillAll},
- * which demands {@code fill(..., F) == aFluid.amount} before it does anything
- * ({@code FL.java:833}) — {@code CoverVent} never uses it. A tank smaller than 256000 mB is
- * therefore filled to the brim and the remainder is simply dropped, so {@link #tickVent} reports
- * "something went in" rather than requiring all 256000.</p>
- *
- * <p><b>The 1.20.1 answer to {@code WD.collectable_air}.</b> The original
- * ({@code WD.java:399-400}) is {@code !hasCollide(...) && !liquid(...)}: no colliding block and no
- * liquid in front. It never asks whether the block literally <em>is</em> air, and the port keeps
- * exactly those two halves — no collision shape, and no liquid ({@link FluidState#isEmpty} plus a
- * {@code LiquidBlock} test, which covers vanilla water and lava as well as the port's
- * {@code GTWorldFluidBlock}s). The leading
- * {@code !MD.GC.mLoaded || !(provider instanceof IGalacticraftWorldProvider)} term has no port
- * equivalent, because there is no Galacticraft dimension here for it to reject.</p>
- *
- * <p><b>Not ported:</b> GT6's biome-set fallback for dimensions outside the three vanilla ones
- * ({@code CoverVent:52-61}: {@code BIOMES_SPACE} returns without filling anything, while
- * {@code BIOMES_END} and {@code BIOMES_NETHER} pick their variant). 1.20.1 has exactly three
- * dimensions and {@code CoverVent:47-51} already covers all three, and the port has no
- * {@code BIOMES_SPACE} / {@code BIOMES_END} / {@code BIOMES_NETHER} equivalent to port it into — the
- * port's {@code GTWorldgenBiomes} is overworld worldgen only — so {@link #ventAirField} answers from
- * the dimension alone. A modded dimension therefore receives overworld air; that is the one gap this
- * leaves open.</p>
- *
- * <h2>Which fluids count as gases</h2>
- *
- * <p>Not decided here. {@link #isGas} forwards to
- * {@code com.gregtech.gregtech.api.fluid.FluidHazards#isGas(net.minecraft.world.level.material.Fluid)},
- * which answers GT6's {@code FL.gas} ({@code FL.java:770}) from the port's own fluid metadata and
- * falls back to Forge's lighter-than-air flag for fluids GT6 never declared
- * ({@code FluidHazards:125-128}). Its single caller is the drain's gravity gate
- * ({@code CoverDrain:147}), where it supplies the {@code FL.gas(tFluid)} term: a gas drains from any
- * face, while a heavy liquid still has to sit above the cover to be drained "against Gravity"
- * ({@code CoverDrain:229}). No gas table is written here on purpose — a private copy would be a
- * second source of truth for a question {@code FluidHazards} already owns.</p>
- *
- * <h2>Throttling uses the owner's cover tick counter</h2>
- *
- * <p>GT6 throttles with its global {@code SERVER_TIME}; the port's existing covers use
- * {@code level.getGameTime()} ({@code BasicMachineBlockEntity.tickPumpCover}). Both are unusable in
- * a GameTest, where the test calls {@code serverTick} in a loop inside a single game tick: the value
- * would never change and the cover would never act. These methods therefore take the owning
- * machine's own cover tick counter, which advances exactly once per server tick. In a running game
- * it is the same cadence as {@code getGameTime()}, and it makes the guard observable in the test.</p>
+/** Native GT6 drain and air-vent behavior, driven by the original tick phases.
+ * Drain operations preserve all-or-nothing fills, gravity and source-block rules, bulk GT waters,
+ * XP conversion and entity walk-over products. Vents require a ticking fluid host and select air by
+ * vanilla dimension or biome tags, including explicit void/space rejection.
+ * Optional OpenBlocks player XP and foreign slime integrations remain separate compatibility work.
  */
 public final class CoverAttachmentBehaviors {
 
@@ -187,6 +66,7 @@ public final class CoverAttachmentBehaviors {
         // Both branches are evaluated independently: they run on different periods.
         if (tickCounter % DRAIN_PERIOD == DRAIN_PHASE) acted = drainFluidBlock(level, machinePos, side, sink);
         if (tickCounter % RAIN_PERIOD == RAIN_PHASE) acted |= collectRain(level, machinePos, side, sink);
+        if (tickCounter % 100 == 50) acted |= collectExperience(level,machinePos,side,sink);
         return acted;
     }
 
@@ -200,6 +80,31 @@ public final class CoverAttachmentBehaviors {
      * leaves the world untouched instead of destroying fluid — the same shape is kept here with a
      * {@code SIMULATE} fill, which also avoids allocating the stack twice.</p>
      */
+    private static boolean collectExperience(Level level,BlockPos pos,Direction side,IFluidHandler sink){
+        var registered=GTFluids.still("XP");boolean mob=false;
+        if(registered==null){registered=GTFluids.still("Mob");mob=true;}
+        if(registered==null)return false;
+        boolean acted=false;var center=pos.relative(side,2);
+        for(var orb:level.getEntitiesOfClass(net.minecraft.world.entity.ExperienceOrb.class,new net.minecraft.world.phys.AABB(center).inflate(1))){
+            long points=(long)orb.getValue()*Math.max(1,((com.gregtech.gregtech.mixin.ExperienceOrbCountAccessor)orb).gregtech$count());
+            if(points<=0||points>Integer.MAX_VALUE/200)continue;
+            int amount=(int)(mob?points*200/3:points*20);var stack=new FluidStack(registered.get(),amount);
+            if(sink.fill(stack,IFluidHandler.FluidAction.SIMULATE)<amount)continue;
+            if(sink.fill(stack,IFluidHandler.FluidAction.EXECUTE)==amount){orb.discard();acted=true;}
+        }
+        return acted;
+    }
+
+    public static void walkOverDrain(Level level,BlockPos pos,IFluidHandler sink,net.minecraft.world.entity.Entity entity){
+        if(level.isClientSide||sink==null||level.getGameTime()%20!=5)return;
+        String field=null;int amount=1;
+        if(entity instanceof net.minecraft.world.entity.animal.Squid)field="InkSquid";
+        else if(entity instanceof net.minecraft.world.entity.monster.MagmaCube slime){field="Blaze";amount=Math.max(1,slime.getSize());}
+        else if(entity instanceof net.minecraft.world.entity.monster.Slime slime){field="Slime_Green";amount=Math.max(1,slime.getSize());}
+        else if(entity instanceof net.minecraft.world.entity.animal.Animal animal&&!animal.isBaby()){field="Sewage";amount=Math.max(1,(int)(20*entity.getBbWidth()*entity.getBbWidth()*entity.getBbHeight()));}
+        if(field!=null){var fluid=GTFluids.still(field);if(fluid!=null)sink.fill(new FluidStack(fluid.get(),amount),IFluidHandler.FluidAction.EXECUTE);}
+    }
+
     private static boolean drainFluidBlock(Level level, BlockPos machinePos, Direction side, IFluidHandler sink) {
         BlockPos front = machinePos.relative(side);
         if (!level.hasChunkAt(front)) return false;
@@ -212,6 +117,11 @@ public final class CoverAttachmentBehaviors {
         Fluid fluid = fluidState.getType();
         if (!drainsAt(side, fluid)) return false;
 
+        var entry=GTFluids.entryForFluid(fluid);
+        boolean worldWater=entry!=null&&com.gregtech.gregtech.api.fluid.GTWaterParity.isWorldWater(entry.registryName());
+        var biome=level.getBiome(front);int waterLevel=level.getSeaLevel();
+        boolean infiniteVanilla=fluid==Fluids.WATER&&front.getY()>=waterLevel-15&&front.getY()<=waterLevel&&biome.is(net.minecraft.tags.BiomeTags.IS_RIVER);
+        if(worldWater||infiniteVanilla)return sink.fill(new FluidStack(fluid,16000),IFluidHandler.FluidAction.EXECUTE)>0;
         FluidStack bucket = new FluidStack(fluid, FLUID_BLOCK_AMOUNT);
         if (sink.fill(bucket, IFluidHandler.FluidAction.SIMULATE) < FLUID_BLOCK_AMOUNT) return false;
         sink.fill(bucket, IFluidHandler.FluidAction.EXECUTE);
@@ -320,7 +230,15 @@ public final class CoverAttachmentBehaviors {
         BlockPos front = machinePos.relative(side);
         if (!level.hasChunkAt(front)) return false;
         if (!collectableAir(level, front)) return false;
-        var air = GTFluids.still(ventAirField(level.dimension()));
+        String field=ventAirField(level.dimension());
+        if(!Level.OVERWORLD.equals(level.dimension())&&!Level.NETHER.equals(level.dimension())&&!Level.END.equals(level.dimension())){
+            var biome=level.getBiome(front);
+            if(biome.is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BIOME,net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","no_collectable_air")))
+                    ||biome.is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BIOME,net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("c","is_void"))))return false;
+            if(biome.is(net.minecraft.tags.BiomeTags.IS_END))field="Air_End";
+            else if(biome.is(net.minecraft.tags.BiomeTags.IS_NETHER))field="Air_Nether";
+        }
+        var air = GTFluids.still(field);
         if (air == null) return false;
         // FL.fill_ semantics: fill what fits, drop the rest. No second call and no all-or-nothing
         // simulate, exactly like CoverVent:48.

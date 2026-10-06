@@ -13,14 +13,14 @@ public class ExtenderBlockEntity extends com.gregtech.gregtech.blockentity.Energ
     @Override public com.gregtech.gregtech.content.cover.PanelCoverRuntime panels(){return panels;}
     @Override public net.minecraft.world.item.ItemStack getCover(Direction side){return covers[side.ordinal()];}
     @Override public boolean attachCover(Direction side,net.minecraft.world.item.ItemStack stack){
-        if(stack.isEmpty()||!getCover(side).isEmpty()||com.gregtech.gregtech.content.cover.PanelCover.of(stack)==null||!panels.canAttach(side,stack))return false;
+        if(stack.isEmpty()||!getCover(side).isEmpty()||!com.gregtech.gregtech.content.cover.CoverItems.isCover(stack)||!panels.canAttach(side,stack))return false;
         covers[side.ordinal()]=stack.copyWithCount(1);panels.attached(side);panels.afterTick();return true;
     }
     @Override public net.minecraft.world.item.ItemStack removeCover(Direction side){
         var stack=getCover(side);covers[side.ordinal()]=net.minecraft.world.item.ItemStack.EMPTY;
-        panels.beforeTick();panels.afterTick();panels.changed();return stack;
+        return panels.removed(side,stack);
     }
-    @Override public void dropContents(){for(var side:Direction.values()){com.gregtech.gregtech.api.inventory.BlockContents.drop(this,getCover(side));covers[side.ordinal()]=net.minecraft.world.item.ItemStack.EMPTY;}}
+    @Override public void dropContents(){for(var side:Direction.values()){if(!com.gregtech.gregtech.content.cover.CoverDrops.retained(this))com.gregtech.gregtech.api.inventory.BlockContents.drop(this,getCover(side));covers[side.ordinal()]=net.minecraft.world.item.ItemStack.EMPTY;}}
     private void saveCovers(net.minecraft.nbt.CompoundTag tag){for(var side:Direction.values())if(!getCover(side).isEmpty())tag.put("gt_cover_"+side.ordinal(),getCover(side).save(new net.minecraft.nbt.CompoundTag()));}
     @Override protected void saveAdditional(net.minecraft.nbt.CompoundTag tag){super.saveAdditional(tag);saveCovers(tag);}
     @Override public void load(net.minecraft.nbt.CompoundTag tag){super.load(tag);for(var side:Direction.values())covers[side.ordinal()]=net.minecraft.world.item.ItemStack.of(tag.getCompound("gt_cover_"+side.ordinal()));panels.loaded();}
@@ -61,9 +61,9 @@ public class ExtenderBlockEntity extends com.gregtech.gregtech.blockentity.Energ
     @Override public com.gregtech.gregtech.api.machine.MachineControl machineControl(Direction side){
         if(!universal()||(((SourceExtenderBlock)getBlockState().getBlock()).spec().bridge&&side==null))return null;
         return new com.gregtech.gregtech.api.machine.MachineControl(){
-            public boolean available(){return controlOperation(side,false,c->c.available());}
-            public boolean supportsProgress(){return controlOperation(side,false,c->c.supportsProgress());}
-            public boolean supportsMode(){return controlOperation(side,false,c->c.supportsMode());}
+            public boolean available(){return !isRemoved();}
+            public boolean supportsProgress(){return true;}
+            public boolean supportsMode(){return true;}
             public int mode(){return controlOperation(side,0,c->c.mode());}
             public int setMode(int value){return controlOperation(side,0,c->c.setMode(value));}
             public boolean enabled(){return controlOperation(side,false,c->c.enabled());}

@@ -135,8 +135,7 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements EntityBlo
         if (be instanceof BasicMachineBlockEntity utilityBe) {
             Direction side = hit.getDirection();
             String coverId = com.gregtech.gregtech.content.cover.CoverItems.behavior(utilityBe.getCover(side));
-            if (held.isEmpty()
-                    && com.gregtech.gregtech.content.cover.CoverUtilityBehaviors.CRAFTING_TABLE.equals(coverId)) {
+            if (!GTToolHelper.isInteractionTool(held) && com.gregtech.gregtech.content.cover.CoverUtilityBehaviors.CRAFTING_TABLE.equals(coverId)) {
                 if (!level.isClientSide) {
                     com.gregtech.gregtech.content.cover.CoverUtilityBehaviors.clickCraftingCover(
                             player, (net.minecraft.server.level.ServerLevel) level, pos);
@@ -205,12 +204,6 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements EntityBlo
      */
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, net.minecraft.world.entity.Entity entity) {
-        if (!level.isClientSide && level.getBlockEntity(pos) instanceof BasicMachineBlockEntity be) {
-            String top = com.gregtech.gregtech.content.cover.CoverItems.behavior(be.getCover(Direction.UP));
-            if (com.gregtech.gregtech.content.cover.CoverUtilityBehaviors.ASPHALT_PANEL.equals(top)) {
-                com.gregtech.gregtech.content.cover.CoverUtilityBehaviors.walkOverAsphalt(entity);
-            }
-        }
         super.stepOn(level, pos, state, entity);
     }
 
@@ -266,7 +259,6 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements EntityBlo
         if(entity instanceof BasicMachineBlockEntity machine) {
             var data=com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(machine,machine.saveWithoutMetadata());
             data.remove("gt.inventory");
-            for(int i=0;i<6;i++) data.remove("gt_cover_"+i);
             stack.getOrCreateTag().put("BlockEntityTag",data);
         }
         return stack;

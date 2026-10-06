@@ -44,8 +44,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
     @Override public boolean coverPossible(Direction side){return isSolar()|| (isBatteryBox()?batteryEnergy.buffer()>spec.outputRate():isElectricTransformer()&&transformerControl.running());}
     @Override public boolean attachCover(Direction side,net.minecraft.world.item.ItemStack stack){
         var panel=com.gregtech.gregtech.content.cover.PanelCover.of(stack);
-        if((!hasControlPanels()&&com.gregtech.gregtech.content.cover.ComponentCoverRuntime.kind(stack)==null&&panel!=com.gregtech.gregtech.content.cover.PanelCover.CONTROLLER)||(panel==null&&com.gregtech.gregtech.content.cover.ComponentCoverRuntime.kind(stack)==null)||(isElectricTransformer()&&panel==com.gregtech.gregtech.content.cover.PanelCover.SHUTTER)
-                ||!getCover(side).isEmpty()||!panels().canAttach(side,stack))return false;
+        if(!com.gregtech.gregtech.content.cover.CoverItems.isCover(stack)||!getCover(side).isEmpty()||!panels().canAttach(side,stack))return false;
         batteryCovers.put(side,stack.copyWithCount(1));panels().attached(side);return true;
     }
     @Override public net.minecraft.world.item.ItemStack removeCover(Direction side){
@@ -53,7 +52,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
         if(removed==null)return net.minecraft.world.item.ItemStack.EMPTY;
         var panel=com.gregtech.gregtech.content.cover.PanelCover.of(removed);
         if(panel!=null&&panel.selector())machineControl(side).setMode(0);
-        panels().changed();panels().afterTick();return removed;
+        return panels().removed(side,removed);
     }
 
     private EnergyNodeSpec spec;
@@ -484,7 +483,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
     }
 
     private void emitOutput() {
-        if (level == null) return;
+        if (level == null || converterStopped) return;
         if (isSteamConverter()) { emitSteamConverter(); return; }
         if(isElectricTransformer()){emitElectricTransformer();return;}
         if (isRotationTransformer()) {
@@ -834,7 +833,18 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
             @Override public long progress() { return buffer; }
             @Override public long progressMax() { return capacity(); }
         };
-        if(!isBatteryBox())return null;
+        if(!isBatteryBox())return new com.gregtech.gregtech.api.machine.MachineControl(){
+            public boolean available(){return !isRemoved();}
+            public boolean supportsMode(){return isMagnet();}
+            public int mode(){return isMagnet()?magnetMode:0;}
+            public int setMode(int value){if(isMagnet()){magnetMode=(byte)(value&15);setChanged();}return mode();}
+            public boolean enabled(){return isMagnet()?!magnetStopped:!converterStopped;}
+            public boolean setEnabled(boolean value){if(isMagnet())magnetStopped=!value;else converterStopped=!value;setChanged();return value;}
+            public boolean running(){return enabled()&&stored()>0;}
+            public boolean active(){return running();}
+            public long progress(){return stored();}
+            public long progressMax(){return capacity();}
+        };
         return new com.gregtech.gregtech.api.machine.MachineControl() {
             @Override public boolean supportsMode(){return true;}
             @Override public int mode(){return batteryEnergy.mode();}
@@ -980,7 +990,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
     }
     @Override public void dropContents() {
         if (level == null || level.isClientSide) return;
-        for(var cover:batteryCovers.values())com.gregtech.gregtech.api.inventory.BlockContents.drop(this,cover);
+        if(!com.gregtech.gregtech.content.cover.CoverDrops.retained(this))for(var cover:batteryCovers.values())com.gregtech.gregtech.api.inventory.BlockContents.drop(this,cover);
         if(!batteryCovers.isEmpty())batteryCovers.clear();
         for (var battery : batteries) com.gregtech.gregtech.api.inventory.BlockContents.drop(this, battery);
         batteries.clear();

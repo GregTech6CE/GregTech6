@@ -15,7 +15,8 @@ public record ToolInteractionSpec(DirectionProperty facing, MachineRotationType 
             return switch (this) {
                 case FLUID -> com.gregtech.gregtech.block.machine.FluidPipeBlock.propFor(side);
                 case ITEM -> com.gregtech.gregtech.block.machine.ItemPipeBlock.propFor(side);
-                case ELECTRIC, LASER, REDSTONE, LOGISTICS -> com.gregtech.gregtech.block.energy.ElectricWireBlock.propFor(side);
+                case ELECTRIC, LASER, REDSTONE -> com.gregtech.gregtech.block.energy.ElectricWireBlock.propFor(side);
+                case LOGISTICS -> com.gregtech.gregtech.api.transport.PipeConnections.propFor(side);
                 case AXLE -> com.gregtech.gregtech.block.energy.AxleBlock.propFor(side);
             };
         }

@@ -143,6 +143,7 @@ public class MoldBlock extends Block implements EntityBlock, GTMachineBlock, Sim
             level.playSound(null, pos, com.gregtech.gregtech.content.transport.fluid.FluidTransportRegistries.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
             if (GTToolHelper.canCollectMachineDrop(tool, state)) {
                 ItemStack machine = getCloneItemStack(state,null,level,pos,player);
+                com.gregtech.gregtech.content.cover.CoverDrops.capture(state,(net.minecraft.server.level.ServerLevel)level,blockEntity,java.util.List.of(machine));
                 if (!machine.isEmpty()) {
                     if (blockEntity instanceof MoldBlockEntity mold) MoldItemData.withShape(machine,mold.getMoldShape());
                     if (!player.getInventory().add(machine)) {

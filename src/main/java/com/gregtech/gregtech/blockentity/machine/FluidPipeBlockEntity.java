@@ -286,7 +286,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
         panels().beforeTick();
         panels().afterTick();
         syncCovers();
-        return cover;
+        return panels().removed(side,cover);
     }
 
     /**
@@ -299,7 +299,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     public void dropCovers() {
         if (covers == null) return;
         for (int i = 0; i < covers.length; i++) {
-            BlockContents.drop(this, covers[i]);
+            if(!com.gregtech.gregtech.content.cover.CoverDrops.retained(this))BlockContents.drop(this, covers[i]);
             covers[i] = ItemStack.EMPTY;
         }
         hasCovers = false;
@@ -843,7 +843,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
      * the pipe) refuses everything, {@code :119}.</p>
      */
     public boolean coverFluidFilterPermits(Direction side, FluidStack candidate) {
-        return CoverUtilityBehaviors.fluidFilterPermits(getCover(side), panelsStopped(), candidate);
+        return (panels==null||!panels.shuttered(side)) && CoverUtilityBehaviors.fluidFilterPermits(getCover(side), panelsStopped(), candidate);
     }
 
     @Override

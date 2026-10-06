@@ -78,7 +78,7 @@ public class ToolShapedRecipe implements CraftingRecipe, com.gregtech.gregtech.a
  public boolean allowMirror(){return allowMirror;}
  public static final MapCodec<ToolShapedRecipe> CODEC=RecordCodecBuilder.mapCodec(instance->instance.group(
   new ShapedRecipe.Serializer().codec().forGetter((ToolShapedRecipe recipe)->recipe.base),
-  Codec.BOOL.optionalFieldOf("allow_mirror",true).forGetter((ToolShapedRecipe recipe)->recipe.allowMirror),
+  Codec.BOOL.optionalFieldOf("allow_mirror",false).forGetter((ToolShapedRecipe recipe)->recipe.allowMirror),
   Codec.BOOL.optionalFieldOf("require_empty_fluid_containers",false).forGetter((ToolShapedRecipe recipe)->recipe.requireEmptyFluidContainers),
   Codec.BOOL.optionalFieldOf("gregtech_autocraftable",true).forGetter((ToolShapedRecipe recipe)->recipe.autocraftable)
  ).apply(instance,ToolShapedRecipe::new));

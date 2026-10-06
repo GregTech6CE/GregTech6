@@ -228,6 +228,7 @@ public class HopperBlock extends DirectionalBlock implements EntityBlock, ToolIn
                               @Nullable BlockEntity blockEntity, ItemStack tool) {
         if (!level.isClientSide && GTToolHelper.isMachineWrench(tool)) {
             ItemStack machine = new ItemStack(this);
+                com.gregtech.gregtech.content.cover.CoverDrops.capture(state,(net.minecraft.server.level.ServerLevel)level,blockEntity,java.util.List.of(machine));
             if (!machine.isEmpty()) {
                 if (!player.getInventory().add(machine)) {
                     popResource(level, pos, machine);

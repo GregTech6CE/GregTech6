@@ -25,7 +25,7 @@ public interface PanelCoverHost {
         return owner.getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.FLUID_HANDLER,null).orElse(null);
     }
     default BlockEntity coverOwner(){return (BlockEntity)this;}
-    default MachineControl coverControl(Direction side){return MachineControl.find(coverOwner(),side);}
+    default MachineControl coverControl(Direction side){var c=MachineControl.find(coverOwner(),side);return c!=null?c:CoverProgress.control(this,side);}
     default boolean coverPossible(Direction side){var c=coverControl(side);return c!=null&&c.available()&&(c.active()||c.progressMax()>0);}
     default boolean coverSupportsPossible(){return false;}
 }

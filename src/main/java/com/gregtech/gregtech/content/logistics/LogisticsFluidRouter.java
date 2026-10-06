@@ -44,6 +44,7 @@ public final class LogisticsFluidRouter {
                 }
             }
             if (!(hostEntity instanceof LogisticsCoverHost host)) continue;
+            if(hostEntity instanceof com.gregtech.gregtech.content.cover.PanelCoverHost panels&&panels.panels().stopped())continue;
             for (Direction face : Direction.values()) {
                 ItemStack cover = host.logisticsCovers().get(face);
                 LogisticsCoverType type = LogisticsCoverType.of(cover);

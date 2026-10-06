@@ -17,7 +17,11 @@ public final class PanelCoverRenderer {
         var panel=PanelCover.of(stack);
         var component=ComponentCoverRuntime.kind(stack);
         if(component!=null)return List.of(ComponentCoverRules.texture(component,ComponentCoverRuntime.visual(stack)));
-        if(panel==null)return List.of();
+        if(panel==null){
+            var id=CoverItems.behavior(stack);int count=CoverUtilityBehaviors.designCount(id);
+            if(count>0)return List.of((CoverUtilityBehaviors.BLANK_COVER.equals(id)?"blank/":"warning/")+Math.floorMod(CoverUtilityBehaviors.design(stack),count));
+            return List.of();
+        }
         int value=PanelCoverRuntime.value(stack),style=PanelCoverRuntime.style(stack);
         return switch(panel){
             case MANUAL->List.of("manualselector/underlay","manualselector/"+(value&15));
@@ -36,7 +40,31 @@ public final class PanelCoverRenderer {
         };
     }
     public static boolean renderFace(PanelCoverHost host,Direction side,PoseStack pose,MultiBufferSource buffers,int fallbackLight){
-        var stack=host.getCover(side);if(PanelCover.of(stack)==null&&ComponentCoverRuntime.kind(stack)==null)return false;
+        var stack=host.getCover(side);if(!CoverItems.isCover(stack))return false;
+        if(stack.getItem() instanceof com.gregtech.gregtech.api.material.MaterialFormItem material){
+            var stone=MaterialCoverRules.stoneTextures(material.getPrefix().getName(),material.getMaterial().getName());
+            if(!stone.isEmpty()){
+                var vertices=buffers.getBuffer(RenderType.cutout());
+                var sprite=ArmRenderHelper.getSprite(ResourceLocation.parse(stone.get(Math.floorMod(CoverUtilityBehaviors.design(stack),stone.size()))));
+                CoverSurfaceRenderer.draw(pose,vertices,side,sprite,fallbackLight,0);return true;
+            }
+            var textures=MaterialCoverRules.textures(material.getPrefix().getName());
+            if(!textures.isEmpty()){
+                String file=textures.get(Math.floorMod(CoverUtilityBehaviors.design(stack),textures.size()));
+                var set=MaterialIcons.resolveTextureSet(material.getMaterial());
+                String path="block/material_icons/"+set.folder()+"/"+file;
+                var vertices=buffers.getBuffer(RenderType.cutout());
+                CoverSurfaceRenderer.draw(pose,vertices,side,ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gregtech",path)),fallbackLight,0,material.getMaterial().getColor());
+                CoverSurfaceRenderer.draw(pose,vertices,side,ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gregtech",path+"_overlay")),fallbackLight,1);
+                return true;
+            }
+        }
+        if(PanelCover.of(stack)==null&&ComponentCoverRuntime.kind(stack)==null&&CoverUtilityBehaviors.designCount(CoverItems.behavior(stack))==0){
+            var model=net.minecraft.client.Minecraft.getInstance().getItemRenderer().getModel(stack,host.coverOwner().getLevel(),null,0);
+            var vertices=buffers.getBuffer(RenderType.cutout());
+            CoverSurfaceRenderer.draw(pose,vertices,side,model.getParticleIcon(),fallbackLight,0,net.minecraft.client.Minecraft.getInstance().getItemColors().getColor(stack,0));
+            return true;
+        }
         var owner=host.coverOwner();var level=owner.getLevel();
         int light=level==null?fallbackLight:LevelRenderer.getLightColor(level,owner.getBlockPos().relative(side));
         var vc=buffers.getBuffer(RenderType.cutout());var matrix=pose.last().pose();

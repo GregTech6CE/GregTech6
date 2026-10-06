@@ -77,8 +77,8 @@ public final class LogisticsCoreStructure {
         public long routingThreshold() { return new LogisticsCoreLayout.Counts(logic,control,storage,conversion).routingThreshold(); }
         /** GT6 {@code :699}: the nominal buffer ceiling (an incoming packet may exceed it). */
         public long energyCapacity() { return new LogisticsCoreLayout.Counts(logic,control,storage,conversion).energyCapacity(); }
-        /** GT6 {@code :209,504}: fixed charge once per 20-tick logistics pass. */
-        public long fixedEnergyPerPass() { return new LogisticsCoreLayout.Counts(logic,control,storage,conversion).fixedEnergyPerPass(); }
+        /** GT6 {@code :209,504}: fixed charge on every server tick. */
+        public long fixedEnergyPerTick() { return new LogisticsCoreLayout.Counts(logic,control,storage,conversion).fixedEnergyPerTick(); }
     }
 
     private static final List<Cell> CELLS = create();

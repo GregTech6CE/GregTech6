@@ -99,7 +99,7 @@ public class ToolShapedRecipe extends ShapedRecipe implements com.gregtech.gregt
     public boolean allowMirror() { return allowMirror; }
     public static final RecipeSerializer<ToolShapedRecipe> SERIALIZER=new RecipeSerializer<>() {
         private final ShapedRecipe.Serializer vanilla=new ShapedRecipe.Serializer();
-        @Override public ToolShapedRecipe fromJson(ResourceLocation id,JsonObject json) { return new ToolShapedRecipe(vanilla.fromJson(id,json),!json.has("allow_mirror")||json.get("allow_mirror").getAsBoolean(),json.has("require_empty_fluid_containers")&&json.get("require_empty_fluid_containers").getAsBoolean(),!json.has("gregtech_autocraftable")||json.get("gregtech_autocraftable").getAsBoolean()); }
+        @Override public ToolShapedRecipe fromJson(ResourceLocation id,JsonObject json) { return new ToolShapedRecipe(vanilla.fromJson(id,json),json.has("allow_mirror")&&json.get("allow_mirror").getAsBoolean(),json.has("require_empty_fluid_containers")&&json.get("require_empty_fluid_containers").getAsBoolean(),!json.has("gregtech_autocraftable")||json.get("gregtech_autocraftable").getAsBoolean()); }
         @Override public ToolShapedRecipe fromNetwork(ResourceLocation id,FriendlyByteBuf buffer) { return new ToolShapedRecipe(vanilla.fromNetwork(id,buffer),buffer.readBoolean(),buffer.readBoolean(),buffer.readBoolean()); }
         @Override public void toNetwork(FriendlyByteBuf buffer,ToolShapedRecipe recipe) { vanilla.toNetwork(buffer,recipe); buffer.writeBoolean(recipe.allowMirror); buffer.writeBoolean(recipe.requireEmptyFluidContainers); buffer.writeBoolean(recipe.autocraftable); }
     };

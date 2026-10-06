@@ -25,7 +25,7 @@ public interface PanelCoverHost {
         return owner.getLevel().getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,owner.getBlockPos(),null);
     }
     default BlockEntity coverOwner(){return (BlockEntity)this;}
-    default MachineControl coverControl(Direction side){return MachineControl.find(coverOwner(),side);}
+    default MachineControl coverControl(Direction side){var c=MachineControl.find(coverOwner(),side);return c!=null?c:CoverProgress.control(this,side);}
     default boolean coverPossible(Direction side){var c=coverControl(side);return c!=null&&c.available()&&(c.active()||c.progressMax()>0);}
     default boolean coverSupportsPossible(){return false;}
 }
