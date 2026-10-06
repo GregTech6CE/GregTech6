@@ -28,6 +28,7 @@ public final class MaterialDefinitions {
         MaterialModTags.apply();
         MaterialRegistryExtras.apply();
         MaterialCompositionData.apply();
+        com.gregtech.gregtech.data.generated.MaterialDataFacts.apply();
         MaterialFormCorrections.apply();
         MaterialGroups.init();
 

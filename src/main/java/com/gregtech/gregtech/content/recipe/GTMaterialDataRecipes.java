@@ -81,8 +81,8 @@ public final class GTMaterialDataRecipes {
     private static final int DYE_MB_MANY = com.gregtech.gregtech.content.data.MaterialDataRules.DYE_MANY_MB;
     /** GT6's threshold for the "large" printed book. */
     private static final int MANY_PAGES = com.gregtech.gregtech.content.data.MaterialDataRules.MANY_PAGES;
-    /** GT6's replicator power per nucleon ({@code RecipeMapReplicator:91}). */
-    private static final long REPLICATOR_EU_PER_NUCLEON = com.gregtech.gregtech.content.data.MaterialDataRules.REPLICATOR_POWER_PER_NUCLEON;
+    /** GT6's replicator duration per nucleon ({@code RecipeMapReplicator:91}). */
+    private static final long REPLICATOR_TICKS_PER_NUCLEON = com.gregtech.gregtech.content.data.MaterialDataRules.REPLICATOR_TICKS_PER_NUCLEON;
 
     private static boolean registered;
 
@@ -115,7 +115,9 @@ public final class GTMaterialDataRecipes {
         for (GTMaterial raw : GTMaterialRegistry.allMaterials()) {
             GTMaterial material = raw.resolve();
             if (!material.isValid() || material.getId() <= 0 || !seen.add(material)) continue;
-            scannable++;
+            if (com.gregtech.gregtech.api.prefix.PrefixRegistry.all().stream().anyMatch(prefix ->
+                    com.gregtech.gregtech.data.generated.MaterialDataFacts.scannable(prefix)
+                            && !GTItems.getStack(prefix, material, 1).isEmpty())) scannable++;
             if (!GTMaterialDictionary.bookStack(material).isEmpty()) printable++;
             if (replicationRecipe(material) != null) replicable++;
         }
@@ -301,23 +303,16 @@ public final class GTMaterialDataRecipes {
         return -1;
     }
 
-    /**
-     * Whether the replicator can rebuild this material — GT6 {@code RecipeMapReplicator:88-114} refuses
-     * antimatter, anything without nucleons and anything the port has no fluid for, and the tooltip
-     * ({@code UT.java:2250,2266}) distinguishes the two cases.
-     */
+    /** Whether an actual native output can be made under the source UUM/antimatter rules. */
     public static boolean isReplicable(GTMaterial material) {
         return material != null && replicationRecipe(material) != null;
     }
 
-    /**
-     * The replicator's energy for one material: {@code (protons + neutrons) * REPLICATOR_EU_PER_NUCLEON}
-     * — the same number {@link #replicationRecipe} charges, so a tooltip that prints it prints what the
-     * machine actually spends.
-     */
+    /** Original UT.NBT data estimate; source deliberately prints 65536 per nucleon. */
     public static long replicatorEnergy(GTMaterial material) {
         if (material == null || !material.isValid()) return 0;
-        return (long) (material.getProtons() + material.getNeutrons()) * REPLICATOR_EU_PER_NUCLEON;
+        return ((long) material.getProtons() + material.getNeutrons())
+                * com.gregtech.gregtech.content.data.MaterialDataRules.DATA_ENERGY_PER_NUCLEON;
     }
 
     /** The material a data compound points at, or null when it carries none. */
@@ -346,24 +341,31 @@ public final class GTMaterialDataRecipes {
         if (usb == null || scanned == null) return null;
         GTMaterial material = scannable(scanned);
         if (material == null) return null;
-        long nucleons = material.getProtons() + material.getNeutrons();
-        return new Recipe(
+        long nucleons = (long) material.getProtons() + material.getNeutrons();
+        Recipe recipe = new Recipe(
                 new ItemStack[]{scanned.copyWithCount(1), usb.copyWithCount(1)},
                 new ItemStack[]{withMaterialData(usb, material)},
                 null, null, null, null,
                 Math.max(1, nucleons * SCANNER_EU), SCANNER_EU, 0);
+        recipe.mCanBeBuffered = false;
+        recipe.mExactItemInputs = true;
+        recipe.mExplicitCatalystsOnly = true;
+        return recipe;
     }
 
     /** The material a scanned item is made of, or null when it carries none. */
     @Nullable
     private static GTMaterial scannable(ItemStack stack) {
-        // GT6 asks for TD.Prefix.SCANNABLE; the port's material items carry (prefix, material) on the
-        // Item instance, and the vanilla/block side carries a composition in ItemMaterialRegistry.
+        MaterialPrefix prefix = com.gregtech.gregtech.item.MaterialItem.getPrefix(stack);
         GTMaterial material = com.gregtech.gregtech.item.MaterialItem.getMaterial(stack);
-        if (material != null && material.isValid() && material.getId() > 0) return material.resolve();
-        var data = ItemMaterialRegistry.get(stack);
-        if (data.isEmpty()) return null;
-        material = data.get().material().resolve();
+        if (material == null) {
+            var data = ItemMaterialRegistry.get(stack);
+            if (data.isEmpty()) return null;
+            prefix = data.get().prefix();
+            material = data.get().material();
+        }
+        if (!com.gregtech.gregtech.data.generated.MaterialDataFacts.scannable(prefix)) return null;
+        material = material.resolve();
         return material.isValid() && material.getId() > 0 ? material : null;
     }
 
@@ -454,27 +456,47 @@ public final class GTMaterialDataRecipes {
     @Nullable
     private static Recipe replicationRecipe(GTMaterial material, @Nullable ItemStack usb) {
         if (!material.isValid() || material.getId() <= 0) return null;
-        if (material.has(MaterialProperty.ANTIMATTER)) return null;
-        long nucleons = material.getProtons() + material.getNeutrons();
+        if (!material.has(MaterialProperty.UUM) || material.has(MaterialProperty.ANTIMATTER)) return null;
+        long nucleons = (long) material.getProtons() + material.getNeutrons();
         if (nucleons <= 0) return null;
         FluidStack[] matter = matter(material);
         if (matter == null) return null;
-        long power = nucleons * REPLICATOR_EU_PER_NUCLEON;
-        ItemStack output = primaryForm(material);
         FluidStack fluid = FluidStack.EMPTY;
-        if (output.isEmpty()) {
-            // GT6 falls back to the material's own fluid when it has no item form at all.
-            fluid = com.gregtech.gregtech.loaders.c.GTGeneratedChem
-                    .materialFluid(material.getName(), 1000);
-            if (fluid == null || fluid.isEmpty()) return null;
+        var ambient = com.gregtech.gregtech.content.data.MaterialDataRules.ambientPhase(material);
+        if (ambient != com.gregtech.gregtech.content.data.MaterialDataRules.AmbientPhase.SOLID)
+            fluid = phaseFluid(material, ambient == com.gregtech.gregtech.content.data.MaterialDataRules.AmbientPhase.GAS);
+        ItemStack output = fluid.isEmpty() ? primaryForm(material) : ItemStack.EMPTY;
+        if (output.isEmpty() && fluid.isEmpty()) {
+            // Original fallback order: liquid, gas, plasma. Never invent an unregistered fluid.
+            fluid = phaseFluid(material, false);
+            if (fluid.isEmpty()) fluid = phaseFluid(material, true);
+            if (fluid.isEmpty()) fluid = nonempty(GTFluids.stack("GenPlasma_" + material.getName(), 1000));
+            if (fluid.isEmpty()) return null;
         }
         Recipe recipe = new Recipe(
                 usb == null ? null : new ItemStack[]{usb.copyWithCount(1)},
                 output.isEmpty() ? null : new ItemStack[]{output},
                 null, null, matter,
                 fluid.isEmpty() ? null : new FluidStack[]{fluid},
-                1, power, 0);
+                nucleons * REPLICATOR_TICKS_PER_NUCLEON,
+                com.gregtech.gregtech.content.data.MaterialDataRules.REPLICATOR_POWER, 0);
+        recipe.mCanBeBuffered = false;
+        recipe.mExactItemInputs = true;
+        recipe.mExplicitCatalystsOnly = true;
         return usb == null ? recipe : recipe.withCatalystInputs(0);
+    }
+
+    private static FluidStack nonempty(@Nullable FluidStack fluid) {
+        return fluid == null ? FluidStack.EMPTY : fluid;
+    }
+
+    /** Native liquid/gas aliases preserve the shared material identity and 1U volume. */
+    private static FluidStack phaseFluid(GTMaterial material, boolean gas) {
+        FluidStack fluid = nonempty(GTFluids.stack((gas ? "GenGas_" : "GenLiquid_") + material.getName(), 1000));
+        if (!fluid.isEmpty()) return fluid;
+        fluid = nonempty(GTFluids.stack(material.getName(), 1000));
+        if (!fluid.isEmpty() && com.gregtech.gregtech.registry.GTFluids.isGas(fluid) == gas) return fluid;
+        return gas ? FluidStack.EMPTY : nonempty(GTFluids.stack("GenMolten_" + material.getName(), 144));
     }
 
     /** GT6's {@code MatterNeutral(neutrons)} + {@code MatterCharged(protons)}, one mB per nucleon. */
@@ -494,6 +516,11 @@ public final class GTMaterialDataRecipes {
      * stick (2).
      */
     private static ItemStack primaryForm(GTMaterial material) {
+        MaterialPrefix priority = com.gregtech.gregtech.data.generated.MaterialDataFacts.priority(material);
+        if (priority != null) {
+            ItemStack preferred = GTItems.getStack(priority, material, 1);
+            if (!preferred.isEmpty()) return preferred;
+        }
         List<MaterialPrefix> forms = com.gregtech.gregtech.content.data.MaterialDataRules.FORMS;
         for (MaterialPrefix form : forms) {
             if (!form.isValidFor(material)) continue;

@@ -62,6 +62,14 @@ final class CanvasDeliveryChecks {
             var item=BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech",path));
             require(com.gregtech.gregtech.data.MachineRecipeMaps.Printer.mRecipeList.stream().anyMatch(r->r.mFakeRecipe&&r.mOutputs.length==1&&r.mOutputs[0].is(item)&&r.mEUt==16&&r.mDuration==(path.equals("printed_pages")?512:1024)),"source printer viewer row "+path);
         }
-        graphics.pose().popPose();var result=new JsonObject();result.addProperty("originalCanvasItemModels",meshes);result.addProperty("printedPageModels",pageModels);result.addProperty("coloredBookScanHints",bookHints);result.addProperty("directionalAndFluidFaces",4);result.addProperty("brightImage",true);return result;
+        var iron=com.gregtech.gregtech.api.material.GTMaterialRegistry.get(260).resolve();
+        var dataStick=com.gregtech.gregtech.content.recipe.GTMaterialDataRecipes.withMaterialData(new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech","usb3_stick"))),iron);
+        var matter=java.util.List.of(com.gregtech.gregtech.registry.GTFluids.stack("MatterNeutral",(int)iron.getNeutrons()),com.gregtech.gregtech.registry.GTFluids.stack("MatterCharged",(int)iron.getProtons()));
+        var replication=com.gregtech.gregtech.data.MachineRecipeMaps.Replicator.findRecipe(java.util.List.of(dataStick),matter,false,3,3);
+        require(replication!=null&&replication.mEUt==1&&replication.mDuration==(iron.getProtons()+iron.getNeutrons())*256L&&!replication.mCanBeBuffered,"installed original molecular work fields");
+        require(!com.gregtech.gregtech.api.material.GTMaterialRegistry.get(8214).has(com.gregtech.gregtech.api.material.MaterialProperty.UUM),"installed obsidian source gate");
+        var mercury=com.gregtech.gregtech.registry.GTFluids.stack("GenLiquid_Mercury",1000);
+        require(mercury!=null&&!mercury.isEmpty()&&BuiltInRegistries.FLUID.getKey(mercury.getFluid()).getPath().equals("mercury"),"installed ordinary mercury liquid");
+        graphics.pose().popPose();var result=new JsonObject();result.addProperty("originalMolecularDataFields",true);result.addProperty("mercuryAmbientUnitMb",1000);result.addProperty("originalCanvasItemModels",meshes);result.addProperty("printedPageModels",pageModels);result.addProperty("coloredBookScanHints",bookHints);result.addProperty("directionalAndFluidFaces",4);result.addProperty("brightImage",true);return result;
     }
 }

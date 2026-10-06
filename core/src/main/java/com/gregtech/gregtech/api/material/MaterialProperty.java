@@ -25,6 +25,8 @@ public enum MaterialProperty {
     EXPLOSIVE,
     /** GT6 {@code TD.Processing.MELTING} — exempts low-temp flammable burnoff in crucibles. */
     MELTING,
+    /** GT6 TD.Processing.UUM: molecular data describes a replicatable material. */
+    UUM,
     /** GT6 {@code TD.Properties.UNBURNABLE}. */
     UNBURNABLE,
     /** GT6 {@code TD.Properties.ACID} — corrodes non-acid-proof molds, faucets and crucibles. */
