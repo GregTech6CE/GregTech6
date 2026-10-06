@@ -1,5 +1,5 @@
 /* GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later.
- * Adapted from gregapi.data.LH.getToolTipBlastResistance. */
+ * Adapted from gregapi.data.LH.getToolTipBlastResistance/getToolTipHarvest. */
 package com.gregtech.gregtech.api.block;
 
 /** Original tooltip thresholds; these labels do not change native explosion mechanics. */
@@ -31,5 +31,29 @@ public final class OriginalBlockTooltipRules {
     /** Original LH truncates to one decimal; it does not round. */
     public static String blastNumber(double resistance) {
         return ((int) resistance) + "." + (((int) (resistance * 10)) % 10);
+    }
+    /** Original LH prints tier details only above1 (its case1 arm is unreachable). */
+    public static boolean showHarvestLevel(int level) { return level > 1; }
+    public static String harvestToolKey(String tool) {
+        return switch (tool.toLowerCase(java.util.Locale.ROOT)) {
+            case "pickaxe" -> "gt.lang.tool.name.pickaxe";
+            case "axe" -> "gt.lang.tool.name.axe";
+            case "shovel" -> "gt.lang.tool.name.shovel";
+            case "sword" -> "gt.lang.tool.name.sword";
+            case "wrench" -> "gt.lang.tool.name.wrench";
+            case "crowbar" -> "gt.lang.tool.name.crowbar";
+            case "cutter" -> "gt.lang.tool.name.cutter";
+            case "shears" -> "gt.lang.tool.name.shears";
+            default -> null;
+        };
+    }
+    public static String harvestTierMaterial(int level) {
+        return switch (level) {
+            case 2 -> "iron";
+            case 3 -> "diamond";
+            case 4 -> "netherite";
+            case 5 -> "adamantium";
+            default -> level > 14 ? "infinity" : null;
+        };
     }
 }

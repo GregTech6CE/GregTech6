@@ -32,6 +32,7 @@ public final class MachineSpecBehaviorContracts {
         chargedCrucibleHeatRequirement();
         originalMachineMaterials();
         originalBlastTooltips();
+        originalHarvestProperties();
         originalManualAndBoilerTooltips();
         originalLargeBoilerTooltipState();
         originalEnergyDeviceTooltips();
@@ -149,6 +150,38 @@ public final class MachineSpecBehaviorContracts {
         check(com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.blastNumber(6.99).equals("6.9"), "Original decimal truncation");
         check(!com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.showMultitileBlast(3.99), "MTE item suppresses blast line below4");
         check(com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.showMultitileBlast(4), "MTE blast boundary4 is visible");
+    }
+
+    private static void originalHarvestProperties() {
+        var properties = com.gregtech.gregtech.data.SourceBlockProperties.blocks();
+        check(properties.size() == 591, "471 adopted source block metadata plus120 original metalset hoppers");
+        check(com.gregtech.gregtech.data.SourceBlockProperties.basics().size() == 252, "All252 adopted original machine metadata keys");
+        var wood = properties.get("gearbox_wood");
+        check(wood.sourceId() == 24809 && wood.tool().equals("axe") && wood.handHarvestable(), "Wood gearbox original aWooden exemption");
+        var metal = properties.get("gearbox_iridium");
+        check(metal.sourceId() == 24859 && metal.tool().equals("wrench") && !metal.handHarvestable()
+                && metal.material().resolve() == GTMaterialRegistry.get("Iridium"), "Iridium gearbox original machine group and material identity");
+        var mortar = properties.get("mortar_diamond");
+        check(mortar.sourceId() == 32076 && mortar.tool().equals("pickaxe") && mortar.handHarvestable() && mortar.level() == 0,
+                "Source aUtilMetal mortar ignores its diamond head tier and remains hand harvestable");
+        var ironwood = properties.get("engine_steam_ironwood");
+        check(ironwood.sourceId() == 1310 && ironwood.tool().equals("axe") && ironwood.handHarvestable(), "Ironwood source utility group exemption");
+        check(properties.get("electric_motor_lv").material().resolve() == GTMaterialRegistry.get("SteelGalvanized"), "Motor harvest follows original casing, not magnet inside");
+        check(com.gregtech.gregtech.data.SourceBlockProperties.basic("melter", 1).orElseThrow().material().resolve()
+                == GTMaterialRegistry.get("Iron"), "Source melter harvest follows registration metadata before ceramic lining override");
+        check(com.gregtech.gregtech.data.SourceBlockProperties.basic("cokeoven", 1).orElseThrow().tool().equals("pickaxe"), "Coke oven source aStone, not heuristic controller wrench");
+        for (String name : new String[]{"hopper_steel", "queue_hopper_steel"}) {
+            var hopper = properties.get(name);
+            check(hopper != null && !hopper.handHarvestable() && hopper.tool().equals("wrench")
+                    && hopper.material().resolve() == GTMaterialRegistry.get("Steel"), "Source metalset hopper metadata " + name);
+        }
+        check(properties.get("axle_wood_4").handHarvestable(), "Empty CR.REV source axle retains original harvest metadata");
+        check(properties.get("energy_storage_xv").sourceId() == 10099, "Broken source recipe does not discard legal machine metadata");
+        check(!com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.showHarvestLevel(1)
+                && com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.showHarvestLevel(2), "Original LH harvest level visibility boundary");
+        for (String[] tier : new String[][]{{"2", "iron"}, {"3", "diamond"}, {"4", "netherite"}, {"5", "adamantium"}, {"15", "infinity"}})
+            check(com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.harvestTierMaterial(Integer.parseInt(tier[0])).equals(tier[1]), "Source harvest tier name " + tier[0]);
+        check(com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.harvestTierMaterial(14) == null, "Source tiers6..14 have no invented reference material");
     }
 
     private static void originalManualAndBoilerTooltips() {

@@ -11167,5 +11167,16 @@
   "block.gregtech.steam_turbine_graphene": "Steam Turbine (Graphene)",
   "gt.lang.emits.used.steam": "Emits used Steam",
   "gt.lang.face.sides": "Sides",
-  "gt.td.short.energy.steam": "Steam"
+  "gt.td.short.energy.steam": "Steam",
+  "gt.lang.enchantment.bonus": "Can influence an Enchanting Table like a Bookshelf",
+  "gt.lang.flammable": "Flammable!",
+  "gt.lang.tool.name.axe": "Axe",
+  "gt.lang.tool.name.crowbar": "Crowbar",
+  "gt.lang.tool.name.cutter": "Cutter",
+  "gt.lang.tool.name.pickaxe": "Pickaxe",
+  "gt.lang.tool.name.shears": "Shears",
+  "gt.lang.tool.name.shovel": "Shovel",
+  "gt.lang.tool.name.sword": "Sword",
+  "gt.lang.tool.to.harvest": "Tool to Harvest",
+  "gt.lang.use.crowbar.to.uncover": "Use Crowbar to remove Covers"
 }
