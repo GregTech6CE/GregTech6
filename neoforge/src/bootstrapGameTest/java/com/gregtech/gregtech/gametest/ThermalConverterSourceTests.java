@@ -108,11 +108,21 @@ public final class ThermalConverterSourceTests {
             var available = new HashMap<GTMaterial,Long>();
             for (var component : ItemMaterialRegistry.get(result).orElseThrow().components())
                 available.merge(component.material().getTargetPulverMaterial().resolve(),MaterialRecoveryRules.pulverizedAmount(component.material(),component.amount()),Math::addExact);
+            var recoveredMaterials = new HashSet<GTMaterial>();
             for (var out : recovery.mOutputs) {
                 var form = MaterialEquivalence.form(out); h.assertTrue(form != null,"native thermal dust output");
                 available.merge(form.material(),-form.prefix().getMaterialWeight()*out.getCount(),Long::sum);
+                recoveredMaterials.add(form.material());
+                long remainder = available.get(form.material());
+                // OM.dust chooses small piles at >=8U:14+1/3U becomes57 quarter piles,
+                // intentionally leaving1/12U. U/72 is not its universal rounding bound.
+                h.assertTrue(remainder >= 0 && remainder < form.prefix().getMaterialWeight(),
+                        "source OM.dust rounding never creates material " + description.output() + " " + form.material());
             }
-            h.assertTrue(available.values().stream().allMatch(v -> v>=0 && v<GTValues.U/72),"thermal recovery conserves each registered material");
+            h.assertTrue(recoveredMaterials.equals(available.keySet()),"thermal recovery includes every registered pulverizing target");
+            if (description.output().equals("gregtech:electric_heater_lv"))
+                h.assertTrue(Arrays.stream(recovery.mOutputs).anyMatch(out -> MaterialEquivalence.form(out).prefix() == com.gregtech.gregtech.data.MaterialPrefix.dustSmall && out.getCount() == 57),
+                        "original heater14+1/3U hull yields57 quarter dust piles");
             checkCrucible(h,result);
             var unsafe = result.copy(); stored(unsafe);
             h.assertTrue(RecipeInputs.consume(recovery,List.of(unsafe),List.of(),1) == null && com.gregtech.gregtech.api.machine.crucible.CrucibleItemInput.parse(unsafe).isEmpty(),"stored thermal machine survives recycling guard");
