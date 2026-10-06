@@ -433,7 +433,7 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
         heat = Math.max(0, tag.getLong("gt.heat"));
         cooldown = tag.contains("gt.cooldown") ? Math.max(0, Math.min(128, tag.getInt("gt.cooldown"))) : 128;
         efficiency = tag.contains("gt.efficiency")
-                ? Math.max(5000, Math.min(10_000, tag.getInt("gt.efficiency"))) : 10_000;
+                ? com.gregtech.gregtech.content.machine.OriginalFunctionalTooltipData.boilerEfficiency(tag.getInt("gt.efficiency")) : 10_000;
         if (tag.contains("gt.water")) water.readFromNBT(tag.getCompound("gt.water"));
         if (tag.contains("gt.steam")) steam.readFromNBT(tag.getCompound("gt.steam"));
         water.setCapacity(WATER_CAPACITY);

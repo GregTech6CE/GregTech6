@@ -68,6 +68,7 @@ final class TankItemDeliveryChecks {
         result.addProperty("observedEmptyLoaderWrappers", emptyLoaderWrappers);
         result.addProperty("scope", "installed methods at title screen; actual harvest tested separately in native server worlds");
         result.add("originalFunctionalTooltips", verifyFunctionalTooltips());
+        result.add("sourceMechanicalTooltips", verifyMechanicalTooltips());
         result.add("machineSourceMaterials", verifyMachineMaterials());
         result.addProperty("sourceFluidPipeTooltips", verifyFluidPipeTooltips());
         result.addProperty("storedTankTooltips", stored);
@@ -194,5 +195,56 @@ final class TankItemDeliveryChecks {
         return result;
     }
     private static String tr(String key) { return net.minecraft.network.chat.Component.translatable(key).getString(); }
+
+    private static JsonObject verifyMechanicalTooltips() {
+        int axles = 0, gearboxes = 0, largeBoilers = 0;
+        for (var block : BuiltInRegistries.BLOCK) {
+            var item = new ItemStack(block);
+            if (block instanceof com.gregtech.gregtech.block.energy.AxleBlock axle) {
+                var lines = tooltip(item, net.minecraft.world.item.TooltipFlag.NORMAL);
+                require(lines.contains(tr("gt.lang.axle.stats.speed") + axle.spec().maxSpeed() + " " + tr("gt.td.short.energy.kinetic_rotation")), "installed original axle speed");
+                require(lines.contains(tr("gt.lang.axle.stats.power") + axle.spec().maxPower()), "installed original axle power");
+                String wrench = tr("gt.lang.use.x.to.toggle.connection.pre") + tr("gt.lang.tool.name.wrench") + tr("gt.lang.use.x.to.toggle.connection.post");
+                require(lines.contains(wrench), "installed original axle connection hint");
+                axles++;
+            } else if (block instanceof com.gregtech.gregtech.block.energy.GearboxBlock gearbox) {
+                String warning = tr("gt.tooltip.gearbox.custom.1");
+                var lines = tooltip(item, net.minecraft.world.item.TooltipFlag.NORMAL);
+                require(!lines.contains(warning), "installed empty gearbox suppresses wrong interlock warning");
+                require(lines.contains(tr("gt.lang.axle.stats.speed") + gearbox.spec().maxSpeed() + " " + tr("gt.td.short.energy.kinetic_rotation")), "installed original gearbox speed");
+                for (String key : java.util.List.of("gt.tooltip.gearbox.custom.2", "gt.tooltip.gearbox.custom.3", "gt.lang.use.soft.hammer.to.toggle", "gt.lang.use.magnifyingglass.to.detail"))
+                    require(lines.contains(tr(key)), "installed original gearbox tool hint");
+                var tag = new CompoundTag();
+                tag.putByte("gearMask", (byte) 3);
+                tag.putByte("axisCode", (byte) 0);
+                item.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA, net.minecraft.world.item.component.CustomData.of(tag));
+                require(tooltip(item, net.minecraft.world.item.TooltipFlag.NORMAL).contains(warning), "installed saved opposite gears warn");
+                tag.putByte("axisCode", (byte) 2);
+                item.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA, net.minecraft.world.item.component.CustomData.of(tag));
+                require(!tooltip(item, net.minecraft.world.item.TooltipFlag.NORMAL).contains(warning), "installed saved matching axle clears warning");
+                gearboxes++;
+            } else if (block instanceof com.gregtech.gregtech.block.machine.OriginalLargeBoilerControllerBlock boiler) {
+                var lines = tooltip(item, net.minecraft.world.item.TooltipFlag.NORMAL);
+                for (String key : java.util.List.of("gt.tooltip.multiblock.largeboiler.1", "gt.tooltip.multiblock.largeboiler.2", "gt.tooltip.multiblock.largeboiler.3", "gt.tooltip.multiblock.largeboiler.4", "gt.lang.requirement.water.pure", "gt.lang.hazard.explosion.steam", "gt.lang.hazard.meltdown", "gt.lang.use.chisel.to.decalcify", "gt.lang.use.builder.wand.to.ease.building", "gt.lang.use.magnifyingglass.to.detail"))
+                    require(lines.stream().filter(tr(key)::equals).count() == 1, "installed complete original large boiler line " + key);
+                require(lines.contains(tr("gt.lang.structure") + ":"), "installed original structure header");
+                require(lines.contains(tr("gt.lang.energy.capacity") + ": " + boiler.variant().steamCapacity() + " " + tr("gt.td.long.energy.steam")), "installed original large Steam capacity");
+                var tag = new CompoundTag();
+                tag.putInt("gt.efficiency", 2500);
+                item.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA, net.minecraft.world.item.component.CustomData.of(tag));
+                lines = tooltip(item, net.minecraft.world.item.TooltipFlag.NORMAL);
+                require(lines.contains(tr("gt.lang.efficiency") + ": 25.00%"), "installed original saved efficiency below natural50percent floor");
+                require(lines.contains(tr("gt.lang.energy.output") + ": " + boiler.variant().steamOutput()/4 + " " + tr("gt.td.long.energy.steam") + "/t (Pipe Holes)"), "installed original large boiler saved output");
+                largeBoilers++;
+            }
+        }
+        require(axles == 52 && gearboxes == 13 && largeBoilers == 5, "installed original mechanical/large boiler identities");
+        var out = new JsonObject();
+        out.addProperty("axles", axles);
+        out.addProperty("customGearboxesDefaultAndSavedConfigurations", gearboxes);
+        out.addProperty("originalLargeBoilersDefaultAndSavedEfficiencies", largeBoilers);
+        out.addProperty("scope", "installed item methods at title screen; no mechanical transport or boiler operation claim");
+        return out;
+    }
 
 }

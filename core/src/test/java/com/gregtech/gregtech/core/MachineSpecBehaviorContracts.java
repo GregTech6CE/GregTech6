@@ -33,6 +33,7 @@ public final class MachineSpecBehaviorContracts {
         originalMachineMaterials();
         originalBlastTooltips();
         originalManualAndBoilerTooltips();
+        originalLargeBoilerTooltipState();
         System.out.println("Machine spec behavior contracts passed: " + assertions
                 + " assertions; brick25percent/16HU, ceramic7U/2500K, mold5U, charged45HU/K, original machine CR.REV data; no game runtime");
     }
@@ -180,6 +181,30 @@ public final class MachineSpecBehaviorContracts {
         var actual = new java.util.HashMap<com.gregtech.gregtech.api.material.GTMaterial, Long>();
         data.components().forEach(part -> actual.put(part.material(), part.amount()));
         check(actual.equals(wanted), "Original components for " + data.source() + ": " + actual + " expected " + wanted);
+    }
+
+    private static void originalLargeBoilerTooltipState() {
+        // Loader_MultiTileEntities17201..17205 and MultiTileEntityLargeBoiler.addToolTips/readFromNBT2.
+        int[] ids = {17201, 17202, 17203, 17204, 17205};
+        long[] outputs = {8192, 16384, 32768, 262144, 8192};
+        for (int i = 0; i < ids.length; i++) {
+            var full = com.gregtech.gregtech.content.machine.OriginalFunctionalTooltipData.largeBoiler(ids[i], 10000);
+            check(full.heatInput() == outputs[i]/2 && full.steamOutput() == outputs[i]
+                    && full.heatCapacity() == outputs[i]*10000 && full.steamCapacity() == outputs[i]*10000,
+                    "Original large boiler rates and capacities " + ids[i]);
+            var saved = com.gregtech.gregtech.content.machine.OriginalFunctionalTooltipData.largeBoiler(ids[i], 9999);
+            check(saved.steamOutput() == outputs[i]*9999/10000 && saved.heatInput() == full.heatInput()
+                    && saved.steamCapacity() == full.steamCapacity(), "Saved large boiler efficiency floor " + ids[i]);
+        }
+        var zero = com.gregtech.gregtech.content.machine.OriginalFunctionalTooltipData.largeBoiler(17204, -1);
+        check(zero.efficiency() == 0 && zero.steamOutput() == 0 && zero.steamCapacity() == 2621440000L,
+                "Original saved efficiency may be below natural calcification floor; capacity exceeds int range");
+        var over = com.gregtech.gregtech.content.machine.OriginalFunctionalTooltipData.largeBoiler(17201, 10001);
+        check(over.efficiency() == 10000 && over.steamOutput() == 8192, "Source large boiler saved efficiency upper clamp");
+        check(com.gregtech.gregtech.content.energy.GearboxRotationRules.gearsWork(0, 0), "Empty original gearbox has no warning");
+        check(!com.gregtech.gregtech.content.energy.GearboxRotationRules.gearsWork(3, 0), "Two opposite gears without axle warn");
+        check(com.gregtech.gregtech.content.energy.GearboxRotationRules.gearsWork(3, 2), "Matching Y axle interlocks opposite gears");
+        check(!com.gregtech.gregtech.content.energy.GearboxRotationRules.gearsWork(21, 0), "Original three-axis triangle warns");
     }
 
     private static void brickHeater() {

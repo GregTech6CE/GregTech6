@@ -179,9 +179,7 @@ public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBl
 
     @Override
     public void appendHoverText(ItemStack stack, BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("gt.tooltip.axle.speed", spec.maxSpeed()));
-        tooltip.add(Component.translatable("gt.tooltip.axle.power", spec.maxPower()));
-        tooltip.add(Component.translatable("gt.tooltip.axle.loss", spec.lossPerBlock()));
+        com.gregtech.gregtech.client.MechanicalBlockTooltips.appendAxle(spec, getExplosionResistance(), tooltip);
     }
 
     @Override

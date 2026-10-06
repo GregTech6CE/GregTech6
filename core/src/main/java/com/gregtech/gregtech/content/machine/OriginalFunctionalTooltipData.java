@@ -33,6 +33,12 @@ public final class OriginalFunctionalTooltipData {
         return new Boiler(efficiency, spec.heatInputRecommended(), spec.heatCapacity(),
                 spec.steamOutput() * efficiency / 10000, spec.steamCapacity());
     }
+    public static Boiler largeBoiler(int originalId, long savedEfficiency) {
+        var spec = com.gregtech.gregtech.content.multiblock.OriginalLargeBoilerParameters.byOriginalId(originalId);
+        int efficiency = boilerEfficiency(savedEfficiency);
+        return new Boiler(efficiency, spec.heatInputRecommended(), spec.heatCapacity(),
+                spec.steamOutput() * efficiency / 10000, spec.steamCapacity());
+    }
     public static String efficiencyPercent(int efficiency) {
         return (efficiency / 100) + "." + (efficiency % 100 < 10 ? "0" : "") + (efficiency % 100);
     }

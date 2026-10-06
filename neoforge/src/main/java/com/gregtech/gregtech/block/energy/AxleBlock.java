@@ -183,9 +183,7 @@ public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBl
 
     @Override
     public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("gt.tooltip.axle.speed", spec.maxSpeed()));
-        tooltip.add(Component.translatable("gt.tooltip.axle.power", spec.maxPower()));
-        tooltip.add(Component.translatable("gt.tooltip.axle.loss", spec.lossPerBlock()));
+        com.gregtech.gregtech.client.MechanicalBlockTooltips.appendAxle(spec, getExplosionResistance(), tooltip);
     }
 
     private InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,

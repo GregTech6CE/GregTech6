@@ -6040,9 +6040,9 @@
   "gt.tooltip.multiblock.distillationtower.2": "3x3x8 of Distillation Tower Parts",
   "gt.tooltip.multiblock.distillationtower.3": "Main centered on side-bottom of tower facing outwards",
   "gt.tooltip.multiblock.largeboiler.1": "3x3 Base of Heat Transmitters",
-  "gt.tooltip.multiblock.largeboiler.2": "3x3x3 of Boiler Walls above, Main front-center bottom",
-  "gt.tooltip.multiblock.largeboiler.3": "HU + Water -> Steam (1 HU = 2 L, 1 L Water = 200 L Steam)",
-  "gt.tooltip.multiblock.largeboiler.4": "Water enters only through the bottom wall; steam exits at the top and upper sides",
+  "gt.tooltip.multiblock.largeboiler.2": "3x3x3 Hollow of the Block you crafted this one with",
+  "gt.tooltip.multiblock.largeboiler.3": "Main centered on Side-Bottom of Boiler facing outwards",
+  "gt.tooltip.multiblock.largeboiler.4": "Input only possible at Bottom Layer of Boiler",
   "gt.tooltip.multiblock.largeboiler.tier": "Rated heat input: %s HU/t; steam output: %s L/t",
   "gt.tooltip.multiblock.largeboiler.wall": "Required wall: %s",
   "gt.tooltip.multiblock.largeboiler.water_steam": "80 HU + 1 L water -> 160 L steam; ordinary water causes calcification",
@@ -11119,5 +11119,13 @@
   "gt.recipe.sharpener": "Sharpener",
   "gt.recipe.sifter": "Sifter",
   "gt.td.long.energy.steam": "Steam",
-  "gt.td.short.energy.heat": "HU"
+  "gt.td.short.energy.heat": "HU",
+  "gt.lang.axle.stats.power": "Power: ",
+  "gt.lang.axle.stats.speed": "Speed: ",
+  "gt.lang.structure": "Structure",
+  "gt.lang.use.builder.wand.to.ease.building": "Use Builder Wand to ease building",
+  "gt.td.short.energy.kinetic_rotation": "RU",
+  "gt.tooltip.gearbox.custom.1": "Gears are interlocked wrongly!",
+  "gt.tooltip.gearbox.custom.2": "Use Wrench to mount Gears from your Inventory",
+  "gt.tooltip.gearbox.custom.3": "Use Monkeywrench to change Axle Direction"
 }
