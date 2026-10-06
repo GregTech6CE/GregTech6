@@ -18,6 +18,7 @@ public final class OriginCreativeContents {
         if(item instanceof ColoredBookItem || id.equals("dusty_guide_book") || id.equals("dusty_material_dictionary"))return "books";
         if(item instanceof GTToolItem) return "tools";
         if(item instanceof ElectricToolItem) return "tools";
+        if(item instanceof com.gregtech.gregtech.item.PanelItemView) return "panels";
         if(item instanceof ChemicalBatteryItem) return "batteries";
         if(item instanceof com.gregtech.gregtech.item.FluidItem) return "fluids";
         if(item instanceof BlockItem b) {
@@ -92,11 +93,13 @@ public final class OriginCreativeContents {
             // Original canvas loop immediately precedes Magic Research Paper (MultiItemRandomTools:443-452).
             if(item instanceof CanvasItem)return SourceCreativeCatalog.entry("magic_research_paper_introduction").order();
             if(item instanceof ColoredBookItem book)return book.variant().originalId();
+            if(item instanceof com.gregtech.gregtech.item.PanelItemView panel)return panel.panelSpec().order();
             if(item instanceof GTToolItem tool)return tool.toolType().gt6Id();
             var source=SourceCreativeCatalog.entry(BuiltInRegistries.ITEM.getKey(item).getPath());
             return source==null?Integer.MAX_VALUE:source.order();
         }).thenComparingInt(item->item instanceof CanvasItem canvas?canvas.variant().originalId():Integer.MAX_VALUE).thenComparing(item->BuiltInRegistries.ITEM.getKey(item).getPath()));
         for(var item:items) {
+            if(item instanceof com.gregtech.gregtech.item.PanelItemView panel&&!panel.panelSpec().canonical())continue;
             var page=result.get(family(item));
             if(item instanceof GTToolItem tool) {
                 var type=tool.toolType(); var head=type==com.gregtech.gregtech.api.tool.GTToolType.GEM_PICK?com.gregtech.gregtech.content.material.Materials.Diamond:com.gregtech.gregtech.content.material.Materials.Steel;

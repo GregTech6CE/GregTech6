@@ -40,7 +40,7 @@ public final class ProductionClientSmoke {
         if (titleAt == 0) titleAt = System.nanoTime();
         if (++frames < 5 || System.nanoTime() - titleAt < TimeUnit.SECONDS.toNanos(3)) return;
         capturing = true;
-        try { surfaceChecks=SurfaceDeliveryChecks.capture(client,event.getGuiGraphics()); surfaceChecks.add("sandwich", SandwichDeliveryChecks.capture(client,event.getGuiGraphics())); surfaceChecks.add("canvas", CanvasDeliveryChecks.capture(client,event.getGuiGraphics())); }
+        try { surfaceChecks=SurfaceDeliveryChecks.capture(client,event.getGuiGraphics()); surfaceChecks.add("sandwich", SandwichDeliveryChecks.capture(client,event.getGuiGraphics())); surfaceChecks.add("canvas", CanvasDeliveryChecks.capture(client,event.getGuiGraphics())); surfaceChecks.add("decorativePanels", DecorativePanelDeliveryChecks.capture(client,event.getGuiGraphics())); }
         catch(Throwable error){terminal.set(true);LogUtils.getLogger().error("PRODUCTION_SMOKE_FAILED",error);client.execute(client::stop);return;}
         String name = "production-neoforge-" + UUID.randomUUID() + ".png";
         var screenshot = client.gameDirectory.toPath().resolve("screenshots").resolve(name).toAbsolutePath();

@@ -11,16 +11,40 @@ import net.minecraft.world.level.Level;
 /** Original mirror policy and GT tool wear, using native shaped recipe/component codecs. */
 public class ToolShapedRecipe implements CraftingRecipe, com.gregtech.gregtech.api.recipe.AutocraftableCraftingRecipe {
  private final boolean autocraftable;
+ private final String constructionColor;
  @Override public boolean isAutocraftableByGT(){return autocraftable;}
  private final ShapedRecipe base;
  private final boolean allowMirror,requireEmptyFluidContainers;
  public ToolShapedRecipe(ShapedRecipe base,boolean allowMirror){this(base,allowMirror,false);}
  public ToolShapedRecipe(ShapedRecipe base,boolean allowMirror,boolean requireEmptyFluidContainers){this(base,allowMirror,requireEmptyFluidContainers,true);}
- public ToolShapedRecipe(ShapedRecipe base,boolean allowMirror,boolean requireEmptyFluidContainers,boolean autocraftable){this.autocraftable=autocraftable;base.getIngredients().replaceAll(CraftingTools::expand);this.base=base;this.allowMirror=allowMirror;this.requireEmptyFluidContainers=requireEmptyFluidContainers;}
+ public ToolShapedRecipe(ShapedRecipe base,boolean allowMirror,boolean requireEmptyFluidContainers,boolean autocraftable){this(base,allowMirror,requireEmptyFluidContainers,autocraftable,"");}
+ public ToolShapedRecipe(ShapedRecipe base,boolean allowMirror,boolean requireEmptyFluidContainers,boolean autocraftable,String constructionColor){this.autocraftable=autocraftable;base.getIngredients().replaceAll(CraftingTools::expand);this.base=base;this.allowMirror=allowMirror;this.requireEmptyFluidContainers=requireEmptyFluidContainers;this.constructionColor=constructionColor;displayConstructionColor();}
  @Override public boolean matches(CraftingInput input,Level level){
   if(!(allowMirror?base.matches(input,level):matchesUnmirrored(input)))return false;
+  if(!constructionColor.isEmpty()) {
+   boolean color=false;for(int i=0;i<input.size();i++)if(coloredConstruction(input.getItem(i)))color|=constructionColor.equals(com.gregtech.gregtech.block.misc.ColoredConstructionBlock.itemColor(input.getItem(i)).getName());
+   if(!color)return false;
+  }
   return toolsUsable(input);
  }
+ private static boolean coloredConstruction(ItemStack stack) {
+  return stack.getItem() instanceof net.minecraft.world.item.BlockItem item&&item.getBlock().defaultBlockState().hasProperty(com.gregtech.gregtech.block.misc.ColoredConstructionBlock.COLOR);
+ }
+ private void displayConstructionColor() {
+  if(constructionColor.isEmpty())return;
+  var dye=net.minecraft.world.item.DyeColor.byName(constructionColor,null);
+  if(dye==null)throw new IllegalArgumentException("Unknown construction color "+constructionColor);
+        // Do not resolve tag ingredients here: recipe parsing precedes native tag binding.
+        // Peeking at all getItems() arrays would cache empty screw tags for this reload.
+        getIngredients().replaceAll(ingredient->{
+            var json=Ingredient.CODEC.encodeStart(com.mojang.serialization.JsonOps.INSTANCE,ingredient).getOrThrow();
+            if(!json.isJsonObject()||!json.getAsJsonObject().has("item"))return ingredient;
+            var item=net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.parse(json.getAsJsonObject().get("item").getAsString()));
+            var sample=new ItemStack(item);
+            return coloredConstruction(sample)?Ingredient.of(com.gregtech.gregtech.block.misc.ConcreteBlock.coloredItem(((net.minecraft.world.item.BlockItem)item).getBlock(),dye)):ingredient;
+        });
+ }
+ public String constructionColor() { return constructionColor; }
  protected boolean toolsUsable(CraftingInput input){
   for(int i=0;i<input.size();i++){var stack=input.getItem(i);
    if(requireEmptyFluidContainers&&net.neoforged.neoforge.fluids.FluidUtil.getFluidContained(stack).filter(fluid->!fluid.isEmpty()).isPresent())return false;
@@ -80,7 +104,8 @@ public class ToolShapedRecipe implements CraftingRecipe, com.gregtech.gregtech.a
   new ShapedRecipe.Serializer().codec().forGetter((ToolShapedRecipe recipe)->recipe.base),
   Codec.BOOL.optionalFieldOf("allow_mirror",false).forGetter((ToolShapedRecipe recipe)->recipe.allowMirror),
   Codec.BOOL.optionalFieldOf("require_empty_fluid_containers",false).forGetter((ToolShapedRecipe recipe)->recipe.requireEmptyFluidContainers),
-  Codec.BOOL.optionalFieldOf("gregtech_autocraftable",true).forGetter((ToolShapedRecipe recipe)->recipe.autocraftable)
+  Codec.BOOL.optionalFieldOf("gregtech_autocraftable",true).forGetter((ToolShapedRecipe recipe)->recipe.autocraftable),
+  Codec.STRING.optionalFieldOf("construction_color","").forGetter((ToolShapedRecipe recipe)->recipe.constructionColor)
  ).apply(instance,ToolShapedRecipe::new));
  public static final RecipeSerializer<ToolShapedRecipe> SERIALIZER=new RecipeSerializer<>(){
   public MapCodec<ToolShapedRecipe> codec(){return CODEC;}

@@ -54,6 +54,8 @@ public final class CoverItems {
         ResourceLocation key = ForgeRegistries.ITEMS.getKey(stack.getItem());
         if (key == null) return null;
         String id = key.getPath();
+        if (stack.getItem() instanceof com.gregtech.gregtech.item.PanelItemView panel)
+            return panel.panelSpec().asphalt() ? CoverUtilityBehaviors.ASPHALT_PANEL : "decorative_panel";
         if (stack.getItem() instanceof com.gregtech.gregtech.item.CanvasItem) return "canvas_cover";
         if(stack.getItem() instanceof com.gregtech.gregtech.api.material.MaterialFormItem material&&!MaterialCoverRules.textures(material.getPrefix().getName()).isEmpty())return "material_plate_cover";
         if (key.getNamespace().equals("minecraft")) {

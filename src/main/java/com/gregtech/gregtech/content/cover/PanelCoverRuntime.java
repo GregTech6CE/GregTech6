@@ -64,7 +64,7 @@ public final class PanelCoverRuntime {
         ComponentCoverRuntime.attached(host,side);
         var stack=host.getCover(side);var panel=PanelCover.of(stack);var c=control(side);
         if(panel!=null&&panel.selector()&&c!=null)stack.getOrCreateTag().putInt(VALUE,c.mode()&15);
-        refreshStopped();CoverConnections.attached(host,side);changed();
+        refreshStopped();CoverConnections.attached(host,side);changed();decorativeSound(stack);
     }
     public void changed(){
         var owner=host.coverOwner();owner.setChanged();
@@ -97,8 +97,16 @@ public final class PanelCoverRuntime {
             if(spec!=null&&!spec.detector()||panel==PanelCover.STATUS)c.setEnabled(true);
             if(panel!=null&&panel.selector()||CoverItems.TAG_SELECTOR.equals(CoverItems.behavior(stack)))c.setMode(0);
         }
-        refreshStopped();changed();afterTick();
+        refreshStopped();changed();afterTick();decorativeSound(stack);
         return stack.isEmpty()?ItemStack.EMPTY:new ItemStack(stack.getItem());
+    }
+    /** Original CoverTextureSimple uses its wood/stone dig sound for both actions. */
+    private void decorativeSound(ItemStack stack) {
+        if(server()&&stack.getItem() instanceof com.gregtech.gregtech.item.PanelItemView panel) {
+            var owner=host.coverOwner();owner.getLevel().playSound(null,owner.getBlockPos(),
+                panel.panelSpec().kind().equals("wood")?net.minecraft.sounds.SoundEvents.WOOD_BREAK:net.minecraft.sounds.SoundEvents.STONE_BREAK,
+                net.minecraft.sounds.SoundSource.BLOCKS,1F,1F);
+        }
     }
     public void beforeTick(){
         if(!server())return;boolean wasStopped=stopped;refreshStopped();if(wasStopped!=stopped)for(var face:Direction.values())if(PanelCover.of(host.getCover(face))==PanelCover.SHUTTER)CoverConnections.update(host,face,!shuttered(face));boolean changed=false;

@@ -46,6 +46,10 @@ public final class PanelCoverRenderer {
             int light=level==null?fallbackLight:LevelRenderer.getLightColor(level,owner.getBlockPos().relative(side));
             CanvasCoverRenderer.render(stack,side,pose,buffers,light,level,owner.getBlockPos());return true;
         }
+        if(stack.getItem() instanceof com.gregtech.gregtech.item.PanelItemView panel) {
+            var spec=panel.panelSpec();var vertices=buffers.getBuffer(RenderType.cutout());
+            CoverSurfaceRenderer.draw(pose,vertices,side,ArmRenderHelper.getSprite(ResourceLocation.parse(spec.texture())),fallbackLight,0,spec.tint());return true;
+        }
         if(stack.getItem() instanceof com.gregtech.gregtech.api.material.MaterialFormItem material){
             var stone=MaterialCoverRules.stoneTextures(material.getPrefix().getName(),material.getMaterial().getName());
             if(!stone.isEmpty()){
