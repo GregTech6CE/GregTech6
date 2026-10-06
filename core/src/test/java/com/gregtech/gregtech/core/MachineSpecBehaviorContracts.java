@@ -370,6 +370,7 @@ public final class MachineSpecBehaviorContracts {
         String[] tiers = {"lv", "mv", "hv", "ev", "iv"};
         String[] electricMaterials = {"SteelGalvanized", "Aluminium", "StainlessSteel", "Chromium", "Titanium"};
         String[] fluxMaterials = {"Lead", "Invar", "Electrum", "EnderiumBase", "Enderium"};
+        String[] fluxNames = {"Lead", "Invar", "Electrum", "Enderium Base", "Enderium"};
         String[] resistorMaterials = {"Copper", "Constantan", "Kanthal", "Nichrome", "Carborundum"};
         String[] cableMaterials = {"Tin", "Copper", "Gold", "Aluminium", "Platinum"};
         long u = GTValues.U;
@@ -377,6 +378,9 @@ public final class MachineSpecBehaviorContracts {
         for (boolean cooler : new boolean[]{false, true}) for (boolean rf : new boolean[]{false, true}) for (int i = 0; i < 5; i++) {
             String id = (rf ? "flux_" : "electric_") + (cooler ? "cooler_" : "heater_") + tiers[i];
             var spec = nodes.stream().filter(s -> s.id().equals(id)).findFirst().orElseThrow();
+            String sourceName = (cooler ? (rf ? "Thermofluxic Cooler" : "Thermoelectric Cooler") : (rf ? "Flux Heater" : "Electric Heater"))
+                    + " (" + (rf ? fluxNames[i] : tiers[i].toUpperCase(java.util.Locale.ROOT)) + ")";
+            check(spec.displayEn().equals(sourceName), "Original thermal English display name, not chemical symbol " + id);
             long input = (32L << (2*i)) * (rf ? 4 : 1), output = (cooler ? 8L : 16L) << (2*i);
             var profile = com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.profile(spec, false);
             check(spec.inputRate() == input && spec.outputRate() == output && spec.capacity() == 2*input

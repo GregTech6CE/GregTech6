@@ -26,7 +26,9 @@ public final class OriginalThermalConverter {
             long input = (32L << (2 * i)) * (rf ? 4 : 1), output = (cooler ? 8L : 16L) << (2 * i);
             int sourceId = (cooler ? 10160 : 10000) + (rf ? 1000 : 0) + i + 1;
             String name = (cooler ? (rf ? "Thermofluxic Cooler" : "Thermoelectric Cooler") : (rf ? "Flux Heater" : "Electric Heater"))
-                    + " (" + (rf ? material.getLocalName() : tiers[i].toUpperCase(Locale.ROOT)) + ")";
+                    // Imported element local aliases can be chemical symbols (Pb); GT6 getLocal
+                    // uses the display translation. Device names need the same English fallback.
+                    + " (" + (rf ? material.getDisplayNameFallback() : tiers[i].toUpperCase(Locale.ROOT)) + ")";
             variants.add(new Variant(id, sourceId, material, input, output,
                     (cooler ? "cooler/cryo_" : "heaters/heat_") + (rf ? "flux" : "electric"), name));
         }
