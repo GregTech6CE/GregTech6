@@ -40,7 +40,17 @@ public final class ProductionClientSmoke {
         if (titleAt == 0) titleAt = System.nanoTime();
         if (++frames < 5 || System.nanoTime() - titleAt < TimeUnit.SECONDS.toNanos(3)) return;
         capturing = true;
-        try { surfaceChecks=SurfaceDeliveryChecks.capture(client,event.getGuiGraphics()); surfaceChecks.add("sandwich", SandwichDeliveryChecks.capture(client,event.getGuiGraphics())); surfaceChecks.add("canvas", CanvasDeliveryChecks.capture(client,event.getGuiGraphics())); surfaceChecks.add("decorativePanels", DecorativePanelDeliveryChecks.capture(client,event.getGuiGraphics())); }
+        try {
+            var graphics=event.getGuiGraphics();
+            // Keep existing model assertions, while reserving this capture for the panel atlas.
+            graphics.pose().pushPose();graphics.pose().translate(-5000,0,0);
+            try {
+                surfaceChecks=SurfaceDeliveryChecks.capture(client,graphics);
+                surfaceChecks.add("sandwich",SandwichDeliveryChecks.capture(client,graphics));
+                surfaceChecks.add("canvas",CanvasDeliveryChecks.capture(client,graphics));
+            } finally { graphics.pose().popPose(); }
+            surfaceChecks.add("decorativePanels",DecorativePanelDeliveryChecks.capture(client,graphics));
+        }
         catch(Throwable error){terminal.set(true);LogUtils.getLogger().error("PRODUCTION_SMOKE_FAILED",error);client.execute(client::stop);return;}
         String name = "production-neoforge-" + UUID.randomUUID() + ".png";
         var screenshot = client.gameDirectory.toPath().resolve("screenshots").resolve(name).toAbsolutePath();
