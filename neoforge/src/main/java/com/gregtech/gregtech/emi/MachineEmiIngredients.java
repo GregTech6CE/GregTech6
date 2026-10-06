@@ -12,6 +12,11 @@ import java.util.Map;
 /** One cache per EMI reload; mutable amounts/chances are copied, alias lists are shared. */
 final class MachineEmiIngredients {
     private final Map<Item, EmiIngredient> plain = new IdentityHashMap<>();
+    EmiIngredient ingredient(com.gregtech.gregtech.api.recipe.Recipe recipe, int index) {
+        var choices = recipe.viewerInputAlternatives(index);
+        if (choices.isEmpty()) return ingredient(recipe.mInputs[index]);
+        return new MachineEmiIngredient(choices.stream().map(stack -> EmiStack.of(stack.copyWithCount(1))).toList(), recipe.mInputs[index].getCount());
+    }
     EmiIngredient ingredient(ItemStack stack) {
         if (!stack.getComponentsPatch().isEmpty()) return create(stack);
         return plain.computeIfAbsent(stack.getItem(), item -> create(new ItemStack(item)))

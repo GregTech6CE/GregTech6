@@ -45,16 +45,9 @@ import java.util.List;
  * machine re-runs the lookup every tick. Scanner, Printer and Replicator rows close over the current
  * medium, so each row is built from that stack's exact item and NBT.</p>
  *
- * <p>Book pages are bound using the original leather/dye recipes. Remaining port differences:</p>
- * <ul>
- *   <li>GT6 gates replication on {@code TD.Processing.UUM}, a flag the port does not model. The port
- *       replicates every material that is not {@code ANTIMATTER}, has at least one nucleon and has a
- *       form or fluid to hand out.</li>
- *   <li>GT6's scanner asks for {@code TD.Prefix.SCANNABLE} and its printer/replicator also read a USB
-     *       <em>cable</em> pointing at a USB port block. The port does not model per-prefix SCANNABLE;
-     *       it scans every item with a registered material composition. Printer and replicator also
-     *       read cables from adjacent USB/HDD switches via their machine context.</li>
- * </ul>
+ * <p>Original UUM and SCANNABLE facts gate the native providers. Viewer rows group real
+ * scannable forms by material; their fake recipes never participate in machine lookup.
+ * Printer and replicator also read the selected file on an adjacent USB/HDD switch.</p>
  */
 public final class GTMaterialDataRecipes {
 
@@ -98,6 +91,7 @@ public final class GTMaterialDataRecipes {
         BlueprintRecipes.register();
         CanvasRecipes.register();
         com.gregtech.gregtech.registry.GTColoredBooks.registerRecipes();
+        MaterialDataViewerRecipes.register();
         return 1;
     }
 
@@ -358,7 +352,7 @@ public final class GTMaterialDataRecipes {
     private static GTMaterial scannable(ItemStack stack) {
         MaterialPrefix prefix = com.gregtech.gregtech.item.MaterialItem.getPrefix(stack);
         GTMaterial material = com.gregtech.gregtech.item.MaterialItem.getMaterial(stack);
-        if (material == null) {
+        if (material == null || !material.isValid() || prefix == null) {
             var data = ItemMaterialRegistry.get(stack);
             if (data.isEmpty()) return null;
             prefix = data.get().prefix();
