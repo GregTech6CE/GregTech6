@@ -14,8 +14,15 @@ final class DecorativePanelDeliveryChecks {
  private static void require(boolean b,String why){if(!b)throw new IllegalStateException("Decorative panel delivery: "+why);}
  static JsonObject capture(Minecraft client,GuiGraphics g){
   int count=0,wood=0,colored=0;var page=com.gregtech.gregtech.loaders.b.OriginCreativeContents.contents("panels");
+  var foam=com.gregtech.gregtech.data.generated.GT6Materials.Compounds.ConstructionFoam;
+  require(com.gregtech.gregtech.content.recipe.MaterialRecoveryRules.shredderWork(foam)==2L*Math.max(1,foam.getToolQuality()+1),"source BRITTLE foam recovery work");
   for(var spec:PanelCatalog.ALL){var stack=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gregtech:"+spec.id())));
    require(stack.getItem() instanceof PanelItemView&&stack.getMaxStackSize()==16,"source stack identity "+spec.id());
+   var data=com.gregtech.gregtech.api.material.ItemMaterialRegistry.get(stack).orElseThrow();
+   require(data.components().size()==2&&data.amount()==com.gregtech.gregtech.api.material.GTValues.U/6,"per-panel original construction/plank amount "+spec.id());
+   require(data.components().stream().anyMatch(c->c.material()==com.gregtech.gregtech.api.material.GTMaterialRegistry.get("Iron")&&c.amount()==com.gregtech.gregtech.api.material.GTValues.U/9),"original ANY.Iron screw amount "+spec.id());
+   require(stack.getTooltipLines(null,net.minecraft.world.item.TooltipFlag.ADVANCED).stream().anyMatch(t->t.getString().contains("0.111")),"material amount reaches native advanced tooltip "+spec.id());
+   require(com.gregtech.gregtech.content.recipe.VanillaRecoveryRecipes.recipes().stream().anyMatch(r->r.mInputs[0].is(stack.getItem())),"installed panel shredder entry "+spec.id());
    require(!stack.getHoverName().getString().contains(".gregtech."),"localized name "+spec.id());
    if(spec.kind().equals("wood")) {
     var plank=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse(spec.input())));
@@ -40,6 +47,6 @@ final class DecorativePanelDeliveryChecks {
   g.drawString(client.font,"Original dye order: black -> white",8,133,0xffffff,false);
   g.drawString(client.font,"30 available plank identities",8,143,0xffffff,false);
   g.drawString(client.font,"Item previews; source sprite/RGB checked for all 83",8,221,0xaaaaaa,false);g.pose().popPose();
-  var out=new JsonObject();out.addProperty("installedItemModels",count);out.addProperty("canonicalColoredModels",colored);out.addProperty("canonicalWoodModels",wood);out.addProperty("centeredTwoPixelMesh",true);out.addProperty("sourceRgbAndTextures",true);out.addProperty("legacyAliasesHiddenFromCreative",true);return out;
+  var out=new JsonObject();out.addProperty("installedItemModels",count);out.addProperty("canonicalColoredModels",colored);out.addProperty("canonicalWoodModels",wood);out.addProperty("centeredTwoPixelMesh",true);out.addProperty("sourceRgbAndTextures",true);out.addProperty("legacyAliasesHiddenFromCreative",true);out.addProperty("originalPerItemMaterialsAndAdvancedTooltip",count);out.addProperty("installedShredderEntries",count);return out;
  }
 }

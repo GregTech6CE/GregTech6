@@ -181,6 +181,7 @@ public final class GTMaterialRegistration {
             count++;
         }
 
+        com.gregtech.gregtech.content.recipe.PanelMaterialRegistration.register();
         GregTech.LOGGER.info("[{}] Registered {} GT block items for material tooltips", GregTech.NAMESPACE, count);
     }
 
