@@ -39,6 +39,10 @@ public final class GTEnergyNodes {
                             .strength(4.0f, 4.0f)
                             .requiresCorrectToolForDrops();
                     if (spec.kind() == EnergyNodeSpec.Kind.SOLAR) props = props.noOcclusion();
+                    if (com.gregtech.gregtech.content.energy.OriginalRotaryConverter.handles(spec))
+                        return com.gregtech.gregtech.content.energy.OriginalRotaryConverter.motor(spec)
+                                ? new com.gregtech.gregtech.block.energy.OriginalMotorBlock(spec, props)
+                                : new com.gregtech.gregtech.block.energy.RotaryConverterBlock(spec, props);
                     return spec.kind() == EnergyNodeSpec.Kind.MAGNET
                             ? new MagnetMachineBlock(spec, props)
                             : spec.batterySlots() > 0

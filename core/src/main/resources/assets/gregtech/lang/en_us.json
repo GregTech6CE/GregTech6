@@ -11135,5 +11135,8 @@
   "gt.td.short.energy.electricity": "EU",
   "gt.tooltip.energybattery.1": "Selector Covers can set the amount of emitted Packets",
   "gt.tooltip.energybattery.2": "Mode 0 = Emit as much as possible, this is Default",
-  "gt.tooltip.energybattery.3": "Mode 1 - 15 = Emit up to 1 - 15 Packets if enough Energy Storages"
+  "gt.tooltip.energybattery.3": "Mode 1 - 15 = Emit up to 1 - 15 Packets if enough Energy Storages",
+  "gt.lang.accepts.redstoneflux.lossless": "Can accept Redstone Flux (RF) losslessly",
+  "gt.lang.emits.redstoneflux.lossless": "Can emit Redstone Flux (RF) losslessly",
+  "gt.td.short.energy.redstone_flux": "RF"
 }

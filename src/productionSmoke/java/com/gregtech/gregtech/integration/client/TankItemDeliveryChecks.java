@@ -70,6 +70,7 @@ final class TankItemDeliveryChecks {
         result.add("originalFunctionalTooltips", verifyFunctionalTooltips());
         result.add("sourceMechanicalTooltips", verifyMechanicalTooltips());
         result.add("sourceEnergyDeviceTooltips", verifyEnergyDeviceTooltips());
+        result.add("sourceRotaryConverters", verifyRotaryConverterDelivery());
         result.add("machineSourceMaterials", verifyMachineMaterials());
         result.addProperty("sourceFluidPipeTooltips", verifyFluidPipeTooltips());
         result.addProperty("storedTankTooltips", stored);
@@ -202,7 +203,8 @@ final class TankItemDeliveryChecks {
         int batteries = 0, solar = 0, electric = 0, rotation = 0, reversed = 0;
         for (var block : BuiltInRegistries.BLOCK) {
             if (!(block instanceof com.gregtech.gregtech.block.energy.EnergyNodeBlock node)
-                    || !com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.handles(node.spec())) continue;
+                    || !com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.handles(node.spec())
+                    || com.gregtech.gregtech.content.energy.OriginalRotaryConverter.handles(node.spec())) continue;
             var spec = node.spec();
             var item = new ItemStack(node);
             var source = com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.profile(spec, false);
@@ -259,13 +261,11 @@ final class TankItemDeliveryChecks {
     private static void verifySourceEnergyLines(com.gregtech.gregtech.api.energy.EnergyNodeSpec spec,
                                                 com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.Profile source,
                                                 java.util.List<String> lines) {
-        String unit = tr(spec.outType() == com.gregtech.gregtech.data.GregTechTags.Energy.RU
-                ? "gt.td.short.energy.kinetic_rotation" : "gt.td.short.energy.electricity");
         if (source.input() != null) {
-            String expected = sourceEnergyLine("gt.lang.energy.input", source.input(), unit, source.inputFaceKey(), source.alwaysShowRange());
+            String expected = sourceEnergyLine("gt.lang.energy.input", source.input(), sourceEnergyUnit(spec.inType()), source.inputFaceKey(), source.alwaysShowRange());
             require(lines.stream().filter(expected::equals).count() == 1, "installed single source energy input " + spec.id());
         } else require(lines.stream().noneMatch(s -> s.startsWith(tr("gt.lang.energy.input") + ":")), "installed solar has no invented input");
-        String expected = sourceEnergyLine("gt.lang.energy.output", source.output(), unit, source.outputFaceKey(), source.alwaysShowRange());
+        String expected = sourceEnergyLine("gt.lang.energy.output", source.output(), sourceEnergyUnit(spec.outType()), source.outputFaceKey(), source.alwaysShowRange());
         require(lines.stream().filter(expected::equals).count() == 1, "installed single source energy output " + spec.id());
     }
 
@@ -276,6 +276,86 @@ final class TankItemDeliveryChecks {
             text += (stats.minimum() <= 1 ? " (up to " : " (" + stats.minimum() + " to ")
                     + stats.maximum() + ", " + tr(faceKey) + ")";
         return text;
+    }
+
+
+    private static JsonObject verifyRotaryConverterDelivery() {
+        int motors = 0, dynamos = 0, states = 0;
+        for (var block : BuiltInRegistries.BLOCK) {
+            if (!(block instanceof com.gregtech.gregtech.block.energy.EnergyNodeBlock node)
+                    || !com.gregtech.gregtech.content.energy.OriginalRotaryConverter.handles(node.spec())) continue;
+            var spec = node.spec();
+            boolean motor = com.gregtech.gregtech.content.energy.OriginalRotaryConverter.motor(spec);
+            require(block instanceof com.gregtech.gregtech.block.energy.RotaryConverterBlock, "installed converter visual state block " + spec.id());
+            require((block instanceof com.gregtech.gregtech.block.energy.OriginalMotorBlock) == motor, "installed separate motor direction state " + spec.id());
+            var item = new ItemStack(block);
+            var lines = tooltip(item, net.minecraft.world.item.TooltipFlag.NORMAL);
+            var source = com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.profile(spec, false);
+            verifySourceEnergyLines(spec, source, lines);
+            require(lines.contains(tr("gt.lang.efficiency") + (motor ? ": 50.00%" : ": 68.75%")), "installed original rotary efficiency " + spec.id());
+            require(lines.stream().filter(tr("gt.lang.use.monkey.wrench.to.toggle.direction")::equals).count() == (motor ? 1 : 0),
+                    "installed source motor-only reversal hint " + spec.id());
+            if (spec.inType() == com.gregtech.gregtech.data.GregTechTags.Energy.RF)
+                require(lines.contains(tr("gt.lang.accepts.redstoneflux.lossless")), "installed RF acceptance hint " + spec.id());
+            if (spec.outType() == com.gregtech.gregtech.data.GregTechTags.Energy.RF)
+                require(lines.contains(tr("gt.lang.emits.redstoneflux.lossless")), "installed RF emission hint " + spec.id());
+            var material = com.gregtech.gregtech.content.machine.MachineConstructionMaterials.blocks().get(spec.id());
+            require(material != null, "installed source converter material registration " + spec.id());
+            verifyComposition(item, material);
+            var tile = (com.gregtech.gregtech.blockentity.energy.EnergyNodeBlockEntity) node.newBlockEntity(BlockPos.ZERO, block.defaultBlockState());
+            require(tile.isOriginalRotaryConverter(), "installed native converter route " + spec.id());
+            verifyNativeEnergyStats(tile, source);
+            require(tile.getEnergyCapacity(spec.inType(), null) == spec.inputRate() * 2, "installed source two-input buffer " + spec.id());
+            var front = block.defaultBlockState().getValue(net.minecraft.world.level.block.DirectionalBlock.FACING);
+            for (var face : net.minecraft.core.Direction.values()) {
+                require(tile.isEnergyAcceptingFrom(spec.inType(), face, false) == (motor ? face != front : face == front.getOpposite()), "installed actual input face " + spec.id());
+                require(tile.isEnergyEmittingTo(spec.outType(), face, false) == (face == front), "installed actual output face " + spec.id());
+            }
+            require(tile.doEnergyInjection(spec.inType(), front.getOpposite(), spec.inputRate(), Long.MAX_VALUE, false) == 2 && tile.stored() == 0,
+                    "installed source simulation is bounded and pure " + spec.id());
+            if (spec.inType() != com.gregtech.gregtech.data.GregTechTags.Energy.RF) {
+                require(tile.doEnergyInjection(spec.inType(), front.getOpposite(), source.input().minimum() - 1, 3, true) == 3 && tile.stored() == 0,
+                        "installed root consumes undersized packets without storage " + spec.id());
+            }
+            require(tile.doEnergyInjection(spec.inType(), front.getOpposite(), spec.inputRate(), 1, true) == 1 && tile.stored() == spec.inputRate(),
+                    "installed native rated packet storage " + spec.id());
+            if (motor) require(tile.reverseMotor() && tile.stored() == 0, "installed motor reversal clears input storage " + spec.id());
+            var control = tile.machineControl(null);
+            require(control.supportsMode() == motor && !control.supportsProgress(), "installed original control interfaces " + spec.id());
+            control.setEnabled(false);
+            require(!tile.isEnergyAcceptingFrom(spec.inType(), front.getOpposite(), false)
+                    && tile.isEnergyAcceptingFrom(spec.inType(), front.getOpposite(), true), "installed stopped vs theoretical gate " + spec.id());
+            require(tile.getEnergyDemanded(spec.inType(), null, spec.inputRate()) == 0
+                    && tile.getEnergyOffered(spec.outType(), null, spec.outputRate()) == 0, "installed push-driven source discovery " + spec.id());
+            for (var state : block.getStateDefinition().getPossibleStates()) {
+                var model = net.minecraft.client.Minecraft.getInstance().getBlockRenderer().getBlockModel(state);
+                require(model != net.minecraft.client.Minecraft.getInstance().getModelManager().getMissingModel(), "installed converter state has baked model " + spec.id() + state);
+                var quads = new java.util.ArrayList<net.minecraft.client.renderer.block.model.BakedQuad>();
+                for (var face : net.minecraft.core.Direction.values())
+                    quads.addAll(model.getQuads(state, face, net.minecraft.util.RandomSource.create(0)));
+                quads.addAll(model.getQuads(state, null, net.minecraft.util.RandomSource.create(0)));
+                boolean active = state.getValue(com.gregtech.gregtech.block.energy.RotaryConverterBlock.ACTIVITY) > 0;
+                String folder = !active ? "/overlay/" : !motor ? "/overlay_active/"
+                        : "/overlay_active_" + (state.getValue(com.gregtech.gregtech.block.energy.OriginalMotorBlock.COUNTER_CLOCKWISE) ? "l" : "r")
+                        + (state.getValue(com.gregtech.gregtech.block.energy.OriginalMotorBlock.FAST) ? "f/" : "s/");
+                require(quads.stream().anyMatch(q -> q.getSprite().contents().name().getPath().contains(folder)),
+                        "installed actual active/inactive overlay baked " + spec.id() + state);
+                require(quads.stream().noneMatch(q -> q.getSprite().contents().name().getPath().equals("missingno")), "installed converter layer textures exist " + spec.id());
+                states++;
+            }
+            if (motor) motors++; else dynamos++;
+        }
+        require(motors == 7 && dynamos == 7 && states == 1260, "installed complete rotary converter families and visual states");
+        var result = new JsonObject();
+        result.addProperty("motors", motors); result.addProperty("dynamos", dynamos); result.addProperty("actualBakedStates", states);
+        result.addProperty("exactMaterialsAndSingleAdvancedSection", true);
+        result.addProperty("scope", "installed title-screen native factories, methods, tooltip events and baked models; actual world chain checked separately");
+        return result;
+    }
+
+    private static String sourceEnergyUnit(com.gregtech.gregtech.data.GregTechTags.Tag type) {
+        return tr(type == com.gregtech.gregtech.data.GregTechTags.Energy.RU ? "gt.td.short.energy.kinetic_rotation"
+                : type == com.gregtech.gregtech.data.GregTechTags.Energy.RF ? "gt.td.short.energy.redstone_flux" : "gt.td.short.energy.electricity");
     }
 
     private static JsonObject verifyMechanicalTooltips() {

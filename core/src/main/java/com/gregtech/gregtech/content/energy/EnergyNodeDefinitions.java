@@ -31,7 +31,7 @@ public final class EnergyNodeDefinitions {
             result.add(EnergyNodeSpec.builder("electric_motor_" + tiers[i].name(), tiers[i].mat())
                     .kind(Kind.CONVERTER).texture("motors/rotation_electric")
                     .input(GregTechTags.Energy.EU, tiers[i].v()).output(GregTechTags.Energy.RU, motorOut[i])
-                    .capacity(tiers[i].v() * 4).names("Electric Motor (" + tiers[i].name().toUpperCase() + ")", "电动机(" + tiers[i].name().toUpperCase() + ")").build());
+                    .capacity(tiers[i].v() * 2).names("Electric Motor (" + tiers[i].name().toUpperCase() + ")", "电动机(" + tiers[i].name().toUpperCase() + ")").build());
         }
 
         // Electric dynamos: RU in → EU out at 11/16 rate (GT6 10111-10115)
@@ -70,19 +70,19 @@ public final class EnergyNodeDefinitions {
         result.add(EnergyNodeSpec.builder("flux_motor_lv", Materials.Lead)
                     .kind(Kind.CONVERTER).texture("motors/rotation_flux")
                     .input(GregTechTags.Energy.RF, 128).output(GregTechTags.Energy.RU, 16)
-                    .capacity(128 * 4).names("Flux Motor (LV)", "通量电动机(LV)").build());
+                    .capacity(128 * 2).names("Flux Motor (LV)", "通量电动机(LV)").build());
         result.add(EnergyNodeSpec.builder("flux_motor_mv", Materials.Invar)
                     .kind(Kind.CONVERTER).texture("motors/rotation_flux")
                     .input(GregTechTags.Energy.RF, 512).output(GregTechTags.Energy.RU, 64)
-                    .capacity(512 * 4).names("Flux Motor (MV)", "通量电动机(MV)").build());
+                    .capacity(512 * 2).names("Flux Motor (MV)", "通量电动机(MV)").build());
         result.add(EnergyNodeSpec.builder("flux_dynamo_lv", Materials.Lead)
                     .kind(Kind.CONVERTER).texture("dynamos/flux_rotation")
                     .input(GregTechTags.Energy.RU, 32).output(GregTechTags.Energy.RF, 88)
-                    .capacity(32 * 4).names("Flux Dynamo (LV)", "通量发电机(LV)").build());
+                    .capacity(32 * 2).names("Flux Dynamo (LV)", "通量发电机(LV)").build());
         result.add(EnergyNodeSpec.builder("flux_dynamo_mv", Materials.Invar)
                     .kind(Kind.CONVERTER).texture("dynamos/flux_rotation")
                     .input(GregTechTags.Energy.RU, 128).output(GregTechTags.Energy.RF, 352)
-                    .capacity(128 * 4).names("Flux Dynamo (MV)", "通量发电机(MV)").build());
+                    .capacity(128 * 2).names("Flux Dynamo (MV)", "通量发电机(MV)").build());
 
         // Steam turbines: steam L → RU (GT6 1512+, STEAM_PER_EU = 2, waste energy)
         record Turbine(String name, GTMaterial mat, long steamLt, long ruOut, String zh) {}

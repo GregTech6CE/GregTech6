@@ -15,7 +15,7 @@ public final class OriginalEnergyDeviceTooltipData {
                           boolean monkeyWrench) {}
 
     public static boolean handles(EnergyNodeSpec spec) {
-        return spec.batterySlots() > 0 || spec.kind() == EnergyNodeSpec.Kind.SOLAR
+        return OriginalRotaryConverter.handles(spec) || spec.batterySlots() > 0 || spec.kind() == EnergyNodeSpec.Kind.SOLAR
                 || spec.id().startsWith("transformer_") || spec.id().startsWith("rotation_transformer_");
     }
 
@@ -23,6 +23,14 @@ public final class OriginalEnergyDeviceTooltipData {
     public static long batteryInputMinimum(long input) { return input / 2; }
 
     public static Profile profile(EnergyNodeSpec spec, boolean reversed) {
+        if (OriginalRotaryConverter.handles(spec)) {
+            long input = spec.inputRate(), output = spec.outputRate();
+            return new Profile(new Stats(OriginalRotaryConverter.inputMinimum(spec), input, input * 2),
+                    new Stats(output / 2, output, output * 2),
+                    OriginalRotaryConverter.motor(spec) ? "gt.lang.face.any.but.front" : "gt.lang.face.back",
+                    "gt.lang.face.front", true, OriginalRotaryConverter.efficiency(spec), false,
+                    OriginalRotaryConverter.motor(spec));
+        }
         if (spec.batterySlots() > 0) {
             long input = spec.inputRate(), output = spec.outputRate();
             return new Profile(new Stats(batteryInputMinimum(input), input, input * 2),

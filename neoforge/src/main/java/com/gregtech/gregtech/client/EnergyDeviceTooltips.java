@@ -16,9 +16,14 @@ public final class EnergyDeviceTooltips {
 
     public static void append(EnergyNodeSpec spec, boolean reversed, float resistance, List<Component> lines) {
         var source = OriginalEnergyDeviceTooltipData.profile(spec, reversed);
-        if (source.input() != null)
+        if (source.input() != null) {
             lines.add(energyLine(source.input(), spec.inType(), source.inputFaceKey(), false, source.alwaysShowRange()));
+            if (spec.inType() == GregTechTags.Energy.RF)
+                lines.add(Component.translatable("gt.lang.accepts.redstoneflux.lossless").withStyle(ChatFormatting.GOLD));
+        }
         lines.add(energyLine(source.output(), spec.outType(), source.outputFaceKey(), true, source.alwaysShowRange()));
+        if (spec.outType() == GregTechTags.Energy.RF)
+            lines.add(Component.translatable("gt.lang.emits.redstoneflux.lossless").withStyle(ChatFormatting.GOLD));
         if (source.efficiency() >= 0)
             lines.add(Component.translatable("gt.lang.efficiency").withStyle(ChatFormatting.YELLOW)
                     .append(Component.literal(": " + OriginalFunctionalTooltipData.efficiencyPercent(source.efficiency()) + "%")
@@ -39,9 +44,10 @@ public final class EnergyDeviceTooltips {
         var line = Component.translatable(emitting ? "gt.lang.energy.output" : "gt.lang.energy.input")
                 .withStyle(emitting ? ChatFormatting.RED : ChatFormatting.GREEN)
                 .append(Component.literal(": " + stats.recommended() + " ").withStyle(ChatFormatting.WHITE))
-                .append(Component.translatable(type == GregTechTags.Energy.RU
-                        ? "gt.td.short.energy.kinetic_rotation" : "gt.td.short.energy.electricity")
-                        .withStyle(type == GregTechTags.Energy.RU ? ChatFormatting.GREEN : ChatFormatting.BLUE))
+                .append(Component.translatable(type == GregTechTags.Energy.RU ? "gt.td.short.energy.kinetic_rotation"
+                        : type == GregTechTags.Energy.RF ? "gt.td.short.energy.redstone_flux" : "gt.td.short.energy.electricity")
+                        .withStyle(type == GregTechTags.Energy.RU ? ChatFormatting.GREEN
+                                : type == GregTechTags.Energy.RF ? ChatFormatting.DARK_RED : ChatFormatting.BLUE))
                 .append(Component.literal("/t").withStyle(ChatFormatting.WHITE));
         // LH omits both the range and face on fixed packets; the converter stats always include them.
         if (alwaysShowRange || stats.minimum() != stats.recommended() || stats.maximum() != stats.recommended()) {

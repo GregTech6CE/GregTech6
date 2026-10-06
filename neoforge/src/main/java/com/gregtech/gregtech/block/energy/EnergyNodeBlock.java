@@ -129,6 +129,21 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
         }
         if (ToolInteractions.use(state,level,pos,player,hand,hit))
             return InteractionResult.sidedSuccess(level.isClientSide);
+        if (node.isOriginalMotor() && com.gregtech.gregtech.platform.neoforge.NeoToolBindings.isMonkeyWrench(held)) {
+            if (!level.isClientSide) {
+                node.reverseMotor();
+                com.gregtech.gregtech.platform.neoforge.NeoToolBindings.damageForUse(held, 1, player);
+                player.displayClientMessage(Component.literal(node.motorCounterClockwise() ? "Counterclockwise" : "Clockwise"), true);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        if (node.isOriginalMotor() && GTToolHelper.isMagnifyingGlass(held)) {
+            if (!level.isClientSide) {
+                GTToolHelper.damageForUse(held, 1, player);
+                player.displayClientMessage(Component.literal(node.motorCounterClockwise() ? "Counterclockwise" : "Clockwise"), true);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
         // GT6 rotational transformers reverse with a monkey wrench; the other
         // invertible energy nodes keep their existing soft-hammer interaction.
         boolean modeTool = node.isRotationTransformer() || node.isElectricTransformer()

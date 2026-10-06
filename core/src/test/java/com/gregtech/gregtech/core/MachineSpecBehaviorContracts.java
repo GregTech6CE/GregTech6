@@ -35,6 +35,7 @@ public final class MachineSpecBehaviorContracts {
         originalManualAndBoilerTooltips();
         originalLargeBoilerTooltipState();
         originalEnergyDeviceTooltips();
+        originalMotorDynamoConversion();
         System.out.println("Machine spec behavior contracts passed: " + assertions
                 + " assertions; brick25percent/16HU, ceramic7U/2500K, mold5U, charged45HU/K, original machine CR.REV data; no game runtime");
     }
@@ -278,8 +279,85 @@ public final class MachineSpecBehaviorContracts {
                         && reverse.output().minimum() == 6 && reverse.output().recommended() == 8 && reverse.output().maximum() == 16
                         && reverse.outputFaceKey().equals("gt.lang.face.back"),
                 "Original wood rotational reverse6to16 input recommendation8");
-        throwsType(() -> com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.profile(nodes.get(0), false),
-                "Incomplete motor conversion is not falsely assigned a battery/transformer tooltip profile");
+        var pendingHeater = nodes.stream().filter(s -> s.id().startsWith("electric_heater_")).findFirst().orElseThrow();
+        throwsType(() -> com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.profile(pendingHeater, false),
+                "Incomplete heater conversion is not falsely assigned another device tooltip profile");
+    }
+
+    private static void originalMotorDynamoConversion() {
+        var nodes = com.gregtech.gregtech.content.energy.EnergyNodeDefinitions.specifications();
+        int seen = 0;
+        for (var spec : nodes) {
+            if (!com.gregtech.gregtech.content.energy.OriginalRotaryConverter.handles(spec)) continue;
+            boolean motor = com.gregtech.gregtech.content.energy.OriginalRotaryConverter.motor(spec);
+            var profile = com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.profile(spec, false);
+            check(spec.capacity() == spec.inputRate() * 2 && profile.input().minimum() == spec.inputRate() / 2
+                            && profile.input().maximum() == spec.inputRate() * 2,
+                    "Original motor/dynamo capacitor and input limits " + spec.id());
+            check(profile.output().minimum() == spec.outputRate() / 2 && profile.output().maximum() == spec.outputRate() * 2
+                            && profile.efficiency() == (motor ? 5000 : 6875) && profile.monkeyWrench() == motor
+                            && profile.inputFaceKey().equals(motor ? "gt.lang.face.any.but.front" : "gt.lang.face.back"),
+                    "Original motor/dynamo efficiency, faces and tool hints " + spec.id());
+            var state = new com.gregtech.gregtech.content.energy.OriginalRotaryConverter.State(spec);
+            var simulated = state.inject(0, spec.inputRate(), Long.MAX_VALUE, false);
+            check(simulated.consumed() == 2 && simulated.energy() == 0 && !simulated.overloaded(),
+                    "Source packet injection simulation with huge amount is pure " + spec.id());
+            var wholeLast = state.inject(spec.inputRate() / 2, spec.inputRate(), 2, true);
+            check(wholeLast.consumed() == 2 && wholeLast.energy() == spec.inputRate() * 5 / 2,
+                    "Original final packet overshoots room " + spec.id());
+            seen++;
+        }
+        check(seen == 14, "Source registered motor/dynamo family coverage");
+        var lv = nodes.stream().filter(s -> s.id().equals("electric_motor_lv")).findFirst().orElseThrow();
+        var motor = new com.gregtech.gregtech.content.energy.OriginalRotaryConverter.State(lv);
+        var calls = new long[2];
+        java.util.function.LongBinaryOperator receiver = (size, amount) -> { calls[0] = size; calls[1] = amount; return amount; };
+        var step = motor.tick(16, false, receiver);
+        check(calls[0] == 8 && calls[1] == 1 && step.energy() == 0 && step.possible() && step.emitted()
+                        && !step.fast() && step.visual() == 2, "LV half input emits8RU as one packet and starts trinary activity");
+        step = motor.tick(32, false, (size, amount) -> 0);
+        check(step.energy() == 0 && step.possible() && !step.emitted(), "Original motor wastes energy without receiver");
+        step = motor.tick(32, true, receiver);
+        check(calls[0] == 16 && step.energy() == 0 && step.possible() && step.emitted() && step.visual() == 0,
+                "Stopping source acceptance/visual does not prevent final buffered conversion");
+        step = motor.tick(100, false, receiver);
+        check(calls[0] == 32 && step.energy() == 36 && step.fast() && !step.overloaded(), "EU input limits oversized output rather than overloading");
+        motor.reverse(); motor.tick(32, false, receiver);
+        check(calls[0] == -16, "Monkey Wrench reverses motor RU sign");
+        motor.inject(0, -32, 1, true); motor.tick(32, false, receiver);
+        check(calls[0] == 16, "Source negative EU input and counterclockwise factor cancel");
+        motor.restore(new com.gregtech.gregtech.content.energy.OriginalRotaryConverter.Snapshot(1, false, false, false, false, false));
+        step = motor.tick(64, false, receiver);
+        check(calls[0] == 30 && step.energy() == 4 && step.fast(), "Mode1 floors output to30 and wastes60EU");
+        motor.mode(15); calls[0] = 0;
+        step = motor.tick(64, false, receiver);
+        check(calls[0] == 0 && !step.possible() && step.energy() == 60, "Mode15 falls below packet minimum but still wastes4EU");
+        motor.mode(0);
+        for (int i = 0; i < 64; i++) step = motor.tick(32, false, receiver);
+        check(step.visual() == 1, "Original64 consecutive active samples select stable activity");
+        step = motor.tick(0, false, receiver);
+        check(step.visual() == 2 && !step.possible(), "Original brief idle still selects transient active texture");
+        for (int i = 0; i < 63; i++) step = motor.tick(0, false, receiver);
+        check(step.visual() == 0, "Original64 idle samples clear activity history");
+        var dyn = nodes.stream().filter(s -> s.id().equals("electric_dynamo_lv")).findFirst().orElseThrow();
+        var dynamo = new com.gregtech.gregtech.content.energy.OriginalRotaryConverter.State(dyn);
+        step = dynamo.tick(16, false, receiver);
+        check(calls[0] == 11 && calls[1] == 1 && step.energy() == 0, "LV half-speed dynamo emits11EU rather than fixed22EU");
+        dynamo = new com.gregtech.gregtech.content.energy.OriginalRotaryConverter.State(dyn);
+        check(!dynamo.tick(66, false, receiver).overloaded() && !dynamo.tick(66, false, receiver).overloaded()
+                        && dynamo.tick(66, false, receiver).overloaded(), "Original first2 chunk-load ticks clear excess; third overloads");
+        var rfMotor = nodes.stream().filter(s -> s.id().equals("flux_motor_lv")).findFirst().orElseThrow();
+        var flux = new com.gregtech.gregtech.content.energy.OriginalRotaryConverter.State(rfMotor);
+        step = flux.tick(64, false, receiver);
+        check(calls[0] == 8 && step.energy() == 0, "Original64RF yields8RU at minimum speed");
+        var rfDynamo = nodes.stream().filter(s -> s.id().equals("flux_dynamo_lv")).findFirst().orElseThrow();
+        step = new com.gregtech.gregtech.content.energy.OriginalRotaryConverter.State(rfDynamo).tick(16, false, receiver);
+        check(calls[0] == 1 && calls[1] == 44 && step.energy() == 0, "Original RF output is44 unit packets at half speed");
+        check(com.gregtech.gregtech.content.energy.OriginalRotaryConverter.overloadPower(32, com.gregtech.gregtech.data.GregTechTags.Energy.EU) == 1
+                        && com.gregtech.gregtech.content.energy.OriginalRotaryConverter.overloadPower(33, com.gregtech.gregtech.data.GregTechTags.Energy.EU) == 2
+                        && com.gregtech.gregtech.content.energy.OriginalRotaryConverter.overloadPower(65, com.gregtech.gregtech.data.GregTechTags.Energy.RU) == 2
+                        && com.gregtech.gregtech.content.energy.OriginalRotaryConverter.overloadPower(1000, com.gregtech.gregtech.data.GregTechTags.Energy.RF) == 0.1F,
+                "Source tierMax overcharge power and non-exploding RF break strength");
     }
 
     private static void brickHeater() {
