@@ -14,8 +14,7 @@ public final class CoverDrops {
     public static boolean retained(BlockEntity owner){return RETAINED.contains(owner);}
     public static void saveRuntime(BlockEntity owner,CompoundTag tag){
         if(!ComponentCoverFallback.ownClass(owner)||!(owner instanceof PanelCoverHost host))return;
-        boolean any=false;for(var side:Direction.values())any|=!host.getCover(side).isEmpty();
-        if(any)tag.putBoolean("gt.cover.stopped",host.panels().stopped());
+        if(host.hasAttachedCovers())tag.putBoolean("gt.cover.stopped",host.panels().stopped());
     }
     public static void loadRuntime(BlockEntity owner,CompoundTag tag){
         if(ComponentCoverFallback.ownClass(owner)&&owner instanceof PanelCoverHost host&&tag.contains("gt.cover.stopped"))host.panels().restoreStopped(tag.getBoolean("gt.cover.stopped"));

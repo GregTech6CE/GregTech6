@@ -84,9 +84,7 @@ public final class PanelCoverRuntime {
         return maximum-1-Math.min(maximum-2,quotient);
     }
     private void refreshStopped(){
-        boolean any=false;
-        for(var face:Direction.values())any|=!host.getCover(face).isEmpty();
-        if(!any)stopped=false;
+        if(!host.hasAttachedCovers())stopped=false;
         // Removing CoverControllerCovers leaves its stopped flag latched until all covers are gone.
         // GT6 evaluates cover controllers in side order; the final one owns the shared stopped flag.
         for(var side:Direction.values())if(PanelCover.of(host.getCover(side))==PanelCover.CONTROLLER)
