@@ -56,9 +56,6 @@ public final class GTMaterialRegistration {
 
         // Source pipe associations and ordinary barrel REV data, shared with NeoForge.
         count += com.gregtech.gregtech.content.recipe.TransportMaterialRegistration.register();
-        // The inherited logistics/generic Wood hull estimates await their separate source audit.
-        for (var entry : GTTanks.all()) if (com.gregtech.gregtech.content.transport.TransportMaterialRules.tank(entry.get().spec()).isEmpty())
-            ItemMaterialRegistry.register(entry.get().asItem(), null, entry.get().spec().material(), GTValues.U);
 
         // Hoppers
         count += registerMachineList(MachineRegistry.hoppers(), GTValues.U);

@@ -32,10 +32,28 @@ final class TankItemDeliveryChecks {
             var item = new ItemStack(block);
             item.addTagElement("BlockEntityTag", data);
             require(ItemMaterialRegistry.hasStoredContents(item) && !ItemMaterialRegistry.canRecover(item), "installed stored shell guard");
+            require(item.getMaxStackSize() == 1, "installed filled barrel stack limit");
             clean++; stored++;
         }
-        require(clean == 32 && stored == 32, "installed existing tank identities");
+        require(clean == 35 && stored == 35, "installed existing tank identities");
+        int cheap = 0;
+        for (var entry : com.gregtech.gregtech.content.transport.fluid.CheapWoodBarrelCatalog.ENTRIES) {
+            var item = new ItemStack(BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.parse("gregtech:" + entry.id())));
+            require(item.getMaxStackSize() == 16, "installed empty barrel stack limit");
+            var block = (TankBlock) ((net.minecraft.world.item.BlockItem) item.getItem()).getBlock();
+            require(block.spec().capacity() == 8000 && block.spec().maxTemperature() == 340, "installed cheap barrel specification");
+            var data = ItemMaterialRegistry.get(item).orElseThrow();
+            require(data.components().size() == 2 && data.components().stream().anyMatch(c -> c.material() == entry.rod() && c.amount() == com.gregtech.gregtech.api.material.GTValues.U * 2), "installed distinct cheap rod composition");
+            require(com.gregtech.gregtech.content.creative.SourceCreativeCatalog.entry(entry.id()) != null, "installed source creative entry");
+            var model = net.minecraft.client.Minecraft.getInstance().getItemRenderer().getModel(item, null, null, 0);
+            require(model != net.minecraft.client.Minecraft.getInstance().getModelManager().getMissingModel(), "installed cheap barrel item model");
+            cheap++;
+        }
+        var logistics = new ItemStack(BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.parse("gregtech:logistics_tank")));
+        require(ItemMaterialRegistry.get(logistics).orElseThrow().components().size() == 7, "installed complete known logistics composition");
         var result = new JsonObject();
+        result.addProperty("cheapSourceVariants", cheap);
+        result.addProperty("knownLogisticsComponents", 7);
         result.addProperty("cleanItemData", clean);
         result.addProperty("storedItemDataProtected", stored);
         result.addProperty("completeWorldSaveRetained", true);

@@ -57,7 +57,6 @@ public final class FluidTransportDefinitions {
 
     private record WoodDef(String id, GTMaterial material, long capacity) {}
     private static final WoodDef[] WOODS = {
-            new WoodDef("wood_barrel",                  com.gregtech.gregtech.content.material.generated.WoodMaterials.Wood,          16000),
             new WoodDef("wood_barrel_treated",          com.gregtech.gregtech.content.material.generated.WoodMaterials.WoodTreated,   16000),
             new WoodDef("wood_barrel_skyroot",          com.gregtech.gregtech.content.material.generated.WoodMaterials.Skyroot,       16000),
             new WoodDef("wood_barrel_livingwood",       com.gregtech.gregtech.content.material.generated.WoodMaterials.Livingwood,    16000),
@@ -105,6 +104,7 @@ public final class FluidTransportDefinitions {
     }
     public static List<TankSpec> tanks() {
         var result = new ArrayList<TankSpec>();
+        for (var cheap : CheapWoodBarrelCatalog.ENTRIES) result.add(cheap.spec());
         for (var w : WOODS) result.add(TankSpec.of(w.id,w.material,TankSpec.TankType.WOOD_BARREL,
                 w.capacity,false,false,false,false,true,2F,3F));
         result.add(TankSpec.of("plastic_canister",com.gregtech.gregtech.content.material.generated.CompoundMaterials.Plastic,

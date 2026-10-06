@@ -3822,7 +3822,7 @@
   "block.gregtech.wiremill_steel": "Wire Mill (Steel)",
   "block.gregtech.wiremill_titanium": "Wire Mill (Titanium)",
   "block.gregtech.wiremill_tungsten_steel": "Wire Mill (Tungsten Steel)",
-  "block.gregtech.wood_barrel": "Wooden Barrel",
+  "block.gregtech.wood_barrel": "Wooden Barrel (Cheap)",
   "block.gregtech.wood_tank_main_valve": "Wood Tank Main Valve",
   "block.gregtech.wood_wall": "Wood Wall",
   "block.gregtech.zpm": "Zero-Point Module (ZPM)",
@@ -11055,5 +11055,8 @@
   "item.gregtech.panel_wood_mossy": "Wooden Panel",
   "item.gregtech.panel_wood_frozen": "Wooden Panel",
   "item.gregtech.panel_wood_wood": "Wooden Panel",
-  "item.gregtech.panel_wood_treated": "Wooden Panel"
+  "item.gregtech.panel_wood_treated": "Wooden Panel",
+  "block.gregtech.wood_barrel_bismuth": "Wooden Barrel (Cheap)",
+  "block.gregtech.wood_barrel_bronze": "Wooden Barrel (Cheap)",
+  "block.gregtech.wood_barrel_brass": "Wooden Barrel (Cheap)"
 }

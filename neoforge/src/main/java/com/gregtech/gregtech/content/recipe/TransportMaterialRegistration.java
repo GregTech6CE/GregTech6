@@ -28,6 +28,13 @@ public final class TransportMaterialRegistration {
             bind(id,TransportMaterialRules.pipe(ItemPipeSpec.of(id,mat.material(),size,mat.stepSize(),mat.invSize(),true)));
         }
         for(var spec:FluidTransportDefinitions.tanks())TransportMaterialRules.tank(spec).ifPresent(data->bind(spec.id(),data));
+        TransportMaterialRules.logisticsComponents().forEach((id, data) -> {
+            var item = BuiltInRegistries.ITEM.get(ResourceLocation.parse("gregtech:" + id));
+            if (item == Items.AIR) throw new IllegalStateException("Missing logistics component " + id);
+            ItemMaterialRegistry.register(item, data);
+        });
+        var logistics = com.gregtech.gregtech.content.transport.fluid.LogisticsTankSpec.spec();
+        bind(logistics.id(), TransportMaterialRules.tank(logistics).orElseThrow());
         return RECOVERY_ITEMS.size();
     }
 }

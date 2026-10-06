@@ -138563,5 +138563,8 @@
   "item.gregtech.panel_wood_mossy": "木制覆盖板",
   "item.gregtech.panel_wood_frozen": "木制覆盖板",
   "item.gregtech.panel_wood_wood": "木制覆盖板",
-  "item.gregtech.panel_wood_treated": "木制覆盖板"
+  "item.gregtech.panel_wood_treated": "木制覆盖板",
+  "block.gregtech.wood_barrel_bismuth": "木制储罐",
+  "block.gregtech.wood_barrel_bronze": "木制储罐",
+  "block.gregtech.wood_barrel_brass": "木制储罐"
 }

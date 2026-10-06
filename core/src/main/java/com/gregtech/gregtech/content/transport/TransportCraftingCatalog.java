@@ -50,8 +50,8 @@ public final class TransportCraftingCatalog {
             if(hull==com.gregtech.gregtech.data.generated.GT6Materials.Elements.W)hull=com.gregtech.gregtech.data.MaterialGroups.W;
             if(spec.type()==TankSpec.TankType.METAL_DRUM)
                 rows.add(shaped("tank/"+spec.id(),List.of(" h ","PSP","PSP"),Map.of('h',tool("hammer"),'P',form("plateCurved",hull),'S',form("stickLong",hull)),spec.id(),false));
-            else if(spec.type()==TankSpec.TankType.WOOD_BARREL&&!spec.id().equals("wood_barrel"))
-                rows.add(shaped("tank/"+spec.id(),List.of("rGs","PSP","PSP"),Map.of('r',tool("soft_hammer"),'s',tool("saw"),'G',tag("forge:glue"),'P',form("plate",spec.material()),'S',form("stickLong",TransportMaterialRules.barrelRod(spec))),spec.id(),false));
+            else if(spec.type()==TankSpec.TankType.WOOD_BARREL)
+                rows.add(shaped("tank/"+spec.id(),List.of("rGs","PSP","PSP"),Map.of('r',tool("soft_hammer"),'s',tool("saw"),'G',tag("forge:glue"),'P',com.gregtech.gregtech.content.transport.fluid.CheapWoodBarrelCatalog.entry(spec.id()).isPresent()?tag("gregtech:wooden_planks"):form("plate",spec.material()),'S',form("stickLong",TransportMaterialRules.barrelRod(spec))),spec.id(),false));
             // PlasticCan is an existing extruder mold output, not a made-up shaped recipe.
         }
         return List.copyOf(rows);

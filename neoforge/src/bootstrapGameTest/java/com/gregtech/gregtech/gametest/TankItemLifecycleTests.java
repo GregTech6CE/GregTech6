@@ -35,7 +35,7 @@ import java.util.List;
 /** Finite real BlockItem / survival harvest / recovery scenarios, excluded from ordinary jars. */
 @GameTestHolder("gregtech_tank_items") @PrefixGameTestTemplate(false)
 public final class TankItemLifecycleTests {
-    private static ServerPlayer player(GameTestHelper h, BlockPos pos) {
+    static ServerPlayer player(GameTestHelper h, BlockPos pos) {
         var profile = new com.mojang.authlib.GameProfile(java.util.UUID.randomUUID(), "TankItemTest");
         var cookie = net.minecraft.server.network.CommonListenerCookie.createInitial(profile, false);
         var player = new ServerPlayer(h.getLevel().getServer(), h.getLevel(), profile, cookie.clientInformation());
@@ -49,14 +49,14 @@ public final class TankItemLifecycleTests {
         return player;
     }
 
-    private static ItemStack item(String path) {
+    static ItemStack item(String path) {
         return new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gregtech:" + path)));
     }
-    private static CompoundTag worldData(GameTestHelper h, TankBlockEntity tank) { return tank.saveWithId(h.getLevel().registryAccess()); }
+    static CompoundTag worldData(GameTestHelper h, TankBlockEntity tank) { return tank.saveWithId(h.getLevel().registryAccess()); }
     private static CompoundTag itemData(ItemStack stack) { return stack.getOrDefault(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag(); }
-    private static void setItemData(ItemStack stack, CompoundTag tag) { stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA, net.minecraft.world.item.component.CustomData.of(tag)); }
+    static void setItemData(ItemStack stack, CompoundTag tag) { stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA, net.minecraft.world.item.component.CustomData.of(tag)); }
 
-    private static TankBlockEntity place(GameTestHelper h, ServerPlayer p, BlockPos pos, ItemStack stack) {
+    static TankBlockEntity place(GameTestHelper h, ServerPlayer p, BlockPos pos, ItemStack stack) {
         h.getLevel().setBlockAndUpdate(pos.below(), Blocks.STONE.defaultBlockState());
         h.getLevel().setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
         p.setItemInHand(InteractionHand.MAIN_HAND, stack.copyWithCount(1));
@@ -65,7 +65,7 @@ public final class TankItemLifecycleTests {
                 p, InteractionHand.MAIN_HAND, hit)).consumesAction(), "actual harvested BlockItem places " + stack);
         return (TankBlockEntity) h.getLevel().getBlockEntity(pos);
     }
-    private static ItemStack harvest(GameTestHelper h, ServerPlayer p, TankBlockEntity tank) {
+    static ItemStack harvest(GameTestHelper h, ServerPlayer p, TankBlockEntity tank) {
         var pos = tank.getBlockPos();
         for (var e : h.getLevel().getEntitiesOfClass(ItemEntity.class, new AABB(pos).inflate(2))) e.discard();
         p.getInventory().clearContent();
@@ -88,7 +88,7 @@ public final class TankItemLifecycleTests {
         for (var e : entities) e.discard();
         return result;
     }
-    private static void checkRecovery(GameTestHelper h, ItemStack stack, boolean allowed) {
+    static void checkRecovery(GameTestHelper h, ItemStack stack, boolean allowed) {
         h.assertTrue(ItemMaterialRegistry.canRecover(stack) == allowed, "harvested shell recovery eligibility");
         var recipe = VanillaRecoveryRecipes.recipes().stream().filter(r -> r.mInputs[0].is(stack.getItem())).findFirst().orElseThrow(() -> new IllegalStateException("Missing audited recovery for " + stack));
         h.assertTrue((RecipeInputs.consume(recipe, List.of(stack), List.of(), 1) != null) == allowed,
@@ -128,7 +128,7 @@ public final class TankItemLifecycleTests {
             } else harvest(h, p, tank);
             tanks++;
         }
-        h.assertTrue(tanks == 32 && recovered == 30 && drained == 31 && legacy == 1, "complete existing tank registry covered");
+        h.assertTrue(tanks == 35 && recovered == 35 && drained == 34 && legacy == 1, "complete existing tank registry covered");
         System.out.println("TANK_ITEM_LIFECYCLE_EMPTY tanks=" + tanks + " recovery=" + recovered + " drained=" + drained + " legacy=" + legacy);
         h.succeed();
     }

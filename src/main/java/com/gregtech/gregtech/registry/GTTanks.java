@@ -31,11 +31,18 @@ public final class GTTanks {
             boolean simpleOnly, float hardness, float blastResistance) {
         TankSpec spec = TankSpec.of(id, material, type, capacity,
                 gasProof, acidProof, plasmaProof, magicProof, simpleOnly, hardness, blastResistance);
+        return register(spec);
+    }
+
+    public static RegistryObject<TankBlock> register(TankSpec spec) {
+        String id = spec.id();
+        var material = spec.material();
+        float hardness = spec.hardness(), blastResistance = spec.blastResistance();
         RegistryObject<TankBlock> block = GTBlocks.BLOCKS.register(id,
                 () -> new TankBlock(spec, TankBlock.defaultProperties(spec)));
         ALL.add(block);
         GTBlocks.BLOCK_ITEMS.register(id,
-                () -> new GTMachineBlockItem(block.get(), new Item.Properties(), new MachineSpec(
+                () -> new GTMachineBlockItem(block.get(), new Item.Properties().stacksTo(16), new MachineSpec(
                         id, material.getLocalName(), material.getColor(), 0, 0,
                         com.gregtech.gregtech.api.machine.MachineTextures.BURNING_SOLID, hardness, blastResistance)));
         return block;
