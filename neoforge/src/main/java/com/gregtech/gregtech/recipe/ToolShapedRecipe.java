@@ -47,7 +47,8 @@ public class ToolShapedRecipe implements CraftingRecipe, com.gregtech.gregtech.a
  public String constructionColor() { return constructionColor; }
  protected boolean toolsUsable(CraftingInput input){
   for(int i=0;i<input.size();i++){var stack=input.getItem(i);
-   if(requireEmptyFluidContainers&&net.neoforged.neoforge.fluids.FluidUtil.getFluidContained(stack).filter(fluid->!fluid.isEmpty()).isPresent())return false;
+   if(requireEmptyFluidContainers&&com.gregtech.gregtech.api.material.ItemMaterialRegistry.hasStoredContents(stack))return false;
+            if(requireEmptyFluidContainers&&net.neoforged.neoforge.fluids.FluidUtil.getFluidContained(stack).filter(fluid->!fluid.isEmpty()).isPresent())return false;
    if((stack.getItem() instanceof com.gregtech.gregtech.item.GTToolItem||stack.getItem() instanceof com.gregtech.gregtech.item.ElectricToolItem)&&!com.gregtech.gregtech.api.tool.GTToolHelper.matchesTool(stack,com.gregtech.gregtech.api.tool.GTToolHelper.getType(stack)))return false;
   }return true;
  }

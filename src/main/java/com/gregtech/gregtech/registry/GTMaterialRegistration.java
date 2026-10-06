@@ -54,31 +54,11 @@ public final class GTMaterialRegistration {
                     block.spec().material(), block.spec().materialAmount());
         }
 
-        // Fluid pipes
-        for (RegistryObject<FluidPipeBlock> entry : GTFluidPipes.all()) {
-            if (!entry.isPresent()) continue;
-            FluidPipeBlock block = entry.get();
-            if (block.spec() == null || block.spec().material() == null) continue;
-            count++;
-            ItemMaterialRegistry.register(block.asItem(), null, block.spec().material(), GTValues.U);
-        }
-
-        // Item pipes
-        for (RegistryObject<ItemPipeBlock> entry : GTItemPipes.all()) {
-            if (!entry.isPresent()) continue;
-            ItemPipeBlock block = entry.get();
-            if (block.spec() == null || block.spec().material() == null) continue;
-            count++;
-            ItemMaterialRegistry.register(block.asItem(), null, block.spec().material(), GTValues.U);
-        }
-
-        // Tanks
-        for (RegistryObject<TankBlock> entry : GTTanks.all()) {
-            if (!entry.isPresent()) continue;
-            TankBlock block = entry.get();
-            count++;
-            ItemMaterialRegistry.register(block.asItem(), null, block.spec().material(), GTValues.U);
-        }
+        // Source pipe associations and ordinary barrel REV data, shared with NeoForge.
+        count += com.gregtech.gregtech.content.recipe.TransportMaterialRegistration.register();
+        // The inherited logistics/generic Wood hull estimates await their separate source audit.
+        for (var entry : GTTanks.all()) if (com.gregtech.gregtech.content.transport.TransportMaterialRules.tank(entry.get().spec()).isEmpty())
+            ItemMaterialRegistry.register(entry.get().asItem(), null, entry.get().spec().material(), GTValues.U);
 
         // Hoppers
         count += registerMachineList(MachineRegistry.hoppers(), GTValues.U);

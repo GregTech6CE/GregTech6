@@ -27,7 +27,7 @@ public final class ReversibleCraftingData {
 
     /** Original ANY reversing groups have concrete output targets; reuse the existing identities. */
     private static GTMaterial reversingOutput(GTMaterial material) {
-        if (material == MaterialGroups.Fe || material == MaterialGroups.Iron) return GT6Materials.Elements.Fe;
+        if (material == MaterialGroups.Fe || material == MaterialGroups.Iron || material == MaterialGroups.MagicIron) return GT6Materials.Elements.Fe;
         if (material == MaterialGroups.Steel) return GT6Materials.Compounds.Steel;
         if (material == MaterialGroups.Cu) return GT6Materials.Elements.Cu;
         if (material == MaterialGroups.W) return GT6Materials.Elements.W;

@@ -38,6 +38,33 @@ final class DecorativePanelDeliveryChecks {
    require(quads==6&&Math.abs(minZ-7/16F)<1e-6&&Math.abs(maxZ-9/16F)<1e-6,"six visible faces and centered 2px mesh "+spec.id());
    require(page.stream().anyMatch(s->s.is(stack.getItem()))==spec.canonical(),"source creative variants without legacy duplicates "+spec.id());count++;
   }
+  int transport=0;
+  for(var item:com.gregtech.gregtech.content.recipe.TransportMaterialRegistration.recoveryItems()) {
+   var stack=new ItemStack(item);var data=com.gregtech.gregtech.api.material.ItemMaterialRegistry.get(stack).orElseThrow();
+   require(data.amount()>0&&data.recoverable(),"installed transport composition "+stack);
+   require(com.gregtech.gregtech.content.recipe.VanillaRecoveryRecipes.recipes().stream().anyMatch(r->r.mInputs[0].is(item)),"installed transport shredder entry "+stack);
+   transport++;
+  }
+  long unit=com.gregtech.gregtech.api.material.GTValues.U;long[] weights={unit/2,unit,unit*3,unit*6,unit*12,unit*12,unit*9};
+  for(var spec:com.gregtech.gregtech.content.transport.fluid.FluidTransportDefinitions.pipes()) {
+   var stack=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gregtech:"+spec.id())));
+   require(com.gregtech.gregtech.api.material.ItemMaterialRegistry.get(stack).orElseThrow().amount()==weights[spec.size().ordinal()],"original installed pipe prefix weight "+spec.id());
+  }
+  for(var row:com.gregtech.gregtech.content.transport.TransportCraftingCatalog.rows())require(com.gregtech.gregtech.content.recipe.TransportCraftingInputs.json(row).isPresent(),"installed source crafting inputs "+row.path());
+  int tankGroupVariants=0;
+  for(var row:com.gregtech.gregtech.content.transport.TransportCraftingCatalog.rows()) {
+   if(!row.path().equals("tank/drum_steel")&&!row.path().equals("tank/drum_tungsten"))continue;
+   for(char symbol:new char[]{'P','S'}) {
+    var input=row.key().get(symbol);require(input.material().getId()<0,"original ANY.Steel/W tank input");
+    var ingredient=com.gregtech.gregtech.content.recipe.TransportCraftingInputs.resolve(input);
+    var prefix=com.gregtech.gregtech.api.prefix.PrefixRegistry.byName(input.name());
+    for(var member:input.material().getReRegistrations()) {
+     var sample=com.gregtech.gregtech.registry.GTItems.getStack(prefix,member);
+     if(sample.isEmpty())continue;
+     require(ingredient.test(sample),"every existing original barrel group member "+member);tankGroupVariants++;
+    }
+   }
+  }
   g.pose().pushPose();g.pose().translate(0,0,1000);g.fill(2,2,424,238,0xff14141c);g.drawString(client.font,"GT6 panels: concrete / foam / asphalt",8,7,0xffffff,false);
   for(var spec:PanelCatalog.CANONICAL){var stack=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gregtech:"+spec.id())));
    int x,y;if(spec.kind().equals("wood")){x=9+(wood%15)*27;y=154+(wood/15)*34;wood++;}
@@ -47,6 +74,6 @@ final class DecorativePanelDeliveryChecks {
   g.drawString(client.font,"Original dye order: black -> white",8,133,0xffffff,false);
   g.drawString(client.font,"30 available plank identities",8,143,0xffffff,false);
   g.drawString(client.font,"Item previews; source sprite/RGB checked for all 83",8,221,0xaaaaaa,false);g.pose().popPose();
-  var out=new JsonObject();out.addProperty("installedItemModels",count);out.addProperty("canonicalColoredModels",colored);out.addProperty("canonicalWoodModels",wood);out.addProperty("centeredTwoPixelMesh",true);out.addProperty("sourceRgbAndTextures",true);out.addProperty("legacyAliasesHiddenFromCreative",true);out.addProperty("originalPerItemMaterialsAndAdvancedTooltip",count);out.addProperty("installedShredderEntries",count);return out;
+  var out=new JsonObject();out.addProperty("installedItemModels",count);out.addProperty("canonicalColoredModels",colored);out.addProperty("canonicalWoodModels",wood);out.addProperty("centeredTwoPixelMesh",true);out.addProperty("sourceRgbAndTextures",true);out.addProperty("legacyAliasesHiddenFromCreative",true);out.addProperty("originalPerItemMaterialsAndAdvancedTooltip",count);out.addProperty("installedShredderEntries",count);out.addProperty("transportMaterialItemsAndShredderEntries",transport);out.addProperty("originalTankGroupFormVariants",tankGroupVariants);out.addProperty("resolvedTransportCraftingRows",com.gregtech.gregtech.content.transport.TransportCraftingCatalog.rows().size());return out;
  }
 }

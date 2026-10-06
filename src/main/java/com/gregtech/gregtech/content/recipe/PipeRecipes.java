@@ -60,9 +60,6 @@ public final class PipeRecipes {
 
     private static final List<Entry> ENTRIES = new ArrayList<>();
     private static final List<String> SKIPPED = List.of(
-            "restrictive item pipes: GT6 registers the items but no production row"
-                    + " (MultiTileEntityPipeItem:80-82 only maps the prefix), so they stay unobtainable"
-                    + " here too",
             "GT6's COATED.NOT condition has no port counterpart; SMITHABLE and FLAMMABLE.NOT are applied");
 
     private static boolean registered;

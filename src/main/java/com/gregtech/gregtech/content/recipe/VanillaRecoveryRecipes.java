@@ -16,7 +16,7 @@ public final class VanillaRecoveryRecipes {
     public static int register() {
         for (var item : ForgeRegistries.ITEMS.getValues().stream().sorted(Comparator.comparing(i -> ForgeRegistries.ITEMS.getKey(i).toString())).toList()) {
             var id = ForgeRegistries.ITEMS.getKey(item);
-            if (!id.getNamespace().equals("minecraft") && !PanelMaterialRegistration.recoveryItems().contains(item)) continue;
+            if (!id.getNamespace().equals("minecraft") && !PanelMaterialRegistration.recoveryItems().contains(item) && !TransportMaterialRegistration.recoveryItems().contains(item)) continue;
             if (id.getPath().endsWith("_ore") || id.getPath().startsWith("raw_")) continue;
             var stack = new ItemStack(item);
             if (!ItemMaterialRegistry.canRecover(stack)) continue;

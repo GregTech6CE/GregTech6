@@ -68,6 +68,7 @@ public class ToolShapedRecipe extends ShapedRecipe implements com.gregtech.gregt
     protected boolean toolsUsable(CraftingContainer inventory) {
         for(int slot=0;slot<inventory.getContainerSize();slot++) {
             var stack=inventory.getItem(slot);
+            if(requireEmptyFluidContainers&&com.gregtech.gregtech.api.material.ItemMaterialRegistry.hasStoredContents(stack))return false;
             if(requireEmptyFluidContainers&&net.minecraftforge.fluids.FluidUtil.getFluidContained(stack).filter(f->!f.isEmpty()).isPresent())return false;
             if((stack.getItem() instanceof GTToolItem||stack.getItem() instanceof com.gregtech.gregtech.item.ElectricToolItem)&&!GTToolHelper.matchesTool(stack,GTToolHelper.getType(stack)))return false;
         }

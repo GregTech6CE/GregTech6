@@ -15,7 +15,7 @@ import net.minecraft.world.level.Level;
 
 /** Original CR shapeless rows: ordinary GT tool container crafting wears and returns the tool. */
 public final class ToolShapelessRecipe extends ShapelessRecipe implements com.gregtech.gregtech.api.recipe.AutocraftableCraftingRecipe {
-    private final boolean autocraftable;
+    private final boolean autocraftable, requireEmptyFluidContainers;
     private final FormConversionSelector formSelector;
     private final String conversionInput, conversionMaterial;
     @Override public boolean isAutocraftableByGT() { return autocraftable; }
@@ -29,9 +29,14 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements com.gr
     }
     public ToolShapelessRecipe(ShapelessRecipe base, boolean autocraftable, FormConversionSelector formSelector,
                                String conversionInput, String conversionMaterial) {
+        this(base, autocraftable, formSelector, conversionInput, conversionMaterial, false);
+    }
+    public ToolShapelessRecipe(ShapelessRecipe base, boolean autocraftable, FormConversionSelector formSelector,
+                              String conversionInput, String conversionMaterial, boolean requireEmptyFluidContainers) {
         super(base.getGroup(),base.category(),base.getResultItem(net.minecraft.core.RegistryAccess.EMPTY),base.getIngredients());
         this.base=base;
         this.autocraftable=autocraftable;
+        this.requireEmptyFluidContainers=requireEmptyFluidContainers;
         this.formSelector=formSelector;
         if (conversionInput.isEmpty() != conversionMaterial.isEmpty()) throw new IllegalArgumentException("Incomplete source conversion form");
         this.conversionInput=conversionInput;
@@ -42,6 +47,7 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements com.gr
         for (var stack:grid.items()) {
             if (!stack.isEmpty() && !conversionInput.isEmpty()
                     && !CraftingMaterialForms.matches(conversionInput, conversionMaterial, stack)) return false;
+            if(requireEmptyFluidContainers&&(com.gregtech.gregtech.api.material.ItemMaterialRegistry.hasStoredContents(stack)||net.neoforged.neoforge.fluids.FluidUtil.getFluidContained(stack).filter(f->!f.isEmpty()).isPresent()))return false;
             if (stack.getItem() instanceof GTToolItem && !GTToolHelper.isUsable(stack)) return false;
         }
         if (formSelector.variants() == 0) return true;
@@ -73,8 +79,9 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements com.gr
             com.mojang.serialization.Codec.intRange(0, Integer.MAX_VALUE).optionalFieldOf("gregtech_form_variants", 0).forGetter((ToolShapelessRecipe recipe) -> recipe.formSelector.variants()),
             com.mojang.serialization.Codec.intRange(0, Integer.MAX_VALUE).optionalFieldOf("gregtech_form_offset", 0).forGetter((ToolShapelessRecipe recipe) -> recipe.formSelector.offset()),
             com.mojang.serialization.Codec.STRING.optionalFieldOf("gregtech_form_input", "").forGetter((ToolShapelessRecipe recipe) -> recipe.conversionInput),
-            com.mojang.serialization.Codec.STRING.optionalFieldOf("gregtech_form_material", "").forGetter((ToolShapelessRecipe recipe) -> recipe.conversionMaterial)
-            ).apply(instance, (base, auto, variants, offset, input, material) -> new ToolShapelessRecipe(base, auto, new FormConversionSelector(variants, offset), input, material)));
+            com.mojang.serialization.Codec.STRING.optionalFieldOf("gregtech_form_material", "").forGetter((ToolShapelessRecipe recipe) -> recipe.conversionMaterial),
+            com.mojang.serialization.Codec.BOOL.optionalFieldOf("require_empty_fluid_containers", false).forGetter((ToolShapelessRecipe recipe) -> recipe.requireEmptyFluidContainers)
+            ).apply(instance, (base, auto, variants, offset, input, material, empty) -> new ToolShapelessRecipe(base, auto, new FormConversionSelector(variants, offset), input, material, empty)));
     public static final RecipeSerializer<ToolShapelessRecipe> SERIALIZER=new RecipeSerializer<>() {
         @Override public MapCodec<ToolShapelessRecipe> codec(){return CODEC;}
         @Override public StreamCodec<RegistryFriendlyByteBuf,ToolShapelessRecipe> streamCodec(){return ByteBufCodecs.fromCodecWithRegistries(CODEC.codec());}
