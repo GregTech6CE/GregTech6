@@ -114,25 +114,18 @@ public final class TooltipHelper {
     // ── Blast resistance ────────────────────────────────────────────────
 
     public static void appendBlastResistance(float resistance, List<Component> tooltip) {
-        ChatFormatting blastColor;
-        String blastKey;
-        if (resistance >= 12.0F) {
-            blastColor = ChatFormatting.GREEN;
-            blastKey = "tooltip." + MOD + ".machine.blast.creeper";
-        } else if (resistance >= 7.0F) {
-            blastColor = ChatFormatting.RED;
-            blastKey = "tooltip." + MOD + ".machine.blast.ghast";
-        } else {
-            blastColor = ChatFormatting.RED;
-            blastKey = "tooltip." + MOD + ".machine.blast.terrible";
-        }
-        tooltip.add(Component.empty()
-                .append(Component.translatable("tooltip." + MOD + ".machine.blast_resistance")
-                        .withStyle(ChatFormatting.WHITE))
-                .append(Component.literal(formatFloat(resistance))
-                        .withStyle(ChatFormatting.WHITE))
-                .append(" ")
-                .append(Component.translatable(blastKey).withStyle(blastColor)));
+        var rating = com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.blastRating(resistance);
+        ChatFormatting color = switch (rating) {
+            case TERRIBLE, GHAST -> ChatFormatting.RED;
+            case CREEPER -> ChatFormatting.YELLOW;
+            case TNT, DYNAMITE -> ChatFormatting.GREEN;
+            case IC2_NUKE_UNPROTECTED -> ChatFormatting.AQUA;
+        };
+        tooltip.add(Component.translatable("gt.lang.blastresistance").withStyle(ChatFormatting.WHITE)
+                .append(Component.literal(com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.blastNumber(resistance))
+                        .withStyle(ChatFormatting.GOLD))
+                .append(Component.literal(" "))
+                .append(Component.translatable(rating.key()).withStyle(color)));
     }
 
     // ── Harvest tool ───────────────────────────────────────────────────

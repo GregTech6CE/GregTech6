@@ -84,23 +84,6 @@ public final class HopperTooltips {
     }
 
     private static void appendBlastResistance(float resistance, List<Component> tooltip) {
-        Component suffix;
-        if (resistance >= 12.0F) {
-            suffix = Component.translatable("tooltip." + "gregtech" + ".machine.blast.creeper")
-                    .withStyle(ChatFormatting.GREEN);
-        } else if (resistance >= 7.0F) {
-            suffix = Component.translatable("tooltip." + "gregtech" + ".machine.blast.ghast")
-                    .withStyle(ChatFormatting.RED);
-        } else {
-            suffix = Component.translatable("tooltip." + "gregtech" + ".machine.blast.terrible")
-                    .withStyle(ChatFormatting.RED);
-        }
-        tooltip.add(Component.empty()
-                .append(Component.translatable("tooltip." + "gregtech" + ".machine.blast_resistance")
-                        .withStyle(ChatFormatting.WHITE))
-                .append(Component.literal(String.format(Locale.ROOT, "%.1f", resistance))
-                        .withStyle(ChatFormatting.GOLD))
-                .append(Component.literal(" "))
-                .append(suffix));
+        TooltipHelper.appendBlastResistance(resistance, tooltip);
     }
 }

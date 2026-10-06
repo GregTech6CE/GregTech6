@@ -31,6 +31,7 @@ public final class MachineSpecBehaviorContracts {
         ceramicCrucibleAndMold();
         chargedCrucibleHeatRequirement();
         originalMachineMaterials();
+        originalBlastTooltips();
         System.out.println("Machine spec behavior contracts passed: " + assertions
                 + " assertions; brick25percent/16HU, ceramic7U/2500K, mold5U, charged45HU/K, original machine CR.REV data; no game runtime");
     }
@@ -84,14 +85,39 @@ public final class MachineSpecBehaviorContracts {
                 java.util.Map.of("StainlessSteel", 9*u/2));
         composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("stainless_steel_boiler_main_barometer").orElseThrow(),
                 java.util.Map.of("StainlessSteel", 90*u));
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("steam_boiler_bronze").orElseThrow(),
+                java.util.Map.of("Bronze", 10*u));
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("strong_steam_boiler_bronze").orElseThrow(),
+                java.util.Map.of("Bronze", 45*u));
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("rotational_pump_bronze").orElseThrow(),
+                java.util.Map.of("Bronze", 22*u, "StainlessSteel", 23*u/2));
         check(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("axle_wood_4").isEmpty(),
                 "Source beamWood/creosote has no automatic material data; do not invent8U");
+        check(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("energy_storage_xv").isEmpty(),
+                "Original null transformer10049 aborts CR.shaped before OM.data; partial Graphene must not become recovery data");
         check(com.gregtech.gregtech.content.machine.OriginalMachineMaterialData.find("scannermolecular", 1).isEmpty(),
                 "Commented-out source molecular scanner cannot create a material registration");
         var spec = com.gregtech.gregtech.content.machine.BasicMachineCatalog.specifications().stream()
                 .filter(p -> p.id().equals("centrifuge_bronze")).findFirst().orElseThrow();
         check(spec.constructionMaterials().size() == 1 && spec.constructionMaterials().get(0).amount() == 23*u,
                 "Both native catalogs receive exact CS.U values, not raw23 or a fixed8U hull estimate");
+    }
+
+    private static void originalBlastTooltips() {
+        var terrible = com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.BlastRating.TERRIBLE;
+        var ghast = com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.BlastRating.GHAST;
+        var creeper = com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.BlastRating.CREEPER;
+        var tnt = com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.BlastRating.TNT;
+        var dynamite = com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.BlastRating.DYNAMITE;
+        check(com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.blastRating(3.99) == terrible, "Original below4 warning");
+        for (double value : new double[]{4, 7, 11.99}) check(com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.blastRating(value) == ghast, "Original ghast tooltip at " + value);
+        for (double value : new double[]{12, 15.99}) check(com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.blastRating(value) == creeper, "Original creeper tooltip at " + value);
+        for (double value : new double[]{16, 40}) check(com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.blastRating(value) == tnt, "Original TNT tooltip at " + value);
+        for (double value : new double[]{40.01, 3329, 3330, 3600000}) check(com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.blastRating(value) == dynamite, "Absent IC2 compat must not invent a nuclear warning at " + value);
+        check(com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.blastRating(3330, true, false)
+                == com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.BlastRating.IC2_NUKE_UNPROTECTED, "Original IC2 conditional warning");
+        check(com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.blastRating(3330, true, true) == dynamite, "Original IC2 whitelist branch");
+        check(com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.blastNumber(6.99).equals("6.9"), "Original decimal truncation");
     }
 
     private static void composition(com.gregtech.gregtech.api.material.ItemComposition data, java.util.Map<String, Long> expected) {

@@ -84,18 +84,7 @@ public final class CrucibleTooltips {
     }
 
     private static void appendBlastResistance(CrucibleSpec spec, List<Component> tooltip) {
-        float resistance = spec.blastResistance();
-        Component suffix = resistance >= 12.0F
-                ? Component.translatable("tooltip." + "gregtech" + ".machine.blast.creeper").withStyle(ChatFormatting.GREEN)
-                : resistance >= 7.0F
-                ? Component.translatable("tooltip." + "gregtech" + ".machine.blast.ghast").withStyle(ChatFormatting.RED)
-                : Component.translatable("tooltip." + "gregtech" + ".machine.blast.terrible").withStyle(ChatFormatting.RED);
-        tooltip.add(Component.empty()
-                .append(Component.translatable("tooltip." + "gregtech" + ".machine.blast_resistance")
-                        .withStyle(ChatFormatting.WHITE))
-                .append(Component.literal(String.format(Locale.ROOT, "%.1f ", resistance))
-                        .withStyle(ChatFormatting.GOLD))
-                .append(suffix));
+        TooltipHelper.appendBlastResistance(spec.blastResistance(), tooltip);
     }
 
     private static void appendHarvestPickaxe(List<Component> tooltip) {

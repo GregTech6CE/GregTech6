@@ -11078,5 +11078,13 @@
   "gt.lang.use.monkey.wrench.to.toggle.auto.outputs": "Use Monkey Wrench to toggle automatic Outputs",
   "gt.lang.use.soft.hammer.to.toggle": "Use Soft Hammer to toggle States",
   "gt.lang.use.x.to.toggle.connection.post": " to set Connections",
-  "gt.lang.use.x.to.toggle.connection.pre": "Use "
+  "gt.lang.use.x.to.toggle.connection.pre": "Use ",
+  "gt.lang.blast.resist.creeper.proof": "(Creeper Proof)",
+  "gt.lang.blast.resist.dynamite.proof": "(Strong Dynamite Proof)",
+  "gt.lang.blast.resist.ghast.proof": "(Ghast Proof)",
+  "gt.lang.blast.resist.nuke.not": "(IC2 Nukes can still go through!)",
+  "gt.lang.blast.resist.terrible": "(Terrible)",
+  "gt.lang.blast.resist.tnt.proof": "(TNT Proof)",
+  "gt.lang.blastresistance": "Blast Resistance: ",
+  "gt.lang.contained.materials": "Contained Materials:"
 }

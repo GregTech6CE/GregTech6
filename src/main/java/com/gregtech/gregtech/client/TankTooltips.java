@@ -186,25 +186,7 @@ public final class TankTooltips {
     // === Shared helpers ===
 
     private static void appendBlastResistance(float resistance, List<Component> tooltip) {
-        ChatFormatting levelColor;
-        String levelKey;
-        if (resistance >= 12.0F) {
-            levelColor = ChatFormatting.GREEN;
-            levelKey = "tooltip." + GregTech.NAMESPACE + ".machine.blast.creeper";
-        } else if (resistance >= 7.0F) {
-            levelColor = ChatFormatting.RED;
-            levelKey = "tooltip." + GregTech.NAMESPACE + ".machine.blast.ghast";
-        } else {
-            levelColor = ChatFormatting.RED;
-            levelKey = "tooltip." + GregTech.NAMESPACE + ".machine.blast.terrible";
-        }
-        tooltip.add(Component.empty()
-                .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.blast_resistance")
-                        .withStyle(ChatFormatting.WHITE))
-                .append(Component.literal(String.format(Locale.ROOT, "%.1f", resistance))
-                        .withStyle(ChatFormatting.GOLD))
-                .append(Component.literal(" "))
-                .append(Component.translatable(levelKey).withStyle(levelColor)));
+        TooltipHelper.appendBlastResistance(resistance, tooltip);
     }
 
     private static void appendHarvestInfo(GTMaterial mat, List<Component> tooltip) {
