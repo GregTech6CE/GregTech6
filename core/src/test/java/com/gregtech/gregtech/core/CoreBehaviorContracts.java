@@ -52,7 +52,8 @@ public final class CoreBehaviorContracts {
         assertions += SolarPanelEnergyContracts.verify();
         assertions += OriginWorldgenSamples.verify();
         assertions += LongDistanceSourceContracts.verify();
-        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 30 groups (Java 17; no game dependencies)");
+        assertions += com.gregtech.gregtech.content.compat.CompatSpecs.check();
+        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 31 groups (Java 17; no game dependencies)");
     }
 
     private static void externalGrindingSourceSamples() {
