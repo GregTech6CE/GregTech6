@@ -11154,5 +11154,18 @@
   "gt.lang.reminder.extenders": "Remember to use Universal Extenders if you need to literally cut Corners",
   "gt.td.short.energy.cryo": "CU",
   "gt.lang.face.front.back": "Front and Back",
-  "gt.td.short.energy.magnetic": "MU"
+  "gt.td.short.energy.magnetic": "MU",
+  "block.gregtech.steam_turbine_ironwood": "Steam Turbine (Ironwood)",
+  "block.gregtech.steam_turbine_steeleaf": "Steam Turbine (Steeleaf)",
+  "block.gregtech.steam_turbine_thaumium": "Steam Turbine (Thaumium)",
+  "block.gregtech.steam_turbine_titanium": "Steam Turbine (Titanium)",
+  "block.gregtech.steam_turbine_fiery_steel": "Steam Turbine (Fiery Steel)",
+  "block.gregtech.steam_turbine_aluminium": "Steam Turbine (Aluminium)",
+  "block.gregtech.steam_turbine_magnalium": "Steam Turbine (Magnalium)",
+  "block.gregtech.steam_turbine_void_metal": "Steam Turbine (Void Metal)",
+  "block.gregtech.steam_turbine_trinitanium": "Steam Turbine (Trinitanium)",
+  "block.gregtech.steam_turbine_graphene": "Steam Turbine (Graphene)",
+  "gt.lang.emits.used.steam": "Emits used Steam",
+  "gt.lang.face.sides": "Sides",
+  "gt.td.short.energy.steam": "Steam"
 }

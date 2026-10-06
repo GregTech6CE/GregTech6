@@ -38,6 +38,7 @@ public final class MachineSpecBehaviorContracts {
         originalMotorDynamoConversion();
         originalThermalDevices();
         originalBipolarMagnets();
+        originalSteamTurbines();
         System.out.println("Machine spec behavior contracts passed: " + assertions
                 + " assertions; brick25percent/16HU, ceramic7U/2500K, mold5U, charged45HU/K, original machine CR.REV data; no game runtime");
     }
@@ -282,8 +283,8 @@ public final class MachineSpecBehaviorContracts {
                         && reverse.outputFaceKey().equals("gt.lang.face.back"),
                 "Original wood rotational reverse6to16 input recommendation8");
         var pendingTurbine = nodes.stream().filter(s -> s.id().startsWith("steam_turbine_")).findFirst().orElseThrow();
-        throwsType(() -> com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.profile(pendingTurbine, false),
-                "Unported turbine tooltip is not falsely assigned another device profile");
+        check(com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.profile(pendingTurbine, false).efficiency() == 6666,
+                "Source steam turbine has its own LH Steam-to-RU efficiency profile");
     }
 
     private static void originalMotorDynamoConversion() {
@@ -489,6 +490,63 @@ public final class MachineSpecBehaviorContracts {
             check(entry != null && entry.family().equals("magnets"), "Source magnet creative family " + id);
         }
         check(specs.size() == 10 && rows.size() == 10, "All ten original bipolar magnet variants");
+    }
+
+    private static void originalSteamTurbines() {
+        // Independent original1512..1548 rows: four4.25U rotors +14U double casing
+        // + two4U gears +1U long rod. Source displayed rotor material differs from Kinetic_T hull.
+        String[] suffixes = {"bronze","brass","invar","steel","chromium","ironwood","steeleaf","thaumium",
+                "titanium","fiery_steel","aluminium","magnalium","void_metal","trinitanium","graphene"};
+        int[] sourceIds = {1512,1515,1518,1522,1525,1527,1528,1529,1530,1531,1535,1538,1540,1545,1548};
+        long[] inputs = {48,72,96,192,288,384,384,384,768,768,1152,1536,2304,3072,6144};
+        long[] outputs = {16,24,32,64,96,128,128,128,256,256,384,512,768,1024,2048};
+        var variants = com.gregtech.gregtech.content.energy.OriginalSteamTurbines.VARIANTS;
+        var rows = com.gregtech.gregtech.content.energy.OriginalSteamTurbines.rows();
+        var specs = com.gregtech.gregtech.content.energy.OriginalSteamTurbines.specifications();
+        for (int i=0;i<15;i++) {
+            var v = variants.get(i); var spec = specs.get(i); long input = inputs[i], output = outputs[i], u = GTValues.U;
+            var hull = i<3 ? Materials.Bronze : i<8 ? Materials.Steel : i<12 ? Materials.Titanium : Materials.Tungstensteel;
+            check(v.id().equals("steam_turbine_"+suffixes[i]) && v.sourceId()==sourceIds[i] && spec.inputRate()==input
+                    && spec.outputRate()==output && spec.capacity()==2*input && spec.material().resolve()==hull.resolve(), "Source turbine IDs, hull and rates " + v.id());
+            check(spec.material().getColor()==hull.getColor(), "Source Kinetic_T hull appearance " + v.id());
+            var expected = new java.util.HashMap<String,Long>();
+            var rotor = v.rotor()==com.gregtech.gregtech.data.MaterialGroups.Steel ? Materials.Steel : v.rotor();
+            expected.put(hull.resolve().getName(),23*u); expected.merge(rotor.resolve().getName(),17*u,Long::sum);
+            composition(com.gregtech.gregtech.content.machine.OriginalMachineMaterialData.block(v.id()).orElseThrow(),expected);
+            var row = rows.get(i);
+            check(row.pattern().equals(java.util.List.of("TwT","GSG","TMT")) && row.count()==1 && row.empty()
+                    && row.key().get('T').name().equals("rotor") && row.key().get('G').name().equals("gearGt")
+                    && row.key().get('M').name().equals("casingMachineDouble") && row.key().get('S').name().equals("stickLong"), "Source four rotors, double hull and stored-input protection " + v.id());
+            var profile = com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.profile(spec,false);
+            check(profile.input().minimum()==input/2 && profile.input().maximum()==2*input && profile.output().minimum()==output/2
+                    && profile.output().maximum()==2*output && profile.efficiency()==6666 && profile.monkeyWrench()
+                    && profile.inputFaceKey().equals("gt.lang.face.back"), "Source Steam LH profile and motor hint " + v.id());
+            var split = com.gregtech.gregtech.content.energy.SteamTurbineConversion.step(0,0,2*input,199,input);
+            check(split.energy()==input && split.pending()==input && split.consumed()==2*input
+                    && split.condensate()==(199+2*input)/200 && split.remainder()==(199+2*input)%200, "Source whole batch split and local200L counter " + v.id());
+            var state = new com.gregtech.gregtech.content.energy.OriginalRotaryConverter.State(spec);
+            var packet = new long[2];
+            var first = state.tick(split.energy(),true,(size,amount)->{packet[0]=size;packet[1]=amount;return amount;});
+            check(packet[0]==output && packet[1]==1 && first.energy()==0 && first.possible() && first.emitted() && first.visual()==0,
+                    "Source stopped first half still converts " + v.id());
+            state.reverse();
+            var next = com.gregtech.gregtech.content.energy.SteamTurbineConversion.step(first.energy(),split.pending(),2*input,split.remainder(),input);
+            var second = state.tick(next.energy(),false,(size,amount)->{packet[0]=size;return amount;});
+            check(packet[0]==-output && next.pending()==0 && next.consumed()==0 && second.energy()==0 && second.visual()==2,
+                    "Source reverse preserves pending half without consuming another batch " + v.id());
+            state.mode(1);
+            var mode = state.tick(2*input,false,(size,amount)->{packet[0]=size;return amount;});
+            check(packet[0]==-(2*output*15/16) && mode.energy()==2*input-(2*input*15+15)/16,
+                    "Source turbine signed mode-limited packet and ceil waste " + v.id());
+            var excess = new com.gregtech.gregtech.content.energy.OriginalRotaryConverter.State(spec);
+            var unloaded = excess.tick(4*input,false,(size,amount)->{throw new AssertionError("source excess Steam emitted");});
+            check(!unloaded.overloaded() && unloaded.energy()==0,"Source first load tick clears excessive turbine batch " + v.id());
+            excess.tick(0,false,(size,amount)->0);
+            check(excess.tick(4*input,false,(size,amount)->0).overloaded(), "Source later steam excess overloads instead of EU/RF clipping " + v.id());
+            var creative = com.gregtech.gregtech.content.creative.SourceCreativeCatalog.entry(v.id());
+            check(creative!=null && creative.family().equals("turbines"),"Source original turbine creative family " + v.id());
+        }
+        check(variants.size()==15 && rows.size()==15 && specs.size()==15,"All fifteen source turbine variants");
     }
 
     private static void brickHeater() {

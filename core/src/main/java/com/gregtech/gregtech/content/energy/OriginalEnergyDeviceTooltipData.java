@@ -15,7 +15,7 @@ public final class OriginalEnergyDeviceTooltipData {
                           boolean monkeyWrench) {}
 
     public static boolean handles(EnergyNodeSpec spec) {
-        return MagnetMachineDefinitions.handles(spec) || OriginalThermalConverter.handles(spec) || OriginalRotaryConverter.handles(spec) || spec.batterySlots() > 0 || spec.kind() == EnergyNodeSpec.Kind.SOLAR
+        return OriginalSteamTurbines.handles(spec) || MagnetMachineDefinitions.handles(spec) || OriginalThermalConverter.handles(spec) || OriginalRotaryConverter.handles(spec) || spec.batterySlots() > 0 || spec.kind() == EnergyNodeSpec.Kind.SOLAR
                 || spec.id().startsWith("transformer_") || spec.id().startsWith("rotation_transformer_");
     }
 
@@ -23,6 +23,11 @@ public final class OriginalEnergyDeviceTooltipData {
     public static long batteryInputMinimum(long input) { return input / 2; }
 
     public static Profile profile(EnergyNodeSpec spec, boolean reversed) {
+        if (OriginalSteamTurbines.handles(spec)) {
+            return new Profile(new Stats(OriginalRotaryConverter.inputMinimum(spec),spec.inputRate(),spec.inputRate()*2),
+                    new Stats(spec.outputRate()/2,spec.outputRate(),spec.outputRate()*2),"gt.lang.face.back","gt.lang.face.front",
+                    true,OriginalSteamTurbines.efficiency(spec),false,true);
+        }
         if (MagnetMachineDefinitions.handles(spec)) {
             return new Profile(new Stats(OriginalRotaryConverter.inputMinimum(spec), spec.inputRate(), spec.inputRate() * 2),
                     new Stats(spec.outputRate() / 2, spec.outputRate(), spec.outputRate() * 2),

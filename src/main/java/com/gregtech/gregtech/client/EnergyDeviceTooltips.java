@@ -42,6 +42,9 @@ public final class EnergyDeviceTooltips {
         TooltipHelper.appendBlastResistance(resistance, lines);
         if (com.gregtech.gregtech.content.energy.MagnetMachineDefinitions.handles(spec))
             lines.add(Component.translatable("gt.lang.reminder.extenders").withStyle(ChatFormatting.GRAY));
+        if (com.gregtech.gregtech.content.energy.OriginalSteamTurbines.handles(spec))
+            lines.add(Component.translatable("gt.lang.emits.used.steam").withStyle(ChatFormatting.GOLD)
+                    .append(Component.literal(" (")).append(Component.translatable("gt.lang.face.sides")).append(Component.literal(", 80%)")));
         if (thermal) {
             if (cooler) lines.add(Component.translatable("gt.lang.reminder.extenders").withStyle(ChatFormatting.GRAY));
             else lines.add(Component.translatable("gt.lang.hazard.contact").withStyle(ChatFormatting.DARK_RED)
@@ -57,11 +60,13 @@ public final class EnergyDeviceTooltips {
                 .append(Component.translatable(type == GregTechTags.Energy.RU ? "gt.td.short.energy.kinetic_rotation"
                         : type == GregTechTags.Energy.RF ? "gt.td.short.energy.redstone_flux"
                         : type == GregTechTags.Energy.HU ? "gt.td.short.energy.heat"
+                        : type == GregTechTags.Energy.STEAM ? "gt.td.short.energy.steam"
                         : type == GregTechTags.Energy.MU ? "gt.td.short.energy.magnetic"
                         : type == GregTechTags.Energy.CU ? "gt.td.short.energy.cryo" : "gt.td.short.energy.electricity")
                         .withStyle(type == GregTechTags.Energy.RU ? ChatFormatting.GREEN
                                 : type == GregTechTags.Energy.RF ? ChatFormatting.DARK_RED
                                 : type == GregTechTags.Energy.HU ? ChatFormatting.RED
+                                : type == GregTechTags.Energy.STEAM ? ChatFormatting.GRAY
                                 : type == GregTechTags.Energy.MU ? ChatFormatting.DARK_GRAY
                                 : type == GregTechTags.Energy.CU ? ChatFormatting.AQUA : ChatFormatting.BLUE))
                 .append(Component.literal("/t").withStyle(ChatFormatting.WHITE));

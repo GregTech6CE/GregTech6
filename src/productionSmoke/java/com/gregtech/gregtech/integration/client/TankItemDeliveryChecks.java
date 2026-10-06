@@ -72,6 +72,7 @@ final class TankItemDeliveryChecks {
         result.add("sourceEnergyDeviceTooltips", verifyEnergyDeviceTooltips());
         result.add("sourceThermalConverters", verifyThermalConverterDelivery());
         result.add("sourceBipolarMagnets", verifyMagnetConverterDelivery());
+        result.add("sourceSteamTurbines", verifySteamTurbineDelivery());
         result.add("sourceRotaryConverters", verifyRotaryConverterDelivery());
         result.add("machineSourceMaterials", verifyMachineMaterials());
         result.addProperty("sourceFluidPipeTooltips", verifyFluidPipeTooltips());
@@ -208,7 +209,8 @@ final class TankItemDeliveryChecks {
                     || !com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.handles(node.spec())
                     || com.gregtech.gregtech.content.energy.OriginalRotaryConverter.handles(node.spec())
                     || com.gregtech.gregtech.content.energy.OriginalThermalConverter.handles(node.spec())
-                    || com.gregtech.gregtech.content.energy.MagnetMachineDefinitions.handles(node.spec())) continue;
+                    || com.gregtech.gregtech.content.energy.MagnetMachineDefinitions.handles(node.spec())
+                    || com.gregtech.gregtech.content.energy.OriginalSteamTurbines.handles(node.spec())) continue;
             var spec = node.spec();
             var item = new ItemStack(node);
             var source = com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.profile(spec, false);
@@ -496,10 +498,74 @@ final class TankItemDeliveryChecks {
         return result;
     }
 
+    private static JsonObject verifySteamTurbineDelivery() {
+        int count = 0, states = 0;
+        for (var block : BuiltInRegistries.BLOCK) {
+            if (!(block instanceof com.gregtech.gregtech.block.energy.EnergyNodeBlock node)
+                    || !com.gregtech.gregtech.content.energy.OriginalSteamTurbines.handles(node.spec())) continue;
+            var spec = node.spec(); var item = new ItemStack(block);
+            require(block instanceof com.gregtech.gregtech.block.energy.OriginalMotorBlock && item.getMaxStackSize() == 16,
+                    "installed source steam motor controls and sixteen-item stack " + spec.id());
+            var lines = tooltip(item, net.minecraft.world.item.TooltipFlag.NORMAL);
+            var source = com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.profile(spec, false);
+            verifySourceEnergyLines(spec, source, lines);
+            require(lines.stream().filter((tr("gt.lang.efficiency") + ": 66.66%")::equals).count() == 1
+                    && lines.stream().filter(tr("gt.lang.use.monkey.wrench.to.toggle.direction")::equals).count() == 1
+                    && lines.contains(tr("gt.lang.emits.used.steam") + " (" + tr("gt.lang.face.sides") + ", 80%)"),
+                    "installed original turbine efficiency, direction and side condensate hints " + spec.id());
+            verifyComposition(item, com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block(spec.id()).orElseThrow());
+            var entry = com.gregtech.gregtech.content.creative.SourceCreativeCatalog.entry(spec.id());
+            require(entry != null && entry.family().equals("turbines") && item.getHoverName().getString().equals(spec.displayEn()),
+                    "installed source turbine creative entry and name " + spec.id());
+            var tile = (com.gregtech.gregtech.blockentity.energy.EnergyNodeBlockEntity) node.newBlockEntity(BlockPos.ZERO, block.defaultBlockState());
+            require(tile.isTurbine() && tile.hasOriginalConverter() && tile.isOriginalMotor() && !tile.isOriginalRotaryConverter(),
+                    "installed source turbine shares the motor converter without changing electric family identity " + spec.id());
+            verifyNativeEnergyStats(tile, source);
+            require(tile.getEnergyCapacity(spec.inType(), null) == 2 * spec.inputRate(), "installed source steam energy buffer " + spec.id());
+            var front = block.defaultBlockState().getValue(net.minecraft.world.level.block.DirectionalBlock.FACING);
+            for (var face : net.minecraft.core.Direction.values()) {
+                require(tile.isEnergyAcceptingFrom(spec.inType(), face, false) == (face == front.getOpposite())
+                        && tile.isEnergyEmittingTo(spec.outType(), face, false) == (face == front), "installed actual turbine energy faces " + spec.id());
+                var fluid = tile.getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.FLUID_HANDLER, face).resolve().orElse(null);
+                require((fluid == null) == (face == front), "installed source non-output fluid tank visibility " + spec.id());
+                if (fluid != null) require(fluid.getTanks() == 1 && fluid.getTankCapacity(0) == 8 * spec.inputRate(),
+                        "installed original rated steam tank capacity " + spec.id());
+            }
+            var control = tile.machineControl(null);
+            require(control.supportsMode() && control.setMode(17) == 1, "installed source turbine mode selector " + spec.id());
+            control.setEnabled(false);
+            require(!tile.isEnergyAcceptingFrom(spec.inType(), front.getOpposite(), false)
+                    && tile.isEnergyAcceptingFrom(spec.inType(), front.getOpposite(), true), "installed source stopped turbine gate " + spec.id());
+            for (var state : block.getStateDefinition().getPossibleStates()) {
+                var model = net.minecraft.client.Minecraft.getInstance().getBlockRenderer().getBlockModel(state);
+                require(model != net.minecraft.client.Minecraft.getInstance().getModelManager().getMissingModel(), "installed turbine baked state " + spec.id());
+                var quads = new java.util.ArrayList<net.minecraft.client.renderer.block.model.BakedQuad>();
+                for (var face : net.minecraft.core.Direction.values()) quads.addAll(model.getQuads(state, face, net.minecraft.util.RandomSource.create(0)));
+                quads.addAll(model.getQuads(state, null, net.minecraft.util.RandomSource.create(0)));
+                boolean active = state.getValue(com.gregtech.gregtech.block.energy.RotaryConverterBlock.ACTIVITY) > 0;
+                String folder = active ? "/overlay_active_"
+                        + (state.getValue(com.gregtech.gregtech.block.energy.OriginalMotorBlock.COUNTER_CLOCKWISE) ? "l" : "r")
+                        + (state.getValue(com.gregtech.gregtech.block.energy.OriginalMotorBlock.FAST) ? "f/" : "s/") : "/overlay/";
+                require(quads.stream().anyMatch(q -> q.getTintIndex() == 0 && q.getSprite().contents().name().getPath().contains("/colored/"))
+                        && quads.stream().anyMatch(q -> q.getSprite().contents().name().getPath().contains(folder))
+                        && quads.stream().noneMatch(q -> q.getSprite().contents().name().getPath().equals("missingno")),
+                        "installed original hull tint and directional turbine overlay " + spec.id());
+                states++;
+            }
+            count++;
+        }
+        require(count == 15 && states == 2160, "installed all fifteen source steam turbines and2160 states");
+        var result = new JsonObject(); result.addProperty("steamTurbines", count); result.addProperty("actualBakedStates", states);
+        result.addProperty("exactMaterialQuantitiesAndSourceTooltips", true);
+        result.addProperty("scope", "installed title-screen factories, tooltip methods, sided capability visibility and baked models; no world or restart claim");
+        return result;
+    }
+
     private static String sourceEnergyUnit(com.gregtech.gregtech.data.GregTechTags.Tag type) {
         return tr(type == com.gregtech.gregtech.data.GregTechTags.Energy.RU ? "gt.td.short.energy.kinetic_rotation"
                 : type == com.gregtech.gregtech.data.GregTechTags.Energy.RF ? "gt.td.short.energy.redstone_flux"
                 : type == com.gregtech.gregtech.data.GregTechTags.Energy.HU ? "gt.td.short.energy.heat"
+                : type == com.gregtech.gregtech.data.GregTechTags.Energy.STEAM ? "gt.td.short.energy.steam"
                 : type == com.gregtech.gregtech.data.GregTechTags.Energy.MU ? "gt.td.short.energy.magnetic"
                 : type == com.gregtech.gregtech.data.GregTechTags.Energy.CU ? "gt.td.short.energy.cryo" : "gt.td.short.energy.electricity");
     }

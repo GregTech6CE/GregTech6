@@ -84,21 +84,7 @@ public final class EnergyNodeDefinitions {
                     .input(GregTechTags.Energy.RU, 128).output(GregTechTags.Energy.RF, 352)
                     .capacity(128 * 2).names("Flux Dynamo (MV)", "通量发电机(MV)").build());
 
-        // Steam turbines: steam L → RU (GT6 1512+, STEAM_PER_EU = 2, waste energy)
-        record Turbine(String name, GTMaterial mat, long steamLt, long ruOut, String zh) {}
-        Turbine[] turbines = {
-                new Turbine("bronze", Materials.Bronze, 48, 16, "青铜"),
-                new Turbine("brass", Materials.Brass, 72, 24, "黄铜"),
-                new Turbine("invar", Materials.Invar, 96, 32, "殷钢"),
-                new Turbine("steel", Materials.Steel, 192, 64, "钢"),
-                new Turbine("chromium", Materials.Chromium, 288, 96, "铬"),
-        };
-        for (Turbine t : turbines) {
-            result.add(EnergyNodeSpec.builder("steam_turbine_" + t.name(), t.mat())
-                    .kind(Kind.TURBINE).texture("turbines/rotation_steam")
-                    .input(GregTechTags.Energy.STEAM, t.steamLt()).output(GregTechTags.Energy.RU, t.ruOut())
-                    .capacity(t.steamLt() * 2).names("Steam Turbine (" + t.mat().getLocalName() + ")", "蒸汽轮机(" + t.zh() + ")").build());
-        }
+        result.addAll(OriginalSteamTurbines.specifications());
 
         // Solar panels (GT6 10050/10051): silicon is the ULV panel (Electric_T[0] = tin alloy),
         // germanium uses Electric_T[2] = aluminium. Both keep only the current tick's output.

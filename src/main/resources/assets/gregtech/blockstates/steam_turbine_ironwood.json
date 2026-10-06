@@ -1,0 +1,280 @@
+{
+  "variants": {
+    "facing=north,activity=0,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood"
+    },
+    "facing=north,activity=0,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood"
+    },
+    "facing=north,activity=0,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood"
+    },
+    "facing=north,activity=0,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood"
+    },
+    "facing=north,activity=1,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_rs"
+    },
+    "facing=north,activity=1,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_rf"
+    },
+    "facing=north,activity=1,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_ls"
+    },
+    "facing=north,activity=1,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_lf"
+    },
+    "facing=north,activity=2,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_rs"
+    },
+    "facing=north,activity=2,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_rf"
+    },
+    "facing=north,activity=2,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_ls"
+    },
+    "facing=north,activity=2,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_lf"
+    },
+    "facing=east,activity=0,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood",
+      "y": 90
+    },
+    "facing=east,activity=0,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood",
+      "y": 90
+    },
+    "facing=east,activity=0,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood",
+      "y": 90
+    },
+    "facing=east,activity=0,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood",
+      "y": 90
+    },
+    "facing=east,activity=1,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_rs",
+      "y": 90
+    },
+    "facing=east,activity=1,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_rf",
+      "y": 90
+    },
+    "facing=east,activity=1,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_ls",
+      "y": 90
+    },
+    "facing=east,activity=1,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_lf",
+      "y": 90
+    },
+    "facing=east,activity=2,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_rs",
+      "y": 90
+    },
+    "facing=east,activity=2,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_rf",
+      "y": 90
+    },
+    "facing=east,activity=2,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_ls",
+      "y": 90
+    },
+    "facing=east,activity=2,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_lf",
+      "y": 90
+    },
+    "facing=south,activity=0,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood",
+      "y": 180
+    },
+    "facing=south,activity=0,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood",
+      "y": 180
+    },
+    "facing=south,activity=0,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood",
+      "y": 180
+    },
+    "facing=south,activity=0,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood",
+      "y": 180
+    },
+    "facing=south,activity=1,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_rs",
+      "y": 180
+    },
+    "facing=south,activity=1,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_rf",
+      "y": 180
+    },
+    "facing=south,activity=1,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_ls",
+      "y": 180
+    },
+    "facing=south,activity=1,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_lf",
+      "y": 180
+    },
+    "facing=south,activity=2,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_rs",
+      "y": 180
+    },
+    "facing=south,activity=2,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_rf",
+      "y": 180
+    },
+    "facing=south,activity=2,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_ls",
+      "y": 180
+    },
+    "facing=south,activity=2,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_lf",
+      "y": 180
+    },
+    "facing=west,activity=0,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood",
+      "y": 270
+    },
+    "facing=west,activity=0,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood",
+      "y": 270
+    },
+    "facing=west,activity=0,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood",
+      "y": 270
+    },
+    "facing=west,activity=0,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood",
+      "y": 270
+    },
+    "facing=west,activity=1,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_rs",
+      "y": 270
+    },
+    "facing=west,activity=1,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_rf",
+      "y": 270
+    },
+    "facing=west,activity=1,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_ls",
+      "y": 270
+    },
+    "facing=west,activity=1,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_lf",
+      "y": 270
+    },
+    "facing=west,activity=2,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_rs",
+      "y": 270
+    },
+    "facing=west,activity=2,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_rf",
+      "y": 270
+    },
+    "facing=west,activity=2,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_ls",
+      "y": 270
+    },
+    "facing=west,activity=2,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_lf",
+      "y": 270
+    },
+    "facing=up,activity=0,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood",
+      "x": 270
+    },
+    "facing=up,activity=0,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood",
+      "x": 270
+    },
+    "facing=up,activity=0,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood",
+      "x": 270
+    },
+    "facing=up,activity=0,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood",
+      "x": 270
+    },
+    "facing=up,activity=1,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_rs",
+      "x": 270
+    },
+    "facing=up,activity=1,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_rf",
+      "x": 270
+    },
+    "facing=up,activity=1,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_ls",
+      "x": 270
+    },
+    "facing=up,activity=1,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_lf",
+      "x": 270
+    },
+    "facing=up,activity=2,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_rs",
+      "x": 270
+    },
+    "facing=up,activity=2,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_rf",
+      "x": 270
+    },
+    "facing=up,activity=2,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_ls",
+      "x": 270
+    },
+    "facing=up,activity=2,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_lf",
+      "x": 270
+    },
+    "facing=down,activity=0,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood",
+      "x": 90
+    },
+    "facing=down,activity=0,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood",
+      "x": 90
+    },
+    "facing=down,activity=0,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood",
+      "x": 90
+    },
+    "facing=down,activity=0,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood",
+      "x": 90
+    },
+    "facing=down,activity=1,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_rs",
+      "x": 90
+    },
+    "facing=down,activity=1,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_rf",
+      "x": 90
+    },
+    "facing=down,activity=1,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_ls",
+      "x": 90
+    },
+    "facing=down,activity=1,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_lf",
+      "x": 90
+    },
+    "facing=down,activity=2,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_rs",
+      "x": 90
+    },
+    "facing=down,activity=2,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_rf",
+      "x": 90
+    },
+    "facing=down,activity=2,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_ls",
+      "x": 90
+    },
+    "facing=down,activity=2,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_ironwood_lf",
+      "x": 90
+    }
+  }
+}

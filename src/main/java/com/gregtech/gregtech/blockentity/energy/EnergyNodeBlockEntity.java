@@ -37,7 +37,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
     public boolean hasOriginalConverter(){return rotaryConverter != null;}
     public boolean isOriginalRotaryConverter(){return hasOriginalConverter() && com.gregtech.gregtech.content.energy.OriginalRotaryConverter.handles(spec);}
     public boolean isOriginalThermalConverter(){return hasOriginalConverter() && com.gregtech.gregtech.content.energy.OriginalThermalConverter.handles(spec);}
-    public boolean isOriginalMotor(){return hasOriginalConverter() && com.gregtech.gregtech.content.energy.OriginalRotaryConverter.motor(spec);}
+    public boolean isOriginalMotor(){return hasOriginalConverter() && com.gregtech.gregtech.content.energy.OriginalRotaryConverter.motorBehavior(spec);}
     public boolean reverseMotor(){buffer=0;boolean reversed=rotaryConverter.reverse();setChanged();return reversed;}
     public boolean motorCounterClockwise(){return isOriginalMotor() && rotaryConverter.counterClockwise();}
     public boolean hasControlPanels(){return hasOriginalConverter()||isBatteryBox()||isElectricTransformer()||isSolar();}
@@ -111,7 +111,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
 
     public void setSpec(EnergyNodeSpec spec) {
         this.spec = spec;
-        rotaryConverter = com.gregtech.gregtech.content.energy.OriginalRotaryConverter.handles(spec) || com.gregtech.gregtech.content.energy.OriginalThermalConverter.handles(spec) || com.gregtech.gregtech.content.energy.MagnetMachineDefinitions.handles(spec)
+        rotaryConverter = com.gregtech.gregtech.content.energy.OriginalRotaryConverter.handles(spec) || com.gregtech.gregtech.content.energy.OriginalThermalConverter.handles(spec) || com.gregtech.gregtech.content.energy.MagnetMachineDefinitions.handles(spec) || com.gregtech.gregtech.content.energy.OriginalSteamTurbines.handles(spec)
                 ? new com.gregtech.gregtech.content.energy.OriginalRotaryConverter.State(spec) : null;
         if (isSolar()) {
             solarEnergy = new com.gregtech.gregtech.content.energy.SolarPanelEnergy(spec.outputRate());
@@ -374,10 +374,6 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
             be.tickOriginalConverter();
             return;
         }
-        switch (be.spec.kind()) {
-            case TURBINE -> be.tickTurbine();
-            default -> {} // converters/storage are push/pull driven; emission below
-        }
         be.emitOutput();
         // charge bar: sync the buffer to clients at most every 20 ticks
         if (level.getGameTime() % 20 == 0 && be.lastSyncedBuffer != be.buffer) {
@@ -409,6 +405,11 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
     public void onDataPacket(net.minecraft.network.Connection net,
                              net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket pkt) {
         if (pkt.getTag() != null) load(pkt.getTag());
+    }
+
+    public long purgeTurbineSteam() {
+        if (!isTurbine() || steamTank == null) return 0;
+        long removed = steamTank.getAmount(); steamTank.remove(removed); setChanged(); return removed;
     }
 
     public boolean isSteamConverter() { return isTurbine(); }
@@ -443,29 +444,21 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
         // Source discards condensate that no adjacent tank recovers.
     }
 
-    private IFluidHandler turbineInlet() { return new IFluidHandler() {
-        public int getTanks() { return 1; }
-        public FluidStack getFluidInTank(int tank) { return steamTank.getFluid().copy(); }
-        public int getTankCapacity(int tank) { return (int) steamTank.capacity(); }
+    private IFluidHandler turbineInlet() { return turbineInlet(null); }
+    private IFluidHandler turbineInlet(@Nullable Direction side) { return new IFluidHandler() {
+        public int getTanks() { return side == facing() ? 0 : 1; }
+        public FluidStack getFluidInTank(int tank) { return getTanks() == 0 ? FluidStack.EMPTY : steamTank.getFluid().copy(); }
+        public int getTankCapacity(int tank) { return getTanks() == 0 ? 0 : (int) steamTank.capacity(); }
         public boolean isFluidValid(int tank, FluidStack fluid) {
             var steam = com.gregtech.gregtech.registry.GTFluids.still("Steam");
             return !fluid.isEmpty() && steam != null && fluid.getFluid().isSame(steam.get());
         }
         public int fill(FluidStack fluid, FluidAction action) {
-            return !isRemoved() && !converterStopped && isFluidValid(0, fluid) ? steamTank.fill(fluid, action) : 0;
+            return !isRemoved() && !converterStopped && (side == null || side == facing().getOpposite()) && isFluidValid(0, fluid) ? steamTank.fill(fluid, action) : 0;
         }
         public FluidStack drain(FluidStack fluid, FluidAction action) { return FluidStack.EMPTY; }
         public FluidStack drain(int amount, FluidAction action) { return FluidStack.EMPTY; }
     }; }
-
-    private void emitSteamConverter() {
-        long output = com.gregtech.gregtech.content.energy.SteamTurbineConversion.output(buffer, spec.inputRate(), spec.outputRate());
-        if (output > spec.outputRate() * 2) magnetOverload(output);
-        else if (output >= Math.max(1, spec.outputRate() / 2))
-            EnergyTransfer.emitEnergyToSide(spec.outType(), facing(), output, 1, this);
-        buffer = com.gregtech.gregtech.content.energy.SteamTurbineConversion.waste(buffer, spec.inputRate());
-        setChanged();
-    }
 
     private void tickSolar(Level level, BlockPos pos) {
         panels().beforeTick();
@@ -487,6 +480,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
         panels().beforeTick();
         for (var side : Direction.values())
             com.gregtech.gregtech.content.cover.ComponentCoverRuntime.tick(this, side, level.getGameTime());
+        if (isTurbine()) tickTurbine();
         long before = buffer;
         var step = rotaryConverter.tick(buffer, converterStopped,
                 (size, amount) -> {
@@ -540,7 +534,6 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
 
     private void emitOutput() {
         if (level == null || converterStopped) return;
-        if (isSteamConverter()) { emitSteamConverter(); return; }
         if(isElectricTransformer()){emitElectricTransformer();return;}
         if (isRotationTransformer()) {
             emitRotationTransformer();
@@ -649,8 +642,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
     // ── IEnergyBlock ─────────────────────────────────────────────────────────
 
     private boolean acceptsEnergyInput() {
-        return spec != null && spec.kind() != EnergyNodeSpec.Kind.TURBINE
-                && spec.kind() != EnergyNodeSpec.Kind.SOLAR;
+        return spec != null && spec.kind() != EnergyNodeSpec.Kind.SOLAR;
     }
 
     @Override
@@ -673,7 +665,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
         if (hasOriginalConverter()) return (theoretical || !converterStopped)
                 && (side == null || (isMagnet() ? side != facing() && side != facing().getOpposite()
                     : isOriginalThermalConverter() ? side != facing() && (!com.gregtech.gregtech.content.energy.OriginalThermalConverter.cooler(spec) || side != facing().getOpposite())
-                    : isOriginalMotor() ? side != facing() : side == facing().getOpposite()))
+                    : isOriginalMotor() && !isTurbine() ? side != facing() : side == facing().getOpposite()))
                 && super.isEnergyAcceptingFrom(energyType, side, theoretical);
         if(isElectricTransformer())return (theoretical||transformerControl.accepts())&&(side==null||(inverted?side!=facing():side==facing()));
         if (isRotationTransformer()) return side == null || side == rotationInputFace();
@@ -993,11 +985,11 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
             return batteryCap.cast();
         }
         if (cap == ForgeCapabilities.FLUID_HANDLER && steamTank != null
-                && (side == null || side == facing().getOpposite())) {
+                && (side == null || side != facing())) {
             if (steamCap == null || !steamCap.isPresent()) {
                 steamCap = LazyOptional.of(this::turbineInlet);
             }
-            return side==null?steamCap.cast():componentSteamCaps.computeIfAbsent(side,face->LazyOptional.of(()->com.gregtech.gregtech.content.cover.ComponentCoverAccess.fluids(this,face,turbineInlet()))).cast();
+            return side==null?steamCap.cast():componentSteamCaps.computeIfAbsent(side,face->LazyOptional.of(()->com.gregtech.gregtech.content.cover.ComponentCoverAccess.fluids(this,face,turbineInlet(face)))).cast();
         }
         return super.getCapability(cap, side);
     }
@@ -1089,7 +1081,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
         }
         if (isRotationTransformer()) rotationNegativeInput = tag.getBoolean("gt.rotation_negative_input");
         turbinePending = Math.max(0, tag.getLong("gt.turbine_pending"));
-        steamRemainder = Math.floorMod(tag.getLong("gt.steam_remainder"), com.gregtech.gregtech.api.machine.BoilerSpec.STEAM_PER_WATER);
+        steamRemainder = Math.floorMod(tag.getLong("gt.steam_remainder"), com.gregtech.gregtech.content.energy.SteamTurbineConversion.STEAM_PER_WATER);
         // Old magnet saves wrote an unrelated false converter flag. Canonical gt.mode distinguishes the new format.
         boolean legacyMagnet = isMagnet() && !tag.contains("gt.mode");
         converterStopped = tag.getBoolean(legacyMagnet ? "gt.magnet_stopped" : "gt.converter_stopped");
@@ -1109,6 +1101,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
         }
         if (steamTank != null && tag.contains("gt.steam")) {
             steamTank.readFromNBT(tag.getCompound("gt.steam"));
+            steamTank.setCapacity(spec.inputRate() * 8); // Source resets rated tank capacity after loading saved contents.
         }
     }
     @Override public void dropContents() {

@@ -8,7 +8,7 @@ import com.gregtech.gregtech.data.GregTechTags;
 import java.math.BigInteger;
 import java.util.function.LongBinaryOperator;
 
-/** Source base conversion shared by rotary, thermal and bipolar devices. Native faces/storage stay at the boundary. */
+/** Source base conversion shared by rotary, thermal, bipolar and steam devices. Native faces/storage stay at the boundary. */
 public final class OriginalRotaryConverter {
     private OriginalRotaryConverter() {}
     public static boolean handles(EnergyNodeSpec spec) {
@@ -18,6 +18,8 @@ public final class OriginalRotaryConverter {
     public static boolean motor(EnergyNodeSpec spec) {
         return spec.id().startsWith("electric_motor_") || spec.id().startsWith("flux_motor_");
     }
+    /** Steam turbines inherit the same source motor controls and visual behavior. */
+    public static boolean motorBehavior(EnergyNodeSpec spec) { return motor(spec) || OriginalSteamTurbines.handles(spec); }
     public static long capacity(EnergyNodeSpec spec) { return spec.inputRate() * 2; }
     public static long inputMinimum(EnergyNodeSpec spec) { return spec.inputRate() <= 16 ? 1 : spec.inputRate() / 2; }
     public static int efficiency(EnergyNodeSpec spec) {
@@ -58,7 +60,7 @@ public final class OriginalRotaryConverter {
         public State(EnergyNodeSpec spec) {
             // The same source base conversion also drives thermal and bipolar devices. Twin outputs use one
             // native emission callback for both channels, so fixed input waste is applied once.
-            if (!handles(spec) && !OriginalThermalConverter.handles(spec) && !MagnetMachineDefinitions.handles(spec))
+            if (!handles(spec) && !OriginalThermalConverter.handles(spec) && !MagnetMachineDefinitions.handles(spec) && !OriginalSteamTurbines.handles(spec))
                 throw new IllegalArgumentException("Not an original registered converter: " + spec.id());
             this.spec = spec;
         }
@@ -104,12 +106,12 @@ public final class OriginalRotaryConverter {
                 // Source doBipolar always fixes positive front / negative back, regardless of input sign.
                 boolean negative = !MagnetMachineDefinitions.handles(spec) && negativeInput && GregTechTags.Energy.ALL_NEGATIVE_ALLOWED.contains(spec.inType())
                         && GregTechTags.Energy.ALL_NEGATIVE_ALLOWED.contains(spec.outType());
-                long size = motor(spec) && counterClockwise ? -output : output;
+                long size = motorBehavior(spec) && counterClockwise ? -output : output;
                 if (negative) size = -size;
                 emitted = (GregTechTags.Energy.isSizeIrrelevant(spec.outType())
                         ? emit.applyAsLong(negative ? -1 : 1, output) : emit.applyAsLong(size, 1)) > 0;
             }
-            // These original electric/flux motors, dynamos, magnets and thermal devices are WASTE_ENERGY=T.
+            // These original motors, dynamos, magnets, thermal devices and steam turbines are WASTE_ENERGY=T.
             // Stopped blocks still convert their remaining buffer; only acceptance/visuals stop.
             energy = Math.max(0, energy - units(spec.inputRate() * 2, 16, 16 - mode, true));
             return finish(energy, stopped, overloaded);

@@ -155,6 +155,13 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
+        if (node.isTurbine() && GTToolHelper.matchesTool(held, com.gregtech.gregtech.api.tool.GTToolType.PLUNGER)) {
+            if (!level.isClientSide) {
+                long removed = node.purgeTurbineSteam();
+                if (removed > 0) GTToolHelper.damageForToolClickReturn(held, removed, player);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
         // Return obsolete installed rotors from worlds made by earlier port versions.
         if (node.isTurbine()) {
             if (node.hasRotor() && GTToolHelper.matchesTool(held,

@@ -535,7 +535,7 @@ public final class CoreBehaviorContracts {
         equal(48, first.energy(), "96L source steam first half");
         equal(48, first.pending(), "96L source steam pending half");
         equal(96, first.consumed(), "consume the whole steam batch once");
-        equal(96, first.remainder(), "condensate remainder below 160L");
+        equal(96, first.remainder(), "condensate remainder below source local200L");
         var second = com.gregtech.gregtech.content.energy.SteamTurbineConversion.step(0,48,96,96,48);
         equal(48, second.energy(), "pending half restored next tick");
         equal(0, second.pending(), "pending half used once");
@@ -546,9 +546,12 @@ public final class CoreBehaviorContracts {
         equal(11, com.gregtech.gregtech.content.energy.SteamTurbineConversion.output(16,32,22), "minimum dynamo packet EU");
         equal(0, com.gregtech.gregtech.content.energy.SteamTurbineConversion.waste(48,48), "turbine spends steam even without receiver");
         equal(4, com.gregtech.gregtech.content.energy.SteamTurbineConversion.waste(100,48), "subtract maximum input, not recommended input");
-        var condensate = com.gregtech.gregtech.content.energy.SteamTurbineConversion.step(0,0,64,96,48);
-        equal(1, condensate.condensate(), "160L accumulated source steam yields one distilled water");
-        equal(0, condensate.remainder(), "160L condensate resets remainder");
+        var below = com.gregtech.gregtech.content.energy.SteamTurbineConversion.step(0,0,64,96,48);
+        equal(0, below.condensate(), "160L is not the source turbine condensation threshold");
+        equal(160, below.remainder(), "160L accumulated steam remains until200L");
+        var condensate = com.gregtech.gregtech.content.energy.SteamTurbineConversion.step(0,0,104,96,48);
+        equal(1, condensate.condensate(), "200L accumulated source steam yields one distilled water");
+        equal(0, condensate.remainder(), "source200L condensation resets remainder");
         var stopped = com.gregtech.gregtech.content.energy.SteamTurbineConversion.step(7,48,96,96,48);
         equal(55, stopped.energy(), "stopping the inlet does not cancel a stored batch");
         equal(0, stopped.pending(), "stored second half is released");
