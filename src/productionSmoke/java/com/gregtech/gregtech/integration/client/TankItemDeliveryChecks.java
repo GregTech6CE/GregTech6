@@ -69,6 +69,7 @@ final class TankItemDeliveryChecks {
         result.add("machineSourceMaterials", verifyMachineMaterials());
         result.addProperty("sourceFluidPipeTooltips", verifyFluidPipeTooltips());
         result.addProperty("storedTankTooltips", stored);
+        result.add("originalFunctionalTooltips", verifyFunctionalTooltips());
         return result;
     }
 
@@ -142,4 +143,51 @@ final class TankItemDeliveryChecks {
     private static java.util.List<String> tooltip(ItemStack stack, net.minecraft.world.item.TooltipFlag flag) {
         return stack.getTooltipLines(null, flag).stream().map(net.minecraft.network.chat.Component::getString).toList();
     }
+    private static com.google.gson.JsonObject verifyFunctionalTooltips() {
+        var result = new com.google.gson.JsonObject();
+        var ids = java.util.List.of("mortar_block", "mortar_netherite", "mortar_sapphire", "mortar_diamond", "mortar_amethyst",
+                "grindstone_block", "sifting_table", "mixing_bowl", "mixing_bowl_table", "juicer", "bathing_pot",
+                "bathing_pot_table", "bathing_pot_wood", "bathing_pot_table_wood");
+        for (String id : ids) {
+            var item = new ItemStack(BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.parse("gregtech:" + id)));
+            var lines = tooltip(item, net.minecraft.world.item.TooltipFlag.NORMAL);
+            var source = com.gregtech.gregtech.content.machine.OriginalFunctionalTooltipData.manual(id);
+            String recipes = tr("gt.lang.recipes") + ": " + tr(source.recipeKey());
+            require(lines.stream().filter(recipes::equals).count() == 1, "installed original manual recipe header " + id);
+            require(lines.contains(tr(source.usageKey())), "installed original manual usage " + id);
+            require(lines.contains(tr("gt.lang.nogui.rightclick.interact") + " (" + tr(source.faceKey()) + ")"), "installed original interaction face " + id);
+            require(lines.contains(tr("gt.lang.use.magnifyingglass.to.detail")) == source.magnifier(), "installed source magnifier presence " + id);
+            if (source.preparationKey() != null) require(lines.contains(tr(source.preparationKey())), "installed original preparation " + id);
+            var block = ((net.minecraft.world.item.BlockItem) item.getItem()).getBlock();
+            String blast = tr("gt.lang.blastresistance") + com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.blastNumber(block.getExplosionResistance());
+            require(lines.stream().anyMatch(s -> s.startsWith(blast)), "installed manual blast resistance " + id);
+            require(lines.stream().noneMatch(s -> s.contains("tooltip.gregtech.manual.")), "installed no unresolved old manual key " + id);
+        }
+        int boilers = 0;
+        for (var block : BuiltInRegistries.BLOCK) {
+            if (!(block instanceof com.gregtech.gregtech.block.machine.BoilerTankBlock boiler)) continue;
+            var item = new ItemStack(block);
+            var lines = tooltip(item, net.minecraft.world.item.TooltipFlag.NORMAL);
+            for (String key : java.util.List.of("gt.lang.requirement.water.pure", "gt.lang.nogui.funnel.tank",
+                    "gt.lang.hazard.explosion.steam", "gt.lang.hazard.meltdown", "gt.lang.use.chisel.to.decalcify", "gt.lang.use.magnifyingglass.to.detail"))
+                require(lines.stream().filter(tr(key)::equals).count() == 1, "installed original boiler requirement/hazard " + key);
+            require(lines.contains(tr("gt.lang.efficiency") + ": 100.00%"), "installed default boiler efficiency");
+            require(lines.contains(tr("gt.lang.energy.input") + ": " + boiler.spec().heatInputRecommended() + " " + tr("gt.td.short.energy.heat") + "/t (" + tr("gt.lang.face.any") + ")"), "installed source HU input");
+            require(lines.contains(tr("gt.lang.energy.capacity") + ": " + boiler.spec().steamCapacity() + " " + tr("gt.td.long.energy.steam")), "installed source Steam capacity");
+            var tag = new CompoundTag();
+            tag.putShort("gt.efficiency", (short) 5000);
+            item.addTagElement("BlockEntityTag", tag);
+            var saved = tooltip(item, net.minecraft.world.item.TooltipFlag.NORMAL);
+            require(saved.contains(tr("gt.lang.efficiency") + ": 50.00%"), "installed stored boiler efficiency");
+            require(saved.contains(tr("gt.lang.energy.output") + ": " + (boiler.spec().steamOutput() / 2) + " " + tr("gt.td.long.energy.steam") + "/t (" + tr("gt.lang.face.top") + ")"), "installed stored source Steam output");
+            boilers++;
+        }
+        require(boilers == 26, "installed source boiler identities");
+        result.addProperty("manualStations", ids.size());
+        result.addProperty("boilersDefaultAndSavedEfficiency", boilers);
+        result.addProperty("scope", "installed actual item tooltip methods at title screen; no player hover or machine operation claim");
+        return result;
+    }
+    private static String tr(String key) { return net.minecraft.network.chat.Component.translatable(key).getString(); }
+
 }

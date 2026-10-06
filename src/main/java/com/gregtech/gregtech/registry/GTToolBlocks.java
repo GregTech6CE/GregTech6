@@ -103,7 +103,7 @@ public final class GTToolBlocks {
 
     public static void registerAll() {
         add("mortar_block", ManualToolBlockEntity.Kind.MORTAR, BlockBehaviour.Properties.of()
-                .mapColor(MapColor.STONE).strength(2.0f, 6.0f).requiresCorrectToolForDrops().noOcclusion());
+                .mapColor(MapColor.STONE).strength(1.0f, 5.0f).requiresCorrectToolForDrops().noOcclusion());
         for (String material : new String[]{"Netherite", "Sapphire", "Diamond", "Amethyst"}) {
             String id = "mortar_" + material.toLowerCase(java.util.Locale.ROOT);
             var block = GTBlocks.BLOCKS.register(id, () -> new ManualToolBlock(ManualToolBlockEntity.Kind.MORTAR, material,
@@ -112,9 +112,9 @@ public final class GTToolBlocks {
             GTBlocks.BLOCK_ITEMS.register(id, () -> new BlockItem(block.get(), new Item.Properties().stacksTo(16)));
         }
         add("grindstone_block", ManualToolBlockEntity.Kind.GRINDSTONE, BlockBehaviour.Properties.of()
-                .mapColor(MapColor.STONE).strength(2.5f, 6.0f).requiresCorrectToolForDrops().noOcclusion());
+                .mapColor(MapColor.STONE).strength(1.0f, 6.0f).requiresCorrectToolForDrops().noOcclusion());
         add("sifting_table", ManualToolBlockEntity.Kind.SIFTING, BlockBehaviour.Properties.of()
-                .mapColor(MapColor.METAL).strength(2.0f, 2.0f).sound(SoundType.METAL).noOcclusion());
+                .mapColor(MapColor.METAL).strength(1.0f, 6.0f).sound(SoundType.METAL).noOcclusion());
         CRANK = GTBlocks.BLOCKS.register("crank", () -> new CrankBlock(BlockBehaviour.Properties.of()
                 .mapColor(MapColor.METAL).strength(1.0f, 6.0f).sound(SoundType.METAL).noOcclusion()));
         GTBlocks.BLOCK_ITEMS.register("crank", () -> new BlockItem(CRANK.get(), new Item.Properties().stacksTo(16)));   // GT6 Hand Crank: 16

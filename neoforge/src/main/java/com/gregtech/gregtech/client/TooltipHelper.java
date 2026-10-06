@@ -114,6 +114,7 @@ public final class TooltipHelper {
     // ── Blast resistance ────────────────────────────────────────────────
 
     public static void appendBlastResistance(float resistance, List<Component> tooltip) {
+        if (!com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.showMultitileBlast(resistance)) return;
         var rating = com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.blastRating(resistance);
         ChatFormatting color = switch (rating) {
             case TERRIBLE, GHAST -> ChatFormatting.RED;

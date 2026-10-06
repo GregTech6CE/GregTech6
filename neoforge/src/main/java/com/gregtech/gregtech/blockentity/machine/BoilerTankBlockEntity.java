@@ -357,7 +357,7 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity {
         super.loadAdditional(tag,lookup);
         heat = Math.max(0,tag.getLong("gt.heat"));
         cooldown=tag.contains("gt.cooldown")?Math.max(0,Math.min(128,tag.getInt("gt.cooldown"))):128;
-        if (tag.contains("gt.efficiency")) efficiency = tag.getShort("gt.efficiency");
+        if (tag.contains("gt.efficiency")) efficiency = (short) com.gregtech.gregtech.content.machine.OriginalFunctionalTooltipData.boilerEfficiency(tag.getShort("gt.efficiency"));
         else efficiency = 10000;
         if (tag.contains("gt.water")) waterTank.readFromNBT(tag.getCompound("gt.water"),lookup);
         if (tag.contains("gt.steam")) steamTank.readFromNBT(tag.getCompound("gt.steam"),lookup);

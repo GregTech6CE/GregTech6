@@ -26,6 +26,8 @@ public final class OriginalBlockTooltipRules {
     }
     /** The port currently has no original IC2 explosion compatibility provider. */
     public static BlastRating blastRating(double resistance) { return blastRating(resistance, false, false); }
+    /** MultiTileEntityItemInternal suppresses the blast row below4. */
+    public static boolean showMultitileBlast(double resistance) { return resistance >= 4; }
     /** Original LH truncates to one decimal; it does not round. */
     public static String blastNumber(double resistance) {
         return ((int) resistance) + "." + (((int) (resistance * 10)) % 10);

@@ -32,6 +32,7 @@ public final class MachineSpecBehaviorContracts {
         chargedCrucibleHeatRequirement();
         originalMachineMaterials();
         originalBlastTooltips();
+        originalManualAndBoilerTooltips();
         System.out.println("Machine spec behavior contracts passed: " + assertions
                 + " assertions; brick25percent/16HU, ceramic7U/2500K, mold5U, charged45HU/K, original machine CR.REV data; no game runtime");
     }
@@ -91,6 +92,28 @@ public final class MachineSpecBehaviorContracts {
                 java.util.Map.of("Bronze", 45*u));
         composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("rotational_pump_bronze").orElseThrow(),
                 java.util.Map.of("Bronze", 22*u, "StainlessSteel", 23*u/2));
+        for (String[] mortar : new String[][]{{"mortar_block", "Iron"}, {"mortar_netherite", "Netherite"},
+                {"mortar_sapphire", "Sapphire"}, {"mortar_diamond", "Diamond"}, {"mortar_amethyst", "Amethyst"}})
+            composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block(mortar[0]).orElseThrow(),
+                    java.util.Map.of("Ceramic", 5*u, mortar[1], u));
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("grindstone_block").orElseThrow(),
+                java.util.Map.of("Iron", 21*u/2));
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("sifting_table").orElseThrow(),
+                java.util.Map.of("Iron", 161*u/36));
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("mixing_bowl").orElseThrow(),
+                java.util.Map.of("Ceramic", 5*u));
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("mixing_bowl_table").orElseThrow(),
+                java.util.Map.of("Ceramic", 5*u, "Brick", 2*u));
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("juicer").orElseThrow(),
+                java.util.Map.of("Ceramic", 4*u));
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("bathing_pot").orElseThrow(),
+                java.util.Map.of("StainlessSteel", 5*u));
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("bathing_pot_table").orElseThrow(),
+                java.util.Map.of("StainlessSteel", 5*u, "Brick", 2*u));
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("bathing_pot_wood").orElseThrow(),
+                java.util.Map.of("Wood", 5*u, "Lead", u));
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("bathing_pot_table_wood").orElseThrow(),
+                java.util.Map.of("Wood", 5*u, "Lead", u, "Brick", 2*u));
         check(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("axle_wood_4").isEmpty(),
                 "Source beamWood/creosote has no automatic material data; do not invent8U");
         check(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("energy_storage_xv").isEmpty(),
@@ -118,6 +141,37 @@ public final class MachineSpecBehaviorContracts {
                 == com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.BlastRating.IC2_NUKE_UNPROTECTED, "Original IC2 conditional warning");
         check(com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.blastRating(3330, true, true) == dynamite, "Original IC2 whitelist branch");
         check(com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.blastNumber(6.99).equals("6.9"), "Original decimal truncation");
+        check(!com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.showMultitileBlast(3.99), "MTE item suppresses blast line below4");
+        check(com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.showMultitileBlast(4), "MTE blast boundary4 is visible");
+    }
+
+    private static void originalManualAndBoilerTooltips() {
+        var mortar = com.gregtech.gregtech.content.machine.OriginalFunctionalTooltipData.manual("mortar_diamond");
+        check(mortar.recipeKey().equals("gt.recipe.mortar") && mortar.faceKey().equals("gt.lang.face.top")
+                && !mortar.magnifier() && !mortar.facingWrench(), "Source mortar top interaction without invented magnifier");
+        var grind = com.gregtech.gregtech.content.machine.OriginalFunctionalTooltipData.manual("GRINDSTONE");
+        check(grind.preparationKey().equals("gt.lang.recipes.grindstone.init") && grind.facingWrench()
+                && grind.faceKey().equals("gt.lang.face.any.but.sides"), "Source grindstone sandstone preparation and facing");
+        var bath = com.gregtech.gregtech.content.machine.OriginalFunctionalTooltipData.manual("bathing_pot_table_wood");
+        check(bath.recipeKey().equals("gt.recipe.bath") && bath.magnifier(), "Wood table inherits source bath tooltip");
+        var bronze = com.gregtech.gregtech.content.energy.BoilerCatalog.all().stream()
+                .filter(s -> s.id().equals("steam_boiler_bronze")).findFirst().orElseThrow();
+        var normal = com.gregtech.gregtech.content.machine.OriginalFunctionalTooltipData.boiler(bronze, 10000);
+        check(normal.heatInput() == 24 && normal.heatCapacity() == 480000 && normal.steamOutput() == 48
+                && normal.steamCapacity() == 480000, "Original bronze boiler24HU/48Steam/480000 buffers");
+        var calcified = com.gregtech.gregtech.content.machine.OriginalFunctionalTooltipData.boiler(bronze, 5000);
+        check(calcified.steamOutput() == 24 && calcified.heatInput() == 24 && calcified.steamCapacity() == 480000,
+                "Calcification halves displayed Steam output without halving input or capacity");
+        check(com.gregtech.gregtech.content.machine.OriginalFunctionalTooltipData.boiler(bronze, 9999).steamOutput() == 47,
+                "Original floor conversion for non-round efficiency");
+        check(com.gregtech.gregtech.content.machine.OriginalFunctionalTooltipData.boilerEfficiency(-1) == 0
+                && com.gregtech.gregtech.content.machine.OriginalFunctionalTooltipData.boilerEfficiency(10001) == 10000,
+                "Original saved efficiency clamp0..10000");
+        for (var value : java.util.Map.of(10000, "100.00", 5000, "50.00", 9999, "99.99", 1, "0.01").entrySet())
+            check(com.gregtech.gregtech.content.machine.OriginalFunctionalTooltipData.efficiencyPercent(value.getKey()).equals(value.getValue()),
+                    "Original percent " + value.getKey());
+        var juicer = com.gregtech.gregtech.content.tool.OpenVesselRules.profile("juicer");
+        check(juicer.hardness() == 1 && juicer.resistance() == 5, "Original ceramic juicer physical properties");
     }
 
     private static void composition(com.gregtech.gregtech.api.material.ItemComposition data, java.util.Map<String, Long> expected) {
