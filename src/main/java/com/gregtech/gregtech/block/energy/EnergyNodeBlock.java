@@ -178,6 +178,12 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
+        if (com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.handles(spec)) {
+            var data = stack.getTagElement("BlockEntityTag");
+            com.gregtech.gregtech.client.EnergyDeviceTooltips.append(spec,
+                    data != null && data.getBoolean("gt.inverted"), getExplosionResistance(), tooltip);
+            return;
+        }
         String outUnit = spec.outType().getShortName();
         switch (spec.kind()) {
             case MAGNET -> {

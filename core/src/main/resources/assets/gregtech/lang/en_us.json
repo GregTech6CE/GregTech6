@@ -11127,5 +11127,13 @@
   "gt.td.short.energy.kinetic_rotation": "RU",
   "gt.tooltip.gearbox.custom.1": "Gears are interlocked wrongly!",
   "gt.tooltip.gearbox.custom.2": "Use Wrench to mount Gears from your Inventory",
-  "gt.tooltip.gearbox.custom.3": "Use Monkeywrench to change Axle Direction"
+  "gt.tooltip.gearbox.custom.3": "Use Monkeywrench to change Axle Direction",
+  "gt.lang.face.any.but.front": "Any but Front",
+  "gt.lang.face.back": "Back",
+  "gt.lang.face.front": "Front",
+  "gt.lang.use.monkey.wrench.to.toggle.direction": "Use Monkey Wrench to set Direction",
+  "gt.td.short.energy.electricity": "EU",
+  "gt.tooltip.energybattery.1": "Selector Covers can set the amount of emitted Packets",
+  "gt.tooltip.energybattery.2": "Mode 0 = Emit as much as possible, this is Default",
+  "gt.tooltip.energybattery.3": "Mode 1 - 15 = Emit up to 1 - 15 Packets if enough Energy Storages"
 }

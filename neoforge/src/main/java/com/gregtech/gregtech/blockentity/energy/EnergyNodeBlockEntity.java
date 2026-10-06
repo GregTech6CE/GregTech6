@@ -670,7 +670,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
 
     @Override
     public long getEnergySizeInputMin(GregTechTags.Tag energyType, @Nullable Direction side) {
-        if(isBatteryBox())return energyType==spec.inType()?(inRate()<=16?1:inRate()/2):0;
+        if(isBatteryBox())return energyType==spec.inType()?com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.batteryInputMinimum(inRate()):0;
         if (!(isRotationTransformer() || isElectricTransformer()) || energyType != spec.inType()) return super.getEnergySizeInputMin(energyType, side);
         if (!inverted) return spec.inputRate() <= 16 ? 1 : spec.inputRate() / 2;
         long originalOutputMin = Math.max(1, spec.outputRate() / 2);

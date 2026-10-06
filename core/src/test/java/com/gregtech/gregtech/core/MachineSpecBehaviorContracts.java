@@ -34,6 +34,7 @@ public final class MachineSpecBehaviorContracts {
         originalBlastTooltips();
         originalManualAndBoilerTooltips();
         originalLargeBoilerTooltipState();
+        originalEnergyDeviceTooltips();
         System.out.println("Machine spec behavior contracts passed: " + assertions
                 + " assertions; brick25percent/16HU, ceramic7U/2500K, mold5U, charged45HU/K, original machine CR.REV data; no game runtime");
     }
@@ -205,6 +206,80 @@ public final class MachineSpecBehaviorContracts {
         check(!com.gregtech.gregtech.content.energy.GearboxRotationRules.gearsWork(3, 0), "Two opposite gears without axle warn");
         check(com.gregtech.gregtech.content.energy.GearboxRotationRules.gearsWork(3, 2), "Matching Y axle interlocks opposite gears");
         check(!com.gregtech.gregtech.content.energy.GearboxRotationRules.gearsWork(21, 0), "Original three-axis triangle warns");
+    }
+
+    private static void originalEnergyDeviceTooltips() {
+        // Original10080..10099 /10040..10048 /10050..10051, with Root/Converter/Bidirectional stats.
+        var boxes = com.gregtech.gregtech.content.energy.BatteryBoxDefinitions.specifications();
+        check(boxes.size() == 20, "Original four/sixteen-slot boxes cover ten voltage tiers");
+        for (int tier = 0; tier < 10; tier++) {
+            long voltage = 8L << (tier * 2);
+            for (int size = 0; size < 2; size++) {
+                var spec = boxes.get(tier * 2 + size);
+                var profile = com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.profile(spec, false);
+                check(spec.batterySlots() == (size == 0 ? 4 : 16)
+                                && profile.input().minimum() == voltage / 2
+                                && profile.input().recommended() == voltage && profile.input().maximum() == voltage * 2,
+                        "Original battery box rated input " + tier + "/" + size);
+                check(profile.output().minimum() == voltage && profile.output().recommended() == voltage
+                                && profile.output().maximum() == voltage && profile.batteryModes()
+                                && !profile.alwaysShowRange() && profile.efficiency() == -1 && !profile.monkeyWrench(),
+                        "Original fixed battery output and source hint chain " + tier + "/" + size);
+            }
+        }
+        check(com.gregtech.gregtech.api.energy.EnergyGate.gateInjection(com.gregtech.gregtech.data.GregTechTags.Energy.EU,
+                        true, 3, com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.batteryInputMinimum(8), 7,
+                        () -> { throw new AssertionError("ULV packet below4 must never reach storage"); }) == 7,
+                "Original ULV under-voltage packet is consumed without storing");
+        check(com.gregtech.gregtech.api.energy.EnergyGate.gateInjection(com.gregtech.gregtech.data.GregTechTags.Energy.EU,
+                        true, 4, com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.batteryInputMinimum(8), 7,
+                        () -> 5) == 5, "Original ULV4 packet reaches storage callback");
+        var nodes = com.gregtech.gregtech.content.energy.EnergyNodeDefinitions.specifications();
+        int transformers = 0, solar = 0;
+        for (var spec : nodes) {
+            if (spec.id().startsWith("transformer_")) {
+                long high = 32L << (transformers * 2), low = high / 4;
+                var normal = com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.profile(spec, false);
+                var reverse = com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.profile(spec, true);
+                check(normal.input().minimum() == high / 2 && normal.input().recommended() == high
+                                && normal.input().maximum() == high * 2 && normal.output().minimum() == low / 2
+                                && normal.output().recommended() == low && normal.output().maximum() == low * 2,
+                        "Original electric transformer normal ratings " + transformers);
+                check(reverse.input().minimum() == (low / 2 <= 8 ? 1 : low / 2)
+                                && reverse.input().recommended() == high && reverse.input().maximum() == high * 2
+                                && reverse.output().minimum() == high * 3 / 4 && reverse.output().recommended() == high
+                                && reverse.output().maximum() == high * 2,
+                        "Original reverse recommendation and ranges " + transformers);
+                check(normal.alwaysShowRange() && normal.efficiency() == 10000 && reverse.efficiency() == 10000
+                                && normal.monkeyWrench() && reverse.monkeyWrench()
+                                && normal.inputFaceKey().equals(reverse.inputFaceKey())
+                                && normal.outputFaceKey().equals("gt.lang.face.any.but.front"),
+                        "Source converter range/efficiency/fixed face labels/Monkey Wrench " + transformers);
+                transformers++;
+            } else if (spec.kind() == com.gregtech.gregtech.api.energy.EnergyNodeSpec.Kind.SOLAR) {
+                long output = solar == 0 ? 8 : 16;
+                var profile = com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.profile(spec, false);
+                check(profile.input() == null && profile.output().minimum() == output / 8
+                                && profile.output().recommended() == output && profile.output().maximum() == output
+                                && profile.outputFaceKey().equals("gt.lang.face.front") && profile.efficiency() == -1,
+                        "Original solar output-only source tooltip " + solar);
+                solar++;
+            }
+        }
+        check(transformers == 9 && solar == 2, "Source electric transformer and solar families");
+        var wood = com.gregtech.gregtech.content.energy.GearboxCatalog.transformer(
+                com.gregtech.gregtech.content.energy.GearboxCatalog.tiers()[0]);
+        var normal = com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.profile(wood, false);
+        var reverse = com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.profile(wood, true);
+        check(normal.input().minimum() == 1 && normal.input().recommended() == 8 && normal.input().maximum() == 16
+                        && normal.output().minimum() == 1 && normal.output().recommended() == 2 && normal.output().maximum() == 4,
+                "Original wood rotational transformer source8to2");
+        check(reverse.input().minimum() == 1 && reverse.input().recommended() == 8 && reverse.input().maximum() == 16
+                        && reverse.output().minimum() == 6 && reverse.output().recommended() == 8 && reverse.output().maximum() == 16
+                        && reverse.outputFaceKey().equals("gt.lang.face.back"),
+                "Original wood rotational reverse6to16 input recommendation8");
+        throwsType(() -> com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.profile(nodes.get(0), false),
+                "Incomplete motor conversion is not falsely assigned a battery/transformer tooltip profile");
     }
 
     private static void brickHeater() {

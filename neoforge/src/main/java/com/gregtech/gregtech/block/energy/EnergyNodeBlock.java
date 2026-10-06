@@ -179,6 +179,13 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
 
     @Override
     public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+        if (com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.handles(spec)) {
+            var component = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
+            var data = component == null ? new net.minecraft.nbt.CompoundTag() : component.copyTag();
+            com.gregtech.gregtech.client.EnergyDeviceTooltips.append(spec,
+                    data.getBoolean("gt.inverted"), getExplosionResistance(), tooltip);
+            return;
+        }
         String outUnit = spec.outType().getShortName();
         switch (spec.kind()) {
             case MAGNET -> {

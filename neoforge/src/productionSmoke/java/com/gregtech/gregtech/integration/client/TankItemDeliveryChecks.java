@@ -69,6 +69,7 @@ final class TankItemDeliveryChecks {
         result.addProperty("scope", "installed methods at title screen; actual harvest tested separately in native server worlds");
         result.add("originalFunctionalTooltips", verifyFunctionalTooltips());
         result.add("sourceMechanicalTooltips", verifyMechanicalTooltips());
+        result.add("sourceEnergyDeviceTooltips", verifyEnergyDeviceTooltips());
         result.add("machineSourceMaterials", verifyMachineMaterials());
         result.addProperty("sourceFluidPipeTooltips", verifyFluidPipeTooltips());
         result.addProperty("storedTankTooltips", stored);
@@ -195,6 +196,87 @@ final class TankItemDeliveryChecks {
         return result;
     }
     private static String tr(String key) { return net.minecraft.network.chat.Component.translatable(key).getString(); }
+
+
+    private static JsonObject verifyEnergyDeviceTooltips() {
+        int batteries = 0, solar = 0, electric = 0, rotation = 0, reversed = 0;
+        for (var block : BuiltInRegistries.BLOCK) {
+            if (!(block instanceof com.gregtech.gregtech.block.energy.EnergyNodeBlock node)
+                    || !com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.handles(node.spec())) continue;
+            var spec = node.spec();
+            var item = new ItemStack(node);
+            var source = com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.profile(spec, false);
+            var lines = tooltip(item, net.minecraft.world.item.TooltipFlag.NORMAL);
+            verifySourceEnergyLines(spec, source, lines);
+            String wrench = tr("gt.lang.use.x.to.toggle.facing.pre") + tr("gt.lang.tool.name.wrench") + tr("gt.lang.use.x.to.toggle.facing.post");
+            require(lines.stream().filter(wrench::equals).count() == 1, "installed one source energy-device facing hint " + spec.id());
+            var raw = node.newBlockEntity(net.minecraft.core.BlockPos.ZERO, node.defaultBlockState());
+            require(raw instanceof com.gregtech.gregtech.blockentity.energy.EnergyNodeBlockEntity, "installed actual node factory " + spec.id());
+            var tile = (com.gregtech.gregtech.blockentity.energy.EnergyNodeBlockEntity) raw;
+            verifyNativeEnergyStats(tile, source);
+            if (source.batteryModes()) {
+                for (String key : java.util.List.of("gt.tooltip.energybattery.1", "gt.tooltip.energybattery.2", "gt.tooltip.energybattery.3"))
+                    require(lines.stream().filter(tr(key)::equals).count() == 1, "installed battery selector mode hint " + spec.id());
+                batteries++;
+            } else if (spec.kind() == com.gregtech.gregtech.api.energy.EnergyNodeSpec.Kind.SOLAR) solar++;
+            else {
+                require(lines.contains(tr("gt.lang.efficiency") + ": 100.00%"), "installed original transformer efficiency " + spec.id());
+                require(lines.stream().filter(tr("gt.lang.use.monkey.wrench.to.toggle.direction")::equals).count() == 1, "installed original Monkey Wrench hint " + spec.id());
+                var tag = new CompoundTag();
+                tag.putBoolean("gt.inverted", true);
+                item.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA, net.minecraft.world.item.component.CustomData.of(tag));
+                var reverse = com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.profile(spec, true);
+                verifySourceEnergyLines(spec, reverse, tooltip(item, net.minecraft.world.item.TooltipFlag.NORMAL));
+                require(tile.toggleInverted(), "installed original converter direction toggled " + spec.id());
+                verifyNativeEnergyStats(tile, reverse);
+                reversed++;
+                if (spec.id().startsWith("rotation_transformer_")) rotation++; else electric++;
+            }
+        }
+        require(batteries == 20 && solar == 2 && electric == 9 && rotation == 13 && reversed == 22, "installed energy-device family coverage");
+        var out = new JsonObject();
+        out.addProperty("batteryBoxes", batteries);
+        out.addProperty("solarPanels", solar);
+        out.addProperty("electricTransformers", electric);
+        out.addProperty("rotationalTransformers", rotation);
+        out.addProperty("savedDirectionItemTooltipsAndNativeToggleStatistics", reversed);
+        out.addProperty("scope", "installed item methods and native factory rating getters at title screen; no energy transfer or saved-world restart claim");
+        return out;
+    }
+
+    private static void verifyNativeEnergyStats(com.gregtech.gregtech.blockentity.energy.EnergyNodeBlockEntity tile,
+                                                com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.Profile source) {
+        var spec = tile.spec();
+        if (source.input() != null)
+            require(tile.getEnergySizeInputMin(spec.inType(), null) == source.input().minimum()
+                    && tile.getEnergySizeInputRecommended(spec.inType(), null) == source.input().recommended()
+                    && tile.getEnergySizeInputMax(spec.inType(), null) == source.input().maximum(), "installed native original input range " + spec.id());
+        require(tile.getEnergySizeOutputMin(spec.outType(), null) == source.output().minimum()
+                && tile.getEnergySizeOutputRecommended(spec.outType(), null) == source.output().recommended()
+                && tile.getEnergySizeOutputMax(spec.outType(), null) == source.output().maximum(), "installed native original output range " + spec.id());
+    }
+
+    private static void verifySourceEnergyLines(com.gregtech.gregtech.api.energy.EnergyNodeSpec spec,
+                                                com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.Profile source,
+                                                java.util.List<String> lines) {
+        String unit = tr(spec.outType() == com.gregtech.gregtech.data.GregTechTags.Energy.RU
+                ? "gt.td.short.energy.kinetic_rotation" : "gt.td.short.energy.electricity");
+        if (source.input() != null) {
+            String expected = sourceEnergyLine("gt.lang.energy.input", source.input(), unit, source.inputFaceKey(), source.alwaysShowRange());
+            require(lines.stream().filter(expected::equals).count() == 1, "installed single source energy input " + spec.id());
+        } else require(lines.stream().noneMatch(s -> s.startsWith(tr("gt.lang.energy.input") + ":")), "installed solar has no invented input");
+        String expected = sourceEnergyLine("gt.lang.energy.output", source.output(), unit, source.outputFaceKey(), source.alwaysShowRange());
+        require(lines.stream().filter(expected::equals).count() == 1, "installed single source energy output " + spec.id());
+    }
+
+    private static String sourceEnergyLine(String key, com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.Stats stats,
+                                          String unit, String faceKey, boolean alwaysRange) {
+        String text = tr(key) + ": " + stats.recommended() + " " + unit + "/t";
+        if (alwaysRange || stats.minimum() != stats.recommended() || stats.maximum() != stats.recommended())
+            text += (stats.minimum() <= 1 ? " (up to " : " (" + stats.minimum() + " to ")
+                    + stats.maximum() + ", " + tr(faceKey) + ")";
+        return text;
+    }
 
     private static JsonObject verifyMechanicalTooltips() {
         int axles = 0, gearboxes = 0, largeBoilers = 0;
