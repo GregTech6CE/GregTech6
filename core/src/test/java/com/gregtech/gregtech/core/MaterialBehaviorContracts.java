@@ -38,8 +38,10 @@ public final class MaterialBehaviorContracts {
     // docs/integration/verification/external-thermal-material-differential-20261004.json.
     // dustPure/refined metadata plus source dustImpure weight correction; full delta audited:
     // docs/integration/verification/dust-listeners-material-differential-20261004.json.
-    private static final String DEFINITIONS_SHA256 = "842079f4654e2eb389117406b4eeef2a564460b4142705dd62adf4d06d1daa74";
-    private static final String POST_INIT_SHA256 = "0a3828a8b07715e8ef8c432572756033c0101eec00ea70657d0f750bcd603b6e";
+    // Source UUM flags and Mercury LIQUID restoration; complete isolated delta:
+    // docs/integration/verification/ci-material-differential-20261006.json.
+    private static final String DEFINITIONS_SHA256 = "e519e84e813110ee84ffdef0c867fd116b51beb697239fbe4b0f71967fb3fe77";
+    private static final String POST_INIT_SHA256 = "edc49979538c7dddd7309a59d27109744a697e1c9aaa85295b875a864240e409";
     private static int assertions;
     private MaterialBehaviorContracts() {}
 
