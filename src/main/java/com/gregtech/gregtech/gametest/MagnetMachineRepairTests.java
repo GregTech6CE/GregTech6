@@ -112,7 +112,9 @@ public final class MagnetMachineRepairTests {
                         + ", lower=" + negative.getEnergyTick() + ", buffer=" + magnet.stored());
         h.assertTrue(magnet.getBlockState().getValue(MagnetMachineBlock.ACTIVE), "live field uses active texture");
         EnergyNodeBlockEntity.serverTick(h.getLevel(), magnet.getBlockPos(), magnet.getBlockState(), magnet);
-        h.assertTrue(!magnet.getBlockState().getValue(MagnetMachineBlock.ACTIVE), "activity clears without power");
+        h.assertTrue(magnet.getBlockState().getValue(MagnetMachineBlock.ACTIVE), "source trinary overlay remembers possible power");
+        for (int i = 0; i < 63; i++) EnergyNodeBlockEntity.serverTick(h.getLevel(), magnet.getBlockPos(), magnet.getBlockState(), magnet);
+        h.assertTrue(!magnet.getBlockState().getValue(MagnetMachineBlock.ACTIVE), "source activity history clears after64 empty ticks");
         h.succeed();
     }
 
@@ -135,8 +137,8 @@ public final class MagnetMachineRepairTests {
         h.assertTrue(restored.stored() == 128 && restored.magnetEnabled(), "charge survives save/load");
         h.assertTrue(!magnet.toggleMagnetEnabled() && !magnet.isEnergyAcceptingFrom(rf, Direction.WEST, false)
                 && cap.receiveEnergy(128, false) == 0, "stopped magnet rejects cached FE handler");
-        h.assertTrue(magnet.cycleMagnetMode() == 1 && magnet.magnetMode() == 1,
-                "field limit is adjustable");
+        h.assertTrue(magnet.machineControl(null).setMode(1) == 1 && magnet.magnetMode() == 1,
+                "source selector interface adjusts field limit");
         saved = magnet.saveWithoutMetadata();
         restored.load(saved);
         h.assertTrue(!restored.magnetEnabled() && restored.magnetMode() == 1,
@@ -161,8 +163,8 @@ public final class MagnetMachineRepairTests {
         h.assertTrue(low.doEnergyInjection(eu, Direction.WEST, 32, 1, true) == 1
                 && half.doEnergyInjection(eu, Direction.WEST, 32, 2, true) == 2,
                 "one or two LV packets fit the GT6 64 EU capacitor");
-        for (int i = 0; i < 15; i++) low.cycleMagnetMode();
-        for (int i = 0; i < 8; i++) half.cycleMagnetMode();
+        low.machineControl(null).setMode(15);
+        half.machineControl(null).setMode(8);
         h.assertTrue(low.magnetMode() == 15 && half.magnetMode() == 8,
                 "field modes change independently");
         EnergyNodeBlockEntity.serverTick(h.getLevel(), low.getBlockPos(), low.getBlockState(), low);

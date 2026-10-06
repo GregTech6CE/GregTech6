@@ -11152,5 +11152,7 @@
   "gt.lang.face.any.but.front.back": "Any but Front and Back",
   "gt.lang.hazard.contact": "Causes Damage when touched while active!",
   "gt.lang.reminder.extenders": "Remember to use Universal Extenders if you need to literally cut Corners",
-  "gt.td.short.energy.cryo": "CU"
+  "gt.td.short.energy.cryo": "CU",
+  "gt.lang.face.front.back": "Front and Back",
+  "gt.td.short.energy.magnetic": "MU"
 }

@@ -1,6 +1,6 @@
 /* Copyright (c) 2021-2023 GregTech-6 Team; Gregorius Techneticies.
  * LGPL-3.0-or-later. Adapted from TileEntityBase10EnergyConverter,
- * TileEntityBase11Motor, TE_Behavior_Energy_Stats/Converter/Active_Trinary. */
+ * TileEntityBase11Motor/Bipolar, TE_Behavior_Energy_Stats/Converter/Active_Trinary. */
 package com.gregtech.gregtech.content.energy;
 
 import com.gregtech.gregtech.api.energy.EnergyNodeSpec;
@@ -8,7 +8,7 @@ import com.gregtech.gregtech.data.GregTechTags;
 import java.math.BigInteger;
 import java.util.function.LongBinaryOperator;
 
-/** Source motor/dynamo conversion. Storage, faces, capabilities and NBT remain native boundaries. */
+/** Source base conversion shared by rotary, thermal and bipolar devices. Native faces/storage stay at the boundary. */
 public final class OriginalRotaryConverter {
     private OriginalRotaryConverter() {}
     public static boolean handles(EnergyNodeSpec spec) {
@@ -56,9 +56,10 @@ public final class OriginalRotaryConverter {
         private int mode;
         private boolean counterClockwise, negativeInput, possible, emitted, fast;
         public State(EnergyNodeSpec spec) {
-            // The same source base conversion also drives thermal devices. Twin outputs use one
+            // The same source base conversion also drives thermal and bipolar devices. Twin outputs use one
             // native emission callback for both channels, so fixed input waste is applied once.
-            if (!handles(spec) && !OriginalThermalConverter.handles(spec)) throw new IllegalArgumentException("Not an original registered converter: " + spec.id());
+            if (!handles(spec) && !OriginalThermalConverter.handles(spec) && !MagnetMachineDefinitions.handles(spec))
+                throw new IllegalArgumentException("Not an original registered converter: " + spec.id());
             this.spec = spec;
         }
         public int mode() { return mode; }
@@ -100,14 +101,15 @@ public final class OriginalRotaryConverter {
                         return finish(0, stopped, overloaded);
                     }
                 }
-                boolean negative = negativeInput && GregTechTags.Energy.ALL_NEGATIVE_ALLOWED.contains(spec.inType())
+                // Source doBipolar always fixes positive front / negative back, regardless of input sign.
+                boolean negative = !MagnetMachineDefinitions.handles(spec) && negativeInput && GregTechTags.Energy.ALL_NEGATIVE_ALLOWED.contains(spec.inType())
                         && GregTechTags.Energy.ALL_NEGATIVE_ALLOWED.contains(spec.outType());
                 long size = motor(spec) && counterClockwise ? -output : output;
                 if (negative) size = -size;
                 emitted = (GregTechTags.Energy.isSizeIrrelevant(spec.outType())
                         ? emit.applyAsLong(negative ? -1 : 1, output) : emit.applyAsLong(size, 1)) > 0;
             }
-            // These original electric/flux motors, dynamos and thermal devices are WASTE_ENERGY=T.
+            // These original electric/flux motors, dynamos, magnets and thermal devices are WASTE_ENERGY=T.
             // Stopped blocks still convert their remaining buffer; only acceptance/visuals stop.
             energy = Math.max(0, energy - units(spec.inputRate() * 2, 16, 16 - mode, true));
             return finish(energy, stopped, overloaded);

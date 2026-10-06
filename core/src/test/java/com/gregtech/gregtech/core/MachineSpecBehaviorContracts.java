@@ -37,6 +37,7 @@ public final class MachineSpecBehaviorContracts {
         originalEnergyDeviceTooltips();
         originalMotorDynamoConversion();
         originalThermalDevices();
+        originalBipolarMagnets();
         System.out.println("Machine spec behavior contracts passed: " + assertions
                 + " assertions; brick25percent/16HU, ceramic7U/2500K, mold5U, charged45HU/K, original machine CR.REV data; no game runtime");
     }
@@ -433,6 +434,61 @@ public final class MachineSpecBehaviorContracts {
             seen++;
         }
         check(seen == 20 && recipes.size() == 20, "All twenty source thermal registrations and recipes");
+    }
+
+    private static void originalBipolarMagnets() {
+        // Fixed source registrations10031..35 /11031..35: six uninsulated wires,
+        // 8U casing, and an RF upgrade adding eight1U long rods; not nominal hull-only data.
+        String[] tiers = {"lv", "mv", "hv", "ev", "iv"};
+        String[] hulls = {"SteelGalvanized", "Aluminium", "StainlessSteel", "Chromium", "Titanium"};
+        String[] fluxHulls = {"Lead", "Invar", "Electrum", "EnderiumBase", "Enderium"};
+        var specs = com.gregtech.gregtech.content.energy.MagnetMachineDefinitions.specifications();
+        var rows = com.gregtech.gregtech.content.energy.OriginalMagnetCrafting.rows();
+        for (boolean rf : new boolean[]{false, true}) for (int tier = 0; tier < 5; tier++) {
+            String id = (rf ? "flux_magnet_" : "electromagnet_") + tiers[tier];
+            var spec = specs.stream().filter(s -> s.id().equals(id)).findFirst().orElseThrow();
+            long input = (32L << (2*tier)) * (rf ? 4 : 1), output = 16L << (2*tier), u = GTValues.U;
+            var profile = com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.profile(spec, false);
+            check(spec.inputRate() == input && spec.outputRate() == output && spec.capacity() == 2*input
+                            && spec.material() == GTMaterialRegistry.get((rf ? fluxHulls : hulls)[tier]), "Source magnet ratings and identity " + id);
+            check(spec.outType() == com.gregtech.gregtech.data.GregTechTags.Energy.MU
+                            && !com.gregtech.gregtech.data.GregTechTags.Energy.isSizeIrrelevant(spec.outType()), "Source signed MU packets " + id);
+            check(profile.input().minimum() == input/2 && profile.input().maximum() == 2*input
+                            && profile.output().minimum() == output/2 && profile.output().maximum() == 2*output
+                            && profile.inputFaceKey().equals("gt.lang.face.any.but.front.back")
+                            && profile.outputFaceKey().equals("gt.lang.face.front.back")
+                            && profile.efficiency() == 10000 && !profile.monkeyWrench(), "Source bipolar total efficiency, faces and tool hints " + id);
+            var expected = new java.util.HashMap<String,Long>();
+            expected.put(hulls[tier], 8*u); expected.put(tier < 2 ? "Copper" : "AnnealedCopper", (3L << tier)*u);
+            if (rf) expected.merge(fluxHulls[tier], 8*u, Long::sum);
+            composition(com.gregtech.gregtech.content.machine.OriginalMachineMaterialData.block(id).orElseThrow(), expected);
+            var row = rows.stream().filter(r -> r.output().equals("gregtech:" + id)).findFirst().orElseThrow();
+            check(row.path().equals("magnets/" + id) && row.empty() && row.count() == 1 && !row.unpack()
+                    && row.pattern().equals(rf ? java.util.List.of("SSS", "SMS", "SSS") : java.util.List.of("CxC", "CMC", "CwC")), "Source crafting pattern and retained recipe identity " + id);
+            if (rf) check(row.key().get('M').name().equals("gregtech:electromagnet_" + tiers[tier])
+                    && row.key().get('S').name().equals("stickLong"), "Source eight long rods and exact base tier " + id);
+            else check(row.key().get('C').kind().equals("wire") && row.key().get('C').name().equals(Integer.toString(1 << tier))
+                            && row.key().get('C').material() == (tier < 2 ? MaterialGroups.Cu : Materials.AnnealedCopper), "Source bare wire width and ANY.Cu group " + id);
+            var state = new com.gregtech.gregtech.content.energy.OriginalRotaryConverter.State(spec);
+            var simulated = state.inject(0, input, Long.MAX_VALUE, false);
+            check(simulated.energy() == 0 && simulated.consumed() == 2 && !simulated.overloaded(), "Source pure bounded magnet injection " + id);
+            var calls = new long[2];
+            state.inject(0, -input, 1, true);
+            var tick = state.tick(input, false, (size, amount) -> { calls[0] = size; calls[1] = amount; return 0; });
+            check(calls[0] == output && calls[1] == 1 && tick.energy() == 0 && tick.possible() && !tick.emitted() && tick.visual() == 2,
+                    "Source input sign never flips bipolar poles; possible and emitted differ without receiver " + id);
+            tick = state.tick(0, false, (size, amount) -> { throw new AssertionError("empty magnet emitted"); });
+            check(tick.visual() == 2 && !tick.possible(), "Source activity overlay lingers in64-bit history " + id);
+            state.mode(1);
+            tick = state.tick(2*input, true, (size, amount) -> { calls[0] = size; return 2; });
+            check(calls[0] == 2*output*15/16 && tick.energy() == input/8 && tick.visual() == 0 && tick.possible() && tick.emitted(),
+                    "Source stopped residual buffer still reaches both poles with one fixed waste tick " + id);
+            state.restore(new com.gregtech.gregtech.content.energy.OriginalRotaryConverter.Snapshot(15, false, true, true, false, false));
+            check(state.mode() == 15 && state.possible() && !state.emitted() && state.visual(false) == 0, "Source saved mode/emission flags reset unsaved visual history " + id);
+            var entry = com.gregtech.gregtech.content.creative.SourceCreativeCatalog.entry(id);
+            check(entry != null && entry.family().equals("magnets"), "Source magnet creative family " + id);
+        }
+        check(specs.size() == 10 && rows.size() == 10, "All ten original bipolar magnet variants");
     }
 
     private static void brickHeater() {

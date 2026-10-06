@@ -33,6 +33,7 @@ init4();
 init5();
 init6();
 initThermal();
+initMagnets();
 }
 private static void init0(){
 ITEMS.put("abyssal_dough",new Entry("nature_foods",568));
@@ -2607,6 +2608,18 @@ ITEMS.put("flux_cooler_mv",new Entry("coolers",498));
 ITEMS.put("flux_cooler_hv",new Entry("coolers",499));
 ITEMS.put("flux_cooler_ev",new Entry("coolers",500));
 ITEMS.put("flux_cooler_iv",new Entry("coolers",501));
+}
+private static void initMagnets(){
+ITEMS.put("electromagnet_lv",new Entry("magnets",425));
+ITEMS.put("electromagnet_mv",new Entry("magnets",426));
+ITEMS.put("electromagnet_hv",new Entry("magnets",427));
+ITEMS.put("electromagnet_ev",new Entry("magnets",428));
+ITEMS.put("electromagnet_iv",new Entry("magnets",429));
+ITEMS.put("flux_magnet_lv",new Entry("magnets",430));
+ITEMS.put("flux_magnet_mv",new Entry("magnets",431));
+ITEMS.put("flux_magnet_hv",new Entry("magnets",432));
+ITEMS.put("flux_magnet_ev",new Entry("magnets",433));
+ITEMS.put("flux_magnet_iv",new Entry("magnets",434));
 }
 public static Entry entry(String id){return ITEMS.get(id.startsWith("bush_plant_gt_berry_")?"bush":id);}
 }

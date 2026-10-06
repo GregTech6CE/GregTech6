@@ -55,6 +55,7 @@ public final class TransportCraftingCatalog {
             // PlasticCan is an existing extruder mold output, not a made-up shaped recipe.
         }
         rows.addAll(com.gregtech.gregtech.content.energy.OriginalThermalCrafting.rows());
+        rows.addAll(com.gregtech.gregtech.content.energy.OriginalMagnetCrafting.rows());
         return List.copyOf(rows);
     }
 }

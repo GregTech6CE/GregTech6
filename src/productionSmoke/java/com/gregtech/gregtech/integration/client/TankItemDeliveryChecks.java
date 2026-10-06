@@ -71,6 +71,7 @@ final class TankItemDeliveryChecks {
         result.add("sourceMechanicalTooltips", verifyMechanicalTooltips());
         result.add("sourceEnergyDeviceTooltips", verifyEnergyDeviceTooltips());
         result.add("sourceThermalConverters", verifyThermalConverterDelivery());
+        result.add("sourceBipolarMagnets", verifyMagnetConverterDelivery());
         result.add("sourceRotaryConverters", verifyRotaryConverterDelivery());
         result.add("machineSourceMaterials", verifyMachineMaterials());
         result.addProperty("sourceFluidPipeTooltips", verifyFluidPipeTooltips());
@@ -206,7 +207,8 @@ final class TankItemDeliveryChecks {
             if (!(block instanceof com.gregtech.gregtech.block.energy.EnergyNodeBlock node)
                     || !com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.handles(node.spec())
                     || com.gregtech.gregtech.content.energy.OriginalRotaryConverter.handles(node.spec())
-                    || com.gregtech.gregtech.content.energy.OriginalThermalConverter.handles(node.spec())) continue;
+                    || com.gregtech.gregtech.content.energy.OriginalThermalConverter.handles(node.spec())
+                    || com.gregtech.gregtech.content.energy.MagnetMachineDefinitions.handles(node.spec())) continue;
             var spec = node.spec();
             var item = new ItemStack(node);
             var source = com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.profile(spec, false);
@@ -438,10 +440,67 @@ final class TankItemDeliveryChecks {
         return result;
     }
 
+    private static JsonObject verifyMagnetConverterDelivery() {
+        int count = 0, states = 0;
+        for (var block : BuiltInRegistries.BLOCK) {
+            if (!(block instanceof com.gregtech.gregtech.block.energy.MagnetMachineBlock node)) continue;
+            var spec = node.spec();
+            var item = new ItemStack(block);
+            var lines = tooltip(item, net.minecraft.world.item.TooltipFlag.NORMAL);
+            var source = com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.profile(spec, false);
+            verifySourceEnergyLines(spec, source, lines);
+            require(lines.stream().filter((tr("gt.lang.efficiency") + ": 100.00%")::equals).count() == 1,
+                    "installed one original bipolar efficiency line " + spec.id());
+            require(lines.contains(tr("gt.lang.reminder.extenders")) && !lines.contains(tr("tooltip.gregtech.magnet.controls")),
+                    "installed source extender reminder replaces invented monkey mode hint " + spec.id());
+            verifyComposition(item, com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block(spec.id()).orElseThrow());
+            var entry = com.gregtech.gregtech.content.creative.SourceCreativeCatalog.entry(spec.id());
+            require(entry != null && entry.family().equals("magnets") && item.getHoverName().getString().equals(spec.displayEn()),
+                    "installed original magnet names and creative family " + spec.id());
+            var tile = (com.gregtech.gregtech.blockentity.energy.EnergyNodeBlockEntity) node.newBlockEntity(BlockPos.ZERO, block.defaultBlockState());
+            require(tile.isMagnet() && tile.hasOriginalConverter() && !tile.isOriginalMotor() && !tile.isOriginalThermalConverter(),
+                    "installed source bipolar common converter route " + spec.id());
+            verifyNativeEnergyStats(tile, source);
+            var front = block.defaultBlockState().getValue(net.minecraft.world.level.block.DirectionalBlock.FACING);
+            for (var face : net.minecraft.core.Direction.values()) {
+                require(tile.isEnergyAcceptingFrom(spec.inType(), face, false) == (face.getAxis() != front.getAxis()), "installed magnet four input faces " + spec.id());
+                require(tile.isEnergyEmittingTo(spec.outType(), face, false) == (face.getAxis() == front.getAxis()), "installed magnet two output faces " + spec.id());
+            }
+            require(tile.doEnergyInjection(spec.inType(), net.minecraft.core.Direction.UP, spec.inputRate(), Long.MAX_VALUE, false) == 2 && tile.stored() == 0,
+                    "installed pure source magnet simulation " + spec.id());
+            var control = tile.machineControl(null);
+            require(control.supportsMode() && !control.supportsProgress() && control.setMode(17) == 1, "installed magnet original selector " + spec.id());
+            control.setEnabled(false);
+            require(!tile.isEnergyAcceptingFrom(spec.inType(), net.minecraft.core.Direction.UP, false) && tile.isEnergyAcceptingFrom(spec.inType(), net.minecraft.core.Direction.UP, true),
+                    "installed magnet stopped and theoretical gate " + spec.id());
+            require(tile.getEnergyDemanded(spec.inType(), null, spec.inputRate()) == 0 && tile.getEnergyOffered(spec.outType(), null, spec.outputRate()) == 0,
+                    "installed magnet push-driven source discovery " + spec.id());
+            for (var state : block.getStateDefinition().getPossibleStates()) {
+                var model = net.minecraft.client.Minecraft.getInstance().getBlockRenderer().getBlockModel(state);
+                require(model != net.minecraft.client.Minecraft.getInstance().getModelManager().getMissingModel(), "installed magnet baked state " + spec.id());
+                var quads = new java.util.ArrayList<net.minecraft.client.renderer.block.model.BakedQuad>();
+                for (var face : net.minecraft.core.Direction.values()) quads.addAll(model.getQuads(state, face, net.minecraft.util.RandomSource.create(0)));
+                quads.addAll(model.getQuads(state, null, net.minecraft.util.RandomSource.create(0)));
+                String overlay = state.getValue(com.gregtech.gregtech.block.energy.MagnetMachineBlock.ACTIVE) ? "/overlay_active/" : "/overlay/";
+                require(quads.stream().anyMatch(q -> q.getTintIndex() == 0 && q.getSprite().contents().name().getPath().contains("/colored/"))
+                        && quads.stream().anyMatch(q -> q.getSprite().contents().name().getPath().contains(overlay))
+                        && quads.stream().noneMatch(q -> q.getSprite().contents().name().getPath().equals("missingno")), "installed magnet material tint and source overlay " + spec.id());
+                states++;
+            }
+            count++;
+        }
+        require(count == 10 && states == 240, "installed complete ten source bipolar magnets and240 states");
+        var result = new JsonObject(); result.addProperty("magnets", count); result.addProperty("actualBakedStates", states);
+        result.addProperty("exactMaterialQuantitiesAndSourceTooltips", true);
+        result.addProperty("scope", "installed native factories, tooltip methods and baked models at title screen; no world restart claim");
+        return result;
+    }
+
     private static String sourceEnergyUnit(com.gregtech.gregtech.data.GregTechTags.Tag type) {
         return tr(type == com.gregtech.gregtech.data.GregTechTags.Energy.RU ? "gt.td.short.energy.kinetic_rotation"
                 : type == com.gregtech.gregtech.data.GregTechTags.Energy.RF ? "gt.td.short.energy.redstone_flux"
                 : type == com.gregtech.gregtech.data.GregTechTags.Energy.HU ? "gt.td.short.energy.heat"
+                : type == com.gregtech.gregtech.data.GregTechTags.Energy.MU ? "gt.td.short.energy.magnetic"
                 : type == com.gregtech.gregtech.data.GregTechTags.Energy.CU ? "gt.td.short.energy.cryo" : "gt.td.short.energy.electricity");
     }
 

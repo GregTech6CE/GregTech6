@@ -1,3 +1,5 @@
+/* GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later.
+ * Loader_MultiTileEntities 10031..10035 / 11031..11035 and TileEntityBase11Bipolar. */
 package com.gregtech.gregtech.content.energy;
 
 import com.gregtech.gregtech.api.energy.EnergyNodeSpec;
@@ -24,6 +26,16 @@ public final class MagnetMachineDefinitions {
     private static final String[] FLUX_NAMES_ZH = {"铅", "殷钢", "琥珀金", "末影粗胚", "末影"};
 
     private MagnetMachineDefinitions() {}
+
+    public static boolean handles(EnergyNodeSpec spec) {
+        return spec.kind() == EnergyNodeSpec.Kind.MAGNET
+                && (spec.id().startsWith("electromagnet_") || spec.id().startsWith("flux_magnet_"));
+    }
+
+    /** Bipolar efficiency includes both equally rated poles; RF has four units per EU. */
+    public static int efficiency(EnergyNodeSpec spec) {
+        return (int) (10000L * spec.outputRate() * (spec.inType() == GregTechTags.Energy.RF ? 8 : 2) / spec.inputRate());
+    }
 
     public static List<EnergyNodeSpec> specifications() {
         List<EnergyNodeSpec> result = new ArrayList<>(10);

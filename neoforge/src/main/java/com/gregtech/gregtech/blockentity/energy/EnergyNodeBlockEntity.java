@@ -71,8 +71,6 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
     /** RU rotation direction for the dedicated rotational transformer path. */
     private boolean rotationNegativeInput;
     /** GT6 bipolar magnets: stopped state and 0..15 output current limit. */
-    private boolean magnetStopped;
-    private byte magnetMode;
     private int magnetOverloads;
     private com.gregtech.gregtech.content.energy.BatteryBoxEnergy batteryEnergy;
     /** Battery boxes store complete energy items in fixed slots. */
@@ -111,7 +109,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
 
     public void setSpec(EnergyNodeSpec spec) {
         this.spec = spec;
-        rotaryConverter = com.gregtech.gregtech.content.energy.OriginalRotaryConverter.handles(spec) || com.gregtech.gregtech.content.energy.OriginalThermalConverter.handles(spec)
+        rotaryConverter = com.gregtech.gregtech.content.energy.OriginalRotaryConverter.handles(spec) || com.gregtech.gregtech.content.energy.OriginalThermalConverter.handles(spec) || com.gregtech.gregtech.content.energy.MagnetMachineDefinitions.handles(spec)
                 ? new com.gregtech.gregtech.content.energy.OriginalRotaryConverter.State(spec) : null;
         if (isSolar()) {
             solarEnergy = new com.gregtech.gregtech.content.energy.SolarPanelEnergy(spec.outputRate());
@@ -152,23 +150,14 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
         return spec != null && spec.kind() == EnergyNodeSpec.Kind.MAGNET;
     }
 
-    public boolean magnetEnabled() { return isMagnet() && !magnetStopped; }
+    public boolean magnetEnabled() { return isMagnet() && !converterStopped; }
 
     public boolean toggleMagnetEnabled() {
         if (!isMagnet()) return false;
-        magnetStopped = !magnetStopped;
-        setChanged();
-        return !magnetStopped;
+        return machineControl(null).setEnabled(!magnetEnabled());
     }
 
-    public int magnetMode() { return Byte.toUnsignedInt(magnetMode); }
-
-    public int cycleMagnetMode() {
-        if (!isMagnet()) return 0;
-        magnetMode = (byte) ((magnetMode + 1) & 15);
-        setChanged();
-        return magnetMode;
-    }
+    public int magnetMode() { return isMagnet() ? rotaryConverter.mode() : 0; }
 
     /** @return the new mode (true = step-up). */
     public boolean toggleInverted() {
@@ -381,11 +370,6 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
             be.tickOriginalConverter();
             return;
         }
-        if (be.isMagnet()) {
-            be.tickMagnet();
-            if (level.getGameTime() % 600 == 5 && be.magnetOverloads > 0) be.magnetOverloads--;
-            return;
-        }
         switch (be.spec.kind()) {
             case TURBINE -> be.tickTurbine();
             default -> {} // converters/storage are push/pull driven; emission below
@@ -502,6 +486,11 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
         long before = buffer;
         var step = rotaryConverter.tick(buffer, converterStopped,
                 (size, amount) -> {
+                    if (isMagnet()) {
+                        long positive = EnergyTransfer.emitEnergyToSide(spec.outType(), facing(), size, amount, this);
+                        long negative = EnergyTransfer.emitEnergyToSide(spec.outType(), facing().getOpposite(), -size, amount, this);
+                        return positive + negative;
+                    }
                     if (isOriginalThermalConverter() && com.gregtech.gregtech.content.energy.OriginalThermalConverter.cooler(spec)) {
                         long cold = EnergyTransfer.emitEnergyToSide(spec.outType(), facing(), size, amount, this);
                         long heat = EnergyTransfer.emitEnergyToSide(GregTechTags.Energy.HU, facing().getOpposite(), size, amount, this);
@@ -514,7 +503,9 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
         if (isRemoved() || level.getBlockEntity(worldPosition) != this) return;
         if (level.getGameTime() % 600 == 5 && !step.possible() && magnetOverloads > 0) magnetOverloads--;
         var state = getBlockState();
-        var next = state.setValue(com.gregtech.gregtech.block.energy.RotaryConverterBlock.ACTIVITY, step.visual());
+        // Both source trinary states 1 and 2 share the same magnet overlay; keep the existing boolean state identity.
+        var next = isMagnet() ? state.setValue(com.gregtech.gregtech.block.energy.MagnetMachineBlock.ACTIVE, step.visual() > 0)
+                : state.setValue(com.gregtech.gregtech.block.energy.RotaryConverterBlock.ACTIVITY, step.visual());
         if (isOriginalMotor())
             next = next.setValue(com.gregtech.gregtech.block.energy.OriginalMotorBlock.COUNTER_CLOCKWISE, rotaryConverter.counterClockwise())
                     .setValue(com.gregtech.gregtech.block.energy.OriginalMotorBlock.FAST, step.fast());
@@ -565,33 +556,6 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
         if (emitted > 0) {
             buffer -= emitted * costPerPacket();
             setChanged();
-        }
-    }
-
-    /** GT6 TileEntityBase11Bipolar.doConversion: two signed MU poles and waste energy. */
-    private void tickMagnet() {
-        if (level == null) return;
-        long output = buffer * spec.outputRate() / spec.inputRate();
-        if (magnetMode > 0) output = Math.min(output,
-                spec.outputRate() * 2 * (16L - magnetMode) / 16L);
-        boolean active = !magnetStopped && output >= getEnergySizeOutputMin(spec.outType(), null);
-        if (active && output <= getEnergySizeOutputMax(spec.outType(), null)) {
-            Direction front = facing();
-            EnergyTransfer.emitEnergyToSide(spec.outType(), front, output, 1, this);
-            EnergyTransfer.emitEnergyToSide(spec.outType(), front.getOpposite(), -output, 1, this);
-        }
-        // GT6 TE_Behavior_Energy_Converter.doBipolar: NBT_WASTE_ENERGY uses
-        // ceil(input maximum * (16 - mode) / 16), even without a receiver.
-        if (buffer > 0) {
-            long inputMaximum = spec.inputRate() * 2;
-            long waste = (inputMaximum * (16L - magnetMode) + 15L) / 16L;
-            buffer = Math.max(0, buffer - waste);
-            setChanged();
-        }
-        if (getBlockState().getBlock() instanceof com.gregtech.gregtech.block.energy.MagnetMachineBlock
-                && getBlockState().getValue(com.gregtech.gregtech.block.energy.MagnetMachineBlock.ACTIVE) != active) {
-            level.setBlock(worldPosition,
-                    getBlockState().setValue(com.gregtech.gregtech.block.energy.MagnetMachineBlock.ACTIVE, active), 3);
         }
     }
 
@@ -702,11 +666,10 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
     public boolean isEnergyAcceptingFrom(GregTechTags.Tag energyType, @Nullable Direction side, boolean theoretical) {
         if (!acceptsEnergyInput() || energyType != spec.inType()) return false;
         if (hasOriginalConverter()) return (theoretical || !converterStopped)
-                && (side == null || (isOriginalThermalConverter() ? side != facing() && (!com.gregtech.gregtech.content.energy.OriginalThermalConverter.cooler(spec) || side != facing().getOpposite())
+                && (side == null || (isMagnet() ? side != facing() && side != facing().getOpposite()
+                    : isOriginalThermalConverter() ? side != facing() && (!com.gregtech.gregtech.content.energy.OriginalThermalConverter.cooler(spec) || side != facing().getOpposite())
                     : isOriginalMotor() ? side != facing() : side == facing().getOpposite()))
                 && super.isEnergyAcceptingFrom(energyType, side, theoretical);
-        if (isMagnet()) return (theoretical || !magnetStopped)
-                && (side == null || (side != facing() && side != facing().getOpposite()));
         if(isElectricTransformer())return (theoretical||transformerControl.accepts())&&(side==null||(inverted?side!=facing():side==facing()));
         if (isRotationTransformer()) return side == null || side == rotationInputFace();
         return isSteamConverter() ? !converterStopped && (side == null || side == facing().getOpposite()) : side == null || side != facing();
@@ -905,9 +868,9 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
         if (hasOriginalConverter()) return new com.gregtech.gregtech.api.machine.MachineControl() {
             @Override public boolean available(){return !isRemoved();}
             @Override public boolean supportsProgress(){return false;}
-            @Override public boolean supportsMode(){return isOriginalMotor() || com.gregtech.gregtech.content.energy.OriginalThermalConverter.modeSelectable(spec);}
+            @Override public boolean supportsMode(){return isOriginalMotor() || isMagnet() || com.gregtech.gregtech.content.energy.OriginalThermalConverter.modeSelectable(spec);}
             @Override public int mode(){return rotaryConverter.mode();}
-            @Override public int setMode(int value){if(isOriginalMotor() || com.gregtech.gregtech.content.energy.OriginalThermalConverter.modeSelectable(spec))rotaryConverter.mode(value);setChanged();return mode();}
+            @Override public int setMode(int value){if(isOriginalMotor() || isMagnet() || com.gregtech.gregtech.content.energy.OriginalThermalConverter.modeSelectable(spec))rotaryConverter.mode(value);setChanged();return mode();}
             @Override public boolean enabled(){return !converterStopped;}
             @Override public boolean setEnabled(boolean value){converterStopped=!value;setChanged();return value;}
             @Override public boolean running(){return rotaryConverter.possible();}
@@ -935,11 +898,9 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
         };
         if(!isBatteryBox())return new com.gregtech.gregtech.api.machine.MachineControl(){
             public boolean available(){return !isRemoved();}
-            public boolean supportsMode(){return isMagnet();}
-            public int mode(){return isMagnet()?magnetMode:0;}
-            public int setMode(int value){if(isMagnet()){magnetMode=(byte)(value&15);setChanged();}return mode();}
-            public boolean enabled(){return isMagnet()?!magnetStopped:!converterStopped;}
-            public boolean setEnabled(boolean value){if(isMagnet())magnetStopped=!value;else converterStopped=!value;setChanged();return value;}
+            public boolean supportsMode(){return false;}
+            public boolean enabled(){return !converterStopped;}
+            public boolean setEnabled(boolean value){converterStopped=!value;setChanged();return value;}
             public boolean running(){return enabled()&&stored()>0;}
             public boolean active(){return running();}
             public long progress(){return stored();}
@@ -981,7 +942,6 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
         @Override
         public int receiveEnergy(int maxReceive, boolean simulate) {
             if (hasOriginalConverter()) return (int) doEnergyInjection(GregTechTags.Energy.RF, null, 1, maxReceive, !simulate);
-            if (isMagnet() && magnetStopped) return 0;
             long space = Math.max(0, capacity() - buffer);
             int accepted = (int) Math.min(maxReceive, space);
             if (!simulate && accepted > 0) {
@@ -995,7 +955,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
         @Override public int getEnergyStored() { return (int) Math.min(Integer.MAX_VALUE, buffer); }
         @Override public int getMaxEnergyStored() { return (int) Math.min(Integer.MAX_VALUE, capacity()); }
         @Override public boolean canExtract() { return false; }
-        @Override public boolean canReceive() { return hasOriginalConverter() ? !converterStopped : !isMagnet() || !magnetStopped; }
+        @Override public boolean canReceive() { return !hasOriginalConverter() || !converterStopped; }
     };
 
     public net.neoforged.neoforge.energy.IEnergyStorage energyCapability(@Nullable Direction side){
@@ -1024,8 +984,9 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
         if(isElectricTransformer())transformerControl.save(tag);
         tag.putBoolean("gt.inverted", inverted);
         if (isMagnet()) {
-            tag.putBoolean("gt.magnet_stopped", magnetStopped);
-            tag.putByte("gt.magnet_mode", magnetMode);
+            // Preserve the port's old magnet keys as aliases of the original common state.
+            tag.putBoolean("gt.magnet_stopped", converterStopped);
+            tag.putByte("gt.magnet_mode", (byte) rotaryConverter.mode());
             tag.putInt("gt.magnet_overloads", magnetOverloads);
         }
         if (isRotationTransformer()) tag.putBoolean("gt.rotation_negative_input", rotationNegativeInput);
@@ -1075,17 +1036,17 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
         }
         inverted = tag.getBoolean("gt.inverted");
         if (isMagnet()) {
-            magnetStopped = tag.getBoolean("gt.magnet_stopped");
-            magnetMode = (byte) (tag.getByte("gt.magnet_mode") & 15);
             magnetOverloads = Math.max(0, tag.getInt("gt.magnet_overloads"));
         }
         if (isRotationTransformer()) rotationNegativeInput = tag.getBoolean("gt.rotation_negative_input");
         turbinePending = Math.max(0, tag.getLong("gt.turbine_pending"));
         steamRemainder = Math.floorMod(tag.getLong("gt.steam_remainder"), com.gregtech.gregtech.api.machine.BoilerSpec.STEAM_PER_WATER);
-        converterStopped = tag.getBoolean("gt.converter_stopped");
+        // Old magnet saves wrote an unrelated false converter flag. Canonical gt.mode distinguishes the new format.
+        boolean legacyMagnet = isMagnet() && !tag.contains("gt.mode");
+        converterStopped = tag.getBoolean(legacyMagnet ? "gt.magnet_stopped" : "gt.converter_stopped");
         if (hasOriginalConverter())
             rotaryConverter.restore(new com.gregtech.gregtech.content.energy.OriginalRotaryConverter.Snapshot(
-                    tag.getByte("gt.mode"), isOriginalMotor() && tag.getBoolean("gt.reversed"), false,
+                    tag.getByte(legacyMagnet ? "gt.magnet_mode" : "gt.mode"), isOriginalMotor() && tag.getBoolean("gt.reversed"), false,
                     tag.getBoolean("gt.can.energy"), tag.getBoolean("gt.active.energy"), isOriginalMotor() && tag.getBoolean("gt.visual")));
         rotor = tag.contains("gt.rotor")
                 ? net.minecraft.world.item.ItemStack.parseOptional(lookup,tag.getCompound("gt.rotor"))

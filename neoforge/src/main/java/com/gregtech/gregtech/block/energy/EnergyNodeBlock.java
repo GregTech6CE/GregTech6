@@ -42,7 +42,7 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
 
     @Override public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         boolean fixed = spec.id().startsWith("battery_eu");
-        if (com.gregtech.gregtech.content.energy.OriginalThermalConverter.handles(spec) && GTToolHelper.isMonkeyWrench(tool)) return null;
+        if ((com.gregtech.gregtech.content.energy.OriginalThermalConverter.handles(spec) || com.gregtech.gregtech.content.energy.MagnetMachineDefinitions.handles(spec)) && GTToolHelper.isMonkeyWrench(tool)) return null;
         // GT6's rotational transformer reserves the monkey wrench for mode reversal.
         // A regular wrench still rotates the block itself.
         if ((spec.id().startsWith("rotation_transformer_") || spec.id().startsWith("transformer_")) && GTToolHelper.isMonkeyWrench(tool)) return null;
