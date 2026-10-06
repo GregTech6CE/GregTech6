@@ -12,6 +12,7 @@ import net.minecraft.world.level.material.Fluids;
 
 /** Ordinary installed-JAR method checks at the title screen; no world/harvest claim. */
 final class TankItemDeliveryChecks {
+    private static int quantityMismatches;
     private static void require(boolean value, String message) {
         if (!value) throw new IllegalStateException(message);
     }
@@ -66,10 +67,10 @@ final class TankItemDeliveryChecks {
         result.addProperty("completeWorldSaveRetained", true);
         result.addProperty("observedEmptyLoaderWrappers", emptyLoaderWrappers);
         result.addProperty("scope", "installed methods at title screen; actual harvest tested separately in native server worlds");
+        result.add("originalFunctionalTooltips", verifyFunctionalTooltips());
         result.add("machineSourceMaterials", verifyMachineMaterials());
         result.addProperty("sourceFluidPipeTooltips", verifyFluidPipeTooltips());
         result.addProperty("storedTankTooltips", stored);
-        result.add("originalFunctionalTooltips", verifyFunctionalTooltips());
         return result;
     }
 
@@ -90,6 +91,7 @@ final class TankItemDeliveryChecks {
             machines++;
         }
         var out = new JsonObject();
+        require(quantityMismatches == 0, "installed source quantity tooltip mismatches " + quantityMismatches + "; see diagnostic lines");
         out.addProperty("sourceBlockIdentities", blocks);
         out.addProperty("nativeBasicMachinesAndControllers", machines);
         out.addProperty("singleAdvancedMaterialSection", true);
@@ -107,8 +109,10 @@ final class TankItemDeliveryChecks {
         for (var part : expected.components()) {
             String prefix = com.gregtech.gregtech.client.MaterialTooltips.displayUnits(part.amount()) + " "
                     + com.gregtech.gregtech.api.material.MaterialPresentation.name(part.material()).getString();
-            require(lines.stream().filter(line -> line.startsWith(prefix + " (") || line.startsWith(prefix + " ")).count() == 1,
-                    "installed exact source quantity tooltip " + id + " " + prefix);
+            if (lines.stream().filter(line -> line.startsWith(prefix + " (")).count() != 1) {
+                quantityMismatches++;
+                System.err.println("SOURCE_QUANTITY_TOOLTIP_MISMATCH " + id + " expected " + prefix + "; actual " + lines);
+            }
         }
         require(tooltip(stack, net.minecraft.world.item.TooltipFlag.NORMAL).stream().noneMatch(header::equals),
                 "installed quantities require advanced tooltips " + id);
@@ -137,7 +141,8 @@ final class TankItemDeliveryChecks {
             require(lines.contains(connection), "installed source wrench pipe connection hint");
             pipes++;
         }
-        require(pipes == 406, "installed fluid pipe tooltip identities");
+        require(pipes == 280 && pipes == com.gregtech.gregtech.content.transport.fluid.FluidTransportDefinitions.pipes().size(),
+                "installed280 fluid pipe tooltip identities;126 item pipes are counted separately");
         return pipes;
     }
     private static java.util.List<String> tooltip(ItemStack stack, net.minecraft.world.item.TooltipFlag flag) {
