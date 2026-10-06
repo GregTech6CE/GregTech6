@@ -90,6 +90,10 @@
       "type": "minecraft:directory",
       "source": "block/machines/covers/warning",
       "prefix": "block/machines/covers/warning/"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "gregtech:block/machines/covers/canvas"
     }
   ]
 }

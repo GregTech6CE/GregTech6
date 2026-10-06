@@ -54,6 +54,7 @@ public final class CoverItems {
         ResourceLocation key = BuiltInRegistries.ITEM.getKey(stack.getItem());
         if (key == null) return null;
         String id = key.getPath();
+        if (stack.getItem() instanceof com.gregtech.gregtech.item.CanvasItem) return "canvas_cover";
         if(stack.getItem() instanceof com.gregtech.gregtech.api.material.MaterialFormItem material&&!MaterialCoverRules.textures(material.getPrefix().getName()).isEmpty())return "material_plate_cover";
         if (key.getNamespace().equals("minecraft")) {
             // GT_API:799-802 - the vanilla redstone torch (either state) and repeater are covers

@@ -25,8 +25,14 @@ import net.minecraftforge.fluids.FluidStack;
 public final class BlueprintRecipes {
     private BlueprintRecipes() {}
     public static void register() {
-        MachineRecipeMaps.ScannerVisuals.contextualRecipes(BlueprintRecipes::scan);
-        MachineRecipeMaps.Printer.contextualRecipes(BlueprintRecipes::print);
+        MachineRecipeMaps.ScannerVisuals.contextualRecipes((level,machine,special,items,fluids) -> {
+            Recipe recipe = CanvasRecipes.scan(level,machine,special,items,fluids);
+            return recipe != null ? recipe : scan(level,machine,special,items,fluids);
+        });
+        MachineRecipeMaps.Printer.contextualRecipes((level,machine,special,items,fluids) -> {
+            Recipe recipe = CanvasRecipes.print(level,machine,special,items,fluids);
+            return recipe != null ? recipe : print(level,machine,special,items,fluids);
+        });
     }
     private static boolean is(ItemStack stack, String path) {
         var id = BuiltInRegistries.ITEM.getKey(stack.getItem());

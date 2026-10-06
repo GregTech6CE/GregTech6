@@ -100,6 +100,7 @@ public final class GTMaterialDataRecipes {
         MachineRecipeMaps.Printer.dynamicRecipes(GTMaterialDataRecipes::printer);
         MachineRecipeMaps.Replicator.dynamicRecipes(GTMaterialDataRecipes::replicator);
         BlueprintRecipes.register();
+        CanvasRecipes.register();
         com.gregtech.gregtech.registry.GTColoredBooks.registerRecipes();
         return 1;
     }

@@ -64,6 +64,7 @@ public final class BehaviorDataStorage {
      * the matter/antimatter requirement of a machine the port does not have).</p>
      */
     public static void dataTooltip(CompoundTag data, List<Component> lines, boolean allDetails) {
+        com.gregtech.gregtech.content.cover.CanvasData.tooltip(data,lines);
         if (data == null || !data.contains(GTMaterialDataRecipes.NBT_REPLICATOR_DATA)) return;
         GTMaterial material = com.gregtech.gregtech.api.material.GTMaterialRegistry
                 .get(data.getShort(GTMaterialDataRecipes.NBT_REPLICATOR_DATA));
