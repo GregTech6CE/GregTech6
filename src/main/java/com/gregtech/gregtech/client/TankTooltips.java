@@ -19,49 +19,67 @@ public final class TankTooltips {
     // === Tank Tooltips ===
 
     public static void appendTank(TankSpec spec, List<Component> tooltip) {
+        appendTankState(spec, new com.gregtech.gregtech.api.fluid.FluidTankGT(spec.capacity()), false, 0, tooltip);
+    }
+
+    public static void appendTank(TankSpec spec, net.minecraft.world.item.ItemStack stack, List<Component> tooltip) {
+        var data = stack.getTagElement("BlockEntityTag");
+        var tank = new com.gregtech.gregtech.api.fluid.FluidTankGT(spec.capacity());
+        if (data != null && data.contains("gt.tank")) tank.readFromNBT(data.getCompound("gt.tank"));
+        appendTankState(spec, tank, data != null && data.getBoolean("gt.soft_hammer"),
+                data == null ? 0 : data.getLong("gt.sealed_time"), tooltip);
+    }
+
+    private static void appendTankState(TankSpec spec, com.gregtech.gregtech.api.fluid.FluidTankGT tank,
+                                        boolean sealed, long sealedTime, List<Component> tooltip) {
         GTMaterial mat = spec.material();
 
-        // Capacity
-        tooltip.add(Component.empty()
-                .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tank.capacity")
-                        .withStyle(ChatFormatting.AQUA))
-                .append(Component.literal(formatLargeNumber(spec.capacity()) + " L")
-                        .withStyle(ChatFormatting.WHITE)));
-
-        // No GUI hint
-        if (!spec.simpleOnly()) {
-            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tank.no_gui")
-                    .withStyle(ChatFormatting.GOLD));
+        var fluid = tank.getFluidLong();
+        if (fluid.isEmpty()) {
+            tooltip.add(Component.translatable("gt.lang.pipe.stats.capacity")
+                    .append(Component.literal(formatLargeNumber(tank.capacity()) + " L")).withStyle(ChatFormatting.AQUA));
+        } else {
+            tooltip.add(Component.literal(formatLargeNumber(tank.getAmount()) + " L of ")
+                    .append(fluid.getDisplayName())
+                    .append(Component.literal(" (" + (com.gregtech.gregtech.api.fluid.FluidHazards.isGas(fluid.getFluid())
+                            ? "Gaseous" : "Liquid") + "); Max: " + formatLargeNumber(tank.capacity()) + " L)"))
+                    .withStyle(ChatFormatting.AQUA));
         }
+        if (tank.getAmount() > 0 && sealed) tooltip.add(Component.literal("Sealed (" + sealedTime + ")")
+                .withStyle(ChatFormatting.AQUA));
+
+        // TileEntityBase08Barrel includes these for wooden barrels as well.
+        tooltip.add(Component.translatable("gt.lang.nogui.funnel.tap.tank").withStyle(ChatFormatting.GOLD));
+        tooltip.add(Component.translatable("gt.lang.no.powerconducting.fluids").withStyle(ChatFormatting.GOLD));
 
         // Proof flags
         if (spec.gasProof())
-            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tank.gas_proof").withStyle(ChatFormatting.GOLD));
+            tooltip.add(Component.translatable("gt.lang.proof.gas").withStyle(ChatFormatting.GOLD));
         if (spec.acidProof())
-            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tank.acid_proof").withStyle(ChatFormatting.GOLD));
+            tooltip.add(Component.translatable("gt.lang.proof.acid").withStyle(ChatFormatting.GOLD));
         if (spec.plasmaProof())
-            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tank.plasma_proof").withStyle(ChatFormatting.GOLD));
+            tooltip.add(Component.translatable("gt.lang.proof.plasma").withStyle(ChatFormatting.GOLD));
         if (spec.magicProof())
-            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tank.magic_proof").withStyle(ChatFormatting.GOLD));
+            tooltip.add(Component.translatable("gt.lang.proof.magic").withStyle(ChatFormatting.GOLD));
         if (spec.simpleOnly())
-            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tank.simple_only").withStyle(ChatFormatting.GOLD));
+            tooltip.add(Component.translatable("gt.lang.only.simple").withStyle(ChatFormatting.GOLD));
 
         // Meltdown warning
         long maxTempK = spec.maxTemperature();
         if (maxTempK < Long.MAX_VALUE) {
             tooltip.add(Component.empty()
-                    .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tank.meltdown")
+                    .append(Component.translatable("gt.lang.hazard.meltdown")
                             .withStyle(ChatFormatting.RED))
                     .append(Component.literal(" (" + maxTempK + " K)")
                             .withStyle(ChatFormatting.WHITE)));
         }
 
         // Tool usage hints
-        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tank.hint.monkey_wrench")
+        tooltip.add(Component.translatable("gt.lang.use.monkey.wrench.to.toggle.auto.outputs")
                 .withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tank.hint.soft_hammer")
+        tooltip.add(Component.translatable("gt.lang.use.soft.hammer.to.toggle")
                 .withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tank.hint.magnifying_glass")
+        tooltip.add(Component.translatable("gt.lang.use.magnifyingglass.to.detail")
                 .withStyle(ChatFormatting.GRAY));
 
         // Blast resistance
@@ -77,46 +95,49 @@ public final class TankTooltips {
         GTMaterial mat = spec.material();
 
         // Bandwidth (throughput per tick)
-        long bandwidth = spec.capacity() / 20; // rough throughput
+        long bandwidth = spec.bandwidthPerTank();
         tooltip.add(Component.empty()
-                .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".pipe.bandwidth")
+                .append(Component.translatable("gt.lang.pipe.stats.bandwidth")
                         .withStyle(ChatFormatting.AQUA))
-                .append(Component.literal(formatLargeNumber(bandwidth) + " L")
+                .append(Component.literal(formatLargeNumber(bandwidth) + " L/t")
                         .withStyle(ChatFormatting.WHITE)));
 
         // Capacity
         tooltip.add(Component.empty()
-                .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".pipe.capacity")
+                .append(Component.translatable("gt.lang.pipe.stats.capacity")
                         .withStyle(ChatFormatting.AQUA))
                 .append(Component.literal(formatLargeNumber(spec.capacity()) + " L")
                         .withStyle(ChatFormatting.WHITE)));
 
+        if (spec.tankCount() > 1) tooltip.add(Component.translatable("gt.lang.pipe.stats.amount")
+                .append(Component.literal(Integer.toString(spec.tankCount()))).withStyle(ChatFormatting.AQUA));
+
         // Proof flags
         if (spec.gasProof())
-            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tank.gas_proof").withStyle(ChatFormatting.GOLD));
+            tooltip.add(Component.translatable("gt.lang.proof.gas").withStyle(ChatFormatting.GOLD));
         if (spec.acidProof())
-            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tank.acid_proof").withStyle(ChatFormatting.GOLD));
+            tooltip.add(Component.translatable("gt.lang.proof.acid").withStyle(ChatFormatting.GOLD));
         if (spec.plasmaProof())
-            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tank.plasma_proof").withStyle(ChatFormatting.GOLD));
+            tooltip.add(Component.translatable("gt.lang.proof.plasma").withStyle(ChatFormatting.GOLD));
         if (spec.magicProof())
-            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tank.magic_proof").withStyle(ChatFormatting.GOLD));
+            tooltip.add(Component.translatable("gt.lang.proof.magic").withStyle(ChatFormatting.GOLD));
 
         // Meltdown warning
         long maxTempK = spec.maxTemperature();
         if (maxTempK < Long.MAX_VALUE) {
             tooltip.add(Component.empty()
-                    .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tank.meltdown")
+                    .append(Component.translatable("gt.lang.hazard.meltdown")
                             .withStyle(ChatFormatting.RED))
                     .append(Component.literal(" (" + maxTempK + " K)")
                             .withStyle(ChatFormatting.WHITE)));
         }
 
         // Tool usage hints (pipe-specific — no auto output / state toggle)
-        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".pipe.hint.wrench")
+        tooltip.add(Component.translatable("gt.lang.use.x.to.toggle.connection.pre")
+                .append(Component.translatable("gt.lang.tool.name.wrench"))
+                .append(Component.translatable("gt.lang.use.x.to.toggle.connection.post"))
                 .withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".pipe.hint.monkey_wrench")
-                .withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".pipe.hint.magnifying_glass")
+        tooltip.add(Component.translatable("gt.lang.use.magnifyingglass.to.detail")
                 .withStyle(ChatFormatting.GRAY));
 
         // Blast resistance
@@ -133,24 +154,26 @@ public final class TankTooltips {
 
         // Stepsize
         tooltip.add(Component.empty()
-                .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".pipe.stepsize")
+                .append(Component.translatable("gt.lang.pipe.stats.stepsize")
                         .withStyle(ChatFormatting.AQUA))
                 .append(Component.literal(formatLargeNumber(spec.stepSize()))
                         .withStyle(ChatFormatting.WHITE)));
 
         // Bandwidth (items per second = invSize)
         tooltip.add(Component.empty()
-                .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".pipe.bandwidth")
+                .append(Component.translatable("gt.lang.pipe.stats.bandwidth")
                         .withStyle(ChatFormatting.AQUA))
                 .append(Component.literal(spec.invSize() + "/s")
                         .withStyle(ChatFormatting.WHITE)));
 
         // Tool usage hints
-        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".pipe.hint.wrench")
+        tooltip.add(Component.translatable("gt.lang.use.x.to.toggle.connection.pre")
+                .append(Component.translatable("gt.lang.tool.name.wrench"))
+                .append(Component.translatable("gt.lang.use.x.to.toggle.connection.post"))
                 .withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".pipe.hint.monkey_wrench_input")
+        tooltip.add(Component.translatable("gt.lang.use.monkey.wrench.to.set.input.side")
                 .withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".pipe.hint.monkey_wrench_output")
+        tooltip.add(Component.translatable("gt.lang.use.monkey.wrench.to.set.output.side")
                 .withStyle(ChatFormatting.GRAY));
 
         // Blast resistance

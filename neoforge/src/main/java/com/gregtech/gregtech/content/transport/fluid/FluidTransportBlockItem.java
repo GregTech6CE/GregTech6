@@ -33,7 +33,7 @@ public final class FluidTransportBlockItem extends BlockItem {
     }
     @Override public void appendHoverText(ItemStack stack,TooltipContext context,List<Component> lines,TooltipFlag flag){
         super.appendHoverText(stack,context,lines,flag);
-        if(getBlock() instanceof TankBlock tank)TankTooltips.appendTank(tank.spec(),lines);
+        if(getBlock() instanceof TankBlock tank)TankTooltips.appendTank(tank.spec(),stack,context.registries(),lines);
         if(getBlock() instanceof FluidPipeBlock pipe)TankTooltips.appendPipe(pipe.spec(),lines);
     }
 }

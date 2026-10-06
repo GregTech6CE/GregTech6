@@ -50,10 +50,8 @@ public final class EngineTooltips {
         if (mat != null && mat.isValid()) {
             tooltip.add(Component.literal(mat.getLocalName()).withStyle(ChatFormatting.YELLOW));
 
-            // Contained materials
-            tooltip.add(Component.translatable("tooltip." + MOD + ".machine.contained_materials")
-                    .withStyle(ChatFormatting.BLUE));
-            tooltip.add(MaterialTooltips.containedMaterialLine(mat, 9L * GTValues.U));
+            // The shared material registry supplies source composition in F3+H.
+
         }
 
         // Footer

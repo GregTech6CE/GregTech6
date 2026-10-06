@@ -76,14 +76,8 @@ public final class MachineTooltips {
         // Harvest tool
         TooltipHelper.appendHarvestWrench(tooltip);
 
-        // Contained materials
-        if (spec.constructionMaterials() != null && !spec.constructionMaterials().isEmpty()) {
-            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.contained_materials")
-                    .withStyle(ChatFormatting.AQUA));
-            for (WeightedMaterial wm : spec.constructionMaterials()) {
-                tooltip.add(MaterialTooltips.containedMaterialLine(wm.material(), wm.amount()));
-            }
-        }
+        // The material event adds the shared exact ItemComposition once in F3+H.
+
     }
 
     // ── Solid burning box tooltip (new format) ──────────────────────────

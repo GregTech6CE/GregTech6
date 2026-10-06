@@ -10,7 +10,6 @@ import com.gregtech.gregtech.data.ImportedMaterialData;
 import static com.gregtech.gregtech.api.energy.MachineFaceMasks.*;
 
 import java.util.*;
-import java.util.function.Function;
 
 
 /**
@@ -56,10 +55,9 @@ public final class BasicMachineCatalog {
      *                 registration the machine is a port of.
      */
     private record MachineDef(String name, String energy, GTMaterial[] tiers,
-                              Function<GTMaterial, List<WeightedMaterial>> materials, int tierBase) {
-        MachineDef(String name, String energy, GTMaterial[] tiers,
-                   Function<GTMaterial, List<WeightedMaterial>> materials) {
-            this(name, energy, tiers, materials, 1);
+                              int tierBase) {
+        MachineDef(String name, String energy, GTMaterial[] tiers) {
+            this(name, energy, tiers, 1);
         }
     }
 
@@ -90,119 +88,109 @@ public final class BasicMachineCatalog {
             "distillationtower", "cryodistillationtower", "cokeoven",
             "fusionreactor", "implosioncompressor");
 
-    /** Casing (8 units) + fixed extras per machine type. */
-    private static List<WeightedMaterial> buildMaterials(GTMaterial casing, Object... extras) {
-        List<WeightedMaterial> list = new ArrayList<>();
-        list.add(new WeightedMaterial(casing, 8));
-        for (int i = 0; i < extras.length; i += 2) {
-            list.add(new WeightedMaterial((GTMaterial) extras[i], (Long) extras[i + 1]));
-        }
-        return list;
-    }
-
     static {
         // HU machines (4 tiers: Steel, Invar, Ti, TungstenCarbide)
-        MACHINE_DEFS.add(new MachineDef("oven",           "HU", HU_TIERS, m -> buildMaterials(m, Materials.ClayBrick, 8L, Materials.Copper, 2L)));
-        MACHINE_DEFS.add(new MachineDef("roaster",        "HU", HU_TIERS, m -> buildMaterials(m, Materials.ClayBrick, 4L, Materials.Copper, 2L)));
-        MACHINE_DEFS.add(new MachineDef("distillery",     "HU", HU_TIERS, m -> buildMaterials(m, Materials.Bronze, 4L, Materials.Copper, 2L)));
-        MACHINE_DEFS.add(new MachineDef("extruder",       "HU", HU_TIERS, m -> buildMaterials(m, Materials.Steel, 4L, Materials.Copper, 2L)));
-        MACHINE_DEFS.add(new MachineDef("smelter",        "HU", HU_TIERS, m -> buildMaterials(m, Materials.ClayBrick, 6L, Materials.Copper, 1L)));
-        MACHINE_DEFS.add(new MachineDef("crystallisationcrucible", "HU", HU_TIERS, m -> buildMaterials(m, Materials.ClayBrick, 4L, Materials.Steel, 2L)));
-        MACHINE_DEFS.add(new MachineDef("dryer",          "HU", HU_TIERS, m -> buildMaterials(m, Materials.ClayBrick, 4L, Materials.Copper, 2L)));
-        MACHINE_DEFS.add(new MachineDef("laminator",      "HU", HU_TIERS, m -> buildMaterials(m, Materials.Steel, 4L, Materials.Copper, 1L)));
-        MACHINE_DEFS.add(new MachineDef("catalyticcracker", "HU", HU_TIERS, m -> buildMaterials(m, Materials.Steel, 6L, Materials.Copper, 3L)));
-        MACHINE_DEFS.add(new MachineDef("steamcracker",   "HU", HU_TIERS, m -> buildMaterials(m, Materials.Steel, 6L, Materials.Copper, 2L)));
+        MACHINE_DEFS.add(new MachineDef("oven",           "HU", HU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("roaster",        "HU", HU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("distillery",     "HU", HU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("extruder",       "HU", HU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("smelter",        "HU", HU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("crystallisationcrucible", "HU", HU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("dryer",          "HU", HU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("laminator",      "HU", HU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("catalyticcracker", "HU", HU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("steamcracker",   "HU", HU_TIERS));
 
         // RU machines (4 tiers: Bronze, Steel, Ti, TungstenSteel)
-        MACHINE_DEFS.add(new MachineDef("shredder",       "RU", RU_KU_TIERS, m -> buildMaterials(m, Materials.Steel, 4L)));
-        MACHINE_DEFS.add(new MachineDef("lathe",          "RU", RU_KU_TIERS, m -> buildMaterials(m, Materials.Steel, 4L, Materials.Copper, 1L)));
-        MACHINE_DEFS.add(new MachineDef("buzzsaw",        "RU", RU_KU_TIERS, m -> buildMaterials(m, Materials.Steel, 4L)));
-        MACHINE_DEFS.add(new MachineDef("centrifuge",     "RU", RU_KU_TIERS, m -> buildMaterials(m, Materials.Steel, 4L, Materials.Copper, 2L)));
-        MACHINE_DEFS.add(new MachineDef("rollingmill",    "RU", RU_KU_TIERS, m -> buildMaterials(m, Materials.Steel, 4L)));
-        MACHINE_DEFS.add(new MachineDef("rollbender",     "RU", RU_KU_TIERS, m -> buildMaterials(m, Materials.Steel, 2L)));
-        MACHINE_DEFS.add(new MachineDef("rollformer",     "RU", RU_KU_TIERS, m -> buildMaterials(m, Materials.Steel, 2L)));
-        MACHINE_DEFS.add(new MachineDef("clustermill",    "RU", RU_KU_TIERS, m -> buildMaterials(m, Materials.Steel, 6L)));
-        MACHINE_DEFS.add(new MachineDef("wiremill",       "RU", RU_KU_TIERS, m -> buildMaterials(m, Materials.Steel, 4L)));
-        MACHINE_DEFS.add(new MachineDef("mixer",          "RU", RU_KU_TIERS, m -> buildMaterials(m, Materials.Steel, 2L)));
-        MACHINE_DEFS.add(new MachineDef("loom",           "RU", RU_KU_TIERS, m -> buildMaterials(m, Materials.Steel, 2L, Materials.Copper, 1L)));
-        MACHINE_DEFS.add(new MachineDef("sluice",         "RU", RU_KU_TIERS, m -> buildMaterials(m, Materials.Steel, 2L)));
-        MACHINE_DEFS.add(new MachineDef("sander",         "RU", RU_KU_TIERS, m -> buildMaterials(m, Materials.Steel, 2L)));
-        MACHINE_DEFS.add(new MachineDef("burnmixer",      "RU", RU_KU_TIERS, m -> buildMaterials(m, Materials.Steel, 2L)));
-        MACHINE_DEFS.add(new MachineDef("debarker",       "RU", RU_KU_TIERS, m -> buildMaterials(m, Materials.Steel, 2L)));
+        MACHINE_DEFS.add(new MachineDef("shredder",       "RU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("lathe",          "RU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("buzzsaw",        "RU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("centrifuge",     "RU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("rollingmill",    "RU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("rollbender",     "RU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("rollformer",     "RU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("clustermill",    "RU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("wiremill",       "RU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("mixer",          "RU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("loom",           "RU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("sluice",         "RU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("sander",         "RU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("burnmixer",      "RU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("debarker",       "RU", RU_KU_TIERS));
 
         // KU machines (4 tiers: Bronze, Steel, Ti, TungstenSteel)
-        MACHINE_DEFS.add(new MachineDef("crusher",        "KU", RU_KU_TIERS, m -> buildMaterials(m, Materials.Steel, 4L)));
-        MACHINE_DEFS.add(new MachineDef("sifter",         "KU", RU_KU_TIERS, m -> buildMaterials(m, Materials.Steel, 2L)));
-        MACHINE_DEFS.add(new MachineDef("squeezer",       "KU", RU_KU_TIERS, m -> buildMaterials(m, Materials.Steel, 4L, Materials.Copper, 1L)));
-        MACHINE_DEFS.add(new MachineDef("compressor",     "KU", RU_KU_TIERS, m -> buildMaterials(m, Materials.Steel, 4L)));
-        MACHINE_DEFS.add(new MachineDef("press",          "KU", RU_KU_TIERS, m -> buildMaterials(m, Materials.Steel, 4L)));
+        MACHINE_DEFS.add(new MachineDef("crusher",        "KU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("sifter",         "KU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("squeezer",       "KU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("compressor",     "KU", RU_KU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("press",          "KU", RU_KU_TIERS));
 
         // EU machines (5 tiers: SteelGalvanized, Al, StainlessSteel, Cr, Ti)
-        MACHINE_DEFS.add(new MachineDef("electrolyzer",   "EU", EU_MU_LU_CU_TIERS, m -> buildMaterials(m, Materials.Copper, 4L)));
-        MACHINE_DEFS.add(new MachineDef("canner",         "EU", EU_MU_LU_CU_TIERS, m -> buildMaterials(m, Materials.Copper, 2L)));
-        MACHINE_DEFS.add(new MachineDef("injector",       "EU", EU_MU_LU_CU_TIERS, m -> buildMaterials(m, Materials.Copper, 4L)));
-        MACHINE_DEFS.add(new MachineDef("printer",        "EU", EU_MU_LU_CU_TIERS, m -> buildMaterials(m, Materials.Copper, 2L, Materials.Plastic, 2L)));
-        MACHINE_DEFS.add(new MachineDef("scannervisuals", "EU", EU_MU_LU_CU_TIERS, m -> buildMaterials(m, Materials.Copper, 4L, Materials.Glass, 2L)));
-        MACHINE_DEFS.add(new MachineDef("autocrafter",    "EU", EU_MU_LU_CU_TIERS, m -> buildMaterials(m, Materials.Copper, 2L)));
-        MACHINE_DEFS.add(new MachineDef("electricmixer",  "EU", EU_MU_LU_CU_TIERS, m -> buildMaterials(m, Materials.Copper, 4L, Materials.Steel, 2L)));
-        MACHINE_DEFS.add(new MachineDef("electricloom",   "EU", EU_MU_LU_CU_TIERS, m -> buildMaterials(m, Materials.Copper, 4L)));
-        MACHINE_DEFS.add(new MachineDef("electricsifter", "EU", EU_MU_LU_CU_TIERS, m -> buildMaterials(m, Materials.Copper, 4L)));
-        MACHINE_DEFS.add(new MachineDef("slicer",         "EU", EU_MU_LU_CU_TIERS, m -> buildMaterials(m, Materials.Copper, 4L, Materials.Steel, 2L)));
-        MACHINE_DEFS.add(new MachineDef("nanofab",        "EU", EU_MU_LU_CU_TIERS, m -> buildMaterials(m, Materials.Copper, 6L, Materials.Steel, 4L)));
-        MACHINE_DEFS.add(new MachineDef("plantalyzer",    "EU", EU_MU_LU_CU_TIERS, m -> buildMaterials(m, Materials.Copper, 4L, Materials.Glass, 2L)));
-        MACHINE_DEFS.add(new MachineDef("bumblelyzer",    "EU", EU_MU_LU_CU_TIERS, m -> buildMaterials(m, Materials.Copper, 4L, Materials.Glass, 2L)));
-        MACHINE_DEFS.add(new MachineDef("boxinator",      "EU", EU_MU_LU_CU_TIERS, m -> buildMaterials(m, Materials.Copper, 2L)));
-        MACHINE_DEFS.add(new MachineDef("unboxinator",    "EU", EU_MU_LU_CU_TIERS, m -> buildMaterials(m, Materials.Copper, 2L)));
+        MACHINE_DEFS.add(new MachineDef("electrolyzer",   "EU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("canner",         "EU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("injector",       "EU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("printer",        "EU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("scannervisuals", "EU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("autocrafter",    "EU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("electricmixer",  "EU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("electricloom",   "EU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("electricsifter", "EU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("slicer",         "EU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("nanofab",        "EU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("plantalyzer",    "EU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("bumblelyzer",    "EU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("boxinator",      "EU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("unboxinator",    "EU", EU_MU_LU_CU_TIERS));
 
         // MU machines (5 tiers)
-        MACHINE_DEFS.add(new MachineDef("polarizer",      "MU", EU_MU_LU_CU_TIERS, m -> buildMaterials(m, Materials.Copper, 4L, Materials.Steel, 2L)));
-        MACHINE_DEFS.add(new MachineDef("magneticseparator", "MU", EU_MU_LU_CU_TIERS, m -> buildMaterials(m, Materials.Copper, 6L, Materials.Steel, 4L)));
+        MACHINE_DEFS.add(new MachineDef("polarizer",      "MU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("magneticseparator", "MU", EU_MU_LU_CU_TIERS));
 
         // LU machines (5 tiers)
-        MACHINE_DEFS.add(new MachineDef("laserengraver",  "LU", EU_MU_LU_CU_TIERS, m -> buildMaterials(m, Materials.Copper, 4L, Materials.Glass, 2L)));
-        MACHINE_DEFS.add(new MachineDef("laserwelder",    "LU", EU_MU_LU_CU_TIERS, m -> buildMaterials(m, Materials.Copper, 4L, Materials.Steel, 2L)));
+        MACHINE_DEFS.add(new MachineDef("laserengraver",  "LU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("laserwelder",    "LU", EU_MU_LU_CU_TIERS));
 
         // CU machines (5 tiers)
-        MACHINE_DEFS.add(new MachineDef("freezer",        "CU", EU_MU_LU_CU_TIERS, m -> buildMaterials(m, Materials.Copper, 4L)));
-        MACHINE_DEFS.add(new MachineDef("cryomixer",      "CU", EU_MU_LU_CU_TIERS, m -> buildMaterials(m, Materials.Copper, 4L, Materials.Steel, 2L)));
+        MACHINE_DEFS.add(new MachineDef("freezer",        "CU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("cryomixer",      "CU", EU_MU_LU_CU_TIERS));
 
         // QU machines — Osmium color only
-        MACHINE_DEFS.add(new MachineDef("massfab",        "QU", new GTMaterial[]{Materials.OsmiumElemental}, m -> buildMaterials(m, Materials.Copper, 8L, Materials.Steel, 8L)));
+        MACHINE_DEFS.add(new MachineDef("massfab",        "QU", new GTMaterial[]{Materials.OsmiumElemental}));
         // GT6 registers the Molecular Scanner as T3 only (Loader_MultiTileEntities:1549-1553; T1/T2/
         // T4/T5 are commented out) and its NBT_INPUT of 512 is exactly the scanner recipe's power
         // (RecipeMapScannerMolecular), so the single port machine is tier 3.
-        MACHINE_DEFS.add(new MachineDef("scannermolecular", "QU", new GTMaterial[]{Materials.OsmiumElemental}, m -> buildMaterials(m, Materials.Copper, 6L, Materials.Glass, 2L), 3));
-        MACHINE_DEFS.add(new MachineDef("replicator",     "QU", new GTMaterial[]{Materials.OsmiumElemental}, m -> buildMaterials(m, Materials.Copper, 8L, Materials.Steel, 8L)));
+        MACHINE_DEFS.add(new MachineDef("scannermolecular", "QU", new GTMaterial[]{Materials.OsmiumElemental}, 3));
+        MACHINE_DEFS.add(new MachineDef("replicator",     "QU", new GTMaterial[]{Materials.OsmiumElemental}));
 
         // Single-tier machines (StainlessSteel color)
         GTMaterial[] SS = {Materials.StainlessSteel};
-        MACHINE_DEFS.add(new MachineDef("autoclave",      "TU", SS, m -> buildMaterials(m, Materials.Copper, 4L)));
-        MACHINE_DEFS.add(new MachineDef("bath",           "TU", SS, m -> buildMaterials(m, Materials.Copper, 2L)));
-        MACHINE_DEFS.add(new MachineDef("generifier",     "TU", SS, m -> buildMaterials(m, Materials.Copper, 4L)));
-        MACHINE_DEFS.add(new MachineDef("coagulator",     "TU", SS, m -> buildMaterials(m, Materials.Copper, 4L)));
-        MACHINE_DEFS.add(new MachineDef("fermenter",      "HU", SS, m -> buildMaterials(m, Materials.ClayBrick, 4L, Materials.Copper, 2L)));
-        MACHINE_DEFS.add(new MachineDef("melter",         "HU", new GTMaterial[]{Materials.Iron}, m -> buildMaterials(m, Materials.ClayBrick, 8L)));
-        MACHINE_DEFS.add(new MachineDef("cokeoven",       "HU", SS, m -> buildMaterials(m, Materials.ClayBrick, 8L)));
-        MACHINE_DEFS.add(new MachineDef("lightning",      "EU", EU_MU_LU_CU_TIERS, m -> buildMaterials(m, Materials.Iron, 4L)));
-        MACHINE_DEFS.add(new MachineDef("implosioncompressor", "HU", SS, m -> buildMaterials(m, Materials.Steel, 8L)));
-        MACHINE_DEFS.add(new MachineDef("fusionreactor",  "QU", SS, m -> buildMaterials(m, Materials.Copper, 12L, Materials.Steel, 12L)));
-        MACHINE_DEFS.add(new MachineDef("cryodistillationtower", "CU", SS, m -> buildMaterials(m, Materials.Steel, 8L, Materials.Copper, 4L)));
-        MACHINE_DEFS.add(new MachineDef("distillationtower", "HU", SS, m -> buildMaterials(m, Materials.Steel, 8L, Materials.Copper, 4L)));
+        MACHINE_DEFS.add(new MachineDef("autoclave",      "TU", SS));
+        MACHINE_DEFS.add(new MachineDef("bath",           "TU", SS));
+        MACHINE_DEFS.add(new MachineDef("generifier",     "TU", SS));
+        MACHINE_DEFS.add(new MachineDef("coagulator",     "TU", SS));
+        MACHINE_DEFS.add(new MachineDef("fermenter",      "HU", SS));
+        MACHINE_DEFS.add(new MachineDef("melter",         "HU", new GTMaterial[]{Materials.Iron}));
+        MACHINE_DEFS.add(new MachineDef("cokeoven",       "HU", SS));
+        MACHINE_DEFS.add(new MachineDef("lightning",      "EU", EU_MU_LU_CU_TIERS));
+        MACHINE_DEFS.add(new MachineDef("implosioncompressor", "HU", SS));
+        MACHINE_DEFS.add(new MachineDef("fusionreactor",  "QU", SS));
+        MACHINE_DEFS.add(new MachineDef("cryodistillationtower", "CU", SS));
+        MACHINE_DEFS.add(new MachineDef("distillationtower", "HU", SS));
 
         // Large batch machines (GT6 single-tier, 512 GU/t; materials per original casing)
-        MACHINE_DEFS.add(new MachineDef("largecentrifuge",   "RU", new GTMaterial[]{Materials.Tungstensteel}, m -> buildMaterials(m, Materials.Steel, 8L, Materials.Copper, 4L)));
-        MACHINE_DEFS.add(new MachineDef("largeelectrolyzer", "EU", SS, m -> buildMaterials(m, Materials.Copper, 8L)));
-        MACHINE_DEFS.add(new MachineDef("largecoagulator",   "TU", SS, m -> buildMaterials(m, Materials.Copper, 8L)));
-        MACHINE_DEFS.add(new MachineDef("largeautoclave",    "TU", SS, m -> buildMaterials(m, Materials.Copper, 8L)));
-        MACHINE_DEFS.add(new MachineDef("largebath",         "TU", SS, m -> buildMaterials(m, Materials.Copper, 4L)));
-        MACHINE_DEFS.add(new MachineDef("largemixer",        "RU", SS, m -> buildMaterials(m, Materials.Steel, 8L)));
-        MACHINE_DEFS.add(new MachineDef("largefermenter",    "HU", SS, m -> buildMaterials(m, Materials.ClayBrick, 8L, Materials.Copper, 4L)));
-        MACHINE_DEFS.add(new MachineDef("largeoven",         "EU", new GTMaterial[]{Materials.Invar}, m -> buildMaterials(m, Materials.Copper, 4L)));
-        MACHINE_DEFS.add(new MachineDef("largesluice",       "RU", new GTMaterial[]{Materials.Titanium}, m -> buildMaterials(m, Materials.Steel, 8L)));
-        MACHINE_DEFS.add(new MachineDef("largecrusher",      "RU", new GTMaterial[]{Materials.Tungstensteel}, m -> buildMaterials(m, Materials.Steel, 8L)));
-        MACHINE_DEFS.add(new MachineDef("largeshredder",     "RU", new GTMaterial[]{Materials.Tungstensteel}, m -> buildMaterials(m, Materials.Steel, 8L)));
-        MACHINE_DEFS.add(new MachineDef("largesqueezer",     "RU", new GTMaterial[]{Materials.Steel}, m -> buildMaterials(m, Materials.Steel, 8L, Materials.Copper, 2L)));
-        MACHINE_DEFS.add(new MachineDef("largemassfab",      "QU", new GTMaterial[]{Materials.Lead}, m -> buildMaterials(m, Materials.Copper, 12L, Materials.Steel, 12L)));
+        MACHINE_DEFS.add(new MachineDef("largecentrifuge",   "RU", new GTMaterial[]{Materials.Tungstensteel}));
+        MACHINE_DEFS.add(new MachineDef("largeelectrolyzer", "EU", SS));
+        MACHINE_DEFS.add(new MachineDef("largecoagulator",   "TU", SS));
+        MACHINE_DEFS.add(new MachineDef("largeautoclave",    "TU", SS));
+        MACHINE_DEFS.add(new MachineDef("largebath",         "TU", SS));
+        MACHINE_DEFS.add(new MachineDef("largemixer",        "RU", SS));
+        MACHINE_DEFS.add(new MachineDef("largefermenter",    "HU", SS));
+        MACHINE_DEFS.add(new MachineDef("largeoven",         "EU", new GTMaterial[]{Materials.Invar}));
+        MACHINE_DEFS.add(new MachineDef("largesluice",       "RU", new GTMaterial[]{Materials.Titanium}));
+        MACHINE_DEFS.add(new MachineDef("largecrusher",      "RU", new GTMaterial[]{Materials.Tungstensteel}));
+        MACHINE_DEFS.add(new MachineDef("largeshredder",     "RU", new GTMaterial[]{Materials.Tungstensteel}));
+        MACHINE_DEFS.add(new MachineDef("largesqueezer",     "RU", new GTMaterial[]{Materials.Steel}));
+        MACHINE_DEFS.add(new MachineDef("largemassfab",      "QU", new GTMaterial[]{Materials.Lead}));
     }
 
     // ── Material short names for ID generation ──────────────────────────────
@@ -263,8 +251,7 @@ public final class BasicMachineCatalog {
                         : (def.energy().equals("TU") ? 1 : baseEnergy << (2 * t)); // x4 per tier
                 int parallel = original != null ? original.parallel()
                         : BasicMachineParameters.legacyParallelLimit(def.name());
-                List<WeightedMaterial> materials = def.materials() != null
-                        ? def.materials().apply(mat) : List.of(new WeightedMaterial(mat, 8));
+                List<WeightedMaterial> materials = OriginalMachineMaterialData.weights(def.name(), tierNumber);
                 var energyType = com.gregtech.gregtech.data.GregTechTags.Energy.ALL.stream()
                         .filter(type -> type.getShortName().equals(energyName)).findFirst().orElseThrow();
                 BasicMachineParameters spec = BasicMachineParameters.builder(id, mat)
@@ -303,7 +290,8 @@ public final class BasicMachineCatalog {
                                 original != null ? original.energyInputMax() : energyIn)
                         .strength(original != null ? original.hardness() : 16,
                                 original != null ? original.resistance() : 16)
-                        .faces(defaultMachineFaceMasks(name)).build());
+                        .faces(defaultMachineFaceMasks(name))
+                        .constructionMaterials(OriginalMachineMaterialData.weights(name, tier)).build());
             }
         }
         return com.gregtech.gregtech.api.definition.DefinitionCatalog.validated(result, BasicMachineParameters::id);

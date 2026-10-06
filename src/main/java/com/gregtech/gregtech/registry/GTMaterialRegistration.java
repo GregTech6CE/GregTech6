@@ -57,19 +57,24 @@ public final class GTMaterialRegistration {
         // Source pipe associations and ordinary barrel REV data, shared with NeoForge.
         count += com.gregtech.gregtech.content.recipe.TransportMaterialRegistration.register();
 
-        // Hoppers
-        count += registerMachineList(MachineRegistry.hoppers(), GTValues.U);
-        count += registerMachineList(MachineRegistry.queueHoppers(), GTValues.U);
-
-        // Burning boxes (MachineSpec doesn't store GTMaterial — look up by materialName)
-        for (RegistryObject<SolidBurningBoxBlock> entry : MachineRegistry.solidBurningBoxes()) {
-            if (!entry.isPresent()) continue;
-            SolidBurningBoxBlock block = entry.get();
-            MachineSpec spec = block.spec();
-            GTMaterial mat = GTMaterialRegistry.get(spec.materialName());
-            if (mat.getId() <= 0) continue;
-            count++;
-            ItemMaterialRegistry.register(block.asItem(), null, mat, GTValues.U);
+        // Original CR.REV components, including tier parts and multiblock controllers.
+        // Iterate the native registry: several families use their own registration holder.
+        for (var block : net.minecraft.core.registries.BuiltInRegistries.BLOCK) {
+            var id = net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(block);
+            if (!id.getNamespace().equals(GregTech.NAMESPACE)) continue;
+            if (block instanceof BasicMachineBlock machine) {
+                var spec = machine.basicSpec();
+                var data = com.gregtech.gregtech.content.machine.OriginalMachineMaterialData.find(spec.machineName(), spec.tier());
+                if (data.isPresent()) {
+                    ItemMaterialRegistry.register(block.asItem(), data.get());
+                    count++;
+                }
+            }
+            var data = com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block(id.getPath());
+            if (data.isPresent()) {
+                ItemMaterialRegistry.register(block.asItem(), data.get());
+                count++;
+            }
         }
 
         // Smelting crucibles

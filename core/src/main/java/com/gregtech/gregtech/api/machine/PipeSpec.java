@@ -25,6 +25,9 @@ public record PipeSpec(
                 plasmaProof, magicProof, maxTemperature, 0);
     }
 
+    /** Original MultiTileEntityPipeFluid.addToolTips: per-channel transfer limit in litres/tick. */
+    public long bandwidthPerTank() { return capacity / 2; }
+
     public enum PipeSize {
         TINY, SMALL, MEDIUM, LARGE, HUGE, QUADRUPLE, NONUPLE;
 

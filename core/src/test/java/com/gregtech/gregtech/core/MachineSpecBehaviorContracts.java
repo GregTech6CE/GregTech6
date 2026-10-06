@@ -30,8 +30,76 @@ public final class MachineSpecBehaviorContracts {
         brickHeater();
         ceramicCrucibleAndMold();
         chargedCrucibleHeatRequirement();
+        originalMachineMaterials();
         System.out.println("Machine spec behavior contracts passed: " + assertions
-                + " assertions; brick25percent/16HU, ceramic7U/2500K, mold5U, charged45HU/K; no game runtime");
+                + " assertions; brick25percent/16HU, ceramic7U/2500K, mold5U, charged45HU/K, original machine CR.REV data; no game runtime");
+    }
+
+    private static void originalMachineMaterials() {
+        long u = GTValues.U;
+        composition(com.gregtech.gregtech.content.machine.OriginalMachineMaterialData.find("oven", 1).orElseThrow(),
+                java.util.Map.of("Steel", 8*u, "Brick", 8*u, "Copper", 2*u));
+        composition(com.gregtech.gregtech.content.machine.OriginalMachineMaterialData.find("centrifuge", 1).orElseThrow(),
+                java.util.Map.of("Bronze", 23*u));
+        composition(com.gregtech.gregtech.content.machine.OriginalMachineMaterialData.find("electrolyzer", 1).orElseThrow(),
+                java.util.Map.of("SteelGalvanized", 8*u, "Platinum", u, "Tin", u, "Rubber", 2*u));
+        composition(com.gregtech.gregtech.content.machine.OriginalMachineMaterialData.find("melter", 1).orElseThrow(),
+                java.util.Map.of("Iron", 14*u, "Ceramic", 7*u, "Brick", 8*u, "Copper", 2*u));
+        composition(com.gregtech.gregtech.content.machine.OriginalMachineMaterialData.find("massfab", 5).orElseThrow(),
+                java.util.Map.of("Osmiridium", 8*u, "Osmium", 64*u, "Titanium", 16*u, "Platinum", 4*u,
+                        "NetherStar", 4*u, "Ruby", 2*u, "Sapphire", 2*u));
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("hopper_steel").orElseThrow(),
+                java.util.Map.of("Steel", 5*u, "Wood", 4*u));
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("queue_hopper_steel").orElseThrow(),
+                java.util.Map.of("Steel", 5*u, "Wood", 8*u));
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("burning_box_solid_bronze").orElseThrow(),
+                java.util.Map.of("Bronze", 4*u, "Copper", 2*u, "Brick", 12*u));
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("gearbox_iridium").orElseThrow(),
+                java.util.Map.of("Iridium", 14*u));
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("rotation_transformer_iridium").orElseThrow(),
+                java.util.Map.of("Iridium", 26*u));
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("gearbox_wood").orElseThrow(),
+                java.util.Map.of("WoodTreated", 10*u));
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("axle_wood_3").orElseThrow(),
+                java.util.Map.of("WoodTreated", 4*u));
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("engine_steam_strong_bronze").orElseThrow(),
+                java.util.Map.of("Bronze", 38*u));
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("electric_motor_lv").orElseThrow(),
+                java.util.Map.of("SteelGalvanized", 18*u + u/3, "IronMagnetic", u, "Copper", u));
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("electric_dynamo_lv").orElseThrow(),
+                java.util.Map.of("SteelGalvanized", 18*u + u/3, "IronMagnetic", u, "Copper", u));
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("battery_box_ulv").orElseThrow(),
+                java.util.Map.of("TinAlloy", 8*u, "Lead", 3*u, "Rubber", 2*u));
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("energy_storage_ulv").orElseThrow(),
+                java.util.Map.of("TinAlloy", 8*u, "Lead", 12*u, "Rubber", 4*u, "Copper", 4*u, "Iron", 4*u));
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("solar_panel_silicon").orElseThrow(),
+                java.util.Map.of("TinAlloy", 8*u, "Silicon", 4*u, "Copper", u, "Rubber", 2*u));
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("steam_turbine_brass").orElseThrow(),
+                java.util.Map.of("Bronze", 23*u, "Brass", 17*u));
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("implosion_compressor_wall").orElseThrow(),
+                java.util.Map.of("TungstenSteel", 36*u));
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("large_iridium_coil").orElseThrow(),
+                java.util.Map.of("Iridium", 16*u));
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("small_stainless_steel_tank_main_valve").orElseThrow(),
+                java.util.Map.of("StainlessSteel", 9*u/2));
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("stainless_steel_boiler_main_barometer").orElseThrow(),
+                java.util.Map.of("StainlessSteel", 90*u));
+        check(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("axle_wood_4").isEmpty(),
+                "Source beamWood/creosote has no automatic material data; do not invent8U");
+        check(com.gregtech.gregtech.content.machine.OriginalMachineMaterialData.find("scannermolecular", 1).isEmpty(),
+                "Commented-out source molecular scanner cannot create a material registration");
+        var spec = com.gregtech.gregtech.content.machine.BasicMachineCatalog.specifications().stream()
+                .filter(p -> p.id().equals("centrifuge_bronze")).findFirst().orElseThrow();
+        check(spec.constructionMaterials().size() == 1 && spec.constructionMaterials().get(0).amount() == 23*u,
+                "Both native catalogs receive exact CS.U values, not raw23 or a fixed8U hull estimate");
+    }
+
+    private static void composition(com.gregtech.gregtech.api.material.ItemComposition data, java.util.Map<String, Long> expected) {
+        var wanted = new java.util.HashMap<com.gregtech.gregtech.api.material.GTMaterial, Long>();
+        expected.forEach((name, amount) -> wanted.put(GTMaterialRegistry.get(name), amount));
+        var actual = new java.util.HashMap<com.gregtech.gregtech.api.material.GTMaterial, Long>();
+        data.components().forEach(part -> actual.put(part.material(), part.amount()));
+        check(actual.equals(wanted), "Original components for " + data.source() + ": " + actual + " expected " + wanted);
     }
 
     private static void brickHeater() {

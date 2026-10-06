@@ -96,7 +96,7 @@ public class GTMachineBlockItem extends BlockItem {
         } else if (getBlock() instanceof SolidBurningBoxBlock) {
             MachineTooltips.appendSolidBurningBox(spec, tooltip);
         } else if (getBlock() instanceof TankBlock tank) {
-            TankTooltips.appendTank(tank.spec(), tooltip);
+            TankTooltips.appendTank(tank.spec(), stack, tooltip);
         } else if (getBlock() instanceof FluidPipeBlock pipe) {
             TankTooltips.appendPipe(pipe.spec(), tooltip);
         } else if (getBlock() instanceof ItemPipeBlock pipe) {
