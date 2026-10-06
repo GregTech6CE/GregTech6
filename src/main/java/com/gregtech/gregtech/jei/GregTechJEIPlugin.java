@@ -69,6 +69,8 @@ public final class GregTechJEIPlugin implements IModPlugin {
     }
 
     @Override public void registerItemSubtypes(mezz.jei.api.registration.ISubtypeRegistration registration) {
+        for(var item:com.gregtech.gregtech.api.recipe.UsbRecipeDisplayBinding.sticks())
+            registration.registerSubtypeInterpreter(item,(stack,context)->com.gregtech.gregtech.api.recipe.UsbRecipeDisplayBinding.subtype(stack));
         for(var entry:com.gregtech.gregtech.registry.GTFluidItems.ITEMS.getEntries()) if(entry.isPresent())
             registration.registerSubtypeInterpreter(entry.get(),(stack,context) -> com.gregtech.gregtech.api.fluid.FluidDisplayBinding.subtype(stack));
     }

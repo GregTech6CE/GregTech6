@@ -57,6 +57,18 @@ final class DecorativePanelDeliveryChecks {
   require(com.gregtech.gregtech.content.recipe.MaterialDataViewerRecipes.prints().size()==dataCounts[1],"installed dictionary printing pages");
   require(com.gregtech.gregtech.content.recipe.MaterialDataViewerRecipes.replications().size()==dataCounts[2],"installed source UUM replication pages");
   require(preferred==406,"all original native pipe targets");
+  int usbFileTypes=0;
+  var steelFile=com.gregtech.gregtech.content.recipe.GTMaterialDataRecipes.usbData(com.gregtech.gregtech.content.recipe.GTMaterialDataRecipes.withMaterialData(
+          new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gregtech:usb3_stick"))),com.gregtech.gregtech.api.material.GTMaterialRegistry.get("Steel")));
+  var ironFile=com.gregtech.gregtech.content.recipe.GTMaterialDataRecipes.usbData(com.gregtech.gregtech.content.recipe.GTMaterialDataRecipes.withMaterialData(
+          new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gregtech:usb3_stick"))),com.gregtech.gregtech.api.material.GTMaterialRegistry.get("Iron")));
+  for(var item:com.gregtech.gregtech.api.recipe.UsbRecipeDisplayBinding.sticks()) {
+   var steel=new ItemStack(item);var iron=new ItemStack(item);var blank=new ItemStack(item);
+   require(com.gregtech.gregtech.content.data.UsbDataMedia.writeStick(steel,1,steelFile)&&com.gregtech.gregtech.content.data.UsbDataMedia.writeStick(iron,1,ironFile),"installed legal USB file writer");
+   var fileId=com.gregtech.gregtech.api.recipe.UsbRecipeDisplayBinding.subtype(steel);
+   require(!fileId.isEmpty()&&!fileId.equals(com.gregtech.gregtech.api.recipe.UsbRecipeDisplayBinding.subtype(iron))&&com.gregtech.gregtech.api.recipe.UsbRecipeDisplayBinding.subtype(blank).isEmpty(),"installed material file identity");usbFileTypes++;
+  }
+  require(usbFileTypes==4,"installed four USB file display types");
   var dataViews=new JsonObject();dataViews.addProperty("scans",dataCounts[0]);dataViews.addProperty("prints",dataCounts[1]);dataViews.addProperty("replications",dataCounts[2]);
   int tankGroupVariants=0;
   for(var row:com.gregtech.gregtech.content.transport.TransportCraftingCatalog.rows()) {
@@ -81,6 +93,6 @@ final class DecorativePanelDeliveryChecks {
   g.drawString(client.font,"Original dye order: black -> white",8,133,0xffffff,false);
   g.drawString(client.font,"30 available plank identities",8,143,0xffffff,false);
   g.drawString(client.font,"Item previews; source sprite/RGB checked for all 83",8,221,0xaaaaaa,false);g.pose().popPose();
-  var out=new JsonObject();out.addProperty("installedItemModels",count);out.addProperty("canonicalColoredModels",colored);out.addProperty("canonicalWoodModels",wood);out.addProperty("centeredTwoPixelMesh",true);out.addProperty("sourceRgbAndTextures",true);out.addProperty("legacyAliasesHiddenFromCreative",true);out.addProperty("originalPerItemMaterialsAndAdvancedTooltip",count);out.addProperty("installedShredderEntries",count);out.addProperty("transportMaterialItemsAndShredderEntries",transport);out.addProperty("originalTankGroupFormVariants",tankGroupVariants);out.addProperty("resolvedTransportCraftingRows",com.gregtech.gregtech.content.transport.TransportCraftingCatalog.rows().size());out.addProperty("preferredTransportForms",preferred);out.add("materialDataDisplay",dataViews);return out;
+  var out=new JsonObject();out.addProperty("installedItemModels",count);out.addProperty("canonicalColoredModels",colored);out.addProperty("canonicalWoodModels",wood);out.addProperty("centeredTwoPixelMesh",true);out.addProperty("sourceRgbAndTextures",true);out.addProperty("legacyAliasesHiddenFromCreative",true);out.addProperty("originalPerItemMaterialsAndAdvancedTooltip",count);out.addProperty("installedShredderEntries",count);out.addProperty("transportMaterialItemsAndShredderEntries",transport);out.addProperty("originalTankGroupFormVariants",tankGroupVariants);out.addProperty("resolvedTransportCraftingRows",com.gregtech.gregtech.content.transport.TransportCraftingCatalog.rows().size());out.addProperty("preferredTransportForms",preferred);out.add("materialDataDisplay",dataViews);out.addProperty("usbFileDisplayTypes",usbFileTypes);return out;
  }
 }

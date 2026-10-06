@@ -19,6 +19,7 @@ public final class RecipePresentationRuntimeSmoke {
     private static boolean checked;
     private static void require(boolean value,String detail){if(!value)throw new IllegalStateException("Recipe presentation: "+detail);}
     public static boolean frame(Minecraft minecraft,JsonObject result) {
+        if(Boolean.getBoolean("gregtech.integration.materialDataBrowserRuntimeOnly"))return MaterialDataBrowserSmoke.frame(minecraft,result);
         if(failure!=null)throw new IllegalStateException("Recipe presentation screenshot failed",failure);
         if(stage==3)return true;
         if(stage>0)return false;
@@ -72,6 +73,7 @@ public final class RecipePresentationRuntimeSmoke {
         }
     }
     public static void screen(Minecraft minecraft,net.minecraft.client.gui.screens.Screen screen) {
+        if(Boolean.getBoolean("gregtech.integration.materialDataBrowserRuntimeOnly")){MaterialDataBrowserSmoke.screen(minecraft,screen);return;}
         if(!checked||stage<1||stage>2||frames<0||failure!=null)return;
         if(!screen.getClass().getName().contains(EMI?"RecipeScreen":"RecipesGui"))return;
         if(EMI)try {

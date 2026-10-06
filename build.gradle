@@ -105,6 +105,7 @@ minecraft {
             property 'gregtech.integration.clientCreateWorldSmoke', (project.findProperty('clientCreateWorldSmoke') ?: 'false').toString()
             property 'gregtech.integration.viewerFeedbackOnly', (project.findProperty('viewerFeedbackOnly') ?: 'false').toString()
             property 'gregtech.integration.recipePresentationRuntimeOnly', (project.findProperty('recipePresentationRuntimeOnly') ?: 'false').toString()
+            property 'gregtech.integration.materialDataBrowserRuntimeOnly', (project.findProperty('materialDataBrowserRuntimeOnly') ?: 'false').toString()
             property 'gregtech.integration.materialBushRuntimeOnly', (project.findProperty('materialBushRuntimeOnly') ?: 'false').toString()
             property 'gregtech.integration.newIssuesRuntimeOnly', (project.findProperty('newIssuesRuntimeOnly') ?: 'false').toString()
             property 'gregtech.integration.longDistanceRuntimeOnly', (project.findProperty('longDistanceRuntimeOnly') ?: 'false').toString()

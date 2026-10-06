@@ -65,6 +65,7 @@ neoForge {
             gameDirectory = project.file('run-client')
             systemProperty 'gregtech.integration.viewerFeedbackOnly', (rootProject.findProperty('viewerFeedbackOnly') ?: 'false').toString()
             systemProperty 'gregtech.integration.recipePresentationRuntimeOnly', (rootProject.findProperty('recipePresentationRuntimeOnly') ?: 'false').toString()
+            systemProperty 'gregtech.integration.materialDataBrowserRuntimeOnly', (rootProject.findProperty('materialDataBrowserRuntimeOnly') ?: 'false').toString()
             systemProperty 'gregtech.integration.materialBushRuntimeOnly', (rootProject.findProperty('materialBushRuntimeOnly') ?: 'false').toString()
             systemProperty 'gregtech.integration.newIssuesRuntimeOnly', (rootProject.findProperty('newIssuesRuntimeOnly') ?: 'false').toString()
             systemProperty 'gregtech.integration.longDistanceRuntimeOnly', (rootProject.findProperty('longDistanceRuntimeOnly') ?: 'false').toString()
