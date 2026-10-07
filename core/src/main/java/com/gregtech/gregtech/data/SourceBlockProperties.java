@@ -22,6 +22,8 @@ public final class SourceBlockProperties {
             int sourceId = BLOCKS.get("chest_"+suffix).sourceId() + (entry.queue() ? 8200 : 8000);
             BLOCKS.put(entry.spec().id(), new Params(sourceId,"wrench",entry.spec().material(),0,false));
         }
+        com.gregtech.gregtech.content.multiblock.OriginalGeneratorTooltipData.aliases().forEach((alias,source)->
+                BLOCKS.put(alias,Objects.requireNonNull(BLOCKS.get(source),source)));
     }
     public static Optional<Params> block(String path) { return Optional.ofNullable(BLOCKS.get(path)); }
     public static Optional<Params> basic(String machine, int tier) { return Optional.ofNullable(BASICS.get(machine+"/"+tier)); }

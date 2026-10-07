@@ -48,6 +48,9 @@ public class LargeGasTurbineControllerBlock extends DirectionalBlock implements 
         }
         return net.minecraft.world.InteractionResult.PASS;
     }
+    @Override public void appendHoverText(net.minecraft.world.item.ItemStack stack,net.minecraft.world.level.BlockGetter level,java.util.List<net.minecraft.network.chat.Component> lines,net.minecraft.world.item.TooltipFlag flag) {
+        com.gregtech.gregtech.client.GeneratorSourceTooltips.append(com.gregtech.gregtech.content.multiblock.OriginalGeneratorTooltipData.find(grade.id()),lines);
+    }
     @Override public java.util.List<net.minecraft.world.item.ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder){
         var stack=new net.minecraft.world.item.ItemStack(this);
         if(builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof LargeGasTurbineControllerBlockEntity machine)stack.getOrCreateTag().put("BlockEntityTag",com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(machine,machine.saveWithoutMetadata()));
