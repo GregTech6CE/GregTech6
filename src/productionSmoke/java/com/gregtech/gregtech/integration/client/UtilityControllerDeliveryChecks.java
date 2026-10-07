@@ -52,6 +52,15 @@ final class UtilityControllerDeliveryChecks {
                         && lines.stream().anyMatch(c -> c.getString().contains("100.00%")), "Source Hot Fuels and full efficiency " + id);
                 require(count(lines, "gt.td.short.energy.heat") == 1 && output.getString().contains("16384 HU/t")
                         && !output.getString().contains("(") && !output.getString().contains(".."), "Fixed source heat output omits side and range " + id);
+                var configured=stack.copy();var settings=new net.minecraft.nbt.CompoundTag();
+                settings.putLong("gt.output",500000000L);settings.putShort("gt.eff",(short)6250);
+                settings.putString("gt.fuelmap","gt.recipe.fuels.gas");settings.putString("gt.energy.emitted","ENERGY.ELECTRICITY");
+                configured.getOrCreateTag().put("BlockEntityTag",settings);
+                var custom=configured.getTooltipLines(null,TooltipFlag.NORMAL);
+                require(line(custom,"gt.lang.energy.output").getString().contains("500000000 EU/t")
+                        &&custom.stream().anyMatch(c->c.getString().contains("62.50%"))
+                        &&count(custom,"gt.recipe.fuels.gas")==1&&count(custom,"gt.recipe.fuels.hot")==0,
+                        "Actual saved heat rate/efficiency/map/emitted type rather than registration defaults");
             } else {
                 require(count(lines, "gt.td.short.energy.electricity") == 2 && output.getString().contains("32768 EU/p (up to 16 Amps)")
                         && lines.stream().anyMatch(c -> c.getString().equals("589824000 EU per Lightning Strike")), "Original hardcoded packet / amps / per-strike suffixes " + id);

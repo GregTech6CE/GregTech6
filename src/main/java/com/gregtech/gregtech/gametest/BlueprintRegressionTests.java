@@ -265,7 +265,7 @@ public final class BlueprintRegressionTests {
         int used=fuel.getAmount()-machine.getFluidInTank(0).getAmount();
         long count=used/recipe.mFluidInputs[0].getAmount();
         helper.assertTrue(count>0&&machine.getEnergyStored(GregTechTags.Energy.HU,null)==count*(-recipe.mEUt)*recipe.mDuration&&machine.getFluidInTank(1).getAmount()==count*recipe.mFluidOutputs[0].getAmount(),"real hot-fluid recipe conserves heat and cooled fluid");
-        var data=machine.saveWithoutMetadata();data.putLong("gt.hu",0);
+        var data=machine.saveWithoutMetadata();data.putLong("gt.energy",0);
         var full=recipe.mFluidOutputs[0].copy();full.setAmount(327680);data.put("gt.cold",full.writeToNBT(new net.minecraft.nbt.CompoundTag()));machine.load(data);
         int before=machine.getFluidInTank(0).getAmount();machine.tick();
         helper.assertTrue(machine.getFluidInTank(0).getAmount()==before&&machine.getEnergyStored(GregTechTags.Energy.HU,null)==0,"exhaust threshold stops fuel consumption");

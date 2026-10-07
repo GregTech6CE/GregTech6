@@ -1,9 +1,15 @@
+/* GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later.
+ * Source LargeHeatExchanger settings, fluid storage and eight-outlet cycle. */
 package com.gregtech.gregtech.blockentity.machine;
 
-import com.gregtech.gregtech.api.energy.IEnergyBlock;
+import com.gregtech.gregtech.api.energy.EnergyTransfer;
+import com.gregtech.gregtech.api.fluid.FluidTankGT;
+import com.gregtech.gregtech.api.fluid.HeatExchangerData;
+import com.gregtech.gregtech.content.multiblock.HeatExchangerRules;
 import com.gregtech.gregtech.api.fluid.FluidPort;
 import com.gregtech.gregtech.api.multiblock.*;
-import com.gregtech.gregtech.api.recipe.FluidFuelBatch;
+import com.gregtech.gregtech.api.recipe.Recipe;
+import com.gregtech.gregtech.api.recipe.RecipeMap;
 import com.gregtech.gregtech.blockentity.GTEnergyBlockEntity;
 import com.gregtech.gregtech.content.multiblock.LargeMachineParts;
 import com.gregtech.gregtech.data.*;
@@ -14,21 +20,36 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import java.util.*;
 
 /** Original two-layer heat exchanger, hot-fluid recipes and eight upward heat outlets. */
-public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity implements MultiblockPortOwner,IFluidHandler {
+public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity implements MultiblockPortOwner,IFluidHandler,com.gregtech.gregtech.api.machine.MachineControl.Provider {
     public static final int RATE=com.gregtech.gregtech.content.multiblock.OriginalGeneratorParameters.HEAT_EXCHANGER_RATE;
-    private long heat;
+    private long heat,activityHistory;
+    private boolean active;
+    private HeatExchangerRules.Settings settings=HeatExchangerRules.DEFAULTS;
+    private Recipe lastRecipe;
     private final PartBindings<BlockPos,MultiblockLayout.Role> bindings=new PartBindings<>();
-    private final FluidTank hot=new FluidTank(RATE*10,stack->FuelRecipeMaps.Hot.containsInput(stack)) {
-        @Override protected void onContentsChanged(){setChanged();}
+    private final FluidTankGT hot=new FluidTankGT(settings.inputCapacity()).setOnChanged(this::setChanged);
+    private final FluidTankGT cold=new FluidTankGT().setOnChanged(this::setChanged);
+    private final IFluidHandler input=new FluidPort(this,true,false);
+    public HeatExchangerRules.Settings settings(){return settings;}
+    public long tankAmount(int index){return index==0?hot.getAmount():index==1?cold.getAmount():0;}
+    public long tankCapacity(int index){return index==0?hot.capacity():index==1?cold.capacity():0;}
+    public boolean isActive(){return active;}
+    private RecipeMap recipes(){return RecipeMap.RECIPE_MAPS.get(settings.fuelMap());}
+    private final com.gregtech.gregtech.api.machine.MachineControl control=new com.gregtech.gregtech.api.machine.MachineControl(){
+        public boolean available(){return !isRemoved();}
+        public boolean supportsSwitch(){return false;}
+        public boolean supportsProgress(){return false;}
+        public boolean enabled(){return true;}
+        public boolean setEnabled(boolean value){return true;}
+        public boolean running(){return active;}
+        public boolean active(){return active;}
+        public long progress(){return 0;}
+        public long progressMax(){return 0;}
     };
-    private final FluidTank cold=new FluidTank(Integer.MAX_VALUE) {
-        @Override protected void onContentsChanged(){setChanged();}
-    };
-    private final IFluidHandler input=new FluidPort(hot,true,false);
+    @Override public com.gregtech.gregtech.api.machine.MachineControl machineControl(Direction side){return control;}
     public LargeHeatExchangerControllerBlockEntity(BlockPos pos,BlockState state){super(GTBlockEntities.LARGE_HEAT_EXCHANGER.get(),pos,state);}
     @Override public boolean isStructureOk(){
         if(level==null||isRemoved())return false;
@@ -45,24 +66,28 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
     @Override public void setRemoved(){bindings.clear(this::release);super.setRemoved();}
     public static void serverTick(Level level,BlockPos pos,BlockState state,LargeHeatExchangerControllerBlockEntity machine){machine.tick();}
     public void tick(){
-        if(level==null||level.isClientSide||!isStructureOk())return;
-        // Heat dissipates equally at all eight outlets, including unconnected ones, as in GT6.
-        long perOutlet=Math.min(RATE/8,heat/8);
+        if(level==null||level.isClientSide)return;
+        long previousHeat=heat,previousHistory=activityHistory;boolean previousActive=active;
+        // The source checks/binds its shell but does not gate buffered heat or fuel on the result.
+        isStructureOk();
+        long perOutlet=HeatExchangerRules.perOutlet(settings.rate(),heat);
         if(perOutlet>0){
             heat-=perOutlet*8;
+            var emitted=settings.energyType();
             for(int x=-1;x<=1;x++)for(int z=-1;z<=1;z++)if(x!=0||z!=0){
                 var target=worldPosition.offset(x,2,z);
-                if(level.hasChunkAt(target)&&level.getBlockEntity(target) instanceof IEnergyBlock receiver)receiver.doEnergyInjection(GregTechTags.Energy.HU,Direction.DOWN,1,perOutlet,true);
+                if(emitted!=null&&level.hasChunkAt(target))
+                    EnergyTransfer.insertEnergyInto(emitted,Direction.DOWN,1,perOutlet,this,level.getBlockEntity(target));
             }
             setChanged();
         }
-        if(heat<RATE*2L&&cold.getFluidAmount()<RATE*20){
-            for(var recipe:FuelRecipeMaps.Hot.mRecipeList){
-                var plan=FluidFuelBatch.plan(recipe,hot.getFluid(),cold.getFluid(),cold.getCapacity(),RATE*2L-heat,10000);
-                if(plan==null||plan.energy()>Long.MAX_VALUE-heat)continue;
-                hot.setFluid(plan.input());cold.setFluid(plan.output());heat+=plan.energy();setChanged();break;
-            }
+        if(heat<settings.bufferTarget()) {
+            active=false;
+            if(cold.getAmount()<settings.outputBackpressure())burnFuel();
         }
+        if(heat<8)heat=0;
+        activityHistory=(activityHistory<<1)|(active?1:0);
+        if(previousHeat!=heat||previousHistory!=activityHistory||previousActive!=active)setChanged();
         var below=worldPosition.below();
         if(!cold.isEmpty()&&level.hasChunkAt(below)&&level.getBlockEntity(below)!=null){
             var target=level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,below,Direction.UP);if(target!=null){
@@ -70,25 +95,63 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
             }
         }
     }
+    private boolean matches(Recipe recipe){
+        return recipe!=null&&recipe.mEnabled&&!recipe.mFakeRecipe&&recipe.mInputs.length==0
+                &&recipe.mFluidInputs.length==1&&!recipe.mFluidInputs[0].isEmpty()
+                &&FluidStack.isSameFluidSameComponents(hot.getFluidLong(),recipe.mFluidInputs[0]);
+    }
+    private void burnFuel(){
+        if(hot.isEmpty())return;
+        var map=recipes();
+        if(map==null)return; // Keep an unknown saved map identity; never silently burn another fuel type.
+        Recipe recipe=map.mRecipeList.contains(lastRecipe)&&matches(lastRecipe)?lastRecipe:null;
+        if(recipe==null)for(var candidate:map.mRecipeList)if(matches(candidate)){recipe=candidate;break;}
+        if(recipe==null){hot.setEmpty();return;}
+        var output=recipe.mFluidOutputs.length==0?FluidStack.EMPTY:recipe.mFluidOutputs[0];
+        if(!output.isEmpty()&&!cold.isEmpty()&&!FluidStack.isSameFluidSameComponents(cold.getFluidLong(),output))return;
+        if(!output.isEmpty()&&Long.MAX_VALUE-cold.getAmount()<output.getAmount())return;
+        var plan=HeatExchangerRules.charge(hot.getAmount(),recipe.mFluidInputs[0].getAmount(),cold.getAmount(),
+                output.getAmount(),heat,settings.bufferTarget(),recipe.mEUt,recipe.mDuration,settings.efficiency());
+        if(plan==null){if(hot.getAmount()<recipe.mFluidInputs[0].getAmount()&&activityHistory==0)hot.setEmpty();return;}
+        hot.remove(plan.inputUsed());
+        if(plan.outputMade()>0)cold.setFluid(output,cold.getAmount()+plan.outputMade());
+        heat+=plan.energyAdded();active=true;lastRecipe=recipe;setChanged();
+    }
     @Override public IFluidHandler portFluids(MultiblockLayout.Role role){return role==MultiblockLayout.Role.FLUID_INPUT?input:null;}
     @Override public int getTanks(){return 2;}
     @Override public FluidStack getFluidInTank(int tank){return tank==0?hot.getFluid().copy():tank==1?cold.getFluid().copy():FluidStack.EMPTY;}
     @Override public int getTankCapacity(int tank){return tank==0?hot.getCapacity():tank==1?cold.getCapacity():0;}
-    @Override public boolean isFluidValid(int tank,FluidStack stack){return tank==0&&hot.isFluidValid(stack);}
-    @Override public int fill(FluidStack stack,FluidAction action){return hot.fill(stack,action);}
+    @Override public boolean isFluidValid(int tank,FluidStack stack){return tank==0&&recipes()!=null&&recipes().containsInput(stack);}
+    @Override public int fill(FluidStack stack,FluidAction action){return isFluidValid(0,stack)?hot.fill(stack,action):0;}
     @Override public FluidStack drain(FluidStack stack,FluidAction action){return cold.drain(stack,action);}
     @Override public FluidStack drain(int amount,FluidAction action){return cold.drain(amount,action);}
     public IFluidHandler fluidCapability(Direction side){return !isRemoved()?this:null;}
-    @Override public boolean isEnergyType(GregTechTags.Tag type,Direction side,boolean emitting){return false;}
-    @Override public Collection<GregTechTags.Tag> getEnergyTypes(Direction side){return List.of();}
+    @Override public boolean isEnergyType(GregTechTags.Tag type,Direction side,boolean emitting){return emitting&&type!=null&&type==settings.energyType();}
+    @Override public boolean isEnergyEmittingTo(GregTechTags.Tag type,Direction side,boolean theoretical){return (side==null||side==Direction.UP)&&super.isEnergyEmittingTo(type,side,theoretical);}
+    @Override public Collection<GregTechTags.Tag> getEnergyTypes(Direction side){return settings.energyType()==null?List.of():List.of(settings.energyType());}
     @Override public long getEnergySizeInputRecommended(GregTechTags.Tag type,Direction side){return 0;}
-    @Override public long getEnergySizeOutputRecommended(GregTechTags.Tag type,Direction side){return 0;}
-    @Override public long getEnergyOffered(GregTechTags.Tag type,Direction side,long size){return 0;}
+    @Override public long getEnergySizeOutputRecommended(GregTechTags.Tag type,Direction side){return settings.rate();}
+    @Override public long getEnergySizeOutputMin(GregTechTags.Tag type,Direction side){return settings.rate();}
+    @Override public long getEnergySizeOutputMax(GregTechTags.Tag type,Direction side){return settings.rate();}
+    @Override public long getEnergyOffered(GregTechTags.Tag type,Direction side,long size){return Math.min(settings.rate(),heat);}
     @Override public long getEnergyDemanded(GregTechTags.Tag type,Direction side,long size){return 0;}
     @Override public long doInject(GregTechTags.Tag type,Direction side,long size,long amount,boolean execute){return 0;}
-    @Override public long getEnergyStored(GregTechTags.Tag type,Direction side){return type==GregTechTags.Energy.HU?heat:0;}
-    @Override public long getEnergyCapacity(GregTechTags.Tag type,Direction side){return type==GregTechTags.Energy.HU?RATE*2:0;}
-    @Override protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup){super.saveAdditional(tag,lookup);tag.putLong("gt.hu",heat);tag.put("gt.hot",hot.writeToNBT(lookup,new CompoundTag()));tag.put("gt.cold",cold.writeToNBT(lookup,new CompoundTag()));}
-    private static void restore(FluidTank tank,CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup){com.gregtech.gregtech.api.fluid.NativeMachineTankData.restore(tank,tag,lookup);}
-    @Override public void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup){super.loadAdditional(tag,lookup);heat=Math.max(0,tag.getLong("gt.hu"));restore(hot,tag.getCompound("gt.hot"),lookup);restore(cold,tag.getCompound("gt.cold"),lookup);}
+    @Override public long getEnergyStored(GregTechTags.Tag type,Direction side){return type!=null&&type==settings.energyType()?heat:0;}
+    @Override public long getEnergyCapacity(GregTechTags.Tag type,Direction side){return type!=null&&type==settings.energyType()?settings.bufferTarget():0;}
+    @Override protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup){
+        super.saveAdditional(tag,lookup);
+        HeatExchangerData.save(tag,settings);tag.putLong("gt.energy",heat);
+        tag.putBoolean("gt.active",active);tag.putLong("gt.active.data",activityHistory);
+        var inputTag=new CompoundTag();var outputTag=new CompoundTag();
+        hot.writeToNBT(inputTag,lookup);cold.writeToNBT(outputTag,lookup);
+        tag.put("gt.hot",inputTag);tag.put("gt.cold",outputTag);
+    }
+    @Override public void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup){
+        super.loadAdditional(tag,lookup);
+        settings=HeatExchangerData.settings(tag);lastRecipe=null;
+        heat=Math.max(0,tag.getLong(tag.contains("gt.energy")?"gt.energy":"gt.hu"));
+        active=tag.getBoolean("gt.active");activityHistory=tag.getLong("gt.active.data");
+        HeatExchangerData.restore(hot,tag.getCompound(tag.contains("gt.hot")?"gt.hot":"gt.tank.0"),settings.inputCapacity(),lookup);
+        HeatExchangerData.restore(cold,tag.getCompound(tag.contains("gt.cold")?"gt.cold":"gt.tank.1"),Long.MAX_VALUE,lookup);
+    }
 }

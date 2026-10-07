@@ -10,20 +10,41 @@ import java.util.List;
 /** Default source descriptions; shared exact material quantities are added by the material event. */
 public final class UtilityControllerTooltips {
     private UtilityControllerTooltips() {}
-    public static void heat(List<Component> lines) {
+    public static void heat(List<Component> lines) { heat(com.gregtech.gregtech.content.multiblock.HeatExchangerRules.DEFAULTS,lines); }
+    public static void heat(net.minecraft.world.item.ItemStack stack,List<Component> lines) {
+        heat(com.gregtech.gregtech.api.fluid.HeatExchangerData.settings(stack),lines);
+    }
+    private static void heat(com.gregtech.gregtech.content.multiblock.HeatExchangerRules.Settings settings,List<Component> lines) {
         if(CommonBlockTooltips.containsKey(lines,"gt.lang.structure"))return;
         structure(lines,OriginalUtilityControllerData.HEAT_STRUCTURE,false);
         lines.add(Component.translatable("gt.lang.recipes").withStyle(ChatFormatting.AQUA).append(": ")
-                .append(Component.translatable(OriginalUtilityControllerData.HEAT_FUEL_KEY).withStyle(ChatFormatting.WHITE)));
+                .append(Component.translatable(settings.fuelMap()).withStyle(ChatFormatting.WHITE)));
         lines.add(Component.translatable("gt.lang.efficiency").withStyle(ChatFormatting.YELLOW).append(": ")
-                .append(Component.literal(MachineTooltips.formatEfficiencyPercent(OriginalUtilityControllerData.HEAT_EFFICIENCY)+"%").withStyle(ChatFormatting.WHITE)));
+                .append(Component.literal(MachineTooltips.formatEfficiencyPercent(settings.efficiency())+"%").withStyle(ChatFormatting.WHITE)));
         // The source min/recommended/max are identical, so LH omits the otherwise supplied top-side suffix.
         lines.add(Component.translatable("gt.lang.energy.output").withStyle(ChatFormatting.RED).append(": ")
-                .append(Component.literal(OriginalUtilityControllerData.HEAT_RATE+" ").withStyle(ChatFormatting.WHITE))
-                .append(Component.translatable("gt.td.short.energy.heat").withStyle(ChatFormatting.RED))
+                .append(Component.literal(settings.rate()+" ").withStyle(ChatFormatting.WHITE))
+                .append(heatUnit(settings))
                 .append(Component.literal("/t").withStyle(ChatFormatting.WHITE)));
+        var emitted=settings.energyType();
+        if(emitted==com.gregtech.gregtech.data.GregTechTags.Energy.KU)
+            lines.add(Component.translatable("gt.lang.emits.redstoneflux.lossy").append(" 50%").withStyle(ChatFormatting.GOLD));
+        else if(emitted==com.gregtech.gregtech.data.GregTechTags.Energy.RF||emitted==com.gregtech.gregtech.data.GregTechTags.Energy.MJ)
+            lines.add(Component.translatable("gt.lang.emits.redstoneflux.lossless").withStyle(ChatFormatting.GOLD));
         lines.add(Component.translatable("gt.lang.nogui.funnel.tap.tank").withStyle(ChatFormatting.GOLD));
         parentTools(lines);
+    }
+    private static Component heatUnit(com.gregtech.gregtech.content.multiblock.HeatExchangerRules.Settings settings) {
+        var type=settings.energyType();
+        if(type==null)return Component.literal(settings.energyId()).withStyle(ChatFormatting.WHITE);
+        var color=switch(type.getShortName()) {
+            case "HU","Ignis"->ChatFormatting.RED;case "RU","Terra"->ChatFormatting.GREEN;case "KU"->ChatFormatting.DARK_GREEN;
+            case "CU","Aqua"->ChatFormatting.AQUA;case "LU","Aer"->ChatFormatting.YELLOW;case "MU"->ChatFormatting.DARK_GRAY;
+            case "NU","Perditio"->ChatFormatting.BLACK;case "QU"->ChatFormatting.DARK_PURPLE;case "TU"->ChatFormatting.DARK_BLUE;
+            case "RF","MJ"->ChatFormatting.DARK_RED;case "Steam"->ChatFormatting.GRAY;case "AU","Ordo"->ChatFormatting.WHITE;
+            default->ChatFormatting.BLUE;
+        };
+        return Component.translatable("gt.td.short."+type.getId().toLowerCase(java.util.Locale.ROOT)).withStyle(color);
     }
     public static void lightning(List<Component> lines) {
         if(CommonBlockTooltips.containsKey(lines,"gt.lang.structure"))return;

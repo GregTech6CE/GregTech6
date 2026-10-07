@@ -11137,6 +11137,7 @@
   "gt.tooltip.energybattery.3": "Mode 1 - 15 = Emit up to 1 - 15 Packets if enough Energy Storages",
   "gt.lang.accepts.redstoneflux.lossless": "Can accept Redstone Flux (RF) losslessly",
   "gt.lang.emits.redstoneflux.lossless": "Can emit Redstone Flux (RF) losslessly",
+  "gt.lang.emits.redstoneflux.lossy": "Can emit Redstone Flux (RF) with a Loss of",
   "gt.td.short.energy.redstone_flux": "RF",
   "block.gregtech.flux_heater_lv": "Flux Heater (Lead)",
   "block.gregtech.flux_heater_mv": "Flux Heater (Invar)",

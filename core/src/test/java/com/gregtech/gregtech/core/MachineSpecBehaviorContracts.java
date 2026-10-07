@@ -41,6 +41,7 @@ public final class MachineSpecBehaviorContracts {
         originalAdvancedControllerParameters();
         assertions += GeneratorTooltipContracts.verify();
         assertions += UtilityControllerContracts.verify();
+        assertions += HeatExchangerContracts.verify();
         assertions += SensorSourceContracts.verify();
         originalMachineMaterials();
         originalBlastTooltips();

@@ -49,6 +49,6 @@ public class LargeHeatExchangerControllerBlock extends HorizontalDirectionalBloc
 
     @Override public void appendHoverText(net.minecraft.world.item.ItemStack stack,@Nullable net.minecraft.world.level.BlockGetter level,
             java.util.List<net.minecraft.network.chat.Component> tooltip,net.minecraft.world.item.TooltipFlag flag) {
-        com.gregtech.gregtech.client.UtilityControllerTooltips.heat(tooltip);
+        com.gregtech.gregtech.client.UtilityControllerTooltips.heat(stack,tooltip);
     }
 }

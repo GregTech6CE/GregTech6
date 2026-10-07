@@ -13,6 +13,47 @@ import net.minecraft.world.level.block.Blocks;
 @net.minecraftforge.gametest.PrefixGameTestTemplate(false)
 public final class SensorSourceTests {
     @GameTest(template="test_empty",timeoutTicks=160)
+    public static void heat_exchanger_long_state_and_real_fuel(GameTestHelper h) {
+        var world=h.getLevel();var pos=h.absolutePos(new BlockPos(7,2,7));
+        var block=BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.parse("gregtech:heat_exchanger_main"));
+        world.setBlockAndUpdate(pos,block.defaultBlockState());
+        var machine=(com.gregtech.gregtech.blockentity.machine.LargeHeatExchangerControllerBlockEntity)world.getBlockEntity(pos);
+        for(var cell:com.gregtech.gregtech.content.multiblock.SharedHeatExchangerStructure.CELLS)
+            world.setBlockAndUpdate(pos.offset(cell.right(),cell.up(),cell.back()),com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(cell.part()).defaultBlockState());
+        h.assertTrue(machine.isStructureOk(),"Original two-layer shell binds native parts");
+        var recipe=com.gregtech.gregtech.data.FuelRecipeMaps.Hot.mRecipeList.stream().filter(x->x.mFluidInputs.length==1&&x.mFluidOutputs.length==1&&x.mEUt<0).findFirst().orElseThrow();
+        var fuel=recipe.mFluidInputs[0].copy();fuel.setAmount(Math.min(163840,recipe.mFluidInputs[0].getAmount()*1000));
+        int accepted=machine.fill(fuel,net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE);
+        machine.tick();long used=accepted-machine.tankAmount(0),batches=used/recipe.mFluidInputs[0].getAmount();
+        h.assertTrue(batches>0&&machine.tankAmount(1)==batches*recipe.mFluidOutputs[0].getAmount()
+                &&machine.getEnergyStored(com.gregtech.gregtech.data.GregTechTags.Energy.HU,null)==batches*(-recipe.mEUt)*recipe.mDuration,
+                "Actual hot recipe consumes matching fuel and conserves cold output and heat");
+        var data=machine.saveWithoutMetadata();data.putLong("gt.output",500000000L);data.putShort("gt.eff",(short)6250);
+        data.putString("gt.energy.emitted","ENERGY.ELECTRICITY");data.putLong("gt.energy",8_000_000_000L);
+        var cold=new net.minecraft.nbt.CompoundTag();cold.put("Fluid",recipe.mFluidOutputs[0].writeToNBT(new net.minecraft.nbt.CompoundTag()));cold.putLong("Amount",5_000_000_000L);
+        data.put("gt.cold",cold);machine.load(data);
+        h.assertTrue(machine.tankCapacity(0)==5_000_000_000L&&machine.tankCapacity(1)==Long.MAX_VALUE
+                &&machine.tankAmount(1)==5_000_000_000L&&machine.settings().efficiency()==6250,
+                "Native large configured capacity and long cold save do not truncate to int");
+        var roundtrip=machine.saveWithoutMetadata();data=roundtrip;machine.load(data);
+        h.assertTrue(machine.tankAmount(1)==5_000_000_000L,"Native save/load preserves long output exactly");
+        h.assertTrue(machine.isEnergyEmittingTo(com.gregtech.gregtech.data.GregTechTags.Energy.EU,Direction.UP,false)
+                &&!machine.isEnergyEmittingTo(com.gregtech.gregtech.data.GregTechTags.Energy.EU,Direction.DOWN,false)
+                &&machine.getEnergySizeOutputMin(com.gregtech.gregtech.data.GregTechTags.Energy.EU,Direction.UP)==500000000L
+                &&machine.getEnergySizeOutputMax(com.gregtech.gregtech.data.GregTechTags.Energy.EU,Direction.UP)==500000000L,
+                "Source energy type, top emission and equal min/recommended/max");
+        world.setBlockAndUpdate(pos.above().east(),Blocks.AIR.defaultBlockState());
+        machine.tick();
+        h.assertTrue(!machine.isStructureOk()&&machine.getEnergyStored(com.gregtech.gregtech.data.GregTechTags.Energy.EU,null)==7_500_000_000L,
+                "Original buffered energy dissipates through all eight outlets even with broken shell /no receivers");
+        var legacy=new net.minecraft.nbt.CompoundTag();legacy.putLong("gt.hu",12345L);
+        legacy.put("gt.cold",recipe.mFluidOutputs[0].writeToNBT(new net.minecraft.nbt.CompoundTag()));data=legacy;machine.load(data);
+        h.assertTrue(machine.settings().rate()==16384&&machine.getEnergyStored(com.gregtech.gregtech.data.GregTechTags.Energy.HU,null)==12345L
+                &&machine.tankAmount(1)==recipe.mFluidOutputs[0].getAmount(),"Old native int tank and gt.hu remain readable");
+        h.succeed();
+    }
+
+    @GameTest(template="test_empty",timeoutTicks=160)
     public static void original_raw_progress_and_spawner(GameTestHelper h) {
         var world=h.getLevel();
         var targetPos=h.absolutePos(new BlockPos(5,1,5));
