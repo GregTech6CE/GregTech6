@@ -116,7 +116,7 @@ public final class CommonBlockTooltips {
                 && CoverItems.isCover(new ItemStack(BuiltInRegistries.ITEM.get(id)));
     }
 
-    private static CompoundTag blockData(ItemStack stack) {
+    static CompoundTag blockData(ItemStack stack) {
         var data = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
         return data == null ? null : data.copyTag();
     }

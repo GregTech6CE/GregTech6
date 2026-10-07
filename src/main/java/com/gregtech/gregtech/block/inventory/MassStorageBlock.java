@@ -195,15 +195,6 @@ public class MassStorageBlock extends HorizontalDirectionalBlock implements Enti
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("gt.tooltip.mass_storage.1"));
-        tooltip.add(Component.translatable("gt.tooltip.mass_storage.2"));
-        tooltip.add(Component.translatable("gt.tooltip.mass_storage.3"));
-        net.minecraft.nbt.CompoundTag stored = stack.getTagElement("BlockEntityTag");
-        if (stored != null && stored.contains("gt.template") && stored.getLong("gt.stored") > 0) {
-            ItemStack template = ItemStack.of(stored.getCompound("gt.template"));
-            if (!template.isEmpty())
-                tooltip.add(Component.translatable("message.gregtech.mass_storage.status",
-                        stored.getLong("gt.stored"), template.getHoverName()));
-        }
+        com.gregtech.gregtech.client.StorageBlockTooltips.massStorage(stack, tooltip);
     }
 }

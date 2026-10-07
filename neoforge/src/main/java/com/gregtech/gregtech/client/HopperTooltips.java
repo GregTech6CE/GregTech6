@@ -1,89 +1,32 @@
+/* Copyright GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later.
+ * Adapted from MultiTileEntityHopper and MultiTileEntityQueueHopper.addToolTips. */
 package com.gregtech.gregtech.client;
 
 import com.gregtech.gregtech.api.machine.HopperSpec;
+import com.gregtech.gregtech.content.storage.OriginalStorageTooltipData;
 import net.minecraft.ChatFormatting;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.TooltipFlag;
-
+import net.minecraft.world.item.ItemStack;
 import java.util.List;
-import java.util.Locale;
 
-/** Hopper / queuehopper functional tooltips — material composition is shown by {@link MaterialTooltips} via F3+H. */
+/** Original saved slot limit and mode rows. The common handler adds harvest/material rows once. */
 public final class HopperTooltips {
     private HopperTooltips() {}
-
-    private static final int SLOT_SIZE = 64;
-
-    public static void appendHopper(HopperSpec spec, List<Component> tooltip, TooltipFlag flag) {
-        // Slot Count
-        tooltip.add(Component.empty()
-                .append(Component.translatable("tooltip." + "gregtech" + ".hopper.slot_count")
-                        .withStyle(ChatFormatting.AQUA))
-                .append(Component.literal(String.valueOf(spec.slotCount()))
-                        .withStyle(ChatFormatting.WHITE)));
-
-        // Tool hints
-        tooltip.add(Component.translatable("tooltip." + "gregtech" + ".hopper.hint.screwdriver")
-                .withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("tooltip." + "gregtech" + ".hopper.hint.monkey_wrench")
-                .withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("tooltip." + "gregtech" + ".hopper.hint.magnifying_glass")
-                .withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("tooltip." + "gregtech" + ".hopper.hint.soft_hammer")
-                .withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("tooltip." + "gregtech" + ".hopper.hint.wrench")
-                .withStyle(ChatFormatting.GRAY));
-
-        // Blast Resistance
-        appendBlastResistance(spec.blastResistance(), tooltip);
-
-        // Harvest tool
-        tooltip.add(Component.empty()
-                .append(Component.translatable("tooltip." + "gregtech" + ".machine.harvest.tool_label")
-                        .withStyle(ChatFormatting.GRAY))
-                .append(Component.literal(" "))
-                .append(Component.translatable("tooltip." + "gregtech" + ".machine.harvest_wrench_short")
-                        .withStyle(ChatFormatting.WHITE)));
+    public static void appendHopper(HopperSpec spec, ItemStack stack, List<Component> lines) { append(spec, stack, false, lines); }
+    public static void appendQueueHopper(HopperSpec spec, ItemStack stack, List<Component> lines) { append(spec, stack, true, lines); }
+    private static void append(HopperSpec spec, ItemStack stack, boolean queue, List<Component> lines) {
+        var data = CommonBlockTooltips.blockData(stack);
+        Integer mode = data != null && data.contains("gt.mode", Tag.TAG_ANY_NUMERIC) ? (int)data.getByte("gt.mode") : null;
+        var state = OriginalStorageTooltipData.hopper(spec.slotCount(), queue, mode, data != null && data.getBoolean("gt.exact"));
+        number(lines, OriginalStorageTooltipData.SLOT_COUNT, state.slots());
+        if (state.showStackSize()) number(lines, OriginalStorageTooltipData.STACK_SIZE, state.stackSize());
+        if (state.exact()) lines.add(Component.translatable(OriginalStorageTooltipData.EXACT).withStyle(ChatFormatting.AQUA));
+        StorageBlockTooltips.tools(lines, state.tools());
+        StorageBlockTooltips.facing(lines);
+        TooltipHelper.appendBlastResistance(spec.blastResistance(), lines);
     }
-
-    public static void appendQueueHopper(HopperSpec spec, List<Component> tooltip, TooltipFlag flag) {
-        // Slot Count
-        tooltip.add(Component.empty()
-                .append(Component.translatable("tooltip." + "gregtech" + ".hopper.slot_count")
-                        .withStyle(ChatFormatting.AQUA))
-                .append(Component.literal(String.valueOf(spec.slotCount()))
-                        .withStyle(ChatFormatting.WHITE)));
-
-        // Slot Size
-        tooltip.add(Component.empty()
-                .append(Component.translatable("tooltip." + "gregtech" + ".hopper.slot_size")
-                        .withStyle(ChatFormatting.AQUA))
-                .append(Component.literal(String.valueOf(SLOT_SIZE))
-                        .withStyle(ChatFormatting.WHITE)));
-
-        // Tool hints
-        tooltip.add(Component.translatable("tooltip." + "gregtech" + ".hopper.hint.screwdriver")
-                .withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("tooltip." + "gregtech" + ".hopper.hint.magnifying_glass")
-                .withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("tooltip." + "gregtech" + ".hopper.hint.soft_hammer")
-                .withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("tooltip." + "gregtech" + ".hopper.hint.wrench")
-                .withStyle(ChatFormatting.GRAY));
-
-        // Blast Resistance
-        appendBlastResistance(spec.blastResistance(), tooltip);
-
-        // Harvest tool
-        tooltip.add(Component.empty()
-                .append(Component.translatable("tooltip." + "gregtech" + ".machine.harvest.tool_label")
-                        .withStyle(ChatFormatting.GRAY))
-                .append(Component.literal(" "))
-                .append(Component.translatable("tooltip." + "gregtech" + ".machine.harvest_wrench_short")
-                        .withStyle(ChatFormatting.WHITE)));
-    }
-
-    private static void appendBlastResistance(float resistance, List<Component> tooltip) {
-        TooltipHelper.appendBlastResistance(resistance, tooltip);
+    private static void number(List<Component> lines, String key, int value) {
+        lines.add(Component.translatable(key).withStyle(ChatFormatting.AQUA).append(Integer.toString(value)));
     }
 }

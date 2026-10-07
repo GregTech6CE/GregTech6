@@ -22,6 +22,8 @@ public final class MachineConstructionMaterials {
         }
     }
     public static Optional<ItemComposition> block(String path) {
+        var storage = OriginalStorageMaterialData.blocks().get(path);
+        if (storage != null) return Optional.of(storage);
         var hopper = HOPPERS.get(path);
         if (hopper != null) return Optional.of(hopper);
         return OriginalMachineMaterialData.block(path);
@@ -29,6 +31,7 @@ public final class MachineConstructionMaterials {
     public static Map<String, ItemComposition> blocks() {
         var blocks = new HashMap<>(OriginalMachineMaterialData.blocks());
         blocks.putAll(HOPPERS);
+        blocks.putAll(OriginalStorageMaterialData.blocks());
         return Map.copyOf(blocks);
     }
 }

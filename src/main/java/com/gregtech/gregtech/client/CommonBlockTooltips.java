@@ -114,7 +114,7 @@ public final class CommonBlockTooltips {
                 && CoverItems.isCover(new ItemStack(BuiltInRegistries.ITEM.get(id)));
     }
 
-    private static CompoundTag blockData(ItemStack stack) {
+    static CompoundTag blockData(ItemStack stack) {
         return stack.getTagElement("BlockEntityTag");
     }
 

@@ -15,8 +15,13 @@ public final class SourceBlockProperties {
     }
     private static final Map<String, Params> BLOCKS = new LinkedHashMap<>(), BASICS = new LinkedHashMap<>();
     static { blocks0(); blocks1(); blocks2(); blocks3(); basics0(); basics1(); basics2(); basics3();
-        // Original metalset: aMachine, aMat.mToolQuality; hopper plus queue hopper.
-        for (var entry : HopperCatalog.ALL) BLOCKS.put(entry.spec().id(), new Params(-1,"wrench",entry.spec().material(),-1,false));
+        BLOCKS.putAll(com.gregtech.gregtech.content.machine.OriginalStorageMaterialData.harvest());
+        // Original metalset lines145..146 pass explicit metadata0, even for high-tier metals.
+        for (var entry : HopperCatalog.ALL) {
+            String suffix = entry.spec().id().substring(entry.queue() ? "queue_hopper_".length() : "hopper_".length());
+            int sourceId = BLOCKS.get("chest_"+suffix).sourceId() + (entry.queue() ? 8200 : 8000);
+            BLOCKS.put(entry.spec().id(), new Params(sourceId,"wrench",entry.spec().material(),0,false));
+        }
     }
     public static Optional<Params> block(String path) { return Optional.ofNullable(BLOCKS.get(path)); }
     public static Optional<Params> basic(String machine, int tier) { return Optional.ofNullable(BASICS.get(machine+"/"+tier)); }

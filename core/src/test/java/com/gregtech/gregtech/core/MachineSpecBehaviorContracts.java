@@ -33,6 +33,7 @@ public final class MachineSpecBehaviorContracts {
         originalMachineMaterials();
         originalBlastTooltips();
         originalHarvestProperties();
+        originalStorageMaterialsAndTooltips();
         originalManualAndBoilerTooltips();
         originalLargeBoilerTooltipState();
         originalEnergyDeviceTooltips();
@@ -154,7 +155,7 @@ public final class MachineSpecBehaviorContracts {
 
     private static void originalHarvestProperties() {
         var properties = com.gregtech.gregtech.data.SourceBlockProperties.blocks();
-        check(properties.size() == 591, "471 adopted source block metadata plus120 original metalset hoppers");
+        check(properties.size() == 1011, "471 fixed source identities plus120 hoppers and420 audited storage variants");
         check(com.gregtech.gregtech.data.SourceBlockProperties.basics().size() == 252, "All252 adopted original machine metadata keys");
         var wood = properties.get("gearbox_wood");
         check(wood.sourceId() == 24809 && wood.tool().equals("axe") && wood.handHarvestable(), "Wood gearbox original aWooden exemption");
@@ -175,6 +176,13 @@ public final class MachineSpecBehaviorContracts {
             check(hopper != null && !hopper.handHarvestable() && hopper.tool().equals("wrench")
                     && hopper.material().resolve() == GTMaterialRegistry.get("Steel"), "Source metalset hopper metadata " + name);
         }
+        for (var entry : com.gregtech.gregtech.content.transport.HopperCatalog.ALL) {
+            check(properties.get(entry.spec().id()).explicitLevel() == 0 && properties.get(entry.spec().id()).level() == 0,
+                    "Original hopper metadata is explicit0 even for iridium and infinity: " + entry.spec().id());
+            String suffix=entry.spec().id().substring(entry.queue()?"queue_hopper_".length():"hopper_".length());
+            check(properties.get(entry.spec().id()).sourceId() == properties.get("chest_"+suffix).sourceId()+(entry.queue()?8200:8000),
+                    "Original hopper has its real metalset registration identity: "+entry.spec().id());
+        }
         check(properties.get("axle_wood_4").handHarvestable(), "Empty CR.REV source axle retains original harvest metadata");
         check(properties.get("energy_storage_xv").sourceId() == 10099, "Broken source recipe does not discard legal machine metadata");
         check(!com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.showHarvestLevel(1)
@@ -182,6 +190,54 @@ public final class MachineSpecBehaviorContracts {
         for (String[] tier : new String[][]{{"2", "iron"}, {"3", "diamond"}, {"4", "netherite"}, {"5", "adamantium"}, {"15", "infinity"}})
             check(com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.harvestTierMaterial(Integer.parseInt(tier[0])).equals(tier[1]), "Source harvest tier name " + tier[0]);
         check(com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.harvestTierMaterial(14) == null, "Source tiers6..14 have no invented reference material");
+    }
+
+    private static void originalStorageMaterialsAndTooltips() {
+        var storage = com.gregtech.gregtech.content.machine.OriginalStorageMaterialData.blocks();
+        var harvest = com.gregtech.gregtech.content.machine.OriginalStorageMaterialData.harvest();
+        check(storage.size() == 420 && harvest.size() == 420, "Seven original storage families across60 metalsets");
+        check(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.blocks().size() == 1009,
+                "469 fixed plus120 hoppers plus420 precise storage records");
+        long u = GTValues.U;
+        for (var spec : com.gregtech.gregtech.registry.GTStorageMetals.ALL) {
+            var metal = spec.material().resolve();
+            String suffix = spec.suffix();
+            for (var row : java.util.Map.of("chest_"+suffix,5*u,
+                    "reinforced_wood_chest_"+suffix,5*u/2,
+                    suffix.equals("steel")?"safe":"safe_"+suffix,55*u/2,
+                    "key_safe_"+suffix,55*u/2,
+                    suffix.equals("stainless_steel")?"drawer_quad":"drawer_quad_"+suffix,20*u+4*u/9,
+                    "mass_storage_"+suffix,18*u+4*u/9,
+                    "bottle_crate_"+suffix,3*u/2+2*u/9).entrySet()) {
+                var record = storage.get(row.getKey());
+                var expected = new java.util.HashMap<String,Long>(); expected.put(metal.getName(),row.getValue());
+                if (row.getKey().startsWith("reinforced_wood_chest_")) expected.put("Wood",4*u);
+                composition(record,expected);
+                var metadata = harvest.get(row.getKey());
+                check(metadata.material().resolve() == metal, "Native metalset suffix/source material identity "+row.getKey());
+                check(metadata.sourceId() >= 0 && com.gregtech.gregtech.data.SourceBlockProperties.block(row.getKey()).orElseThrow().equals(metadata),
+                        "Native storage has real original registration identity "+row.getKey());
+            }
+        }
+        check(harvest.get("safe").sourceId() == 2010 && harvest.get("drawer_quad").sourceId() == 4011, "Source legacy steel safe and stainless drawer aliases");
+        check(harvest.get("chest_iridium").level() == 0 && !harvest.get("chest_iridium").handHarvestable(), "Original metal chest explicit0 does not inherit metal tier");
+        check(harvest.get("reinforced_wood_chest_iridium").handHarvestable() && harvest.get("bottle_crate_iridium").handHarvestable(), "Original wood and utility exemptions");
+        check(harvest.get("key_safe_iridium").level() == GTMaterialRegistry.get("Iridium").getToolQuality(), "Machine source metadata uses actual metal quality");
+        var normal = com.gregtech.gregtech.content.storage.OriginalStorageTooltipData.hopper(1,false,null,false);
+        var queue = com.gregtech.gregtech.content.storage.OriginalStorageTooltipData.hopper(1,true,null,true);
+        check(normal.slots() == 1 && !normal.showStackSize() && !normal.exact(), "Default original hopper automatic insertion has no size/exact row");
+        check(queue.slots() == 2 && queue.stackSize() == 64 && queue.showStackSize() && !queue.exact(), "Original queue minimum2 slots/default64; ordinary exact flag does not apply");
+        var configured = com.gregtech.gregtech.content.storage.OriginalStorageTooltipData.hopper(36,false,16,true);
+        check(configured.stackSize() == 16 && configured.showStackSize() && configured.exact(), "Configured native hopper shows actual16/exact");
+        check(!queue.tools().contains("gt.lang.use.monkey.wrench.to.toggle") && normal.tools().contains("gt.lang.use.monkey.wrench.to.toggle"), "Original queue omits ordinary hopper monkey wrench mode");
+        for (int mode=0;mode<16;mode++) {
+            var tools = com.gregtech.gregtech.content.storage.OriginalStorageTooltipData.massTools(mode);
+            boolean packed = (mode&8)!=0;
+            check(tools.contains("gt.lang.use.untape") == packed && tools.contains("gt.lang.use.tape") != packed
+                    && tools.contains("gt.lang.use.soft.hammer.to.reset") != packed, "Original taped container controls at mode"+mode);
+        }
+        check(com.gregtech.gregtech.content.storage.OriginalStorageTooltipData.lootKey("minecraft:chests/simple_dungeon").equals("loot.dungeonChest")
+                && com.gregtech.gregtech.content.storage.OriginalStorageTooltipData.lootKey("other:custom") == null, "Known source loot label maps explicitly; custom table identity retained");
     }
 
     private static void originalManualAndBoilerTooltips() {

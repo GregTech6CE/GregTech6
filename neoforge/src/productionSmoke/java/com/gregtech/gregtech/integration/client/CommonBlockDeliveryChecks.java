@@ -32,7 +32,7 @@ final class CommonBlockDeliveryChecks {
             if (SourceBlockProperties.block(BuiltInRegistries.BLOCK.getKey(block).getPath()).isPresent()) sourceBlocks++;
             else sourceMachines++;
         }
-        require(sourceBlocks == 591 && sourceMachines >= 250, "all adopted original metadata identities present");
+        require(sourceBlocks == 1011 && sourceMachines >= 250, "all adopted original metadata identities present");
         for (var item : representatives.values()) verifyRows(new ItemStack(item));
         int storedCovers = 0;
         var machine = new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gregtech:electric_motor_lv")));
@@ -69,7 +69,93 @@ final class CommonBlockDeliveryChecks {
         result.addProperty("actualSourceBasicMachines",sourceMachines); result.addProperty("nativeBlockClasses",representatives.size());
         result.addProperty("nativeSavedCoverFaces",storedCovers);
         result.addProperty("scope","native installed item tooltip events, source policy and sparse saved face data; no hover screenshot, actual harvest or world restart claim");
+        result.add("storageTooltips",verifyStorage());
         return result;
+    }
+
+    private static JsonObject verifyStorage() {
+        int safes=0,drawers=0,tables=0,crates=0,mass=0,hoppers=0;
+        for (var item : BuiltInRegistries.ITEM) {
+            if (!(item instanceof BlockItem nativeItem)) continue;
+            if (!BuiltInRegistries.ITEM.getKey(item).getNamespace().equals("gregtech")) continue;
+            var type=nativeItem.getBlock();
+            if (!(type instanceof com.gregtech.gregtech.block.inventory.SafeBlock
+                    || type instanceof com.gregtech.gregtech.block.inventory.DrawerQuadBlock
+                    || type instanceof com.gregtech.gregtech.block.misc.AdvancedCraftingTableBlock
+                    || type instanceof com.gregtech.gregtech.block.inventory.BottleCrateBlock
+                    || type instanceof com.gregtech.gregtech.block.inventory.MassStorageBlock
+                    || item instanceof com.gregtech.gregtech.block.machine.HopperBlockItem
+                    || item instanceof com.gregtech.gregtech.block.machine.QueueHopperBlockItem)) continue;
+            var block=nativeItem.getBlock(); var stack=new ItemStack(item); var lines=tooltip(stack);
+            boolean facing=false;
+            if (block instanceof com.gregtech.gregtech.block.inventory.SafeBlock safe) {
+                require(countKey(lines,safe.keyLocked()?"gt.lang.key.controlled":"gt.lang.owner.controlled")==1,"source lock rule once "+stack);
+                require(countKey(lines,"gt.tooltip.safe.1")==0 && countKey(lines,"gt.tooltip.safe.2")==0,"old guessed safe rows removed");
+                safes++;facing=true;
+            } else if (block instanceof com.gregtech.gregtech.block.inventory.DrawerQuadBlock) {
+                require(countKey(lines,"gt.lang.use.monkey.wrench.to.toggle.inputs")==1,"source drawer input access tool");
+                drawers++;facing=true;
+            } else if (block instanceof com.gregtech.gregtech.block.misc.AdvancedCraftingTableBlock) {
+                require(countKey(lines,"gt.lang.use.monkey.wrench.to.toggle.inputs")==1
+                        && countKey(lines,"gt.lang.use.screwdriver.to.toggle")==1,"both source crafting table controls including charging inheritance");
+                tables++;facing=true;
+            } else if (block instanceof com.gregtech.gregtech.block.inventory.BottleCrateBlock) {
+                require(countKey(lines,"gt.lang.nogui.rightclick.interact")==1,"source bottlecrate direct interaction row");
+                crates++;facing=true;
+            } else if (block instanceof com.gregtech.gregtech.block.inventory.MassStorageBlock) {
+                require(countKey(lines,"gt.multitileentity.massstorage.tooltip.1")==1
+                        && countKey(lines,"gt.multitileentity.massstorage.tooltip.2")==1,"source mass capacity/table rows");
+                require(countKey(lines,"gt.lang.use.tape")==1 && countKey(lines,"gt.lang.use.untape")==0,"default untaped storage tools");
+                mass++;facing=true;
+            }
+            var hopper=item instanceof com.gregtech.gregtech.block.machine.HopperBlockItem h?h.spec():
+                    item instanceof com.gregtech.gregtech.block.machine.QueueHopperBlockItem q?q.spec():null;
+            if (hopper!=null) {
+                boolean queue=item instanceof com.gregtech.gregtech.block.machine.QueueHopperBlockItem;
+                require(number(lines,"gt.multitileentity.hopper.tooltip.1",Math.max(queue?2:1,hopper.slotCount())),"actual source hopper inventory size "+stack);
+                require(countKey(lines,"gt.multitileentity.hopper.tooltip.2")== (queue?1:0),"default saved hopper stack limit visibility");
+                if(queue)require(number(lines,"gt.multitileentity.hopper.tooltip.2",64),"default queue source size64");
+                require(com.gregtech.gregtech.data.BlockHarvestPolicy.level(nativeItem.getBlock())==0,"explicit0 native hopper metadata");
+                var data=new CompoundTag();data.putByte("gt.mode",(byte)16);data.putBoolean("gt.exact",true);write(stack,data);
+                var configured=tooltip(stack);
+                require(number(configured,"gt.multitileentity.hopper.tooltip.2",16)
+                        && countKey(configured,"gt.multitileentity.hopper.tooltip.3")== (queue?0:1),"actual saved16 and applicable exact flag");
+                require(read(stack).equals(data),"hover does not change saved hopper mode");
+                hoppers++;facing=true;
+            }
+            if(facing)require(countKey(lines,"gt.lang.use.x.to.toggle.facing.pre")==1,"source facing row appears once "+stack);
+        }
+        require(safes==120 && drawers==60 && tables==120 && hoppers==120,"all original native storage/tool families");
+        require(mass==121 && crates==61+com.gregtech.gregtech.content.storage.BottleCrateVariants.WOODS.size(),"existing ordinary/logistics/legacy and wooden crate variants");
+        var packed=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gregtech:mass_storage_steel")));
+        var template=new ItemStack(Items.APPLE); name(template,Component.literal("Storage probe"));
+        for (int mode : new int[]{0,8}) for (long count : new long[]{0,1_000_257}) {
+            var data=new CompoundTag();data.putInt("gt.mode",mode);data.putLong("gt.stored",count);data.put("gt.template",save(template));write(packed,data);
+            var lines=tooltip(packed);
+            require(lines.stream().anyMatch(row->row.getString().contains("Storage probe") && row.getString().endsWith(": "+count)),"actual saved template name/count including retained zero filter and legacy overflow");
+            require(countKey(lines,"gt.lang.use.untape")== (mode==8?1:0)
+                    && countKey(lines,"gt.lang.use.tape")== (mode==8?0:1)
+                    && countKey(lines,"gt.lang.use.soft.hammer.to.reset")== (mode==8?0:1),"actual tape state controls");
+            require(read(packed).equals(data) && !com.gregtech.gregtech.api.material.ItemMaterialRegistry.canRecover(packed),"hover preserves stored items and recovery rejects them");
+        }
+        var safe=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gregtech:safe")));
+        for (boolean explicit : new boolean[]{false,true}) {
+            var data=new CompoundTag();
+            data.putInt("gt.mode",0);if (explicit) data.putString("gt.dungeonloot","");write(safe,data);
+            require(tooltip(safe).stream().noneMatch(row->row.getString().startsWith("Contains Loot of ")),"empty saved loot name has no phantom loot row");
+            data.remove("gt.dungeonloot");write(safe,data);
+            require(tooltip(safe).stream().noneMatch(row->row.getString().startsWith("Contains Loot of ")),"absent saved loot name has no phantom loot row");
+        }
+        var loot=new CompoundTag();loot.putString("gt.dungeonloot","minecraft:chests/simple_dungeon");write(safe,loot);
+        require(countKey(tooltip(safe),"loot.dungeonChest")==1 && read(safe).equals(loot),"saved original loot label without generating its contents");
+        loot.putString("gt.dungeonloot","other:custom");write(safe,loot);
+        require(tooltip(safe).stream().anyMatch(row->row.getString().endsWith("other:custom")),"unknown table retains actual identity");
+        var result=new JsonObject();result.addProperty("safes",safes);result.addProperty("drawers",drawers);result.addProperty("craftingTables",tables);
+        result.addProperty("bottleCrates",crates);result.addProperty("massStorages",mass);result.addProperty("hoppers",hoppers);
+        result.addProperty("savedMassConfigurations",4);result.addProperty("scope","actual native tooltip calls/events and saved item state; no world interaction or screen hover claim");return result;
+    }
+    private static boolean number(List<Component> lines,String key,int value) {
+        return lines.stream().anyMatch(line->CommonBlockTooltips.containsKey(List.of(line),key) && line.getString().endsWith(Integer.toString(value)));
     }
     private static void verifyRows(ItemStack stack) {
         var block = ((BlockItem)stack.getItem()).getBlock();
@@ -97,9 +183,10 @@ final class CommonBlockDeliveryChecks {
     private static long countKey(List<Component> lines,String key) {
         return lines.stream().filter(line -> CommonBlockTooltips.containsKey(List.of(line),key)).count();
     }
-    private static List<Component> tooltip(ItemStack stack) { return stack.getTooltipLines(Item.TooltipContext.EMPTY,null,TooltipFlag.NORMAL); }
+    private static List<Component> tooltip(ItemStack stack) { return stack.getTooltipLines(Item.TooltipContext.of(net.minecraft.core.RegistryAccess.fromRegistryOfRegistries(BuiltInRegistries.REGISTRY)),null,TooltipFlag.NORMAL); }
     private static CompoundTag save(ItemStack stack) { return (CompoundTag)stack.save(net.minecraft.core.RegistryAccess.fromRegistryOfRegistries(BuiltInRegistries.REGISTRY)); }
     private static void write(ItemStack stack,CompoundTag data) { stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(data)); }
     private static CompoundTag read(ItemStack stack) { return stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA).copyTag(); }
+    private static void name(ItemStack stack,Component text) { stack.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME,text); }
     private static void require(boolean value,String message) { if (!value) throw new IllegalStateException(message); }
 }
