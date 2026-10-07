@@ -38,8 +38,12 @@ public final class MaterialBehaviorContracts {
     // docs/integration/verification/external-thermal-material-differential-20261004.json.
     // dustPure/refined metadata plus source dustImpure weight correction; full delta audited:
     // docs/integration/verification/dust-listeners-material-differential-20261004.json.
-    private static final String DEFINITIONS_SHA256 = "842079f4654e2eb389117406b4eeef2a564460b4142705dd62adf4d06d1daa74";
-    private static final String POST_INIT_SHA256 = "0a3828a8b07715e8ef8c432572756033c0101eec00ea70657d0f750bcd603b6e";
+    // Source UUM flags and Mercury LIQUID restoration; complete isolated delta:
+    // docs/integration/verification/ci-material-differential-20261006.json.
+    // Ten nongenerating native pipe associations; complete isolated delta:
+    // docs/integration/verification/transport-material-differential-20261006.json.
+    private static final String DEFINITIONS_SHA256 = "9c743d9d39c4e41d11279f99d32b173208b40456ee4884a00a12853dd4468146";
+    private static final String POST_INIT_SHA256 = "149d06616708c6871e2b0622fad173acb56f801406875b03a277eb611a0f1efe";
     private static int assertions;
     private MaterialBehaviorContracts() {}
 
@@ -70,7 +74,7 @@ public final class MaterialBehaviorContracts {
                 "The complete directory must finish linking");
         check(GTMaterialRegistry.allMaterials().size() == 1160, "All 1160 original material objects must remain");
         check(MaterialCatalogSnapshot.aliases().size() == 1523, "All 1523 original name entries must remain");
-        check(PrefixRegistry.all().size() == 122, "109 prior prefixes plus thirteen source external forms must remain");
+        check(PrefixRegistry.all().size() == 132, "122 prior prefixes plus ten source native pipe associations must remain");
         check(DEFINITIONS_SHA256.equals(MaterialCatalogSnapshot.sha256()), "Full definitions/aliases/forms must match the Community Edition snapshot");
         GTMaterialRegistry.init();
         check(DEFINITIONS_SHA256.equals(MaterialCatalogSnapshot.sha256()), "Repeated init must not mutate or duplicate definitions");
@@ -128,7 +132,7 @@ public final class MaterialBehaviorContracts {
         validateCopperTinBronze();
         validateAmountsAndReactions();
         System.out.println("Material behavior contracts passed: " + assertions
-                + " assertions; 1160 materials, 1105 positive IDs, 1523 name entries, 122 prefixes, "
+                + " assertions; 1160 materials, 1105 positive IDs, 1523 name entries, " + PrefixRegistry.all().size() + " prefixes, "
                 + CrucibleReactions.allRecipes().size() + " reactions");
     }
 

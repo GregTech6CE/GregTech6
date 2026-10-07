@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WCW",
+    "WCW",
+    "XMX"
+  ],
+  "key": {
+    "W": {
+      "item": "gregtech:wire_01_graphene"
+    },
+    "C": {
+      "item": "gregtech:wire_01_graphene"
+    },
+    "X": {
+      "tag": "gregtech:circuits_tier_8_plus"
+    },
+    "M": {
+      "item": "gregtech:casing_machine_trinitanium"
+    }
+  },
+  "result": {
+    "item": "gregtech:battery_box_uv"
+  }
+}

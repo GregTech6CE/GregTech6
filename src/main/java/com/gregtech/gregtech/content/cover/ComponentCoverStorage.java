@@ -33,13 +33,13 @@ public final class ComponentCoverStorage {
     public ItemStack get(Direction side) { return covers==null?ItemStack.EMPTY:covers[side.ordinal()]; }
     public boolean attach(Direction side, ItemStack stack) {
         if (stack.isEmpty() || !get(side).isEmpty() || !panels.canAttach(side,stack)
-                || ComponentCoverRuntime.kind(stack)==null && PanelCover.of(stack)!=PanelCover.CONTROLLER) return false;
+                || !CoverItems.isCover(stack)) return false;
         if(covers==null){covers=new ItemStack[6];java.util.Arrays.fill(covers,ItemStack.EMPTY);}
         covers[side.ordinal()]=stack.copyWithCount(1);panels.attached(side);return true;
     }
     public ItemStack remove(Direction side) {
         var stack=get(side);if(stack.isEmpty())return stack;
-        covers[side.ordinal()]=ItemStack.EMPTY;panels.beforeTick();panels.changed();return stack;
+        covers[side.ordinal()]=ItemStack.EMPTY;return panels.removed(side,stack);
     }
     public void tick() {
         if(covers==null)return;
@@ -49,6 +49,7 @@ public final class ComponentCoverStorage {
     }
     public void drop() {
         if(covers==null)return;
+        if(CoverDrops.retained(host.coverOwner())){java.util.Arrays.fill(covers,ItemStack.EMPTY);return;}
         for(var side:Direction.values())com.gregtech.gregtech.api.inventory.BlockContents.drop(host.coverOwner(),remove(side));
     }
     public void save(CompoundTag tag) {

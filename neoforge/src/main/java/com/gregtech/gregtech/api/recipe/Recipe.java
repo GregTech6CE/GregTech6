@@ -54,6 +54,17 @@ public class Recipe {
 
     private final java.util.BitSet catalystInputs = new java.util.BitSet();
 
+    private final java.util.Map<Integer, java.util.List<ItemStack>> viewerInputAlternatives = new java.util.HashMap<>();
+    /** Informational choices for one displayed slot; this never broadens machine matching. */
+    public Recipe withViewerInputAlternatives(int index, java.util.List<ItemStack> alternatives) {
+        if (index < 0 || index >= mInputs.length || alternatives.isEmpty()) throw new IllegalArgumentException("Viewer input " + index);
+        viewerInputAlternatives.put(index, alternatives.stream().map(ItemStack::copy).toList());
+        return this;
+    }
+    public java.util.List<ItemStack> viewerInputAlternatives(int index) {
+        return viewerInputAlternatives.getOrDefault(index, java.util.List.of()).stream().map(ItemStack::copy).toList();
+    }
+
     /** Mark non-consumable lenses/etc. before publishing this recipe to a map. */
     public Recipe withCatalystInputs(int... indices) {
         for (int index : indices) {

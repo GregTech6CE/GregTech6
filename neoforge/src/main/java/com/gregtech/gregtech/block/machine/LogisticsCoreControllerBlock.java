@@ -58,6 +58,14 @@ public final class LogisticsCoreControllerBlock extends DirectionalBlock impleme
             var coverResult = com.gregtech.gregtech.content.logistics.LogisticsCoverInteraction.use(
                     core, level, player, hand, hit.getDirection());
             if (coverResult != InteractionResult.PASS) return coverResult;
+            if(player.getItemInHand(hand).isEmpty()){
+                if(!level.isClientSide){
+                    var cpu=core.processorCounts();
+                    if(cpu==null)player.displayClientMessage(Component.literal("Structure Incomplete!"),false);
+                    else player.displayClientMessage(Component.literal("Logic: "+cpu.logic()+", Control: "+cpu.control()+", Storage: "+cpu.storage()+", Conversion: "+cpu.conversion()+"; "+cpu.fixedEnergyPerTick()+" EU/t"),false);
+                }
+                return InteractionResult.sidedSuccess(level.isClientSide);
+            }
         }
         return ToolInteractions.use(state, level, pos, player, hand, hit)
                 ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
@@ -91,7 +99,7 @@ public final class LogisticsCoreControllerBlock extends DirectionalBlock impleme
 
     @Override public boolean isSignalSource(BlockState state) { return true; }
     @Override public int getSignal(BlockState state, BlockGetter level, BlockPos pos, Direction side) {
-        return com.gregtech.gregtech.content.logistics.LogisticsCoverSignals.at(level, pos, side);
+        return com.gregtech.gregtech.content.logistics.LogisticsCoverSignals.at(level, pos, side.getOpposite());
     }
     @Override public int getDirectSignal(BlockState state, BlockGetter level, BlockPos pos, Direction side) {
         return getSignal(state, level, pos, side);

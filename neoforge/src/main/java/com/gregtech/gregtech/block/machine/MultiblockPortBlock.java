@@ -64,7 +64,7 @@ public final class MultiblockPortBlock extends Block implements EntityBlock {
     @Override public boolean isSignalSource(BlockState state) { return true; }
     @Override public int getSignal(BlockState state, net.minecraft.world.level.BlockGetter level,
                                    BlockPos pos, net.minecraft.core.Direction side) {
-        return com.gregtech.gregtech.content.logistics.LogisticsCoverSignals.at(level, pos, side);
+        return com.gregtech.gregtech.content.logistics.LogisticsCoverSignals.at(level, pos, side.getOpposite());
     }
     @Override public int getDirectSignal(BlockState state, net.minecraft.world.level.BlockGetter level,
                                          BlockPos pos, net.minecraft.core.Direction side) {

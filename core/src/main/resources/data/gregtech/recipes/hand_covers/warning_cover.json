@@ -1,6 +1,7 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "gregtech:tool_shaped",
   "_comment": "GT6 MultiItemTechnological:167",
+  "allow_mirror": false,
   "pattern": [
     "G ",
     "YQ"

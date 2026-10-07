@@ -109,6 +109,12 @@ public final class LogisticsCoverInteraction {
         return true;
     }
 
+    private static void describe(Player player,ItemStack cover) {
+        var type=LogisticsCoverType.of(cover);
+        if(type!=null&&type.usesPriority())player.displayClientMessage(net.minecraft.network.chat.Component.literal("Priority: "+type.effectivePriority(value(cover))),false);
+        if(type!=null&&type.targetStackSize())player.displayClientMessage(net.minecraft.network.chat.Component.literal("Target Stacksize: "+targetStackSize(cover)),false);
+    }
+
     public static InteractionResult use(LogisticsCoverHost host, Level level, Player player,
                                         InteractionHand hand, Direction face) {
         BlockEntity owner = (BlockEntity) host;
@@ -126,6 +132,10 @@ public final class LogisticsCoverInteraction {
         if (installed.isEmpty()) return InteractionResult.PASS;
         LogisticsCoverType installedType = LogisticsCoverType.of(installed);
         if (installedType == null) return InteractionResult.PASS;
+        if (GTToolHelper.isMagnifyingGlass(held)) {
+            if (!level.isClientSide) describe(player, installed);
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
         boolean crowbar = GTToolHelper.matchesTool(held, GTToolType.CROWBAR);
         boolean screwdriver = GTToolHelper.isScrewdriver(held);
         boolean cutter = GTToolHelper.isWireCutter(held);
@@ -134,7 +144,9 @@ public final class LogisticsCoverInteraction {
             boolean handled = crowbar || screwdriver && installedType.usesPriority()
                     || cutter && installedType.targetStackSize()
                     || softHammer && installedType.filtered();
-            if (!handled) return InteractionResult.PASS;
+            // Every installed logistics attachment intercepts connector tools, even when it has
+            // no quota/priority setting. Otherwise the underlying wire reconnects its covered face.
+            if (!handled) return InteractionResult.sidedSuccess(level.isClientSide);
             if (!level.isClientSide) {
                 if (crowbar) {
                     ItemStack removed = covers.remove(face);
@@ -146,6 +158,7 @@ public final class LogisticsCoverInteraction {
                         clearFluidFilter(covers, face);
                     else clearItemFilter(covers, face);
                 }
+                if (!crowbar) describe(player, installed);
                 GTToolHelper.damageForUse(held, 1, player);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
@@ -156,11 +169,7 @@ public final class LogisticsCoverInteraction {
         }
         if (installedType.channel() == LogisticsCoverType.Channel.FLUID && installedType.filtered()) {
             if (!level.isClientSide && !held.isEmpty()) {
-                var container = held.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).resolve().orElse(null);
-                if (container != null) {
-                    FluidStack sample = container.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.SIMULATE);
-                    setFluidFilter(covers, face, sample);
-                }
+                setFluidFilter(covers, face, com.gregtech.gregtech.content.cover.UtilityCoverInteraction.sample(held));
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }

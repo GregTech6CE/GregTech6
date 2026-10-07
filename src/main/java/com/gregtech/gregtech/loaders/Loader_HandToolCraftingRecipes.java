@@ -415,63 +415,15 @@ public final class Loader_HandToolCraftingRecipes {
     // ── pipes: the aRecipe patterns of the pipe helpers ─────────────────────
 
     private static int pipes(List<Recipe<?>> recipes) {
-        int added = 0;
-        for (var holder : GTFluidPipes.all()) {
-            if (!holder.isPresent()) continue;
-            PipeSpec spec = holder.get().spec();
-            GTMaterial material = spec.material();
-            ItemStack output = new ItemStack(holder.get().asItem(),
-                    spec.size() == PipeSpec.PipeSize.TINY ? 2 : 1);
-            added += pipe(recipes, "fluid/" + spec.id(), spec.size(), material, output);
+        int count=0;
+        for(var row:com.gregtech.gregtech.content.transport.TransportCraftingCatalog.rows()) {
+            var json=com.gregtech.gregtech.content.recipe.TransportCraftingInputs.json(row);
+            if(json.isEmpty()) { GregTech.LOGGER.warn("Missing original transport crafting form: {}",row.path()); continue; }
+            var id=ResourceLocation.parse("gregtech:hand/"+row.path());
+            recipes.add(row.unpack()?com.gregtech.gregtech.recipe.ToolShapelessRecipe.SERIALIZER.fromJson(id,json.get()):ToolShapedRecipe.SERIALIZER.fromJson(id,json.get()));
+            REGISTERED.add(id.toString()); count++;
         }
-        for (var holder : GTItemPipes.all()) {
-            if (!holder.isPresent()) continue;
-            ItemPipeSpec spec = holder.get().spec();
-            ItemStack output = new ItemStack(holder.get().asItem());
-            if (spec.size().restrictive()) {
-                ItemStack plain = plainPipe(spec.material(), spec.size());
-                if (plain.isEmpty()) continue;
-                String[] pattern = switch (spec.size()) {
-                    case RESTRICTIVE_MEDIUM -> new String[]{" h ", "RPR", " R "};
-                    case RESTRICTIVE_LARGE -> new String[]{"hR ", "RPR", " R "};
-                    default -> new String[]{" h ", "RPR", "RRR"};
-                };
-                added += register(recipes, "pipe/restrictive/" + spec.id(), pattern,
-                        Map.of('P', Ingredient.of(plain), 'R', Ingredient.of(steelRing()),
-                                'h', Ingredient.of(tool(GTToolType.HARD_HAMMER))),
-                        output);
-                continue;
-            }
-            PipeSpec.PipeSize size = switch (spec.size()) {
-                case MEDIUM -> PipeSpec.PipeSize.MEDIUM;
-                case LARGE -> PipeSpec.PipeSize.LARGE;
-                default -> PipeSpec.PipeSize.HUGE;
-            };
-            added += pipe(recipes, "item/" + spec.id(), size, spec.material(), output);
-        }
-        return added;
-    }
-
-    /** GT6's five pipe patterns; huge pipes use a double plate instead of a curved one. */
-    private static int pipe(List<Recipe<?>> recipes, String path, PipeSpec.PipeSize size,
-                            GTMaterial material, ItemStack output) {
-        boolean huge = size == PipeSpec.PipeSize.HUGE;
-        ItemStack plate = GTItems.getStack(huge ? MaterialPrefix.plateDouble : MaterialPrefix.plateCurved,
-                material, 1);
-        if (plate.isEmpty() || output.isEmpty()) return 0;
-        String[] pattern = switch (size) {
-            case TINY -> new String[]{"sP ", "wzh"};
-            case SMALL -> new String[]{" P ", "wzh"};
-            case MEDIUM -> new String[]{"PPP", "wzh"};
-            default -> new String[]{"PPP", "wzh", "PPP"};
-        };
-        Map<Character, Ingredient> key = Map.of(
-                'P', Ingredient.of(plate),
-                's', Ingredient.of(tool(GTToolType.SAW)),
-                'w', Ingredient.of(tool(GTToolType.WRENCH)),
-                'z', Ingredient.of(tool(GTToolType.BENDING_CYLINDER)),
-                'h', Ingredient.of(tool(GTToolType.HARD_HAMMER)));
-        return register(recipes, "pipe/" + path, pattern, key, output);
+        return count;
     }
 
     // ── anvils: "RRR" / "hR " / "RRR" ──────────────────────────────────────
@@ -806,30 +758,6 @@ public final class Loader_HandToolCraftingRecipes {
     }
 
     // ── helpers ────────────────────────────────────────────────────────────
-
-    private static ItemStack plainPipe(GTMaterial material, ItemPipeSpec.ItemPipeSize size) {
-        PipeSpec.PipeSize wanted = switch (size) {
-            case RESTRICTIVE_MEDIUM -> PipeSpec.PipeSize.MEDIUM;
-            case RESTRICTIVE_LARGE -> PipeSpec.PipeSize.LARGE;
-            default -> PipeSpec.PipeSize.HUGE;
-        };
-        for (var holder : GTFluidPipes.all()) {
-            if (!holder.isPresent()) continue;
-            var spec = holder.get().spec();
-            if (spec.material() == material && spec.size() == wanted) {
-                return new ItemStack(holder.get().asItem());
-            }
-        }
-        return ItemStack.EMPTY;
-    }
-
-    private static ItemStack steelRing() {
-        ItemStack ring = GTItems.getStack(MaterialPrefix.ring, Materials.Steel, 1);
-        if (!ring.isEmpty()) return ring;
-        Item item = ForgeRegistries.ITEMS.getValue(
-                ResourceLocation.fromNamespaceAndPath("forge", "steel_ingot"));
-        return item == null ? ItemStack.EMPTY : new ItemStack(item);
-    }
 
     private static ItemStack plate(GTMaterial material) {
         return GTItems.getStack(MaterialPrefix.plate, material, 1);

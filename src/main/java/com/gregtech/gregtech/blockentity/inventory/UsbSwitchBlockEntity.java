@@ -45,6 +45,7 @@ public class UsbSwitchBlockEntity extends BlockEntity
     private final PanelCoverRuntime panels = new PanelCoverRuntime(this);
     private final MachineControl control = new MachineControl() {
         @Override public boolean available() { return !isRemoved(); }
+        @Override public boolean supportsSwitch() { return false; }
         @Override public boolean supportsProgress() { return false; }
         @Override public boolean supportsMode() { return true; }
         @Override public int mode() { return UsbSwitchBlockEntity.this.mode; }
@@ -126,9 +127,7 @@ public class UsbSwitchBlockEntity extends BlockEntity
     @Override public MachineControl machineControl(Direction side) { return control; }
     @Override public boolean attachCover(Direction side, ItemStack stack) {
         PanelCover panel = PanelCover.of(stack);
-        if ((panel == null || !panel.selector()) && com.gregtech.gregtech.content.cover.ComponentCoverRuntime.kind(stack)==null
-                || !covers[side.ordinal()].isEmpty()
-                || !panels.canAttach(side, stack)) return false;
+        if (!com.gregtech.gregtech.content.cover.CoverItems.isCover(stack) || !covers[side.ordinal()].isEmpty() || !panels.canAttach(side,stack)) return false;
         covers[side.ordinal()] = stack.copyWithCount(1);
         panels.attached(side);
         sync();
@@ -142,7 +141,7 @@ public class UsbSwitchBlockEntity extends BlockEntity
         if(PanelCover.of(cover)!=null)setMode(0);
         setChanged();
         sync();
-        return cover;
+        return panels.removed(side,cover);
     }
     public void serverTick() {
         panels.beforeTick();

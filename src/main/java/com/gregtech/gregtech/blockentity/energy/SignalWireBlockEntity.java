@@ -43,7 +43,9 @@ public final class SignalWireBlockEntity extends BlockEntity implements MachineC
     public boolean connected(Direction side){return getBlockState().getValue(ElectricWireBlock.propFor(side));}
     public int comparator(){return (int)(signal/UNIT);}
     public int output(Direction side){
-        if(SAMPLING.get()||level==null||isRemoved()||signal<=0||side==received||!connected(side))return 0;
+        if(SAMPLING.get()||level==null||isRemoved())return 0;
+        if((Object)this instanceof com.gregtech.gregtech.content.cover.PanelCoverHost host&&!host.getCover(side).isEmpty())return host.panels().signal(side);
+        if(signal<=0||side==received||!connected(side))return 0;
         var pos=worldPosition.relative(side);
         if(!level.hasChunkAt(pos))return 0;
         var state=level.getBlockState(pos);
@@ -124,6 +126,7 @@ public final class SignalWireBlockEntity extends BlockEntity implements MachineC
     @Override public void load(CompoundTag tag){super.load(tag);mode=Math.max(0,Math.min(15,tag.getInt("mode")));signal=0;received=null;solvedTick=Long.MIN_VALUE;}
     @Override public MachineControl machineControl(Direction side){return new MachineControl(){
         public boolean available(){return !isRemoved();}
+        public boolean supportsSwitch(){return false;}
         public boolean supportsMode(){return true;}
         public int mode(){return available()?SignalWireBlockEntity.this.mode:0;}
         public int setMode(int value){SignalWireBlockEntity.this.setMode(value);return mode();}

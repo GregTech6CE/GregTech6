@@ -22,8 +22,11 @@ public final class LogisticsCoverRenderer<T extends BlockEntity & LogisticsCover
 
     @Override public void render(T be, float partialTick, PoseStack pose, MultiBufferSource buffers,
                                  int packedLight, int packedOverlay) {
+        renderFaces(be,be,pose,buffers,packedLight);
+    }
+    public static void renderFaces(BlockEntity be,LogisticsCoverHost host,PoseStack pose,MultiBufferSource buffers,int packedLight){
         for (Direction side : Direction.values()) {
-            var stack = be.logisticsCovers().get(side);
+            var stack = host.logisticsCovers().get(side);
             if (stack.isEmpty()) continue;
             var type = LogisticsCoverType.of(stack);
             if (type == null) continue;
@@ -43,7 +46,7 @@ public final class LogisticsCoverRenderer<T extends BlockEntity & LogisticsCover
                 };
                 String prefix = "block/machines/covers/logistics/display/" + name + "/";
                 drawSurface(pose, vc, side, prefix + "underlay", out + .0006, light);
-                drawSurface(pose, vc, side, prefix + be.logisticsCovers().displayVisual(side),
+                drawSurface(pose, vc, side, prefix + host.logisticsCovers().displayVisual(side),
                         out + .0008, light);
             } else {
                 var itemModel = Minecraft.getInstance().getItemRenderer().getModel(stack, be.getLevel(), null, 0);

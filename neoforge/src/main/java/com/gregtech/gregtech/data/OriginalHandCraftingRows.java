@@ -253,64 +253,16 @@ public final class OriginalHandCraftingRows {
 
     // ── pipes: the aRecipe patterns of the pipe helpers ─────────────────────
 
-    private static int pipes(Map<ResourceLocation, byte[]> recipes) {
-        int added = 0;
-        for (var holder : FluidTransportRegistries.pipes()) {
-            if (!holder.isBound()) continue;
-            PipeSpec spec = holder.get().spec();
-            GTMaterial material = spec.material();
-            ItemStack output = new ItemStack(holder.get().asItem(),
-                    spec.size() == PipeSpec.PipeSize.TINY ? 2 : 1);
-            added += pipe(recipes, "fluid/" + spec.id(), spec.size(), material, output);
+    private static int pipes(Map<ResourceLocation,byte[]> recipes) {
+        int count=0;
+        for(var row:com.gregtech.gregtech.content.transport.TransportCraftingCatalog.rows()) {
+            var json=com.gregtech.gregtech.content.recipe.TransportCraftingInputs.json(row);
+            if(json.isEmpty()) { com.mojang.logging.LogUtils.getLogger().warn("Missing original transport crafting form: {}",row.path()); continue; }
+            var location=id("recipe/hand/"+row.path()+".json");
+            if(recipes.putIfAbsent(location,json.get().toString().getBytes(StandardCharsets.UTF_8))!=null)throw new IllegalStateException("Duplicate transport recipe "+location);
+            count++;
         }
-        for (var holder : GTItemPipes.all()) {
-            if (!holder.isBound()) continue;
-            ItemPipeSpec spec = holder.get().spec();
-            ItemStack output = new ItemStack(holder.get().asItem());
-            if (spec.size().restrictive()) {
-                ItemStack plain = plainPipe(spec.material(), spec.size());
-                if (plain.isEmpty()) continue;
-                String[] pattern = switch (spec.size()) {
-                    case RESTRICTIVE_MEDIUM -> new String[]{" h ", "RPR", " R "};
-                    case RESTRICTIVE_LARGE -> new String[]{"hR ", "RPR", " R "};
-                    default -> new String[]{" h ", "RPR", "RRR"};
-                };
-                added += register(recipes, "pipe/restrictive/" + spec.id(), pattern,
-                        Map.of('P', Ingredient.of(plain), 'R', Ingredient.of(steelRing()),
-                                'h', Ingredient.of(tool(GTToolType.HARD_HAMMER))),
-                        output);
-                continue;
-            }
-            PipeSpec.PipeSize size = switch (spec.size()) {
-                case MEDIUM -> PipeSpec.PipeSize.MEDIUM;
-                case LARGE -> PipeSpec.PipeSize.LARGE;
-                default -> PipeSpec.PipeSize.HUGE;
-            };
-            added += pipe(recipes, "item/" + spec.id(), size, spec.material(), output);
-        }
-        return added;
-    }
-
-    /** GT6's five pipe patterns; huge pipes use a double plate instead of a curved one. */
-    private static int pipe(Map<ResourceLocation, byte[]> recipes, String path, PipeSpec.PipeSize size,
-                            GTMaterial material, ItemStack output) {
-        boolean huge = size == PipeSpec.PipeSize.HUGE;
-        ItemStack plate = GTItems.getStack(huge ? MaterialPrefix.plateDouble : MaterialPrefix.plateCurved,
-                material, 1);
-        if (plate.isEmpty() || output.isEmpty()) return 0;
-        String[] pattern = switch (size) {
-            case TINY -> new String[]{"sP ", "wzh"};
-            case SMALL -> new String[]{" P ", "wzh"};
-            case MEDIUM -> new String[]{"PPP", "wzh"};
-            default -> new String[]{"PPP", "wzh", "PPP"};
-        };
-        Map<Character, Ingredient> key = Map.of(
-                'P', Ingredient.of(plate),
-                's', Ingredient.of(tool(GTToolType.SAW)),
-                'w', Ingredient.of(tool(GTToolType.WRENCH)),
-                'z', Ingredient.of(tool(GTToolType.BENDING_CYLINDER)),
-                'h', Ingredient.of(tool(GTToolType.HARD_HAMMER)));
-        return register(recipes, "pipe/" + path, pattern, key, output);
+        return count;
     }
 
     // ── anvils: "RRR" / "hR " / "RRR" ──────────────────────────────────────
@@ -369,30 +321,6 @@ public final class OriginalHandCraftingRows {
                     new ItemStack((Block) entry[2], 3), false, true);
         }
         return added;
-    }
-
-    private static ItemStack plainPipe(GTMaterial material, ItemPipeSpec.ItemPipeSize size) {
-        PipeSpec.PipeSize wanted = switch (size) {
-            case RESTRICTIVE_MEDIUM -> PipeSpec.PipeSize.MEDIUM;
-            case RESTRICTIVE_LARGE -> PipeSpec.PipeSize.LARGE;
-            default -> PipeSpec.PipeSize.HUGE;
-        };
-        for (var holder : FluidTransportRegistries.pipes()) {
-            if (!holder.isBound()) continue;
-            var spec = holder.get().spec();
-            if (spec.material() == material && spec.size() == wanted) {
-                return new ItemStack(holder.get().asItem());
-            }
-        }
-        return ItemStack.EMPTY;
-    }
-
-    private static ItemStack steelRing() {
-        ItemStack ring = GTItems.getStack(MaterialPrefix.ring, Materials.Steel, 1);
-        if (!ring.isEmpty()) return ring;
-        Item item = BuiltInRegistries.ITEM.get(
-                ResourceLocation.fromNamespaceAndPath("forge", "steel_ingot"));
-        return item == null ? ItemStack.EMPTY : new ItemStack(item);
     }
 
     private static ItemStack plate(GTMaterial material) {

@@ -12,11 +12,13 @@ public final class PanelCoverRuntime {
     private final int[] signals=new int[6];
     private final boolean[] strong=new boolean[6];
     private boolean stopped,restore=true;
+    private long utilityTick=Long.MIN_VALUE;
     public PanelCoverRuntime(PanelCoverHost host){this.host=host;}
     public boolean stopped(){return stopped;}
     public static int value(ItemStack stack){return stack.hasTag()?stack.getTag().getInt(VALUE):0;}
     public static int style(ItemStack stack){return stack.hasTag()?stack.getTag().getInt(STYLE):0;}
     public void loaded(){restore=true;}
+    public void restoreStopped(boolean value){stopped=value;restore=true;}
     private boolean server(){return host.coverOwner().getLevel()!=null&&!host.coverOwner().getLevel().isClientSide&&!host.coverOwner().isRemoved();}
     public int incoming(Direction side){
         var owner=host.coverOwner();var level=owner.getLevel();var pos=owner.getBlockPos().relative(side);
@@ -32,16 +34,29 @@ public final class PanelCoverRuntime {
     }
     public boolean canAttach(Direction side,ItemStack stack){
         if(!ComponentCoverRuntime.canAttach(host,side,stack))return false;
+        if(host.coverOwner() instanceof com.gregtech.gregtech.content.logistics.LogisticsCoverHost logistics&&!logistics.logisticsCovers().get(side).isEmpty())return false;
         // GT6 logistics covers only attach to ITileEntityLogistics; ordinary machines and pipes
         // must not accept them merely because they are registered cover items.
         if(com.gregtech.gregtech.content.logistics.LogisticsCoverType.of(stack)!=null)
             return host.coverOwner() instanceof com.gregtech.gregtech.content.logistics.LogisticsHost logistics
                     && logistics.canLogistics(null);
-        var panel=PanelCover.of(stack);if(panel==null)return true;
+        var id=CoverItems.behavior(stack);
+        var candidateControl=control(side);
+        if(CoverItems.TAG_SELECTOR.equals(id))return candidateControl!=null&&candidateControl.supportsMode();
+        if(CoverItems.REDSTONE_TORCH.equals(id)||CoverItems.REDSTONE_REPEATER.equals(id))return host.coverOwner() instanceof com.gregtech.gregtech.blockentity.energy.SignalWireBlockEntity&&host.coverOwner().getBlockState().getBlock() instanceof com.gregtech.gregtech.block.energy.SignalWireBlock wire&&wire.insulated();
+        if(CoverAttachmentBehaviors.DRAIN.equals(id)||CoverAttachmentBehaviors.AIR_VENT.equals(id))return host.componentTicks()&&host.componentFluids(side)!=null&&host.componentFluids(side).getTanks()>0;
+        if(CoverUtilityBehaviors.FILTER_ITEM.equals(id)){
+            var owner=host.coverOwner();var level=owner.getLevel();
+            return host.componentItems(side)!=null&&!(owner instanceof com.gregtech.gregtech.blockentity.machine.ItemPipeBlockEntity&&level!=null&&level.getBlockEntity(owner.getBlockPos().relative(side)) instanceof com.gregtech.gregtech.blockentity.machine.ItemPipeBlockEntity);
+        }
+        if(CoverUtilityBehaviors.FILTER_FLUID.equals(id))return host.componentFluids(side)!=null&&host.componentFluids(side).getTanks()>0;
+        if(CoverUtilityBehaviors.PRESSURE_VALVE.equals(id))return host.coverOwner() instanceof com.gregtech.gregtech.blockentity.machine.FluidPipeBlockEntity;
+        if(MachineCoverSpec.of(stack)!=null)return candidateControl!=null&&candidateControl.supportsSwitch();
+        var panel=PanelCover.of(stack);if(panel==null)return CoverItems.isCover(stack);
         var c=control(side);
         if(panel.selector())return c!=null&&c.supportsMode();
         if(panel==PanelCover.PROGRESS)return c!=null&&c.supportsProgress();
-        if(panel==PanelCover.STATUS)return c!=null;
+        if(panel==PanelCover.STATUS)return c!=null&&c.supportsSwitch();
         if(panel.energy())return energy(side)!=null;
         return true;
     }
@@ -49,7 +64,7 @@ public final class PanelCoverRuntime {
         ComponentCoverRuntime.attached(host,side);
         var stack=host.getCover(side);var panel=PanelCover.of(stack);var c=control(side);
         if(panel!=null&&panel.selector()&&c!=null)stack.getOrCreateTag().putInt(VALUE,c.mode()&15);
-        refreshStopped();changed();
+        refreshStopped();CoverConnections.attached(host,side);changed();decorativeSound(stack);
     }
     public void changed(){
         var owner=host.coverOwner();owner.setChanged();
@@ -69,13 +84,39 @@ public final class PanelCoverRuntime {
         return maximum-1-Math.min(maximum-2,quotient);
     }
     private void refreshStopped(){
-        stopped=false;
+        if(!host.hasAttachedCovers())stopped=false;
+        // Removing CoverControllerCovers leaves its stopped flag latched until all covers are gone.
         // GT6 evaluates cover controllers in side order; the final one owns the shared stopped flag.
         for(var side:Direction.values())if(PanelCover.of(host.getCover(side))==PanelCover.CONTROLLER)
             stopped=(incoming(side)>0)==MachineCoverSpec.inverted(host.getCover(side));
     }
+    /** Caller has already freed the face; detached items carry the default cover configuration. */
+    public ItemStack removed(Direction side,ItemStack stack){
+        var c=control(side);var panel=PanelCover.of(stack);var spec=MachineCoverSpec.of(stack);
+        if(c!=null){
+            if(spec!=null&&!spec.detector()||panel==PanelCover.STATUS)c.setEnabled(true);
+            if(panel!=null&&panel.selector()||CoverItems.TAG_SELECTOR.equals(CoverItems.behavior(stack)))c.setMode(0);
+        }
+        refreshStopped();changed();afterTick();decorativeSound(stack);
+        return stack.isEmpty()?ItemStack.EMPTY:new ItemStack(stack.getItem());
+    }
+    /** Original CoverTextureSimple uses its wood/stone dig sound for both actions. */
+    private void decorativeSound(ItemStack stack) {
+        if(server()&&stack.getItem() instanceof com.gregtech.gregtech.item.PanelItemView panel) {
+            var owner=host.coverOwner();owner.getLevel().playSound(null,owner.getBlockPos(),
+                panel.panelSpec().kind().equals("wood")?net.minecraft.sounds.SoundEvents.WOOD_BREAK:net.minecraft.sounds.SoundEvents.STONE_BREAK,
+                net.minecraft.sounds.SoundSource.BLOCKS,1F,1F);
+        }
+    }
     public void beforeTick(){
-        if(!server())return;refreshStopped();boolean changed=false;
+        if(!server())return;boolean wasStopped=stopped;refreshStopped();if(wasStopped!=stopped)for(var face:Direction.values())if(PanelCover.of(host.getCover(face))==PanelCover.SHUTTER)CoverConnections.update(host,face,!shuttered(face));boolean changed=false;
+        for(var side:Direction.values()){
+            var stack=host.getCover(side);var c=control(side);if(c==null)continue;
+            if(CoverItems.TAG_SELECTOR.equals(CoverItems.behavior(stack))&&c.supportsMode()&&!stopped)c.setMode(CoverItems.selectorTag(stack));
+            var spec=MachineCoverSpec.of(stack);
+            if(spec!=null&&!spec.detector()&&!(host instanceof com.gregtech.gregtech.blockentity.machine.BasicMachineBlockEntity))
+                c.setEnabled(spec.allows(new MachineCoverSpec.State(host.coverPossible(side),c.running(),c.active(),false),incoming(side),MachineCoverSpec.inverted(stack),host.coverOwner().getLevel().getGameTime()));
+        }
         for(var side:Direction.values()){
             var stack=host.getCover(side);var panel=PanelCover.of(stack);if(panel==null||!panel.selector())continue;
             var c=control(side);if(c==null||!c.supportsMode()||stopped)continue;
@@ -91,6 +132,8 @@ public final class PanelCoverRuntime {
     }
     public void afterTick(){
         if(!server())return;
+        long now=host.coverOwner().getLevel().getGameTime();
+        if(utilityTick!=now){utilityTick=now;tickAttachments(now);}
         boolean visualChanged=false,signalChanged=false;
         int conducted=0;
         for(var side:Direction.values())if(PanelCover.of(host.getCover(side))==PanelCover.CONDUCTOR_IN)conducted=Math.max(conducted,incoming(side));
@@ -114,6 +157,18 @@ public final class PanelCoverRuntime {
                 if(panel==PanelCover.PROGRESS||panel==PanelCover.ENERGY)if(MachineCoverSpec.inverted(stack))signal=15-signal;
                 power=panel.strongConfig()&&MachineCoverSpec.strong(stack);
             }
+            var spec=MachineCoverSpec.of(stack);
+            if(spec!=null&&spec.detector()){
+                var c=control(side);
+                signal=c==null?0:spec.signal(new MachineCoverSpec.State(host.coverPossible(side),c.running(),c.active(),false),MachineCoverSpec.inverted(stack));
+                power=MachineCoverSpec.strong(stack);
+            }
+            if(host.coverOwner() instanceof com.gregtech.gregtech.blockentity.energy.SignalWireBlockEntity wire){
+                var id=CoverItems.behavior(stack);
+                if(CoverItems.REDSTONE_TORCH.equals(id))signal=wire.signal()>0?0:15;
+                else if(CoverItems.REDSTONE_REPEATER.equals(id))signal=wire.signal()>0?15:0;
+                if(CoverItems.REDSTONE_TORCH.equals(id)||CoverItems.REDSTONE_REPEATER.equals(id))power=true;
+            }
             int i=side.ordinal();
             if(signals[i]!=signal||strong[i]!=power){
                 boolean old=strong[i];signals[i]=signal;strong[i]=power;signalChanged=true;
@@ -124,6 +179,20 @@ public final class PanelCoverRuntime {
         if(visualChanged)changed();
         if(signalChanged){var owner=host.coverOwner();owner.getLevel().updateNeighborsAt(owner.getBlockPos(),owner.getBlockState().getBlock());}
     }
+    private void tickAttachments(long now){
+        if(stopped||!host.componentTicks()
+                ||host.coverOwner() instanceof com.gregtech.gregtech.blockentity.machine.BasicMachineBlockEntity
+                ||host.coverOwner() instanceof com.gregtech.gregtech.blockentity.machine.FluidPipeBlockEntity
+                ||host.coverOwner() instanceof com.gregtech.gregtech.blockentity.machine.ItemPipeBlockEntity)return;
+        for(var side:Direction.values()){
+            var id=CoverItems.behavior(host.getCover(side));
+            if(!CoverAttachmentBehaviors.DRAIN.equals(id)&&!CoverAttachmentBehaviors.AIR_VENT.equals(id))continue;
+            var sink=host.componentFluids(side);if(sink==null||sink.getTanks()==0)continue;
+            var owner=host.coverOwner();
+            if(CoverAttachmentBehaviors.DRAIN.equals(id))CoverAttachmentBehaviors.tickDrain(owner.getLevel(),owner.getBlockPos(),side,sink,now);
+            else CoverAttachmentBehaviors.tickVent(owner.getLevel(),owner.getBlockPos(),side,sink,now);
+        }
+    }
     public int signal(Direction side){return signals[side.ordinal()];}
     public int strongSignal(Direction side){return strong[side.ordinal()]?signal(side):0;}
     public boolean shuttered(Direction side){
@@ -131,7 +200,13 @@ public final class PanelCoverRuntime {
         return PanelCover.of(stack)==PanelCover.SHUTTER&&(!MachineCoverSpec.inverted(stack)==stopped);
     }
     public boolean configure(Direction side,boolean cutter,boolean chisel){
-        var stack=host.getCover(side);var panel=PanelCover.of(stack);if(panel==null)return false;
+        var stack=host.getCover(side);var panel=PanelCover.of(stack);
+        var spec=MachineCoverSpec.of(stack);
+        if(panel==null){
+            if(spec==null||chisel||(cutter?!spec.detector():!spec.invertible()))return false;
+            if(server()){CoverStackData.putBoolean(stack,cutter?"gt.cover.strong":"gt.cover.inverted",!(cutter?MachineCoverSpec.strong(stack):MachineCoverSpec.inverted(stack)));changed();afterTick();}
+            return true;
+        }
         if(chisel&&panel!=PanelCover.BUTTONS&&panel!=PanelCover.STATUS)return false;
         if(!chisel&&(cutter?!panel.strongConfig():!panel.invertible()&&panel!=PanelCover.BUTTONS))return false;
         if(!server())return true;
@@ -140,7 +215,7 @@ public final class PanelCoverRuntime {
         else if(cutter)tag.putBoolean("gt.cover.strong",!MachineCoverSpec.strong(stack));
         else if(panel==PanelCover.BUTTONS){tag.putBoolean(RESET,!tag.getBoolean(RESET));tag.putInt(COUNTDOWN,0);}
         else tag.putBoolean("gt.cover.inverted",!MachineCoverSpec.inverted(stack));
-        refreshStopped();changed();afterTick();return true;
+        refreshStopped();if(panel==PanelCover.SHUTTER)CoverConnections.update(host,side,!shuttered(side));changed();afterTick();return true;
     }
     public boolean click(Direction side,double u,double v){
         var stack=host.getCover(side);var panel=PanelCover.of(stack);if(panel==null)return false;

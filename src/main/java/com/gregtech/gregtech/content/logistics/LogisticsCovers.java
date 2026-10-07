@@ -48,6 +48,7 @@ public final class LogisticsCovers {
 
     public boolean attach(Direction face, ItemStack held) {
         if (LogisticsCoverType.of(held) == null || !host.canLogistics(null) || !get(face).isEmpty()) return false;
+        if (owner instanceof com.gregtech.gregtech.content.cover.PanelCoverHost panels && !panels.getCover(face).isEmpty()) return false;
         faces[face.ordinal()] = held.copyWithCount(1);
         displaySignals[face.ordinal()] = 0;
         displayVisuals[face.ordinal()] = 0;
@@ -79,11 +80,15 @@ public final class LogisticsCovers {
         changed();
         if (owner.getLevel() != null && !owner.getLevel().isClientSide)
             owner.getLevel().updateNeighborsAt(owner.getBlockPos(), owner.getBlockState().getBlock());
-        return result;
+        return new ItemStack(result.getItem());
     }
 
     public void changed() {
         owner.setChanged();
+        if(com.gregtech.gregtech.content.cover.ComponentCoverFallback.uses(owner)){
+            ((com.gregtech.gregtech.content.cover.FallbackCoverHost)owner).gregtechComponentStorage(true);
+            com.gregtech.gregtech.content.cover.ComponentCoverFallback.track(owner);
+        }
         if (owner.getLevel() != null && !owner.getLevel().isClientSide)
             owner.getLevel().sendBlockUpdated(owner.getBlockPos(), owner.getBlockState(), owner.getBlockState(), 2);
     }
@@ -115,7 +120,7 @@ public final class LogisticsCovers {
 
     public void dropAll() {
         for (int i = 0; i < faces.length; i++) {
-            if (!faces[i].isEmpty()) BlockContents.drop(owner, faces[i]);
+            if (!faces[i].isEmpty()&&!com.gregtech.gregtech.content.cover.CoverDrops.retained(owner)) BlockContents.drop(owner, faces[i]);
             faces[i] = ItemStack.EMPTY;
             displaySignals[i] = 0;
             displayVisuals[i] = 0;

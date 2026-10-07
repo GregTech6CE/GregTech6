@@ -16,7 +16,7 @@ import net.minecraft.world.level.Level;
 
 /** Original CR shapeless rows: ordinary GT tool container crafting wears and returns the tool. */
 public final class ToolShapelessRecipe extends ShapelessRecipe implements com.gregtech.gregtech.api.recipe.AutocraftableCraftingRecipe {
-    private final boolean autocraftable;
+    private final boolean autocraftable, requireEmptyFluidContainers;
     private final FormConversionSelector formSelector;
     private final String conversionInput, conversionMaterial;
     @Override public boolean isAutocraftableByGT() { return autocraftable; }
@@ -29,8 +29,13 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements com.gr
     }
     public ToolShapelessRecipe(ShapelessRecipe base, boolean autocraftable, FormConversionSelector formSelector,
                                String conversionInput, String conversionMaterial) {
+        this(base, autocraftable, formSelector, conversionInput, conversionMaterial, false);
+    }
+    public ToolShapelessRecipe(ShapelessRecipe base, boolean autocraftable, FormConversionSelector formSelector,
+                              String conversionInput, String conversionMaterial, boolean requireEmptyFluidContainers) {
         super(base.getId(), base.getGroup(), base.category(), base.getResultItem(RegistryAccess.EMPTY), base.getIngredients());
         this.autocraftable = autocraftable;
+        this.requireEmptyFluidContainers=requireEmptyFluidContainers;
         this.formSelector = formSelector;
         if (conversionInput.isEmpty() != conversionMaterial.isEmpty()) throw new IllegalArgumentException("Incomplete source conversion form");
         this.conversionInput = conversionInput;
@@ -44,6 +49,7 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements com.gr
             if (!stack.isEmpty()) { if (first < 0) first = i; occupied++; }
             if (!stack.isEmpty() && !conversionInput.isEmpty()
                     && !CraftingMaterialForms.matches(conversionInput, conversionMaterial, stack)) return false;
+            if(requireEmptyFluidContainers&&(com.gregtech.gregtech.api.material.ItemMaterialRegistry.hasStoredContents(stack)||net.minecraftforge.fluids.FluidUtil.getFluidContained(stack).filter(f->!f.isEmpty()).isPresent()))return false;
             if (stack.getItem() instanceof GTToolItem && !GTToolHelper.isUsable(stack)) return false;
         }
         return formSelector.matches(grid.getContainerSize(), first, occupied);
@@ -72,16 +78,17 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements com.gr
                     new FormConversionSelector(json.has("gregtech_form_variants") ? json.get("gregtech_form_variants").getAsInt() : 0,
                             json.has("gregtech_form_offset") ? json.get("gregtech_form_offset").getAsInt() : 0),
                     json.has("gregtech_form_input") ? json.get("gregtech_form_input").getAsString() : "",
-                    json.has("gregtech_form_material") ? json.get("gregtech_form_material").getAsString() : "");
+                    json.has("gregtech_form_material") ? json.get("gregtech_form_material").getAsString() : "",
+                    json.has("require_empty_fluid_containers") && json.get("require_empty_fluid_containers").getAsBoolean());
         }
         @Override public ToolShapelessRecipe fromNetwork(ResourceLocation id,FriendlyByteBuf buffer) {
             return new ToolShapelessRecipe(vanilla.fromNetwork(id,buffer), buffer.readBoolean(),
-                    new FormConversionSelector(buffer.readVarInt(), buffer.readVarInt()), buffer.readUtf(), buffer.readUtf());
+                    new FormConversionSelector(buffer.readVarInt(), buffer.readVarInt()), buffer.readUtf(), buffer.readUtf(), buffer.readBoolean());
         }
         @Override public void toNetwork(FriendlyByteBuf buffer,ToolShapelessRecipe recipe) {
             vanilla.toNetwork(buffer,recipe); buffer.writeBoolean(recipe.autocraftable);
             buffer.writeVarInt(recipe.formSelector.variants()); buffer.writeVarInt(recipe.formSelector.offset());
-            buffer.writeUtf(recipe.conversionInput); buffer.writeUtf(recipe.conversionMaterial);
+            buffer.writeUtf(recipe.conversionInput); buffer.writeUtf(recipe.conversionMaterial); buffer.writeBoolean(recipe.requireEmptyFluidContainers);
         }
     };
 }

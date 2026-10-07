@@ -1,7 +1,8 @@
 {
   "type": "gregtech:tool_shaped",
-  "_comment": "GT6 Loader_MultiTileEntities:2170, Logistics Tank 32072",
+  "_comment": "GT6 Loader_MultiTileEntities:2171, Logistics Tank 32072",
   "allow_mirror": false,
+  "require_empty_fluid_containers": true,
   "pattern": ["TQT", "wFd", "TMT"],
   "key": {
     "T": {"tag": "forge:screws/tungsten"},

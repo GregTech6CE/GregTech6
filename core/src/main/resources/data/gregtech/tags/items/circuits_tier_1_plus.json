@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "gregtech:circuit_basic",
+    "#gregtech:circuits_tier_2_plus",
+    {
+      "id": "#gt:circuit1",
+      "required": false
+    },
+    {
+      "id": "#forge:circuits/basic",
+      "required": false
+    }
+  ]
+}

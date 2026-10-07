@@ -11,8 +11,19 @@ import java.util.List;
 /** Original tank/pipe tooltip and stack limits; BlockItem restores BLOCK_ENTITY_DATA on placement. */
 public final class FluidTransportBlockItem extends BlockItem {
     public FluidTransportBlockItem(Block block,Properties properties){super(block,properties);}
+    @Override public int getMaxStackSize(ItemStack stack) {
+        var stored = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
+        var tag = stored == null ? null : stored.copyTag();
+        if (getBlock() instanceof TankBlock && tag != null && tag.getCompound("gt.tank").getLong("Amount") > 0) return 1;
+        return super.getMaxStackSize(stack);
+    }
+
     @Override public Component getName(ItemStack stack){
-        if(getBlock() instanceof TankBlock tank)return Component.literal(tank.spec().materialName()+" Tank");
+        if(getBlock() instanceof TankBlock tank) {
+            if(com.gregtech.gregtech.content.transport.fluid.CheapWoodBarrelCatalog.entry(tank.spec().id()).isPresent())
+                return Component.translatable("block.gregtech."+tank.spec().id());
+            return Component.literal(tank.spec().materialName()+" Tank");
+        }
         if(getBlock() instanceof FluidPipeBlock pipe){
             String size=pipe.spec().size().name();
             return Component.literal(size.substring(0,1).toUpperCase(java.util.Locale.ROOT)+size.substring(1).toLowerCase(java.util.Locale.ROOT)

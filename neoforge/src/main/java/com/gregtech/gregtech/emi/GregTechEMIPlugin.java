@@ -18,6 +18,9 @@ import java.util.Locale;
 public final class GregTechEMIPlugin implements EmiPlugin {
     @Override
     public void register(EmiRegistry registry) {
+        for(var item:com.gregtech.gregtech.api.recipe.UsbRecipeDisplayBinding.sticks())
+            registry.setDefaultComparison(item,dev.emi.emi.api.stack.Comparison.compareData(
+                    stack->com.gregtech.gregtech.api.recipe.UsbRecipeDisplayBinding.subtype(stack.getItemStack())));
         LootEmiRecipe.register(registry);
         StructureEmiRecipe.register(registry);
         WorldgenEmiRecipe.register(registry);

@@ -15,7 +15,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import java.util.EnumMap;
 import java.util.Map;
 
-/** GT6-style decorative thin panel block (1px thick, placed on any face). */
+/** Saved legacy panel block; original panel items attach to hosts and refuse new block placement. */
 public class PanelBlock extends Block {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
 
@@ -35,6 +35,7 @@ public class PanelBlock extends Block {
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
+    public com.gregtech.gregtech.content.transport.PanelCatalog.Spec spec() { return com.gregtech.gregtech.content.transport.PanelCatalog.get(materialName); }
     public String materialName() { return materialName; }
     public int tintRgb() { return tintRgb; }
 
@@ -43,7 +44,7 @@ public class PanelBlock extends Block {
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        return defaultBlockState().setValue(FACING, ctx.getClickedFace());
+        return null;
     }
 
     @Override

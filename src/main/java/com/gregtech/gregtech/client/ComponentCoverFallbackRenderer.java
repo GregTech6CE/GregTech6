@@ -45,6 +45,7 @@ public final class ComponentCoverFallbackRenderer {
             var pos=owner.getBlockPos();pose.pushPose();pose.translate(pos.getX()-camera.x,pos.getY()-camera.y,pos.getZ()-camera.z);
             int light=LevelRenderer.getLightColor(level,pos);var host=(PanelCoverHost)owner;
             for(var side:Direction.values())PanelCoverRenderer.renderFace(host,side,pose,buffers,light);
+            if(owner instanceof com.gregtech.gregtech.content.logistics.LogisticsCoverHost logistics)LogisticsCoverRenderer.renderFaces(owner,logistics,pose,buffers,light);
             pose.popPose();
         }
     }

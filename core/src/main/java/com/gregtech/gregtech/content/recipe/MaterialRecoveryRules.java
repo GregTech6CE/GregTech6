@@ -10,7 +10,9 @@ public final class MaterialRecoveryRules {
   return BigInteger.valueOf(amount).multiply(BigInteger.valueOf(source.getTargetPulverAmount())).divide(BigInteger.valueOf(GTValues.U)).longValueExact();
  }
  public static long shredderWork(GTMaterial material){
-  return (material.getName().contains("Quartz")?64L:material.hasAny(MaterialProperty.WOOD,MaterialProperty.STONE,MaterialProperty.GEM)?2L:256L)*Math.max(1,material.getToolQuality()+1);
+  return (material.getName().contains("Quartz")?64L:material.hasAny(MaterialProperty.WOOD,MaterialProperty.STONE,MaterialProperty.GEM)
+    ||com.gregtech.gregtech.data.generated.MaterialWorkability.isBrittle(material)
+    ||com.gregtech.gregtech.data.generated.MaterialWorkability.isFood(material)?2L:256L)*Math.max(1,material.getToolQuality()+1);
  }
  public static DustPile dust(long amount){
   long unit=GTValues.U;

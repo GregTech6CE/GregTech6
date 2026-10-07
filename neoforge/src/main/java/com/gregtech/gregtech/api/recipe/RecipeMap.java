@@ -610,9 +610,9 @@ public class RecipeMap {
         var inputFluids = new ArrayList<FluidStack>();
         for (var fluid : fluids) inputFluids.add(fluid == null ? FluidStack.EMPTY : fluid);
         for(int pass=0;pass<2;pass++) for (Recipe r : mRecipeList) {
+            if (!r.mEnabled || r.mFakeRecipe) continue;
             boolean exact=java.util.Arrays.stream(r.mInputs).allMatch(required->inputItems.stream().anyMatch(available->required.is(available.getItem())));
             if((pass==0)!=exact)continue;
-            if (!r.mEnabled || r.mFakeRecipe) continue;
             if (needsOutputs && r.mNeedsEmptyOutput && !allOutputSlotsEmpty(items, inputSlotCount, outputSlotCount)) continue;
             if (RecipeInputs.consume(r, inputItems, inputFluids, 1) != null) return r;
         }

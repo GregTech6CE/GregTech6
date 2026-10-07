@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "gregtech:circuit_ultimate",
+    "#gregtech:circuits_tier_7_plus",
+    {
+      "id": "#gt:circuit6",
+      "required": false
+    },
+    {
+      "id": "#forge:circuits/ultimate",
+      "required": false
+    }
+  ]
+}

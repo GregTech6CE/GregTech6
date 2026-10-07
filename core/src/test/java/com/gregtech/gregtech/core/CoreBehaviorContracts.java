@@ -53,7 +53,8 @@ public final class CoreBehaviorContracts {
         assertions += OriginWorldgenSamples.verify();
         assertions += LongDistanceSourceContracts.verify();
         assertions += com.gregtech.gregtech.content.compat.CompatSpecs.check();
-        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 31 groups (Java 17; no game dependencies)");
+        assertions += CanvasSourceContracts.verify();
+        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 32 groups (Java 17; no game dependencies)");
     }
 
     private static void externalGrindingSourceSamples() {

@@ -196,6 +196,7 @@ public class SmeltingCrucibleBlock extends Block implements EntityBlock {
             level.playSound(null, pos, FluidTransportRegistries.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
             if (GTToolHelper.canCollectMachineDrop(tool, state)) {
                 ItemStack machine = new ItemStack(this);
+                com.gregtech.gregtech.content.cover.CoverDrops.capture(state,(net.minecraft.server.level.ServerLevel)level,blockEntity,java.util.List.of(machine));
                 if (!machine.isEmpty()) {
                     if (!player.getInventory().add(machine)) {
                         popResource(level, pos, machine);

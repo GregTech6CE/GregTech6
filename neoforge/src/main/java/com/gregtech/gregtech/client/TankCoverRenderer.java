@@ -8,5 +8,6 @@ public final class TankCoverRenderer implements BlockEntityRenderer<TankBlockEnt
     public TankCoverRenderer(BlockEntityRendererProvider.Context context) {}
     @Override public void render(TankBlockEntity tank,float partial,PoseStack pose,MultiBufferSource buffers,int light,int overlay) {
         for(var side:net.minecraft.core.Direction.values())PanelCoverRenderer.renderFace(tank,side,pose,buffers,light);
+        if(tank instanceof com.gregtech.gregtech.content.logistics.LogisticsCoverHost host)LogisticsCoverRenderer.renderFaces(tank,host,pose,buffers,light);
     }
 }

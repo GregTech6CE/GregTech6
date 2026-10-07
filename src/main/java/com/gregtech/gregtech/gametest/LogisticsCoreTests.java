@@ -59,9 +59,9 @@ public final class LogisticsCoreTests {
                 "each Versatile processor contributes one to all four counters");
         helper.assertTrue(allVersatile.routingThreshold() == 46784
                         && allVersatile.energyCapacity() == 186752
-                        && allVersatile.fixedEnergyPerPass() == 128
+                        && allVersatile.fixedEnergyPerTick() == 128
                         && LogisticsCoreStructure.range(allVersatile) == 29,
-                "threshold, buffer, fixed cost per 20-tick pass and network radius are distinct GT6 values");
+                "threshold, buffer, standby cost per tick and network radius are distinct GT6 values");
         var cpuCell = LogisticsCoreStructure.cells().stream()
                 .filter(c -> c.kind() == LogisticsCoreStructure.Kind.CPU).findFirst().orElseThrow();
         BlockPos cpu = cpuCell.at(core.getBlockPos(), Direction.EAST);
@@ -77,14 +77,14 @@ public final class LogisticsCoreTests {
     }
 
     @GameTest(template = "test_fusion_empty", timeoutTicks = 200)
-    public static void galvanizedWallsAreTheOnlyEuInputs(GameTestHelper helper) {
+    public static void controllerAndGalvanizedWallsAcceptEu(GameTestHelper helper) {
         var core = build(helper, Direction.NORTH);
         var wall = part(core, Direction.NORTH, LogisticsCoreStructure.Kind.WALL);
         var vent = part(core, Direction.NORTH, LogisticsCoreStructure.Kind.VENT);
         helper.assertTrue(wall.isEnergyAcceptingFrom(GregTechTags.Energy.EU, Direction.UP, false)
                         && !vent.isEnergyAcceptingFrom(GregTechTags.Energy.EU, Direction.UP, false)
-                        && !core.isEnergyAcceptingFrom(GregTechTags.Energy.EU, Direction.NORTH, false),
-                "only the 44 galvanized wall parts admit EU");
+                        && core.isEnergyAcceptingFrom(GregTechTags.Energy.EU, Direction.NORTH, false),
+                "controller and 44 galvanized wall parts admit EU");
         helper.assertTrue(wall.getEnergySizeInputMin(GregTechTags.Energy.EU, Direction.UP) == 256
                         && wall.getEnergySizeInputRecommended(GregTechTags.Energy.EU, Direction.UP) == 512
                         && wall.getEnergySizeInputMax(GregTechTags.Energy.EU, Direction.UP) == 1024
@@ -106,27 +106,18 @@ public final class LogisticsCoreTests {
     }
 
     @GameTest(template = "test_fusion_empty", timeoutTicks = 200)
-    public static void fixedEuChargeFollowsOriginalSecondGate(GameTestHelper helper) {
-        var core = build(helper, Direction.NORTH);
-        var wall = part(core, Direction.NORTH, LogisticsCoreStructure.Kind.WALL);
-        int untilMidSecond = (10 - (int) (helper.getLevel().getGameTime() % 20) + 20) % 20;
-        if (untilMidSecond == 0) untilMidSecond = 20;
-        helper.runAfterDelay(untilMidSecond, () -> {
-            helper.assertTrue(wall.doEnergyInjection(GregTechTags.Energy.EU, Direction.UP, 512, 2, true) == 2,
-                    "wall accepts two packets at mid-second");
-            helper.runAfterDelay(9, () ->
-                    helper.assertTrue(core.storedEU() == 1024, "fixed charge waits for the next second pass"));
-            helper.runAfterDelay(11, () -> {
-                helper.assertTrue(core.storedEU() == 896, "one second pass charges 128 EU exactly once");
-                helper.getLevel().setBlock(wall.getBlockPos(), Blocks.AIR.defaultBlockState(), 3);
-                helper.assertTrue(!core.isStructureOk(), "broken wall invalidates the core");
-                helper.runAfterDelay(20, () -> {
-                    helper.assertTrue(core.storedEU() == 876,
-                            "unformed core still pays GT6's 20 EU fixed charge each second");
-                    helper.succeed();
-                });
-            });
-        });
+    public static void fixedEuChargeFollowsOriginalEveryTick(GameTestHelper helper) {
+        var core=build(helper,Direction.NORTH);
+        core.doEnergyInjection(GregTechTags.Energy.EU,Direction.NORTH,512,20,true);
+        long before=core.storedEU();
+        for(int i=0;i<20;i++)LogisticsCoreControllerBlockEntity.serverTick(helper.getLevel(),core.getBlockPos(),core.getBlockState(),core);
+        helper.assertTrue(core.storedEU()==before-20*128,"27 versatile CPUs charge 128 EU every tick");
+        var wall=part(core,Direction.NORTH,LogisticsCoreStructure.Kind.WALL);
+        helper.getLevel().setBlockAndUpdate(wall.getBlockPos(),Blocks.AIR.defaultBlockState());
+        before=core.storedEU();
+        LogisticsCoreControllerBlockEntity.serverTick(helper.getLevel(),core.getBlockPos(),core.getBlockState(),core);
+        helper.assertTrue(core.storedEU()==before-20,"unformed controller still charges 20 EU per tick");
+        helper.succeed();
     }
 
     @GameTest(template = "test_fusion_empty", timeoutTicks = 200)

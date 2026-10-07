@@ -47,28 +47,36 @@ public final class ComponentCoverFallback {
     @SuppressWarnings({"unchecked","rawtypes"})
     public static boolean eligible(BlockEntity owner){
         if(!ownClass(owner)||owner.getLevel()==null||owner.isRemoved())return false;
-        // Client tickers need not exist for a server-ticking block. The server is authoritative.
-        return owner.getLevel().isClientSide || owner.getBlockState().getBlock() instanceof net.minecraft.world.level.block.EntityBlock entity && entity.getTicker(owner.getLevel(),owner.getBlockState(),(net.minecraft.world.level.block.entity.BlockEntityType)owner.getType())!=null;
+        // The active fallback service provides cover ticks even for otherwise passive GT storage.
+        return owner.getBlockState().getBlock() instanceof net.minecraft.world.level.block.EntityBlock;
+    }
+    public static boolean hasLogistics(BlockEntity owner){
+        if(owner instanceof com.gregtech.gregtech.content.logistics.LogisticsCoverHost host)for(var side:Direction.values())if(!host.logisticsCovers().get(side).isEmpty())return true;
+        return false;
     }
     public static List<BlockEntity> active(){synchronized(ACTIVE){return new ArrayList<>(ACTIVE.keySet());}}
     public static void track(BlockEntity owner){if(uses(owner))ACTIVE.put(owner,true);}
     public static void write(BlockEntity owner,CompoundTag tag){
+        CoverDrops.saveRuntime(owner,tag);
+        if(owner instanceof com.gregtech.gregtech.content.logistics.LogisticsCoverHost logistics)logistics.logisticsCovers().save(tag);
         if(!uses(owner))return;
         var storage=((FallbackCoverHost)owner).gregtechComponentStorage(false);
         if(storage!=null){tag.putBoolean("gt.component_covers",true);storage.save(tag);}
     }
-    /** Covers drop separately when the block breaks; item copies must not duplicate them. */
+    /** Harvested GT block items retain the native attachment data. */
     public static CompoundTag forItem(BlockEntity owner,CompoundTag tag){
-        if(uses(owner))for(var side:Direction.values())tag.remove("gt_cover_"+side.ordinal());
+        // Native harvested block data retains attached covers and their configuration.
         return tag;
     }
     public static void read(BlockEntity owner,CompoundTag tag){
-        if(!uses(owner)||tag==null)return;
+        if(tag==null)return;CoverDrops.loadRuntime(owner,tag);
+        if(owner instanceof com.gregtech.gregtech.content.logistics.LogisticsCoverHost logistics)logistics.logisticsCovers().load(tag);
+        if(!uses(owner))return;
         boolean present=false;for(var side:Direction.values())present|=tag.contains("gt_cover_"+side.ordinal());
         if(!present&&!tag.getBoolean("gt.component_covers"))return;
         var host=(FallbackCoverHost)owner;var storage=host.gregtechComponentStorage(present);
         if(storage==null)return;storage.load(tag);
-        if(storage.hasCovers())track(owner);else ACTIVE.remove(owner);
+        if(storage.hasCovers()||hasLogistics(owner))track(owner);else ACTIVE.remove(owner);
     }
     public static void tick(ServerLevel level){
         for(var owner:active()){
@@ -87,7 +95,7 @@ public final class ComponentCoverFallback {
                 for(var player:level.getChunkSource().chunkMap.getPlayers(new net.minecraft.world.level.ChunkPos(owner.getBlockPos()),false))
                     com.gregtech.gregtech.network.PacketSyncComponentCovers.send(player,packet);
             }
-            if(!storage.hasCovers()){ACTIVE.remove(owner);SENT.remove(owner);}
+            if(!storage.hasCovers()&&!hasLogistics(owner)){ACTIVE.remove(owner);SENT.remove(owner);}
         }
     }
     public static void removing(BlockEntity owner){ACTIVE.remove(owner);SENT.remove(owner);}

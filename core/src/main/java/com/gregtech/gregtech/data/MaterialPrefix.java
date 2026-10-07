@@ -16,6 +16,9 @@ import java.util.function.Predicate;
  * (parent prefixes before children).
  */
 public final class MaterialPrefix {
+    /** Source associations for registered pipe blocks; never generate standalone form items. */
+    public static final MaterialPrefix pipeTiny, pipeSmall, pipeMedium, pipeLarge, pipeHuge,
+            pipeQuadruple, pipeNonuple, pipeRestrictiveMedium, pipeRestrictiveLarge, pipeRestrictiveHuge;
     // --- dust / ore processing ---
     public static final MaterialPrefix dust;
     public static final MaterialPrefix dustSmall;
@@ -481,6 +484,19 @@ public final class MaterialPrefix {
                 m -> HAS_PROJECTILE.test(m) || GT6_PROJECTILES.test(m));
     }
 
+    static {
+        pipeTiny = def("pipeTiny", "Tiny Pipe", m -> false, true);
+        pipeSmall = def("pipeSmall", "Small Pipe", m -> false, true);
+        pipeMedium = def("pipeMedium", "Pipe", m -> false, true);
+        pipeLarge = def("pipeLarge", "Large Pipe", m -> false, true);
+        pipeHuge = def("pipeHuge", "Huge Pipe", m -> false, true);
+        pipeQuadruple = def("pipeQuadruple", "Quadruple Pipe", m -> false, true);
+        pipeNonuple = def("pipeNonuple", "Nonuple Pipe", m -> false, true);
+        pipeRestrictiveMedium = def("pipeRestrictiveMedium", "Restrictive Pipe", m -> false, true);
+        pipeRestrictiveLarge = def("pipeRestrictiveLarge", "Restrictive Large Pipe", m -> false, true);
+        pipeRestrictiveHuge = def("pipeRestrictiveHuge", "Restrictive Huge Pipe", m -> false, true);
+    }
+
     /** Forces this class to load so static prefix fields register into {@link PrefixRegistry}. */
     public static void bootstrap() {
         if (dust == null || ingot == null || plate == null || gearGt == null || bulletGtLarge == null) {
@@ -549,6 +565,12 @@ private final String name;
     /** Amount of material (in {@link GTValues#U} units) represented by one item of this prefix. */
     public long getMaterialWeight() {
         return switch (registryName) {
+            // GT6 OP.pipe* associations, independent of flow capacity and restrictive steel rings.
+            case "pipe_tiny" -> GTValues.U / 2;
+            case "pipe_medium", "pipe_restrictive_medium" -> GTValues.U * 3;
+            case "pipe_large", "pipe_restrictive_large" -> GTValues.U * 6;
+            case "pipe_huge", "pipe_quadruple", "pipe_restrictive_huge" -> GTValues.U * 12;
+            case "pipe_nonuple" -> GTValues.U * 9;
             // dusts
             case "dust_small" -> GTValues.U4;
             case "dust_tiny", "nugget" -> GTValues.U9;

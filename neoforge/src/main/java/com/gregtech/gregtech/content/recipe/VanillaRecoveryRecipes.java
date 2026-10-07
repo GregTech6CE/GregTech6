@@ -8,7 +8,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import java.util.*;
 
-/** GT6 RecipeMapShredder material decomposition, published for known vanilla compositions. */
+/** GT6 RecipeMapShredder decomposition for vanilla and explicitly audited native compositions. */
 public final class VanillaRecoveryRecipes {
     private static final List<Recipe> RECIPES = new ArrayList<>();
     public static List<Recipe> recipes() { return Collections.unmodifiableList(RECIPES); }
@@ -16,7 +16,8 @@ public final class VanillaRecoveryRecipes {
     public static int register() {
         for (var item : BuiltInRegistries.ITEM.stream().sorted(Comparator.comparing(i -> BuiltInRegistries.ITEM.getKey(i).toString())).toList()) {
             var id = BuiltInRegistries.ITEM.getKey(item);
-            if (!id.getNamespace().equals("minecraft") || id.getPath().endsWith("_ore") || id.getPath().startsWith("raw_")) continue;
+            if (!id.getNamespace().equals("minecraft") && !PanelMaterialRegistration.recoveryItems().contains(item) && !TransportMaterialRegistration.recoveryItems().contains(item)) continue;
+            if (id.getPath().endsWith("_ore") || id.getPath().startsWith("raw_")) continue;
             var stack = new ItemStack(item);
             if (!ItemMaterialRegistry.canRecover(stack)) continue;
             var data = ItemMaterialRegistry.get(stack).orElseThrow();

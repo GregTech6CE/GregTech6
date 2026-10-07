@@ -227,32 +227,21 @@ public class ItemPipeBlockEntity extends BlockEntity
         return covers == null ? ItemStack.EMPTY : covers[side.ordinal()];
     }
 
-    /** Whether this pipe carries at least one cover. The renderer uses it to skip coverless pipes. */
-    public boolean hasCovers() {
-        return hasCovers;
-    }
-
-    @Override
-    public PanelCoverRuntime panels() {
-        if (panels == null) panels = new PanelCoverRuntime(this);
+    public boolean hasCovers() { return hasCovers; }
+    @Override public PanelCoverRuntime panels() {
+        if(panels==null)panels=new PanelCoverRuntime(this);
         return panels;
     }
 
-    /**
-     * Attaches one cover to a face — GT6's {@code CoverData} placement path, of which
-     * {@code BasicMachineBlockEntity:302-312} is the machine's copy and
-     * {@code FluidPipeBlockEntity.attachCover} the pipe's.
-     *
-     * <p>Neither of the two placement questions GT6's item-side covers ask survives as a test here, and
-     * both for a stated reason: the item filter's host rule ({@code CoverFilterItem:135-137}, refuse
-     * when the cover's face points at another item pipe) is deliberately not mirrored — see the class
-     * javadoc — and the retriever's ({@code CoverRetrieverItem:50}, the host must be a tickable item
-     * pipe) is satisfied by construction. So the only question left is the ordinary one every cover
-     * gets — is this face free — which {@code BasicMachineBlockEntity:302-312} asks the same way.</p>
-     */
+    /** Item filters reject pipe-to-pipe faces; attempted placement disconnects that face. */
     @Override
     public boolean attachCover(Direction side, ItemStack stack) {
-        if (stack.isEmpty() || !getCover(side).isEmpty() || !panels().canAttach(side, stack)) return false;
+        if (stack.isEmpty() || !getCover(side).isEmpty()) return false;
+        if(CoverUtilityBehaviors.FILTER_ITEM.equals(CoverItems.behavior(stack))&&level!=null
+                &&level.getBlockEntity(worldPosition.relative(side)) instanceof ItemPipeBlockEntity){
+            com.gregtech.gregtech.content.cover.CoverConnections.update(this,side,false);return false;
+        }
+        if(!panels().canAttach(side,stack))return false;
         if (covers == null) covers = emptyCovers();
         covers[side.ordinal()] = stack.copyWithCount(1);
         hasCovers = true;
@@ -280,7 +269,7 @@ public class ItemPipeBlockEntity extends BlockEntity
         panels().beforeTick();
         panels().afterTick();
         syncCovers();
-        return cover;
+        return panels().removed(side,cover);
     }
 
     /**
@@ -293,7 +282,7 @@ public class ItemPipeBlockEntity extends BlockEntity
     public void dropCovers() {
         if (covers == null) return;
         for (int i = 0; i < covers.length; i++) {
-            BlockContents.drop(this, covers[i]);
+            if(!com.gregtech.gregtech.content.cover.CoverDrops.retained(this))BlockContents.drop(this, covers[i]);
             covers[i] = ItemStack.EMPTY;
         }
         hasCovers = false;
@@ -425,7 +414,7 @@ public class ItemPipeBlockEntity extends BlockEntity
      * read as "intercept". A suspended cover refuses everything ({@code :117}).</p>
      */
     public boolean coverFilterPermits(Direction side, ItemStack candidate) {
-        return CoverUtilityBehaviors.itemFilterPermits(getCover(side), panelsStopped(), candidate);
+        return (panels==null||!panels.shuttered(side)) && CoverUtilityBehaviors.itemFilterPermits(getCover(side), panelsStopped(), candidate);
     }
 
     /**
@@ -611,11 +600,11 @@ public class ItemPipeBlockEntity extends BlockEntity
     }
 
     private boolean canEmitTo(Direction side) {
-        return com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsItem(getCover(side),false) && (disabledOutputs & (1 << side.ordinal())) == 0;
+        return (panels==null||!panels.shuttered(side)) && com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsItem(getCover(side),false) && (disabledOutputs & (1 << side.ordinal())) == 0;
     }
 
     private boolean canAcceptFrom(Direction side) {
-        return com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsItem(getCover(side),true) && (disabledInputs & (1 << side.ordinal())) == 0
+        return (panels==null||!panels.shuttered(side)) && com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsItem(getCover(side),true) && (disabledInputs & (1 << side.ordinal())) == 0
                 && (lastReceivedFrom < 0 || lastReceivedFrom == side.ordinal());
     }
 
@@ -667,7 +656,7 @@ public class ItemPipeBlockEntity extends BlockEntity
             Direction toNeighbor = clickedFace.getOpposite();
             BlockPos neighborPos = worldPosition.relative(toNeighbor);
             BlockEntity be = level.getBlockEntity(neighborPos);
-            if (be instanceof ItemPipeBlockEntity neighborPipe) {
+            if (be instanceof ItemPipeBlockEntity neighborPipe && com.gregtech.gregtech.content.cover.CoverConnections.canConnect(level,worldPosition,toNeighbor)) {
                 BlockState state = getBlockState();
                 BlockState newState = state.setValue(ItemPipeBlock.propFor(toNeighbor), true);
                 level.setBlockAndUpdate(worldPosition, newState);
@@ -684,7 +673,7 @@ public class ItemPipeBlockEntity extends BlockEntity
         for (Direction dir : Direction.values()) {
             BlockPos neighborPos = worldPosition.relative(dir);
             BlockEntity be = level.getBlockEntity(neighborPos);
-            if (!(be instanceof ItemPipeBlockEntity neighborPipe)) continue;
+            if (!(be instanceof ItemPipeBlockEntity neighborPipe)||!com.gregtech.gregtech.content.cover.CoverConnections.canConnect(level,worldPosition,dir)) continue;
 
             BlockState neighborState = neighborPipe.getBlockState();
             if (neighborState.getValue(ItemPipeBlock.propFor(dir.getOpposite()))) {

@@ -105,6 +105,7 @@ minecraft {
             property 'gregtech.integration.clientCreateWorldSmoke', (project.findProperty('clientCreateWorldSmoke') ?: 'false').toString()
             property 'gregtech.integration.viewerFeedbackOnly', (project.findProperty('viewerFeedbackOnly') ?: 'false').toString()
             property 'gregtech.integration.recipePresentationRuntimeOnly', (project.findProperty('recipePresentationRuntimeOnly') ?: 'false').toString()
+            property 'gregtech.integration.materialDataBrowserRuntimeOnly', (project.findProperty('materialDataBrowserRuntimeOnly') ?: 'false').toString()
             property 'gregtech.integration.materialBushRuntimeOnly', (project.findProperty('materialBushRuntimeOnly') ?: 'false').toString()
             property 'gregtech.integration.newIssuesRuntimeOnly', (project.findProperty('newIssuesRuntimeOnly') ?: 'false').toString()
             property 'gregtech.integration.longDistanceRuntimeOnly', (project.findProperty('longDistanceRuntimeOnly') ?: 'false').toString()
@@ -289,6 +290,9 @@ def deliveryProbeJar = tasks.register('productionSmokeJar', Jar) {
         include 'com/gregtech/gregtech/integration/client/SurfaceDeliveryChecks*.class'
         include 'com/gregtech/gregtech/integration/client/SandwichDeliveryChecks*.class'
         include 'com/gregtech/gregtech/integration/client/CannedFoodDeliveryChecks*.class'
+        include 'com/gregtech/gregtech/integration/client/CanvasDeliveryChecks*.class'
+        include 'com/gregtech/gregtech/integration/client/DecorativePanelDeliveryChecks*.class'
+        include 'com/gregtech/gregtech/integration/client/TankItemDeliveryChecks*.class'
     }
     from('tools/integration/production-probe/forge')
     // The probe must not supply the production mod's mapping or Mixin discovery.

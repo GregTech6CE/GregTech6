@@ -11,6 +11,13 @@ public interface PanelCoverHost {
     boolean attachCover(Direction side,ItemStack stack);
     ItemStack removeCover(Direction side);
     PanelCoverRuntime panels();
+    /** Both native cover stores share the original single all-covers stop lifetime. */
+    default boolean hasAttachedCovers(){
+        for(var face:Direction.values())if(!getCover(face).isEmpty())return true;
+        if(coverOwner() instanceof com.gregtech.gregtech.content.logistics.LogisticsCoverHost logistics)
+            for(var face:Direction.values())if(!logistics.logisticsCovers().get(face).isEmpty())return true;
+        return false;
+    }
     default boolean componentTicks() { return true; }
     default net.minecraftforge.items.IItemHandler componentItems(Direction side) {
         var owner=coverOwner();
@@ -25,7 +32,7 @@ public interface PanelCoverHost {
         return owner.getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.FLUID_HANDLER,null).orElse(null);
     }
     default BlockEntity coverOwner(){return (BlockEntity)this;}
-    default MachineControl coverControl(Direction side){return MachineControl.find(coverOwner(),side);}
+    default MachineControl coverControl(Direction side){var c=MachineControl.find(coverOwner(),side);return c!=null?c:CoverProgress.control(this,side);}
     default boolean coverPossible(Direction side){var c=coverControl(side);return c!=null&&c.available()&&(c.active()||c.progressMax()>0);}
     default boolean coverSupportsPossible(){return false;}
 }

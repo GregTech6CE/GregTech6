@@ -1,10 +1,10 @@
 {
   "parent": "minecraft:block/block",
   "textures": {
-    "top": "gregtech:block/machines/multiblockparts/metalwall/0/colored/top",
-    "front": "gregtech:block/machines/multiblockparts/metalwall/0/colored/side",
-    "side": "gregtech:block/machines/multiblockparts/metalwall/0/colored/side",
-    "particle": "gregtech:block/machines/multiblockparts/metalwall/0/colored/side"
+    "top": "gregtech:block/iconsets/concrete",
+    "front": "gregtech:block/iconsets/concrete",
+    "side": "gregtech:block/iconsets/concrete",
+    "particle": "gregtech:block/iconsets/concrete"
   },
   "elements": [
     {

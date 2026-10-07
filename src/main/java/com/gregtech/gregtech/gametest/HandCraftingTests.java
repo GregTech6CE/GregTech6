@@ -399,8 +399,8 @@ public final class HandCraftingTests {
                         .equals(com.gregtech.gregtech.content.cover.CoverItems.PUMP),
                 "the attached pump keeps its cover behaviour");
         h.assertTrue(machine.removeCover(Direction.NORTH).is(pump.getItem()), "crowbar returns the component");
-        h.assertTrue(machine.attachCover(Direction.SOUTH, torch), "machine face accepts a vanilla redstone torch");
-        h.assertTrue(machine.hasRedstoneCover(), "a vanilla torch gives the machine a redstone cover");
+        h.assertTrue(!machine.attachCover(Direction.SOUTH, torch), "machine rejects a wire-only redstone torch");
+        h.assertTrue(!machine.hasRedstoneCover(), "rejected torch does not become a machine cover");
         h.succeed();
     }
 

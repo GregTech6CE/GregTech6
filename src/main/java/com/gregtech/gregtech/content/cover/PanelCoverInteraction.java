@@ -25,6 +25,15 @@ public final class PanelCoverInteraction {
         }
         // Source controller forwards edge tool actions to the selected neighboring cover.
         if(PanelCover.of(host.getCover(side))==PanelCover.CONTROLLER&&GTToolHelper.isInteractionTool(held))side=ToolInteractions.selectedFace(hit);
+        if(GTToolHelper.isMagnifyingGlass(held)&&!host.getCover(side).isEmpty()){
+            if(!level.isClientSide){
+                var stack=host.getCover(side);
+                player.displayClientMessage(net.minecraft.network.chat.Component.translatable(MachineCoverSpec.inverted(stack)?"message.gregtech.cover.inverted":"message.gregtech.cover.normal"),false);
+                if(MachineCoverSpec.of(stack)!=null&&MachineCoverSpec.of(stack).detector()||PanelCover.of(stack)!=null&&PanelCover.of(stack).strongConfig())
+                    player.displayClientMessage(net.minecraft.network.chat.Component.translatable(MachineCoverSpec.strong(stack)?"message.gregtech.cover.strong":"message.gregtech.cover.weak"),false);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
         boolean cutter=GTToolHelper.isWireCutter(held),screw=GTToolHelper.isScrewdriver(held),chisel=GTToolHelper.matchesTool(held,GTToolType.CHISEL);
         if((cutter||screw||chisel)&&(host.panels().configure(side,cutter,chisel)
                 ||!chisel&&host instanceof com.gregtech.gregtech.blockentity.machine.BasicMachineBlockEntity machine&&machine.configureControlCover(side,cutter))){
