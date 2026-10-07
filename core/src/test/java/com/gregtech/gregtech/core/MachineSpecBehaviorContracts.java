@@ -37,6 +37,7 @@ public final class MachineSpecBehaviorContracts {
         originalCryoDistillationParametersAndOutlets();
         originalAdjacentEnergySources();
         assertions += LargeRecipeControllerContracts.verify();
+        assertions += BasicMachineSourceContracts.verify();
         originalMachineMaterials();
         originalBlastTooltips();
         originalHarvestProperties();

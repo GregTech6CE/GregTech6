@@ -265,7 +265,7 @@ public final class BasicMachineCatalog {
                                 original != null ? original.energyInputMax()
                                         : BasicMachineParameters.defaultEnergyInMax(energyName, energyIn))
                         .parallel(parallel)
-                        .strength(def.name().equals("massfab")?16:stats[0], def.name().equals("massfab")?16:stats[1]).faces(defaultMachineFaceMasks(def.name()))
+                        .strength(def.name().equals("massfab")?16:stats[0], def.name().equals("massfab")?16:stats[1]).faces(defaultMachineFaceMasks(def.name(),tierNumber))
                         .constructionMaterials(materials).build();
                 result.add(spec);
             }
@@ -290,7 +290,7 @@ public final class BasicMachineCatalog {
                                 original != null ? original.energyInputMax() : energyIn)
                         .strength(original != null ? original.hardness() : 16,
                                 original != null ? original.resistance() : 16)
-                        .faces(defaultMachineFaceMasks(name))
+                        .faces(defaultMachineFaceMasks(name,tier))
                         .constructionMaterials(OriginalMachineMaterialData.weights(name, tier)).build());
             }
         }
@@ -301,7 +301,8 @@ public final class BasicMachineCatalog {
      *  Uses machine-relative directions: TOP/BOTTOM/LEFT/RIGHT/FRONT/BACK.
      *  Auto I/O pulls from / pushes to the adjacent block on the specified relative face
      *  every server tick when enabled. */
-    private static MachineFaceMasks defaultMachineFaceMasks(String machineName) {
+    private static MachineFaceMasks defaultMachineFaceMasks(String machineName,int tier) {
+        if(OriginalBasicMachineRules.handles(machineName,tier))return OriginalBasicMachineFaces.defaults(machineName);
         if(com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.handles(machineName))
             return com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.faces(machineName);
         // ── HU heat machines ──────────────────────────────────────────

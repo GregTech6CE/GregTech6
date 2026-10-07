@@ -28,6 +28,10 @@ public final class MachineTooltips {
             if(!CommonBlockTooltips.containsKey(tooltip,"gt.lang.recipes")) OriginalControllerTooltips.basic(spec,tooltip);
             return; // Dedicated blocks own the original inherited rows; their item must not append them twice.
         }
+        if(com.gregtech.gregtech.content.machine.OriginalBasicMachineRules.handles(spec.machineName(),spec.tier())) {
+            BasicMachineSourceTooltips.append(spec,tooltip);
+            return;
+        }
         FaceConfig fc = spec.faceConfig();
 
         // Recipes

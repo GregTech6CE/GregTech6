@@ -40,7 +40,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collection;
 import java.util.Collections;
 
-public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements MenuProvider, IFluidHandler, com.gregtech.gregtech.api.inventory.BlockContents, com.gregtech.gregtech.api.machine.MachineControl.Provider, com.gregtech.gregtech.content.cover.PanelCoverHost {
+public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements MenuProvider, IFluidHandler, com.gregtech.gregtech.api.inventory.BlockContents, com.gregtech.gregtech.api.machine.MachineControl.Provider, com.gregtech.gregtech.content.cover.PanelCoverHost, com.gregtech.gregtech.item.behavior.ItemBehaviors.Ignitable {
     private static final String NBT_SPEC = "gt.spec";
     private static final String NBT_INVENTORY = "gt.inventory";
     private static final String NBT_TANKS_IN = "gt.tanks_input";
@@ -73,6 +73,14 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     private long mProgress;         // accumulated energy towards recipe completion
     private boolean mActive;        // currently processing a recipe
     private boolean mRunning;       // machine is in running state (energy present)
+    private int sourceIgnitionTicks;
+    private boolean sourceRequiresIgnition() {return spec!=null&&com.gregtech.gregtech.content.machine.OriginalBasicMachineRules.requiresIgnition(spec.machineName(),spec.tier());}
+    @Override public long onIgnite(Level level,BlockPos pos,Direction side,Player player,ItemStack igniter,
+            boolean sneaking,float hitX,float hitY,float hitZ) {
+        if(!sourceRequiresIgnition())return 0;
+        if(!level.isClientSide) {sourceIgnitionTicks=com.gregtech.gregtech.content.machine.OriginalBasicMachineRules.IGNITION_TICKS;mInventoryChanged=true;setChanged();}
+        return 10000;
+    }
     private boolean controlStopped;
     private boolean adjacentEnergySourcesChanged = true;
     private Direction adjacentEnergyFacing;
@@ -182,6 +190,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     private void tickServer(Level level, BlockPos pos) {
         if (faceConfig == null || spec == null) return;
         refreshAdjacentEnergySources();
+        if(sourceRequiresIgnition()&&sourceIgnitionTicks>0)sourceIgnitionTicks--;
         beforeMachineTick();
         coverTicks++;
         panels.beforeTick();
@@ -564,9 +573,9 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         return original == null || original.parallelDuration();
     }
     // Loader_MultiTileEntities 22010 explicitly enables cheap overclocking for the Melter.
-    protected boolean cheapOverclocking() { return spec != null && spec.machineName().equals("melter"); }
-    protected boolean requiresConstantEnergy() { return !usesTimeEnergy(); }
-    protected int efficiency() { return 10000; }
+    protected boolean cheapOverclocking() { return spec!=null&&com.gregtech.gregtech.content.machine.OriginalBasicMachineRules.cheapOverclocking(spec.machineName(),spec.tier()); }
+    protected boolean requiresConstantEnergy() { return !usesTimeEnergy()&&(spec==null||!com.gregtech.gregtech.content.machine.OriginalBasicMachineRules.noConstantPower(spec.machineName(),spec.tier())); }
+    protected int efficiency() { return spec==null?10000:com.gregtech.gregtech.content.machine.OriginalBasicMachineRules.efficiency(spec.machineName(),spec.tier()); }
 
     protected boolean structureComplete() {
         return true;
@@ -575,8 +584,8 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     private com.gregtech.gregtech.api.recipe.MachineWorkOutputs pendingOutputs;
 
     protected void beforeMachineTick() {}
-    protected boolean recipeStartAllowed() { return true; }
-    protected void onProcessFinished() {}
+    protected boolean recipeStartAllowed() { return !sourceRequiresIgnition()||sourceIgnitionTicks>0||mActive; }
+    protected void onProcessFinished() {if(sourceRequiresIgnition())sourceIgnitionTicks=com.gregtech.gregtech.content.machine.OriginalBasicMachineRules.IGNITION_TICKS;}
 
     private void checkRecipe() {
         if (!recipeStartAllowed()) return;
@@ -1189,6 +1198,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     @Override
     public void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
         super.saveAdditional(tag,lookup);
+        if(sourceRequiresIgnition())tag.putByte(com.gregtech.gregtech.content.machine.OriginalBasicMachineRules.IGNITION_NBT,(byte)sourceIgnitionTicks);
         tag.putBoolean("gt.control_stopped",controlStopped);
         tag.putLong("gt.cover_ticks",coverTicks);
         if (itemHandler != null)
@@ -1267,6 +1277,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             savedProgram.putInt("Size", 1);
             autocraftingProgram.deserializeNBT(lookup, savedProgram);
         }
+        sourceIgnitionTicks=Math.max(0,tag.getByte(com.gregtech.gregtech.content.machine.OriginalBasicMachineRules.IGNITION_NBT));
         controlStopped=tag.getBoolean("gt.control_stopped");
         adjacentEnergySourcesChanged();
         coverTicks=Math.max(0,tag.getLong("gt.cover_ticks"));successful=false;workPossible=false;mInventoryChanged=true;
