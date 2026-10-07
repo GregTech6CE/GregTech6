@@ -22,6 +22,8 @@ import java.util.Map;
 /** Installed item callbacks with the real resource-manager zh_cn locale; isolated delivery probe only. */
 final class LanguageDeliveryChecks {
     private static final String FLUID = "gregtech.fluid_display.";
+    private static final java.util.regex.Pattern UNRESOLVED_NAME=java.util.regex.Pattern.compile("(?:item|block|fluid_type|material)\\.gregtech\\.[a-z_]");
+    private static final java.util.regex.Pattern LATIN_WORD=java.util.regex.Pattern.compile("[A-Za-z]{3}");
     private static final Map<String,String> ANVILS = Map.ofEntries(
         Map.entry("anvil","gt.multitileentity.32031"),
         Map.entry("anvil_adamantium","gt.multitileentity.32048"),
@@ -69,22 +71,29 @@ final class LanguageDeliveryChecks {
             manager.setSelected("en_us");
             manager.onResourceManagerReload(client.getResourceManager());
             int englishNames=0;
+            var englishSnapshot=new java.util.LinkedHashMap<String,String>();
             var unresolved=new ArrayList<String>();
             for(var registered:BuiltInRegistries.ITEM) {
                 var id=BuiltInRegistries.ITEM.getKey(registered);
                 if(!id.getNamespace().equals("gregtech"))continue;
                 String name=new ItemStack(registered).getHoverName().getString();
-                if(name.isBlank()||name.matches("(?s).*(?:item|block|fluid_type|material)\\.gregtech\\.[a-z_].*"))
+                if(name.isBlank()||UNRESOLVED_NAME.matcher(name).find())
                     unresolved.add(id+" = "+name);
+                englishSnapshot.put(id.toString(),name);
                 englishNames++;
             }
             require(unresolved.isEmpty(),"Unresolved installed English names: "+unresolved+"; total="+unresolved.size());
             int machineNamesEnglish=verifyMachineNames();
             int coloredEnglish=verifyColoredConstruction(false);
+            int stoneEnglish=verifySourceStones(false);
+            int bushEnglish=verifyBushes(false);
             manager.setSelected("zh_cn");
             manager.onResourceManagerReload(client.getResourceManager());
             int machineNamesChinese=verifyMachineNames();
             int coloredChinese=verifyColoredConstruction(true);
+            int stoneChinese=verifySourceStones(true);
+            int bushChinese=verifyBushes(true);
+            int latinCandidates=recordNameInventory(client,englishSnapshot);
             require(Language.getInstance().has("gt.multiitem.bumblebee.0"), "Original Chinese resource is loaded");
             int names=0, nonempty=0, empty=0;
             String[] states={"drone","princess","queen","dead","scanned_drone","scanned_princess","scanned_queen","scanned_dead"};
@@ -193,6 +202,12 @@ final class LanguageDeliveryChecks {
             report.addProperty("machineNamesChinese",machineNamesChinese);
             report.addProperty("coloredConstructionNamesEnglish",coloredEnglish);
             report.addProperty("coloredConstructionNamesChinese",coloredChinese);
+            report.addProperty("sourceStoneNamesEnglish",stoneEnglish);
+            report.addProperty("sourceStoneNamesChinese",stoneChinese);
+            report.addProperty("bushNamesAndOutputsEnglish",bushEnglish);
+            report.addProperty("bushNamesAndOutputsChinese",bushChinese);
+            report.addProperty("chineseItemNames",englishSnapshot.size());
+            report.addProperty("latinNameCandidates",latinCandidates);
             report.addProperty("assembledToolNames",toolSamples.size());
             report.addProperty("newSourceDescriptions",1);
             var samples=new JsonArray();for(var c:ironLines)samples.add(c.getString());report.add("moltenIronTooltip",samples);
@@ -228,6 +243,79 @@ final class LanguageDeliveryChecks {
         }
         require(mismatches.isEmpty(),"Installed colored construction names: "+mismatches);
         return checked;
+    }
+    private static int recordNameInventory(Minecraft client, Map<String,String> englishNames) {
+        var candidates=new JsonArray();int checked=0;
+        for(var registered:BuiltInRegistries.ITEM) {
+            var id=BuiltInRegistries.ITEM.getKey(registered);
+            if(!id.getNamespace().equals("gregtech"))continue;
+            var stack=new ItemStack(registered);
+            String name=stack.getHoverName().getString();
+            require(!name.isBlank()&&!UNRESOLVED_NAME.matcher(name).find(),"Unresolved installed Chinese name "+id+" = "+name);
+            require(englishNames.containsKey(id.toString()),"Same registered items in both locales "+id);
+            if(LATIN_WORD.matcher(name).find()) {
+                var entry=new JsonObject();entry.addProperty("id",id.toString());
+                entry.addProperty("descriptionKey",stack.getDescriptionId());
+                entry.addProperty("english",englishNames.get(id.toString()));entry.addProperty("chinese",name);
+                entry.addProperty("unchanged",name.equals(englishNames.get(id.toString())));candidates.add(entry);
+            }
+            checked++;
+        }
+        require(checked==englishNames.size(),"Complete registered Chinese name scan");
+        var inventory=new JsonObject();inventory.addProperty("registeredItems",checked);
+        inventory.addProperty("candidateCount",candidates.size());inventory.add("candidates",candidates);
+        inventory.addProperty("scope","Actual default item names containing Latin words under zh_cn; candidates include legitimate source names/acronyms, not confirmed missing translations. No player inventory or world data.");
+        try {
+            java.nio.file.Files.writeString(client.gameDirectory.toPath().resolve("language-names.json"),
+                    new com.google.gson.GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create().toJson(inventory),java.nio.charset.StandardCharsets.UTF_8);
+        } catch(java.io.IOException error) {throw new IllegalStateException("Could not write installed language inventory",error);}
+        return candidates.size();
+    }
+    private static int verifySourceStones(boolean chinese) {
+        // Loader_Rocks registers these 17 families. Port-only rocks have no original block phrases.
+        var sources=java.util.Set.of("granite.black","granite.red","basalt","marble","limestone",
+                "granite","diorite","andesite","komatiite","greenschist","blueschist",
+                "kimberlite","quartzite","prismarine.light","prismarine.dark","slate","shale");
+        int count=0;
+        for(var stone:com.gregtech.gregtech.block.stone.StoneType.values()) {
+            if(!sources.contains(stone.textureFolder().substring("gt.stone.".length())))continue;
+            for(var variant:com.gregtech.gregtech.block.stone.StoneVariant.values())for(boolean slab:new boolean[]{false,true}) {
+                String id=stone.registryId()+"_"+variant.registrySuffix()+(slab?"_slab":"");
+                var stack=item(id);
+                String expected=original("block.gregtech."+id);
+                if(chinese)require(expected.equals(original(stone.textureFolder()+(slab?".slab.0.":".")+variant.meta())),
+                        "Exact original stone phrase "+id);
+                require(stack.getHoverName().getString().equals(expected),"Installed stone item name "+id);
+                require(((BlockItem)stack.getItem()).getBlock().getName().getString().equals(expected),"Installed stone block name "+id);
+                count++;
+            }
+        }
+        require(count==544,"Complete original full/slab stone catalog");
+        return count;
+    }
+    private static int verifyBushes(boolean chinese) {
+        String expected=original("block.gregtech.bush");
+        if(chinese)require(expected.equals(original("gt.multitileentity.32759")),"Original bush family name");
+        var blocks=com.gregtech.gregtech.registry.GTBushes.allBlocks();
+        require(blocks.length==10+com.gregtech.gregtech.content.plant.MaterialBerryBushCatalog.variants().size(),
+                "Complete unplanted/food/cotton/material bush catalog");
+        for(var block:blocks) {
+            var bush=(com.gregtech.gregtech.block.plant.BushBlock)block;
+            var stack=new ItemStack(block);
+            require(stack.getHoverName().getString().equals(expected)&&block.getName().getString().equals(expected),
+                    "Bush keeps original family name "+bush.berryId());
+            var key=com.gregtech.gregtech.content.plant.GTBerryBushes.itemId(bush.berryId());
+            String output;
+            if(key==null)output=original("tooltip.gregtech.bush.set_output");
+            else {
+                var berry=new ItemStack(BuiltInRegistries.ITEM.get(key));
+                require(!berry.isEmpty(),"Bush output item exists "+key);
+                output=berry.getHoverName().getString();
+            }
+            require(tooltip(stack).stream().filter(c -> c.getString().equals(output)).count()==1,
+                    "Bush shows its localized output exactly once "+bush.berryId());
+        }
+        return blocks.length;
     }
     private static int verifyMachineNames() {
         int checked=0;

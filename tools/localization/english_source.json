@@ -14,6 +14,10 @@
       "sha256": "1445d711ec079bcd32f93b87045b2d81963a4b99d02c504af231a2ab9a80db6e"
     },
     {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\block\\metatype\\BlockMetaType.java",
+      "sha256": "af99a9e50607e5bd4675c1c7ae7b41510a5f2405bfdd781bc68bf06bfb56aa65"
+    },
+    {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\block\\metatype\\BlockStones.java",
       "sha256": "aafdf56ce4b3720b314cf62fa031712b697df2bd0b7666bedc479dfe5cb9216f"
     },
@@ -180,6 +184,10 @@
     {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\plants\\BlockGlowtus.java",
       "sha256": "94e4db28baae9208fb086002af0e7b2ac56192871ebd73a8cd93dc9d5a43656f"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\stone\\BlockStonesGT.java",
+      "sha256": "f2e28484f472296620bb5d014553786d39a1b230cc42515a039e6f6b7470eda3"
     },
     {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tool\\BlockBarsBrass.java",
@@ -440,6 +448,10 @@
     {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\a\\Loader_Rails.java",
       "sha256": "b870301fca62e84351a499e344a6e5e49ae8a23dc2f19ddbe679ad0dd0637f02"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\a\\Loader_Rocks.java",
+      "sha256": "858fb3115a143c2c5d88c0e79c6baa7bd9ac69fa2cf2aee2f000fc27487b92db"
     },
     {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\a\\Loader_Tools.java",
@@ -2675,6 +2687,42 @@
       "source_key": "gt.multitileentity.32759",
       "value": "Berry Bush"
     },
+    "block.gregtech.bush_black_currants": {
+      "source_key": "gt.multitileentity.32759",
+      "value": "Berry Bush"
+    },
+    "block.gregtech.bush_blackberry": {
+      "source_key": "gt.multitileentity.32759",
+      "value": "Berry Bush"
+    },
+    "block.gregtech.bush_blueberry": {
+      "source_key": "gt.multitileentity.32759",
+      "value": "Berry Bush"
+    },
+    "block.gregtech.bush_candleberry": {
+      "source_key": "gt.multitileentity.32759",
+      "value": "Berry Bush"
+    },
+    "block.gregtech.bush_cotton": {
+      "source_key": "gt.multitileentity.32759",
+      "value": "Berry Bush"
+    },
+    "block.gregtech.bush_cranberry": {
+      "source_key": "gt.multitileentity.32759",
+      "value": "Berry Bush"
+    },
+    "block.gregtech.bush_raspberry": {
+      "source_key": "gt.multitileentity.32759",
+      "value": "Berry Bush"
+    },
+    "block.gregtech.bush_red_currants": {
+      "source_key": "gt.multitileentity.32759",
+      "value": "Berry Bush"
+    },
+    "block.gregtech.bush_white_currants": {
+      "source_key": "gt.multitileentity.32759",
+      "value": "Berry Bush"
+    },
     "block.gregtech.buzzsaw_bronze": {
       "source_key": "gt.multitileentity.20061",
       "value": "Buzzsaw (Bronze)"
@@ -3703,9 +3751,17 @@
       "source_key": "gt.multitileentity.1899",
       "value": "Crucible Crossing (Adamantium)"
     },
+    "block.gregtech.crucible_crossing_basalt": {
+      "source_key": "gt.multitileentity.1851",
+      "value": "Crucible Crossing (Basalt)"
+    },
     "block.gregtech.crucible_crossing_bedrock_hsla_alloy": {
       "source_key": "gt.multitileentity.1898",
       "value": "Crucible Crossing (Bedrock-HSLA-Alloy)"
+    },
+    "block.gregtech.crucible_crossing_betweenstone": {
+      "source_key": "gt.multitileentity.1859",
+      "value": "Crucible Crossing (Betweenstone)"
     },
     "block.gregtech.crucible_crossing_bronze": {
       "source_key": "gt.multitileentity.1870",
@@ -3731,6 +3787,18 @@
       "source_key": "gt.multitileentity.1878",
       "value": "Crucible Crossing (Fiery Steel)"
     },
+    "block.gregtech.crucible_crossing_granite_black": {
+      "source_key": "gt.multitileentity.1852",
+      "value": "Crucible Crossing (Black Granite)"
+    },
+    "block.gregtech.crucible_crossing_granite_red": {
+      "source_key": "gt.multitileentity.1853",
+      "value": "Crucible Crossing (Red Granite)"
+    },
+    "block.gregtech.crucible_crossing_holystone": {
+      "source_key": "gt.multitileentity.1858",
+      "value": "Crucible Crossing (Holystone)"
+    },
     "block.gregtech.crucible_crossing_hsla": {
       "source_key": "gt.multitileentity.1891",
       "value": "Crucible Crossing (HSLA-Steel)"
@@ -3746,6 +3814,10 @@
     "block.gregtech.crucible_crossing_knightmetal": {
       "source_key": "gt.multitileentity.1877",
       "value": "Crucible Crossing (Knightmetal)"
+    },
+    "block.gregtech.crucible_crossing_livingrock": {
+      "source_key": "gt.multitileentity.1857",
+      "value": "Crucible Crossing (Livingrock)"
     },
     "block.gregtech.crucible_crossing_meteoric_iron": {
       "source_key": "gt.multitileentity.1881",
@@ -3819,6 +3891,10 @@
       "source_key": "gt.multitileentity.1874",
       "value": "Crucible Crossing (Tungsten)"
     },
+    "block.gregtech.crucible_crossing_umber": {
+      "source_key": "gt.multitileentity.1856",
+      "value": "Crucible Crossing (Umberstone)"
+    },
     "block.gregtech.crucible_crossing_vanadium": {
       "source_key": "gt.multitileentity.1888",
       "value": "Crucible Crossing (Vanadium)"
@@ -3831,9 +3907,17 @@
       "source_key": "gt.multitileentity.1749",
       "value": "Crucible Faucet (Adamantium)"
     },
+    "block.gregtech.crucible_faucet_basalt": {
+      "source_key": "gt.multitileentity.1701",
+      "value": "Crucible Faucet (Basalt)"
+    },
     "block.gregtech.crucible_faucet_bedrock_hsla_alloy": {
       "source_key": "gt.multitileentity.1748",
       "value": "Crucible Faucet (Bedrock-HSLA-Alloy)"
+    },
+    "block.gregtech.crucible_faucet_betweenstone": {
+      "source_key": "gt.multitileentity.1709",
+      "value": "Crucible Faucet (Betweenstone)"
     },
     "block.gregtech.crucible_faucet_bronze": {
       "source_key": "gt.multitileentity.1720",
@@ -3859,6 +3943,18 @@
       "source_key": "gt.multitileentity.1728",
       "value": "Crucible Faucet (Fiery Steel)"
     },
+    "block.gregtech.crucible_faucet_granite_black": {
+      "source_key": "gt.multitileentity.1702",
+      "value": "Crucible Faucet (Black Granite)"
+    },
+    "block.gregtech.crucible_faucet_granite_red": {
+      "source_key": "gt.multitileentity.1703",
+      "value": "Crucible Faucet (Red Granite)"
+    },
+    "block.gregtech.crucible_faucet_holystone": {
+      "source_key": "gt.multitileentity.1708",
+      "value": "Crucible Faucet (Holystone)"
+    },
     "block.gregtech.crucible_faucet_hsla": {
       "source_key": "gt.multitileentity.1741",
       "value": "Crucible Faucet (HSLA-Steel)"
@@ -3874,6 +3970,10 @@
     "block.gregtech.crucible_faucet_knightmetal": {
       "source_key": "gt.multitileentity.1727",
       "value": "Crucible Faucet (Knightmetal)"
+    },
+    "block.gregtech.crucible_faucet_livingrock": {
+      "source_key": "gt.multitileentity.1707",
+      "value": "Crucible Faucet (Livingrock)"
     },
     "block.gregtech.crucible_faucet_meteoric_iron": {
       "source_key": "gt.multitileentity.1731",
@@ -3946,6 +4046,10 @@
     "block.gregtech.crucible_faucet_tungsten": {
       "source_key": "gt.multitileentity.1724",
       "value": "Crucible Faucet (Tungsten)"
+    },
+    "block.gregtech.crucible_faucet_umber": {
+      "source_key": "gt.multitileentity.1706",
+      "value": "Crucible Faucet (Umberstone)"
     },
     "block.gregtech.crucible_faucet_vanadium": {
       "source_key": "gt.multitileentity.1738",
@@ -7839,13 +7943,25 @@
       "source_key": "gt.multitileentity.1099",
       "value": "Mold (Adamantium)"
     },
+    "block.gregtech.mold_basalt": {
+      "source_key": "gt.multitileentity.1051",
+      "value": "Mold (Basalt)"
+    },
     "block.gregtech.mold_basin_ad": {
       "source_key": "gt.multitileentity.1799",
       "value": "Basin (Adamantium)"
     },
+    "block.gregtech.mold_basin_basalt": {
+      "source_key": "gt.multitileentity.1751",
+      "value": "Basin (Basalt)"
+    },
     "block.gregtech.mold_basin_bedrock_hsla_alloy": {
       "source_key": "gt.multitileentity.1798",
       "value": "Basin (Bedrock-HSLA-Alloy)"
+    },
+    "block.gregtech.mold_basin_betweenstone": {
+      "source_key": "gt.multitileentity.1759",
+      "value": "Basin (Betweenstone)"
     },
     "block.gregtech.mold_basin_bronze": {
       "source_key": "gt.multitileentity.1770",
@@ -7871,6 +7987,18 @@
       "source_key": "gt.multitileentity.1778",
       "value": "Basin (Fiery Steel)"
     },
+    "block.gregtech.mold_basin_granite_black": {
+      "source_key": "gt.multitileentity.1752",
+      "value": "Basin (Black Granite)"
+    },
+    "block.gregtech.mold_basin_granite_red": {
+      "source_key": "gt.multitileentity.1753",
+      "value": "Basin (Red Granite)"
+    },
+    "block.gregtech.mold_basin_holystone": {
+      "source_key": "gt.multitileentity.1758",
+      "value": "Basin (Holystone)"
+    },
     "block.gregtech.mold_basin_hsla": {
       "source_key": "gt.multitileentity.1791",
       "value": "Basin (HSLA-Steel)"
@@ -7886,6 +8014,10 @@
     "block.gregtech.mold_basin_knightmetal": {
       "source_key": "gt.multitileentity.1777",
       "value": "Basin (Knightmetal)"
+    },
+    "block.gregtech.mold_basin_livingrock": {
+      "source_key": "gt.multitileentity.1757",
+      "value": "Basin (Livingrock)"
     },
     "block.gregtech.mold_basin_meteoric_iron": {
       "source_key": "gt.multitileentity.1781",
@@ -7959,6 +8091,10 @@
       "source_key": "gt.multitileentity.1774",
       "value": "Basin (Tungsten)"
     },
+    "block.gregtech.mold_basin_umber": {
+      "source_key": "gt.multitileentity.1756",
+      "value": "Basin (Umberstone)"
+    },
     "block.gregtech.mold_basin_vanadium": {
       "source_key": "gt.multitileentity.1788",
       "value": "Basin (Vanadium)"
@@ -7970,6 +8106,10 @@
     "block.gregtech.mold_bedrock_hsla_alloy": {
       "source_key": "gt.multitileentity.1098",
       "value": "Mold (Bedrock-HSLA-Alloy)"
+    },
+    "block.gregtech.mold_betweenstone": {
+      "source_key": "gt.multitileentity.1059",
+      "value": "Mold (Betweenstone)"
     },
     "block.gregtech.mold_bronze": {
       "source_key": "gt.multitileentity.1070",
@@ -7995,6 +8135,18 @@
       "source_key": "gt.multitileentity.1078",
       "value": "Mold (Fiery Steel)"
     },
+    "block.gregtech.mold_granite_black": {
+      "source_key": "gt.multitileentity.1052",
+      "value": "Mold (Black Granite)"
+    },
+    "block.gregtech.mold_granite_red": {
+      "source_key": "gt.multitileentity.1053",
+      "value": "Mold (Red Granite)"
+    },
+    "block.gregtech.mold_holystone": {
+      "source_key": "gt.multitileentity.1058",
+      "value": "Mold (Holystone)"
+    },
     "block.gregtech.mold_hsla": {
       "source_key": "gt.multitileentity.1091",
       "value": "Mold (HSLA-Steel)"
@@ -8010,6 +8162,10 @@
     "block.gregtech.mold_knightmetal": {
       "source_key": "gt.multitileentity.1077",
       "value": "Mold (Knightmetal)"
+    },
+    "block.gregtech.mold_livingrock": {
+      "source_key": "gt.multitileentity.1057",
+      "value": "Mold (Livingrock)"
     },
     "block.gregtech.mold_meteoric_iron": {
       "source_key": "gt.multitileentity.1081",
@@ -8082,6 +8238,10 @@
     "block.gregtech.mold_tungsten": {
       "source_key": "gt.multitileentity.1074",
       "value": "Mold (Tungsten)"
+    },
+    "block.gregtech.mold_umber": {
+      "source_key": "gt.multitileentity.1056",
+      "value": "Mold (Umberstone)"
     },
     "block.gregtech.mold_vanadium": {
       "source_key": "gt.multitileentity.1088",
@@ -11143,9 +11303,17 @@
       "source_key": "gt.multitileentity.1049",
       "value": "Smelting Crucible (Adamantium)"
     },
+    "block.gregtech.smelting_crucible_basalt": {
+      "source_key": "gt.multitileentity.1001",
+      "value": "Smelting Crucible (Basalt)"
+    },
     "block.gregtech.smelting_crucible_bedrock_hsla_alloy": {
       "source_key": "gt.multitileentity.1048",
       "value": "Smelting Crucible (Bedrock-HSLA-Alloy)"
+    },
+    "block.gregtech.smelting_crucible_betweenstone": {
+      "source_key": "gt.multitileentity.1009",
+      "value": "Smelting Crucible (Betweenstone)"
     },
     "block.gregtech.smelting_crucible_bronze": {
       "source_key": "gt.multitileentity.1020",
@@ -11171,6 +11339,18 @@
       "source_key": "gt.multitileentity.1028",
       "value": "Smelting Crucible (Fiery Steel)"
     },
+    "block.gregtech.smelting_crucible_granite_black": {
+      "source_key": "gt.multitileentity.1002",
+      "value": "Smelting Crucible (Black Granite)"
+    },
+    "block.gregtech.smelting_crucible_granite_red": {
+      "source_key": "gt.multitileentity.1003",
+      "value": "Smelting Crucible (Red Granite)"
+    },
+    "block.gregtech.smelting_crucible_holystone": {
+      "source_key": "gt.multitileentity.1008",
+      "value": "Smelting Crucible (Holystone)"
+    },
     "block.gregtech.smelting_crucible_hsla": {
       "source_key": "gt.multitileentity.1041",
       "value": "Smelting Crucible (HSLA-Steel)"
@@ -11186,6 +11366,10 @@
     "block.gregtech.smelting_crucible_knightmetal": {
       "source_key": "gt.multitileentity.1027",
       "value": "Smelting Crucible (Knightmetal)"
+    },
+    "block.gregtech.smelting_crucible_livingrock": {
+      "source_key": "gt.multitileentity.1007",
+      "value": "Smelting Crucible (Livingrock)"
     },
     "block.gregtech.smelting_crucible_meteoric_iron": {
       "source_key": "gt.multitileentity.1031",
@@ -11258,6 +11442,10 @@
     "block.gregtech.smelting_crucible_tungsten": {
       "source_key": "gt.multitileentity.1024",
       "value": "Smelting Crucible (Tungsten)"
+    },
+    "block.gregtech.smelting_crucible_umber": {
+      "source_key": "gt.multitileentity.1006",
+      "value": "Smelting Crucible (Umberstone)"
     },
     "block.gregtech.smelting_crucible_vanadium": {
       "source_key": "gt.multitileentity.1038",
@@ -11394,6 +11582,2182 @@
     "block.gregtech.steel_wall": {
       "source_key": "gt.multitileentity.18009",
       "value": "Steel Wall"
+    },
+    "block.gregtech.stone_andesite_bricks": {
+      "source_key": "gt.stone.andesite.3",
+      "value": "Andesite Bricks"
+    },
+    "block.gregtech.stone_andesite_bricks_chiseled": {
+      "source_key": "gt.stone.andesite.6",
+      "value": "Chiseled Andesite"
+    },
+    "block.gregtech.stone_andesite_bricks_chiseled_slab": {
+      "source_key": "gt.stone.andesite.slab.0.6",
+      "value": "Chiseled Andesite Slab"
+    },
+    "block.gregtech.stone_andesite_bricks_cracked": {
+      "source_key": "gt.stone.andesite.4",
+      "value": "Cracked Andesite Bricks"
+    },
+    "block.gregtech.stone_andesite_bricks_cracked_slab": {
+      "source_key": "gt.stone.andesite.slab.0.4",
+      "value": "Cracked Andesite Bricks Slab"
+    },
+    "block.gregtech.stone_andesite_bricks_mossy": {
+      "source_key": "gt.stone.andesite.5",
+      "value": "Mossy Andesite Bricks"
+    },
+    "block.gregtech.stone_andesite_bricks_mossy_slab": {
+      "source_key": "gt.stone.andesite.slab.0.5",
+      "value": "Mossy Andesite Bricks Slab"
+    },
+    "block.gregtech.stone_andesite_bricks_redstone": {
+      "source_key": "gt.stone.andesite.9",
+      "value": "Redstoned Andesite Bricks"
+    },
+    "block.gregtech.stone_andesite_bricks_redstone_slab": {
+      "source_key": "gt.stone.andesite.slab.0.9",
+      "value": "Redstoned Andesite Bricks Slab"
+    },
+    "block.gregtech.stone_andesite_bricks_reinforced": {
+      "source_key": "gt.stone.andesite.8",
+      "value": "Reinforced Andesite Bricks"
+    },
+    "block.gregtech.stone_andesite_bricks_reinforced_slab": {
+      "source_key": "gt.stone.andesite.slab.0.8",
+      "value": "Reinforced Andesite Bricks Slab"
+    },
+    "block.gregtech.stone_andesite_bricks_slab": {
+      "source_key": "gt.stone.andesite.slab.0.3",
+      "value": "Andesite Bricks Slab"
+    },
+    "block.gregtech.stone_andesite_cobble": {
+      "source_key": "gt.stone.andesite.1",
+      "value": "Andesite Cobblestone"
+    },
+    "block.gregtech.stone_andesite_cobble_mossy": {
+      "source_key": "gt.stone.andesite.2",
+      "value": "Mossy Andesite Cobblestone"
+    },
+    "block.gregtech.stone_andesite_cobble_mossy_slab": {
+      "source_key": "gt.stone.andesite.slab.0.2",
+      "value": "Mossy Andesite Cobblestone Slab"
+    },
+    "block.gregtech.stone_andesite_cobble_slab": {
+      "source_key": "gt.stone.andesite.slab.0.1",
+      "value": "Andesite Cobblestone Slab"
+    },
+    "block.gregtech.stone_andesite_small_bricks": {
+      "source_key": "gt.stone.andesite.12",
+      "value": "Small Andesite Bricks"
+    },
+    "block.gregtech.stone_andesite_small_bricks_slab": {
+      "source_key": "gt.stone.andesite.slab.0.12",
+      "value": "Small Andesite Bricks Slab"
+    },
+    "block.gregtech.stone_andesite_small_tiles": {
+      "source_key": "gt.stone.andesite.11",
+      "value": "Small Andesite Tiles"
+    },
+    "block.gregtech.stone_andesite_small_tiles_slab": {
+      "source_key": "gt.stone.andesite.slab.0.11",
+      "value": "Small Andesite Tiles Slab"
+    },
+    "block.gregtech.stone_andesite_smooth": {
+      "source_key": "gt.stone.andesite.7",
+      "value": "Smooth Andesite"
+    },
+    "block.gregtech.stone_andesite_smooth_slab": {
+      "source_key": "gt.stone.andesite.slab.0.7",
+      "value": "Smooth Andesite Slab"
+    },
+    "block.gregtech.stone_andesite_square_bricks": {
+      "source_key": "gt.stone.andesite.15",
+      "value": "Andesite Square Bricks"
+    },
+    "block.gregtech.stone_andesite_square_bricks_slab": {
+      "source_key": "gt.stone.andesite.slab.0.15",
+      "value": "Andesite Square Bricks Slab"
+    },
+    "block.gregtech.stone_andesite_stone": {
+      "source_key": "gt.stone.andesite.0",
+      "value": "Andesite"
+    },
+    "block.gregtech.stone_andesite_stone_slab": {
+      "source_key": "gt.stone.andesite.slab.0.0",
+      "value": "Andesite Slab"
+    },
+    "block.gregtech.stone_andesite_tiles": {
+      "source_key": "gt.stone.andesite.10",
+      "value": "Andesite Tiles"
+    },
+    "block.gregtech.stone_andesite_tiles_slab": {
+      "source_key": "gt.stone.andesite.slab.0.10",
+      "value": "Andesite Tiles Slab"
+    },
+    "block.gregtech.stone_andesite_windmill_tiles_a": {
+      "source_key": "gt.stone.andesite.13",
+      "value": "Andesite Windmill Tiles A"
+    },
+    "block.gregtech.stone_andesite_windmill_tiles_a_slab": {
+      "source_key": "gt.stone.andesite.slab.0.13",
+      "value": "Andesite Windmill Tiles A Slab"
+    },
+    "block.gregtech.stone_andesite_windmill_tiles_b": {
+      "source_key": "gt.stone.andesite.14",
+      "value": "Andesite Windmill Tiles B"
+    },
+    "block.gregtech.stone_andesite_windmill_tiles_b_slab": {
+      "source_key": "gt.stone.andesite.slab.0.14",
+      "value": "Andesite Windmill Tiles B Slab"
+    },
+    "block.gregtech.stone_basalt_bricks": {
+      "source_key": "gt.stone.basalt.3",
+      "value": "Basalt Bricks"
+    },
+    "block.gregtech.stone_basalt_bricks_chiseled": {
+      "source_key": "gt.stone.basalt.6",
+      "value": "Chiseled Basalt"
+    },
+    "block.gregtech.stone_basalt_bricks_chiseled_slab": {
+      "source_key": "gt.stone.basalt.slab.0.6",
+      "value": "Chiseled Basalt Slab"
+    },
+    "block.gregtech.stone_basalt_bricks_cracked": {
+      "source_key": "gt.stone.basalt.4",
+      "value": "Cracked Basalt Bricks"
+    },
+    "block.gregtech.stone_basalt_bricks_cracked_slab": {
+      "source_key": "gt.stone.basalt.slab.0.4",
+      "value": "Cracked Basalt Bricks Slab"
+    },
+    "block.gregtech.stone_basalt_bricks_mossy": {
+      "source_key": "gt.stone.basalt.5",
+      "value": "Mossy Basalt Bricks"
+    },
+    "block.gregtech.stone_basalt_bricks_mossy_slab": {
+      "source_key": "gt.stone.basalt.slab.0.5",
+      "value": "Mossy Basalt Bricks Slab"
+    },
+    "block.gregtech.stone_basalt_bricks_redstone": {
+      "source_key": "gt.stone.basalt.9",
+      "value": "Redstoned Basalt Bricks"
+    },
+    "block.gregtech.stone_basalt_bricks_redstone_slab": {
+      "source_key": "gt.stone.basalt.slab.0.9",
+      "value": "Redstoned Basalt Bricks Slab"
+    },
+    "block.gregtech.stone_basalt_bricks_reinforced": {
+      "source_key": "gt.stone.basalt.8",
+      "value": "Reinforced Basalt Bricks"
+    },
+    "block.gregtech.stone_basalt_bricks_reinforced_slab": {
+      "source_key": "gt.stone.basalt.slab.0.8",
+      "value": "Reinforced Basalt Bricks Slab"
+    },
+    "block.gregtech.stone_basalt_bricks_slab": {
+      "source_key": "gt.stone.basalt.slab.0.3",
+      "value": "Basalt Bricks Slab"
+    },
+    "block.gregtech.stone_basalt_cobble": {
+      "source_key": "gt.stone.basalt.1",
+      "value": "Basalt Cobblestone"
+    },
+    "block.gregtech.stone_basalt_cobble_mossy": {
+      "source_key": "gt.stone.basalt.2",
+      "value": "Mossy Basalt Cobblestone"
+    },
+    "block.gregtech.stone_basalt_cobble_mossy_slab": {
+      "source_key": "gt.stone.basalt.slab.0.2",
+      "value": "Mossy Basalt Cobblestone Slab"
+    },
+    "block.gregtech.stone_basalt_cobble_slab": {
+      "source_key": "gt.stone.basalt.slab.0.1",
+      "value": "Basalt Cobblestone Slab"
+    },
+    "block.gregtech.stone_basalt_small_bricks": {
+      "source_key": "gt.stone.basalt.12",
+      "value": "Small Basalt Bricks"
+    },
+    "block.gregtech.stone_basalt_small_bricks_slab": {
+      "source_key": "gt.stone.basalt.slab.0.12",
+      "value": "Small Basalt Bricks Slab"
+    },
+    "block.gregtech.stone_basalt_small_tiles": {
+      "source_key": "gt.stone.basalt.11",
+      "value": "Small Basalt Tiles"
+    },
+    "block.gregtech.stone_basalt_small_tiles_slab": {
+      "source_key": "gt.stone.basalt.slab.0.11",
+      "value": "Small Basalt Tiles Slab"
+    },
+    "block.gregtech.stone_basalt_smooth": {
+      "source_key": "gt.stone.basalt.7",
+      "value": "Smooth Basalt"
+    },
+    "block.gregtech.stone_basalt_smooth_slab": {
+      "source_key": "gt.stone.basalt.slab.0.7",
+      "value": "Smooth Basalt Slab"
+    },
+    "block.gregtech.stone_basalt_square_bricks": {
+      "source_key": "gt.stone.basalt.15",
+      "value": "Basalt Square Bricks"
+    },
+    "block.gregtech.stone_basalt_square_bricks_slab": {
+      "source_key": "gt.stone.basalt.slab.0.15",
+      "value": "Basalt Square Bricks Slab"
+    },
+    "block.gregtech.stone_basalt_stone": {
+      "source_key": "gt.stone.basalt.0",
+      "value": "Basalt"
+    },
+    "block.gregtech.stone_basalt_stone_slab": {
+      "source_key": "gt.stone.basalt.slab.0.0",
+      "value": "Basalt Slab"
+    },
+    "block.gregtech.stone_basalt_tiles": {
+      "source_key": "gt.stone.basalt.10",
+      "value": "Basalt Tiles"
+    },
+    "block.gregtech.stone_basalt_tiles_slab": {
+      "source_key": "gt.stone.basalt.slab.0.10",
+      "value": "Basalt Tiles Slab"
+    },
+    "block.gregtech.stone_basalt_windmill_tiles_a": {
+      "source_key": "gt.stone.basalt.13",
+      "value": "Basalt Windmill Tiles A"
+    },
+    "block.gregtech.stone_basalt_windmill_tiles_a_slab": {
+      "source_key": "gt.stone.basalt.slab.0.13",
+      "value": "Basalt Windmill Tiles A Slab"
+    },
+    "block.gregtech.stone_basalt_windmill_tiles_b": {
+      "source_key": "gt.stone.basalt.14",
+      "value": "Basalt Windmill Tiles B"
+    },
+    "block.gregtech.stone_basalt_windmill_tiles_b_slab": {
+      "source_key": "gt.stone.basalt.slab.0.14",
+      "value": "Basalt Windmill Tiles B Slab"
+    },
+    "block.gregtech.stone_blueschist_bricks": {
+      "source_key": "gt.stone.blueschist.3",
+      "value": "Blue Schist Bricks"
+    },
+    "block.gregtech.stone_blueschist_bricks_chiseled": {
+      "source_key": "gt.stone.blueschist.6",
+      "value": "Chiseled Blue Schist"
+    },
+    "block.gregtech.stone_blueschist_bricks_chiseled_slab": {
+      "source_key": "gt.stone.blueschist.slab.0.6",
+      "value": "Chiseled Blue Schist Slab"
+    },
+    "block.gregtech.stone_blueschist_bricks_cracked": {
+      "source_key": "gt.stone.blueschist.4",
+      "value": "Cracked Blue Schist Bricks"
+    },
+    "block.gregtech.stone_blueschist_bricks_cracked_slab": {
+      "source_key": "gt.stone.blueschist.slab.0.4",
+      "value": "Cracked Blue Schist Bricks Slab"
+    },
+    "block.gregtech.stone_blueschist_bricks_mossy": {
+      "source_key": "gt.stone.blueschist.5",
+      "value": "Mossy Blue Schist Bricks"
+    },
+    "block.gregtech.stone_blueschist_bricks_mossy_slab": {
+      "source_key": "gt.stone.blueschist.slab.0.5",
+      "value": "Mossy Blue Schist Bricks Slab"
+    },
+    "block.gregtech.stone_blueschist_bricks_redstone": {
+      "source_key": "gt.stone.blueschist.9",
+      "value": "Redstoned Blue Schist Bricks"
+    },
+    "block.gregtech.stone_blueschist_bricks_redstone_slab": {
+      "source_key": "gt.stone.blueschist.slab.0.9",
+      "value": "Redstoned Blue Schist Bricks Slab"
+    },
+    "block.gregtech.stone_blueschist_bricks_reinforced": {
+      "source_key": "gt.stone.blueschist.8",
+      "value": "Reinforced Blue Schist Bricks"
+    },
+    "block.gregtech.stone_blueschist_bricks_reinforced_slab": {
+      "source_key": "gt.stone.blueschist.slab.0.8",
+      "value": "Reinforced Blue Schist Bricks Slab"
+    },
+    "block.gregtech.stone_blueschist_bricks_slab": {
+      "source_key": "gt.stone.blueschist.slab.0.3",
+      "value": "Blue Schist Bricks Slab"
+    },
+    "block.gregtech.stone_blueschist_cobble": {
+      "source_key": "gt.stone.blueschist.1",
+      "value": "Blue Schist Cobblestone"
+    },
+    "block.gregtech.stone_blueschist_cobble_mossy": {
+      "source_key": "gt.stone.blueschist.2",
+      "value": "Mossy Blue Schist Cobblestone"
+    },
+    "block.gregtech.stone_blueschist_cobble_mossy_slab": {
+      "source_key": "gt.stone.blueschist.slab.0.2",
+      "value": "Mossy Blue Schist Cobblestone Slab"
+    },
+    "block.gregtech.stone_blueschist_cobble_slab": {
+      "source_key": "gt.stone.blueschist.slab.0.1",
+      "value": "Blue Schist Cobblestone Slab"
+    },
+    "block.gregtech.stone_blueschist_small_bricks": {
+      "source_key": "gt.stone.blueschist.12",
+      "value": "Small Blue Schist Bricks"
+    },
+    "block.gregtech.stone_blueschist_small_bricks_slab": {
+      "source_key": "gt.stone.blueschist.slab.0.12",
+      "value": "Small Blue Schist Bricks Slab"
+    },
+    "block.gregtech.stone_blueschist_small_tiles": {
+      "source_key": "gt.stone.blueschist.11",
+      "value": "Small Blue Schist Tiles"
+    },
+    "block.gregtech.stone_blueschist_small_tiles_slab": {
+      "source_key": "gt.stone.blueschist.slab.0.11",
+      "value": "Small Blue Schist Tiles Slab"
+    },
+    "block.gregtech.stone_blueschist_smooth": {
+      "source_key": "gt.stone.blueschist.7",
+      "value": "Smooth Blue Schist"
+    },
+    "block.gregtech.stone_blueschist_smooth_slab": {
+      "source_key": "gt.stone.blueschist.slab.0.7",
+      "value": "Smooth Blue Schist Slab"
+    },
+    "block.gregtech.stone_blueschist_square_bricks": {
+      "source_key": "gt.stone.blueschist.15",
+      "value": "Blue Schist Square Bricks"
+    },
+    "block.gregtech.stone_blueschist_square_bricks_slab": {
+      "source_key": "gt.stone.blueschist.slab.0.15",
+      "value": "Blue Schist Square Bricks Slab"
+    },
+    "block.gregtech.stone_blueschist_stone": {
+      "source_key": "gt.stone.blueschist.0",
+      "value": "Blue Schist"
+    },
+    "block.gregtech.stone_blueschist_stone_slab": {
+      "source_key": "gt.stone.blueschist.slab.0.0",
+      "value": "Blue Schist Slab"
+    },
+    "block.gregtech.stone_blueschist_tiles": {
+      "source_key": "gt.stone.blueschist.10",
+      "value": "Blue Schist Tiles"
+    },
+    "block.gregtech.stone_blueschist_tiles_slab": {
+      "source_key": "gt.stone.blueschist.slab.0.10",
+      "value": "Blue Schist Tiles Slab"
+    },
+    "block.gregtech.stone_blueschist_windmill_tiles_a": {
+      "source_key": "gt.stone.blueschist.13",
+      "value": "Blue Schist Windmill Tiles A"
+    },
+    "block.gregtech.stone_blueschist_windmill_tiles_a_slab": {
+      "source_key": "gt.stone.blueschist.slab.0.13",
+      "value": "Blue Schist Windmill Tiles A Slab"
+    },
+    "block.gregtech.stone_blueschist_windmill_tiles_b": {
+      "source_key": "gt.stone.blueschist.14",
+      "value": "Blue Schist Windmill Tiles B"
+    },
+    "block.gregtech.stone_blueschist_windmill_tiles_b_slab": {
+      "source_key": "gt.stone.blueschist.slab.0.14",
+      "value": "Blue Schist Windmill Tiles B Slab"
+    },
+    "block.gregtech.stone_diorite_bricks": {
+      "source_key": "gt.stone.diorite.3",
+      "value": "Diorite Bricks"
+    },
+    "block.gregtech.stone_diorite_bricks_chiseled": {
+      "source_key": "gt.stone.diorite.6",
+      "value": "Chiseled Diorite"
+    },
+    "block.gregtech.stone_diorite_bricks_chiseled_slab": {
+      "source_key": "gt.stone.diorite.slab.0.6",
+      "value": "Chiseled Diorite Slab"
+    },
+    "block.gregtech.stone_diorite_bricks_cracked": {
+      "source_key": "gt.stone.diorite.4",
+      "value": "Cracked Diorite Bricks"
+    },
+    "block.gregtech.stone_diorite_bricks_cracked_slab": {
+      "source_key": "gt.stone.diorite.slab.0.4",
+      "value": "Cracked Diorite Bricks Slab"
+    },
+    "block.gregtech.stone_diorite_bricks_mossy": {
+      "source_key": "gt.stone.diorite.5",
+      "value": "Mossy Diorite Bricks"
+    },
+    "block.gregtech.stone_diorite_bricks_mossy_slab": {
+      "source_key": "gt.stone.diorite.slab.0.5",
+      "value": "Mossy Diorite Bricks Slab"
+    },
+    "block.gregtech.stone_diorite_bricks_redstone": {
+      "source_key": "gt.stone.diorite.9",
+      "value": "Redstoned Diorite Bricks"
+    },
+    "block.gregtech.stone_diorite_bricks_redstone_slab": {
+      "source_key": "gt.stone.diorite.slab.0.9",
+      "value": "Redstoned Diorite Bricks Slab"
+    },
+    "block.gregtech.stone_diorite_bricks_reinforced": {
+      "source_key": "gt.stone.diorite.8",
+      "value": "Reinforced Diorite Bricks"
+    },
+    "block.gregtech.stone_diorite_bricks_reinforced_slab": {
+      "source_key": "gt.stone.diorite.slab.0.8",
+      "value": "Reinforced Diorite Bricks Slab"
+    },
+    "block.gregtech.stone_diorite_bricks_slab": {
+      "source_key": "gt.stone.diorite.slab.0.3",
+      "value": "Diorite Bricks Slab"
+    },
+    "block.gregtech.stone_diorite_cobble": {
+      "source_key": "gt.stone.diorite.1",
+      "value": "Diorite Cobblestone"
+    },
+    "block.gregtech.stone_diorite_cobble_mossy": {
+      "source_key": "gt.stone.diorite.2",
+      "value": "Mossy Diorite Cobblestone"
+    },
+    "block.gregtech.stone_diorite_cobble_mossy_slab": {
+      "source_key": "gt.stone.diorite.slab.0.2",
+      "value": "Mossy Diorite Cobblestone Slab"
+    },
+    "block.gregtech.stone_diorite_cobble_slab": {
+      "source_key": "gt.stone.diorite.slab.0.1",
+      "value": "Diorite Cobblestone Slab"
+    },
+    "block.gregtech.stone_diorite_small_bricks": {
+      "source_key": "gt.stone.diorite.12",
+      "value": "Small Diorite Bricks"
+    },
+    "block.gregtech.stone_diorite_small_bricks_slab": {
+      "source_key": "gt.stone.diorite.slab.0.12",
+      "value": "Small Diorite Bricks Slab"
+    },
+    "block.gregtech.stone_diorite_small_tiles": {
+      "source_key": "gt.stone.diorite.11",
+      "value": "Small Diorite Tiles"
+    },
+    "block.gregtech.stone_diorite_small_tiles_slab": {
+      "source_key": "gt.stone.diorite.slab.0.11",
+      "value": "Small Diorite Tiles Slab"
+    },
+    "block.gregtech.stone_diorite_smooth": {
+      "source_key": "gt.stone.diorite.7",
+      "value": "Smooth Diorite"
+    },
+    "block.gregtech.stone_diorite_smooth_slab": {
+      "source_key": "gt.stone.diorite.slab.0.7",
+      "value": "Smooth Diorite Slab"
+    },
+    "block.gregtech.stone_diorite_square_bricks": {
+      "source_key": "gt.stone.diorite.15",
+      "value": "Diorite Square Bricks"
+    },
+    "block.gregtech.stone_diorite_square_bricks_slab": {
+      "source_key": "gt.stone.diorite.slab.0.15",
+      "value": "Diorite Square Bricks Slab"
+    },
+    "block.gregtech.stone_diorite_stone": {
+      "source_key": "gt.stone.diorite.0",
+      "value": "Diorite"
+    },
+    "block.gregtech.stone_diorite_stone_slab": {
+      "source_key": "gt.stone.diorite.slab.0.0",
+      "value": "Diorite Slab"
+    },
+    "block.gregtech.stone_diorite_tiles": {
+      "source_key": "gt.stone.diorite.10",
+      "value": "Diorite Tiles"
+    },
+    "block.gregtech.stone_diorite_tiles_slab": {
+      "source_key": "gt.stone.diorite.slab.0.10",
+      "value": "Diorite Tiles Slab"
+    },
+    "block.gregtech.stone_diorite_windmill_tiles_a": {
+      "source_key": "gt.stone.diorite.13",
+      "value": "Diorite Windmill Tiles A"
+    },
+    "block.gregtech.stone_diorite_windmill_tiles_a_slab": {
+      "source_key": "gt.stone.diorite.slab.0.13",
+      "value": "Diorite Windmill Tiles A Slab"
+    },
+    "block.gregtech.stone_diorite_windmill_tiles_b": {
+      "source_key": "gt.stone.diorite.14",
+      "value": "Diorite Windmill Tiles B"
+    },
+    "block.gregtech.stone_diorite_windmill_tiles_b_slab": {
+      "source_key": "gt.stone.diorite.slab.0.14",
+      "value": "Diorite Windmill Tiles B Slab"
+    },
+    "block.gregtech.stone_granite_black_bricks": {
+      "source_key": "gt.stone.granite.black.3",
+      "value": "Black Granite Bricks"
+    },
+    "block.gregtech.stone_granite_black_bricks_chiseled": {
+      "source_key": "gt.stone.granite.black.6",
+      "value": "Chiseled Black Granite"
+    },
+    "block.gregtech.stone_granite_black_bricks_chiseled_slab": {
+      "source_key": "gt.stone.granite.black.slab.0.6",
+      "value": "Chiseled Black Granite Slab"
+    },
+    "block.gregtech.stone_granite_black_bricks_cracked": {
+      "source_key": "gt.stone.granite.black.4",
+      "value": "Cracked Black Granite Bricks"
+    },
+    "block.gregtech.stone_granite_black_bricks_cracked_slab": {
+      "source_key": "gt.stone.granite.black.slab.0.4",
+      "value": "Cracked Black Granite Bricks Slab"
+    },
+    "block.gregtech.stone_granite_black_bricks_mossy": {
+      "source_key": "gt.stone.granite.black.5",
+      "value": "Mossy Black Granite Bricks"
+    },
+    "block.gregtech.stone_granite_black_bricks_mossy_slab": {
+      "source_key": "gt.stone.granite.black.slab.0.5",
+      "value": "Mossy Black Granite Bricks Slab"
+    },
+    "block.gregtech.stone_granite_black_bricks_redstone": {
+      "source_key": "gt.stone.granite.black.9",
+      "value": "Redstoned Black Granite Bricks"
+    },
+    "block.gregtech.stone_granite_black_bricks_redstone_slab": {
+      "source_key": "gt.stone.granite.black.slab.0.9",
+      "value": "Redstoned Black Granite Bricks Slab"
+    },
+    "block.gregtech.stone_granite_black_bricks_reinforced": {
+      "source_key": "gt.stone.granite.black.8",
+      "value": "Reinforced Black Granite Bricks"
+    },
+    "block.gregtech.stone_granite_black_bricks_reinforced_slab": {
+      "source_key": "gt.stone.granite.black.slab.0.8",
+      "value": "Reinforced Black Granite Bricks Slab"
+    },
+    "block.gregtech.stone_granite_black_bricks_slab": {
+      "source_key": "gt.stone.granite.black.slab.0.3",
+      "value": "Black Granite Bricks Slab"
+    },
+    "block.gregtech.stone_granite_black_cobble": {
+      "source_key": "gt.stone.granite.black.1",
+      "value": "Black Granite Cobblestone"
+    },
+    "block.gregtech.stone_granite_black_cobble_mossy": {
+      "source_key": "gt.stone.granite.black.2",
+      "value": "Mossy Black Granite Cobblestone"
+    },
+    "block.gregtech.stone_granite_black_cobble_mossy_slab": {
+      "source_key": "gt.stone.granite.black.slab.0.2",
+      "value": "Mossy Black Granite Cobblestone Slab"
+    },
+    "block.gregtech.stone_granite_black_cobble_slab": {
+      "source_key": "gt.stone.granite.black.slab.0.1",
+      "value": "Black Granite Cobblestone Slab"
+    },
+    "block.gregtech.stone_granite_black_small_bricks": {
+      "source_key": "gt.stone.granite.black.12",
+      "value": "Small Black Granite Bricks"
+    },
+    "block.gregtech.stone_granite_black_small_bricks_slab": {
+      "source_key": "gt.stone.granite.black.slab.0.12",
+      "value": "Small Black Granite Bricks Slab"
+    },
+    "block.gregtech.stone_granite_black_small_tiles": {
+      "source_key": "gt.stone.granite.black.11",
+      "value": "Small Black Granite Tiles"
+    },
+    "block.gregtech.stone_granite_black_small_tiles_slab": {
+      "source_key": "gt.stone.granite.black.slab.0.11",
+      "value": "Small Black Granite Tiles Slab"
+    },
+    "block.gregtech.stone_granite_black_smooth": {
+      "source_key": "gt.stone.granite.black.7",
+      "value": "Smooth Black Granite"
+    },
+    "block.gregtech.stone_granite_black_smooth_slab": {
+      "source_key": "gt.stone.granite.black.slab.0.7",
+      "value": "Smooth Black Granite Slab"
+    },
+    "block.gregtech.stone_granite_black_square_bricks": {
+      "source_key": "gt.stone.granite.black.15",
+      "value": "Black Granite Square Bricks"
+    },
+    "block.gregtech.stone_granite_black_square_bricks_slab": {
+      "source_key": "gt.stone.granite.black.slab.0.15",
+      "value": "Black Granite Square Bricks Slab"
+    },
+    "block.gregtech.stone_granite_black_stone": {
+      "source_key": "gt.stone.granite.black.0",
+      "value": "Black Granite"
+    },
+    "block.gregtech.stone_granite_black_stone_slab": {
+      "source_key": "gt.stone.granite.black.slab.0.0",
+      "value": "Black Granite Slab"
+    },
+    "block.gregtech.stone_granite_black_tiles": {
+      "source_key": "gt.stone.granite.black.10",
+      "value": "Black Granite Tiles"
+    },
+    "block.gregtech.stone_granite_black_tiles_slab": {
+      "source_key": "gt.stone.granite.black.slab.0.10",
+      "value": "Black Granite Tiles Slab"
+    },
+    "block.gregtech.stone_granite_black_windmill_tiles_a": {
+      "source_key": "gt.stone.granite.black.13",
+      "value": "Black Granite Windmill Tiles A"
+    },
+    "block.gregtech.stone_granite_black_windmill_tiles_a_slab": {
+      "source_key": "gt.stone.granite.black.slab.0.13",
+      "value": "Black Granite Windmill Tiles A Slab"
+    },
+    "block.gregtech.stone_granite_black_windmill_tiles_b": {
+      "source_key": "gt.stone.granite.black.14",
+      "value": "Black Granite Windmill Tiles B"
+    },
+    "block.gregtech.stone_granite_black_windmill_tiles_b_slab": {
+      "source_key": "gt.stone.granite.black.slab.0.14",
+      "value": "Black Granite Windmill Tiles B Slab"
+    },
+    "block.gregtech.stone_granite_bricks": {
+      "source_key": "gt.stone.granite.3",
+      "value": "Granite Bricks"
+    },
+    "block.gregtech.stone_granite_bricks_chiseled": {
+      "source_key": "gt.stone.granite.6",
+      "value": "Chiseled Granite"
+    },
+    "block.gregtech.stone_granite_bricks_chiseled_slab": {
+      "source_key": "gt.stone.granite.slab.0.6",
+      "value": "Chiseled Granite Slab"
+    },
+    "block.gregtech.stone_granite_bricks_cracked": {
+      "source_key": "gt.stone.granite.4",
+      "value": "Cracked Granite Bricks"
+    },
+    "block.gregtech.stone_granite_bricks_cracked_slab": {
+      "source_key": "gt.stone.granite.slab.0.4",
+      "value": "Cracked Granite Bricks Slab"
+    },
+    "block.gregtech.stone_granite_bricks_mossy": {
+      "source_key": "gt.stone.granite.5",
+      "value": "Mossy Granite Bricks"
+    },
+    "block.gregtech.stone_granite_bricks_mossy_slab": {
+      "source_key": "gt.stone.granite.slab.0.5",
+      "value": "Mossy Granite Bricks Slab"
+    },
+    "block.gregtech.stone_granite_bricks_redstone": {
+      "source_key": "gt.stone.granite.9",
+      "value": "Redstoned Granite Bricks"
+    },
+    "block.gregtech.stone_granite_bricks_redstone_slab": {
+      "source_key": "gt.stone.granite.slab.0.9",
+      "value": "Redstoned Granite Bricks Slab"
+    },
+    "block.gregtech.stone_granite_bricks_reinforced": {
+      "source_key": "gt.stone.granite.8",
+      "value": "Reinforced Granite Bricks"
+    },
+    "block.gregtech.stone_granite_bricks_reinforced_slab": {
+      "source_key": "gt.stone.granite.slab.0.8",
+      "value": "Reinforced Granite Bricks Slab"
+    },
+    "block.gregtech.stone_granite_bricks_slab": {
+      "source_key": "gt.stone.granite.slab.0.3",
+      "value": "Granite Bricks Slab"
+    },
+    "block.gregtech.stone_granite_cobble": {
+      "source_key": "gt.stone.granite.1",
+      "value": "Granite Cobblestone"
+    },
+    "block.gregtech.stone_granite_cobble_mossy": {
+      "source_key": "gt.stone.granite.2",
+      "value": "Mossy Granite Cobblestone"
+    },
+    "block.gregtech.stone_granite_cobble_mossy_slab": {
+      "source_key": "gt.stone.granite.slab.0.2",
+      "value": "Mossy Granite Cobblestone Slab"
+    },
+    "block.gregtech.stone_granite_cobble_slab": {
+      "source_key": "gt.stone.granite.slab.0.1",
+      "value": "Granite Cobblestone Slab"
+    },
+    "block.gregtech.stone_granite_red_bricks": {
+      "source_key": "gt.stone.granite.red.3",
+      "value": "Red Granite Bricks"
+    },
+    "block.gregtech.stone_granite_red_bricks_chiseled": {
+      "source_key": "gt.stone.granite.red.6",
+      "value": "Chiseled Red Granite"
+    },
+    "block.gregtech.stone_granite_red_bricks_chiseled_slab": {
+      "source_key": "gt.stone.granite.red.slab.0.6",
+      "value": "Chiseled Red Granite Slab"
+    },
+    "block.gregtech.stone_granite_red_bricks_cracked": {
+      "source_key": "gt.stone.granite.red.4",
+      "value": "Cracked Red Granite Bricks"
+    },
+    "block.gregtech.stone_granite_red_bricks_cracked_slab": {
+      "source_key": "gt.stone.granite.red.slab.0.4",
+      "value": "Cracked Red Granite Bricks Slab"
+    },
+    "block.gregtech.stone_granite_red_bricks_mossy": {
+      "source_key": "gt.stone.granite.red.5",
+      "value": "Mossy Red Granite Bricks"
+    },
+    "block.gregtech.stone_granite_red_bricks_mossy_slab": {
+      "source_key": "gt.stone.granite.red.slab.0.5",
+      "value": "Mossy Red Granite Bricks Slab"
+    },
+    "block.gregtech.stone_granite_red_bricks_redstone": {
+      "source_key": "gt.stone.granite.red.9",
+      "value": "Redstoned Red Granite Bricks"
+    },
+    "block.gregtech.stone_granite_red_bricks_redstone_slab": {
+      "source_key": "gt.stone.granite.red.slab.0.9",
+      "value": "Redstoned Red Granite Bricks Slab"
+    },
+    "block.gregtech.stone_granite_red_bricks_reinforced": {
+      "source_key": "gt.stone.granite.red.8",
+      "value": "Reinforced Red Granite Bricks"
+    },
+    "block.gregtech.stone_granite_red_bricks_reinforced_slab": {
+      "source_key": "gt.stone.granite.red.slab.0.8",
+      "value": "Reinforced Red Granite Bricks Slab"
+    },
+    "block.gregtech.stone_granite_red_bricks_slab": {
+      "source_key": "gt.stone.granite.red.slab.0.3",
+      "value": "Red Granite Bricks Slab"
+    },
+    "block.gregtech.stone_granite_red_cobble": {
+      "source_key": "gt.stone.granite.red.1",
+      "value": "Red Granite Cobblestone"
+    },
+    "block.gregtech.stone_granite_red_cobble_mossy": {
+      "source_key": "gt.stone.granite.red.2",
+      "value": "Mossy Red Granite Cobblestone"
+    },
+    "block.gregtech.stone_granite_red_cobble_mossy_slab": {
+      "source_key": "gt.stone.granite.red.slab.0.2",
+      "value": "Mossy Red Granite Cobblestone Slab"
+    },
+    "block.gregtech.stone_granite_red_cobble_slab": {
+      "source_key": "gt.stone.granite.red.slab.0.1",
+      "value": "Red Granite Cobblestone Slab"
+    },
+    "block.gregtech.stone_granite_red_small_bricks": {
+      "source_key": "gt.stone.granite.red.12",
+      "value": "Small Red Granite Bricks"
+    },
+    "block.gregtech.stone_granite_red_small_bricks_slab": {
+      "source_key": "gt.stone.granite.red.slab.0.12",
+      "value": "Small Red Granite Bricks Slab"
+    },
+    "block.gregtech.stone_granite_red_small_tiles": {
+      "source_key": "gt.stone.granite.red.11",
+      "value": "Small Red Granite Tiles"
+    },
+    "block.gregtech.stone_granite_red_small_tiles_slab": {
+      "source_key": "gt.stone.granite.red.slab.0.11",
+      "value": "Small Red Granite Tiles Slab"
+    },
+    "block.gregtech.stone_granite_red_smooth": {
+      "source_key": "gt.stone.granite.red.7",
+      "value": "Smooth Red Granite"
+    },
+    "block.gregtech.stone_granite_red_smooth_slab": {
+      "source_key": "gt.stone.granite.red.slab.0.7",
+      "value": "Smooth Red Granite Slab"
+    },
+    "block.gregtech.stone_granite_red_square_bricks": {
+      "source_key": "gt.stone.granite.red.15",
+      "value": "Red Granite Square Bricks"
+    },
+    "block.gregtech.stone_granite_red_square_bricks_slab": {
+      "source_key": "gt.stone.granite.red.slab.0.15",
+      "value": "Red Granite Square Bricks Slab"
+    },
+    "block.gregtech.stone_granite_red_stone": {
+      "source_key": "gt.stone.granite.red.0",
+      "value": "Red Granite"
+    },
+    "block.gregtech.stone_granite_red_stone_slab": {
+      "source_key": "gt.stone.granite.red.slab.0.0",
+      "value": "Red Granite Slab"
+    },
+    "block.gregtech.stone_granite_red_tiles": {
+      "source_key": "gt.stone.granite.red.10",
+      "value": "Red Granite Tiles"
+    },
+    "block.gregtech.stone_granite_red_tiles_slab": {
+      "source_key": "gt.stone.granite.red.slab.0.10",
+      "value": "Red Granite Tiles Slab"
+    },
+    "block.gregtech.stone_granite_red_windmill_tiles_a": {
+      "source_key": "gt.stone.granite.red.13",
+      "value": "Red Granite Windmill Tiles A"
+    },
+    "block.gregtech.stone_granite_red_windmill_tiles_a_slab": {
+      "source_key": "gt.stone.granite.red.slab.0.13",
+      "value": "Red Granite Windmill Tiles A Slab"
+    },
+    "block.gregtech.stone_granite_red_windmill_tiles_b": {
+      "source_key": "gt.stone.granite.red.14",
+      "value": "Red Granite Windmill Tiles B"
+    },
+    "block.gregtech.stone_granite_red_windmill_tiles_b_slab": {
+      "source_key": "gt.stone.granite.red.slab.0.14",
+      "value": "Red Granite Windmill Tiles B Slab"
+    },
+    "block.gregtech.stone_granite_small_bricks": {
+      "source_key": "gt.stone.granite.12",
+      "value": "Small Granite Bricks"
+    },
+    "block.gregtech.stone_granite_small_bricks_slab": {
+      "source_key": "gt.stone.granite.slab.0.12",
+      "value": "Small Granite Bricks Slab"
+    },
+    "block.gregtech.stone_granite_small_tiles": {
+      "source_key": "gt.stone.granite.11",
+      "value": "Small Granite Tiles"
+    },
+    "block.gregtech.stone_granite_small_tiles_slab": {
+      "source_key": "gt.stone.granite.slab.0.11",
+      "value": "Small Granite Tiles Slab"
+    },
+    "block.gregtech.stone_granite_smooth": {
+      "source_key": "gt.stone.granite.7",
+      "value": "Smooth Granite"
+    },
+    "block.gregtech.stone_granite_smooth_slab": {
+      "source_key": "gt.stone.granite.slab.0.7",
+      "value": "Smooth Granite Slab"
+    },
+    "block.gregtech.stone_granite_square_bricks": {
+      "source_key": "gt.stone.granite.15",
+      "value": "Granite Square Bricks"
+    },
+    "block.gregtech.stone_granite_square_bricks_slab": {
+      "source_key": "gt.stone.granite.slab.0.15",
+      "value": "Granite Square Bricks Slab"
+    },
+    "block.gregtech.stone_granite_stone": {
+      "source_key": "gt.stone.granite.0",
+      "value": "Granite"
+    },
+    "block.gregtech.stone_granite_stone_slab": {
+      "source_key": "gt.stone.granite.slab.0.0",
+      "value": "Granite Slab"
+    },
+    "block.gregtech.stone_granite_tiles": {
+      "source_key": "gt.stone.granite.10",
+      "value": "Granite Tiles"
+    },
+    "block.gregtech.stone_granite_tiles_slab": {
+      "source_key": "gt.stone.granite.slab.0.10",
+      "value": "Granite Tiles Slab"
+    },
+    "block.gregtech.stone_granite_windmill_tiles_a": {
+      "source_key": "gt.stone.granite.13",
+      "value": "Granite Windmill Tiles A"
+    },
+    "block.gregtech.stone_granite_windmill_tiles_a_slab": {
+      "source_key": "gt.stone.granite.slab.0.13",
+      "value": "Granite Windmill Tiles A Slab"
+    },
+    "block.gregtech.stone_granite_windmill_tiles_b": {
+      "source_key": "gt.stone.granite.14",
+      "value": "Granite Windmill Tiles B"
+    },
+    "block.gregtech.stone_granite_windmill_tiles_b_slab": {
+      "source_key": "gt.stone.granite.slab.0.14",
+      "value": "Granite Windmill Tiles B Slab"
+    },
+    "block.gregtech.stone_greenschist_bricks": {
+      "source_key": "gt.stone.greenschist.3",
+      "value": "Green Schist Bricks"
+    },
+    "block.gregtech.stone_greenschist_bricks_chiseled": {
+      "source_key": "gt.stone.greenschist.6",
+      "value": "Chiseled Green Schist"
+    },
+    "block.gregtech.stone_greenschist_bricks_chiseled_slab": {
+      "source_key": "gt.stone.greenschist.slab.0.6",
+      "value": "Chiseled Green Schist Slab"
+    },
+    "block.gregtech.stone_greenschist_bricks_cracked": {
+      "source_key": "gt.stone.greenschist.4",
+      "value": "Cracked Green Schist Bricks"
+    },
+    "block.gregtech.stone_greenschist_bricks_cracked_slab": {
+      "source_key": "gt.stone.greenschist.slab.0.4",
+      "value": "Cracked Green Schist Bricks Slab"
+    },
+    "block.gregtech.stone_greenschist_bricks_mossy": {
+      "source_key": "gt.stone.greenschist.5",
+      "value": "Mossy Green Schist Bricks"
+    },
+    "block.gregtech.stone_greenschist_bricks_mossy_slab": {
+      "source_key": "gt.stone.greenschist.slab.0.5",
+      "value": "Mossy Green Schist Bricks Slab"
+    },
+    "block.gregtech.stone_greenschist_bricks_redstone": {
+      "source_key": "gt.stone.greenschist.9",
+      "value": "Redstoned Green Schist Bricks"
+    },
+    "block.gregtech.stone_greenschist_bricks_redstone_slab": {
+      "source_key": "gt.stone.greenschist.slab.0.9",
+      "value": "Redstoned Green Schist Bricks Slab"
+    },
+    "block.gregtech.stone_greenschist_bricks_reinforced": {
+      "source_key": "gt.stone.greenschist.8",
+      "value": "Reinforced Green Schist Bricks"
+    },
+    "block.gregtech.stone_greenschist_bricks_reinforced_slab": {
+      "source_key": "gt.stone.greenschist.slab.0.8",
+      "value": "Reinforced Green Schist Bricks Slab"
+    },
+    "block.gregtech.stone_greenschist_bricks_slab": {
+      "source_key": "gt.stone.greenschist.slab.0.3",
+      "value": "Green Schist Bricks Slab"
+    },
+    "block.gregtech.stone_greenschist_cobble": {
+      "source_key": "gt.stone.greenschist.1",
+      "value": "Green Schist Cobblestone"
+    },
+    "block.gregtech.stone_greenschist_cobble_mossy": {
+      "source_key": "gt.stone.greenschist.2",
+      "value": "Mossy Green Schist Cobblestone"
+    },
+    "block.gregtech.stone_greenschist_cobble_mossy_slab": {
+      "source_key": "gt.stone.greenschist.slab.0.2",
+      "value": "Mossy Green Schist Cobblestone Slab"
+    },
+    "block.gregtech.stone_greenschist_cobble_slab": {
+      "source_key": "gt.stone.greenschist.slab.0.1",
+      "value": "Green Schist Cobblestone Slab"
+    },
+    "block.gregtech.stone_greenschist_small_bricks": {
+      "source_key": "gt.stone.greenschist.12",
+      "value": "Small Green Schist Bricks"
+    },
+    "block.gregtech.stone_greenschist_small_bricks_slab": {
+      "source_key": "gt.stone.greenschist.slab.0.12",
+      "value": "Small Green Schist Bricks Slab"
+    },
+    "block.gregtech.stone_greenschist_small_tiles": {
+      "source_key": "gt.stone.greenschist.11",
+      "value": "Small Green Schist Tiles"
+    },
+    "block.gregtech.stone_greenschist_small_tiles_slab": {
+      "source_key": "gt.stone.greenschist.slab.0.11",
+      "value": "Small Green Schist Tiles Slab"
+    },
+    "block.gregtech.stone_greenschist_smooth": {
+      "source_key": "gt.stone.greenschist.7",
+      "value": "Smooth Green Schist"
+    },
+    "block.gregtech.stone_greenschist_smooth_slab": {
+      "source_key": "gt.stone.greenschist.slab.0.7",
+      "value": "Smooth Green Schist Slab"
+    },
+    "block.gregtech.stone_greenschist_square_bricks": {
+      "source_key": "gt.stone.greenschist.15",
+      "value": "Green Schist Square Bricks"
+    },
+    "block.gregtech.stone_greenschist_square_bricks_slab": {
+      "source_key": "gt.stone.greenschist.slab.0.15",
+      "value": "Green Schist Square Bricks Slab"
+    },
+    "block.gregtech.stone_greenschist_stone": {
+      "source_key": "gt.stone.greenschist.0",
+      "value": "Green Schist"
+    },
+    "block.gregtech.stone_greenschist_stone_slab": {
+      "source_key": "gt.stone.greenschist.slab.0.0",
+      "value": "Green Schist Slab"
+    },
+    "block.gregtech.stone_greenschist_tiles": {
+      "source_key": "gt.stone.greenschist.10",
+      "value": "Green Schist Tiles"
+    },
+    "block.gregtech.stone_greenschist_tiles_slab": {
+      "source_key": "gt.stone.greenschist.slab.0.10",
+      "value": "Green Schist Tiles Slab"
+    },
+    "block.gregtech.stone_greenschist_windmill_tiles_a": {
+      "source_key": "gt.stone.greenschist.13",
+      "value": "Green Schist Windmill Tiles A"
+    },
+    "block.gregtech.stone_greenschist_windmill_tiles_a_slab": {
+      "source_key": "gt.stone.greenschist.slab.0.13",
+      "value": "Green Schist Windmill Tiles A Slab"
+    },
+    "block.gregtech.stone_greenschist_windmill_tiles_b": {
+      "source_key": "gt.stone.greenschist.14",
+      "value": "Green Schist Windmill Tiles B"
+    },
+    "block.gregtech.stone_greenschist_windmill_tiles_b_slab": {
+      "source_key": "gt.stone.greenschist.slab.0.14",
+      "value": "Green Schist Windmill Tiles B Slab"
+    },
+    "block.gregtech.stone_kimberlite_bricks": {
+      "source_key": "gt.stone.kimberlite.3",
+      "value": "Kimberlite Bricks"
+    },
+    "block.gregtech.stone_kimberlite_bricks_chiseled": {
+      "source_key": "gt.stone.kimberlite.6",
+      "value": "Chiseled Kimberlite"
+    },
+    "block.gregtech.stone_kimberlite_bricks_chiseled_slab": {
+      "source_key": "gt.stone.kimberlite.slab.0.6",
+      "value": "Chiseled Kimberlite Slab"
+    },
+    "block.gregtech.stone_kimberlite_bricks_cracked": {
+      "source_key": "gt.stone.kimberlite.4",
+      "value": "Cracked Kimberlite Bricks"
+    },
+    "block.gregtech.stone_kimberlite_bricks_cracked_slab": {
+      "source_key": "gt.stone.kimberlite.slab.0.4",
+      "value": "Cracked Kimberlite Bricks Slab"
+    },
+    "block.gregtech.stone_kimberlite_bricks_mossy": {
+      "source_key": "gt.stone.kimberlite.5",
+      "value": "Mossy Kimberlite Bricks"
+    },
+    "block.gregtech.stone_kimberlite_bricks_mossy_slab": {
+      "source_key": "gt.stone.kimberlite.slab.0.5",
+      "value": "Mossy Kimberlite Bricks Slab"
+    },
+    "block.gregtech.stone_kimberlite_bricks_redstone": {
+      "source_key": "gt.stone.kimberlite.9",
+      "value": "Redstoned Kimberlite Bricks"
+    },
+    "block.gregtech.stone_kimberlite_bricks_redstone_slab": {
+      "source_key": "gt.stone.kimberlite.slab.0.9",
+      "value": "Redstoned Kimberlite Bricks Slab"
+    },
+    "block.gregtech.stone_kimberlite_bricks_reinforced": {
+      "source_key": "gt.stone.kimberlite.8",
+      "value": "Reinforced Kimberlite Bricks"
+    },
+    "block.gregtech.stone_kimberlite_bricks_reinforced_slab": {
+      "source_key": "gt.stone.kimberlite.slab.0.8",
+      "value": "Reinforced Kimberlite Bricks Slab"
+    },
+    "block.gregtech.stone_kimberlite_bricks_slab": {
+      "source_key": "gt.stone.kimberlite.slab.0.3",
+      "value": "Kimberlite Bricks Slab"
+    },
+    "block.gregtech.stone_kimberlite_cobble": {
+      "source_key": "gt.stone.kimberlite.1",
+      "value": "Kimberlite Cobblestone"
+    },
+    "block.gregtech.stone_kimberlite_cobble_mossy": {
+      "source_key": "gt.stone.kimberlite.2",
+      "value": "Mossy Kimberlite Cobblestone"
+    },
+    "block.gregtech.stone_kimberlite_cobble_mossy_slab": {
+      "source_key": "gt.stone.kimberlite.slab.0.2",
+      "value": "Mossy Kimberlite Cobblestone Slab"
+    },
+    "block.gregtech.stone_kimberlite_cobble_slab": {
+      "source_key": "gt.stone.kimberlite.slab.0.1",
+      "value": "Kimberlite Cobblestone Slab"
+    },
+    "block.gregtech.stone_kimberlite_small_bricks": {
+      "source_key": "gt.stone.kimberlite.12",
+      "value": "Small Kimberlite Bricks"
+    },
+    "block.gregtech.stone_kimberlite_small_bricks_slab": {
+      "source_key": "gt.stone.kimberlite.slab.0.12",
+      "value": "Small Kimberlite Bricks Slab"
+    },
+    "block.gregtech.stone_kimberlite_small_tiles": {
+      "source_key": "gt.stone.kimberlite.11",
+      "value": "Small Kimberlite Tiles"
+    },
+    "block.gregtech.stone_kimberlite_small_tiles_slab": {
+      "source_key": "gt.stone.kimberlite.slab.0.11",
+      "value": "Small Kimberlite Tiles Slab"
+    },
+    "block.gregtech.stone_kimberlite_smooth": {
+      "source_key": "gt.stone.kimberlite.7",
+      "value": "Smooth Kimberlite"
+    },
+    "block.gregtech.stone_kimberlite_smooth_slab": {
+      "source_key": "gt.stone.kimberlite.slab.0.7",
+      "value": "Smooth Kimberlite Slab"
+    },
+    "block.gregtech.stone_kimberlite_square_bricks": {
+      "source_key": "gt.stone.kimberlite.15",
+      "value": "Kimberlite Square Bricks"
+    },
+    "block.gregtech.stone_kimberlite_square_bricks_slab": {
+      "source_key": "gt.stone.kimberlite.slab.0.15",
+      "value": "Kimberlite Square Bricks Slab"
+    },
+    "block.gregtech.stone_kimberlite_stone": {
+      "source_key": "gt.stone.kimberlite.0",
+      "value": "Kimberlite"
+    },
+    "block.gregtech.stone_kimberlite_stone_slab": {
+      "source_key": "gt.stone.kimberlite.slab.0.0",
+      "value": "Kimberlite Slab"
+    },
+    "block.gregtech.stone_kimberlite_tiles": {
+      "source_key": "gt.stone.kimberlite.10",
+      "value": "Kimberlite Tiles"
+    },
+    "block.gregtech.stone_kimberlite_tiles_slab": {
+      "source_key": "gt.stone.kimberlite.slab.0.10",
+      "value": "Kimberlite Tiles Slab"
+    },
+    "block.gregtech.stone_kimberlite_windmill_tiles_a": {
+      "source_key": "gt.stone.kimberlite.13",
+      "value": "Kimberlite Windmill Tiles A"
+    },
+    "block.gregtech.stone_kimberlite_windmill_tiles_a_slab": {
+      "source_key": "gt.stone.kimberlite.slab.0.13",
+      "value": "Kimberlite Windmill Tiles A Slab"
+    },
+    "block.gregtech.stone_kimberlite_windmill_tiles_b": {
+      "source_key": "gt.stone.kimberlite.14",
+      "value": "Kimberlite Windmill Tiles B"
+    },
+    "block.gregtech.stone_kimberlite_windmill_tiles_b_slab": {
+      "source_key": "gt.stone.kimberlite.slab.0.14",
+      "value": "Kimberlite Windmill Tiles B Slab"
+    },
+    "block.gregtech.stone_komatiite_bricks": {
+      "source_key": "gt.stone.komatiite.3",
+      "value": "Komatiite Bricks"
+    },
+    "block.gregtech.stone_komatiite_bricks_chiseled": {
+      "source_key": "gt.stone.komatiite.6",
+      "value": "Chiseled Komatiite"
+    },
+    "block.gregtech.stone_komatiite_bricks_chiseled_slab": {
+      "source_key": "gt.stone.komatiite.slab.0.6",
+      "value": "Chiseled Komatiite Slab"
+    },
+    "block.gregtech.stone_komatiite_bricks_cracked": {
+      "source_key": "gt.stone.komatiite.4",
+      "value": "Cracked Komatiite Bricks"
+    },
+    "block.gregtech.stone_komatiite_bricks_cracked_slab": {
+      "source_key": "gt.stone.komatiite.slab.0.4",
+      "value": "Cracked Komatiite Bricks Slab"
+    },
+    "block.gregtech.stone_komatiite_bricks_mossy": {
+      "source_key": "gt.stone.komatiite.5",
+      "value": "Mossy Komatiite Bricks"
+    },
+    "block.gregtech.stone_komatiite_bricks_mossy_slab": {
+      "source_key": "gt.stone.komatiite.slab.0.5",
+      "value": "Mossy Komatiite Bricks Slab"
+    },
+    "block.gregtech.stone_komatiite_bricks_redstone": {
+      "source_key": "gt.stone.komatiite.9",
+      "value": "Redstoned Komatiite Bricks"
+    },
+    "block.gregtech.stone_komatiite_bricks_redstone_slab": {
+      "source_key": "gt.stone.komatiite.slab.0.9",
+      "value": "Redstoned Komatiite Bricks Slab"
+    },
+    "block.gregtech.stone_komatiite_bricks_reinforced": {
+      "source_key": "gt.stone.komatiite.8",
+      "value": "Reinforced Komatiite Bricks"
+    },
+    "block.gregtech.stone_komatiite_bricks_reinforced_slab": {
+      "source_key": "gt.stone.komatiite.slab.0.8",
+      "value": "Reinforced Komatiite Bricks Slab"
+    },
+    "block.gregtech.stone_komatiite_bricks_slab": {
+      "source_key": "gt.stone.komatiite.slab.0.3",
+      "value": "Komatiite Bricks Slab"
+    },
+    "block.gregtech.stone_komatiite_cobble": {
+      "source_key": "gt.stone.komatiite.1",
+      "value": "Komatiite Cobblestone"
+    },
+    "block.gregtech.stone_komatiite_cobble_mossy": {
+      "source_key": "gt.stone.komatiite.2",
+      "value": "Mossy Komatiite Cobblestone"
+    },
+    "block.gregtech.stone_komatiite_cobble_mossy_slab": {
+      "source_key": "gt.stone.komatiite.slab.0.2",
+      "value": "Mossy Komatiite Cobblestone Slab"
+    },
+    "block.gregtech.stone_komatiite_cobble_slab": {
+      "source_key": "gt.stone.komatiite.slab.0.1",
+      "value": "Komatiite Cobblestone Slab"
+    },
+    "block.gregtech.stone_komatiite_small_bricks": {
+      "source_key": "gt.stone.komatiite.12",
+      "value": "Small Komatiite Bricks"
+    },
+    "block.gregtech.stone_komatiite_small_bricks_slab": {
+      "source_key": "gt.stone.komatiite.slab.0.12",
+      "value": "Small Komatiite Bricks Slab"
+    },
+    "block.gregtech.stone_komatiite_small_tiles": {
+      "source_key": "gt.stone.komatiite.11",
+      "value": "Small Komatiite Tiles"
+    },
+    "block.gregtech.stone_komatiite_small_tiles_slab": {
+      "source_key": "gt.stone.komatiite.slab.0.11",
+      "value": "Small Komatiite Tiles Slab"
+    },
+    "block.gregtech.stone_komatiite_smooth": {
+      "source_key": "gt.stone.komatiite.7",
+      "value": "Smooth Komatiite"
+    },
+    "block.gregtech.stone_komatiite_smooth_slab": {
+      "source_key": "gt.stone.komatiite.slab.0.7",
+      "value": "Smooth Komatiite Slab"
+    },
+    "block.gregtech.stone_komatiite_square_bricks": {
+      "source_key": "gt.stone.komatiite.15",
+      "value": "Komatiite Square Bricks"
+    },
+    "block.gregtech.stone_komatiite_square_bricks_slab": {
+      "source_key": "gt.stone.komatiite.slab.0.15",
+      "value": "Komatiite Square Bricks Slab"
+    },
+    "block.gregtech.stone_komatiite_stone": {
+      "source_key": "gt.stone.komatiite.0",
+      "value": "Komatiite"
+    },
+    "block.gregtech.stone_komatiite_stone_slab": {
+      "source_key": "gt.stone.komatiite.slab.0.0",
+      "value": "Komatiite Slab"
+    },
+    "block.gregtech.stone_komatiite_tiles": {
+      "source_key": "gt.stone.komatiite.10",
+      "value": "Komatiite Tiles"
+    },
+    "block.gregtech.stone_komatiite_tiles_slab": {
+      "source_key": "gt.stone.komatiite.slab.0.10",
+      "value": "Komatiite Tiles Slab"
+    },
+    "block.gregtech.stone_komatiite_windmill_tiles_a": {
+      "source_key": "gt.stone.komatiite.13",
+      "value": "Komatiite Windmill Tiles A"
+    },
+    "block.gregtech.stone_komatiite_windmill_tiles_a_slab": {
+      "source_key": "gt.stone.komatiite.slab.0.13",
+      "value": "Komatiite Windmill Tiles A Slab"
+    },
+    "block.gregtech.stone_komatiite_windmill_tiles_b": {
+      "source_key": "gt.stone.komatiite.14",
+      "value": "Komatiite Windmill Tiles B"
+    },
+    "block.gregtech.stone_komatiite_windmill_tiles_b_slab": {
+      "source_key": "gt.stone.komatiite.slab.0.14",
+      "value": "Komatiite Windmill Tiles B Slab"
+    },
+    "block.gregtech.stone_limestone_bricks": {
+      "source_key": "gt.stone.limestone.3",
+      "value": "Limestone Bricks"
+    },
+    "block.gregtech.stone_limestone_bricks_chiseled": {
+      "source_key": "gt.stone.limestone.6",
+      "value": "Chiseled Limestone"
+    },
+    "block.gregtech.stone_limestone_bricks_chiseled_slab": {
+      "source_key": "gt.stone.limestone.slab.0.6",
+      "value": "Chiseled Limestone Slab"
+    },
+    "block.gregtech.stone_limestone_bricks_cracked": {
+      "source_key": "gt.stone.limestone.4",
+      "value": "Cracked Limestone Bricks"
+    },
+    "block.gregtech.stone_limestone_bricks_cracked_slab": {
+      "source_key": "gt.stone.limestone.slab.0.4",
+      "value": "Cracked Limestone Bricks Slab"
+    },
+    "block.gregtech.stone_limestone_bricks_mossy": {
+      "source_key": "gt.stone.limestone.5",
+      "value": "Mossy Limestone Bricks"
+    },
+    "block.gregtech.stone_limestone_bricks_mossy_slab": {
+      "source_key": "gt.stone.limestone.slab.0.5",
+      "value": "Mossy Limestone Bricks Slab"
+    },
+    "block.gregtech.stone_limestone_bricks_redstone": {
+      "source_key": "gt.stone.limestone.9",
+      "value": "Redstoned Limestone Bricks"
+    },
+    "block.gregtech.stone_limestone_bricks_redstone_slab": {
+      "source_key": "gt.stone.limestone.slab.0.9",
+      "value": "Redstoned Limestone Bricks Slab"
+    },
+    "block.gregtech.stone_limestone_bricks_reinforced": {
+      "source_key": "gt.stone.limestone.8",
+      "value": "Reinforced Limestone Bricks"
+    },
+    "block.gregtech.stone_limestone_bricks_reinforced_slab": {
+      "source_key": "gt.stone.limestone.slab.0.8",
+      "value": "Reinforced Limestone Bricks Slab"
+    },
+    "block.gregtech.stone_limestone_bricks_slab": {
+      "source_key": "gt.stone.limestone.slab.0.3",
+      "value": "Limestone Bricks Slab"
+    },
+    "block.gregtech.stone_limestone_cobble": {
+      "source_key": "gt.stone.limestone.1",
+      "value": "Limestone Cobblestone"
+    },
+    "block.gregtech.stone_limestone_cobble_mossy": {
+      "source_key": "gt.stone.limestone.2",
+      "value": "Mossy Limestone Cobblestone"
+    },
+    "block.gregtech.stone_limestone_cobble_mossy_slab": {
+      "source_key": "gt.stone.limestone.slab.0.2",
+      "value": "Mossy Limestone Cobblestone Slab"
+    },
+    "block.gregtech.stone_limestone_cobble_slab": {
+      "source_key": "gt.stone.limestone.slab.0.1",
+      "value": "Limestone Cobblestone Slab"
+    },
+    "block.gregtech.stone_limestone_small_bricks": {
+      "source_key": "gt.stone.limestone.12",
+      "value": "Small Limestone Bricks"
+    },
+    "block.gregtech.stone_limestone_small_bricks_slab": {
+      "source_key": "gt.stone.limestone.slab.0.12",
+      "value": "Small Limestone Bricks Slab"
+    },
+    "block.gregtech.stone_limestone_small_tiles": {
+      "source_key": "gt.stone.limestone.11",
+      "value": "Small Limestone Tiles"
+    },
+    "block.gregtech.stone_limestone_small_tiles_slab": {
+      "source_key": "gt.stone.limestone.slab.0.11",
+      "value": "Small Limestone Tiles Slab"
+    },
+    "block.gregtech.stone_limestone_smooth": {
+      "source_key": "gt.stone.limestone.7",
+      "value": "Smooth Limestone"
+    },
+    "block.gregtech.stone_limestone_smooth_slab": {
+      "source_key": "gt.stone.limestone.slab.0.7",
+      "value": "Smooth Limestone Slab"
+    },
+    "block.gregtech.stone_limestone_square_bricks": {
+      "source_key": "gt.stone.limestone.15",
+      "value": "Limestone Square Bricks"
+    },
+    "block.gregtech.stone_limestone_square_bricks_slab": {
+      "source_key": "gt.stone.limestone.slab.0.15",
+      "value": "Limestone Square Bricks Slab"
+    },
+    "block.gregtech.stone_limestone_stone": {
+      "source_key": "gt.stone.limestone.0",
+      "value": "Limestone"
+    },
+    "block.gregtech.stone_limestone_stone_slab": {
+      "source_key": "gt.stone.limestone.slab.0.0",
+      "value": "Limestone Slab"
+    },
+    "block.gregtech.stone_limestone_tiles": {
+      "source_key": "gt.stone.limestone.10",
+      "value": "Limestone Tiles"
+    },
+    "block.gregtech.stone_limestone_tiles_slab": {
+      "source_key": "gt.stone.limestone.slab.0.10",
+      "value": "Limestone Tiles Slab"
+    },
+    "block.gregtech.stone_limestone_windmill_tiles_a": {
+      "source_key": "gt.stone.limestone.13",
+      "value": "Limestone Windmill Tiles A"
+    },
+    "block.gregtech.stone_limestone_windmill_tiles_a_slab": {
+      "source_key": "gt.stone.limestone.slab.0.13",
+      "value": "Limestone Windmill Tiles A Slab"
+    },
+    "block.gregtech.stone_limestone_windmill_tiles_b": {
+      "source_key": "gt.stone.limestone.14",
+      "value": "Limestone Windmill Tiles B"
+    },
+    "block.gregtech.stone_limestone_windmill_tiles_b_slab": {
+      "source_key": "gt.stone.limestone.slab.0.14",
+      "value": "Limestone Windmill Tiles B Slab"
+    },
+    "block.gregtech.stone_marble_bricks": {
+      "source_key": "gt.stone.marble.3",
+      "value": "Marble Bricks"
+    },
+    "block.gregtech.stone_marble_bricks_chiseled": {
+      "source_key": "gt.stone.marble.6",
+      "value": "Chiseled Marble"
+    },
+    "block.gregtech.stone_marble_bricks_chiseled_slab": {
+      "source_key": "gt.stone.marble.slab.0.6",
+      "value": "Chiseled Marble Slab"
+    },
+    "block.gregtech.stone_marble_bricks_cracked": {
+      "source_key": "gt.stone.marble.4",
+      "value": "Cracked Marble Bricks"
+    },
+    "block.gregtech.stone_marble_bricks_cracked_slab": {
+      "source_key": "gt.stone.marble.slab.0.4",
+      "value": "Cracked Marble Bricks Slab"
+    },
+    "block.gregtech.stone_marble_bricks_mossy": {
+      "source_key": "gt.stone.marble.5",
+      "value": "Mossy Marble Bricks"
+    },
+    "block.gregtech.stone_marble_bricks_mossy_slab": {
+      "source_key": "gt.stone.marble.slab.0.5",
+      "value": "Mossy Marble Bricks Slab"
+    },
+    "block.gregtech.stone_marble_bricks_redstone": {
+      "source_key": "gt.stone.marble.9",
+      "value": "Redstoned Marble Bricks"
+    },
+    "block.gregtech.stone_marble_bricks_redstone_slab": {
+      "source_key": "gt.stone.marble.slab.0.9",
+      "value": "Redstoned Marble Bricks Slab"
+    },
+    "block.gregtech.stone_marble_bricks_reinforced": {
+      "source_key": "gt.stone.marble.8",
+      "value": "Reinforced Marble Bricks"
+    },
+    "block.gregtech.stone_marble_bricks_reinforced_slab": {
+      "source_key": "gt.stone.marble.slab.0.8",
+      "value": "Reinforced Marble Bricks Slab"
+    },
+    "block.gregtech.stone_marble_bricks_slab": {
+      "source_key": "gt.stone.marble.slab.0.3",
+      "value": "Marble Bricks Slab"
+    },
+    "block.gregtech.stone_marble_cobble": {
+      "source_key": "gt.stone.marble.1",
+      "value": "Marble Cobblestone"
+    },
+    "block.gregtech.stone_marble_cobble_mossy": {
+      "source_key": "gt.stone.marble.2",
+      "value": "Mossy Marble Cobblestone"
+    },
+    "block.gregtech.stone_marble_cobble_mossy_slab": {
+      "source_key": "gt.stone.marble.slab.0.2",
+      "value": "Mossy Marble Cobblestone Slab"
+    },
+    "block.gregtech.stone_marble_cobble_slab": {
+      "source_key": "gt.stone.marble.slab.0.1",
+      "value": "Marble Cobblestone Slab"
+    },
+    "block.gregtech.stone_marble_small_bricks": {
+      "source_key": "gt.stone.marble.12",
+      "value": "Small Marble Bricks"
+    },
+    "block.gregtech.stone_marble_small_bricks_slab": {
+      "source_key": "gt.stone.marble.slab.0.12",
+      "value": "Small Marble Bricks Slab"
+    },
+    "block.gregtech.stone_marble_small_tiles": {
+      "source_key": "gt.stone.marble.11",
+      "value": "Small Marble Tiles"
+    },
+    "block.gregtech.stone_marble_small_tiles_slab": {
+      "source_key": "gt.stone.marble.slab.0.11",
+      "value": "Small Marble Tiles Slab"
+    },
+    "block.gregtech.stone_marble_smooth": {
+      "source_key": "gt.stone.marble.7",
+      "value": "Smooth Marble"
+    },
+    "block.gregtech.stone_marble_smooth_slab": {
+      "source_key": "gt.stone.marble.slab.0.7",
+      "value": "Smooth Marble Slab"
+    },
+    "block.gregtech.stone_marble_square_bricks": {
+      "source_key": "gt.stone.marble.15",
+      "value": "Marble Square Bricks"
+    },
+    "block.gregtech.stone_marble_square_bricks_slab": {
+      "source_key": "gt.stone.marble.slab.0.15",
+      "value": "Marble Square Bricks Slab"
+    },
+    "block.gregtech.stone_marble_stone": {
+      "source_key": "gt.stone.marble.0",
+      "value": "Marble"
+    },
+    "block.gregtech.stone_marble_stone_slab": {
+      "source_key": "gt.stone.marble.slab.0.0",
+      "value": "Marble Slab"
+    },
+    "block.gregtech.stone_marble_tiles": {
+      "source_key": "gt.stone.marble.10",
+      "value": "Marble Tiles"
+    },
+    "block.gregtech.stone_marble_tiles_slab": {
+      "source_key": "gt.stone.marble.slab.0.10",
+      "value": "Marble Tiles Slab"
+    },
+    "block.gregtech.stone_marble_windmill_tiles_a": {
+      "source_key": "gt.stone.marble.13",
+      "value": "Marble Windmill Tiles A"
+    },
+    "block.gregtech.stone_marble_windmill_tiles_a_slab": {
+      "source_key": "gt.stone.marble.slab.0.13",
+      "value": "Marble Windmill Tiles A Slab"
+    },
+    "block.gregtech.stone_marble_windmill_tiles_b": {
+      "source_key": "gt.stone.marble.14",
+      "value": "Marble Windmill Tiles B"
+    },
+    "block.gregtech.stone_marble_windmill_tiles_b_slab": {
+      "source_key": "gt.stone.marble.slab.0.14",
+      "value": "Marble Windmill Tiles B Slab"
+    },
+    "block.gregtech.stone_prismarine_dark_bricks": {
+      "source_key": "gt.stone.prismarine.dark.3",
+      "value": "Dark Prismarine Bricks"
+    },
+    "block.gregtech.stone_prismarine_dark_bricks_chiseled": {
+      "source_key": "gt.stone.prismarine.dark.6",
+      "value": "Chiseled Dark Prismarine"
+    },
+    "block.gregtech.stone_prismarine_dark_bricks_chiseled_slab": {
+      "source_key": "gt.stone.prismarine.dark.slab.0.6",
+      "value": "Chiseled Dark Prismarine Slab"
+    },
+    "block.gregtech.stone_prismarine_dark_bricks_cracked": {
+      "source_key": "gt.stone.prismarine.dark.4",
+      "value": "Cracked Dark Prismarine Bricks"
+    },
+    "block.gregtech.stone_prismarine_dark_bricks_cracked_slab": {
+      "source_key": "gt.stone.prismarine.dark.slab.0.4",
+      "value": "Cracked Dark Prismarine Bricks Slab"
+    },
+    "block.gregtech.stone_prismarine_dark_bricks_mossy": {
+      "source_key": "gt.stone.prismarine.dark.5",
+      "value": "Mossy Dark Prismarine Bricks"
+    },
+    "block.gregtech.stone_prismarine_dark_bricks_mossy_slab": {
+      "source_key": "gt.stone.prismarine.dark.slab.0.5",
+      "value": "Mossy Dark Prismarine Bricks Slab"
+    },
+    "block.gregtech.stone_prismarine_dark_bricks_redstone": {
+      "source_key": "gt.stone.prismarine.dark.9",
+      "value": "Redstoned Dark Prismarine Bricks"
+    },
+    "block.gregtech.stone_prismarine_dark_bricks_redstone_slab": {
+      "source_key": "gt.stone.prismarine.dark.slab.0.9",
+      "value": "Redstoned Dark Prismarine Bricks Slab"
+    },
+    "block.gregtech.stone_prismarine_dark_bricks_reinforced": {
+      "source_key": "gt.stone.prismarine.dark.8",
+      "value": "Reinforced Dark Prismarine Bricks"
+    },
+    "block.gregtech.stone_prismarine_dark_bricks_reinforced_slab": {
+      "source_key": "gt.stone.prismarine.dark.slab.0.8",
+      "value": "Reinforced Dark Prismarine Bricks Slab"
+    },
+    "block.gregtech.stone_prismarine_dark_bricks_slab": {
+      "source_key": "gt.stone.prismarine.dark.slab.0.3",
+      "value": "Dark Prismarine Bricks Slab"
+    },
+    "block.gregtech.stone_prismarine_dark_cobble": {
+      "source_key": "gt.stone.prismarine.dark.1",
+      "value": "Dark Prismarine Cobblestone"
+    },
+    "block.gregtech.stone_prismarine_dark_cobble_mossy": {
+      "source_key": "gt.stone.prismarine.dark.2",
+      "value": "Mossy Dark Prismarine Cobblestone"
+    },
+    "block.gregtech.stone_prismarine_dark_cobble_mossy_slab": {
+      "source_key": "gt.stone.prismarine.dark.slab.0.2",
+      "value": "Mossy Dark Prismarine Cobblestone Slab"
+    },
+    "block.gregtech.stone_prismarine_dark_cobble_slab": {
+      "source_key": "gt.stone.prismarine.dark.slab.0.1",
+      "value": "Dark Prismarine Cobblestone Slab"
+    },
+    "block.gregtech.stone_prismarine_dark_small_bricks": {
+      "source_key": "gt.stone.prismarine.dark.12",
+      "value": "Small Dark Prismarine Bricks"
+    },
+    "block.gregtech.stone_prismarine_dark_small_bricks_slab": {
+      "source_key": "gt.stone.prismarine.dark.slab.0.12",
+      "value": "Small Dark Prismarine Bricks Slab"
+    },
+    "block.gregtech.stone_prismarine_dark_small_tiles": {
+      "source_key": "gt.stone.prismarine.dark.11",
+      "value": "Small Dark Prismarine Tiles"
+    },
+    "block.gregtech.stone_prismarine_dark_small_tiles_slab": {
+      "source_key": "gt.stone.prismarine.dark.slab.0.11",
+      "value": "Small Dark Prismarine Tiles Slab"
+    },
+    "block.gregtech.stone_prismarine_dark_smooth": {
+      "source_key": "gt.stone.prismarine.dark.7",
+      "value": "Smooth Dark Prismarine"
+    },
+    "block.gregtech.stone_prismarine_dark_smooth_slab": {
+      "source_key": "gt.stone.prismarine.dark.slab.0.7",
+      "value": "Smooth Dark Prismarine Slab"
+    },
+    "block.gregtech.stone_prismarine_dark_square_bricks": {
+      "source_key": "gt.stone.prismarine.dark.15",
+      "value": "Dark Prismarine Square Bricks"
+    },
+    "block.gregtech.stone_prismarine_dark_square_bricks_slab": {
+      "source_key": "gt.stone.prismarine.dark.slab.0.15",
+      "value": "Dark Prismarine Square Bricks Slab"
+    },
+    "block.gregtech.stone_prismarine_dark_stone": {
+      "source_key": "gt.stone.prismarine.dark.0",
+      "value": "Dark Prismarine"
+    },
+    "block.gregtech.stone_prismarine_dark_stone_slab": {
+      "source_key": "gt.stone.prismarine.dark.slab.0.0",
+      "value": "Dark Prismarine Slab"
+    },
+    "block.gregtech.stone_prismarine_dark_tiles": {
+      "source_key": "gt.stone.prismarine.dark.10",
+      "value": "Dark Prismarine Tiles"
+    },
+    "block.gregtech.stone_prismarine_dark_tiles_slab": {
+      "source_key": "gt.stone.prismarine.dark.slab.0.10",
+      "value": "Dark Prismarine Tiles Slab"
+    },
+    "block.gregtech.stone_prismarine_dark_windmill_tiles_a": {
+      "source_key": "gt.stone.prismarine.dark.13",
+      "value": "Dark Prismarine Windmill Tiles A"
+    },
+    "block.gregtech.stone_prismarine_dark_windmill_tiles_a_slab": {
+      "source_key": "gt.stone.prismarine.dark.slab.0.13",
+      "value": "Dark Prismarine Windmill Tiles A Slab"
+    },
+    "block.gregtech.stone_prismarine_dark_windmill_tiles_b": {
+      "source_key": "gt.stone.prismarine.dark.14",
+      "value": "Dark Prismarine Windmill Tiles B"
+    },
+    "block.gregtech.stone_prismarine_dark_windmill_tiles_b_slab": {
+      "source_key": "gt.stone.prismarine.dark.slab.0.14",
+      "value": "Dark Prismarine Windmill Tiles B Slab"
+    },
+    "block.gregtech.stone_prismarine_light_bricks": {
+      "source_key": "gt.stone.prismarine.light.3",
+      "value": "Light Prismarine Bricks"
+    },
+    "block.gregtech.stone_prismarine_light_bricks_chiseled": {
+      "source_key": "gt.stone.prismarine.light.6",
+      "value": "Chiseled Light Prismarine"
+    },
+    "block.gregtech.stone_prismarine_light_bricks_chiseled_slab": {
+      "source_key": "gt.stone.prismarine.light.slab.0.6",
+      "value": "Chiseled Light Prismarine Slab"
+    },
+    "block.gregtech.stone_prismarine_light_bricks_cracked": {
+      "source_key": "gt.stone.prismarine.light.4",
+      "value": "Cracked Light Prismarine Bricks"
+    },
+    "block.gregtech.stone_prismarine_light_bricks_cracked_slab": {
+      "source_key": "gt.stone.prismarine.light.slab.0.4",
+      "value": "Cracked Light Prismarine Bricks Slab"
+    },
+    "block.gregtech.stone_prismarine_light_bricks_mossy": {
+      "source_key": "gt.stone.prismarine.light.5",
+      "value": "Mossy Light Prismarine Bricks"
+    },
+    "block.gregtech.stone_prismarine_light_bricks_mossy_slab": {
+      "source_key": "gt.stone.prismarine.light.slab.0.5",
+      "value": "Mossy Light Prismarine Bricks Slab"
+    },
+    "block.gregtech.stone_prismarine_light_bricks_redstone": {
+      "source_key": "gt.stone.prismarine.light.9",
+      "value": "Redstoned Light Prismarine Bricks"
+    },
+    "block.gregtech.stone_prismarine_light_bricks_redstone_slab": {
+      "source_key": "gt.stone.prismarine.light.slab.0.9",
+      "value": "Redstoned Light Prismarine Bricks Slab"
+    },
+    "block.gregtech.stone_prismarine_light_bricks_reinforced": {
+      "source_key": "gt.stone.prismarine.light.8",
+      "value": "Reinforced Light Prismarine Bricks"
+    },
+    "block.gregtech.stone_prismarine_light_bricks_reinforced_slab": {
+      "source_key": "gt.stone.prismarine.light.slab.0.8",
+      "value": "Reinforced Light Prismarine Bricks Slab"
+    },
+    "block.gregtech.stone_prismarine_light_bricks_slab": {
+      "source_key": "gt.stone.prismarine.light.slab.0.3",
+      "value": "Light Prismarine Bricks Slab"
+    },
+    "block.gregtech.stone_prismarine_light_cobble": {
+      "source_key": "gt.stone.prismarine.light.1",
+      "value": "Light Prismarine Cobblestone"
+    },
+    "block.gregtech.stone_prismarine_light_cobble_mossy": {
+      "source_key": "gt.stone.prismarine.light.2",
+      "value": "Mossy Light Prismarine Cobblestone"
+    },
+    "block.gregtech.stone_prismarine_light_cobble_mossy_slab": {
+      "source_key": "gt.stone.prismarine.light.slab.0.2",
+      "value": "Mossy Light Prismarine Cobblestone Slab"
+    },
+    "block.gregtech.stone_prismarine_light_cobble_slab": {
+      "source_key": "gt.stone.prismarine.light.slab.0.1",
+      "value": "Light Prismarine Cobblestone Slab"
+    },
+    "block.gregtech.stone_prismarine_light_small_bricks": {
+      "source_key": "gt.stone.prismarine.light.12",
+      "value": "Small Light Prismarine Bricks"
+    },
+    "block.gregtech.stone_prismarine_light_small_bricks_slab": {
+      "source_key": "gt.stone.prismarine.light.slab.0.12",
+      "value": "Small Light Prismarine Bricks Slab"
+    },
+    "block.gregtech.stone_prismarine_light_small_tiles": {
+      "source_key": "gt.stone.prismarine.light.11",
+      "value": "Small Light Prismarine Tiles"
+    },
+    "block.gregtech.stone_prismarine_light_small_tiles_slab": {
+      "source_key": "gt.stone.prismarine.light.slab.0.11",
+      "value": "Small Light Prismarine Tiles Slab"
+    },
+    "block.gregtech.stone_prismarine_light_smooth": {
+      "source_key": "gt.stone.prismarine.light.7",
+      "value": "Smooth Light Prismarine"
+    },
+    "block.gregtech.stone_prismarine_light_smooth_slab": {
+      "source_key": "gt.stone.prismarine.light.slab.0.7",
+      "value": "Smooth Light Prismarine Slab"
+    },
+    "block.gregtech.stone_prismarine_light_square_bricks": {
+      "source_key": "gt.stone.prismarine.light.15",
+      "value": "Light Prismarine Square Bricks"
+    },
+    "block.gregtech.stone_prismarine_light_square_bricks_slab": {
+      "source_key": "gt.stone.prismarine.light.slab.0.15",
+      "value": "Light Prismarine Square Bricks Slab"
+    },
+    "block.gregtech.stone_prismarine_light_stone": {
+      "source_key": "gt.stone.prismarine.light.0",
+      "value": "Light Prismarine"
+    },
+    "block.gregtech.stone_prismarine_light_stone_slab": {
+      "source_key": "gt.stone.prismarine.light.slab.0.0",
+      "value": "Light Prismarine Slab"
+    },
+    "block.gregtech.stone_prismarine_light_tiles": {
+      "source_key": "gt.stone.prismarine.light.10",
+      "value": "Light Prismarine Tiles"
+    },
+    "block.gregtech.stone_prismarine_light_tiles_slab": {
+      "source_key": "gt.stone.prismarine.light.slab.0.10",
+      "value": "Light Prismarine Tiles Slab"
+    },
+    "block.gregtech.stone_prismarine_light_windmill_tiles_a": {
+      "source_key": "gt.stone.prismarine.light.13",
+      "value": "Light Prismarine Windmill Tiles A"
+    },
+    "block.gregtech.stone_prismarine_light_windmill_tiles_a_slab": {
+      "source_key": "gt.stone.prismarine.light.slab.0.13",
+      "value": "Light Prismarine Windmill Tiles A Slab"
+    },
+    "block.gregtech.stone_prismarine_light_windmill_tiles_b": {
+      "source_key": "gt.stone.prismarine.light.14",
+      "value": "Light Prismarine Windmill Tiles B"
+    },
+    "block.gregtech.stone_prismarine_light_windmill_tiles_b_slab": {
+      "source_key": "gt.stone.prismarine.light.slab.0.14",
+      "value": "Light Prismarine Windmill Tiles B Slab"
+    },
+    "block.gregtech.stone_quartzite_bricks": {
+      "source_key": "gt.stone.quartzite.3",
+      "value": "Quartzite Bricks"
+    },
+    "block.gregtech.stone_quartzite_bricks_chiseled": {
+      "source_key": "gt.stone.quartzite.6",
+      "value": "Chiseled Quartzite"
+    },
+    "block.gregtech.stone_quartzite_bricks_chiseled_slab": {
+      "source_key": "gt.stone.quartzite.slab.0.6",
+      "value": "Chiseled Quartzite Slab"
+    },
+    "block.gregtech.stone_quartzite_bricks_cracked": {
+      "source_key": "gt.stone.quartzite.4",
+      "value": "Cracked Quartzite Bricks"
+    },
+    "block.gregtech.stone_quartzite_bricks_cracked_slab": {
+      "source_key": "gt.stone.quartzite.slab.0.4",
+      "value": "Cracked Quartzite Bricks Slab"
+    },
+    "block.gregtech.stone_quartzite_bricks_mossy": {
+      "source_key": "gt.stone.quartzite.5",
+      "value": "Mossy Quartzite Bricks"
+    },
+    "block.gregtech.stone_quartzite_bricks_mossy_slab": {
+      "source_key": "gt.stone.quartzite.slab.0.5",
+      "value": "Mossy Quartzite Bricks Slab"
+    },
+    "block.gregtech.stone_quartzite_bricks_redstone": {
+      "source_key": "gt.stone.quartzite.9",
+      "value": "Redstoned Quartzite Bricks"
+    },
+    "block.gregtech.stone_quartzite_bricks_redstone_slab": {
+      "source_key": "gt.stone.quartzite.slab.0.9",
+      "value": "Redstoned Quartzite Bricks Slab"
+    },
+    "block.gregtech.stone_quartzite_bricks_reinforced": {
+      "source_key": "gt.stone.quartzite.8",
+      "value": "Reinforced Quartzite Bricks"
+    },
+    "block.gregtech.stone_quartzite_bricks_reinforced_slab": {
+      "source_key": "gt.stone.quartzite.slab.0.8",
+      "value": "Reinforced Quartzite Bricks Slab"
+    },
+    "block.gregtech.stone_quartzite_bricks_slab": {
+      "source_key": "gt.stone.quartzite.slab.0.3",
+      "value": "Quartzite Bricks Slab"
+    },
+    "block.gregtech.stone_quartzite_cobble": {
+      "source_key": "gt.stone.quartzite.1",
+      "value": "Quartzite Cobblestone"
+    },
+    "block.gregtech.stone_quartzite_cobble_mossy": {
+      "source_key": "gt.stone.quartzite.2",
+      "value": "Mossy Quartzite Cobblestone"
+    },
+    "block.gregtech.stone_quartzite_cobble_mossy_slab": {
+      "source_key": "gt.stone.quartzite.slab.0.2",
+      "value": "Mossy Quartzite Cobblestone Slab"
+    },
+    "block.gregtech.stone_quartzite_cobble_slab": {
+      "source_key": "gt.stone.quartzite.slab.0.1",
+      "value": "Quartzite Cobblestone Slab"
+    },
+    "block.gregtech.stone_quartzite_small_bricks": {
+      "source_key": "gt.stone.quartzite.12",
+      "value": "Small Quartzite Bricks"
+    },
+    "block.gregtech.stone_quartzite_small_bricks_slab": {
+      "source_key": "gt.stone.quartzite.slab.0.12",
+      "value": "Small Quartzite Bricks Slab"
+    },
+    "block.gregtech.stone_quartzite_small_tiles": {
+      "source_key": "gt.stone.quartzite.11",
+      "value": "Small Quartzite Tiles"
+    },
+    "block.gregtech.stone_quartzite_small_tiles_slab": {
+      "source_key": "gt.stone.quartzite.slab.0.11",
+      "value": "Small Quartzite Tiles Slab"
+    },
+    "block.gregtech.stone_quartzite_smooth": {
+      "source_key": "gt.stone.quartzite.7",
+      "value": "Smooth Quartzite"
+    },
+    "block.gregtech.stone_quartzite_smooth_slab": {
+      "source_key": "gt.stone.quartzite.slab.0.7",
+      "value": "Smooth Quartzite Slab"
+    },
+    "block.gregtech.stone_quartzite_square_bricks": {
+      "source_key": "gt.stone.quartzite.15",
+      "value": "Quartzite Square Bricks"
+    },
+    "block.gregtech.stone_quartzite_square_bricks_slab": {
+      "source_key": "gt.stone.quartzite.slab.0.15",
+      "value": "Quartzite Square Bricks Slab"
+    },
+    "block.gregtech.stone_quartzite_stone": {
+      "source_key": "gt.stone.quartzite.0",
+      "value": "Quartzite"
+    },
+    "block.gregtech.stone_quartzite_stone_slab": {
+      "source_key": "gt.stone.quartzite.slab.0.0",
+      "value": "Quartzite Slab"
+    },
+    "block.gregtech.stone_quartzite_tiles": {
+      "source_key": "gt.stone.quartzite.10",
+      "value": "Quartzite Tiles"
+    },
+    "block.gregtech.stone_quartzite_tiles_slab": {
+      "source_key": "gt.stone.quartzite.slab.0.10",
+      "value": "Quartzite Tiles Slab"
+    },
+    "block.gregtech.stone_quartzite_windmill_tiles_a": {
+      "source_key": "gt.stone.quartzite.13",
+      "value": "Quartzite Windmill Tiles A"
+    },
+    "block.gregtech.stone_quartzite_windmill_tiles_a_slab": {
+      "source_key": "gt.stone.quartzite.slab.0.13",
+      "value": "Quartzite Windmill Tiles A Slab"
+    },
+    "block.gregtech.stone_quartzite_windmill_tiles_b": {
+      "source_key": "gt.stone.quartzite.14",
+      "value": "Quartzite Windmill Tiles B"
+    },
+    "block.gregtech.stone_quartzite_windmill_tiles_b_slab": {
+      "source_key": "gt.stone.quartzite.slab.0.14",
+      "value": "Quartzite Windmill Tiles B Slab"
+    },
+    "block.gregtech.stone_shale_bricks": {
+      "source_key": "gt.stone.shale.3",
+      "value": "Shale Bricks"
+    },
+    "block.gregtech.stone_shale_bricks_chiseled": {
+      "source_key": "gt.stone.shale.6",
+      "value": "Chiseled Shale"
+    },
+    "block.gregtech.stone_shale_bricks_chiseled_slab": {
+      "source_key": "gt.stone.shale.slab.0.6",
+      "value": "Chiseled Shale Slab"
+    },
+    "block.gregtech.stone_shale_bricks_cracked": {
+      "source_key": "gt.stone.shale.4",
+      "value": "Cracked Shale Bricks"
+    },
+    "block.gregtech.stone_shale_bricks_cracked_slab": {
+      "source_key": "gt.stone.shale.slab.0.4",
+      "value": "Cracked Shale Bricks Slab"
+    },
+    "block.gregtech.stone_shale_bricks_mossy": {
+      "source_key": "gt.stone.shale.5",
+      "value": "Mossy Shale Bricks"
+    },
+    "block.gregtech.stone_shale_bricks_mossy_slab": {
+      "source_key": "gt.stone.shale.slab.0.5",
+      "value": "Mossy Shale Bricks Slab"
+    },
+    "block.gregtech.stone_shale_bricks_redstone": {
+      "source_key": "gt.stone.shale.9",
+      "value": "Redstoned Shale Bricks"
+    },
+    "block.gregtech.stone_shale_bricks_redstone_slab": {
+      "source_key": "gt.stone.shale.slab.0.9",
+      "value": "Redstoned Shale Bricks Slab"
+    },
+    "block.gregtech.stone_shale_bricks_reinforced": {
+      "source_key": "gt.stone.shale.8",
+      "value": "Reinforced Shale Bricks"
+    },
+    "block.gregtech.stone_shale_bricks_reinforced_slab": {
+      "source_key": "gt.stone.shale.slab.0.8",
+      "value": "Reinforced Shale Bricks Slab"
+    },
+    "block.gregtech.stone_shale_bricks_slab": {
+      "source_key": "gt.stone.shale.slab.0.3",
+      "value": "Shale Bricks Slab"
+    },
+    "block.gregtech.stone_shale_cobble": {
+      "source_key": "gt.stone.shale.1",
+      "value": "Shale Cobblestone"
+    },
+    "block.gregtech.stone_shale_cobble_mossy": {
+      "source_key": "gt.stone.shale.2",
+      "value": "Mossy Shale Cobblestone"
+    },
+    "block.gregtech.stone_shale_cobble_mossy_slab": {
+      "source_key": "gt.stone.shale.slab.0.2",
+      "value": "Mossy Shale Cobblestone Slab"
+    },
+    "block.gregtech.stone_shale_cobble_slab": {
+      "source_key": "gt.stone.shale.slab.0.1",
+      "value": "Shale Cobblestone Slab"
+    },
+    "block.gregtech.stone_shale_small_bricks": {
+      "source_key": "gt.stone.shale.12",
+      "value": "Small Shale Bricks"
+    },
+    "block.gregtech.stone_shale_small_bricks_slab": {
+      "source_key": "gt.stone.shale.slab.0.12",
+      "value": "Small Shale Bricks Slab"
+    },
+    "block.gregtech.stone_shale_small_tiles": {
+      "source_key": "gt.stone.shale.11",
+      "value": "Small Shale Tiles"
+    },
+    "block.gregtech.stone_shale_small_tiles_slab": {
+      "source_key": "gt.stone.shale.slab.0.11",
+      "value": "Small Shale Tiles Slab"
+    },
+    "block.gregtech.stone_shale_smooth": {
+      "source_key": "gt.stone.shale.7",
+      "value": "Smooth Shale"
+    },
+    "block.gregtech.stone_shale_smooth_slab": {
+      "source_key": "gt.stone.shale.slab.0.7",
+      "value": "Smooth Shale Slab"
+    },
+    "block.gregtech.stone_shale_square_bricks": {
+      "source_key": "gt.stone.shale.15",
+      "value": "Shale Square Bricks"
+    },
+    "block.gregtech.stone_shale_square_bricks_slab": {
+      "source_key": "gt.stone.shale.slab.0.15",
+      "value": "Shale Square Bricks Slab"
+    },
+    "block.gregtech.stone_shale_stone": {
+      "source_key": "gt.stone.shale.0",
+      "value": "Shale"
+    },
+    "block.gregtech.stone_shale_stone_slab": {
+      "source_key": "gt.stone.shale.slab.0.0",
+      "value": "Shale Slab"
+    },
+    "block.gregtech.stone_shale_tiles": {
+      "source_key": "gt.stone.shale.10",
+      "value": "Shale Tiles"
+    },
+    "block.gregtech.stone_shale_tiles_slab": {
+      "source_key": "gt.stone.shale.slab.0.10",
+      "value": "Shale Tiles Slab"
+    },
+    "block.gregtech.stone_shale_windmill_tiles_a": {
+      "source_key": "gt.stone.shale.13",
+      "value": "Shale Windmill Tiles A"
+    },
+    "block.gregtech.stone_shale_windmill_tiles_a_slab": {
+      "source_key": "gt.stone.shale.slab.0.13",
+      "value": "Shale Windmill Tiles A Slab"
+    },
+    "block.gregtech.stone_shale_windmill_tiles_b": {
+      "source_key": "gt.stone.shale.14",
+      "value": "Shale Windmill Tiles B"
+    },
+    "block.gregtech.stone_shale_windmill_tiles_b_slab": {
+      "source_key": "gt.stone.shale.slab.0.14",
+      "value": "Shale Windmill Tiles B Slab"
+    },
+    "block.gregtech.stone_slate_bricks": {
+      "source_key": "gt.stone.slate.3",
+      "value": "Slate Bricks"
+    },
+    "block.gregtech.stone_slate_bricks_chiseled": {
+      "source_key": "gt.stone.slate.6",
+      "value": "Chiseled Slate"
+    },
+    "block.gregtech.stone_slate_bricks_chiseled_slab": {
+      "source_key": "gt.stone.slate.slab.0.6",
+      "value": "Chiseled Slate Slab"
+    },
+    "block.gregtech.stone_slate_bricks_cracked": {
+      "source_key": "gt.stone.slate.4",
+      "value": "Cracked Slate Bricks"
+    },
+    "block.gregtech.stone_slate_bricks_cracked_slab": {
+      "source_key": "gt.stone.slate.slab.0.4",
+      "value": "Cracked Slate Bricks Slab"
+    },
+    "block.gregtech.stone_slate_bricks_mossy": {
+      "source_key": "gt.stone.slate.5",
+      "value": "Mossy Slate Bricks"
+    },
+    "block.gregtech.stone_slate_bricks_mossy_slab": {
+      "source_key": "gt.stone.slate.slab.0.5",
+      "value": "Mossy Slate Bricks Slab"
+    },
+    "block.gregtech.stone_slate_bricks_redstone": {
+      "source_key": "gt.stone.slate.9",
+      "value": "Redstoned Slate Bricks"
+    },
+    "block.gregtech.stone_slate_bricks_redstone_slab": {
+      "source_key": "gt.stone.slate.slab.0.9",
+      "value": "Redstoned Slate Bricks Slab"
+    },
+    "block.gregtech.stone_slate_bricks_reinforced": {
+      "source_key": "gt.stone.slate.8",
+      "value": "Reinforced Slate Bricks"
+    },
+    "block.gregtech.stone_slate_bricks_reinforced_slab": {
+      "source_key": "gt.stone.slate.slab.0.8",
+      "value": "Reinforced Slate Bricks Slab"
+    },
+    "block.gregtech.stone_slate_bricks_slab": {
+      "source_key": "gt.stone.slate.slab.0.3",
+      "value": "Slate Bricks Slab"
+    },
+    "block.gregtech.stone_slate_cobble": {
+      "source_key": "gt.stone.slate.1",
+      "value": "Slate Cobblestone"
+    },
+    "block.gregtech.stone_slate_cobble_mossy": {
+      "source_key": "gt.stone.slate.2",
+      "value": "Mossy Slate Cobblestone"
+    },
+    "block.gregtech.stone_slate_cobble_mossy_slab": {
+      "source_key": "gt.stone.slate.slab.0.2",
+      "value": "Mossy Slate Cobblestone Slab"
+    },
+    "block.gregtech.stone_slate_cobble_slab": {
+      "source_key": "gt.stone.slate.slab.0.1",
+      "value": "Slate Cobblestone Slab"
+    },
+    "block.gregtech.stone_slate_small_bricks": {
+      "source_key": "gt.stone.slate.12",
+      "value": "Small Slate Bricks"
+    },
+    "block.gregtech.stone_slate_small_bricks_slab": {
+      "source_key": "gt.stone.slate.slab.0.12",
+      "value": "Small Slate Bricks Slab"
+    },
+    "block.gregtech.stone_slate_small_tiles": {
+      "source_key": "gt.stone.slate.11",
+      "value": "Small Slate Tiles"
+    },
+    "block.gregtech.stone_slate_small_tiles_slab": {
+      "source_key": "gt.stone.slate.slab.0.11",
+      "value": "Small Slate Tiles Slab"
+    },
+    "block.gregtech.stone_slate_smooth": {
+      "source_key": "gt.stone.slate.7",
+      "value": "Smooth Slate"
+    },
+    "block.gregtech.stone_slate_smooth_slab": {
+      "source_key": "gt.stone.slate.slab.0.7",
+      "value": "Smooth Slate Slab"
+    },
+    "block.gregtech.stone_slate_square_bricks": {
+      "source_key": "gt.stone.slate.15",
+      "value": "Slate Square Bricks"
+    },
+    "block.gregtech.stone_slate_square_bricks_slab": {
+      "source_key": "gt.stone.slate.slab.0.15",
+      "value": "Slate Square Bricks Slab"
+    },
+    "block.gregtech.stone_slate_stone": {
+      "source_key": "gt.stone.slate.0",
+      "value": "Slate"
+    },
+    "block.gregtech.stone_slate_stone_slab": {
+      "source_key": "gt.stone.slate.slab.0.0",
+      "value": "Slate Slab"
+    },
+    "block.gregtech.stone_slate_tiles": {
+      "source_key": "gt.stone.slate.10",
+      "value": "Slate Tiles"
+    },
+    "block.gregtech.stone_slate_tiles_slab": {
+      "source_key": "gt.stone.slate.slab.0.10",
+      "value": "Slate Tiles Slab"
+    },
+    "block.gregtech.stone_slate_windmill_tiles_a": {
+      "source_key": "gt.stone.slate.13",
+      "value": "Slate Windmill Tiles A"
+    },
+    "block.gregtech.stone_slate_windmill_tiles_a_slab": {
+      "source_key": "gt.stone.slate.slab.0.13",
+      "value": "Slate Windmill Tiles A Slab"
+    },
+    "block.gregtech.stone_slate_windmill_tiles_b": {
+      "source_key": "gt.stone.slate.14",
+      "value": "Slate Windmill Tiles B"
+    },
+    "block.gregtech.stone_slate_windmill_tiles_b_slab": {
+      "source_key": "gt.stone.slate.slab.0.14",
+      "value": "Slate Windmill Tiles B Slab"
     },
     "block.gregtech.storage_quadcore_processor_unit": {
       "source_key": "gt.multitileentity.18203",
