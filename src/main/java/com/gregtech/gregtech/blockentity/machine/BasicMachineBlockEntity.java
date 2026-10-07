@@ -830,7 +830,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         }
     }
 
-    private void autoOutputItems(Level level, BlockPos pos, int relDir) {
+    protected void autoOutputItems(Level level, BlockPos pos, int relDir) {
         Direction absolute = relativeToAbsolute(relDir);
         if(isFaceShuttered(absolute))return;
         BlockPos adj = pos.relative(absolute);
@@ -883,7 +883,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         }
     }
 
-    private void autoOutputFluids(Level level, BlockPos pos, int relDir) {
+    protected void autoOutputFluids(Level level, BlockPos pos, int relDir) {
         Direction absolute = relativeToAbsolute(relDir);
         if(isFaceShuttered(absolute))return;
         IFluidHandler target = automaticFluidOutputTarget(level,pos,absolute);

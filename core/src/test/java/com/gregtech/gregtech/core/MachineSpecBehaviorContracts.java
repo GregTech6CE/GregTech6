@@ -34,6 +34,7 @@ public final class MachineSpecBehaviorContracts {
         assertions += CrucibleHazardContracts.verify();
         originalTankTooltipsAndControllerMaterials();
         originalProcessControllerParameters();
+        originalCryoDistillationParametersAndOutlets();
         originalMachineMaterials();
         originalBlastTooltips();
         originalHarvestProperties();
@@ -118,6 +119,41 @@ public final class MachineSpecBehaviorContracts {
                 && drill.unitKey().equals("gt.td.short.energy.kinetic_rotation"),"17999 source tooltip packet and aggregate limits");
         check(com.gregtech.gregtech.content.multiblock.OriginalControllerTooltipData.basicFamily("oven")==null,
                 "ordinary basic machine does not acquire specialized multiblock rows");
+    }
+
+    private static void originalCryoDistillationParametersAndOutlets() {
+        var p=com.gregtech.gregtech.content.multiblock.OriginalMultiblockMachineParameters.cryoDistillationTower();
+        check(p.id().equals("cryo_distillation_main") && p.machineName().equals("cryodistillationtower")
+                && p.energyType().equals("CU") && p.energyIn()==512 && p.energyInMin()==1 && p.energyInMax()==1024,
+                "17111 original CU512 explicit1..1024 range, never old HU splitter");
+        check(p.faceConfig().itemInputs()==63 && p.faceConfig().itemOutputs()==63 && p.faceConfig().fluidInputs()==63
+                && p.faceConfig().fluidOutputs()==63 && p.faceConfig().energyInputs()==63,
+                "17111 original inherited any-face defaults");
+        check(p.faceConfig().itemAutoInput()==-1 && p.faceConfig().fluidAutoInput()==-1
+                && p.faceConfig().itemAutoOutput()==5 && p.faceConfig().fluidAutoOutput()==5,
+                "17111 source declares back auto outputs only");
+        long u=GTValues.U;
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("cryo_distillation_main").orElseThrow(),
+                java.util.Map.of("Cu",72*u,"StainlessSteel",31*u/9));
+        var cells=com.gregtech.gregtech.content.multiblock.SharedDistillationTowerStructure.CELLS;
+        check(cells.size()==80 && cells.stream().filter(c->c.up()<0 && c.part()==18101).count()==9
+                && cells.stream().filter(c->c.up()==0 && c.part()==18102).count()==8
+                && cells.stream().filter(c->c.up()>0 && c.part()==18102).count()==63,
+                "17111 full solid tower: nine transmitters, eight bottom parts, seven full9-part upper layers");
+        var cryo=java.util.Map.of("helium",7,"neon",6,"nitrogen",5,"oxygen",4,"argon",3,
+                "carbondioxide",2,"sulfurdioxide",2,"krypton",1,"xenon",1,"radon",1);
+        for(var entry:cryo.entrySet()) check(com.gregtech.gregtech.content.multiblock.OriginalDistillationOutputRules.fluidHeight(true,entry.getKey())==entry.getValue(),
+                "17111 original species rear output height "+entry.getKey());
+        var normal=java.util.Map.ofEntries(java.util.Map.entry("propane",7),java.util.Map.entry("methane",7),java.util.Map.entry("butane",6),
+                java.util.Map.entry("petrol",5),java.util.Map.entry("gasoline",5),java.util.Map.entry("bioethanol",5),
+                java.util.Map.entry("kerosene",4),java.util.Map.entry("kerosine",4),java.util.Map.entry("glycerol",4),
+                java.util.Map.entry("diesel",3),java.util.Map.entry("biodiesel",3),java.util.Map.entry("fuel",2),
+                java.util.Map.entry("fueloil",2),java.util.Map.entry("biofuel",2),java.util.Map.entry("water",1));
+        for(var entry:normal.entrySet()) check(com.gregtech.gregtech.content.multiblock.OriginalDistillationOutputRules.fluidHeight(false,entry.getKey())==entry.getValue(),
+                "17101 original rear output height and source aliases "+entry.getKey());
+        check(com.gregtech.gregtech.content.multiblock.OriginalDistillationOutputRules.fluidHeight(true,"HELIUM")==7
+                && com.gregtech.gregtech.content.multiblock.OriginalDistillationOutputRules.fluidHeight(true,null)==1,
+                "original FL.is is case insensitive; unknown species uses bottom fluid outlet");
     }
 
     private static void originalMachineMaterials() {

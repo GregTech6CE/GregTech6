@@ -11267,5 +11267,12 @@
   "gt.tooltip.multiblock.cokeoven.2": "Main Block centered on Side and facing outwards",
   "gt.tooltip.multiblock.distillationtower.4": "Outputs automatically to the Holes on the Backside",
   "gt.tooltip.multiblock.distillationtower.5": "Bottom Hole is for outputting all Items",
-  "gt.tooltip.multiblock.distillationtower.6": "Input only possible at Bottom Layer of Tower"
+  "gt.tooltip.multiblock.distillationtower.6": "Input only possible at Bottom Layer of Tower",
+  "gt.recipe.cryodistillationtower": "Cryo Distillation Tower",
+  "gt.tooltip.multiblock.cryodistillationtower.1": "3x3 Base of Heat Transmitters. They can also transfer Cold. ;)",
+  "gt.tooltip.multiblock.cryodistillationtower.2": "3x3x8 of Distillation Tower Parts",
+  "gt.tooltip.multiblock.cryodistillationtower.3": "Main centered on Side-Bottom of Tower facing outwards",
+  "gt.tooltip.multiblock.cryodistillationtower.4": "Outputs automatically to the Holes on the Backside",
+  "gt.tooltip.multiblock.cryodistillationtower.5": "Bottom Hole is for outputting all Items",
+  "gt.tooltip.multiblock.cryodistillationtower.6": "Input only possible at Bottom Layer of Tower"
 }

@@ -20,7 +20,7 @@ final class ProcessControllerDeliveryChecks {
     private ProcessControllerDeliveryChecks() {}
     static JsonObject verify() {
         var paths=Map.of("coke_oven_main",Family.COKE_OVEN,"distillation_tower_main",Family.DISTILLATION_TOWER,
-                "logistics_core",Family.LOGISTICS_CORE,"bedrock_mining_drill_controller",Family.BEDROCK_DRILL);
+                "cryo_distillation_main",Family.CRYO_DISTILLATION_TOWER,"logistics_core",Family.LOGISTICS_CORE,"bedrock_mining_drill_controller",Family.BEDROCK_DRILL);
         for(var entry:paths.entrySet()) {
             var id=ResourceLocation.parse("gregtech:"+entry.getKey());var family=entry.getValue();
             var block=BuiltInRegistries.BLOCK.get(id);var stack=new ItemStack(block);
@@ -54,6 +54,16 @@ final class ProcessControllerDeliveryChecks {
                         machine.newBlockEntity(BlockPos.ZERO,block.defaultBlockState());
                 require(entity.getEnergySizeInputMin(spec.energyTag(),Direction.NORTH)==spec.energyInMin()
                         && entity.getEnergySizeInputMax(spec.energyTag(),Direction.NORTH)==spec.energyInMax(),"actual native source energy range "+id);
+                if(family==Family.CRYO_DISTILLATION_TOWER) {
+                    require(spec.energyTag()==com.gregtech.gregtech.data.GregTechTags.Energy.CU
+                            && entity.getTanksInput().length==1 && entity.getTanksOutput().length==9,
+                            "original cold recipe map has one fluid input and nine outputs "+id);
+                    require(count(normal,"gt.td.short.energy.cryo")==1 && count(normal,"gt.td.short.energy.heat")==0,
+                            "source cold-energy unit, not HU "+id);
+                    for(var tank:entity.getTanksOutput()) require(tank.baseCapacity()==Long.MAX_VALUE,"source unlimited output tanks "+id);
+                    require(com.gregtech.gregtech.content.multiblock.ControllerStructureLayouts.cells(block).size()==80,
+                            "JEI/EMI uses actual full tower rather than obsolete hollow5-layer preview "+id);
+                }
                 if(family==Family.COKE_OVEN) {
                     require(count(normal,"gt.lang.energy.input")==0 && count(normal,"gt.lang.requirement.ignite.fire")==1
                             && count(normal,"gt.lang.fluid.output")==1 && count(normal,"gt.lang.item.input")==1
@@ -78,7 +88,7 @@ final class ProcessControllerDeliveryChecks {
             }
         }
         var result=new JsonObject();result.addProperty("originalControllers",paths.size());
-        result.addProperty("exactMaterialRecords",paths.size());result.addProperty("sourceStructureRows",22);
+        result.addProperty("exactMaterialRecords",paths.size());result.addProperty("sourceStructureRows",28);
         result.addProperty("scope","actual installed tooltip methods/events and native parameter methods; no world tick/restart claim");return result;
     }
     private static long count(List<Component> lines,String key) {return lines.stream().filter(c->CommonBlockTooltips.containsKey(List.of(c),key)).count();}

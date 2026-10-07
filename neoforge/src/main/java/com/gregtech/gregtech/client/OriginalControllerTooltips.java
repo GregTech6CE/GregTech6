@@ -19,11 +19,12 @@ public final class OriginalControllerTooltips {
             add(lines,keys.get(i),family==Family.LOGISTICS_CORE && i>=4 ? ChatFormatting.YELLOW : ChatFormatting.WHITE);
     }
 
-    /** These two source classes inherit basic-machine text through their registered item. */
+    /** These source classes inherit basic-machine text through their registered item. */
     public static void basic(BasicMachineSpec spec, List<Component> lines) {
         boolean coke=OriginalControllerTooltipData.basicFamily(spec.machineName())==Family.COKE_OVEN;
+        boolean cryo=OriginalControllerTooltipData.basicFamily(spec.machineName())==Family.CRYO_DISTILLATION_TOWER;
         add(lines,"gt.lang.recipes",ChatFormatting.AQUA).append(": ")
-                .append(Component.translatable(coke ? "gt.recipe.cokeoven" : "gt.recipe.distillationtower").withStyle(ChatFormatting.WHITE))
+                .append(Component.translatable(coke ? "gt.recipe.cokeoven" : cryo ? "gt.recipe.cryodistillationtower" : "gt.recipe.distillationtower").withStyle(ChatFormatting.WHITE))
                 .append(Component.literal(spec.parallelLimit()>1 ? " (up to "+spec.parallelLimit()+"x processed per run)" : "")
                         .withStyle(ChatFormatting.WHITE));
         if(!coke) add(lines,"gt.lang.cheap.overclocking",ChatFormatting.YELLOW);
@@ -36,7 +37,7 @@ public final class OriginalControllerTooltips {
         } else {
             var line=add(lines,"gt.lang.energy.input",ChatFormatting.GREEN).append(": ")
                     .append(Component.literal(spec.energyIn()+" ").withStyle(ChatFormatting.WHITE))
-                    .append(Component.translatable("gt.td.short.energy.heat").withStyle(ChatFormatting.RED))
+                    .append(Component.translatable(cryo ? "gt.td.short.energy.cryo" : "gt.td.short.energy.heat").withStyle(cryo ? ChatFormatting.AQUA : ChatFormatting.RED))
                     .append(Component.literal("/t (up to "+spec.energyInMax()+", ").withStyle(ChatFormatting.WHITE));
             int index=0;
             for(var key:List.of("gt.lang.face.bottom","gt.lang.face.top","gt.lang.face.left","gt.lang.face.front",
