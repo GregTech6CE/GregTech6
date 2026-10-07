@@ -52,13 +52,21 @@ def format_arguments(value):
     return used
 
 
-def check_english(repo, english, chinese, aliases):
+def check_english(repo, english, chinese, aliases, source):
     pinned = read_json(repo / CONFIG_PATH / 'english_source.json')['values']
     changed = [key for key, row in pinned.items() if english.get(key) != row['value']]
     if changed:
         raise ValueError('English differs from original source declarations: ' + ', '.join(changed[:12]))
-    changed_bindings = [key for key, row in pinned.items()
-                        if aliases.get(key, key) != row['source_key']]
+    changed_bindings = []
+    english_only = 0
+    for key, row in pinned.items():
+        if row.get('chinese_source_missing'):
+            if (row['chinese_source_missing'] is not True or key in aliases or key in source
+                    or row['source_key'] in source or chinese.get(key) != english.get(key)):
+                changed_bindings.append(key)
+            english_only += 1
+        elif aliases.get(key, key) != row['source_key']:
+            changed_bindings.append(key)
     if changed_bindings:
         raise ValueError('English/Chinese original identities differ: ' + ', '.join(changed_bindings[:12]))
     formats = 0
@@ -76,6 +84,7 @@ def check_english(repo, english, chinese, aliases):
             raise ValueError(f'English/Chinese format arguments differ for {key}: {expected} != {actual}')
         formats += bool(expected)
     return {'keys': len(english), 'exact_original_declarations': len(pinned),
+            'original_english_without_chinese_source': english_only,
             'formatted_keys': formats, 'intentional_empty_tooltips': sum(not v for v in english.values())}
 
 
@@ -164,7 +173,7 @@ def synchronize(repo=ROOT, *, write=False, external=None):
     target = repo / LANG_PATH / 'zh_cn.json'
     current = read_json(target)
     delta = differences(expected, current)
-    english_report = check_english(repo, english, expected, aliases)
+    english_report = check_english(repo, english, expected, aliases, source)
     if any(delta.values()):
         if not write:
             raise ValueError('Chinese differs from exact source/aliases/English fallback: ' +

@@ -89,6 +89,7 @@ final class LanguageDeliveryChecks {
             int bushEnglish=verifyBushes(false);
             int coinsEnglish=verifyCoins(false);
             int technologyEnglish=verifyTechnologyNames(false);
+            int wiresOresEnglish=verifyAdditionalBlockNames();
             manager.setSelected("zh_cn");
             manager.onResourceManagerReload(client.getResourceManager());
             int machineNamesChinese=verifyMachineNames();
@@ -97,6 +98,7 @@ final class LanguageDeliveryChecks {
             int bushChinese=verifyBushes(true);
             int coinsChinese=verifyCoins(true);
             int technologyChinese=verifyTechnologyNames(true);
+            int wiresOresChinese=verifyAdditionalBlockNames();
             var nameInventory=recordNameInventory(client,englishSnapshot);
             require(Language.getInstance().has("gt.multiitem.bumblebee.0"), "Original Chinese resource is loaded");
             int names=0, nonempty=0, empty=0;
@@ -212,6 +214,8 @@ final class LanguageDeliveryChecks {
             report.addProperty("bushNamesAndOutputsChinese",bushChinese);
             report.addProperty("coinNamesAndMaterialsEnglish",coinsEnglish);
             report.addProperty("coinNamesAndMaterialsChinese",coinsChinese);
+            report.addProperty("additionalSourceBlockNamesEnglish",wiresOresEnglish);
+            report.addProperty("additionalSourceBlockNamesChinese",wiresOresChinese);
             report.addProperty("sourceTechnologyNamesEnglish",technologyEnglish);
             report.addProperty("sourceTechnologyNamesChinese",technologyChinese);
             report.addProperty("chineseItemNames",englishSnapshot.size());
@@ -252,6 +256,27 @@ final class LanguageDeliveryChecks {
         }
         require(mismatches.isEmpty(),"Installed colored construction names: "+mismatches);
         return checked;
+    }
+    private static int verifyAdditionalBlockNames() {
+        var ids=new ArrayList<String>();
+        for(var wire:com.gregtech.gregtech.content.energy.WireCatalog.specifications())
+            ids.add(com.gregtech.gregtech.content.energy.WireCatalog.registryId(wire));
+        for(var family:com.gregtech.gregtech.content.energy.SignalWireCatalog.families()) {
+            ids.add("wire_01_"+family.name());ids.add("cable_01_"+family.name());
+        }
+        for(var icon:com.gregtech.gregtech.block.SpecialOreDefinitions.ORDERED_ICONS)
+            ids.add(icon.startsWith("ore_")?"block_"+icon:icon);
+        for(String tier:new String[]{"lv","mv","hv","ev","iv"})
+            for(String family:new String[]{"co2_laser","flux_laser","laser_absorber"})ids.add(family+"_"+tier);
+        ids.addAll(List.of("zpm","zpm_discharger_basic","zpm_discharger_advanced","zpm_discharger_elite",
+                "ingot_pile","plate_pile","plate_gem_pile","coin_pile","sandwich_block","sensor_kilogibblometer"));
+        for(String id:ids) {
+            var stack=item(id);String key="block.gregtech."+id;
+            require(stack.getDescriptionId().equals(key),"Source-bound registry description identity "+id);
+            // Exact English/source-Chinese resource contents are independently pinned by the language gate.
+            require(stack.getHoverName().getString().equals(original(key)),"Installed complete source block name "+id);
+        }
+        require(ids.size()==688,"Complete wire, special-ore and utility catalog");return ids.size();
     }
     private static void verifySourceTechnology(String id, String source, boolean chinese) {
         var stack=item(id);String key=stack.getDescriptionId(),expected=original(key);

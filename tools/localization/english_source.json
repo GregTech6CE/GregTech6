@@ -114,6 +114,10 @@
       "sha256": "0e9aa956b807d8390b20dd70f224b2b8d0a7be8df25fe66660abffda8b88069b"
     },
     {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\connectors\\MultiTileEntityWireElectric.java",
+      "sha256": "60dd3bf9147a220ab327a1aed3f0081382678eb0d6190e865e84e1b7dae89724"
+    },
+    {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\delegate\\ITileEntityDelegating.java",
       "sha256": "dc042adafa3ca5871a83bee83e7560031c8c1973e03ed2b39439d8b228616004"
     },
@@ -190,8 +194,20 @@
       "sha256": "94e4db28baae9208fb086002af0e7b2ac56192871ebd73a8cd93dc9d5a43656f"
     },
     {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\stone\\BlockCrystalOres.java",
+      "sha256": "315c791a50f74271981a25dc726f34aa1eec9096a8e8cefacf6e7f9b9e176d06"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\stone\\BlockRockOres.java",
+      "sha256": "0519a79e90046e2f821b1b20571d14f5d2df45580035b7fed4f8756c31944c3b"
+    },
+    {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\stone\\BlockStonesGT.java",
       "sha256": "f2e28484f472296620bb5d014553786d39a1b230cc42515a039e6f6b7470eda3"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\stone\\BlockVanillaOresA.java",
+      "sha256": "4ff719e20a8e2d45bcc264196815f3b25a99d4a3c39f1a64b5fd5357a2b5204c"
     },
     {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tool\\BlockBarsBrass.java",
@@ -1503,6 +1519,106 @@
       "source_key": "gt.multitileentity.18103",
       "value": "Bedrock Mining Drill Head"
     },
+    "block.gregtech.block_ore_amber": {
+      "source_key": "gt.block.vanillaores.a.3",
+      "value": "Amber Ore"
+    },
+    "block.gregtech.block_ore_amethyst": {
+      "source_key": "gt.block.vanillaores.a.4",
+      "value": "Amethyst Ore"
+    },
+    "block.gregtech.block_ore_anthracite": {
+      "source_key": "gt.block.rockores.0",
+      "value": "Anthracite Coal"
+    },
+    "block.gregtech.block_ore_apatite": {
+      "source_key": "gt.block.vanillaores.a.1",
+      "value": "Apatite Ore"
+    },
+    "block.gregtech.block_ore_bastnasite": {
+      "source_key": "gt.block.vanillaores.a.12",
+      "value": "Bastnasite Ore"
+    },
+    "block.gregtech.block_ore_bauxite": {
+      "source_key": "gt.block.rockores.4",
+      "value": "Bauxite"
+    },
+    "block.gregtech.block_ore_borax": {
+      "source_key": "gt.block.vanillaores.a.15",
+      "value": "Borax Ore"
+    },
+    "block.gregtech.block_ore_cassiterite": {
+      "source_key": "gt.block.vanillaores.a.7",
+      "value": "Cassiterite Ore"
+    },
+    "block.gregtech.block_ore_galena": {
+      "source_key": "gt.block.vanillaores.a.5",
+      "value": "Galena Ore"
+    },
+    "block.gregtech.block_ore_graphite": {
+      "source_key": "gt.block.vanillaores.a.13",
+      "value": "Graphite Ore"
+    },
+    "block.gregtech.block_ore_gypsum": {
+      "source_key": "gt.block.rockores.6",
+      "value": "Gypsum"
+    },
+    "block.gregtech.block_ore_lignite": {
+      "source_key": "gt.block.rockores.1",
+      "value": "Lignite Coal"
+    },
+    "block.gregtech.block_ore_milkyquartz": {
+      "source_key": "gt.block.rockores.7",
+      "value": "Milky Quartz"
+    },
+    "block.gregtech.block_ore_netherquartz": {
+      "source_key": "gt.block.rockores.8",
+      "value": "Nether Quartz"
+    },
+    "block.gregtech.block_ore_oil": {
+      "source_key": "gt.block.rockores.5",
+      "value": "Oil Shale"
+    },
+    "block.gregtech.block_ore_pentlandite": {
+      "source_key": "gt.block.vanillaores.a.9",
+      "value": "Pentlandite Ore"
+    },
+    "block.gregtech.block_ore_pitchblende": {
+      "source_key": "gt.block.vanillaores.a.14",
+      "value": "Pitchblende Ore"
+    },
+    "block.gregtech.block_ore_rocksalt": {
+      "source_key": "gt.block.rockores.3",
+      "value": "Sylvite"
+    },
+    "block.gregtech.block_ore_ruby": {
+      "source_key": "gt.block.vanillaores.a.2",
+      "value": "Ruby Ore"
+    },
+    "block.gregtech.block_ore_rutile": {
+      "source_key": "gt.block.vanillaores.a.11",
+      "value": "Rutile Ore"
+    },
+    "block.gregtech.block_ore_salt": {
+      "source_key": "gt.block.rockores.2",
+      "value": "Salt"
+    },
+    "block.gregtech.block_ore_scheelite": {
+      "source_key": "gt.block.vanillaores.a.10",
+      "value": "Scheelite Ore"
+    },
+    "block.gregtech.block_ore_sheldonite": {
+      "source_key": "gt.block.vanillaores.a.8",
+      "value": "Sheldonite Ore"
+    },
+    "block.gregtech.block_ore_sulfur": {
+      "source_key": "gt.block.vanillaores.a.0",
+      "value": "Sulfur Ore"
+    },
+    "block.gregtech.block_ore_tetrahedrite": {
+      "source_key": "gt.block.vanillaores.a.6",
+      "value": "Tetrahedrite Ore"
+    },
     "block.gregtech.bookshelf": {
       "source_key": "gt.multitileentity.7000",
       "value": "Wooden Bookshelf"
@@ -2743,6 +2859,578 @@
       "source_key": "gt.multitileentity.20064",
       "value": "Buzzsaw (Tungstensteel)"
     },
+    "block.gregtech.cable_01_aluminium": {
+      "source_key": "gt.multitileentity.29016",
+      "value": "1x Aluminium Cable"
+    },
+    "block.gregtech.cable_01_annealed_copper": {
+      "source_key": "gt.multitileentity.28416",
+      "value": "1x Annealed Copper Cable"
+    },
+    "block.gregtech.cable_01_blue_alloy": {
+      "source_key": "gt.multitileentity.28816",
+      "value": "1x Blue Alloy Cable"
+    },
+    "block.gregtech.cable_01_constantan": {
+      "source_key": "gt.multitileentity.28316",
+      "value": "1x Constantan Cable"
+    },
+    "block.gregtech.cable_01_copper": {
+      "source_key": "gt.multitileentity.28366",
+      "value": "1x Copper Cable"
+    },
+    "block.gregtech.cable_01_efrine": {
+      "source_key": "gt.multitileentity.28466",
+      "value": "1x Efrine Cable"
+    },
+    "block.gregtech.cable_01_electrotine_alloy": {
+      "source_key": "gt.multitileentity.28866",
+      "value": "1x Electrotine Alloy Cable"
+    },
+    "block.gregtech.cable_01_electrum": {
+      "source_key": "gt.multitileentity.28766",
+      "value": "1x Electrum Cable"
+    },
+    "block.gregtech.cable_01_gold": {
+      "source_key": "gt.multitileentity.28716",
+      "value": "1x Gold Cable"
+    },
+    "block.gregtech.cable_01_hsla": {
+      "source_key": "gt.multitileentity.28266",
+      "value": "1x HSLA-Steel Cable"
+    },
+    "block.gregtech.cable_01_iridium": {
+      "source_key": "gt.multitileentity.29416",
+      "value": "1x Iridium Cable"
+    },
+    "block.gregtech.cable_01_kanthal": {
+      "source_key": "gt.multitileentity.28616",
+      "value": "1x Kanthal Cable"
+    },
+    "block.gregtech.cable_01_lead": {
+      "source_key": "gt.multitileentity.28116",
+      "value": "1x Lead Cable"
+    },
+    "block.gregtech.cable_01_lumium": {
+      "source_key": "gt.multitileentity.27506",
+      "value": "Lumium Cable"
+    },
+    "block.gregtech.cable_01_naquadah": {
+      "source_key": "gt.multitileentity.29516",
+      "value": "1x Naquadah Cable"
+    },
+    "block.gregtech.cable_01_netherite": {
+      "source_key": "gt.multitileentity.29166",
+      "value": "1x Netherite Cable"
+    },
+    "block.gregtech.cable_01_nichrome": {
+      "source_key": "gt.multitileentity.28916",
+      "value": "1x Nichrome Cable"
+    },
+    "block.gregtech.cable_01_niobium_titanium": {
+      "source_key": "gt.multitileentity.29566",
+      "value": "1x Niobium Titanium Cable"
+    },
+    "block.gregtech.cable_01_osmiridium": {
+      "source_key": "gt.multitileentity.29316",
+      "value": "1x Osmiridium Cable"
+    },
+    "block.gregtech.cable_01_osmium": {
+      "source_key": "gt.multitileentity.29216",
+      "value": "1x Osmium Cable"
+    },
+    "block.gregtech.cable_01_platinum": {
+      "source_key": "gt.multitileentity.29266",
+      "value": "1x Platinum Cable"
+    },
+    "block.gregtech.cable_01_redalloy": {
+      "source_key": "gt.multitileentity.27006",
+      "value": "Red Alloy Cable"
+    },
+    "block.gregtech.cable_01_signalum": {
+      "source_key": "gt.multitileentity.27056",
+      "value": "Signalum Cable"
+    },
+    "block.gregtech.cable_01_silicon_carbide": {
+      "source_key": "gt.multitileentity.29366",
+      "value": "1x Carborundum Cable"
+    },
+    "block.gregtech.cable_01_silver": {
+      "source_key": "gt.multitileentity.28666",
+      "value": "1x Silver Cable"
+    },
+    "block.gregtech.cable_01_steel": {
+      "source_key": "gt.multitileentity.28966",
+      "value": "1x Steel Cable"
+    },
+    "block.gregtech.cable_01_tin": {
+      "source_key": "gt.multitileentity.28066",
+      "value": "1x Tin Cable"
+    },
+    "block.gregtech.cable_01_tungsten": {
+      "source_key": "gt.multitileentity.29116",
+      "value": "1x Tungsten Cable"
+    },
+    "block.gregtech.cable_01_tungsten_steel": {
+      "source_key": "gt.multitileentity.29066",
+      "value": "1x Tungstensteel Cable"
+    },
+    "block.gregtech.cable_01_vanadium_gallium": {
+      "source_key": "gt.multitileentity.29616",
+      "value": "1x Vanadium-Gallium Cable"
+    },
+    "block.gregtech.cable_01_yttrium_barium_cuprate": {
+      "source_key": "gt.multitileentity.29666",
+      "value": "1x Yttrium-Barium-Cuprate Cable"
+    },
+    "block.gregtech.cable_02_aluminium": {
+      "source_key": "gt.multitileentity.29017",
+      "value": "2x Aluminium Cable"
+    },
+    "block.gregtech.cable_02_annealed_copper": {
+      "source_key": "gt.multitileentity.28417",
+      "value": "2x Annealed Copper Cable"
+    },
+    "block.gregtech.cable_02_blue_alloy": {
+      "source_key": "gt.multitileentity.28817",
+      "value": "2x Blue Alloy Cable"
+    },
+    "block.gregtech.cable_02_constantan": {
+      "source_key": "gt.multitileentity.28317",
+      "value": "2x Constantan Cable"
+    },
+    "block.gregtech.cable_02_copper": {
+      "source_key": "gt.multitileentity.28367",
+      "value": "2x Copper Cable"
+    },
+    "block.gregtech.cable_02_efrine": {
+      "source_key": "gt.multitileentity.28467",
+      "value": "2x Efrine Cable"
+    },
+    "block.gregtech.cable_02_electrotine_alloy": {
+      "source_key": "gt.multitileentity.28867",
+      "value": "2x Electrotine Alloy Cable"
+    },
+    "block.gregtech.cable_02_electrum": {
+      "source_key": "gt.multitileentity.28767",
+      "value": "2x Electrum Cable"
+    },
+    "block.gregtech.cable_02_gold": {
+      "source_key": "gt.multitileentity.28717",
+      "value": "2x Gold Cable"
+    },
+    "block.gregtech.cable_02_hsla": {
+      "source_key": "gt.multitileentity.28267",
+      "value": "2x HSLA-Steel Cable"
+    },
+    "block.gregtech.cable_02_iridium": {
+      "source_key": "gt.multitileentity.29417",
+      "value": "2x Iridium Cable"
+    },
+    "block.gregtech.cable_02_kanthal": {
+      "source_key": "gt.multitileentity.28617",
+      "value": "2x Kanthal Cable"
+    },
+    "block.gregtech.cable_02_lead": {
+      "source_key": "gt.multitileentity.28117",
+      "value": "2x Lead Cable"
+    },
+    "block.gregtech.cable_02_naquadah": {
+      "source_key": "gt.multitileentity.29517",
+      "value": "2x Naquadah Cable"
+    },
+    "block.gregtech.cable_02_netherite": {
+      "source_key": "gt.multitileentity.29167",
+      "value": "2x Netherite Cable"
+    },
+    "block.gregtech.cable_02_nichrome": {
+      "source_key": "gt.multitileentity.28917",
+      "value": "2x Nichrome Cable"
+    },
+    "block.gregtech.cable_02_niobium_titanium": {
+      "source_key": "gt.multitileentity.29567",
+      "value": "2x Niobium Titanium Cable"
+    },
+    "block.gregtech.cable_02_osmiridium": {
+      "source_key": "gt.multitileentity.29317",
+      "value": "2x Osmiridium Cable"
+    },
+    "block.gregtech.cable_02_osmium": {
+      "source_key": "gt.multitileentity.29217",
+      "value": "2x Osmium Cable"
+    },
+    "block.gregtech.cable_02_platinum": {
+      "source_key": "gt.multitileentity.29267",
+      "value": "2x Platinum Cable"
+    },
+    "block.gregtech.cable_02_silicon_carbide": {
+      "source_key": "gt.multitileentity.29367",
+      "value": "2x Carborundum Cable"
+    },
+    "block.gregtech.cable_02_silver": {
+      "source_key": "gt.multitileentity.28667",
+      "value": "2x Silver Cable"
+    },
+    "block.gregtech.cable_02_steel": {
+      "source_key": "gt.multitileentity.28967",
+      "value": "2x Steel Cable"
+    },
+    "block.gregtech.cable_02_tin": {
+      "source_key": "gt.multitileentity.28067",
+      "value": "2x Tin Cable"
+    },
+    "block.gregtech.cable_02_tungsten": {
+      "source_key": "gt.multitileentity.29117",
+      "value": "2x Tungsten Cable"
+    },
+    "block.gregtech.cable_02_tungsten_steel": {
+      "source_key": "gt.multitileentity.29067",
+      "value": "2x Tungstensteel Cable"
+    },
+    "block.gregtech.cable_02_vanadium_gallium": {
+      "source_key": "gt.multitileentity.29617",
+      "value": "2x Vanadium-Gallium Cable"
+    },
+    "block.gregtech.cable_02_yttrium_barium_cuprate": {
+      "source_key": "gt.multitileentity.29667",
+      "value": "2x Yttrium-Barium-Cuprate Cable"
+    },
+    "block.gregtech.cable_04_aluminium": {
+      "source_key": "gt.multitileentity.29019",
+      "value": "4x Aluminium Cable"
+    },
+    "block.gregtech.cable_04_annealed_copper": {
+      "source_key": "gt.multitileentity.28419",
+      "value": "4x Annealed Copper Cable"
+    },
+    "block.gregtech.cable_04_blue_alloy": {
+      "source_key": "gt.multitileentity.28819",
+      "value": "4x Blue Alloy Cable"
+    },
+    "block.gregtech.cable_04_constantan": {
+      "source_key": "gt.multitileentity.28319",
+      "value": "4x Constantan Cable"
+    },
+    "block.gregtech.cable_04_copper": {
+      "source_key": "gt.multitileentity.28369",
+      "value": "4x Copper Cable"
+    },
+    "block.gregtech.cable_04_efrine": {
+      "source_key": "gt.multitileentity.28469",
+      "value": "4x Efrine Cable"
+    },
+    "block.gregtech.cable_04_electrotine_alloy": {
+      "source_key": "gt.multitileentity.28869",
+      "value": "4x Electrotine Alloy Cable"
+    },
+    "block.gregtech.cable_04_electrum": {
+      "source_key": "gt.multitileentity.28769",
+      "value": "4x Electrum Cable"
+    },
+    "block.gregtech.cable_04_gold": {
+      "source_key": "gt.multitileentity.28719",
+      "value": "4x Gold Cable"
+    },
+    "block.gregtech.cable_04_hsla": {
+      "source_key": "gt.multitileentity.28269",
+      "value": "4x HSLA-Steel Cable"
+    },
+    "block.gregtech.cable_04_iridium": {
+      "source_key": "gt.multitileentity.29419",
+      "value": "4x Iridium Cable"
+    },
+    "block.gregtech.cable_04_kanthal": {
+      "source_key": "gt.multitileentity.28619",
+      "value": "4x Kanthal Cable"
+    },
+    "block.gregtech.cable_04_lead": {
+      "source_key": "gt.multitileentity.28119",
+      "value": "4x Lead Cable"
+    },
+    "block.gregtech.cable_04_naquadah": {
+      "source_key": "gt.multitileentity.29519",
+      "value": "4x Naquadah Cable"
+    },
+    "block.gregtech.cable_04_netherite": {
+      "source_key": "gt.multitileentity.29169",
+      "value": "4x Netherite Cable"
+    },
+    "block.gregtech.cable_04_nichrome": {
+      "source_key": "gt.multitileentity.28919",
+      "value": "4x Nichrome Cable"
+    },
+    "block.gregtech.cable_04_niobium_titanium": {
+      "source_key": "gt.multitileentity.29569",
+      "value": "4x Niobium Titanium Cable"
+    },
+    "block.gregtech.cable_04_osmiridium": {
+      "source_key": "gt.multitileentity.29319",
+      "value": "4x Osmiridium Cable"
+    },
+    "block.gregtech.cable_04_osmium": {
+      "source_key": "gt.multitileentity.29219",
+      "value": "4x Osmium Cable"
+    },
+    "block.gregtech.cable_04_platinum": {
+      "source_key": "gt.multitileentity.29269",
+      "value": "4x Platinum Cable"
+    },
+    "block.gregtech.cable_04_silicon_carbide": {
+      "source_key": "gt.multitileentity.29369",
+      "value": "4x Carborundum Cable"
+    },
+    "block.gregtech.cable_04_silver": {
+      "source_key": "gt.multitileentity.28669",
+      "value": "4x Silver Cable"
+    },
+    "block.gregtech.cable_04_steel": {
+      "source_key": "gt.multitileentity.28969",
+      "value": "4x Steel Cable"
+    },
+    "block.gregtech.cable_04_tin": {
+      "source_key": "gt.multitileentity.28069",
+      "value": "4x Tin Cable"
+    },
+    "block.gregtech.cable_04_tungsten": {
+      "source_key": "gt.multitileentity.29119",
+      "value": "4x Tungsten Cable"
+    },
+    "block.gregtech.cable_04_tungsten_steel": {
+      "source_key": "gt.multitileentity.29069",
+      "value": "4x Tungstensteel Cable"
+    },
+    "block.gregtech.cable_04_vanadium_gallium": {
+      "source_key": "gt.multitileentity.29619",
+      "value": "4x Vanadium-Gallium Cable"
+    },
+    "block.gregtech.cable_04_yttrium_barium_cuprate": {
+      "source_key": "gt.multitileentity.29669",
+      "value": "4x Yttrium-Barium-Cuprate Cable"
+    },
+    "block.gregtech.cable_08_aluminium": {
+      "source_key": "gt.multitileentity.29023",
+      "value": "8x Aluminium Cable"
+    },
+    "block.gregtech.cable_08_annealed_copper": {
+      "source_key": "gt.multitileentity.28423",
+      "value": "8x Annealed Copper Cable"
+    },
+    "block.gregtech.cable_08_blue_alloy": {
+      "source_key": "gt.multitileentity.28823",
+      "value": "8x Blue Alloy Cable"
+    },
+    "block.gregtech.cable_08_constantan": {
+      "source_key": "gt.multitileentity.28323",
+      "value": "8x Constantan Cable"
+    },
+    "block.gregtech.cable_08_copper": {
+      "source_key": "gt.multitileentity.28373",
+      "value": "8x Copper Cable"
+    },
+    "block.gregtech.cable_08_efrine": {
+      "source_key": "gt.multitileentity.28473",
+      "value": "8x Efrine Cable"
+    },
+    "block.gregtech.cable_08_electrotine_alloy": {
+      "source_key": "gt.multitileentity.28873",
+      "value": "8x Electrotine Alloy Cable"
+    },
+    "block.gregtech.cable_08_electrum": {
+      "source_key": "gt.multitileentity.28773",
+      "value": "8x Electrum Cable"
+    },
+    "block.gregtech.cable_08_gold": {
+      "source_key": "gt.multitileentity.28723",
+      "value": "8x Gold Cable"
+    },
+    "block.gregtech.cable_08_hsla": {
+      "source_key": "gt.multitileentity.28273",
+      "value": "8x HSLA-Steel Cable"
+    },
+    "block.gregtech.cable_08_iridium": {
+      "source_key": "gt.multitileentity.29423",
+      "value": "8x Iridium Cable"
+    },
+    "block.gregtech.cable_08_kanthal": {
+      "source_key": "gt.multitileentity.28623",
+      "value": "8x Kanthal Cable"
+    },
+    "block.gregtech.cable_08_lead": {
+      "source_key": "gt.multitileentity.28123",
+      "value": "8x Lead Cable"
+    },
+    "block.gregtech.cable_08_naquadah": {
+      "source_key": "gt.multitileentity.29523",
+      "value": "8x Naquadah Cable"
+    },
+    "block.gregtech.cable_08_netherite": {
+      "source_key": "gt.multitileentity.29173",
+      "value": "8x Netherite Cable"
+    },
+    "block.gregtech.cable_08_nichrome": {
+      "source_key": "gt.multitileentity.28923",
+      "value": "8x Nichrome Cable"
+    },
+    "block.gregtech.cable_08_niobium_titanium": {
+      "source_key": "gt.multitileentity.29573",
+      "value": "8x Niobium Titanium Cable"
+    },
+    "block.gregtech.cable_08_osmiridium": {
+      "source_key": "gt.multitileentity.29323",
+      "value": "8x Osmiridium Cable"
+    },
+    "block.gregtech.cable_08_osmium": {
+      "source_key": "gt.multitileentity.29223",
+      "value": "8x Osmium Cable"
+    },
+    "block.gregtech.cable_08_platinum": {
+      "source_key": "gt.multitileentity.29273",
+      "value": "8x Platinum Cable"
+    },
+    "block.gregtech.cable_08_silicon_carbide": {
+      "source_key": "gt.multitileentity.29373",
+      "value": "8x Carborundum Cable"
+    },
+    "block.gregtech.cable_08_silver": {
+      "source_key": "gt.multitileentity.28673",
+      "value": "8x Silver Cable"
+    },
+    "block.gregtech.cable_08_steel": {
+      "source_key": "gt.multitileentity.28973",
+      "value": "8x Steel Cable"
+    },
+    "block.gregtech.cable_08_tin": {
+      "source_key": "gt.multitileentity.28073",
+      "value": "8x Tin Cable"
+    },
+    "block.gregtech.cable_08_tungsten": {
+      "source_key": "gt.multitileentity.29123",
+      "value": "8x Tungsten Cable"
+    },
+    "block.gregtech.cable_08_tungsten_steel": {
+      "source_key": "gt.multitileentity.29073",
+      "value": "8x Tungstensteel Cable"
+    },
+    "block.gregtech.cable_08_vanadium_gallium": {
+      "source_key": "gt.multitileentity.29623",
+      "value": "8x Vanadium-Gallium Cable"
+    },
+    "block.gregtech.cable_08_yttrium_barium_cuprate": {
+      "source_key": "gt.multitileentity.29673",
+      "value": "8x Yttrium-Barium-Cuprate Cable"
+    },
+    "block.gregtech.cable_12_aluminium": {
+      "source_key": "gt.multitileentity.29027",
+      "value": "12x Aluminium Cable"
+    },
+    "block.gregtech.cable_12_annealed_copper": {
+      "source_key": "gt.multitileentity.28427",
+      "value": "12x Annealed Copper Cable"
+    },
+    "block.gregtech.cable_12_blue_alloy": {
+      "source_key": "gt.multitileentity.28827",
+      "value": "12x Blue Alloy Cable"
+    },
+    "block.gregtech.cable_12_constantan": {
+      "source_key": "gt.multitileentity.28327",
+      "value": "12x Constantan Cable"
+    },
+    "block.gregtech.cable_12_copper": {
+      "source_key": "gt.multitileentity.28377",
+      "value": "12x Copper Cable"
+    },
+    "block.gregtech.cable_12_efrine": {
+      "source_key": "gt.multitileentity.28477",
+      "value": "12x Efrine Cable"
+    },
+    "block.gregtech.cable_12_electrotine_alloy": {
+      "source_key": "gt.multitileentity.28877",
+      "value": "12x Electrotine Alloy Cable"
+    },
+    "block.gregtech.cable_12_electrum": {
+      "source_key": "gt.multitileentity.28777",
+      "value": "12x Electrum Cable"
+    },
+    "block.gregtech.cable_12_gold": {
+      "source_key": "gt.multitileentity.28727",
+      "value": "12x Gold Cable"
+    },
+    "block.gregtech.cable_12_hsla": {
+      "source_key": "gt.multitileentity.28277",
+      "value": "12x HSLA-Steel Cable"
+    },
+    "block.gregtech.cable_12_iridium": {
+      "source_key": "gt.multitileentity.29427",
+      "value": "12x Iridium Cable"
+    },
+    "block.gregtech.cable_12_kanthal": {
+      "source_key": "gt.multitileentity.28627",
+      "value": "12x Kanthal Cable"
+    },
+    "block.gregtech.cable_12_lead": {
+      "source_key": "gt.multitileentity.28127",
+      "value": "12x Lead Cable"
+    },
+    "block.gregtech.cable_12_naquadah": {
+      "source_key": "gt.multitileentity.29527",
+      "value": "12x Naquadah Cable"
+    },
+    "block.gregtech.cable_12_netherite": {
+      "source_key": "gt.multitileentity.29177",
+      "value": "12x Netherite Cable"
+    },
+    "block.gregtech.cable_12_nichrome": {
+      "source_key": "gt.multitileentity.28927",
+      "value": "12x Nichrome Cable"
+    },
+    "block.gregtech.cable_12_niobium_titanium": {
+      "source_key": "gt.multitileentity.29577",
+      "value": "12x Niobium Titanium Cable"
+    },
+    "block.gregtech.cable_12_osmiridium": {
+      "source_key": "gt.multitileentity.29327",
+      "value": "12x Osmiridium Cable"
+    },
+    "block.gregtech.cable_12_osmium": {
+      "source_key": "gt.multitileentity.29227",
+      "value": "12x Osmium Cable"
+    },
+    "block.gregtech.cable_12_platinum": {
+      "source_key": "gt.multitileentity.29277",
+      "value": "12x Platinum Cable"
+    },
+    "block.gregtech.cable_12_silicon_carbide": {
+      "source_key": "gt.multitileentity.29377",
+      "value": "12x Carborundum Cable"
+    },
+    "block.gregtech.cable_12_silver": {
+      "source_key": "gt.multitileentity.28677",
+      "value": "12x Silver Cable"
+    },
+    "block.gregtech.cable_12_steel": {
+      "source_key": "gt.multitileentity.28977",
+      "value": "12x Steel Cable"
+    },
+    "block.gregtech.cable_12_tin": {
+      "source_key": "gt.multitileentity.28077",
+      "value": "12x Tin Cable"
+    },
+    "block.gregtech.cable_12_tungsten": {
+      "source_key": "gt.multitileentity.29127",
+      "value": "12x Tungsten Cable"
+    },
+    "block.gregtech.cable_12_tungsten_steel": {
+      "source_key": "gt.multitileentity.29077",
+      "value": "12x Tungstensteel Cable"
+    },
+    "block.gregtech.cable_12_vanadium_gallium": {
+      "source_key": "gt.multitileentity.29627",
+      "value": "12x Vanadium-Gallium Cable"
+    },
+    "block.gregtech.cable_12_yttrium_barium_cuprate": {
+      "source_key": "gt.multitileentity.29677",
+      "value": "12x Yttrium-Barium-Cuprate Cable"
+    },
     "block.gregtech.canner_aluminium": {
       "source_key": "gt.multitileentity.20162",
       "value": "Canning Machine (MV)"
@@ -3559,6 +4247,26 @@
       "source_key": "gt.multitileentity.20144",
       "value": "Cluster Mill (Tungstensteel)"
     },
+    "block.gregtech.co2_laser_ev": {
+      "source_key": "gt.multitileentity.10104",
+      "value": "Electric CO2 Laser (EV)"
+    },
+    "block.gregtech.co2_laser_hv": {
+      "source_key": "gt.multitileentity.10103",
+      "value": "Electric CO2 Laser (HV)"
+    },
+    "block.gregtech.co2_laser_iv": {
+      "source_key": "gt.multitileentity.10105",
+      "value": "Electric CO2 Laser (IV)"
+    },
+    "block.gregtech.co2_laser_lv": {
+      "source_key": "gt.multitileentity.10101",
+      "value": "Electric CO2 Laser (LV)"
+    },
+    "block.gregtech.co2_laser_mv": {
+      "source_key": "gt.multitileentity.10102",
+      "value": "Electric CO2 Laser (MV)"
+    },
     "block.gregtech.coagulator_stainless_steel": {
       "source_key": "gt.multitileentity.22000",
       "value": "Coagulator"
@@ -3570,6 +4278,10 @@
     "block.gregtech.coin_mold": {
       "source_key": "gt.multitileentity.32701",
       "value": "Coinage Mold"
+    },
+    "block.gregtech.coin_pile": {
+      "source_key": "gt.multitileentity.32700",
+      "value": "Coin"
     },
     "block.gregtech.coke_oven_main": {
       "source_key": "gt.multitileentity.17000",
@@ -4106,6 +4818,54 @@
     "block.gregtech.cryomixer_titanium": {
       "source_key": "gt.multitileentity.20575",
       "value": "Cryo Mixer (T5)"
+    },
+    "block.gregtech.crystal_ore_arsenopyrite": {
+      "source_key": "gt.block.crystalores.0",
+      "value": "Arsenopyrite Crystal"
+    },
+    "block.gregtech.crystal_ore_chalcopyrite": {
+      "source_key": "gt.block.crystalores.1",
+      "value": "Chalcopyrite Crystal"
+    },
+    "block.gregtech.crystal_ore_cinnabar": {
+      "source_key": "gt.block.crystalores.2",
+      "value": "Cinnabar Crystal"
+    },
+    "block.gregtech.crystal_ore_cobaltite": {
+      "source_key": "gt.block.crystalores.3",
+      "value": "Cobaltite Crystal"
+    },
+    "block.gregtech.crystal_ore_galena": {
+      "source_key": "gt.block.crystalores.4",
+      "value": "Galena Crystal"
+    },
+    "block.gregtech.crystal_ore_kesterite": {
+      "source_key": "gt.block.crystalores.5",
+      "value": "Kesterite Crystal"
+    },
+    "block.gregtech.crystal_ore_molybdenite": {
+      "source_key": "gt.block.crystalores.6",
+      "value": "Molybdenite Crystal"
+    },
+    "block.gregtech.crystal_ore_pyrite": {
+      "source_key": "gt.block.crystalores.7",
+      "value": "Pyrite Crystal"
+    },
+    "block.gregtech.crystal_ore_sphalerite": {
+      "source_key": "gt.block.crystalores.8",
+      "value": "Sphalerite Crystal"
+    },
+    "block.gregtech.crystal_ore_stannite": {
+      "source_key": "gt.block.crystalores.9",
+      "value": "Stannite Crystal"
+    },
+    "block.gregtech.crystal_ore_stibnite": {
+      "source_key": "gt.block.crystalores.10",
+      "value": "Stibnite Crystal"
+    },
+    "block.gregtech.crystal_ore_tetrahedrite": {
+      "source_key": "gt.block.crystalores.11",
+      "value": "Tetrahedrite Crystal"
     },
     "block.gregtech.crystallisationcrucible_invar": {
       "source_key": "gt.multitileentity.20252",
@@ -5371,6 +6131,26 @@
       "source_key": "gt.multitileentity.11002",
       "value": "Flux Heater (Invar)"
     },
+    "block.gregtech.flux_laser_ev": {
+      "source_key": "gt.multitileentity.11104",
+      "value": "Flux Laser (Enderium Base)"
+    },
+    "block.gregtech.flux_laser_hv": {
+      "source_key": "gt.multitileentity.11103",
+      "value": "Flux Laser (Electrum)"
+    },
+    "block.gregtech.flux_laser_iv": {
+      "source_key": "gt.multitileentity.11105",
+      "value": "Flux Laser (Enderium)"
+    },
+    "block.gregtech.flux_laser_lv": {
+      "source_key": "gt.multitileentity.11101",
+      "value": "Flux Laser (Lead)"
+    },
+    "block.gregtech.flux_laser_mv": {
+      "source_key": "gt.multitileentity.11102",
+      "value": "Flux Laser (Invar)"
+    },
     "block.gregtech.flux_magnet_ev": {
       "source_key": "gt.multitileentity.11034",
       "value": "Flux Magnet (Enderium Base)"
@@ -6034,6 +6814,10 @@
     "block.gregtech.implosion_compressor_wall": {
       "source_key": "gt.multitileentity.18023",
       "value": "Dense Tungstensteel Wall"
+    },
+    "block.gregtech.ingot_pile": {
+      "source_key": "gt.multitileentity.32084",
+      "value": "Ingots"
     },
     "block.gregtech.injector_aluminium": {
       "source_key": "gt.multitileentity.20262",
@@ -7046,6 +7830,26 @@
     "block.gregtech.largesqueezer_steel": {
       "source_key": "gt.multitileentity.17114",
       "value": "Large Squeezer"
+    },
+    "block.gregtech.laser_absorber_ev": {
+      "source_key": "gt.multitileentity.10154",
+      "value": "Laser Absorber (EV)"
+    },
+    "block.gregtech.laser_absorber_hv": {
+      "source_key": "gt.multitileentity.10153",
+      "value": "Laser Absorber (HV)"
+    },
+    "block.gregtech.laser_absorber_iv": {
+      "source_key": "gt.multitileentity.10155",
+      "value": "Laser Absorber (IV)"
+    },
+    "block.gregtech.laser_absorber_lv": {
+      "source_key": "gt.multitileentity.10151",
+      "value": "Laser Absorber (LV)"
+    },
+    "block.gregtech.laser_absorber_mv": {
+      "source_key": "gt.multitileentity.10152",
+      "value": "Laser Absorber (MV)"
     },
     "block.gregtech.laser_fiber_wire": {
       "source_key": "gt.multitileentity.24900",
@@ -9559,6 +10363,14 @@
       "source_key": "gt.multitileentity.32715",
       "value": "Plastic Canister"
     },
+    "block.gregtech.plate_gem_pile": {
+      "source_key": "gt.multitileentity.32086",
+      "value": "Gem Plates"
+    },
+    "block.gregtech.plate_pile": {
+      "source_key": "gt.multitileentity.32085",
+      "value": "Plates"
+    },
     "block.gregtech.polarizer_aluminium": {
       "source_key": "gt.multitileentity.20222",
       "value": "Polarizer (Aluminium)"
@@ -10691,6 +11503,10 @@
       "source_key": "gt.multitileentity.20514",
       "value": "Sanding Machine (Tungstensteel)"
     },
+    "block.gregtech.sandwich_block": {
+      "source_key": "gt.multitileentity.32105",
+      "value": "Sandwich"
+    },
     "block.gregtech.sap_bag": {
       "source_key": "gt.multitileentity.32736",
       "value": "Resin/Sap Bag"
@@ -11106,6 +11922,11 @@
     "block.gregtech.sensor_kilobucketometer": {
       "source_key": "gt.multitileentity.31022",
       "value": "Kilo-Bucket-O-Meter Sensor"
+    },
+    "block.gregtech.sensor_kilogibblometer": {
+      "chinese_source_missing": true,
+      "source_key": "gt.multitileentity.31023",
+      "value": "Kilo-Gibbl-O-Meter Sensor"
     },
     "block.gregtech.sensor_laserometer": {
       "source_key": "gt.multitileentity.31021",
@@ -14131,6 +14952,1938 @@
       "source_key": "gt.multitileentity.17996",
       "value": "Von da Graagg Generator"
     },
+    "block.gregtech.wire_01_aluminium": {
+      "source_key": "gt.multitileentity.29000",
+      "value": "1x Aluminium Wire"
+    },
+    "block.gregtech.wire_01_annealed_copper": {
+      "source_key": "gt.multitileentity.28400",
+      "value": "1x Annealed Copper Wire"
+    },
+    "block.gregtech.wire_01_blue_alloy": {
+      "source_key": "gt.multitileentity.28800",
+      "value": "1x Blue Alloy Wire"
+    },
+    "block.gregtech.wire_01_constantan": {
+      "source_key": "gt.multitileentity.28300",
+      "value": "1x Constantan Wire"
+    },
+    "block.gregtech.wire_01_copper": {
+      "source_key": "gt.multitileentity.28350",
+      "value": "1x Copper Wire"
+    },
+    "block.gregtech.wire_01_efrine": {
+      "source_key": "gt.multitileentity.28450",
+      "value": "1x Efrine Wire"
+    },
+    "block.gregtech.wire_01_electrotine_alloy": {
+      "source_key": "gt.multitileentity.28850",
+      "value": "1x Electrotine Alloy Wire"
+    },
+    "block.gregtech.wire_01_electrum": {
+      "source_key": "gt.multitileentity.28750",
+      "value": "1x Electrum Wire"
+    },
+    "block.gregtech.wire_01_gold": {
+      "source_key": "gt.multitileentity.28700",
+      "value": "1x Gold Wire"
+    },
+    "block.gregtech.wire_01_graphene": {
+      "source_key": "gt.multitileentity.29800",
+      "value": "1x Graphene Wire"
+    },
+    "block.gregtech.wire_01_hsla": {
+      "source_key": "gt.multitileentity.28250",
+      "value": "1x HSLA-Steel Wire"
+    },
+    "block.gregtech.wire_01_iridium": {
+      "source_key": "gt.multitileentity.29400",
+      "value": "1x Iridium Wire"
+    },
+    "block.gregtech.wire_01_kanthal": {
+      "source_key": "gt.multitileentity.28600",
+      "value": "1x Kanthal Wire"
+    },
+    "block.gregtech.wire_01_lead": {
+      "source_key": "gt.multitileentity.28100",
+      "value": "1x Lead Wire"
+    },
+    "block.gregtech.wire_01_lumium": {
+      "source_key": "gt.multitileentity.27500",
+      "value": "Lumium Wirelamp"
+    },
+    "block.gregtech.wire_01_naquadah": {
+      "source_key": "gt.multitileentity.29500",
+      "value": "1x Naquadah Wire"
+    },
+    "block.gregtech.wire_01_netherite": {
+      "source_key": "gt.multitileentity.29150",
+      "value": "1x Netherite Wire"
+    },
+    "block.gregtech.wire_01_nichrome": {
+      "source_key": "gt.multitileentity.28900",
+      "value": "1x Nichrome Wire"
+    },
+    "block.gregtech.wire_01_niobium_titanium": {
+      "source_key": "gt.multitileentity.29550",
+      "value": "1x Niobium Titanium Wire"
+    },
+    "block.gregtech.wire_01_osmiridium": {
+      "source_key": "gt.multitileentity.29300",
+      "value": "1x Osmiridium Wire"
+    },
+    "block.gregtech.wire_01_osmium": {
+      "source_key": "gt.multitileentity.29200",
+      "value": "1x Osmium Wire"
+    },
+    "block.gregtech.wire_01_platinum": {
+      "source_key": "gt.multitileentity.29250",
+      "value": "1x Platinum Wire"
+    },
+    "block.gregtech.wire_01_redalloy": {
+      "source_key": "gt.multitileentity.27000",
+      "value": "Red Alloy Wire"
+    },
+    "block.gregtech.wire_01_signalum": {
+      "source_key": "gt.multitileentity.27050",
+      "value": "Signalum Wire"
+    },
+    "block.gregtech.wire_01_silicon_carbide": {
+      "source_key": "gt.multitileentity.29350",
+      "value": "1x Carborundum Wire"
+    },
+    "block.gregtech.wire_01_silver": {
+      "source_key": "gt.multitileentity.28650",
+      "value": "1x Silver Wire"
+    },
+    "block.gregtech.wire_01_steel": {
+      "source_key": "gt.multitileentity.28950",
+      "value": "1x Steel Wire"
+    },
+    "block.gregtech.wire_01_superconductor": {
+      "source_key": "gt.multitileentity.29950",
+      "value": "1x Superconductor Wire"
+    },
+    "block.gregtech.wire_01_tin": {
+      "source_key": "gt.multitileentity.28050",
+      "value": "1x Tin Wire"
+    },
+    "block.gregtech.wire_01_tungsten": {
+      "source_key": "gt.multitileentity.29100",
+      "value": "1x Tungsten Wire"
+    },
+    "block.gregtech.wire_01_tungsten_steel": {
+      "source_key": "gt.multitileentity.29050",
+      "value": "1x Tungstensteel Wire"
+    },
+    "block.gregtech.wire_01_vanadium_gallium": {
+      "source_key": "gt.multitileentity.29600",
+      "value": "1x Vanadium-Gallium Wire"
+    },
+    "block.gregtech.wire_01_yttrium_barium_cuprate": {
+      "source_key": "gt.multitileentity.29650",
+      "value": "1x Yttrium-Barium-Cuprate Wire"
+    },
+    "block.gregtech.wire_02_aluminium": {
+      "source_key": "gt.multitileentity.29001",
+      "value": "2x Aluminium Wire"
+    },
+    "block.gregtech.wire_02_annealed_copper": {
+      "source_key": "gt.multitileentity.28401",
+      "value": "2x Annealed Copper Wire"
+    },
+    "block.gregtech.wire_02_blue_alloy": {
+      "source_key": "gt.multitileentity.28801",
+      "value": "2x Blue Alloy Wire"
+    },
+    "block.gregtech.wire_02_constantan": {
+      "source_key": "gt.multitileentity.28301",
+      "value": "2x Constantan Wire"
+    },
+    "block.gregtech.wire_02_copper": {
+      "source_key": "gt.multitileentity.28351",
+      "value": "2x Copper Wire"
+    },
+    "block.gregtech.wire_02_efrine": {
+      "source_key": "gt.multitileentity.28451",
+      "value": "2x Efrine Wire"
+    },
+    "block.gregtech.wire_02_electrotine_alloy": {
+      "source_key": "gt.multitileentity.28851",
+      "value": "2x Electrotine Alloy Wire"
+    },
+    "block.gregtech.wire_02_electrum": {
+      "source_key": "gt.multitileentity.28751",
+      "value": "2x Electrum Wire"
+    },
+    "block.gregtech.wire_02_gold": {
+      "source_key": "gt.multitileentity.28701",
+      "value": "2x Gold Wire"
+    },
+    "block.gregtech.wire_02_graphene": {
+      "source_key": "gt.multitileentity.29801",
+      "value": "2x Graphene Wire"
+    },
+    "block.gregtech.wire_02_hsla": {
+      "source_key": "gt.multitileentity.28251",
+      "value": "2x HSLA-Steel Wire"
+    },
+    "block.gregtech.wire_02_iridium": {
+      "source_key": "gt.multitileentity.29401",
+      "value": "2x Iridium Wire"
+    },
+    "block.gregtech.wire_02_kanthal": {
+      "source_key": "gt.multitileentity.28601",
+      "value": "2x Kanthal Wire"
+    },
+    "block.gregtech.wire_02_lead": {
+      "source_key": "gt.multitileentity.28101",
+      "value": "2x Lead Wire"
+    },
+    "block.gregtech.wire_02_naquadah": {
+      "source_key": "gt.multitileentity.29501",
+      "value": "2x Naquadah Wire"
+    },
+    "block.gregtech.wire_02_netherite": {
+      "source_key": "gt.multitileentity.29151",
+      "value": "2x Netherite Wire"
+    },
+    "block.gregtech.wire_02_nichrome": {
+      "source_key": "gt.multitileentity.28901",
+      "value": "2x Nichrome Wire"
+    },
+    "block.gregtech.wire_02_niobium_titanium": {
+      "source_key": "gt.multitileentity.29551",
+      "value": "2x Niobium Titanium Wire"
+    },
+    "block.gregtech.wire_02_osmiridium": {
+      "source_key": "gt.multitileentity.29301",
+      "value": "2x Osmiridium Wire"
+    },
+    "block.gregtech.wire_02_osmium": {
+      "source_key": "gt.multitileentity.29201",
+      "value": "2x Osmium Wire"
+    },
+    "block.gregtech.wire_02_platinum": {
+      "source_key": "gt.multitileentity.29251",
+      "value": "2x Platinum Wire"
+    },
+    "block.gregtech.wire_02_silicon_carbide": {
+      "source_key": "gt.multitileentity.29351",
+      "value": "2x Carborundum Wire"
+    },
+    "block.gregtech.wire_02_silver": {
+      "source_key": "gt.multitileentity.28651",
+      "value": "2x Silver Wire"
+    },
+    "block.gregtech.wire_02_steel": {
+      "source_key": "gt.multitileentity.28951",
+      "value": "2x Steel Wire"
+    },
+    "block.gregtech.wire_02_superconductor": {
+      "source_key": "gt.multitileentity.29951",
+      "value": "2x Superconductor Wire"
+    },
+    "block.gregtech.wire_02_tin": {
+      "source_key": "gt.multitileentity.28051",
+      "value": "2x Tin Wire"
+    },
+    "block.gregtech.wire_02_tungsten": {
+      "source_key": "gt.multitileentity.29101",
+      "value": "2x Tungsten Wire"
+    },
+    "block.gregtech.wire_02_tungsten_steel": {
+      "source_key": "gt.multitileentity.29051",
+      "value": "2x Tungstensteel Wire"
+    },
+    "block.gregtech.wire_02_vanadium_gallium": {
+      "source_key": "gt.multitileentity.29601",
+      "value": "2x Vanadium-Gallium Wire"
+    },
+    "block.gregtech.wire_02_yttrium_barium_cuprate": {
+      "source_key": "gt.multitileentity.29651",
+      "value": "2x Yttrium-Barium-Cuprate Wire"
+    },
+    "block.gregtech.wire_03_aluminium": {
+      "source_key": "gt.multitileentity.29002",
+      "value": "3x Aluminium Wire"
+    },
+    "block.gregtech.wire_03_annealed_copper": {
+      "source_key": "gt.multitileentity.28402",
+      "value": "3x Annealed Copper Wire"
+    },
+    "block.gregtech.wire_03_blue_alloy": {
+      "source_key": "gt.multitileentity.28802",
+      "value": "3x Blue Alloy Wire"
+    },
+    "block.gregtech.wire_03_constantan": {
+      "source_key": "gt.multitileentity.28302",
+      "value": "3x Constantan Wire"
+    },
+    "block.gregtech.wire_03_copper": {
+      "source_key": "gt.multitileentity.28352",
+      "value": "3x Copper Wire"
+    },
+    "block.gregtech.wire_03_efrine": {
+      "source_key": "gt.multitileentity.28452",
+      "value": "3x Efrine Wire"
+    },
+    "block.gregtech.wire_03_electrotine_alloy": {
+      "source_key": "gt.multitileentity.28852",
+      "value": "3x Electrotine Alloy Wire"
+    },
+    "block.gregtech.wire_03_electrum": {
+      "source_key": "gt.multitileentity.28752",
+      "value": "3x Electrum Wire"
+    },
+    "block.gregtech.wire_03_gold": {
+      "source_key": "gt.multitileentity.28702",
+      "value": "3x Gold Wire"
+    },
+    "block.gregtech.wire_03_graphene": {
+      "source_key": "gt.multitileentity.29802",
+      "value": "3x Graphene Wire"
+    },
+    "block.gregtech.wire_03_hsla": {
+      "source_key": "gt.multitileentity.28252",
+      "value": "3x HSLA-Steel Wire"
+    },
+    "block.gregtech.wire_03_iridium": {
+      "source_key": "gt.multitileentity.29402",
+      "value": "3x Iridium Wire"
+    },
+    "block.gregtech.wire_03_kanthal": {
+      "source_key": "gt.multitileentity.28602",
+      "value": "3x Kanthal Wire"
+    },
+    "block.gregtech.wire_03_lead": {
+      "source_key": "gt.multitileentity.28102",
+      "value": "3x Lead Wire"
+    },
+    "block.gregtech.wire_03_naquadah": {
+      "source_key": "gt.multitileentity.29502",
+      "value": "3x Naquadah Wire"
+    },
+    "block.gregtech.wire_03_netherite": {
+      "source_key": "gt.multitileentity.29152",
+      "value": "3x Netherite Wire"
+    },
+    "block.gregtech.wire_03_nichrome": {
+      "source_key": "gt.multitileentity.28902",
+      "value": "3x Nichrome Wire"
+    },
+    "block.gregtech.wire_03_niobium_titanium": {
+      "source_key": "gt.multitileentity.29552",
+      "value": "3x Niobium Titanium Wire"
+    },
+    "block.gregtech.wire_03_osmiridium": {
+      "source_key": "gt.multitileentity.29302",
+      "value": "3x Osmiridium Wire"
+    },
+    "block.gregtech.wire_03_osmium": {
+      "source_key": "gt.multitileentity.29202",
+      "value": "3x Osmium Wire"
+    },
+    "block.gregtech.wire_03_platinum": {
+      "source_key": "gt.multitileentity.29252",
+      "value": "3x Platinum Wire"
+    },
+    "block.gregtech.wire_03_silicon_carbide": {
+      "source_key": "gt.multitileentity.29352",
+      "value": "3x Carborundum Wire"
+    },
+    "block.gregtech.wire_03_silver": {
+      "source_key": "gt.multitileentity.28652",
+      "value": "3x Silver Wire"
+    },
+    "block.gregtech.wire_03_steel": {
+      "source_key": "gt.multitileentity.28952",
+      "value": "3x Steel Wire"
+    },
+    "block.gregtech.wire_03_superconductor": {
+      "source_key": "gt.multitileentity.29952",
+      "value": "3x Superconductor Wire"
+    },
+    "block.gregtech.wire_03_tin": {
+      "source_key": "gt.multitileentity.28052",
+      "value": "3x Tin Wire"
+    },
+    "block.gregtech.wire_03_tungsten": {
+      "source_key": "gt.multitileentity.29102",
+      "value": "3x Tungsten Wire"
+    },
+    "block.gregtech.wire_03_tungsten_steel": {
+      "source_key": "gt.multitileentity.29052",
+      "value": "3x Tungstensteel Wire"
+    },
+    "block.gregtech.wire_03_vanadium_gallium": {
+      "source_key": "gt.multitileentity.29602",
+      "value": "3x Vanadium-Gallium Wire"
+    },
+    "block.gregtech.wire_03_yttrium_barium_cuprate": {
+      "source_key": "gt.multitileentity.29652",
+      "value": "3x Yttrium-Barium-Cuprate Wire"
+    },
+    "block.gregtech.wire_04_aluminium": {
+      "source_key": "gt.multitileentity.29003",
+      "value": "4x Aluminium Wire"
+    },
+    "block.gregtech.wire_04_annealed_copper": {
+      "source_key": "gt.multitileentity.28403",
+      "value": "4x Annealed Copper Wire"
+    },
+    "block.gregtech.wire_04_blue_alloy": {
+      "source_key": "gt.multitileentity.28803",
+      "value": "4x Blue Alloy Wire"
+    },
+    "block.gregtech.wire_04_constantan": {
+      "source_key": "gt.multitileentity.28303",
+      "value": "4x Constantan Wire"
+    },
+    "block.gregtech.wire_04_copper": {
+      "source_key": "gt.multitileentity.28353",
+      "value": "4x Copper Wire"
+    },
+    "block.gregtech.wire_04_efrine": {
+      "source_key": "gt.multitileentity.28453",
+      "value": "4x Efrine Wire"
+    },
+    "block.gregtech.wire_04_electrotine_alloy": {
+      "source_key": "gt.multitileentity.28853",
+      "value": "4x Electrotine Alloy Wire"
+    },
+    "block.gregtech.wire_04_electrum": {
+      "source_key": "gt.multitileentity.28753",
+      "value": "4x Electrum Wire"
+    },
+    "block.gregtech.wire_04_gold": {
+      "source_key": "gt.multitileentity.28703",
+      "value": "4x Gold Wire"
+    },
+    "block.gregtech.wire_04_graphene": {
+      "source_key": "gt.multitileentity.29803",
+      "value": "4x Graphene Wire"
+    },
+    "block.gregtech.wire_04_hsla": {
+      "source_key": "gt.multitileentity.28253",
+      "value": "4x HSLA-Steel Wire"
+    },
+    "block.gregtech.wire_04_iridium": {
+      "source_key": "gt.multitileentity.29403",
+      "value": "4x Iridium Wire"
+    },
+    "block.gregtech.wire_04_kanthal": {
+      "source_key": "gt.multitileentity.28603",
+      "value": "4x Kanthal Wire"
+    },
+    "block.gregtech.wire_04_lead": {
+      "source_key": "gt.multitileentity.28103",
+      "value": "4x Lead Wire"
+    },
+    "block.gregtech.wire_04_naquadah": {
+      "source_key": "gt.multitileentity.29503",
+      "value": "4x Naquadah Wire"
+    },
+    "block.gregtech.wire_04_netherite": {
+      "source_key": "gt.multitileentity.29153",
+      "value": "4x Netherite Wire"
+    },
+    "block.gregtech.wire_04_nichrome": {
+      "source_key": "gt.multitileentity.28903",
+      "value": "4x Nichrome Wire"
+    },
+    "block.gregtech.wire_04_niobium_titanium": {
+      "source_key": "gt.multitileentity.29553",
+      "value": "4x Niobium Titanium Wire"
+    },
+    "block.gregtech.wire_04_osmiridium": {
+      "source_key": "gt.multitileentity.29303",
+      "value": "4x Osmiridium Wire"
+    },
+    "block.gregtech.wire_04_osmium": {
+      "source_key": "gt.multitileentity.29203",
+      "value": "4x Osmium Wire"
+    },
+    "block.gregtech.wire_04_platinum": {
+      "source_key": "gt.multitileentity.29253",
+      "value": "4x Platinum Wire"
+    },
+    "block.gregtech.wire_04_silicon_carbide": {
+      "source_key": "gt.multitileentity.29353",
+      "value": "4x Carborundum Wire"
+    },
+    "block.gregtech.wire_04_silver": {
+      "source_key": "gt.multitileentity.28653",
+      "value": "4x Silver Wire"
+    },
+    "block.gregtech.wire_04_steel": {
+      "source_key": "gt.multitileentity.28953",
+      "value": "4x Steel Wire"
+    },
+    "block.gregtech.wire_04_superconductor": {
+      "source_key": "gt.multitileentity.29953",
+      "value": "4x Superconductor Wire"
+    },
+    "block.gregtech.wire_04_tin": {
+      "source_key": "gt.multitileentity.28053",
+      "value": "4x Tin Wire"
+    },
+    "block.gregtech.wire_04_tungsten": {
+      "source_key": "gt.multitileentity.29103",
+      "value": "4x Tungsten Wire"
+    },
+    "block.gregtech.wire_04_tungsten_steel": {
+      "source_key": "gt.multitileentity.29053",
+      "value": "4x Tungstensteel Wire"
+    },
+    "block.gregtech.wire_04_vanadium_gallium": {
+      "source_key": "gt.multitileentity.29603",
+      "value": "4x Vanadium-Gallium Wire"
+    },
+    "block.gregtech.wire_04_yttrium_barium_cuprate": {
+      "source_key": "gt.multitileentity.29653",
+      "value": "4x Yttrium-Barium-Cuprate Wire"
+    },
+    "block.gregtech.wire_05_aluminium": {
+      "source_key": "gt.multitileentity.29004",
+      "value": "5x Aluminium Wire"
+    },
+    "block.gregtech.wire_05_annealed_copper": {
+      "source_key": "gt.multitileentity.28404",
+      "value": "5x Annealed Copper Wire"
+    },
+    "block.gregtech.wire_05_blue_alloy": {
+      "source_key": "gt.multitileentity.28804",
+      "value": "5x Blue Alloy Wire"
+    },
+    "block.gregtech.wire_05_constantan": {
+      "source_key": "gt.multitileentity.28304",
+      "value": "5x Constantan Wire"
+    },
+    "block.gregtech.wire_05_copper": {
+      "source_key": "gt.multitileentity.28354",
+      "value": "5x Copper Wire"
+    },
+    "block.gregtech.wire_05_efrine": {
+      "source_key": "gt.multitileentity.28454",
+      "value": "5x Efrine Wire"
+    },
+    "block.gregtech.wire_05_electrotine_alloy": {
+      "source_key": "gt.multitileentity.28854",
+      "value": "5x Electrotine Alloy Wire"
+    },
+    "block.gregtech.wire_05_electrum": {
+      "source_key": "gt.multitileentity.28754",
+      "value": "5x Electrum Wire"
+    },
+    "block.gregtech.wire_05_gold": {
+      "source_key": "gt.multitileentity.28704",
+      "value": "5x Gold Wire"
+    },
+    "block.gregtech.wire_05_graphene": {
+      "source_key": "gt.multitileentity.29804",
+      "value": "5x Graphene Wire"
+    },
+    "block.gregtech.wire_05_hsla": {
+      "source_key": "gt.multitileentity.28254",
+      "value": "5x HSLA-Steel Wire"
+    },
+    "block.gregtech.wire_05_iridium": {
+      "source_key": "gt.multitileentity.29404",
+      "value": "5x Iridium Wire"
+    },
+    "block.gregtech.wire_05_kanthal": {
+      "source_key": "gt.multitileentity.28604",
+      "value": "5x Kanthal Wire"
+    },
+    "block.gregtech.wire_05_lead": {
+      "source_key": "gt.multitileentity.28104",
+      "value": "5x Lead Wire"
+    },
+    "block.gregtech.wire_05_naquadah": {
+      "source_key": "gt.multitileentity.29504",
+      "value": "5x Naquadah Wire"
+    },
+    "block.gregtech.wire_05_netherite": {
+      "source_key": "gt.multitileentity.29154",
+      "value": "5x Netherite Wire"
+    },
+    "block.gregtech.wire_05_nichrome": {
+      "source_key": "gt.multitileentity.28904",
+      "value": "5x Nichrome Wire"
+    },
+    "block.gregtech.wire_05_niobium_titanium": {
+      "source_key": "gt.multitileentity.29554",
+      "value": "5x Niobium Titanium Wire"
+    },
+    "block.gregtech.wire_05_osmiridium": {
+      "source_key": "gt.multitileentity.29304",
+      "value": "5x Osmiridium Wire"
+    },
+    "block.gregtech.wire_05_osmium": {
+      "source_key": "gt.multitileentity.29204",
+      "value": "5x Osmium Wire"
+    },
+    "block.gregtech.wire_05_platinum": {
+      "source_key": "gt.multitileentity.29254",
+      "value": "5x Platinum Wire"
+    },
+    "block.gregtech.wire_05_silicon_carbide": {
+      "source_key": "gt.multitileentity.29354",
+      "value": "5x Carborundum Wire"
+    },
+    "block.gregtech.wire_05_silver": {
+      "source_key": "gt.multitileentity.28654",
+      "value": "5x Silver Wire"
+    },
+    "block.gregtech.wire_05_steel": {
+      "source_key": "gt.multitileentity.28954",
+      "value": "5x Steel Wire"
+    },
+    "block.gregtech.wire_05_superconductor": {
+      "source_key": "gt.multitileentity.29954",
+      "value": "5x Superconductor Wire"
+    },
+    "block.gregtech.wire_05_tin": {
+      "source_key": "gt.multitileentity.28054",
+      "value": "5x Tin Wire"
+    },
+    "block.gregtech.wire_05_tungsten": {
+      "source_key": "gt.multitileentity.29104",
+      "value": "5x Tungsten Wire"
+    },
+    "block.gregtech.wire_05_tungsten_steel": {
+      "source_key": "gt.multitileentity.29054",
+      "value": "5x Tungstensteel Wire"
+    },
+    "block.gregtech.wire_05_vanadium_gallium": {
+      "source_key": "gt.multitileentity.29604",
+      "value": "5x Vanadium-Gallium Wire"
+    },
+    "block.gregtech.wire_05_yttrium_barium_cuprate": {
+      "source_key": "gt.multitileentity.29654",
+      "value": "5x Yttrium-Barium-Cuprate Wire"
+    },
+    "block.gregtech.wire_06_aluminium": {
+      "source_key": "gt.multitileentity.29005",
+      "value": "6x Aluminium Wire"
+    },
+    "block.gregtech.wire_06_annealed_copper": {
+      "source_key": "gt.multitileentity.28405",
+      "value": "6x Annealed Copper Wire"
+    },
+    "block.gregtech.wire_06_blue_alloy": {
+      "source_key": "gt.multitileentity.28805",
+      "value": "6x Blue Alloy Wire"
+    },
+    "block.gregtech.wire_06_constantan": {
+      "source_key": "gt.multitileentity.28305",
+      "value": "6x Constantan Wire"
+    },
+    "block.gregtech.wire_06_copper": {
+      "source_key": "gt.multitileentity.28355",
+      "value": "6x Copper Wire"
+    },
+    "block.gregtech.wire_06_efrine": {
+      "source_key": "gt.multitileentity.28455",
+      "value": "6x Efrine Wire"
+    },
+    "block.gregtech.wire_06_electrotine_alloy": {
+      "source_key": "gt.multitileentity.28855",
+      "value": "6x Electrotine Alloy Wire"
+    },
+    "block.gregtech.wire_06_electrum": {
+      "source_key": "gt.multitileentity.28755",
+      "value": "6x Electrum Wire"
+    },
+    "block.gregtech.wire_06_gold": {
+      "source_key": "gt.multitileentity.28705",
+      "value": "6x Gold Wire"
+    },
+    "block.gregtech.wire_06_graphene": {
+      "source_key": "gt.multitileentity.29805",
+      "value": "6x Graphene Wire"
+    },
+    "block.gregtech.wire_06_hsla": {
+      "source_key": "gt.multitileentity.28255",
+      "value": "6x HSLA-Steel Wire"
+    },
+    "block.gregtech.wire_06_iridium": {
+      "source_key": "gt.multitileentity.29405",
+      "value": "6x Iridium Wire"
+    },
+    "block.gregtech.wire_06_kanthal": {
+      "source_key": "gt.multitileentity.28605",
+      "value": "6x Kanthal Wire"
+    },
+    "block.gregtech.wire_06_lead": {
+      "source_key": "gt.multitileentity.28105",
+      "value": "6x Lead Wire"
+    },
+    "block.gregtech.wire_06_naquadah": {
+      "source_key": "gt.multitileentity.29505",
+      "value": "6x Naquadah Wire"
+    },
+    "block.gregtech.wire_06_netherite": {
+      "source_key": "gt.multitileentity.29155",
+      "value": "6x Netherite Wire"
+    },
+    "block.gregtech.wire_06_nichrome": {
+      "source_key": "gt.multitileentity.28905",
+      "value": "6x Nichrome Wire"
+    },
+    "block.gregtech.wire_06_niobium_titanium": {
+      "source_key": "gt.multitileentity.29555",
+      "value": "6x Niobium Titanium Wire"
+    },
+    "block.gregtech.wire_06_osmiridium": {
+      "source_key": "gt.multitileentity.29305",
+      "value": "6x Osmiridium Wire"
+    },
+    "block.gregtech.wire_06_osmium": {
+      "source_key": "gt.multitileentity.29205",
+      "value": "6x Osmium Wire"
+    },
+    "block.gregtech.wire_06_platinum": {
+      "source_key": "gt.multitileentity.29255",
+      "value": "6x Platinum Wire"
+    },
+    "block.gregtech.wire_06_silicon_carbide": {
+      "source_key": "gt.multitileentity.29355",
+      "value": "6x Carborundum Wire"
+    },
+    "block.gregtech.wire_06_silver": {
+      "source_key": "gt.multitileentity.28655",
+      "value": "6x Silver Wire"
+    },
+    "block.gregtech.wire_06_steel": {
+      "source_key": "gt.multitileentity.28955",
+      "value": "6x Steel Wire"
+    },
+    "block.gregtech.wire_06_superconductor": {
+      "source_key": "gt.multitileentity.29955",
+      "value": "6x Superconductor Wire"
+    },
+    "block.gregtech.wire_06_tin": {
+      "source_key": "gt.multitileentity.28055",
+      "value": "6x Tin Wire"
+    },
+    "block.gregtech.wire_06_tungsten": {
+      "source_key": "gt.multitileentity.29105",
+      "value": "6x Tungsten Wire"
+    },
+    "block.gregtech.wire_06_tungsten_steel": {
+      "source_key": "gt.multitileentity.29055",
+      "value": "6x Tungstensteel Wire"
+    },
+    "block.gregtech.wire_06_vanadium_gallium": {
+      "source_key": "gt.multitileentity.29605",
+      "value": "6x Vanadium-Gallium Wire"
+    },
+    "block.gregtech.wire_06_yttrium_barium_cuprate": {
+      "source_key": "gt.multitileentity.29655",
+      "value": "6x Yttrium-Barium-Cuprate Wire"
+    },
+    "block.gregtech.wire_07_aluminium": {
+      "source_key": "gt.multitileentity.29006",
+      "value": "7x Aluminium Wire"
+    },
+    "block.gregtech.wire_07_annealed_copper": {
+      "source_key": "gt.multitileentity.28406",
+      "value": "7x Annealed Copper Wire"
+    },
+    "block.gregtech.wire_07_blue_alloy": {
+      "source_key": "gt.multitileentity.28806",
+      "value": "7x Blue Alloy Wire"
+    },
+    "block.gregtech.wire_07_constantan": {
+      "source_key": "gt.multitileentity.28306",
+      "value": "7x Constantan Wire"
+    },
+    "block.gregtech.wire_07_copper": {
+      "source_key": "gt.multitileentity.28356",
+      "value": "7x Copper Wire"
+    },
+    "block.gregtech.wire_07_efrine": {
+      "source_key": "gt.multitileentity.28456",
+      "value": "7x Efrine Wire"
+    },
+    "block.gregtech.wire_07_electrotine_alloy": {
+      "source_key": "gt.multitileentity.28856",
+      "value": "7x Electrotine Alloy Wire"
+    },
+    "block.gregtech.wire_07_electrum": {
+      "source_key": "gt.multitileentity.28756",
+      "value": "7x Electrum Wire"
+    },
+    "block.gregtech.wire_07_gold": {
+      "source_key": "gt.multitileentity.28706",
+      "value": "7x Gold Wire"
+    },
+    "block.gregtech.wire_07_graphene": {
+      "source_key": "gt.multitileentity.29806",
+      "value": "7x Graphene Wire"
+    },
+    "block.gregtech.wire_07_hsla": {
+      "source_key": "gt.multitileentity.28256",
+      "value": "7x HSLA-Steel Wire"
+    },
+    "block.gregtech.wire_07_iridium": {
+      "source_key": "gt.multitileentity.29406",
+      "value": "7x Iridium Wire"
+    },
+    "block.gregtech.wire_07_kanthal": {
+      "source_key": "gt.multitileentity.28606",
+      "value": "7x Kanthal Wire"
+    },
+    "block.gregtech.wire_07_lead": {
+      "source_key": "gt.multitileentity.28106",
+      "value": "7x Lead Wire"
+    },
+    "block.gregtech.wire_07_naquadah": {
+      "source_key": "gt.multitileentity.29506",
+      "value": "7x Naquadah Wire"
+    },
+    "block.gregtech.wire_07_netherite": {
+      "source_key": "gt.multitileentity.29156",
+      "value": "7x Netherite Wire"
+    },
+    "block.gregtech.wire_07_nichrome": {
+      "source_key": "gt.multitileentity.28906",
+      "value": "7x Nichrome Wire"
+    },
+    "block.gregtech.wire_07_niobium_titanium": {
+      "source_key": "gt.multitileentity.29556",
+      "value": "7x Niobium Titanium Wire"
+    },
+    "block.gregtech.wire_07_osmiridium": {
+      "source_key": "gt.multitileentity.29306",
+      "value": "7x Osmiridium Wire"
+    },
+    "block.gregtech.wire_07_osmium": {
+      "source_key": "gt.multitileentity.29206",
+      "value": "7x Osmium Wire"
+    },
+    "block.gregtech.wire_07_platinum": {
+      "source_key": "gt.multitileentity.29256",
+      "value": "7x Platinum Wire"
+    },
+    "block.gregtech.wire_07_silicon_carbide": {
+      "source_key": "gt.multitileentity.29356",
+      "value": "7x Carborundum Wire"
+    },
+    "block.gregtech.wire_07_silver": {
+      "source_key": "gt.multitileentity.28656",
+      "value": "7x Silver Wire"
+    },
+    "block.gregtech.wire_07_steel": {
+      "source_key": "gt.multitileentity.28956",
+      "value": "7x Steel Wire"
+    },
+    "block.gregtech.wire_07_superconductor": {
+      "source_key": "gt.multitileentity.29956",
+      "value": "7x Superconductor Wire"
+    },
+    "block.gregtech.wire_07_tin": {
+      "source_key": "gt.multitileentity.28056",
+      "value": "7x Tin Wire"
+    },
+    "block.gregtech.wire_07_tungsten": {
+      "source_key": "gt.multitileentity.29106",
+      "value": "7x Tungsten Wire"
+    },
+    "block.gregtech.wire_07_tungsten_steel": {
+      "source_key": "gt.multitileentity.29056",
+      "value": "7x Tungstensteel Wire"
+    },
+    "block.gregtech.wire_07_vanadium_gallium": {
+      "source_key": "gt.multitileentity.29606",
+      "value": "7x Vanadium-Gallium Wire"
+    },
+    "block.gregtech.wire_07_yttrium_barium_cuprate": {
+      "source_key": "gt.multitileentity.29656",
+      "value": "7x Yttrium-Barium-Cuprate Wire"
+    },
+    "block.gregtech.wire_08_aluminium": {
+      "source_key": "gt.multitileentity.29007",
+      "value": "8x Aluminium Wire"
+    },
+    "block.gregtech.wire_08_annealed_copper": {
+      "source_key": "gt.multitileentity.28407",
+      "value": "8x Annealed Copper Wire"
+    },
+    "block.gregtech.wire_08_blue_alloy": {
+      "source_key": "gt.multitileentity.28807",
+      "value": "8x Blue Alloy Wire"
+    },
+    "block.gregtech.wire_08_constantan": {
+      "source_key": "gt.multitileentity.28307",
+      "value": "8x Constantan Wire"
+    },
+    "block.gregtech.wire_08_copper": {
+      "source_key": "gt.multitileentity.28357",
+      "value": "8x Copper Wire"
+    },
+    "block.gregtech.wire_08_efrine": {
+      "source_key": "gt.multitileentity.28457",
+      "value": "8x Efrine Wire"
+    },
+    "block.gregtech.wire_08_electrotine_alloy": {
+      "source_key": "gt.multitileentity.28857",
+      "value": "8x Electrotine Alloy Wire"
+    },
+    "block.gregtech.wire_08_electrum": {
+      "source_key": "gt.multitileentity.28757",
+      "value": "8x Electrum Wire"
+    },
+    "block.gregtech.wire_08_gold": {
+      "source_key": "gt.multitileentity.28707",
+      "value": "8x Gold Wire"
+    },
+    "block.gregtech.wire_08_graphene": {
+      "source_key": "gt.multitileentity.29807",
+      "value": "8x Graphene Wire"
+    },
+    "block.gregtech.wire_08_hsla": {
+      "source_key": "gt.multitileentity.28257",
+      "value": "8x HSLA-Steel Wire"
+    },
+    "block.gregtech.wire_08_iridium": {
+      "source_key": "gt.multitileentity.29407",
+      "value": "8x Iridium Wire"
+    },
+    "block.gregtech.wire_08_kanthal": {
+      "source_key": "gt.multitileentity.28607",
+      "value": "8x Kanthal Wire"
+    },
+    "block.gregtech.wire_08_lead": {
+      "source_key": "gt.multitileentity.28107",
+      "value": "8x Lead Wire"
+    },
+    "block.gregtech.wire_08_naquadah": {
+      "source_key": "gt.multitileentity.29507",
+      "value": "8x Naquadah Wire"
+    },
+    "block.gregtech.wire_08_netherite": {
+      "source_key": "gt.multitileentity.29157",
+      "value": "8x Netherite Wire"
+    },
+    "block.gregtech.wire_08_nichrome": {
+      "source_key": "gt.multitileentity.28907",
+      "value": "8x Nichrome Wire"
+    },
+    "block.gregtech.wire_08_niobium_titanium": {
+      "source_key": "gt.multitileentity.29557",
+      "value": "8x Niobium Titanium Wire"
+    },
+    "block.gregtech.wire_08_osmiridium": {
+      "source_key": "gt.multitileentity.29307",
+      "value": "8x Osmiridium Wire"
+    },
+    "block.gregtech.wire_08_osmium": {
+      "source_key": "gt.multitileentity.29207",
+      "value": "8x Osmium Wire"
+    },
+    "block.gregtech.wire_08_platinum": {
+      "source_key": "gt.multitileentity.29257",
+      "value": "8x Platinum Wire"
+    },
+    "block.gregtech.wire_08_silicon_carbide": {
+      "source_key": "gt.multitileentity.29357",
+      "value": "8x Carborundum Wire"
+    },
+    "block.gregtech.wire_08_silver": {
+      "source_key": "gt.multitileentity.28657",
+      "value": "8x Silver Wire"
+    },
+    "block.gregtech.wire_08_steel": {
+      "source_key": "gt.multitileentity.28957",
+      "value": "8x Steel Wire"
+    },
+    "block.gregtech.wire_08_superconductor": {
+      "source_key": "gt.multitileentity.29957",
+      "value": "8x Superconductor Wire"
+    },
+    "block.gregtech.wire_08_tin": {
+      "source_key": "gt.multitileentity.28057",
+      "value": "8x Tin Wire"
+    },
+    "block.gregtech.wire_08_tungsten": {
+      "source_key": "gt.multitileentity.29107",
+      "value": "8x Tungsten Wire"
+    },
+    "block.gregtech.wire_08_tungsten_steel": {
+      "source_key": "gt.multitileentity.29057",
+      "value": "8x Tungstensteel Wire"
+    },
+    "block.gregtech.wire_08_vanadium_gallium": {
+      "source_key": "gt.multitileentity.29607",
+      "value": "8x Vanadium-Gallium Wire"
+    },
+    "block.gregtech.wire_08_yttrium_barium_cuprate": {
+      "source_key": "gt.multitileentity.29657",
+      "value": "8x Yttrium-Barium-Cuprate Wire"
+    },
+    "block.gregtech.wire_09_aluminium": {
+      "source_key": "gt.multitileentity.29008",
+      "value": "9x Aluminium Wire"
+    },
+    "block.gregtech.wire_09_annealed_copper": {
+      "source_key": "gt.multitileentity.28408",
+      "value": "9x Annealed Copper Wire"
+    },
+    "block.gregtech.wire_09_blue_alloy": {
+      "source_key": "gt.multitileentity.28808",
+      "value": "9x Blue Alloy Wire"
+    },
+    "block.gregtech.wire_09_constantan": {
+      "source_key": "gt.multitileentity.28308",
+      "value": "9x Constantan Wire"
+    },
+    "block.gregtech.wire_09_copper": {
+      "source_key": "gt.multitileentity.28358",
+      "value": "9x Copper Wire"
+    },
+    "block.gregtech.wire_09_efrine": {
+      "source_key": "gt.multitileentity.28458",
+      "value": "9x Efrine Wire"
+    },
+    "block.gregtech.wire_09_electrotine_alloy": {
+      "source_key": "gt.multitileentity.28858",
+      "value": "9x Electrotine Alloy Wire"
+    },
+    "block.gregtech.wire_09_electrum": {
+      "source_key": "gt.multitileentity.28758",
+      "value": "9x Electrum Wire"
+    },
+    "block.gregtech.wire_09_gold": {
+      "source_key": "gt.multitileentity.28708",
+      "value": "9x Gold Wire"
+    },
+    "block.gregtech.wire_09_graphene": {
+      "source_key": "gt.multitileentity.29808",
+      "value": "9x Graphene Wire"
+    },
+    "block.gregtech.wire_09_hsla": {
+      "source_key": "gt.multitileentity.28258",
+      "value": "9x HSLA-Steel Wire"
+    },
+    "block.gregtech.wire_09_iridium": {
+      "source_key": "gt.multitileentity.29408",
+      "value": "9x Iridium Wire"
+    },
+    "block.gregtech.wire_09_kanthal": {
+      "source_key": "gt.multitileentity.28608",
+      "value": "9x Kanthal Wire"
+    },
+    "block.gregtech.wire_09_lead": {
+      "source_key": "gt.multitileentity.28108",
+      "value": "9x Lead Wire"
+    },
+    "block.gregtech.wire_09_naquadah": {
+      "source_key": "gt.multitileentity.29508",
+      "value": "9x Naquadah Wire"
+    },
+    "block.gregtech.wire_09_netherite": {
+      "source_key": "gt.multitileentity.29158",
+      "value": "9x Netherite Wire"
+    },
+    "block.gregtech.wire_09_nichrome": {
+      "source_key": "gt.multitileentity.28908",
+      "value": "9x Nichrome Wire"
+    },
+    "block.gregtech.wire_09_niobium_titanium": {
+      "source_key": "gt.multitileentity.29558",
+      "value": "9x Niobium Titanium Wire"
+    },
+    "block.gregtech.wire_09_osmiridium": {
+      "source_key": "gt.multitileentity.29308",
+      "value": "9x Osmiridium Wire"
+    },
+    "block.gregtech.wire_09_osmium": {
+      "source_key": "gt.multitileentity.29208",
+      "value": "9x Osmium Wire"
+    },
+    "block.gregtech.wire_09_platinum": {
+      "source_key": "gt.multitileentity.29258",
+      "value": "9x Platinum Wire"
+    },
+    "block.gregtech.wire_09_silicon_carbide": {
+      "source_key": "gt.multitileentity.29358",
+      "value": "9x Carborundum Wire"
+    },
+    "block.gregtech.wire_09_silver": {
+      "source_key": "gt.multitileentity.28658",
+      "value": "9x Silver Wire"
+    },
+    "block.gregtech.wire_09_steel": {
+      "source_key": "gt.multitileentity.28958",
+      "value": "9x Steel Wire"
+    },
+    "block.gregtech.wire_09_superconductor": {
+      "source_key": "gt.multitileentity.29958",
+      "value": "9x Superconductor Wire"
+    },
+    "block.gregtech.wire_09_tin": {
+      "source_key": "gt.multitileentity.28058",
+      "value": "9x Tin Wire"
+    },
+    "block.gregtech.wire_09_tungsten": {
+      "source_key": "gt.multitileentity.29108",
+      "value": "9x Tungsten Wire"
+    },
+    "block.gregtech.wire_09_tungsten_steel": {
+      "source_key": "gt.multitileentity.29058",
+      "value": "9x Tungstensteel Wire"
+    },
+    "block.gregtech.wire_09_vanadium_gallium": {
+      "source_key": "gt.multitileentity.29608",
+      "value": "9x Vanadium-Gallium Wire"
+    },
+    "block.gregtech.wire_09_yttrium_barium_cuprate": {
+      "source_key": "gt.multitileentity.29658",
+      "value": "9x Yttrium-Barium-Cuprate Wire"
+    },
+    "block.gregtech.wire_10_aluminium": {
+      "source_key": "gt.multitileentity.29009",
+      "value": "10x Aluminium Wire"
+    },
+    "block.gregtech.wire_10_annealed_copper": {
+      "source_key": "gt.multitileentity.28409",
+      "value": "10x Annealed Copper Wire"
+    },
+    "block.gregtech.wire_10_blue_alloy": {
+      "source_key": "gt.multitileentity.28809",
+      "value": "10x Blue Alloy Wire"
+    },
+    "block.gregtech.wire_10_constantan": {
+      "source_key": "gt.multitileentity.28309",
+      "value": "10x Constantan Wire"
+    },
+    "block.gregtech.wire_10_copper": {
+      "source_key": "gt.multitileentity.28359",
+      "value": "10x Copper Wire"
+    },
+    "block.gregtech.wire_10_efrine": {
+      "source_key": "gt.multitileentity.28459",
+      "value": "10x Efrine Wire"
+    },
+    "block.gregtech.wire_10_electrotine_alloy": {
+      "source_key": "gt.multitileentity.28859",
+      "value": "10x Electrotine Alloy Wire"
+    },
+    "block.gregtech.wire_10_electrum": {
+      "source_key": "gt.multitileentity.28759",
+      "value": "10x Electrum Wire"
+    },
+    "block.gregtech.wire_10_gold": {
+      "source_key": "gt.multitileentity.28709",
+      "value": "10x Gold Wire"
+    },
+    "block.gregtech.wire_10_graphene": {
+      "source_key": "gt.multitileentity.29809",
+      "value": "10x Graphene Wire"
+    },
+    "block.gregtech.wire_10_hsla": {
+      "source_key": "gt.multitileentity.28259",
+      "value": "10x HSLA-Steel Wire"
+    },
+    "block.gregtech.wire_10_iridium": {
+      "source_key": "gt.multitileentity.29409",
+      "value": "10x Iridium Wire"
+    },
+    "block.gregtech.wire_10_kanthal": {
+      "source_key": "gt.multitileentity.28609",
+      "value": "10x Kanthal Wire"
+    },
+    "block.gregtech.wire_10_lead": {
+      "source_key": "gt.multitileentity.28109",
+      "value": "10x Lead Wire"
+    },
+    "block.gregtech.wire_10_naquadah": {
+      "source_key": "gt.multitileentity.29509",
+      "value": "10x Naquadah Wire"
+    },
+    "block.gregtech.wire_10_netherite": {
+      "source_key": "gt.multitileentity.29159",
+      "value": "10x Netherite Wire"
+    },
+    "block.gregtech.wire_10_nichrome": {
+      "source_key": "gt.multitileentity.28909",
+      "value": "10x Nichrome Wire"
+    },
+    "block.gregtech.wire_10_niobium_titanium": {
+      "source_key": "gt.multitileentity.29559",
+      "value": "10x Niobium Titanium Wire"
+    },
+    "block.gregtech.wire_10_osmiridium": {
+      "source_key": "gt.multitileentity.29309",
+      "value": "10x Osmiridium Wire"
+    },
+    "block.gregtech.wire_10_osmium": {
+      "source_key": "gt.multitileentity.29209",
+      "value": "10x Osmium Wire"
+    },
+    "block.gregtech.wire_10_platinum": {
+      "source_key": "gt.multitileentity.29259",
+      "value": "10x Platinum Wire"
+    },
+    "block.gregtech.wire_10_silicon_carbide": {
+      "source_key": "gt.multitileentity.29359",
+      "value": "10x Carborundum Wire"
+    },
+    "block.gregtech.wire_10_silver": {
+      "source_key": "gt.multitileentity.28659",
+      "value": "10x Silver Wire"
+    },
+    "block.gregtech.wire_10_steel": {
+      "source_key": "gt.multitileentity.28959",
+      "value": "10x Steel Wire"
+    },
+    "block.gregtech.wire_10_superconductor": {
+      "source_key": "gt.multitileentity.29959",
+      "value": "10x Superconductor Wire"
+    },
+    "block.gregtech.wire_10_tin": {
+      "source_key": "gt.multitileentity.28059",
+      "value": "10x Tin Wire"
+    },
+    "block.gregtech.wire_10_tungsten": {
+      "source_key": "gt.multitileentity.29109",
+      "value": "10x Tungsten Wire"
+    },
+    "block.gregtech.wire_10_tungsten_steel": {
+      "source_key": "gt.multitileentity.29059",
+      "value": "10x Tungstensteel Wire"
+    },
+    "block.gregtech.wire_10_vanadium_gallium": {
+      "source_key": "gt.multitileentity.29609",
+      "value": "10x Vanadium-Gallium Wire"
+    },
+    "block.gregtech.wire_10_yttrium_barium_cuprate": {
+      "source_key": "gt.multitileentity.29659",
+      "value": "10x Yttrium-Barium-Cuprate Wire"
+    },
+    "block.gregtech.wire_11_aluminium": {
+      "source_key": "gt.multitileentity.29010",
+      "value": "11x Aluminium Wire"
+    },
+    "block.gregtech.wire_11_annealed_copper": {
+      "source_key": "gt.multitileentity.28410",
+      "value": "11x Annealed Copper Wire"
+    },
+    "block.gregtech.wire_11_blue_alloy": {
+      "source_key": "gt.multitileentity.28810",
+      "value": "11x Blue Alloy Wire"
+    },
+    "block.gregtech.wire_11_constantan": {
+      "source_key": "gt.multitileentity.28310",
+      "value": "11x Constantan Wire"
+    },
+    "block.gregtech.wire_11_copper": {
+      "source_key": "gt.multitileentity.28360",
+      "value": "11x Copper Wire"
+    },
+    "block.gregtech.wire_11_efrine": {
+      "source_key": "gt.multitileentity.28460",
+      "value": "11x Efrine Wire"
+    },
+    "block.gregtech.wire_11_electrotine_alloy": {
+      "source_key": "gt.multitileentity.28860",
+      "value": "11x Electrotine Alloy Wire"
+    },
+    "block.gregtech.wire_11_electrum": {
+      "source_key": "gt.multitileentity.28760",
+      "value": "11x Electrum Wire"
+    },
+    "block.gregtech.wire_11_gold": {
+      "source_key": "gt.multitileentity.28710",
+      "value": "11x Gold Wire"
+    },
+    "block.gregtech.wire_11_graphene": {
+      "source_key": "gt.multitileentity.29810",
+      "value": "11x Graphene Wire"
+    },
+    "block.gregtech.wire_11_hsla": {
+      "source_key": "gt.multitileentity.28260",
+      "value": "11x HSLA-Steel Wire"
+    },
+    "block.gregtech.wire_11_iridium": {
+      "source_key": "gt.multitileentity.29410",
+      "value": "11x Iridium Wire"
+    },
+    "block.gregtech.wire_11_kanthal": {
+      "source_key": "gt.multitileentity.28610",
+      "value": "11x Kanthal Wire"
+    },
+    "block.gregtech.wire_11_lead": {
+      "source_key": "gt.multitileentity.28110",
+      "value": "11x Lead Wire"
+    },
+    "block.gregtech.wire_11_naquadah": {
+      "source_key": "gt.multitileentity.29510",
+      "value": "11x Naquadah Wire"
+    },
+    "block.gregtech.wire_11_netherite": {
+      "source_key": "gt.multitileentity.29160",
+      "value": "11x Netherite Wire"
+    },
+    "block.gregtech.wire_11_nichrome": {
+      "source_key": "gt.multitileentity.28910",
+      "value": "11x Nichrome Wire"
+    },
+    "block.gregtech.wire_11_niobium_titanium": {
+      "source_key": "gt.multitileentity.29560",
+      "value": "11x Niobium Titanium Wire"
+    },
+    "block.gregtech.wire_11_osmiridium": {
+      "source_key": "gt.multitileentity.29310",
+      "value": "11x Osmiridium Wire"
+    },
+    "block.gregtech.wire_11_osmium": {
+      "source_key": "gt.multitileentity.29210",
+      "value": "11x Osmium Wire"
+    },
+    "block.gregtech.wire_11_platinum": {
+      "source_key": "gt.multitileentity.29260",
+      "value": "11x Platinum Wire"
+    },
+    "block.gregtech.wire_11_silicon_carbide": {
+      "source_key": "gt.multitileentity.29360",
+      "value": "11x Carborundum Wire"
+    },
+    "block.gregtech.wire_11_silver": {
+      "source_key": "gt.multitileentity.28660",
+      "value": "11x Silver Wire"
+    },
+    "block.gregtech.wire_11_steel": {
+      "source_key": "gt.multitileentity.28960",
+      "value": "11x Steel Wire"
+    },
+    "block.gregtech.wire_11_superconductor": {
+      "source_key": "gt.multitileentity.29960",
+      "value": "11x Superconductor Wire"
+    },
+    "block.gregtech.wire_11_tin": {
+      "source_key": "gt.multitileentity.28060",
+      "value": "11x Tin Wire"
+    },
+    "block.gregtech.wire_11_tungsten": {
+      "source_key": "gt.multitileentity.29110",
+      "value": "11x Tungsten Wire"
+    },
+    "block.gregtech.wire_11_tungsten_steel": {
+      "source_key": "gt.multitileentity.29060",
+      "value": "11x Tungstensteel Wire"
+    },
+    "block.gregtech.wire_11_vanadium_gallium": {
+      "source_key": "gt.multitileentity.29610",
+      "value": "11x Vanadium-Gallium Wire"
+    },
+    "block.gregtech.wire_11_yttrium_barium_cuprate": {
+      "source_key": "gt.multitileentity.29660",
+      "value": "11x Yttrium-Barium-Cuprate Wire"
+    },
+    "block.gregtech.wire_12_aluminium": {
+      "source_key": "gt.multitileentity.29011",
+      "value": "12x Aluminium Wire"
+    },
+    "block.gregtech.wire_12_annealed_copper": {
+      "source_key": "gt.multitileentity.28411",
+      "value": "12x Annealed Copper Wire"
+    },
+    "block.gregtech.wire_12_blue_alloy": {
+      "source_key": "gt.multitileentity.28811",
+      "value": "12x Blue Alloy Wire"
+    },
+    "block.gregtech.wire_12_constantan": {
+      "source_key": "gt.multitileentity.28311",
+      "value": "12x Constantan Wire"
+    },
+    "block.gregtech.wire_12_copper": {
+      "source_key": "gt.multitileentity.28361",
+      "value": "12x Copper Wire"
+    },
+    "block.gregtech.wire_12_efrine": {
+      "source_key": "gt.multitileentity.28461",
+      "value": "12x Efrine Wire"
+    },
+    "block.gregtech.wire_12_electrotine_alloy": {
+      "source_key": "gt.multitileentity.28861",
+      "value": "12x Electrotine Alloy Wire"
+    },
+    "block.gregtech.wire_12_electrum": {
+      "source_key": "gt.multitileentity.28761",
+      "value": "12x Electrum Wire"
+    },
+    "block.gregtech.wire_12_gold": {
+      "source_key": "gt.multitileentity.28711",
+      "value": "12x Gold Wire"
+    },
+    "block.gregtech.wire_12_graphene": {
+      "source_key": "gt.multitileentity.29811",
+      "value": "12x Graphene Wire"
+    },
+    "block.gregtech.wire_12_hsla": {
+      "source_key": "gt.multitileentity.28261",
+      "value": "12x HSLA-Steel Wire"
+    },
+    "block.gregtech.wire_12_iridium": {
+      "source_key": "gt.multitileentity.29411",
+      "value": "12x Iridium Wire"
+    },
+    "block.gregtech.wire_12_kanthal": {
+      "source_key": "gt.multitileentity.28611",
+      "value": "12x Kanthal Wire"
+    },
+    "block.gregtech.wire_12_lead": {
+      "source_key": "gt.multitileentity.28111",
+      "value": "12x Lead Wire"
+    },
+    "block.gregtech.wire_12_naquadah": {
+      "source_key": "gt.multitileentity.29511",
+      "value": "12x Naquadah Wire"
+    },
+    "block.gregtech.wire_12_netherite": {
+      "source_key": "gt.multitileentity.29161",
+      "value": "12x Netherite Wire"
+    },
+    "block.gregtech.wire_12_nichrome": {
+      "source_key": "gt.multitileentity.28911",
+      "value": "12x Nichrome Wire"
+    },
+    "block.gregtech.wire_12_niobium_titanium": {
+      "source_key": "gt.multitileentity.29561",
+      "value": "12x Niobium Titanium Wire"
+    },
+    "block.gregtech.wire_12_osmiridium": {
+      "source_key": "gt.multitileentity.29311",
+      "value": "12x Osmiridium Wire"
+    },
+    "block.gregtech.wire_12_osmium": {
+      "source_key": "gt.multitileentity.29211",
+      "value": "12x Osmium Wire"
+    },
+    "block.gregtech.wire_12_platinum": {
+      "source_key": "gt.multitileentity.29261",
+      "value": "12x Platinum Wire"
+    },
+    "block.gregtech.wire_12_silicon_carbide": {
+      "source_key": "gt.multitileentity.29361",
+      "value": "12x Carborundum Wire"
+    },
+    "block.gregtech.wire_12_silver": {
+      "source_key": "gt.multitileentity.28661",
+      "value": "12x Silver Wire"
+    },
+    "block.gregtech.wire_12_steel": {
+      "source_key": "gt.multitileentity.28961",
+      "value": "12x Steel Wire"
+    },
+    "block.gregtech.wire_12_superconductor": {
+      "source_key": "gt.multitileentity.29961",
+      "value": "12x Superconductor Wire"
+    },
+    "block.gregtech.wire_12_tin": {
+      "source_key": "gt.multitileentity.28061",
+      "value": "12x Tin Wire"
+    },
+    "block.gregtech.wire_12_tungsten": {
+      "source_key": "gt.multitileentity.29111",
+      "value": "12x Tungsten Wire"
+    },
+    "block.gregtech.wire_12_tungsten_steel": {
+      "source_key": "gt.multitileentity.29061",
+      "value": "12x Tungstensteel Wire"
+    },
+    "block.gregtech.wire_12_vanadium_gallium": {
+      "source_key": "gt.multitileentity.29611",
+      "value": "12x Vanadium-Gallium Wire"
+    },
+    "block.gregtech.wire_12_yttrium_barium_cuprate": {
+      "source_key": "gt.multitileentity.29661",
+      "value": "12x Yttrium-Barium-Cuprate Wire"
+    },
+    "block.gregtech.wire_13_aluminium": {
+      "source_key": "gt.multitileentity.29012",
+      "value": "13x Aluminium Wire"
+    },
+    "block.gregtech.wire_13_annealed_copper": {
+      "source_key": "gt.multitileentity.28412",
+      "value": "13x Annealed Copper Wire"
+    },
+    "block.gregtech.wire_13_blue_alloy": {
+      "source_key": "gt.multitileentity.28812",
+      "value": "13x Blue Alloy Wire"
+    },
+    "block.gregtech.wire_13_constantan": {
+      "source_key": "gt.multitileentity.28312",
+      "value": "13x Constantan Wire"
+    },
+    "block.gregtech.wire_13_copper": {
+      "source_key": "gt.multitileentity.28362",
+      "value": "13x Copper Wire"
+    },
+    "block.gregtech.wire_13_efrine": {
+      "source_key": "gt.multitileentity.28462",
+      "value": "13x Efrine Wire"
+    },
+    "block.gregtech.wire_13_electrotine_alloy": {
+      "source_key": "gt.multitileentity.28862",
+      "value": "13x Electrotine Alloy Wire"
+    },
+    "block.gregtech.wire_13_electrum": {
+      "source_key": "gt.multitileentity.28762",
+      "value": "13x Electrum Wire"
+    },
+    "block.gregtech.wire_13_gold": {
+      "source_key": "gt.multitileentity.28712",
+      "value": "13x Gold Wire"
+    },
+    "block.gregtech.wire_13_graphene": {
+      "source_key": "gt.multitileentity.29812",
+      "value": "13x Graphene Wire"
+    },
+    "block.gregtech.wire_13_hsla": {
+      "source_key": "gt.multitileentity.28262",
+      "value": "13x HSLA-Steel Wire"
+    },
+    "block.gregtech.wire_13_iridium": {
+      "source_key": "gt.multitileentity.29412",
+      "value": "13x Iridium Wire"
+    },
+    "block.gregtech.wire_13_kanthal": {
+      "source_key": "gt.multitileentity.28612",
+      "value": "13x Kanthal Wire"
+    },
+    "block.gregtech.wire_13_lead": {
+      "source_key": "gt.multitileentity.28112",
+      "value": "13x Lead Wire"
+    },
+    "block.gregtech.wire_13_naquadah": {
+      "source_key": "gt.multitileentity.29512",
+      "value": "13x Naquadah Wire"
+    },
+    "block.gregtech.wire_13_netherite": {
+      "source_key": "gt.multitileentity.29162",
+      "value": "13x Netherite Wire"
+    },
+    "block.gregtech.wire_13_nichrome": {
+      "source_key": "gt.multitileentity.28912",
+      "value": "13x Nichrome Wire"
+    },
+    "block.gregtech.wire_13_niobium_titanium": {
+      "source_key": "gt.multitileentity.29562",
+      "value": "13x Niobium Titanium Wire"
+    },
+    "block.gregtech.wire_13_osmiridium": {
+      "source_key": "gt.multitileentity.29312",
+      "value": "13x Osmiridium Wire"
+    },
+    "block.gregtech.wire_13_osmium": {
+      "source_key": "gt.multitileentity.29212",
+      "value": "13x Osmium Wire"
+    },
+    "block.gregtech.wire_13_platinum": {
+      "source_key": "gt.multitileentity.29262",
+      "value": "13x Platinum Wire"
+    },
+    "block.gregtech.wire_13_silicon_carbide": {
+      "source_key": "gt.multitileentity.29362",
+      "value": "13x Carborundum Wire"
+    },
+    "block.gregtech.wire_13_silver": {
+      "source_key": "gt.multitileentity.28662",
+      "value": "13x Silver Wire"
+    },
+    "block.gregtech.wire_13_steel": {
+      "source_key": "gt.multitileentity.28962",
+      "value": "13x Steel Wire"
+    },
+    "block.gregtech.wire_13_superconductor": {
+      "source_key": "gt.multitileentity.29962",
+      "value": "13x Superconductor Wire"
+    },
+    "block.gregtech.wire_13_tin": {
+      "source_key": "gt.multitileentity.28062",
+      "value": "13x Tin Wire"
+    },
+    "block.gregtech.wire_13_tungsten": {
+      "source_key": "gt.multitileentity.29112",
+      "value": "13x Tungsten Wire"
+    },
+    "block.gregtech.wire_13_tungsten_steel": {
+      "source_key": "gt.multitileentity.29062",
+      "value": "13x Tungstensteel Wire"
+    },
+    "block.gregtech.wire_13_vanadium_gallium": {
+      "source_key": "gt.multitileentity.29612",
+      "value": "13x Vanadium-Gallium Wire"
+    },
+    "block.gregtech.wire_13_yttrium_barium_cuprate": {
+      "source_key": "gt.multitileentity.29662",
+      "value": "13x Yttrium-Barium-Cuprate Wire"
+    },
+    "block.gregtech.wire_14_aluminium": {
+      "source_key": "gt.multitileentity.29013",
+      "value": "14x Aluminium Wire"
+    },
+    "block.gregtech.wire_14_annealed_copper": {
+      "source_key": "gt.multitileentity.28413",
+      "value": "14x Annealed Copper Wire"
+    },
+    "block.gregtech.wire_14_blue_alloy": {
+      "source_key": "gt.multitileentity.28813",
+      "value": "14x Blue Alloy Wire"
+    },
+    "block.gregtech.wire_14_constantan": {
+      "source_key": "gt.multitileentity.28313",
+      "value": "14x Constantan Wire"
+    },
+    "block.gregtech.wire_14_copper": {
+      "source_key": "gt.multitileentity.28363",
+      "value": "14x Copper Wire"
+    },
+    "block.gregtech.wire_14_efrine": {
+      "source_key": "gt.multitileentity.28463",
+      "value": "14x Efrine Wire"
+    },
+    "block.gregtech.wire_14_electrotine_alloy": {
+      "source_key": "gt.multitileentity.28863",
+      "value": "14x Electrotine Alloy Wire"
+    },
+    "block.gregtech.wire_14_electrum": {
+      "source_key": "gt.multitileentity.28763",
+      "value": "14x Electrum Wire"
+    },
+    "block.gregtech.wire_14_gold": {
+      "source_key": "gt.multitileentity.28713",
+      "value": "14x Gold Wire"
+    },
+    "block.gregtech.wire_14_graphene": {
+      "source_key": "gt.multitileentity.29813",
+      "value": "14x Graphene Wire"
+    },
+    "block.gregtech.wire_14_hsla": {
+      "source_key": "gt.multitileentity.28263",
+      "value": "14x HSLA-Steel Wire"
+    },
+    "block.gregtech.wire_14_iridium": {
+      "source_key": "gt.multitileentity.29413",
+      "value": "14x Iridium Wire"
+    },
+    "block.gregtech.wire_14_kanthal": {
+      "source_key": "gt.multitileentity.28613",
+      "value": "14x Kanthal Wire"
+    },
+    "block.gregtech.wire_14_lead": {
+      "source_key": "gt.multitileentity.28113",
+      "value": "14x Lead Wire"
+    },
+    "block.gregtech.wire_14_naquadah": {
+      "source_key": "gt.multitileentity.29513",
+      "value": "14x Naquadah Wire"
+    },
+    "block.gregtech.wire_14_netherite": {
+      "source_key": "gt.multitileentity.29163",
+      "value": "14x Netherite Wire"
+    },
+    "block.gregtech.wire_14_nichrome": {
+      "source_key": "gt.multitileentity.28913",
+      "value": "14x Nichrome Wire"
+    },
+    "block.gregtech.wire_14_niobium_titanium": {
+      "source_key": "gt.multitileentity.29563",
+      "value": "14x Niobium Titanium Wire"
+    },
+    "block.gregtech.wire_14_osmiridium": {
+      "source_key": "gt.multitileentity.29313",
+      "value": "14x Osmiridium Wire"
+    },
+    "block.gregtech.wire_14_osmium": {
+      "source_key": "gt.multitileentity.29213",
+      "value": "14x Osmium Wire"
+    },
+    "block.gregtech.wire_14_platinum": {
+      "source_key": "gt.multitileentity.29263",
+      "value": "14x Platinum Wire"
+    },
+    "block.gregtech.wire_14_silicon_carbide": {
+      "source_key": "gt.multitileentity.29363",
+      "value": "14x Carborundum Wire"
+    },
+    "block.gregtech.wire_14_silver": {
+      "source_key": "gt.multitileentity.28663",
+      "value": "14x Silver Wire"
+    },
+    "block.gregtech.wire_14_steel": {
+      "source_key": "gt.multitileentity.28963",
+      "value": "14x Steel Wire"
+    },
+    "block.gregtech.wire_14_superconductor": {
+      "source_key": "gt.multitileentity.29963",
+      "value": "14x Superconductor Wire"
+    },
+    "block.gregtech.wire_14_tin": {
+      "source_key": "gt.multitileentity.28063",
+      "value": "14x Tin Wire"
+    },
+    "block.gregtech.wire_14_tungsten": {
+      "source_key": "gt.multitileentity.29113",
+      "value": "14x Tungsten Wire"
+    },
+    "block.gregtech.wire_14_tungsten_steel": {
+      "source_key": "gt.multitileentity.29063",
+      "value": "14x Tungstensteel Wire"
+    },
+    "block.gregtech.wire_14_vanadium_gallium": {
+      "source_key": "gt.multitileentity.29613",
+      "value": "14x Vanadium-Gallium Wire"
+    },
+    "block.gregtech.wire_14_yttrium_barium_cuprate": {
+      "source_key": "gt.multitileentity.29663",
+      "value": "14x Yttrium-Barium-Cuprate Wire"
+    },
+    "block.gregtech.wire_15_aluminium": {
+      "source_key": "gt.multitileentity.29014",
+      "value": "15x Aluminium Wire"
+    },
+    "block.gregtech.wire_15_annealed_copper": {
+      "source_key": "gt.multitileentity.28414",
+      "value": "15x Annealed Copper Wire"
+    },
+    "block.gregtech.wire_15_blue_alloy": {
+      "source_key": "gt.multitileentity.28814",
+      "value": "15x Blue Alloy Wire"
+    },
+    "block.gregtech.wire_15_constantan": {
+      "source_key": "gt.multitileentity.28314",
+      "value": "15x Constantan Wire"
+    },
+    "block.gregtech.wire_15_copper": {
+      "source_key": "gt.multitileentity.28364",
+      "value": "15x Copper Wire"
+    },
+    "block.gregtech.wire_15_efrine": {
+      "source_key": "gt.multitileentity.28464",
+      "value": "15x Efrine Wire"
+    },
+    "block.gregtech.wire_15_electrotine_alloy": {
+      "source_key": "gt.multitileentity.28864",
+      "value": "15x Electrotine Alloy Wire"
+    },
+    "block.gregtech.wire_15_electrum": {
+      "source_key": "gt.multitileentity.28764",
+      "value": "15x Electrum Wire"
+    },
+    "block.gregtech.wire_15_gold": {
+      "source_key": "gt.multitileentity.28714",
+      "value": "15x Gold Wire"
+    },
+    "block.gregtech.wire_15_graphene": {
+      "source_key": "gt.multitileentity.29814",
+      "value": "15x Graphene Wire"
+    },
+    "block.gregtech.wire_15_hsla": {
+      "source_key": "gt.multitileentity.28264",
+      "value": "15x HSLA-Steel Wire"
+    },
+    "block.gregtech.wire_15_iridium": {
+      "source_key": "gt.multitileentity.29414",
+      "value": "15x Iridium Wire"
+    },
+    "block.gregtech.wire_15_kanthal": {
+      "source_key": "gt.multitileentity.28614",
+      "value": "15x Kanthal Wire"
+    },
+    "block.gregtech.wire_15_lead": {
+      "source_key": "gt.multitileentity.28114",
+      "value": "15x Lead Wire"
+    },
+    "block.gregtech.wire_15_naquadah": {
+      "source_key": "gt.multitileentity.29514",
+      "value": "15x Naquadah Wire"
+    },
+    "block.gregtech.wire_15_netherite": {
+      "source_key": "gt.multitileentity.29164",
+      "value": "15x Netherite Wire"
+    },
+    "block.gregtech.wire_15_nichrome": {
+      "source_key": "gt.multitileentity.28914",
+      "value": "15x Nichrome Wire"
+    },
+    "block.gregtech.wire_15_niobium_titanium": {
+      "source_key": "gt.multitileentity.29564",
+      "value": "15x Niobium Titanium Wire"
+    },
+    "block.gregtech.wire_15_osmiridium": {
+      "source_key": "gt.multitileentity.29314",
+      "value": "15x Osmiridium Wire"
+    },
+    "block.gregtech.wire_15_osmium": {
+      "source_key": "gt.multitileentity.29214",
+      "value": "15x Osmium Wire"
+    },
+    "block.gregtech.wire_15_platinum": {
+      "source_key": "gt.multitileentity.29264",
+      "value": "15x Platinum Wire"
+    },
+    "block.gregtech.wire_15_silicon_carbide": {
+      "source_key": "gt.multitileentity.29364",
+      "value": "15x Carborundum Wire"
+    },
+    "block.gregtech.wire_15_silver": {
+      "source_key": "gt.multitileentity.28664",
+      "value": "15x Silver Wire"
+    },
+    "block.gregtech.wire_15_steel": {
+      "source_key": "gt.multitileentity.28964",
+      "value": "15x Steel Wire"
+    },
+    "block.gregtech.wire_15_superconductor": {
+      "source_key": "gt.multitileentity.29964",
+      "value": "15x Superconductor Wire"
+    },
+    "block.gregtech.wire_15_tin": {
+      "source_key": "gt.multitileentity.28064",
+      "value": "15x Tin Wire"
+    },
+    "block.gregtech.wire_15_tungsten": {
+      "source_key": "gt.multitileentity.29114",
+      "value": "15x Tungsten Wire"
+    },
+    "block.gregtech.wire_15_tungsten_steel": {
+      "source_key": "gt.multitileentity.29064",
+      "value": "15x Tungstensteel Wire"
+    },
+    "block.gregtech.wire_15_vanadium_gallium": {
+      "source_key": "gt.multitileentity.29614",
+      "value": "15x Vanadium-Gallium Wire"
+    },
+    "block.gregtech.wire_15_yttrium_barium_cuprate": {
+      "source_key": "gt.multitileentity.29664",
+      "value": "15x Yttrium-Barium-Cuprate Wire"
+    },
+    "block.gregtech.wire_16_aluminium": {
+      "source_key": "gt.multitileentity.29015",
+      "value": "16x Aluminium Wire"
+    },
+    "block.gregtech.wire_16_annealed_copper": {
+      "source_key": "gt.multitileentity.28415",
+      "value": "16x Annealed Copper Wire"
+    },
+    "block.gregtech.wire_16_blue_alloy": {
+      "source_key": "gt.multitileentity.28815",
+      "value": "16x Blue Alloy Wire"
+    },
+    "block.gregtech.wire_16_constantan": {
+      "source_key": "gt.multitileentity.28315",
+      "value": "16x Constantan Wire"
+    },
+    "block.gregtech.wire_16_copper": {
+      "source_key": "gt.multitileentity.28365",
+      "value": "16x Copper Wire"
+    },
+    "block.gregtech.wire_16_efrine": {
+      "source_key": "gt.multitileentity.28465",
+      "value": "16x Efrine Wire"
+    },
+    "block.gregtech.wire_16_electrotine_alloy": {
+      "source_key": "gt.multitileentity.28865",
+      "value": "16x Electrotine Alloy Wire"
+    },
+    "block.gregtech.wire_16_electrum": {
+      "source_key": "gt.multitileentity.28765",
+      "value": "16x Electrum Wire"
+    },
+    "block.gregtech.wire_16_gold": {
+      "source_key": "gt.multitileentity.28715",
+      "value": "16x Gold Wire"
+    },
+    "block.gregtech.wire_16_graphene": {
+      "source_key": "gt.multitileentity.29815",
+      "value": "16x Graphene Wire"
+    },
+    "block.gregtech.wire_16_hsla": {
+      "source_key": "gt.multitileentity.28265",
+      "value": "16x HSLA-Steel Wire"
+    },
+    "block.gregtech.wire_16_iridium": {
+      "source_key": "gt.multitileentity.29415",
+      "value": "16x Iridium Wire"
+    },
+    "block.gregtech.wire_16_kanthal": {
+      "source_key": "gt.multitileentity.28615",
+      "value": "16x Kanthal Wire"
+    },
+    "block.gregtech.wire_16_lead": {
+      "source_key": "gt.multitileentity.28115",
+      "value": "16x Lead Wire"
+    },
+    "block.gregtech.wire_16_naquadah": {
+      "source_key": "gt.multitileentity.29515",
+      "value": "16x Naquadah Wire"
+    },
+    "block.gregtech.wire_16_netherite": {
+      "source_key": "gt.multitileentity.29165",
+      "value": "16x Netherite Wire"
+    },
+    "block.gregtech.wire_16_nichrome": {
+      "source_key": "gt.multitileentity.28915",
+      "value": "16x Nichrome Wire"
+    },
+    "block.gregtech.wire_16_niobium_titanium": {
+      "source_key": "gt.multitileentity.29565",
+      "value": "16x Niobium Titanium Wire"
+    },
+    "block.gregtech.wire_16_osmiridium": {
+      "source_key": "gt.multitileentity.29315",
+      "value": "16x Osmiridium Wire"
+    },
+    "block.gregtech.wire_16_osmium": {
+      "source_key": "gt.multitileentity.29215",
+      "value": "16x Osmium Wire"
+    },
+    "block.gregtech.wire_16_platinum": {
+      "source_key": "gt.multitileentity.29265",
+      "value": "16x Platinum Wire"
+    },
+    "block.gregtech.wire_16_silicon_carbide": {
+      "source_key": "gt.multitileentity.29365",
+      "value": "16x Carborundum Wire"
+    },
+    "block.gregtech.wire_16_silver": {
+      "source_key": "gt.multitileentity.28665",
+      "value": "16x Silver Wire"
+    },
+    "block.gregtech.wire_16_steel": {
+      "source_key": "gt.multitileentity.28965",
+      "value": "16x Steel Wire"
+    },
+    "block.gregtech.wire_16_superconductor": {
+      "source_key": "gt.multitileentity.29965",
+      "value": "16x Superconductor Wire"
+    },
+    "block.gregtech.wire_16_tin": {
+      "source_key": "gt.multitileentity.28065",
+      "value": "16x Tin Wire"
+    },
+    "block.gregtech.wire_16_tungsten": {
+      "source_key": "gt.multitileentity.29115",
+      "value": "16x Tungsten Wire"
+    },
+    "block.gregtech.wire_16_tungsten_steel": {
+      "source_key": "gt.multitileentity.29065",
+      "value": "16x Tungstensteel Wire"
+    },
+    "block.gregtech.wire_16_vanadium_gallium": {
+      "source_key": "gt.multitileentity.29615",
+      "value": "16x Vanadium-Gallium Wire"
+    },
+    "block.gregtech.wire_16_yttrium_barium_cuprate": {
+      "source_key": "gt.multitileentity.29665",
+      "value": "16x Yttrium-Barium-Cuprate Wire"
+    },
     "block.gregtech.wiremill_bronze": {
       "source_key": "gt.multitileentity.20151",
       "value": "Wiremill (Bronze)"
@@ -14202,6 +16955,22 @@
     "block.gregtech.wood_wall": {
       "source_key": "gt.multitileentity.18001",
       "value": "Wood Wall"
+    },
+    "block.gregtech.zpm": {
+      "source_key": "gt.multitileentity.14999",
+      "value": "Zero-Point-Module (ZPM)"
+    },
+    "block.gregtech.zpm_discharger_advanced": {
+      "source_key": "gt.multitileentity.11171",
+      "value": "ZPM Decharger (Electric)"
+    },
+    "block.gregtech.zpm_discharger_basic": {
+      "source_key": "gt.multitileentity.11170",
+      "value": "ZPM Decharger (Quantum)"
+    },
+    "block.gregtech.zpm_discharger_elite": {
+      "source_key": "gt.multitileentity.11170",
+      "value": "ZPM Decharger (Quantum)"
     },
     "fluid_type.gregtech.grccore_saltwater": {
       "source_key": "gt.multiitem.bottles.1",
