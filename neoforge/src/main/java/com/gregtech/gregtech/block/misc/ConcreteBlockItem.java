@@ -12,7 +12,6 @@ public final class ConcreteBlockItem extends BlockItem {
     @Override
     public Component getName(ItemStack stack) {
         var color = ConcreteBlock.itemColor(stack);
-        return Component.translatable("color.minecraft." + color.getName()).append(" ")
-                .append(Component.translatable(getDescriptionId()));
+        return Component.translatable(getDescriptionId() + "." + color.getName());
     }
 }

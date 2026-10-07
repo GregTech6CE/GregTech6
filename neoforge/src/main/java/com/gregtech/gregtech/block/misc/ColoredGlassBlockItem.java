@@ -11,7 +11,6 @@ public final class ColoredGlassBlockItem extends BlockItem {
 
     @Override public Component getName(ItemStack stack) {
         var color = ColoredGlassBlock.itemColor(stack);
-        return Component.translatable("color.minecraft." + color.getName()).append(" ")
-                .append(Component.translatable(getDescriptionId()));
+        return Component.translatable(getDescriptionId() + "." + color.getName());
     }
 }

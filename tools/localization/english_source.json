@@ -10,6 +10,10 @@
       "sha256": "daf4bd014d7157e05a920759dc2bd245443ca1732aaa7f56eaacb763549e5929"
     },
     {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\block\\metatype\\BlockColored.java",
+      "sha256": "1445d711ec079bcd32f93b87045b2d81963a4b99d02c504af231a2ab9a80db6e"
+    },
+    {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\block\\metatype\\BlockStones.java",
       "sha256": "aafdf56ce4b3720b314cf62fa031712b697df2bd0b7666bedc479dfe5cb9216f"
     },
@@ -114,12 +118,48 @@
       "sha256": "2bf9bc42503a926e97c0ea45109a7cc936e5493cc49a41313b7d526fea485477"
     },
     {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockAsphalt.java",
+      "sha256": "317fdf3650b729b496b0114be6e7c694ef6e5c6484d6833835c36f7a66d477e2"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockBaleCrop.java",
+      "sha256": "4d5bf9b0cbd62551a19d581ef4addb98ec172b0a4f4091bf2678ba20f079a9c3"
+    },
+    {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockBaleGrass.java",
       "sha256": "fe78f45ec9730432ac54eedbf16a739456ca8363f17ec5fe2afef0e5cdccd10f"
     },
     {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockCFoam.java",
+      "sha256": "6a143ace64dd065d50a7851c8507c493e327f4cfef6e870a665bf1c7b0a7bd03"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockCFoamFresh.java",
+      "sha256": "d4d1dcf2bef2da7ebee60725bde4e0fd06149745c67356ec3119387f28595c4a"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockConcrete.java",
+      "sha256": "58649b4da03c17a9d73beb421fca61d11bac057f3e2c3e101e4e0f5a2a3676e6"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockConcreteReinforced.java",
+      "sha256": "4305ecd760301a9763f309287c965e7c552588cb1e011ba0ec99a95cebeedf82"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockGlassClear.java",
+      "sha256": "5984cc5d77e9df531fb4c3510773c07e560a2a682a80b8755ae562ae8c744964"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockGlassGlow.java",
+      "sha256": "90d0ac2e44a097bca23a08a53043ae18933030fd6ac630c4ca898712e9101f11"
+    },
+    {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockGrass.java",
       "sha256": "dfc34e552b169a88c05c666509d82e0f05010e119081069ab33bcedf94473016"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockSands.java",
+      "sha256": "5d0ecc599fc4ea47802317f2a44244d11454a30721270ab5e7ffe24c815f7be2"
     },
     {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\plants\\BlockFlowersA.java",
@@ -132,6 +172,38 @@
     {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\plants\\BlockGlowtus.java",
       "sha256": "94e4db28baae9208fb086002af0e7b2ac56192871ebd73a8cd93dc9d5a43656f"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tool\\BlockBarsBrass.java",
+      "sha256": "2e60df6d92bc530e3891df4b5092cbeb3e94ecdca9091275b2d350d25fb66211"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tool\\BlockBarsSteel.java",
+      "sha256": "7e20c4fe6a106cc14f1e29ca73d2e482aa872401f11dc7842d2e65b6b546c686"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tool\\BlockBarsTungstenSteel.java",
+      "sha256": "50066fa067fa531801395c350d0780d4278cebb7d9bd85386b83b5db3476c081"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tool\\BlockSpikeFancy.java",
+      "sha256": "0cd008aa9f5f364612be00c9513d116b56791ba8196276a0dc17d755fcff4a39"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tool\\BlockSpikeMetal.java",
+      "sha256": "08f9914494886673734f20519951bbd4f7d4f854fa552c64f92a5b35da1e038a"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tool\\BlockSpikeSharp.java",
+      "sha256": "1fec895db48163c8912dbbd8e27155251d888022c5745f020c42b02ad03eecdb"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tool\\BlockSpikeSteel.java",
+      "sha256": "3e69d6bfab3a0cc6067d1c2618e0c57a0b47b1e16d07ec9be3bd133d8ba661cd"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tool\\BlockSpikeSuper.java",
+      "sha256": "2f2bdad0fc77934cc327cd0358f7f61fa108b0fe984705a1d632ed91ff72fb6c"
     },
     {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tree\\BlockTreeLeavesAB.java",
@@ -975,6 +1047,74 @@
       "source_key": "gt.multitileentity.5028",
       "value": "Advanced Crafting Table (Void Metal)"
     },
+    "block.gregtech.asphalt": {
+      "source_key": "gt.block.asphalt.0",
+      "value": "Black Asphalt"
+    },
+    "block.gregtech.asphalt.black": {
+      "source_key": "gt.block.asphalt.0",
+      "value": "Black Asphalt"
+    },
+    "block.gregtech.asphalt.blue": {
+      "source_key": "gt.block.asphalt.4",
+      "value": "Blue Asphalt"
+    },
+    "block.gregtech.asphalt.brown": {
+      "source_key": "gt.block.asphalt.3",
+      "value": "Brown Asphalt"
+    },
+    "block.gregtech.asphalt.cyan": {
+      "source_key": "gt.block.asphalt.6",
+      "value": "Cyan Asphalt"
+    },
+    "block.gregtech.asphalt.gray": {
+      "source_key": "gt.block.asphalt.8",
+      "value": "Gray Asphalt"
+    },
+    "block.gregtech.asphalt.green": {
+      "source_key": "gt.block.asphalt.2",
+      "value": "Green Asphalt"
+    },
+    "block.gregtech.asphalt.light_blue": {
+      "source_key": "gt.block.asphalt.12",
+      "value": "Light Blue Asphalt"
+    },
+    "block.gregtech.asphalt.light_gray": {
+      "source_key": "gt.block.asphalt.7",
+      "value": "Light Gray Asphalt"
+    },
+    "block.gregtech.asphalt.lime": {
+      "source_key": "gt.block.asphalt.10",
+      "value": "Lime Asphalt"
+    },
+    "block.gregtech.asphalt.magenta": {
+      "source_key": "gt.block.asphalt.13",
+      "value": "Magenta Asphalt"
+    },
+    "block.gregtech.asphalt.orange": {
+      "source_key": "gt.block.asphalt.14",
+      "value": "Orange Asphalt"
+    },
+    "block.gregtech.asphalt.pink": {
+      "source_key": "gt.block.asphalt.9",
+      "value": "Pink Asphalt"
+    },
+    "block.gregtech.asphalt.purple": {
+      "source_key": "gt.block.asphalt.5",
+      "value": "Purple Asphalt"
+    },
+    "block.gregtech.asphalt.red": {
+      "source_key": "gt.block.asphalt.1",
+      "value": "Red Asphalt"
+    },
+    "block.gregtech.asphalt.white": {
+      "source_key": "gt.block.asphalt.15",
+      "value": "White Asphalt"
+    },
+    "block.gregtech.asphalt.yellow": {
+      "source_key": "gt.block.asphalt.11",
+      "value": "Yellow Asphalt"
+    },
     "block.gregtech.auto_hammer_aluminium": {
       "source_key": "gt.multitileentity.15002",
       "value": "Automatic Hammer (Any Iron-Steel)"
@@ -1054,6 +1194,50 @@
     "block.gregtech.axle_wood_4": {
       "source_key": "gt.multitileentity.24803",
       "value": "Huge Wooden Axle"
+    },
+    "block.gregtech.bale_barley": {
+      "source_key": "gt.block.bale.crop.2",
+      "value": "Barley Bale"
+    },
+    "block.gregtech.bale_grass": {
+      "source_key": "gt.block.bale.grass.0",
+      "value": "Grass Bale"
+    },
+    "block.gregtech.bale_grass_dry": {
+      "source_key": "gt.block.bale.grass.1",
+      "value": "Dry Grass Bale"
+    },
+    "block.gregtech.bale_grass_moldy": {
+      "source_key": "gt.block.bale.grass.2",
+      "value": "Moldy Grass Bale"
+    },
+    "block.gregtech.bale_grass_rotten": {
+      "source_key": "gt.block.bale.grass.3",
+      "value": "Rotten Grass Bale"
+    },
+    "block.gregtech.bale_oat": {
+      "source_key": "gt.block.bale.crop.1",
+      "value": "Oats Bale"
+    },
+    "block.gregtech.bale_rice": {
+      "source_key": "gt.block.bale.crop.3",
+      "value": "Rice Bale"
+    },
+    "block.gregtech.bale_rye": {
+      "source_key": "gt.block.bale.crop.0",
+      "value": "Rye Bale"
+    },
+    "block.gregtech.bars_brass": {
+      "source_key": "gt.block.bars.brass.0",
+      "value": "Brass Bars"
+    },
+    "block.gregtech.bars_steel": {
+      "source_key": "gt.block.bars.steel.0",
+      "value": "Steel Bars"
+    },
+    "block.gregtech.bars_tungsten_steel": {
+      "source_key": "gt.block.bars.tungstensteel.0",
+      "value": "Tungstensteel Bars"
     },
     "block.gregtech.bath_stainless_steel": {
       "source_key": "gt.multitileentity.22002",
@@ -2519,6 +2703,10 @@
       "source_key": "gt.multitileentity.20165",
       "value": "Canning Machine (IV)"
     },
+    "block.gregtech.cap_nozzle": {
+      "source_key": "gt.multitileentity.32058",
+      "value": "Steel Cap Nozzle"
+    },
     "block.gregtech.cap_nozzle_adamantium": {
       "source_key": "gt.multitileentity.32062",
       "value": "Adamantium Cap Nozzle"
@@ -2526,6 +2714,10 @@
     "block.gregtech.cap_nozzle_plastic": {
       "source_key": "gt.multitileentity.32059",
       "value": "Plastic Cap Nozzle"
+    },
+    "block.gregtech.cap_nozzle_stainless_steel": {
+      "source_key": "gt.multitileentity.32060",
+      "value": "Stainless Cap Nozzle"
     },
     "block.gregtech.cap_nozzle_steel": {
       "source_key": "gt.multitileentity.32058",
@@ -2574,6 +2766,222 @@
     "block.gregtech.centrifuge_tungsten_steel": {
       "source_key": "gt.multitileentity.20084",
       "value": "Centrifuge (Tungstensteel)"
+    },
+    "block.gregtech.cfoam": {
+      "source_key": "gt.block.cfoam.15",
+      "value": "White C-Foam"
+    },
+    "block.gregtech.cfoam.black": {
+      "source_key": "gt.block.cfoam.0",
+      "value": "Black C-Foam"
+    },
+    "block.gregtech.cfoam.blue": {
+      "source_key": "gt.block.cfoam.4",
+      "value": "Blue C-Foam"
+    },
+    "block.gregtech.cfoam.brown": {
+      "source_key": "gt.block.cfoam.3",
+      "value": "Brown C-Foam"
+    },
+    "block.gregtech.cfoam.cyan": {
+      "source_key": "gt.block.cfoam.6",
+      "value": "Cyan C-Foam"
+    },
+    "block.gregtech.cfoam.gray": {
+      "source_key": "gt.block.cfoam.8",
+      "value": "Gray C-Foam"
+    },
+    "block.gregtech.cfoam.green": {
+      "source_key": "gt.block.cfoam.2",
+      "value": "Green C-Foam"
+    },
+    "block.gregtech.cfoam.light_blue": {
+      "source_key": "gt.block.cfoam.12",
+      "value": "Light Blue C-Foam"
+    },
+    "block.gregtech.cfoam.light_gray": {
+      "source_key": "gt.block.cfoam.7",
+      "value": "Light Gray C-Foam"
+    },
+    "block.gregtech.cfoam.lime": {
+      "source_key": "gt.block.cfoam.10",
+      "value": "Lime C-Foam"
+    },
+    "block.gregtech.cfoam.magenta": {
+      "source_key": "gt.block.cfoam.13",
+      "value": "Magenta C-Foam"
+    },
+    "block.gregtech.cfoam.orange": {
+      "source_key": "gt.block.cfoam.14",
+      "value": "Orange C-Foam"
+    },
+    "block.gregtech.cfoam.pink": {
+      "source_key": "gt.block.cfoam.9",
+      "value": "Pink C-Foam"
+    },
+    "block.gregtech.cfoam.purple": {
+      "source_key": "gt.block.cfoam.5",
+      "value": "Purple C-Foam"
+    },
+    "block.gregtech.cfoam.red": {
+      "source_key": "gt.block.cfoam.1",
+      "value": "Red C-Foam"
+    },
+    "block.gregtech.cfoam.white": {
+      "source_key": "gt.block.cfoam.15",
+      "value": "White C-Foam"
+    },
+    "block.gregtech.cfoam.yellow": {
+      "source_key": "gt.block.cfoam.11",
+      "value": "Yellow C-Foam"
+    },
+    "block.gregtech.cfoam_fresh": {
+      "source_key": "gt.block.cfoam.fresh.15",
+      "value": "White Fresh C-Foam"
+    },
+    "block.gregtech.cfoam_fresh.black": {
+      "source_key": "gt.block.cfoam.fresh.0",
+      "value": "Black Fresh C-Foam"
+    },
+    "block.gregtech.cfoam_fresh.blue": {
+      "source_key": "gt.block.cfoam.fresh.4",
+      "value": "Blue Fresh C-Foam"
+    },
+    "block.gregtech.cfoam_fresh.brown": {
+      "source_key": "gt.block.cfoam.fresh.3",
+      "value": "Brown Fresh C-Foam"
+    },
+    "block.gregtech.cfoam_fresh.cyan": {
+      "source_key": "gt.block.cfoam.fresh.6",
+      "value": "Cyan Fresh C-Foam"
+    },
+    "block.gregtech.cfoam_fresh.gray": {
+      "source_key": "gt.block.cfoam.fresh.8",
+      "value": "Gray Fresh C-Foam"
+    },
+    "block.gregtech.cfoam_fresh.green": {
+      "source_key": "gt.block.cfoam.fresh.2",
+      "value": "Green Fresh C-Foam"
+    },
+    "block.gregtech.cfoam_fresh.light_blue": {
+      "source_key": "gt.block.cfoam.fresh.12",
+      "value": "Light Blue Fresh C-Foam"
+    },
+    "block.gregtech.cfoam_fresh.light_gray": {
+      "source_key": "gt.block.cfoam.fresh.7",
+      "value": "Light Gray Fresh C-Foam"
+    },
+    "block.gregtech.cfoam_fresh.lime": {
+      "source_key": "gt.block.cfoam.fresh.10",
+      "value": "Lime Fresh C-Foam"
+    },
+    "block.gregtech.cfoam_fresh.magenta": {
+      "source_key": "gt.block.cfoam.fresh.13",
+      "value": "Magenta Fresh C-Foam"
+    },
+    "block.gregtech.cfoam_fresh.orange": {
+      "source_key": "gt.block.cfoam.fresh.14",
+      "value": "Orange Fresh C-Foam"
+    },
+    "block.gregtech.cfoam_fresh.pink": {
+      "source_key": "gt.block.cfoam.fresh.9",
+      "value": "Pink Fresh C-Foam"
+    },
+    "block.gregtech.cfoam_fresh.purple": {
+      "source_key": "gt.block.cfoam.fresh.5",
+      "value": "Purple Fresh C-Foam"
+    },
+    "block.gregtech.cfoam_fresh.red": {
+      "source_key": "gt.block.cfoam.fresh.1",
+      "value": "Red Fresh C-Foam"
+    },
+    "block.gregtech.cfoam_fresh.white": {
+      "source_key": "gt.block.cfoam.fresh.15",
+      "value": "White Fresh C-Foam"
+    },
+    "block.gregtech.cfoam_fresh.yellow": {
+      "source_key": "gt.block.cfoam.fresh.11",
+      "value": "Yellow Fresh C-Foam"
+    },
+    "block.gregtech.cfoam_fresh_owned": {
+      "source_key": "gt.block.cfoam.fresh.15",
+      "value": "White Fresh C-Foam"
+    },
+    "block.gregtech.cfoam_hardened": {
+      "source_key": "gt.block.cfoam.15",
+      "value": "White C-Foam"
+    },
+    "block.gregtech.cfoam_hardened_owned": {
+      "source_key": "gt.block.cfoam.15",
+      "value": "White C-Foam"
+    },
+    "block.gregtech.cfoam_slab": {
+      "source_key": "gt.block.cfoam.slab.0.15",
+      "value": "White C-Foam Slab"
+    },
+    "block.gregtech.cfoam_slab.black": {
+      "source_key": "gt.block.cfoam.slab.0.0",
+      "value": "Black C-Foam Slab"
+    },
+    "block.gregtech.cfoam_slab.blue": {
+      "source_key": "gt.block.cfoam.slab.0.4",
+      "value": "Blue C-Foam Slab"
+    },
+    "block.gregtech.cfoam_slab.brown": {
+      "source_key": "gt.block.cfoam.slab.0.3",
+      "value": "Brown C-Foam Slab"
+    },
+    "block.gregtech.cfoam_slab.cyan": {
+      "source_key": "gt.block.cfoam.slab.0.6",
+      "value": "Cyan C-Foam Slab"
+    },
+    "block.gregtech.cfoam_slab.gray": {
+      "source_key": "gt.block.cfoam.slab.0.8",
+      "value": "Gray C-Foam Slab"
+    },
+    "block.gregtech.cfoam_slab.green": {
+      "source_key": "gt.block.cfoam.slab.0.2",
+      "value": "Green C-Foam Slab"
+    },
+    "block.gregtech.cfoam_slab.light_blue": {
+      "source_key": "gt.block.cfoam.slab.0.12",
+      "value": "Light Blue C-Foam Slab"
+    },
+    "block.gregtech.cfoam_slab.light_gray": {
+      "source_key": "gt.block.cfoam.slab.0.7",
+      "value": "Light Gray C-Foam Slab"
+    },
+    "block.gregtech.cfoam_slab.lime": {
+      "source_key": "gt.block.cfoam.slab.0.10",
+      "value": "Lime C-Foam Slab"
+    },
+    "block.gregtech.cfoam_slab.magenta": {
+      "source_key": "gt.block.cfoam.slab.0.13",
+      "value": "Magenta C-Foam Slab"
+    },
+    "block.gregtech.cfoam_slab.orange": {
+      "source_key": "gt.block.cfoam.slab.0.14",
+      "value": "Orange C-Foam Slab"
+    },
+    "block.gregtech.cfoam_slab.pink": {
+      "source_key": "gt.block.cfoam.slab.0.9",
+      "value": "Pink C-Foam Slab"
+    },
+    "block.gregtech.cfoam_slab.purple": {
+      "source_key": "gt.block.cfoam.slab.0.5",
+      "value": "Purple C-Foam Slab"
+    },
+    "block.gregtech.cfoam_slab.red": {
+      "source_key": "gt.block.cfoam.slab.0.1",
+      "value": "Red C-Foam Slab"
+    },
+    "block.gregtech.cfoam_slab.white": {
+      "source_key": "gt.block.cfoam.slab.0.15",
+      "value": "White C-Foam Slab"
+    },
+    "block.gregtech.cfoam_slab.yellow": {
+      "source_key": "gt.block.cfoam.slab.0.11",
+      "value": "Yellow C-Foam Slab"
     },
     "block.gregtech.charging_crafting_table": {
       "source_key": "gt.multitileentity.5510",
@@ -3099,6 +3507,10 @@
       "source_key": "gt.multitileentity.32700",
       "value": "Coin"
     },
+    "block.gregtech.coin_mold": {
+      "source_key": "gt.multitileentity.32701",
+      "value": "Coinage Mold"
+    },
     "block.gregtech.coke_oven_main": {
       "source_key": "gt.multitileentity.17000",
       "value": "Coke Oven"
@@ -3123,6 +3535,142 @@
       "source_key": "gt.multitileentity.20104",
       "value": "Compressor (Tungstensteel)"
     },
+    "block.gregtech.concrete": {
+      "source_key": "gt.block.concrete.7",
+      "value": "Light Gray Concrete"
+    },
+    "block.gregtech.concrete.black": {
+      "source_key": "gt.block.concrete.0",
+      "value": "Black Concrete"
+    },
+    "block.gregtech.concrete.blue": {
+      "source_key": "gt.block.concrete.4",
+      "value": "Blue Concrete"
+    },
+    "block.gregtech.concrete.brown": {
+      "source_key": "gt.block.concrete.3",
+      "value": "Brown Concrete"
+    },
+    "block.gregtech.concrete.cyan": {
+      "source_key": "gt.block.concrete.6",
+      "value": "Cyan Concrete"
+    },
+    "block.gregtech.concrete.gray": {
+      "source_key": "gt.block.concrete.8",
+      "value": "Gray Concrete"
+    },
+    "block.gregtech.concrete.green": {
+      "source_key": "gt.block.concrete.2",
+      "value": "Green Concrete"
+    },
+    "block.gregtech.concrete.light_blue": {
+      "source_key": "gt.block.concrete.12",
+      "value": "Light Blue Concrete"
+    },
+    "block.gregtech.concrete.light_gray": {
+      "source_key": "gt.block.concrete.7",
+      "value": "Light Gray Concrete"
+    },
+    "block.gregtech.concrete.lime": {
+      "source_key": "gt.block.concrete.10",
+      "value": "Lime Concrete"
+    },
+    "block.gregtech.concrete.magenta": {
+      "source_key": "gt.block.concrete.13",
+      "value": "Magenta Concrete"
+    },
+    "block.gregtech.concrete.orange": {
+      "source_key": "gt.block.concrete.14",
+      "value": "Orange Concrete"
+    },
+    "block.gregtech.concrete.pink": {
+      "source_key": "gt.block.concrete.9",
+      "value": "Pink Concrete"
+    },
+    "block.gregtech.concrete.purple": {
+      "source_key": "gt.block.concrete.5",
+      "value": "Purple Concrete"
+    },
+    "block.gregtech.concrete.red": {
+      "source_key": "gt.block.concrete.1",
+      "value": "Red Concrete"
+    },
+    "block.gregtech.concrete.white": {
+      "source_key": "gt.block.concrete.15",
+      "value": "White Concrete"
+    },
+    "block.gregtech.concrete.yellow": {
+      "source_key": "gt.block.concrete.11",
+      "value": "Yellow Concrete"
+    },
+    "block.gregtech.concrete_reinforced": {
+      "source_key": "gt.block.concrete.reinforced.7",
+      "value": "Light Gray Reinforced Concrete"
+    },
+    "block.gregtech.concrete_reinforced.black": {
+      "source_key": "gt.block.concrete.reinforced.0",
+      "value": "Black Reinforced Concrete"
+    },
+    "block.gregtech.concrete_reinforced.blue": {
+      "source_key": "gt.block.concrete.reinforced.4",
+      "value": "Blue Reinforced Concrete"
+    },
+    "block.gregtech.concrete_reinforced.brown": {
+      "source_key": "gt.block.concrete.reinforced.3",
+      "value": "Brown Reinforced Concrete"
+    },
+    "block.gregtech.concrete_reinforced.cyan": {
+      "source_key": "gt.block.concrete.reinforced.6",
+      "value": "Cyan Reinforced Concrete"
+    },
+    "block.gregtech.concrete_reinforced.gray": {
+      "source_key": "gt.block.concrete.reinforced.8",
+      "value": "Gray Reinforced Concrete"
+    },
+    "block.gregtech.concrete_reinforced.green": {
+      "source_key": "gt.block.concrete.reinforced.2",
+      "value": "Green Reinforced Concrete"
+    },
+    "block.gregtech.concrete_reinforced.light_blue": {
+      "source_key": "gt.block.concrete.reinforced.12",
+      "value": "Light Blue Reinforced Concrete"
+    },
+    "block.gregtech.concrete_reinforced.light_gray": {
+      "source_key": "gt.block.concrete.reinforced.7",
+      "value": "Light Gray Reinforced Concrete"
+    },
+    "block.gregtech.concrete_reinforced.lime": {
+      "source_key": "gt.block.concrete.reinforced.10",
+      "value": "Lime Reinforced Concrete"
+    },
+    "block.gregtech.concrete_reinforced.magenta": {
+      "source_key": "gt.block.concrete.reinforced.13",
+      "value": "Magenta Reinforced Concrete"
+    },
+    "block.gregtech.concrete_reinforced.orange": {
+      "source_key": "gt.block.concrete.reinforced.14",
+      "value": "Orange Reinforced Concrete"
+    },
+    "block.gregtech.concrete_reinforced.pink": {
+      "source_key": "gt.block.concrete.reinforced.9",
+      "value": "Pink Reinforced Concrete"
+    },
+    "block.gregtech.concrete_reinforced.purple": {
+      "source_key": "gt.block.concrete.reinforced.5",
+      "value": "Purple Reinforced Concrete"
+    },
+    "block.gregtech.concrete_reinforced.red": {
+      "source_key": "gt.block.concrete.reinforced.1",
+      "value": "Red Reinforced Concrete"
+    },
+    "block.gregtech.concrete_reinforced.white": {
+      "source_key": "gt.block.concrete.reinforced.15",
+      "value": "White Reinforced Concrete"
+    },
+    "block.gregtech.concrete_reinforced.yellow": {
+      "source_key": "gt.block.concrete.reinforced.11",
+      "value": "Yellow Reinforced Concrete"
+    },
     "block.gregtech.control_processor_unit": {
       "source_key": "gt.multitileentity.18202",
       "value": "Control Quadcore Processor Unit"
@@ -3138,6 +3686,10 @@
     "block.gregtech.conversion_quadcore_processor_unit": {
       "source_key": "gt.multitileentity.18204",
       "value": "Conversion Quadcore Processor Unit"
+    },
+    "block.gregtech.crank": {
+      "source_key": "gt.multitileentity.32111",
+      "value": "Hand Crank"
     },
     "block.gregtech.crucible_crossing_ad": {
       "source_key": "gt.multitileentity.1899",
@@ -4299,6 +4851,22 @@
       "source_key": "gt.multitileentity.22003",
       "value": "Fermenter"
     },
+    "block.gregtech.filter_fluids": {
+      "source_key": "gt.multitileentity.30257",
+      "value": "Filter (Fluids)"
+    },
+    "block.gregtech.filter_items": {
+      "source_key": "gt.multitileentity.30256",
+      "value": "Filter (Items)"
+    },
+    "block.gregtech.filter_items_fluids": {
+      "source_key": "gt.multitileentity.30258",
+      "value": "Filter (Items & Fluids)"
+    },
+    "block.gregtech.filter_oredict": {
+      "source_key": "gt.multitileentity.30259",
+      "value": "Filter (Ore-Dictionary Prefixes)"
+    },
     "block.gregtech.fire_bricks": {
       "source_key": "gt.multitileentity.18000",
       "value": "Fire Bricks"
@@ -4774,6 +5342,210 @@
     "block.gregtech.generifier_stainless_steel": {
       "source_key": "gt.multitileentity.22001",
       "value": "Generifier"
+    },
+    "block.gregtech.glass_clear": {
+      "source_key": "gt.block.glass.7",
+      "value": "Light Gray Glass"
+    },
+    "block.gregtech.glass_clear.black": {
+      "source_key": "gt.block.glass.0",
+      "value": "Black Glass"
+    },
+    "block.gregtech.glass_clear.blue": {
+      "source_key": "gt.block.glass.4",
+      "value": "Blue Glass"
+    },
+    "block.gregtech.glass_clear.brown": {
+      "source_key": "gt.block.glass.3",
+      "value": "Brown Glass"
+    },
+    "block.gregtech.glass_clear.cyan": {
+      "source_key": "gt.block.glass.6",
+      "value": "Cyan Glass"
+    },
+    "block.gregtech.glass_clear.gray": {
+      "source_key": "gt.block.glass.8",
+      "value": "Gray Glass"
+    },
+    "block.gregtech.glass_clear.green": {
+      "source_key": "gt.block.glass.2",
+      "value": "Green Glass"
+    },
+    "block.gregtech.glass_clear.light_blue": {
+      "source_key": "gt.block.glass.12",
+      "value": "Light Blue Glass"
+    },
+    "block.gregtech.glass_clear.light_gray": {
+      "source_key": "gt.block.glass.7",
+      "value": "Light Gray Glass"
+    },
+    "block.gregtech.glass_clear.lime": {
+      "source_key": "gt.block.glass.10",
+      "value": "Lime Glass"
+    },
+    "block.gregtech.glass_clear.magenta": {
+      "source_key": "gt.block.glass.13",
+      "value": "Magenta Glass"
+    },
+    "block.gregtech.glass_clear.orange": {
+      "source_key": "gt.block.glass.14",
+      "value": "Orange Glass"
+    },
+    "block.gregtech.glass_clear.pink": {
+      "source_key": "gt.block.glass.9",
+      "value": "Pink Glass"
+    },
+    "block.gregtech.glass_clear.purple": {
+      "source_key": "gt.block.glass.5",
+      "value": "Purple Glass"
+    },
+    "block.gregtech.glass_clear.red": {
+      "source_key": "gt.block.glass.1",
+      "value": "Red Glass"
+    },
+    "block.gregtech.glass_clear.white": {
+      "source_key": "gt.block.glass.15",
+      "value": "White Glass"
+    },
+    "block.gregtech.glass_clear.yellow": {
+      "source_key": "gt.block.glass.11",
+      "value": "Yellow Glass"
+    },
+    "block.gregtech.glass_glow": {
+      "source_key": "gt.block.glass.glow.7",
+      "value": "Light Gray Glow Glass"
+    },
+    "block.gregtech.glass_glow.black": {
+      "source_key": "gt.block.glass.glow.0",
+      "value": "Black Glow Glass"
+    },
+    "block.gregtech.glass_glow.blue": {
+      "source_key": "gt.block.glass.glow.4",
+      "value": "Blue Glow Glass"
+    },
+    "block.gregtech.glass_glow.brown": {
+      "source_key": "gt.block.glass.glow.3",
+      "value": "Brown Glow Glass"
+    },
+    "block.gregtech.glass_glow.cyan": {
+      "source_key": "gt.block.glass.glow.6",
+      "value": "Cyan Glow Glass"
+    },
+    "block.gregtech.glass_glow.gray": {
+      "source_key": "gt.block.glass.glow.8",
+      "value": "Gray Glow Glass"
+    },
+    "block.gregtech.glass_glow.green": {
+      "source_key": "gt.block.glass.glow.2",
+      "value": "Green Glow Glass"
+    },
+    "block.gregtech.glass_glow.light_blue": {
+      "source_key": "gt.block.glass.glow.12",
+      "value": "Light Blue Glow Glass"
+    },
+    "block.gregtech.glass_glow.light_gray": {
+      "source_key": "gt.block.glass.glow.7",
+      "value": "Light Gray Glow Glass"
+    },
+    "block.gregtech.glass_glow.lime": {
+      "source_key": "gt.block.glass.glow.10",
+      "value": "Lime Glow Glass"
+    },
+    "block.gregtech.glass_glow.magenta": {
+      "source_key": "gt.block.glass.glow.13",
+      "value": "Magenta Glow Glass"
+    },
+    "block.gregtech.glass_glow.orange": {
+      "source_key": "gt.block.glass.glow.14",
+      "value": "Orange Glow Glass"
+    },
+    "block.gregtech.glass_glow.pink": {
+      "source_key": "gt.block.glass.glow.9",
+      "value": "Pink Glow Glass"
+    },
+    "block.gregtech.glass_glow.purple": {
+      "source_key": "gt.block.glass.glow.5",
+      "value": "Purple Glow Glass"
+    },
+    "block.gregtech.glass_glow.red": {
+      "source_key": "gt.block.glass.glow.1",
+      "value": "Red Glow Glass"
+    },
+    "block.gregtech.glass_glow.white": {
+      "source_key": "gt.block.glass.glow.15",
+      "value": "White Glow Glass"
+    },
+    "block.gregtech.glass_glow.yellow": {
+      "source_key": "gt.block.glass.glow.11",
+      "value": "Yellow Glow Glass"
+    },
+    "block.gregtech.glass_glow_slab": {
+      "source_key": "gt.block.glass.glow.slab.0.15",
+      "value": "White Glow Glass Slab"
+    },
+    "block.gregtech.glass_glow_slab.black": {
+      "source_key": "gt.block.glass.glow.slab.0.0",
+      "value": "Black Glow Glass Slab"
+    },
+    "block.gregtech.glass_glow_slab.blue": {
+      "source_key": "gt.block.glass.glow.slab.0.4",
+      "value": "Blue Glow Glass Slab"
+    },
+    "block.gregtech.glass_glow_slab.brown": {
+      "source_key": "gt.block.glass.glow.slab.0.3",
+      "value": "Brown Glow Glass Slab"
+    },
+    "block.gregtech.glass_glow_slab.cyan": {
+      "source_key": "gt.block.glass.glow.slab.0.6",
+      "value": "Cyan Glow Glass Slab"
+    },
+    "block.gregtech.glass_glow_slab.gray": {
+      "source_key": "gt.block.glass.glow.slab.0.8",
+      "value": "Gray Glow Glass Slab"
+    },
+    "block.gregtech.glass_glow_slab.green": {
+      "source_key": "gt.block.glass.glow.slab.0.2",
+      "value": "Green Glow Glass Slab"
+    },
+    "block.gregtech.glass_glow_slab.light_blue": {
+      "source_key": "gt.block.glass.glow.slab.0.12",
+      "value": "Light Blue Glow Glass Slab"
+    },
+    "block.gregtech.glass_glow_slab.light_gray": {
+      "source_key": "gt.block.glass.glow.slab.0.7",
+      "value": "Light Gray Glow Glass Slab"
+    },
+    "block.gregtech.glass_glow_slab.lime": {
+      "source_key": "gt.block.glass.glow.slab.0.10",
+      "value": "Lime Glow Glass Slab"
+    },
+    "block.gregtech.glass_glow_slab.magenta": {
+      "source_key": "gt.block.glass.glow.slab.0.13",
+      "value": "Magenta Glow Glass Slab"
+    },
+    "block.gregtech.glass_glow_slab.orange": {
+      "source_key": "gt.block.glass.glow.slab.0.14",
+      "value": "Orange Glow Glass Slab"
+    },
+    "block.gregtech.glass_glow_slab.pink": {
+      "source_key": "gt.block.glass.glow.slab.0.9",
+      "value": "Pink Glow Glass Slab"
+    },
+    "block.gregtech.glass_glow_slab.purple": {
+      "source_key": "gt.block.glass.glow.slab.0.5",
+      "value": "Purple Glow Glass Slab"
+    },
+    "block.gregtech.glass_glow_slab.red": {
+      "source_key": "gt.block.glass.glow.slab.0.1",
+      "value": "Red Glow Glass Slab"
+    },
+    "block.gregtech.glass_glow_slab.white": {
+      "source_key": "gt.block.glass.glow.slab.0.15",
+      "value": "White Glow Glass Slab"
+    },
+    "block.gregtech.glass_glow_slab.yellow": {
+      "source_key": "gt.block.glass.glow.slab.0.11",
+      "value": "Yellow Glow Glass Slab"
     },
     "block.gregtech.glowtus_black": {
       "source_key": "gt.block.lilypad.glowtus.0",
@@ -6207,6 +6979,10 @@
       "source_key": "gt.block.leaves.cd.0",
       "value": "Blue Spruce Leaves"
     },
+    "block.gregtech.leaves_bluespruce_xmas": {
+      "source_key": "gt.block.leaves.cd.0",
+      "value": "Blue Spruce Leaves"
+    },
     "block.gregtech.leaves_cinnamon": {
       "source_key": "gt.block.leaves.5",
       "value": "Cinnamon Leaves"
@@ -6222,6 +6998,78 @@
     "block.gregtech.leaves_maple": {
       "source_key": "gt.block.leaves.1",
       "value": "Maple Leaves"
+    },
+    "block.gregtech.leaves_maple_brown": {
+      "source_key": "gt.block.leaves.1",
+      "value": "Maple Leaves"
+    },
+    "block.gregtech.leaves_maple_orange": {
+      "source_key": "gt.block.leaves.1",
+      "value": "Maple Leaves"
+    },
+    "block.gregtech.leaves_maple_red": {
+      "source_key": "gt.block.leaves.1",
+      "value": "Maple Leaves"
+    },
+    "block.gregtech.leaves_maple_yellow": {
+      "source_key": "gt.block.leaves.1",
+      "value": "Maple Leaves"
+    },
+    "block.gregtech.leaves_opaque_bluemahoe": {
+      "source_key": "gt.block.leaves.3",
+      "value": "Blue Mahoe Leaves"
+    },
+    "block.gregtech.leaves_opaque_bluespruce": {
+      "source_key": "gt.block.leaves.cd.0",
+      "value": "Blue Spruce Leaves"
+    },
+    "block.gregtech.leaves_opaque_bluespruce_xmas": {
+      "source_key": "gt.block.leaves.cd.0",
+      "value": "Blue Spruce Leaves"
+    },
+    "block.gregtech.leaves_opaque_cinnamon": {
+      "source_key": "gt.block.leaves.5",
+      "value": "Cinnamon Leaves"
+    },
+    "block.gregtech.leaves_opaque_coconut": {
+      "source_key": "gt.block.leaves.6",
+      "value": "Coconut Leaves"
+    },
+    "block.gregtech.leaves_opaque_hazel": {
+      "source_key": "gt.block.leaves.4",
+      "value": "Hazel Leaves"
+    },
+    "block.gregtech.leaves_opaque_maple": {
+      "source_key": "gt.block.leaves.1",
+      "value": "Maple Leaves"
+    },
+    "block.gregtech.leaves_opaque_maple_brown": {
+      "source_key": "gt.block.leaves.1",
+      "value": "Maple Leaves"
+    },
+    "block.gregtech.leaves_opaque_maple_orange": {
+      "source_key": "gt.block.leaves.1",
+      "value": "Maple Leaves"
+    },
+    "block.gregtech.leaves_opaque_maple_red": {
+      "source_key": "gt.block.leaves.1",
+      "value": "Maple Leaves"
+    },
+    "block.gregtech.leaves_opaque_maple_yellow": {
+      "source_key": "gt.block.leaves.1",
+      "value": "Maple Leaves"
+    },
+    "block.gregtech.leaves_opaque_rainbowood": {
+      "source_key": "gt.block.leaves.7",
+      "value": "Rainbow Leaves"
+    },
+    "block.gregtech.leaves_opaque_rubber": {
+      "source_key": "gt.block.leaves.0",
+      "value": "Rubber Leaves"
+    },
+    "block.gregtech.leaves_opaque_willow": {
+      "source_key": "gt.block.leaves.2",
+      "value": "Willow Leaves"
     },
     "block.gregtech.leaves_rainbowood": {
       "source_key": "gt.block.leaves.7",
@@ -7251,6 +8099,10 @@
       "source_key": "gt.multitileentity.20445",
       "value": "Nanoscale Fabricator (IV)"
     },
+    "block.gregtech.nozzle": {
+      "source_key": "gt.multitileentity.32746",
+      "value": "Steel Nozzle"
+    },
     "block.gregtech.nozzle_adamantium": {
       "source_key": "gt.multitileentity.32750",
       "value": "Adamantium Nozzle"
@@ -7258,6 +8110,10 @@
     "block.gregtech.nozzle_plastic": {
       "source_key": "gt.multitileentity.32747",
       "value": "Plastic Nozzle"
+    },
+    "block.gregtech.nozzle_stainless_steel": {
+      "source_key": "gt.multitileentity.32748",
+      "value": "Stainless Nozzle"
     },
     "block.gregtech.nozzle_steel": {
       "source_key": "gt.multitileentity.32746",
@@ -8475,6 +9331,10 @@
       "source_key": "gt.block.planks.9",
       "value": "Wood Planks"
     },
+    "block.gregtech.plant_pot": {
+      "source_key": "gt.multitileentity.32065",
+      "value": "Universal Plant Pot"
+    },
     "block.gregtech.plantalyzer_aluminium": {
       "source_key": "gt.multitileentity.20532",
       "value": "Plantalyzer (MV)"
@@ -8818,6 +9678,14 @@
     "block.gregtech.railroad": {
       "source_key": "gt.block.rail.road",
       "value": "Road Stripe"
+    },
+    "block.gregtech.reactor_core": {
+      "source_key": "gt.multitileentity.9300",
+      "value": "Nuclear Reactor Core (1x1)"
+    },
+    "block.gregtech.reactor_core_2x2": {
+      "source_key": "gt.multitileentity.9200",
+      "value": "Nuclear Reactor Core (2x2)"
     },
     "block.gregtech.reactor_rod_9201": {
       "source_key": "gt.multitileentity.9201",
@@ -9595,6 +10463,18 @@
       "source_key": "gt.multitileentity.2028",
       "value": "Mechanical Void Metal Safe"
     },
+    "block.gregtech.sand_basalt_magnetite": {
+      "source_key": "gt.block.sands.1",
+      "value": "Basaltic Black Sand"
+    },
+    "block.gregtech.sand_granite_magnetite": {
+      "source_key": "gt.block.sands.2",
+      "value": "Granitic Black Sand"
+    },
+    "block.gregtech.sand_magnetite": {
+      "source_key": "gt.block.sands.0",
+      "value": "Black Sand"
+    },
     "block.gregtech.sander_bronze": {
       "source_key": "gt.multitileentity.20511",
       "value": "Sanding Machine (Bronze)"
@@ -9610,6 +10490,10 @@
     "block.gregtech.sander_tungsten_steel": {
       "source_key": "gt.multitileentity.20514",
       "value": "Sanding Machine (Tungstensteel)"
+    },
+    "block.gregtech.sap_bag": {
+      "source_key": "gt.multitileentity.32736",
+      "value": "Resin/Sap Bag"
     },
     "block.gregtech.sapling_blue_mahoe": {
       "source_key": "gt.block.sapling.3",
@@ -9635,6 +10519,42 @@
       "source_key": "gt.block.sapling.4",
       "value": "Hazel Sapling"
     },
+    "block.gregtech.sapling_large_bluemahoe": {
+      "source_key": "gt.block.sapling.11",
+      "value": "Blue Mahoe Sapling"
+    },
+    "block.gregtech.sapling_large_bluespruce": {
+      "source_key": "gt.block.sapling.cd.8",
+      "value": "Blue Spruce Sapling"
+    },
+    "block.gregtech.sapling_large_cinnamon": {
+      "source_key": "gt.block.sapling.13",
+      "value": "Cinnamon Sapling"
+    },
+    "block.gregtech.sapling_large_coconut": {
+      "source_key": "gt.block.sapling.14",
+      "value": "Coconut Sapling"
+    },
+    "block.gregtech.sapling_large_hazel": {
+      "source_key": "gt.block.sapling.12",
+      "value": "Hazel Sapling"
+    },
+    "block.gregtech.sapling_large_maple": {
+      "source_key": "gt.block.sapling.9",
+      "value": "Maple Sapling"
+    },
+    "block.gregtech.sapling_large_rainbowood": {
+      "source_key": "gt.block.sapling.15",
+      "value": "Rainbowood Sapling"
+    },
+    "block.gregtech.sapling_large_rubber": {
+      "source_key": "gt.block.sapling.8",
+      "value": "Rubber Sapling"
+    },
+    "block.gregtech.sapling_large_willow": {
+      "source_key": "gt.block.sapling.10",
+      "value": "Willow Sapling"
+    },
     "block.gregtech.sapling_maple": {
       "source_key": "gt.block.sapling.1",
       "value": "Maple Sapling"
@@ -9646,6 +10566,42 @@
     "block.gregtech.sapling_rubber": {
       "source_key": "gt.block.sapling.0",
       "value": "Rubber Sapling"
+    },
+    "block.gregtech.sapling_small_bluemahoe": {
+      "source_key": "gt.block.sapling.3",
+      "value": "Blue Mahoe Sapling"
+    },
+    "block.gregtech.sapling_small_bluespruce": {
+      "source_key": "gt.block.sapling.cd.0",
+      "value": "Blue Spruce Sapling"
+    },
+    "block.gregtech.sapling_small_cinnamon": {
+      "source_key": "gt.block.sapling.5",
+      "value": "Cinnamon Sapling"
+    },
+    "block.gregtech.sapling_small_coconut": {
+      "source_key": "gt.block.sapling.6",
+      "value": "Coconut Sapling"
+    },
+    "block.gregtech.sapling_small_hazel": {
+      "source_key": "gt.block.sapling.4",
+      "value": "Hazel Sapling"
+    },
+    "block.gregtech.sapling_small_maple": {
+      "source_key": "gt.block.sapling.1",
+      "value": "Maple Sapling"
+    },
+    "block.gregtech.sapling_small_rainbowood": {
+      "source_key": "gt.block.sapling.7",
+      "value": "Rainbowood Sapling"
+    },
+    "block.gregtech.sapling_small_rubber": {
+      "source_key": "gt.block.sapling.0",
+      "value": "Rubber Sapling"
+    },
+    "block.gregtech.sapling_small_willow": {
+      "source_key": "gt.block.sapling.2",
+      "value": "Willow Sapling"
     },
     "block.gregtech.sapling_willow": {
       "source_key": "gt.block.sapling.2",
@@ -10283,6 +11239,26 @@
       "source_key": "gt.multitileentity.10050",
       "value": "Solar Panel (Silicon)"
     },
+    "block.gregtech.spike_fancy": {
+      "source_key": "gt.block.spikes.fancy.0",
+      "value": "Gold Wall Spike"
+    },
+    "block.gregtech.spike_metal": {
+      "source_key": "gt.block.spikes.metal.0",
+      "value": "Copper Wall Spike"
+    },
+    "block.gregtech.spike_sharp": {
+      "source_key": "gt.block.spikes.sharp.0",
+      "value": "Steel Wall Spike"
+    },
+    "block.gregtech.spike_steel": {
+      "source_key": "gt.block.spikes.steel.0",
+      "value": "Blue Steel Wall Spike"
+    },
+    "block.gregtech.spike_super": {
+      "source_key": "gt.block.spikes.super.0",
+      "value": "Tungstensteel Wall Spike"
+    },
     "block.gregtech.squeezer_bronze": {
       "source_key": "gt.multitileentity.20071",
       "value": "Squeezer (Bronze)"
@@ -10463,6 +11439,10 @@
       "source_key": "gt.multitileentity.18012",
       "value": "Tantalum Hafnium Carbide Wall"
     },
+    "block.gregtech.tap": {
+      "source_key": "gt.multitileentity.32728",
+      "value": "Ceramic Tap"
+    },
     "block.gregtech.tap_adamantium": {
       "source_key": "gt.multitileentity.32732",
       "value": "Adamantium Tap"
@@ -10474,6 +11454,10 @@
     "block.gregtech.tap_plastic": {
       "source_key": "gt.multitileentity.32729",
       "value": "Plastic Tap"
+    },
+    "block.gregtech.tap_stainless_steel": {
+      "source_key": "gt.multitileentity.32730",
+      "value": "Stainless Tap"
     },
     "block.gregtech.tap_tantalum_hafnium_carbide": {
       "source_key": "gt.multitileentity.32080",

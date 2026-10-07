@@ -80,9 +80,11 @@ final class LanguageDeliveryChecks {
             }
             require(unresolved.isEmpty(),"Unresolved installed English names: "+unresolved+"; total="+unresolved.size());
             int machineNamesEnglish=verifyMachineNames();
+            int coloredEnglish=verifyColoredConstruction(false);
             manager.setSelected("zh_cn");
             manager.onResourceManagerReload(client.getResourceManager());
             int machineNamesChinese=verifyMachineNames();
+            int coloredChinese=verifyColoredConstruction(true);
             require(Language.getInstance().has("gt.multiitem.bumblebee.0"), "Original Chinese resource is loaded");
             int names=0, nonempty=0, empty=0;
             String[] states={"drone","princess","queen","dead","scanned_drone","scanned_princess","scanned_queen","scanned_dead"};
@@ -106,6 +108,14 @@ final class LanguageDeliveryChecks {
                     "Original numbered anvil name "+entry.getKey());
             require(names==640 && nonempty==360 && empty==280,"Complete source bee catalog and original empty rows");
             var identitySamples=Map.ofEntries(
+                    Map.entry("bale_rye","gt.block.bale.crop.0"),
+                    Map.entry("bale_grass_rotten","gt.block.bale.grass.3"),
+                    Map.entry("sand_granite_magnetite","gt.block.sands.2"),
+                    Map.entry("spike_super","gt.block.spikes.super.0"),
+                    Map.entry("filter_oredict","gt.multitileentity.30259"),
+                    Map.entry("sapling_large_hazel","gt.block.sapling.12"),
+                    Map.entry("leaves_opaque_maple_red","gt.block.leaves.1"),
+                    Map.entry("crank","gt.multitileentity.32111"),
                     Map.entry("auto_igniter_steel","gt.multitileentity.15010"),
                     Map.entry("item_pipe_restrictive_huge_brass","gt.multitileentity.25007"),
                     Map.entry("pipe_nonuple_wood","gt.multitileentity.26006"),
@@ -181,6 +191,8 @@ final class LanguageDeliveryChecks {
             report.addProperty("sourceIdentitySamples",identitySamples.size());
             report.addProperty("machineNamesEnglish",machineNamesEnglish);
             report.addProperty("machineNamesChinese",machineNamesChinese);
+            report.addProperty("coloredConstructionNamesEnglish",coloredEnglish);
+            report.addProperty("coloredConstructionNamesChinese",coloredChinese);
             report.addProperty("assembledToolNames",toolSamples.size());
             report.addProperty("newSourceDescriptions",1);
             var samples=new JsonArray();for(var c:ironLines)samples.add(c.getString());report.add("moltenIronTooltip",samples);
@@ -193,6 +205,29 @@ final class LanguageDeliveryChecks {
     private static String original(String key) {
         require(Language.getInstance().has(key),"Original key present "+key);
         return Language.getInstance().getOrDefault(key);
+    }
+    private static int verifyColoredConstruction(boolean chinese) {
+        var families=Map.ofEntries(Map.entry("asphalt","asphalt"),Map.entry("concrete","concrete"),
+                Map.entry("concrete_reinforced","concrete.reinforced"),Map.entry("cfoam","cfoam"),
+                Map.entry("cfoam_fresh","cfoam.fresh"),
+                Map.entry("glass_clear","glass"),Map.entry("glass_glow","glass.glow"),
+                Map.entry("cfoam_slab","cfoam.slab.0"),Map.entry("glass_glow_slab","glass.glow.slab.0"));
+        int checked=0;var mismatches=new ArrayList<String>();
+        for(var entry:families.entrySet())for(var color:DyeColor.values()) {
+            var block=((BlockItem)item(entry.getKey()).getItem()).getBlock();
+            require(block.defaultBlockState().getProperties().stream().anyMatch(p -> p.getName().equals("color")),
+                    "Colored fixture must have a real color state: "+entry.getKey());
+            var stack=com.gregtech.gregtech.block.misc.ConcreteBlock.coloredItem(block,color);
+            String key="block.gregtech."+entry.getKey()+"."+color.getName();
+            String actual=stack.getHoverName().getString();
+            String expected=original(key);
+            if(chinese) require(expected.equals(original("gt.block."+entry.getValue()+"."+(15-color.getId()))),
+                    "Exact original colored phrase "+key);
+            if(!actual.equals(expected))mismatches.add(key+": "+actual+" != "+expected);
+            checked++;
+        }
+        require(mismatches.isEmpty(),"Installed colored construction names: "+mismatches);
+        return checked;
     }
     private static int verifyMachineNames() {
         int checked=0;
