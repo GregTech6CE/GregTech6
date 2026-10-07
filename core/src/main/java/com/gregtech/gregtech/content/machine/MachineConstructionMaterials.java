@@ -26,6 +26,7 @@ public final class MachineConstructionMaterials {
         if (storage != null) return Optional.of(storage);
         var hopper = HOPPERS.get(path);
         if (hopper != null) return Optional.of(hopper);
+        path=com.gregtech.gregtech.content.multiblock.OriginalUtilityControllerData.aliases().getOrDefault(path,path);
         return OriginalMachineMaterialData.block(com.gregtech.gregtech.content.multiblock.OriginalGeneratorTooltipData.aliases().getOrDefault(path,path));
     }
     public static Map<String, ItemComposition> blocks() {
@@ -33,6 +34,8 @@ public final class MachineConstructionMaterials {
         blocks.putAll(HOPPERS);
         blocks.putAll(OriginalStorageMaterialData.blocks());
         com.gregtech.gregtech.content.multiblock.OriginalGeneratorTooltipData.aliases().forEach((alias,source)->
+                blocks.put(alias,Objects.requireNonNull(blocks.get(source),source)));
+        com.gregtech.gregtech.content.multiblock.OriginalUtilityControllerData.aliases().forEach((alias,source)->
                 blocks.put(alias,Objects.requireNonNull(blocks.get(source),source)));
         return Map.copyOf(blocks);
     }

@@ -113,7 +113,7 @@ public final class MultiblockDefinitions {
         LIGHTNING_ROD_PILLAR = part("lightning_rod_pillar");
         LARGE_NIOBIUM_TITANIUM_COIL = part("large_niobium_titanium_coil");
         LIGHTNING_ROD_MAIN = com.gregtech.gregtech.registry.MachineBlockRegistration.block("lightning_rod_main", com.gregtech.gregtech.block.machine.LightningRodControllerBlock::new)
-                .strength(6.0f, 6.0f).register();
+                .strength(10.0f, 10.0f).register();
 
         IMPLOSION_COMPRESSOR_WALL = part("implosion_compressor_wall");
         IMPLOSION_COMPRESSOR_MAIN = com.gregtech.gregtech.registry.MachineBlockRegistration.block("implosion_compressor_main", com.gregtech.gregtech.block.machine.ImplosionCompressorControllerBlock::new)

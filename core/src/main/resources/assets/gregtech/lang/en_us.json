@@ -1253,7 +1253,7 @@
   "block.gregtech.grindstone_block": "Grind Stone",
   "block.gregtech.hatch": "Hatch",
   "block.gregtech.hdd_switch": "HDD Switch",
-  "block.gregtech.heat_exchanger_main": "Heat Exchanger Main",
+  "block.gregtech.heat_exchanger_main": "Large Heat Exchanger",
   "block.gregtech.heat_exchanger_wall": "Heat Exchanger Wall",
   "block.gregtech.heat_transmitter": "Heat Transmitter",
   "block.gregtech.hopper_adamantium": "Adamantium Hopper",
@@ -1644,7 +1644,7 @@
   "block.gregtech.lightning_galvanized_steel": "Lightning Processor (LV)",
   "block.gregtech.lightning_rod": "Lightning Rod",
   "block.gregtech.lightning_rod_electric_output": "Lightning Rod Electric Output",
-  "block.gregtech.lightning_rod_main": "Lightning Rod Main",
+  "block.gregtech.lightning_rod_main": "Lightning Rod Electric Output",
   "block.gregtech.lightning_rod_pillar": "Lightning Rod",
   "block.gregtech.lightning_rod_wall": "Lightning Rod Wall",
   "block.gregtech.lightning_stainless_steel": "Lightning Processor (HV)",
@@ -6058,7 +6058,6 @@
   "gt.tooltip.multiblock.lightningrod.7": "The Tip of the Rod has to be at Y = 100 or above",
   "gt.tooltip.multiblock.lightningrod.8": "Optimum Efficiency at a Rod Length of 100m",
   "gt.tooltip.multiblock.lightningrod.9": "Reduced Efficiency if too close to another Lightning Rod (256m)",
-  "gt.tooltip.multiblock.lightningrod.output": "Bottom output: 32768 EU per packet, up to 16 packets per tick",
   "gt.tooltip.multiblock.logisticscore.1": "5x5x5 Frame made out of 44 Galvanized Steel Walls (Power Input Here)",
   "gt.tooltip.multiblock.logisticscore.10": "Conversion Processors increase Throughput by 1 Stack or 16000L",
   "gt.tooltip.multiblock.logisticscore.2": "3x3x3 Core of 27 of any Multiblock Processor Units (Customizable)",
@@ -11409,5 +11408,10 @@
   "gt.tooltip.multiblock.steamturbine.1": "3x3x4 of 35 ",
   "gt.tooltip.multiblock.steamturbine.2": "Main centered on the 3x3 facing outwards",
   "gt.tooltip.multiblock.steamturbine.3": "Input only possible at frontal 3x3",
-  "gt.tooltip.multiblock.steamturbine.4": "Distilled Water can be pumped out at Bottom Layer"
+  "gt.tooltip.multiblock.steamturbine.4": "Distilled Water can be pumped out at Bottom Layer",
+  "gt.tooltip.multiblock.heatexchanger.1": "3x3 Ring of 8 Heat Transmitters with Dense Tungsten Wall inside",
+  "gt.tooltip.multiblock.heatexchanger.2": "3x3 Ring of 8 Dense Tungsten Walls with Main inside",
+  "gt.tooltip.multiblock.heatexchanger.3": "Energy Output split over the 8 Heat Transmitters (Top)",
+  "gt.tooltip.multiblock.heatexchanger.4": "Input at Bottom Layer, Fluid Output at Main Block",
+  "gt.recipe.fuels.hot": "Hot Fuels"
 }

@@ -40,6 +40,7 @@ public final class MachineSpecBehaviorContracts {
         assertions += BasicMachineSourceContracts.verify();
         originalAdvancedControllerParameters();
         assertions += GeneratorTooltipContracts.verify();
+        assertions += UtilityControllerContracts.verify();
         originalMachineMaterials();
         originalBlastTooltips();
         originalHarvestProperties();
@@ -289,7 +290,7 @@ public final class MachineSpecBehaviorContracts {
 
     private static void originalHarvestProperties() {
         var properties = com.gregtech.gregtech.data.SourceBlockProperties.blocks();
-        check(properties.size() == 1519, "667 fixed source identities plus120 hoppers/720 storage/12 generator aliases");
+        check(properties.size() == 1521, "668 fixed source identities plus120 hoppers/720 storage/12 generator aliases/1 utility alias");
         check(com.gregtech.gregtech.data.SourceBlockProperties.basics().size() == 265, "All265 adopted original machine metadata keys");
         var wood = properties.get("gearbox_wood");
         check(wood.sourceId() == 24809 && wood.tool().equals("axe") && wood.handHarvestable(), "Wood gearbox original aWooden exemption");
@@ -330,8 +331,8 @@ public final class MachineSpecBehaviorContracts {
         var storage = com.gregtech.gregtech.content.machine.OriginalStorageMaterialData.blocks();
         var harvest = com.gregtech.gregtech.content.machine.OriginalStorageMaterialData.harvest();
         check(storage.size() == 720 && harvest.size() == 720, "Twelve existing original storage families across60 metalsets");
-        check(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.blocks().size() == 1477,
-                "625 fixed plus120 hoppers plus720 storage plus12 source generator aliases");
+        check(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.blocks().size() == 1479,
+                "626 fixed plus120 hoppers plus720 storage plus12 source generator aliases plus1 utility alias");
         long u = GTValues.U;
         for (var spec : com.gregtech.gregtech.registry.GTStorageMetals.ALL) {
             var metal = spec.material().resolve();

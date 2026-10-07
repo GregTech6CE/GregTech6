@@ -24,6 +24,8 @@ public final class SourceBlockProperties {
         }
         com.gregtech.gregtech.content.multiblock.OriginalGeneratorTooltipData.aliases().forEach((alias,source)->
                 BLOCKS.put(alias,Objects.requireNonNull(BLOCKS.get(source),source)));
+        com.gregtech.gregtech.content.multiblock.OriginalUtilityControllerData.aliases().forEach((alias,source)->
+                BLOCKS.put(alias,Objects.requireNonNull(BLOCKS.get(source),source)));
     }
     public static Optional<Params> block(String path) { return Optional.ofNullable(BLOCKS.get(path)); }
     public static Optional<Params> basic(String machine, int tier) { return Optional.ofNullable(BASICS.get(machine+"/"+tier)); }
@@ -247,6 +249,7 @@ public final class SourceBlockProperties {
         BLOCKS.put("logistics_core", new Params(17997,"wrench",ImportedMaterialData.SteelGalvanized,-1,false));
         BLOCKS.put("implosion_compressor_main", new Params(17110,"wrench",ImportedMaterialData.TungstenSteel,-1,false));
         BLOCKS.put("fusion_reactor_main", new Params(17198,"wrench",ImportedMaterialData.SteelGalvanized,-1,false));
+        BLOCKS.put("heat_exchanger_main", new Params(17197,"wrench",ImportedMaterialData.W,-1,false));
         BLOCKS.put("distillation_tower_main", new Params(17101,"wrench",ImportedMaterialData.StainlessSteel,-1,false));
         BLOCKS.put("cryo_distillation_main", new Params(17111,"wrench",ImportedMaterialData.StainlessSteel,-1,false));
         BLOCKS.put("coke_oven_wall", new Params(18000,"pickaxe",ImportedMaterialData.Ceramic,-1,false));

@@ -49,4 +49,9 @@ public class LargeHeatExchangerControllerBlock extends HorizontalDirectionalBloc
             stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(machine,machine.saveWithId(machine.getLevel().registryAccess()))));
         return java.util.List.of(stack);
     }
+
+    @Override public void appendHoverText(net.minecraft.world.item.ItemStack stack,net.minecraft.world.item.Item.TooltipContext context,
+            java.util.List<net.minecraft.network.chat.Component> tooltip,net.minecraft.world.item.TooltipFlag flag) {
+        com.gregtech.gregtech.client.UtilityControllerTooltips.heat(tooltip);
+    }
 }
