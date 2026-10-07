@@ -41,7 +41,7 @@ public class MaterialBlockItem extends BlockItem {
             return Component.translatable("block.gregtech.ore_broken", MaterialPresentation.name(ore.material()));
         }
         if (material != null && getBlock() instanceof MaterialBlockLike form) {
-            return Component.translatableWithFallback("oredict." + form.prefix().getName() + material.getName(), "%s",
+            return Component.translatableWithFallback(com.gregtech.gregtech.api.prefix.PrefixRegistry.sourceTranslationKey(form.prefix().getName(), material.getName()), "%s",
                     Component.translatable(getDescriptionId(), MaterialPresentation.name(material)));
         }
         if (getBlock() instanceof GTStoneBlock stoneBlock) {

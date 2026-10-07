@@ -30,6 +30,20 @@ public final class CoinItem extends MaterialItem {
         super(properties, MaterialPrefix.coin, material);
     }
 
+    /** MultiTileEntityCoin keeps the family name; the material is a separate tooltip line. */
+    @Override
+    public net.minecraft.network.chat.Component getName(ItemStack stack) {
+        return net.minecraft.network.chat.Component.translatable(getDescriptionId());
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, @org.jetbrains.annotations.Nullable Level level,
+            java.util.List<net.minecraft.network.chat.Component> tooltip, net.minecraft.world.item.TooltipFlag flag) {
+        tooltip.add(com.gregtech.gregtech.api.material.MaterialPresentation.name(getMaterial())
+                .copy().withStyle(net.minecraft.ChatFormatting.AQUA));
+        super.appendHoverText(stack, level, tooltip, flag);
+    }
+
     @Override
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(new IClientItemExtensions() {

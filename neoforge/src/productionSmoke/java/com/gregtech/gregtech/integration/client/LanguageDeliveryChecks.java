@@ -87,13 +87,15 @@ final class LanguageDeliveryChecks {
             int coloredEnglish=verifyColoredConstruction(false);
             int stoneEnglish=verifySourceStones(false);
             int bushEnglish=verifyBushes(false);
+            int coinsEnglish=verifyCoins(false);
             manager.setSelected("zh_cn");
             manager.onResourceManagerReload(client.getResourceManager());
             int machineNamesChinese=verifyMachineNames();
             int coloredChinese=verifyColoredConstruction(true);
             int stoneChinese=verifySourceStones(true);
             int bushChinese=verifyBushes(true);
-            int latinCandidates=recordNameInventory(client,englishSnapshot);
+            int coinsChinese=verifyCoins(true);
+            var nameInventory=recordNameInventory(client,englishSnapshot);
             require(Language.getInstance().has("gt.multiitem.bumblebee.0"), "Original Chinese resource is loaded");
             int names=0, nonempty=0, empty=0;
             String[] states={"drone","princess","queen","dead","scanned_drone","scanned_princess","scanned_queen","scanned_dead"};
@@ -206,8 +208,11 @@ final class LanguageDeliveryChecks {
             report.addProperty("sourceStoneNamesChinese",stoneChinese);
             report.addProperty("bushNamesAndOutputsEnglish",bushEnglish);
             report.addProperty("bushNamesAndOutputsChinese",bushChinese);
+            report.addProperty("coinNamesAndMaterialsEnglish",coinsEnglish);
+            report.addProperty("coinNamesAndMaterialsChinese",coinsChinese);
             report.addProperty("chineseItemNames",englishSnapshot.size());
-            report.addProperty("latinNameCandidates",latinCandidates);
+            report.addProperty("latinNameCandidates",nameInventory.get("candidateCount").getAsInt());
+            report.add("materialFormNames",nameInventory.getAsJsonObject("materialFormNames"));
             report.addProperty("assembledToolNames",toolSamples.size());
             report.addProperty("newSourceDescriptions",1);
             var samples=new JsonArray();for(var c:ironLines)samples.add(c.getString());report.add("moltenIronTooltip",samples);
@@ -244,8 +249,30 @@ final class LanguageDeliveryChecks {
         require(mismatches.isEmpty(),"Installed colored construction names: "+mismatches);
         return checked;
     }
-    private static int recordNameInventory(Minecraft client, Map<String,String> englishNames) {
-        var candidates=new JsonArray();int checked=0;
+    private static int verifyCoins(boolean chinese) {
+        String expected=original("item.gregtech.coin");int count=0;
+        if(chinese)require(expected.equals(original("gt.multitileentity.32700")),"Original coin family name");
+        for(var registered:BuiltInRegistries.ITEM)if(registered instanceof com.gregtech.gregtech.item.CoinItem coin) {
+            var stack=new ItemStack(registered);
+            require(stack.getHoverName().getString().equals(expected),"Original coin name "+BuiltInRegistries.ITEM.getKey(registered));
+            String material=com.gregtech.gregtech.api.material.MaterialPresentation.name(coin.getMaterial()).getString();
+            require(tooltip(stack).stream().filter(c -> c.getString().equals(material)).count()==1,"Coin material shown exactly once");
+            count++;
+        }
+        require(count>500,"Complete material coin catalog");
+        return count;
+    }
+    private static String materialSourceKey(ItemStack stack) {
+        if(stack.getItem() instanceof com.gregtech.gregtech.item.CoinItem)return "gt.multitileentity.32700";
+        if(stack.getItem() instanceof com.gregtech.gregtech.api.material.MaterialFormItem form)
+            return com.gregtech.gregtech.api.prefix.PrefixRegistry.sourceTranslationKey(form.getPrefix().getName(),form.getMaterial().getName());
+        if(stack.getItem() instanceof BlockItem blockItem
+                && blockItem.getBlock() instanceof com.gregtech.gregtech.block.MaterialBlockLike form)
+            return com.gregtech.gregtech.api.prefix.PrefixRegistry.sourceTranslationKey(form.prefix().getName(),form.material().getName());
+        return null;
+    }
+    private static JsonObject recordNameInventory(Minecraft client, Map<String,String> englishNames) {
+        var candidates=new JsonArray();var missingForms=new JsonArray();int checked=0,sourceForms=0,matchedForms=0,sourceCasings=0;
         for(var registered:BuiltInRegistries.ITEM) {
             var id=BuiltInRegistries.ITEM.getKey(registered);
             if(!id.getNamespace().equals("gregtech"))continue;
@@ -253,23 +280,37 @@ final class LanguageDeliveryChecks {
             String name=stack.getHoverName().getString();
             require(!name.isBlank()&&!UNRESOLVED_NAME.matcher(name).find(),"Unresolved installed Chinese name "+id+" = "+name);
             require(englishNames.containsKey(id.toString()),"Same registered items in both locales "+id);
-            if(LATIN_WORD.matcher(name).find()) {
-                var entry=new JsonObject();entry.addProperty("id",id.toString());
-                entry.addProperty("descriptionKey",stack.getDescriptionId());
-                entry.addProperty("english",englishNames.get(id.toString()));entry.addProperty("chinese",name);
-                entry.addProperty("unchanged",name.equals(englishNames.get(id.toString())));candidates.add(entry);
+            var entry=new JsonObject();entry.addProperty("id",id.toString());
+            entry.addProperty("descriptionKey",stack.getDescriptionId());
+            entry.addProperty("english",englishNames.get(id.toString()));entry.addProperty("chinese",name);
+            entry.addProperty("unchanged",name.equals(englishNames.get(id.toString())));
+            String source=materialSourceKey(stack);
+            if(source!=null) {
+                sourceForms++;
+                boolean available=Language.getInstance().has(source);
+                entry.addProperty("sourceKey",source);entry.addProperty("sourceNameAvailable",available);
+                if(available) {
+                    require(name.equals(original(source)),"Existing original material name bypassed: "+id+" / "+source+" / "+name);
+                    matchedForms++;
+                    if(source.startsWith("oredict.casingSmall"))sourceCasings++;
+                } else missingForms.add(entry);
             }
+            if(LATIN_WORD.matcher(name).find())candidates.add(entry);
             checked++;
         }
         require(checked==englishNames.size(),"Complete registered Chinese name scan");
+        require(sourceForms>10000&&matchedForms>10000&&sourceCasings>100,"Complete original material form name scan");
+        var forms=new JsonObject();forms.addProperty("registered",sourceForms);forms.addProperty("exactOriginal",matchedForms);
+        forms.addProperty("missingOriginal",missingForms.size());forms.addProperty("originalCasingNames",sourceCasings);
         var inventory=new JsonObject();inventory.addProperty("registeredItems",checked);
         inventory.addProperty("candidateCount",candidates.size());inventory.add("candidates",candidates);
-        inventory.addProperty("scope","Actual default item names containing Latin words under zh_cn; candidates include legitimate source names/acronyms, not confirmed missing translations. No player inventory or world data.");
+        inventory.add("materialFormNames",forms);inventory.add("missingMaterialFormNames",missingForms);
+        inventory.addProperty("scope","Actual default item names containing Latin words under zh_cn; candidates include legitimate source names/acronyms, not confirmed missing translations. Material forms separately verify every available whole-name source key. No player inventory or world data.");
         try {
             java.nio.file.Files.writeString(client.gameDirectory.toPath().resolve("language-names.json"),
                     new com.google.gson.GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create().toJson(inventory),java.nio.charset.StandardCharsets.UTF_8);
         } catch(java.io.IOException error) {throw new IllegalStateException("Could not write installed language inventory",error);}
-        return candidates.size();
+        return inventory;
     }
     private static int verifySourceStones(boolean chinese) {
         // Loader_Rocks registers these 17 families. Port-only rocks have no original block phrases.

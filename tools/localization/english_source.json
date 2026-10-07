@@ -16099,6 +16099,10 @@
       "source_key": "gt.multiitem.bottles.5605.tooltip",
       "value": ""
     },
+    "item.gregtech.coin": {
+      "source_key": "gt.multitileentity.32700",
+      "value": "Coin"
+    },
     "item.gregtech.compact_electric_conveyor_ev": {
       "source_key": "gt.multiitem.technological.12044",
       "value": "Compact Electric Conveyor (EV)"
@@ -21606,6 +21610,10 @@
     "item.gregtech.tab_icon_ingot_triple": {
       "source_key": "oredict.prefix.ingotTriple",
       "value": "3x Ingots"
+    },
+    "item.gregtech.tab_icon_item_casing": {
+      "source_key": "oredict.prefix.casingSmall",
+      "value": "Item Casings"
     },
     "item.gregtech.tab_icon_lens": {
       "source_key": "oredict.prefix.lens",

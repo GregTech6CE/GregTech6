@@ -44,6 +44,7 @@
     "block.gregtech.cfoam_fresh_owned": "Retained white foam sprite block with no native color state: reuse the corresponding original white BlockColored family name only, not an original owned-block registration or 16-color behavior claim.",
     "block.gregtech.cfoam_hardened": "Retained white foam sprite block with no native color state: reuse the corresponding original white BlockColored family name only, not an original owned-block registration or 16-color behavior claim.",
     "block.gregtech.cfoam_hardened_owned": "Retained white foam sprite block with no native color state: reuse the corresponding original white BlockColored family name only, not an original owned-block registration or 16-color behavior claim.",
+    "item.gregtech.coin": "Flattened material variants of original coin 32700 keep the original generic name; MultiTileEntityCoin.addToolTips shows the material separately. This does not assign a separate original registration to each modern material.",
     "item.gregtech.panel_wood_bamboo": "Uses the original generic Wood Panel display name; this is not a claim of an original registration for this wood.",
     "item.gregtech.panel_wood_cherry": "Uses the original generic Wood Panel display name; this is not a claim of an original registration for this wood.",
     "item.gregtech.panel_wood_crimson": "Uses the original generic Wood Panel display name; this is not a claim of an original registration for this wood.",

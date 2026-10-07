@@ -58,10 +58,10 @@ public class MaterialItem extends Item implements com.gregtech.gregtech.api.mate
     @Override
     public Component getName(ItemStack stack) {
         if ("Empty".equals(material.getName()) && prefix.hasEmptyAmmunitionForm())
-            return Component.translatableWithFallback("oredict."+prefix.getName()+material.getName(), "%s",
+            return Component.translatableWithFallback(com.gregtech.gregtech.api.prefix.PrefixRegistry.sourceTranslationKey(prefix.getName(), material.getName()), "%s",
                     Component.translatable(getDescriptionId() + "_empty"));
         // Same domain translation data/argument contract as Forge MaterialPresentation.
-        return Component.translatableWithFallback("oredict." + prefix.getName() + material.getName(), "%s",
+        return Component.translatableWithFallback(com.gregtech.gregtech.api.prefix.PrefixRegistry.sourceTranslationKey(prefix.getName(), material.getName()), "%s",
                 Component.translatable(getDescriptionId(),
                         Component.translatable(material.getTranslationKey(), material.getDisplayNameFallback())));
     }
