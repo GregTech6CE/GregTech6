@@ -228,6 +228,7 @@ public final class SourceBlockProperties {
         BLOCKS.put("bathing_pot_wood", new Params(32721,"axe",null,0,true));
         BLOCKS.put("bathing_pot_table_wood", new Params(32720,"axe",null,0,true));
         BLOCKS.put("coke_oven_main", new Params(17000,"pickaxe",ImportedMaterialData.Ceramic,-1,false));
+        BLOCKS.put("logistics_core", new Params(17997,"wrench",ImportedMaterialData.SteelGalvanized,-1,false));
         BLOCKS.put("implosion_compressor_main", new Params(17110,"wrench",ImportedMaterialData.TungstenSteel,-1,false));
         BLOCKS.put("fusion_reactor_main", new Params(17198,"wrench",ImportedMaterialData.SteelGalvanized,-1,false));
         BLOCKS.put("distillation_tower_main", new Params(17101,"wrench",ImportedMaterialData.StainlessSteel,-1,false));

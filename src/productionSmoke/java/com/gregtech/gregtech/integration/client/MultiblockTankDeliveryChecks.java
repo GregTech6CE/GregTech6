@@ -28,8 +28,11 @@ final class MultiblockTankDeliveryChecks {
             long capacity=spec==null?(tankBlock.size()==5?1024000L:320000L):spec.capacity();
             for(String key:List.of("gt.lang.structure","gt.lang.pipe.stats.capacity","gt.lang.nogui.funnel.tap.tank",
                     "gt.lang.no.powerconducting.fluids","gt.lang.use.builder.wand.to.ease.building","gt.lang.use.magnifyingglass.to.detail",
-                    "gt.lang.use.x.to.toggle.facing.pre","gt.lang.tool.name.wrench","gt.lang.use.x.to.toggle.facing.post"))
+                    "gt.lang.use.x.to.toggle.facing.pre","gt.lang.use.x.to.toggle.facing.post"))
                 require(count(normal,key)==1,"single inherited/specialized tank row "+key+" "+id);
+            var facing=normal.stream().filter(c->CommonBlockTooltips.containsKey(List.of(c),"gt.lang.use.x.to.toggle.facing.pre")).findFirst().orElseThrow();
+            require(CommonBlockTooltips.containsKey(List.of(facing),"gt.lang.tool.name.wrench")
+                    && CommonBlockTooltips.containsKey(List.of(facing),"gt.lang.use.x.to.toggle.facing.post"),"source facing tool in its own line "+id);
             for(String key:OriginalTankTooltipData.structureKeys(tankBlock.size())) require(count(normal,key)==1,"source tank structure "+id);
             require(normal.stream().anyMatch(c->CommonBlockTooltips.containsKey(List.of(c),"gt.lang.pipe.stats.capacity")
                     && c.getString().endsWith(OriginalTankTooltipData.formatNumber(capacity)+" L")),"source empty liters and decimal grouping "+id);

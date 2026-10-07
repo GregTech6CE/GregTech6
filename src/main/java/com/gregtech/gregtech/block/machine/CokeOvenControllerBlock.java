@@ -26,9 +26,8 @@ public class CokeOvenControllerBlock extends BasicMachineBlock {
         return new com.gregtech.gregtech.blockentity.machine.CokeOvenControllerBlockEntity(pos,state);
     }
     @Override public void appendHoverText(ItemStack stack,net.minecraft.world.level.BlockGetter context,List<Component> tooltip,TooltipFlag flag) {
-        super.appendHoverText(stack,context,tooltip,flag);
-        tooltip.add(Component.translatable("gregtech.coke.structure"));
-        tooltip.add(Component.translatable("gregtech.coke.controller"));
-        tooltip.add(Component.translatable("gregtech.coke.ignition"));
+        com.gregtech.gregtech.client.OriginalControllerTooltips.structure(
+                com.gregtech.gregtech.content.multiblock.OriginalControllerTooltipData.Family.COKE_OVEN,tooltip);
+        com.gregtech.gregtech.client.OriginalControllerTooltips.basic(basicSpec(),tooltip);
     }
 }

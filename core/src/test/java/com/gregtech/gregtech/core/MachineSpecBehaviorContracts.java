@@ -33,6 +33,7 @@ public final class MachineSpecBehaviorContracts {
         originalSmelteryParametersAndShapes();
         assertions += CrucibleHazardContracts.verify();
         originalTankTooltipsAndControllerMaterials();
+        originalProcessControllerParameters();
         originalMachineMaterials();
         originalBlastTooltips();
         originalHarvestProperties();
@@ -83,6 +84,40 @@ public final class MachineSpecBehaviorContracts {
                 -9999L,"-9999",-10000L,"-10_000",3210000L,"3_210_000",Long.MAX_VALUE,"9_223_372_036_854_775_807");
         for(var entry:numbers.entrySet()) check(com.gregtech.gregtech.content.multiblock.OriginalTankTooltipData.formatNumber(entry.getKey())
                 .equals(entry.getValue()),"original UT decimal grouping "+entry.getKey());
+    }
+
+    private static void originalProcessControllerParameters() {
+        var distillation=com.gregtech.gregtech.content.multiblock.OriginalMultiblockMachineParameters.distillationTower();
+        var faces=distillation.faceConfig();
+        check(faces.itemInputs()==63 && faces.itemOutputs()==63 && faces.fluidInputs()==63 && faces.fluidOutputs()==63
+                && faces.energyInputs()==63 && faces.energyOutputs()==0,
+                "17101 inherits original any-side IO/energy defaults; formation still gates ports");
+        check(faces.itemAutoInput()==-1 && faces.fluidAutoInput()==-1
+                && faces.itemAutoOutput()==com.gregtech.gregtech.api.energy.MachineFaceMasks.BACK
+                && faces.fluidAutoOutput()==com.gregtech.gregtech.api.energy.MachineFaceMasks.BACK,
+                "17101 only declares back automatic outputs; no fabricated left automatic input");
+        check(distillation.energyIn()==512 && distillation.energyInMin()==1 && distillation.energyInMax()==1024
+                && distillation.energyType().equals("HU"),"17101 original explicit heat input range");
+        var coke=com.gregtech.gregtech.content.multiblock.OriginalMultiblockMachineParameters.cokeOven();
+        check(coke.parallelLimit()==16 && coke.energyType().equals("TU") && coke.faceConfig().fluidOutputs()==61
+                && coke.faceConfig().fluidAutoOutput()==0,"17000 time energy, parallel16, original non-top fluid output and bottom auto");
+        long u=GTValues.U;
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("logistics_core").orElseThrow(),
+                java.util.Map.of("SteelGalvanized",8*u,"Pt",2*u,"Emerald",2*u));
+        var harvest=com.gregtech.gregtech.data.SourceBlockProperties.block("logistics_core").orElseThrow();
+        check(harvest.sourceId()==17997 && harvest.tool().equals("wrench") && !harvest.handHarvestable()
+                && harvest.material().resolve()==GTMaterialRegistry.get("SteelGalvanized").resolve()
+                && harvest.explicitLevel()==-1,"17997 original aMachine tool/material-quality metadata");
+        var logistics=com.gregtech.gregtech.content.multiblock.OriginalControllerTooltipData.standaloneEnergy(
+                com.gregtech.gregtech.content.multiblock.OriginalControllerTooltipData.Family.LOGISTICS_CORE);
+        check(logistics.minimum()==256 && logistics.maximum()==1024 && logistics.totalPerTick()==0
+                && logistics.unitKey().equals("gt.td.short.energy.electricity"),"17997 literal source tooltip packet range");
+        var drill=com.gregtech.gregtech.content.multiblock.OriginalControllerTooltipData.standaloneEnergy(
+                com.gregtech.gregtech.content.multiblock.OriginalControllerTooltipData.Family.BEDROCK_DRILL);
+        check(drill.minimum()==1024 && drill.maximum()==4096 && drill.totalPerTick()==32768
+                && drill.unitKey().equals("gt.td.short.energy.kinetic_rotation"),"17999 source tooltip packet and aggregate limits");
+        check(com.gregtech.gregtech.content.multiblock.OriginalControllerTooltipData.basicFamily("oven")==null,
+                "ordinary basic machine does not acquire specialized multiblock rows");
     }
 
     private static void originalMachineMaterials() {
@@ -195,7 +230,7 @@ public final class MachineSpecBehaviorContracts {
 
     private static void originalHarvestProperties() {
         var properties = com.gregtech.gregtech.data.SourceBlockProperties.blocks();
-        check(properties.size() == 1506, "666 fixed source identities plus120 hoppers and720 audited storage variants");
+        check(properties.size() == 1507, "667 fixed source identities plus120 hoppers and720 audited storage variants");
         check(com.gregtech.gregtech.data.SourceBlockProperties.basics().size() == 252, "All252 adopted original machine metadata keys");
         var wood = properties.get("gearbox_wood");
         check(wood.sourceId() == 24809 && wood.tool().equals("axe") && wood.handHarvestable(), "Wood gearbox original aWooden exemption");
@@ -236,8 +271,8 @@ public final class MachineSpecBehaviorContracts {
         var storage = com.gregtech.gregtech.content.machine.OriginalStorageMaterialData.blocks();
         var harvest = com.gregtech.gregtech.content.machine.OriginalStorageMaterialData.harvest();
         check(storage.size() == 720 && harvest.size() == 720, "Twelve existing original storage families across60 metalsets");
-        check(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.blocks().size() == 1464,
-                "624 fixed plus120 hoppers plus720 precise storage records");
+        check(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.blocks().size() == 1465,
+                "625 fixed plus120 hoppers plus720 precise storage records");
         long u = GTValues.U;
         for (var spec : com.gregtech.gregtech.registry.GTStorageMetals.ALL) {
             var metal = spec.material().resolve();

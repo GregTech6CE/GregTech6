@@ -20,6 +20,10 @@ public final class MachineTooltips {
     // ── Basic machine tooltip ────────────────────────────────────────────
 
     public static void appendBasicMachine(BasicMachineSpec spec, List<Component> tooltip) {
+        if(com.gregtech.gregtech.content.multiblock.OriginalControllerTooltipData.basicFamily(spec.machineName())!=null) {
+            if(!CommonBlockTooltips.containsKey(tooltip,"gt.lang.recipes")) OriginalControllerTooltips.basic(spec,tooltip);
+            return; // Dedicated blocks own the original inherited rows; their item must not append them twice.
+        }
         FaceConfig fc = spec.faceConfig();
 
         // Recipes
