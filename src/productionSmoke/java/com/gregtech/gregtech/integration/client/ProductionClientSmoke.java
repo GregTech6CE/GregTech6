@@ -85,6 +85,7 @@ public final class ProductionClientSmoke {
             surfaceChecks.add("decorativePanels",DecorativePanelDeliveryChecks.capture(client,graphics));
             surfaceChecks.add("commonBlockTooltips",CommonBlockDeliveryChecks.verify());
             surfaceChecks.add("smelteryTooltipsAndMaterials",SmelteryDeliveryChecks.verify());
+            surfaceChecks.add("multiblockTankTooltipsAndMaterials",MultiblockTankDeliveryChecks.verify());
         }
         catch(Throwable error){terminal.set(true);LogUtils.getLogger().error("PRODUCTION_SMOKE_FAILED",error);client.execute(client::stop);return;}
         String name = "production-forge-" + UUID.randomUUID() + ".png";

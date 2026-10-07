@@ -11246,5 +11246,11 @@
   "gt.tooltip.multiblock.crucible.2": "Main at Bottom-Center.",
   "gt.tooltip.multiblock.crucible.3": "Energy IN from Bottom Layer, Stuff IN from Top Layer.",
   "gt.tooltip.multiblock.crucible.4": "Molds usable at second Layer of Walls",
-  "gt.tooltip.multiblock.crucible.5": "KU at Bottom Layer will turn into Air for Steelmaking"
+  "gt.tooltip.multiblock.crucible.5": "KU at Bottom Layer will turn into Air for Steelmaking",
+  "gt.tooltip.multiblock.tank3x3x3.1": "3x3x3 Hollow of the corresponding Walls made of this Material",
+  "gt.tooltip.multiblock.tank3x3x3.2": "This Block centered on Side/Top/Bottom and facing outwards",
+  "gt.tooltip.multiblock.tank3x3x3.3": "Auto-Emits Fluids from the Main Block if not against Gravity",
+  "gt.tooltip.multiblock.tank5x5x5.1": "5x5x5 Hollow of the corresponding Walls made of this Material",
+  "gt.tooltip.multiblock.tank5x5x5.2": "This Block centered on Side/Top/Bottom and facing outwards",
+  "gt.tooltip.multiblock.tank5x5x5.3": "Auto-Emits Fluids from the Main Block if not against Gravity"
 }

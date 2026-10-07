@@ -32,6 +32,7 @@ public final class MachineSpecBehaviorContracts {
         chargedCrucibleHeatRequirement();
         originalSmelteryParametersAndShapes();
         assertions += CrucibleHazardContracts.verify();
+        originalTankTooltipsAndControllerMaterials();
         originalMachineMaterials();
         originalBlastTooltips();
         originalHarvestProperties();
@@ -46,6 +47,42 @@ public final class MachineSpecBehaviorContracts {
         originalSteamTurbines();
         System.out.println("Machine spec behavior contracts passed: " + assertions
                 + " assertions; brick25percent/16HU, ceramic7U/2500K, mold5U, charged45HU/K, original machine CR.REV data; no game runtime");
+    }
+
+    private static void originalTankTooltipsAndControllerMaterials() {
+        var capacities=java.util.Map.ofEntries(
+                java.util.Map.entry(17001,432000L),java.util.Map.entry(17002,1728000L),java.util.Map.entry(17003,6912000L),
+                java.util.Map.entry(17004,6912000L),java.util.Map.entry(17005,110592000L),java.util.Map.entry(17006,3456000L),java.util.Map.entry(17007,1728000L),
+                java.util.Map.entry(17022,6912000L),java.util.Map.entry(17023,27648000L),java.util.Map.entry(17024,27648000L),
+                java.util.Map.entry(17025,442368000L),java.util.Map.entry(17026,13824000L),java.util.Map.entry(17027,6912000L),
+                java.util.Map.entry(17042,8000000L),java.util.Map.entry(17043,32000000L),java.util.Map.entry(17044,32000000L),
+                java.util.Map.entry(17045,512000000L),java.util.Map.entry(17046,16000000L),java.util.Map.entry(17047,8000000L),
+                java.util.Map.entry(17062,32000000L),java.util.Map.entry(17063,128000000L),java.util.Map.entry(17064,128000000L),
+                java.util.Map.entry(17065,2048000000L),java.util.Map.entry(17066,64000000L),java.util.Map.entry(17067,32000000L));
+        check(com.gregtech.gregtech.content.multiblock.TankValveParameters.all().size()==25,"all25 original tank registrations");
+        for(var spec:com.gregtech.gregtech.content.multiblock.TankValveParameters.all()) {
+            int id=spec.originalId();
+            check(spec.capacity()==capacities.get(id),"source tank capacity registration "+id);
+            int size=id>=17040?5:3;
+            check(spec.size()==size && com.gregtech.gregtech.content.multiblock.OriginalTankTooltipData.structureKeys(size)
+                    .equals(java.util.List.of("gt.tooltip.multiblock.tank"+size+"x"+size+"x"+size+".1",
+                            "gt.tooltip.multiblock.tank"+size+"x"+size+"x"+size+".2","gt.tooltip.multiblock.tank"+size+"x"+size+"x"+size+".3")),"original shape keys "+id);
+            var path=com.gregtech.gregtech.content.multiblock.SharedLargeMachineParts.DEFINITIONS.stream()
+                    .filter(p->p.originalId()==id).findFirst().orElseThrow().name();
+            var data=com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block(path).orElseThrow();
+            long u=GTValues.U;
+            if(id==17001) composition(data,java.util.Map.of("WoodTreated",4*u,"Pb",3*u/2));
+            else {
+                long amount=switch(id/20) {case 850->9*u/2;case 851->73*u/2;case 852->21*u/2;case 853->181*u/2;
+                    default->throw new IllegalStateException("source fixture ID "+id);};
+                check(data.components().size()==1 && data.components().get(0).material().resolve()==GTMaterialRegistry.get(spec.material()).resolve()
+                        && data.components().get(0).amount()==amount,"original controller REV ring/wall/plate material "+id);
+            }
+        }
+        var numbers=java.util.Map.of(0L,"0",9999L,"9999",10000L,"10_000",432000L,"432_000",2048000000L,"2_048_000_000",
+                -9999L,"-9999",-10000L,"-10_000",3210000L,"3_210_000",Long.MAX_VALUE,"9_223_372_036_854_775_807");
+        for(var entry:numbers.entrySet()) check(com.gregtech.gregtech.content.multiblock.OriginalTankTooltipData.formatNumber(entry.getKey())
+                .equals(entry.getValue()),"original UT decimal grouping "+entry.getKey());
     }
 
     private static void originalMachineMaterials() {
