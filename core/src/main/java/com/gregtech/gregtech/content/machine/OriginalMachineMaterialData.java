@@ -12,7 +12,7 @@ public final class OriginalMachineMaterialData {
     private OriginalMachineMaterialData() {}
     private static final Map<String, ItemComposition> DATA = new HashMap<>();
     private static final Map<String, ItemComposition> BLOCK_DATA = new HashMap<>();
-    static { init0(); init1(); init2(); init3(); blocks0(); blocks1(); blocks2(); blocks3(); }
+    static { init0(); init1(); init2(); init3(); initLargeRecipe(); blocks0(); blocks1(); blocks2(); blocks3(); }
     public static Optional<ItemComposition> find(String machine, int tier) {
         return Optional.ofNullable(DATA.get(machine + "/" + tier));
     }
@@ -286,6 +286,20 @@ public final class OriginalMachineMaterialData {
         add("fusionreactor", 1, 17198, part(ImportedMaterialData.Os, 83026944000L), part(ImportedMaterialData.Ti, 20756736000L), part(ImportedMaterialData.NetherStar, 5189184000L), part(ImportedMaterialData.TungstenSteel, 2594592000L));
         add("distillationtower", 1, 17101, part(ImportedMaterialData.StainlessSteel, 48936888000L));
         add("cryodistillationtower", 1, 17111, part(ImportedMaterialData.Cu, 46702656000L), part(ImportedMaterialData.StainlessSteel, 2234232000L));
+    }
+    private static void initLargeRecipe() {
+        add("largecentrifuge", 1, 17100, part(ImportedMaterialData.TungstenSteel, 10666656000L), part(ImportedMaterialData.Pt, 1297296000L), part(ImportedMaterialData.Ruby, 1297296000L));
+        add("largeelectrolyzer", 1, 17103, part(ImportedMaterialData.Pt, 2594592000L), part(ImportedMaterialData.StainlessSteel, 5189184000L), part(ImportedMaterialData.Ruby, 1297296000L));
+        add("largecoagulator", 1, 17105, part(ImportedMaterialData.Pt, 648648000L), part(ImportedMaterialData.Ruby, 648648000L), part(ImportedMaterialData.StainlessSteel, 31783752000L));
+        add("largeautoclave", 1, 17112, part(ImportedMaterialData.Pt, 648648000L), part(ImportedMaterialData.Ruby, 648648000L), part(ImportedMaterialData.StainlessSteel, 52540488000L));
+        add("largebath", 1, 17104, part(ImportedMaterialData.Pt, 648648000L), part(ImportedMaterialData.Ruby, 648648000L), part(ImportedMaterialData.StainlessSteel, 20108088000L), part(ImportedMaterialData.Cu, 21405384000L), part(ImportedMaterialData.Rubber, 11675664000L), part(ImportedMaterialData.Al, 12612600000L), part(ImportedMaterialData.SteelMagnetic, 1945944000L));
+        add("largemixer", 1, 17102, part(ImportedMaterialData.StainlessSteel, 27243216000L), part(ImportedMaterialData.Pt, 648648000L), part(ImportedMaterialData.Ruby, 648648000L));
+        add("largefermenter", 1, 17113, part(ImportedMaterialData.StainlessSteel, 31783752000L), part(ImportedMaterialData.Pt, 648648000L), part(ImportedMaterialData.Ruby, 648648000L));
+        add("largeoven", 1, 17106, part(ImportedMaterialData.Invar, 31783752000L), part(ImportedMaterialData.Pt, 648648000L), part(ImportedMaterialData.Ruby, 648648000L));
+        add("largesluice", 1, 17107, part(ImportedMaterialData.Ti, 11027016000L), part(ImportedMaterialData.Pt, 648648000L), part(ImportedMaterialData.Ruby, 648648000L));
+        add("largecrusher", 1, 17108, part(ImportedMaterialData.TungstenSteel, 12324312000L), part(ImportedMaterialData.Pt, 648648000L), part(ImportedMaterialData.Ruby, 648648000L));
+        add("largeshredder", 1, 17109, part(ImportedMaterialData.TungstenSteel, 12324312000L), part(ImportedMaterialData.Pt, 648648000L), part(ImportedMaterialData.Ruby, 648648000L));
+        add("largesqueezer", 1, 17114, part(ImportedMaterialData.Steel, 14270256000L), part(ImportedMaterialData.Pt, 648648000L), part(ImportedMaterialData.Ruby, 648648000L));
     }
     private static void blocks0() {
         BLOCK_DATA.put("axle_wood_1", ReversibleCraftingData.perItem(List.of(part(com.gregtech.gregtech.data.generated.GT6Materials.Woods.WoodTreated, 648648000L)), 1, "GT6 Loader_MultiTileEntities 24800 known CR.REV inputs"));

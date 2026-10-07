@@ -17,8 +17,72 @@ import java.util.*;
 public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity implements MultiblockPortOwner {
     private final PartBindings<BlockPos,MultiblockLayout.Role> bindings=new PartBindings<>();
     public LargeRecipeMachineBlockEntity(BlockEntityType<?> type,BlockPos pos,BlockState state) { super(type,pos,state); }
-    // Original multiblock base suppresses the single-block six-neighbor request; each source layout opts in.
-    @Override protected void updateAdjacentToggleableEnergySources() {}
+    private boolean originalProcessingController() {return spec()!=null && com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.handles(spec().machineName());}
+    private BlockPos sourcePosition(int right,int up,int back) {
+        var front=getBlockState().getValue(HorizontalDirectionalBlock.FACING);
+        return worldPosition.relative(front.getClockWise(),right).above(up).relative(front.getOpposite(),back);
+    }
+    private Direction sourceFace(com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.Face face) {
+        var front=getBlockState().getValue(HorizontalDirectionalBlock.FACING);
+        return switch(face) {case UP->Direction.UP;case DOWN->Direction.DOWN;case LEFT->front.getCounterClockWise();case RIGHT->front.getClockWise();case FRONT->front;};
+    }
+    // The source multiblock parent suppresses ordinary six-neighbor requests; only explicit layouts opt in.
+    @Override protected void updateAdjacentToggleableEnergySources() {
+        if(level==null || level.isClientSide || !originalProcessingController() || isRemoved())return;
+        for(var source:com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.sources(spec().machineName())) {
+            var pos=sourcePosition(source.right(),source.up(),source.back());
+            if(level.hasChunkAt(pos))com.gregtech.gregtech.api.machine.AdjacentEnergyControl.update(level.getBlockEntity(pos),
+                    spec().energyTag(),sourceFace(source.outputFace()),machineControl(null).enabled());
+        }
+    }
+    @Override public void setSpec(com.gregtech.gregtech.api.machine.BasicMachineSpec spec) {
+        super.setSpec(spec);
+        if(originalProcessingController())for(var tank:getTanksOutput())tank.setCapacity(Long.MAX_VALUE);
+    }
+    @Override protected void autoInputItems(net.minecraft.world.level.Level level,BlockPos pos,int side) {
+        if(!originalProcessingController())super.autoInputItems(level,pos,side); // Source getItemInputTarget returns null.
+    }
+    @Override protected void autoInputFluids(net.minecraft.world.level.Level level,BlockPos pos,int side) {
+        if(!originalProcessingController())super.autoInputFluids(level,pos,side); // Source getFluidInputTarget returns null.
+    }
+    @Override protected void beforeMachineTick() {
+        super.beforeMachineTick();
+        if(!originalProcessingController() || faceConfig().fluidAutoOutput()<0)return;
+        var output=com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.output(spec().machineName(),false);
+        var targetPos=sourcePosition(output.right(),output.up(),output.back());var face=sourceFace(output.receiverFace());
+        if(!level.hasChunkAt(targetPos))return;
+        var target=level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,targetPos,face);
+        if(target==null)return;
+        for(var tank:getTanksOutput()) {
+            var offer=tank.getFluid();if(offer.isEmpty())continue;
+            int simulated=target.fill(offer.copy(),IFluidHandler.FluidAction.SIMULATE);
+            if(simulated<=0)continue;
+            offer.setAmount(Math.min(simulated,offer.getAmount()));
+            int accepted=target.fill(offer.copy(),IFluidHandler.FluidAction.EXECUTE);
+            if(accepted<0 || accepted>offer.getAmount())throw new IllegalStateException("Invalid original controller fluid receiver amount: "+accepted);
+            if(accepted>0)tank.remove(accepted);
+        }
+    }
+    @Override protected void autoOutputFluids(net.minecraft.world.level.Level level,BlockPos pos,int side) {
+        if(!originalProcessingController())super.autoOutputFluids(level,pos,side); // Already moved before work, including while stopped/unformed.
+    }
+    @Override protected void autoOutputItems(net.minecraft.world.level.Level level,BlockPos pos,int side) {
+        if(!originalProcessingController()) {super.autoOutputItems(level,pos,side);return;}
+        var output=com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.output(spec().machineName(),true);
+        var targetPos=sourcePosition(output.right(),output.up(),output.back());var face=sourceFace(output.receiverFace());
+        if(!level.hasChunkAt(targetPos))return;
+        var target=level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,targetPos,face);
+        if(target==null)return;
+        for(int slot=inputSlots();slot<inventory().getSlots();slot++) {
+            var offer=inventory().getStackInSlot(slot);if(offer.isEmpty())continue;
+            var result=com.gregtech.gregtech.content.transport.ItemPipeTransferAdapter.transfer(offer.copy(),()->target);
+            if(result.accepted()>0)inventory().extractItem(slot,result.accepted(),false);
+        }
+    }
+    @Override public void loadAdditional(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
+        super.loadAdditional(tag,lookup);
+        if(originalProcessingController())for(var tank:getTanksOutput())tank.setCapacity(Long.MAX_VALUE);
+    }
     @Override protected boolean usesTimeEnergy() { return spec()!=null&&spec().energyTag()==GregTechTags.Energy.TU; }
     @Override protected long inputMinimum() { return com.gregtech.gregtech.content.multiblock.LargeMachineProcessingRules.inputMinimum(usesTimeEnergy(),spec().energyTag()==GregTechTags.Energy.HU); }
     @Override protected long inputMaximum() { return com.gregtech.gregtech.content.multiblock.LargeMachineProcessingRules.inputMaximum(usesTimeEnergy()); }

@@ -271,7 +271,19 @@ public final class BasicMachineOriginalParams {
             new Params("implosioncompressor", 1, "Implosion Compressor", "TU", 1L, 1L, 16L, 64, false, 12.5F, 12.5F),
             new Params("fusionreactor", 1, "Fusion Reactor", "TU", 8192L, 1L, 16384L, 1, false, 12.5F, 12.5F),
             new Params("distillationtower", 1, "Distillation Tower", "HU", 512L, 1L, 1024L, 1, false, 6.0F, 6.0F),
-            new Params("cryodistillationtower", 1, "Cryo Distillation Tower", "CU", 512L, 1L, 1024L, 1, false, 6.0F, 6.0F)
+            new Params("cryodistillationtower", 1, "Cryo Distillation Tower", "CU", 512L, 1L, 1024L, 1, false, 6.0F, 6.0F),
+            new Params("largecentrifuge", 1, "Large Centrifuge", "RU", 512L, 512L, 4096L, 16, true, 12.5F, 12.5F),
+            new Params("largeelectrolyzer", 1, "Large Electrolyzer", "EU", 512L, 512L, 4096L, 16, true, 6.0F, 6.0F),
+            new Params("largecoagulator", 1, "Large Coagulator Array", "TU", 1L, 1L, 16L, 64, false, 6.0F, 6.0F),
+            new Params("largeautoclave", 1, "Large Autoclave", "TU", 1L, 1L, 16L, 16, false, 6.0F, 6.0F),
+            new Params("largebath", 1, "Large Bathing Vat", "TU", 1L, 1L, 16L, 64, false, 6.0F, 6.0F),
+            new Params("largemixer", 1, "Large Batch Mixer", "RU", 512L, 512L, 4096L, 256, true, 6.0F, 6.0F),
+            new Params("largefermenter", 1, "Large Fermenter", "HU", 512L, 1L, 4096L, 256, true, 6.0F, 6.0F),
+            new Params("largeoven", 1, "Large Electric Oven", "EU", 512L, 512L, 4096L, 64, true, 6.0F, 6.0F),
+            new Params("largesluice", 1, "Large Sluice", "RU", 512L, 512L, 4096L, 64, true, 9.0F, 9.0F),
+            new Params("largecrusher", 1, "Large Crusher", "RU", 512L, 512L, 4096L, 64, true, 12.5F, 12.5F),
+            new Params("largeshredder", 1, "Large Shredder", "RU", 512L, 512L, 4096L, 64, true, 12.5F, 12.5F),
+            new Params("largesqueezer", 1, "Large Squeezer", "RU", 512L, 512L, 4096L, 64, true, 6.0F, 6.0F)
     );
 
     /** Original GT6 parameters for one port machine type and tier, or {@code null} if GT6 has none. */

@@ -788,7 +788,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         }
     }
 
-    private void autoInputItems(Level level, BlockPos pos, int relDir) {
+    protected void autoInputItems(Level level, BlockPos pos, int relDir) {
         Direction absolute = relativeToAbsolute(relDir);
         if(isFaceShuttered(absolute))return;
         BlockPos adj = pos.relative(absolute);
@@ -850,7 +850,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         }
     }
 
-    private void autoInputFluids(Level level, BlockPos pos, int relDir) {
+    protected void autoInputFluids(Level level, BlockPos pos, int relDir) {
         Direction absolute = relativeToAbsolute(relDir);
         if(isFaceShuttered(absolute))return;
         BlockPos adj = pos.relative(absolute);

@@ -36,6 +36,7 @@ public final class MachineSpecBehaviorContracts {
         originalProcessControllerParameters();
         originalCryoDistillationParametersAndOutlets();
         originalAdjacentEnergySources();
+        assertions += LargeRecipeControllerContracts.verify();
         originalMachineMaterials();
         originalBlastTooltips();
         originalHarvestProperties();
@@ -286,7 +287,7 @@ public final class MachineSpecBehaviorContracts {
     private static void originalHarvestProperties() {
         var properties = com.gregtech.gregtech.data.SourceBlockProperties.blocks();
         check(properties.size() == 1507, "667 fixed source identities plus120 hoppers and720 audited storage variants");
-        check(com.gregtech.gregtech.data.SourceBlockProperties.basics().size() == 252, "All252 adopted original machine metadata keys");
+        check(com.gregtech.gregtech.data.SourceBlockProperties.basics().size() == 264, "All264 adopted original machine metadata keys");
         var wood = properties.get("gearbox_wood");
         check(wood.sourceId() == 24809 && wood.tool().equals("axe") && wood.handHarvestable(), "Wood gearbox original aWooden exemption");
         var metal = properties.get("gearbox_iridium");

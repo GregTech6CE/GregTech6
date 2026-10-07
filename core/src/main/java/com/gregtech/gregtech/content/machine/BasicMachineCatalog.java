@@ -302,6 +302,8 @@ public final class BasicMachineCatalog {
      *  Auto I/O pulls from / pushes to the adjacent block on the specified relative face
      *  every server tick when enabled. */
     private static MachineFaceMasks defaultMachineFaceMasks(String machineName) {
+        if(com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.handles(machineName))
+            return com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.faces(machineName);
         // ── HU heat machines ──────────────────────────────────────────
         return switch (machineName) {
             case "oven" -> MachineFaceMasks.builder()

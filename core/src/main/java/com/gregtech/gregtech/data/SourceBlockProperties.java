@@ -14,7 +14,7 @@ public final class SourceBlockProperties {
         public int level() { return Math.max(0, Math.min(15, explicitLevel < 0 ? material.getToolQuality() : explicitLevel)); }
     }
     private static final Map<String, Params> BLOCKS = new LinkedHashMap<>(), BASICS = new LinkedHashMap<>();
-    static { blocks0(); blocks1(); blocks2(); blocks3(); basics0(); basics1(); basics2(); basics3();
+    static { blocks0(); blocks1(); blocks2(); blocks3(); basics0(); basics1(); basics2(); basics3(); basicsLargeRecipe();
         BLOCKS.putAll(com.gregtech.gregtech.content.machine.OriginalStorageMaterialData.harvest());
         // Original metalset lines145..146 pass explicit metadata0, even for high-tier metals.
         for (var entry : HopperCatalog.ALL) {
@@ -27,6 +27,20 @@ public final class SourceBlockProperties {
     public static Optional<Params> basic(String machine, int tier) { return Optional.ofNullable(BASICS.get(machine+"/"+tier)); }
     public static Map<String, Params> blocks() { return Collections.unmodifiableMap(BLOCKS); }
     public static Map<String, Params> basics() { return Collections.unmodifiableMap(BASICS); }
+    private static void basicsLargeRecipe() {
+        BASICS.put("largecentrifuge/1", new Params(17100,"wrench",ImportedMaterialData.TungstenSteel,-1,false));
+        BASICS.put("largeelectrolyzer/1", new Params(17103,"wrench",ImportedMaterialData.StainlessSteel,-1,false));
+        BASICS.put("largecoagulator/1", new Params(17105,"wrench",ImportedMaterialData.StainlessSteel,-1,false));
+        BASICS.put("largeautoclave/1", new Params(17112,"wrench",ImportedMaterialData.StainlessSteel,-1,false));
+        BASICS.put("largebath/1", new Params(17104,"wrench",ImportedMaterialData.StainlessSteel,-1,false));
+        BASICS.put("largemixer/1", new Params(17102,"wrench",ImportedMaterialData.StainlessSteel,-1,false));
+        BASICS.put("largefermenter/1", new Params(17113,"wrench",ImportedMaterialData.StainlessSteel,-1,false));
+        BASICS.put("largeoven/1", new Params(17106,"wrench",ImportedMaterialData.Invar,-1,false));
+        BASICS.put("largesluice/1", new Params(17107,"wrench",ImportedMaterialData.Ti,-1,false));
+        BASICS.put("largecrusher/1", new Params(17108,"wrench",ImportedMaterialData.TungstenSteel,-1,false));
+        BASICS.put("largeshredder/1", new Params(17109,"wrench",ImportedMaterialData.TungstenSteel,-1,false));
+        BASICS.put("largesqueezer/1", new Params(17114,"wrench",ImportedMaterialData.Steel,-1,false));
+    }
     private static void blocks0() {
         BLOCKS.put("axle_wood_1", new Params(24800,"axe",com.gregtech.gregtech.data.generated.GT6Materials.Woods.WoodTreated,-1,true));
         BLOCKS.put("axle_wood_2", new Params(24801,"axe",com.gregtech.gregtech.data.generated.GT6Materials.Woods.WoodTreated,-1,true));
