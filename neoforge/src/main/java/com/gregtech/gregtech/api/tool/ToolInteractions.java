@@ -68,8 +68,7 @@ public final class ToolInteractions {
             if (state.getValue(spec.facing()) == side) {
                 if(state.getBlock() instanceof ToolInteractionTarget target)target.toolStateChanged(level,pos,state,spec);
                 // GT6 facing clicks return 10000 even when selecting the current valid side.
-                if (player.getItemInHand(hand).getItem() instanceof com.gregtech.gregtech.item.ElectricToolItem)
-                    GTToolHelper.damageForToolClickReturn(player.getItemInHand(hand), 10000, player);
+                GTToolHelper.damageForToolClickReturn(player.getItemInHand(hand), 10000, player);
                 return true;
             }
             next = state.setValue(spec.facing(), side);
@@ -92,7 +91,8 @@ public final class ToolInteractions {
         if (state.getBlock() instanceof ToolInteractionTarget target) target.toolStateChanged(level, pos, next,spec);
         level.playSound(null, pos, com.gregtech.gregtech.content.transport.fluid.FluidTransportRegistries.WRENCH.get(),
                 net.minecraft.sounds.SoundSource.BLOCKS, 1.0F, 1.0F);
-        GTToolHelper.damageForUse(player.getItemInHand(hand), 1, player);
+        if (spec.connection() == null) GTToolHelper.damageForToolClickReturn(player.getItemInHand(hand), 10000, player);
+        else GTToolHelper.damageForUse(player.getItemInHand(hand), 1, player);
         return true;
     }
 

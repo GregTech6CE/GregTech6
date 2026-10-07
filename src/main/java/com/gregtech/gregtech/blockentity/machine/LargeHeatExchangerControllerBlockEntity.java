@@ -25,7 +25,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import java.util.*;
 
 /** Original two-layer heat exchanger, hot-fluid recipes and eight upward heat outlets. */
-public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity implements MultiblockPortOwner,IFluidHandler,com.gregtech.gregtech.api.machine.MachineControl.Provider {
+public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity implements MultiblockPortOwner,IFluidHandler,com.gregtech.gregtech.api.fluid.FluidToolTarget,com.gregtech.gregtech.api.machine.MachineControl.Provider {
     public static final int RATE=com.gregtech.gregtech.content.multiblock.OriginalGeneratorParameters.HEAT_EXCHANGER_RATE;
     private long heat,activityHistory;
     private boolean active;
@@ -35,6 +35,24 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
     private final FluidTankGT hot=new FluidTankGT(settings.inputCapacity()).setOnChanged(this::setChanged);
     private final FluidTankGT cold=new FluidTankGT().setOnChanged(this::setChanged);
     private final IFluidHandler input=new FluidPort(this,true,false);
+    private FluidTankGT tappedTank(){return HeatExchangerRules.tapTank(cold.getAmount())==1?cold:hot;}
+    private final IFluidHandler tap=new IFluidHandler(){
+        public int getTanks(){return 1;}
+        public FluidStack getFluidInTank(int tank){return tank==0?tappedTank().getFluid().copy():FluidStack.EMPTY;}
+        public int getTankCapacity(int tank){return tank==0?tappedTank().getCapacity():0;}
+        public boolean isFluidValid(int tank,FluidStack fluid){return false;}
+        public int fill(FluidStack fluid,FluidAction action){return 0;}
+        public FluidStack drain(FluidStack fluid,FluidAction action){return tappedTank().drain(fluid,action);}
+        public FluidStack drain(int amount,FluidAction action){return tappedTank().drain(amount,action);}
+    };
+    @Override public IFluidHandler fluidToolHandler(Direction side,boolean filling){return isRemoved()?null:filling?input:tap;}
+    @Override public void onLoad(){
+        super.onLoad();
+        // Older port saves had horizontal fronts. Original GT6 accepts only SIDE_BOTTOM.
+        var facing=com.gregtech.gregtech.block.machine.LargeHeatExchangerControllerBlock.FACING;
+        if(level!=null&&!level.isClientSide&&getBlockState().getValue(facing)!=Direction.DOWN)
+            level.setBlock(worldPosition,getBlockState().setValue(facing,Direction.DOWN),3);
+    }
     public HeatExchangerRules.Settings settings(){return settings;}
     public long tankAmount(int index){return index==0?hot.getAmount():index==1?cold.getAmount():0;}
     public long tankCapacity(int index){return index==0?hot.capacity():index==1?cold.capacity():0;}

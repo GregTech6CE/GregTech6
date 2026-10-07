@@ -7,6 +7,9 @@ final class HeatExchangerContracts {
     private static int assertions;
     static int verify() {
         assertions=0;
+        check(HeatExchangerRules.tapTank(0)==0,"Empty output permits draining unused hot fuel");
+        check(HeatExchangerRules.tapTank(1)==1,"Even one unit of output prevents selecting the input");
+        check(HeatExchangerRules.tapTank(Long.MAX_VALUE)==1,"Long output retains tap priority");
         for(int efficiency:new int[]{0,1,3333,5000,10000})for(int fuel:new int[]{0,1,2,19,100})
             for(int initial:new int[]{0,1,31,63,64}) {
                 long remaining=fuel,output=7,energy=initial,batches=0;

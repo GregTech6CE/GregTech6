@@ -48,6 +48,7 @@ final class UtilityControllerDeliveryChecks {
                 require(block.defaultBlockState().getDestroySpeed(null,net.minecraft.core.BlockPos.ZERO)==6 && block.getExplosionResistance()==6,
                         "Source galvanized steel controller hardness/resistance " + id);
             } else if (heat) {
+                verifyHeatFaces(block);
                 require(count(lines, "gt.recipe.fuels.hot") == 1 && net.minecraft.client.resources.language.I18n.exists("gt.recipe.fuels.hot")
                         && lines.stream().anyMatch(c -> c.getString().contains("100.00%")), "Source Hot Fuels and full efficiency " + id);
                 require(count(lines, "gt.td.short.energy.heat") == 1 && output.getString().contains("16384 HU/t")
@@ -82,8 +83,26 @@ final class UtilityControllerDeliveryChecks {
         var result = new JsonObject();
         result.addProperty("items", items);
         result.addProperty("sourceStructureRows", rows);
+        result.addProperty("fixedBottomHeatModels", 6);
         result.addProperty("scope", "Installed native tooltip calls/events and registration only; not fuel/strike generation, player hover or restart");
         return result;
+    }
+    private static void verifyHeatFaces(net.minecraft.world.level.block.Block block) {
+        var facing=com.gregtech.gregtech.block.machine.LargeHeatExchangerControllerBlock.FACING;
+        require(block.defaultBlockState().getValue(facing)==net.minecraft.core.Direction.DOWN,"Original heat front is fixed at bottom");
+        for(var direction:net.minecraft.core.Direction.values()) {
+            var state=block.defaultBlockState().setValue(facing,direction);
+            var model=net.minecraft.client.Minecraft.getInstance().getBlockRenderer().getBlockModel(state);
+            for(var face:net.minecraft.core.Direction.values()) {
+                var suffix=face==net.minecraft.core.Direction.DOWN?"_front/bottom":face==net.minecraft.core.Direction.UP?"/top":"/side";
+                var prefix="gregtech:block/machines/multiblockmains/largeheatexchanger/";
+                var quads=model.getQuads(state,face,net.minecraft.util.RandomSource.create(0),
+                        net.neoforged.neoforge.client.model.data.ModelData.EMPTY,net.minecraft.client.renderer.RenderType.cutout());
+                require(quads.stream().anyMatch(q->q.getTintIndex()==0&&q.getSprite().contents().name().toString().equals(prefix+"colored"+suffix))
+                        &&quads.stream().anyMatch(q->!q.isTinted()&&q.getSprite().contents().name().toString().equals(prefix+"overlay"+suffix)),
+                        "Heat base and uncolored overlay use original world face, including old horizontal states "+direction+"/"+face);
+            }
+        }
     }
     private static Component line(List<Component> lines, String key) {
         return lines.stream().filter(c -> CommonBlockTooltips.containsKey(List.of(c), key)).findFirst().orElseThrow();

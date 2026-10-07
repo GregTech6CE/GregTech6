@@ -55,6 +55,14 @@ public class FluidAttachmentBlock extends net.minecraft.world.level.block.Block 
         if(entry!=null){gas|=entry.gas();if(entry.materialKey()!=null)acid=GTMaterialRegistry.get(entry.materialKey()).resolve().has(MaterialProperty.ACID);}
         return gas==(spec.shape().equals("cap_nozzle")||spec.shape().equals("nozzle"))&&(!acid||spec.acidProof());
     }
+    /** Native attachment entry point: explicit source tool access precedes ordinary capabilities. */
+    public IFluidHandler attachedHandler(Level level,BlockPos targetPos,Direction side){
+        if(!level.hasChunkAt(targetPos))return null;
+        var target=level.getBlockEntity(targetPos);if(target==null||target.isRemoved())return null;
+        if(target instanceof com.gregtech.gregtech.api.fluid.FluidToolTarget tools)
+            return tools.fluidToolHandler(side,spec.shape().equals("fluid_funnel")||spec.shape().equals("cap_nozzle"));
+        return level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,targetPos,side);
+    }
     public IFluidHandler access(IFluidHandler tank){
         boolean funnel=spec.shape().equals("fluid_funnel")||spec.shape().equals("cap_nozzle");
         return new IFluidHandler(){
@@ -80,7 +88,7 @@ public class FluidAttachmentBlock extends net.minecraft.world.level.block.Block 
         var facing=state.getValue(FACING);var targetPos=pos.relative(facing);
         if(!level.hasChunkAt(targetPos))return InteractionResult.PASS;
         var target=level.getBlockEntity(targetPos);if(target==null)return InteractionResult.PASS;
-        var handler=level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,targetPos,facing.getOpposite());if(handler==null)return InteractionResult.PASS;
+        var handler=attachedHandler(level,targetPos,facing.getOpposite());if(handler==null)return InteractionResult.PASS;
         if(level.isClientSide)return InteractionResult.SUCCESS;
         if(player.getItemInHand(hand).isEmpty()&&spec.shape().equals("tap"))
             return pourBelow(level,pos,access(handler))?InteractionResult.CONSUME:InteractionResult.PASS;

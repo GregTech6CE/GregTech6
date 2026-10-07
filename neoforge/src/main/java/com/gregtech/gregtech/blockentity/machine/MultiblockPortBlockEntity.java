@@ -15,7 +15,8 @@ import java.util.*;
 public final class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
         com.gregtech.gregtech.content.logistics.LogisticsCoverHost,
         com.gregtech.gregtech.api.machine.ITileEntityCrucible,
-        com.gregtech.gregtech.api.multiblock.BoundMachinePort {
+        com.gregtech.gregtech.api.multiblock.BoundMachinePort,
+        com.gregtech.gregtech.api.fluid.FluidToolTarget {
     private final com.gregtech.gregtech.content.logistics.LogisticsCovers covers =
             new com.gregtech.gregtech.content.logistics.LogisticsCovers(this, this);
     private BlockPos controller;
@@ -33,6 +34,17 @@ public final class MultiblockPortBlockEntity extends GTEnergyBlockEntity impleme
         var target = owner();
         return target instanceof net.minecraft.world.level.block.entity.BlockEntity entity && !entity.isRemoved()
                 ? entity : this;
+    }
+    /** Original part funnel/tap access checks the formed controller, not transport role bits. */
+    @Override public IFluidHandler fluidToolHandler(Direction side,boolean filling) {
+        return com.gregtech.gregtech.api.fluid.FluidToolTarget.relay(()->{
+            var host=owner();
+            if(host==null||!host.isStructureOk())return null;
+            if(host instanceof com.gregtech.gregtech.api.fluid.FluidToolTarget tools)
+                return tools.fluidToolHandler(side,filling);
+            // Preserve existing access for controllers whose original tool path is not ported yet.
+            return level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,worldPosition,side);
+        });
     }
     public boolean isBoundTo(BlockPos owner) {return owner.equals(controller);}
     public boolean canBind(BlockPos owner) { return controller==null || controller.equals(owner) || owner()==null; }

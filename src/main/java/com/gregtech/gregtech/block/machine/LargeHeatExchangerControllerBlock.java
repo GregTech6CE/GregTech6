@@ -7,7 +7,7 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -16,14 +16,21 @@ import net.minecraft.world.level.block.state.StateDefinition;
 
 import javax.annotation.Nullable;
 
-public class LargeHeatExchangerControllerBlock extends HorizontalDirectionalBlock implements EntityBlock {
+public class LargeHeatExchangerControllerBlock extends DirectionalBlock implements EntityBlock, com.gregtech.gregtech.api.tool.ToolInteractionTarget {
     public LargeHeatExchangerControllerBlock(Properties properties) {
         super(properties);
-        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
+        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.DOWN));
     }
 
     @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> b) { b.add(FACING); }
-    @Override public BlockState getStateForPlacement(BlockPlaceContext ctx) { return defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite()); }
+    @Override public BlockState getStateForPlacement(BlockPlaceContext ctx) { return defaultBlockState(); }
+
+    @Override public com.gregtech.gregtech.api.tool.ToolInteractionSpec toolInteraction(BlockState state,net.minecraft.world.item.ItemStack tool) {
+        return com.gregtech.gregtech.api.tool.GTToolHelper.isMachineWrench(tool)
+                ? com.gregtech.gregtech.api.tool.ToolInteractionSpec.facing(FACING,MachineRotationType.BOTTOM) : null;
+    }
+    @Override public BlockState rotate(BlockState state,net.minecraft.world.level.block.Rotation rotation) { return state.setValue(FACING,Direction.DOWN); }
+    @Override public BlockState mirror(BlockState state,net.minecraft.world.level.block.Mirror mirror) { return state.setValue(FACING,Direction.DOWN); }
 
     @Nullable @Override public BlockEntity newBlockEntity(BlockPos pos, BlockState state) { return new LargeHeatExchangerControllerBlockEntity(pos, state); }
 
@@ -34,6 +41,8 @@ public class LargeHeatExchangerControllerBlock extends HorizontalDirectionalBloc
     }
 
     @Override public net.minecraft.world.InteractionResult use(BlockState state,Level level,BlockPos pos,net.minecraft.world.entity.player.Player player,net.minecraft.world.InteractionHand hand,net.minecraft.world.phys.BlockHitResult hit) {
+        if(com.gregtech.gregtech.api.tool.ToolInteractions.use(state,level,pos,player,hand,hit))
+            return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
         if(level.getBlockEntity(pos) instanceof LargeHeatExchangerControllerBlockEntity machine) {
             if(level.isClientSide)return net.minecraft.world.InteractionResult.SUCCESS;
             if(net.minecraftforge.fluids.FluidUtil.interactWithFluidHandler(player,hand,machine))return net.minecraft.world.InteractionResult.CONSUME;

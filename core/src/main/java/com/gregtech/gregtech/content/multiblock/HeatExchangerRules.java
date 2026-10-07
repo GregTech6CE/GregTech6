@@ -22,6 +22,8 @@ public final class HeatExchangerRules {
         return value>Long.MAX_VALUE/factor?Long.MAX_VALUE:Math.max(0,value)*factor;
     }
     public static long perOutlet(long rate,long energy) { return Math.min(Math.max(0,rate)/8,Math.max(0,energy)/8); }
+    /** Original tapDrain always chooses output while any remains, otherwise the hot input. */
+    public static int tapTank(long coldAmount) { return coldAmount>0?1:0; }
     public record Charge(long inputUsed,long outputMade,long energyAdded,long batches) {}
     /** Equivalent to the source repeated single-charge loop, including zero-efficiency fuel consumption. */
     public static Charge charge(long input,long inputPerBatch,long output,long outputPerBatch,
