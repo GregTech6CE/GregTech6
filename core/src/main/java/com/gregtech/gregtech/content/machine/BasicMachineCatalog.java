@@ -302,6 +302,7 @@ public final class BasicMachineCatalog {
      *  Auto I/O pulls from / pushes to the adjacent block on the specified relative face
      *  every server tick when enabled. */
     private static MachineFaceMasks defaultMachineFaceMasks(String machineName,int tier) {
+        if(com.gregtech.gregtech.content.multiblock.OriginalAdvancedControllerData.handles(machineName))return com.gregtech.gregtech.content.multiblock.OriginalAdvancedControllerData.faces(machineName);
         if(OriginalBasicMachineRules.handles(machineName,tier))return OriginalBasicMachineFaces.defaults(machineName);
         if(com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.handles(machineName))
             return com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.faces(machineName);

@@ -38,6 +38,7 @@ public final class MachineSpecBehaviorContracts {
         originalAdjacentEnergySources();
         assertions += LargeRecipeControllerContracts.verify();
         assertions += BasicMachineSourceContracts.verify();
+        originalAdvancedControllerParameters();
         originalMachineMaterials();
         originalBlastTooltips();
         originalHarvestProperties();
@@ -288,7 +289,7 @@ public final class MachineSpecBehaviorContracts {
     private static void originalHarvestProperties() {
         var properties = com.gregtech.gregtech.data.SourceBlockProperties.blocks();
         check(properties.size() == 1507, "667 fixed source identities plus120 hoppers and720 audited storage variants");
-        check(com.gregtech.gregtech.data.SourceBlockProperties.basics().size() == 264, "All264 adopted original machine metadata keys");
+        check(com.gregtech.gregtech.data.SourceBlockProperties.basics().size() == 265, "All265 adopted original machine metadata keys");
         var wood = properties.get("gearbox_wood");
         check(wood.sourceId() == 24809 && wood.tool().equals("axe") && wood.handHarvestable(), "Wood gearbox original aWooden exemption");
         var metal = properties.get("gearbox_iridium");
@@ -959,5 +960,29 @@ public final class MachineSpecBehaviorContracts {
     private static void check(boolean value, String message) {
         assertions++;
         if (!value) throw new AssertionError(message);
+    }
+
+    private static void originalAdvancedControllerParameters() {
+        var data=com.gregtech.gregtech.content.multiblock.OriginalAdvancedControllerData.parameters("fusionreactor","fusion_reactor_main");
+        check(data.energyType().equals("TU")&&data.energyIn()==8192&&data.energyInMin()==1&&data.energyInMax()==16384&&data.parallelLimit()==1,"Original17198 accepted TU / charged LU input8192, range1..16384");
+        check(data.hardness()==12.5f&&data.blastResistance()==12.5f&&data.faceConfig().itemInputs()==63&&data.faceConfig().fluidOutputs()==63&&data.faceConfig().itemAutoOutput()==-1,"Original17198 strength/ANY/manual outputs");
+        var implosion=com.gregtech.gregtech.content.multiblock.OriginalMultiblockMachineParameters.implosionCompressor();
+        check(implosion.energyType().equals("TU")&&implosion.energyIn()==1&&implosion.energyInMax()==16&&implosion.parallelLimit()==64&&implosion.hardness()==12.5f,"Original17110 TU/64parallel/12.5 strength");
+        check(implosion.faceConfig().itemInputs()==63&&implosion.faceConfig().fluidInputs()==63&&implosion.faceConfig().itemAutoInput()==-1&&implosion.faceConfig().itemAutoOutput()==0&&implosion.faceConfig().fluidAutoOutput()==0,"Original17110 ANY and bottom item/fluid auto output");
+        var matter=com.gregtech.gregtech.content.machine.BasicMachineCatalog.specifications().stream().filter(s->s.machineName().equals("largemassfab")).findFirst().orElseThrow();
+        check(matter.energyType().equals("QU")&&matter.energyIn()==1&&matter.energyInMin()==1&&matter.energyInMax()==2097152&&matter.parallelLimit()==64&&matter.hardness()==6&&matter.blastResistance()==6,"Original17199 QU/64parallel/range1..2097152/6 strength");
+        check(matter.faceConfig().itemInputs()==63&&matter.faceConfig().itemOutputs()==63&&matter.faceConfig().fluidInputs()==63&&matter.faceConfig().fluidOutputs()==63&&matter.faceConfig().itemAutoInput()==-1&&matter.faceConfig().fluidAutoInput()==-1&&matter.faceConfig().itemAutoOutput()==0&&matter.faceConfig().fluidAutoOutput()==0,"Original17199 ANY and bottom auto outputs without fabricated input automation");
+        var rules=com.gregtech.gregtech.content.multiblock.OriginalAdvancedControllerData.class;
+        check(com.gregtech.gregtech.content.multiblock.OriginalAdvancedControllerData.cheapOverclocking("largemassfab")&&!com.gregtech.gregtech.content.multiblock.OriginalAdvancedControllerData.cheapOverclocking("fusionreactor")&&!com.gregtech.gregtech.content.multiblock.OriginalAdvancedControllerData.cheapOverclocking("implosioncompressor"),"Original three-controller cheap flags");
+        check(com.gregtech.gregtech.content.multiblock.OriginalAdvancedControllerData.chargedEnergy("fusionreactor").equals("LU")&&com.gregtech.gregtech.content.multiblock.OriginalAdvancedControllerData.chargedEnergy("largemassfab").equals("TU"),"Original only fusion has charged LU row");
+        int rows=0;
+        for(var name:java.util.List.of("implosioncompressor","fusionreactor","largemassfab"))rows+=com.gregtech.gregtech.content.multiblock.OriginalAdvancedControllerData.structureKeys(name).size();
+        check(rows==17,"Original three specialized structures2+7+8");
+        var original=com.gregtech.gregtech.data.BasicMachineOriginalParams.find("largemassfab",1);
+        check(original.originalName().equals("Large Matter Fabricator")&&original.parallelDuration(),"Original17199 omitted registration now present with parallel-duration flag");
+        long u=com.gregtech.gregtech.api.material.GTValues.U;
+        composition(com.gregtech.gregtech.content.machine.OriginalMachineMaterialData.find("largemassfab",1).orElseThrow(),java.util.Map.of("Osmium",128*u,"Titanium",32*u,"NetherStar",8*u,"Lead",36*u));
+        var harvest=com.gregtech.gregtech.data.SourceBlockProperties.basics().get("largemassfab/1");
+        check(harvest.sourceId()==17199&&harvest.tool().equals("wrench")&&!harvest.handHarvestable()&&harvest.material().resolve()==com.gregtech.gregtech.api.material.GTMaterialRegistry.get("Pb"),"Original17199 source harvest identity and lead hull");
     }
 }

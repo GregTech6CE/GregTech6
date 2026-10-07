@@ -300,6 +300,7 @@ public final class OriginalMachineMaterialData {
         add("largecrusher", 1, 17108, part(ImportedMaterialData.TungstenSteel, 12324312000L), part(ImportedMaterialData.Pt, 648648000L), part(ImportedMaterialData.Ruby, 648648000L));
         add("largeshredder", 1, 17109, part(ImportedMaterialData.TungstenSteel, 12324312000L), part(ImportedMaterialData.Pt, 648648000L), part(ImportedMaterialData.Ruby, 648648000L));
         add("largesqueezer", 1, 17114, part(ImportedMaterialData.Steel, 14270256000L), part(ImportedMaterialData.Pt, 648648000L), part(ImportedMaterialData.Ruby, 648648000L));
+        add("largemassfab", 1, 17199, part(ImportedMaterialData.Os, 83026944000L), part(ImportedMaterialData.Ti, 20756736000L), part(ImportedMaterialData.NetherStar, 5189184000L), part(ImportedMaterialData.Pb, 23351328000L));
     }
     private static void blocks0() {
         BLOCK_DATA.put("axle_wood_1", ReversibleCraftingData.perItem(List.of(part(com.gregtech.gregtech.data.generated.GT6Materials.Woods.WoodTreated, 648648000L)), 1, "GT6 Loader_MultiTileEntities 24800 known CR.REV inputs"));

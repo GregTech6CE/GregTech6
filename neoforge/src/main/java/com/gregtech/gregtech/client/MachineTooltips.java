@@ -24,6 +24,9 @@ public final class MachineTooltips {
     // ── Basic machine tooltip ────────────────────────────────────────────
 
     public static void appendBasicMachine(BasicMachineSpec spec, List<Component> tooltip) {
+        if(com.gregtech.gregtech.content.multiblock.OriginalAdvancedControllerData.handles(spec.machineName())) {
+            AdvancedControllerTooltips.append(spec,tooltip);return;
+        }
         if(com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.handles(spec.machineName())) {
             if(!CommonBlockTooltips.containsKey(tooltip,"gt.lang.recipes")) LargeRecipeMachineTooltips.append(spec,tooltip);
             return;

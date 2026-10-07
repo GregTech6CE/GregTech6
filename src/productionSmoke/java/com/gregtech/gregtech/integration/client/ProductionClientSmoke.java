@@ -89,6 +89,7 @@ public final class ProductionClientSmoke {
             surfaceChecks.add("processControllerTooltipsAndMaterials",ProcessControllerDeliveryChecks.verify());
             surfaceChecks.add("largeRecipeControllerTooltipsAndMaterials",LargeRecipeControllerDeliveryChecks.verify());
             surfaceChecks.add("sourceBasicMachineTooltips",BasicMachineSourceDeliveryChecks.verify());
+            surfaceChecks.add("advancedControllerTooltipsAndMaterials",AdvancedControllerDeliveryChecks.verify());
         }
         catch(Throwable error){terminal.set(true);LogUtils.getLogger().error("PRODUCTION_SMOKE_FAILED",error);client.execute(client::stop);return;}
         String name = "production-forge-" + UUID.randomUUID() + ".png";

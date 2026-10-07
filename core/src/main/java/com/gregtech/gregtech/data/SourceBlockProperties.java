@@ -717,6 +717,7 @@ public final class SourceBlockProperties {
         BLOCKS.put("energy_storage_xv", new Params(10099,"wrench",ImportedMaterialData.Trinaquadalloy,-1,false));
     }
     private static void basics0() {
+        BASICS.put("largemassfab/1", new Params(17199,"wrench",ImportedMaterialData.Pb,-1,false));
         BASICS.put("oven/1", new Params(20001,"wrench",ImportedMaterialData.Steel,-1,false));
         BASICS.put("oven/2", new Params(20002,"wrench",ImportedMaterialData.Invar,-1,false));
         BASICS.put("oven/3", new Params(20003,"wrench",ImportedMaterialData.Ti,-1,false));

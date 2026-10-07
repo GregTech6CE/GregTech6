@@ -17,7 +17,8 @@ import java.util.*;
 public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity implements MultiblockPortOwner {
     private final PartBindings<BlockPos,MultiblockLayout.Role> bindings=new PartBindings<>();
     public LargeRecipeMachineBlockEntity(BlockEntityType<?> type,BlockPos pos,BlockState state) { super(type,pos,state); }
-    private boolean originalProcessingController() {return spec()!=null && com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.handles(spec().machineName());}
+    private boolean originalProcessingController() {return spec()!=null && (com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.handles(spec().machineName())||spec().machineName().equals("largemassfab"));}
+    private boolean sourceUnlimitedOutputs() {return originalProcessingController()||spec()!=null&&spec().machineName().equals("fusionreactor");}
     private BlockPos sourcePosition(int right,int up,int back) {
         var front=getBlockState().getValue(HorizontalDirectionalBlock.FACING);
         return worldPosition.relative(front.getClockWise(),right).above(up).relative(front.getOpposite(),back);
@@ -37,7 +38,7 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
     }
     @Override public void setSpec(com.gregtech.gregtech.api.machine.BasicMachineSpec spec) {
         super.setSpec(spec);
-        if(originalProcessingController())for(var tank:getTanksOutput())tank.setCapacity(Long.MAX_VALUE);
+        if(sourceUnlimitedOutputs())for(var tank:getTanksOutput())tank.setCapacity(Long.MAX_VALUE);
     }
     @Override protected void autoInputItems(net.minecraft.world.level.Level level,BlockPos pos,int side) {
         if(!originalProcessingController())super.autoInputItems(level,pos,side); // Source getItemInputTarget returns null.
@@ -81,7 +82,7 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
     }
     @Override public void loadAdditional(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
         super.loadAdditional(tag,lookup);
-        if(originalProcessingController())for(var tank:getTanksOutput())tank.setCapacity(Long.MAX_VALUE);
+        if(sourceUnlimitedOutputs())for(var tank:getTanksOutput())tank.setCapacity(Long.MAX_VALUE);
     }
     @Override protected boolean usesTimeEnergy() { return spec()!=null&&spec().energyTag()==GregTechTags.Energy.TU; }
     @Override protected long inputMinimum() { return com.gregtech.gregtech.content.multiblock.LargeMachineProcessingRules.inputMinimum(usesTimeEnergy(),spec().energyTag()==GregTechTags.Energy.HU); }

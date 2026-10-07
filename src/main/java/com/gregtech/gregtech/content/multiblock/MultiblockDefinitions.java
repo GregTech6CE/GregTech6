@@ -117,10 +117,10 @@ public final class MultiblockDefinitions {
 
         IMPLOSION_COMPRESSOR_WALL = part("implosion_compressor_wall");
         IMPLOSION_COMPRESSOR_MAIN = com.gregtech.gregtech.registry.MachineBlockRegistration.block("implosion_compressor_main", com.gregtech.gregtech.block.machine.ImplosionCompressorControllerBlock::new)
-                .strength(8.0f, 8.0f).register();
+                .strength(12.5f, 12.5f).register();
 
         FUSION_REACTOR_WALL = part("fusion_reactor_wall");
         FUSION_REACTOR_MAIN = com.gregtech.gregtech.registry.MachineBlockRegistration.block("fusion_reactor_main", com.gregtech.gregtech.block.machine.FusionReactorControllerBlock::new)
-                .strength(12.0f, 12.0f).register();
+                .strength(12.5f, 12.5f).register();
     }
 }

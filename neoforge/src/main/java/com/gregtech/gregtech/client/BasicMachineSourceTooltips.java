@@ -10,19 +10,22 @@ import java.util.List;
 public final class BasicMachineSourceTooltips {
     private BasicMachineSourceTooltips() {}
     public static void append(BasicMachineSpec spec,List<Component> lines) {
+        appendDefaults(spec,lines,OriginalBasicMachineRules.cheapOverclocking(spec.machineName(),spec.tier()),OriginalBasicMachineRules.efficiency(spec.machineName(),spec.tier()),false,"TU");
+    }
+    public static void appendDefaults(BasicMachineSpec spec,List<Component> lines,boolean cheap,int efficiency,boolean multiblock,String chargedEnergy) {
         if(CommonBlockTooltips.containsKey(lines,"gt.lang.recipes"))return;
         var map=spec.recipeMap();var fc=spec.faceConfig();
         add(lines,"gt.lang.recipes",ChatFormatting.AQUA).append(": ")
             .append(Component.translatable(map.mNameInternal).withStyle(ChatFormatting.WHITE))
             .append(Component.literal(spec.parallelLimit()>1?" (up to "+spec.parallelLimit()+"x processed per run)":"").withStyle(ChatFormatting.WHITE));
-        if(OriginalBasicMachineRules.cheapOverclocking(spec.machineName(),spec.tier()))add(lines,"gt.lang.cheap.overclocking",ChatFormatting.YELLOW);
-        int efficiency=OriginalBasicMachineRules.efficiency(spec.machineName(),spec.tier());
+        if(cheap)add(lines,"gt.lang.cheap.overclocking",ChatFormatting.YELLOW);
         if(efficiency!=10000)add(lines,"gt.lang.efficiency",ChatFormatting.YELLOW).append(": ")
             .append(Component.literal(MachineTooltips.formatEfficiencyPercent(efficiency)+"%").withStyle(ChatFormatting.WHITE));
-        if(!spec.energyType().equals("TU")) {
+        String energy=spec.energyType().equals("TU")?chargedEnergy:spec.energyType();
+        if(!energy.equals("TU")) {
             var line=add(lines,"gt.lang.energy.input",ChatFormatting.GREEN).append(": ")
                 .append(Component.literal(spec.energyIn()+" ").withStyle(ChatFormatting.WHITE))
-                .append(Component.translatable(OriginalBasicMachineRules.unitKey(spec.energyType())).withStyle(energyColor(spec.energyType())))
+                .append(Component.translatable(OriginalBasicMachineRules.unitKey(energy)).withStyle(energyColor(energy)))
                 .append(Component.literal("/t").withStyle(ChatFormatting.WHITE));
             if(spec.energyIn()!=spec.energyInMin()||spec.energyIn()!=spec.energyInMax()) {
                 line.append(Component.literal(" ("+(spec.energyInMin()<=1?"up to ":spec.energyInMin()+" to ")+spec.energyInMax()).withStyle(ChatFormatting.WHITE));
@@ -40,6 +43,7 @@ public final class BasicMachineSourceTooltips {
         if(validAuto(fc.itemAutoInput())||validAuto(fc.fluidAutoInput()))add(lines,"gt.lang.use.monkey.wrench.to.toggle.auto.inputs",ChatFormatting.DARK_GRAY);
         if(validAuto(fc.itemAutoOutput())||validAuto(fc.fluidAutoOutput()))add(lines,"gt.lang.use.monkey.wrench.to.toggle.auto.outputs",ChatFormatting.DARK_GRAY);
         add(lines,"gt.lang.use.soft.hammer.to.reset",ChatFormatting.DARK_GRAY);
+        if(multiblock)add(lines,"gt.lang.use.builder.wand.to.ease.building",ChatFormatting.DARK_GRAY);
         add(lines,"gt.lang.use.magnifyingglass.to.detail",ChatFormatting.DARK_GRAY);
         StorageBlockTooltips.facing(lines);
         // CommonBlockTooltips and MaterialTooltipHandler own harvest/blast and exact composition once.

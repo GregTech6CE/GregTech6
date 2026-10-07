@@ -283,7 +283,8 @@ public final class BasicMachineOriginalParams {
             new Params("largesluice", 1, "Large Sluice", "RU", 512L, 512L, 4096L, 64, true, 9.0F, 9.0F),
             new Params("largecrusher", 1, "Large Crusher", "RU", 512L, 512L, 4096L, 64, true, 12.5F, 12.5F),
             new Params("largeshredder", 1, "Large Shredder", "RU", 512L, 512L, 4096L, 64, true, 12.5F, 12.5F),
-            new Params("largesqueezer", 1, "Large Squeezer", "RU", 512L, 512L, 4096L, 64, true, 6.0F, 6.0F)
+            new Params("largesqueezer", 1, "Large Squeezer", "RU", 512L, 512L, 4096L, 64, true, 6.0F, 6.0F),
+            new Params("largemassfab", 1, "Large Matter Fabricator", "QU", 1L, 1L, 2097152L, 64, true, 6.0F, 6.0F)
     );
 
     /** Original GT6 parameters for one port machine type and tier, or {@code null} if GT6 has none. */

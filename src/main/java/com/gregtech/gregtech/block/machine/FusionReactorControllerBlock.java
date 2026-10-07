@@ -13,9 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
 /** GT6 17198: timed reactions, LU startup and EU generation. */
 public class FusionReactorControllerBlock extends BasicMachineBlock {
     public FusionReactorControllerBlock(Properties properties) {
-        super(BasicMachineSpec.builder("fusion_reactor_main",GTMaterialRegistry.get("SteelGalvanized"))
-                .machineType("fusionreactor").recipes(MachineRecipeMaps.Fusion)
-                .energy(GregTechTags.Energy.TU,1).strength(12.5f,12.5f).build(),properties);
+        super(com.gregtech.gregtech.content.machine.BasicMachineDefinitions.from(com.gregtech.gregtech.content.multiblock.OriginalMultiblockMachineParameters.fusionReactor()),properties);
         setBeTypeSupplier(()->GTBlockEntities.FUSION_REACTOR.get());
     }
     @Override public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
