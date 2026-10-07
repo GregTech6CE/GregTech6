@@ -230,6 +230,20 @@ public final class CoreBehaviorContracts {
         check(com.gregtech.gregtech.content.recipe.MaterialWashingRules.byproductMaterial(weighted, 2)
                 == com.gregtech.gregtech.content.material.generated.ElementMaterials.Copper, "source byproduct selection retains the final candidate");
         equal(15, com.gregtech.gregtech.content.recipe.ExternalOreProcessingRules.COMPOSITION_FORMS.size(), "source world listeners bind foreign crushed and impure dust alongside external forms");
+        var taggedForms = com.gregtech.gregtech.content.recipe.ExternalOreProcessingRules.TAGGED_MATERIAL_FORMS;
+        String[] taggedNames = {"ingot", "nugget", "gem", "dust", "dustSmall", "dustTiny", "plate", "stick"};
+        equal(taggedNames.length, taggedForms.size(), "common form tags bind eight material forms");
+        for (int i = 0; i < taggedNames.length; i++) {
+            check(taggedForms.get(i).getName().equals(taggedNames[i]), "common form tag " + taggedNames[i]);
+            check(!taggedForms.get(i).getName().toLowerCase(java.util.Locale.ROOT).contains("block"),
+                    "common form tags exclude storage blocks " + taggedNames[i]);
+        }
+        var aliases = com.gregtech.gregtech.api.material.MaterialTagAliases.ALTERNATE_SPELLINGS;
+        equal(4, aliases.size(), "four established common-tag spellings");
+        check("aluminum".equals(aliases.get("aluminium")), "aluminium common-tag alias");
+        check("nether_quartz".equals(aliases.get("quartz")), "quartz common-tag alias");
+        check("sulphur".equals(aliases.get("sulfur")), "sulfur common-tag alias");
+        check("tungstensteel".equals(aliases.get("tungsten_steel")), "tungsten steel common-tag alias");
     }
 
     private static void externalOreSourceSamples() {

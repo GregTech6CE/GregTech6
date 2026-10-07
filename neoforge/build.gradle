@@ -58,6 +58,9 @@ dependencies {
         runtimeOnly "maven.modrinth:codechicken-lib:${rootProject.property('neoforge_ccl_version')}"
         runtimeOnly "maven.modrinth:cb-multipart:${rootProject.property('neoforge_cbm_version')}"
     }
+    if (rootProject.findProperty('compatRuntime') == 'hc') {
+        runtimeOnly "maven.modrinth:pams-harvestcraft-2-food-core:${rootProject.property('neoforge_hc_version')}"
+    }
 
     if (rootProject.findProperty('directCoreClasspath')?.toString() == 'true') {
         // Local development can use the same compiled core output directly.

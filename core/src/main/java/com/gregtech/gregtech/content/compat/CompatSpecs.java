@@ -38,7 +38,7 @@ public final class CompatSpecs {
 
     public static List<Module> modules() {
         return List.of(ImmersiveEngineeringCompat.module(), MekanismCompat.module(),
-                AppliedEnergisticsCompat.module(), ProjectRedCompat.module());
+                AppliedEnergisticsCompat.module(), ProjectRedCompat.module(), HarvestCraftCompat.module());
     }
 
     /** Structural checks only. A loaded game still has to resolve the registry names. */
@@ -50,14 +50,16 @@ public final class CompatSpecs {
                 throw new IllegalStateException("Duplicate compat module " + module.modernId());
             assertions++;
         }
-        if (byId.size() != 4 || !byId.containsKey("immersiveengineering") || !byId.containsKey("mekanism")
-                || !byId.containsKey("ae2") || !byId.containsKey("projectred_core"))
+        if (byId.size() != 5 || !byId.containsKey("immersiveengineering") || !byId.containsKey("mekanism")
+                || !byId.containsKey("ae2") || !byId.containsKey("projectred_core")
+                || !byId.containsKey("pamhc2foodcore"))
             throw new IllegalStateException("compat modules " + byId.keySet());
         assertions++;
         assertions += immersiveEngineering(byId.get("immersiveengineering"));
         assertions += mekanism(byId.get("mekanism"));
         assertions += appliedEnergistics(byId.get("ae2"));
         assertions += projectRed(byId.get("projectred_core"));
+        assertions += harvestCraft(byId.get("pamhc2foodcore"));
         return assertions;
     }
 
@@ -156,6 +158,33 @@ public final class CompatSpecs {
             throw new IllegalStateException("Project Red saw");
         assertions++;
         if (module.deferred().isEmpty()) throw new IllegalStateException("deferred Project Red notes");
+        assertions++;
+        return assertions;
+    }
+
+    private static int harvestCraft(Module module) {
+        int assertions = 0;
+        if (!module.forge() || !module.neo() || !module.originalClass().equals("Compat_Recipes_HarvestCraft"))
+            throw new IllegalStateException(module.originalClass());
+        assertions++;
+        if (!module.crafting().isEmpty() || !module.shaped().isEmpty() || module.removals().size() != 4
+                || module.machines().size() != 12)
+            throw new IllegalStateException("HarvestCraft counts");
+        assertions++;
+        if (module.machines().stream().filter(row -> row.map().equals("Mixer") && row.op() == Op.BATH).count() != 4
+                || module.machines().stream().noneMatch(row -> row.map().equals("Shredder"))
+                || module.machines().stream().noneMatch(row -> row.map().equals("Bath")))
+            throw new IllegalStateException("HarvestCraft maps");
+        assertions++;
+        for (var row : module.machines()) {
+            if (!switch (row.map()) {
+                case "Shredder", "Mixer", "Bath" -> true;
+                default -> false;
+            } || row.inputs().isEmpty() || row.outputs().isEmpty() || row.source().isBlank())
+                throw new IllegalStateException(row.id());
+            assertions++;
+        }
+        if (module.deferred().size() < 8) throw new IllegalStateException("deferred HarvestCraft notes");
         assertions++;
         return assertions;
     }

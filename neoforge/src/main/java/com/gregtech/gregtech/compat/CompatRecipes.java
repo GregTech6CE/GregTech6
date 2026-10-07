@@ -227,6 +227,7 @@ public final class CompatRecipes {
             case "Press" -> MachineRecipeMaps.Press;
             case "Hammer" -> MachineRecipeMaps.Hammer;
             case "Crusher" -> MachineRecipeMaps.Crusher;
+            case "Mixer" -> MachineRecipeMaps.Mixer;
             default -> throw new IllegalArgumentException(name);
         };
     }
