@@ -10,7 +10,7 @@ public final class SensorPanelRules {private SensorPanelRules(){}
             case "WEIGHTOMETRIC_LIGHT" -> "gramm"; case "WEIGHTOMETRIC_MEDIUM" -> "kilogramm";
             case "WEIGHTOMETRIC_SUPER_HEAVY" -> "kiloton"; case "TPS" -> "clock";
             case "BUCKETOMETER" -> "cubicmeter"; case "KILOBUCKETOMETER" -> "cubicdecameter";
-            case "GIBBLOMETER" -> "gibbl"; case "LUMINOMETER" -> "lumin"; case "PLAYERCOUNTER" -> "greg";
+            case "GIBBLOMETER","KILOGIBBLOMETER" -> "gibbl"; case "LUMINOMETER" -> "lumin"; case "PLAYERCOUNTER" -> "greg";
             case "CHRONOMETER" -> "clock"; case "GEIGER" -> "neutron"; case "LASEROMETER" -> "lu";
             default -> null;
         };
@@ -20,11 +20,12 @@ public final class SensorPanelRules {private SensorPanelRules(){}
             case "FLUID","BUCKETOMETER","KILOBUCKETOMETER" -> 0x0000FF;
             case "ENERGY","THERMOMETER","TPS" -> 0xFF0000;
             case "TACHOMETER","CHRONOMETER","GEIGER" -> 0x00FF00;
-            case "GIBBLOMETER","LASEROMETER" -> 0xFFFF00;
+            case "GIBBLOMETER","KILOGIBBLOMETER","LASEROMETER" -> 0xFFFF00;
             case "PLAYERCOUNTER","PROGRESS" -> 0x80C0FF;
             case "LUMINOMETER" -> 0xFFFF80;
             case "WEIGHTOMETRIC","WEIGHTOMETRIC_LIGHT","WEIGHTOMETRIC_MEDIUM","WEIGHTOMETRIC_SUPER_HEAVY" -> 0xC0C0C0;
             default -> 0xFFFFFF;
         };
 }
+ public static boolean validInputSide(int display, int input) { return display >= 0 && display < 6 && input >= 0 && input < 6 && display != input; }
 }

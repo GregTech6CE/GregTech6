@@ -87,6 +87,7 @@ public final class SensorMatrixTests {
             {"31020", "Geiger Counter Sensor", "sensor_geiger"},
             {"31021", "Laser-O-Meter Sensor", "sensor_laserometer"},
             {"31022", "Kilo-Bucket-O-Meter Sensor", "sensor_kilobucketometer"},
+            {"31023", "Kilo-Gibbl-O-Meter Sensor", "sensor_kilogibblometer"},
     };
 
     private static Block block(GameTestHelper helper, String path) {
@@ -393,7 +394,7 @@ public final class SensorMatrixTests {
         // Both lists go into one message so a single gate run shows every problem at once.
         helper.assertTrue(broken.isEmpty() && fellBack.isEmpty(),
                 "sensor recipe problems: rows=" + broken + " substitutions=" + fellBack);
-        helper.assertTrue(GTSensorRecipesGen.ROWS.size() == 20,
+        helper.assertTrue(GTSensorRecipesGen.ROWS.size() == 21,
                 "GT6's twenty sensor rows, got " + GTSensorRecipesGen.ROWS.size());
         helper.assertTrue(resolved == GTSensorRecipesGen.ROWS.size(),
                 "rows fully resolved: " + resolved + " of " + GTSensorRecipesGen.ROWS.size());

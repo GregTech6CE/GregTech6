@@ -46,6 +46,27 @@ public final class SourceBlockProperties {
         BASICS.put("largesqueezer/1", new Params(17114,"wrench",ImportedMaterialData.Steel,-1,false));
     }
     private static void blocks0() {
+        BLOCKS.put("sensor_fluidometer", new Params(31006,"pickaxe",null,1,true));
+        BLOCKS.put("sensor_itemometer", new Params(31004,"pickaxe",null,1,true));
+        BLOCKS.put("sensor_electrometer", new Params(31015,"pickaxe",null,1,true));
+        BLOCKS.put("sensor_progressmeter", new Params(31018,"pickaxe",null,1,true));
+        BLOCKS.put("sensor_thermometer", new Params(31000,"pickaxe",null,1,true));
+        BLOCKS.put("sensor_tachometer", new Params(31019,"pickaxe",null,1,true));
+        BLOCKS.put("sensor_weightometric", new Params(31012,"pickaxe",null,1,true));
+        BLOCKS.put("sensor_weightometer_light", new Params(31010,"pickaxe",null,1,true));
+        BLOCKS.put("sensor_weightometer_medium", new Params(31011,"pickaxe",null,1,true));
+        BLOCKS.put("sensor_weightometer_super_heavy", new Params(31013,"pickaxe",null,1,true));
+        BLOCKS.put("sensor_bucketometer", new Params(31007,"pickaxe",null,1,true));
+        BLOCKS.put("sensor_kilobucketometer", new Params(31022,"pickaxe",null,1,true));
+        BLOCKS.put("sensor_gibblometer", new Params(31001,"pickaxe",null,1,true));
+        BLOCKS.put("sensor_stackometer", new Params(31005,"pickaxe",null,1,true));
+        BLOCKS.put("sensor_luminometer", new Params(31002,"pickaxe",null,1,true));
+        BLOCKS.put("sensor_playercounter", new Params(31017,"pickaxe",null,1,true));
+        BLOCKS.put("sensor_chronometer", new Params(31003,"pickaxe",null,1,true));
+        BLOCKS.put("sensor_geiger", new Params(31020,"pickaxe",null,1,true));
+        BLOCKS.put("sensor_laserometer", new Params(31021,"pickaxe",null,1,true));
+        BLOCKS.put("sensor_tpsmeter", new Params(31016,"pickaxe",null,1,true));
+        BLOCKS.put("sensor_kilogibblometer", new Params(31023,"pickaxe",null,1,true));
         BLOCKS.put("axle_wood_1", new Params(24800,"axe",com.gregtech.gregtech.data.generated.GT6Materials.Woods.WoodTreated,-1,true));
         BLOCKS.put("axle_wood_2", new Params(24801,"axe",com.gregtech.gregtech.data.generated.GT6Materials.Woods.WoodTreated,-1,true));
         BLOCKS.put("axle_wood_3", new Params(24802,"axe",com.gregtech.gregtech.data.generated.GT6Materials.Woods.WoodTreated,-1,true));

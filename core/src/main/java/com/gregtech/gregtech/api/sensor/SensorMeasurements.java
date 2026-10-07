@@ -27,6 +27,8 @@ public final class SensorMeasurements {
     public static long timeOfDayMinutes(long ticks) { return ((Math.floorMod(ticks,24000)+6000)%24000)*60/1000; }
     public static long cubicMetres(long millibuckets) { return Math.max(0, millibuckets) / 1000; }
     public static long cubicDecametres(long millibuckets) { return Math.max(0, millibuckets) / 1_000_000; }
+    public static long gibbl(long compressedVolume) { return Math.max(0, compressedVolume) / 1000; }
+    public static long kiloGibbl(long compressedVolume) { return Math.max(0, compressedVolume) / 1_000_000; }
 
     /** GT6 {@code WeightometerHeavy:62}: {@code (long)(rWeightKG/1000)}, "in Tons". */
     public static long tonnes(double kilograms) { return clamp(kilograms / 1000); }

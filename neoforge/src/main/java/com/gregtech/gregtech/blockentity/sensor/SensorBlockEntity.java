@@ -30,7 +30,7 @@ public class SensorBlockEntity extends BlockEntity {
         // §108: GT6 has four weight-o-meters that differ only in their scale (gramm / kilogramme /
         // tons / kilotons - Loader_MultiTileEntities:1988-1991) and a TPS meter (:1992). The port's
         // WEIGHTOMETRIC is GT6's Heavy one (tonnes, maximum 65535), so these complete the set.
-        WEIGHTOMETRIC_LIGHT, WEIGHTOMETRIC_MEDIUM, WEIGHTOMETRIC_SUPER_HEAVY, TPS
+        WEIGHTOMETRIC_LIGHT, WEIGHTOMETRIC_MEDIUM, WEIGHTOMETRIC_SUPER_HEAVY, TPS, KILOGIBBLOMETER
     }
 
     /** GT6 {@code MultiTileEntityTPSmeter:62} {@code getTickRate()}: one sample every 20 ticks. */
@@ -41,6 +41,28 @@ public class SensorBlockEntity extends BlockEntity {
 
     /** GT6 {@code MultiTileEntityTPSmeter:57} {@code getCurrentMax()}: 20.00 TPS on the display. */
     public static final long TPS_MAX = 2000L;
+
+    private Direction configuredInput;
+    public Direction inputSide() {
+        var front = getBlockState().getValue(DirectionalBlock.FACING);
+        return configuredInput != null && com.gregtech.gregtech.api.sensor.SensorPanelRules.validInputSide(front.ordinal(), configuredInput.ordinal())
+                ? configuredInput : front.getOpposite();
+    }
+    public boolean setInputSide(Direction side) {
+        if (!com.gregtech.gregtech.api.sensor.SensorPanelRules.validInputSide(
+                getBlockState().getValue(DirectionalBlock.FACING).ordinal(), side.ordinal())) return false;
+        configuredInput = side;
+        syncInputSide();
+        return true;
+    }
+    public void resetInputSide() { configuredInput = null; syncInputSide(); }
+    private void syncInputSide() {
+        setChanged();
+        if (level != null) {
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+            level.updateNeighborsAt(worldPosition, getBlockState().getBlock());
+        }
+    }
 
     private final Kind kind;
     private long value;
@@ -129,9 +151,8 @@ public class SensorBlockEntity extends BlockEntity {
      * test drives {@code measure} directly (the same split {@code CoverAttachmentBehaviors} uses).
      */
     public static void measure(Level level, BlockPos pos, BlockState state, SensorBlockEntity be) {
-        Direction facing = state.hasProperty(DirectionalBlock.FACING)
-                ? state.getValue(DirectionalBlock.FACING) : Direction.NORTH;
-        BlockEntity target = level.getBlockEntity(pos.relative(facing.getOpposite()));
+        Direction facing = be.inputSide().getOpposite();
+        BlockEntity target = level.getBlockEntity(pos.relative(be.inputSide()));
 
         // GT6 MultiTileEntityTPSmeter:42-49 - the TPS meter measures the server, not the block in
         // front of it, so it is sampled on its own 20-tick beat and needs no target at all.
@@ -169,15 +190,9 @@ public class SensorBlockEntity extends BlockEntity {
                     }
                 }
                 case ENERGY -> {
-                    if (target instanceof IEnergyBlock energy) {
-                        for (GregTechTags.Tag type : new GregTechTags.Tag[]{GregTechTags.Energy.EU, GregTechTags.Energy.KU, GregTechTags.Energy.HU, GregTechTags.Energy.RU}) {
-                            long capacity = energy.getEnergyCapacity(type, facing);
-                            if (capacity > 0) {
-                                newValue = energy.getEnergyStored(type, facing);
-                                maximum = capacity;
-                                break;
-                            }
-                        }
+                    if (target instanceof com.gregtech.gregtech.blockentity.energy.ElectricWireBlockEntity wire) {
+                        newValue = wire.lastWattage();
+                        maximum = com.gregtech.gregtech.api.sensor.SensorPanelRules.transferMaximum(wire.voltage(), wire.amperage());
                     }
                 }
                 case PROGRESS -> {
@@ -225,7 +240,7 @@ public class SensorBlockEntity extends BlockEntity {
                 case TPS -> {
                     // Handled before the target lookup: the TPS meter measures the whole server.
                 }
-                case BUCKETOMETER, KILOBUCKETOMETER, GIBBLOMETER -> {
+                case BUCKETOMETER, KILOBUCKETOMETER -> {
                     IFluidHandler fluids = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,target.getBlockPos(),facing);
                     if (fluids != null) {
                         long amount = 0, capacity = 0;
@@ -243,6 +258,17 @@ public class SensorBlockEntity extends BlockEntity {
                             case KILOBUCKETOMETER -> com.gregtech.gregtech.api.sensor.SensorMeasurements.cubicDecametres(capacity);
                             default -> capacity;
                         };
+                    }
+                }
+                case GIBBLOMETER, KILOGIBBLOMETER -> {
+                    if (target instanceof com.gregtech.gregtech.api.sensor.CompressionSensorSource compressed) {
+                        long amount = compressed.gibblValue(facing.ordinal()), capacity = compressed.gibblMaximum(facing.ordinal());
+                        newValue = be.kind == Kind.GIBBLOMETER
+                                ? com.gregtech.gregtech.api.sensor.SensorMeasurements.gibbl(amount)
+                                : com.gregtech.gregtech.api.sensor.SensorMeasurements.kiloGibbl(amount);
+                        maximum = be.kind == Kind.GIBBLOMETER
+                                ? com.gregtech.gregtech.api.sensor.SensorMeasurements.gibbl(capacity)
+                                : com.gregtech.gregtech.api.sensor.SensorMeasurements.kiloGibbl(capacity);
                     }
                 }
                 case STACKOMETER -> {
@@ -310,6 +336,7 @@ public class SensorBlockEntity extends BlockEntity {
         tag.putInt("gt.average_index", average.index());
     }
     private void saveDisplay(CompoundTag tag) {
+        tag.putByte("gt.sensor_input", (byte) inputSide().ordinal());
         tag.putLong("gt.value", value);
         tag.putInt("gt.signal", signal);
         tag.putInt("gt.control_mode", mode.ordinal());
@@ -320,6 +347,9 @@ public class SensorBlockEntity extends BlockEntity {
     @Override
     protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
         super.loadAdditional(tag,lookup);
+        int input = tag.contains("gt.sensor_input") ? tag.getByte("gt.sensor_input") : -1;
+        configuredInput = com.gregtech.gregtech.api.sensor.SensorPanelRules.validInputSide(
+                getBlockState().getValue(DirectionalBlock.FACING).ordinal(), input) ? Direction.values()[input] : null;
         value = tag.getLong("gt.value");
         signal = Math.max(0, Math.min(15, tag.getInt("gt.signal")));
         mode = com.gregtech.gregtech.api.sensor.SensorControl.Mode.values()[Math.max(0,Math.min(7,tag.getInt("gt.control_mode")))];

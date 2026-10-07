@@ -40,7 +40,7 @@ import java.util.Random;
  * — both explode (GT6 hazard). Non-distilled water causes calcification (efficiency
  * loss); chisel it off at low pressure. Magnifying glass inspects calcification.</p>
  */
-public class BoilerTankBlockEntity extends GTEnergyBlockEntity {
+public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements com.gregtech.gregtech.api.sensor.CompressionSensorSource {
 
     private BoilerSpec spec;
     private long heat;
@@ -69,6 +69,8 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity {
         this.steamTank = new FluidTankGT(spec.steamCapacity()).setOnChanged(this::setChanged);
     }
 
+    @Override public long gibblValue(int side) { return steamTank.getAmount(); }
+    @Override public long gibblMaximum(int side) { return steamTank.getCapacity(); }
     public BoilerSpec spec() { return spec; }
     public long storedHeat() { return heat; }
     @Nullable public FluidTankGT waterTank() { return waterTank; }

@@ -43,7 +43,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collection;
 import java.util.Collections;
 
-public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements MenuProvider, IFluidHandler, com.gregtech.gregtech.api.inventory.BlockContents, com.gregtech.gregtech.api.machine.MachineControl.Provider, com.gregtech.gregtech.content.cover.PanelCoverHost, com.gregtech.gregtech.item.behavior.ItemBehaviors.Ignitable {
+public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements MenuProvider, IFluidHandler, com.gregtech.gregtech.api.inventory.BlockContents, com.gregtech.gregtech.api.machine.MachineControl.Provider, com.gregtech.gregtech.content.cover.PanelCoverHost, com.gregtech.gregtech.item.behavior.ItemBehaviors.Ignitable, com.gregtech.gregtech.api.sensor.CompressionSensorSource {
     private static final String NBT_SPEC = "gt.spec";
     private static final String NBT_INVENTORY = "gt.inventory";
     private static final String NBT_TANKS_IN = "gt.tanks_input";
@@ -186,6 +186,8 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     public RecipeMap recipeMap() { return recipeMap; }
     public FaceConfig faceConfig() { return faceConfig; }
     public FluidTankGT[] getTanksInput() { return tanksInput; }
+    @Override public long gibblValue(int side) { return java.util.Arrays.stream(tanksInput).mapToLong(FluidTankGT::getAmount).sum(); }
+    @Override public long gibblMaximum(int side) { return java.util.Arrays.stream(tanksInput).mapToLong(FluidTankGT::capacity).sum(); }
     public FluidTankGT[] getTanksOutput() { return tanksOutput; }
     public long getEnergyTick() { return mEnergy; }
     public boolean isRunning() { return mRunning; }

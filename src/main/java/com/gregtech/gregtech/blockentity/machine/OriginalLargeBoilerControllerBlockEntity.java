@@ -43,7 +43,7 @@ import java.util.List;
  * Their wall material and rated output are fixed by the placed controller item.
  */
 public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBlockEntity
-        implements MultiblockPortOwner {
+        implements MultiblockPortOwner, com.gregtech.gregtech.api.sensor.CompressionSensorSource {
     private static final int WATER_CAPACITY = com.gregtech.gregtech.content.multiblock.OriginalLargeBoilerParameters.WATER_CAPACITY;
     private static final int HU_PER_WATER = com.gregtech.gregtech.content.multiblock.OriginalLargeBoilerParameters.HU_PER_WATER;
     private static final int STEAM_PER_WATER = com.gregtech.gregtech.content.multiblock.OriginalLargeBoilerParameters.STEAM_PER_WATER;
@@ -67,6 +67,8 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
     public OriginalLargeBoilerSpecs.Variant variant() { return variant; }
     public long storedHeat() { return heat; }
     public long waterAmount() { return water.getAmount(); }
+    @Override public long gibblValue(int side) { return steam.getAmount(); }
+    @Override public long gibblMaximum(int side) { return steam.getCapacity(); }
     public long steamAmount() { return steam.getAmount(); }
     public int efficiency() { return efficiency; }
     public int barometerValue() { return barometer; }
