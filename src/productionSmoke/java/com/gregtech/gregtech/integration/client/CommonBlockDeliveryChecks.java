@@ -16,6 +16,8 @@ final class CommonBlockDeliveryChecks {
     private CommonBlockDeliveryChecks() {}
     static JsonObject verify() {
         int sourceBlocks = 0, sourceMachines = 0;
+        int overlappingMachines = 0;
+        var checkedSourcePaths = new LinkedHashSet<String>();
         var representatives = new LinkedHashMap<Class<?>, BlockItem>();
         for (var item : BuiltInRegistries.ITEM) {
             if (!(item instanceof BlockItem blockItem)
@@ -29,10 +31,22 @@ final class CommonBlockDeliveryChecks {
                     && BlockHarvestPolicy.level(block) == source.get().level()
                     && BlockHarvestPolicy.handHarvestable(block) == source.get().handHarvestable(),
                     "installed native policy uses original group and metadata " + BuiltInRegistries.ITEM.getKey(item));
-            if (SourceBlockProperties.block(BuiltInRegistries.BLOCK.getKey(block).getPath()).isPresent()) sourceBlocks++;
-            else sourceMachines++;
+            String path = BuiltInRegistries.BLOCK.getKey(block).getPath();
+            boolean fixed = SourceBlockProperties.block(path).isPresent();
+            if (fixed) { sourceBlocks++; checkedSourcePaths.add(path); }
+            // Some named source blocks are also BasicMachineBlock instances; these sets overlap.
+            if (block instanceof com.gregtech.gregtech.block.machine.BasicMachineBlock machine
+                    && SourceBlockProperties.basic(machine.basicSpec().machineName(),machine.basicSpec().tier()).isPresent()) {
+                sourceMachines++;
+                if (fixed) overlappingMachines++;
+            }
         }
-        require(sourceBlocks == 1311 && sourceMachines >= 250, "all adopted original metadata identities present");
+        var missing = new LinkedHashSet<>(SourceBlockProperties.blocks().keySet());
+        missing.removeAll(checkedSourcePaths);
+        System.err.println("SOURCE_BLOCK_TOOLTIP_COVERAGE blocks="+sourceBlocks+" basicMachines="+sourceMachines
+                +" overlap="+overlappingMachines+" missing="+missing);
+        require(sourceBlocks == 1311 && missing.isEmpty() && sourceMachines >= 250,
+                "all adopted original metadata identities present: blocks="+sourceBlocks+", basicMachines="+sourceMachines+", missing="+missing);
         for (var item : representatives.values()) verifyRows(new ItemStack(item));
         int storedCovers = 0;
         var machine = new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gregtech:electric_motor_lv")));
@@ -65,6 +79,7 @@ final class CommonBlockDeliveryChecks {
         require(after.equals(before), "vanilla block tooltips untouched");
         var result = new JsonObject(); result.addProperty("sourceBlockAndHopperIdentities",sourceBlocks);
         result.addProperty("actualSourceBasicMachines",sourceMachines); result.addProperty("nativeBlockClasses",representatives.size());
+        result.addProperty("overlappingNamedBasicMachines",overlappingMachines);
         result.addProperty("nativeSavedCoverFaces",storedCovers);
         result.addProperty("scope","native installed item tooltip events, source policy and sparse saved face data; no hover screenshot, actual harvest or world restart claim");
         result.add("storageTooltips",verifyStorage());
@@ -185,12 +200,15 @@ final class CommonBlockDeliveryChecks {
                     : " (" + level + ")";
             require(row.endsWith(suffix), "source LH tier reference is a translated material name " + stack);
         }
-        require(lines.stream().filter(line -> line.getString().equals(row)).count() == 1, "single source harvest row " + stack);
+        require(lines.stream().filter(line -> line.getString().equals(row)).count() == 1,
+                "single source harvest row " + stack + "; expected=" + row + "; actual=" + lines);
         require(countKey(lines,"gt.lang.blastresistance") <= 1, "blast row appended once " + stack);
         require(countKey(lines,"gt.lang.flammable") <= 1 && countKey(lines,"tooltip.gregtech.flammable") == 0,
                 "single canonical source flame row " + stack);
         require(countKey(lines,"tooltip.gregtech.machine.harvest_wrench") == 0
-                && countKey(lines,"tooltip.gregtech.machine.harvest.tool_label") == 0, "obsolete generic harvest instructions removed " + stack);
+                && countKey(lines,"tooltip.gregtech.machine.harvest.tool_label") == 0
+                && countKey(lines,"tooltip.gregtech.crucible.harvest_pickaxe") == 0
+                && countKey(lines,"tooltip.gregtech.wire.harvest_tool") == 0, "obsolete generic harvest instructions removed " + stack);
         if (block instanceof com.gregtech.gregtech.block.BookShelfBlock)
             require(countKey(lines,"gt.lang.enchantment.bonus") == 1,"original bookshelf interface hint");
         var second = new ArrayList<>(lines); CommonBlockTooltips.append(stack,second);

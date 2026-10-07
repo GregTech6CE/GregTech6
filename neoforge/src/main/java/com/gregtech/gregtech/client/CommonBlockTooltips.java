@@ -36,6 +36,7 @@ public final class CommonBlockTooltips {
             "tooltip.gregtech.machine.harvest_wrench", "tooltip.gregtech.machine.harvest_wrench_short",
             "tooltip.gregtech.machine.harvest_axe", "tooltip.gregtech.machine.harvest_shears",
             "tooltip.gregtech.machine.harvest.tool_label", "tooltip.gregtech.machine.hand_harvest",
+            "tooltip.gregtech.crucible.harvest_pickaxe", "tooltip.gregtech.wire.harvest_tool",
             "gt.lang.harvest.shovel");
     private static final Set<String> FLAME_KEYS = Set.of(FLAMMABLE, "tooltip.gregtech.flammable");
 
