@@ -163,7 +163,7 @@ final class CommonBlockDeliveryChecks {
         var template=new ItemStack(Items.APPLE); name(template,Component.literal("Storage probe"));
         for (int mode : new int[]{0,8}) for (long count : new long[]{0,1_000_257}) {
             var data=new CompoundTag();data.putInt("gt.mode",mode);data.putLong("gt.stored",count);data.put("gt.template",save(template));write(packed,data);
-            var lines=tooltip(packed);
+            var lines=storedMassTooltip(packed);
             require(lines.stream().anyMatch(row->row.getString().contains("Storage probe") && row.getString().endsWith(": "+count)),"actual saved template name/count including retained zero filter and legacy overflow");
             require(countKey(lines,"gt.lang.use.untape")== (mode==8?1:0)
                     && countKey(lines,"gt.lang.use.tape")== (mode==8?0:1)
@@ -185,7 +185,7 @@ final class CommonBlockDeliveryChecks {
         var result=new JsonObject();result.addProperty("safes",safes);result.addProperty("drawers",drawers);result.addProperty("craftingTables",tables);
         result.addProperty("bottleCrates",crates);result.addProperty("massStorages",mass);result.addProperty("hoppers",hoppers);
         result.addProperty("bookShelves",shelves);result.addProperty("scaffolds",scaffolds);
-        result.addProperty("savedMassConfigurations",4);result.addProperty("scope","actual native tooltip calls/events and saved item state; no world interaction or screen hover claim");return result;
+        result.addProperty("savedMassConfigurations",4);result.addProperty("scope","default rows through native tooltip calls/events; four saved-template rows through actual BlockItem.appendHoverText with built-in item lookup at title; no world interaction or screen hover claim");return result;
     }
     private static boolean number(List<Component> lines,String key,int value) {
         return lines.stream().anyMatch(line->CommonBlockTooltips.containsKey(List.of(line),key) && line.getString().endsWith(Integer.toString(value)));
@@ -222,6 +222,14 @@ final class CommonBlockDeliveryChecks {
     // At the title screen no world/data-pack enchantment registry has been loaded.
     // EMPTY is Minecraft's supported context for tooltip calls without a world.
     private static List<Component> tooltip(ItemStack stack) { return stack.getTooltipLines(Item.TooltipContext.EMPTY,null,TooltipFlag.NORMAL); }
+    private static List<Component> storedMassTooltip(ItemStack stack) {
+        // EMPTY deliberately has no registries, so the native block cannot decode a saved item there.
+        // Exercise its actual item method with the real built-in item registry; do not fabricate a world
+        // or use that partial lookup for vanilla's complete data-pack-dependent tooltip pipeline.
+        var lines = new ArrayList<Component>(); lines.add(stack.getHoverName());
+        stack.getItem().appendHoverText(stack,Item.TooltipContext.of(net.minecraft.core.RegistryAccess.fromRegistryOfRegistries(BuiltInRegistries.REGISTRY)),lines,TooltipFlag.NORMAL);
+        return lines;
+    }
     private static CompoundTag save(ItemStack stack) { return (CompoundTag)stack.save(net.minecraft.core.RegistryAccess.fromRegistryOfRegistries(BuiltInRegistries.REGISTRY)); }
     private static void write(ItemStack stack,CompoundTag data) { stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(data)); }
     private static CompoundTag read(ItemStack stack) { return stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA).copyTag(); }
