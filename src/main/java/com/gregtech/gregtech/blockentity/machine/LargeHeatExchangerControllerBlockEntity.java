@@ -90,7 +90,7 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
         boolean claimed=bindings.update(parts,p->level.getBlockEntity(p) instanceof MultiblockPortBlockEntity part&&part.canBind(worldPosition),
                 (p,r)->((MultiblockPortBlockEntity)level.getBlockEntity(p)).bind(worldPosition,r),this::release);
         boolean formed=complete&&claimed;
-        if(structureOkay!=formed){structureOkay=formed;setChanged();}
+        if(structureOkay!=formed){structureOkay=formed;syncToClient();}
         return formed;
     }
     @Override public boolean containsToolPosition(BlockPos pos){
@@ -123,11 +123,7 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
         return List.copyOf(messages);
     }
     private static net.minecraft.network.chat.Component tankMessage(String prefix,FluidTankGT tank){
-        var message=net.minecraft.network.chat.Component.literal(prefix);
-        if(tank.isEmpty())return message.append("Empty");
-        var fluid=tank.getFluidLong();
-        return message.append(MultiblockToolRules.amount(tank.getAmount())+" L of ").append(fluid.getDisplayName())
-                .append(GTFluids.isGas(fluid)?" (Gaseous)":" (Liquid)");
+        return net.minecraft.network.chat.Component.literal(prefix).append(MultiblockTools.tankContent(tank,"Empty"));
     }
     private void release(BlockPos pos){if(level!=null&&level.hasChunkAt(pos)&&level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part)part.release(worldPosition);}
     @Override public void setRemoved(){bindings.clear(this::release);super.setRemoved();}

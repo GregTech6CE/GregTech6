@@ -43,6 +43,14 @@ public final class MultiblockTools {
         return InteractionResult.SUCCESS;
     }
 
+    /** Original FluidTankGT.content; preserve full long amounts and translatable native names. */
+    public static Component tankContent(com.gregtech.gregtech.api.fluid.FluidTankGT tank,String emptyMessage) {
+        if(tank.isEmpty())return Component.literal(emptyMessage);
+        var fluid=tank.getFluidLong();
+        return Component.literal(MultiblockToolRules.amount(tank.getAmount())+" L of ").append(fluid.getDisplayName())
+                .append(com.gregtech.gregtech.registry.GTFluids.isGas(fluid)?" (Gaseous)":" (Liquid)");
+    }
+
     /** Exact structure cell placement; never the ordinary wand's copy-on-top operation. */
     public static boolean build(UseOnContext use, BlockPos pos, Block expected) {
         var level = use.getLevel();

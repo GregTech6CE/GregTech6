@@ -1,3 +1,4 @@
+/* GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later. Source boiler tool and structure rules. */
 package com.gregtech.gregtech.blockentity.machine;
 
 import com.gregtech.gregtech.api.fluid.FluidTankGT;
@@ -43,7 +44,7 @@ import java.util.List;
  * Their wall material and rated output are fixed by the placed controller item.
  */
 public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBlockEntity
-        implements MultiblockPortOwner, com.gregtech.gregtech.api.sensor.CompressionSensorSource {
+        implements MultiblockPortOwner, com.gregtech.gregtech.api.multiblock.MultiblockToolTarget, com.gregtech.gregtech.api.sensor.CompressionSensorSource {
     private static final int WATER_CAPACITY = com.gregtech.gregtech.content.multiblock.OriginalLargeBoilerParameters.WATER_CAPACITY;
     private static final int HU_PER_WATER = com.gregtech.gregtech.content.multiblock.OriginalLargeBoilerParameters.HU_PER_WATER;
     private static final int STEAM_PER_WATER = com.gregtech.gregtech.content.multiblock.OriginalLargeBoilerParameters.STEAM_PER_WATER;
@@ -56,6 +57,7 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
     private int efficiency = 10_000;
     private int cooldown = 128;
     private int barometer;
+    private boolean structureOkay;
     private LazyOptional<IFluidHandler> fluidCap = LazyOptional.empty();
 
     public OriginalLargeBoilerControllerBlockEntity(BlockPos pos, BlockState state) {
@@ -77,33 +79,70 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
     private Direction front() { return getBlockState().getValue(HorizontalDirectionalBlock.FACING); }
     private BlockPos bodyCentre() { return worldPosition.relative(front().getOpposite()); }
 
-    /** Validate before claiming any ports; an incomplete shell never exposes its storage. */
+    /** Source claims each correct cell even when the shell has missing or obstructed cells. */
     @Override public boolean isStructureOk() {
-        if (level == null || isRemoved()) return invalid();
-        var parts = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
-        for (var cell : OriginalLargeBoilerSpecs.LAYOUT.cells()) {
-            BlockPos position = cell.at(worldPosition, front());
-            if (!level.hasChunkAt(position)) return invalid();
-            if (position.equals(worldPosition)) continue;
-            if (cell.role() == MultiblockLayout.Role.AIR) {
-                if (!level.getBlockState(position).isAir()) return invalid();
+        if(level==null||isRemoved())return false;
+        if(level.isClientSide)return structureOkay;
+        var centre=bodyCentre();
+        var parts=new LinkedHashMap<BlockPos,MultiblockLayout.Role>();
+        boolean complete=true;
+        for(var cell:com.gregtech.gregtech.content.multiblock.OriginalLargeBoilerParameters.CHECK_ORDER) {
+            var position=centre.offset(cell.x(),cell.y(),cell.z());
+            if(!level.hasChunkAt(position)){complete=false;continue;}
+            if(position.equals(worldPosition))continue;
+            if(cell.role()==com.gregtech.gregtech.api.multiblock.StructureGrid.Role.AIR) {
+                if(!level.getBlockState(position).isAir())complete=false;
                 continue;
             }
-            var required = cell.role() == MultiblockLayout.Role.HEAT_INPUT
-                    ? GTMultiblocks.HEAT_TRANSMITTER.get() : variant.wall();
-            if (!level.getBlockState(position).is(required)
-                    || !(level.getBlockEntity(position) instanceof MultiblockPortBlockEntity port)
-                    || !port.canBind(worldPosition)) return invalid();
-            parts.put(position, cell.role());
+            var required=cell.role()==com.gregtech.gregtech.api.multiblock.StructureGrid.Role.HEAT_INPUT
+                    ?GTMultiblocks.HEAT_TRANSMITTER.get():variant.wall();
+            if(!level.getBlockState(position).is(required)
+                    ||!(level.getBlockEntity(position) instanceof MultiblockPortBlockEntity port)||!port.canBind(worldPosition)) {
+                complete=false;continue;
+            }
+            parts.put(position,MultiblockLayout.Role.valueOf(cell.role().name()));
         }
-        return bindings.update(parts,
-                position -> level.getBlockEntity(position) instanceof MultiblockPortBlockEntity port
-                        && port.canBind(worldPosition),
-                (position, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(position))
-                        .bind(worldPosition, role), this::release);
+        boolean claimed=bindings.update(parts,
+                position->level.getBlockEntity(position) instanceof MultiblockPortBlockEntity port&&port.canBind(worldPosition),
+                (position,role)->((MultiblockPortBlockEntity)level.getBlockEntity(position)).bind(worldPosition,role),this::release);
+        boolean formed=complete&&claimed;
+        if(structureOkay!=formed){structureOkay=formed;syncToClient();}
+        return formed;
+    }
+    @Override public boolean containsToolPosition(BlockPos pos) {
+        var centre=bodyCentre();
+        return com.gregtech.gregtech.content.multiblock.OriginalLargeBoilerParameters.contains(
+                pos.getX()-centre.getX(),pos.getY()-centre.getY(),pos.getZ()-centre.getZ());
+    }
+    @Override public long useMultiblockTool(net.minecraft.world.item.context.UseOnContext context,List<Component> messages) {
+        if(level==null||level.isClientSide||isRemoved()||!containsToolPosition(context.getClickedPos()))return 0;
+        if(GTToolHelper.matchesTool(context.getItemInHand(),GTToolType.BUILDER_WAND)) {
+            var centre=bodyCentre();
+            for(var cell:com.gregtech.gregtech.content.multiblock.OriginalLargeBoilerParameters.CHECK_ORDER) {
+                var position=centre.offset(cell.x(),cell.y(),cell.z());
+                if(position.equals(worldPosition)||cell.role()==com.gregtech.gregtech.api.multiblock.StructureGrid.Role.AIR)continue;
+                var block=cell.role()==com.gregtech.gregtech.api.multiblock.StructureGrid.Role.HEAT_INPUT
+                        ?GTMultiblocks.HEAT_TRANSMITTER.get():variant.wall();
+                com.gregtech.gregtech.api.multiblock.MultiblockTools.build(context,position,block);
+            }
+            isStructureOk();
+            return com.gregtech.gregtech.api.multiblock.MultiblockToolRules.BUILDER_COST;
+        }
+        if(GTToolHelper.matchesTool(context.getItemInHand(),GTToolType.MAGNIFYING_GLASS)) {
+            messages.addAll(magnifyingGlassMessages());
+            return com.gregtech.gregtech.api.multiblock.MultiblockToolRules.MAGNIFIER_COST;
+        }
+        return 0;
+    }
+    public List<Component> magnifyingGlassMessages() {
+        boolean previous=structureOkay,formed=isStructureOk();
+        if(!previous||!formed)return List.of(Component.literal(
+                com.gregtech.gregtech.api.multiblock.MultiblockToolRules.structureMessage(previous,formed)));
+        // This source override replaces the generic "formed already" line with boiler details.
+        return List.of(Component.literal(com.gregtech.gregtech.content.multiblock.OriginalLargeBoilerParameters.calcificationMessage(efficiency)),
+                com.gregtech.gregtech.api.multiblock.MultiblockTools.tankContent(water,"WARNING: NO WATER!!!"));
     }
 
-    private boolean invalid() { bindings.clear(this::release); return false; }
     private void release(BlockPos position) {
         if (level != null && level.hasChunkAt(position)
                 && level.getBlockEntity(position) instanceof MultiblockPortBlockEntity port)
@@ -231,14 +270,10 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
 
     public InteractionResult onToolUse(Player player, InteractionHand hand) {
         ItemStack held = player.getItemInHand(hand);
-        if (GTToolHelper.matchesTool(held, GTToolType.MAGNIFYING_GLASS)) {
-            if (!level.isClientSide) {
-                player.displayClientMessage(Component.translatable("message.gregtech.large_boiler.calcification",
-                        (10_000 - efficiency) / 100.0), false);
-                player.displayClientMessage(Component.translatable("message.gregtech.large_boiler.water",
-                        water.getAmount(), water.getFluid().getDisplayName()), false);
-            }
-            return InteractionResult.sidedSuccess(level.isClientSide);
+        if(GTToolHelper.matchesTool(held,GTToolType.MAGNIFYING_GLASS)||GTToolHelper.matchesTool(held,GTToolType.BUILDER_WAND)) {
+            if(level.isClientSide)return InteractionResult.SUCCESS;
+            return com.gregtech.gregtech.api.multiblock.MultiblockTools.use(new net.minecraft.world.item.context.UseOnContext(player,hand,
+                    new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(worldPosition),front(),worldPosition,false)));
         }
         if (GTToolHelper.matchesTool(held, GTToolType.PLUNGER)) {
             if (!level.isClientSide) {
@@ -427,12 +462,14 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
         tag.putInt("gt.cooldown", cooldown);
         tag.putInt("gt.efficiency", efficiency);
         tag.putInt("gt.barometer", barometer);
+        tag.putBoolean("gt.state.str",structureOkay);
         CompoundTag waterTag = new CompoundTag(); water.writeToNBT(waterTag); tag.put("gt.water", waterTag);
         CompoundTag steamTag = new CompoundTag(); steam.writeToNBT(steamTag); tag.put("gt.steam", steamTag);
     }
     @Override public void load(CompoundTag tag) {
         super.load(tag);
         heat = Math.max(0, tag.getLong("gt.heat"));
+        structureOkay=tag.getBoolean("gt.state.str");
         cooldown = tag.contains("gt.cooldown") ? Math.max(0, Math.min(128, tag.getInt("gt.cooldown"))) : 128;
         efficiency = tag.contains("gt.efficiency")
                 ? com.gregtech.gregtech.content.machine.OriginalFunctionalTooltipData.boilerEfficiency(tag.getInt("gt.efficiency")) : 10_000;

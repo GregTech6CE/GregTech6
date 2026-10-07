@@ -12,6 +12,59 @@ import net.minecraft.world.level.block.Blocks;
 @net.neoforged.neoforge.gametest.GameTestHolder("gregtech_sensor_source")
 @net.neoforged.neoforge.gametest.PrefixGameTestTemplate(false)
 public final class SensorSourceTests {
+    @GameTest(template="test_empty",timeoutTicks=300)
+    public static void original_boiler_builder_and_diagnostics(GameTestHelper h) {
+        var world=h.getLevel();var pos=h.absolutePos(new BlockPos(7,3,7));
+        var player=net.neoforged.neoforge.common.util.FakePlayerFactory.get(world,new com.mojang.authlib.GameProfile(java.util.UUID.randomUUID(),"BoilerBuilder"));
+        player.gameMode.changeGameModeForPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+        player.setPos(net.minecraft.world.phys.Vec3.atCenterOf(pos.offset(-4,0,-4)));
+        for(var variant:com.gregtech.gregtech.content.multiblock.OriginalLargeBoilerSpecs.all())for(var front:Direction.Plane.HORIZONTAL) {
+            var block=BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.parse("gregtech:"+variant.path()));
+            var centre=pos.relative(front.getOpposite());
+            world.setBlockAndUpdate(pos,block.defaultBlockState().setValue(net.minecraft.world.level.block.HorizontalDirectionalBlock.FACING,front));
+            var boiler=(com.gregtech.gregtech.blockentity.machine.OriginalLargeBoilerControllerBlockEntity)world.getBlockEntity(pos);
+            var wand=com.gregtech.gregtech.item.GTToolItem.create(com.gregtech.gregtech.api.tool.GTToolType.BUILDER_WAND,
+                    com.gregtech.gregtech.api.material.GTMaterialRegistry.get("Heliodor"),com.gregtech.gregtech.api.material.GTMaterialRegistry.get("Wood"));
+            player.getInventory().clearContent();player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,wand);
+            player.getInventory().setItem(35,new ItemStack(com.gregtech.gregtech.registry.GTMultiblocks.HEAT_TRANSMITTER.get(),9));
+            player.getInventory().setItem(34,new ItemStack(variant.wall(),25));
+            h.assertTrue(useHeatTool(player,pos).consumesAction()&&!boiler.isStructureOk(),"Controller-local build is handled but cannot reach the full shell "+variant.path()+front);
+            h.assertTrue(player.getInventory().getItem(35).getCount()==3&&player.getInventory().getItem(34).getCount()==15,
+                    "First click consumes exactly six heat transmitters and ten walls in every facing");
+            var part=(com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity)world.getBlockEntity(centre);
+            h.assertTrue(part!=null&&part.isBoundTo(pos)&&part.fluidToolHandler(Direction.DOWN,false).getTanks()==0,
+                    "Incomplete boiler keeps part tool access without opening storage");
+            useHeatTool(player,centre);
+            useHeatTool(player,centre.east().above());
+            useHeatTool(player,centre.above(2));
+            h.assertTrue(boiler.isStructureOk()&&wand.getDamageValue()==4,"Four local clicks complete the source structure at one wear each");
+            h.assertTrue(world.getBlockState(pos).is(block)&&world.getBlockState(centre.above()).isAir()
+                    &&player.getInventory().getItem(35).isEmpty()&&player.getInventory().getItem(34).isEmpty(),
+                    "Builder preserves controller and hollow centre; total consumption is nine transmitters and twenty-five walls");
+            var messages=boiler.magnifyingGlassMessages();
+            h.assertTrue(messages.size()==2&&messages.get(0).getString().equals("No Calcification in this Boiler")
+                    &&messages.get(1).getString().equals("WARNING: NO WATER!!!"),"Source formed boiler override reports no scale and empty-water warning");
+            var water=new net.neoforged.neoforge.fluids.FluidStack(net.minecraft.world.level.material.Fluids.WATER,10000);
+            h.assertTrue(boiler.directFluidHandler().fill(water,net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE)==10000,"Formed boiler admits actual native water");
+            var data=new net.minecraft.nbt.CompoundTag();data.putInt("gt.efficiency",9876);data.putBoolean("gt.state.str",true);boiler.loadWithComponents(data,world.registryAccess());
+            messages=boiler.magnifyingGlassMessages();
+            h.assertTrue(messages.size()==2&&messages.get(0).getString().equals("Calcification: 1.24%")
+                    &&messages.get(1).getString().startsWith("10_000 L of ")&&messages.get(1).getString().endsWith(" (Liquid)"),
+                    "Source scale precision and actual water contents remain intact after state load");
+            var glass=com.gregtech.gregtech.item.GTToolItem.create(com.gregtech.gregtech.api.tool.GTToolType.MAGNIFYING_GLASS,
+                    com.gregtech.gregtech.api.material.GTMaterialRegistry.get("Glass"),com.gregtech.gregtech.api.material.GTMaterialRegistry.get("Wood"));
+            player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,glass);
+            h.assertTrue(useHeatTool(player,centre).consumesAction()&&glass.getDamageValue()==1,"Magnifier on a wall reaches boiler with one wear");
+            world.setBlockAndUpdate(centre.above(),Blocks.STONE.defaultBlockState());
+            h.assertTrue(!boiler.isStructureOk()&&part.isBoundTo(pos),"Blocked hollow prevents formation without dropping valid bindings");
+            h.assertTrue(boiler.magnifyingGlassMessages().get(0).getString().equals("Structure did not form!"),"Broken boiler does not report normal formed diagnostics");
+            world.removeBlock(pos,false);
+            for(var cell:com.gregtech.gregtech.content.multiblock.OriginalLargeBoilerParameters.CHECK_ORDER)
+                world.setBlockAndUpdate(centre.offset(cell.x(),cell.y(),cell.z()),Blocks.AIR.defaultBlockState());
+        }
+        h.succeed();
+    }
+
     @GameTest(template="test_empty",timeoutTicks=160)
     public static void heat_exchanger_builder_and_magnifier(GameTestHelper h) {
         var world=h.getLevel();var pos=h.absolutePos(new BlockPos(7,2,7));
