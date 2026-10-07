@@ -32,7 +32,7 @@ final class CommonBlockDeliveryChecks {
             if (SourceBlockProperties.block(BuiltInRegistries.BLOCK.getKey(block).getPath()).isPresent()) sourceBlocks++;
             else sourceMachines++;
         }
-        require(sourceBlocks == 1011 && sourceMachines >= 250, "all adopted original metadata identities present");
+        require(sourceBlocks == 1311 && sourceMachines >= 250, "all adopted original metadata identities present");
         for (var item : representatives.values()) verifyRows(new ItemStack(item));
         int storedCovers = 0;
         var machine = new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gregtech:electric_motor_lv")));
@@ -74,7 +74,7 @@ final class CommonBlockDeliveryChecks {
     }
 
     private static JsonObject verifyStorage() {
-        int safes=0,drawers=0,tables=0,crates=0,mass=0,hoppers=0;
+        int safes=0,drawers=0,tables=0,crates=0,mass=0,hoppers=0,shelves=0,scaffolds=0;
         for (var item : BuiltInRegistries.ITEM) {
             if (!(item instanceof BlockItem nativeItem)) continue;
             if (!BuiltInRegistries.ITEM.getKey(item).getNamespace().equals("gregtech")) continue;
@@ -84,11 +84,27 @@ final class CommonBlockDeliveryChecks {
                     || type instanceof com.gregtech.gregtech.block.misc.AdvancedCraftingTableBlock
                     || type instanceof com.gregtech.gregtech.block.inventory.BottleCrateBlock
                     || type instanceof com.gregtech.gregtech.block.inventory.MassStorageBlock
+                    || type instanceof com.gregtech.gregtech.block.BookShelfBlock
+                    || type instanceof com.gregtech.gregtech.block.tool.ScaffoldBlock
                     || item instanceof com.gregtech.gregtech.block.machine.HopperBlockItem
                     || item instanceof com.gregtech.gregtech.block.machine.QueueHopperBlockItem)) continue;
             var block=nativeItem.getBlock(); var stack=new ItemStack(item); var lines=tooltip(stack);
             boolean facing=false;
-            if (block instanceof com.gregtech.gregtech.block.inventory.SafeBlock safe) {
+            if (block instanceof com.gregtech.gregtech.block.BookShelfBlock shelf) {
+                require(countKey(lines,"gt.lang.nogui.rightclick.interact")==1
+                        && countKey(lines,"gt.lang.use.pincers.to.take")==1
+                        && countKey(lines,"gt.lang.use.magnifyingglass.to.detail")==1,"original shelf interaction rows");
+                require(lines.stream().anyMatch(row->CommonBlockTooltips.containsKey(List.of(row),"gt.lang.nogui.rightclick.interact")
+                        && row.getStyle().getColor().getValue()==net.minecraft.ChatFormatting.GOLD.getColor()),"original shelf no-GUI orange tone");
+                require(countKey(lines,"tooltip.gregtech.machine.nogui.click_front")==0
+                        && countKey(lines,"tooltip.gregtech.smeltery.tool.pincers")==0
+                        && countKey(lines,"tooltip.gregtech.machine.tool.magnifying_glass")==0,"obsolete guessed shelf rows absent");
+                if(shelf.variant().metal())require(BlockHarvestPolicy.source(block).orElseThrow().sourceId()==shelf.variant().originalId(),"actual metal shelf source ID");
+                shelves++;facing=true;
+            } else if (block instanceof com.gregtech.gregtech.block.tool.ScaffoldBlock) {
+                require(BlockHarvestPolicy.level(block)==0 && !BlockHarvestPolicy.handHarvestable(block),"actual scaffold explicit0 machine harvest rule");
+                scaffolds++;facing=true;
+            } else if (block instanceof com.gregtech.gregtech.block.inventory.SafeBlock safe) {
                 require(countKey(lines,safe.keyLocked()?"gt.lang.key.controlled":"gt.lang.owner.controlled")==1,"source lock rule once "+stack);
                 require(countKey(lines,"gt.tooltip.safe.1")==0 && countKey(lines,"gt.tooltip.safe.2")==0,"old guessed safe rows removed");
                 safes++;facing=true;
@@ -127,6 +143,7 @@ final class CommonBlockDeliveryChecks {
         }
         require(safes==120 && drawers==60 && tables==120 && hoppers==120,"all original native storage/tool families");
         require(mass==121 && crates==61+com.gregtech.gregtech.content.storage.BottleCrateVariants.WOODS.size(),"existing ordinary/logistics/legacy and wooden crate variants");
+        require(shelves==com.gregtech.gregtech.content.book.BookShelfVariants.all().size() && scaffolds==60,"all actual native shelf/scaffold variants");
         var packed=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gregtech:mass_storage_steel")));
         var template=new ItemStack(Items.APPLE); name(template,Component.literal("Storage probe"));
         for (int mode : new int[]{0,8}) for (long count : new long[]{0,1_000_257}) {
@@ -152,6 +169,7 @@ final class CommonBlockDeliveryChecks {
         require(tooltip(safe).stream().anyMatch(row->row.getString().endsWith("other:custom")),"unknown table retains actual identity");
         var result=new JsonObject();result.addProperty("safes",safes);result.addProperty("drawers",drawers);result.addProperty("craftingTables",tables);
         result.addProperty("bottleCrates",crates);result.addProperty("massStorages",mass);result.addProperty("hoppers",hoppers);
+        result.addProperty("bookShelves",shelves);result.addProperty("scaffolds",scaffolds);
         result.addProperty("savedMassConfigurations",4);result.addProperty("scope","actual native tooltip calls/events and saved item state; no world interaction or screen hover claim");return result;
     }
     private static boolean number(List<Component> lines,String key,int value) {

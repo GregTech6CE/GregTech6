@@ -38,6 +38,10 @@ public final class StorageBlockTooltips {
         add(lines, "gt.lang.nogui.rightclick.interact", ChatFormatting.GOLD); facing(lines);
     }
     public static void craftingTable(List<Component> lines) { tools(lines, OriginalStorageTooltipData.craftingTableTools()); facing(lines); }
+    public static void bookShelf(List<Component> lines) {
+        add(lines, "gt.lang.nogui.rightclick.interact", ChatFormatting.GOLD);
+        tools(lines, OriginalStorageTooltipData.bookShelfTools()); facing(lines);
+    }
     private static void loot(ItemStack stack, List<Component> lines) {
         var data = CommonBlockTooltips.blockData(stack);
         if (data == null) return;

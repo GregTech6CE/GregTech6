@@ -34,6 +34,7 @@ public final class MachineSpecBehaviorContracts {
         originalBlastTooltips();
         originalHarvestProperties();
         originalStorageMaterialsAndTooltips();
+        originalRemainingStorageMaterials();
         originalManualAndBoilerTooltips();
         originalLargeBoilerTooltipState();
         originalEnergyDeviceTooltips();
@@ -155,7 +156,7 @@ public final class MachineSpecBehaviorContracts {
 
     private static void originalHarvestProperties() {
         var properties = com.gregtech.gregtech.data.SourceBlockProperties.blocks();
-        check(properties.size() == 1011, "471 fixed source identities plus120 hoppers and420 audited storage variants");
+        check(properties.size() == 1311, "471 fixed source identities plus120 hoppers and720 audited storage variants");
         check(com.gregtech.gregtech.data.SourceBlockProperties.basics().size() == 252, "All252 adopted original machine metadata keys");
         var wood = properties.get("gearbox_wood");
         check(wood.sourceId() == 24809 && wood.tool().equals("axe") && wood.handHarvestable(), "Wood gearbox original aWooden exemption");
@@ -195,9 +196,9 @@ public final class MachineSpecBehaviorContracts {
     private static void originalStorageMaterialsAndTooltips() {
         var storage = com.gregtech.gregtech.content.machine.OriginalStorageMaterialData.blocks();
         var harvest = com.gregtech.gregtech.content.machine.OriginalStorageMaterialData.harvest();
-        check(storage.size() == 420 && harvest.size() == 420, "Seven original storage families across60 metalsets");
-        check(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.blocks().size() == 1009,
-                "469 fixed plus120 hoppers plus420 precise storage records");
+        check(storage.size() == 720 && harvest.size() == 720, "Twelve existing original storage families across60 metalsets");
+        check(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.blocks().size() == 1309,
+                "469 fixed plus120 hoppers plus720 precise storage records");
         long u = GTValues.U;
         for (var spec : com.gregtech.gregtech.registry.GTStorageMetals.ALL) {
             var metal = spec.material().resolve();
@@ -238,6 +239,55 @@ public final class MachineSpecBehaviorContracts {
         }
         check(com.gregtech.gregtech.content.storage.OriginalStorageTooltipData.lootKey("minecraft:chests/simple_dungeon").equals("loot.dungeonChest")
                 && com.gregtech.gregtech.content.storage.OriginalStorageTooltipData.lootKey("other:custom") == null, "Known source loot label maps explicitly; custom table identity retained");
+    }
+
+    private static void originalRemainingStorageMaterials() {
+        var storage = com.gregtech.gregtech.content.machine.OriginalStorageMaterialData.blocks();
+        var harvest = com.gregtech.gregtech.content.machine.OriginalStorageMaterialData.harvest();
+        long u = GTValues.U;
+        for (var spec : com.gregtech.gregtech.registry.GTStorageMetals.ALL) {
+            String suffix = spec.suffix(), tableSuffix = suffix.equals("steel") ? "" : "_"+suffix;
+            var metal = spec.material().resolve();
+            var amounts = java.util.Map.of("advanced_crafting_table"+tableSuffix,4*u+2*u/9,
+                    "charging_crafting_table"+tableSuffix,4*u+4*u/9,
+                    "logistics_mass_storage_"+suffix,18*u+8*u/9,
+                    suffix.equals("steel")?"scaffold":"scaffold_"+suffix,2*u+2*u/9);
+            for (var row : amounts.entrySet()) {
+                var expected = new java.util.HashMap<String,Long>();expected.put(metal.getName(),row.getValue());
+                String path = row.getKey(); int offset;
+                if (path.startsWith("charging_crafting_table")) {
+                    offset=5500;expected.merge(GTMaterialRegistry.get("Gold").getName(),8*u,Long::sum);
+                    expected.put("Rubber",8*u);expected.put("Wood",4*u);
+                } else if (path.startsWith("advanced_crafting_table")) { offset=5000;expected.put("Wood",4*u); }
+                else if (path.startsWith("logistics_mass_storage_")) {
+                    offset=6200;
+                    expected.merge(GTMaterialRegistry.get("Aluminium").getName(),10*u/9,Long::sum);
+                    expected.merge(GTMaterialRegistry.get("Platinum").getName(),u,Long::sum);
+                    expected.merge(GTMaterialRegistry.get("Emerald").getName(),u,Long::sum);
+                    expected.merge(GTMaterialRegistry.get("Osmium").getName(),u/4,Long::sum);
+                } else offset=8400;
+                composition(storage.get(path),expected);
+                var metadata = harvest.get(path);
+                check(metadata.sourceId()==harvest.get("chest_"+suffix).sourceId()+offset
+                        && metadata.material().resolve()==metal,"Remaining metalset source identity "+path);
+                check(metadata.tool().equals("wrench") && !metadata.handHarvestable()
+                        && metadata.level()==(offset==8400?0:metal.getToolQuality()),"Actual source metadata, including explicit0 scaffold "+path);
+            }
+        }
+        int shelves=0;
+        for (var row : harvest.entrySet()) if (row.getKey().startsWith("bookshelf_metal_")) {
+            var metadata=row.getValue();var metal=metadata.material().resolve();
+            composition(storage.get(row.getKey()),java.util.Map.of(metal.getName(),4*u+2*u/9));
+            var base=harvest.entrySet().stream().filter(e->e.getKey().startsWith("chest_")
+                    && e.getValue().sourceId()==metadata.sourceId()-7100).findFirst().orElseThrow().getValue();
+            check(base.material().resolve()==metal && metadata.tool().equals("wrench") && !metadata.handHarvestable()
+                    && metadata.level()==metal.getToolQuality(),"Metal shelf original identity and actual construction material "+row.getKey());
+            shelves++;
+        }
+        check(shelves==60 && harvest.get("bookshelf_metal_stainless_steel").sourceId()==7111,"All original metal shelves including native split-word paths");
+        check(!storage.containsKey("locker") && !storage.containsKey("charging_locker"),"Unported original locker variants cannot give a false identity to the legacy mixed recipe");
+        check(com.gregtech.gregtech.content.storage.OriginalStorageTooltipData.bookShelfTools().equals(java.util.List.of(
+                "gt.lang.use.pincers.to.take","gt.lang.use.magnifyingglass.to.detail")),"Book shelf original take/detail tools without fabricated loot rows");
     }
 
     private static void originalManualAndBoilerTooltips() {

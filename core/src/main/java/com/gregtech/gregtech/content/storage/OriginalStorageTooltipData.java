@@ -40,6 +40,7 @@ public final class OriginalStorageTooltipData {
     }
     public static List<String> drawerTools() { return List.of(INPUTS); }
     public static List<String> craftingTableTools() { return List.of(INPUTS, SCREWDRIVER); }
+    public static List<String> bookShelfTools() { return List.of(PINCERS, MAGNIFIER); }
 
     /** Only source ChestGenHooks names with an explicit adopted modern table identity. */
     public static String lootKey(String table) {
