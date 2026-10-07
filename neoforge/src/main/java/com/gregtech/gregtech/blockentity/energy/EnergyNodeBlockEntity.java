@@ -29,7 +29,7 @@ import java.util.List;
  * storage cabinets (EU buffer). Inputs on every face except the front; output
  * packets of {@code outputRate} leave through the front (FACING).
  */
-public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gregtech.gregtech.api.inventory.BlockContents, com.gregtech.gregtech.api.machine.MachineControl.Provider, com.gregtech.gregtech.content.cover.PanelCoverHost {
+public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gregtech.gregtech.api.machine.AdjacentEnergyControl.Provider, com.gregtech.gregtech.api.inventory.BlockContents, com.gregtech.gregtech.api.machine.MachineControl.Provider, com.gregtech.gregtech.content.cover.PanelCoverHost {
 
     private java.util.Map<Direction,net.minecraft.world.item.ItemStack> batteryCovers=new java.util.EnumMap<>(Direction.class);
     private com.gregtech.gregtech.content.cover.PanelCoverRuntime batteryPanels;
@@ -855,6 +855,17 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
             level.explode(null,worldPosition.getX()+0.5,worldPosition.getY()+0.5,worldPosition.getZ()+0.5,
                     power,Level.ExplosionInteraction.BLOCK);
         }
+    }
+    @Override public com.gregtech.gregtech.api.machine.AdjacentEnergyControl adjacentEnergyControl() {
+        if (!hasOriginalConverter() || !com.gregtech.gregtech.content.energy.OriginalAdjacentEnergyRules.respondsToAdjacent(spec)) return null;
+        return enabled -> {
+            // Source waste-energy converters use the same stopped state for manual and adjacent requests.
+            // Stored remainder still converts/drains normally; changing the request must not erase it.
+            if (!isRemoved() && (level == null || !level.isClientSide) && converterStopped == enabled) {
+                converterStopped = !enabled; setChanged();
+            }
+            return !converterStopped;
+        };
     }
     @Override public com.gregtech.gregtech.api.machine.MachineControl machineControl(Direction side) {
         if (hasOriginalConverter()) return new com.gregtech.gregtech.api.machine.MachineControl() {

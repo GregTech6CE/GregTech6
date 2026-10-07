@@ -74,6 +74,25 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     private boolean mActive;        // currently processing a recipe
     private boolean mRunning;       // machine is in running state (energy present)
     private boolean controlStopped;
+    private boolean adjacentEnergySourcesChanged = true;
+    private Direction adjacentEnergyFacing;
+    private int adjacentEnergyInputs = -1;
+    public void adjacentEnergySourcesChanged() { adjacentEnergySourcesChanged = true; }
+    protected void updateAdjacentToggleableEnergySources() {
+        if (level == null || level.isClientSide || spec == null || isRemoved()) return;
+        for (var side : Direction.values()) if (isEnergyAcceptingFrom(spec.energyTag(), side, true)) {
+            var target = worldPosition.relative(side);
+            if (level.hasChunkAt(target)) com.gregtech.gregtech.api.machine.AdjacentEnergyControl.update(
+                    level.getBlockEntity(target), spec.energyTag(), side.getOpposite(), !controlStopped);
+        }
+    }
+    private void refreshAdjacentEnergySources() {
+        var facing = getBlockState().getValue(HorizontalDirectionalBlock.FACING);
+        if (adjacentEnergySourcesChanged || adjacentEnergyFacing != facing || adjacentEnergyInputs != faceConfig.energyInputs()) {
+            adjacentEnergySourcesChanged = false; adjacentEnergyFacing = facing; adjacentEnergyInputs = faceConfig.energyInputs();
+            updateAdjacentToggleableEnergySources();
+        }
+    }
     private final com.gregtech.gregtech.content.cover.PanelCoverRuntime panels=new com.gregtech.gregtech.content.cover.PanelCoverRuntime(this);
     @Override public com.gregtech.gregtech.content.cover.PanelCoverRuntime panels(){return panels;}
     @Override public boolean coverSupportsPossible(){return true;}
@@ -88,7 +107,8 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         public boolean setEnabled(boolean enabled){
             if(!available())return false;
             if(level!=null&&level.isClientSide)return !controlStopped;
-            controlStopped=!enabled;mInventoryChanged=true;
+            boolean changed=controlStopped==enabled;controlStopped=!enabled;mInventoryChanged=true;
+            if(changed)updateAdjacentToggleableEnergySources();
             if(!enabled){mEnergy=0;mActive=false;mRunning=false;updateBlockStates(false,false);}
             setChanged();return !controlStopped;
         }
@@ -109,6 +129,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     public void setSpec(BasicMachineSpec spec) {
         this.spec = spec;
+        adjacentEnergySourcesChanged();
         this.recipeMap = spec.recipeMap();
         this.faceConfig = spec.faceConfig();
         int totalSlots = recipeMap.mInputItemsCount + recipeMap.mOutputItemsCount;
@@ -160,6 +181,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     private void tickServer(Level level, BlockPos pos) {
         if (faceConfig == null || spec == null) return;
+        refreshAdjacentEnergySources();
         beforeMachineTick();
         coverTicks++;
         panels.beforeTick();
@@ -319,7 +341,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         covers[side.ordinal()] = ItemStack.EMPTY;
         panels.beforeTick();
         var removedSpec=MachineCoverSpec.of(cover);
-        if(removedSpec!=null&&!removedSpec.detector()||com.gregtech.gregtech.content.cover.PanelCover.of(cover)==com.gregtech.gregtech.content.cover.PanelCover.STATUS)controlStopped=false;
+        if(removedSpec!=null&&!removedSpec.detector()||com.gregtech.gregtech.content.cover.PanelCover.of(cover)==com.gregtech.gregtech.content.cover.PanelCover.STATUS){controlStopped=false;updateAdjacentToggleableEnergySources();}
         mInventoryChanged=true;
         invalidateSideCaps();
         setChanged();
@@ -529,7 +551,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             int signal=level.hasChunkAt(neighbor)?level.getSignal(neighbor,side):0;
             allowed=cover.allows(state,signal,MachineCoverSpec.inverted(stack),coverTicks);
         }
-        if(controlled&&controlStopped==allowed){controlStopped=!allowed;setChanged();}
+        if(controlled&&controlStopped==allowed){controlStopped=!allowed;setChanged();updateAdjacentToggleableEnergySources();}
         return !controlStopped;
     }
 
@@ -1246,6 +1268,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             autocraftingProgram.deserializeNBT(lookup, savedProgram);
         }
         controlStopped=tag.getBoolean("gt.control_stopped");
+        adjacentEnergySourcesChanged();
         coverTicks=Math.max(0,tag.getLong("gt.cover_ticks"));successful=false;workPossible=false;mInventoryChanged=true;
         if (tag.contains(NBT_ENERGY)) mEnergy = tag.getLong(NBT_ENERGY);
         if (tag.contains(NBT_PROGRESS)) mProgress = tag.getLong(NBT_PROGRESS);

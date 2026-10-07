@@ -35,6 +35,7 @@ public final class MachineSpecBehaviorContracts {
         originalTankTooltipsAndControllerMaterials();
         originalProcessControllerParameters();
         originalCryoDistillationParametersAndOutlets();
+        originalAdjacentEnergySources();
         originalMachineMaterials();
         originalBlastTooltips();
         originalHarvestProperties();
@@ -121,6 +122,24 @@ public final class MachineSpecBehaviorContracts {
                 "ordinary basic machine does not acquire specialized multiblock rows");
     }
 
+    private static void originalAdjacentEnergySources() {
+        var positions = com.gregtech.gregtech.content.energy.OriginalAdjacentEnergyRules.TOWER_SOURCES;
+        check(positions.size() == 9 && new java.util.HashSet<>(positions).size() == 9, "source nine unique providers below transmitter base");
+        for (int x=-1;x<=1;x++) for(int z=0;z<=2;z++) check(positions.contains(
+                new com.gregtech.gregtech.content.energy.OriginalAdjacentEnergyRules.Position(x,-2,z)),
+                "canonical source control coordinate relative to front-bottom main "+x+"/"+z);
+        for (var spec : com.gregtech.gregtech.content.energy.OriginalThermalConverter.specifications())
+            check(com.gregtech.gregtech.content.energy.OriginalAdjacentEnergyRules.respondsToAdjacent(spec),
+                    "source twenty electric/flux thermal registrations all WASTE_ENERGY=T "+spec.id());
+        check(!com.gregtech.gregtech.content.energy.OriginalAdjacentEnergyRules.respondsToAdjacent(null), "no adjacent source contract without an imported spec");
+        var unsupported = com.gregtech.gregtech.api.energy.EnergyNodeSpec.builder("fixture_generic_hu_source",
+                com.gregtech.gregtech.content.material.Materials.StainlessSteel)
+                .texture("fixture").names("Fixture", "Fixture").capacity(64)
+                .input(com.gregtech.gregtech.data.GregTechTags.Energy.EU,32)
+                .output(com.gregtech.gregtech.data.GregTechTags.Energy.HU,16).build();
+        check(!com.gregtech.gregtech.content.energy.OriginalAdjacentEnergyRules.respondsToAdjacent(unsupported),
+                "generic switchable energy nodes do not acquire an unregistered source WASTE contract");
+    }
     private static void originalCryoDistillationParametersAndOutlets() {
         var p=com.gregtech.gregtech.content.multiblock.OriginalMultiblockMachineParameters.cryoDistillationTower();
         check(p.id().equals("cryo_distillation_main") && p.machineName().equals("cryodistillationtower")
