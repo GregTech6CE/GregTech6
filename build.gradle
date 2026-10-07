@@ -382,7 +382,7 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 tasks.register('sourcePolicyCheck', Exec) {
-    description = 'Checks source-set boundaries and exact original Chinese strings without starting a game.'
+    description = 'Checks source-set/platform boundaries, Chinese literals and exact original language without starting a game.'
     group = 'verification'
     workingDir rootDir
     commandLine (findProperty('pythonExecutable') ?: 'python'), '-X', 'utf8',

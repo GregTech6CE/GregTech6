@@ -41,7 +41,7 @@ public final class OriginalSteamTurbines {
         // but use that concrete identity at the native block boundary.
         return VARIANTS.stream().map(v -> EnergyNodeSpec.builder(v.id(),v.hull()==MaterialGroups.Steel ? Materials.Steel : v.hull()).kind(EnergyNodeSpec.Kind.TURBINE)
                 .texture("turbines/rotation_steam").input(GregTechTags.Energy.STEAM,v.input()).output(GregTechTags.Energy.RU,v.output())
-                .capacity(v.input()*2).names(v.name(),v.name()).build()).toList();
+                .capacity(v.input()*2).name(v.name()).build()).toList();
     }
     public static List<Row> rows() {
         return VARIANTS.stream().map(v -> new Row("turbines/"+v.id(),List.of("TwT","GSG","TMT"),Map.of(

@@ -11,22 +11,75 @@ from localization import ROOT, json_text, synchronize
 
 SOURCE_ROOTS = ('core/src/main', 'src/main', 'src/generated',
                 'neoforge/src/main', 'neoforge/src/generated')
-IMPORT = re.compile(r'^\s*import\s+(?:static\s+)?([\w.]+)', re.M)
+CJK = re.compile(r'[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\U00020000-\U000323af]')
+# Text blocks precede ordinary strings. Comments/characters must also be consumed
+# whole so quotes inside them cannot manufacture apparent imports or translations.
+JAVA_TOKEN = re.compile(
+    r'//[^\r\n]*|/\*[\s\S]*?\*/|"""(?:\\[\s\S]|(?!""")[^\\])*"""'
+    r'|"(?:\\[\s\S]|[^"\\])*"|\'(?:\\[\s\S]|[^\'\\])*\'')
+UNICODE_ESCAPE = re.compile(r'u+([0-9a-fA-F]{4})')
+SURROGATE_PAIR = re.compile(r'([\ud800-\udbff])([\udc00-\udfff])')
+PLATFORM_REFERENCE = re.compile(
+    r'\b(?:net\s*\.\s*(?:minecraft|minecraftforge|neoforged)'
+    r'|com\s*\.\s*gregtech\s*\.\s*gregtech\s*\.\s*platform)\s*\.')
+
+
+def java_unicode(source):
+    """Java expands eligible Unicode escapes before it recognizes comments/literals.
+
+    Keep escaped backslashes literal; never recursively interpret the result.
+    This also catches fully-qualified platform names written with Unicode escapes.
+    """
+    if '\\u' not in source:
+        return source
+    result, index, backslashes, escaped = [], 0, 0, False
+    while index < len(source):
+        char = source[index]
+        match = (UNICODE_ESCAPE.match(source, index + 1)
+                 if char == '\\' and (escaped or backslashes % 2 == 0) else None)
+        if match:
+            char = chr(int(match[1], 16))
+            index = match.end()
+            escaped = True
+        else:
+            index += 1
+            escaped = False
+        result.append(char)
+        backslashes = backslashes + 1 if char == '\\' else 0
+    return ''.join(result)
+
+
+def java_code_and_literals(source):
+    source = java_unicode(source)
+    code, literals, cursor, line = [], [], 0, 1
+    for match in JAVA_TOKEN.finditer(source):
+        gap = source[cursor:match.start()]
+        line += gap.count('\n')
+        code.append(gap)
+        token = match[0]
+        if token.startswith(('"', "'")):
+            value = SURROGATE_PAIR.sub(
+                lambda m: chr(0x10000 + ((ord(m[1]) - 0xd800) << 10) + ord(m[2]) - 0xdc00), token)
+            literals.append((line, value))
+        code.append(re.sub(r'[^\r\n]', ' ', token))
+        line += token.count('\n')
+        cursor = match.end()
+    code.append(source[cursor:])
+    return ''.join(code), literals
 
 
 def boundary_errors(path, source, *, core=False):
-    # Ignore commented-out imports and annotations; retain line starts.
-    code = re.sub(r'"(?:\\.|[^"\\])*"|//[^\n]*|/\*[\s\S]*?\*/',
-                  lambda m: m[0] if m[0].startswith('"') else re.sub(r'[^\n]', ' ', m[0]), source)
-    imports = IMPORT.findall(code)
+    code, literals = java_code_and_literals(source)
     errors = []
     if ('gametest' in path.parts or path.name == 'JeiMachineIndexTests.java'
-            or any('.gametest.' in item for item in imports)
-            or re.search(r'@(?:[\w.]+\.)?(?:GameTest|GameTestHolder|GameTestGenerator)\b', code)):
+            or re.search(r'\b(?:\w+\s*\.\s*)+gametest\s*\.', code)
+            or re.search(r'@\s*(?:\w+\s*\.\s*)*(?:GameTest|GameTestHolder|GameTestGenerator)\b', code)):
         errors.append('GameTest belongs in bootstrapGameTest, not main: ' + str(path))
-    if core and any(item.startswith(('net.minecraft.', 'net.minecraftforge.', 'net.neoforged.',
-                                    'com.gregtech.gregtech.platform.')) for item in imports):
+    if core and PLATFORM_REFERENCE.search(code):
         errors.append('Shared core must not depend on a loader or Minecraft: ' + str(path))
+    for line, value in literals:
+        if CJK.search(value):
+            errors.append(f'Chinese literal bypasses exact-source language resources: {path}:{line}')
     return errors
 
 
@@ -58,7 +111,7 @@ def check(repo):
     language = synchronize(repo)
     return {'status': 'passed', 'java_sources': count, 'language': language,
             'seconds': round(time.perf_counter() - started, 3),
-            'scope': 'Source boundaries and exact language only; not runtime/gameplay acceptance.'}
+            'scope': 'Code boundaries, Chinese literal exclusion and exact language only; not runtime/gameplay acceptance.'}
 
 
 def main():

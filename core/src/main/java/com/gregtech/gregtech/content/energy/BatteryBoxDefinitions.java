@@ -21,7 +21,7 @@ public final class BatteryBoxDefinitions {
             result.add(EnergyNodeSpec.builder((large?"energy_storage_":"battery_box_")+TIERS.get(tier),material(tier))
                     .kind(EnergyNodeSpec.Kind.STORAGE).texture("energystorages/battery_electric"+(large?"_large":""))
                     .input(GregTechTags.Energy.EU,8L<<(2*tier)).output(GregTechTags.Energy.EU,8L<<(2*tier))
-                    .batterySlots(large?16:4).capacity(0).names(name,(large?"大型电池盒 (":"电池盒 (")+label(tier)+")").build());
+                    .batterySlots(large?16:4).capacity(0).name(name).build());
         }
         return List.copyOf(result);
     }

@@ -51,6 +51,6 @@ public final class OriginalThermalConverter {
         return VARIANTS.stream().map(v -> EnergyNodeSpec.builder(v.id(), v.material()).kind(EnergyNodeSpec.Kind.CONVERTER)
                 .texture(v.texture()).input(v.id().startsWith("flux_") ? GregTechTags.Energy.RF : GregTechTags.Energy.EU, v.input())
                 .output(v.id().contains("cooler_") ? GregTechTags.Energy.CU : GregTechTags.Energy.HU, v.output())
-                .capacity(v.input() * 2).names(v.englishName(), v.englishName()).build()).toList();
+                .capacity(v.input() * 2).name(v.englishName()).build()).toList();
     }
 }
