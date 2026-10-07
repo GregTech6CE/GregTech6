@@ -1,10 +1,12 @@
 package com.gregtech.gregtech.content.multiblock;
 import java.util.List;
-/** Original eight GT6 vessels; each hull has 100 U mass and holds 432 U. */
+/** Original eight GT6 vessels (GregTech-6 Team / Gregorius Techneticies, LGPL-3.0-or-later).
+ * Thermal hull100U, capacity432U; the controller's separate REV composition is4U. */
 public final class OriginalLargeCrucibleParameters {
  private OriginalLargeCrucibleParameters(){}
  public static final long HULL_UNITS=100L*com.gregtech.gregtech.api.material.GTValues.U;
  public static final long CAPACITY_UNITS=432L*com.gregtech.gregtech.api.material.GTValues.U;
+ public static long meltDownTemperatureK(long meltingPointK) { return (long) (meltingPointK * 1.10D); }
  public record Definition(int originalId,String path,String material,int wallId,float hardness,boolean acidProof){}
  public static final List<Definition> DEFINITIONS=List.of(
             new Definition(17309, "large_steel_crucible", "Steel", 18009, 6, false),

@@ -11241,5 +11241,10 @@
   "oredict.prefix.toolHeadRawSpade": "Raw Spade Heads",
   "oredict.prefix.toolHeadRawSword": "Raw Sword Blades",
   "oredict.prefix.toolHeadRawUniversalSpade": "Raw Universal Spade Heads",
-  "oredict.prefix.toolHeadScrewdriver": "Screwdriver Tips"
+  "oredict.prefix.toolHeadScrewdriver": "Screwdriver Tips",
+  "gt.tooltip.multiblock.crucible.1": "3x3x3 Hollow of Walls with opening on Top.",
+  "gt.tooltip.multiblock.crucible.2": "Main at Bottom-Center.",
+  "gt.tooltip.multiblock.crucible.3": "Energy IN from Bottom Layer, Stuff IN from Top Layer.",
+  "gt.tooltip.multiblock.crucible.4": "Molds usable at second Layer of Walls",
+  "gt.tooltip.multiblock.crucible.5": "KU at Bottom Layer will turn into Air for Steelmaking"
 }

@@ -198,6 +198,10 @@ public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements 
 
     protected long maxMaterialAmount() { return MAX_AMOUNT; }
 
+    protected com.gregtech.gregtech.api.machine.crucible.CrucibleHazards.Profile hazardProfile() {
+        return com.gregtech.gregtech.api.machine.crucible.CrucibleHazards.SMALL;
+    }
+
     protected double thermalMassKg() { return spec.smeltingThermalMassKg(); }
 
     protected AABB itemSuctionArea() {
@@ -244,15 +248,23 @@ public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements 
     protected void tickServer() {
         long environmentTemperature = environmentTemperature();
         int contentHash = content.hashCode();
-        boolean anyVaporized = false;
 
         suckItemIntoCache();
         processCacheSlot(environmentTemperature);
         boolean newContent = contentHash != content.hashCode();
         CrucibleProcess.PhaseResult phases = CrucibleProcess.process(content, temperature,
                 previousTemperature, newContent, spec.acidProof());
-        for (int i = 0; i < phases.vaporizedStacks(); i++) playFizz();
-        anyVaporized = phases.vaporizedStacks() > 0;
+        for (int i = 0; i < phases.fizzCount(); i++) playFizz();
+        for (var vapor : phases.vapors()) SmelteryFireHelper.vaporize(level, worldPosition, hazardProfile(), vapor);
+        if (phases.explosiveAmount() > 0) {
+            int strength = com.gregtech.gregtech.api.machine.crucible.CrucibleHazards.explosionPower(hazardProfile(), phases.explosiveAmount());
+            if (level != null) {
+                level.removeBlock(worldPosition, false);
+                level.explode(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(),
+                        strength, Level.ExplosionInteraction.BLOCK);
+            }
+            return;
+        }
         if (phases.acidDestroyedHull()) {
             if (level != null) level.removeBlock(worldPosition, false);
             return;
@@ -269,13 +281,10 @@ public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements 
         temperature = stepped.temperatureK();
         cooldown = stepped.cooldownTicks();
 
-        if (anyVaporized) {
-            SmelteryFireHelper.tryIgniteNearby(level, worldPosition, temperature);
-        }
-
         if (temperature > getMeltDownLimitK()) {
             content.clear();
-            SmelteryBlockEntityHelper.meltdown(level, worldPosition);
+            playFizz();
+            SmelteryFireHelper.crucibleMeltdown(level, worldPosition, hazardProfile(), temperature);
             return;
         }
 

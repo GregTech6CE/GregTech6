@@ -49,13 +49,14 @@ public class SmeltingCrucibleEntity extends com.gregtech.gregtech.blockentity.GT
     protected SmeltingCrucibleEntity(net.minecraft.world.level.block.entity.BlockEntityType<?> type,BlockPos pos,BlockState state,com.gregtech.gregtech.api.machine.CrucibleSpec spec){super(type,pos,state);this.spec=spec;}
     public com.gregtech.gregtech.api.machine.CrucibleSpec spec(){return spec;}
     protected long maxMaterialAmount(){return MAX_AMOUNT;}
+    protected CrucibleHazards.Profile hazardProfile(){return CrucibleHazards.SMALL;}
     protected double thermalMassKg(){return spec.smeltingThermalMassKg();}
     public long getMeltDownLimitK(){return spec.meltDownTemperatureK();}
     protected ItemStackHandler cacheHandler(){return cache;}
     protected AABB itemSuctionArea(){return new AABB(worldPosition.getX()+.125,worldPosition.getY()+.125,worldPosition.getZ()+.125,worldPosition.getX()+.875,worldPosition.getY()+1,worldPosition.getZ()+.875);}
     protected long environmentTemperature(){return com.gregtech.gregtech.blockentity.machine.SmelteryBlockEntityHelper.environmentTemperature(level,worldPosition);}
     protected void sync(){setChanged();syncToClient();}
-    protected void meltdown(){com.gregtech.gregtech.blockentity.machine.SmelteryBlockEntityHelper.meltdown(level,worldPosition);}
+    protected void meltdown(){level.playSound(null,worldPosition,SoundEvents.FIRE_EXTINGUISH,SoundSource.BLOCKS,0.5F,2.6F);com.gregtech.gregtech.blockentity.machine.SmelteryFireHelper.crucibleMeltdown(level,worldPosition,hazardProfile(),getTemperature());}
     protected void addHeatEnergy(long units){if(units>0){thermal=new ThermalState(getTemperature(),thermal.previousTemperatureK(),Math.min(Long.MAX_VALUE-units,getEnergyBuffer())+units,thermal.cooldownTicks());setChanged();}}
     protected void removeHeatEnergy(long units){if(units>0){thermal=new ThermalState(getTemperature(),thermal.previousTemperatureK(),Math.max(0,getEnergyBuffer()-units),thermal.cooldownTicks());setChanged();}}
     protected void coolWithoutStructure(){if(level==null||level.isClientSide)return;long environment=environmentTemperature(),before=getTemperature(),temp=before;if(level.getGameTime()%10==0){if(temp>environment)temp--;else if(temp<environment)temp++;}temp=Math.max(temp,Math.min(200,environment));if(temp!=before){thermal=new ThermalState(temp,thermal.previousTemperatureK(),getEnergyBuffer(),thermal.cooldownTicks());sync();}}
@@ -146,12 +147,19 @@ public class SmeltingCrucibleEntity extends com.gregtech.gregtech.blockentity.GT
         }
         var phase = CrucibleProcess.process(content, getTemperature(), thermal.previousTemperatureK(),
                 before != content.hashCode(), spec.acidProof());
-        for (int i = 0; i < phase.vaporizedStacks(); i++)
+        for (int i = 0; i < phase.fizzCount(); i++)
             level.playSound(null, worldPosition, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 2.6F);
+        for (var vapor : phase.vapors()) com.gregtech.gregtech.blockentity.machine.SmelteryFireHelper.vaporize(level, worldPosition, hazardProfile(), vapor);
+        if (phase.explosiveAmount() > 0) {
+            int strength = CrucibleHazards.explosionPower(hazardProfile(), phase.explosiveAmount());
+            level.removeBlock(worldPosition, false);
+            level.explode(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), strength,
+                    net.minecraft.world.level.Level.ExplosionInteraction.BLOCK);
+            return;
+        }
         if (phase.acidDestroyedHull()) { level.removeBlock(worldPosition, false); return; }
         thermal = ThermalStep.advance(thermal, environmentTemperature(),
                 thermalMassKg() + CrucibleMaterialStack.weight(content));
-        if(phase.vaporizedStacks()>0)com.gregtech.gregtech.blockentity.machine.SmelteryFireHelper.tryIgniteNearby(level,worldPosition,getTemperature());
         if (getTemperature() > getMeltDownLimitK()) {
             content.clear(); meltdown(); return;
         }

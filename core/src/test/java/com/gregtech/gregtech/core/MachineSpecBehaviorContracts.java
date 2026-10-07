@@ -31,6 +31,7 @@ public final class MachineSpecBehaviorContracts {
         ceramicCrucibleAndMold();
         chargedCrucibleHeatRequirement();
         originalSmelteryParametersAndShapes();
+        assertions += CrucibleHazardContracts.verify();
         originalMachineMaterials();
         originalBlastTooltips();
         originalHarvestProperties();
