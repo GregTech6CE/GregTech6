@@ -32,7 +32,7 @@ final class LargeRecipeControllerDeliveryChecks {
         }
         var pack=new com.gregtech.gregtech.data.MultiblockRecipePack(new net.minecraft.server.packs.PackLocationInfo("gregtech:delivery",Component.literal("Delivery"),net.minecraft.server.packs.repository.PackSource.BUILT_IN,Optional.empty()));
         for(var entry:com.gregtech.gregtech.data.MultiblockCraftingRecipes.ENTRIES)if(entry.blockId().startsWith("large")&&OriginalLargeRecipeMachineData.handles(entry.blockId().substring(0,entry.blockId().indexOf('_')))) {
-            var resource=pack.getResource(net.minecraft.server.packs.PackType.SERVER_DATA,net.minecraft.resources.ResourceLocation.parse("gregtech:recipes/machines/multiblock/"+entry.blockId()+".json"));
+            var resource=pack.getResource(net.minecraft.server.packs.PackType.SERVER_DATA,net.minecraft.resources.ResourceLocation.parse("gregtech:recipe/machines/multiblock/"+entry.blockId()+".json"));
             require(resource!=null,"actual native recipe pack resolves controller "+entry.blockId());
             try(var input=resource.get()) {
                 var data=com.google.gson.JsonParser.parseString(new String(input.readAllBytes(),java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject();
