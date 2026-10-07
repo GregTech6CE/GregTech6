@@ -7,7 +7,8 @@ import sys
 import time
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from localization import ROOT, json_text, synchronize
+from localization import ROOT, LANG_PATH, read_json, json_text, synchronize, format_arguments
+from extract_basic_machine_recipes import match_paren, split_top_level
 
 SOURCE_ROOTS = ('core/src/main', 'src/main', 'src/generated',
                 'neoforge/src/main', 'neoforge/src/generated')
@@ -83,15 +84,53 @@ def boundary_errors(path, source, *, core=False):
     return errors
 
 
+def literal_language_calls(path, source, english):
+    """Check actual literal-key call sites, excluding comments and string examples.
+
+    Dynamic key factories/varargs remain runtime/catalog checks; this is not a
+    promise that regular expressions prove every generated registry name.
+    """
+    code, _ = java_code_and_literals(source)
+    source = java_unicode(source)
+    source = JAVA_TOKEN.sub(lambda m: re.sub(r'[^\r\n]', ' ', m[0])
+                            if m[0].startswith(('//', '/*')) else m[0], source)
+    errors, checked, dynamic = [], 0, 0
+    for match in re.finditer(r'\b(translatableWithFallback|translatable|I18n\s*\.\s*get)\s*\(', code):
+        start = code.index('(', match.start())
+        end = match_paren(source, start)
+        args = split_top_level(source[start+1:end])
+        if not args or not re.fullmatch(r'"[\w.:-]+"', args[0]):
+            dynamic += 1; continue
+        key = args[0][1:-1]
+        if not (key.startswith(('gt.', 'gregtech.', 'oredict.')) or '.gregtech.' in key): continue
+        line = code.count('\n', 0, start)+1
+        where = f'{path}:{line}'
+        checked += 1
+        if key not in english:
+            errors.append(f'Missing English language key {key} at {where}'); continue
+        supplied = args[2:] if match[1] == 'translatableWithFallback' else args[1:]
+        needed = format_arguments(english[key])
+        # An explicit varargs array has unknown length to this lightweight checker.
+        if len(supplied) == 1 and ('.toArray(' in supplied[0] or supplied[0] in ('args','arguments')):
+            dynamic += 1; continue
+        if needed and max(needed) > len(supplied):
+            errors.append(f'Insufficient language arguments for {key} at {where}: needs {max(needed)}, receives {len(supplied)}')
+    return errors, checked, dynamic
+
+
 def check(repo):
     started = time.perf_counter()
     errors, count = [], 0
+    english = read_json(repo / LANG_PATH / 'en_us.json')
+    checked_calls = dynamic_calls = 0
     for name in SOURCE_ROOTS:
         base = repo / name
         for path in sorted((base / 'java').rglob('*.java')):
             count += 1
-            errors.extend(boundary_errors(path.relative_to(repo), path.read_text(encoding='utf-8-sig'),
-                                          core=name.startswith('core/')))
+            source = path.read_text(encoding='utf-8-sig')
+            errors.extend(boundary_errors(path.relative_to(repo), source, core=name.startswith('core/')))
+            issues, checked, dynamic = literal_language_calls(path.relative_to(repo), source, english)
+            errors.extend(issues); checked_calls += checked; dynamic_calls += dynamic
         resources = base / 'resources'
         for folder in ('structures', 'structure'):
             for structures in (resources / 'data').glob('*/' + folder):
@@ -110,8 +149,9 @@ def check(repo):
         raise ValueError('\n'.join(errors))
     language = synchronize(repo)
     return {'status': 'passed', 'java_sources': count, 'language': language,
+            'literal_language_calls': checked_calls, 'dynamic_calls_requiring_catalog_or_runtime_checks': dynamic_calls,
             'seconds': round(time.perf_counter() - started, 3),
-            'scope': 'Code boundaries, Chinese literal exclusion and exact language only; not runtime/gameplay acceptance.'}
+            'scope': 'Code boundaries, exact-source Chinese, pinned English declarations, encoding/format parity and literal call-site keys/arity; dynamic registry names require the separate installed-client probe. Not gameplay acceptance.'}
 
 
 def main():
