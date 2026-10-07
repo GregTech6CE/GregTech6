@@ -7,6 +7,23 @@ final class HeatExchangerContracts {
     private static int assertions;
     static int verify() {
         assertions=0;
+        var cells=com.gregtech.gregtech.content.multiblock.SharedHeatExchangerStructure.CELLS;
+        int[][] sourceOrder={{-1,0,-1},{0,0,-1},{1,0,-1},{-1,0,0},{1,0,0},{-1,0,1},{0,0,1},{1,0,1},
+                {-1,1,-1},{0,1,-1},{1,1,-1},{-1,1,0},{0,1,0},{1,1,0},{-1,1,1},{0,1,1},{1,1,1}};
+        check(cells.size()==17,"Source heat exchanger has exactly seventeen ordered shell cells");
+        for(int i=0;i<sourceOrder.length;i++) {
+            var cell=cells.get(i);var expected=sourceOrder[i];
+            check(cell.right()==expected[0]&&cell.up()==expected[1]&&cell.back()==expected[2]
+                    &&cell.part()==(i<8||i==12?18024:18101),"Original explicit builder call order at index "+i);
+        }
+        check(com.gregtech.gregtech.api.multiblock.MultiblockToolRules.inBuilderReach(-1,1,1),
+                "Builder reaches the corner of its source three by three by three cube");
+        check(!com.gregtech.gregtech.api.multiblock.MultiblockToolRules.inBuilderReach(0,0,2),
+                "Clicking a shell edge cannot repair the opposite edge two blocks away");
+        check(com.gregtech.gregtech.api.multiblock.MultiblockToolRules.amount(9999).equals("9999")
+                &&com.gregtech.gregtech.api.multiblock.MultiblockToolRules.amount(10000).equals("10_000")
+                &&com.gregtech.gregtech.api.multiblock.MultiblockToolRules.amount(Long.MAX_VALUE).equals("9_223_372_036_854_775_807"),
+                "Tank diagnostics preserve the original grouping threshold and full long amount");
         check(HeatExchangerRules.tapTank(0)==0,"Empty output permits draining unused hot fuel");
         check(HeatExchangerRules.tapTank(1)==1,"Even one unit of output prevents selecting the input");
         check(HeatExchangerRules.tapTank(Long.MAX_VALUE)==1,"Long output retains tap priority");

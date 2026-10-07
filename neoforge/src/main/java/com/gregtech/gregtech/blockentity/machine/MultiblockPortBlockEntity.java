@@ -16,7 +16,7 @@ public final class MultiblockPortBlockEntity extends GTEnergyBlockEntity impleme
         com.gregtech.gregtech.content.logistics.LogisticsCoverHost,
         com.gregtech.gregtech.api.machine.ITileEntityCrucible,
         com.gregtech.gregtech.api.multiblock.BoundMachinePort,
-        com.gregtech.gregtech.api.fluid.FluidToolTarget {
+        com.gregtech.gregtech.api.fluid.FluidToolTarget, MultiblockToolTarget {
     private final com.gregtech.gregtech.content.logistics.LogisticsCovers covers =
             new com.gregtech.gregtech.content.logistics.LogisticsCovers(this, this);
     private BlockPos controller;
@@ -45,6 +45,24 @@ public final class MultiblockPortBlockEntity extends GTEnergyBlockEntity impleme
             // Preserve existing access for controllers whose original tool path is not ported yet.
             return level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,worldPosition,side);
         });
+    }
+    @Override public boolean containsToolPosition(BlockPos pos) { return worldPosition.equals(pos); }
+    @Override public long useMultiblockTool(net.minecraft.world.item.context.UseOnContext context,
+                                           List<net.minecraft.network.chat.Component> messages) {
+        if(level==null||level.isClientSide||isRemoved())return 0;
+        var held=context.getItemInHand();
+        if(!com.gregtech.gregtech.api.tool.GTToolHelper.matchesTool(held,com.gregtech.gregtech.api.tool.GTToolType.BUILDER_WAND)
+                &&!com.gregtech.gregtech.api.tool.GTToolHelper.matchesTool(held,com.gregtech.gregtech.api.tool.GTToolType.MAGNIFYING_GLASS))return 0;
+        var host=owner();
+        if(host==null) {
+            messages.add(net.minecraft.network.chat.Component.literal(MultiblockToolRules.NO_CONTROLLER));
+            return MultiblockToolRules.MAGNIFIER_COST;
+        }
+        if(host instanceof MultiblockToolTarget tools) {
+            if(tools.containsToolPosition(worldPosition)) return tools.useMultiblockTool(context,messages);
+            release(controller); // A stale cache must not route a click outside the owner's shell.
+        }
+        return 0;
     }
     public boolean isBoundTo(BlockPos owner) {return owner.equals(controller);}
     public boolean canBind(BlockPos owner) { return controller==null || controller.equals(owner) || owner()==null; }

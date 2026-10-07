@@ -23,10 +23,10 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import java.util.*;
 
 /** Original two-layer heat exchanger, hot-fluid recipes and eight upward heat outlets. */
-public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity implements MultiblockPortOwner,IFluidHandler,com.gregtech.gregtech.api.fluid.FluidToolTarget,com.gregtech.gregtech.api.machine.MachineControl.Provider {
+public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity implements MultiblockPortOwner,MultiblockToolTarget,IFluidHandler,com.gregtech.gregtech.api.fluid.FluidToolTarget,com.gregtech.gregtech.api.machine.MachineControl.Provider {
     public static final int RATE=com.gregtech.gregtech.content.multiblock.OriginalGeneratorParameters.HEAT_EXCHANGER_RATE;
     private long heat,activityHistory;
-    private boolean active;
+    private boolean active,structureOkay;
     private HeatExchangerRules.Settings settings=HeatExchangerRules.DEFAULTS;
     private Recipe lastRecipe;
     private final PartBindings<BlockPos,MultiblockLayout.Role> bindings=new PartBindings<>();
@@ -71,14 +71,60 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
     public LargeHeatExchangerControllerBlockEntity(BlockPos pos,BlockState state){super(GTBlockEntities.LARGE_HEAT_EXCHANGER.get(),pos,state);}
     @Override public boolean isStructureOk(){
         if(level==null||isRemoved())return false;
+        if(level.isClientSide)return structureOkay;
         var parts=new LinkedHashMap<BlockPos,MultiblockLayout.Role>();
+        boolean complete=true;
         for(var cell:com.gregtech.gregtech.content.multiblock.SharedHeatExchangerStructure.CELLS){
             var pos=worldPosition.offset(cell.right(),cell.up(),cell.back());var expected=LargeMachineParts.block(cell.part());
-            if(!level.hasChunkAt(pos)||!level.getBlockState(pos).is(expected)||!(level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity)){bindings.clear(this::release);return false;}
+            if(!level.hasChunkAt(pos)||!level.getBlockState(pos).is(expected)
+                    ||!(level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part)||!part.canBind(worldPosition)) {
+                complete=false;
+                continue;
+            }
             parts.put(pos,MultiblockLayout.Role.valueOf(cell.role().name()));
         }
-        return bindings.update(parts,p->((MultiblockPortBlockEntity)level.getBlockEntity(p)).canBind(worldPosition),
+        // Source checkAndSetTarget binds each valid cell even when another cell is missing.
+        boolean claimed=bindings.update(parts,p->level.getBlockEntity(p) instanceof MultiblockPortBlockEntity part&&part.canBind(worldPosition),
                 (p,r)->((MultiblockPortBlockEntity)level.getBlockEntity(p)).bind(worldPosition,r),this::release);
+        boolean formed=complete&&claimed;
+        if(structureOkay!=formed){structureOkay=formed;setChanged();}
+        return formed;
+    }
+    @Override public boolean containsToolPosition(BlockPos pos){
+        return com.gregtech.gregtech.content.multiblock.SharedHeatExchangerStructure.contains(
+                pos.getX()-worldPosition.getX(),pos.getY()-worldPosition.getY(),pos.getZ()-worldPosition.getZ());
+    }
+    @Override public long useMultiblockTool(net.minecraft.world.item.context.UseOnContext context,
+                                           List<net.minecraft.network.chat.Component> messages){
+        if(level==null||level.isClientSide||isRemoved()||!containsToolPosition(context.getClickedPos()))return 0;
+        if(com.gregtech.gregtech.api.tool.GTToolHelper.matchesTool(context.getItemInHand(),com.gregtech.gregtech.api.tool.GTToolType.BUILDER_WAND)){
+            for(var cell:com.gregtech.gregtech.content.multiblock.SharedHeatExchangerStructure.CELLS)
+                MultiblockTools.build(context,worldPosition.offset(cell.right(),cell.up(),cell.back()),LargeMachineParts.block(cell.part()));
+            isStructureOk();
+            return MultiblockToolRules.BUILDER_COST;
+        }
+        if(com.gregtech.gregtech.api.tool.GTToolHelper.matchesTool(context.getItemInHand(),com.gregtech.gregtech.api.tool.GTToolType.MAGNIFYING_GLASS)){
+            messages.addAll(magnifyingGlassMessages());
+            return MultiblockToolRules.MAGNIFIER_COST;
+        }
+        return 0;
+    }
+    public List<net.minecraft.network.chat.Component> magnifyingGlassMessages(){
+        boolean previous=structureOkay,formed=isStructureOk();
+        var messages=new ArrayList<net.minecraft.network.chat.Component>();
+        messages.add(net.minecraft.network.chat.Component.literal(MultiblockToolRules.structureMessage(previous,formed)));
+        if(previous&&formed){
+            messages.add(tankMessage("Input: ",hot));
+            messages.add(tankMessage("Output: ",cold));
+        }
+        return List.copyOf(messages);
+    }
+    private static net.minecraft.network.chat.Component tankMessage(String prefix,FluidTankGT tank){
+        var message=net.minecraft.network.chat.Component.literal(prefix);
+        if(tank.isEmpty())return message.append("Empty");
+        var fluid=tank.getFluidLong();
+        return message.append(MultiblockToolRules.amount(tank.getAmount())+" L of ").append(fluid.getDisplayName())
+                .append(GTFluids.isGas(fluid)?" (Gaseous)":" (Liquid)");
     }
     private void release(BlockPos pos){if(level!=null&&level.hasChunkAt(pos)&&level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part)part.release(worldPosition);}
     @Override public void setRemoved(){bindings.clear(this::release);super.setRemoved();}
@@ -160,6 +206,7 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
         super.saveAdditional(tag,lookup);
         HeatExchangerData.save(tag,settings);tag.putLong("gt.energy",heat);
         tag.putBoolean("gt.active",active);tag.putLong("gt.active.data",activityHistory);
+        tag.putBoolean("gt.state.str",structureOkay);
         var inputTag=new CompoundTag();var outputTag=new CompoundTag();
         hot.writeToNBT(inputTag,lookup);cold.writeToNBT(outputTag,lookup);
         tag.put("gt.hot",inputTag);tag.put("gt.cold",outputTag);
@@ -169,6 +216,7 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
         settings=HeatExchangerData.settings(tag);lastRecipe=null;
         heat=Math.max(0,tag.getLong(tag.contains("gt.energy")?"gt.energy":"gt.hu"));
         active=tag.getBoolean("gt.active");activityHistory=tag.getLong("gt.active.data");
+        structureOkay=tag.getBoolean("gt.state.str");
         HeatExchangerData.restore(hot,tag.getCompound(tag.contains("gt.hot")?"gt.hot":"gt.tank.0"),settings.inputCapacity(),lookup);
         HeatExchangerData.restore(cold,tag.getCompound(tag.contains("gt.cold")?"gt.cold":"gt.tank.1"),Long.MAX_VALUE,lookup);
     }

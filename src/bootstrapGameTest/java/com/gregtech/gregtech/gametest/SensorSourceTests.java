@@ -13,6 +13,100 @@ import net.minecraft.world.level.block.Blocks;
 @net.minecraftforge.gametest.PrefixGameTestTemplate(false)
 public final class SensorSourceTests {
     @GameTest(template="test_empty",timeoutTicks=160)
+    public static void heat_exchanger_builder_and_magnifier(GameTestHelper h) {
+        var world=h.getLevel();var pos=h.absolutePos(new BlockPos(7,2,7));
+        var block=BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.parse("gregtech:heat_exchanger_main"));
+        world.setBlockAndUpdate(pos,block.defaultBlockState());
+        var machine=(com.gregtech.gregtech.blockentity.machine.LargeHeatExchangerControllerBlockEntity)world.getBlockEntity(pos);
+        var player=net.minecraftforge.common.util.FakePlayerFactory.get(world,new com.mojang.authlib.GameProfile(java.util.UUID.randomUUID(),"HeatBuilder"));
+        player.gameMode.changeGameModeForPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+        player.setPos(net.minecraft.world.phys.Vec3.atCenterOf(pos.offset(-3,0,-3)));
+        var wand=com.gregtech.gregtech.item.GTToolItem.create(com.gregtech.gregtech.api.tool.GTToolType.BUILDER_WAND,
+                com.gregtech.gregtech.api.material.GTMaterialRegistry.get("Heliodor"),com.gregtech.gregtech.api.material.GTMaterialRegistry.get("Wood"));
+        var glass=com.gregtech.gregtech.item.GTToolItem.create(com.gregtech.gregtech.api.tool.GTToolType.MAGNIFYING_GLASS,
+                com.gregtech.gregtech.api.material.GTMaterialRegistry.get("Glass"),com.gregtech.gregtech.api.material.GTMaterialRegistry.get("Wood"));
+        h.assertTrue(!wand.isEmpty()&&!glass.isEmpty(),"Real registered tools exist");
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,wand);
+        var wall=com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(18024);
+        var transmitter=com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(18101);
+        h.assertTrue(machine.magnifyingGlassMessages().get(0).getString().equals("Structure did not form!"),"Missing shell diagnostic");
+        player.getInventory().setItem(35,new ItemStack(wall,9));
+        player.getInventory().setItem(34,new ItemStack(transmitter,8));
+        h.assertTrue(useHeatTool(player,pos).consumesAction(),"Builder is handled before ordinary plane copying");
+        h.assertTrue(machine.isStructureOk()&&wand.getDamageValue()==1,"One source tool click builds all seventeen cells with one wear");
+        h.assertTrue(player.getInventory().getItem(35).isEmpty()&&player.getInventory().getItem(34).isEmpty(),"Exactly nine walls and eight transmitters consumed");
+        var messages=machine.magnifyingGlassMessages();
+        h.assertTrue(messages.size()==3&&messages.get(0).getString().equals("Structure is formed already!")
+                &&messages.get(1).getString().equals("Input: Empty")&&messages.get(2).getString().equals("Output: Empty"),"Formed diagnostic includes both original tanks");
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,glass);
+        h.assertTrue(useHeatTool(player,pos).consumesAction()&&glass.getDamageValue()==1,"Magnifier dispatch costs one durability");
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,wand);
+        var near=pos.offset(-1,0,-1);var far=pos.offset(1,0,1);var clicked=pos.north();
+        world.setBlockAndUpdate(near,Blocks.AIR.defaultBlockState());world.setBlockAndUpdate(far,Blocks.AIR.defaultBlockState());
+        h.assertTrue(!machine.isStructureOk(),"Broken shell is incomplete");
+        var part=(com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity)world.getBlockEntity(clicked);
+        h.assertTrue(part.isBoundTo(pos)&&part.fluidToolHandler(Direction.NORTH,false).getTanks()==0,
+                "Valid part retains tool ownership while incomplete shell cannot transport fluids");
+        player.getInventory().setItem(35,new ItemStack(wall,2));
+        useHeatTool(player,clicked);
+        h.assertTrue(world.getBlockState(near).is(wall)&&world.getBlockState(far).isAir()&&player.getInventory().getItem(35).getCount()==1,
+                "Part click only repairs the nearby hole and leaves the opposite edge two blocks away untouched");
+        h.assertTrue(wand.getDamageValue()==2&&!machine.isStructureOk(),"Partial repair charges once and remains incomplete");
+        useHeatTool(player,pos);
+        h.assertTrue(machine.isStructureOk()&&wand.getDamageValue()==3&&player.getInventory().getItem(35).isEmpty(),"Controller click completes remaining repair");
+        // With scarce material, source call order and reverse inventory order are observable.
+        world.setBlockAndUpdate(pos.offset(-1,0,-1),Blocks.AIR.defaultBlockState());
+        world.setBlockAndUpdate(pos.offset(0,0,-1),Blocks.AIR.defaultBlockState());
+        world.setBlockAndUpdate(pos.offset(1,0,-1),Blocks.STONE.defaultBlockState());
+        player.getInventory().setItem(35,new ItemStack(wall,1));
+        useHeatTool(player,pos);
+        h.assertTrue(world.getBlockState(pos.offset(-1,0,-1)).is(wall)&&world.getBlockState(pos.offset(0,0,-1)).isAir()
+                &&world.getBlockState(pos.offset(1,0,-1)).is(Blocks.STONE),"First source cell wins scarce material and solid obstacle survives");
+        player.getInventory().setItem(9,new ItemStack(wall,2));player.getInventory().setItem(35,new ItemStack(wall,1));
+        useHeatTool(player,pos);
+        h.assertTrue(player.getInventory().getItem(35).isEmpty()&&player.getInventory().getItem(9).getCount()==2,"Higher inventory slot is consumed first");
+        world.setBlockAndUpdate(pos.offset(1,0,-1),Blocks.OAK_LEAVES.defaultBlockState());
+        useHeatTool(player,pos);
+        h.assertTrue(machine.isStructureOk()&&player.getInventory().getItem(9).getCount()==1,"Source easy replacement places into leaves at exact cell");
+        // Creative builds without inventory and without wear; adventure cannot edit the shell.
+        player.getInventory().setItem(9,ItemStack.EMPTY);
+        world.setBlockAndUpdate(near,Blocks.AIR.defaultBlockState());
+        player.gameMode.changeGameModeForPlayer(net.minecraft.world.level.GameType.CREATIVE);
+        int wear=wand.getDamageValue();useHeatTool(player,pos);
+        h.assertTrue(machine.isStructureOk()&&wand.getDamageValue()==wear,"Creative placement needs no source items and does not wear wand");
+        world.setBlockAndUpdate(near,Blocks.AIR.defaultBlockState());
+        player.gameMode.changeGameModeForPlayer(net.minecraft.world.level.GameType.ADVENTURE);
+        player.getInventory().setItem(35,new ItemStack(wall));useHeatTool(player,pos);
+        h.assertTrue(world.getBlockState(near).isAir()&&player.getInventory().getItem(35).getCount()==1,"Denied placement neither consumes material nor creates a block");
+        player.gameMode.changeGameModeForPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+        world.setBlockAndUpdate(near,wall.defaultBlockState());
+        var data=new net.minecraft.nbt.CompoundTag();data.putBoolean("gt.state.str",false);
+        machine.load(data);
+        h.assertTrue(machine.magnifyingGlassMessages().get(0).getString().equals("Structure did form just now!"),"Previously unformed diagnostic reports successful forced check");
+        var cold=new com.gregtech.gregtech.api.fluid.FluidTankGT();
+        cold.setFluid(new net.minecraftforge.fluids.FluidStack(net.minecraft.world.level.material.Fluids.WATER,1),Long.MAX_VALUE);
+        var coldData=new net.minecraft.nbt.CompoundTag();cold.writeToNBT(coldData);
+        data.put("gt.cold",coldData);data.putBoolean("gt.state.str",true);machine.load(data);
+        messages=machine.magnifyingGlassMessages();
+        h.assertTrue(messages.size()==3&&messages.get(2).getString().startsWith("Output: 9_223_372_036_854_775_807 L of ")
+                &&messages.get(2).getString().endsWith(" (Liquid)"),"Actual diagnostic preserves full long tank amount and source phase text");
+        world.removeBlock(pos,false);
+        var orphanMessages=new java.util.ArrayList<net.minecraft.network.chat.Component>();
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,glass);
+        var context=new net.minecraft.world.item.context.UseOnContext(player,net.minecraft.world.InteractionHand.MAIN_HAND,
+                new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(clicked),Direction.UP,clicked,false));
+        h.assertTrue(part.useMultiblockTool(context,orphanMessages)==1&&orphanMessages.size()==1
+                &&orphanMessages.get(0).getString().equals("There is no Multiblock Controller for this Block."),"Orphan part reports original missing-controller diagnostic");
+        h.succeed();
+    }
+    private static net.minecraft.world.InteractionResult useHeatTool(net.minecraft.world.entity.player.Player player,BlockPos pos) {
+        var context=new net.minecraft.world.item.context.UseOnContext(player,net.minecraft.world.InteractionHand.MAIN_HAND,
+                new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(pos),Direction.UP,pos,false));
+        var stack=player.getMainHandItem();
+        return ((com.gregtech.gregtech.item.GTToolItem)stack.getItem()).onItemUseFirst(stack,context);
+    }
+
+    @GameTest(template="test_empty",timeoutTicks=160)
     public static void heat_exchanger_tool_ports_and_fixed_front(GameTestHelper h) {
         var world=h.getLevel();var pos=h.absolutePos(new BlockPos(7,2,7));
         var block=(com.gregtech.gregtech.block.machine.LargeHeatExchangerControllerBlock)BuiltInRegistries.BLOCK.get(
