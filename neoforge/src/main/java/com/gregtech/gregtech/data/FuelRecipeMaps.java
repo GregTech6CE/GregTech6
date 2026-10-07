@@ -28,6 +28,10 @@ public class FuelRecipeMaps {
             Turbine = fromDefinition(FuelRecipeMapDefinitions.Turbine),
             Magic = fromDefinition(FuelRecipeMapDefinitions.Magic);
 
+    /** Original fuel display order; shared by consumers of the native fuel maps. */
+    public static final java.util.List<RecipeMap> FUEL_MAP_LIST = java.util.List.of(
+            FluidBed, Burn, Gas, Hot, Plasma, Engine, Turbine, Magic);
+
     private static com.gregtech.gregtech.api.recipe.RecipeMap fromDefinition(com.gregtech.gregtech.api.recipe.RecipeMapSpec spec) {
         var map=new com.gregtech.gregtech.api.recipe.RecipeMap(null,spec.mNameInternal,spec.mNameLocal,spec.mGUIPath,
                 spec.mInputItemsCount,spec.mOutputItemsCount,spec.mMinimalInputItems,
