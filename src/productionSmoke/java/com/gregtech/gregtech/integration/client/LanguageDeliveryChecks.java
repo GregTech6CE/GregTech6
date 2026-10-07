@@ -88,6 +88,7 @@ final class LanguageDeliveryChecks {
             int stoneEnglish=verifySourceStones(false);
             int bushEnglish=verifyBushes(false);
             int coinsEnglish=verifyCoins(false);
+            int technologyEnglish=verifyTechnologyNames(false);
             manager.setSelected("zh_cn");
             manager.onResourceManagerReload(client.getResourceManager());
             int machineNamesChinese=verifyMachineNames();
@@ -95,6 +96,7 @@ final class LanguageDeliveryChecks {
             int stoneChinese=verifySourceStones(true);
             int bushChinese=verifyBushes(true);
             int coinsChinese=verifyCoins(true);
+            int technologyChinese=verifyTechnologyNames(true);
             var nameInventory=recordNameInventory(client,englishSnapshot);
             require(Language.getInstance().has("gt.multiitem.bumblebee.0"), "Original Chinese resource is loaded");
             int names=0, nonempty=0, empty=0;
@@ -210,6 +212,8 @@ final class LanguageDeliveryChecks {
             report.addProperty("bushNamesAndOutputsChinese",bushChinese);
             report.addProperty("coinNamesAndMaterialsEnglish",coinsEnglish);
             report.addProperty("coinNamesAndMaterialsChinese",coinsChinese);
+            report.addProperty("sourceTechnologyNamesEnglish",technologyEnglish);
+            report.addProperty("sourceTechnologyNamesChinese",technologyChinese);
             report.addProperty("chineseItemNames",englishSnapshot.size());
             report.addProperty("latinNameCandidates",nameInventory.get("candidateCount").getAsInt());
             report.add("materialFormNames",nameInventory.getAsJsonObject("materialFormNames"));
@@ -248,6 +252,44 @@ final class LanguageDeliveryChecks {
         }
         require(mismatches.isEmpty(),"Installed colored construction names: "+mismatches);
         return checked;
+    }
+    private static void verifySourceTechnology(String id, String source, boolean chinese) {
+        var stack=item(id);String key=stack.getDescriptionId(),expected=original(key);
+        if(chinese)require(expected.equals(original(source)),"Technology original identity "+id);
+        require(stack.getHoverName().getString().equals(expected),"Installed technology name "+id);
+        if(Language.getInstance().has(key+".tooltip")) {
+            String description=original(key+".tooltip");
+            if(chinese)require(description.equals(original(source+".tooltip")),"Technology original description "+id);
+            var rows=tooltip(stack).stream().filter(c -> has(c,key+".tooltip")).toList();
+            require(rows.size()==(description.isEmpty()?0:1),"Technology description appears once or is intentionally empty "+id);
+            if(!description.isEmpty())require(rows.get(0).getString().equals(description),"Exact installed technology description "+id);
+        }
+    }
+    private static int verifyTechnologyNames(boolean chinese) {
+        int count=0;
+        for(int tier=1;tier<=4;tier++)for(var form:Map.of("stick",32000,"cable",32010,"hdd",32020).entrySet()) {
+            verifySourceTechnology("usb"+tier+"_"+form.getKey(),"gt.multiitem.technological."+(form.getValue()+tier),chinese);count++;
+        }
+        String[] gems={"diamond","ruby","emerald","sapphire"};
+        for(int gem=0;gem<gems.length;gem++)for(var form:Map.of("circuit",30401,"processor",30501).entrySet()) {
+            verifySourceTechnology("crystal_"+form.getKey()+"_"+gems[gem],"gt.multiitem.technological."+(form.getValue()+gem),chinese);count++;
+        }
+        String[] molds={"empty","bun","bread","baguette","cylinder","toast"};
+        for(int mold=0;mold<molds.length;mold++) {
+            verifySourceTechnology("foodmold_shape_"+molds[mold],"gt.multiitem.technological."+(10800+mold),chinese);count++;
+        }
+        verifySourceTechnology("slicer_shape_eights_hollow","gt.multiitem.technological.10904",chinese);count++;
+        for(var dye:com.gregtech.gregtech.content.tool.PaintingRules.DYES)for(boolean used:new boolean[]{false,true}) {
+            verifySourceTechnology(used?dye.usedId():dye.fullId(),"gt.multiitem.randomtools."+(1000+2*dye.index()+(used?1:0)),chinese);count++;
+        }
+        for(int configuration=0;configuration<25;configuration++) {
+            String id="integrated_circuit_"+configuration;verifySourceTechnology(id,"gt.integrated_circuit",chinese);
+            var stack=item(id);String expected=original("gt.integrated_circuit.configuration")+"== "+configuration;
+            require(tooltip(stack).stream().filter(c -> c.getString().equals(expected)).count()==1,"Selector configuration appears once "+id);
+            require(stack.getItem() instanceof com.gregtech.gregtech.item.SelectorTagItem tag && tag.isCatalyst(),"Selector keeps recipe catalyst identity");
+            count++;
+        }
+        require(count==84,"Complete newly source-bound technology catalog");return count;
     }
     private static int verifyCoins(boolean chinese) {
         String expected=original("item.gregtech.coin");int count=0;

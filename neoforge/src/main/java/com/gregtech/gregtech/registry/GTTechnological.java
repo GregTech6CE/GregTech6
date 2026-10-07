@@ -33,8 +33,8 @@ public final class GTTechnological {
         // GT6 ST.tag equivalents: integrated circuits select recipe variants, never consumed.
         for (int i = 0; i < 25; i++) {
             String id = "integrated_circuit_" + i;
-            String name = "Integrated Circuit (" + i + ")";
-            DeferredHolder<Item,Item> obj = ITEMS.register(id, () -> new TechItem(name, true, new Item.Properties().stacksTo(64)));
+            final int configuration = i;
+            DeferredHolder<Item,Item> obj = ITEMS.register(id, () -> new com.gregtech.gregtech.item.SelectorTagItem(configuration, new Item.Properties().stacksTo(64)));
             BY_ID.put(id, obj);
         }
     }

@@ -46,6 +46,10 @@
       "sha256": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e"
     },
     {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\ItemIntegratedCircuit.java",
+      "sha256": "4eed20d19382a186e7e9d6ea33e705f50f9192468a16036f186512c006154678"
+    },
+    {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\multiitem\\behaviors\\Behavior_CureZombie.java",
       "sha256": "c516df0ca1e16d9a1414e9cbb7dd1a56cbc4d6efe083767a3fc1f6dc35ff5adb"
     },
@@ -14223,6 +14227,10 @@
       "source_key": "gt.multiitem.books.32004.tooltip",
       "value": "With a Radiation Symbol on it"
     },
+    "gt.integrated_circuit.configuration": {
+      "source_key": "gt.integrated_circuit.configuration",
+      "value": "Configuration: "
+    },
     "gt.tooltip.ender_garbage.1": {
       "source_key": "gt.multitileentity.ender.garbage.bin.tooltip.1",
       "value": "Trash Bin deleting Items & Fluids, or moving them to the Servers Garbage Dump"
@@ -16935,6 +16943,70 @@
       "source_key": "gt.multiitem.food.30201.tooltip",
       "value": ""
     },
+    "item.gregtech.crystal_circuit_diamond": {
+      "source_key": "gt.multiitem.technological.30401",
+      "value": "Crystal Circuit (Diamond)"
+    },
+    "item.gregtech.crystal_circuit_diamond.tooltip": {
+      "source_key": "gt.multiitem.technological.30401.tooltip",
+      "value": "Logic Diamond"
+    },
+    "item.gregtech.crystal_circuit_emerald": {
+      "source_key": "gt.multiitem.technological.30403",
+      "value": "Crystal Circuit (Emerald)"
+    },
+    "item.gregtech.crystal_circuit_emerald.tooltip": {
+      "source_key": "gt.multiitem.technological.30403.tooltip",
+      "value": "Storage Emerald"
+    },
+    "item.gregtech.crystal_circuit_ruby": {
+      "source_key": "gt.multiitem.technological.30402",
+      "value": "Crystal Circuit (Ruby)"
+    },
+    "item.gregtech.crystal_circuit_ruby.tooltip": {
+      "source_key": "gt.multiitem.technological.30402.tooltip",
+      "value": "Control Ruby"
+    },
+    "item.gregtech.crystal_circuit_sapphire": {
+      "source_key": "gt.multiitem.technological.30404",
+      "value": "Crystal Circuit (Sapphire)"
+    },
+    "item.gregtech.crystal_circuit_sapphire.tooltip": {
+      "source_key": "gt.multiitem.technological.30404.tooltip",
+      "value": "Conversion Sapphire"
+    },
+    "item.gregtech.crystal_processor_diamond": {
+      "source_key": "gt.multiitem.technological.30501",
+      "value": "Crystal Processor (Diamond)"
+    },
+    "item.gregtech.crystal_processor_diamond.tooltip": {
+      "source_key": "gt.multiitem.technological.30501.tooltip",
+      "value": "Logic Processor Circuit"
+    },
+    "item.gregtech.crystal_processor_emerald": {
+      "source_key": "gt.multiitem.technological.30503",
+      "value": "Crystal Processor (Emerald)"
+    },
+    "item.gregtech.crystal_processor_emerald.tooltip": {
+      "source_key": "gt.multiitem.technological.30503.tooltip",
+      "value": "Storage Processor Circuit"
+    },
+    "item.gregtech.crystal_processor_ruby": {
+      "source_key": "gt.multiitem.technological.30502",
+      "value": "Crystal Processor (Ruby)"
+    },
+    "item.gregtech.crystal_processor_ruby.tooltip": {
+      "source_key": "gt.multiitem.technological.30502.tooltip",
+      "value": "Control Processor Circuit"
+    },
+    "item.gregtech.crystal_processor_sapphire": {
+      "source_key": "gt.multiitem.technological.30504",
+      "value": "Crystal Processor (Sapphire)"
+    },
+    "item.gregtech.crystal_processor_sapphire.tooltip": {
+      "source_key": "gt.multiitem.technological.30504.tooltip",
+      "value": "Conversion Processor Circuit"
+    },
     "item.gregtech.crystal_processor_socket": {
       "source_key": "gt.multiitem.technological.30500",
       "value": "Crystal Processor Socket"
@@ -17775,6 +17847,54 @@
       "source_key": "gt.multiitem.technological.1024.tooltip",
       "value": "Filters for a Fluid"
     },
+    "item.gregtech.foodmold_shape_baguette": {
+      "source_key": "gt.multiitem.technological.10803",
+      "value": "Food Grade Mold (Baguette)"
+    },
+    "item.gregtech.foodmold_shape_baguette.tooltip": {
+      "source_key": "gt.multiitem.technological.10803.tooltip",
+      "value": ""
+    },
+    "item.gregtech.foodmold_shape_bread": {
+      "source_key": "gt.multiitem.technological.10802",
+      "value": "Food Grade Mold (Bread)"
+    },
+    "item.gregtech.foodmold_shape_bread.tooltip": {
+      "source_key": "gt.multiitem.technological.10802.tooltip",
+      "value": ""
+    },
+    "item.gregtech.foodmold_shape_bun": {
+      "source_key": "gt.multiitem.technological.10801",
+      "value": "Food Grade Mold (Bun)"
+    },
+    "item.gregtech.foodmold_shape_bun.tooltip": {
+      "source_key": "gt.multiitem.technological.10801.tooltip",
+      "value": ""
+    },
+    "item.gregtech.foodmold_shape_cylinder": {
+      "source_key": "gt.multiitem.technological.10804",
+      "value": "Food Grade Mold (Cylinder)"
+    },
+    "item.gregtech.foodmold_shape_cylinder.tooltip": {
+      "source_key": "gt.multiitem.technological.10804.tooltip",
+      "value": ""
+    },
+    "item.gregtech.foodmold_shape_empty": {
+      "source_key": "gt.multiitem.technological.10800",
+      "value": "Empty Food Grade Mold"
+    },
+    "item.gregtech.foodmold_shape_empty.tooltip": {
+      "source_key": "gt.multiitem.technological.10800.tooltip",
+      "value": ""
+    },
+    "item.gregtech.foodmold_shape_toast": {
+      "source_key": "gt.multiitem.technological.10805",
+      "value": "Food Grade Mold (Toast)"
+    },
+    "item.gregtech.foodmold_shape_toast.tooltip": {
+      "source_key": "gt.multiitem.technological.10805.tooltip",
+      "value": ""
+    },
     "item.gregtech.fried_egg": {
       "source_key": "gt.multiitem.food.1070",
       "value": "Fried Egg"
@@ -18410,6 +18530,106 @@
     "item.gregtech.ink_bottle": {
       "source_key": "gt.multiitem.bottles.32000",
       "value": "Ink Bottle"
+    },
+    "item.gregtech.integrated_circuit_0": {
+      "source_key": "gt.integrated_circuit",
+      "value": "Selector Tag"
+    },
+    "item.gregtech.integrated_circuit_1": {
+      "source_key": "gt.integrated_circuit",
+      "value": "Selector Tag"
+    },
+    "item.gregtech.integrated_circuit_10": {
+      "source_key": "gt.integrated_circuit",
+      "value": "Selector Tag"
+    },
+    "item.gregtech.integrated_circuit_11": {
+      "source_key": "gt.integrated_circuit",
+      "value": "Selector Tag"
+    },
+    "item.gregtech.integrated_circuit_12": {
+      "source_key": "gt.integrated_circuit",
+      "value": "Selector Tag"
+    },
+    "item.gregtech.integrated_circuit_13": {
+      "source_key": "gt.integrated_circuit",
+      "value": "Selector Tag"
+    },
+    "item.gregtech.integrated_circuit_14": {
+      "source_key": "gt.integrated_circuit",
+      "value": "Selector Tag"
+    },
+    "item.gregtech.integrated_circuit_15": {
+      "source_key": "gt.integrated_circuit",
+      "value": "Selector Tag"
+    },
+    "item.gregtech.integrated_circuit_16": {
+      "source_key": "gt.integrated_circuit",
+      "value": "Selector Tag"
+    },
+    "item.gregtech.integrated_circuit_17": {
+      "source_key": "gt.integrated_circuit",
+      "value": "Selector Tag"
+    },
+    "item.gregtech.integrated_circuit_18": {
+      "source_key": "gt.integrated_circuit",
+      "value": "Selector Tag"
+    },
+    "item.gregtech.integrated_circuit_19": {
+      "source_key": "gt.integrated_circuit",
+      "value": "Selector Tag"
+    },
+    "item.gregtech.integrated_circuit_2": {
+      "source_key": "gt.integrated_circuit",
+      "value": "Selector Tag"
+    },
+    "item.gregtech.integrated_circuit_20": {
+      "source_key": "gt.integrated_circuit",
+      "value": "Selector Tag"
+    },
+    "item.gregtech.integrated_circuit_21": {
+      "source_key": "gt.integrated_circuit",
+      "value": "Selector Tag"
+    },
+    "item.gregtech.integrated_circuit_22": {
+      "source_key": "gt.integrated_circuit",
+      "value": "Selector Tag"
+    },
+    "item.gregtech.integrated_circuit_23": {
+      "source_key": "gt.integrated_circuit",
+      "value": "Selector Tag"
+    },
+    "item.gregtech.integrated_circuit_24": {
+      "source_key": "gt.integrated_circuit",
+      "value": "Selector Tag"
+    },
+    "item.gregtech.integrated_circuit_3": {
+      "source_key": "gt.integrated_circuit",
+      "value": "Selector Tag"
+    },
+    "item.gregtech.integrated_circuit_4": {
+      "source_key": "gt.integrated_circuit",
+      "value": "Selector Tag"
+    },
+    "item.gregtech.integrated_circuit_5": {
+      "source_key": "gt.integrated_circuit",
+      "value": "Selector Tag"
+    },
+    "item.gregtech.integrated_circuit_6": {
+      "source_key": "gt.integrated_circuit",
+      "value": "Selector Tag"
+    },
+    "item.gregtech.integrated_circuit_7": {
+      "source_key": "gt.integrated_circuit",
+      "value": "Selector Tag"
+    },
+    "item.gregtech.integrated_circuit_8": {
+      "source_key": "gt.integrated_circuit",
+      "value": "Selector Tag"
+    },
+    "item.gregtech.integrated_circuit_9": {
+      "source_key": "gt.integrated_circuit",
+      "value": "Selector Tag"
     },
     "item.gregtech.iron_key": {
       "source_key": "gt.multiitem.randomtools.30000",
@@ -21035,6 +21255,14 @@
       "source_key": "gt.multiitem.technological.10903.tooltip",
       "value": ""
     },
+    "item.gregtech.slicer_shape_eights_hollow": {
+      "source_key": "gt.multiitem.technological.10904",
+      "value": "Slicer Blades (Hollow Eigths)"
+    },
+    "item.gregtech.slicer_shape_eights_hollow.tooltip": {
+      "source_key": "gt.multiitem.technological.10904.tooltip",
+      "value": ""
+    },
     "item.gregtech.slicer_shape_empty": {
       "source_key": "gt.multiitem.technological.10900",
       "value": "Slicer Blade Frame"
@@ -21202,6 +21430,262 @@
     "item.gregtech.spectral_dew.tooltip": {
       "source_key": "gt.multiitem.bottles.8.tooltip",
       "value": ""
+    },
+    "item.gregtech.spray_paint_black": {
+      "source_key": "gt.multiitem.randomtools.1000",
+      "value": "Spray Paint (Black)"
+    },
+    "item.gregtech.spray_paint_black.tooltip": {
+      "source_key": "gt.multiitem.randomtools.1000.tooltip",
+      "value": "Full"
+    },
+    "item.gregtech.spray_paint_black_2": {
+      "source_key": "gt.multiitem.randomtools.1001",
+      "value": "Spray Paint (Black)"
+    },
+    "item.gregtech.spray_paint_black_2.tooltip": {
+      "source_key": "gt.multiitem.randomtools.1001.tooltip",
+      "value": "Used"
+    },
+    "item.gregtech.spray_paint_blue": {
+      "source_key": "gt.multiitem.randomtools.1008",
+      "value": "Spray Paint (Blue)"
+    },
+    "item.gregtech.spray_paint_blue.tooltip": {
+      "source_key": "gt.multiitem.randomtools.1008.tooltip",
+      "value": "Full"
+    },
+    "item.gregtech.spray_paint_blue_2": {
+      "source_key": "gt.multiitem.randomtools.1009",
+      "value": "Spray Paint (Blue)"
+    },
+    "item.gregtech.spray_paint_blue_2.tooltip": {
+      "source_key": "gt.multiitem.randomtools.1009.tooltip",
+      "value": "Used"
+    },
+    "item.gregtech.spray_paint_brown": {
+      "source_key": "gt.multiitem.randomtools.1006",
+      "value": "Spray Paint (Brown)"
+    },
+    "item.gregtech.spray_paint_brown.tooltip": {
+      "source_key": "gt.multiitem.randomtools.1006.tooltip",
+      "value": "Full"
+    },
+    "item.gregtech.spray_paint_brown_2": {
+      "source_key": "gt.multiitem.randomtools.1007",
+      "value": "Spray Paint (Brown)"
+    },
+    "item.gregtech.spray_paint_brown_2.tooltip": {
+      "source_key": "gt.multiitem.randomtools.1007.tooltip",
+      "value": "Used"
+    },
+    "item.gregtech.spray_paint_cyan": {
+      "source_key": "gt.multiitem.randomtools.1012",
+      "value": "Spray Paint (Cyan)"
+    },
+    "item.gregtech.spray_paint_cyan.tooltip": {
+      "source_key": "gt.multiitem.randomtools.1012.tooltip",
+      "value": "Full"
+    },
+    "item.gregtech.spray_paint_cyan_2": {
+      "source_key": "gt.multiitem.randomtools.1013",
+      "value": "Spray Paint (Cyan)"
+    },
+    "item.gregtech.spray_paint_cyan_2.tooltip": {
+      "source_key": "gt.multiitem.randomtools.1013.tooltip",
+      "value": "Used"
+    },
+    "item.gregtech.spray_paint_gray": {
+      "source_key": "gt.multiitem.randomtools.1016",
+      "value": "Spray Paint (Gray)"
+    },
+    "item.gregtech.spray_paint_gray.tooltip": {
+      "source_key": "gt.multiitem.randomtools.1016.tooltip",
+      "value": "Full"
+    },
+    "item.gregtech.spray_paint_gray_2": {
+      "source_key": "gt.multiitem.randomtools.1017",
+      "value": "Spray Paint (Gray)"
+    },
+    "item.gregtech.spray_paint_gray_2.tooltip": {
+      "source_key": "gt.multiitem.randomtools.1017.tooltip",
+      "value": "Used"
+    },
+    "item.gregtech.spray_paint_green": {
+      "source_key": "gt.multiitem.randomtools.1004",
+      "value": "Spray Paint (Green)"
+    },
+    "item.gregtech.spray_paint_green.tooltip": {
+      "source_key": "gt.multiitem.randomtools.1004.tooltip",
+      "value": "Full"
+    },
+    "item.gregtech.spray_paint_green_2": {
+      "source_key": "gt.multiitem.randomtools.1005",
+      "value": "Spray Paint (Green)"
+    },
+    "item.gregtech.spray_paint_green_2.tooltip": {
+      "source_key": "gt.multiitem.randomtools.1005.tooltip",
+      "value": "Used"
+    },
+    "item.gregtech.spray_paint_light_blue": {
+      "source_key": "gt.multiitem.randomtools.1024",
+      "value": "Spray Paint (Light Blue)"
+    },
+    "item.gregtech.spray_paint_light_blue.tooltip": {
+      "source_key": "gt.multiitem.randomtools.1024.tooltip",
+      "value": "Full"
+    },
+    "item.gregtech.spray_paint_light_blue_2": {
+      "source_key": "gt.multiitem.randomtools.1025",
+      "value": "Spray Paint (Light Blue)"
+    },
+    "item.gregtech.spray_paint_light_blue_2.tooltip": {
+      "source_key": "gt.multiitem.randomtools.1025.tooltip",
+      "value": "Used"
+    },
+    "item.gregtech.spray_paint_light_gray": {
+      "source_key": "gt.multiitem.randomtools.1014",
+      "value": "Spray Paint (Light Gray)"
+    },
+    "item.gregtech.spray_paint_light_gray.tooltip": {
+      "source_key": "gt.multiitem.randomtools.1014.tooltip",
+      "value": "Full"
+    },
+    "item.gregtech.spray_paint_light_gray_2": {
+      "source_key": "gt.multiitem.randomtools.1015",
+      "value": "Spray Paint (Light Gray)"
+    },
+    "item.gregtech.spray_paint_light_gray_2.tooltip": {
+      "source_key": "gt.multiitem.randomtools.1015.tooltip",
+      "value": "Used"
+    },
+    "item.gregtech.spray_paint_lime": {
+      "source_key": "gt.multiitem.randomtools.1020",
+      "value": "Spray Paint (Lime)"
+    },
+    "item.gregtech.spray_paint_lime.tooltip": {
+      "source_key": "gt.multiitem.randomtools.1020.tooltip",
+      "value": "Full"
+    },
+    "item.gregtech.spray_paint_lime_2": {
+      "source_key": "gt.multiitem.randomtools.1021",
+      "value": "Spray Paint (Lime)"
+    },
+    "item.gregtech.spray_paint_lime_2.tooltip": {
+      "source_key": "gt.multiitem.randomtools.1021.tooltip",
+      "value": "Used"
+    },
+    "item.gregtech.spray_paint_magenta": {
+      "source_key": "gt.multiitem.randomtools.1026",
+      "value": "Spray Paint (Magenta)"
+    },
+    "item.gregtech.spray_paint_magenta.tooltip": {
+      "source_key": "gt.multiitem.randomtools.1026.tooltip",
+      "value": "Full"
+    },
+    "item.gregtech.spray_paint_magenta_2": {
+      "source_key": "gt.multiitem.randomtools.1027",
+      "value": "Spray Paint (Magenta)"
+    },
+    "item.gregtech.spray_paint_magenta_2.tooltip": {
+      "source_key": "gt.multiitem.randomtools.1027.tooltip",
+      "value": "Used"
+    },
+    "item.gregtech.spray_paint_orange": {
+      "source_key": "gt.multiitem.randomtools.1028",
+      "value": "Spray Paint (Orange)"
+    },
+    "item.gregtech.spray_paint_orange.tooltip": {
+      "source_key": "gt.multiitem.randomtools.1028.tooltip",
+      "value": "Full"
+    },
+    "item.gregtech.spray_paint_orange_2": {
+      "source_key": "gt.multiitem.randomtools.1029",
+      "value": "Spray Paint (Orange)"
+    },
+    "item.gregtech.spray_paint_orange_2.tooltip": {
+      "source_key": "gt.multiitem.randomtools.1029.tooltip",
+      "value": "Used"
+    },
+    "item.gregtech.spray_paint_pink": {
+      "source_key": "gt.multiitem.randomtools.1018",
+      "value": "Spray Paint (Pink)"
+    },
+    "item.gregtech.spray_paint_pink.tooltip": {
+      "source_key": "gt.multiitem.randomtools.1018.tooltip",
+      "value": "Full"
+    },
+    "item.gregtech.spray_paint_pink_2": {
+      "source_key": "gt.multiitem.randomtools.1019",
+      "value": "Spray Paint (Pink)"
+    },
+    "item.gregtech.spray_paint_pink_2.tooltip": {
+      "source_key": "gt.multiitem.randomtools.1019.tooltip",
+      "value": "Used"
+    },
+    "item.gregtech.spray_paint_purple": {
+      "source_key": "gt.multiitem.randomtools.1010",
+      "value": "Spray Paint (Purple)"
+    },
+    "item.gregtech.spray_paint_purple.tooltip": {
+      "source_key": "gt.multiitem.randomtools.1010.tooltip",
+      "value": "Full"
+    },
+    "item.gregtech.spray_paint_purple_2": {
+      "source_key": "gt.multiitem.randomtools.1011",
+      "value": "Spray Paint (Purple)"
+    },
+    "item.gregtech.spray_paint_purple_2.tooltip": {
+      "source_key": "gt.multiitem.randomtools.1011.tooltip",
+      "value": "Used"
+    },
+    "item.gregtech.spray_paint_red": {
+      "source_key": "gt.multiitem.randomtools.1002",
+      "value": "Spray Paint (Red)"
+    },
+    "item.gregtech.spray_paint_red.tooltip": {
+      "source_key": "gt.multiitem.randomtools.1002.tooltip",
+      "value": "Full"
+    },
+    "item.gregtech.spray_paint_red_2": {
+      "source_key": "gt.multiitem.randomtools.1003",
+      "value": "Spray Paint (Red)"
+    },
+    "item.gregtech.spray_paint_red_2.tooltip": {
+      "source_key": "gt.multiitem.randomtools.1003.tooltip",
+      "value": "Used"
+    },
+    "item.gregtech.spray_paint_white": {
+      "source_key": "gt.multiitem.randomtools.1030",
+      "value": "Spray Paint (White)"
+    },
+    "item.gregtech.spray_paint_white.tooltip": {
+      "source_key": "gt.multiitem.randomtools.1030.tooltip",
+      "value": "Full"
+    },
+    "item.gregtech.spray_paint_white_2": {
+      "source_key": "gt.multiitem.randomtools.1031",
+      "value": "Spray Paint (White)"
+    },
+    "item.gregtech.spray_paint_white_2.tooltip": {
+      "source_key": "gt.multiitem.randomtools.1031.tooltip",
+      "value": "Used"
+    },
+    "item.gregtech.spray_paint_yellow": {
+      "source_key": "gt.multiitem.randomtools.1022",
+      "value": "Spray Paint (Yellow)"
+    },
+    "item.gregtech.spray_paint_yellow.tooltip": {
+      "source_key": "gt.multiitem.randomtools.1022.tooltip",
+      "value": "Full"
+    },
+    "item.gregtech.spray_paint_yellow_2": {
+      "source_key": "gt.multiitem.randomtools.1023",
+      "value": "Spray Paint (Yellow)"
+    },
+    "item.gregtech.spray_paint_yellow_2.tooltip": {
+      "source_key": "gt.multiitem.randomtools.1023.tooltip",
+      "value": "Used"
     },
     "item.gregtech.spumoni_chocolate_ice_cream": {
       "source_key": "gt.multiitem.food.13996",
@@ -22326,6 +22810,102 @@
     "item.gregtech.tusk.tooltip": {
       "source_key": "gt.multiitem.food.12400.tooltip",
       "value": ""
+    },
+    "item.gregtech.usb1_cable": {
+      "source_key": "gt.multiitem.technological.32011",
+      "value": "USB 1.0 Cable"
+    },
+    "item.gregtech.usb1_cable.tooltip": {
+      "source_key": "gt.multiitem.technological.32011.tooltip",
+      "value": "Replaces USB Sticks when connected to USB Ports"
+    },
+    "item.gregtech.usb1_hdd": {
+      "source_key": "gt.multiitem.technological.32021",
+      "value": "USB 1.0 HDD"
+    },
+    "item.gregtech.usb1_hdd.tooltip": {
+      "source_key": "gt.multiitem.technological.32021.tooltip",
+      "value": "Stores up to 16 Files at once"
+    },
+    "item.gregtech.usb1_stick": {
+      "source_key": "gt.multiitem.technological.32001",
+      "value": "USB 1.0 Stick"
+    },
+    "item.gregtech.usb1_stick.tooltip": {
+      "source_key": "gt.multiitem.technological.32001.tooltip",
+      "value": "Stores Data"
+    },
+    "item.gregtech.usb2_cable": {
+      "source_key": "gt.multiitem.technological.32012",
+      "value": "USB 2.0 Cable"
+    },
+    "item.gregtech.usb2_cable.tooltip": {
+      "source_key": "gt.multiitem.technological.32012.tooltip",
+      "value": "Replaces USB Sticks when connected to USB Ports"
+    },
+    "item.gregtech.usb2_hdd": {
+      "source_key": "gt.multiitem.technological.32022",
+      "value": "USB 2.0 HDD"
+    },
+    "item.gregtech.usb2_hdd.tooltip": {
+      "source_key": "gt.multiitem.technological.32022.tooltip",
+      "value": "Stores up to 16 Files at once"
+    },
+    "item.gregtech.usb2_stick": {
+      "source_key": "gt.multiitem.technological.32002",
+      "value": "USB 2.0 Stick"
+    },
+    "item.gregtech.usb2_stick.tooltip": {
+      "source_key": "gt.multiitem.technological.32002.tooltip",
+      "value": "Stores Data"
+    },
+    "item.gregtech.usb3_cable": {
+      "source_key": "gt.multiitem.technological.32013",
+      "value": "USB 3.0 Cable"
+    },
+    "item.gregtech.usb3_cable.tooltip": {
+      "source_key": "gt.multiitem.technological.32013.tooltip",
+      "value": "Replaces USB Sticks when connected to USB Ports"
+    },
+    "item.gregtech.usb3_hdd": {
+      "source_key": "gt.multiitem.technological.32023",
+      "value": "USB 3.0 HDD"
+    },
+    "item.gregtech.usb3_hdd.tooltip": {
+      "source_key": "gt.multiitem.technological.32023.tooltip",
+      "value": "Stores up to 16 Files at once"
+    },
+    "item.gregtech.usb3_stick": {
+      "source_key": "gt.multiitem.technological.32003",
+      "value": "USB 3.0 Stick"
+    },
+    "item.gregtech.usb3_stick.tooltip": {
+      "source_key": "gt.multiitem.technological.32003.tooltip",
+      "value": "Stores Data"
+    },
+    "item.gregtech.usb4_cable": {
+      "source_key": "gt.multiitem.technological.32014",
+      "value": "USB 4.0 Cable"
+    },
+    "item.gregtech.usb4_cable.tooltip": {
+      "source_key": "gt.multiitem.technological.32014.tooltip",
+      "value": "Replaces USB Sticks when connected to USB Ports"
+    },
+    "item.gregtech.usb4_hdd": {
+      "source_key": "gt.multiitem.technological.32024",
+      "value": "USB 4.0 HDD"
+    },
+    "item.gregtech.usb4_hdd.tooltip": {
+      "source_key": "gt.multiitem.technological.32024.tooltip",
+      "value": "Stores up to 16 Files at once"
+    },
+    "item.gregtech.usb4_stick": {
+      "source_key": "gt.multiitem.technological.32004",
+      "value": "USB 4.0 Stick"
+    },
+    "item.gregtech.usb4_stick.tooltip": {
+      "source_key": "gt.multiitem.technological.32004.tooltip",
+      "value": "Stores Data"
     },
     "item.gregtech.vanilla_ice_cream": {
       "source_key": "gt.multiitem.food.13003",
