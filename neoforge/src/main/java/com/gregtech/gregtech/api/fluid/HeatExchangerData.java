@@ -28,6 +28,8 @@ public final class HeatExchangerData {
     public static void restore(FluidTankGT tank,CompoundTag data,long capacity,net.minecraft.core.HolderLookup.Provider lookup) {
         // Source setCapacity never discards an over-capacity saved amount.
         tank.setEmpty();tank.setCapacity(capacity);
+        // An empty long-tank envelope only has Amount/Capacity, not a fluid codec payload.
+        if(!data.contains("Fluid")&&!data.contains("FluidName")&&!data.contains("id"))return;
         var fluidTag=data.contains("Fluid")?data.getCompound("Fluid"):data;
         var fluid=FluidStackNbt.read(lookup,fluidTag);
         long amount=data.contains("Fluid")?data.getLong("Amount")

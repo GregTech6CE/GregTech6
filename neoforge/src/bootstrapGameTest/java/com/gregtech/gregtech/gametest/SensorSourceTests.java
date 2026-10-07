@@ -37,6 +37,9 @@ public final class SensorSourceTests {
                 "Native large configured capacity and long cold save do not truncate to int");
         var roundtrip=machine.saveWithoutMetadata(world.registryAccess());data=roundtrip;machine.loadWithComponents(data,world.registryAccess());
         h.assertTrue(machine.tankAmount(1)==5_000_000_000L,"Native save/load preserves long output exactly");
+        var emptyTank=new net.minecraft.nbt.CompoundTag();emptyTank.putLong("Amount",0);emptyTank.putLong("Capacity",5_000_000_000L);
+        data.put("gt.hot",emptyTank);machine.loadWithComponents(data,world.registryAccess());
+        h.assertTrue(machine.tankAmount(0)==0&&machine.tankCapacity(0)==5_000_000_000L,"Empty long envelope retains capacity without decoding an absent fluid");
         h.assertTrue(machine.isEnergyEmittingTo(com.gregtech.gregtech.data.GregTechTags.Energy.EU,Direction.UP,false)
                 &&!machine.isEnergyEmittingTo(com.gregtech.gregtech.data.GregTechTags.Energy.EU,Direction.DOWN,false)
                 &&machine.getEnergySizeOutputMin(com.gregtech.gregtech.data.GregTechTags.Energy.EU,Direction.UP)==500000000L
