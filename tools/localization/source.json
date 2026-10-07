@@ -1,0 +1,21 @@
+{
+  "alias_origin_report": "docs/integration/verification/original-zh-cn-source-20261005.json",
+  "author": "User-supplied original GregTech Chinese patch; no author attribution present in the configuration header",
+  "bytes": 7375784,
+  "family_name_aliases": {
+    "item.gregtech.panel_wood_bamboo": "Uses the original generic Wood Panel display name; this is not a claim of an original registration for this wood.",
+    "item.gregtech.panel_wood_cherry": "Uses the original generic Wood Panel display name; this is not a claim of an original registration for this wood.",
+    "item.gregtech.panel_wood_crimson": "Uses the original generic Wood Panel display name; this is not a claim of an original registration for this wood.",
+    "item.gregtech.panel_wood_ebony": "Uses the original generic Wood Panel display name; this is not a claim of an original registration for this wood.",
+    "item.gregtech.panel_wood_mangrove": "Uses the original generic Wood Panel display name; this is not a claim of an original registration for this wood.",
+    "item.gregtech.panel_wood_pine": "Uses the original generic Wood Panel display name; this is not a claim of an original registration for this wood.",
+    "item.gregtech.panel_wood_warped": "Uses the original generic Wood Panel display name; this is not a claim of an original registration for this wood.",
+    "item.gregtech.panel_wood_white_mahoe": "Uses the original generic Wood Panel display name; this is not a claim of an original registration for this wood."
+  },
+  "keys": 125676,
+  "license": "Not declared in the supplied language file; preserved local source, no publication in this batch",
+  "policy": "Copy exact S: values, including punctuation, spaces and formatting. Unmapped native keys use en_us unchanged. Snapshot is tooling only, excluded from runtime jars.",
+  "provided_path": "C:\\Dev\\GregTech_zh_cn.lang",
+  "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0",
+  "source_filename": "GregTech_zh_cn.lang"
+}

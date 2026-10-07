@@ -381,6 +381,14 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
 }
 
+tasks.register('sourcePolicyCheck', Exec) {
+    description = 'Checks source-set boundaries and exact original Chinese strings without starting a game.'
+    group = 'verification'
+    workingDir rootDir
+    commandLine (findProperty('pythonExecutable') ?: 'python'), '-X', 'utf8',
+            'tools/integration/check_source.py', '--output', 'build/reports/source-policy.json'
+}
+
 tasks.named('check').configure { dependsOn ':core:check' }
 
 // ---------------------------------------------------------------------------

@@ -160,6 +160,9 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
+// NeoForge-only builds must enforce the same shared contracts/source policy.
+tasks.named('check').configure { dependsOn ':core:check' }
+
 tasks.named('jar', Jar).configure {
     // Embedding the complete shared resource catalog requires ZIP64 too.
     zip64 = true
