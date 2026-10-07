@@ -18,19 +18,6 @@ public final class FluidTransportBlockItem extends BlockItem {
         return super.getMaxStackSize(stack);
     }
 
-    @Override public Component getName(ItemStack stack){
-        if(getBlock() instanceof TankBlock tank) {
-            if(com.gregtech.gregtech.content.transport.fluid.CheapWoodBarrelCatalog.entry(tank.spec().id()).isPresent())
-                return Component.translatable("block.gregtech."+tank.spec().id());
-            return Component.literal(tank.spec().materialName()+" Tank");
-        }
-        if(getBlock() instanceof FluidPipeBlock pipe){
-            String size=pipe.spec().size().name();
-            return Component.literal(size.substring(0,1).toUpperCase(java.util.Locale.ROOT)+size.substring(1).toLowerCase(java.util.Locale.ROOT)
-                    +" "+pipe.spec().materialName()+" Fluid Pipe");
-        }
-        return super.getName(stack);
-    }
     @Override public void appendHoverText(ItemStack stack,TooltipContext context,List<Component> lines,TooltipFlag flag){
         super.appendHoverText(stack,context,lines,flag);
         if(getBlock() instanceof TankBlock tank)TankTooltips.appendTank(tank.spec(),stack,context.registries(),lines);

@@ -211,9 +211,6 @@ public class GTToolItem extends Item {
             return super.getName(stack);
         }
         GTMaterial head = GTToolHelper.getHead(stack);
-        if (toolType == GTToolType.GEM_PICK) {
-            return Component.translatable("item." + "gregtech" + ".tool.gem_tipped_pickaxe.named", MaterialPresentation.name(head));
-        }
         return Component.translatable("item." + "gregtech" + ".tool." + toolType.id() + ".named",
                 MaterialPresentation.name(head), Component.translatable(toolType.translationKey()));
     }

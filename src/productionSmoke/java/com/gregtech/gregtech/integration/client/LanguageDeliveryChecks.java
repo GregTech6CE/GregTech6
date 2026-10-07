@@ -79,8 +79,10 @@ final class LanguageDeliveryChecks {
                 englishNames++;
             }
             require(unresolved.isEmpty(),"Unresolved installed English names: "+unresolved+"; total="+unresolved.size());
+            int machineNamesEnglish=verifyMachineNames();
             manager.setSelected("zh_cn");
             manager.onResourceManagerReload(client.getResourceManager());
+            int machineNamesChinese=verifyMachineNames();
             require(Language.getInstance().has("gt.multiitem.bumblebee.0"), "Original Chinese resource is loaded");
             int names=0, nonempty=0, empty=0;
             String[] states={"drone","princess","queen","dead","scanned_drone","scanned_princess","scanned_queen","scanned_dead"};
@@ -103,6 +105,37 @@ final class LanguageDeliveryChecks {
             for (var entry:ANVILS.entrySet()) require(item(entry.getKey()).getHoverName().getString().equals(original(entry.getValue())),
                     "Original numbered anvil name "+entry.getKey());
             require(names==640 && nonempty==360 && empty==280,"Complete source bee catalog and original empty rows");
+            var identitySamples=Map.ofEntries(
+                    Map.entry("auto_igniter_steel","gt.multitileentity.15010"),
+                    Map.entry("item_pipe_restrictive_huge_brass","gt.multitileentity.25007"),
+                    Map.entry("pipe_nonuple_wood","gt.multitileentity.26006"),
+                    Map.entry("fluid_cell_wax","gt.multitileentity.32600"),
+                    Map.entry("fluid_measuring_pot","gt.multitileentity.32738"),
+                    Map.entry("glowtus_lime","gt.block.lilypad.glowtus.10"),
+                    Map.entry("track_steel","gt.block.rail.steel"),
+                    Map.entry("log_dry","gt.block.log.1.0"),
+                    Map.entry("planks_cinnamon","gt.block.planks.5"),
+                    Map.entry("battery_lithium_cobalt_mv","gt.multitileentity.14032"),
+                    Map.entry("compact_electric_motor_luv","gt.multiitem.technological.12006"),
+                    Map.entry("extruder_shape_tinypipe","gt.multiitem.technological.10009"));
+            var mismatches=new ArrayList<String>();
+            for(var entry:identitySamples.entrySet()) {
+                String actual=item(entry.getKey()).getHoverName().getString(), expected=original(entry.getValue());
+                if(!actual.equals(expected))mismatches.add(entry.getKey()+": "+actual+" != "+expected);
+            }
+            require(mismatches.isEmpty(),"Installed original identity names: "+mismatches);
+            var shape=item("extruder_shape_tinypipe");
+            require(tooltip(shape).stream().anyMatch(c -> c.getString().equals(original("gt.multiitem.technological.10009.tooltip"))),
+                    "Newly imported original shape description reaches native tooltip");
+            var toolSamples=List.of(com.gregtech.gregtech.api.tool.GTToolType.SWORD,
+                    com.gregtech.gregtech.api.tool.GTToolType.GEM_PICK,
+                    com.gregtech.gregtech.api.tool.GTToolType.POCKET_MULTITOOL);
+            for(var type:toolSamples) {
+                var stack=com.gregtech.gregtech.api.tool.GTToolHelper.displayTool(type);
+                require(stack.getHoverName().getString().contains(original("gt.metatool.01."+type.gt6Id())),
+                        "Assembled tool keeps localized original kind "+type);
+                require(!stack.getHoverName().getString().contains("%s"),"No unexpanded assembled tool format");
+            }
 
             var ironFluid=new FluidStack(BuiltInRegistries.FLUID.get(ResourceLocation.parse("gregtech:molten_iron")),144);
             var oxygen=GTFluids.stack("Oxygen",1000);
@@ -145,6 +178,11 @@ final class LanguageDeliveryChecks {
             report.addProperty("beeDescriptions",nonempty);report.addProperty("emptyBeeDescriptions",empty);
             report.addProperty("anvilNames",ANVILS.size());report.addProperty("fluidNameSamples",3);
             report.addProperty("fluidPropertySamples",7);report.addProperty("hotRecipeValues",2);
+            report.addProperty("sourceIdentitySamples",identitySamples.size());
+            report.addProperty("machineNamesEnglish",machineNamesEnglish);
+            report.addProperty("machineNamesChinese",machineNamesChinese);
+            report.addProperty("assembledToolNames",toolSamples.size());
+            report.addProperty("newSourceDescriptions",1);
             var samples=new JsonArray();for(var c:ironLines)samples.add(c.getString());report.add("moltenIronTooltip",samples);
             report.addProperty("scope","Installed resource-manager language and actual item callbacks; explicitly supplied native lookup for Neo payloads at title screen; no in-world player hover or survival claim");
             return report;
@@ -155,6 +193,21 @@ final class LanguageDeliveryChecks {
     private static String original(String key) {
         require(Language.getInstance().has(key),"Original key present "+key);
         return Language.getInstance().getOrDefault(key);
+    }
+    private static int verifyMachineNames() {
+        int checked=0;
+        var mismatches=new ArrayList<String>();
+        for(var registered:BuiltInRegistries.ITEM) {
+            if(!(registered instanceof com.gregtech.gregtech.block.machine.GTMachineBlockItem)
+                    && !(registered instanceof com.gregtech.gregtech.item.BookShelfBlockItem))continue;
+            var stack=new ItemStack(registered);
+            String key=stack.getDescriptionId(),actual=stack.getHoverName().getString();
+            if(!Language.getInstance().has(key)||!actual.equals(Component.translatable(key).getString()))
+                mismatches.add(BuiltInRegistries.ITEM.getKey(registered)+": "+actual+" != "+key);
+            checked++;
+        }
+        require(checked>=400&&mismatches.isEmpty(),"Registered machine names must use current locale: "+mismatches+"; checked="+checked);
+        return checked;
     }
     private static ItemStack item(String path) {
         var id=ResourceLocation.parse("gregtech:"+path);require(BuiltInRegistries.ITEM.containsKey(id),"Registered item "+id);
