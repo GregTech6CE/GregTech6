@@ -34,6 +34,7 @@ public final class BasicMachineSourceContracts {
         var partial=OriginalBasicMachineRules.io(1,(1<<MachineFaceMasks.TOP)|(1<<MachineFaceMasks.LEFT),MachineFaceMasks.LEFT);
         check(!partial.any()&&partial.faces().size()==2&&partial.faces().get(0).side()==MachineFaceMasks.TOP&&!partial.faces().get(0).automatic()&&partial.faces().get(1).automatic(),"source restricted face order and auto marker");
         check(OriginalBasicMachineRules.unitKey("LU").equals("gt.td.short.energy.light")&&OriginalBasicMachineRules.unitKey("QU").equals("gt.td.short.energy.quantum"),"source energy identities");
+        check(OriginalBasicMachineRules.unitKey("MU").equals("gt.td.short.energy.magnetic"),"original TD.Energy.MAGNETIC short-name identity");
         check(OriginalBasicMachineRules.IGNITION_TICKS==40&&OriginalBasicMachineRules.IGNITION_NBT.equals("gt.ignite"),"original ignition timer and key");
         var mixer=MachineWorkCost.calculate(8,10,1,false,OriginalBasicMachineRules.efficiency("electricmixer",1),16,64,OriginalBasicMachineRules.cheapOverclocking("electricmixer",1));
         check(mixer.minimumPower()==32&&mixer.totalWork()==320,"source half efficiency plus normal overclock");

@@ -33,7 +33,7 @@ public final class OriginalBasicMachineRules {
     public static final List<Integer> FACE_ORDER=List.of(MachineFaceMasks.BOTTOM,MachineFaceMasks.TOP,MachineFaceMasks.LEFT,MachineFaceMasks.FRONT,MachineFaceMasks.RIGHT,MachineFaceMasks.BACK);
     public static String unitKey(String type) {return "gt.td.short.energy."+switch(type) {
         case "HU"->"heat";case "RU"->"kinetic_rotation";case "KU"->"kinetic_push";
-        case "EU"->"electricity";case "CU"->"cryo";case "LU"->"light";case "QU"->"quantum";
+        case "EU"->"electricity";case "CU"->"cryo";case "LU"->"light";case "QU"->"quantum";case "MU"->"magnetic";
         case "TU"->"time";case "RF"->"redstone_flux";case "MJ"->"minecraft_joules";
         default->throw new IllegalArgumentException("Source energy:"+type);
     };}
