@@ -198,7 +198,7 @@ public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements 
 
     protected long maxMaterialAmount() { return MAX_AMOUNT; }
 
-    protected double thermalMassKg() { return spec.thermalMassKg(); }
+    protected double thermalMassKg() { return spec.smeltingThermalMassKg(); }
 
     protected AABB itemSuctionArea() {
         return new AABB(worldPosition.getX() + 2 / 16.0D, worldPosition.getY() + 2 / 16.0D,

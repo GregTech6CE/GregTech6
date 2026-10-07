@@ -45,7 +45,7 @@ final class CommonBlockDeliveryChecks {
         missing.removeAll(checkedSourcePaths);
         System.err.println("SOURCE_BLOCK_TOOLTIP_COVERAGE blocks="+sourceBlocks+" basicMachines="+sourceMachines
                 +" overlap="+overlappingMachines+" missing="+missing);
-        require(sourceBlocks == 1311 && missing.isEmpty() && sourceMachines >= 250,
+        require(sourceBlocks == 1506 && missing.isEmpty() && sourceMachines >= 250,
                 "all adopted original metadata identities present: blocks="+sourceBlocks+", basicMachines="+sourceMachines+", missing="+missing);
         for (var item : representatives.values()) verifyRows(new ItemStack(item));
         int storedCovers = 0;

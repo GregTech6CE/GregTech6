@@ -33,7 +33,7 @@ public record CrucibleSpec(
     public static final long KG_PER_ENERGY = 100L;
     public static final long MIN_HU_PER_TICK = 1L;
 
-    /** True if this spec represents a stone-tier crucible (9x capacity). */
+    /** Legacy construction-amount predicate; never determines vessel capacity or heat capacity. */
     public boolean isStoneTier() {
         return hullMaterialUnits >= STONE_CRUCIBLE_HULL_UNITS;
     }
@@ -47,11 +47,18 @@ public record CrucibleSpec(
     }
 
     public long meltDownTemperatureK() {
-        return Math.round(meltingPointK * HEAT_RESISTANCE_BONUS);
+        return (long) (meltingPointK * HEAT_RESISTANCE_BONUS);
     }
 
     public double thermalMassKg() {
         return MaterialMass.kilograms(hullDensity, hullMaterialUnits);
+    }
+
+    /** MultiTileEntitySmeltery always heats7U of its hull material, regardless of its REV inputs.
+     * Large crucibles retain their separately defined100U thermal hull. */
+    public double smeltingThermalMassKg() {
+        return MaterialMass.kilograms(hullDensity,
+                id.startsWith("smelting_crucible_") ? DEFAULT_CRUCIBLE_HULL_UNITS : hullMaterialUnits);
     }
 
     /** GT6 {@code RM.CrucibleAlloying} — registered for future recipe logic. */

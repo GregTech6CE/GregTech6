@@ -49,7 +49,7 @@ public class SmeltingCrucibleEntity extends com.gregtech.gregtech.blockentity.GT
     protected SmeltingCrucibleEntity(net.minecraft.world.level.block.entity.BlockEntityType<?> type,BlockPos pos,BlockState state,com.gregtech.gregtech.api.machine.CrucibleSpec spec){super(type,pos,state);this.spec=spec;}
     public com.gregtech.gregtech.api.machine.CrucibleSpec spec(){return spec;}
     protected long maxMaterialAmount(){return MAX_AMOUNT;}
-    protected double thermalMassKg(){return spec.thermalMassKg();}
+    protected double thermalMassKg(){return spec.smeltingThermalMassKg();}
     public long getMeltDownLimitK(){return spec.meltDownTemperatureK();}
     protected ItemStackHandler cacheHandler(){return cache;}
     protected AABB itemSuctionArea(){return new AABB(worldPosition.getX()+.125,worldPosition.getY()+.125,worldPosition.getZ()+.125,worldPosition.getX()+.875,worldPosition.getY()+1,worldPosition.getZ()+.875);}

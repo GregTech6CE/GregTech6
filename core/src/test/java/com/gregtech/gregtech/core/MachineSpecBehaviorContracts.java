@@ -30,6 +30,7 @@ public final class MachineSpecBehaviorContracts {
         brickHeater();
         ceramicCrucibleAndMold();
         chargedCrucibleHeatRequirement();
+        originalSmelteryParametersAndShapes();
         originalMachineMaterials();
         originalBlastTooltips();
         originalHarvestProperties();
@@ -156,7 +157,7 @@ public final class MachineSpecBehaviorContracts {
 
     private static void originalHarvestProperties() {
         var properties = com.gregtech.gregtech.data.SourceBlockProperties.blocks();
-        check(properties.size() == 1311, "471 fixed source identities plus120 hoppers and720 audited storage variants");
+        check(properties.size() == 1506, "666 fixed source identities plus120 hoppers and720 audited storage variants");
         check(com.gregtech.gregtech.data.SourceBlockProperties.basics().size() == 252, "All252 adopted original machine metadata keys");
         var wood = properties.get("gearbox_wood");
         check(wood.sourceId() == 24809 && wood.tool().equals("axe") && wood.handHarvestable(), "Wood gearbox original aWooden exemption");
@@ -197,8 +198,8 @@ public final class MachineSpecBehaviorContracts {
         var storage = com.gregtech.gregtech.content.machine.OriginalStorageMaterialData.blocks();
         var harvest = com.gregtech.gregtech.content.machine.OriginalStorageMaterialData.harvest();
         check(storage.size() == 720 && harvest.size() == 720, "Twelve existing original storage families across60 metalsets");
-        check(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.blocks().size() == 1309,
-                "469 fixed plus120 hoppers plus720 precise storage records");
+        check(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.blocks().size() == 1464,
+                "624 fixed plus120 hoppers plus720 precise storage records");
         long u = GTValues.U;
         for (var spec : com.gregtech.gregtech.registry.GTStorageMetals.ALL) {
             var metal = spec.material().resolve();
@@ -714,35 +715,32 @@ public final class MachineSpecBehaviorContracts {
     }
 
     private static void ceramicCrucibleAndMold() {
-        // Original GTMachines.java:334-335 specifies hull density, not Ceramic's default density.
-        var ceramic = CrucibleSpec.of("smelting_crucible_ceramic", Materials.Ceramic,
-                1005, 5.0F, 5.0F, false, 2000, 4000, 0.8181818181818182D);
+        // Original Loader_MultiTileEntities uses the shared ceramic material statistics.
+        var ceramic = com.gregtech.gregtech.api.machine.InitialSmelteryDefinitions.ceramicCrucible();
         check(ceramic.id().equals("smelting_crucible_ceramic") && ceramic.gt6MetaId() == 1005,
                 "Original ceramic registry path and meta");
         check(ceramic.material() == GTMaterialRegistry.get(8225), "Same full shared material identity");
         check(ceramic.meltingPointK() == 2000 && ceramic.boilingPointK() == 4000, "Explicit hull Kelvin bounds");
-        check(Double.doubleToLongBits(ceramic.hullDensity()) == Double.doubleToLongBits(0.8181818181818182D),
-                "Explicit density retained bit-for-bit");
-        check(ceramic.hullDensity() != Materials.Ceramic.getDensity(), "Do not substitute material density");
+        check(Double.doubleToLongBits(ceramic.hullDensity()) == Double.doubleToLongBits((double)0.866478F),
+                "Original canonical ceramic density retained");
+        check(ceramic.hullDensity() == Materials.Ceramic.getDensity(), "Source hull uses live material density");
         check(ceramic.hullMaterialUnits() == 4540536000L && ceramic.hullMaterialUnits() == 7 * GTValues.U,
                 "Original7U shell, not a144-unit replacement");
-        check(ceramic.meltDownTemperatureK() == 2500, "Original round(2000*1.25) hull limit");
+        check(ceramic.meltDownTemperatureK() == 2500, "Original truncated(2000*1.25) hull limit");
         check(ceramic.hardness() == 5.0F && ceramic.blastResistance() == 5.0F && !ceramic.acidProof(),
                 "Original ceramic block and acid parameters");
         check(!ceramic.isStoneTier(), "Ceramic shell is not63U stone tier");
-        near(ceramic.thermalMassKg(), 636.3636357272728D, "Independent original7U shell mass");
+        near(ceramic.thermalMassKg(), 673.9273528141471D, "Independent original7U shell mass");
 
-        // Original MachineRegistry.java:149-168 uses offset50 and the5U companion constant.
-        var mold = new CrucibleSpec("mold_ceramic", ceramic.material(), ceramic.gt6MetaId() + 50,
-                ceramic.meltingPointK(), ceramic.boilingPointK(), ceramic.hullDensity(),
-                ceramic.hardness(), ceramic.blastResistance(), ceramic.acidProof(), CrucibleSpec.MOLD_HULL_UNITS);
+        // Original Loader_MultiTileEntities registers the ceramic mold with5U and its own hardness.
+        var mold = com.gregtech.gregtech.api.machine.InitialSmelteryDefinitions.ceramicMold();
         check(mold.id().equals("mold_ceramic") && mold.gt6MetaId() == 1055, "Original mold path and meta offset");
         check(mold.material() == ceramic.material() && mold.hullDensity() == ceramic.hullDensity(),
-                "Mold companion retains the same material and explicit hull density");
+                "Mold companion uses the same canonical material density");
         check(mold.hullMaterialUnits() == 3243240000L && mold.hullMaterialUnits() == 5 * GTValues.U,
                 "Original5U mold shell");
         check(mold.meltDownTemperatureK() == 2500, "Original mold Kelvin limit");
-        near(mold.thermalMassKg(), 454.5454540909092D, "Independent original5U mold mass");
+        near(mold.thermalMassKg(), 481.3766805815337D, "Independent original5U mold mass");
         check(CrucibleSpec.BASIN_HULL_UNITS == 5 * GTValues.U
                         && CrucibleSpec.CROSSING_HULL_UNITS == 5 * GTValues.U
                         && CrucibleSpec.FAUCET_HULL_UNITS == 3 * GTValues.U,
@@ -751,21 +749,67 @@ public final class MachineSpecBehaviorContracts {
         check(defaults.hullDensity() == Materials.Ceramic.getDensity(), "Retained material-derived overload");
         var stone = CrucibleSpec.of("stone_hull", Materials.Ceramic, 1005, 5, 5, false,
                 CrucibleSpec.STONE_CRUCIBLE_HULL_UNITS);
-        check(stone.isStoneTier() && stone.hullMaterialUnits() == 63 * GTValues.U, "Original63U tier predicate");
+        check(stone.isStoneTier() && stone.hullMaterialUnits() == 63 * GTValues.U, "Legacy63U construction predicate never determines heat capacity");
     }
 
     private static void chargedCrucibleHeatRequirement() {
-        var ceramic = CrucibleSpec.of("smelting_crucible_ceramic", Materials.Ceramic,
-                1005, 5.0F, 5.0F, false, 2000, 4000, 0.8181818181818182D);
+        var ceramic = com.gregtech.gregtech.api.machine.InitialSmelteryDefinitions.ceramicCrucible();
         // Decimal expected values were calculated independently from Java float32 source densities.
         double copperKg = com.gregtech.gregtech.api.material.MaterialMass.kilograms(Materials.Copper, 3 * GTValues.U);
         double tinKg = com.gregtech.gregtech.api.material.MaterialMass.kilograms(Materials.Tin, GTValues.U);
         near(copperKg, 2986.6666763956573D, "Original three copper units mass");
         near(tinKg, 809.6666857781968D, "Original one tin unit mass");
         double chargedKg = ceramic.thermalMassKg() + copperKg + tinKg;
-        near(chargedKg, 4432.696997901126D, "Fixed3Cu+1Sn with original ceramic shell mass");
+        near(chargedKg, 4470.260714988001D, "Fixed3Cu+1Sn with original ceramic shell mass");
         check(ThermalStep.requiredEnergy(chargedKg) == 45, "Charged vessel needs45HU for one Kelvin");
         check(ThermalStep.requiredEnergy(ceramic.thermalMassKg()) == 7, "Empty original hull needs7HU/K");
+    }
+
+    private static void originalSmelteryParametersAndShapes() {
+        var definitions = com.gregtech.gregtech.api.machine.OriginalSmelteryDefinitions.all();
+        check(definitions.size() == 195, "39 original vessels with four source companions each");
+        long u = GTValues.U;
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("smelting_crucible_stone").orElseThrow(), java.util.Map.of("Stone",63*u));
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("mold_stone").orElseThrow(), java.util.Map.of("Stone",45*u));
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("crucible_faucet_stone").orElseThrow(), java.util.Map.of("Stone",27*u));
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("smelting_crucible_quartz").orElseThrow(), java.util.Map.of("SiliconDioxide",7*u));
+        composition(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("smelting_crucible_carbon").orElseThrow(), java.util.Map.of("Graphene",7*u));
+        check(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block("smelting_crucible_basalt").isEmpty(), "OP.stone.mAmount=-1 supplies no positive source REV quantity");
+        var stone = com.gregtech.gregtech.api.machine.OriginalSmelteryDefinitions.get(1000);
+        near(stone.smeltingThermalMassKg(),777.7777769999999D,"Stone vessel heats7U while construction contains63U");
+        var steel = com.gregtech.gregtech.api.machine.OriginalSmelteryDefinitions.get(1022);
+        check(steel.meltDownTemperatureK()==2557,"Source long cast truncates2046*1.25 instead of rounding to2558K");
+        check(com.gregtech.gregtech.api.machine.OriginalSmelteryDefinitions.get(1051).hardness()==1F
+                && com.gregtech.gregtech.api.machine.OriginalSmelteryDefinitions.get(1701).blastResistance()==5F,
+                "Basalt mold/faucet own source physical NBT does not inherit15/15 vessel parameters");
+        check(com.gregtech.gregtech.api.machine.SmelteryCompanionDefinitions.copy(
+                com.gregtech.gregtech.api.machine.OriginalSmelteryDefinitions.get(1001),"mold_basalt",50,5*u)
+                ==com.gregtech.gregtech.api.machine.OriginalSmelteryDefinitions.get(1051),
+                "Forge compatibility registry entry point uses the exact original companion record");
+        check(com.gregtech.gregtech.api.machine.OriginalSmelteryDefinitions.get(1041).meltingPointK()==1873,"HSLA canonical source melting point");
+        int positive=0;
+        for(var spec:definitions) {
+            var policy=com.gregtech.gregtech.data.SourceBlockProperties.block(spec.id()).orElseThrow();
+            check(policy.sourceId()==spec.gt6MetaId() && policy.tool().equals("pickaxe"),"Smeltery source ID and tool identity "+spec.id());
+            check(policy.handHarvestable()==(spec.id().startsWith("crucible_faucet_")
+                    || spec.id().startsWith("mold_") && !spec.id().startsWith("mold_basin_")),
+                    "Original utility mold/faucet hand exemption "+spec.id());
+            if(spec.hullMaterialUnits()>0)positive++;
+        }
+        check(positive==155,"155 positive original quantities;40 nonpositive stone-prefix results remain undefined");
+        var large=CrucibleSpec.of("large_crucible_fixture",Materials.Ceramic,0,5,5,false,100*u);
+        near(large.smeltingThermalMassKg(),9627.533611630674D,"Large vessel keeps100U heat capacity");
+        var shapes=com.gregtech.gregtech.api.machine.crucible.MoldShapes.recipes();
+        check(com.gregtech.gregtech.api.machine.crucible.MoldShapes.recipe(0)==null,"Unselected mold has no cast recipe");
+        check(com.gregtech.gregtech.api.machine.crucible.MoldShapes.recipe(1<<30).itemPrefix()==com.gregtech.gregtech.data.MaterialPrefix.nugget
+                && com.gregtech.gregtech.api.machine.crucible.MoldShapes.requiredMaterialUnits(1<<30)==0,"Legacy high bits retain source nugget fallback but never consume material");
+        check(com.gregtech.gregtech.api.machine.crucible.MoldShapes.requiredMaterialUnits((1<<30)|1)==GTValues.U9,
+                "Unknown one-cell cavity consumes one nugget regardless of legacy high bits");
+        check(com.gregtech.gregtech.api.machine.crucible.MoldShapes.requiredMaterialUnits(0x1ffffff)==u,"Full25-cell plate uses1U");
+        int ingot=0b00000_11111_11111_11111_00000;
+        check(com.gregtech.gregtech.api.machine.crucible.MoldShapes.recipe(ingot).itemPrefix()==com.gregtech.gregtech.data.MaterialPrefix.ingot,
+                "Pinned original three-row ingot shape");
+        check(com.gregtech.gregtech.api.machine.crucible.MoldShapes.requiredMaterialUnits(ingot|(1<<30))==u,"Known ingot shape ignores extra legacy bits");
     }
 
     private static void near(double actual, double expected, String message) {

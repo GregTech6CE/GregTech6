@@ -406,8 +406,6 @@ public final class OriginalMachineMaterialData {
         BLOCK_DATA.put("flux_cooler_hv", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Electrum, 5189184000L), part(ImportedMaterialData.Au, 648648000L), part(ImportedMaterialData.Rubber, 1297296000L), part(ImportedMaterialData.Si, 3891888000L), part(ImportedMaterialData.Cu, 3891888000L), part(ImportedMaterialData.StainlessSteel, 5189184000L)), 1, "GT6 Loader_MultiTileEntities 11163 known CR.REV inputs"));
         BLOCK_DATA.put("electromagnet_hv", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.AnnealedCopper, 7783776000L), part(ImportedMaterialData.StainlessSteel, 5189184000L)), 1, "GT6 Loader_MultiTileEntities 10033 known CR.REV inputs"));
         BLOCK_DATA.put("flux_magnet_hv", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Electrum, 5189184000L), part(ImportedMaterialData.AnnealedCopper, 7783776000L), part(ImportedMaterialData.StainlessSteel, 5189184000L)), 1, "GT6 Loader_MultiTileEntities 11033 known CR.REV inputs"));
-    }
-    private static void blocks1() {
         BLOCK_DATA.put("electric_motor_ev", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Cr, 11891880000L), part(ImportedMaterialData.NeodymiumMagnetic, 648648000L), part(ImportedMaterialData.AnnealedCopper, 5189184000L)), 1, "GT6 Loader_MultiTileEntities 10024 known CR.REV inputs"));
         BLOCK_DATA.put("electric_dynamo_ev", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Cr, 11891880000L), part(ImportedMaterialData.AnnealedCopper, 5189184000L), part(ImportedMaterialData.NeodymiumMagnetic, 648648000L)), 1, "GT6 Loader_MultiTileEntities 10114 known CR.REV inputs"));
         BLOCK_DATA.put("electric_heater_ev", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Cr, 9297288000L), part(ImportedMaterialData.Nichrome, 10378368000L)), 1, "GT6 Loader_MultiTileEntities 10004 known CR.REV inputs"));
@@ -446,6 +444,8 @@ public final class OriginalMachineMaterialData {
         BLOCK_DATA.put("battery_box_hv", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Au, 1945944000L), part(ImportedMaterialData.Rubber, 1297296000L), part(ImportedMaterialData.StainlessSteel, 5189184000L)), 1, "GT6 Loader_MultiTileEntities 10083 known CR.REV inputs"));
         BLOCK_DATA.put("energy_storage_hv", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Au, 7783776000L), part(ImportedMaterialData.Rubber, 2594592000L), part(ImportedMaterialData.AnnealedCopper, 2594592000L), part(ImportedMaterialData.Fe, 2594592000L), part(ImportedMaterialData.StainlessSteel, 5189184000L)), 1, "GT6 Loader_MultiTileEntities 10093 known CR.REV inputs"));
         BLOCK_DATA.put("battery_box_ev", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Al, 1945944000L), part(ImportedMaterialData.Rubber, 1297296000L), part(ImportedMaterialData.Cr, 5189184000L)), 1, "GT6 Loader_MultiTileEntities 10084 known CR.REV inputs"));
+    }
+    private static void blocks1() {
         BLOCK_DATA.put("energy_storage_ev", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Al, 7783776000L), part(ImportedMaterialData.Rubber, 2594592000L), part(ImportedMaterialData.AnnealedCopper, 2594592000L), part(ImportedMaterialData.Fe, 2594592000L), part(ImportedMaterialData.Cr, 5189184000L)), 1, "GT6 Loader_MultiTileEntities 10094 known CR.REV inputs"));
         BLOCK_DATA.put("battery_box_iv", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Pt, 1945944000L), part(ImportedMaterialData.Rubber, 1297296000L), part(ImportedMaterialData.Ti, 5189184000L)), 1, "GT6 Loader_MultiTileEntities 10085 known CR.REV inputs"));
         BLOCK_DATA.put("energy_storage_iv", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Pt, 7783776000L), part(ImportedMaterialData.Rubber, 2594592000L), part(ImportedMaterialData.AnnealedCopper, 2594592000L), part(ImportedMaterialData.Fe, 2594592000L), part(ImportedMaterialData.Ti, 5189184000L)), 1, "GT6 Loader_MultiTileEntities 10095 known CR.REV inputs"));
@@ -526,8 +526,6 @@ public final class OriginalMachineMaterialData {
         BLOCK_DATA.put("small_tungstensteel_tank_main_valve", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.TungstenSteel, 2918916000L)), 1, "GT6 Loader_MultiTileEntities 17003 known CR.REV inputs"));
         BLOCK_DATA.put("small_tungsten_tank_main_valve", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.W, 2918916000L)), 1, "GT6 Loader_MultiTileEntities 17004 known CR.REV inputs"));
         BLOCK_DATA.put("small_adamantium_tank_main_valve", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ad, 2918916000L)), 1, "GT6 Loader_MultiTileEntities 17005 known CR.REV inputs"));
-    }
-    private static void blocks2() {
         BLOCK_DATA.put("small_titanium_tank_main_valve", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ti, 2918916000L)), 1, "GT6 Loader_MultiTileEntities 17006 known CR.REV inputs"));
         BLOCK_DATA.put("small_invar_tank_main_valve", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Invar, 2918916000L)), 1, "GT6 Loader_MultiTileEntities 17007 known CR.REV inputs"));
         BLOCK_DATA.put("small_dense_stainless_steel_tank_main_valve", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.StainlessSteel, 23675652000L)), 1, "GT6 Loader_MultiTileEntities 17022 known CR.REV inputs"));
@@ -604,6 +602,8 @@ public final class OriginalMachineMaterialData {
         BLOCK_DATA.put("burning_box_solid_titanium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ti, 2594592000L), part(ImportedMaterialData.Cu, 1297296000L), part(ImportedMaterialData.Brick, 7783776000L)), 1, "GT6 Loader_MultiTileEntities 1106 known CR.REV inputs"));
         BLOCK_DATA.put("burning_box_solid_netherite", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Netherite, 2594592000L), part(ImportedMaterialData.Cu, 1297296000L), part(ImportedMaterialData.Brick, 7783776000L)), 1, "GT6 Loader_MultiTileEntities 1110 known CR.REV inputs"));
         BLOCK_DATA.put("burning_box_solid_tungsten", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.W, 2594592000L), part(ImportedMaterialData.Cu, 1297296000L), part(ImportedMaterialData.Brick, 7783776000L)), 1, "GT6 Loader_MultiTileEntities 1107 known CR.REV inputs"));
+    }
+    private static void blocks2() {
         BLOCK_DATA.put("burning_box_solid_tungsten_steel", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.TungstenSteel, 2594592000L), part(ImportedMaterialData.Cu, 1297296000L), part(ImportedMaterialData.Brick, 7783776000L)), 1, "GT6 Loader_MultiTileEntities 1108 known CR.REV inputs"));
         BLOCK_DATA.put("burning_box_solid_ta4hfc5", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ta4HfC5, 2594592000L), part(ImportedMaterialData.Cu, 1297296000L), part(ImportedMaterialData.Brick, 7783776000L)), 1, "GT6 Loader_MultiTileEntities 1109 known CR.REV inputs"));
         BLOCK_DATA.put("burning_box_solid_dense_lead", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Pb, 12972960000L), part(ImportedMaterialData.Cu, 5837832000L), part(ImportedMaterialData.Brick, 7783776000L)), 1, "GT6 Loader_MultiTileEntities 1150 known CR.REV inputs"));
@@ -646,8 +646,6 @@ public final class OriginalMachineMaterialData {
         BLOCK_DATA.put("strong_steam_boiler_tungsten_steel", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.TungstenSteel, 29189160000L)), 1, "GT6 Loader_MultiTileEntities 1258 known CR.REV inputs"));
         BLOCK_DATA.put("strong_steam_boiler_ultimet", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ultimet, 29189160000L)), 1, "GT6 Loader_MultiTileEntities 1262 known CR.REV inputs"));
         BLOCK_DATA.put("engine_steam_lead", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Pb, 5999994000L)), 1, "GT6 Loader_MultiTileEntities 1300 known CR.REV inputs"));
-    }
-    private static void blocks3() {
         BLOCK_DATA.put("engine_steam_tin_alloy", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.TinAlloy, 5999994000L)), 1, "GT6 Loader_MultiTileEntities 1301 known CR.REV inputs"));
         BLOCK_DATA.put("engine_steam_bronze", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Bronze, 5999994000L)), 1, "GT6 Loader_MultiTileEntities 1302 known CR.REV inputs"));
         BLOCK_DATA.put("engine_steam_arsenic_copper", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.ArsenicCopper, 5999994000L)), 1, "GT6 Loader_MultiTileEntities 1312 known CR.REV inputs"));
@@ -762,6 +760,163 @@ public final class OriginalMachineMaterialData {
         BLOCK_DATA.put("engine_flux_invar", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Invar, 5189184000L), part(ImportedMaterialData.Al, 7783776000L), part(ImportedMaterialData.Cu, 1297296000L), part(ImportedMaterialData.SteelMagnetic, 648648000L)), 1, "GT6 Loader_MultiTileEntities 11012 known CR.REV inputs"));
         BLOCK_DATA.put("engine_flux_electrum", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Electrum, 5189184000L), part(ImportedMaterialData.StainlessSteel, 7783776000L), part(ImportedMaterialData.AnnealedCopper, 2594592000L), part(ImportedMaterialData.SteelMagnetic, 648648000L)), 1, "GT6 Loader_MultiTileEntities 11013 known CR.REV inputs"));
         BLOCK_DATA.put("engine_flux_enderium_base", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.EnderiumBase, 5189184000L), part(ImportedMaterialData.Cr, 7783776000L), part(ImportedMaterialData.AnnealedCopper, 5189184000L), part(ImportedMaterialData.NeodymiumMagnetic, 648648000L)), 1, "GT6 Loader_MultiTileEntities 11014 known CR.REV inputs"));
+    }
+    private static void blocks3() {
         BLOCK_DATA.put("engine_flux_enderium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Enderium, 5189184000L), part(ImportedMaterialData.Ti, 7783776000L), part(ImportedMaterialData.AnnealedCopper, 10378368000L), part(ImportedMaterialData.NeodymiumMagnetic, 648648000L)), 1, "GT6 Loader_MultiTileEntities 11015 known CR.REV inputs"));
+        BLOCK_DATA.put("smelting_crucible_ceramic", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ceramic, 4540536000L)), 1, "GT6 Loader_MultiTileEntities 1005 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_ceramic", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ceramic, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1055 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_basin_ceramic", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ceramic, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1755 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_crossing_ceramic", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ceramic, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1855 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_faucet_ceramic", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ceramic, 1945944000L)), 1, "GT6 Loader_MultiTileEntities 1705 known CR.REV inputs"));
+        BLOCK_DATA.put("smelting_crucible_stone", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.STONES.Stone, 40864824000L)), 1, "GT6 Loader_MultiTileEntities 1000 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_stone", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.STONES.Stone, 29189160000L)), 1, "GT6 Loader_MultiTileEntities 1050 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_basin_stone", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.STONES.Stone, 29189160000L)), 1, "GT6 Loader_MultiTileEntities 1750 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_crossing_stone", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.STONES.Stone, 29189160000L)), 1, "GT6 Loader_MultiTileEntities 1850 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_faucet_stone", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.STONES.Stone, 17513496000L)), 1, "GT6 Loader_MultiTileEntities 1700 known CR.REV inputs"));
+        BLOCK_DATA.put("smelting_crucible_quartz", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.SiO2, 4540536000L)), 1, "GT6 Loader_MultiTileEntities 1018 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_quartz", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.SiO2, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1068 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_basin_quartz", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.SiO2, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1768 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_crossing_quartz", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.SiO2, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1868 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_faucet_quartz", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.SiO2, 1945944000L)), 1, "GT6 Loader_MultiTileEntities 1718 known CR.REV inputs"));
+        BLOCK_DATA.put("smelting_crucible_carbon", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Graphene, 4540536000L)), 1, "GT6 Loader_MultiTileEntities 1019 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_carbon", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Graphene, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1069 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_basin_carbon", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Graphene, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1769 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_crossing_carbon", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Graphene, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1869 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_faucet_carbon", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Graphene, 1945944000L)), 1, "GT6 Loader_MultiTileEntities 1719 known CR.REV inputs"));
+        BLOCK_DATA.put("smelting_crucible_bronze", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Bronze, 4540536000L)), 1, "GT6 Loader_MultiTileEntities 1020 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_bronze", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Bronze, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1070 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_basin_bronze", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Bronze, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1770 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_crossing_bronze", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Bronze, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1870 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_faucet_bronze", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Bronze, 1945944000L)), 1, "GT6 Loader_MultiTileEntities 1720 known CR.REV inputs"));
+        BLOCK_DATA.put("smelting_crucible_invar", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Invar, 4540536000L)), 1, "GT6 Loader_MultiTileEntities 1021 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_invar", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Invar, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1071 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_basin_invar", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Invar, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1771 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_crossing_invar", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Invar, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1871 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_faucet_invar", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Invar, 1945944000L)), 1, "GT6 Loader_MultiTileEntities 1721 known CR.REV inputs"));
+        BLOCK_DATA.put("smelting_crucible_steel", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Steel, 4540536000L)), 1, "GT6 Loader_MultiTileEntities 1022 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_steel", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Steel, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1072 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_basin_steel", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Steel, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1772 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_crossing_steel", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Steel, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1872 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_faucet_steel", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Steel, 1945944000L)), 1, "GT6 Loader_MultiTileEntities 1722 known CR.REV inputs"));
+        BLOCK_DATA.put("smelting_crucible_hsla", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.HSLA, 4540536000L)), 1, "GT6 Loader_MultiTileEntities 1041 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_hsla", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.HSLA, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1091 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_basin_hsla", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.HSLA, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1791 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_crossing_hsla", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.HSLA, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1891 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_faucet_hsla", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.HSLA, 1945944000L)), 1, "GT6 Loader_MultiTileEntities 1741 known CR.REV inputs"));
+        BLOCK_DATA.put("smelting_crucible_titanium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ti, 4540536000L)), 1, "GT6 Loader_MultiTileEntities 1023 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_titanium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ti, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1073 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_basin_titanium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ti, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1773 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_crossing_titanium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ti, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1873 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_faucet_titanium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ti, 1945944000L)), 1, "GT6 Loader_MultiTileEntities 1723 known CR.REV inputs"));
+        BLOCK_DATA.put("smelting_crucible_tungsten", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.W, 4540536000L)), 1, "GT6 Loader_MultiTileEntities 1024 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_tungsten", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.W, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1074 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_basin_tungsten", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.W, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1774 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_crossing_tungsten", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.W, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1874 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_faucet_tungsten", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.W, 1945944000L)), 1, "GT6 Loader_MultiTileEntities 1724 known CR.REV inputs"));
+        BLOCK_DATA.put("smelting_crucible_stainless_steel", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.StainlessSteel, 4540536000L)), 1, "GT6 Loader_MultiTileEntities 1025 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_stainless_steel", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.StainlessSteel, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1075 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_basin_stainless_steel", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.StainlessSteel, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1775 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_crossing_stainless_steel", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.StainlessSteel, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1875 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_faucet_stainless_steel", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.StainlessSteel, 1945944000L)), 1, "GT6 Loader_MultiTileEntities 1725 known CR.REV inputs"));
+        BLOCK_DATA.put("smelting_crucible_dark_iron", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.DarkIron, 4540536000L)), 1, "GT6 Loader_MultiTileEntities 1026 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_dark_iron", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.DarkIron, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1076 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_basin_dark_iron", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.DarkIron, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1776 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_crossing_dark_iron", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.DarkIron, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1876 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_faucet_dark_iron", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.DarkIron, 1945944000L)), 1, "GT6 Loader_MultiTileEntities 1726 known CR.REV inputs"));
+        BLOCK_DATA.put("smelting_crucible_knightmetal", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Knightmetal, 4540536000L)), 1, "GT6 Loader_MultiTileEntities 1027 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_knightmetal", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Knightmetal, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1077 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_basin_knightmetal", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Knightmetal, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1777 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_crossing_knightmetal", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Knightmetal, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1877 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_faucet_knightmetal", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Knightmetal, 1945944000L)), 1, "GT6 Loader_MultiTileEntities 1727 known CR.REV inputs"));
+        BLOCK_DATA.put("smelting_crucible_fiery_steel", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.FierySteel, 4540536000L)), 1, "GT6 Loader_MultiTileEntities 1028 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_fiery_steel", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.FierySteel, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1078 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_basin_fiery_steel", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.FierySteel, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1778 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_crossing_fiery_steel", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.FierySteel, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1878 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_faucet_fiery_steel", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.FierySteel, 1945944000L)), 1, "GT6 Loader_MultiTileEntities 1728 known CR.REV inputs"));
+        BLOCK_DATA.put("smelting_crucible_octine", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Octine, 4540536000L)), 1, "GT6 Loader_MultiTileEntities 1042 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_octine", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Octine, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1092 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_basin_octine", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Octine, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1792 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_crossing_octine", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Octine, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1892 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_faucet_octine", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Octine, 1945944000L)), 1, "GT6 Loader_MultiTileEntities 1742 known CR.REV inputs"));
+        BLOCK_DATA.put("smelting_crucible_thaumium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Thaumium, 4540536000L)), 1, "GT6 Loader_MultiTileEntities 1029 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_thaumium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Thaumium, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1079 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_basin_thaumium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Thaumium, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1779 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_crossing_thaumium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Thaumium, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1879 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_faucet_thaumium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Thaumium, 1945944000L)), 1, "GT6 Loader_MultiTileEntities 1729 known CR.REV inputs"));
+        BLOCK_DATA.put("smelting_crucible_void_metal", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.VoidMetal, 4540536000L)), 1, "GT6 Loader_MultiTileEntities 1030 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_void_metal", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.VoidMetal, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1080 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_basin_void_metal", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.VoidMetal, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1780 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_crossing_void_metal", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.VoidMetal, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1880 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_faucet_void_metal", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.VoidMetal, 1945944000L)), 1, "GT6 Loader_MultiTileEntities 1730 known CR.REV inputs"));
+        BLOCK_DATA.put("smelting_crucible_meteoric_iron", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.MeteoricIron, 4540536000L)), 1, "GT6 Loader_MultiTileEntities 1031 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_meteoric_iron", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.MeteoricIron, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1081 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_basin_meteoric_iron", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.MeteoricIron, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1781 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_crossing_meteoric_iron", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.MeteoricIron, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1881 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_faucet_meteoric_iron", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.MeteoricIron, 1945944000L)), 1, "GT6 Loader_MultiTileEntities 1731 known CR.REV inputs"));
+        BLOCK_DATA.put("smelting_crucible_meteoric_steel", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.MeteoricSteel, 4540536000L)), 1, "GT6 Loader_MultiTileEntities 1032 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_meteoric_steel", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.MeteoricSteel, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1082 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_basin_meteoric_steel", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.MeteoricSteel, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1782 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_crossing_meteoric_steel", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.MeteoricSteel, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1882 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_faucet_meteoric_steel", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.MeteoricSteel, 1945944000L)), 1, "GT6 Loader_MultiTileEntities 1732 known CR.REV inputs"));
+        BLOCK_DATA.put("smelting_crucible_chromium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Cr, 4540536000L)), 1, "GT6 Loader_MultiTileEntities 1033 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_chromium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Cr, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1083 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_basin_chromium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Cr, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1783 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_crossing_chromium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Cr, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1883 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_faucet_chromium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Cr, 1945944000L)), 1, "GT6 Loader_MultiTileEntities 1733 known CR.REV inputs"));
+        BLOCK_DATA.put("smelting_crucible_molybdenum", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Mo, 4540536000L)), 1, "GT6 Loader_MultiTileEntities 1034 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_molybdenum", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Mo, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1084 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_basin_molybdenum", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Mo, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1784 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_crossing_molybdenum", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Mo, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1884 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_faucet_molybdenum", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Mo, 1945944000L)), 1, "GT6 Loader_MultiTileEntities 1734 known CR.REV inputs"));
+        BLOCK_DATA.put("smelting_crucible_niobium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Nb, 4540536000L)), 1, "GT6 Loader_MultiTileEntities 1035 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_niobium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Nb, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1085 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_basin_niobium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Nb, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1785 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_crossing_niobium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Nb, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1885 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_faucet_niobium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Nb, 1945944000L)), 1, "GT6 Loader_MultiTileEntities 1735 known CR.REV inputs"));
+        BLOCK_DATA.put("smelting_crucible_tantalum", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ta, 4540536000L)), 1, "GT6 Loader_MultiTileEntities 1036 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_tantalum", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ta, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1086 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_basin_tantalum", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ta, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1786 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_crossing_tantalum", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ta, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1886 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_faucet_tantalum", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ta, 1945944000L)), 1, "GT6 Loader_MultiTileEntities 1736 known CR.REV inputs"));
+        BLOCK_DATA.put("smelting_crucible_osmium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Os, 4540536000L)), 1, "GT6 Loader_MultiTileEntities 1037 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_osmium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Os, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1087 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_basin_osmium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Os, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1787 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_crossing_osmium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Os, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1887 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_faucet_osmium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Os, 1945944000L)), 1, "GT6 Loader_MultiTileEntities 1737 known CR.REV inputs"));
+        BLOCK_DATA.put("smelting_crucible_vanadium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.V, 4540536000L)), 1, "GT6 Loader_MultiTileEntities 1038 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_vanadium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.V, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1088 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_basin_vanadium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.V, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1788 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_crossing_vanadium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.V, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1888 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_faucet_vanadium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.V, 1945944000L)), 1, "GT6 Loader_MultiTileEntities 1738 known CR.REV inputs"));
+        BLOCK_DATA.put("smelting_crucible_iridium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ir, 4540536000L)), 1, "GT6 Loader_MultiTileEntities 1039 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_iridium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ir, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1089 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_basin_iridium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ir, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1789 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_crossing_iridium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ir, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1889 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_faucet_iridium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ir, 1945944000L)), 1, "GT6 Loader_MultiTileEntities 1739 known CR.REV inputs"));
+        BLOCK_DATA.put("smelting_crucible_niobium_titanium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.NiobiumTitanium, 4540536000L)), 1, "GT6 Loader_MultiTileEntities 1040 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_niobium_titanium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.NiobiumTitanium, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1090 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_basin_niobium_titanium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.NiobiumTitanium, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1790 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_crossing_niobium_titanium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.NiobiumTitanium, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1890 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_faucet_niobium_titanium", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.NiobiumTitanium, 1945944000L)), 1, "GT6 Loader_MultiTileEntities 1740 known CR.REV inputs"));
+        BLOCK_DATA.put("smelting_crucible_ta4hfc5", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ta4HfC5, 4540536000L)), 1, "GT6 Loader_MultiTileEntities 1043 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_ta4hfc5", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ta4HfC5, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1093 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_basin_ta4hfc5", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ta4HfC5, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1793 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_crossing_ta4hfc5", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ta4HfC5, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1893 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_faucet_ta4hfc5", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ta4HfC5, 1945944000L)), 1, "GT6 Loader_MultiTileEntities 1743 known CR.REV inputs"));
+        BLOCK_DATA.put("smelting_crucible_netherite", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Netherite, 4540536000L)), 1, "GT6 Loader_MultiTileEntities 1044 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_netherite", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Netherite, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1094 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_basin_netherite", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Netherite, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1794 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_crossing_netherite", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Netherite, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1894 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_faucet_netherite", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Netherite, 1945944000L)), 1, "GT6 Loader_MultiTileEntities 1744 known CR.REV inputs"));
+        BLOCK_DATA.put("smelting_crucible_bedrock_hsla_alloy", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Bedrock_HSLA_Alloy, 4540536000L)), 1, "GT6 Loader_MultiTileEntities 1048 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_bedrock_hsla_alloy", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Bedrock_HSLA_Alloy, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1098 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_basin_bedrock_hsla_alloy", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Bedrock_HSLA_Alloy, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1798 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_crossing_bedrock_hsla_alloy", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Bedrock_HSLA_Alloy, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1898 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_faucet_bedrock_hsla_alloy", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Bedrock_HSLA_Alloy, 1945944000L)), 1, "GT6 Loader_MultiTileEntities 1748 known CR.REV inputs"));
+        BLOCK_DATA.put("smelting_crucible_ad", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ad, 4540536000L)), 1, "GT6 Loader_MultiTileEntities 1049 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_ad", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ad, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1099 known CR.REV inputs"));
+        BLOCK_DATA.put("mold_basin_ad", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ad, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1799 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_crossing_ad", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ad, 3243240000L)), 1, "GT6 Loader_MultiTileEntities 1899 known CR.REV inputs"));
+        BLOCK_DATA.put("crucible_faucet_ad", ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ad, 1945944000L)), 1, "GT6 Loader_MultiTileEntities 1749 known CR.REV inputs"));
     }
 }

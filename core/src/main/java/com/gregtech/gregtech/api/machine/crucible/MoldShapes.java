@@ -32,22 +32,29 @@ public final class MoldShapes {
     public static Recipe recipe(int rawShape) {
         int key = rawShape & SHAPE_MASK;
         Recipe recipe = MOLD_RECIPES.get(key);
-        if (recipe == null && key != 0) return item(MaterialPrefix.nugget);
+        if (recipe == null && rawShape != 0) return item(MaterialPrefix.nugget);
         return recipe;
     }
 
     public static boolean isNuggetFallback(int rawShape) {
         int key = rawShape & SHAPE_MASK;
-        return key != 0 && !MOLD_RECIPES.containsKey(key);
+        return rawShape != 0 && !MOLD_RECIPES.containsKey(key);
     }
 
     public static long requiredMaterialUnits(int rawShape) {
         Recipe recipe = recipe(rawShape);
         if (recipe == null) return 0;
-        // Preserve original raw-shape bitCount for legacy NBT, rather than silently masking it.
-        if (isNuggetFallback(rawShape)) return (long) Integer.bitCount(rawShape) * GTValues.U9;
+        // The original loop counts only the25 cavity bits, even when legacy NBT has high bits.
+        if (recipe.itemPrefix() == MaterialPrefix.nugget)
+            return (long) Integer.bitCount(rawShape & SHAPE_MASK) * GTValues.U9;
         // MaterialPrefixes.java:780-785 defines the original storage block as9U.
         return recipe.blockSolid() ? 9L * GTValues.U : recipe.itemPrefix().getMaterialWeight();
+    }
+
+    /** OP category identity for the original prefix name localization. */
+    public static String sourcePrefixName(Recipe recipe) {
+        if (recipe.blockSolid()) return "blockSolid";
+        return recipe.itemPrefix() == MaterialPrefix.itemCasing ? "casingSmall" : recipe.itemPrefix().getName();
     }
 
     /** MultiTileEntityMold:628-921. Preserve the original HashMap stages and overwrite order. */
