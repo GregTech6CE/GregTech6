@@ -27,6 +27,13 @@ public final class MultiblockPortBlockEntity extends GTEnergyBlockEntity impleme
         if(isRemoved() || level==null || controller==null || !level.hasChunkAt(controller)) return null;
         return level.getBlockEntity(controller) instanceof MultiblockPortOwner owner?owner:null;
     }
+    /** Original SensorTE reads the cached controller directly, preserving the measured side.
+     * This does not expose an item/fluid transport capability or bypass its role restrictions. */
+    public net.minecraft.world.level.block.entity.BlockEntity sensorTarget() {
+        var target = owner();
+        return target instanceof net.minecraft.world.level.block.entity.BlockEntity entity && !entity.isRemoved()
+                ? entity : this;
+    }
     public boolean isBoundTo(BlockPos owner) {return owner.equals(controller);}
     public boolean canBind(BlockPos owner) { return controller==null || controller.equals(owner) || owner()==null; }
     public void bind(BlockPos owner,MultiblockLayout.Role role) {

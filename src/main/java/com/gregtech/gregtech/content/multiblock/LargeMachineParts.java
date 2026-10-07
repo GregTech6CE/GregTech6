@@ -57,9 +57,9 @@ public final class LargeMachineParts {
                         properties -> new com.gregtech.gregtech.block.machine.LargeGasTurbineControllerBlock(grade, properties))
                         .strength(grade.hardness(), grade.hardness()).register());
             } else {
+                var source = OriginalMultiblockPartData.byId(part.originalId()).orElseThrow();
                 BLOCKS.put(part.originalId(),MachineBlockRegistration.block(part.name(),MultiblockPortBlock::new)
-                        .strength(part.originalId()==18025?100:part.originalId()==18023?12.5f:8,
-                                  part.originalId()==18025?100:part.originalId()==18023?12.5f:8).register());
+                        .strength(source.hardness(), source.resistance()).register());
             }
         }
     }

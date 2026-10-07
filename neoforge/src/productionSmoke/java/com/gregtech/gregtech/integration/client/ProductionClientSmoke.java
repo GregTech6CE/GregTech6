@@ -60,6 +60,7 @@ public final class ProductionClientSmoke {
             surfaceChecks.add("generatorSourceTooltipsAndMaterials",GeneratorTooltipDeliveryChecks.verify());
             surfaceChecks.add("utilityControllerTooltipsAndMaterials",UtilityControllerDeliveryChecks.verify());
             surfaceChecks.add("sensorSourceTooltipsAndMaterials",SensorSourceDeliveryChecks.verify());
+            surfaceChecks.add("originalMultiblockParts",MultiblockPartDeliveryChecks.verify());
         }
         catch(Throwable error){terminal.set(true);LogUtils.getLogger().error("PRODUCTION_SMOKE_FAILED",error);client.execute(client::stop);return;}
         String name = "production-neoforge-" + UUID.randomUUID() + ".png";

@@ -64,4 +64,61 @@ public final class SensorSourceTests {
         h.assertTrue(bath.gibblValue(0)==5000,"Source basic compression counts input only, excludes output");
         h.succeed();
     }
+
+    @GameTest(template="test_empty",timeoutTicks=160)
+    public static void original_parts_delegate_sensor_measurements(GameTestHelper h) {
+        for (var source : com.gregtech.gregtech.content.multiblock.OriginalMultiblockPartData.ALL) {
+            var block = (com.gregtech.gregtech.block.machine.MultiblockPortBlock) BuiltInRegistries.BLOCK.get(
+                    net.minecraft.resources.ResourceLocation.parse("gregtech:" + source.path()));
+            var part = (com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity) block.newBlockEntity(BlockPos.ZERO,block.defaultBlockState());
+            h.assertTrue(part.getType().isValid(block.defaultBlockState()) && part.sensorTarget() == part,
+                    "All45 native factory bindings, unbound measures itself " + source.path());
+        }
+        var block = (com.gregtech.gregtech.block.machine.OriginalLargeBoilerControllerBlock) BuiltInRegistries.BLOCK.get(
+                net.minecraft.resources.ResourceLocation.parse("gregtech:stainless_steel_boiler_main_barometer"));
+        var origin = h.absolutePos(new BlockPos(4,2,4));
+        h.getLevel().setBlockAndUpdate(origin,block.defaultBlockState().setValue(net.minecraft.world.level.block.HorizontalDirectionalBlock.FACING,Direction.NORTH));
+        var boiler = (com.gregtech.gregtech.blockentity.machine.OriginalLargeBoilerControllerBlockEntity)h.getLevel().getBlockEntity(origin);
+        for (var cell : com.gregtech.gregtech.content.multiblock.OriginalLargeBoilerSpecs.LAYOUT.cells()) {
+            var position = cell.at(origin,Direction.NORTH);
+            if (position.equals(origin)) continue;
+            var required = cell.role() == com.gregtech.gregtech.api.multiblock.MultiblockLayout.Role.AIR ? Blocks.AIR
+                    : cell.role() == com.gregtech.gregtech.api.multiblock.MultiblockLayout.Role.HEAT_INPUT
+                    ? com.gregtech.gregtech.registry.GTMultiblocks.HEAT_TRANSMITTER.get() : boiler.variant().wall();
+            h.getLevel().setBlockAndUpdate(position,required.defaultBlockState());
+        }
+        var steam = BuiltInRegistries.FLUID.get(net.minecraft.resources.ResourceLocation.parse("gregtech:steam"));
+        var seeded = new com.gregtech.gregtech.api.fluid.FluidTankGT(boiler.variant().steamCapacity());
+        seeded.setFluid(new net.minecraftforge.fluids.FluidStack(steam,1_234_567));
+        var tank = new net.minecraft.nbt.CompoundTag(); seeded.writeToNBT(tank);
+        var saved = boiler.saveWithoutMetadata(); saved.put("gt.steam",tank); boiler.load(saved);
+        h.assertTrue(boiler.isStructureOk(),"Real boiler binds its complete shell");
+        var heatPos = origin.east().below().south();
+        var heat = (com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity) h.getLevel().getBlockEntity(heatPos);
+        h.assertTrue(heat.sensorTarget() == boiler,"Source sensor unwraps an energy-only port to controller");
+        var fluids = heat.getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.FLUID_HANDLER,Direction.EAST).resolve().orElse(null);
+        h.assertTrue(fluids == null || fluids.getTanks() == 0,"Sensor delegation does not expose transport through heat port");
+        var meterPos = heatPos.east();
+        for (var name : java.util.List.of("sensor_gibblometer","sensor_kilogibblometer","sensor_fluidometer")) {
+            var meterBlock = (SensorBlock)BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.parse("gregtech:"+name));
+            h.getLevel().setBlockAndUpdate(meterPos,meterBlock.defaultBlockState());
+            var meter = (SensorBlockEntity)h.getLevel().getBlockEntity(meterPos); meter.setInputSide(Direction.WEST);
+            SensorBlockEntity.measure(h.getLevel(),meterPos,meterBlock.defaultBlockState(),meter);
+            long expected = name.equals("sensor_gibblometer")?1234:name.equals("sensor_kilogibblometer")?1:1_234_567;
+            h.assertTrue(meter.value() == expected,"Pressure /fluid reads controller, not restricted part " + name);
+        }
+        var meter = (SensorBlockEntity)h.getLevel().getBlockEntity(meterPos);
+        var broken = origin.west(); h.getLevel().setBlockAndUpdate(broken,Blocks.AIR.defaultBlockState());
+        h.assertTrue(!boiler.isStructureOk() && heat.sensorTarget() == heat,"Invalid shell releases measurement binding");
+        SensorBlockEntity.measure(h.getLevel(),meterPos,meter.getBlockState(),meter);
+        h.assertTrue(meter.value() == 0,"Released part cannot retain controller measurement");
+        h.getLevel().setBlockAndUpdate(broken,boiler.variant().wall().defaultBlockState());
+        h.assertTrue(boiler.isStructureOk(),"Repaired shell rebinds");
+        SensorBlockEntity.measure(h.getLevel(),meterPos,meter.getBlockState(),meter);
+        h.assertTrue(meter.value() == 1_234_567,"Reformed shell restores real measurement");
+        h.getLevel().setBlockAndUpdate(origin,Blocks.AIR.defaultBlockState());
+        SensorBlockEntity.measure(h.getLevel(),meterPos,meter.getBlockState(),meter);
+        h.assertTrue(meter.value() == 0,"Removed controller leaves no stale measurement");
+        h.succeed();
+    }
 }

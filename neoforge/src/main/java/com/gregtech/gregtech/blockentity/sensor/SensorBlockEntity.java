@@ -153,6 +153,9 @@ public class SensorBlockEntity extends BlockEntity {
     public static void measure(Level level, BlockPos pos, BlockState state, SensorBlockEntity be) {
         Direction facing = be.inputSide().getOpposite();
         BlockEntity target = level.getBlockEntity(pos.relative(be.inputSide()));
+        // MultiTileEntitySensorTE unwraps a bound structural part before every measurement.
+        if (target instanceof com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity part)
+            target = part.sensorTarget();
 
         // GT6 MultiTileEntityTPSmeter:42-49 - the TPS meter measures the server, not the block in
         // front of it, so it is sampled on its own 20-tick beat and needs no target at all.

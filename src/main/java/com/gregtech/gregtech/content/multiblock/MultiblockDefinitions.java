@@ -24,10 +24,12 @@ import static com.gregtech.gregtech.registry.GTMultiblocks.*;
 public final class MultiblockDefinitions {
     private MultiblockDefinitions() {}
     private static RegistryObject<Block> part(String id) {
+        var source = OriginalMultiblockPartData.byPath(id);
         return com.gregtech.gregtech.registry.MachineBlockRegistration.block(id, props ->
-                java.util.Set.of("coke_oven_wall", "distillation_tower_part", "large_gas_turbine_wall", "bedrock_drill_wall", "heat_transmitter", "boiler_wall", "tank_wall", "tank_wall_dense", "implosion_compressor_wall", "centrifuge_part", "electrolyzer_part", "turbine_wall", "large_dynamo_wall", "large_crucible_wall").contains(id)
+                java.util.Set.of("large_niobium_titanium_coil", "coke_oven_wall", "distillation_tower_part", "large_gas_turbine_wall", "bedrock_drill_wall", "heat_transmitter", "boiler_wall", "tank_wall", "tank_wall_dense", "implosion_compressor_wall", "centrifuge_part", "electrolyzer_part", "turbine_wall", "large_dynamo_wall", "large_crucible_wall").contains(id)
                         ? new com.gregtech.gregtech.block.machine.MultiblockPortBlock(props) : new Block(props))
-                .strength(6.0f, 6.0f).register();
+                .strength(source.map(OriginalMultiblockPartData.Part::hardness).orElse(6.0f),
+                        source.map(OriginalMultiblockPartData.Part::resistance).orElse(6.0f)).register();
     }
 
     public static void registerAll() {
