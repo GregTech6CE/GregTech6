@@ -71,8 +71,8 @@ public final class VonDaGraaggRepairTests {
                         GregTechTags.Energy.ELECTRICITY, 2048, 2, true) == 2,
                 "a galvanized base wall accepts two 2048 EU packets");
         VonDaGraaggControllerBlockEntity.serverTick(world, center, world.getBlockState(center), machine);
-        helper.assertTrue(machine.currentRange() == 256 && machine.storedEnergy() == 0,
-                "GT6 computes 4096/16 = 256 blocks of range, then spends 4096 EU each tick");
+        helper.assertTrue(machine.currentRange() == 255 && machine.storedEnergy() == 0,
+                "GT6 clamps 4096/16 to the byte maximum of 255 blocks of range, then spends 4096 EU each tick");
 
         BlockPos spawn = center.offset(2, 0, 0);
         var zombie = EntityType.ZOMBIE.create(world);
@@ -113,10 +113,10 @@ public final class VonDaGraaggRepairTests {
                         && machine.storedEnergy() == 8192,
                 "GT6 accumulates multiple same-tick packets above its advertised 4096 EU capacitor");
         VonDaGraaggControllerBlockEntity.serverTick(world, center, world.getBlockState(center), machine);
-        helper.assertTrue(machine.currentRange() == 256 && machine.storedEnergy() == 4096,
+        helper.assertTrue(machine.currentRange() == 255 && machine.storedEnergy() == 4096,
                 "first tick spends only 4096 EU");
         VonDaGraaggControllerBlockEntity.serverTick(world, center, world.getBlockState(center), machine);
-        helper.assertTrue(machine.currentRange() == 256 && machine.storedEnergy() == 0,
+        helper.assertTrue(machine.currentRange() == 255 && machine.storedEnergy() == 0,
                 "the second tick consumes the carried-over packet energy");
         helper.succeed();
     }

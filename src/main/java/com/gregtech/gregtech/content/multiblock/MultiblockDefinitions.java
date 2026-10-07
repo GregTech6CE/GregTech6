@@ -109,7 +109,7 @@ public final class MultiblockDefinitions {
         // Wave 49: F6.9-12 multiblock parts and controllers
         BEDROCK_DRILL_WALL = part("bedrock_drill_wall");
         BEDROCK_DRILL_MAIN = com.gregtech.gregtech.registry.MachineBlockRegistration.block("bedrock_drill_main", com.gregtech.gregtech.block.machine.BedrockDrillControllerBlock::new)
-                .strength(10.0f, 10.0f).register();
+                .strength(9.0f, 9.0f).register();
 
         LIGHTNING_ROD_WALL = part("lightning_rod_wall");
         LIGHTNING_ROD_PILLAR = part("lightning_rod_pillar");

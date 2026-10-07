@@ -37,6 +37,19 @@ public final class UtilityControllerTooltips {
                 .append(Component.literal(" per Lightning Strike").withStyle(ChatFormatting.GRAY)));
         parentTools(lines);
     }
+    public static void vonDaGraagg(List<Component> lines) {
+        if(CommonBlockTooltips.containsKey(lines,"gt.lang.structure"))return;
+        lines.add(Component.translatable("gt.lang.structure").withStyle(ChatFormatting.AQUA).append(":"));
+        var keys=OriginalUtilityControllerData.VON_DA_GRAAGG_STRUCTURE;
+        for(int i=0;i<keys.size();i++)lines.add(Component.translatable(keys.get(i)).withStyle(i==3?ChatFormatting.AQUA:ChatFormatting.WHITE));
+        lines.add(Component.translatable("gt.lang.energy.input").withStyle(ChatFormatting.GREEN).append(": ")
+                .append(Component.literal(com.gregtech.gregtech.content.multiblock.VonDaGraaggRules.INPUT_RECOMMENDED+" ").withStyle(ChatFormatting.WHITE))
+                .append(Component.translatable("gt.td.short.energy.electricity").withStyle(ChatFormatting.BLUE))
+                .append(Component.literal("/t ("+com.gregtech.gregtech.content.multiblock.VonDaGraaggRules.INPUT_MIN+" to "+com.gregtech.gregtech.content.multiblock.VonDaGraaggRules.CAPACITY+", ").withStyle(ChatFormatting.WHITE))
+                .append(Component.translatable("gt.lang.face.bottom").withStyle(ChatFormatting.WHITE))
+                .append(Component.literal(")").withStyle(ChatFormatting.WHITE)));
+        parentTools(lines);
+    }
     private static void structure(List<Component> lines,List<String> keys,boolean lightning) {
         lines.add(Component.translatable("gt.lang.structure").withStyle(ChatFormatting.AQUA).append(":"));
         for(int i=0;i<keys.size();i++)lines.add(Component.translatable(keys.get(i)).withStyle(

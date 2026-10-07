@@ -201,12 +201,21 @@ public class SensorBlockEntity extends BlockEntity {
                     }
                 }
                 case PROGRESS -> {
-                    var machine=com.gregtech.gregtech.api.machine.MachineControl.find(target,facing);
-                    if (machine!=null&&machine.available()&&machine.supportsProgress()) {
-                        long total=machine.progressMax();
-                        newValue = total<=0?0:(long)Math.min(100,100.0*machine.progress()/total);
-                        maximum = 100;
+                    if (target instanceof com.gregtech.gregtech.api.sensor.ProgressSensorSource progress) {
+                        newValue = progress.progressValue(facing.ordinal());
+                        maximum = progress.progressMaximum(facing.ordinal());
+                    } else if (target instanceof net.minecraft.world.level.block.entity.SpawnerBlockEntity spawner) {
+                        newValue = ((com.gregtech.gregtech.mixin.BaseSpawnerAccessor)spawner.getSpawner()).gregtech$spawnDelay();
+                        maximum = Integer.MAX_VALUE; // Original sensor binds Long.MAX_VALUE to a signed int.
+                    } else {
+                        var machine=com.gregtech.gregtech.api.machine.MachineControl.find(target,facing);
+                        if (machine!=null&&machine.available()&&machine.supportsProgress()) {
+                            newValue = machine.progress();
+                            maximum = machine.progressMax();
+                        }
                     }
+                    newValue = Math.max(Integer.MIN_VALUE,Math.min(Integer.MAX_VALUE,newValue));
+                    maximum = Math.max(Integer.MIN_VALUE,Math.min(Integer.MAX_VALUE,maximum));
                 }
                 case THERMOMETER -> {
                     if (target instanceof com.gregtech.gregtech.blockentity.machine.SmeltingCrucibleBlockEntity crucible) {

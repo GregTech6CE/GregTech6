@@ -13,6 +13,37 @@ import net.minecraft.world.level.block.Blocks;
 @net.neoforged.neoforge.gametest.PrefixGameTestTemplate(false)
 public final class SensorSourceTests {
     @GameTest(template="test_empty",timeoutTicks=160)
+    public static void original_raw_progress_and_spawner(GameTestHelper h) {
+        var world=h.getLevel();
+        var targetPos=h.absolutePos(new BlockPos(5,1,5));
+        var controller=BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.parse("gregtech:von_da_graagg_generator"));
+        world.setBlockAndUpdate(targetPos,controller.defaultBlockState());
+        var machine=(com.gregtech.gregtech.blockentity.machine.VonDaGraaggControllerBlockEntity)world.getBlockEntity(targetPos);
+        var saved=machine.saveWithoutMetadata(world.registryAccess());
+        saved.putInt("gt.range",255); machine.loadWithComponents(saved,world.registryAccess());
+        h.assertTrue(machine.progressValue(0)==255 && machine.progressMaximum(0)==256
+                && machine.gibblValue(0)==255000 && machine.gibblMaximum(0)==256000,"Source range / compression domains");
+        var sensorPos=targetPos.west();
+        for(var name:java.util.List.of("sensor_progressmeter","sensor_gibblometer")) {
+            var block=(SensorBlock)BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.parse("gregtech:"+name));
+            world.setBlockAndUpdate(sensorPos,block.defaultBlockState());
+            var meter=(SensorBlockEntity)world.getBlockEntity(sensorPos);meter.setInputSide(Direction.EAST);
+            SensorBlockEntity.measure(world,sensorPos,block.defaultBlockState(),meter);
+            h.assertTrue(meter.value()==255,"Actual sensor exposes raw255 not percent99 " + name);
+        }
+        world.setBlockAndUpdate(targetPos,Blocks.SPAWNER.defaultBlockState());
+        var spawner=(net.minecraft.world.level.block.entity.SpawnerBlockEntity)world.getBlockEntity(targetPos);
+        var data=new net.minecraft.nbt.CompoundTag();data.putShort("Delay",(short)237);
+        spawner.getSpawner().load(world,targetPos,data);
+        var block=(SensorBlock)BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.parse("gregtech:sensor_progressmeter"));
+        world.setBlockAndUpdate(sensorPos,block.defaultBlockState());
+        var meter=(SensorBlockEntity)world.getBlockEntity(sensorPos);meter.setInputSide(Direction.EAST);
+        SensorBlockEntity.measure(world,sensorPos,block.defaultBlockState(),meter);
+        h.assertTrue(meter.value()==237,"Actual vanilla countdown accessed through installed mixin");
+        h.succeed();
+    }
+
+    @GameTest(template="test_empty",timeoutTicks=160)
     public static void original_factories_input_and_pressure(GameTestHelper h) {
         for (var entry : SensorCatalog.ALL) {
             var block = (SensorBlock) BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.parse("gregtech:"+entry.id()));

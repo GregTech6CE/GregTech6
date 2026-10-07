@@ -291,7 +291,7 @@ public final class MachineSpecBehaviorContracts {
 
     private static void originalHarvestProperties() {
         var properties = com.gregtech.gregtech.data.SourceBlockProperties.blocks();
-        check(properties.size() == 1542, "689 fixed source identities plus120 hoppers/720 storage/12 generator aliases/1 utility alias");
+        check(properties.size() == 1543, "689 fixed source identities plus120 hoppers/720 storage/12 generator aliases/2 utility aliases");
         check(com.gregtech.gregtech.data.SourceBlockProperties.basics().size() == 265, "All265 adopted original machine metadata keys");
         var wood = properties.get("gearbox_wood");
         check(wood.sourceId() == 24809 && wood.tool().equals("axe") && wood.handHarvestable(), "Wood gearbox original aWooden exemption");
@@ -332,8 +332,8 @@ public final class MachineSpecBehaviorContracts {
         var storage = com.gregtech.gregtech.content.machine.OriginalStorageMaterialData.blocks();
         var harvest = com.gregtech.gregtech.content.machine.OriginalStorageMaterialData.harvest();
         check(storage.size() == 720 && harvest.size() == 720, "Twelve existing original storage families across60 metalsets");
-        check(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.blocks().size() == 1500,
-                "647 fixed plus120 hoppers plus720 storage plus12 source generator aliases plus1 utility alias");
+        check(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.blocks().size() == 1501,
+                "647 fixed plus120 hoppers plus720 storage plus12 source generator aliases plus2 utility aliases");
         long u = GTValues.U;
         for (var spec : com.gregtech.gregtech.registry.GTStorageMetals.ALL) {
             var metal = spec.material().resolve();

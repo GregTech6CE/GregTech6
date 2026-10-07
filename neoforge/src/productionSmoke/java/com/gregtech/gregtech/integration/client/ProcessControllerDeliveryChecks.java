@@ -20,7 +20,7 @@ final class ProcessControllerDeliveryChecks {
     private ProcessControllerDeliveryChecks() {}
     static JsonObject verify() {
         var paths=Map.of("coke_oven_main",Family.COKE_OVEN,"distillation_tower_main",Family.DISTILLATION_TOWER,
-                "cryo_distillation_main",Family.CRYO_DISTILLATION_TOWER,"logistics_core",Family.LOGISTICS_CORE,"bedrock_mining_drill_controller",Family.BEDROCK_DRILL);
+                "cryo_distillation_main",Family.CRYO_DISTILLATION_TOWER,"logistics_core",Family.LOGISTICS_CORE,"bedrock_mining_drill_controller",Family.BEDROCK_DRILL,"bedrock_drill_main",Family.BEDROCK_DRILL);
         for(var entry:paths.entrySet()) {
             var id=ResourceLocation.parse("gregtech:"+entry.getKey());var family=entry.getValue();
             var block=BuiltInRegistries.BLOCK.get(id);var stack=new ItemStack(block);
@@ -88,7 +88,8 @@ final class ProcessControllerDeliveryChecks {
             }
         }
         var result=new JsonObject();result.addProperty("originalControllers",paths.size());
-        result.addProperty("exactMaterialRecords",paths.size());result.addProperty("sourceStructureRows",28);
+        result.addProperty("exactMaterialRecords",paths.size());result.addProperty("sourceStructureRows",
+                paths.values().stream().mapToInt(family -> OriginalControllerTooltipData.structureKeys(family).size()).sum());
         result.addProperty("scope","actual installed tooltip methods/events and native parameter methods; no world tick/restart claim");return result;
     }
     private static long count(List<Component> lines,String key) {return lines.stream().filter(c->CommonBlockTooltips.containsKey(List.of(c),key)).count();}

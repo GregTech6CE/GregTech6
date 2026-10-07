@@ -18,7 +18,7 @@ public final class LargeMachineParts {
             if (part.originalId() == 17996) {
                 BLOCKS.put(part.originalId(), MachineBlockRegistration.block(part.name(),
                         com.gregtech.gregtech.block.machine.VonDaGraaggControllerBlock::new)
-                        .strength(8, 8).register());
+                        .strength(6, 6).register());
             } else if (part.originalId() == 17998) {
                 BLOCKS.put(part.originalId(), MachineBlockRegistration.block(part.name(),
                         com.gregtech.gregtech.block.machine.OriginalLightningRodControllerBlock::new)
