@@ -49,6 +49,7 @@ final class UtilityControllerDeliveryChecks {
                         "Source galvanized steel controller hardness/resistance " + id);
             } else if (heat) {
                 verifyHeatFaces(block);
+                verifyHotFluidModels();
                 require(count(lines, "gt.recipe.fuels.hot") == 1 && net.minecraft.client.resources.language.I18n.exists("gt.recipe.fuels.hot")
                         && lines.stream().anyMatch(c -> c.getString().contains("100.00%")), "Source Hot Fuels and full efficiency " + id);
                 require(count(lines, "gt.td.short.energy.heat") == 1 && output.getString().contains("16384 HU/t")
@@ -84,8 +85,37 @@ final class UtilityControllerDeliveryChecks {
         result.addProperty("items", items);
         result.addProperty("sourceStructureRows", rows);
         result.addProperty("fixedBottomHeatModels", 6);
-        result.addProperty("scope", "Installed native tooltip calls/events and registration only; not fuel/strike generation, player hover or restart");
+        result.addProperty("distinctLavaFluidModels", 3);
+        result.addProperty("originalHotRecipes", 16);
+        result.addProperty("scope", "Installed tooltip calls/events, baked heat/fluid models and hot recipe registry; not world fuel/strike generation, player hover or restart");
         return result;
+    }
+    private static void verifyHotFluidModels() {
+        var map=com.gregtech.gregtech.data.FuelRecipeMaps.Hot;
+        int checked=0;
+        for(var row:com.gregtech.gregtech.content.recipe.OriginalFuelRecipeRows.ROWS) {
+            if(!row.kind().equals("hot"))continue;
+            var input=com.gregtech.gregtech.registry.GTFluids.stack(row.input(),1);
+            require(input!=null&&!input.isEmpty(),"Installed hot fluid "+row.input());
+            var matches=map.mRecipeList.stream().filter(r->r.mFluidInputs.length==1&&r.mFluidInputs[0].getFluid()==input.getFluid()).toList();
+            require(matches.size()==1&&matches.get(0).mEUt==-row.eut()&&matches.get(0).mDuration==row.duration(),
+                    "Installed original hot recipe "+row.input());
+            checked++;
+        }
+        require(checked==16,"All original hot recipe rows installed");
+        for(String key:List.of("Lava_Pahoehoe","Lava_Volcanic","Lava_Pure")) {
+            var entry=com.gregtech.gregtech.data.RegisteredFluids.get(key);
+            var fluid=com.gregtech.gregtech.registry.GTFluids.stack(key,1);
+            require(fluid!=null&&!fluid.isEmpty()&&fluid.getFluid()!=net.minecraft.world.level.material.Fluids.LAVA,
+                    "Distinct installed lava identity "+key);
+            var id=ResourceLocation.parse("gregtech:fluid_item_"+entry.registryName());
+            require(BuiltInRegistries.ITEM.containsKey(id),"Registered display item "+id);
+            var stack=new ItemStack(BuiltInRegistries.ITEM.get(id));
+            var model=net.minecraft.client.Minecraft.getInstance().getItemRenderer().getModel(stack,null,null,0);
+            var quads=model.getQuads(null,null,net.minecraft.util.RandomSource.create(0));
+            require(!quads.isEmpty()&&quads.stream().allMatch(q->q.getSprite().contents().name().toString().equals("minecraft:block/lava_still")),
+                    "Fluid display item uses actual baked lava sprite "+key);
+        }
     }
     private static void verifyHeatFaces(net.minecraft.world.level.block.Block block) {
         var facing=com.gregtech.gregtech.block.machine.LargeHeatExchangerControllerBlock.FACING;

@@ -148,7 +148,9 @@ public final class SensorSourceTests {
         player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,glass);
         var context=new net.minecraft.world.item.context.UseOnContext(player,net.minecraft.world.InteractionHand.MAIN_HAND,
                 new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(clicked),Direction.UP,clicked,false));
-        h.assertTrue(part.useMultiblockTool(context,orphanMessages)==1&&orphanMessages.size()==1
+        h.assertTrue(part.useMultiblockTool(context,orphanMessages)==0&&orphanMessages.isEmpty(),"Old replaced part object never handles later clicks");
+        var orphan=(com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity)world.getBlockEntity(clicked);
+        h.assertTrue(orphan.useMultiblockTool(context,orphanMessages)==1&&orphanMessages.size()==1
                 &&orphanMessages.get(0).getString().equals("There is no Multiblock Controller for this Block."),"Orphan part reports original missing-controller diagnostic");
         h.succeed();
     }
@@ -196,6 +198,8 @@ public final class SensorSourceTests {
         h.assertTrue(machine.isStructureOk(),"Source shell forms for attachment forwarding");
         var lava=new net.neoforged.neoforge.fluids.FluidStack(net.minecraft.world.level.material.Fluids.LAVA,5000);
         var water=new net.neoforged.neoforge.fluids.FluidStack(net.minecraft.world.level.material.Fluids.WATER,250);
+        h.assertTrue(com.gregtech.gregtech.data.FuelRecipeMaps.Hot.containsInput(lava),
+                "Original FL.Lava hot recipe resolves to vanilla lava, which has no GT-specific still holder");
         var data=new net.minecraft.nbt.CompoundTag();
         data.put("gt.hot",lava.save(world.registryAccess()));
         data.put("gt.cold",water.save(world.registryAccess()));
@@ -233,8 +237,52 @@ public final class SensorSourceTests {
         h.succeed();
     }
 
+    private static void verifySourceHotFluids(GameTestHelper h) {
+        var map=com.gregtech.gregtech.data.FuelRecipeMaps.Hot;
+        var fuel=com.gregtech.gregtech.registry.GTFluids.stack("Blaze",1);
+        var empty=com.gregtech.gregtech.api.recipe.RecipeMap.ZL_IS;
+        var noFluids=com.gregtech.gregtech.api.recipe.RecipeMap.ZL_FS;
+        var inputs=new net.neoforged.neoforge.fluids.FluidStack[]{fuel};
+        h.assertTrue(com.gregtech.gregtech.api.recipe.RecipeMap.make(true,empty,empty,null,null,inputs,noFluids,6,16,0)==null,
+                "Positive-energy ordinary work still cannot silently void its only input");
+        h.assertTrue(com.gregtech.gregtech.api.recipe.RecipeMap.make(true,empty,empty,null,null,inputs,noFluids,6,-16,0)!=null,
+                "Original negative-energy fuel may emit only energy");
+        int checked=0;
+        for(var row:com.gregtech.gregtech.content.recipe.OriginalFuelRecipeRows.ROWS) {
+            if(!row.kind().equals("hot"))continue;
+            var input=com.gregtech.gregtech.registry.GTFluids.stack(row.input(),1);
+            h.assertTrue(input!=null&&!input.isEmpty(),"Registered hot input "+row.input());
+            var matches=map.mRecipeList.stream().filter(r->r.mFluidInputs.length==1&&r.mFluidInputs[0].getFluid()==input.getFluid()).toList();
+            h.assertTrue(matches.size()==1,"Exactly one source recipe per distinct hot fluid "+row.input()+"; found "+matches.size());
+            var recipe=matches.get(0);
+            h.assertTrue(recipe.mFluidInputs[0].getAmount()==1&&recipe.mEUt==-row.eut()&&recipe.mDuration==row.duration(),
+                    "Original per-litre recipe energy "+row.input());
+            if(row.output()!=null) {
+                var output=com.gregtech.gregtech.registry.GTFluids.stack(row.output().equals("water")?"Water":row.output(),1);
+                h.assertTrue(output!=null&&!output.isEmpty()&&recipe.mFluidOutputs.length==1
+                        &&recipe.mFluidOutputs[0].getFluid()==output.getFluid()&&recipe.mFluidOutputs[0].getAmount()==1,
+                        "Original cooled output identity/amount "+row.input());
+                h.assertTrue(!map.containsInput(output),"Cooled exhaust cannot feed the hot recipe map again "+row.input());
+            } else h.assertTrue(recipe.mFluidOutputs.length==0,"Blaze is the source row with no exhaust");
+            checked++;
+        }
+        h.assertTrue(checked==16,"All sixteen original hot-fluid rows resolved in the running game");
+        for(String key:new String[]{"Lava_Pahoehoe","Lava_Volcanic","Lava_Pure"}) {
+            var fluid=com.gregtech.gregtech.registry.GTFluids.stack(key,1).getFluid();
+            h.assertTrue(fluid!=net.minecraft.world.level.material.Fluids.LAVA,
+                    "Shared lava sprite must not alias registry identity "+key);
+            h.assertTrue(com.gregtech.gregtech.loaders.c.GTGeneratedChem.resolveFluidSpec("f:"+key+":1").getFluid()==fluid
+                    &&com.gregtech.gregtech.content.food.GTDrinks.fluidOf(com.gregtech.gregtech.data.RegisteredFluids.get(key))==fluid,
+                    "Chemical and container lookup preserve distinct fluid "+key);
+        }
+        var cold=com.gregtech.gregtech.registry.GTFluids.stack("Lava_Pahoehoe",1);
+        h.assertTrue(BuiltInRegistries.FLUID.getKey(cold.getFluid()).toString().equals("gregtech:ic2pahoehoelava")
+                &&cold.getFluid().getFluidType().getTemperature(cold)==1200,"Source cooled lava ID and temperature");
+    }
+
     @GameTest(template="test_empty",timeoutTicks=160)
     public static void heat_exchanger_long_state_and_real_fuel(GameTestHelper h) {
+        verifySourceHotFluids(h);
         var world=h.getLevel();var pos=h.absolutePos(new BlockPos(7,2,7));
         var block=BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.parse("gregtech:heat_exchanger_main"));
         world.setBlockAndUpdate(pos,block.defaultBlockState());
@@ -242,13 +290,16 @@ public final class SensorSourceTests {
         for(var cell:com.gregtech.gregtech.content.multiblock.SharedHeatExchangerStructure.CELLS)
             world.setBlockAndUpdate(pos.offset(cell.right(),cell.up(),cell.back()),com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(cell.part()).defaultBlockState());
         h.assertTrue(machine.isStructureOk(),"Original two-layer shell binds native parts");
-        var recipe=com.gregtech.gregtech.data.FuelRecipeMaps.Hot.mRecipeList.stream().filter(x->x.mFluidInputs.length==1&&x.mFluidOutputs.length==1&&x.mEUt<0).findFirst().orElseThrow();
+        var recipe=com.gregtech.gregtech.data.FuelRecipeMaps.Hot.mRecipeList.stream().filter(x->x.mFluidInputs.length==1&&x.mFluidInputs[0].getFluid()==net.minecraft.world.level.material.Fluids.LAVA).findFirst().orElseThrow();
+        h.assertTrue(recipe.mEUt==-16&&recipe.mDuration==5,"Original vanilla lava yields80 heat per litre");
         var fuel=recipe.mFluidInputs[0].copy();fuel.setAmount(Math.min(163840,recipe.mFluidInputs[0].getAmount()*1000));
         int accepted=machine.fill(fuel,net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE);
         machine.tick();long used=accepted-machine.tankAmount(0),batches=used/recipe.mFluidInputs[0].getAmount();
         h.assertTrue(batches>0&&machine.tankAmount(1)==batches*recipe.mFluidOutputs[0].getAmount()
                 &&machine.getEnergyStored(com.gregtech.gregtech.data.GregTechTags.Energy.HU,null)==batches*(-recipe.mEUt)*recipe.mDuration,
                 "Actual hot recipe consumes matching fuel and conserves cold output and heat");
+        h.assertTrue(machine.drain(1000,net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.SIMULATE).getFluid()==com.gregtech.gregtech.registry.GTFluids.stack("Lava_Pahoehoe",1).getFluid(),
+                "Actual heat exchanger produces cooled lava rather than recycling vanilla lava");
         var data=machine.saveWithoutMetadata(world.registryAccess());data.putLong("gt.output",500000000L);data.putShort("gt.eff",(short)6250);
         data.putString("gt.energy.emitted","ENERGY.ELECTRICITY");data.putLong("gt.energy",8_000_000_000L);
         var cold=new net.minecraft.nbt.CompoundTag();cold.put("Fluid",recipe.mFluidOutputs[0].save(world.registryAccess()));cold.putLong("Amount",5_000_000_000L);
@@ -405,9 +456,10 @@ public final class SensorSourceTests {
         }
         var meter = (SensorBlockEntity)h.getLevel().getBlockEntity(meterPos);
         var broken = origin.west(); h.getLevel().setBlockAndUpdate(broken,Blocks.AIR.defaultBlockState());
-        h.assertTrue(!boiler.isStructureOk() && heat.sensorTarget() == heat,"Invalid shell releases measurement binding");
+        h.assertTrue(!boiler.isStructureOk() && heat.sensorTarget() == boiler,"Source retains controller measurement through an intact part of an incomplete shell");
+        h.assertTrue(heat.fluidToolHandler(Direction.EAST,false).getTanks()==0,"Retained sensor/tool binding does not permit fluid transfer through a broken shell");
         SensorBlockEntity.measure(h.getLevel(),meterPos,meter.getBlockState(),meter);
-        h.assertTrue(meter.value() == 0,"Released part cannot retain controller measurement");
+        h.assertTrue(meter.value() == 1_234_567,"Original SensorTE reads cached controller independently of shell formation");
         h.getLevel().setBlockAndUpdate(broken,boiler.variant().wall().defaultBlockState());
         h.assertTrue(boiler.isStructureOk(),"Repaired shell rebinds");
         SensorBlockEntity.measure(h.getLevel(),meterPos,meter.getBlockState(),meter);

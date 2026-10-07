@@ -99,9 +99,9 @@ public final class GTDrinks {
             return null;
         }
         // The catalog binds these entries to vanilla fluids rather than GT deferred holders.
-        if (entry.textureMode() == RegisteredFluids.FluidTextureMode.VANILLA_WATER)
+        if (entry.isVanillaWater())
             return net.minecraft.world.level.material.Fluids.WATER;
-        if (entry.textureMode() == RegisteredFluids.FluidTextureMode.VANILLA_LAVA)
+        if (entry.isVanillaLava())
             return net.minecraft.world.level.material.Fluids.LAVA;
         for (var ro
                 : com.gregtech.gregtech.registry.GTFluids.FLUIDS.getEntries()) {
