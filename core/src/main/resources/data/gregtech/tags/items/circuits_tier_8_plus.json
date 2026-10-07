@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#gregtech:circuits_tier_9_plus",
+    {
+      "id": "#gt:circuit8",
+      "required": false
+    }
+  ]
+}

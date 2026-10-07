@@ -80,6 +80,20 @@
       "type": "minecraft:directory",
       "source": "items",
       "prefix": "items/"
+    },
+    {
+      "type": "minecraft:directory",
+      "source": "block/machines/covers/blank",
+      "prefix": "block/machines/covers/blank/"
+    },
+    {
+      "type": "minecraft:directory",
+      "source": "block/machines/covers/warning",
+      "prefix": "block/machines/covers/warning/"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "gregtech:block/machines/covers/canvas"
     }
   ]
 }

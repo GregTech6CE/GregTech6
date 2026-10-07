@@ -30,7 +30,7 @@ import java.util.List;
  *       now visible in JEI.</li>
  * </ul>
  *
- * <p>Rows whose content the port does not register (printed pages, Twilight Forest and
+ * <p>Rows whose content the port does not register (Twilight Forest and
  * Galacticraft maps, Thaumcraft loot bags) are recorded in {@link #skipped()} with their reason
  * instead of being invented. The material dictionary book ({@code GT6_Main:388}) also needs the NBT
  * of a scanned USB stick, so it is printed by {@link GTMaterialDataRecipes} rather than from a static
@@ -93,6 +93,17 @@ public final class GTMainRecipes {
                     "v:filled_map:1;tech:usb1_stick:1", "", "", "GT6_Main:332"),
             new Row("ScannerVisuals", true, 16, 64, "v:crafting_table:1;tech:usb1_stick:1",
                     "v:crafting_table:1;tech:usb1_stick:1", "", "", "GT6_Main:331"),
+
+            new Row("ScannerVisuals", true, 16, 512, "v:written_book:1;tech:usb1_stick:1",
+                    "tech:usb1_stick:1|Containing scanned Book;v:written_book:1", "", "", "GT6_Main:326"),
+            new Row("ScannerVisuals", true, 16, 512, "tech:printed_pages:1;tech:usb1_stick:1",
+                    "tech:usb1_stick:1|Containing scanned Book;tech:printed_pages:1", "", "", "GT6_Main:327"),
+            new Row("ScannerVisuals", true, 16, 512, "tech:many_printed_pages:1;tech:usb1_stick:1",
+                    "tech:usb1_stick:1|Containing large scanned Book;tech:many_printed_pages:1", "", "", "GT6_Main:328"),
+            new Row("Printer", true, 16, 512, "v:paper:3;tech:usb1_stick:1|Containing scanned Book",
+                    "tech:printed_pages:1", "f:Dye_Chemical_Black:72", "", "GT6_Main:359"),
+            new Row("Printer", true, 16, 1024, "v:paper:6;tech:usb1_stick:1|Containing large scanned Book",
+                    "tech:many_printed_pages:1", "f:Dye_Chemical_Black:144", "", "GT6_Main:360"),
 
             // ---- display rows: the printer reproduces what a scanned USB stick carries ----
             // GT6 prints a map of one dye unit per colour divided by nine (16 mB per colour) and one
@@ -178,12 +189,12 @@ public final class GTMainRecipes {
                 SKIPPED.add(row.source() + ": rejected by " + row.map());
                 continue;
             }
-            if (row.source().equals("GT6_Main:357") || row.source().equals("GT6_Main:358")) recipe.withCatalystInputs(1);
+            if (row.source().equals("GT6_Main:357") || row.source().equals("GT6_Main:358") || row.source().equals("GT6_Main:359")
+                    || row.source().equals("GT6_Main:360") || row.source().equals("GT6_Main:361")) recipe.withCatalystInputs(1);
             ENTRIES.add(row.map() + "|" + (row.fake() ? "display" : "recipe") + "|" + row.source());
         }
         // GT6_Main rows whose content the port does not register, kept as a checklist.
         for (String reason : new String[]{
-                "GT6_Main:327-328 printed pages (the port registers no IL.Paper_Printed_Pages items)",
                 "GT6_Main:334-338/161 Twilight Forest maps (another mod)",
                 "GT6_Main:341-345/369-371 Galacticraft schematics (another mod)",
                 "GT6_Main:347/372 IndustrialCraft blueprint (another mod)",

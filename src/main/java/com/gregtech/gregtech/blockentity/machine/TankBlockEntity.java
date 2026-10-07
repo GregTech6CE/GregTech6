@@ -383,6 +383,33 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, com.g
 
     // === NBT ===
 
+    /**
+     * Sparse harvested data, following GT6 Team / Gregorius Techneticies
+     * TileEntityBase08Barrel.writeItemNBT2 and FluidTankGT.writeToNBT (LGPL-3.0-or-later).
+     * Original persistence: Copyright (c) 2025 GregTech-6 Team.
+     * World saves remain complete. Retained fluid filters, covers and nondefault settings
+     * still make this a data-bearing item, so recovery cannot discard them.
+     */
+    public CompoundTag saveItemData() {
+        CompoundTag tag = saveWithoutMetadata();
+        if (temperature == GregTechConstants.DEF_ENV_TEMP) tag.remove(NBT_TEMPERATURE);
+        if (!autoOutput) tag.remove(NBT_AUTO_OUTPUT);
+        if (!softHammerState) tag.remove(NBT_SOFT_HAMMER);
+        if (sealedTime == 0) tag.remove(NBT_SEALED_TIME);
+        if (maxSealedTime == 0) tag.remove(NBT_MAX_SEALED_TIME);
+        if (tag.contains("gt.painted", net.minecraft.nbt.Tag.TAG_BYTE) && !tag.getBoolean("gt.painted"))
+            tag.remove("gt.painted");
+        if (tank.getFluidLong().isEmpty() && tank.getAmount() == 0
+                && tank.baseCapacity() == spec.capacity()) tag.remove("gt.tank");
+        // Forge creates these wrappers even when there is no persistent capability data.
+        // Never discard a nonempty wrapper, or an unexpected tag type from an integration.
+        for (String key : java.util.List.of("ForgeCaps", "ForgeData")) {
+            if (tag.contains(key, net.minecraft.nbt.Tag.TAG_COMPOUND) && tag.getCompound(key).isEmpty())
+                tag.remove(key);
+        }
+        return tag;
+    }
+
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);

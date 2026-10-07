@@ -129,6 +129,7 @@ public final class GTMultiItems {
                 continue;
             }
             BY_ID.put(id, ITEMS.register(id, () -> switch(id) {
+                case "printed_pages", "many_printed_pages" -> new com.gregtech.gregtech.item.PrintedPagesItem(id.equals("many_printed_pages"),props);
                 case "portable_scanner", "portable_cropnalyzer", "debug_scanner" ->
                     new com.gregtech.gregtech.item.ScannerItem(name,
                         com.gregtech.gregtech.content.tool.ScannerEnergyRules.forItem(id), props);

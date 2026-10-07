@@ -162,6 +162,7 @@ public final class WorldCreationSmoke {
             if(!COKE_ONLY&&!LONG_ONLY&&!MATERIAL_BUSH_ONLY&&!PRESENTATION_ONLY&&!NEW_ISSUES_ONLY&&!ViewerGlassChecks.capture(minecraft,result))return;
             result.addProperty("renderedWorldFrames",frames);
             result.addProperty("emiLoaded",EMI_PRESENT);
+            if(EMI_PRESENT)result.addProperty("emiPostReloadIndexReady",true);
             if (!Files.isRegularFile(minecraft.gameDirectory.toPath().resolve("saves").resolve(WORLD).resolve("level.dat")))
                 throw new IllegalStateException("Fresh world has no level.dat");
             stage = 4;
@@ -191,13 +192,14 @@ public final class WorldCreationSmoke {
         } catch (Throwable failure) { fail(failure); }
     }
     private static final boolean EMI_PRESENT = net.neoforged.fml.ModList.get().isLoaded("emi");
-    private static boolean emiReady() throws ReflectiveOperationException {
+    static boolean emiReady() throws ReflectiveOperationException {
         if (!EMI_PRESENT) return true;
         var manager=Class.forName("dev.emi.emi.runtime.EmiReloadManager");
         if (((Number)manager.getMethod("getStatus").invoke(null)).intValue()==-1)
             throw new IllegalStateException("EMI reload failed before preflight completion");
-        // isLoaded also requires its reload worker to have stopped; do not unload its world early.
-        return (boolean)manager.getMethod("isLoaded").invoke(null);
+        // The reload worker and the later input/output index worker must both stop before closing the world.
+        return (boolean)manager.getMethod("isLoaded").invoke(null)
+                && Class.forName("dev.emi.emi.registry.EmiRecipes").getField("activeWorker").get(null)==null;
     }
     /** Checks actual loader aliases and stack decoding; it never reads a user save. */
     private static void checkBatteries(net.minecraft.server.MinecraftServer server,JsonObject receipt) {

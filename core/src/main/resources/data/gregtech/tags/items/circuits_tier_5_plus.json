@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "gregtech:circuit_master",
+    "#gregtech:circuits_tier_6_plus",
+    {
+      "id": "#gt:circuit5",
+      "required": false
+    },
+    {
+      "id": "#forge:circuits/master",
+      "required": false
+    }
+  ]
+}

@@ -35,6 +35,12 @@ public class GTMachineBlockItem extends BlockItem {
     @Nullable
     public BasicMachineSpec basicSpec() { return basicSpec; }
 
+    @Override public int getMaxStackSize(ItemStack stack) {
+        var tag = stack.getTagElement("BlockEntityTag");
+        if (getBlock() instanceof TankBlock && tag != null && tag.getCompound("gt.tank").getLong("Amount") > 0) return 1;
+        return super.getMaxStackSize(stack);
+    }
+
     @Override
     public Component getName(ItemStack stack) {
         Block block = getBlock();
@@ -45,7 +51,9 @@ public class GTMachineBlockItem extends BlockItem {
             String prefix = pipe.spec().size().restrictive() ? "Restrictive " : "";
             return Component.literal(prefix + capitalize(pipe.spec().size().name()) + " " + spec.materialName() + " Item Pipe");
         }
-        if (block instanceof TankBlock) {
+        if (block instanceof TankBlock tank) {
+            if (com.gregtech.gregtech.content.transport.fluid.CheapWoodBarrelCatalog.entry(tank.spec().id()).isPresent())
+                return Component.translatable("block.gregtech." + tank.spec().id());
             return Component.literal(spec.materialName() + " Tank");
         }
         if (block instanceof SolidBurningBoxBlock) {

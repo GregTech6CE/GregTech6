@@ -65,6 +65,7 @@ public final class SignalWireBlock extends Block implements EntityBlock, ToolInt
         for(var side:Direction.values()){
             var neighbor=pos.relative(side);
             if(!level.hasChunkAt(neighbor))continue;
+            if(!com.gregtech.gregtech.content.cover.CoverConnections.canConnect(level,pos,side))continue;
             var other=level.getBlockState(neighbor);
             if(other.getBlock() instanceof SignalWireBlock){
                 next=next.setValue(ElectricWireBlock.propFor(side),true);

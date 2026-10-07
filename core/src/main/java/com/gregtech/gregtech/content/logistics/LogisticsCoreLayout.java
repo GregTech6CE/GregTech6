@@ -21,8 +21,8 @@ public final class LogisticsCoreLayout {
         public long routingThreshold() { return 128L + (long) logic * 64L * conversion; }
         /** GT6 {@code :699}: the nominal buffer ceiling (an incoming packet may exceed it). */
         public long energyCapacity() { return 128L + (long) logic * 256L * conversion; }
-        /** GT6 {@code :209,504}: fixed charge once per 20-tick logistics pass. */
-        public long fixedEnergyPerPass() { return 20L + logic + control + storage + conversion; }
+        /** GT6 {@code :209,504}: fixed charge on every server tick. */
+        public long fixedEnergyPerTick() { return 20L + logic + control + storage + conversion; }
     }
 
     public static Counts contribution(int id){return switch(id){case VERSATILE->new Counts(1,1,1,1);case LOGIC->new Counts(4,0,0,0);case CONTROL->new Counts(0,4,0,0);case STORAGE->new Counts(0,0,4,0);case CONVERSION->new Counts(0,0,0,4);default->null;};}

@@ -11,6 +11,10 @@ public final class FluidDefinitions {
     private FluidDefinitions() {}
     public static void prepare() {
         FluidCatalog.bootstrap();
+        // Loader_Fluids:618 creates Hg's ordinary mercury liquid (1U=1000mB).
+        // Retain the existing molten registry ID for saves, but restore the native liquid too.
+        com.gregtech.gregtech.content.material.generated.ElementMaterials.Mercury
+                .put(com.gregtech.gregtech.api.material.MaterialProperty.LIQUID);
         // GT6 reactor coolant isotopologues have liquid phases; retain old gas IDs for saves.
         for(var material:java.util.List.of(
                 com.gregtech.gregtech.content.material.generated.CompoundMaterials.SemiheavyWater,

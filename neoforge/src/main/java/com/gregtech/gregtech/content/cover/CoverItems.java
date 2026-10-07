@@ -54,6 +54,10 @@ public final class CoverItems {
         ResourceLocation key = BuiltInRegistries.ITEM.getKey(stack.getItem());
         if (key == null) return null;
         String id = key.getPath();
+        if (stack.getItem() instanceof com.gregtech.gregtech.item.PanelItemView panel)
+            return panel.panelSpec().asphalt() ? CoverUtilityBehaviors.ASPHALT_PANEL : "decorative_panel";
+        if (stack.getItem() instanceof com.gregtech.gregtech.item.CanvasItem) return "canvas_cover";
+        if(stack.getItem() instanceof com.gregtech.gregtech.api.material.MaterialFormItem material&&!MaterialCoverRules.textures(material.getPrefix().getName()).isEmpty())return "material_plate_cover";
         if (key.getNamespace().equals("minecraft")) {
             // GT_API:799-802 - the vanilla redstone torch (either state) and repeater are covers
             return switch (id) {
@@ -81,7 +85,7 @@ public final class CoverItems {
                 // pressure valve is a fluid-pipe cover (CoverPressureValve:44) and the asphalt cover
                 // is bound to the Asphalt Panel block (Loader_MultiTileEntities:2054). Both could be
                 // attached but never dispatched before, because this list did not name them.
-                || id.equals("pressure_value") || id.equals("panel_asphalt")
+                || id.equals("pressure_value") || id.equals("panel_asphalt") || id.startsWith("panel_concrete") || id.startsWith("panel_wood")
                 || id.contains("machine_switch") || id.contains("selector") && id.startsWith("redstone")
                 || id.startsWith("activity_detector") || id.equals("energy_sensor")
                 || id.equals("progress_sensor") || id.equals("redstone_emitter")

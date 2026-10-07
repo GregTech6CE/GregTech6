@@ -26,6 +26,7 @@ public final class FluidPipeToolInteractions {
         if(!player.mayBuild()||!level.mayInteract(player,pos)||!level.hasChunkAt(neighbor)||!level.mayInteract(player,neighbor))return true;
         if(level.isClientSide)return true;
         boolean connected=!state.getValue(FluidPipeBlock.propFor(side));
+        if(connected&&!com.gregtech.gregtech.content.cover.CoverConnections.canConnect(level,pos,side))return true;
         if(!level.setBlockAndUpdate(pos,state.setValue(FluidPipeBlock.propFor(side),connected)))return true;
         BlockState other=level.getBlockState(neighbor);
         if(other.getBlock() instanceof FluidPipeBlock)level.setBlockAndUpdate(neighbor,other.setValue(FluidPipeBlock.propFor(side.getOpposite()),connected));

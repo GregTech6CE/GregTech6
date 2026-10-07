@@ -97,7 +97,7 @@ public final class GTMiscBlocks {
         ALL.add(ro);
         GTBlocks.BLOCK_ITEMS.register(id, () -> com.gregtech.gregtech.content.logistics.LongDistanceCatalog.find(id)!=null
                 ? new com.gregtech.gregtech.item.LongDistanceBlockItem(ro.get(),new Item.Properties().stacksTo(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.get(id).stackLimit()),com.gregtech.gregtech.content.logistics.LongDistanceCatalog.get(id))
-                : new BlockItem(ro.get(), new Item.Properties().stacksTo(ro.get() instanceof FilterBlock || ro.get() instanceof AdvancedCraftingTableBlock?16:64)));
+                : ro.get() instanceof PanelBlock panel ? new com.gregtech.gregtech.item.PanelBlockItem(panel,new Item.Properties()) : new BlockItem(ro.get(), new Item.Properties().stacksTo(ro.get() instanceof FilterBlock || ro.get() instanceof AdvancedCraftingTableBlock?16:64)));
         return ro;
     }
 
@@ -109,6 +109,9 @@ public final class GTMiscBlocks {
         PANEL_ASPHALT = reg("panel_asphalt", () -> panel("asphalt"));
         PANEL_COLORED_GRAY = reg("panel_colored_gray", () -> panel("colored_gray"));
         PANEL_COLORED_BLACK = reg("panel_colored_black", () -> panel("colored_black"));
+
+        for(var spec:com.gregtech.gregtech.content.transport.PanelCatalog.ALL)
+            if(!java.util.Set.of("wood","concrete","cfoam","asphalt","colored_gray","colored_black").contains(spec.material()))GTBlocks.BLOCK_ITEMS.register(spec.id(),()->new com.gregtech.gregtech.item.PanelItem(spec,new Item.Properties()));
 
         // N9: Crafting Tables
         for(var spec:GTStorageMetals.ALL){

@@ -49,27 +49,21 @@ public final class BehaviorDataStorage {
     }
 
     /**
-     * GT6 {@code UT.NBT.getDataToolTip} ({@code UT.java:2237-2269}), restricted to the one data kind the
-     * port's model produces: {@code gt.replicator.data}, i.e. a material id.
+     * GT6 {@code UT.NBT.getDataToolTip}: image and document details share this entry point with
+     * material replication data; sticks are verbose and HDD file rows are compact.
      *
-     * <p>{@code allDetails} is GT6's own switch: a stick passes {@code true} and gets the material plus
-     * what replicating it takes, a drive slot passes {@code false} and gets the one-line form
-     * ({@code Behavior_DataStorage16:49}). A material the replicator refuses keeps GT6's
-     * {@code "(Not Replicatable)"} line ({@code UT.java:2266}) — in the port that is every antimatter
-     * material, since {@code replicationRecipe} refuses those.</p>
-     *
-     * <p><b>Energy figure:</b> GT6 prints {@code (neutrons + protons) * 65536} QU ({@code UT.java:2261})
-     * while the port's replicator charges {@code nucleons * REPLICATOR_EU_PER_NUCLEON} — the tooltip
-     * prints the port's own number, so what a player reads is what the machine spends (the GT6 figure is
-     * the matter/antimatter requirement of a machine the port does not have).</p>
+     * Original UUM flag decides the data hint; antimatter retains its own source labels.
+     * The source estimate (65536 QU per nucleon) is distinct from raw recipe work.
      */
     public static void dataTooltip(CompoundTag data, List<Component> lines, boolean allDetails) {
+        com.gregtech.gregtech.content.cover.CanvasData.tooltip(data,lines);
+        if(com.gregtech.gregtech.content.data.VisualDocumentData.tooltip(data,lines,allDetails))return;
         if (data == null || !data.contains(GTMaterialDataRecipes.NBT_REPLICATOR_DATA)) return;
         GTMaterial material = com.gregtech.gregtech.api.material.GTMaterialRegistry
                 .get(data.getShort(GTMaterialDataRecipes.NBT_REPLICATOR_DATA));
         if (!material.isValid()) return;
         String name = material.getLocalName();
-        if (!GTMaterialDataRecipes.isReplicable(material)) {
+        if (!material.has(com.gregtech.gregtech.api.material.MaterialProperty.UUM)) {
             lines.add(Component.translatable("gt.tooltip.usb.material_data", name)
                     .withStyle(ChatFormatting.AQUA)
                     .append(Component.translatable("gt.tooltip.usb.not_replicable")
@@ -85,15 +79,15 @@ public final class BehaviorDataStorage {
         lines.add(Component.translatable("gt.tooltip.usb.material_data", name)
                 .withStyle(ChatFormatting.AQUA));
         lines.add(Component.translatable("gt.tooltip.usb.replicable_hint").withStyle(ChatFormatting.AQUA));
-        lines.add(body("gt.tooltip.usb.neutral_matter", String.valueOf(material.getNeutrons()),
-                ChatFormatting.YELLOW));
-        lines.add(body("gt.tooltip.usb.charged_matter", String.valueOf(material.getProtons()),
-                ChatFormatting.RED));
-        lines.add(body("gt.tooltip.usb.energy", String.valueOf(replicatorEnergy(material)),
-                ChatFormatting.AQUA));
+        boolean antimatter = material.has(com.gregtech.gregtech.api.material.MaterialProperty.ANTIMATTER);
+        lines.add(body(antimatter ? "gt.tooltip.usb.neutral_antimatter" : "gt.tooltip.usb.neutral_matter",
+                String.valueOf(material.getNeutrons()), ChatFormatting.YELLOW));
+        lines.add(body(antimatter ? "gt.tooltip.usb.charged_antimatter" : "gt.tooltip.usb.charged_matter",
+                String.valueOf(material.getProtons()), ChatFormatting.RED));
+        lines.add(body("gt.tooltip.usb.energy", replicatorEnergy(material) + " QU", ChatFormatting.AQUA));
     }
 
-    /** The port's replicator cost for one material, in QU — see the javadoc on the class. */
+    /** Original material-data estimate, in QU. */
     public static long replicatorEnergy(GTMaterial material) {
         return GTMaterialDataRecipes.replicatorEnergy(material);
     }

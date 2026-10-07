@@ -28,116 +28,10 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.items.IItemHandler;
 
-/**
- * The second batch of GUI-less covers: everything GT6 attaches to a face whose whole behaviour is a
- * rule plus one tick or one interaction, and which the port therefore implements as static functions
- * instead of a panel.
- *
- * <p>The split is the same one {@link CoverAttachmentBehaviors} uses: this class owns the rules and
- * the entry points, {@code BasicMachineBlockEntity.tickUtilityCovers} owns the dispatch. Every method
- * here is either a pure function (assertable on its own, including its boundary and its negative
- * case) or a tick/interaction entry that touches the objects GT6's own code touches.</p>
- *
- * <h2>Which items these are, and which of them the port already recognises</h2>
- *
- * <table>
- *   <caption>Behaviour id, GT6 registration site, port item</caption>
- *   <tr><th>behaviour id</th><th>GT6 class</th><th>GT6 registration</th></tr>
- *   <tr><td>{@value #CRAFTING_TABLE}</td><td>{@code CoverCrafting}</td>
- *       <td>{@code MultiItemTechnological:60}</td></tr>
- *   <tr><td>{@value #RETRIEVER_ITEM}</td><td>{@code CoverRetrieverItem}</td>
- *       <td>{@code MultiItemTechnological:90}</td></tr>
- *   <tr><td>{@value #FILTER_ITEM}</td><td>{@code CoverFilterItem}</td>
- *       <td>{@code MultiItemTechnological:82}</td></tr>
- *   <tr><td>{@value #FILTER_FLUID}</td><td>{@code CoverFilterFluid}</td>
- *       <td>{@code MultiItemTechnological:83}</td></tr>
- *   <tr><td>{@value #PRESSURE_VALVE}</td><td>{@code CoverPressureValve}</td>
- *       <td>{@code MultiItemTechnological:176}</td></tr>
- *   <tr><td>{@value #ASPHALT_PANEL}</td><td>{@code CoverAsphalt}</td>
- *       <td>{@code Loader_MultiTileEntities:2054}</td></tr>
- *   <tr><td>{@value #BLANK_COVER}</td><td>{@code CoverTextureMulti}</td>
- *       <td>{@code MultiItemTechnological:59}</td></tr>
- *   <tr><td>{@value #WARNING_COVER}</td><td>{@code CoverTextureMulti}</td>
- *       <td>{@code MultiItemTechnological:87}</td></tr>
- *   <tr><td>{@link CoverItems#REDSTONE_TORCH}</td><td>{@code CoverRedstoneTorch}</td>
- *       <td>{@code GT_API:799-801}</td></tr>
- *   <tr><td>{@link CoverItems#REDSTONE_REPEATER}</td><td>{@code CoverRedstoneRepeater}</td>
- *       <td>{@code GT_API:802}</td></tr>
- * </table>
- *
- * <p>{@link CoverItems#behavior} recognises all of these except two, and that is a defect of that
- * one method rather than of this class: its {@code portCoverId} guard {@code CoverItems:75-82} lists
- * {@code drain}, {@code air_vent}, {@code item_filter}, {@code fluid_filter} and the
- * {@code *_cover} / {@code *_selector} / {@code machine_switch} / detector families, but
- * <b>{@value #PRESSURE_VALVE} and {@value #ASPHALT_PANEL} match none of those tests</b>. A stack of
- * either item therefore reports {@code null} from {@link CoverItems#behavior}, so a face can hold it
- * but {@code BasicMachineBlockEntity.getCoverId} never dispatches it. The two-line fix belongs in
- * {@code CoverItems}, which this batch may not touch; it is reported to the integrator and pinned by
- * {@code CoverBehaviorTests.pressureValveAndAsphaltStillNeedTheirCoverItemsEntry}.</p>
- *
- * <h2>The filters: what GT6 matches, and what the port matches instead</h2>
- *
- * <p>GT6's item filter does not consult the ore dictionary at all. Its whole rule is
- * {@code ST.equal(filter, candidate, T)} ({@code CoverFilterItem:119,126}) with {@code T} = "ignore
- * NBT" — and {@code ST.equal(..., aIgnoreNBT)} is
- * {@code item_(a) == item_(b) && equal(meta_(a), meta_(b))} ({@code ST.java:94}), i.e. <em>item plus
- * metadata, NBT ignored</em>, where {@code ST.equal(long,long)} also lets the wildcard metadata
- * {@code W} match anything ({@code ST.java:118}). The fluid filter is the same shape with
- * {@code FL.equal(a, b, T)}, i.e. {@code UT.Code.equal} — <em>same fluid, NBT ignored</em>
- * ({@code UT.java:113}), driven from {@code CoverFilterFluid:121,128}.</p>
- *
- * <p>The port has neither metadata nor a wildcard meta value, so the equivalence is:</p>
- *
- * <ul>
- *   <li><b>item + meta</b> becomes the registry item plus the port's NBT wildcard, which the
- *       logistics filter block already established: {@code FilterRules.itemMatches}
- *       ({@code FilterRules:9-12}) accepts when the item is the same <em>and</em> the stored template
- *       carries no tag, and demands equal tags otherwise. That is stricter than GT6 for a template
- *       that carries NBT: GT6 ignores the tag on both sides, the port compares it. It is the same
- *       answer for every filter GT6 itself can store, because the cover saves
- *       {@code ST.make(ST.item_(tStack), 1, ST.meta_(tStack))} — item and metadata only, never NBT
- *       ({@code CoverFilterItem:95,100,104}).</li>
- *   <li><b>the ore dictionary</b> is not used by these two covers at all, so nothing is lost here.
- *       The one place a tag rule does exist in the port is the logistics <em>filter block</em>'s
- *       prefix mode, which reads Forge item tags ({@code FilterRules:24-25}); it is deliberately not
- *       reused, because GT6's covers never had a prefix or tag mode. The only tag-shaped thing a
- *       filter cover can hold is what the player right-clicks into it.</li>
- *   <li><b>the wildcard metadata {@code W}</b> has no 1.20.1 counterpart and no GT6 counterpart in
- *       the covers either — {@code CoverFilterItem:99-107} stores {@code W} only to mark "the same
- *       item, all variants", which is exactly the untagged-template rule above.</li>
- * </ul>
- *
- * <h2>Where the mode (whitelist / blacklist) lives</h2>
- *
- * <p>GT6 keeps it in {@code aData.mVisuals[aSide]} — 0 is the whitelist ("Normal Filter"), 1 the
- * blacklist ("Inverted Filter"), toggled by a screwdriver ({@code CoverFilterItem:58-62},
- * {@code CoverFilterFluid:62-66}, and for the retriever {@code CoverRetrieverItem:94-98}). The port
- * already has one boolean per cover for exactly this, {@code gt.cover.inverted}, read by
- * {@link MachineCoverSpec#inverted(ItemStack)} and written by the same screwdriver path as the
- * machine switches ({@code BasicMachineBlockEntity:554-562}); this class reuses it instead of
- * inventing a second flag.</p>
- *
- * <h2>The pressure valve, and the two hosts it is ticked from</h2>
- *
- * <p>GT6's valve is a <em>pipe</em> cover: {@code interceptCoverPlacement} refuses any host that is
- * not a {@code MultiTileEntityPipeFluid} with exactly one tank ({@code CoverPressureValve:44}), and
- * the behaviour dereferences {@code ((MultiTileEntityPipeFluid)aData.mTileEntity).mTanks[0]}
- * ({@code CoverPressureValve:51}). The port now has that host: {@code FluidPipeBlockEntity} is a
- * cover host, it calls {@link #valveCanAttachTo} — the original's placement rule kept here as a
- * predicate, written with a pipe-host caller in mind — from its {@code attachCover}, and it ticks a
- * pipe-hosted valve with its own {@code mTanks[0]} equivalent, the pipe's single tank. The machine
- * host keeps its earlier, wider substitution: {@code BasicMachineBlockEntity.tickUtilityCovers}
- * ticks a machine-hosted valve with the machine's own output tank ({@code :1561-1565}), because GT6
- * has no machine-hosted valve at all. Both callers pass the same {@link #tickPressureValve}; the
- * only difference between them is which tank that call releases.</p>
- *
- * <h2>Throttling uses the owner's cover tick counter, like the previous batch</h2>
- *
- * <p>{@link #retrieverDue} ported {@code SERVER_TIME % 20 == 15} ({@code CoverRetrieverItem:61}) and
- * {@link #tickPressureValve} ported {@code aTimer > 2} ({@code CoverPressureValve:50}). Both read
- * the counter the caller hands them, which is {@code BasicMachineBlockEntity.coverTicks}: frozen
- * {@code level.getGameTime()} cannot be observed from inside a GameTest body. See
- * {@link CoverAttachmentBehaviors} for the full argument.</p>
+/** Native interactions and utility cover behavior derived from GT6's cover classes.
+ * Item filters compare item identity and damage, ignoring tags/components; repeated matching clicks
+ * toggle all damage variants. Workbench menus validate the actual cover host rather than a vanilla
+ * crafting-table block. Placement restrictions are enforced by PanelCoverRuntime.
  */
 public final class CoverUtilityBehaviors {
 
@@ -214,10 +108,8 @@ public final class CoverUtilityBehaviors {
      * {@link ServerPlayer#openMenu(net.minecraft.world.MenuProvider)} — no new menu type, no new
      * packet, no client class.</p>
      *
-     * <p><b>Difference:</b> the original overrides {@code canInteractWith} to {@code T}
-     * ({@code CoverCrafting:50}), so its workbench stays open at any distance. {@link CraftingMenu}
-     * keeps vanilla's own eight-block reach test, and GT6's override has no 1.20.1 equivalent that
-     * does not mean writing a menu class of our own.</p>
+     * <p>The native menu keeps its crafting inventory and recipes. Its validity check uses the
+     * cover host and an eight-block reach instead of requiring a vanilla crafting-table block.</p>
      *
      * @return whether the click was consumed, which is always true — {@code CoverCrafting:54}
      */
@@ -225,7 +117,13 @@ public final class CoverUtilityBehaviors {
         if (player instanceof ServerPlayer server && level != null && pos != null) {
             server.openMenu(new SimpleMenuProvider(
                     (id, inventory, p) -> new CraftingMenu(id, inventory,
-                            ContainerLevelAccess.create(level, pos)),
+                            ContainerLevelAccess.create(level, pos)) {
+                        private final net.minecraft.world.level.block.entity.BlockEntity host = level.getBlockEntity(pos);
+                        @Override public boolean stillValid(net.minecraft.world.entity.player.Player player) {
+                            return host != null && !host.isRemoved() && level.getBlockEntity(pos) == host
+                                    && player.distanceToSqr(pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5) <= 64;
+                        }
+                    },
                     Component.translatable("container.crafting")));
         }
         return true;
@@ -376,7 +274,8 @@ public final class CoverUtilityBehaviors {
         if (candidate == null || candidate.isEmpty()) return !stopped && !MachineCoverSpec.inverted(cover);
         ItemStack filter = itemFilter(cover,lookup);
         return filterPermits(!filter.isEmpty(), MachineCoverSpec.inverted(cover), stopped,
-                FilterRules.itemMatches(filter, candidate));
+                !candidate.isEmpty()&&filter.getItem()==candidate.getItem()
+                        &&(CoverStackData.readOrEmpty(cover).getBoolean("gt.filter.wildcard")||filter.getDamageValue()==candidate.getDamageValue()));
     }
 
     /**
@@ -428,8 +327,12 @@ public final class CoverUtilityBehaviors {
     public static boolean setItemFilter(ItemStack cover, ItemStack held,net.minecraft.core.HolderLookup.Provider lookup) {
         if (cover == null || cover.isEmpty() || held == null || held.isEmpty()) return false;
         CompoundTag tag = CoverStackData.readOrEmpty(cover);
-        if (tag.contains(FILTER_ITEM_KEY)) return false;   // "already configured" (CoverFilterItem:94)
-        tag.put(FILTER_ITEM_KEY, held.copyWithCount(1).save(lookup));
+        var previous=itemFilter(cover,lookup);
+        if(!previous.isEmpty()&&(previous.getItem()!=held.getItem()||!tag.getBoolean("gt.filter.wildcard")&&previous.getDamageValue()!=held.getDamageValue()))return false;
+        if(!previous.isEmpty())tag.putBoolean("gt.filter.wildcard",!tag.getBoolean("gt.filter.wildcard"));
+        else tag.putBoolean("gt.filter.wildcard",false);
+        var specimen=new ItemStack(held.getItem());specimen.setDamageValue(held.getDamageValue());
+        tag.put(FILTER_ITEM_KEY, specimen.save(lookup));
         CoverStackData.write(cover,tag);
         return true;
     }
@@ -473,6 +376,7 @@ public final class CoverUtilityBehaviors {
         CompoundTag tag = cover == null ? null : CoverStackData.read(cover);
         if (tag == null) return false;
         boolean had = tag.contains(FILTER_ITEM_KEY) || tag.contains(FILTER_FLUID_KEY);
+        tag.remove("gt.filter.wildcard");
         tag.remove(FILTER_ITEM_KEY);
         tag.remove(FILTER_FLUID_KEY);
         CoverStackData.write(cover,tag);

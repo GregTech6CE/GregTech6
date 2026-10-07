@@ -19,7 +19,13 @@
     "ColoredBookLecternMixin",
     "ComponentCoverHostMixin",
     "ComponentCoverCapabilitiesMixin",
-    "ComponentCoverRemovalMixin"
+    "ComponentCoverRemovalMixin",
+    "CoverDropMixin",
+    "ExperienceOrbCountAccessor",
+    "CoverWalkMixin",
+    "CoverCollisionMixin",
+    "CoverSignalMixin",
+    "CoverHarvestMixin"
   ],
   "injectors": {
     "defaultRequire": 0

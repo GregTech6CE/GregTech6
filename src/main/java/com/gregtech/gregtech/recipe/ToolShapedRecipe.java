@@ -14,6 +14,7 @@ import net.minecraft.world.level.Level;
 /** Normal shaped crafting, with usable GT tools returned with the specified GT6 durability cost. */
 public class ToolShapedRecipe extends ShapedRecipe implements com.gregtech.gregtech.api.recipe.AutocraftableCraftingRecipe {
     private final boolean autocraftable;
+    private final String constructionColor;
     @Override public boolean isAutocraftableByGT() { return autocraftable; }
     private final boolean allowMirror;
     private final boolean requireEmptyFluidContainers;
@@ -25,20 +26,49 @@ public class ToolShapedRecipe extends ShapedRecipe implements com.gregtech.gregt
         this(base, allowMirror, requireEmptyFluidContainers, true);
     }
     public ToolShapedRecipe(ShapedRecipe base, boolean allowMirror, boolean requireEmptyFluidContainers, boolean autocraftable) {
+        this(base,allowMirror,requireEmptyFluidContainers,autocraftable,"");
+    }
+    public ToolShapedRecipe(ShapedRecipe base, boolean allowMirror, boolean requireEmptyFluidContainers, boolean autocraftable, String constructionColor) {
         super(base.getId(),base.getGroup(),base.category(),base.getWidth(),base.getHeight(),base.getIngredients(),base.getResultItem(RegistryAccess.EMPTY));
         getIngredients().replaceAll(CraftingTools::expand);
         this.allowMirror=allowMirror;
         this.requireEmptyFluidContainers=requireEmptyFluidContainers;
         this.autocraftable=autocraftable;
+        this.constructionColor=constructionColor;
+        displayConstructionColor();
     }
     @Override public boolean matches(CraftingContainer inventory,Level level) {
         if(!(allowMirror?super.matches(inventory,level):matchesUnmirrored(inventory)))return false;
+        if(!constructionColor.isEmpty()) {
+            boolean color=false;
+            for(int i=0;i<inventory.getContainerSize();i++)if(coloredConstruction(inventory.getItem(i)))color|=constructionColor.equals(com.gregtech.gregtech.block.misc.ColoredConstructionBlock.itemColor(inventory.getItem(i)).getName());
+            if(!color)return false;
+        }
         return toolsUsable(inventory);
     }
+    private static boolean coloredConstruction(ItemStack stack) {
+        return stack.getItem() instanceof net.minecraft.world.item.BlockItem item&&item.getBlock().defaultBlockState().hasProperty(com.gregtech.gregtech.block.misc.ColoredConstructionBlock.COLOR);
+    }
+    private void displayConstructionColor() {
+        if(constructionColor.isEmpty())return;
+        var dye=net.minecraft.world.item.DyeColor.byName(constructionColor,null);
+        if(dye==null)throw new IllegalArgumentException("Unknown construction color "+constructionColor);
+        // Do not resolve tag ingredients here: recipe parsing precedes native tag binding.
+        // Peeking at all getItems() arrays would cache empty screw tags for this reload.
+        getIngredients().replaceAll(ingredient->{
+            var json=ingredient.toJson();
+            if(!json.isJsonObject()||!json.getAsJsonObject().has("item"))return ingredient;
+            var item=net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.parse(json.getAsJsonObject().get("item").getAsString()));
+            var sample=new ItemStack(item);
+            return coloredConstruction(sample)?Ingredient.of(com.gregtech.gregtech.block.misc.ConcreteBlock.coloredItem(((net.minecraft.world.item.BlockItem)item).getBlock(),dye)):ingredient;
+        });
+    }
+    public String constructionColor() { return constructionColor; }
     /** Every GT tool in the grid has to be a usable tool of its own type. */
     protected boolean toolsUsable(CraftingContainer inventory) {
         for(int slot=0;slot<inventory.getContainerSize();slot++) {
             var stack=inventory.getItem(slot);
+            if(requireEmptyFluidContainers&&com.gregtech.gregtech.api.material.ItemMaterialRegistry.hasStoredContents(stack))return false;
             if(requireEmptyFluidContainers&&net.minecraftforge.fluids.FluidUtil.getFluidContained(stack).filter(f->!f.isEmpty()).isPresent())return false;
             if((stack.getItem() instanceof GTToolItem||stack.getItem() instanceof com.gregtech.gregtech.item.ElectricToolItem)&&!GTToolHelper.matchesTool(stack,GTToolHelper.getType(stack)))return false;
         }
@@ -99,8 +129,8 @@ public class ToolShapedRecipe extends ShapedRecipe implements com.gregtech.gregt
     public boolean allowMirror() { return allowMirror; }
     public static final RecipeSerializer<ToolShapedRecipe> SERIALIZER=new RecipeSerializer<>() {
         private final ShapedRecipe.Serializer vanilla=new ShapedRecipe.Serializer();
-        @Override public ToolShapedRecipe fromJson(ResourceLocation id,JsonObject json) { return new ToolShapedRecipe(vanilla.fromJson(id,json),!json.has("allow_mirror")||json.get("allow_mirror").getAsBoolean(),json.has("require_empty_fluid_containers")&&json.get("require_empty_fluid_containers").getAsBoolean(),!json.has("gregtech_autocraftable")||json.get("gregtech_autocraftable").getAsBoolean()); }
-        @Override public ToolShapedRecipe fromNetwork(ResourceLocation id,FriendlyByteBuf buffer) { return new ToolShapedRecipe(vanilla.fromNetwork(id,buffer),buffer.readBoolean(),buffer.readBoolean(),buffer.readBoolean()); }
-        @Override public void toNetwork(FriendlyByteBuf buffer,ToolShapedRecipe recipe) { vanilla.toNetwork(buffer,recipe); buffer.writeBoolean(recipe.allowMirror); buffer.writeBoolean(recipe.requireEmptyFluidContainers); buffer.writeBoolean(recipe.autocraftable); }
+        @Override public ToolShapedRecipe fromJson(ResourceLocation id,JsonObject json) { return new ToolShapedRecipe(vanilla.fromJson(id,json),json.has("allow_mirror")&&json.get("allow_mirror").getAsBoolean(),json.has("require_empty_fluid_containers")&&json.get("require_empty_fluid_containers").getAsBoolean(),!json.has("gregtech_autocraftable")||json.get("gregtech_autocraftable").getAsBoolean(),json.has("construction_color")?json.get("construction_color").getAsString():""); }
+        @Override public ToolShapedRecipe fromNetwork(ResourceLocation id,FriendlyByteBuf buffer) { return new ToolShapedRecipe(vanilla.fromNetwork(id,buffer),buffer.readBoolean(),buffer.readBoolean(),buffer.readBoolean(),buffer.readUtf()); }
+        @Override public void toNetwork(FriendlyByteBuf buffer,ToolShapedRecipe recipe) { vanilla.toNetwork(buffer,recipe); buffer.writeBoolean(recipe.allowMirror); buffer.writeBoolean(recipe.requireEmptyFluidContainers); buffer.writeBoolean(recipe.autocraftable); buffer.writeUtf(recipe.constructionColor); }
     };
 }

@@ -41,7 +41,7 @@ public final class FluidTransportRegistries {
     public static void register(IEventBus bus){
         for(TankSpec spec:FluidTransportDefinitions.tanks()){
             var block=BLOCKS.register(spec.id(),()->new TankBlock(spec,TankBlock.defaultProperties(spec)));
-            TANKS.add(block);ITEMS.register(spec.id(),()->new FluidTransportBlockItem(block.get(),new Item.Properties()));
+            TANKS.add(block);ITEMS.register(spec.id(),()->new FluidTransportBlockItem(block.get(),new Item.Properties().stacksTo(16)));
             if(spec.id().equals("wood_barrel"))WOOD_BARREL=block;
             if(spec.id().equals("drum_bronze"))DRUM_BRONZE=block;
             if(spec.id().equals("drum_steel"))DRUM_STEEL=block;

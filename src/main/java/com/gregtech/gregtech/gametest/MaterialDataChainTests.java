@@ -214,8 +214,8 @@ public final class MaterialDataChainTests {
         h.assertTrue(replicated != null, "a scanned stick plus its matter replicates the material");
         h.assertTrue(!replicated.getOutput(0).isEmpty(),
                 "the replicator hands out " + material.getName() + ": " + replicated.getOutput(0));
-        h.assertTrue(replicated.mEUt == (material.getProtons() + material.getNeutrons()) * 256,
-                "GT6's 256 QU per nucleon: " + replicated.mEUt);
+        h.assertTrue(replicated.mEUt == 1 && replicated.mDuration == (material.getProtons() + material.getNeutrons()) * 256L,
+                "GT6's 256 ticks per nucleon, at one QU/t");
         h.assertTrue(replicated.isCatalystInput(0), "the replicator retains its data stick");
         var remaining = RecipeInputs.consume(replicated, List.of(scanned), List.of(neutral, charged), 1);
         h.assertTrue(remaining != null && remaining.items().get(0).getCount() == 1

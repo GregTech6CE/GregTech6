@@ -132,7 +132,7 @@ public final class PanelCoverTests {
     @GameTest(template="test_blueprint_empty") public static void controllerPausesButtonsAndExtenderShutter(GameTestHelper h){
         var relay=modeRelay(h);relay.attachCover(Direction.NORTH,stack(PanelCover.BUTTONS));relay.attachCover(Direction.SOUTH,stack(PanelCover.CONTROLLER));relay.tickSignals();
         h.assertTrue(!relay.panels().click(Direction.NORTH,.875,.875),"stopped selectors ignore clicks");
-        relay.removeCover(Direction.SOUTH);h.assertTrue(relay.panels().click(Direction.NORTH,.875,.875),"removing controller restores interaction");
+        relay.removeCover(Direction.SOUTH);h.assertTrue(!relay.panels().click(Direction.NORTH,.875,.875),"stopped flag stays latched while other covers remain");
         relay.removeCover(Direction.NORTH);h.setBlock(POS.east(),Blocks.BARREL);relay.attachCover(Direction.NORTH,stack(PanelCover.SHUTTER));
         var items=relay.getCapability(ForgeCapabilities.ITEM_HANDLER,Direction.NORTH).orElseThrow(IllegalStateException::new);
         h.assertTrue(items.insertItem(0,new ItemStack(Items.APPLE),false).isEmpty(),"open extender gate forwards actual item");relay.panels().configure(Direction.NORTH,false,false);
@@ -145,7 +145,7 @@ public final class PanelCoverTests {
             double u=(n%4+.5)/4,v=(n/4+.5)/4;var p=CoverFaceCoordinates.to(side,u,v,.063);var uv=CoverFaceCoordinates.from(side,p.x,p.y,p.z);
             h.assertTrue(Math.abs(u-uv.u())<1e-8&&Math.abs(v-uv.v())<1e-8,"render and click coordinates agree: "+side);
         }
-        var removed=relay.removeCover(Direction.NORTH);h.assertTrue(PanelCoverRuntime.value(removed)==15&&PanelCoverRuntime.style(removed)==1,"crowbar retains configured item");h.succeed();
+        var removed=relay.removeCover(Direction.NORTH);h.assertTrue(PanelCoverRuntime.value(removed)==0&&PanelCoverRuntime.style(removed)==0,"crowbar returns default stackable cover");h.succeed();
     }
     @GameTest(template="test_blueprint_empty") public static void unsupportedAttachmentsAndSurvivalRecipes(GameTestHelper h){
         var m=machine(h);h.assertTrue(!m.attachCover(Direction.NORTH,stack(PanelCover.MANUAL))&&!m.attachCover(Direction.NORTH,stack(PanelCover.ENERGY)),"no fake modes or capacitor on processing machines");

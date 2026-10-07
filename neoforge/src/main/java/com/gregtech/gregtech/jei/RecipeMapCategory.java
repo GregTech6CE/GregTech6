@@ -50,7 +50,9 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
         for(int i=0;i<items.length;i++) {
             if(items[i]==null||items[i].isEmpty()) continue;
             var point=MachineGuiLayout.item(input,i,count,map.mInputFluidCount+map.mOutputFluidCount);
-            var itemSlot=builder.addSlot(role,point.x(),point.y()).setSlotName(role.name()+"_item_"+i).addItemStack(items[i]);
+            var itemSlot=builder.addSlot(role,point.x(),point.y()).setSlotName(role.name()+"_item_"+i);
+            var choices=input?recipe.viewerInputAlternatives(i):java.util.List.<ItemStack>of();
+            if(choices.isEmpty())itemSlot.addItemStack(items[i]);else itemSlot.addItemStacks(choices);
             var materialAliases=com.gregtech.gregtech.api.material.MaterialDisplayBinding.alternatives(items[i]);
             if(!materialAliases.isEmpty())builder.addInvisibleIngredients(role).addItemStacks(materialAliases);
             int chance=recipe.getOutputChance(i);

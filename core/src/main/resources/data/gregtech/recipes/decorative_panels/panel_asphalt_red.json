@@ -1,0 +1,28 @@
+{
+  "type": "gregtech:tool_shaped",
+  "allow_mirror": true,
+  "pattern": [
+    "TsT",
+    "TPT",
+    "TdT"
+  ],
+  "key": {
+    "T": {
+      "tag": "gregtech:screws/any_iron_or_steel"
+    },
+    "P": {
+      "item": "gregtech:asphalt"
+    },
+    "s": {
+      "item": "gregtech:tool_saw"
+    },
+    "d": {
+      "item": "gregtech:tool_screwdriver"
+    }
+  },
+  "result": {
+    "item": "gregtech:panel_asphalt_red",
+    "count": 6
+  },
+  "construction_color": "red"
+}

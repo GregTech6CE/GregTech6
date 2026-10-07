@@ -34,6 +34,9 @@ public abstract class ComponentCoverRemovalMixin {
     @Inject(method="setBlockState",at=@At("HEAD"),require=1)
     private void gregtech$break(BlockPos pos,BlockState next,boolean moved,CallbackInfoReturnable<BlockState> cir){
         var owner=((LevelChunk)(Object)this).getBlockEntities().get(pos);
-        if(owner!=null&&!next.is(owner.getBlockState().getBlock()))ComponentCoverFallback.breaking(owner);
+        if(owner!=null&&!next.is(owner.getBlockState().getBlock())){
+            ComponentCoverFallback.breaking(owner);
+            if(owner instanceof com.gregtech.gregtech.content.logistics.LogisticsCoverHost host)host.logisticsCovers().dropAll();
+        }
     }
 }

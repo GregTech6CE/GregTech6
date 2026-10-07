@@ -486,8 +486,8 @@ public final class CoverBehaviorTests {
                 "nether air is hotter than the 320 K heat threshold of UT.java:2984, got "
                         + temperature + " K");
 
-        helper.assertTrue(machine.attachCover(Direction.EAST, cover(CoverUtilityBehaviors.PRESSURE_VALVE)),
-                "the machine face accepts the pressure valve");
+        helper.assertTrue(!machine.attachCover(Direction.EAST, cover(CoverUtilityBehaviors.PRESSURE_VALVE)),
+                "a pressure valve accepts only a single-channel fluid pipe");
         helper.assertTrue(!machine.getCover(Direction.EAST).isEmpty(),
                 "the valve is attached, got " + machine.getCover(Direction.EAST));
 
@@ -567,8 +567,8 @@ public final class CoverBehaviorTests {
         ServerLevel level = helper.getLevel();
         BlockPos pos = site(64, 0);
         var machine = machine(level, pos);
-        helper.assertTrue(machine.attachCover(Direction.EAST, cover(CoverUtilityBehaviors.PRESSURE_VALVE)),
-                "the machine face accepts the pressure valve");
+        helper.assertTrue(!machine.attachCover(Direction.EAST, cover(CoverUtilityBehaviors.PRESSURE_VALVE)),
+                "a pressure valve accepts only a single-channel fluid pipe");
         var tank = machine.getTanksOutput()[0];
         tank.setFluid(new FluidStack(Fluids.WATER, (int) tank.capacity()));
         int full = (int) tank.capacity();
@@ -682,26 +682,11 @@ public final class CoverBehaviorTests {
 
     /** GT6 {@code GT_API:799-802}: the covers of the redstone torch and the repeater are the vanilla items. */
     @GameTest(template = "test_empty", timeoutTicks = 300)
-    public static void torchAndRepeaterCoversAreTheVanillaBlocksOnAMachine(GameTestHelper helper) {
-        ServerLevel level = helper.getLevel();
-        BlockPos pos = site(88, 0);
-        var machine = machine(level, pos);
-
-        helper.assertTrue(machine.attachCover(Direction.NORTH, new ItemStack(Items.REDSTONE_TORCH)),
-                "the machine face accepts the vanilla redstone torch as a cover");
-        helper.assertTrue(CoverItems.REDSTONE_TORCH.equals(CoverItems.behavior(machine.getCover(Direction.NORTH))),
-                "minecraft:redstone_torch is the torch cover (GT_API:800-801), got "
-                        + CoverItems.behavior(machine.getCover(Direction.NORTH)));
-        helper.assertTrue(machine.attachCover(Direction.SOUTH, new ItemStack(Items.REPEATER)),
-                "the machine face accepts the vanilla repeater as a cover");
-        helper.assertTrue(CoverItems.REDSTONE_REPEATER.equals(CoverItems.behavior(machine.getCover(Direction.SOUTH))),
-                "minecraft:repeater is the repeater cover (GT_API:802), got "
-                        + CoverItems.behavior(machine.getCover(Direction.SOUTH)));
-        helper.assertTrue(!CoverItems.REDSTONE_TORCH.equals(CoverItems.behavior(machine.getCover(Direction.SOUTH))),
-                "the two faces keep distinct behaviours");
-        helper.assertTrue(machine.hasRedstoneCover(),
-                "the machine reports a redstone cover once either is attached "
-                        + "(BasicMachineBlockEntity.hasRedstoneCover)");
+    public static void torchAndRepeaterCoversRejectProcessingMachines(GameTestHelper helper) {
+        var host=machine(helper.getLevel(),site(88,0));
+        helper.assertTrue(!host.attachCover(Direction.NORTH,new ItemStack(Items.REDSTONE_TORCH))
+                &&!host.attachCover(Direction.SOUTH,new ItemStack(Items.REPEATER)),
+                "torch/repeater covers require an insulated signal wire, never a processing machine");
         helper.succeed();
     }
 

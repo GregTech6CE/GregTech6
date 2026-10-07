@@ -133,6 +133,8 @@ public final class GregTechNeoForge {
         com.gregtech.gregtech.registry.GTBlackSands.registerCompositions();
         VanillaUnificationLoader.register();
         VanillaCompositionLoader.register();
+        com.gregtech.gregtech.content.recipe.PanelMaterialRegistration.register();
+        com.gregtech.gregtech.content.recipe.TransportMaterialRegistration.register();
         com.gregtech.gregtech.data.MachineRecipeMaps.bootstrap();
         com.gregtech.gregtech.content.recipe.GTBumbleBeeRecipes.register();
         LOGGER.info("[gregtech] Native bumblebee scanning display rows: {}",com.gregtech.gregtech.content.recipe.GTBumbleBeeRecipes.registerDisplayRows());

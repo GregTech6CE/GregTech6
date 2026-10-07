@@ -25,8 +25,18 @@ import net.neoforged.neoforge.fluids.FluidStack;
 public final class BlueprintRecipes {
     private BlueprintRecipes() {}
     public static void register() {
-        MachineRecipeMaps.ScannerVisuals.contextualRecipes(BlueprintRecipes::scan);
-        MachineRecipeMaps.Printer.contextualRecipes(BlueprintRecipes::print);
+        MachineRecipeMaps.ScannerVisuals.contextualRecipes((level,machine,special,items,fluids) -> {
+            Recipe recipe = CanvasRecipes.scan(level,machine,special,items,fluids);
+            if(recipe != null)return recipe;
+            recipe=scan(level,machine,special,items,fluids);
+            return recipe != null ? recipe : VisualDocumentRecipes.scan(level,machine,special,items,fluids);
+        });
+        MachineRecipeMaps.Printer.contextualRecipes((level,machine,special,items,fluids) -> {
+            Recipe recipe = CanvasRecipes.print(level,machine,special,items,fluids);
+            if(recipe != null)return recipe;
+            recipe=print(level,machine,special,items,fluids);
+            return recipe != null ? recipe : VisualDocumentRecipes.print(level,machine,special,items,fluids);
+        });
     }
     private static boolean is(ItemStack stack, String path) {
         var id = BuiltInRegistries.ITEM.getKey(stack.getItem());

@@ -94,8 +94,8 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         }
         public boolean running(){return available()&&mRunning;}
         public boolean active(){return available()&&mActive;}
-        public long progress(){return available()?mProgress:0;}
-        public long progressMax(){return available()?mMaxProgress:0;}
+        public long progress(){return available()?(successful?1:mProgress):0;}
+        public long progressMax(){return available()?(successful?1:mMaxProgress):0;}
     };
     @Override public com.gregtech.gregtech.api.machine.MachineControl machineControl(Direction side){return control;}
     private boolean mInventoryChanged = true; // inventory changed, re-check recipe
@@ -319,13 +319,13 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         covers[side.ordinal()] = ItemStack.EMPTY;
         panels.beforeTick();
         var removedSpec=MachineCoverSpec.of(cover);
-        if(removedSpec!=null&&!removedSpec.detector())controlStopped=false;
+        if(removedSpec!=null&&!removedSpec.detector()||com.gregtech.gregtech.content.cover.PanelCover.of(cover)==com.gregtech.gregtech.content.cover.PanelCover.STATUS)controlStopped=false;
         mInventoryChanged=true;
         invalidateSideCaps();
         setChanged();
         if (level != null) level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
         updateCoverSignals();
-        return cover;
+        return panels.removed(side,cover);
     }
 
     private void invalidateSideCaps() { invalidateCapabilities(); }
@@ -516,7 +516,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         return panels.shuttered(side);
     }
 
-    /** Controllers own the switch while attached. Multiple controllers must all allow work. */
+    /** Controllers own the switch while attached. The last controller in side order owns the switch. */
     protected boolean switchesAllowRunning() {
         if (level == null) return !controlStopped;
         var state=coverState();
@@ -527,7 +527,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             controlled=true;
             var neighbor=worldPosition.relative(side);
             int signal=level.hasChunkAt(neighbor)?level.getSignal(neighbor,side):0;
-            if(!cover.allows(state,signal,MachineCoverSpec.inverted(stack),coverTicks))allowed=false;
+            allowed=cover.allows(state,signal,MachineCoverSpec.inverted(stack),coverTicks);
         }
         if(controlled&&controlStopped==allowed){controlStopped=!allowed;setChanged();}
         return !controlStopped;
@@ -1423,7 +1423,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         if (level == null || level.isClientSide) return;
         com.gregtech.gregtech.api.inventory.BlockContents.drop(this, itemHandler);
         com.gregtech.gregtech.api.inventory.BlockContents.drop(this, autocraftingProgram);
-        for (int i = 0; i < covers.length; i++) { com.gregtech.gregtech.api.inventory.BlockContents.drop(this, covers[i]); covers[i] = ItemStack.EMPTY; }
+        for (int i = 0; i < covers.length; i++) { if(!com.gregtech.gregtech.content.cover.CoverDrops.retained(this))com.gregtech.gregtech.api.inventory.BlockContents.drop(this, covers[i]); covers[i] = ItemStack.EMPTY; }
         setChanged();
     }
 

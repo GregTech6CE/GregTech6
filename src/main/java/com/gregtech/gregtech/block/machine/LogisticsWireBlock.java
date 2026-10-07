@@ -84,6 +84,9 @@ public final class LogisticsWireBlock extends Block implements EntityBlock, Tool
             BlockState neighbor = level.getBlockState(adjacent);
             boolean ours = next.getValue(ElectricWireBlock.propFor(side));
             if (neighbor.getBlock() instanceof LogisticsWireBlock) {
+                boolean blocked=level.getBlockEntity(adjacent) instanceof com.gregtech.gregtech.content.logistics.LogisticsCoverHost otherHost&&!otherHost.logisticsCovers().get(side.getOpposite()).isEmpty()
+                        ||level.getBlockEntity(pos) instanceof com.gregtech.gregtech.content.logistics.LogisticsCoverHost host&&!host.logisticsCovers().get(side).isEmpty();
+                if(blocked){next=next.setValue(ElectricWireBlock.propFor(side),false);continue;}
                 boolean theirs = neighbor.getValue(ElectricWireBlock.propFor(side.getOpposite()));
                 if (ours && !theirs)
                     level.setBlockAndUpdate(adjacent,
@@ -125,7 +128,7 @@ public final class LogisticsWireBlock extends Block implements EntityBlock, Tool
 
     @Override public boolean isSignalSource(BlockState state) { return true; }
     @Override public int getSignal(BlockState state, BlockGetter level, BlockPos pos, Direction side) {
-        return com.gregtech.gregtech.content.logistics.LogisticsCoverSignals.at(level, pos, side);
+        return com.gregtech.gregtech.content.logistics.LogisticsCoverSignals.at(level, pos, side.getOpposite());
     }
     @Override public int getDirectSignal(BlockState state, BlockGetter level, BlockPos pos, Direction side) {
         return getSignal(state, level, pos, side);

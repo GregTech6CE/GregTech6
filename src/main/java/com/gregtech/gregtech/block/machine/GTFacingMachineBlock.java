@@ -103,6 +103,7 @@ public abstract class GTFacingMachineBlock extends HorizontalDirectionalBlock im
                               @Nullable BlockEntity blockEntity, ItemStack tool) {
         if (!level.isClientSide && GTToolHelper.canCollectMachineDrop(tool, state)) {
             ItemStack machine = createMachineDrop(state, blockEntity);
+                com.gregtech.gregtech.content.cover.CoverDrops.capture(state,(net.minecraft.server.level.ServerLevel)level,blockEntity,java.util.List.of(machine));
             if (!machine.isEmpty()) {
                 if (!player.getInventory().add(machine)) {
                     popResource(level, pos, machine);

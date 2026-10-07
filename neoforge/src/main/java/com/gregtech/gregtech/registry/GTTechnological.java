@@ -28,6 +28,8 @@ public final class GTTechnological {
             DeferredHolder<Item,Item> obj = ITEMS.register(id, () -> new TechItem(name, catalyst, new Item.Properties().stacksTo(64)));
             BY_ID.put(id, obj);
         }
+        for (var variant : com.gregtech.gregtech.content.cover.CanvasRules.VARIANTS)
+            BY_ID.put(variant.path(), ITEMS.register(variant.path(), () -> new com.gregtech.gregtech.item.CanvasItem(variant)));
         // GT6 ST.tag equivalents: integrated circuits select recipe variants, never consumed.
         for (int i = 0; i < 25; i++) {
             String id = "integrated_circuit_" + i;
