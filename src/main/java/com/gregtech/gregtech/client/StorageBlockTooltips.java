@@ -5,7 +5,6 @@ package com.gregtech.gregtech.client;
 import com.gregtech.gregtech.content.storage.OriginalStorageTooltipData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import java.util.List;
 
@@ -42,16 +41,23 @@ public final class StorageBlockTooltips {
         add(lines, "gt.lang.nogui.rightclick.interact", ChatFormatting.GOLD);
         tools(lines, OriginalStorageTooltipData.bookShelfTools()); facing(lines);
     }
-    private static void loot(ItemStack stack, List<Component> lines) {
+    /** Source chest name is common to every table; show the table without rolling it. */
+    public static void chest(ItemStack stack, String defaultTable, List<Component> lines) {
+        lines.add(Component.translatable(OriginalStorageTooltipData.SLOT_COUNT).append("54")
+                .withStyle(ChatFormatting.AQUA));
+        loot(stack, defaultTable, lines);
+        add(lines, OriginalStorageTooltipData.PINCERS, ChatFormatting.DARK_GRAY);
+    }
+    private static void loot(ItemStack stack, List<Component> lines) { loot(stack, null, lines); }
+    private static void loot(ItemStack stack, String defaultTable, List<Component> lines) {
         var data = CommonBlockTooltips.blockData(stack);
-        if (data == null) return;
-        String tableId = data.getString("gt.dungeonloot");
-        if (tableId.isEmpty()) return;
-        var table = ResourceLocation.tryParse(tableId);
-        if (table == null) return;
-        String key = OriginalStorageTooltipData.lootKey(table.toString());
+        if (data != null && data.getBoolean("GTLootGenerated")) return;
+        String table = data == null ? "" : data.getString("gt.dungeonloot");
+        if (table.isEmpty()) table = defaultTable;
+        if (table == null || table.isEmpty()) return;
+        String key = OriginalStorageTooltipData.lootKey(table);
         lines.add(Component.literal("Contains Loot of ").withStyle(ChatFormatting.AQUA)
-                .append((key == null ? Component.literal(table.toString()) : Component.translatable(key))
+                .append((key == null ? Component.literal(table) : Component.translatable(key))
                         .withStyle(ChatFormatting.WHITE)));
     }
     public static void tools(List<Component> lines, List<String> keys) {

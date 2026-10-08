@@ -377,6 +377,14 @@ public final class MachineSpecBehaviorContracts {
         }
         check(com.gregtech.gregtech.content.storage.OriginalStorageTooltipData.lootKey("minecraft:chests/simple_dungeon").equals("loot.dungeonChest")
                 && com.gregtech.gregtech.content.storage.OriginalStorageTooltipData.lootKey("other:custom") == null, "Known source loot label maps explicitly; custom table identity retained");
+        String[] lootLabels={"dungeonChest","mineshaftCorridor","strongholdLibrary","strongholdCrossing",
+                "strongholdCorridor","pyramidDesertyChest","pyramidJungleChest","pyramidJungleDispenser",
+                "villageBlacksmith","bonusChest","gt.flawless","gt.gems","gt.misc","gt.seeds","gt.saplings",
+                "gt.books","gt.bottles","gt.matdicts"};
+        var lootTables=com.gregtech.gregtech.content.loot.LootChestCatalog.ENTRIES;
+        check(lootTables.size()==lootLabels.length,"Every flattened loot chest has a source label");
+        for(int i=0;i<lootLabels.length;i++)check(com.gregtech.gregtech.content.storage.OriginalStorageTooltipData
+                .lootKey(lootTables.get(i).split("\\|")[1]).equals("loot."+lootLabels[i]),"Original flattened loot label "+lootLabels[i]);
     }
 
     private static void originalRemainingStorageMaterials() {

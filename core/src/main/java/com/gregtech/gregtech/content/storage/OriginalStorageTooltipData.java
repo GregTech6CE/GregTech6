@@ -45,16 +45,17 @@ public final class OriginalStorageTooltipData {
     /** Only source ChestGenHooks names with an explicit adopted modern table identity. */
     public static String lootKey(String table) {
         String name = switch (table) {
-            case "minecraft:chests/simple_dungeon" -> "dungeonChest";
-            case "minecraft:chests/abandoned_mineshaft" -> "mineshaftCorridor";
-            case "minecraft:chests/stronghold_library" -> "strongholdLibrary";
-            case "minecraft:chests/stronghold_crossing" -> "strongholdCrossing";
-            case "minecraft:chests/stronghold_corridor" -> "strongholdCorridor";
-            case "minecraft:chests/desert_pyramid" -> "pyramidDesertyChest";
-            case "minecraft:chests/jungle_temple" -> "pyramidJungleChest";
-            case "minecraft:chests/jungle_temple_dispenser" -> "pyramidJungleDispenser";
-            case "minecraft:chests/village/village_weaponsmith" -> "villageBlacksmith";
-            case "minecraft:chests/spawn_bonus_chest" -> "bonusChest";
+            case "minecraft:chests/simple_dungeon", "van.DUNGEON_CHEST" -> "dungeonChest";
+            case "minecraft:chests/abandoned_mineshaft", "van.MINESHAFT_CORRIDOR" -> "mineshaftCorridor";
+            case "minecraft:chests/stronghold_library", "van.STRONGHOLD_LIBRARY" -> "strongholdLibrary";
+            case "minecraft:chests/stronghold_crossing", "van.STRONGHOLD_CROSSING" -> "strongholdCrossing";
+            case "minecraft:chests/stronghold_corridor", "van.STRONGHOLD_CORRIDOR" -> "strongholdCorridor";
+            case "minecraft:chests/desert_pyramid", "van.PYRAMID_DESERT_CHEST" -> "pyramidDesertyChest";
+            case "minecraft:chests/jungle_temple", "van.PYRAMID_JUNGLE_CHEST" -> "pyramidJungleChest";
+            case "minecraft:chests/jungle_temple_dispenser", "van.PYRAMID_JUNGLE_DISPENSER" -> "pyramidJungleDispenser";
+            case "minecraft:chests/village/village_weaponsmith", "van.VILLAGE_BLACKSMITH" -> "villageBlacksmith";
+            case "minecraft:chests/spawn_bonus_chest", "van.BONUS_CHEST" -> "bonusChest";
+            case "gt.flawless", "gt.gems", "gt.misc", "gt.seeds", "gt.saplings", "gt.books", "gt.bottles", "gt.matdicts" -> table;
             default -> null;
         };
         return name == null ? null : "loot." + name;

@@ -89,6 +89,7 @@ final class LanguageDeliveryChecks {
             int bushEnglish=verifyBushes(false);
             int coinsEnglish=verifyCoins(false);
             int technologyEnglish=verifyTechnologyNames(false);
+            int lootEnglish=verifyLootChestNames(false),fluidsEnglish=verifyDeclaredFluidNames();
             int wiresOresEnglish=verifyAdditionalBlockNames();
             manager.setSelected("zh_cn");
             manager.onResourceManagerReload(client.getResourceManager());
@@ -98,6 +99,7 @@ final class LanguageDeliveryChecks {
             int bushChinese=verifyBushes(true);
             int coinsChinese=verifyCoins(true);
             int technologyChinese=verifyTechnologyNames(true);
+            int lootChinese=verifyLootChestNames(true),fluidsChinese=verifyDeclaredFluidNames();
             int wiresOresChinese=verifyAdditionalBlockNames();
             var nameInventory=recordNameInventory(client,englishSnapshot);
             require(Language.getInstance().has("gt.multiitem.bumblebee.0"), "Original Chinese resource is loaded");
@@ -216,6 +218,10 @@ final class LanguageDeliveryChecks {
             report.addProperty("coinNamesAndMaterialsChinese",coinsChinese);
             report.addProperty("additionalSourceBlockNamesEnglish",wiresOresEnglish);
             report.addProperty("additionalSourceBlockNamesChinese",wiresOresChinese);
+            report.addProperty("lootChestNamesEnglish",lootEnglish);
+            report.addProperty("lootChestNamesChinese",lootChinese);
+            report.addProperty("declaredFluidNamesEnglish",fluidsEnglish);
+            report.addProperty("declaredFluidNamesChinese",fluidsChinese);
             report.addProperty("sourceTechnologyNamesEnglish",technologyEnglish);
             report.addProperty("sourceTechnologyNamesChinese",technologyChinese);
             report.addProperty("chineseItemNames",englishSnapshot.size());
@@ -256,6 +262,34 @@ final class LanguageDeliveryChecks {
         }
         require(mismatches.isEmpty(),"Installed colored construction names: "+mismatches);
         return checked;
+    }
+    private static int verifyLootChestNames(boolean chinese) {
+        int checked=0;
+        for(String entry:com.gregtech.gregtech.content.loot.LootChestCatalog.ENTRIES) {
+            String[] parts=entry.split("\\|");var stack=item("loot_chest_"+parts[0]);
+            String expected=original(stack.getDescriptionId());
+            if(chinese)require(expected.equals(original("gt.multitileentity.32745")),"Original loot shell name");
+            require(stack.getHoverName().getString().equals(expected),"Installed loot chest name "+entry);
+            String key=com.gregtech.gregtech.content.storage.OriginalStorageTooltipData.lootKey(parts[1]);
+            String label="Contains Loot of "+original(key);
+            require(tooltip(stack).stream().filter(c -> c.getString().equals(label)).count()==1,"Loot table label once "+entry);
+            var data=new net.minecraft.nbt.CompoundTag();data.putBoolean("GTLootGenerated",true);
+            net.minecraft.world.item.BlockItem.setBlockEntityData(stack,com.gregtech.gregtech.registry.GTBlockEntities.METAL_CHEST.get(),data);
+            require(tooltip(stack).stream().noneMatch(c -> c.getString().startsWith("Contains Loot of ")),"Consumed chest does not advertise unrolled loot "+entry);
+            checked++;
+        }
+        return checked;
+    }
+    private static int verifyDeclaredFluidNames() {
+        int checked=0;
+        for(var registered:BuiltInRegistries.ITEM)if(registered instanceof com.gregtech.gregtech.item.FluidItem fluidItem) {
+            String key="fluid_type.gregtech."+com.gregtech.gregtech.data.FluidCatalog.sanitizePath(fluidItem.fluidEntry().registryName());
+            if(!Language.getInstance().has(key))continue;
+            var stack=new ItemStack(registered);
+            require(stack.getHoverName().getString().equals(original(key)),"Installed declared fluid name "+key);
+            checked++;
+        }
+        require(checked>100,"Declared fluid catalog checked in actual locale");return checked;
     }
     private static int verifyAdditionalBlockNames() {
         var ids=new ArrayList<String>();

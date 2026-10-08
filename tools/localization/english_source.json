@@ -34,6 +34,10 @@
       "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5"
     },
     {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\FL.java",
+      "sha256": "87ec6759b7c3b1ad7d7c6d574e24ec7d7371fa285e93ab67cfa26cd83f2b18b3"
+    },
+    {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
       "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8"
     },
@@ -464,6 +468,10 @@
     {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\a\\Loader_Blocks.java",
       "sha256": "4215d81610616b406af400c98ddaee3b0d266cb187c9335d2d6a5dd851284abb"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\a\\Loader_Fluids.java",
+      "sha256": "fdc9a697adc7822159cb8ea82389cc83e6494fc9723551f2983607ed46505fcb"
     },
     {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\a\\Loader_Rails.java",
@@ -8426,6 +8434,78 @@
     "block.gregtech.loom_tungsten_steel": {
       "source_key": "gt.multitileentity.20214",
       "value": "Loom (Tungstensteel)"
+    },
+    "block.gregtech.loot_chest_blacksmith": {
+      "source_key": "gt.multitileentity.32745",
+      "value": "Mossy Stone Chest"
+    },
+    "block.gregtech.loot_chest_bonus": {
+      "source_key": "gt.multitileentity.32745",
+      "value": "Mossy Stone Chest"
+    },
+    "block.gregtech.loot_chest_books": {
+      "source_key": "gt.multitileentity.32745",
+      "value": "Mossy Stone Chest"
+    },
+    "block.gregtech.loot_chest_bottles": {
+      "source_key": "gt.multitileentity.32745",
+      "value": "Mossy Stone Chest"
+    },
+    "block.gregtech.loot_chest_desert_pyramid": {
+      "source_key": "gt.multitileentity.32745",
+      "value": "Mossy Stone Chest"
+    },
+    "block.gregtech.loot_chest_dungeon": {
+      "source_key": "gt.multitileentity.32745",
+      "value": "Mossy Stone Chest"
+    },
+    "block.gregtech.loot_chest_flawless": {
+      "source_key": "gt.multitileentity.32745",
+      "value": "Mossy Stone Chest"
+    },
+    "block.gregtech.loot_chest_gems": {
+      "source_key": "gt.multitileentity.32745",
+      "value": "Mossy Stone Chest"
+    },
+    "block.gregtech.loot_chest_jungle_dispenser": {
+      "source_key": "gt.multitileentity.32745",
+      "value": "Mossy Stone Chest"
+    },
+    "block.gregtech.loot_chest_jungle_temple": {
+      "source_key": "gt.multitileentity.32745",
+      "value": "Mossy Stone Chest"
+    },
+    "block.gregtech.loot_chest_library": {
+      "source_key": "gt.multitileentity.32745",
+      "value": "Mossy Stone Chest"
+    },
+    "block.gregtech.loot_chest_matdicts": {
+      "source_key": "gt.multitileentity.32745",
+      "value": "Mossy Stone Chest"
+    },
+    "block.gregtech.loot_chest_mineshaft": {
+      "source_key": "gt.multitileentity.32745",
+      "value": "Mossy Stone Chest"
+    },
+    "block.gregtech.loot_chest_misc": {
+      "source_key": "gt.multitileentity.32745",
+      "value": "Mossy Stone Chest"
+    },
+    "block.gregtech.loot_chest_saplings": {
+      "source_key": "gt.multitileentity.32745",
+      "value": "Mossy Stone Chest"
+    },
+    "block.gregtech.loot_chest_seeds": {
+      "source_key": "gt.multitileentity.32745",
+      "value": "Mossy Stone Chest"
+    },
+    "block.gregtech.loot_chest_stronghold_corridor": {
+      "source_key": "gt.multitileentity.32745",
+      "value": "Mossy Stone Chest"
+    },
+    "block.gregtech.loot_chest_stronghold_storage": {
+      "source_key": "gt.multitileentity.32745",
+      "value": "Mossy Stone Chest"
     },
     "block.gregtech.loot_crate": {
       "source_key": "gt.multitileentity.32110",
@@ -16972,21 +17052,4685 @@
       "source_key": "gt.multitileentity.11170",
       "value": "ZPM Decharger (Quantum)"
     },
+    "fluid.gregtech.aerotheum": {
+      "source_key": "fluid.aerotheum",
+      "value": "Zephyrean Aerotheum"
+    },
+    "fluid.gregtech.air": {
+      "source_key": "fluid.air",
+      "value": "Air"
+    },
+    "fluid.gregtech.ammonia": {
+      "source_key": "fluid.ammonia",
+      "value": "Ammonia"
+    },
+    "fluid.gregtech.applesmoothie": {
+      "source_key": "fluid.applesmoothie",
+      "value": "Apple Smoothie"
+    },
+    "fluid.gregtech.applevinegar": {
+      "source_key": "fluid.applevinegar",
+      "value": "Apple Cider Vinegar"
+    },
+    "fluid.gregtech.apricotsmoothie": {
+      "source_key": "fluid.apricotsmoothie",
+      "value": "Apricot Smoothie"
+    },
+    "fluid.gregtech.aquaregia": {
+      "source_key": "fluid.aquaregia",
+      "value": "Aqua Regia"
+    },
+    "fluid.gregtech.argon": {
+      "source_key": "fluid.argon",
+      "value": "Argon"
+    },
+    "fluid.gregtech.bananasmoothie": {
+      "source_key": "fluid.bananasmoothie",
+      "value": "Banana Smoothie"
+    },
+    "fluid.gregtech.bawls": {
+      "source_key": "fluid.bawls",
+      "value": "BAWLS"
+    },
+    "fluid.gregtech.bbqsauce": {
+      "source_key": "fluid.bbqsauce",
+      "value": "Barbecue Sauce"
+    },
+    "fluid.gregtech.beer": {
+      "source_key": "fluid.beer",
+      "value": "Beer"
+    },
+    "fluid.gregtech.beetjuice": {
+      "source_key": "fluid.beetjuice",
+      "value": "Beet Juice"
+    },
+    "fluid.gregtech.binnie.ciderapple": {
+      "source_key": "fluid.binnie.ciderapple",
+      "value": "Cider"
+    },
+    "fluid.gregtech.binnie.juiceapple": {
+      "source_key": "fluid.binnie.juiceapple",
+      "value": "Apple Juice"
+    },
+    "fluid.gregtech.binnie.juiceapricot": {
+      "source_key": "fluid.binnie.juiceapricot",
+      "value": "Apricot Juice"
+    },
+    "fluid.gregtech.binnie.juicebanana": {
+      "source_key": "fluid.binnie.juicebanana",
+      "value": "Banana Juice"
+    },
+    "fluid.gregtech.binnie.juicecarrot": {
+      "source_key": "fluid.binnie.juicecarrot",
+      "value": "Carrot Juice"
+    },
+    "fluid.gregtech.binnie.juicecherry": {
+      "source_key": "fluid.binnie.juicecherry",
+      "value": "Cherry Juice"
+    },
+    "fluid.gregtech.binnie.juicecranberry": {
+      "source_key": "fluid.binnie.juicecranberry",
+      "value": "Cranberry Juice"
+    },
+    "fluid.gregtech.binnie.juiceelderberry": {
+      "source_key": "fluid.binnie.juiceelderberry",
+      "value": "Elderberry Juice"
+    },
+    "fluid.gregtech.binnie.juicegrapefruit": {
+      "source_key": "fluid.binnie.juicegrapefruit",
+      "value": "Grapefruit Juice"
+    },
+    "fluid.gregtech.binnie.juicelemon": {
+      "source_key": "fluid.binnie.juicelemon",
+      "value": "Lemon Juice"
+    },
+    "fluid.gregtech.binnie.juicelime": {
+      "source_key": "fluid.binnie.juicelime",
+      "value": "Lime Juice"
+    },
+    "fluid.gregtech.binnie.juiceolive": {
+      "source_key": "fluid.binnie.juiceolive",
+      "value": "Olive Oil"
+    },
+    "fluid.gregtech.binnie.juiceorange": {
+      "source_key": "fluid.binnie.juiceorange",
+      "value": "Orange Juice"
+    },
+    "fluid.gregtech.binnie.juicepeach": {
+      "source_key": "fluid.binnie.juicepeach",
+      "value": "Peach Juice"
+    },
+    "fluid.gregtech.binnie.juicepear": {
+      "source_key": "fluid.binnie.juicepear",
+      "value": "Pear Juice"
+    },
+    "fluid.gregtech.binnie.juicepineapple": {
+      "source_key": "fluid.binnie.juicepineapple",
+      "value": "Ananas Juice"
+    },
+    "fluid.gregtech.binnie.juiceplum": {
+      "source_key": "fluid.binnie.juiceplum",
+      "value": "Plum Juice"
+    },
+    "fluid.gregtech.binnie.juiceredgrape": {
+      "source_key": "fluid.binnie.juiceredgrape",
+      "value": "Red Grape Juice"
+    },
+    "fluid.gregtech.binnie.juicetomato": {
+      "source_key": "fluid.binnie.juicetomato",
+      "value": "Tomato Juice"
+    },
+    "fluid.gregtech.binnie.juicewhitegrape": {
+      "source_key": "fluid.binnie.juicewhitegrape",
+      "value": "White Grape Juice"
+    },
+    "fluid.gregtech.binnie.mashcorn": {
+      "source_key": "fluid.binnie.mashcorn",
+      "value": "Corn Mash"
+    },
+    "fluid.gregtech.binnie.mashgrain": {
+      "source_key": "fluid.binnie.mashgrain",
+      "value": "Grain Mash"
+    },
+    "fluid.gregtech.binnie.mashrye": {
+      "source_key": "fluid.binnie.mashrye",
+      "value": "Rye Mash"
+    },
+    "fluid.gregtech.binnie.mashwheat": {
+      "source_key": "fluid.binnie.mashwheat",
+      "value": "Wheat Mash"
+    },
+    "fluid.gregtech.binnie.rumdark": {
+      "source_key": "fluid.binnie.rumdark",
+      "value": "Pirate Brew"
+    },
+    "fluid.gregtech.binnie.rumwhite": {
+      "source_key": "fluid.binnie.rumwhite",
+      "value": "Rum"
+    },
+    "fluid.gregtech.binnie.vodka": {
+      "source_key": "fluid.binnie.vodka",
+      "value": "Vodka"
+    },
+    "fluid.gregtech.binnie.whiskeywheat": {
+      "source_key": "fluid.binnie.whiskeywheat",
+      "value": "Scotch"
+    },
+    "fluid.gregtech.binnie.winepineapple": {
+      "source_key": "fluid.binnie.winepineapple",
+      "value": "Ananas Cider"
+    },
+    "fluid.gregtech.binnie.winered": {
+      "source_key": "fluid.binnie.winered",
+      "value": "Red Wine"
+    },
+    "fluid.gregtech.binnie.winewhite": {
+      "source_key": "fluid.binnie.winewhite",
+      "value": "White Wine"
+    },
+    "fluid.gregtech.bioethanol": {
+      "source_key": "fluid.bioethanol",
+      "value": "Ethanol"
+    },
+    "fluid.gregtech.biomass": {
+      "source_key": "fluid.biomass",
+      "value": "Biomass"
+    },
+    "fluid.gregtech.blackberryjuice": {
+      "source_key": "fluid.blackberryjuice",
+      "value": "Blackberry Juice"
+    },
+    "fluid.gregtech.blackberrysmoothie": {
+      "source_key": "fluid.blackberrysmoothie",
+      "value": "Blackberry Smoothie"
+    },
+    "fluid.gregtech.blaze": {
+      "source_key": "fluid.blaze",
+      "value": "Blazing Goo"
+    },
+    "fluid.gregtech.blueberryjuice": {
+      "source_key": "fluid.blueberryjuice",
+      "value": "Blueberry Juice"
+    },
+    "fluid.gregtech.blueberrysmoothie": {
+      "source_key": "fluid.blueberrysmoothie",
+      "value": "Blueberry Smoothie"
+    },
+    "fluid.gregtech.bluevitriol": {
+      "source_key": "fluid.bluevitriol",
+      "value": "Blue Vitriol"
+    },
+    "fluid.gregtech.bromine": {
+      "source_key": "fluid.bromine",
+      "value": "Bromine"
+    },
+    "fluid.gregtech.butane": {
+      "source_key": "fluid.butane",
+      "value": "Butane"
+    },
+    "fluid.gregtech.cactuswater": {
+      "source_key": "fluid.cactuswater",
+      "value": "Cactuswater"
+    },
+    "fluid.gregtech.canevinegar": {
+      "source_key": "fluid.canevinegar",
+      "value": "Cane Vinegar"
+    },
+    "fluid.gregtech.carbondioxide": {
+      "source_key": "fluid.carbondioxide",
+      "value": "Carbon Dioxide"
+    },
+    "fluid.gregtech.carbonmonoxide": {
+      "source_key": "fluid.carbonmonoxide",
+      "value": "Carbon Monoxide"
+    },
+    "fluid.gregtech.carbontrioxide": {
+      "source_key": "fluid.carbontrioxide",
+      "value": "Carbon Trioxide"
+    },
+    "fluid.gregtech.chargedmatter": {
+      "source_key": "fluid.chargedmatter",
+      "value": "Charged Matter"
+    },
+    "fluid.gregtech.cherrysmoothie": {
+      "source_key": "fluid.cherrysmoothie",
+      "value": "Cherry Smoothie"
+    },
+    "fluid.gregtech.chillysauce": {
+      "source_key": "fluid.chillysauce",
+      "value": "Chili Sauce"
+    },
+    "fluid.gregtech.chlorine": {
+      "source_key": "fluid.chlorine",
+      "value": "Chlorine"
+    },
+    "fluid.gregtech.chloroauricacid": {
+      "source_key": "fluid.chloroauricacid",
+      "value": "Chloroauric Acid"
+    },
+    "fluid.gregtech.chloroplatinicacid": {
+      "source_key": "fluid.chloroplatinicacid",
+      "value": "Chloroplatinic Acid"
+    },
+    "fluid.gregtech.chocolatecream": {
+      "source_key": "fluid.chocolatecream",
+      "value": "Chocolate Cream"
+    },
+    "fluid.gregtech.chocolatemilk": {
+      "source_key": "fluid.chocolatemilk",
+      "value": "Chocolate Milk"
+    },
+    "fluid.gregtech.coconutcream": {
+      "source_key": "fluid.coconutcream",
+      "value": "Coconut Cream"
+    },
+    "fluid.gregtech.coconutmilk": {
+      "source_key": "fluid.coconutmilk",
+      "value": "Coconut Milk"
+    },
+    "fluid.gregtech.coconutsmoothie": {
+      "source_key": "fluid.coconutsmoothie",
+      "value": "Coconut Smoothie"
+    },
+    "fluid.gregtech.concrete": {
+      "source_key": "fluid.concrete",
+      "value": "Wet Concrete"
+    },
+    "fluid.gregtech.cranberrysmoothie": {
+      "source_key": "fluid.cranberrysmoothie",
+      "value": "Cranberry Smoothie"
+    },
+    "fluid.gregtech.creosote": {
+      "source_key": "fluid.creosote",
+      "value": "Creosote"
+    },
+    "fluid.gregtech.cryotheum": {
+      "source_key": "fluid.cryotheum",
+      "value": "Gelid Cryotheum"
+    },
+    "fluid.gregtech.currantjuice": {
+      "source_key": "fluid.currantjuice",
+      "value": "Currant Juice"
+    },
+    "fluid.gregtech.currantsmoothie": {
+      "source_key": "fluid.currantsmoothie",
+      "value": "Currant Smoothie"
+    },
+    "fluid.gregtech.cyanvitriol": {
+      "source_key": "fluid.cyanvitriol",
+      "value": "Cyan Vitriol"
+    },
+    "fluid.gregtech.darkbeer": {
+      "source_key": "fluid.darkbeer",
+      "value": "Dark Beer"
+    },
+    "fluid.gregtech.deuterium": {
+      "source_key": "fluid.deuterium",
+      "value": "Deuterium"
+    },
+    "fluid.gregtech.diesel": {
+      "source_key": "fluid.diesel",
+      "value": "Diesel"
+    },
+    "fluid.gregtech.disulfuricacid": {
+      "source_key": "fluid.disulfuricacid",
+      "value": "Disulfuric Acid"
+    },
+    "fluid.gregtech.dragonbreath": {
+      "source_key": "fluid.dragonbreath",
+      "value": "Dragon's Breath"
+    },
+    "fluid.gregtech.elderberrysmoothie": {
+      "source_key": "fluid.elderberrysmoothie",
+      "value": "Elderberry Smoothie"
+    },
+    "fluid.gregtech.enderair": {
+      "source_key": "fluid.enderair",
+      "value": "Ender Air"
+    },
+    "fluid.gregtech.error": {
+      "source_key": "fluid.error",
+      "value": "Liquid Error"
+    },
+    "fluid.gregtech.ethanol": {
+      "source_key": "fluid.ethanol",
+      "value": "Ethanol"
+    },
+    "fluid.gregtech.ethylene": {
+      "source_key": "fluid.ethylene",
+      "value": "Ethylene"
+    },
+    "fluid.gregtech.fieryblood": {
+      "source_key": "fluid.fieryblood",
+      "value": "Fiery Blood"
+    },
+    "fluid.gregtech.fierytears": {
+      "source_key": "fluid.fierytears",
+      "value": "Fiery Tears"
+    },
+    "fluid.gregtech.figjuice": {
+      "source_key": "fluid.figjuice",
+      "value": "Fig Juice"
+    },
+    "fluid.gregtech.figsmoothie": {
+      "source_key": "fluid.figsmoothie",
+      "value": "Fig Smoothie"
+    },
+    "fluid.gregtech.fishoil": {
+      "source_key": "fluid.fishoil",
+      "value": "Fish Oil"
+    },
+    "fluid.gregtech.fluorine": {
+      "source_key": "fluid.fluorine",
+      "value": "Fluorine"
+    },
+    "fluid.gregtech.for.honey": {
+      "source_key": "fluid.for.honey",
+      "value": "Honey (Forestry, most other Mods)"
+    },
+    "fluid.gregtech.fruitsmoothie": {
+      "source_key": "fluid.fruitsmoothie",
+      "value": "Froot Smoothie"
+    },
+    "fluid.gregtech.fuel": {
+      "source_key": "fluid.fuel",
+      "value": "Fuel Oil"
+    },
+    "fluid.gregtech.gas_natural_gas": {
+      "source_key": "fluid.gas_natural_gas",
+      "value": "Natural Gas"
+    },
+    "fluid.gregtech.glass": {
+      "source_key": "fluid.glass",
+      "value": "Molten Glass"
+    },
+    "fluid.gregtech.glenmckenner": {
+      "source_key": "fluid.glenmckenner",
+      "value": "Glen McKenner"
+    },
+    "fluid.gregtech.glue": {
+      "source_key": "fluid.glue",
+      "value": "Glue"
+    },
+    "fluid.gregtech.glycerol": {
+      "source_key": "fluid.glycerol",
+      "value": "Glycerol"
+    },
+    "fluid.gregtech.glyceryl": {
+      "source_key": "fluid.glyceryl",
+      "value": "Glyceryl"
+    },
+    "fluid.gregtech.goldencarrotjuice": {
+      "source_key": "fluid.goldencarrotjuice",
+      "value": "Golden Carrot Juice"
+    },
+    "fluid.gregtech.gooseberryjuice": {
+      "source_key": "fluid.gooseberryjuice",
+      "value": "Gooseberry Juice"
+    },
+    "fluid.gregtech.gooseberrysmoothie": {
+      "source_key": "fluid.gooseberrysmoothie",
+      "value": "Gooseberry Smoothie"
+    },
+    "fluid.gregtech.grapefruitsmoothie": {
+      "source_key": "fluid.grapefruitsmoothie",
+      "value": "Grapefruit Smoothie"
+    },
+    "fluid.gregtech.grapejuice": {
+      "source_key": "fluid.grapejuice",
+      "value": "Green Grape Juice"
+    },
+    "fluid.gregtech.grapesmoothie": {
+      "source_key": "fluid.grapesmoothie",
+      "value": "Grape Smoothie"
+    },
+    "fluid.gregtech.grayvitriol": {
+      "source_key": "fluid.grayvitriol",
+      "value": "Gray Vitriol"
+    },
+    "fluid.gregtech.grc.applecider0": {
+      "source_key": "fluid.grc.applecider0",
+      "value": "Apple Juice"
+    },
+    "fluid.gregtech.grc.grapewine0": {
+      "source_key": "fluid.grc.grapewine0",
+      "value": "Purple Grape Juice"
+    },
+    "fluid.gregtech.grc.honey": {
+      "source_key": "fluid.grc.honey",
+      "value": "Honey (GrowthCraft)"
+    },
+    "fluid.gregtech.grcmilk.cream": {
+      "source_key": "fluid.grcmilk.cream",
+      "value": "Heavy Cream"
+    },
+    "fluid.gregtech.grcmilk.milk": {
+      "source_key": "fluid.grcmilk.milk",
+      "value": "Milk"
+    },
+    "fluid.gregtech.greenvitriol": {
+      "source_key": "fluid.greenvitriol",
+      "value": "Green Vitriol"
+    },
+    "fluid.gregtech.heavywater": {
+      "source_key": "fluid.heavywater",
+      "value": "Heavy Water"
+    },
+    "fluid.gregtech.helium": {
+      "source_key": "fluid.helium",
+      "value": "Helium"
+    },
+    "fluid.gregtech.helium3": {
+      "source_key": "fluid.helium3",
+      "value": "Helium-3"
+    },
+    "fluid.gregtech.heliumneon": {
+      "source_key": "fluid.heliumneon",
+      "value": "Helium-Neon"
+    },
+    "fluid.gregtech.heliumplasma": {
+      "source_key": "fluid.heliumplasma",
+      "value": "Helium Plasma"
+    },
+    "fluid.gregtech.hellderberryjuice": {
+      "source_key": "fluid.hellderberryjuice",
+      "value": "Hellderberry Juice"
+    },
+    "fluid.gregtech.hempoil": {
+      "source_key": "fluid.hempoil",
+      "value": "Hemp Oil"
+    },
+    "fluid.gregtech.hexafluorosilicicacid": {
+      "source_key": "fluid.hexafluorosilicicacid",
+      "value": "Hexafluorosilicic Acid"
+    },
+    "fluid.gregtech.holywater": {
+      "source_key": "fluid.holywater",
+      "value": "Holy Water"
+    },
+    "fluid.gregtech.honey": {
+      "source_key": "fluid.honey",
+      "value": "Honey (Biomes o'Plenty, Erebus)"
+    },
+    "fluid.gregtech.honeydew": {
+      "source_key": "fluid.honeydew",
+      "value": "Honeydew"
+    },
+    "fluid.gregtech.hopsmash": {
+      "source_key": "fluid.hopsmash",
+      "value": "Hops Mash"
+    },
+    "fluid.gregtech.hotcarbondioxide": {
+      "source_key": "fluid.hotcarbondioxide",
+      "value": "Hot Carbon Dioxide"
+    },
+    "fluid.gregtech.hotfryingoil": {
+      "source_key": "fluid.hotfryingoil",
+      "value": "Hot Frying Oil"
+    },
+    "fluid.gregtech.hotheavywater": {
+      "source_key": "fluid.hotheavywater",
+      "value": "Hot Heavy Water"
+    },
+    "fluid.gregtech.hothelium": {
+      "source_key": "fluid.hothelium",
+      "value": "Hot Helium"
+    },
+    "fluid.gregtech.hotmoltenlicl": {
+      "source_key": "fluid.hotmoltenlicl",
+      "value": "Hot Molten Lithium Chloride"
+    },
+    "fluid.gregtech.hotmoltensodium": {
+      "source_key": "fluid.hotmoltensodium",
+      "value": "Hot Molten Sodium"
+    },
+    "fluid.gregtech.hotmoltentin": {
+      "source_key": "fluid.hotmoltentin",
+      "value": "Hot Molten Tin"
+    },
+    "fluid.gregtech.hotsemiheavywater": {
+      "source_key": "fluid.hotsemiheavywater",
+      "value": "Hot Semiheavy Water"
+    },
+    "fluid.gregtech.hottritiatedwater": {
+      "source_key": "fluid.hottritiatedwater",
+      "value": "Hot Tritiated Water"
+    },
+    "fluid.gregtech.hydrochloricacid": {
+      "source_key": "fluid.hydrochloricacid",
+      "value": "Hydrochloric Acid"
+    },
+    "fluid.gregtech.hydrogen": {
+      "source_key": "fluid.hydrogen",
+      "value": "Hydrogen"
+    },
+    "fluid.gregtech.hydrogenfluoride": {
+      "source_key": "fluid.hydrogenfluoride",
+      "value": "Hydrogen Fluoride"
+    },
+    "fluid.gregtech.hydrogenperoxide": {
+      "source_key": "fluid.hydrogenperoxide",
+      "value": "Hydrogen Peroxide"
+    },
+    "fluid.gregtech.hydrosulfuricacid": {
+      "source_key": "fluid.hydrosulfuricacid",
+      "value": "Hydrosulfuric Acid"
+    },
+    "fluid.gregtech.ic2biomass": {
+      "source_key": "fluid.ic2biomass",
+      "value": "Biomass"
+    },
+    "fluid.gregtech.ic2coolant": {
+      "source_key": "fluid.ic2coolant",
+      "value": "Industrial Coolant"
+    },
+    "fluid.gregtech.ic2distilledwater": {
+      "source_key": "fluid.ic2distilledwater",
+      "value": "Distilled Water"
+    },
+    "fluid.gregtech.ic2hotcoolant": {
+      "source_key": "fluid.ic2hotcoolant",
+      "value": "Industrial Heatant"
+    },
+    "fluid.gregtech.ic2pahoehoelava": {
+      "source_key": "fluid.ic2pahoehoelava",
+      "value": "Pahoehoe Lava"
+    },
+    "fluid.gregtech.ice": {
+      "source_key": "fluid.ice",
+      "value": "Near Frozen Water"
+    },
+    "fluid.gregtech.icetea": {
+      "source_key": "fluid.icetea",
+      "value": "Ice Tea"
+    },
+    "fluid.gregtech.indigo": {
+      "source_key": "fluid.indigo",
+      "value": "Indigo Dye"
+    },
+    "fluid.gregtech.juice": {
+      "source_key": "fluid.juice",
+      "value": "Juice"
+    },
+    "fluid.gregtech.kerosene": {
+      "source_key": "fluid.kerosene",
+      "value": "Kerosene"
+    },
+    "fluid.gregtech.kerosine": {
+      "source_key": "fluid.kerosine",
+      "value": "Kerosine"
+    },
+    "fluid.gregtech.ketchup": {
+      "source_key": "fluid.ketchup",
+      "value": "Tomato Ketchup"
+    },
+    "fluid.gregtech.kiwijuice": {
+      "source_key": "fluid.kiwijuice",
+      "value": "Kiwi Juice"
+    },
+    "fluid.gregtech.kiwismoothie": {
+      "source_key": "fluid.kiwismoothie",
+      "value": "Kiwi Smoothie"
+    },
+    "fluid.gregtech.krypton": {
+      "source_key": "fluid.krypton",
+      "value": "Krypton"
+    },
+    "fluid.gregtech.latex": {
+      "source_key": "fluid.latex",
+      "value": "Latex"
+    },
+    "fluid.gregtech.lemonsmoothie": {
+      "source_key": "fluid.lemonsmoothie",
+      "value": "Lemon Smoothie"
+    },
+    "fluid.gregtech.limesmoothie": {
+      "source_key": "fluid.limesmoothie",
+      "value": "Lime Smoothie"
+    },
+    "fluid.gregtech.limoncello": {
+      "source_key": "fluid.limoncello",
+      "value": "Limoncello"
+    },
+    "fluid.gregtech.linoil": {
+      "source_key": "fluid.linoil",
+      "value": "Lin Oil"
+    },
+    "fluid.gregtech.liquid_extra_heavy_oil": {
+      "source_key": "fluid.liquid_extra_heavy_oil",
+      "value": "Very Heavy Oil"
+    },
+    "fluid.gregtech.liquid_heavy_oil": {
+      "source_key": "fluid.liquid_heavy_oil",
+      "value": "Heavy Oil"
+    },
+    "fluid.gregtech.liquid_light_oil": {
+      "source_key": "fluid.liquid_light_oil",
+      "value": "Light Oil"
+    },
+    "fluid.gregtech.liquid_medium_oil": {
+      "source_key": "fluid.liquid_medium_oil",
+      "value": "Raw Oil"
+    },
+    "fluid.gregtech.liquidoxygen": {
+      "source_key": "fluid.liquidoxygen",
+      "value": "Liquid Oxygen"
+    },
+    "fluid.gregtech.lubricant": {
+      "source_key": "fluid.lubricant",
+      "value": "Lubricant"
+    },
+    "fluid.gregtech.mangojuice": {
+      "source_key": "fluid.mangojuice",
+      "value": "Mango Juice"
+    },
+    "fluid.gregtech.mangosmoothie": {
+      "source_key": "fluid.mangosmoothie",
+      "value": "Mango Smoothie"
+    },
+    "fluid.gregtech.maplesap": {
+      "source_key": "fluid.maplesap",
+      "value": "Maple Sap"
+    },
+    "fluid.gregtech.maplesyrup": {
+      "source_key": "fluid.maplesyrup",
+      "value": "Maple Syrup"
+    },
+    "fluid.gregtech.martianvitriol": {
+      "source_key": "fluid.martianvitriol",
+      "value": "Martian Vitriol"
+    },
+    "fluid.gregtech.mayo": {
+      "source_key": "fluid.mayo",
+      "value": "Mayonnaise"
+    },
+    "fluid.gregtech.mcguffium": {
+      "source_key": "fluid.mcguffium",
+      "value": "Mc Guffium 239"
+    },
+    "fluid.gregtech.mead": {
+      "source_key": "fluid.mead",
+      "value": "Mead"
+    },
+    "fluid.gregtech.medicine.heal": {
+      "source_key": "fluid.medicine.heal",
+      "value": "Medicine"
+    },
+    "fluid.gregtech.medicine.laxative": {
+      "source_key": "fluid.medicine.laxative",
+      "value": "Laxative"
+    },
+    "fluid.gregtech.melonjuice": {
+      "source_key": "fluid.melonjuice",
+      "value": "Melon Juice"
+    },
+    "fluid.gregtech.melonsmoothie": {
+      "source_key": "fluid.melonsmoothie",
+      "value": "Melon Smoothie"
+    },
+    "fluid.gregtech.mercury": {
+      "source_key": "fluid.mercury",
+      "value": "Mercury"
+    },
+    "fluid.gregtech.methane": {
+      "source_key": "fluid.methane",
+      "value": "Methane"
+    },
+    "fluid.gregtech.milk": {
+      "source_key": "fluid.milk",
+      "value": "Milk"
+    },
+    "fluid.gregtech.mineralsoda": {
+      "source_key": "fluid.mineralsoda",
+      "value": "Mineral Soda"
+    },
+    "fluid.gregtech.molten hsla": {
+      "source_key": "fluid.molten hsla",
+      "value": "Molten HSLA Steel"
+    },
+    "fluid.gregtech.molten.adamantium": {
+      "source_key": "fluid.molten.adamantium",
+      "value": "Molten Adamantium"
+    },
+    "fluid.gregtech.molten.alumina": {
+      "source_key": "fluid.molten.alumina",
+      "value": "Molten Alumina"
+    },
+    "fluid.gregtech.molten.aluminium": {
+      "source_key": "fluid.molten.aluminium",
+      "value": "Molten Aluminium"
+    },
+    "fluid.gregtech.molten.aluminiumbrass": {
+      "source_key": "fluid.molten.aluminiumbrass",
+      "value": "Molten Aluminium Brass"
+    },
+    "fluid.gregtech.molten.alumite": {
+      "source_key": "fluid.molten.alumite",
+      "value": "Molten Alumite"
+    },
+    "fluid.gregtech.molten.ancientdebris": {
+      "source_key": "fluid.molten.ancientdebris",
+      "value": "Molten Ancient Debris"
+    },
+    "fluid.gregtech.molten.angmallen": {
+      "source_key": "fluid.molten.angmallen",
+      "value": "Molten Angmallen"
+    },
+    "fluid.gregtech.molten.annealedcopper": {
+      "source_key": "fluid.molten.annealedcopper",
+      "value": "Molten Annealed Copper"
+    },
+    "fluid.gregtech.molten.antimony": {
+      "source_key": "fluid.molten.antimony",
+      "value": "Molten Antimony"
+    },
+    "fluid.gregtech.molten.ardite": {
+      "source_key": "fluid.molten.ardite",
+      "value": "Molten Ardite"
+    },
+    "fluid.gregtech.molten.arsenic": {
+      "source_key": "fluid.molten.arsenic",
+      "value": "Molten Arsenic"
+    },
+    "fluid.gregtech.molten.arsenicbronze": {
+      "source_key": "fluid.molten.arsenicbronze",
+      "value": "Molten Arsenic Bronze"
+    },
+    "fluid.gregtech.molten.arseniccopper": {
+      "source_key": "fluid.molten.arseniccopper",
+      "value": "Molten Arsenic Copper"
+    },
+    "fluid.gregtech.molten.astatine": {
+      "source_key": "fluid.molten.astatine",
+      "value": "Molten Astatine"
+    },
+    "fluid.gregtech.molten.astralsilver": {
+      "source_key": "fluid.molten.astralsilver",
+      "value": "Molten Astral Silver"
+    },
+    "fluid.gregtech.molten.barium": {
+      "source_key": "fluid.molten.barium",
+      "value": "Molten Barium"
+    },
+    "fluid.gregtech.molten.batteryalloy": {
+      "source_key": "fluid.molten.batteryalloy",
+      "value": "Molten Battery Alloy"
+    },
+    "fluid.gregtech.molten.beryllium": {
+      "source_key": "fluid.molten.beryllium",
+      "value": "Molten Beryllium"
+    },
+    "fluid.gregtech.molten.beryllium7": {
+      "source_key": "fluid.molten.beryllium7",
+      "value": "Molten Beryllium-7"
+    },
+    "fluid.gregtech.molten.beryllium8": {
+      "source_key": "fluid.molten.beryllium8",
+      "value": "Molten Beryllium-8"
+    },
+    "fluid.gregtech.molten.bismuth": {
+      "source_key": "fluid.molten.bismuth",
+      "value": "Molten Bismuth"
+    },
+    "fluid.gregtech.molten.bismuthbronze": {
+      "source_key": "fluid.molten.bismuthbronze",
+      "value": "Molten Bismuth Bronze"
+    },
+    "fluid.gregtech.molten.blackbronze": {
+      "source_key": "fluid.molten.blackbronze",
+      "value": "Molten Black Bronze"
+    },
+    "fluid.gregtech.molten.blacksteel": {
+      "source_key": "fluid.molten.blacksteel",
+      "value": "Molten Black Steel"
+    },
+    "fluid.gregtech.molten.bluealloy": {
+      "source_key": "fluid.molten.bluealloy",
+      "value": "Molten Blue Alloy"
+    },
+    "fluid.gregtech.molten.bluesteel": {
+      "source_key": "fluid.molten.bluesteel",
+      "value": "Molten Blue Steel"
+    },
+    "fluid.gregtech.molten.boron": {
+      "source_key": "fluid.molten.boron",
+      "value": "Molten Boron"
+    },
+    "fluid.gregtech.molten.boron11": {
+      "source_key": "fluid.molten.boron11",
+      "value": "Molten Boron-11"
+    },
+    "fluid.gregtech.molten.brass": {
+      "source_key": "fluid.molten.brass",
+      "value": "Molten Brass"
+    },
+    "fluid.gregtech.molten.bronze": {
+      "source_key": "fluid.molten.bronze",
+      "value": "Molten Bronze"
+    },
+    "fluid.gregtech.molten.caesium": {
+      "source_key": "fluid.molten.caesium",
+      "value": "Molten Caesium"
+    },
+    "fluid.gregtech.molten.calcite": {
+      "source_key": "fluid.molten.calcite",
+      "value": "Molten Calcite"
+    },
+    "fluid.gregtech.molten.calcium": {
+      "source_key": "fluid.molten.calcium",
+      "value": "Molten Calcium"
+    },
+    "fluid.gregtech.molten.calciumchloride": {
+      "source_key": "fluid.molten.calciumchloride",
+      "value": "Molten Calcium Chloride"
+    },
+    "fluid.gregtech.molten.carbon": {
+      "source_key": "fluid.molten.carbon",
+      "value": "Molten Carbon"
+    },
+    "fluid.gregtech.molten.carbon13": {
+      "source_key": "fluid.molten.carbon13",
+      "value": "Molten Carbon-13"
+    },
+    "fluid.gregtech.molten.celenegil": {
+      "source_key": "fluid.molten.celenegil",
+      "value": "Molten Celenegil"
+    },
+    "fluid.gregtech.molten.cheese": {
+      "source_key": "fluid.molten.cheese",
+      "value": "Molten Cheese"
+    },
+    "fluid.gregtech.molten.chocolate": {
+      "source_key": "fluid.molten.chocolate",
+      "value": "Molten Chocolate"
+    },
+    "fluid.gregtech.molten.chromium": {
+      "source_key": "fluid.molten.chromium",
+      "value": "Molten Chromium"
+    },
+    "fluid.gregtech.molten.cobalt": {
+      "source_key": "fluid.molten.cobalt",
+      "value": "Molten Cobalt"
+    },
+    "fluid.gregtech.molten.cobaltbrass": {
+      "source_key": "fluid.molten.cobaltbrass",
+      "value": "Molten Cobalt Brass"
+    },
+    "fluid.gregtech.molten.constantan": {
+      "source_key": "fluid.molten.constantan",
+      "value": "Molten Constantan"
+    },
+    "fluid.gregtech.molten.copper": {
+      "source_key": "fluid.molten.copper",
+      "value": "Molten Copper"
+    },
+    "fluid.gregtech.molten.damascussteel": {
+      "source_key": "fluid.molten.damascussteel",
+      "value": "Molten Damascus Steel"
+    },
+    "fluid.gregtech.molten.darkthaumium": {
+      "source_key": "fluid.molten.darkthaumium",
+      "value": "Molten Dark Thaumium"
+    },
+    "fluid.gregtech.molten.desh": {
+      "source_key": "fluid.molten.desh",
+      "value": "Molten Desh"
+    },
+    "fluid.gregtech.molten.draconium": {
+      "source_key": "fluid.molten.draconium",
+      "value": "Molten Draconium"
+    },
+    "fluid.gregtech.molten.draconiumawakened": {
+      "source_key": "fluid.molten.draconiumawakened",
+      "value": "Molten Awakened Draconium"
+    },
+    "fluid.gregtech.molten.efrine": {
+      "source_key": "fluid.molten.efrine",
+      "value": "Molten Efrine"
+    },
+    "fluid.gregtech.molten.electrotinealloy": {
+      "source_key": "fluid.molten.electrotinealloy",
+      "value": "Molten Electrotine Alloy"
+    },
+    "fluid.gregtech.molten.electrum": {
+      "source_key": "fluid.molten.electrum",
+      "value": "Molten Electrum"
+    },
+    "fluid.gregtech.molten.enderium": {
+      "source_key": "fluid.molten.enderium",
+      "value": "Molten Enderium"
+    },
+    "fluid.gregtech.molten.enderiumbase": {
+      "source_key": "fluid.molten.enderiumbase",
+      "value": "Molten Enderium Base"
+    },
+    "fluid.gregtech.molten.enderpearl": {
+      "source_key": "fluid.molten.enderpearl",
+      "value": "Molten Enderpearls"
+    },
+    "fluid.gregtech.molten.fierysteel": {
+      "source_key": "fluid.molten.fierysteel",
+      "value": "Molten Fiery Steel"
+    },
+    "fluid.gregtech.molten.flamascussteel": {
+      "source_key": "fluid.molten.flamascussteel",
+      "value": "Molten Flamascus Steel"
+    },
+    "fluid.gregtech.molten.fluorite": {
+      "source_key": "fluid.molten.fluorite",
+      "value": "Molten Fluorite"
+    },
+    "fluid.gregtech.molten.francium": {
+      "source_key": "fluid.molten.francium",
+      "value": "Molten Francium"
+    },
+    "fluid.gregtech.molten.germanium": {
+      "source_key": "fluid.molten.germanium",
+      "value": "Molten Germanium"
+    },
+    "fluid.gregtech.molten.gold": {
+      "source_key": "fluid.molten.gold",
+      "value": "Molten Gold"
+    },
+    "fluid.gregtech.molten.gold198": {
+      "source_key": "fluid.molten.gold198",
+      "value": "Molten Gold-198"
+    },
+    "fluid.gregtech.molten.goldinductive": {
+      "source_key": "fluid.molten.goldinductive",
+      "value": "Molten Inductive Alloy"
+    },
+    "fluid.gregtech.molten.hematite": {
+      "source_key": "fluid.molten.hematite",
+      "value": "Molten Hematite"
+    },
+    "fluid.gregtech.molten.hepatizon": {
+      "source_key": "fluid.molten.hepatizon",
+      "value": "Molten Hepatizon"
+    },
+    "fluid.gregtech.molten.hsse": {
+      "source_key": "fluid.molten.hsse",
+      "value": "Molten HSS-E"
+    },
+    "fluid.gregtech.molten.hssg": {
+      "source_key": "fluid.molten.hssg",
+      "value": "Molten HSS-G"
+    },
+    "fluid.gregtech.molten.hsss": {
+      "source_key": "fluid.molten.hsss",
+      "value": "Molten HSS-S"
+    },
+    "fluid.gregtech.molten.invar": {
+      "source_key": "fluid.molten.invar",
+      "value": "Molten Invar"
+    },
+    "fluid.gregtech.molten.iridium": {
+      "source_key": "fluid.molten.iridium",
+      "value": "Molten Iridium"
+    },
+    "fluid.gregtech.molten.iron": {
+      "source_key": "fluid.molten.iron",
+      "value": "Molten Iron"
+    },
+    "fluid.gregtech.molten.ironwood": {
+      "source_key": "fluid.molten.ironwood",
+      "value": "Molten Ironwood"
+    },
+    "fluid.gregtech.molten.kanthal": {
+      "source_key": "fluid.molten.kanthal",
+      "value": "Molten Kanthal"
+    },
+    "fluid.gregtech.molten.knightmetal": {
+      "source_key": "fluid.molten.knightmetal",
+      "value": "Molten Knightmetal"
+    },
+    "fluid.gregtech.molten.kreknorite": {
+      "source_key": "fluid.molten.kreknorite",
+      "value": "Molten Kreknorite"
+    },
+    "fluid.gregtech.molten.latex": {
+      "source_key": "fluid.molten.latex",
+      "value": "Latex"
+    },
+    "fluid.gregtech.molten.lead": {
+      "source_key": "fluid.molten.lead",
+      "value": "Molten Lead"
+    },
+    "fluid.gregtech.molten.lithium": {
+      "source_key": "fluid.molten.lithium",
+      "value": "Molten Lithium"
+    },
+    "fluid.gregtech.molten.lithium6": {
+      "source_key": "fluid.molten.lithium6",
+      "value": "Molten Lithium-6"
+    },
+    "fluid.gregtech.molten.lumium": {
+      "source_key": "fluid.molten.lumium",
+      "value": "Molten Lumium"
+    },
+    "fluid.gregtech.molten.magnalium": {
+      "source_key": "fluid.molten.magnalium",
+      "value": "Molten Magnalium"
+    },
+    "fluid.gregtech.molten.magnesium": {
+      "source_key": "fluid.molten.magnesium",
+      "value": "Molten Magnesium"
+    },
+    "fluid.gregtech.molten.magnesiumcarbonate": {
+      "source_key": "fluid.molten.magnesiumcarbonate",
+      "value": "Molten Magnesium Carbonate"
+    },
+    "fluid.gregtech.molten.magnesiumchloride": {
+      "source_key": "fluid.molten.magnesiumchloride",
+      "value": "Molten Magnesium Chloride"
+    },
+    "fluid.gregtech.molten.manganese": {
+      "source_key": "fluid.molten.manganese",
+      "value": "Molten Manganese"
+    },
+    "fluid.gregtech.molten.manganesechloride": {
+      "source_key": "fluid.molten.manganesechloride",
+      "value": "Molten Manganese Chloride"
+    },
+    "fluid.gregtech.molten.manyullyn": {
+      "source_key": "fluid.molten.manyullyn",
+      "value": "Molten Manyullyn"
+    },
+    "fluid.gregtech.molten.meteoflameblacksteel": {
+      "source_key": "fluid.molten.meteoflameblacksteel",
+      "value": "Molten Meteoflame Black Steel"
+    },
+    "fluid.gregtech.molten.meteoflamebluesteel": {
+      "source_key": "fluid.molten.meteoflamebluesteel",
+      "value": "Molten Meteoflame Blue Steel"
+    },
+    "fluid.gregtech.molten.meteoflameredsteel": {
+      "source_key": "fluid.molten.meteoflameredsteel",
+      "value": "Molten Meteoflame Red Steel"
+    },
+    "fluid.gregtech.molten.meteoflamesteel": {
+      "source_key": "fluid.molten.meteoflamesteel",
+      "value": "Molten Meteoflame Steel"
+    },
+    "fluid.gregtech.molten.meteoricblacksteel": {
+      "source_key": "fluid.molten.meteoricblacksteel",
+      "value": "Molten Meteoric Black Steel"
+    },
+    "fluid.gregtech.molten.meteoricbluesteel": {
+      "source_key": "fluid.molten.meteoricbluesteel",
+      "value": "Molten Meteoric Blue Steel"
+    },
+    "fluid.gregtech.molten.meteoriciron": {
+      "source_key": "fluid.molten.meteoriciron",
+      "value": "Molten Meteoric Iron"
+    },
+    "fluid.gregtech.molten.meteoricredsteel": {
+      "source_key": "fluid.molten.meteoricredsteel",
+      "value": "Molten Meteoric Red Steel"
+    },
+    "fluid.gregtech.molten.meteoricsteel": {
+      "source_key": "fluid.molten.meteoricsteel",
+      "value": "Molten Meteoric Steel"
+    },
+    "fluid.gregtech.molten.meteorite": {
+      "source_key": "fluid.molten.meteorite",
+      "value": "Molten Meteorite"
+    },
+    "fluid.gregtech.molten.midasium": {
+      "source_key": "fluid.molten.midasium",
+      "value": "Molten Midasium"
+    },
+    "fluid.gregtech.molten.mithril": {
+      "source_key": "fluid.molten.mithril",
+      "value": "Molten Mithril"
+    },
+    "fluid.gregtech.molten.molybdenum": {
+      "source_key": "fluid.molten.molybdenum",
+      "value": "Molten Molybdenum"
+    },
+    "fluid.gregtech.molten.neodymium": {
+      "source_key": "fluid.molten.neodymium",
+      "value": "Molten Neodymium"
+    },
+    "fluid.gregtech.molten.netherite": {
+      "source_key": "fluid.molten.netherite",
+      "value": "Molten Netherite"
+    },
+    "fluid.gregtech.molten.nichrome": {
+      "source_key": "fluid.molten.nichrome",
+      "value": "Molten Nichrome"
+    },
+    "fluid.gregtech.molten.nickel": {
+      "source_key": "fluid.molten.nickel",
+      "value": "Molten Nickel"
+    },
+    "fluid.gregtech.molten.nikolinealloy": {
+      "source_key": "fluid.molten.nikolinealloy",
+      "value": "Molten Nikoline Alloy"
+    },
+    "fluid.gregtech.molten.octine": {
+      "source_key": "fluid.molten.octine",
+      "value": "Molten Octine"
+    },
+    "fluid.gregtech.molten.orichalcum": {
+      "source_key": "fluid.molten.orichalcum",
+      "value": "Molten Orichalcum"
+    },
+    "fluid.gregtech.molten.osmiridium": {
+      "source_key": "fluid.molten.osmiridium",
+      "value": "Molten Osmiridium"
+    },
+    "fluid.gregtech.molten.osmiumelemental": {
+      "source_key": "fluid.molten.osmiumelemental",
+      "value": "Molten Osmium"
+    },
+    "fluid.gregtech.molten.pigiron": {
+      "source_key": "fluid.molten.pigiron",
+      "value": "Molten Pig Iron"
+    },
+    "fluid.gregtech.molten.platinum": {
+      "source_key": "fluid.molten.platinum",
+      "value": "Molten Platinum"
+    },
+    "fluid.gregtech.molten.potassium": {
+      "source_key": "fluid.molten.potassium",
+      "value": "Molten Potassium"
+    },
+    "fluid.gregtech.molten.purplealloy": {
+      "source_key": "fluid.molten.purplealloy",
+      "value": "Molten Purple Alloy"
+    },
+    "fluid.gregtech.molten.radium": {
+      "source_key": "fluid.molten.radium",
+      "value": "Molten Radium"
+    },
+    "fluid.gregtech.molten.redalloy": {
+      "source_key": "fluid.molten.redalloy",
+      "value": "Molten Red Alloy"
+    },
+    "fluid.gregtech.molten.redsteel": {
+      "source_key": "fluid.molten.redsteel",
+      "value": "Molten Red Steel"
+    },
+    "fluid.gregtech.molten.redstone": {
+      "source_key": "fluid.molten.redstone",
+      "value": "Molten Redstone"
+    },
+    "fluid.gregtech.molten.redstonealloy": {
+      "source_key": "fluid.molten.redstonealloy",
+      "value": "Molten Redstone Alloy"
+    },
+    "fluid.gregtech.molten.rosegold": {
+      "source_key": "fluid.molten.rosegold",
+      "value": "Molten Rose Gold"
+    },
+    "fluid.gregtech.molten.rubber": {
+      "source_key": "fluid.molten.rubber",
+      "value": "Molten Rubber"
+    },
+    "fluid.gregtech.molten.rubidium": {
+      "source_key": "fluid.molten.rubidium",
+      "value": "Molten Rubidium"
+    },
+    "fluid.gregtech.molten.signalum": {
+      "source_key": "fluid.molten.signalum",
+      "value": "Molten Signalum"
+    },
+    "fluid.gregtech.molten.silicon": {
+      "source_key": "fluid.molten.silicon",
+      "value": "Molten Silicon"
+    },
+    "fluid.gregtech.molten.silver": {
+      "source_key": "fluid.molten.silver",
+      "value": "Molten Silver"
+    },
+    "fluid.gregtech.molten.sodium": {
+      "source_key": "fluid.molten.sodium",
+      "value": "Molten Sodium"
+    },
+    "fluid.gregtech.molten.sodiumcarbonate": {
+      "source_key": "fluid.molten.sodiumcarbonate",
+      "value": "Molten Sodium Carbonate"
+    },
+    "fluid.gregtech.molten.solderingalloy": {
+      "source_key": "fluid.molten.solderingalloy",
+      "value": "Molten Soldering Alloy"
+    },
+    "fluid.gregtech.molten.spectreiron": {
+      "source_key": "fluid.molten.spectreiron",
+      "value": "Molten Spectre Iron"
+    },
+    "fluid.gregtech.molten.stainlesssteel": {
+      "source_key": "fluid.molten.stainlesssteel",
+      "value": "Molten Stainless Steel"
+    },
+    "fluid.gregtech.molten.steel": {
+      "source_key": "fluid.molten.steel",
+      "value": "Molten Steel"
+    },
+    "fluid.gregtech.molten.sterlingsilver": {
+      "source_key": "fluid.molten.sterlingsilver",
+      "value": "Molten Sterling Silver"
+    },
+    "fluid.gregtech.molten.strontium": {
+      "source_key": "fluid.molten.strontium",
+      "value": "Molten Strontium"
+    },
+    "fluid.gregtech.molten.sugar": {
+      "source_key": "fluid.molten.sugar",
+      "value": "Molten Sugar"
+    },
+    "fluid.gregtech.molten.sulfur": {
+      "source_key": "fluid.molten.sulfur",
+      "value": "Molten Sulfur"
+    },
+    "fluid.gregtech.molten.syrmorite": {
+      "source_key": "fluid.molten.syrmorite",
+      "value": "Molten Syrmorite"
+    },
+    "fluid.gregtech.molten.tellurium": {
+      "source_key": "fluid.molten.tellurium",
+      "value": "Molten Tellurium"
+    },
+    "fluid.gregtech.molten.thaumium": {
+      "source_key": "fluid.molten.thaumium",
+      "value": "Molten Thaumium"
+    },
+    "fluid.gregtech.molten.tin": {
+      "source_key": "fluid.molten.tin",
+      "value": "Molten Tin"
+    },
+    "fluid.gregtech.molten.tinalloy": {
+      "source_key": "fluid.molten.tinalloy",
+      "value": "Molten Tin Alloy"
+    },
+    "fluid.gregtech.molten.titanium": {
+      "source_key": "fluid.molten.titanium",
+      "value": "Molten Titanium"
+    },
+    "fluid.gregtech.molten.titaniumgold": {
+      "source_key": "fluid.molten.titaniumgold",
+      "value": "Molten Titanium-Gold"
+    },
+    "fluid.gregtech.molten.tungsten": {
+      "source_key": "fluid.molten.tungsten",
+      "value": "Molten Tungsten"
+    },
+    "fluid.gregtech.molten.tungstensteel": {
+      "source_key": "fluid.molten.tungstensteel",
+      "value": "Molten Tungstensteel"
+    },
+    "fluid.gregtech.molten.ultimet": {
+      "source_key": "fluid.molten.ultimet",
+      "value": "Molten Ultimet"
+    },
+    "fluid.gregtech.molten.uranium": {
+      "source_key": "fluid.molten.uranium",
+      "value": "Molten Uranium"
+    },
+    "fluid.gregtech.molten.uranium235": {
+      "source_key": "fluid.molten.uranium235",
+      "value": "Molten Uranium-235"
+    },
+    "fluid.gregtech.molten.uranium235tetrafluoride": {
+      "source_key": "fluid.molten.uranium235tetrafluoride",
+      "value": "Molten Uranium-235 Tetrafluoride"
+    },
+    "fluid.gregtech.molten.uranium238tetrafluoride": {
+      "source_key": "fluid.molten.uranium238tetrafluoride",
+      "value": "Molten Uranium-238 Tetrafluoride"
+    },
+    "fluid.gregtech.molten.uraniumtetrafluoride": {
+      "source_key": "fluid.molten.uraniumtetrafluoride",
+      "value": "Molten Uranium Tetrafluoride"
+    },
+    "fluid.gregtech.molten.vanadium": {
+      "source_key": "fluid.molten.vanadium",
+      "value": "Molten Vanadium"
+    },
+    "fluid.gregtech.molten.vanadiumsteel": {
+      "source_key": "fluid.molten.vanadiumsteel",
+      "value": "Molten Vanadiumsteel"
+    },
+    "fluid.gregtech.molten.voidmetal": {
+      "source_key": "fluid.molten.voidmetal",
+      "value": "Molten Void Metal"
+    },
+    "fluid.gregtech.molten.wax": {
+      "source_key": "fluid.molten.wax",
+      "value": "Molten Wax"
+    },
+    "fluid.gregtech.molten.waxamnesic": {
+      "source_key": "fluid.molten.waxamnesic",
+      "value": "Molten Amnesic Wax"
+    },
+    "fluid.gregtech.molten.waxbee": {
+      "source_key": "fluid.molten.waxbee",
+      "value": "Molten Bees Wax"
+    },
+    "fluid.gregtech.molten.waxmagic": {
+      "source_key": "fluid.molten.waxmagic",
+      "value": "Molten Magic Wax"
+    },
+    "fluid.gregtech.molten.waxparaffin": {
+      "source_key": "fluid.molten.waxparaffin",
+      "value": "Molten Paraffin Wax"
+    },
+    "fluid.gregtech.molten.waxplant": {
+      "source_key": "fluid.molten.waxplant",
+      "value": "Molten Plant Wax"
+    },
+    "fluid.gregtech.molten.waxrefractory": {
+      "source_key": "fluid.molten.waxrefractory",
+      "value": "Molten Refractory Wax"
+    },
+    "fluid.gregtech.molten.waxsoulful": {
+      "source_key": "fluid.molten.waxsoulful",
+      "value": "Molten Soulful Wax"
+    },
+    "fluid.gregtech.molten.workersalloy": {
+      "source_key": "fluid.molten.workersalloy",
+      "value": "Molten Workers Alloy"
+    },
+    "fluid.gregtech.molten.wroughtiron": {
+      "source_key": "fluid.molten.wroughtiron",
+      "value": "Molten Wrought Iron"
+    },
+    "fluid.gregtech.molten.zinc": {
+      "source_key": "fluid.molten.zinc",
+      "value": "Molten Zinc"
+    },
+    "fluid.gregtech.mushroomsoup": {
+      "source_key": "fluid.mushroomsoup",
+      "value": "Mushroom Stew"
+    },
+    "fluid.gregtech.neon": {
+      "source_key": "fluid.neon",
+      "value": "Neon"
+    },
+    "fluid.gregtech.netherair": {
+      "source_key": "fluid.netherair",
+      "value": "Nether Air"
+    },
+    "fluid.gregtech.neutralmatter": {
+      "source_key": "fluid.neutralmatter",
+      "value": "Neutral Matter"
+    },
+    "fluid.gregtech.nitricacid": {
+      "source_key": "fluid.nitricacid",
+      "value": "Nitric Acid"
+    },
+    "fluid.gregtech.nitrofuel": {
+      "source_key": "fluid.nitrofuel",
+      "value": "Nitro Fuel"
+    },
+    "fluid.gregtech.nitrogen": {
+      "source_key": "fluid.nitrogen",
+      "value": "Nitrogen"
+    },
+    "fluid.gregtech.nitrogendioxide": {
+      "source_key": "fluid.nitrogendioxide",
+      "value": "Nitrogen Dioxide"
+    },
+    "fluid.gregtech.nitrogenmonoxide": {
+      "source_key": "fluid.nitrogenmonoxide",
+      "value": "Nitrogen Monoxide"
+    },
+    "fluid.gregtech.nitrogenplasma": {
+      "source_key": "fluid.nitrogenplasma",
+      "value": "Nitrogen Plasma"
+    },
+    "fluid.gregtech.nutella": {
+      "source_key": "fluid.nutella",
+      "value": "Nutella"
+    },
+    "fluid.gregtech.nutoil": {
+      "source_key": "fluid.nutoil",
+      "value": "Nut Oil"
+    },
+    "fluid.gregtech.oil": {
+      "source_key": "fluid.oil",
+      "value": "Oil"
+    },
+    "fluid.gregtech.orangesmoothie": {
+      "source_key": "fluid.orangesmoothie",
+      "value": "Orange Smoothie"
+    },
+    "fluid.gregtech.oxygen": {
+      "source_key": "fluid.oxygen",
+      "value": "Oxygen"
+    },
+    "fluid.gregtech.papayajuice": {
+      "source_key": "fluid.papayajuice",
+      "value": "Papaya Juice"
+    },
+    "fluid.gregtech.papayasmoothie": {
+      "source_key": "fluid.papayasmoothie",
+      "value": "Papaya Smoothie"
+    },
+    "fluid.gregtech.peachsmoothie": {
+      "source_key": "fluid.peachsmoothie",
+      "value": "Peach Smoothie"
+    },
+    "fluid.gregtech.peanutbutter": {
+      "source_key": "fluid.peanutbutter",
+      "value": "Peanut Butter"
+    },
+    "fluid.gregtech.pearsmoothie": {
+      "source_key": "fluid.pearsmoothie",
+      "value": "Pear Smoothie"
+    },
+    "fluid.gregtech.persimmonjuice": {
+      "source_key": "fluid.persimmonjuice",
+      "value": "Persimmon Juice"
+    },
+    "fluid.gregtech.persimmonsmoothie": {
+      "source_key": "fluid.persimmonsmoothie",
+      "value": "Persimmon Smoothie"
+    },
+    "fluid.gregtech.petrol": {
+      "source_key": "fluid.petrol",
+      "value": "Petrol"
+    },
+    "fluid.gregtech.petrotheum": {
+      "source_key": "fluid.petrotheum",
+      "value": "Tectonic Petrotheum"
+    },
+    "fluid.gregtech.pina.colada": {
+      "source_key": "fluid.pina.colada",
+      "value": "Piña Colada"
+    },
+    "fluid.gregtech.pineapplesmoothie": {
+      "source_key": "fluid.pineapplesmoothie",
+      "value": "Ananas Smoothie"
+    },
+    "fluid.gregtech.pinkvitriol": {
+      "source_key": "fluid.pinkvitriol",
+      "value": "Pink Vitriol"
+    },
+    "fluid.gregtech.plastic": {
+      "source_key": "fluid.plastic",
+      "value": "Molten Plastic"
+    },
+    "fluid.gregtech.plumsmoothie": {
+      "source_key": "fluid.plumsmoothie",
+      "value": "Plum Smoothie"
+    },
+    "fluid.gregtech.pomegranatejuice": {
+      "source_key": "fluid.pomegranatejuice",
+      "value": "Pomegranate Juice"
+    },
+    "fluid.gregtech.pomegranatesmoothie": {
+      "source_key": "fluid.pomegranatesmoothie",
+      "value": "Pomegranate Smoothie"
+    },
+    "fluid.gregtech.potatojuice": {
+      "source_key": "fluid.potatojuice",
+      "value": "Potato Juice"
+    },
+    "fluid.gregtech.potion.alcopops": {
+      "source_key": "fluid.potion.alcopops",
+      "value": "Alcopops"
+    },
+    "fluid.gregtech.potion.ambrosia": {
+      "source_key": "fluid.potion.ambrosia",
+      "value": "Ambrosia"
+    },
+    "fluid.gregtech.potion.awkward": {
+      "source_key": "fluid.potion.awkward",
+      "value": "Awkward Brew"
+    },
+    "fluid.gregtech.potion.cafeaulait": {
+      "source_key": "fluid.potion.cafeaulait",
+      "value": "Cafe au lait"
+    },
+    "fluid.gregtech.potion.cavejohnsonsgrenadejuice": {
+      "source_key": "fluid.potion.cavejohnsonsgrenadejuice",
+      "value": "Cave Johnson's Grenade Juice"
+    },
+    "fluid.gregtech.potion.coffee": {
+      "source_key": "fluid.potion.coffee",
+      "value": "Coffee"
+    },
+    "fluid.gregtech.potion.darkcafeaulait": {
+      "source_key": "fluid.potion.darkcafeaulait",
+      "value": "Dark Cafe au lait"
+    },
+    "fluid.gregtech.potion.darkchocolatemilk": {
+      "source_key": "fluid.potion.darkchocolatemilk",
+      "value": "Bitter Chocolate Milk"
+    },
+    "fluid.gregtech.potion.darkcoffee": {
+      "source_key": "fluid.potion.darkcoffee",
+      "value": "Dark Coffee"
+    },
+    "fluid.gregtech.potion.diablosauce": {
+      "source_key": "fluid.potion.diablosauce",
+      "value": "Diablo Sauce"
+    },
+    "fluid.gregtech.potion.diablosauce.strong": {
+      "source_key": "fluid.potion.diablosauce.strong",
+      "value": "There is no Cow Sauce"
+    },
+    "fluid.gregtech.potion.diabolosauce": {
+      "source_key": "fluid.potion.diabolosauce",
+      "value": "Diabolo Sauce"
+    },
+    "fluid.gregtech.potion.dragonblood": {
+      "source_key": "fluid.potion.dragonblood",
+      "value": "Dragon Blood"
+    },
+    "fluid.gregtech.potion.dressing": {
+      "source_key": "fluid.potion.dressing",
+      "value": "Dressing"
+    },
+    "fluid.gregtech.potion.goldenapplejuice": {
+      "source_key": "fluid.potion.goldenapplejuice",
+      "value": "Golden Apple Juice"
+    },
+    "fluid.gregtech.potion.goldencider": {
+      "source_key": "fluid.potion.goldencider",
+      "value": "Golden Cider"
+    },
+    "fluid.gregtech.potion.hotsauce": {
+      "source_key": "fluid.potion.hotsauce",
+      "value": "Hot Sauce"
+    },
+    "fluid.gregtech.potion.idunsapplejuice": {
+      "source_key": "fluid.potion.idunsapplejuice",
+      "value": "Idun's Apple Juice"
+    },
+    "fluid.gregtech.potion.laitaucafe": {
+      "source_key": "fluid.potion.laitaucafe",
+      "value": "Lait au cafe"
+    },
+    "fluid.gregtech.potion.lemonade": {
+      "source_key": "fluid.potion.lemonade",
+      "value": "Lemonade"
+    },
+    "fluid.gregtech.potion.leninade": {
+      "source_key": "fluid.potion.leninade",
+      "value": "Leninade"
+    },
+    "fluid.gregtech.potion.mineralwater": {
+      "source_key": "fluid.potion.mineralwater",
+      "value": "Mineral Water"
+    },
+    "fluid.gregtech.potion.mundane": {
+      "source_key": "fluid.potion.mundane",
+      "value": "Mundane Brew"
+    },
+    "fluid.gregtech.potion.notchesbrew": {
+      "source_key": "fluid.potion.notchesbrew",
+      "value": "Notches Brew"
+    },
+    "fluid.gregtech.potion.sake": {
+      "source_key": "fluid.potion.sake",
+      "value": "Sake"
+    },
+    "fluid.gregtech.potion.tainted": {
+      "source_key": "fluid.potion.tainted",
+      "value": "Tainted Brew"
+    },
+    "fluid.gregtech.potion.thick": {
+      "source_key": "fluid.potion.thick",
+      "value": "Thick Brew"
+    },
+    "fluid.gregtech.propane": {
+      "source_key": "fluid.propane",
+      "value": "Propane"
+    },
+    "fluid.gregtech.propylene": {
+      "source_key": "fluid.propylene",
+      "value": "Propylene"
+    },
+    "fluid.gregtech.pumpkinjuice": {
+      "source_key": "fluid.pumpkinjuice",
+      "value": "Pumpkin Juice"
+    },
+    "fluid.gregtech.purpledrink": {
+      "source_key": "fluid.purpledrink",
+      "value": "Purple Drink"
+    },
+    "fluid.gregtech.purplegrapesmoothie": {
+      "source_key": "fluid.purplegrapesmoothie",
+      "value": "Grape Smoothie"
+    },
+    "fluid.gregtech.pyrotheum": {
+      "source_key": "fluid.pyrotheum",
+      "value": "Blazing Pyrotheum"
+    },
+    "fluid.gregtech.radon": {
+      "source_key": "fluid.radon",
+      "value": "Radon"
+    },
+    "fluid.gregtech.rainbowsap": {
+      "source_key": "fluid.rainbowsap",
+      "value": "Rainbow Sap"
+    },
+    "fluid.gregtech.raspberryjuice": {
+      "source_key": "fluid.raspberryjuice",
+      "value": "Raspberry Juice"
+    },
+    "fluid.gregtech.raspberrysmoothie": {
+      "source_key": "fluid.raspberrysmoothie",
+      "value": "Raspberry Smoothie"
+    },
+    "fluid.gregtech.redgrapesmoothie": {
+      "source_key": "fluid.redgrapesmoothie",
+      "value": "Grape Smoothie"
+    },
+    "fluid.gregtech.redvitriol": {
+      "source_key": "fluid.redvitriol",
+      "value": "Red Vitriol"
+    },
+    "fluid.gregtech.reedwater": {
+      "source_key": "fluid.reedwater",
+      "value": "Reedwater"
+    },
+    "fluid.gregtech.ricardosanchez": {
+      "source_key": "fluid.ricardosanchez",
+      "value": "Ricardo Sanchez"
+    },
+    "fluid.gregtech.ricevinegar": {
+      "source_key": "fluid.ricevinegar",
+      "value": "Rice Vinegar"
+    },
+    "fluid.gregtech.ricewater": {
+      "source_key": "fluid.ricewater",
+      "value": "Ricewater"
+    },
+    "fluid.gregtech.riverwater": {
+      "source_key": "fluid.riverwater",
+      "value": "River Water"
+    },
+    "fluid.gregtech.rottendrink": {
+      "source_key": "fluid.rottendrink",
+      "value": "Rotten Drink"
+    },
+    "fluid.gregtech.royaljelly": {
+      "source_key": "fluid.royaljelly",
+      "value": "Royal Jelly"
+    },
+    "fluid.gregtech.saltedwater": {
+      "source_key": "fluid.saltedwater",
+      "value": "Salted Water"
+    },
+    "fluid.gregtech.saltwater": {
+      "source_key": "fluid.saltwater",
+      "value": "Saltwater"
+    },
+    "fluid.gregtech.seawater": {
+      "source_key": "fluid.seawater",
+      "value": "Sea Water"
+    },
+    "fluid.gregtech.seedoil": {
+      "source_key": "fluid.seedoil",
+      "value": "Seed Oil"
+    },
+    "fluid.gregtech.semiheavywater": {
+      "source_key": "fluid.semiheavywater",
+      "value": "Semiheavy Water"
+    },
+    "fluid.gregtech.short.mead": {
+      "source_key": "fluid.short.mead",
+      "value": "Short Mead"
+    },
+    "fluid.gregtech.slime": {
+      "source_key": "fluid.slime",
+      "value": "Slime"
+    },
+    "fluid.gregtech.sluicejuice": {
+      "source_key": "fluid.sluicejuice",
+      "value": "Sluice Juice"
+    },
+    "fluid.gregtech.soda": {
+      "source_key": "fluid.soda",
+      "value": "Soda"
+    },
+    "fluid.gregtech.soulsandoil": {
+      "source_key": "fluid.soulsandoil",
+      "value": "Soulsand Oil"
+    },
+    "fluid.gregtech.soymilk": {
+      "source_key": "fluid.soymilk",
+      "value": "Soy Milk"
+    },
+    "fluid.gregtech.spectral_dew": {
+      "source_key": "fluid.spectral_dew",
+      "value": "Spectral Dew"
+    },
+    "fluid.gregtech.spoiledmilk": {
+      "source_key": "fluid.spoiledmilk",
+      "value": "Milk"
+    },
+    "fluid.gregtech.squidink": {
+      "source_key": "fluid.squidink",
+      "value": "Squid Ink"
+    },
+    "fluid.gregtech.stannicchloride": {
+      "source_key": "fluid.stannicchloride",
+      "value": "Stannic Chloride"
+    },
+    "fluid.gregtech.starfruitjuice": {
+      "source_key": "fluid.starfruitjuice",
+      "value": "Starfruit Juice"
+    },
+    "fluid.gregtech.starfruitsmoothie": {
+      "source_key": "fluid.starfruitsmoothie",
+      "value": "Starfruit Smoothie"
+    },
+    "fluid.gregtech.steam": {
+      "source_key": "fluid.steam",
+      "value": "Steam"
+    },
+    "fluid.gregtech.strawberryjuice": {
+      "source_key": "fluid.strawberryjuice",
+      "value": "Strawberry Juice"
+    },
+    "fluid.gregtech.strawberrysmoothie": {
+      "source_key": "fluid.strawberrysmoothie",
+      "value": "Strawberry Smoothie"
+    },
+    "fluid.gregtech.sulfurdioxide": {
+      "source_key": "fluid.sulfurdioxide",
+      "value": "Sulfur Dioxide"
+    },
+    "fluid.gregtech.sulfuricacid": {
+      "source_key": "fluid.sulfuricacid",
+      "value": "Sulfuric Acid"
+    },
+    "fluid.gregtech.sulfurtrioxide": {
+      "source_key": "fluid.sulfurtrioxide",
+      "value": "Sulfur Trioxide"
+    },
+    "fluid.gregtech.sunfloweroil": {
+      "source_key": "fluid.sunfloweroil",
+      "value": "Sunflower Oil"
+    },
+    "fluid.gregtech.sweettea": {
+      "source_key": "fluid.sweettea",
+      "value": "Sweet Tea"
+    },
+    "fluid.gregtech.tea": {
+      "source_key": "fluid.tea",
+      "value": "Tea"
+    },
+    "fluid.gregtech.thoriumsalt": {
+      "source_key": "fluid.thoriumsalt",
+      "value": "Molten Thorium Salt"
+    },
+    "fluid.gregtech.titaniumtetrachloride": {
+      "source_key": "fluid.titaniumtetrachloride",
+      "value": "Titanium Tetrachloride"
+    },
+    "fluid.gregtech.tritiatedwater": {
+      "source_key": "fluid.tritiatedwater",
+      "value": "Tritiated Water"
+    },
+    "fluid.gregtech.tritium": {
+      "source_key": "fluid.tritium",
+      "value": "Tritium"
+    },
+    "fluid.gregtech.uranium235hexafluoride": {
+      "source_key": "fluid.uranium235hexafluoride",
+      "value": "Uranium-235 Hexafluoride"
+    },
+    "fluid.gregtech.uranium238hexafluoride": {
+      "source_key": "fluid.uranium238hexafluoride",
+      "value": "Uranium-238 Hexafluoride"
+    },
+    "fluid.gregtech.uraniumhexafluoride": {
+      "source_key": "fluid.uraniumhexafluoride",
+      "value": "Uranium Hexafluoride"
+    },
+    "fluid.gregtech.uuamplifier": {
+      "source_key": "fluid.uuamplifier",
+      "value": "UU-Amplifier"
+    },
+    "fluid.gregtech.vinegar": {
+      "source_key": "fluid.vinegar",
+      "value": "Grape Vinegar"
+    },
+    "fluid.gregtech.vitriolofclay": {
+      "source_key": "fluid.vitriolofclay",
+      "value": "Vitriol Of Clay"
+    },
+    "fluid.gregtech.waterdirty": {
+      "source_key": "fluid.waterdirty",
+      "value": "Dirty Water"
+    },
+    "fluid.gregtech.watergeothermal": {
+      "source_key": "fluid.watergeothermal",
+      "value": "Hot Spring Water"
+    },
+    "fluid.gregtech.whaleoil": {
+      "source_key": "fluid.whaleoil",
+      "value": "Whale Oil"
+    },
+    "fluid.gregtech.wheathopsmash": {
+      "source_key": "fluid.wheathopsmash",
+      "value": "Wheat-Hops Mash"
+    },
+    "fluid.gregtech.whitegrapesmoothie": {
+      "source_key": "fluid.whitegrapesmoothie",
+      "value": "Grape Smoothie"
+    },
+    "fluid.gregtech.whitevitriol": {
+      "source_key": "fluid.whitevitriol",
+      "value": "White Vitriol"
+    },
+    "fluid.gregtech.wine": {
+      "source_key": "fluid.wine",
+      "value": "Wine"
+    },
+    "fluid.gregtech.xenon": {
+      "source_key": "fluid.xenon",
+      "value": "Xenon"
+    },
+    "fluid_type.gregtech.aerotheum": {
+      "source_key": "fluid.aerotheum",
+      "value": "Zephyrean Aerotheum"
+    },
+    "fluid_type.gregtech.air": {
+      "source_key": "fluid.air",
+      "value": "Air"
+    },
+    "fluid_type.gregtech.ammonia": {
+      "source_key": "fluid.ammonia",
+      "value": "Ammonia"
+    },
+    "fluid_type.gregtech.applesmoothie": {
+      "source_key": "fluid.applesmoothie",
+      "value": "Apple Smoothie"
+    },
+    "fluid_type.gregtech.applevinegar": {
+      "source_key": "fluid.applevinegar",
+      "value": "Apple Cider Vinegar"
+    },
+    "fluid_type.gregtech.apricotsmoothie": {
+      "source_key": "fluid.apricotsmoothie",
+      "value": "Apricot Smoothie"
+    },
+    "fluid_type.gregtech.aquaregia": {
+      "source_key": "fluid.aquaregia",
+      "value": "Aqua Regia"
+    },
+    "fluid_type.gregtech.argon": {
+      "source_key": "fluid.argon",
+      "value": "Argon"
+    },
+    "fluid_type.gregtech.bananasmoothie": {
+      "source_key": "fluid.bananasmoothie",
+      "value": "Banana Smoothie"
+    },
+    "fluid_type.gregtech.bawls": {
+      "source_key": "fluid.bawls",
+      "value": "BAWLS"
+    },
+    "fluid_type.gregtech.bbqsauce": {
+      "source_key": "fluid.bbqsauce",
+      "value": "Barbecue Sauce"
+    },
+    "fluid_type.gregtech.beer": {
+      "source_key": "fluid.beer",
+      "value": "Beer"
+    },
+    "fluid_type.gregtech.beetjuice": {
+      "source_key": "fluid.beetjuice",
+      "value": "Beet Juice"
+    },
+    "fluid_type.gregtech.binnie.ciderapple": {
+      "source_key": "fluid.binnie.ciderapple",
+      "value": "Cider"
+    },
+    "fluid_type.gregtech.binnie.juiceapple": {
+      "source_key": "fluid.binnie.juiceapple",
+      "value": "Apple Juice"
+    },
+    "fluid_type.gregtech.binnie.juiceapricot": {
+      "source_key": "fluid.binnie.juiceapricot",
+      "value": "Apricot Juice"
+    },
+    "fluid_type.gregtech.binnie.juicebanana": {
+      "source_key": "fluid.binnie.juicebanana",
+      "value": "Banana Juice"
+    },
+    "fluid_type.gregtech.binnie.juicecarrot": {
+      "source_key": "fluid.binnie.juicecarrot",
+      "value": "Carrot Juice"
+    },
+    "fluid_type.gregtech.binnie.juicecherry": {
+      "source_key": "fluid.binnie.juicecherry",
+      "value": "Cherry Juice"
+    },
+    "fluid_type.gregtech.binnie.juicecranberry": {
+      "source_key": "fluid.binnie.juicecranberry",
+      "value": "Cranberry Juice"
+    },
+    "fluid_type.gregtech.binnie.juiceelderberry": {
+      "source_key": "fluid.binnie.juiceelderberry",
+      "value": "Elderberry Juice"
+    },
+    "fluid_type.gregtech.binnie.juicegrapefruit": {
+      "source_key": "fluid.binnie.juicegrapefruit",
+      "value": "Grapefruit Juice"
+    },
+    "fluid_type.gregtech.binnie.juicelemon": {
+      "source_key": "fluid.binnie.juicelemon",
+      "value": "Lemon Juice"
+    },
+    "fluid_type.gregtech.binnie.juicelime": {
+      "source_key": "fluid.binnie.juicelime",
+      "value": "Lime Juice"
+    },
+    "fluid_type.gregtech.binnie.juiceolive": {
+      "source_key": "fluid.binnie.juiceolive",
+      "value": "Olive Oil"
+    },
+    "fluid_type.gregtech.binnie.juiceorange": {
+      "source_key": "fluid.binnie.juiceorange",
+      "value": "Orange Juice"
+    },
+    "fluid_type.gregtech.binnie.juicepeach": {
+      "source_key": "fluid.binnie.juicepeach",
+      "value": "Peach Juice"
+    },
+    "fluid_type.gregtech.binnie.juicepear": {
+      "source_key": "fluid.binnie.juicepear",
+      "value": "Pear Juice"
+    },
+    "fluid_type.gregtech.binnie.juicepineapple": {
+      "source_key": "fluid.binnie.juicepineapple",
+      "value": "Ananas Juice"
+    },
+    "fluid_type.gregtech.binnie.juiceplum": {
+      "source_key": "fluid.binnie.juiceplum",
+      "value": "Plum Juice"
+    },
+    "fluid_type.gregtech.binnie.juiceredgrape": {
+      "source_key": "fluid.binnie.juiceredgrape",
+      "value": "Red Grape Juice"
+    },
+    "fluid_type.gregtech.binnie.juicetomato": {
+      "source_key": "fluid.binnie.juicetomato",
+      "value": "Tomato Juice"
+    },
+    "fluid_type.gregtech.binnie.juicewhitegrape": {
+      "source_key": "fluid.binnie.juicewhitegrape",
+      "value": "White Grape Juice"
+    },
+    "fluid_type.gregtech.binnie.mashcorn": {
+      "source_key": "fluid.binnie.mashcorn",
+      "value": "Corn Mash"
+    },
+    "fluid_type.gregtech.binnie.mashgrain": {
+      "source_key": "fluid.binnie.mashgrain",
+      "value": "Grain Mash"
+    },
+    "fluid_type.gregtech.binnie.mashrye": {
+      "source_key": "fluid.binnie.mashrye",
+      "value": "Rye Mash"
+    },
+    "fluid_type.gregtech.binnie.mashwheat": {
+      "source_key": "fluid.binnie.mashwheat",
+      "value": "Wheat Mash"
+    },
+    "fluid_type.gregtech.binnie.rumdark": {
+      "source_key": "fluid.binnie.rumdark",
+      "value": "Pirate Brew"
+    },
+    "fluid_type.gregtech.binnie.rumwhite": {
+      "source_key": "fluid.binnie.rumwhite",
+      "value": "Rum"
+    },
+    "fluid_type.gregtech.binnie.vodka": {
+      "source_key": "fluid.binnie.vodka",
+      "value": "Vodka"
+    },
+    "fluid_type.gregtech.binnie.whiskeywheat": {
+      "source_key": "fluid.binnie.whiskeywheat",
+      "value": "Scotch"
+    },
+    "fluid_type.gregtech.binnie.winepineapple": {
+      "source_key": "fluid.binnie.winepineapple",
+      "value": "Ananas Cider"
+    },
+    "fluid_type.gregtech.binnie.winered": {
+      "source_key": "fluid.binnie.winered",
+      "value": "Red Wine"
+    },
+    "fluid_type.gregtech.binnie.winewhite": {
+      "source_key": "fluid.binnie.winewhite",
+      "value": "White Wine"
+    },
+    "fluid_type.gregtech.binnie_ciderapple": {
+      "source_key": "fluid.binnie.ciderapple",
+      "value": "Cider"
+    },
+    "fluid_type.gregtech.binnie_juiceapple": {
+      "source_key": "fluid.binnie.juiceapple",
+      "value": "Apple Juice"
+    },
+    "fluid_type.gregtech.binnie_juiceapricot": {
+      "source_key": "fluid.binnie.juiceapricot",
+      "value": "Apricot Juice"
+    },
+    "fluid_type.gregtech.binnie_juicebanana": {
+      "source_key": "fluid.binnie.juicebanana",
+      "value": "Banana Juice"
+    },
+    "fluid_type.gregtech.binnie_juicecarrot": {
+      "source_key": "fluid.binnie.juicecarrot",
+      "value": "Carrot Juice"
+    },
+    "fluid_type.gregtech.binnie_juicecherry": {
+      "source_key": "fluid.binnie.juicecherry",
+      "value": "Cherry Juice"
+    },
+    "fluid_type.gregtech.binnie_juicecranberry": {
+      "source_key": "fluid.binnie.juicecranberry",
+      "value": "Cranberry Juice"
+    },
+    "fluid_type.gregtech.binnie_juiceelderberry": {
+      "source_key": "fluid.binnie.juiceelderberry",
+      "value": "Elderberry Juice"
+    },
+    "fluid_type.gregtech.binnie_juicegrapefruit": {
+      "source_key": "fluid.binnie.juicegrapefruit",
+      "value": "Grapefruit Juice"
+    },
+    "fluid_type.gregtech.binnie_juicelemon": {
+      "source_key": "fluid.binnie.juicelemon",
+      "value": "Lemon Juice"
+    },
+    "fluid_type.gregtech.binnie_juicelime": {
+      "source_key": "fluid.binnie.juicelime",
+      "value": "Lime Juice"
+    },
+    "fluid_type.gregtech.binnie_juiceolive": {
+      "source_key": "fluid.binnie.juiceolive",
+      "value": "Olive Oil"
+    },
+    "fluid_type.gregtech.binnie_juiceorange": {
+      "source_key": "fluid.binnie.juiceorange",
+      "value": "Orange Juice"
+    },
+    "fluid_type.gregtech.binnie_juicepeach": {
+      "source_key": "fluid.binnie.juicepeach",
+      "value": "Peach Juice"
+    },
+    "fluid_type.gregtech.binnie_juicepear": {
+      "source_key": "fluid.binnie.juicepear",
+      "value": "Pear Juice"
+    },
+    "fluid_type.gregtech.binnie_juicepineapple": {
+      "source_key": "fluid.binnie.juicepineapple",
+      "value": "Ananas Juice"
+    },
+    "fluid_type.gregtech.binnie_juiceplum": {
+      "source_key": "fluid.binnie.juiceplum",
+      "value": "Plum Juice"
+    },
+    "fluid_type.gregtech.binnie_juiceredgrape": {
+      "source_key": "fluid.binnie.juiceredgrape",
+      "value": "Red Grape Juice"
+    },
+    "fluid_type.gregtech.binnie_juicetomato": {
+      "source_key": "fluid.binnie.juicetomato",
+      "value": "Tomato Juice"
+    },
+    "fluid_type.gregtech.binnie_juicewhitegrape": {
+      "source_key": "fluid.binnie.juicewhitegrape",
+      "value": "White Grape Juice"
+    },
+    "fluid_type.gregtech.binnie_mashcorn": {
+      "source_key": "fluid.binnie.mashcorn",
+      "value": "Corn Mash"
+    },
+    "fluid_type.gregtech.binnie_mashgrain": {
+      "source_key": "fluid.binnie.mashgrain",
+      "value": "Grain Mash"
+    },
+    "fluid_type.gregtech.binnie_mashrye": {
+      "source_key": "fluid.binnie.mashrye",
+      "value": "Rye Mash"
+    },
+    "fluid_type.gregtech.binnie_mashwheat": {
+      "source_key": "fluid.binnie.mashwheat",
+      "value": "Wheat Mash"
+    },
+    "fluid_type.gregtech.binnie_rumdark": {
+      "source_key": "fluid.binnie.rumdark",
+      "value": "Pirate Brew"
+    },
+    "fluid_type.gregtech.binnie_rumwhite": {
+      "source_key": "fluid.binnie.rumwhite",
+      "value": "Rum"
+    },
+    "fluid_type.gregtech.binnie_vodka": {
+      "source_key": "fluid.binnie.vodka",
+      "value": "Vodka"
+    },
+    "fluid_type.gregtech.binnie_whiskeywheat": {
+      "source_key": "fluid.binnie.whiskeywheat",
+      "value": "Scotch"
+    },
+    "fluid_type.gregtech.binnie_winepineapple": {
+      "source_key": "fluid.binnie.winepineapple",
+      "value": "Ananas Cider"
+    },
+    "fluid_type.gregtech.binnie_winered": {
+      "source_key": "fluid.binnie.winered",
+      "value": "Red Wine"
+    },
+    "fluid_type.gregtech.binnie_winewhite": {
+      "source_key": "fluid.binnie.winewhite",
+      "value": "White Wine"
+    },
+    "fluid_type.gregtech.bioethanol": {
+      "source_key": "fluid.bioethanol",
+      "value": "Ethanol"
+    },
+    "fluid_type.gregtech.biomass": {
+      "source_key": "fluid.biomass",
+      "value": "Biomass"
+    },
+    "fluid_type.gregtech.blackberryjuice": {
+      "source_key": "fluid.blackberryjuice",
+      "value": "Blackberry Juice"
+    },
+    "fluid_type.gregtech.blackberrysmoothie": {
+      "source_key": "fluid.blackberrysmoothie",
+      "value": "Blackberry Smoothie"
+    },
+    "fluid_type.gregtech.blaze": {
+      "source_key": "fluid.blaze",
+      "value": "Blazing Goo"
+    },
+    "fluid_type.gregtech.blueberryjuice": {
+      "source_key": "fluid.blueberryjuice",
+      "value": "Blueberry Juice"
+    },
+    "fluid_type.gregtech.blueberrysmoothie": {
+      "source_key": "fluid.blueberrysmoothie",
+      "value": "Blueberry Smoothie"
+    },
+    "fluid_type.gregtech.bluevitriol": {
+      "source_key": "fluid.bluevitriol",
+      "value": "Blue Vitriol"
+    },
+    "fluid_type.gregtech.bromine": {
+      "source_key": "fluid.bromine",
+      "value": "Bromine"
+    },
+    "fluid_type.gregtech.butane": {
+      "source_key": "fluid.butane",
+      "value": "Butane"
+    },
+    "fluid_type.gregtech.cactuswater": {
+      "source_key": "fluid.cactuswater",
+      "value": "Cactuswater"
+    },
+    "fluid_type.gregtech.canevinegar": {
+      "source_key": "fluid.canevinegar",
+      "value": "Cane Vinegar"
+    },
+    "fluid_type.gregtech.carbondioxide": {
+      "source_key": "fluid.carbondioxide",
+      "value": "Carbon Dioxide"
+    },
+    "fluid_type.gregtech.carbonmonoxide": {
+      "source_key": "fluid.carbonmonoxide",
+      "value": "Carbon Monoxide"
+    },
+    "fluid_type.gregtech.carbontrioxide": {
+      "source_key": "fluid.carbontrioxide",
+      "value": "Carbon Trioxide"
+    },
+    "fluid_type.gregtech.chargedmatter": {
+      "source_key": "fluid.chargedmatter",
+      "value": "Charged Matter"
+    },
+    "fluid_type.gregtech.cherrysmoothie": {
+      "source_key": "fluid.cherrysmoothie",
+      "value": "Cherry Smoothie"
+    },
+    "fluid_type.gregtech.chillysauce": {
+      "source_key": "fluid.chillysauce",
+      "value": "Chili Sauce"
+    },
+    "fluid_type.gregtech.chlorine": {
+      "source_key": "fluid.chlorine",
+      "value": "Chlorine"
+    },
+    "fluid_type.gregtech.chloroauricacid": {
+      "source_key": "fluid.chloroauricacid",
+      "value": "Chloroauric Acid"
+    },
+    "fluid_type.gregtech.chloroplatinicacid": {
+      "source_key": "fluid.chloroplatinicacid",
+      "value": "Chloroplatinic Acid"
+    },
+    "fluid_type.gregtech.chocolatecream": {
+      "source_key": "fluid.chocolatecream",
+      "value": "Chocolate Cream"
+    },
+    "fluid_type.gregtech.chocolatemilk": {
+      "source_key": "fluid.chocolatemilk",
+      "value": "Chocolate Milk"
+    },
+    "fluid_type.gregtech.coconutcream": {
+      "source_key": "fluid.coconutcream",
+      "value": "Coconut Cream"
+    },
+    "fluid_type.gregtech.coconutmilk": {
+      "source_key": "fluid.coconutmilk",
+      "value": "Coconut Milk"
+    },
+    "fluid_type.gregtech.coconutsmoothie": {
+      "source_key": "fluid.coconutsmoothie",
+      "value": "Coconut Smoothie"
+    },
+    "fluid_type.gregtech.concrete": {
+      "source_key": "fluid.concrete",
+      "value": "Wet Concrete"
+    },
+    "fluid_type.gregtech.cranberrysmoothie": {
+      "source_key": "fluid.cranberrysmoothie",
+      "value": "Cranberry Smoothie"
+    },
+    "fluid_type.gregtech.creosote": {
+      "source_key": "fluid.creosote",
+      "value": "Creosote"
+    },
+    "fluid_type.gregtech.cryotheum": {
+      "source_key": "fluid.cryotheum",
+      "value": "Gelid Cryotheum"
+    },
+    "fluid_type.gregtech.currantjuice": {
+      "source_key": "fluid.currantjuice",
+      "value": "Currant Juice"
+    },
+    "fluid_type.gregtech.currantsmoothie": {
+      "source_key": "fluid.currantsmoothie",
+      "value": "Currant Smoothie"
+    },
+    "fluid_type.gregtech.cyanvitriol": {
+      "source_key": "fluid.cyanvitriol",
+      "value": "Cyan Vitriol"
+    },
+    "fluid_type.gregtech.darkbeer": {
+      "source_key": "fluid.darkbeer",
+      "value": "Dark Beer"
+    },
+    "fluid_type.gregtech.deuterium": {
+      "source_key": "fluid.deuterium",
+      "value": "Deuterium"
+    },
+    "fluid_type.gregtech.diesel": {
+      "source_key": "fluid.diesel",
+      "value": "Diesel"
+    },
+    "fluid_type.gregtech.disulfuricacid": {
+      "source_key": "fluid.disulfuricacid",
+      "value": "Disulfuric Acid"
+    },
+    "fluid_type.gregtech.dragonbreath": {
+      "source_key": "fluid.dragonbreath",
+      "value": "Dragon's Breath"
+    },
+    "fluid_type.gregtech.elderberrysmoothie": {
+      "source_key": "fluid.elderberrysmoothie",
+      "value": "Elderberry Smoothie"
+    },
+    "fluid_type.gregtech.enderair": {
+      "source_key": "fluid.enderair",
+      "value": "Ender Air"
+    },
+    "fluid_type.gregtech.error": {
+      "source_key": "fluid.error",
+      "value": "Liquid Error"
+    },
+    "fluid_type.gregtech.ethanol": {
+      "source_key": "fluid.ethanol",
+      "value": "Ethanol"
+    },
+    "fluid_type.gregtech.ethylene": {
+      "source_key": "fluid.ethylene",
+      "value": "Ethylene"
+    },
+    "fluid_type.gregtech.fieryblood": {
+      "source_key": "fluid.fieryblood",
+      "value": "Fiery Blood"
+    },
+    "fluid_type.gregtech.fierytears": {
+      "source_key": "fluid.fierytears",
+      "value": "Fiery Tears"
+    },
+    "fluid_type.gregtech.figjuice": {
+      "source_key": "fluid.figjuice",
+      "value": "Fig Juice"
+    },
+    "fluid_type.gregtech.figsmoothie": {
+      "source_key": "fluid.figsmoothie",
+      "value": "Fig Smoothie"
+    },
+    "fluid_type.gregtech.fishoil": {
+      "source_key": "fluid.fishoil",
+      "value": "Fish Oil"
+    },
+    "fluid_type.gregtech.fluorine": {
+      "source_key": "fluid.fluorine",
+      "value": "Fluorine"
+    },
+    "fluid_type.gregtech.for.honey": {
+      "source_key": "fluid.for.honey",
+      "value": "Honey (Forestry, most other Mods)"
+    },
+    "fluid_type.gregtech.for_honey": {
+      "source_key": "fluid.for.honey",
+      "value": "Honey (Forestry, most other Mods)"
+    },
+    "fluid_type.gregtech.fruitsmoothie": {
+      "source_key": "fluid.fruitsmoothie",
+      "value": "Froot Smoothie"
+    },
+    "fluid_type.gregtech.fuel": {
+      "source_key": "fluid.fuel",
+      "value": "Fuel Oil"
+    },
+    "fluid_type.gregtech.gas_natural_gas": {
+      "source_key": "fluid.gas_natural_gas",
+      "value": "Natural Gas"
+    },
+    "fluid_type.gregtech.glass": {
+      "source_key": "fluid.glass",
+      "value": "Molten Glass"
+    },
+    "fluid_type.gregtech.glenmckenner": {
+      "source_key": "fluid.glenmckenner",
+      "value": "Glen McKenner"
+    },
+    "fluid_type.gregtech.glue": {
+      "source_key": "fluid.glue",
+      "value": "Glue"
+    },
+    "fluid_type.gregtech.glycerol": {
+      "source_key": "fluid.glycerol",
+      "value": "Glycerol"
+    },
+    "fluid_type.gregtech.glyceryl": {
+      "source_key": "fluid.glyceryl",
+      "value": "Glyceryl"
+    },
+    "fluid_type.gregtech.goldencarrotjuice": {
+      "source_key": "fluid.goldencarrotjuice",
+      "value": "Golden Carrot Juice"
+    },
+    "fluid_type.gregtech.gooseberryjuice": {
+      "source_key": "fluid.gooseberryjuice",
+      "value": "Gooseberry Juice"
+    },
+    "fluid_type.gregtech.gooseberrysmoothie": {
+      "source_key": "fluid.gooseberrysmoothie",
+      "value": "Gooseberry Smoothie"
+    },
+    "fluid_type.gregtech.grapefruitsmoothie": {
+      "source_key": "fluid.grapefruitsmoothie",
+      "value": "Grapefruit Smoothie"
+    },
+    "fluid_type.gregtech.grapejuice": {
+      "source_key": "fluid.grapejuice",
+      "value": "Green Grape Juice"
+    },
+    "fluid_type.gregtech.grapesmoothie": {
+      "source_key": "fluid.grapesmoothie",
+      "value": "Grape Smoothie"
+    },
+    "fluid_type.gregtech.grayvitriol": {
+      "source_key": "fluid.grayvitriol",
+      "value": "Gray Vitriol"
+    },
+    "fluid_type.gregtech.grc.applecider0": {
+      "source_key": "fluid.grc.applecider0",
+      "value": "Apple Juice"
+    },
+    "fluid_type.gregtech.grc.grapewine0": {
+      "source_key": "fluid.grc.grapewine0",
+      "value": "Purple Grape Juice"
+    },
+    "fluid_type.gregtech.grc.honey": {
+      "source_key": "fluid.grc.honey",
+      "value": "Honey (GrowthCraft)"
+    },
+    "fluid_type.gregtech.grc_applecider0": {
+      "source_key": "fluid.grc.applecider0",
+      "value": "Apple Juice"
+    },
+    "fluid_type.gregtech.grc_grapewine0": {
+      "source_key": "fluid.grc.grapewine0",
+      "value": "Purple Grape Juice"
+    },
+    "fluid_type.gregtech.grc_honey": {
+      "source_key": "fluid.grc.honey",
+      "value": "Honey (GrowthCraft)"
+    },
     "fluid_type.gregtech.grccore_saltwater": {
       "source_key": "gt.multiitem.bottles.1",
       "value": "Sea Water"
+    },
+    "fluid_type.gregtech.grcmilk.cream": {
+      "source_key": "fluid.grcmilk.cream",
+      "value": "Heavy Cream"
+    },
+    "fluid_type.gregtech.grcmilk.milk": {
+      "source_key": "fluid.grcmilk.milk",
+      "value": "Milk"
+    },
+    "fluid_type.gregtech.grcmilk_cream": {
+      "source_key": "fluid.grcmilk.cream",
+      "value": "Heavy Cream"
+    },
+    "fluid_type.gregtech.grcmilk_milk": {
+      "source_key": "fluid.grcmilk.milk",
+      "value": "Milk"
+    },
+    "fluid_type.gregtech.greenvitriol": {
+      "source_key": "fluid.greenvitriol",
+      "value": "Green Vitriol"
+    },
+    "fluid_type.gregtech.heavywater": {
+      "source_key": "fluid.heavywater",
+      "value": "Heavy Water"
+    },
+    "fluid_type.gregtech.helium": {
+      "source_key": "fluid.helium",
+      "value": "Helium"
+    },
+    "fluid_type.gregtech.helium3": {
+      "source_key": "fluid.helium3",
+      "value": "Helium-3"
+    },
+    "fluid_type.gregtech.heliumneon": {
+      "source_key": "fluid.heliumneon",
+      "value": "Helium-Neon"
+    },
+    "fluid_type.gregtech.heliumplasma": {
+      "source_key": "fluid.heliumplasma",
+      "value": "Helium Plasma"
+    },
+    "fluid_type.gregtech.hellderberryjuice": {
+      "source_key": "fluid.hellderberryjuice",
+      "value": "Hellderberry Juice"
+    },
+    "fluid_type.gregtech.hempoil": {
+      "source_key": "fluid.hempoil",
+      "value": "Hemp Oil"
+    },
+    "fluid_type.gregtech.hexafluorosilicicacid": {
+      "source_key": "fluid.hexafluorosilicicacid",
+      "value": "Hexafluorosilicic Acid"
+    },
+    "fluid_type.gregtech.holywater": {
+      "source_key": "fluid.holywater",
+      "value": "Holy Water"
+    },
+    "fluid_type.gregtech.honey": {
+      "source_key": "fluid.honey",
+      "value": "Honey (Biomes o'Plenty, Erebus)"
+    },
+    "fluid_type.gregtech.honeydew": {
+      "source_key": "fluid.honeydew",
+      "value": "Honeydew"
+    },
+    "fluid_type.gregtech.hopsmash": {
+      "source_key": "fluid.hopsmash",
+      "value": "Hops Mash"
+    },
+    "fluid_type.gregtech.hotcarbondioxide": {
+      "source_key": "fluid.hotcarbondioxide",
+      "value": "Hot Carbon Dioxide"
+    },
+    "fluid_type.gregtech.hotfryingoil": {
+      "source_key": "fluid.hotfryingoil",
+      "value": "Hot Frying Oil"
+    },
+    "fluid_type.gregtech.hotheavywater": {
+      "source_key": "fluid.hotheavywater",
+      "value": "Hot Heavy Water"
+    },
+    "fluid_type.gregtech.hothelium": {
+      "source_key": "fluid.hothelium",
+      "value": "Hot Helium"
+    },
+    "fluid_type.gregtech.hotmoltenlicl": {
+      "source_key": "fluid.hotmoltenlicl",
+      "value": "Hot Molten Lithium Chloride"
+    },
+    "fluid_type.gregtech.hotmoltensodium": {
+      "source_key": "fluid.hotmoltensodium",
+      "value": "Hot Molten Sodium"
+    },
+    "fluid_type.gregtech.hotmoltentin": {
+      "source_key": "fluid.hotmoltentin",
+      "value": "Hot Molten Tin"
+    },
+    "fluid_type.gregtech.hotsemiheavywater": {
+      "source_key": "fluid.hotsemiheavywater",
+      "value": "Hot Semiheavy Water"
+    },
+    "fluid_type.gregtech.hottritiatedwater": {
+      "source_key": "fluid.hottritiatedwater",
+      "value": "Hot Tritiated Water"
+    },
+    "fluid_type.gregtech.hydrochloricacid": {
+      "source_key": "fluid.hydrochloricacid",
+      "value": "Hydrochloric Acid"
+    },
+    "fluid_type.gregtech.hydrogen": {
+      "source_key": "fluid.hydrogen",
+      "value": "Hydrogen"
+    },
+    "fluid_type.gregtech.hydrogenfluoride": {
+      "source_key": "fluid.hydrogenfluoride",
+      "value": "Hydrogen Fluoride"
+    },
+    "fluid_type.gregtech.hydrogenperoxide": {
+      "source_key": "fluid.hydrogenperoxide",
+      "value": "Hydrogen Peroxide"
+    },
+    "fluid_type.gregtech.hydrosulfuricacid": {
+      "source_key": "fluid.hydrosulfuricacid",
+      "value": "Hydrosulfuric Acid"
+    },
+    "fluid_type.gregtech.ic2biomass": {
+      "source_key": "fluid.ic2biomass",
+      "value": "Biomass"
+    },
+    "fluid_type.gregtech.ic2coolant": {
+      "source_key": "fluid.ic2coolant",
+      "value": "Industrial Coolant"
+    },
+    "fluid_type.gregtech.ic2distilledwater": {
+      "source_key": "fluid.ic2distilledwater",
+      "value": "Distilled Water"
+    },
+    "fluid_type.gregtech.ic2hotcoolant": {
+      "source_key": "fluid.ic2hotcoolant",
+      "value": "Industrial Heatant"
+    },
+    "fluid_type.gregtech.ic2pahoehoelava": {
+      "source_key": "fluid.ic2pahoehoelava",
+      "value": "Pahoehoe Lava"
+    },
+    "fluid_type.gregtech.ice": {
+      "source_key": "fluid.ice",
+      "value": "Near Frozen Water"
+    },
+    "fluid_type.gregtech.icetea": {
+      "source_key": "fluid.icetea",
+      "value": "Ice Tea"
+    },
+    "fluid_type.gregtech.indigo": {
+      "source_key": "fluid.indigo",
+      "value": "Indigo Dye"
+    },
+    "fluid_type.gregtech.juice": {
+      "source_key": "fluid.juice",
+      "value": "Juice"
+    },
+    "fluid_type.gregtech.kerosene": {
+      "source_key": "fluid.kerosene",
+      "value": "Kerosene"
+    },
+    "fluid_type.gregtech.kerosine": {
+      "source_key": "fluid.kerosine",
+      "value": "Kerosine"
+    },
+    "fluid_type.gregtech.ketchup": {
+      "source_key": "fluid.ketchup",
+      "value": "Tomato Ketchup"
+    },
+    "fluid_type.gregtech.kiwijuice": {
+      "source_key": "fluid.kiwijuice",
+      "value": "Kiwi Juice"
+    },
+    "fluid_type.gregtech.kiwismoothie": {
+      "source_key": "fluid.kiwismoothie",
+      "value": "Kiwi Smoothie"
+    },
+    "fluid_type.gregtech.krypton": {
+      "source_key": "fluid.krypton",
+      "value": "Krypton"
+    },
+    "fluid_type.gregtech.latex": {
+      "source_key": "fluid.latex",
+      "value": "Latex"
+    },
+    "fluid_type.gregtech.lemonsmoothie": {
+      "source_key": "fluid.lemonsmoothie",
+      "value": "Lemon Smoothie"
+    },
+    "fluid_type.gregtech.limesmoothie": {
+      "source_key": "fluid.limesmoothie",
+      "value": "Lime Smoothie"
+    },
+    "fluid_type.gregtech.limoncello": {
+      "source_key": "fluid.limoncello",
+      "value": "Limoncello"
+    },
+    "fluid_type.gregtech.linoil": {
+      "source_key": "fluid.linoil",
+      "value": "Lin Oil"
+    },
+    "fluid_type.gregtech.liquid_extra_heavy_oil": {
+      "source_key": "fluid.liquid_extra_heavy_oil",
+      "value": "Very Heavy Oil"
+    },
+    "fluid_type.gregtech.liquid_heavy_oil": {
+      "source_key": "fluid.liquid_heavy_oil",
+      "value": "Heavy Oil"
+    },
+    "fluid_type.gregtech.liquid_light_oil": {
+      "source_key": "fluid.liquid_light_oil",
+      "value": "Light Oil"
+    },
+    "fluid_type.gregtech.liquid_medium_oil": {
+      "source_key": "fluid.liquid_medium_oil",
+      "value": "Raw Oil"
+    },
+    "fluid_type.gregtech.liquidoxygen": {
+      "source_key": "fluid.liquidoxygen",
+      "value": "Liquid Oxygen"
+    },
+    "fluid_type.gregtech.lubricant": {
+      "source_key": "fluid.lubricant",
+      "value": "Lubricant"
+    },
+    "fluid_type.gregtech.mangojuice": {
+      "source_key": "fluid.mangojuice",
+      "value": "Mango Juice"
+    },
+    "fluid_type.gregtech.mangosmoothie": {
+      "source_key": "fluid.mangosmoothie",
+      "value": "Mango Smoothie"
+    },
+    "fluid_type.gregtech.maplesap": {
+      "source_key": "fluid.maplesap",
+      "value": "Maple Sap"
+    },
+    "fluid_type.gregtech.maplesyrup": {
+      "source_key": "fluid.maplesyrup",
+      "value": "Maple Syrup"
+    },
+    "fluid_type.gregtech.martianvitriol": {
+      "source_key": "fluid.martianvitriol",
+      "value": "Martian Vitriol"
+    },
+    "fluid_type.gregtech.mayo": {
+      "source_key": "fluid.mayo",
+      "value": "Mayonnaise"
+    },
+    "fluid_type.gregtech.mcguffium": {
+      "source_key": "fluid.mcguffium",
+      "value": "Mc Guffium 239"
+    },
+    "fluid_type.gregtech.mead": {
+      "source_key": "fluid.mead",
+      "value": "Mead"
+    },
+    "fluid_type.gregtech.medicine.heal": {
+      "source_key": "fluid.medicine.heal",
+      "value": "Medicine"
+    },
+    "fluid_type.gregtech.medicine.laxative": {
+      "source_key": "fluid.medicine.laxative",
+      "value": "Laxative"
+    },
+    "fluid_type.gregtech.medicine_heal": {
+      "source_key": "fluid.medicine.heal",
+      "value": "Medicine"
+    },
+    "fluid_type.gregtech.medicine_laxative": {
+      "source_key": "fluid.medicine.laxative",
+      "value": "Laxative"
+    },
+    "fluid_type.gregtech.melonjuice": {
+      "source_key": "fluid.melonjuice",
+      "value": "Melon Juice"
+    },
+    "fluid_type.gregtech.melonsmoothie": {
+      "source_key": "fluid.melonsmoothie",
+      "value": "Melon Smoothie"
+    },
+    "fluid_type.gregtech.mercury": {
+      "source_key": "fluid.mercury",
+      "value": "Mercury"
+    },
+    "fluid_type.gregtech.methane": {
+      "source_key": "fluid.methane",
+      "value": "Methane"
+    },
+    "fluid_type.gregtech.milk": {
+      "source_key": "fluid.milk",
+      "value": "Milk"
+    },
+    "fluid_type.gregtech.mineralsoda": {
+      "source_key": "fluid.mineralsoda",
+      "value": "Mineral Soda"
+    },
+    "fluid_type.gregtech.molten hsla": {
+      "source_key": "fluid.molten hsla",
+      "value": "Molten HSLA Steel"
+    },
+    "fluid_type.gregtech.molten.adamantium": {
+      "source_key": "fluid.molten.adamantium",
+      "value": "Molten Adamantium"
+    },
+    "fluid_type.gregtech.molten.alumina": {
+      "source_key": "fluid.molten.alumina",
+      "value": "Molten Alumina"
+    },
+    "fluid_type.gregtech.molten.aluminium": {
+      "source_key": "fluid.molten.aluminium",
+      "value": "Molten Aluminium"
+    },
+    "fluid_type.gregtech.molten.aluminiumbrass": {
+      "source_key": "fluid.molten.aluminiumbrass",
+      "value": "Molten Aluminium Brass"
+    },
+    "fluid_type.gregtech.molten.alumite": {
+      "source_key": "fluid.molten.alumite",
+      "value": "Molten Alumite"
+    },
+    "fluid_type.gregtech.molten.ancientdebris": {
+      "source_key": "fluid.molten.ancientdebris",
+      "value": "Molten Ancient Debris"
+    },
+    "fluid_type.gregtech.molten.angmallen": {
+      "source_key": "fluid.molten.angmallen",
+      "value": "Molten Angmallen"
+    },
+    "fluid_type.gregtech.molten.annealedcopper": {
+      "source_key": "fluid.molten.annealedcopper",
+      "value": "Molten Annealed Copper"
+    },
+    "fluid_type.gregtech.molten.antimony": {
+      "source_key": "fluid.molten.antimony",
+      "value": "Molten Antimony"
+    },
+    "fluid_type.gregtech.molten.ardite": {
+      "source_key": "fluid.molten.ardite",
+      "value": "Molten Ardite"
+    },
+    "fluid_type.gregtech.molten.arsenic": {
+      "source_key": "fluid.molten.arsenic",
+      "value": "Molten Arsenic"
+    },
+    "fluid_type.gregtech.molten.arsenicbronze": {
+      "source_key": "fluid.molten.arsenicbronze",
+      "value": "Molten Arsenic Bronze"
+    },
+    "fluid_type.gregtech.molten.arseniccopper": {
+      "source_key": "fluid.molten.arseniccopper",
+      "value": "Molten Arsenic Copper"
+    },
+    "fluid_type.gregtech.molten.astatine": {
+      "source_key": "fluid.molten.astatine",
+      "value": "Molten Astatine"
+    },
+    "fluid_type.gregtech.molten.astralsilver": {
+      "source_key": "fluid.molten.astralsilver",
+      "value": "Molten Astral Silver"
+    },
+    "fluid_type.gregtech.molten.barium": {
+      "source_key": "fluid.molten.barium",
+      "value": "Molten Barium"
+    },
+    "fluid_type.gregtech.molten.batteryalloy": {
+      "source_key": "fluid.molten.batteryalloy",
+      "value": "Molten Battery Alloy"
+    },
+    "fluid_type.gregtech.molten.beryllium": {
+      "source_key": "fluid.molten.beryllium",
+      "value": "Molten Beryllium"
+    },
+    "fluid_type.gregtech.molten.beryllium7": {
+      "source_key": "fluid.molten.beryllium7",
+      "value": "Molten Beryllium-7"
+    },
+    "fluid_type.gregtech.molten.beryllium8": {
+      "source_key": "fluid.molten.beryllium8",
+      "value": "Molten Beryllium-8"
+    },
+    "fluid_type.gregtech.molten.bismuth": {
+      "source_key": "fluid.molten.bismuth",
+      "value": "Molten Bismuth"
+    },
+    "fluid_type.gregtech.molten.bismuthbronze": {
+      "source_key": "fluid.molten.bismuthbronze",
+      "value": "Molten Bismuth Bronze"
+    },
+    "fluid_type.gregtech.molten.blackbronze": {
+      "source_key": "fluid.molten.blackbronze",
+      "value": "Molten Black Bronze"
+    },
+    "fluid_type.gregtech.molten.blacksteel": {
+      "source_key": "fluid.molten.blacksteel",
+      "value": "Molten Black Steel"
+    },
+    "fluid_type.gregtech.molten.bluealloy": {
+      "source_key": "fluid.molten.bluealloy",
+      "value": "Molten Blue Alloy"
+    },
+    "fluid_type.gregtech.molten.bluesteel": {
+      "source_key": "fluid.molten.bluesteel",
+      "value": "Molten Blue Steel"
+    },
+    "fluid_type.gregtech.molten.boron": {
+      "source_key": "fluid.molten.boron",
+      "value": "Molten Boron"
+    },
+    "fluid_type.gregtech.molten.boron11": {
+      "source_key": "fluid.molten.boron11",
+      "value": "Molten Boron-11"
+    },
+    "fluid_type.gregtech.molten.brass": {
+      "source_key": "fluid.molten.brass",
+      "value": "Molten Brass"
+    },
+    "fluid_type.gregtech.molten.bronze": {
+      "source_key": "fluid.molten.bronze",
+      "value": "Molten Bronze"
+    },
+    "fluid_type.gregtech.molten.caesium": {
+      "source_key": "fluid.molten.caesium",
+      "value": "Molten Caesium"
+    },
+    "fluid_type.gregtech.molten.calcite": {
+      "source_key": "fluid.molten.calcite",
+      "value": "Molten Calcite"
+    },
+    "fluid_type.gregtech.molten.calcium": {
+      "source_key": "fluid.molten.calcium",
+      "value": "Molten Calcium"
+    },
+    "fluid_type.gregtech.molten.calciumchloride": {
+      "source_key": "fluid.molten.calciumchloride",
+      "value": "Molten Calcium Chloride"
+    },
+    "fluid_type.gregtech.molten.carbon": {
+      "source_key": "fluid.molten.carbon",
+      "value": "Molten Carbon"
+    },
+    "fluid_type.gregtech.molten.carbon13": {
+      "source_key": "fluid.molten.carbon13",
+      "value": "Molten Carbon-13"
+    },
+    "fluid_type.gregtech.molten.celenegil": {
+      "source_key": "fluid.molten.celenegil",
+      "value": "Molten Celenegil"
+    },
+    "fluid_type.gregtech.molten.cheese": {
+      "source_key": "fluid.molten.cheese",
+      "value": "Molten Cheese"
+    },
+    "fluid_type.gregtech.molten.chocolate": {
+      "source_key": "fluid.molten.chocolate",
+      "value": "Molten Chocolate"
+    },
+    "fluid_type.gregtech.molten.chromium": {
+      "source_key": "fluid.molten.chromium",
+      "value": "Molten Chromium"
+    },
+    "fluid_type.gregtech.molten.cobalt": {
+      "source_key": "fluid.molten.cobalt",
+      "value": "Molten Cobalt"
+    },
+    "fluid_type.gregtech.molten.cobaltbrass": {
+      "source_key": "fluid.molten.cobaltbrass",
+      "value": "Molten Cobalt Brass"
+    },
+    "fluid_type.gregtech.molten.constantan": {
+      "source_key": "fluid.molten.constantan",
+      "value": "Molten Constantan"
+    },
+    "fluid_type.gregtech.molten.copper": {
+      "source_key": "fluid.molten.copper",
+      "value": "Molten Copper"
+    },
+    "fluid_type.gregtech.molten.damascussteel": {
+      "source_key": "fluid.molten.damascussteel",
+      "value": "Molten Damascus Steel"
+    },
+    "fluid_type.gregtech.molten.darkthaumium": {
+      "source_key": "fluid.molten.darkthaumium",
+      "value": "Molten Dark Thaumium"
+    },
+    "fluid_type.gregtech.molten.desh": {
+      "source_key": "fluid.molten.desh",
+      "value": "Molten Desh"
+    },
+    "fluid_type.gregtech.molten.draconium": {
+      "source_key": "fluid.molten.draconium",
+      "value": "Molten Draconium"
+    },
+    "fluid_type.gregtech.molten.draconiumawakened": {
+      "source_key": "fluid.molten.draconiumawakened",
+      "value": "Molten Awakened Draconium"
+    },
+    "fluid_type.gregtech.molten.efrine": {
+      "source_key": "fluid.molten.efrine",
+      "value": "Molten Efrine"
+    },
+    "fluid_type.gregtech.molten.electrotinealloy": {
+      "source_key": "fluid.molten.electrotinealloy",
+      "value": "Molten Electrotine Alloy"
+    },
+    "fluid_type.gregtech.molten.electrum": {
+      "source_key": "fluid.molten.electrum",
+      "value": "Molten Electrum"
+    },
+    "fluid_type.gregtech.molten.enderium": {
+      "source_key": "fluid.molten.enderium",
+      "value": "Molten Enderium"
+    },
+    "fluid_type.gregtech.molten.enderiumbase": {
+      "source_key": "fluid.molten.enderiumbase",
+      "value": "Molten Enderium Base"
+    },
+    "fluid_type.gregtech.molten.enderpearl": {
+      "source_key": "fluid.molten.enderpearl",
+      "value": "Molten Enderpearls"
+    },
+    "fluid_type.gregtech.molten.fierysteel": {
+      "source_key": "fluid.molten.fierysteel",
+      "value": "Molten Fiery Steel"
+    },
+    "fluid_type.gregtech.molten.flamascussteel": {
+      "source_key": "fluid.molten.flamascussteel",
+      "value": "Molten Flamascus Steel"
+    },
+    "fluid_type.gregtech.molten.fluorite": {
+      "source_key": "fluid.molten.fluorite",
+      "value": "Molten Fluorite"
+    },
+    "fluid_type.gregtech.molten.francium": {
+      "source_key": "fluid.molten.francium",
+      "value": "Molten Francium"
+    },
+    "fluid_type.gregtech.molten.germanium": {
+      "source_key": "fluid.molten.germanium",
+      "value": "Molten Germanium"
+    },
+    "fluid_type.gregtech.molten.gold": {
+      "source_key": "fluid.molten.gold",
+      "value": "Molten Gold"
+    },
+    "fluid_type.gregtech.molten.gold198": {
+      "source_key": "fluid.molten.gold198",
+      "value": "Molten Gold-198"
+    },
+    "fluid_type.gregtech.molten.goldinductive": {
+      "source_key": "fluid.molten.goldinductive",
+      "value": "Molten Inductive Alloy"
+    },
+    "fluid_type.gregtech.molten.hematite": {
+      "source_key": "fluid.molten.hematite",
+      "value": "Molten Hematite"
+    },
+    "fluid_type.gregtech.molten.hepatizon": {
+      "source_key": "fluid.molten.hepatizon",
+      "value": "Molten Hepatizon"
+    },
+    "fluid_type.gregtech.molten.hsse": {
+      "source_key": "fluid.molten.hsse",
+      "value": "Molten HSS-E"
+    },
+    "fluid_type.gregtech.molten.hssg": {
+      "source_key": "fluid.molten.hssg",
+      "value": "Molten HSS-G"
+    },
+    "fluid_type.gregtech.molten.hsss": {
+      "source_key": "fluid.molten.hsss",
+      "value": "Molten HSS-S"
+    },
+    "fluid_type.gregtech.molten.invar": {
+      "source_key": "fluid.molten.invar",
+      "value": "Molten Invar"
+    },
+    "fluid_type.gregtech.molten.iridium": {
+      "source_key": "fluid.molten.iridium",
+      "value": "Molten Iridium"
+    },
+    "fluid_type.gregtech.molten.iron": {
+      "source_key": "fluid.molten.iron",
+      "value": "Molten Iron"
+    },
+    "fluid_type.gregtech.molten.ironwood": {
+      "source_key": "fluid.molten.ironwood",
+      "value": "Molten Ironwood"
+    },
+    "fluid_type.gregtech.molten.kanthal": {
+      "source_key": "fluid.molten.kanthal",
+      "value": "Molten Kanthal"
+    },
+    "fluid_type.gregtech.molten.knightmetal": {
+      "source_key": "fluid.molten.knightmetal",
+      "value": "Molten Knightmetal"
+    },
+    "fluid_type.gregtech.molten.kreknorite": {
+      "source_key": "fluid.molten.kreknorite",
+      "value": "Molten Kreknorite"
+    },
+    "fluid_type.gregtech.molten.latex": {
+      "source_key": "fluid.molten.latex",
+      "value": "Latex"
+    },
+    "fluid_type.gregtech.molten.lead": {
+      "source_key": "fluid.molten.lead",
+      "value": "Molten Lead"
+    },
+    "fluid_type.gregtech.molten.lithium": {
+      "source_key": "fluid.molten.lithium",
+      "value": "Molten Lithium"
+    },
+    "fluid_type.gregtech.molten.lithium6": {
+      "source_key": "fluid.molten.lithium6",
+      "value": "Molten Lithium-6"
+    },
+    "fluid_type.gregtech.molten.lumium": {
+      "source_key": "fluid.molten.lumium",
+      "value": "Molten Lumium"
+    },
+    "fluid_type.gregtech.molten.magnalium": {
+      "source_key": "fluid.molten.magnalium",
+      "value": "Molten Magnalium"
+    },
+    "fluid_type.gregtech.molten.magnesium": {
+      "source_key": "fluid.molten.magnesium",
+      "value": "Molten Magnesium"
+    },
+    "fluid_type.gregtech.molten.magnesiumcarbonate": {
+      "source_key": "fluid.molten.magnesiumcarbonate",
+      "value": "Molten Magnesium Carbonate"
+    },
+    "fluid_type.gregtech.molten.magnesiumchloride": {
+      "source_key": "fluid.molten.magnesiumchloride",
+      "value": "Molten Magnesium Chloride"
+    },
+    "fluid_type.gregtech.molten.manganese": {
+      "source_key": "fluid.molten.manganese",
+      "value": "Molten Manganese"
+    },
+    "fluid_type.gregtech.molten.manganesechloride": {
+      "source_key": "fluid.molten.manganesechloride",
+      "value": "Molten Manganese Chloride"
+    },
+    "fluid_type.gregtech.molten.manyullyn": {
+      "source_key": "fluid.molten.manyullyn",
+      "value": "Molten Manyullyn"
+    },
+    "fluid_type.gregtech.molten.meteoflameblacksteel": {
+      "source_key": "fluid.molten.meteoflameblacksteel",
+      "value": "Molten Meteoflame Black Steel"
+    },
+    "fluid_type.gregtech.molten.meteoflamebluesteel": {
+      "source_key": "fluid.molten.meteoflamebluesteel",
+      "value": "Molten Meteoflame Blue Steel"
+    },
+    "fluid_type.gregtech.molten.meteoflameredsteel": {
+      "source_key": "fluid.molten.meteoflameredsteel",
+      "value": "Molten Meteoflame Red Steel"
+    },
+    "fluid_type.gregtech.molten.meteoflamesteel": {
+      "source_key": "fluid.molten.meteoflamesteel",
+      "value": "Molten Meteoflame Steel"
+    },
+    "fluid_type.gregtech.molten.meteoricblacksteel": {
+      "source_key": "fluid.molten.meteoricblacksteel",
+      "value": "Molten Meteoric Black Steel"
+    },
+    "fluid_type.gregtech.molten.meteoricbluesteel": {
+      "source_key": "fluid.molten.meteoricbluesteel",
+      "value": "Molten Meteoric Blue Steel"
+    },
+    "fluid_type.gregtech.molten.meteoriciron": {
+      "source_key": "fluid.molten.meteoriciron",
+      "value": "Molten Meteoric Iron"
+    },
+    "fluid_type.gregtech.molten.meteoricredsteel": {
+      "source_key": "fluid.molten.meteoricredsteel",
+      "value": "Molten Meteoric Red Steel"
+    },
+    "fluid_type.gregtech.molten.meteoricsteel": {
+      "source_key": "fluid.molten.meteoricsteel",
+      "value": "Molten Meteoric Steel"
+    },
+    "fluid_type.gregtech.molten.meteorite": {
+      "source_key": "fluid.molten.meteorite",
+      "value": "Molten Meteorite"
+    },
+    "fluid_type.gregtech.molten.midasium": {
+      "source_key": "fluid.molten.midasium",
+      "value": "Molten Midasium"
+    },
+    "fluid_type.gregtech.molten.mithril": {
+      "source_key": "fluid.molten.mithril",
+      "value": "Molten Mithril"
+    },
+    "fluid_type.gregtech.molten.molybdenum": {
+      "source_key": "fluid.molten.molybdenum",
+      "value": "Molten Molybdenum"
+    },
+    "fluid_type.gregtech.molten.neodymium": {
+      "source_key": "fluid.molten.neodymium",
+      "value": "Molten Neodymium"
+    },
+    "fluid_type.gregtech.molten.netherite": {
+      "source_key": "fluid.molten.netherite",
+      "value": "Molten Netherite"
+    },
+    "fluid_type.gregtech.molten.nichrome": {
+      "source_key": "fluid.molten.nichrome",
+      "value": "Molten Nichrome"
+    },
+    "fluid_type.gregtech.molten.nickel": {
+      "source_key": "fluid.molten.nickel",
+      "value": "Molten Nickel"
+    },
+    "fluid_type.gregtech.molten.nikolinealloy": {
+      "source_key": "fluid.molten.nikolinealloy",
+      "value": "Molten Nikoline Alloy"
+    },
+    "fluid_type.gregtech.molten.octine": {
+      "source_key": "fluid.molten.octine",
+      "value": "Molten Octine"
+    },
+    "fluid_type.gregtech.molten.orichalcum": {
+      "source_key": "fluid.molten.orichalcum",
+      "value": "Molten Orichalcum"
+    },
+    "fluid_type.gregtech.molten.osmiridium": {
+      "source_key": "fluid.molten.osmiridium",
+      "value": "Molten Osmiridium"
+    },
+    "fluid_type.gregtech.molten.osmiumelemental": {
+      "source_key": "fluid.molten.osmiumelemental",
+      "value": "Molten Osmium"
+    },
+    "fluid_type.gregtech.molten.pigiron": {
+      "source_key": "fluid.molten.pigiron",
+      "value": "Molten Pig Iron"
+    },
+    "fluid_type.gregtech.molten.platinum": {
+      "source_key": "fluid.molten.platinum",
+      "value": "Molten Platinum"
+    },
+    "fluid_type.gregtech.molten.potassium": {
+      "source_key": "fluid.molten.potassium",
+      "value": "Molten Potassium"
+    },
+    "fluid_type.gregtech.molten.purplealloy": {
+      "source_key": "fluid.molten.purplealloy",
+      "value": "Molten Purple Alloy"
+    },
+    "fluid_type.gregtech.molten.radium": {
+      "source_key": "fluid.molten.radium",
+      "value": "Molten Radium"
+    },
+    "fluid_type.gregtech.molten.redalloy": {
+      "source_key": "fluid.molten.redalloy",
+      "value": "Molten Red Alloy"
+    },
+    "fluid_type.gregtech.molten.redsteel": {
+      "source_key": "fluid.molten.redsteel",
+      "value": "Molten Red Steel"
+    },
+    "fluid_type.gregtech.molten.redstone": {
+      "source_key": "fluid.molten.redstone",
+      "value": "Molten Redstone"
+    },
+    "fluid_type.gregtech.molten.redstonealloy": {
+      "source_key": "fluid.molten.redstonealloy",
+      "value": "Molten Redstone Alloy"
+    },
+    "fluid_type.gregtech.molten.rosegold": {
+      "source_key": "fluid.molten.rosegold",
+      "value": "Molten Rose Gold"
+    },
+    "fluid_type.gregtech.molten.rubber": {
+      "source_key": "fluid.molten.rubber",
+      "value": "Molten Rubber"
+    },
+    "fluid_type.gregtech.molten.rubidium": {
+      "source_key": "fluid.molten.rubidium",
+      "value": "Molten Rubidium"
+    },
+    "fluid_type.gregtech.molten.signalum": {
+      "source_key": "fluid.molten.signalum",
+      "value": "Molten Signalum"
+    },
+    "fluid_type.gregtech.molten.silicon": {
+      "source_key": "fluid.molten.silicon",
+      "value": "Molten Silicon"
+    },
+    "fluid_type.gregtech.molten.silver": {
+      "source_key": "fluid.molten.silver",
+      "value": "Molten Silver"
+    },
+    "fluid_type.gregtech.molten.sodium": {
+      "source_key": "fluid.molten.sodium",
+      "value": "Molten Sodium"
+    },
+    "fluid_type.gregtech.molten.sodiumcarbonate": {
+      "source_key": "fluid.molten.sodiumcarbonate",
+      "value": "Molten Sodium Carbonate"
+    },
+    "fluid_type.gregtech.molten.solderingalloy": {
+      "source_key": "fluid.molten.solderingalloy",
+      "value": "Molten Soldering Alloy"
+    },
+    "fluid_type.gregtech.molten.spectreiron": {
+      "source_key": "fluid.molten.spectreiron",
+      "value": "Molten Spectre Iron"
+    },
+    "fluid_type.gregtech.molten.stainlesssteel": {
+      "source_key": "fluid.molten.stainlesssteel",
+      "value": "Molten Stainless Steel"
+    },
+    "fluid_type.gregtech.molten.steel": {
+      "source_key": "fluid.molten.steel",
+      "value": "Molten Steel"
+    },
+    "fluid_type.gregtech.molten.sterlingsilver": {
+      "source_key": "fluid.molten.sterlingsilver",
+      "value": "Molten Sterling Silver"
+    },
+    "fluid_type.gregtech.molten.strontium": {
+      "source_key": "fluid.molten.strontium",
+      "value": "Molten Strontium"
+    },
+    "fluid_type.gregtech.molten.sugar": {
+      "source_key": "fluid.molten.sugar",
+      "value": "Molten Sugar"
+    },
+    "fluid_type.gregtech.molten.sulfur": {
+      "source_key": "fluid.molten.sulfur",
+      "value": "Molten Sulfur"
+    },
+    "fluid_type.gregtech.molten.syrmorite": {
+      "source_key": "fluid.molten.syrmorite",
+      "value": "Molten Syrmorite"
+    },
+    "fluid_type.gregtech.molten.tellurium": {
+      "source_key": "fluid.molten.tellurium",
+      "value": "Molten Tellurium"
+    },
+    "fluid_type.gregtech.molten.thaumium": {
+      "source_key": "fluid.molten.thaumium",
+      "value": "Molten Thaumium"
+    },
+    "fluid_type.gregtech.molten.tin": {
+      "source_key": "fluid.molten.tin",
+      "value": "Molten Tin"
+    },
+    "fluid_type.gregtech.molten.tinalloy": {
+      "source_key": "fluid.molten.tinalloy",
+      "value": "Molten Tin Alloy"
+    },
+    "fluid_type.gregtech.molten.titanium": {
+      "source_key": "fluid.molten.titanium",
+      "value": "Molten Titanium"
+    },
+    "fluid_type.gregtech.molten.titaniumgold": {
+      "source_key": "fluid.molten.titaniumgold",
+      "value": "Molten Titanium-Gold"
+    },
+    "fluid_type.gregtech.molten.tungsten": {
+      "source_key": "fluid.molten.tungsten",
+      "value": "Molten Tungsten"
+    },
+    "fluid_type.gregtech.molten.tungstensteel": {
+      "source_key": "fluid.molten.tungstensteel",
+      "value": "Molten Tungstensteel"
+    },
+    "fluid_type.gregtech.molten.ultimet": {
+      "source_key": "fluid.molten.ultimet",
+      "value": "Molten Ultimet"
+    },
+    "fluid_type.gregtech.molten.uranium": {
+      "source_key": "fluid.molten.uranium",
+      "value": "Molten Uranium"
+    },
+    "fluid_type.gregtech.molten.uranium235": {
+      "source_key": "fluid.molten.uranium235",
+      "value": "Molten Uranium-235"
+    },
+    "fluid_type.gregtech.molten.uranium235tetrafluoride": {
+      "source_key": "fluid.molten.uranium235tetrafluoride",
+      "value": "Molten Uranium-235 Tetrafluoride"
+    },
+    "fluid_type.gregtech.molten.uranium238tetrafluoride": {
+      "source_key": "fluid.molten.uranium238tetrafluoride",
+      "value": "Molten Uranium-238 Tetrafluoride"
+    },
+    "fluid_type.gregtech.molten.uraniumtetrafluoride": {
+      "source_key": "fluid.molten.uraniumtetrafluoride",
+      "value": "Molten Uranium Tetrafluoride"
+    },
+    "fluid_type.gregtech.molten.vanadium": {
+      "source_key": "fluid.molten.vanadium",
+      "value": "Molten Vanadium"
+    },
+    "fluid_type.gregtech.molten.vanadiumsteel": {
+      "source_key": "fluid.molten.vanadiumsteel",
+      "value": "Molten Vanadiumsteel"
+    },
+    "fluid_type.gregtech.molten.voidmetal": {
+      "source_key": "fluid.molten.voidmetal",
+      "value": "Molten Void Metal"
+    },
+    "fluid_type.gregtech.molten.wax": {
+      "source_key": "fluid.molten.wax",
+      "value": "Molten Wax"
+    },
+    "fluid_type.gregtech.molten.waxamnesic": {
+      "source_key": "fluid.molten.waxamnesic",
+      "value": "Molten Amnesic Wax"
+    },
+    "fluid_type.gregtech.molten.waxbee": {
+      "source_key": "fluid.molten.waxbee",
+      "value": "Molten Bees Wax"
+    },
+    "fluid_type.gregtech.molten.waxmagic": {
+      "source_key": "fluid.molten.waxmagic",
+      "value": "Molten Magic Wax"
+    },
+    "fluid_type.gregtech.molten.waxparaffin": {
+      "source_key": "fluid.molten.waxparaffin",
+      "value": "Molten Paraffin Wax"
+    },
+    "fluid_type.gregtech.molten.waxplant": {
+      "source_key": "fluid.molten.waxplant",
+      "value": "Molten Plant Wax"
+    },
+    "fluid_type.gregtech.molten.waxrefractory": {
+      "source_key": "fluid.molten.waxrefractory",
+      "value": "Molten Refractory Wax"
+    },
+    "fluid_type.gregtech.molten.waxsoulful": {
+      "source_key": "fluid.molten.waxsoulful",
+      "value": "Molten Soulful Wax"
+    },
+    "fluid_type.gregtech.molten.workersalloy": {
+      "source_key": "fluid.molten.workersalloy",
+      "value": "Molten Workers Alloy"
+    },
+    "fluid_type.gregtech.molten.wroughtiron": {
+      "source_key": "fluid.molten.wroughtiron",
+      "value": "Molten Wrought Iron"
+    },
+    "fluid_type.gregtech.molten.zinc": {
+      "source_key": "fluid.molten.zinc",
+      "value": "Molten Zinc"
+    },
+    "fluid_type.gregtech.molten_adamantium": {
+      "source_key": "fluid.molten.adamantium",
+      "value": "Molten Adamantium"
+    },
+    "fluid_type.gregtech.molten_alumina": {
+      "source_key": "fluid.molten.alumina",
+      "value": "Molten Alumina"
+    },
+    "fluid_type.gregtech.molten_aluminium": {
+      "source_key": "fluid.molten.aluminium",
+      "value": "Molten Aluminium"
+    },
+    "fluid_type.gregtech.molten_aluminiumbrass": {
+      "source_key": "fluid.molten.aluminiumbrass",
+      "value": "Molten Aluminium Brass"
+    },
+    "fluid_type.gregtech.molten_alumite": {
+      "source_key": "fluid.molten.alumite",
+      "value": "Molten Alumite"
+    },
+    "fluid_type.gregtech.molten_ancientdebris": {
+      "source_key": "fluid.molten.ancientdebris",
+      "value": "Molten Ancient Debris"
+    },
+    "fluid_type.gregtech.molten_angmallen": {
+      "source_key": "fluid.molten.angmallen",
+      "value": "Molten Angmallen"
+    },
+    "fluid_type.gregtech.molten_annealedcopper": {
+      "source_key": "fluid.molten.annealedcopper",
+      "value": "Molten Annealed Copper"
+    },
+    "fluid_type.gregtech.molten_antimony": {
+      "source_key": "fluid.molten.antimony",
+      "value": "Molten Antimony"
+    },
+    "fluid_type.gregtech.molten_ardite": {
+      "source_key": "fluid.molten.ardite",
+      "value": "Molten Ardite"
+    },
+    "fluid_type.gregtech.molten_arsenic": {
+      "source_key": "fluid.molten.arsenic",
+      "value": "Molten Arsenic"
+    },
+    "fluid_type.gregtech.molten_arsenicbronze": {
+      "source_key": "fluid.molten.arsenicbronze",
+      "value": "Molten Arsenic Bronze"
+    },
+    "fluid_type.gregtech.molten_arseniccopper": {
+      "source_key": "fluid.molten.arseniccopper",
+      "value": "Molten Arsenic Copper"
+    },
+    "fluid_type.gregtech.molten_astatine": {
+      "source_key": "fluid.molten.astatine",
+      "value": "Molten Astatine"
+    },
+    "fluid_type.gregtech.molten_astralsilver": {
+      "source_key": "fluid.molten.astralsilver",
+      "value": "Molten Astral Silver"
+    },
+    "fluid_type.gregtech.molten_barium": {
+      "source_key": "fluid.molten.barium",
+      "value": "Molten Barium"
+    },
+    "fluid_type.gregtech.molten_batteryalloy": {
+      "source_key": "fluid.molten.batteryalloy",
+      "value": "Molten Battery Alloy"
+    },
+    "fluid_type.gregtech.molten_beryllium": {
+      "source_key": "fluid.molten.beryllium",
+      "value": "Molten Beryllium"
+    },
+    "fluid_type.gregtech.molten_beryllium7": {
+      "source_key": "fluid.molten.beryllium7",
+      "value": "Molten Beryllium-7"
+    },
+    "fluid_type.gregtech.molten_beryllium8": {
+      "source_key": "fluid.molten.beryllium8",
+      "value": "Molten Beryllium-8"
+    },
+    "fluid_type.gregtech.molten_bismuth": {
+      "source_key": "fluid.molten.bismuth",
+      "value": "Molten Bismuth"
+    },
+    "fluid_type.gregtech.molten_bismuthbronze": {
+      "source_key": "fluid.molten.bismuthbronze",
+      "value": "Molten Bismuth Bronze"
+    },
+    "fluid_type.gregtech.molten_blackbronze": {
+      "source_key": "fluid.molten.blackbronze",
+      "value": "Molten Black Bronze"
+    },
+    "fluid_type.gregtech.molten_blacksteel": {
+      "source_key": "fluid.molten.blacksteel",
+      "value": "Molten Black Steel"
+    },
+    "fluid_type.gregtech.molten_bluealloy": {
+      "source_key": "fluid.molten.bluealloy",
+      "value": "Molten Blue Alloy"
+    },
+    "fluid_type.gregtech.molten_bluesteel": {
+      "source_key": "fluid.molten.bluesteel",
+      "value": "Molten Blue Steel"
+    },
+    "fluid_type.gregtech.molten_boron": {
+      "source_key": "fluid.molten.boron",
+      "value": "Molten Boron"
+    },
+    "fluid_type.gregtech.molten_boron11": {
+      "source_key": "fluid.molten.boron11",
+      "value": "Molten Boron-11"
+    },
+    "fluid_type.gregtech.molten_brass": {
+      "source_key": "fluid.molten.brass",
+      "value": "Molten Brass"
+    },
+    "fluid_type.gregtech.molten_bronze": {
+      "source_key": "fluid.molten.bronze",
+      "value": "Molten Bronze"
+    },
+    "fluid_type.gregtech.molten_caesium": {
+      "source_key": "fluid.molten.caesium",
+      "value": "Molten Caesium"
+    },
+    "fluid_type.gregtech.molten_calcite": {
+      "source_key": "fluid.molten.calcite",
+      "value": "Molten Calcite"
+    },
+    "fluid_type.gregtech.molten_calcium": {
+      "source_key": "fluid.molten.calcium",
+      "value": "Molten Calcium"
+    },
+    "fluid_type.gregtech.molten_calciumchloride": {
+      "source_key": "fluid.molten.calciumchloride",
+      "value": "Molten Calcium Chloride"
+    },
+    "fluid_type.gregtech.molten_carbon": {
+      "source_key": "fluid.molten.carbon",
+      "value": "Molten Carbon"
+    },
+    "fluid_type.gregtech.molten_carbon13": {
+      "source_key": "fluid.molten.carbon13",
+      "value": "Molten Carbon-13"
+    },
+    "fluid_type.gregtech.molten_celenegil": {
+      "source_key": "fluid.molten.celenegil",
+      "value": "Molten Celenegil"
+    },
+    "fluid_type.gregtech.molten_cheese": {
+      "source_key": "fluid.molten.cheese",
+      "value": "Molten Cheese"
+    },
+    "fluid_type.gregtech.molten_chocolate": {
+      "source_key": "fluid.molten.chocolate",
+      "value": "Molten Chocolate"
+    },
+    "fluid_type.gregtech.molten_chromium": {
+      "source_key": "fluid.molten.chromium",
+      "value": "Molten Chromium"
+    },
+    "fluid_type.gregtech.molten_cobalt": {
+      "source_key": "fluid.molten.cobalt",
+      "value": "Molten Cobalt"
+    },
+    "fluid_type.gregtech.molten_cobaltbrass": {
+      "source_key": "fluid.molten.cobaltbrass",
+      "value": "Molten Cobalt Brass"
+    },
+    "fluid_type.gregtech.molten_constantan": {
+      "source_key": "fluid.molten.constantan",
+      "value": "Molten Constantan"
+    },
+    "fluid_type.gregtech.molten_copper": {
+      "source_key": "fluid.molten.copper",
+      "value": "Molten Copper"
+    },
+    "fluid_type.gregtech.molten_damascussteel": {
+      "source_key": "fluid.molten.damascussteel",
+      "value": "Molten Damascus Steel"
+    },
+    "fluid_type.gregtech.molten_darkthaumium": {
+      "source_key": "fluid.molten.darkthaumium",
+      "value": "Molten Dark Thaumium"
+    },
+    "fluid_type.gregtech.molten_desh": {
+      "source_key": "fluid.molten.desh",
+      "value": "Molten Desh"
+    },
+    "fluid_type.gregtech.molten_draconium": {
+      "source_key": "fluid.molten.draconium",
+      "value": "Molten Draconium"
+    },
+    "fluid_type.gregtech.molten_draconiumawakened": {
+      "source_key": "fluid.molten.draconiumawakened",
+      "value": "Molten Awakened Draconium"
+    },
+    "fluid_type.gregtech.molten_efrine": {
+      "source_key": "fluid.molten.efrine",
+      "value": "Molten Efrine"
+    },
+    "fluid_type.gregtech.molten_electrotinealloy": {
+      "source_key": "fluid.molten.electrotinealloy",
+      "value": "Molten Electrotine Alloy"
+    },
+    "fluid_type.gregtech.molten_electrum": {
+      "source_key": "fluid.molten.electrum",
+      "value": "Molten Electrum"
+    },
+    "fluid_type.gregtech.molten_enderium": {
+      "source_key": "fluid.molten.enderium",
+      "value": "Molten Enderium"
+    },
+    "fluid_type.gregtech.molten_enderiumbase": {
+      "source_key": "fluid.molten.enderiumbase",
+      "value": "Molten Enderium Base"
+    },
+    "fluid_type.gregtech.molten_enderpearl": {
+      "source_key": "fluid.molten.enderpearl",
+      "value": "Molten Enderpearls"
+    },
+    "fluid_type.gregtech.molten_fierysteel": {
+      "source_key": "fluid.molten.fierysteel",
+      "value": "Molten Fiery Steel"
+    },
+    "fluid_type.gregtech.molten_flamascussteel": {
+      "source_key": "fluid.molten.flamascussteel",
+      "value": "Molten Flamascus Steel"
+    },
+    "fluid_type.gregtech.molten_fluorite": {
+      "source_key": "fluid.molten.fluorite",
+      "value": "Molten Fluorite"
+    },
+    "fluid_type.gregtech.molten_francium": {
+      "source_key": "fluid.molten.francium",
+      "value": "Molten Francium"
+    },
+    "fluid_type.gregtech.molten_germanium": {
+      "source_key": "fluid.molten.germanium",
+      "value": "Molten Germanium"
+    },
+    "fluid_type.gregtech.molten_gold": {
+      "source_key": "fluid.molten.gold",
+      "value": "Molten Gold"
+    },
+    "fluid_type.gregtech.molten_gold198": {
+      "source_key": "fluid.molten.gold198",
+      "value": "Molten Gold-198"
+    },
+    "fluid_type.gregtech.molten_goldinductive": {
+      "source_key": "fluid.molten.goldinductive",
+      "value": "Molten Inductive Alloy"
+    },
+    "fluid_type.gregtech.molten_hematite": {
+      "source_key": "fluid.molten.hematite",
+      "value": "Molten Hematite"
+    },
+    "fluid_type.gregtech.molten_hepatizon": {
+      "source_key": "fluid.molten.hepatizon",
+      "value": "Molten Hepatizon"
+    },
+    "fluid_type.gregtech.molten_hsla": {
+      "source_key": "fluid.molten hsla",
+      "value": "Molten HSLA Steel"
+    },
+    "fluid_type.gregtech.molten_hslasteel": {
+      "source_key": "fluid.molten hsla",
+      "value": "Molten HSLA Steel"
+    },
+    "fluid_type.gregtech.molten_hsse": {
+      "source_key": "fluid.molten.hsse",
+      "value": "Molten HSS-E"
+    },
+    "fluid_type.gregtech.molten_hssg": {
+      "source_key": "fluid.molten.hssg",
+      "value": "Molten HSS-G"
+    },
+    "fluid_type.gregtech.molten_hsss": {
+      "source_key": "fluid.molten.hsss",
+      "value": "Molten HSS-S"
+    },
+    "fluid_type.gregtech.molten_invar": {
+      "source_key": "fluid.molten.invar",
+      "value": "Molten Invar"
+    },
+    "fluid_type.gregtech.molten_iridium": {
+      "source_key": "fluid.molten.iridium",
+      "value": "Molten Iridium"
+    },
+    "fluid_type.gregtech.molten_iron": {
+      "source_key": "fluid.molten.iron",
+      "value": "Molten Iron"
+    },
+    "fluid_type.gregtech.molten_ironwood": {
+      "source_key": "fluid.molten.ironwood",
+      "value": "Molten Ironwood"
+    },
+    "fluid_type.gregtech.molten_kanthal": {
+      "source_key": "fluid.molten.kanthal",
+      "value": "Molten Kanthal"
+    },
+    "fluid_type.gregtech.molten_knightmetal": {
+      "source_key": "fluid.molten.knightmetal",
+      "value": "Molten Knightmetal"
+    },
+    "fluid_type.gregtech.molten_kreknorite": {
+      "source_key": "fluid.molten.kreknorite",
+      "value": "Molten Kreknorite"
+    },
+    "fluid_type.gregtech.molten_lead": {
+      "source_key": "fluid.molten.lead",
+      "value": "Molten Lead"
+    },
+    "fluid_type.gregtech.molten_lithium": {
+      "source_key": "fluid.molten.lithium",
+      "value": "Molten Lithium"
+    },
+    "fluid_type.gregtech.molten_lithium6": {
+      "source_key": "fluid.molten.lithium6",
+      "value": "Molten Lithium-6"
+    },
+    "fluid_type.gregtech.molten_lumium": {
+      "source_key": "fluid.molten.lumium",
+      "value": "Molten Lumium"
+    },
+    "fluid_type.gregtech.molten_magnalium": {
+      "source_key": "fluid.molten.magnalium",
+      "value": "Molten Magnalium"
+    },
+    "fluid_type.gregtech.molten_magnesium": {
+      "source_key": "fluid.molten.magnesium",
+      "value": "Molten Magnesium"
+    },
+    "fluid_type.gregtech.molten_magnesiumcarbonate": {
+      "source_key": "fluid.molten.magnesiumcarbonate",
+      "value": "Molten Magnesium Carbonate"
+    },
+    "fluid_type.gregtech.molten_magnesiumchloride": {
+      "source_key": "fluid.molten.magnesiumchloride",
+      "value": "Molten Magnesium Chloride"
+    },
+    "fluid_type.gregtech.molten_manganese": {
+      "source_key": "fluid.molten.manganese",
+      "value": "Molten Manganese"
+    },
+    "fluid_type.gregtech.molten_manganesechloride": {
+      "source_key": "fluid.molten.manganesechloride",
+      "value": "Molten Manganese Chloride"
+    },
+    "fluid_type.gregtech.molten_manyullyn": {
+      "source_key": "fluid.molten.manyullyn",
+      "value": "Molten Manyullyn"
+    },
+    "fluid_type.gregtech.molten_meteoflameblacksteel": {
+      "source_key": "fluid.molten.meteoflameblacksteel",
+      "value": "Molten Meteoflame Black Steel"
+    },
+    "fluid_type.gregtech.molten_meteoflamebluesteel": {
+      "source_key": "fluid.molten.meteoflamebluesteel",
+      "value": "Molten Meteoflame Blue Steel"
+    },
+    "fluid_type.gregtech.molten_meteoflameredsteel": {
+      "source_key": "fluid.molten.meteoflameredsteel",
+      "value": "Molten Meteoflame Red Steel"
+    },
+    "fluid_type.gregtech.molten_meteoflamesteel": {
+      "source_key": "fluid.molten.meteoflamesteel",
+      "value": "Molten Meteoflame Steel"
+    },
+    "fluid_type.gregtech.molten_meteoricblacksteel": {
+      "source_key": "fluid.molten.meteoricblacksteel",
+      "value": "Molten Meteoric Black Steel"
+    },
+    "fluid_type.gregtech.molten_meteoricbluesteel": {
+      "source_key": "fluid.molten.meteoricbluesteel",
+      "value": "Molten Meteoric Blue Steel"
+    },
+    "fluid_type.gregtech.molten_meteoriciron": {
+      "source_key": "fluid.molten.meteoriciron",
+      "value": "Molten Meteoric Iron"
+    },
+    "fluid_type.gregtech.molten_meteoricredsteel": {
+      "source_key": "fluid.molten.meteoricredsteel",
+      "value": "Molten Meteoric Red Steel"
+    },
+    "fluid_type.gregtech.molten_meteoricsteel": {
+      "source_key": "fluid.molten.meteoricsteel",
+      "value": "Molten Meteoric Steel"
+    },
+    "fluid_type.gregtech.molten_meteorite": {
+      "source_key": "fluid.molten.meteorite",
+      "value": "Molten Meteorite"
+    },
+    "fluid_type.gregtech.molten_midasium": {
+      "source_key": "fluid.molten.midasium",
+      "value": "Molten Midasium"
+    },
+    "fluid_type.gregtech.molten_mithril": {
+      "source_key": "fluid.molten.mithril",
+      "value": "Molten Mithril"
+    },
+    "fluid_type.gregtech.molten_molybdenum": {
+      "source_key": "fluid.molten.molybdenum",
+      "value": "Molten Molybdenum"
+    },
+    "fluid_type.gregtech.molten_neodymium": {
+      "source_key": "fluid.molten.neodymium",
+      "value": "Molten Neodymium"
+    },
+    "fluid_type.gregtech.molten_netherite": {
+      "source_key": "fluid.molten.netherite",
+      "value": "Molten Netherite"
+    },
+    "fluid_type.gregtech.molten_nichrome": {
+      "source_key": "fluid.molten.nichrome",
+      "value": "Molten Nichrome"
+    },
+    "fluid_type.gregtech.molten_nickel": {
+      "source_key": "fluid.molten.nickel",
+      "value": "Molten Nickel"
+    },
+    "fluid_type.gregtech.molten_nikolinealloy": {
+      "source_key": "fluid.molten.nikolinealloy",
+      "value": "Molten Nikoline Alloy"
+    },
+    "fluid_type.gregtech.molten_octine": {
+      "source_key": "fluid.molten.octine",
+      "value": "Molten Octine"
+    },
+    "fluid_type.gregtech.molten_orichalcum": {
+      "source_key": "fluid.molten.orichalcum",
+      "value": "Molten Orichalcum"
+    },
+    "fluid_type.gregtech.molten_osmiridium": {
+      "source_key": "fluid.molten.osmiridium",
+      "value": "Molten Osmiridium"
+    },
+    "fluid_type.gregtech.molten_osmiumelemental": {
+      "source_key": "fluid.molten.osmiumelemental",
+      "value": "Molten Osmium"
+    },
+    "fluid_type.gregtech.molten_pigiron": {
+      "source_key": "fluid.molten.pigiron",
+      "value": "Molten Pig Iron"
+    },
+    "fluid_type.gregtech.molten_platinum": {
+      "source_key": "fluid.molten.platinum",
+      "value": "Molten Platinum"
+    },
+    "fluid_type.gregtech.molten_potassium": {
+      "source_key": "fluid.molten.potassium",
+      "value": "Molten Potassium"
+    },
+    "fluid_type.gregtech.molten_purplealloy": {
+      "source_key": "fluid.molten.purplealloy",
+      "value": "Molten Purple Alloy"
+    },
+    "fluid_type.gregtech.molten_radium": {
+      "source_key": "fluid.molten.radium",
+      "value": "Molten Radium"
+    },
+    "fluid_type.gregtech.molten_redalloy": {
+      "source_key": "fluid.molten.redalloy",
+      "value": "Molten Red Alloy"
+    },
+    "fluid_type.gregtech.molten_redsteel": {
+      "source_key": "fluid.molten.redsteel",
+      "value": "Molten Red Steel"
+    },
+    "fluid_type.gregtech.molten_redstone": {
+      "source_key": "fluid.molten.redstone",
+      "value": "Molten Redstone"
+    },
+    "fluid_type.gregtech.molten_redstonealloy": {
+      "source_key": "fluid.molten.redstonealloy",
+      "value": "Molten Redstone Alloy"
+    },
+    "fluid_type.gregtech.molten_rosegold": {
+      "source_key": "fluid.molten.rosegold",
+      "value": "Molten Rose Gold"
+    },
+    "fluid_type.gregtech.molten_rubber": {
+      "source_key": "fluid.molten.rubber",
+      "value": "Molten Rubber"
+    },
+    "fluid_type.gregtech.molten_rubidium": {
+      "source_key": "fluid.molten.rubidium",
+      "value": "Molten Rubidium"
+    },
+    "fluid_type.gregtech.molten_signalum": {
+      "source_key": "fluid.molten.signalum",
+      "value": "Molten Signalum"
+    },
+    "fluid_type.gregtech.molten_silicon": {
+      "source_key": "fluid.molten.silicon",
+      "value": "Molten Silicon"
+    },
+    "fluid_type.gregtech.molten_silver": {
+      "source_key": "fluid.molten.silver",
+      "value": "Molten Silver"
+    },
+    "fluid_type.gregtech.molten_sodium": {
+      "source_key": "fluid.molten.sodium",
+      "value": "Molten Sodium"
+    },
+    "fluid_type.gregtech.molten_sodiumcarbonate": {
+      "source_key": "fluid.molten.sodiumcarbonate",
+      "value": "Molten Sodium Carbonate"
+    },
+    "fluid_type.gregtech.molten_solderingalloy": {
+      "source_key": "fluid.molten.solderingalloy",
+      "value": "Molten Soldering Alloy"
+    },
+    "fluid_type.gregtech.molten_spectreiron": {
+      "source_key": "fluid.molten.spectreiron",
+      "value": "Molten Spectre Iron"
+    },
+    "fluid_type.gregtech.molten_stainlesssteel": {
+      "source_key": "fluid.molten.stainlesssteel",
+      "value": "Molten Stainless Steel"
+    },
+    "fluid_type.gregtech.molten_steel": {
+      "source_key": "fluid.molten.steel",
+      "value": "Molten Steel"
+    },
+    "fluid_type.gregtech.molten_sterlingsilver": {
+      "source_key": "fluid.molten.sterlingsilver",
+      "value": "Molten Sterling Silver"
+    },
+    "fluid_type.gregtech.molten_strontium": {
+      "source_key": "fluid.molten.strontium",
+      "value": "Molten Strontium"
+    },
+    "fluid_type.gregtech.molten_sugar": {
+      "source_key": "fluid.molten.sugar",
+      "value": "Molten Sugar"
+    },
+    "fluid_type.gregtech.molten_sulfur": {
+      "source_key": "fluid.molten.sulfur",
+      "value": "Molten Sulfur"
+    },
+    "fluid_type.gregtech.molten_syrmorite": {
+      "source_key": "fluid.molten.syrmorite",
+      "value": "Molten Syrmorite"
+    },
+    "fluid_type.gregtech.molten_tellurium": {
+      "source_key": "fluid.molten.tellurium",
+      "value": "Molten Tellurium"
+    },
+    "fluid_type.gregtech.molten_thaumium": {
+      "source_key": "fluid.molten.thaumium",
+      "value": "Molten Thaumium"
+    },
+    "fluid_type.gregtech.molten_tin": {
+      "source_key": "fluid.molten.tin",
+      "value": "Molten Tin"
+    },
+    "fluid_type.gregtech.molten_tinalloy": {
+      "source_key": "fluid.molten.tinalloy",
+      "value": "Molten Tin Alloy"
+    },
+    "fluid_type.gregtech.molten_titanium": {
+      "source_key": "fluid.molten.titanium",
+      "value": "Molten Titanium"
+    },
+    "fluid_type.gregtech.molten_titaniumgold": {
+      "source_key": "fluid.molten.titaniumgold",
+      "value": "Molten Titanium-Gold"
+    },
+    "fluid_type.gregtech.molten_tungsten": {
+      "source_key": "fluid.molten.tungsten",
+      "value": "Molten Tungsten"
+    },
+    "fluid_type.gregtech.molten_tungstensteel": {
+      "source_key": "fluid.molten.tungstensteel",
+      "value": "Molten Tungstensteel"
+    },
+    "fluid_type.gregtech.molten_ultimet": {
+      "source_key": "fluid.molten.ultimet",
+      "value": "Molten Ultimet"
+    },
+    "fluid_type.gregtech.molten_uranium": {
+      "source_key": "fluid.molten.uranium",
+      "value": "Molten Uranium"
+    },
+    "fluid_type.gregtech.molten_uranium235": {
+      "source_key": "fluid.molten.uranium235",
+      "value": "Molten Uranium-235"
+    },
+    "fluid_type.gregtech.molten_uranium235tetrafluoride": {
+      "source_key": "fluid.molten.uranium235tetrafluoride",
+      "value": "Molten Uranium-235 Tetrafluoride"
+    },
+    "fluid_type.gregtech.molten_uranium238tetrafluoride": {
+      "source_key": "fluid.molten.uranium238tetrafluoride",
+      "value": "Molten Uranium-238 Tetrafluoride"
+    },
+    "fluid_type.gregtech.molten_uraniumtetrafluoride": {
+      "source_key": "fluid.molten.uraniumtetrafluoride",
+      "value": "Molten Uranium Tetrafluoride"
+    },
+    "fluid_type.gregtech.molten_vanadium": {
+      "source_key": "fluid.molten.vanadium",
+      "value": "Molten Vanadium"
+    },
+    "fluid_type.gregtech.molten_vanadiumsteel": {
+      "source_key": "fluid.molten.vanadiumsteel",
+      "value": "Molten Vanadiumsteel"
+    },
+    "fluid_type.gregtech.molten_voidmetal": {
+      "source_key": "fluid.molten.voidmetal",
+      "value": "Molten Void Metal"
+    },
+    "fluid_type.gregtech.molten_wax": {
+      "source_key": "fluid.molten.wax",
+      "value": "Molten Wax"
+    },
+    "fluid_type.gregtech.molten_waxamnesic": {
+      "source_key": "fluid.molten.waxamnesic",
+      "value": "Molten Amnesic Wax"
+    },
+    "fluid_type.gregtech.molten_waxbee": {
+      "source_key": "fluid.molten.waxbee",
+      "value": "Molten Bees Wax"
+    },
+    "fluid_type.gregtech.molten_waxmagic": {
+      "source_key": "fluid.molten.waxmagic",
+      "value": "Molten Magic Wax"
+    },
+    "fluid_type.gregtech.molten_waxparaffin": {
+      "source_key": "fluid.molten.waxparaffin",
+      "value": "Molten Paraffin Wax"
+    },
+    "fluid_type.gregtech.molten_waxplant": {
+      "source_key": "fluid.molten.waxplant",
+      "value": "Molten Plant Wax"
+    },
+    "fluid_type.gregtech.molten_waxrefractory": {
+      "source_key": "fluid.molten.waxrefractory",
+      "value": "Molten Refractory Wax"
+    },
+    "fluid_type.gregtech.molten_waxsoulful": {
+      "source_key": "fluid.molten.waxsoulful",
+      "value": "Molten Soulful Wax"
+    },
+    "fluid_type.gregtech.molten_workersalloy": {
+      "source_key": "fluid.molten.workersalloy",
+      "value": "Molten Workers Alloy"
+    },
+    "fluid_type.gregtech.molten_wroughtiron": {
+      "source_key": "fluid.molten.wroughtiron",
+      "value": "Molten Wrought Iron"
+    },
+    "fluid_type.gregtech.molten_zinc": {
+      "source_key": "fluid.molten.zinc",
+      "value": "Molten Zinc"
+    },
+    "fluid_type.gregtech.mushroomsoup": {
+      "source_key": "fluid.mushroomsoup",
+      "value": "Mushroom Stew"
+    },
+    "fluid_type.gregtech.neon": {
+      "source_key": "fluid.neon",
+      "value": "Neon"
+    },
+    "fluid_type.gregtech.netherair": {
+      "source_key": "fluid.netherair",
+      "value": "Nether Air"
+    },
+    "fluid_type.gregtech.neutralmatter": {
+      "source_key": "fluid.neutralmatter",
+      "value": "Neutral Matter"
+    },
+    "fluid_type.gregtech.nitricacid": {
+      "source_key": "fluid.nitricacid",
+      "value": "Nitric Acid"
+    },
+    "fluid_type.gregtech.nitrofuel": {
+      "source_key": "fluid.nitrofuel",
+      "value": "Nitro Fuel"
+    },
+    "fluid_type.gregtech.nitrogen": {
+      "source_key": "fluid.nitrogen",
+      "value": "Nitrogen"
+    },
+    "fluid_type.gregtech.nitrogendioxide": {
+      "source_key": "fluid.nitrogendioxide",
+      "value": "Nitrogen Dioxide"
+    },
+    "fluid_type.gregtech.nitrogenmonoxide": {
+      "source_key": "fluid.nitrogenmonoxide",
+      "value": "Nitrogen Monoxide"
+    },
+    "fluid_type.gregtech.nitrogenplasma": {
+      "source_key": "fluid.nitrogenplasma",
+      "value": "Nitrogen Plasma"
+    },
+    "fluid_type.gregtech.nutella": {
+      "source_key": "fluid.nutella",
+      "value": "Nutella"
+    },
+    "fluid_type.gregtech.nutoil": {
+      "source_key": "fluid.nutoil",
+      "value": "Nut Oil"
+    },
+    "fluid_type.gregtech.oil": {
+      "source_key": "fluid.oil",
+      "value": "Oil"
+    },
+    "fluid_type.gregtech.orangesmoothie": {
+      "source_key": "fluid.orangesmoothie",
+      "value": "Orange Smoothie"
+    },
+    "fluid_type.gregtech.oxygen": {
+      "source_key": "fluid.oxygen",
+      "value": "Oxygen"
+    },
+    "fluid_type.gregtech.papayajuice": {
+      "source_key": "fluid.papayajuice",
+      "value": "Papaya Juice"
+    },
+    "fluid_type.gregtech.papayasmoothie": {
+      "source_key": "fluid.papayasmoothie",
+      "value": "Papaya Smoothie"
+    },
+    "fluid_type.gregtech.peachsmoothie": {
+      "source_key": "fluid.peachsmoothie",
+      "value": "Peach Smoothie"
+    },
+    "fluid_type.gregtech.peanutbutter": {
+      "source_key": "fluid.peanutbutter",
+      "value": "Peanut Butter"
+    },
+    "fluid_type.gregtech.pearsmoothie": {
+      "source_key": "fluid.pearsmoothie",
+      "value": "Pear Smoothie"
+    },
+    "fluid_type.gregtech.persimmonjuice": {
+      "source_key": "fluid.persimmonjuice",
+      "value": "Persimmon Juice"
+    },
+    "fluid_type.gregtech.persimmonsmoothie": {
+      "source_key": "fluid.persimmonsmoothie",
+      "value": "Persimmon Smoothie"
+    },
+    "fluid_type.gregtech.petrol": {
+      "source_key": "fluid.petrol",
+      "value": "Petrol"
+    },
+    "fluid_type.gregtech.petrotheum": {
+      "source_key": "fluid.petrotheum",
+      "value": "Tectonic Petrotheum"
+    },
+    "fluid_type.gregtech.pina.colada": {
+      "source_key": "fluid.pina.colada",
+      "value": "Piña Colada"
+    },
+    "fluid_type.gregtech.pina_colada": {
+      "source_key": "fluid.pina.colada",
+      "value": "Piña Colada"
+    },
+    "fluid_type.gregtech.pineapplesmoothie": {
+      "source_key": "fluid.pineapplesmoothie",
+      "value": "Ananas Smoothie"
+    },
+    "fluid_type.gregtech.pinkvitriol": {
+      "source_key": "fluid.pinkvitriol",
+      "value": "Pink Vitriol"
+    },
+    "fluid_type.gregtech.plastic": {
+      "source_key": "fluid.plastic",
+      "value": "Molten Plastic"
+    },
+    "fluid_type.gregtech.plumsmoothie": {
+      "source_key": "fluid.plumsmoothie",
+      "value": "Plum Smoothie"
+    },
+    "fluid_type.gregtech.pomegranatejuice": {
+      "source_key": "fluid.pomegranatejuice",
+      "value": "Pomegranate Juice"
+    },
+    "fluid_type.gregtech.pomegranatesmoothie": {
+      "source_key": "fluid.pomegranatesmoothie",
+      "value": "Pomegranate Smoothie"
+    },
+    "fluid_type.gregtech.potatojuice": {
+      "source_key": "fluid.potatojuice",
+      "value": "Potato Juice"
+    },
+    "fluid_type.gregtech.potion.alcopops": {
+      "source_key": "fluid.potion.alcopops",
+      "value": "Alcopops"
+    },
+    "fluid_type.gregtech.potion.ambrosia": {
+      "source_key": "fluid.potion.ambrosia",
+      "value": "Ambrosia"
+    },
+    "fluid_type.gregtech.potion.awkward": {
+      "source_key": "fluid.potion.awkward",
+      "value": "Awkward Brew"
+    },
+    "fluid_type.gregtech.potion.cafeaulait": {
+      "source_key": "fluid.potion.cafeaulait",
+      "value": "Cafe au lait"
+    },
+    "fluid_type.gregtech.potion.cavejohnsonsgrenadejuice": {
+      "source_key": "fluid.potion.cavejohnsonsgrenadejuice",
+      "value": "Cave Johnson's Grenade Juice"
+    },
+    "fluid_type.gregtech.potion.coffee": {
+      "source_key": "fluid.potion.coffee",
+      "value": "Coffee"
+    },
+    "fluid_type.gregtech.potion.darkcafeaulait": {
+      "source_key": "fluid.potion.darkcafeaulait",
+      "value": "Dark Cafe au lait"
+    },
+    "fluid_type.gregtech.potion.darkchocolatemilk": {
+      "source_key": "fluid.potion.darkchocolatemilk",
+      "value": "Bitter Chocolate Milk"
+    },
+    "fluid_type.gregtech.potion.darkcoffee": {
+      "source_key": "fluid.potion.darkcoffee",
+      "value": "Dark Coffee"
+    },
+    "fluid_type.gregtech.potion.diablosauce": {
+      "source_key": "fluid.potion.diablosauce",
+      "value": "Diablo Sauce"
+    },
+    "fluid_type.gregtech.potion.diablosauce.strong": {
+      "source_key": "fluid.potion.diablosauce.strong",
+      "value": "There is no Cow Sauce"
+    },
+    "fluid_type.gregtech.potion.diabolosauce": {
+      "source_key": "fluid.potion.diabolosauce",
+      "value": "Diabolo Sauce"
+    },
+    "fluid_type.gregtech.potion.dragonblood": {
+      "source_key": "fluid.potion.dragonblood",
+      "value": "Dragon Blood"
+    },
+    "fluid_type.gregtech.potion.dressing": {
+      "source_key": "fluid.potion.dressing",
+      "value": "Dressing"
+    },
+    "fluid_type.gregtech.potion.goldenapplejuice": {
+      "source_key": "fluid.potion.goldenapplejuice",
+      "value": "Golden Apple Juice"
+    },
+    "fluid_type.gregtech.potion.goldencider": {
+      "source_key": "fluid.potion.goldencider",
+      "value": "Golden Cider"
+    },
+    "fluid_type.gregtech.potion.hotsauce": {
+      "source_key": "fluid.potion.hotsauce",
+      "value": "Hot Sauce"
+    },
+    "fluid_type.gregtech.potion.idunsapplejuice": {
+      "source_key": "fluid.potion.idunsapplejuice",
+      "value": "Idun's Apple Juice"
+    },
+    "fluid_type.gregtech.potion.laitaucafe": {
+      "source_key": "fluid.potion.laitaucafe",
+      "value": "Lait au cafe"
+    },
+    "fluid_type.gregtech.potion.lemonade": {
+      "source_key": "fluid.potion.lemonade",
+      "value": "Lemonade"
+    },
+    "fluid_type.gregtech.potion.leninade": {
+      "source_key": "fluid.potion.leninade",
+      "value": "Leninade"
+    },
+    "fluid_type.gregtech.potion.mineralwater": {
+      "source_key": "fluid.potion.mineralwater",
+      "value": "Mineral Water"
+    },
+    "fluid_type.gregtech.potion.mundane": {
+      "source_key": "fluid.potion.mundane",
+      "value": "Mundane Brew"
+    },
+    "fluid_type.gregtech.potion.notchesbrew": {
+      "source_key": "fluid.potion.notchesbrew",
+      "value": "Notches Brew"
+    },
+    "fluid_type.gregtech.potion.sake": {
+      "source_key": "fluid.potion.sake",
+      "value": "Sake"
+    },
+    "fluid_type.gregtech.potion.tainted": {
+      "source_key": "fluid.potion.tainted",
+      "value": "Tainted Brew"
+    },
+    "fluid_type.gregtech.potion.thick": {
+      "source_key": "fluid.potion.thick",
+      "value": "Thick Brew"
+    },
+    "fluid_type.gregtech.potion_alcopops": {
+      "source_key": "fluid.potion.alcopops",
+      "value": "Alcopops"
+    },
+    "fluid_type.gregtech.potion_ambrosia": {
+      "source_key": "fluid.potion.ambrosia",
+      "value": "Ambrosia"
+    },
+    "fluid_type.gregtech.potion_awkward": {
+      "source_key": "fluid.potion.awkward",
+      "value": "Awkward Brew"
+    },
+    "fluid_type.gregtech.potion_cafeaulait": {
+      "source_key": "fluid.potion.cafeaulait",
+      "value": "Cafe au lait"
+    },
+    "fluid_type.gregtech.potion_cavejohnsonsgrenadejuice": {
+      "source_key": "fluid.potion.cavejohnsonsgrenadejuice",
+      "value": "Cave Johnson's Grenade Juice"
+    },
+    "fluid_type.gregtech.potion_coffee": {
+      "source_key": "fluid.potion.coffee",
+      "value": "Coffee"
+    },
+    "fluid_type.gregtech.potion_darkcafeaulait": {
+      "source_key": "fluid.potion.darkcafeaulait",
+      "value": "Dark Cafe au lait"
+    },
+    "fluid_type.gregtech.potion_darkchocolatemilk": {
+      "source_key": "fluid.potion.darkchocolatemilk",
+      "value": "Bitter Chocolate Milk"
+    },
+    "fluid_type.gregtech.potion_darkcoffee": {
+      "source_key": "fluid.potion.darkcoffee",
+      "value": "Dark Coffee"
+    },
+    "fluid_type.gregtech.potion_diablosauce": {
+      "source_key": "fluid.potion.diablosauce",
+      "value": "Diablo Sauce"
+    },
+    "fluid_type.gregtech.potion_diablosauce_strong": {
+      "source_key": "fluid.potion.diablosauce.strong",
+      "value": "There is no Cow Sauce"
+    },
+    "fluid_type.gregtech.potion_diabolosauce": {
+      "source_key": "fluid.potion.diabolosauce",
+      "value": "Diabolo Sauce"
+    },
+    "fluid_type.gregtech.potion_dragonblood": {
+      "source_key": "fluid.potion.dragonblood",
+      "value": "Dragon Blood"
+    },
+    "fluid_type.gregtech.potion_dressing": {
+      "source_key": "fluid.potion.dressing",
+      "value": "Dressing"
+    },
+    "fluid_type.gregtech.potion_hotsauce": {
+      "source_key": "fluid.potion.hotsauce",
+      "value": "Hot Sauce"
+    },
+    "fluid_type.gregtech.potion_laitaucafe": {
+      "source_key": "fluid.potion.laitaucafe",
+      "value": "Lait au cafe"
+    },
+    "fluid_type.gregtech.potion_lemonade": {
+      "source_key": "fluid.potion.lemonade",
+      "value": "Lemonade"
+    },
+    "fluid_type.gregtech.potion_leninade": {
+      "source_key": "fluid.potion.leninade",
+      "value": "Leninade"
+    },
+    "fluid_type.gregtech.potion_mineralwater": {
+      "source_key": "fluid.potion.mineralwater",
+      "value": "Mineral Water"
+    },
+    "fluid_type.gregtech.potion_mundane": {
+      "source_key": "fluid.potion.mundane",
+      "value": "Mundane Brew"
+    },
+    "fluid_type.gregtech.potion_sake": {
+      "source_key": "fluid.potion.sake",
+      "value": "Sake"
+    },
+    "fluid_type.gregtech.potion_tainted": {
+      "source_key": "fluid.potion.tainted",
+      "value": "Tainted Brew"
+    },
+    "fluid_type.gregtech.potion_thick": {
+      "source_key": "fluid.potion.thick",
+      "value": "Thick Brew"
+    },
+    "fluid_type.gregtech.propane": {
+      "source_key": "fluid.propane",
+      "value": "Propane"
+    },
+    "fluid_type.gregtech.propylene": {
+      "source_key": "fluid.propylene",
+      "value": "Propylene"
+    },
+    "fluid_type.gregtech.pumpkinjuice": {
+      "source_key": "fluid.pumpkinjuice",
+      "value": "Pumpkin Juice"
+    },
+    "fluid_type.gregtech.purpledrink": {
+      "source_key": "fluid.purpledrink",
+      "value": "Purple Drink"
+    },
+    "fluid_type.gregtech.purplegrapesmoothie": {
+      "source_key": "fluid.purplegrapesmoothie",
+      "value": "Grape Smoothie"
+    },
+    "fluid_type.gregtech.pyrotheum": {
+      "source_key": "fluid.pyrotheum",
+      "value": "Blazing Pyrotheum"
+    },
+    "fluid_type.gregtech.radon": {
+      "source_key": "fluid.radon",
+      "value": "Radon"
+    },
+    "fluid_type.gregtech.rainbowsap": {
+      "source_key": "fluid.rainbowsap",
+      "value": "Rainbow Sap"
+    },
+    "fluid_type.gregtech.raspberryjuice": {
+      "source_key": "fluid.raspberryjuice",
+      "value": "Raspberry Juice"
+    },
+    "fluid_type.gregtech.raspberrysmoothie": {
+      "source_key": "fluid.raspberrysmoothie",
+      "value": "Raspberry Smoothie"
+    },
+    "fluid_type.gregtech.redgrapesmoothie": {
+      "source_key": "fluid.redgrapesmoothie",
+      "value": "Grape Smoothie"
+    },
+    "fluid_type.gregtech.redvitriol": {
+      "source_key": "fluid.redvitriol",
+      "value": "Red Vitriol"
+    },
+    "fluid_type.gregtech.reedwater": {
+      "source_key": "fluid.reedwater",
+      "value": "Reedwater"
+    },
+    "fluid_type.gregtech.ricardosanchez": {
+      "source_key": "fluid.ricardosanchez",
+      "value": "Ricardo Sanchez"
+    },
+    "fluid_type.gregtech.ricevinegar": {
+      "source_key": "fluid.ricevinegar",
+      "value": "Rice Vinegar"
+    },
+    "fluid_type.gregtech.ricewater": {
+      "source_key": "fluid.ricewater",
+      "value": "Ricewater"
+    },
+    "fluid_type.gregtech.riverwater": {
+      "source_key": "fluid.riverwater",
+      "value": "River Water"
+    },
+    "fluid_type.gregtech.rottendrink": {
+      "source_key": "fluid.rottendrink",
+      "value": "Rotten Drink"
+    },
+    "fluid_type.gregtech.royaljelly": {
+      "source_key": "fluid.royaljelly",
+      "value": "Royal Jelly"
+    },
+    "fluid_type.gregtech.saltedwater": {
+      "source_key": "fluid.saltedwater",
+      "value": "Salted Water"
+    },
+    "fluid_type.gregtech.saltwater": {
+      "source_key": "fluid.saltwater",
+      "value": "Saltwater"
+    },
+    "fluid_type.gregtech.seawater": {
+      "source_key": "fluid.seawater",
+      "value": "Sea Water"
+    },
+    "fluid_type.gregtech.seedoil": {
+      "source_key": "fluid.seedoil",
+      "value": "Seed Oil"
+    },
+    "fluid_type.gregtech.semiheavywater": {
+      "source_key": "fluid.semiheavywater",
+      "value": "Semiheavy Water"
+    },
+    "fluid_type.gregtech.short.mead": {
+      "source_key": "fluid.short.mead",
+      "value": "Short Mead"
+    },
+    "fluid_type.gregtech.short_mead": {
+      "source_key": "fluid.short.mead",
+      "value": "Short Mead"
+    },
+    "fluid_type.gregtech.slime": {
+      "source_key": "fluid.slime",
+      "value": "Slime"
+    },
+    "fluid_type.gregtech.sluicejuice": {
+      "source_key": "fluid.sluicejuice",
+      "value": "Sluice Juice"
+    },
+    "fluid_type.gregtech.soda": {
+      "source_key": "fluid.soda",
+      "value": "Soda"
+    },
+    "fluid_type.gregtech.soulsandoil": {
+      "source_key": "fluid.soulsandoil",
+      "value": "Soulsand Oil"
+    },
+    "fluid_type.gregtech.soymilk": {
+      "source_key": "fluid.soymilk",
+      "value": "Soy Milk"
+    },
+    "fluid_type.gregtech.spectral_dew": {
+      "source_key": "fluid.spectral_dew",
+      "value": "Spectral Dew"
+    },
+    "fluid_type.gregtech.spoiledmilk": {
+      "source_key": "fluid.spoiledmilk",
+      "value": "Milk"
+    },
+    "fluid_type.gregtech.squidink": {
+      "source_key": "fluid.squidink",
+      "value": "Squid Ink"
     },
     "fluid_type.gregtech.stagnantwater": {
       "source_key": "gt.multiitem.bottles.7",
       "value": "Stagnant Water"
     },
+    "fluid_type.gregtech.stannicchloride": {
+      "source_key": "fluid.stannicchloride",
+      "value": "Stannic Chloride"
+    },
+    "fluid_type.gregtech.starfruitjuice": {
+      "source_key": "fluid.starfruitjuice",
+      "value": "Starfruit Juice"
+    },
+    "fluid_type.gregtech.starfruitsmoothie": {
+      "source_key": "fluid.starfruitsmoothie",
+      "value": "Starfruit Smoothie"
+    },
+    "fluid_type.gregtech.steam": {
+      "source_key": "fluid.steam",
+      "value": "Steam"
+    },
+    "fluid_type.gregtech.strawberryjuice": {
+      "source_key": "fluid.strawberryjuice",
+      "value": "Strawberry Juice"
+    },
+    "fluid_type.gregtech.strawberrysmoothie": {
+      "source_key": "fluid.strawberrysmoothie",
+      "value": "Strawberry Smoothie"
+    },
+    "fluid_type.gregtech.sulfurdioxide": {
+      "source_key": "fluid.sulfurdioxide",
+      "value": "Sulfur Dioxide"
+    },
+    "fluid_type.gregtech.sulfuricacid": {
+      "source_key": "fluid.sulfuricacid",
+      "value": "Sulfuric Acid"
+    },
+    "fluid_type.gregtech.sulfurtrioxide": {
+      "source_key": "fluid.sulfurtrioxide",
+      "value": "Sulfur Trioxide"
+    },
+    "fluid_type.gregtech.sunfloweroil": {
+      "source_key": "fluid.sunfloweroil",
+      "value": "Sunflower Oil"
+    },
     "fluid_type.gregtech.swampwater": {
       "source_key": "gt.multiitem.bottles.6",
       "value": "Swampwater"
     },
+    "fluid_type.gregtech.sweettea": {
+      "source_key": "fluid.sweettea",
+      "value": "Sweet Tea"
+    },
+    "fluid_type.gregtech.tea": {
+      "source_key": "fluid.tea",
+      "value": "Tea"
+    },
+    "fluid_type.gregtech.thoriumsalt": {
+      "source_key": "fluid.thoriumsalt",
+      "value": "Molten Thorium Salt"
+    },
+    "fluid_type.gregtech.titaniumtetrachloride": {
+      "source_key": "fluid.titaniumtetrachloride",
+      "value": "Titanium Tetrachloride"
+    },
+    "fluid_type.gregtech.tritiatedwater": {
+      "source_key": "fluid.tritiatedwater",
+      "value": "Tritiated Water"
+    },
+    "fluid_type.gregtech.tritium": {
+      "source_key": "fluid.tritium",
+      "value": "Tritium"
+    },
     "fluid_type.gregtech.tropicswater": {
       "source_key": "gt.multiitem.bottles.1",
       "value": "Sea Water"
+    },
+    "fluid_type.gregtech.uranium235hexafluoride": {
+      "source_key": "fluid.uranium235hexafluoride",
+      "value": "Uranium-235 Hexafluoride"
+    },
+    "fluid_type.gregtech.uranium238hexafluoride": {
+      "source_key": "fluid.uranium238hexafluoride",
+      "value": "Uranium-238 Hexafluoride"
+    },
+    "fluid_type.gregtech.uraniumhexafluoride": {
+      "source_key": "fluid.uraniumhexafluoride",
+      "value": "Uranium Hexafluoride"
+    },
+    "fluid_type.gregtech.uuamplifier": {
+      "source_key": "fluid.uuamplifier",
+      "value": "UU-Amplifier"
+    },
+    "fluid_type.gregtech.vinegar": {
+      "source_key": "fluid.vinegar",
+      "value": "Grape Vinegar"
+    },
+    "fluid_type.gregtech.vitriolofclay": {
+      "source_key": "fluid.vitriolofclay",
+      "value": "Vitriol Of Clay"
+    },
+    "fluid_type.gregtech.waterdirty": {
+      "source_key": "fluid.waterdirty",
+      "value": "Dirty Water"
+    },
+    "fluid_type.gregtech.watergeothermal": {
+      "source_key": "fluid.watergeothermal",
+      "value": "Hot Spring Water"
+    },
+    "fluid_type.gregtech.whaleoil": {
+      "source_key": "fluid.whaleoil",
+      "value": "Whale Oil"
+    },
+    "fluid_type.gregtech.wheathopsmash": {
+      "source_key": "fluid.wheathopsmash",
+      "value": "Wheat-Hops Mash"
+    },
+    "fluid_type.gregtech.whitegrapesmoothie": {
+      "source_key": "fluid.whitegrapesmoothie",
+      "value": "Grape Smoothie"
+    },
+    "fluid_type.gregtech.whitevitriol": {
+      "source_key": "fluid.whitevitriol",
+      "value": "White Vitriol"
+    },
+    "fluid_type.gregtech.wine": {
+      "source_key": "fluid.wine",
+      "value": "Wine"
+    },
+    "fluid_type.gregtech.xenon": {
+      "source_key": "fluid.xenon",
+      "value": "Xenon"
     },
     "gregtech.book.bronze": {
       "source_key": "gt.multiitem.books.32000.tooltip",
@@ -25908,6 +30652,78 @@
       "source_key": "gt.multiitem.food.12312.tooltip",
       "value": "Bentonite Clay"
     },
+    "loot.bonusChest": {
+      "source_key": "loot.bonusChest",
+      "value": "-Bonus Chest-"
+    },
+    "loot.dungeonChest": {
+      "source_key": "loot.dungeonChest",
+      "value": "*Dungeon*"
+    },
+    "loot.gt.books": {
+      "source_key": "loot.gt.books",
+      "value": "+Random Books+"
+    },
+    "loot.gt.bottles": {
+      "source_key": "loot.gt.bottles",
+      "value": "+Bottles+"
+    },
+    "loot.gt.flawless": {
+      "source_key": "loot.gt.flawless",
+      "value": "*Flawless Gems*"
+    },
+    "loot.gt.gems": {
+      "source_key": "loot.gt.gems",
+      "value": "+Random Gems+"
+    },
+    "loot.gt.matdicts": {
+      "source_key": "loot.gt.matdicts",
+      "value": "-Random Material Dictionaries-"
+    },
+    "loot.gt.misc": {
+      "source_key": "loot.gt.misc",
+      "value": "*Miscellaneous Items*"
+    },
+    "loot.gt.saplings": {
+      "source_key": "loot.gt.saplings",
+      "value": "-Random Saplings-"
+    },
+    "loot.gt.seeds": {
+      "source_key": "loot.gt.seeds",
+      "value": "-Random Seeds-"
+    },
+    "loot.mineshaftCorridor": {
+      "source_key": "loot.mineshaftCorridor",
+      "value": "+Mineshaft+"
+    },
+    "loot.pyramidDesertyChest": {
+      "source_key": "loot.pyramidDesertyChest",
+      "value": "*Desert Pyramid*"
+    },
+    "loot.pyramidJungleChest": {
+      "source_key": "loot.pyramidJungleChest",
+      "value": "*Jungle Temple*"
+    },
+    "loot.pyramidJungleDispenser": {
+      "source_key": "loot.pyramidJungleDispenser",
+      "value": "-Dispenser-"
+    },
+    "loot.strongholdCorridor": {
+      "source_key": "loot.strongholdCorridor",
+      "value": "-Corridor-"
+    },
+    "loot.strongholdCrossing": {
+      "source_key": "loot.strongholdCrossing",
+      "value": "+Storage+"
+    },
+    "loot.strongholdLibrary": {
+      "source_key": "loot.strongholdLibrary",
+      "value": "+Library+"
+    },
+    "loot.villageBlacksmith": {
+      "source_key": "loot.villageBlacksmith",
+      "value": "*Blacksmith*"
+    },
     "material.gregtech.abyssalnite": {
       "source_key": "gt.material.Abyssalnite",
       "value": "Abyssalnite"
@@ -26165,6 +30981,10 @@
       "value": "Clay"
     },
     "material.gregtech.anycoal/carbon": {
+      "source_key": "gt.material.AnyCoalCarbon",
+      "value": "Carbon"
+    },
+    "material.gregtech.anycoalcarbon": {
       "source_key": "gt.material.AnyCoalCarbon",
       "value": "Carbon"
     },
@@ -26976,6 +31796,10 @@
       "source_key": "gt.material.CastIron",
       "value": "Cast Iron"
     },
+    "material.gregtech.castlerock": {
+      "source_key": "gt.material.Castlerock",
+      "value": "Castlerock"
+    },
     "material.gregtech.catseye": {
       "source_key": "gt.material.CatsEye",
       "value": "Cat's Eye"
@@ -27468,6 +32292,10 @@
       "source_key": "gt.material.Deuterium",
       "value": "Deuterium"
     },
+    "material.gregtech.diamantine": {
+      "source_key": "gt.material.Diamantine",
+      "value": "Diamantine"
+    },
     "material.gregtech.diamond": {
       "source_key": "gt.material.Diamond",
       "value": "Diamond"
@@ -27704,6 +32532,10 @@
       "source_key": "gt.material.Elvorium",
       "value": "Elvorium"
     },
+    "material.gregtech.emeradic": {
+      "source_key": "gt.material.Emeradic",
+      "value": "Emeradic"
+    },
     "material.gregtech.emerald": {
       "source_key": "gt.material.Emerald",
       "value": "Emerald"
@@ -27767,6 +32599,10 @@
     "material.gregtech.energiumred": {
       "source_key": "gt.material.EnergiumRed",
       "value": "Red Energium"
+    },
+    "material.gregtech.enori": {
+      "source_key": "gt.material.Enori",
+      "value": "Enori"
     },
     "material.gregtech.epidote": {
       "source_key": "gt.material.Epidote",
@@ -29200,6 +34036,10 @@
       "source_key": "gt.material.Maxixe",
       "value": "Maxixe"
     },
+    "material.gregtech.mazestone": {
+      "source_key": "gt.material.Mazestone",
+      "value": "Mazestone"
+    },
     "material.gregtech.mc": {
       "source_key": "gt.material.Moscovium",
       "value": "Moscovium"
@@ -29782,7 +34622,7 @@
     },
     "material.gregtech.os": {
       "source_key": "gt.material.OsmiumElemental",
-      "value": "OsmiumElemental"
+      "value": "Osmium"
     },
     "material.gregtech.osmiridium": {
       "source_key": "gt.material.Osmiridium",
@@ -29790,7 +34630,7 @@
     },
     "material.gregtech.osmiumelemental": {
       "source_key": "gt.material.OsmiumElemental",
-      "value": "OsmiumElemental"
+      "value": "Osmium"
     },
     "material.gregtech.oureclase": {
       "source_key": "gt.material.Oureclase",
@@ -29811,6 +34651,10 @@
     "material.gregtech.padauk": {
       "source_key": "gt.material.Padauk",
       "value": "Padauk"
+    },
+    "material.gregtech.palis": {
+      "source_key": "gt.material.Palis",
+      "value": "Palis"
     },
     "material.gregtech.palladium": {
       "source_key": "gt.material.Palladium",
@@ -29899,6 +34743,10 @@
     "material.gregtech.petroleumcoke": {
       "source_key": "gt.material.PetroleumCoke",
       "value": "Petroleum Coke"
+    },
+    "material.gregtech.petrotheum": {
+      "source_key": "gt.material.Petrotheum",
+      "value": "Petrotheum"
     },
     "material.gregtech.pez": {
       "source_key": "gt.material.PEZ",
@@ -30252,6 +35100,10 @@
       "source_key": "gt.material.Pyrope",
       "value": "Pyrope"
     },
+    "material.gregtech.pyrotheum": {
+      "source_key": "gt.material.Pyrotheum",
+      "value": "Pyrotheum"
+    },
     "material.gregtech.quartz": {
       "source_key": "gt.material.Quartz",
       "value": "Quartz"
@@ -30371,6 +35223,10 @@
     "material.gregtech.redstonealloy": {
       "source_key": "gt.material.RedstoneAlloy",
       "value": "Redstone Alloy"
+    },
+    "material.gregtech.redstonia": {
+      "source_key": "gt.material.Redstonia",
+      "value": "Redstonia"
     },
     "material.gregtech.redvitriol": {
       "source_key": "gt.material.RedVitriol",
@@ -31016,6 +35872,10 @@
       "source_key": "gt.material.Tellurium",
       "value": "Tellurium"
     },
+    "material.gregtech.templerock": {
+      "source_key": "gt.material.Templerock",
+      "value": "Templerock"
+    },
     "material.gregtech.terbium": {
       "source_key": "gt.material.Terbium",
       "value": "Terbium"
@@ -31440,6 +36300,14 @@
       "source_key": "gt.material.VibrantAlloy",
       "value": "Vibrant Alloy"
     },
+    "material.gregtech.vinteum": {
+      "source_key": "gt.material.Vinteum",
+      "value": "Vinteum"
+    },
+    "material.gregtech.vinteumpurified": {
+      "source_key": "gt.material.VinteumPurified",
+      "value": "Purified Vinteum"
+    },
     "material.gregtech.vitriolofclay": {
       "source_key": "gt.material.VitriolOfClay",
       "value": "Vitriol Of Clay"
@@ -31447,6 +36315,10 @@
     "material.gregtech.vividalloy": {
       "source_key": "gt.material.VividAlloy",
       "value": "Vivid Alloy"
+    },
+    "material.gregtech.voidcrystal": {
+      "source_key": "gt.material.VoidCrystal",
+      "value": "Void"
     },
     "material.gregtech.voidmetal": {
       "source_key": "gt.material.VoidMetal",
