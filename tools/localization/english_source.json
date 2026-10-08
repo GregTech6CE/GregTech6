@@ -26717,6 +26717,10 @@
       "source_key": "gt.lang.gravity",
       "value": "This Block is affected by Gravity"
     },
+    "gt.lang.has.shapeless": {
+      "source_key": "gt.lang.has.shapeless",
+      "value": "Has Shapeless Recipes with Amounts: "
+    },
     "gt.lang.hazard.contact": {
       "source_key": "gt.lang.hazard.contact",
       "value": "Causes Damage when touched while active!"
@@ -26968,6 +26972,18 @@
     "gt.lang.walkspeed": {
       "source_key": "gt.lang.walkspeed",
       "value": "This Block alters the Walk Speed"
+    },
+    "gt.lang.wire.stats.amperage": {
+      "source_key": "gt.lang.wire.stats.amperage",
+      "value": "Amperage: "
+    },
+    "gt.lang.wire.stats.loss": {
+      "source_key": "gt.lang.wire.stats.loss",
+      "value": "Loss: "
+    },
+    "gt.lang.wire.stats.voltage": {
+      "source_key": "gt.lang.wire.stats.voltage",
+      "value": "Voltage: "
     },
     "gt.multitileentity.18022": {
       "source_key": "gt.multitileentity.18022",
