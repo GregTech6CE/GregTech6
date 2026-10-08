@@ -85,6 +85,7 @@ final class LanguageDeliveryChecks {
             require(unresolved.isEmpty(),"Unresolved installed English names: "+unresolved+"; total="+unresolved.size());
             int machineNamesEnglish=verifyMachineNames();
             int originalEnglishForms=verifyOriginalEnglishForms();
+            int toolHintsEnglish=verifyToolHints(false);
             int coloredEnglish=verifyColoredConstruction(false);
             int stoneEnglish=verifySourceStones(false);
             int bushEnglish=verifyBushes(false);
@@ -234,6 +235,8 @@ final class LanguageDeliveryChecks {
             report.addProperty("latinNameCandidates",nameInventory.get("candidateCount").getAsInt());
             report.add("materialFormNames",nameInventory.getAsJsonObject("materialFormNames"));
             report.addProperty("assembledToolNames",toolSamples.size());
+            report.addProperty("toolHintsEnglish",toolHintsEnglish);
+            report.addProperty("toolHintsChinese",verifyToolHints(true));
             report.addProperty("newSourceDescriptions",1);
             var samples=new JsonArray();for(var c:ironLines)samples.add(c.getString());report.add("moltenIronTooltip",samples);
             report.addProperty("scope","Installed resource-manager language and actual item callbacks; explicitly supplied native lookup for Neo payloads at title screen; no in-world player hover or survival claim");
@@ -318,6 +321,24 @@ final class LanguageDeliveryChecks {
         }
         return rows.length;
     }
+    private static int verifyToolHints(boolean chinese) {
+        int count=0;
+        for(var definition:com.gregtech.gregtech.api.tool.ToolDefinition.values()) {
+            if(definition.tooltipKey()==null)continue;
+            var type=com.gregtech.gregtech.api.tool.GTToolType.valueOf(definition.name());
+            var stack=com.gregtech.gregtech.api.tool.GTToolHelper.displayTool(type);
+            String key="tooltip.gregtech.tool_hint."+definition.tooltipKey();
+            String expected=original(key);
+            String source=definition==com.gregtech.gregtech.api.tool.ToolDefinition.BUILDER_WAND
+                    ? "gt.lang.use.builder.wand.to.ease.building" : "gt.metatool.01."+definition.gt6Id()+".tooltip";
+            if(chinese)require(expected.equals(original(source)),"Original tool description or behavior instruction "+type);
+            var rows=tooltip(stack).stream().filter(c -> has(c,key)).toList();
+            require(rows.size()==(expected.isEmpty()?0:1),"Source tool description appears once or remains absent "+type);
+            if(!expected.isEmpty())require(rows.get(0).getString().equals(expected),"Installed tool description "+type);
+            count++;
+        }
+        require(count==10,"Complete hinted tool catalog");return count;
+    }
     private static int verifyAdditionalBlockNames() {
         var ids=new ArrayList<String>();
         for(var wire:com.gregtech.gregtech.content.energy.WireCatalog.specifications())
@@ -333,13 +354,16 @@ final class LanguageDeliveryChecks {
                 "ingot_pile","plate_pile","plate_gem_pile","coin_pile","sandwich_block","sensor_kilogibblometer"));
         ids.addAll(List.of("log_hole_maple","log_sap_maple","log_hole_rainbowood","log_sap_rainbowood",
                 "log_hole_rubber","log_resin_rubber"));
+        ids.addAll(List.of("boiler_wall","turbine_wall","large_crucible_wall","cryo_distillation_wall",
+                "large_gas_turbine_wall","large_dynamo_wall","heat_exchanger_wall","bedrock_drill_wall",
+                "lightning_rod_wall","extender_basic","extender_advanced","extender_elite","extender_wireless"));
         for(String id:ids) {
             var stack=item(id);String key="block.gregtech."+id;
             require(stack.getDescriptionId().equals(key),"Source-bound registry description identity "+id);
             // Exact English/source-Chinese resource contents are independently pinned by the language gate.
             require(stack.getHoverName().getString().equals(original(key)),"Installed complete source block name "+id);
         }
-        require(ids.size()==694,"Complete wire, special-ore and utility catalog");return ids.size();
+        require(ids.size()==707,"Complete wire, special-ore and utility catalog");return ids.size();
     }
     private static void verifySourceTechnology(String id, String source, boolean chinese) {
         var stack=item(id);String key=stack.getDescriptionId(),expected=original(key);

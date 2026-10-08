@@ -1527,6 +1527,10 @@
       "source_key": "gt.multitileentity.17999",
       "value": "Bedrock Mining Drill Controller"
     },
+    "block.gregtech.bedrock_drill_wall": {
+      "source_key": "gt.multitileentity.18103",
+      "value": "Bedrock Mining Drill Head"
+    },
     "block.gregtech.bedrock_mining_drill_controller": {
       "source_key": "gt.multitileentity.17999",
       "value": "Bedrock Mining Drill Controller"
@@ -1676,6 +1680,10 @@
       "source_formula": "material_default_name",
       "source_key": "@material-form.default.blockSolid",
       "value": "Block of solid %s"
+    },
+    "block.gregtech.boiler_wall": {
+      "source_key": "gt.multitileentity.18002",
+      "value": "Stainless Steel Wall"
     },
     "block.gregtech.bookshelf": {
       "source_key": "gt.multitileentity.7000",
@@ -4953,6 +4961,10 @@
       "source_key": "gt.multitileentity.17111",
       "value": "Cryo Distillation Tower"
     },
+    "block.gregtech.cryo_distillation_wall": {
+      "source_key": "gt.multitileentity.18102",
+      "value": "Distillation Tower Part"
+    },
     "block.gregtech.cryomixer_aluminium": {
       "source_key": "gt.multitileentity.20572",
       "value": "Cryo Mixer (T2)"
@@ -5865,6 +5877,22 @@
       "source_key": "gt.multitileentity.1308",
       "value": "Steam Engine (Tungstensteel)"
     },
+    "block.gregtech.extender_advanced": {
+      "source_key": "gt.multitileentity.30002",
+      "value": "Inventory and Tank Extender"
+    },
+    "block.gregtech.extender_basic": {
+      "source_key": "gt.multitileentity.30002",
+      "value": "Inventory and Tank Extender"
+    },
+    "block.gregtech.extender_elite": {
+      "source_key": "gt.multitileentity.30002",
+      "value": "Inventory and Tank Extender"
+    },
+    "block.gregtech.extender_wireless": {
+      "source_key": "gt.multitileentity.30002",
+      "value": "Inventory and Tank Extender"
+    },
     "block.gregtech.extruder_invar": {
       "source_key": "gt.multitileentity.20202",
       "value": "Extruder (Invar)"
@@ -6381,6 +6409,10 @@
       "source_key": "gt.multitileentity.17198",
       "value": "Fusion Reactor"
     },
+    "block.gregtech.fusion_reactor_wall": {
+      "source_key": "gt.multitileentity.18045",
+      "value": "Large Iridium Coil"
+    },
     "block.gregtech.fusion_ventilation_unit": {
       "source_key": "gt.multitileentity.18299",
       "value": "Ventilation Unit"
@@ -6716,6 +6748,10 @@
     "block.gregtech.heat_exchanger_main": {
       "source_key": "gt.multitileentity.17197",
       "value": "Large Heat Exchanger"
+    },
+    "block.gregtech.heat_exchanger_wall": {
+      "source_key": "gt.multitileentity.18101",
+      "value": "Heat Transmitter"
     },
     "block.gregtech.heat_transmitter": {
       "source_key": "gt.multitileentity.18101",
@@ -7797,6 +7833,10 @@
       "source_key": "gt.multitileentity.18040",
       "value": "Large Copper Coil"
     },
+    "block.gregtech.large_crucible_wall": {
+      "source_key": "gt.multitileentity.18000",
+      "value": "Fire Bricks"
+    },
     "block.gregtech.large_dense_adamantium_tank_main_valve": {
       "source_key": "gt.multitileentity.17065",
       "value": "Large Dense Adamantium Tank Main Valve"
@@ -7837,6 +7877,10 @@
       "source_key": "gt.multitileentity.17223",
       "value": "Tungstensteel Dynamo Main Housing"
     },
+    "block.gregtech.large_dynamo_wall": {
+      "source_key": "gt.multitileentity.18040",
+      "value": "Large Copper Coil"
+    },
     "block.gregtech.large_gas_turbine_graphene": {
       "source_key": "gt.multitileentity.17233",
       "value": "Graphene Gas Turbine Main Housing"
@@ -7852,6 +7896,10 @@
     "block.gregtech.large_gas_turbine_vibramantium": {
       "source_key": "gt.multitileentity.17234",
       "value": "Vibramantium Gas Turbine Main Housing"
+    },
+    "block.gregtech.large_gas_turbine_wall": {
+      "source_key": "gt.multitileentity.18022",
+      "value": "Dense Stainless Steel Wall"
     },
     "block.gregtech.large_invar_crucible": {
       "source_key": "gt.multitileentity.17307",
@@ -8212,6 +8260,10 @@
     "block.gregtech.lightning_rod_pillar": {
       "source_key": "gt.multitileentity.18104",
       "value": "Lightning Rod"
+    },
+    "block.gregtech.lightning_rod_wall": {
+      "source_key": "gt.multitileentity.18004",
+      "value": "Tungsten Wall"
     },
     "block.gregtech.lightning_stainless_steel": {
       "source_key": "gt.multitileentity.20503",
@@ -15153,6 +15205,10 @@
     "block.gregtech.tungstensteel_wall": {
       "source_key": "gt.multitileentity.18003",
       "value": "Tungstensteel Wall"
+    },
+    "block.gregtech.turbine_wall": {
+      "source_key": "gt.multitileentity.18022",
+      "value": "Dense Stainless Steel Wall"
     },
     "block.gregtech.turf": {
       "source_key": "gt.block.diggable.2",
@@ -39433,6 +39489,14 @@
       "source_key": "gt.lang.contained.materials",
       "value": "Contained Materials:"
     },
+    "tooltip.gregtech.machine.harvest.pickaxe": {
+      "source_key": "gt.metatool.01.2",
+      "value": "Pickaxe"
+    },
+    "tooltip.gregtech.machine.harvest_wrench_short": {
+      "source_key": "gt.metatool.01.16",
+      "value": "Wrench"
+    },
     "tooltip.gregtech.machine.none": {
       "source_key": "gt.lang.face.none",
       "value": "None"
@@ -39517,6 +39581,10 @@
       "source_key": "gt.lang.recipes.mold.select",
       "value": "Use a Chisel in order to select the Shape of the Mold"
     },
+    "tooltip.gregtech.smeltery.product.block_solid": {
+      "source_key": "oredict.prefix.blockSolid",
+      "value": "Blocks of Cast Metal"
+    },
     "tooltip.gregtech.smeltery.tool.monkey_wrench_auto_inputs": {
       "source_key": "gt.lang.use.monkey.wrench.to.toggle.auto.inputs",
       "value": "Use Monkey Wrench to toggle automatic Inputs"
@@ -39576,6 +39644,42 @@
     "tooltip.gregtech.tool_hint.builder_wand": {
       "source_key": "gt.lang.use.builder.wand.to.ease.building",
       "value": "Use Builder Wand to ease building"
+    },
+    "tooltip.gregtech.tool_hint.construction_pick": {
+      "source_key": "gt.metatool.01.60.tooltip",
+      "value": "Good for Bricks and alike, terrible for mining"
+    },
+    "tooltip.gregtech.tool_hint.crowbar": {
+      "source_key": "gt.metatool.01.20.tooltip",
+      "value": "Harvests anything that cannot be harvested otherwise"
+    },
+    "tooltip.gregtech.tool_hint.double_axe": {
+      "source_key": "gt.metatool.01.58.tooltip",
+      "value": "Chops down whole Trees and has a slow Attack Rate"
+    },
+    "tooltip.gregtech.tool_hint.gem_pick": {
+      "source_key": "gt.metatool.01.70.tooltip",
+      "value": "Half of the Durability of a full Gem Pick"
+    },
+    "tooltip.gregtech.tool_hint.hard_hammer": {
+      "source_key": "gt.metatool.01.12.tooltip",
+      "value": "Crushes Ores instead of harvesting them"
+    },
+    "tooltip.gregtech.tool_hint.monkey_wrench": {
+      "source_key": "gt.metatool.01.52.tooltip",
+      "value": "Hold Leftclick to dismantle Machines"
+    },
+    "tooltip.gregtech.tool_hint.soft_hammer": {
+      "source_key": "gt.metatool.01.14.tooltip",
+      "value": "Can rotate vanilla-ish things and toggle Lamps/Rails"
+    },
+    "tooltip.gregtech.tool_hint.spade": {
+      "source_key": "gt.metatool.01.68.tooltip",
+      "value": "for Snow, Grass, Mycelium, Podzol, Mud and Clay"
+    },
+    "tooltip.gregtech.tool_hint.wrench": {
+      "source_key": "gt.metatool.01.16.tooltip",
+      "value": "Hold Leftclick to dismantle Machines"
     },
     "tooltip.gregtech.tool_penetrate_armor": {
       "source_key": "gt.lang.armorpenetrating",
