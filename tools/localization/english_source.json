@@ -46,6 +46,10 @@
       "sha256": "87ec6759b7c3b1ad7d7c6d574e24ec7d7371fa285e93ab67cfa26cd83f2b18b3"
     },
     {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\FM.java",
+      "sha256": "374772472db8a786a8a0af2408ad71ae2500481e258ee1c6815fcd87f7cbec64"
+    },
+    {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
       "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8"
     },
@@ -56,6 +60,10 @@
     {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\OP.java",
       "sha256": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\RM.java",
+      "sha256": "c7cb07faef0235ace4bb26656fddaabfa10da6aa4a2689a7f4cdcaef10d366e6"
     },
     {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\GT_API_Proxy_Client.java",
@@ -132,6 +140,98 @@
     {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\oredict\\OreDictPrefix.java",
       "sha256": "89c94fd1149297496e2904a7897b3ab33c02991009b232df0d70febabb8888f5"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapAssembler.java",
+      "sha256": "bcc79d20d72a4ba7bb4cc73b4c752c5d5d4be27bdc0dc4799b301d7c4ac94722"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapAutocrafting.java",
+      "sha256": "76c79b611b286bfbe331f516fed22ce7877b366ceb656a56749a9d8aab9a04e9"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapBath.java",
+      "sha256": "69a915045f1ee5f524394ee87d33da3441e85d562cb7deb9f4e97387497f9f6c"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapBumblelyzer.java",
+      "sha256": "cfb0dd2b0d70ef363b87b6878c7a515b61cefa128209db30a28ed91982a837fc"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapChisel.java",
+      "sha256": "fc320baceaecf5d8b2f56418a20cf5755c5fddf455ce05f40c90c63f2ddef2ce"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapCrucible.java",
+      "sha256": "48e87b089b6460cb2d55d32bcbcf8485af3565722e466f86b8e417e5ee3de1ab"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapFluidCanner.java",
+      "sha256": "cb2f6a82e98b4c18186ad870c152c70fe167e2dc3d7678b77fcaf15849e7fc89"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapFormingPress.java",
+      "sha256": "5e6af03456f73670e8ff7396aad39330825b3e197d64a825ef87cab14e62b275"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapFuel.java",
+      "sha256": "86d8ee81bd5842dc624bd031a66fe4c87ab6599225e596531462e9d7ab28cf27"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapFurnace.java",
+      "sha256": "38c1db59cb30550295d62e0eefcd6c2ae6f24b749ea52665b86de3a3a5aa830d"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapFurnaceFuel.java",
+      "sha256": "8ba67c06a0083c52e5ef500902dc1af8747839cbb1d077266a0a0cb53a0481a6"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapHammer.java",
+      "sha256": "a38bc4d24b890094fd113633dae8bec2206a6ed4b2f1bc0203f41834977f8e78"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapMicrowave.java",
+      "sha256": "5ad605429254c0b3792768874f1300c6afd353dc33c80ed6d7f980a0074e98be"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapNonGTRecipes.java",
+      "sha256": "1196da054405c5c30b7536c26415da593ed5d00cce8fe75a761d6d2825011b63"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapPlantalyzer.java",
+      "sha256": "c6943362dd53d0ab31e5a038db19c3e2367d3b48f86d2b2e3fae0419a5970d53"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapPrinter.java",
+      "sha256": "84a1536f4865fa03c9670c529078fdbfaf273a531be331d1919e8f856d67508c"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapReplicator.java",
+      "sha256": "27842d2b10e83052f10a0985b5a289600185df5092a8fe4bafa2c18eee8d6bd3"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapScannerMolecular.java",
+      "sha256": "1530afad7f0701d7bbb2b0061b97d3516a4ae995a44e30f92102e9b9a316c42a"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapScannerVisuals.java",
+      "sha256": "eb79301ab2ffd0c7320d94f414699aeadfead0972156ce02cdfff030a707a135"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapShredder.java",
+      "sha256": "b963307f82df8cb595f4d0927d969b603f57a792596ec642bb31f6aaee01d1f4"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapSpecialSingleInput.java",
+      "sha256": "3891676abaeba568318cf814af0ac31de492e85842f369126cd8aff0bf4a1288"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapUnboxinator.java",
+      "sha256": "34d81f6198e7311dc42aee2aaa5cb67ddc53fee9e9dd90ce98f8c93d6116096f"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\Recipe.java",
+      "sha256": "8bb9a0bd00aa839a48a2c082281a988e9a796a540137d1cf50249d2250ad1c7e"
     },
     {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\computer\\TileEntityBase08DataSwitch.java",
@@ -26905,6 +27005,266 @@
       "source_key": "gt.multitileentity.plantpot.tooltip.1",
       "value": "Can grow any Plants ontop of it!"
     },
+    "gt.recipe.autoclave": {
+      "source_key": "gt.recipe.autoclave",
+      "value": "Autoclave"
+    },
+    "gt.recipe.autocrafting": {
+      "source_key": "gt.recipe.autocrafting",
+      "value": "Crafting"
+    },
+    "gt.recipe.bath": {
+      "source_key": "gt.recipe.bath",
+      "value": "Bath"
+    },
+    "gt.recipe.boxinator": {
+      "source_key": "gt.recipe.boxinator",
+      "value": "Boxinator"
+    },
+    "gt.recipe.bumblelyzer": {
+      "source_key": "gt.recipe.bumblelyzer",
+      "value": "Bumblelyzer"
+    },
+    "gt.recipe.burnmixer": {
+      "source_key": "gt.recipe.burnmixer",
+      "value": "Burner Mixer"
+    },
+    "gt.recipe.canner": {
+      "source_key": "gt.recipe.canner",
+      "value": "Canning Machine"
+    },
+    "gt.recipe.catalyticcracking": {
+      "source_key": "gt.recipe.catalyticcracking",
+      "value": "Catalytic Cracking"
+    },
+    "gt.recipe.centrifuge": {
+      "source_key": "gt.recipe.centrifuge",
+      "value": "Centrifuge"
+    },
+    "gt.recipe.clustermill": {
+      "source_key": "gt.recipe.clustermill",
+      "value": "Cluster Mill"
+    },
+    "gt.recipe.coagulator": {
+      "source_key": "gt.recipe.coagulator",
+      "value": "Coagulator"
+    },
+    "gt.recipe.cokeoven": {
+      "source_key": "gt.recipe.cokeoven",
+      "value": "Coke Oven"
+    },
+    "gt.recipe.compressor": {
+      "source_key": "gt.recipe.compressor",
+      "value": "Compressor"
+    },
+    "gt.recipe.crusher": {
+      "source_key": "gt.recipe.crusher",
+      "value": "Crusher"
+    },
+    "gt.recipe.cryodistillationtower": {
+      "source_key": "gt.recipe.cryodistillationtower",
+      "value": "Cryo Distillation Tower"
+    },
+    "gt.recipe.cryomixer": {
+      "source_key": "gt.recipe.cryomixer",
+      "value": "Cryo Mixer"
+    },
+    "gt.recipe.crystallisationcrucible": {
+      "source_key": "gt.recipe.crystallisationcrucible",
+      "value": "Crystallisation Crucible"
+    },
+    "gt.recipe.cutter": {
+      "source_key": "gt.recipe.cutter",
+      "value": "Cutter"
+    },
+    "gt.recipe.distillationtower": {
+      "source_key": "gt.recipe.distillationtower",
+      "value": "Distillation Tower"
+    },
+    "gt.recipe.distillery": {
+      "source_key": "gt.recipe.distillery",
+      "value": "Distillery"
+    },
+    "gt.recipe.drying": {
+      "source_key": "gt.recipe.drying",
+      "value": "Dryer"
+    },
+    "gt.recipe.electrolyzer": {
+      "source_key": "gt.recipe.electrolyzer",
+      "value": "Electrolyzer"
+    },
+    "gt.recipe.extruder": {
+      "source_key": "gt.recipe.extruder",
+      "value": "Extruder"
+    },
+    "gt.recipe.fermenter": {
+      "source_key": "gt.recipe.fermenter",
+      "value": "Fermenter"
+    },
+    "gt.recipe.freezer": {
+      "source_key": "gt.recipe.freezer",
+      "value": "Freezer"
+    },
+    "gt.recipe.fuels.hot": {
+      "source_key": "gt.recipe.fuels.hot",
+      "value": "Hot Fuels"
+    },
+    "gt.recipe.fusionreactor": {
+      "source_key": "gt.recipe.fusionreactor",
+      "value": "Fusion Reactor"
+    },
+    "gt.recipe.generifier": {
+      "source_key": "gt.recipe.generifier",
+      "value": "Generifier"
+    },
+    "gt.recipe.implosioncompressor": {
+      "source_key": "gt.recipe.implosioncompressor",
+      "value": "Implosion Compressor"
+    },
+    "gt.recipe.injector": {
+      "source_key": "gt.recipe.injector",
+      "value": "Injector"
+    },
+    "gt.recipe.juicer": {
+      "source_key": "gt.recipe.juicer",
+      "value": "Juicer"
+    },
+    "gt.recipe.laminator": {
+      "source_key": "gt.recipe.laminator",
+      "value": "Laminator"
+    },
+    "gt.recipe.laserengraver": {
+      "source_key": "gt.recipe.laserengraver",
+      "value": "Precision Laser Engraver"
+    },
+    "gt.recipe.lathe": {
+      "source_key": "gt.recipe.lathe",
+      "value": "Lathe"
+    },
+    "gt.recipe.lightning": {
+      "source_key": "gt.recipe.lightning",
+      "value": "Lightning Processor"
+    },
+    "gt.recipe.loom": {
+      "source_key": "gt.recipe.loom",
+      "value": "Loom"
+    },
+    "gt.recipe.magneticseparator": {
+      "source_key": "gt.recipe.magneticseparator",
+      "value": "Magnetic Separator"
+    },
+    "gt.recipe.massfab": {
+      "source_key": "gt.recipe.massfab",
+      "value": "Matter Fabricator"
+    },
+    "gt.recipe.melter": {
+      "source_key": "gt.recipe.melter",
+      "value": "Melter"
+    },
+    "gt.recipe.mixer": {
+      "source_key": "gt.recipe.mixer",
+      "value": "Mixer"
+    },
+    "gt.recipe.mortar": {
+      "source_key": "gt.recipe.mortar",
+      "value": "Mortar"
+    },
+    "gt.recipe.nanofab": {
+      "source_key": "gt.recipe.nanofab",
+      "value": "Nanoscale Fabricator"
+    },
+    "gt.recipe.plantalyzer": {
+      "source_key": "gt.recipe.plantalyzer",
+      "value": "Plantalyzer"
+    },
+    "gt.recipe.polarizer": {
+      "source_key": "gt.recipe.polarizer",
+      "value": "Polarizer"
+    },
+    "gt.recipe.press": {
+      "source_key": "gt.recipe.press",
+      "value": "Press"
+    },
+    "gt.recipe.pressurewasher": {
+      "source_key": "gt.recipe.pressurewasher",
+      "value": "Pressure Washer"
+    },
+    "gt.recipe.printer": {
+      "source_key": "gt.recipe.printer",
+      "value": "Printer"
+    },
+    "gt.recipe.replicator": {
+      "source_key": "gt.recipe.replicator",
+      "value": "Matter Replicator"
+    },
+    "gt.recipe.roaster": {
+      "source_key": "gt.recipe.roaster",
+      "value": "Roaster"
+    },
+    "gt.recipe.rollbender": {
+      "source_key": "gt.recipe.rollbender",
+      "value": "Roll Bender"
+    },
+    "gt.recipe.rollformer": {
+      "source_key": "gt.recipe.rollformer",
+      "value": "Roll Former"
+    },
+    "gt.recipe.rollingmill": {
+      "source_key": "gt.recipe.rollingmill",
+      "value": "Rolling Mill"
+    },
+    "gt.recipe.scannermolecular": {
+      "source_key": "gt.recipe.scannermolecular",
+      "value": "Molecular Scanner"
+    },
+    "gt.recipe.scannervisuals": {
+      "source_key": "gt.recipe.scannervisuals",
+      "value": "Scanner (Visuals)"
+    },
+    "gt.recipe.sharpener": {
+      "source_key": "gt.recipe.sharpener",
+      "value": "Sharpener"
+    },
+    "gt.recipe.shredder": {
+      "source_key": "gt.recipe.shredder",
+      "value": "Shredder"
+    },
+    "gt.recipe.sifter": {
+      "source_key": "gt.recipe.sifter",
+      "value": "Sifter"
+    },
+    "gt.recipe.slicer": {
+      "source_key": "gt.recipe.slicer",
+      "value": "Slicer"
+    },
+    "gt.recipe.sluice": {
+      "source_key": "gt.recipe.sluice",
+      "value": "Sluice"
+    },
+    "gt.recipe.smelter": {
+      "source_key": "gt.recipe.smelter",
+      "value": "Smelter"
+    },
+    "gt.recipe.squeezer": {
+      "source_key": "gt.recipe.squeezer",
+      "value": "Squeezer"
+    },
+    "gt.recipe.steamcracking": {
+      "source_key": "gt.recipe.steamcracking",
+      "value": "Steam Cracking"
+    },
+    "gt.recipe.unboxinator": {
+      "source_key": "gt.recipe.unboxinator",
+      "value": "Unboxinator"
+    },
+    "gt.recipe.welder": {
+      "source_key": "gt.recipe.welder",
+      "value": "Welding Machine"
+    },
+    "gt.recipe.wiremill": {
+      "source_key": "gt.recipe.wiremill",
+      "value": "Wiremill"
+    },
     "gt.tooltip.crucible.1": {
       "source_key": "gt.tooltip.crucible.1",
       "value": "KU Input will turn into Air for Steelmaking"
@@ -51920,6 +52280,10 @@
     "material.gregtech.zr": {
       "source_key": "gt.material.Zirconium",
       "value": "Zirconium"
+    },
+    "mc.recipe.furnace": {
+      "source_key": "mc.recipe.furnace",
+      "value": "Furnace"
     },
     "oredict.prefix.billet": {
       "source_key": "oredict.prefix.billet",

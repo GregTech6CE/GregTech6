@@ -33,7 +33,7 @@ public final class EngineTooltips {
             case FLUX     -> appendFlux(block, ms, tooltip);
             case STEAM    -> appendSteam(block, ms, tooltip);
             case ROTATION -> appendRotation(block, ms, tooltip);
-            case DIESEL   -> tooltip.add(Component.empty().append(Component.translatable("tooltip."+MOD+".machine.energy_out")).append(Component.literal(" "+TooltipHelper.formatLong(block.engineSpec(DieselEngineSpec.class).outputRate())+" RU/t ("+TooltipHelper.dirMaskToString(ENERGY_OUT_FACES)+")")).withStyle(ChatFormatting.RED));
+            case DIESEL   -> tooltip.add(Component.empty().append(Component.translatable("gt.lang.energy.output").append(": ")).append(Component.literal(TooltipHelper.formatLong(block.engineSpec(DieselEngineSpec.class).outputRate())+" RU/t ("+TooltipHelper.dirMaskToString(ENERGY_OUT_FACES)+")")).withStyle(ChatFormatting.RED));
         }
 
         // Tool hints
@@ -48,7 +48,7 @@ public final class EngineTooltips {
         // Material name
         GTMaterial mat = resolveMaterial(block, type);
         if (mat != null && mat.isValid()) {
-            tooltip.add(Component.literal(mat.getLocalName()).withStyle(ChatFormatting.YELLOW));
+            tooltip.add(com.gregtech.gregtech.api.material.MaterialPresentation.name(mat).copy().withStyle(ChatFormatting.YELLOW));
 
             // The shared material registry supplies source composition in F3+H.
 
@@ -119,18 +119,19 @@ public final class EngineTooltips {
         long steamMax = out * 40000 / eff;
         String dirsIn = TooltipHelper.dirMaskToString(FLUID_IN_FACES);
         tooltip.add(Component.empty()
-                .append(Component.translatable("tooltip." + MOD + ".machine.energy_in").withStyle(ChatFormatting.GREEN))
-                .append(Component.literal(steamMin + " - " + steamMax + " Steam/t")
+                .append(Component.translatable("gt.lang.energy.input").append(": ").withStyle(ChatFormatting.GREEN))
+                .append(Component.literal(steamMin + " - " + steamMax + " ")
+                        .append(Component.translatable("fluid_type.gregtech.steam")).append("/t")
                         .withStyle(ChatFormatting.WHITE))
                 .append(Component.literal(" (" + dirsIn + ")").withStyle(ChatFormatting.WHITE)));
-        appendCapacityLine("Steam", spec.steamCapacity(), ChatFormatting.GREEN, tooltip);
+        appendCapacityLine(Component.translatable("fluid_type.gregtech.steam").getString(), spec.steamCapacity(), ChatFormatting.GREEN, tooltip);
 
         // Energy OUT: KU range
         long kuMin = out / 2;
         long kuMax = out * 2;
         String dirsOut = TooltipHelper.dirMaskToString(ENERGY_OUT_FACES);
         tooltip.add(Component.empty()
-                .append(Component.translatable("tooltip." + MOD + ".machine.energy_out").withStyle(ChatFormatting.RED))
+                .append(Component.translatable("gt.lang.energy.output").append(": ").withStyle(ChatFormatting.RED))
                 .append(Component.literal(kuMin + " - " + kuMax + " KU/t")
                         .withStyle(ChatFormatting.WHITE))
                 .append(Component.literal(" (" + dirsOut + ")").withStyle(ChatFormatting.WHITE)));
@@ -183,7 +184,7 @@ public final class EngineTooltips {
         long min = rate / 4;
         long max = rate * 2;
         return Component.empty()
-                .append(Component.translatable("tooltip." + MOD + ".machine.energy_in").withStyle(ChatFormatting.GREEN))
+                .append(Component.translatable("gt.lang.energy.input").append(": ").withStyle(ChatFormatting.GREEN))
                 .append(Component.literal(
                         TooltipHelper.formatLong(min) + " - " + TooltipHelper.formatLong(max) + " " + unit)
                         .withStyle(ChatFormatting.WHITE))
@@ -196,7 +197,7 @@ public final class EngineTooltips {
         long min = rate / 4;
         long max = rate;
         return Component.empty()
-                .append(Component.translatable("tooltip." + MOD + ".machine.energy_out").withStyle(ChatFormatting.RED))
+                .append(Component.translatable("gt.lang.energy.output").append(": ").withStyle(ChatFormatting.RED))
                 .append(Component.literal(
                         TooltipHelper.formatLong(min) + " - " + TooltipHelper.formatLong(max) + " " + unit)
                         .withStyle(ChatFormatting.WHITE))
@@ -207,7 +208,7 @@ public final class EngineTooltips {
     /** "Efficiency: 30.00%" */
     private static void appendEfficiencyLine(int efficiency, List<Component> tooltip) {
         tooltip.add(Component.empty()
-                .append(Component.translatable("tooltip." + MOD + ".machine.efficiency.label").withStyle(ChatFormatting.YELLOW))
+                .append(Component.translatable("gt.lang.efficiency").append(": ").withStyle(ChatFormatting.YELLOW))
                 .append(Component.literal(MachineTooltips.formatEfficiencyPercent(efficiency) + "%")
                         .withStyle(ChatFormatting.WHITE)));
     }
@@ -215,7 +216,7 @@ public final class EngineTooltips {
     /** "Capacity: 1,024 EU" */
     private static void appendCapacityLine(String unit, long capacity, ChatFormatting color, List<Component> tooltip) {
         tooltip.add(Component.empty()
-                .append(Component.translatable("tooltip." + MOD + ".engine.capacity").withStyle(color))
+                .append(Component.translatable("gt.lang.energy.capacity").append(": ").withStyle(color))
                 .append(Component.literal(TooltipHelper.formatLong(capacity) + " " + unit)
                         .withStyle(ChatFormatting.WHITE)));
     }

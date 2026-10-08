@@ -52,7 +52,7 @@ public final class TooltipHelper {
     /** "32 HU/t (16 to 64, Bottom)" */
     public static Component energyInLine(long nominal, long min, long max, String unit, String dirLabel) {
         return Component.empty()
-                .append(Component.translatable("tooltip." + MOD + ".machine.energy_in")
+                .append(Component.translatable("gt.lang.energy.input").append(": ")
                         .withStyle(ChatFormatting.GREEN))
                 .append(Component.literal(formatLong(nominal)).withStyle(ChatFormatting.WHITE))
                 .append(Component.literal(" " + unit + "/t").withStyle(ChatFormatting.GREEN))
@@ -63,14 +63,14 @@ public final class TooltipHelper {
     /** "Energy OUT: 32 HU/t" */
     public static MutableComponent energyOutLine(long amount, String unit) {
         return Component.empty()
-                .append(Component.translatable("tooltip." + MOD + ".machine.energy_out")
+                .append(Component.translatable("gt.lang.energy.output").append(": ")
                         .withStyle(ChatFormatting.RED))
                 .append(Component.literal(formatLong(amount) + " " + unit + "/t")
                         .withStyle(ChatFormatting.WHITE));
     }
 
     public static Component energyInNone() {
-        return Component.translatable("tooltip." + MOD + ".machine.energy_in")
+        return Component.translatable("gt.lang.energy.input").append(": ")
                 .append(Component.translatable("tooltip." + MOD + ".machine.none")
                         .withStyle(ChatFormatting.WHITE))
                 .withStyle(ChatFormatting.RED);
@@ -81,6 +81,13 @@ public final class TooltipHelper {
     /** "Items IN: Left (auto), Right (no auto)" */
     public static Component ioLine(String typeKey, int mask, int autoMask, ChatFormatting color) {
         if (mask == 0) return null;
+        MutableComponent title = switch (typeKey) {
+            case "items_in" -> Component.translatable("gt.lang.item.input").append(": ");
+            case "items_out" -> Component.translatable("gt.lang.item.output").append(": ");
+            case "fluids_in" -> Component.translatable("gt.lang.fluid.input").append(": ");
+            case "fluids_out" -> Component.translatable("gt.lang.fluid.output").append(": ");
+            default -> Component.translatable("tooltip." + MOD + ".machine.io." + typeKey);
+        };
         List<MutableComponent> parts = new ArrayList<>();
         for (int d : new int[]{FaceConfig.BOTTOM, FaceConfig.TOP, FaceConfig.LEFT,
                 FaceConfig.RIGHT, FaceConfig.FRONT, FaceConfig.BACK}) {
@@ -94,8 +101,7 @@ public final class TooltipHelper {
             else list = list.append(", ").append(parts.get(i));
         }
         return Component.empty()
-                .append(Component.translatable("tooltip." + MOD + ".machine.io." + typeKey)
-                        .withStyle(color))
+                .append(title.withStyle(color))
                 .append(list != null ? list.withStyle(ChatFormatting.WHITE) : Component.literal(""));
     }
 

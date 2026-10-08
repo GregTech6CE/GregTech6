@@ -1,5 +1,6 @@
 """Fast source boundary and exact-language checks; never launch Minecraft."""
 import argparse
+from dataclasses import dataclass
 import json
 from pathlib import Path
 import re
@@ -50,27 +51,45 @@ def java_unicode(source):
     return ''.join(result)
 
 
-def java_code_and_literals(source):
+@dataclass(frozen=True)
+class JavaSourceView:
+    code: str
+    literals: tuple
+    uncommented: str
+
+
+def java_source_view(source):
+    """Expand Unicode once and share one lexical pass across both source gates."""
     source = java_unicode(source)
-    code, literals, cursor, line = [], [], 0, 1
+    code, uncommented, literals, cursor, line = [], [], [], 0, 1
     for match in JAVA_TOKEN.finditer(source):
         gap = source[cursor:match.start()]
         line += gap.count('\n')
         code.append(gap)
+        uncommented.append(gap)
         token = match[0]
         if token.startswith(('"', "'")):
             value = SURROGATE_PAIR.sub(
                 lambda m: chr(0x10000 + ((ord(m[1]) - 0xd800) << 10) + ord(m[2]) - 0xdc00), token)
             literals.append((line, value))
-        code.append(re.sub(r'[^\r\n]', ' ', token))
+        blank = re.sub(r'[^\r\n]', ' ', token)
+        code.append(blank)
+        uncommented.append(blank if token.startswith(('//', '/*')) else token)
         line += token.count('\n')
         cursor = match.end()
     code.append(source[cursor:])
-    return ''.join(code), literals
+    uncommented.append(source[cursor:])
+    return JavaSourceView(''.join(code), tuple(literals), ''.join(uncommented))
 
 
-def boundary_errors(path, source, *, core=False):
-    code, literals = java_code_and_literals(source)
+def java_code_and_literals(source):
+    view = java_source_view(source)
+    return view.code, list(view.literals)
+
+
+def boundary_errors(path, source, *, core=False, parsed=None):
+    view = java_source_view(source) if parsed is None else parsed
+    code, literals = view.code, view.literals
     errors = []
     if ('gametest' in path.parts or path.name == 'JeiMachineIndexTests.java'
             or re.search(r'\b(?:\w+\s*\.\s*)+gametest\s*\.', code)
@@ -84,16 +103,14 @@ def boundary_errors(path, source, *, core=False):
     return errors
 
 
-def literal_language_calls(path, source, english):
+def literal_language_calls(path, source, english, *, parsed=None):
     """Check actual literal-key call sites, excluding comments and string examples.
 
     Dynamic key factories/varargs remain runtime/catalog checks; this is not a
     promise that regular expressions prove every generated registry name.
     """
-    code, _ = java_code_and_literals(source)
-    source = java_unicode(source)
-    source = JAVA_TOKEN.sub(lambda m: re.sub(r'[^\r\n]', ' ', m[0])
-                            if m[0].startswith(('//', '/*')) else m[0], source)
+    view = java_source_view(source) if parsed is None else parsed
+    code, source = view.code, view.uncommented
     errors, checked, dynamic = [], 0, 0
     for match in re.finditer(r'\b(translatableWithFallback|translatable|I18n\s*\.\s*get)\s*\(', code):
         start = code.index('(', match.start())
@@ -128,8 +145,9 @@ def check(repo):
         for path in sorted((base / 'java').rglob('*.java')):
             count += 1
             source = path.read_text(encoding='utf-8-sig')
-            errors.extend(boundary_errors(path.relative_to(repo), source, core=name.startswith('core/')))
-            issues, checked, dynamic = literal_language_calls(path.relative_to(repo), source, english)
+            parsed = java_source_view(source)
+            errors.extend(boundary_errors(path.relative_to(repo), source, core=name.startswith('core/'), parsed=parsed))
+            issues, checked, dynamic = literal_language_calls(path.relative_to(repo), source, english, parsed=parsed)
             errors.extend(issues); checked_calls += checked; dynamic_calls += dynamic
         resources = base / 'resources'
         for folder in ('structures', 'structure'):

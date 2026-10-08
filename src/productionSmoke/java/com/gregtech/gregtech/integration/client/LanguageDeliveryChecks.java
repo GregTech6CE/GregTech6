@@ -303,7 +303,64 @@ final class LanguageDeliveryChecks {
         report.addProperty("panels",panels.size());report.addProperty("creativeTabs",tabs);
         report.addProperty("bottles",bottles);
         report.addProperty("faceMasks",verifyFaceNames());
+        report.addProperty("machineLabels",verifyMachineLabels());
+        report.addProperty("engineDescriptions",verifyEngineDescriptions());
         return report;
+    }
+
+    private static int verifyMachineLabels() {
+        String bottom=original("gt.lang.face.bottom"),front=original("gt.lang.face.front");
+        require(com.gregtech.gregtech.client.TooltipHelper.energyInLine(32,16,64,"EU",bottom).getString()
+                .equals(original("gt.lang.energy.input")+": 32 EU/t (16 to 64, "+bottom+")"),"Original input label and unchanged numbers");
+        require(com.gregtech.gregtech.client.TooltipHelper.energyOutLine(8,"KU").getString()
+                .equals(original("gt.lang.energy.output")+": 8 KU/t"),"Original output label");
+        require(com.gregtech.gregtech.client.TooltipHelper.energyInNone().getString()
+                .equals(original("gt.lang.energy.input")+": "+original("gt.lang.face.none")),"No input label");
+        for(var type:Map.of("items_in","item.input","items_out","item.output","fluids_in","fluid.input","fluids_out","fluid.output").entrySet()) {
+            var line=com.gregtech.gregtech.client.TooltipHelper.ioLine(type.getKey(),9,0,net.minecraft.ChatFormatting.GREEN);
+            require(line!=null&&line.getString().equals(original("gt.lang."+type.getValue())+": "+bottom+" (auto), "+front+" (no auto)"),
+                    "Original I/O label and face composition "+type.getKey());
+            require(com.gregtech.gregtech.client.TooltipHelper.ioLine(type.getKey(),0,0,net.minecraft.ChatFormatting.GREEN)==null,
+                    "Empty I/O mask produces no line "+type.getKey());
+        }
+        return 7;
+    }
+
+    private static int verifyEngineDescriptions() {
+        int count=0;
+        for(var registered:BuiltInRegistries.ITEM)if(registered instanceof BlockItem item
+                && item.getBlock() instanceof com.gregtech.gregtech.block.machine.EngineBlock engine) {
+            var material=switch(engine.engineType()) {
+                case ELECTRIC -> engine.engineSpec(com.gregtech.gregtech.api.machine.ElectricEngineSpec.class).material();
+                case FLUX -> engine.engineSpec(com.gregtech.gregtech.api.machine.FluxEngineSpec.class).material();
+                case STEAM -> engine.engineSpec(com.gregtech.gregtech.api.machine.SteamEngineData.class).material();
+                case ROTATION -> engine.engineSpec(com.gregtech.gregtech.api.machine.RotationEngineSpec.class).material();
+                case DIESEL -> engine.engineSpec(com.gregtech.gregtech.api.machine.DieselEngineSpec.class).material();
+            };
+            var lines=tooltip(new ItemStack(registered)).stream().skip(1).toList();
+            String key=material.getTranslationKey();
+            // Harvest-level hints may legitimately name the same material inside another row.
+            var materialLines=lines.stream().filter(c->c.getContents() instanceof TranslatableContents tr
+                    &&tr.getKey().equals(key)).toList();
+            require(materialLines.size()==1&&materialLines.get(0).getString().equals(
+                    com.gregtech.gregtech.api.material.MaterialPresentation.name(material).getString()),
+                    "Engine uses its localized material exactly once "+BuiltInRegistries.ITEM.getKey(registered));
+            if(engine.engineType()!=com.gregtech.gregtech.api.machine.EngineType.DIESEL) {
+                require(lines.stream().anyMatch(c->has(c,"gt.lang.efficiency")),"Engine source efficiency label");
+                require(lines.stream().anyMatch(c->has(c,"gt.lang.energy.capacity")),"Engine source capacity label");
+            }
+            if(engine.engineType()==com.gregtech.gregtech.api.machine.EngineType.STEAM) {
+                require(lines.stream().anyMatch(c->has(c,"fluid_type.gregtech.steam")),"Steam input uses localized fluid name");
+                require(lines.stream().filter(c->has(c,"gt.lang.energy.input")||has(c,"gt.lang.energy.capacity"))
+                        .noneMatch(c->c.getString().contains(" Steam"))
+                        ||net.minecraft.locale.Language.getInstance().getOrDefault("fluid_type.gregtech.steam").equals("Steam"),
+                        "Steam tooltip has no hardcoded fluid name");
+            }
+            require(lines.stream().noneMatch(c->has(c,"tooltip.gregtech.machine.energy_in")
+                    ||has(c,"tooltip.gregtech.machine.energy_out")),"Engine has no obsolete untranslated energy title");
+            count++;
+        }
+        require(count>=10,"Registered engine tooltip family");return count;
     }
 
     private static int verifyFaceNames() {
