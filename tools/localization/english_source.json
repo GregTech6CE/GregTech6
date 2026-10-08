@@ -94,6 +94,10 @@
       "sha256": "bcce79fbbc5feeff44f73ca05c0bb0598c342ec0c076e9c3f55970616e48aab3"
     },
     {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\lang\\LanguageHandler.java",
+      "sha256": "fed8d4bd2e3cb5f70f180d42876792843fa4dba7b8aab6be7581f3ae4130249b"
+    },
+    {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\oredict\\listeners\\OreDictListenerItem_Rocks.java",
       "sha256": "e1f37cd689165920af198ea26b8c21b4f007d244db263100015b92d255a26e6b"
     },
@@ -104,6 +108,10 @@
     {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\oredict\\OreDictMaterial.java",
       "sha256": "768707d5eeeb6b60f0c5d0a24b39ab50f6f173a29a40f0fa3365308cf0688371"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\oredict\\OreDictPrefix.java",
+      "sha256": "89c94fd1149297496e2904a7897b3ab33c02991009b232df0d70febabb8888f5"
     },
     {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\computer\\TileEntityBase08DataSwitch.java",
@@ -1527,6 +1535,24 @@
       "source_key": "gt.multitileentity.18103",
       "value": "Bedrock Mining Drill Head"
     },
+    "block.gregtech.block_dust": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.blockDust",
+      "value": "Block of %s Dust"
+    },
+    "block.gregtech.block_gem": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.blockGem",
+      "value": "Block of %s"
+    },
+    "block.gregtech.block_ingot": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.blockIngot",
+      "value": "Block of %s Ingot"
+    },
     "block.gregtech.block_ore_amber": {
       "source_key": "gt.block.vanillaores.a.3",
       "value": "Amber Ore"
@@ -1626,6 +1652,30 @@
     "block.gregtech.block_ore_tetrahedrite": {
       "source_key": "gt.block.vanillaores.a.6",
       "value": "Tetrahedrite Ore"
+    },
+    "block.gregtech.block_plate": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.blockPlate",
+      "value": "Block of %s Plate"
+    },
+    "block.gregtech.block_plate_gem": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.blockPlateGem",
+      "value": "Block of Crystalline %s Plate"
+    },
+    "block.gregtech.block_raw": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.blockRaw",
+      "value": "Block of %s Ore"
+    },
+    "block.gregtech.block_solid": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.blockSolid",
+      "value": "Block of solid %s"
     },
     "block.gregtech.bookshelf": {
       "source_key": "gt.multitileentity.7000",
@@ -3487,6 +3537,30 @@
       "source_key": "gt.multitileentity.32061",
       "value": "Tungsten Cap Nozzle"
     },
+    "block.gregtech.casing_machine": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.casingMachine",
+      "value": "%s Machine Casing"
+    },
+    "block.gregtech.casing_machine_dense": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.casingMachineDense",
+      "value": "Dense %s Machine Casing"
+    },
+    "block.gregtech.casing_machine_double": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.casingMachineDouble",
+      "value": "Robust %s Machine Casing"
+    },
+    "block.gregtech.casing_machine_quadruple": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.casingMachineQuadruple",
+      "value": "Reinforced %s Machine Casing"
+    },
     "block.gregtech.catalyticcracker_invar": {
       "source_key": "gt.multitileentity.20482",
       "value": "Catalytic Cracker (Invar)"
@@ -4470,6 +4544,78 @@
     "block.gregtech.crank": {
       "source_key": "gt.multitileentity.32111",
       "value": "Hand Crank"
+    },
+    "block.gregtech.crate_gt64_dust": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.crateGt64Dust",
+      "value": "Crate of %s Dust"
+    },
+    "block.gregtech.crate_gt64_gem": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.crateGt64Gem",
+      "value": "Crate of %s"
+    },
+    "block.gregtech.crate_gt64_ingot": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.crateGt64Ingot",
+      "value": "Crate of %s Ingot"
+    },
+    "block.gregtech.crate_gt64_plate": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.crateGt64Plate",
+      "value": "Crate of %s Plate"
+    },
+    "block.gregtech.crate_gt64_plate_gem": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.crateGt64PlateGem",
+      "value": "Crate of Crystalline %s Plate"
+    },
+    "block.gregtech.crate_gt64_raw": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.crateGt64Raw",
+      "value": "Crate of %s Ore"
+    },
+    "block.gregtech.crate_gt_dust": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.crateGtDust",
+      "value": "Partial Crate of %s Dust"
+    },
+    "block.gregtech.crate_gt_gem": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.crateGtGem",
+      "value": "Partial Crate of %s"
+    },
+    "block.gregtech.crate_gt_ingot": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.crateGtIngot",
+      "value": "Partial Crate of %s Ingot"
+    },
+    "block.gregtech.crate_gt_plate": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.crateGtPlate",
+      "value": "Partial Crate of %s Plate"
+    },
+    "block.gregtech.crate_gt_plate_gem": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.crateGtPlateGem",
+      "value": "Partial Crate of Crystalline %s Plate"
+    },
+    "block.gregtech.crate_gt_raw": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.crateGtRaw",
+      "value": "Partial Crate of %s Ore"
     },
     "block.gregtech.crucible_crossing_ad": {
       "source_key": "gt.multitileentity.1899",
@@ -9234,6 +9380,18 @@
     "block.gregtech.nozzle_tungsten": {
       "source_key": "gt.multitileentity.32749",
       "value": "Tungsten Nozzle"
+    },
+    "block.gregtech.ore": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.ore",
+      "value": "%s Ore"
+    },
+    "block.gregtech.ore_small": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.oreSmall",
+      "value": "Small %s Ore"
     },
     "block.gregtech.oven_invar": {
       "source_key": "gt.multitileentity.20002",
@@ -23755,6 +23913,26 @@
       "source_key": "gt.multiitem.bottles.4705.tooltip",
       "value": ""
     },
+    "item.gregtech.arrow_gt_plastic": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.arrowGtPlastic",
+      "value": "Light %s Arrow"
+    },
+    "item.gregtech.arrow_gt_plastic_empty": {
+      "source_key": "oredict.arrowGtPlasticEmpty",
+      "value": "Headless Plastic Arrow"
+    },
+    "item.gregtech.arrow_gt_wood": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.arrowGtWood",
+      "value": "%s Arrow"
+    },
+    "item.gregtech.arrow_gt_wood_empty": {
+      "source_key": "oredict.arrowGtWoodEmpty",
+      "value": "Headless Wood Arrow"
+    },
     "item.gregtech.arsenic_bronze_compound": {
       "source_key": "gt.multiitem.randomtools.4",
       "value": "Arsenic Bronze Compound"
@@ -23987,6 +24165,12 @@
       "source_key": "gt.multiitem.bottles.5700.tooltip",
       "value": ""
     },
+    "item.gregtech.billet": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.billet",
+      "value": "%s Billet"
+    },
     "item.gregtech.bismuth_bronze_compound": {
       "source_key": "gt.multiitem.randomtools.2",
       "value": "Bismuth Bronze Compound"
@@ -24139,6 +24323,12 @@
       "source_key": "gt.multiitem.food.1060.tooltip",
       "value": "Did you expect this to look different after boiling?"
     },
+    "item.gregtech.bolt": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.bolt",
+      "value": "%s Bolt"
+    },
     "item.gregtech.book_bronze": {
       "source_key": "gt.multiitem.books.32000",
       "value": "Book"
@@ -24182,6 +24372,12 @@
     "item.gregtech.bottled_indigo_dye": {
       "source_key": "gt.multiitem.bottles.32001",
       "value": "Bottled Indigo Dye"
+    },
+    "item.gregtech.boule_gt": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.bouleGt",
+      "value": "%s Boule"
     },
     "item.gregtech.braintech_aerospace_advanced_reinforced_duct_tape_fal_84": {
       "source_key": "gt.multiitem.randomtools.12008",
@@ -24246,6 +24442,36 @@
     "item.gregtech.brown_clay.tooltip": {
       "source_key": "gt.multiitem.food.12310.tooltip",
       "value": "Contains small amounts of Lithium"
+    },
+    "item.gregtech.bullet_gt_large": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.bulletGtLarge",
+      "value": "Large %s Bullet"
+    },
+    "item.gregtech.bullet_gt_large_empty": {
+      "source_key": "oredict.bulletGtLargeEmpty",
+      "value": "Large Bullet Casing"
+    },
+    "item.gregtech.bullet_gt_medium": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.bulletGtMedium",
+      "value": "Medium %s Bullet"
+    },
+    "item.gregtech.bullet_gt_medium_empty": {
+      "source_key": "oredict.bulletGtMediumEmpty",
+      "value": "Medium Bullet Casing"
+    },
+    "item.gregtech.bullet_gt_small": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.bulletGtSmall",
+      "value": "Small %s Bullet"
+    },
+    "item.gregtech.bullet_gt_small_empty": {
+      "source_key": "oredict.bulletGtSmallEmpty",
+      "value": "Small Bullet Casing"
     },
     "item.gregtech.bun": {
       "source_key": "gt.multiitem.food.5001",
@@ -24390,6 +24616,12 @@
     "item.gregtech.cerublossom.tooltip": {
       "source_key": "gt.multiitem.food.12010.tooltip",
       "value": "Used for magical Purposes"
+    },
+    "item.gregtech.chain": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.chain",
+      "value": "%s Chain"
     },
     "item.gregtech.cheese": {
       "source_key": "gt.multiitem.food.1000",
@@ -24558,6 +24790,12 @@
     "item.gregtech.chunk_eraser.tooltip": {
       "source_key": "gt.multiitem.randomtools.9998.tooltip",
       "value": ""
+    },
+    "item.gregtech.chunk_gt": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.chunkGt",
+      "value": "%s Chunk"
     },
     "item.gregtech.cider": {
       "source_key": "gt.multiitem.bottles.901",
@@ -26139,6 +26377,42 @@
       "source_key": "gt.multiitem.bottles.2905.tooltip",
       "value": ""
     },
+    "item.gregtech.crushed": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.crushed",
+      "value": "Crushed %s Ore"
+    },
+    "item.gregtech.crushed_centrifuged": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.crushedCentrifuged",
+      "value": "Refined %s Ore"
+    },
+    "item.gregtech.crushed_centrifuged_tiny": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.crushedCentrifugedTiny",
+      "value": "Tiny Refined %s Ore"
+    },
+    "item.gregtech.crushed_purified": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.crushedPurified",
+      "value": "Purified %s Ore"
+    },
+    "item.gregtech.crushed_purified_tiny": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.crushedPurifiedTiny",
+      "value": "Tiny Purified %s Ore"
+    },
+    "item.gregtech.crushed_tiny": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.crushedTiny",
+      "value": "Tiny Crushed %s Ore"
+    },
     "item.gregtech.cryo_comb": {
       "source_key": "gt.multiitem.food.30201",
       "value": "Cryo Comb"
@@ -26450,6 +26724,36 @@
     "item.gregtech.duct_tape_2.tooltip": {
       "source_key": "gt.multiitem.randomtools.12002.tooltip",
       "value": "Full Roll"
+    },
+    "item.gregtech.dust": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.dust",
+      "value": "%s Dust"
+    },
+    "item.gregtech.dust_div72": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.dustDiv72",
+      "value": "1/72nd of a Pile of %s Dust"
+    },
+    "item.gregtech.dust_impure": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.dustImpure",
+      "value": "Impure Pile of %s Dust"
+    },
+    "item.gregtech.dust_small": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.dustSmall",
+      "value": "Small Pile of %s Dust"
+    },
+    "item.gregtech.dust_tiny": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.dustTiny",
+      "value": "Tiny Pile of %s Dust"
     },
     "item.gregtech.dusty_guide_book": {
       "source_key": "gt.multiitem.books.32765",
@@ -27051,6 +27355,12 @@
       "source_key": "gt.multiitem.technological.1024.tooltip",
       "value": "Filters for a Fluid"
     },
+    "item.gregtech.foil": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.foil",
+      "value": "%s Foil"
+    },
     "item.gregtech.foodmold_shape_baguette": {
       "source_key": "gt.multiitem.technological.10803",
       "value": "Food Grade Mold (Baguette)"
@@ -27171,6 +27481,18 @@
       "source_key": "gt.multitileentity.9220",
       "value": "Uranium-238 Fuel Rod"
     },
+    "item.gregtech.gear_gt": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.gearGt",
+      "value": "%s Gear"
+    },
+    "item.gregtech.gear_gt_small": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.gearGtSmall",
+      "value": "Small %s Gear"
+    },
     "item.gregtech.geiger_counter": {
       "source_key": "gt.multiitem.randomtools.10002",
       "value": "Geiger Counter"
@@ -27186,6 +27508,42 @@
     "item.gregtech.geiger_counter_empty.tooltip": {
       "source_key": "gt.multiitem.randomtools.10001.tooltip",
       "value": "Fill with proper inert Gas"
+    },
+    "item.gregtech.gem": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.gem",
+      "value": "%s"
+    },
+    "item.gregtech.gem_chipped": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.gemChipped",
+      "value": "Chipped %s"
+    },
+    "item.gregtech.gem_exquisite": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.gemExquisite",
+      "value": "Exquisite %s"
+    },
+    "item.gregtech.gem_flawed": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.gemFlawed",
+      "value": "Flawed %s"
+    },
+    "item.gregtech.gem_flawless": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.gemFlawless",
+      "value": "Flawless %s"
+    },
+    "item.gregtech.gem_legendary": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.gemLegendary",
+      "value": "Legendary %s"
     },
     "item.gregtech.gem_pouch": {
       "source_key": "gt.multiitem.randomtools.13002",
@@ -27731,6 +28089,42 @@
       "source_key": "gt.multiitem.bottles.1500.tooltip",
       "value": ""
     },
+    "item.gregtech.ingot": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.ingot",
+      "value": "%s Ingot"
+    },
+    "item.gregtech.ingot_double": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.ingotDouble",
+      "value": "Double %s Ingot"
+    },
+    "item.gregtech.ingot_hot": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.ingotHot",
+      "value": "Hot %s Ingot"
+    },
+    "item.gregtech.ingot_quadruple": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.ingotQuadruple",
+      "value": "Quadruple %s Ingot"
+    },
+    "item.gregtech.ingot_quintuple": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.ingotQuintuple",
+      "value": "Quintuple %s Ingot"
+    },
+    "item.gregtech.ingot_triple": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.ingotTriple",
+      "value": "Triple %s Ingot"
+    },
     "item.gregtech.ink_bottle": {
       "source_key": "gt.multiitem.bottles.32000",
       "value": "Ink Bottle"
@@ -27842,6 +28236,12 @@
     "item.gregtech.iron_key.tooltip": {
       "source_key": "gt.multiitem.randomtools.30000.tooltip",
       "value": ""
+    },
+    "item.gregtech.item_casing": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.casingSmall",
+      "value": "%s Item Casing"
     },
     "item.gregtech.item_filter": {
       "source_key": "gt.multiitem.technological.1023",
@@ -28266,6 +28666,12 @@
     "item.gregtech.leninade.tooltip": {
       "source_key": "gt.multiitem.bottles.302.tooltip",
       "value": ""
+    },
+    "item.gregtech.lens": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.lens",
+      "value": "%s Lens"
     },
     "item.gregtech.lighter": {
       "source_key": "gt.multiitem.randomtools.5005",
@@ -28947,6 +29353,12 @@
       "source_key": "gt.multiitem.food.4013.tooltip",
       "value": "Emo Pizza, it cuts itself!"
     },
+    "item.gregtech.minecart_wheels": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.minecartWheels",
+      "value": "%s Cart Wheels"
+    },
     "item.gregtech.mineral_soda": {
       "source_key": "gt.multiitem.bottles.3",
       "value": "Mineral Soda"
@@ -29075,6 +29487,12 @@
       "source_key": "gt.multiitem.bottles.1501.tooltip",
       "value": ""
     },
+    "item.gregtech.nugget": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.nugget",
+      "value": "%s Nugget"
+    },
     "item.gregtech.nut_oil": {
       "source_key": "gt.multiitem.bottles.1002",
       "value": "Nut Oil"
@@ -29154,6 +29572,12 @@
     "item.gregtech.orange_smoothie.tooltip": {
       "source_key": "gt.multiitem.bottles.4605.tooltip",
       "value": ""
+    },
+    "item.gregtech.ore_raw": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.oreRaw",
+      "value": "Raw %s Ore"
     },
     "item.gregtech.paint_removal_spray": {
       "source_key": "gt.multiitem.randomtools.1096",
@@ -29331,6 +29755,36 @@
       "source_key": "gt.multiitem.food.4011.tooltip",
       "value": "Cheese Pizza"
     },
+    "item.gregtech.plant_gt_berry": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.plantGtBerry",
+      "value": "%s Berry"
+    },
+    "item.gregtech.plant_gt_blossom": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.plantGtBlossom",
+      "value": "%s Blossom"
+    },
+    "item.gregtech.plant_gt_fiber": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.plantGtFiber",
+      "value": "Raw %s Fiber"
+    },
+    "item.gregtech.plant_gt_twig": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.plantGtTwig",
+      "value": "%s Twig"
+    },
+    "item.gregtech.plant_gt_wart": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.plantGtWart",
+      "value": "%s Wart"
+    },
     "item.gregtech.plant_remains": {
       "source_key": "gt.multiitem.food.12100",
       "value": "Plant Remains"
@@ -29378,6 +29832,66 @@
     "item.gregtech.plastic_lighter_full.tooltip": {
       "source_key": "gt.multiitem.randomtools.5012.tooltip",
       "value": ""
+    },
+    "item.gregtech.plate": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.plate",
+      "value": "%s Plate"
+    },
+    "item.gregtech.plate_curved": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.plateCurved",
+      "value": "Curved %s Plate"
+    },
+    "item.gregtech.plate_dense": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.plateDense",
+      "value": "Dense %s Plate"
+    },
+    "item.gregtech.plate_double": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.plateDouble",
+      "value": "Double %s Plate"
+    },
+    "item.gregtech.plate_gem": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.plateGem",
+      "value": "Crystalline %s Plate"
+    },
+    "item.gregtech.plate_gem_tiny": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.plateGemTiny",
+      "value": "Tiny Crystalline %s Plate"
+    },
+    "item.gregtech.plate_quadruple": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.plateQuadruple",
+      "value": "Quadruple %s Plate"
+    },
+    "item.gregtech.plate_quintuple": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.plateQuintuple",
+      "value": "Quintuple %s Plate"
+    },
+    "item.gregtech.plate_tiny": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.plateTiny",
+      "value": "Tiny %s Plate"
+    },
+    "item.gregtech.plate_triple": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.plateTriple",
+      "value": "Triple %s Plate"
     },
     "item.gregtech.platinum_key": {
       "source_key": "gt.multiitem.randomtools.30007",
@@ -29594,6 +30108,12 @@
     "item.gregtech.radaway.tooltip": {
       "source_key": "gt.multiitem.food.31001.tooltip",
       "value": "Pill that cures Effects of Radiation"
+    },
+    "item.gregtech.rail_gt": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.railGt",
+      "value": "%s Rail"
     },
     "item.gregtech.rainbow_ice_cream": {
       "source_key": "gt.multiitem.food.13999",
@@ -30051,6 +30571,12 @@
       "source_key": "gt.multiitem.bottles.1800.tooltip",
       "value": ""
     },
+    "item.gregtech.ring": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.ring",
+      "value": "%s Ring"
+    },
     "item.gregtech.roasted_potato_on_a_stick": {
       "source_key": "gt.multiitem.food.32701",
       "value": "Roasted Potato on a Stick"
@@ -30147,6 +30673,18 @@
       "source_key": "gt.multiitem.food.30005.tooltip",
       "value": ""
     },
+    "item.gregtech.rock_gt": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.rockGt",
+      "value": "%s bearing Rock"
+    },
+    "item.gregtech.rotor": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.rotor",
+      "value": "%s Rotor"
+    },
     "item.gregtech.rotten_drink": {
       "source_key": "gt.multiitem.bottles.1601",
       "value": "Rotten Drink"
@@ -30162,6 +30700,12 @@
     "item.gregtech.rotten_grass.tooltip": {
       "source_key": "gt.multiitem.food.12003.tooltip",
       "value": ""
+    },
+    "item.gregtech.round": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.round",
+      "value": "%s Round"
     },
     "item.gregtech.royal_comb": {
       "source_key": "gt.multiitem.food.30102",
@@ -30243,6 +30787,12 @@
       "source_key": "gt.multiitem.food.1071.tooltip",
       "value": ""
     },
+    "item.gregtech.scrap_gt": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.scrapGt",
+      "value": "%s Scrap"
+    },
     "item.gregtech.scrap_meat": {
       "source_key": "gt.multiitem.food.1998",
       "value": "Scrap Meat"
@@ -30250,6 +30800,12 @@
     "item.gregtech.scrap_meat.tooltip": {
       "source_key": "gt.multiitem.food.1998.tooltip",
       "value": "Parts people usually don't eat"
+    },
+    "item.gregtech.screw": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.screw",
+      "value": "%s Screw"
     },
     "item.gregtech.sea_water": {
       "source_key": "gt.multiitem.bottles.1",
@@ -30891,6 +31447,18 @@
       "source_key": "gt.multiitem.randomtools.1023.tooltip",
       "value": "Used"
     },
+    "item.gregtech.spring": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.spring",
+      "value": "%s Spring"
+    },
+    "item.gregtech.spring_small": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.springSmall",
+      "value": "Small %s Spring"
+    },
     "item.gregtech.spumoni_chocolate_ice_cream": {
       "source_key": "gt.multiitem.food.13996",
       "value": "Spumoni Chocolate Ice Cream"
@@ -30938,6 +31506,18 @@
     "item.gregtech.steak_sandwich.tooltip": {
       "source_key": "gt.multiitem.food.6015.tooltip",
       "value": "Not a 'Steam Sandwich'"
+    },
+    "item.gregtech.stick": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.stick",
+      "value": "%s Rod"
+    },
+    "item.gregtech.stick_long": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.stickLong",
+      "value": "Long %s Rod"
     },
     "item.gregtech.sticky_comb": {
       "source_key": "gt.multiitem.food.30101",
@@ -32007,6 +32587,222 @@
       "source_key": "gt.metatool.01.16",
       "value": "Wrench"
     },
+    "item.gregtech.tool_head_arrow": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadArrow",
+      "value": "%s Arrow Head"
+    },
+    "item.gregtech.tool_head_axe": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadAxe",
+      "value": "%s Axe Head"
+    },
+    "item.gregtech.tool_head_axe_double": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadAxeDouble",
+      "value": "%s Double Axe Head"
+    },
+    "item.gregtech.tool_head_builderwand": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadBuilderwand",
+      "value": "%s Builder's Wand Cap"
+    },
+    "item.gregtech.tool_head_buzz_saw": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadBuzzSaw",
+      "value": "%s Buzzsaw Blade"
+    },
+    "item.gregtech.tool_head_chainsaw": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadChainsaw",
+      "value": "%s Chainsaw Tip"
+    },
+    "item.gregtech.tool_head_chisel": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadChisel",
+      "value": "%s Chisel Head"
+    },
+    "item.gregtech.tool_head_construction_pickaxe": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadConstructionPickaxe",
+      "value": "%s Construction Pickaxe Head"
+    },
+    "item.gregtech.tool_head_drill": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadDrill",
+      "value": "%s Drill Tip"
+    },
+    "item.gregtech.tool_head_file": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadFile",
+      "value": "%s File Head"
+    },
+    "item.gregtech.tool_head_hammer": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadHammer",
+      "value": "%s Hammer Head"
+    },
+    "item.gregtech.tool_head_hoe": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadHoe",
+      "value": "%s Hoe Head"
+    },
+    "item.gregtech.tool_head_pickaxe": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadPickaxe",
+      "value": "%s Pickaxe Head"
+    },
+    "item.gregtech.tool_head_pickaxe_gem": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadPickaxeGem",
+      "value": "%s tipped Pickaxe Head"
+    },
+    "item.gregtech.tool_head_plow": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadPlow",
+      "value": "%s Plow Head"
+    },
+    "item.gregtech.tool_head_raw_arrow": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadRawArrow",
+      "value": "Raw %s Arrow Head"
+    },
+    "item.gregtech.tool_head_raw_axe": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadRawAxe",
+      "value": "Raw %s Axe Head"
+    },
+    "item.gregtech.tool_head_raw_axe_double": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadRawAxeDouble",
+      "value": "Raw %s Double Axe Head"
+    },
+    "item.gregtech.tool_head_raw_chisel": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadRawChisel",
+      "value": "Raw %s Chisel Head"
+    },
+    "item.gregtech.tool_head_raw_hoe": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadRawHoe",
+      "value": "Raw %s Hoe Head"
+    },
+    "item.gregtech.tool_head_raw_pickaxe": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadRawPickaxe",
+      "value": "Raw %s Pickaxe Head"
+    },
+    "item.gregtech.tool_head_raw_plow": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadRawPlow",
+      "value": "Raw %s Plow Head"
+    },
+    "item.gregtech.tool_head_raw_saw": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadRawSaw",
+      "value": "Raw %s Saw Blade"
+    },
+    "item.gregtech.tool_head_raw_sense": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadRawSense",
+      "value": "Raw %s Sense Blade"
+    },
+    "item.gregtech.tool_head_raw_shovel": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadRawShovel",
+      "value": "Raw %s Shovel Head"
+    },
+    "item.gregtech.tool_head_raw_spade": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadRawSpade",
+      "value": "Raw %s Spade Head"
+    },
+    "item.gregtech.tool_head_raw_sword": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadRawSword",
+      "value": "Raw %s Sword Blade"
+    },
+    "item.gregtech.tool_head_raw_universal_spade": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadRawUniversalSpade",
+      "value": "Raw %s Universal Spade Head"
+    },
+    "item.gregtech.tool_head_saw": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadSaw",
+      "value": "%s Saw Blade"
+    },
+    "item.gregtech.tool_head_screwdriver": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadScrewdriver",
+      "value": "%s Screwdriver Tip"
+    },
+    "item.gregtech.tool_head_sense": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadSense",
+      "value": "%s Sense Blade"
+    },
+    "item.gregtech.tool_head_shovel": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadShovel",
+      "value": "%s Shovel Head"
+    },
+    "item.gregtech.tool_head_spade": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadSpade",
+      "value": "%s Spade Head"
+    },
+    "item.gregtech.tool_head_sword": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadSword",
+      "value": "%s Sword Blade"
+    },
+    "item.gregtech.tool_head_universal_spade": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadUniversalSpade",
+      "value": "%s Universal Spade Head"
+    },
+    "item.gregtech.tool_head_wrench": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.toolHeadWrench",
+      "value": "%s Wrench Tip"
+    },
     "item.gregtech.tusk": {
       "source_key": "gt.multiitem.food.12400",
       "value": "Tusk"
@@ -32318,6 +33114,12 @@
     "item.gregtech.wine.tooltip": {
       "source_key": "gt.multiitem.bottles.111.tooltip",
       "value": ""
+    },
+    "item.gregtech.wire_fine": {
+      "chinese_source_missing": true,
+      "source_formula": "material_default_name",
+      "source_key": "@material-form.default.wireFine",
+      "value": "Fine %s Wire"
     },
     "item.gregtech.wood_pellet": {
       "source_key": "gt.multiitem.randomtools.5999",
