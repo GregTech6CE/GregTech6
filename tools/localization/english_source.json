@@ -8107,6 +8107,18 @@
       "source_key": "gt.block.log.b.0",
       "value": "Hazel Log"
     },
+    "block.gregtech.log_hole_maple": {
+      "source_key": "gt.multitileentity.32761",
+      "value": "Tapped Maple"
+    },
+    "block.gregtech.log_hole_rainbowood": {
+      "source_key": "gt.multitileentity.32760",
+      "value": "Tapped Rainbowood"
+    },
+    "block.gregtech.log_hole_rubber": {
+      "source_key": "gt.multitileentity.32762",
+      "value": "Rubber Resin Hole"
+    },
     "block.gregtech.log_maple": {
       "source_key": "gt.block.log.a.1",
       "value": "Maple Log"
@@ -8119,6 +8131,10 @@
       "source_key": "gt.block.log.b.3",
       "value": "Rainbowood Log"
     },
+    "block.gregtech.log_resin_rubber": {
+      "source_key": "gt.multitileentity.32762",
+      "value": "Rubber Resin Hole"
+    },
     "block.gregtech.log_rotten": {
       "source_key": "gt.block.log.1.1",
       "value": "Rotten Log"
@@ -8126,6 +8142,14 @@
     "block.gregtech.log_rubber": {
       "source_key": "gt.block.log.a.0",
       "value": "Rubber Log"
+    },
+    "block.gregtech.log_sap_maple": {
+      "source_key": "gt.multitileentity.32761",
+      "value": "Tapped Maple"
+    },
+    "block.gregtech.log_sap_rainbowood": {
+      "source_key": "gt.multitileentity.32760",
+      "value": "Tapped Rainbowood"
     },
     "block.gregtech.log_willow": {
       "source_key": "gt.block.log.a.2",
@@ -19232,6 +19256,11 @@
       "source_key": "fluid.bioethanol",
       "value": "Ethanol"
     },
+    "fluid_type.gregtech.biofuel": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.biofuel",
+      "value": "Bio Diesel"
+    },
     "fluid_type.gregtech.biomass": {
       "source_key": "fluid.biomass",
       "value": "Biomass"
@@ -19515,6 +19544,10 @@
     "fluid_type.gregtech.grc_honey": {
       "source_key": "fluid.grc.honey",
       "value": "Honey (GrowthCraft)"
+    },
+    "fluid_type.gregtech.grccore.saltwater": {
+      "source_key": "gt.multiitem.bottles.1",
+      "value": "Sea Water"
     },
     "fluid_type.gregtech.grccore_saltwater": {
       "source_key": "gt.multiitem.bottles.1",
@@ -19824,9 +19857,29 @@
       "source_key": "fluid.molten hsla",
       "value": "Molten HSLA Steel"
     },
+    "fluid_type.gregtech.molten.actinium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.actinium",
+      "value": "Molten Actinium"
+    },
+    "fluid_type.gregtech.molten.adamantine": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.adamantine",
+      "value": "Molten Adamantine"
+    },
+    "fluid_type.gregtech.molten.adamantite": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.adamantite",
+      "value": "Molten Adamantite"
+    },
     "fluid_type.gregtech.molten.adamantium": {
       "source_key": "fluid.molten.adamantium",
       "value": "Molten Adamantium"
+    },
+    "fluid_type.gregtech.molten.alduorite": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.alduorite",
+      "value": "Molten Alduorite"
     },
     "fluid_type.gregtech.molten.alumina": {
       "source_key": "fluid.molten.alumina",
@@ -19836,6 +19889,11 @@
       "source_key": "fluid.molten.aluminium",
       "value": "Molten Aluminium"
     },
+    "fluid_type.gregtech.molten.aluminiumalloy": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.aluminiumalloy",
+      "value": "Molten Aluminium Alloy"
+    },
     "fluid_type.gregtech.molten.aluminiumbrass": {
       "source_key": "fluid.molten.aluminiumbrass",
       "value": "Molten Aluminium Brass"
@@ -19843,6 +19901,26 @@
     "fluid_type.gregtech.molten.alumite": {
       "source_key": "fluid.molten.alumite",
       "value": "Molten Alumite"
+    },
+    "fluid_type.gregtech.molten.americium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.americium",
+      "value": "Molten Americium"
+    },
+    "fluid_type.gregtech.molten.americium241": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.americium241",
+      "value": "Molten Americium-241"
+    },
+    "fluid_type.gregtech.molten.americium242": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.americium242",
+      "value": "Molten Americium-242"
+    },
+    "fluid_type.gregtech.molten.amordrine": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.amordrine",
+      "value": "Molten Amordrine"
     },
     "fluid_type.gregtech.molten.ancientdebris": {
       "source_key": "fluid.molten.ancientdebris",
@@ -19863,6 +19941,11 @@
     "fluid_type.gregtech.molten.ardite": {
       "source_key": "fluid.molten.ardite",
       "value": "Molten Ardite"
+    },
+    "fluid_type.gregtech.molten.aredrite": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.aredrite",
+      "value": "Molten Aredrite"
     },
     "fluid_type.gregtech.molten.arsenic": {
       "source_key": "fluid.molten.arsenic",
@@ -19891,6 +19974,21 @@
     "fluid_type.gregtech.molten.batteryalloy": {
       "source_key": "fluid.molten.batteryalloy",
       "value": "Molten Battery Alloy"
+    },
+    "fluid_type.gregtech.molten.bedrockhslaalloy": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.bedrockhslaalloy",
+      "value": "Molten Bedrock-HSLA-Alloy"
+    },
+    "fluid_type.gregtech.molten.bedrockium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.bedrockium",
+      "value": "Molten Bedrockium"
+    },
+    "fluid_type.gregtech.molten.berkelium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.berkelium",
+      "value": "Molten Berkelium"
     },
     "fluid_type.gregtech.molten.beryllium": {
       "source_key": "fluid.molten.beryllium",
@@ -19928,6 +20026,16 @@
       "source_key": "fluid.molten.bluesteel",
       "value": "Molten Blue Steel"
     },
+    "fluid_type.gregtech.molten.blutonium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.blutonium",
+      "value": "Molten Blutonium"
+    },
+    "fluid_type.gregtech.molten.bohrium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.bohrium",
+      "value": "Molten Bohrium"
+    },
     "fluid_type.gregtech.molten.boron": {
       "source_key": "fluid.molten.boron",
       "value": "Molten Boron"
@@ -19943,6 +20051,11 @@
     "fluid_type.gregtech.molten.bronze": {
       "source_key": "fluid.molten.bronze",
       "value": "Molten Bronze"
+    },
+    "fluid_type.gregtech.molten.cadmium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.cadmium",
+      "value": "Molten Cadmium"
     },
     "fluid_type.gregtech.molten.caesium": {
       "source_key": "fluid.molten.caesium",
@@ -19960,6 +20073,11 @@
       "source_key": "fluid.molten.calciumchloride",
       "value": "Molten Calcium Chloride"
     },
+    "fluid_type.gregtech.molten.californium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.californium",
+      "value": "Molten Californium"
+    },
     "fluid_type.gregtech.molten.carbon": {
       "source_key": "fluid.molten.carbon",
       "value": "Molten Carbon"
@@ -19968,9 +20086,39 @@
       "source_key": "fluid.molten.carbon13",
       "value": "Molten Carbon-13"
     },
+    "fluid_type.gregtech.molten.carborundum": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.carborundum",
+      "value": "Molten Carborundum"
+    },
+    "fluid_type.gregtech.molten.carmot": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.carmot",
+      "value": "Molten Carmot"
+    },
+    "fluid_type.gregtech.molten.castiron": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.castiron",
+      "value": "Molten Cast Iron"
+    },
+    "fluid_type.gregtech.molten.cdinagalloy": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.cdinagalloy",
+      "value": "Molten Cd-In-Ag-Alloy"
+    },
     "fluid_type.gregtech.molten.celenegil": {
       "source_key": "fluid.molten.celenegil",
       "value": "Molten Celenegil"
+    },
+    "fluid_type.gregtech.molten.cerium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.cerium",
+      "value": "Molten Cerium"
+    },
+    "fluid_type.gregtech.molten.ceruclase": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.ceruclase",
+      "value": "Molten Ceruclase"
     },
     "fluid_type.gregtech.molten.cheese": {
       "source_key": "fluid.molten.cheese",
@@ -19984,33 +20132,103 @@
       "source_key": "fluid.molten.chromium",
       "value": "Molten Chromium"
     },
+    "fluid_type.gregtech.molten.chromiumdioxide": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.chromiumdioxide",
+      "value": "Molten Chromium Dioxide"
+    },
+    "fluid_type.gregtech.molten.claycompound": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.claycompound",
+      "value": "Molten Clay Compound"
+    },
     "fluid_type.gregtech.molten.cobalt": {
       "source_key": "fluid.molten.cobalt",
       "value": "Molten Cobalt"
+    },
+    "fluid_type.gregtech.molten.cobalt60": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.cobalt60",
+      "value": "Molten Cobalt-60"
     },
     "fluid_type.gregtech.molten.cobaltbrass": {
       "source_key": "fluid.molten.cobaltbrass",
       "value": "Molten Cobalt Brass"
     },
+    "fluid_type.gregtech.molten.conductiveiron": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.conductiveiron",
+      "value": "Molten Conductive Iron"
+    },
     "fluid_type.gregtech.molten.constantan": {
       "source_key": "fluid.molten.constantan",
       "value": "Molten Constantan"
+    },
+    "fluid_type.gregtech.molten.copernicium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.copernicium",
+      "value": "Molten Copernicium"
     },
     "fluid_type.gregtech.molten.copper": {
       "source_key": "fluid.molten.copper",
       "value": "Molten Copper"
     },
+    "fluid_type.gregtech.molten.cosmicneutronium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.cosmicneutronium",
+      "value": "Molten Cosmic Neutronium"
+    },
+    "fluid_type.gregtech.molten.crystallinealloy": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.crystallinealloy",
+      "value": "Molten Crystalline Alloy"
+    },
+    "fluid_type.gregtech.molten.crystallinepinkslime": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.crystallinepinkslime",
+      "value": "Molten Crystalline Pink Slime"
+    },
+    "fluid_type.gregtech.molten.crystalmatrix": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.crystalmatrix",
+      "value": "Molten Crystal Matrix"
+    },
+    "fluid_type.gregtech.molten.curium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.curium",
+      "value": "Molten Curium"
+    },
+    "fluid_type.gregtech.molten.cyanite": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.cyanite",
+      "value": "Molten Cyanite"
+    },
     "fluid_type.gregtech.molten.damascussteel": {
       "source_key": "fluid.molten.damascussteel",
       "value": "Molten Damascus Steel"
+    },
+    "fluid_type.gregtech.molten.darkiron": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.darkiron",
+      "value": "Molten Dark Iron"
     },
     "fluid_type.gregtech.molten.darkthaumium": {
       "source_key": "fluid.molten.darkthaumium",
       "value": "Molten Dark Thaumium"
     },
+    "fluid_type.gregtech.molten.deepiron": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.deepiron",
+      "value": "Molten Deep Iron"
+    },
     "fluid_type.gregtech.molten.desh": {
       "source_key": "fluid.molten.desh",
       "value": "Molten Desh"
+    },
+    "fluid_type.gregtech.molten.desichalkos": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.desichalkos",
+      "value": "Molten Desichalkos"
     },
     "fluid_type.gregtech.molten.draconium": {
       "source_key": "fluid.molten.draconium",
@@ -20020,9 +20238,39 @@
       "source_key": "fluid.molten.draconiumawakened",
       "value": "Molten Awakened Draconium"
     },
+    "fluid_type.gregtech.molten.dubnium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.dubnium",
+      "value": "Molten Dubnium"
+    },
+    "fluid_type.gregtech.molten.duralumin": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.duralumin",
+      "value": "Molten Duralumin"
+    },
+    "fluid_type.gregtech.molten.duranium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.duranium",
+      "value": "Molten Duranium Alloy"
+    },
+    "fluid_type.gregtech.molten.dysprosium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.dysprosium",
+      "value": "Molten Dysprosium"
+    },
     "fluid_type.gregtech.molten.efrine": {
       "source_key": "fluid.molten.efrine",
       "value": "Molten Efrine"
+    },
+    "fluid_type.gregtech.molten.einsteinium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.einsteinium",
+      "value": "Molten Einsteinium"
+    },
+    "fluid_type.gregtech.molten.electricalsteel": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.electricalsteel",
+      "value": "Molten Electrical Steel"
     },
     "fluid_type.gregtech.molten.electrotinealloy": {
       "source_key": "fluid.molten.electrotinealloy",
@@ -20031,6 +20279,21 @@
     "fluid_type.gregtech.molten.electrum": {
       "source_key": "fluid.molten.electrum",
       "value": "Molten Electrum"
+    },
+    "fluid_type.gregtech.molten.electrumflux": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.electrumflux",
+      "value": "Molten Electrum Flux"
+    },
+    "fluid_type.gregtech.molten.elvenelementium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.elvenelementium",
+      "value": "Molten Elementium"
+    },
+    "fluid_type.gregtech.molten.elvorium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.elvorium",
+      "value": "Molten Elvorium"
     },
     "fluid_type.gregtech.molten.enderium": {
       "source_key": "fluid.molten.enderium",
@@ -20044,13 +20307,73 @@
       "source_key": "fluid.molten.enderpearl",
       "value": "Molten Enderpearls"
     },
+    "fluid_type.gregtech.molten.endium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.endium",
+      "value": "Molten Endium"
+    },
+    "fluid_type.gregtech.molten.endsteel": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.endsteel",
+      "value": "Molten End Steel"
+    },
+    "fluid_type.gregtech.molten.energeticalloy": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.energeticalloy",
+      "value": "Molten Energetic Alloy"
+    },
+    "fluid_type.gregtech.molten.energeticsilver": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.energeticsilver",
+      "value": "Molten Energetic Silver"
+    },
+    "fluid_type.gregtech.molten.erbium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.erbium",
+      "value": "Molten Erbium"
+    },
+    "fluid_type.gregtech.molten.europium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.europium",
+      "value": "Molten Europium"
+    },
+    "fluid_type.gregtech.molten.eximite": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.eximite",
+      "value": "Molten Eximite"
+    },
+    "fluid_type.gregtech.molten.fermium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.fermium",
+      "value": "Molten Fermium"
+    },
+    "fluid_type.gregtech.molten.ferrite": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.ferrite",
+      "value": "Molten Ferrite"
+    },
     "fluid_type.gregtech.molten.fierysteel": {
       "source_key": "fluid.molten.fierysteel",
       "value": "Molten Fiery Steel"
     },
+    "fluid_type.gregtech.molten.fireleaf": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.fireleaf",
+      "value": "Molten Fireleaf"
+    },
     "fluid_type.gregtech.molten.flamascussteel": {
       "source_key": "fluid.molten.flamascussteel",
       "value": "Molten Flamascus Steel"
+    },
+    "fluid_type.gregtech.molten.flerovium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.flerovium",
+      "value": "Molten Flerovium"
+    },
+    "fluid_type.gregtech.molten.flerovium298": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.flerovium298",
+      "value": "Molten Flerovium-298"
     },
     "fluid_type.gregtech.molten.fluorite": {
       "source_key": "fluid.molten.fluorite",
@@ -20060,9 +20383,39 @@
       "source_key": "fluid.molten.francium",
       "value": "Molten Francium"
     },
+    "fluid_type.gregtech.molten.frozeniron": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.frozeniron",
+      "value": "Molten Frozen Iron"
+    },
+    "fluid_type.gregtech.molten.gadolinium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.gadolinium",
+      "value": "Molten Gadolinium"
+    },
+    "fluid_type.gregtech.molten.gaiaspirit": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.gaiaspirit",
+      "value": "Molten Gaia Spirit"
+    },
+    "fluid_type.gregtech.molten.gallium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.gallium",
+      "value": "Molten Gallium"
+    },
     "fluid_type.gregtech.molten.germanium": {
       "source_key": "fluid.molten.germanium",
       "value": "Molten Germanium"
+    },
+    "fluid_type.gregtech.molten.gildediron": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.gildediron",
+      "value": "Molten Gilded Iron"
+    },
+    "fluid_type.gregtech.molten.glowstonerefined": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.glowstonerefined",
+      "value": "Molten Refined Glowstone"
     },
     "fluid_type.gregtech.molten.gold": {
       "source_key": "fluid.molten.gold",
@@ -20076,6 +20429,21 @@
       "source_key": "fluid.molten.goldinductive",
       "value": "Molten Inductive Alloy"
     },
+    "fluid_type.gregtech.molten.haderoth": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.haderoth",
+      "value": "Molten Haderoth"
+    },
+    "fluid_type.gregtech.molten.hafnium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.hafnium",
+      "value": "Molten Hafnium"
+    },
+    "fluid_type.gregtech.molten.hassium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.hassium",
+      "value": "Molten Hassium"
+    },
     "fluid_type.gregtech.molten.hematite": {
       "source_key": "fluid.molten.hematite",
       "value": "Molten Hematite"
@@ -20083,6 +20451,29 @@
     "fluid_type.gregtech.molten.hepatizon": {
       "source_key": "fluid.molten.hepatizon",
       "value": "Molten Hepatizon"
+    },
+    "fluid_type.gregtech.molten.holmium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.holmium",
+      "value": "Molten Holmium"
+    },
+    "fluid_type.gregtech.molten.hsla": {
+      "source_key": "fluid.molten hsla",
+      "value": "Molten HSLA Steel"
+    },
+    "fluid_type.gregtech.molten.hslaspringsteel": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.hslaspringsteel",
+      "value": "Molten Spring Steel"
+    },
+    "fluid_type.gregtech.molten.hslasteel": {
+      "source_key": "fluid.molten hsla",
+      "value": "Molten HSLA Steel"
+    },
+    "fluid_type.gregtech.molten.hslatungstenalloy": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.hslatungstenalloy",
+      "value": "Molten Tungsten Alloy"
     },
     "fluid_type.gregtech.molten.hsse": {
       "source_key": "fluid.molten.hsse",
@@ -20096,6 +20487,31 @@
       "source_key": "fluid.molten.hsss",
       "value": "Molten HSS-S"
     },
+    "fluid_type.gregtech.molten.ignatius": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.ignatius",
+      "value": "Molten Ignatius"
+    },
+    "fluid_type.gregtech.molten.indium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.indium",
+      "value": "Molten Indium"
+    },
+    "fluid_type.gregtech.molten.infinity": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.infinity",
+      "value": "Molten Infinity"
+    },
+    "fluid_type.gregtech.molten.infuscolium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.infuscolium",
+      "value": "Molten Infuscolium"
+    },
+    "fluid_type.gregtech.molten.inolashite": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.inolashite",
+      "value": "Molten Inolashite"
+    },
     "fluid_type.gregtech.molten.invar": {
       "source_key": "fluid.molten.invar",
       "value": "Molten Invar"
@@ -20108,9 +20524,24 @@
       "source_key": "fluid.molten.iron",
       "value": "Molten Iron"
     },
+    "fluid_type.gregtech.molten.ironcompressed": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.ironcompressed",
+      "value": "Molten Compressed Iron"
+    },
+    "fluid_type.gregtech.molten.ironmagnetic": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.ironmagnetic",
+      "value": "Molten Magnetic Iron"
+    },
     "fluid_type.gregtech.molten.ironwood": {
       "source_key": "fluid.molten.ironwood",
       "value": "Molten Ironwood"
+    },
+    "fluid_type.gregtech.molten.kalendrite": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.kalendrite",
+      "value": "Molten Kalendrite"
     },
     "fluid_type.gregtech.molten.kanthal": {
       "source_key": "fluid.molten.kanthal",
@@ -20124,13 +20555,28 @@
       "source_key": "fluid.molten.kreknorite",
       "value": "Molten Kreknorite"
     },
+    "fluid_type.gregtech.molten.lanthanium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.lanthanium",
+      "value": "Molten Lanthanium"
+    },
     "fluid_type.gregtech.molten.latex": {
       "source_key": "fluid.molten.latex",
       "value": "Latex"
     },
+    "fluid_type.gregtech.molten.lawrencium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.lawrencium",
+      "value": "Molten Lawrencium"
+    },
     "fluid_type.gregtech.molten.lead": {
       "source_key": "fluid.molten.lead",
       "value": "Molten Lead"
+    },
+    "fluid_type.gregtech.molten.lemurite": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.lemurite",
+      "value": "Molten Lemurite"
     },
     "fluid_type.gregtech.molten.lithium": {
       "source_key": "fluid.molten.lithium",
@@ -20140,9 +20586,19 @@
       "source_key": "fluid.molten.lithium6",
       "value": "Molten Lithium-6"
     },
+    "fluid_type.gregtech.molten.ludicrite": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.ludicrite",
+      "value": "Molten Ludicrite"
+    },
     "fluid_type.gregtech.molten.lumium": {
       "source_key": "fluid.molten.lumium",
       "value": "Molten Lumium"
+    },
+    "fluid_type.gregtech.molten.lutetium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.lutetium",
+      "value": "Molten Lutetium"
     },
     "fluid_type.gregtech.molten.magnalium": {
       "source_key": "fluid.molten.magnalium",
@@ -20160,6 +20616,11 @@
       "source_key": "fluid.molten.magnesiumchloride",
       "value": "Molten Magnesium Chloride"
     },
+    "fluid_type.gregtech.molten.manasteel": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.manasteel",
+      "value": "Molten Manasteel"
+    },
     "fluid_type.gregtech.molten.manganese": {
       "source_key": "fluid.molten.manganese",
       "value": "Molten Manganese"
@@ -20171,6 +20632,26 @@
     "fluid_type.gregtech.molten.manyullyn": {
       "source_key": "fluid.molten.manyullyn",
       "value": "Molten Manyullyn"
+    },
+    "fluid_type.gregtech.molten.mauftrium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.mauftrium",
+      "value": "Molten Mauftrium"
+    },
+    "fluid_type.gregtech.molten.melodicalloy": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.melodicalloy",
+      "value": "Molten Melodic Alloy"
+    },
+    "fluid_type.gregtech.molten.mendelevium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.mendelevium",
+      "value": "Molten Mendelevium"
+    },
+    "fluid_type.gregtech.molten.mercury": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.mercury",
+      "value": "Molten Mercury"
     },
     "fluid_type.gregtech.molten.meteoflameblacksteel": {
       "source_key": "fluid.molten.meteoflameblacksteel",
@@ -20212,9 +20693,19 @@
       "source_key": "fluid.molten.meteorite",
       "value": "Molten Meteorite"
     },
+    "fluid_type.gregtech.molten.meutoite": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.meutoite",
+      "value": "Molten Meutoite"
+    },
     "fluid_type.gregtech.molten.midasium": {
       "source_key": "fluid.molten.midasium",
       "value": "Molten Midasium"
+    },
+    "fluid_type.gregtech.molten.mingrade": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.mingrade",
+      "value": "Molten Red Copper"
     },
     "fluid_type.gregtech.molten.mithril": {
       "source_key": "fluid.molten.mithril",
@@ -20224,13 +20715,33 @@
       "source_key": "fluid.molten.molybdenum",
       "value": "Molten Molybdenum"
     },
+    "fluid_type.gregtech.molten.muspelheimpower": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.muspelheimpower",
+      "value": "Molten Muspelheim Power"
+    },
     "fluid_type.gregtech.molten.neodymium": {
       "source_key": "fluid.molten.neodymium",
       "value": "Molten Neodymium"
     },
+    "fluid_type.gregtech.molten.neodymiummagnetic": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.neodymiummagnetic",
+      "value": "Molten Magnetic Neodymium"
+    },
+    "fluid_type.gregtech.molten.neptunium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.neptunium",
+      "value": "Molten Neptunium"
+    },
     "fluid_type.gregtech.molten.netherite": {
       "source_key": "fluid.molten.netherite",
       "value": "Molten Netherite"
+    },
+    "fluid_type.gregtech.molten.netherizeddiamond": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.netherizeddiamond",
+      "value": "Molten Netherized Diamond"
     },
     "fluid_type.gregtech.molten.nichrome": {
       "source_key": "fluid.molten.nichrome",
@@ -20240,9 +20751,44 @@
       "source_key": "fluid.molten.nickel",
       "value": "Molten Nickel"
     },
+    "fluid_type.gregtech.molten.niflheimpower": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.niflheimpower",
+      "value": "Molten Niflheim Power"
+    },
     "fluid_type.gregtech.molten.nikolinealloy": {
       "source_key": "fluid.molten.nikolinealloy",
       "value": "Molten Nikoline Alloy"
+    },
+    "fluid_type.gregtech.molten.niobium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.niobium",
+      "value": "Molten Niobium"
+    },
+    "fluid_type.gregtech.molten.niobiumnitride": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.niobiumnitride",
+      "value": "Molten Niobium Nitride"
+    },
+    "fluid_type.gregtech.molten.niobiumtitanium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.niobiumtitanium",
+      "value": "Molten Niobium Titanium"
+    },
+    "fluid_type.gregtech.molten.nobelium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.nobelium",
+      "value": "Molten Nobelium"
+    },
+    "fluid_type.gregtech.molten.obsidianrefined": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.obsidianrefined",
+      "value": "Molten Refined Obsidian"
+    },
+    "fluid_type.gregtech.molten.obsidiansteel": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.obsidiansteel",
+      "value": "Molten Obsidian Steel"
     },
     "fluid_type.gregtech.molten.octine": {
       "source_key": "fluid.molten.octine",
@@ -20252,6 +20798,11 @@
       "source_key": "fluid.molten.orichalcum",
       "value": "Molten Orichalcum"
     },
+    "fluid_type.gregtech.molten.oriharukon": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.oriharukon",
+      "value": "Molten Oriharukon"
+    },
     "fluid_type.gregtech.molten.osmiridium": {
       "source_key": "fluid.molten.osmiridium",
       "value": "Molten Osmiridium"
@@ -20260,17 +20811,92 @@
       "source_key": "fluid.molten.osmiumelemental",
       "value": "Molten Osmium"
     },
+    "fluid_type.gregtech.molten.oureclase": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.oureclase",
+      "value": "Molten Oureclase"
+    },
+    "fluid_type.gregtech.molten.palladium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.palladium",
+      "value": "Molten Palladium"
+    },
     "fluid_type.gregtech.molten.pigiron": {
       "source_key": "fluid.molten.pigiron",
       "value": "Molten Pig Iron"
+    },
+    "fluid_type.gregtech.molten.plastic": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.plastic",
+      "value": "Molten Plastic"
     },
     "fluid_type.gregtech.molten.platinum": {
       "source_key": "fluid.molten.platinum",
       "value": "Molten Platinum"
     },
+    "fluid_type.gregtech.molten.plutonium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.plutonium",
+      "value": "Molten Plutonium"
+    },
+    "fluid_type.gregtech.molten.plutonium238": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.plutonium238",
+      "value": "Molten Plutonium-238"
+    },
+    "fluid_type.gregtech.molten.plutonium239": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.plutonium239",
+      "value": "Molten Plutonium-239"
+    },
+    "fluid_type.gregtech.molten.plutonium240": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.plutonium240",
+      "value": "Molten Plutonium-240"
+    },
+    "fluid_type.gregtech.molten.plutonium241": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.plutonium241",
+      "value": "Molten Plutonium-241"
+    },
+    "fluid_type.gregtech.molten.plutonium243": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.plutonium243",
+      "value": "Molten Plutonium-243"
+    },
+    "fluid_type.gregtech.molten.polonium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.polonium",
+      "value": "Molten Polonium"
+    },
     "fluid_type.gregtech.molten.potassium": {
       "source_key": "fluid.molten.potassium",
       "value": "Molten Potassium"
+    },
+    "fluid_type.gregtech.molten.praseodymium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.praseodymium",
+      "value": "Molten Praseodymium"
+    },
+    "fluid_type.gregtech.molten.prometheum": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.prometheum",
+      "value": "Molten Prometheum"
+    },
+    "fluid_type.gregtech.molten.promethium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.promethium",
+      "value": "Molten Promethium"
+    },
+    "fluid_type.gregtech.molten.protactinium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.protactinium",
+      "value": "Molten Protactinium"
+    },
+    "fluid_type.gregtech.molten.pulsatingiron": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.pulsatingiron",
+      "value": "Molten Pulsating Iron"
     },
     "fluid_type.gregtech.molten.purplealloy": {
       "source_key": "fluid.molten.purplealloy",
@@ -20296,6 +20922,16 @@
       "source_key": "fluid.molten.redstonealloy",
       "value": "Molten Redstone Alloy"
     },
+    "fluid_type.gregtech.molten.rhenium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.rhenium",
+      "value": "Molten Rhenium"
+    },
+    "fluid_type.gregtech.molten.rhodium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.rhodium",
+      "value": "Molten Rhodium"
+    },
     "fluid_type.gregtech.molten.rosegold": {
       "source_key": "fluid.molten.rosegold",
       "value": "Molten Rose Gold"
@@ -20307,6 +20943,51 @@
     "fluid_type.gregtech.molten.rubidium": {
       "source_key": "fluid.molten.rubidium",
       "value": "Molten Rubidium"
+    },
+    "fluid_type.gregtech.molten.rubracium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.rubracium",
+      "value": "Molten Rubracium"
+    },
+    "fluid_type.gregtech.molten.ruthenium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.ruthenium",
+      "value": "Molten Ruthenium"
+    },
+    "fluid_type.gregtech.molten.rutherfordium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.rutherfordium",
+      "value": "Molten Rutherfordium"
+    },
+    "fluid_type.gregtech.molten.samarium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.samarium",
+      "value": "Molten Samarium"
+    },
+    "fluid_type.gregtech.molten.sanguinite": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.sanguinite",
+      "value": "Molten Sanguinite"
+    },
+    "fluid_type.gregtech.molten.scandium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.scandium",
+      "value": "Molten Scandium"
+    },
+    "fluid_type.gregtech.molten.seaborgium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.seaborgium",
+      "value": "Molten Seaborgium"
+    },
+    "fluid_type.gregtech.molten.shadowiron": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.shadowiron",
+      "value": "Molten Shadow Iron"
+    },
+    "fluid_type.gregtech.molten.shadowsteel": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.shadowsteel",
+      "value": "Molten Shadow Steel"
     },
     "fluid_type.gregtech.molten.signalum": {
       "source_key": "fluid.molten.signalum",
@@ -20332,6 +21013,11 @@
       "source_key": "fluid.molten.solderingalloy",
       "value": "Molten Soldering Alloy"
     },
+    "fluid_type.gregtech.molten.soularium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.soularium",
+      "value": "Molten Soularium"
+    },
     "fluid_type.gregtech.molten.spectreiron": {
       "source_key": "fluid.molten.spectreiron",
       "value": "Molten Spectre Iron"
@@ -20343,6 +21029,26 @@
     "fluid_type.gregtech.molten.steel": {
       "source_key": "fluid.molten.steel",
       "value": "Molten Steel"
+    },
+    "fluid_type.gregtech.molten.steeleaf": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.steeleaf",
+      "value": "Molten Steeleaf"
+    },
+    "fluid_type.gregtech.molten.steelgalvanized": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.steelgalvanized",
+      "value": "Molten Galvanized Steel"
+    },
+    "fluid_type.gregtech.molten.steelmagnetic": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.steelmagnetic",
+      "value": "Molten Magnetic Steel"
+    },
+    "fluid_type.gregtech.molten.stellaralloy": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.stellaralloy",
+      "value": "Molten Stellar Alloy"
     },
     "fluid_type.gregtech.molten.sterlingsilver": {
       "source_key": "fluid.molten.sterlingsilver",
@@ -20360,17 +21066,67 @@
       "source_key": "fluid.molten.sulfur",
       "value": "Molten Sulfur"
     },
+    "fluid_type.gregtech.molten.sunnarium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.sunnarium",
+      "value": "Molten Sunnarium"
+    },
     "fluid_type.gregtech.molten.syrmorite": {
       "source_key": "fluid.molten.syrmorite",
       "value": "Molten Syrmorite"
+    },
+    "fluid_type.gregtech.molten.tantalum": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.tantalum",
+      "value": "Molten Tantalum"
+    },
+    "fluid_type.gregtech.molten.tantalumhafniumcarbide": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.tantalumhafniumcarbide",
+      "value": "Molten Tantalum Hafnium Carbide"
+    },
+    "fluid_type.gregtech.molten.tartarite": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.tartarite",
+      "value": "Molten Tartarite"
+    },
+    "fluid_type.gregtech.molten.technetium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.technetium",
+      "value": "Molten Technetium"
     },
     "fluid_type.gregtech.molten.tellurium": {
       "source_key": "fluid.molten.tellurium",
       "value": "Molten Tellurium"
     },
+    "fluid_type.gregtech.molten.terbium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.terbium",
+      "value": "Molten Terbium"
+    },
+    "fluid_type.gregtech.molten.terrasteel": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.terrasteel",
+      "value": "Molten Terrasteel"
+    },
+    "fluid_type.gregtech.molten.thallium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.thallium",
+      "value": "Molten Thallium"
+    },
     "fluid_type.gregtech.molten.thaumium": {
       "source_key": "fluid.molten.thaumium",
       "value": "Molten Thaumium"
+    },
+    "fluid_type.gregtech.molten.thorium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.thorium",
+      "value": "Molten Thorium"
+    },
+    "fluid_type.gregtech.molten.thulium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.thulium",
+      "value": "Molten Thulium"
     },
     "fluid_type.gregtech.molten.tin": {
       "source_key": "fluid.molten.tin",
@@ -20384,13 +21140,48 @@
       "source_key": "fluid.molten.titanium",
       "value": "Molten Titanium"
     },
+    "fluid_type.gregtech.molten.titaniumaluminide": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.titaniumaluminide",
+      "value": "Molten Titanium Aluminide"
+    },
     "fluid_type.gregtech.molten.titaniumgold": {
       "source_key": "fluid.molten.titaniumgold",
       "value": "Molten Titanium-Gold"
     },
+    "fluid_type.gregtech.molten.titaniumiridium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.titaniumiridium",
+      "value": "Molten Iritanium"
+    },
+    "fluid_type.gregtech.molten.trinaquadalloy": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.trinaquadalloy",
+      "value": "Molten Trinaquadalloy"
+    },
+    "fluid_type.gregtech.molten.trinitanium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.trinitanium",
+      "value": "Molten Trinitanium"
+    },
+    "fluid_type.gregtech.molten.tritanium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.tritanium",
+      "value": "Molten Tritanium Alloy"
+    },
     "fluid_type.gregtech.molten.tungsten": {
       "source_key": "fluid.molten.tungsten",
       "value": "Molten Tungsten"
+    },
+    "fluid_type.gregtech.molten.tungstencarbide": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.tungstencarbide",
+      "value": "Molten Tungsten Carbide"
+    },
+    "fluid_type.gregtech.molten.tungstensintered": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.tungstensintered",
+      "value": "Molten Sintered Tungsten"
     },
     "fluid_type.gregtech.molten.tungstensteel": {
       "source_key": "fluid.molten.tungstensteel",
@@ -20400,9 +21191,19 @@
       "source_key": "fluid.molten.ultimet",
       "value": "Molten Ultimet"
     },
+    "fluid_type.gregtech.molten.unstable": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.unstable",
+      "value": "Molten Unstable"
+    },
     "fluid_type.gregtech.molten.uranium": {
       "source_key": "fluid.molten.uranium",
       "value": "Molten Uranium"
+    },
+    "fluid_type.gregtech.molten.uranium233": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.uranium233",
+      "value": "Molten Uranium-233"
     },
     "fluid_type.gregtech.molten.uranium235": {
       "source_key": "fluid.molten.uranium235",
@@ -20424,13 +21225,53 @@
       "source_key": "fluid.molten.vanadium",
       "value": "Molten Vanadium"
     },
+    "fluid_type.gregtech.molten.vanadiumgallium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.vanadiumgallium",
+      "value": "Molten Vanadium-Gallium"
+    },
     "fluid_type.gregtech.molten.vanadiumsteel": {
       "source_key": "fluid.molten.vanadiumsteel",
       "value": "Molten Vanadiumsteel"
     },
+    "fluid_type.gregtech.molten.vibramantium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.vibramantium",
+      "value": "Molten Vibramantium"
+    },
+    "fluid_type.gregtech.molten.vibraniumsilver": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.vibraniumsilver",
+      "value": "Molten Vibranium Silver"
+    },
+    "fluid_type.gregtech.molten.vibraniumsteel": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.vibraniumsteel",
+      "value": "Molten Vibranium Steel"
+    },
+    "fluid_type.gregtech.molten.vibrantalloy": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.vibrantalloy",
+      "value": "Molten Vibrant Alloy"
+    },
+    "fluid_type.gregtech.molten.vividalloy": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.vividalloy",
+      "value": "Molten Vivid Alloy"
+    },
     "fluid_type.gregtech.molten.voidmetal": {
       "source_key": "fluid.molten.voidmetal",
       "value": "Molten Void Metal"
+    },
+    "fluid_type.gregtech.molten.vulcanite": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.vulcanite",
+      "value": "Molten Vulcanite"
+    },
+    "fluid_type.gregtech.molten.vyroxeres": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.vyroxeres",
+      "value": "Molten Vyroxeres"
     },
     "fluid_type.gregtech.molten.wax": {
       "source_key": "fluid.molten.wax",
@@ -20472,13 +21313,58 @@
       "source_key": "fluid.molten.wroughtiron",
       "value": "Molten Wrought Iron"
     },
+    "fluid_type.gregtech.molten.yellorium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.yellorium",
+      "value": "Molten Yellorium"
+    },
+    "fluid_type.gregtech.molten.ytterbium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.ytterbium",
+      "value": "Molten Ytterbium"
+    },
+    "fluid_type.gregtech.molten.yttrium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.yttrium",
+      "value": "Molten Yttrium"
+    },
+    "fluid_type.gregtech.molten.yttriumbariumcuprate": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.yttriumbariumcuprate",
+      "value": "Molten Yttrium-Barium-Cuprate"
+    },
     "fluid_type.gregtech.molten.zinc": {
       "source_key": "fluid.molten.zinc",
       "value": "Molten Zinc"
     },
+    "fluid_type.gregtech.molten.zirconium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.zirconium",
+      "value": "Molten Zirconium"
+    },
+    "fluid_type.gregtech.molten_actinium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.actinium",
+      "value": "Molten Actinium"
+    },
+    "fluid_type.gregtech.molten_adamantine": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.adamantine",
+      "value": "Molten Adamantine"
+    },
+    "fluid_type.gregtech.molten_adamantite": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.adamantite",
+      "value": "Molten Adamantite"
+    },
     "fluid_type.gregtech.molten_adamantium": {
       "source_key": "fluid.molten.adamantium",
       "value": "Molten Adamantium"
+    },
+    "fluid_type.gregtech.molten_alduorite": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.alduorite",
+      "value": "Molten Alduorite"
     },
     "fluid_type.gregtech.molten_alumina": {
       "source_key": "fluid.molten.alumina",
@@ -20488,6 +21374,11 @@
       "source_key": "fluid.molten.aluminium",
       "value": "Molten Aluminium"
     },
+    "fluid_type.gregtech.molten_aluminiumalloy": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.aluminiumalloy",
+      "value": "Molten Aluminium Alloy"
+    },
     "fluid_type.gregtech.molten_aluminiumbrass": {
       "source_key": "fluid.molten.aluminiumbrass",
       "value": "Molten Aluminium Brass"
@@ -20495,6 +21386,26 @@
     "fluid_type.gregtech.molten_alumite": {
       "source_key": "fluid.molten.alumite",
       "value": "Molten Alumite"
+    },
+    "fluid_type.gregtech.molten_americium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.americium",
+      "value": "Molten Americium"
+    },
+    "fluid_type.gregtech.molten_americium241": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.americium241",
+      "value": "Molten Americium-241"
+    },
+    "fluid_type.gregtech.molten_americium242": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.americium242",
+      "value": "Molten Americium-242"
+    },
+    "fluid_type.gregtech.molten_amordrine": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.amordrine",
+      "value": "Molten Amordrine"
     },
     "fluid_type.gregtech.molten_ancientdebris": {
       "source_key": "fluid.molten.ancientdebris",
@@ -20515,6 +21426,11 @@
     "fluid_type.gregtech.molten_ardite": {
       "source_key": "fluid.molten.ardite",
       "value": "Molten Ardite"
+    },
+    "fluid_type.gregtech.molten_aredrite": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.aredrite",
+      "value": "Molten Aredrite"
     },
     "fluid_type.gregtech.molten_arsenic": {
       "source_key": "fluid.molten.arsenic",
@@ -20543,6 +21459,21 @@
     "fluid_type.gregtech.molten_batteryalloy": {
       "source_key": "fluid.molten.batteryalloy",
       "value": "Molten Battery Alloy"
+    },
+    "fluid_type.gregtech.molten_bedrockhslaalloy": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.bedrockhslaalloy",
+      "value": "Molten Bedrock-HSLA-Alloy"
+    },
+    "fluid_type.gregtech.molten_bedrockium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.bedrockium",
+      "value": "Molten Bedrockium"
+    },
+    "fluid_type.gregtech.molten_berkelium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.berkelium",
+      "value": "Molten Berkelium"
     },
     "fluid_type.gregtech.molten_beryllium": {
       "source_key": "fluid.molten.beryllium",
@@ -20580,6 +21511,16 @@
       "source_key": "fluid.molten.bluesteel",
       "value": "Molten Blue Steel"
     },
+    "fluid_type.gregtech.molten_blutonium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.blutonium",
+      "value": "Molten Blutonium"
+    },
+    "fluid_type.gregtech.molten_bohrium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.bohrium",
+      "value": "Molten Bohrium"
+    },
     "fluid_type.gregtech.molten_boron": {
       "source_key": "fluid.molten.boron",
       "value": "Molten Boron"
@@ -20595,6 +21536,11 @@
     "fluid_type.gregtech.molten_bronze": {
       "source_key": "fluid.molten.bronze",
       "value": "Molten Bronze"
+    },
+    "fluid_type.gregtech.molten_cadmium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.cadmium",
+      "value": "Molten Cadmium"
     },
     "fluid_type.gregtech.molten_caesium": {
       "source_key": "fluid.molten.caesium",
@@ -20612,6 +21558,11 @@
       "source_key": "fluid.molten.calciumchloride",
       "value": "Molten Calcium Chloride"
     },
+    "fluid_type.gregtech.molten_californium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.californium",
+      "value": "Molten Californium"
+    },
     "fluid_type.gregtech.molten_carbon": {
       "source_key": "fluid.molten.carbon",
       "value": "Molten Carbon"
@@ -20620,9 +21571,39 @@
       "source_key": "fluid.molten.carbon13",
       "value": "Molten Carbon-13"
     },
+    "fluid_type.gregtech.molten_carborundum": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.carborundum",
+      "value": "Molten Carborundum"
+    },
+    "fluid_type.gregtech.molten_carmot": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.carmot",
+      "value": "Molten Carmot"
+    },
+    "fluid_type.gregtech.molten_castiron": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.castiron",
+      "value": "Molten Cast Iron"
+    },
+    "fluid_type.gregtech.molten_cdinagalloy": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.cdinagalloy",
+      "value": "Molten Cd-In-Ag-Alloy"
+    },
     "fluid_type.gregtech.molten_celenegil": {
       "source_key": "fluid.molten.celenegil",
       "value": "Molten Celenegil"
+    },
+    "fluid_type.gregtech.molten_cerium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.cerium",
+      "value": "Molten Cerium"
+    },
+    "fluid_type.gregtech.molten_ceruclase": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.ceruclase",
+      "value": "Molten Ceruclase"
     },
     "fluid_type.gregtech.molten_cheese": {
       "source_key": "fluid.molten.cheese",
@@ -20636,33 +21617,103 @@
       "source_key": "fluid.molten.chromium",
       "value": "Molten Chromium"
     },
+    "fluid_type.gregtech.molten_chromiumdioxide": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.chromiumdioxide",
+      "value": "Molten Chromium Dioxide"
+    },
+    "fluid_type.gregtech.molten_claycompound": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.claycompound",
+      "value": "Molten Clay Compound"
+    },
     "fluid_type.gregtech.molten_cobalt": {
       "source_key": "fluid.molten.cobalt",
       "value": "Molten Cobalt"
+    },
+    "fluid_type.gregtech.molten_cobalt60": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.cobalt60",
+      "value": "Molten Cobalt-60"
     },
     "fluid_type.gregtech.molten_cobaltbrass": {
       "source_key": "fluid.molten.cobaltbrass",
       "value": "Molten Cobalt Brass"
     },
+    "fluid_type.gregtech.molten_conductiveiron": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.conductiveiron",
+      "value": "Molten Conductive Iron"
+    },
     "fluid_type.gregtech.molten_constantan": {
       "source_key": "fluid.molten.constantan",
       "value": "Molten Constantan"
+    },
+    "fluid_type.gregtech.molten_copernicium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.copernicium",
+      "value": "Molten Copernicium"
     },
     "fluid_type.gregtech.molten_copper": {
       "source_key": "fluid.molten.copper",
       "value": "Molten Copper"
     },
+    "fluid_type.gregtech.molten_cosmicneutronium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.cosmicneutronium",
+      "value": "Molten Cosmic Neutronium"
+    },
+    "fluid_type.gregtech.molten_crystallinealloy": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.crystallinealloy",
+      "value": "Molten Crystalline Alloy"
+    },
+    "fluid_type.gregtech.molten_crystallinepinkslime": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.crystallinepinkslime",
+      "value": "Molten Crystalline Pink Slime"
+    },
+    "fluid_type.gregtech.molten_crystalmatrix": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.crystalmatrix",
+      "value": "Molten Crystal Matrix"
+    },
+    "fluid_type.gregtech.molten_curium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.curium",
+      "value": "Molten Curium"
+    },
+    "fluid_type.gregtech.molten_cyanite": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.cyanite",
+      "value": "Molten Cyanite"
+    },
     "fluid_type.gregtech.molten_damascussteel": {
       "source_key": "fluid.molten.damascussteel",
       "value": "Molten Damascus Steel"
+    },
+    "fluid_type.gregtech.molten_darkiron": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.darkiron",
+      "value": "Molten Dark Iron"
     },
     "fluid_type.gregtech.molten_darkthaumium": {
       "source_key": "fluid.molten.darkthaumium",
       "value": "Molten Dark Thaumium"
     },
+    "fluid_type.gregtech.molten_deepiron": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.deepiron",
+      "value": "Molten Deep Iron"
+    },
     "fluid_type.gregtech.molten_desh": {
       "source_key": "fluid.molten.desh",
       "value": "Molten Desh"
+    },
+    "fluid_type.gregtech.molten_desichalkos": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.desichalkos",
+      "value": "Molten Desichalkos"
     },
     "fluid_type.gregtech.molten_draconium": {
       "source_key": "fluid.molten.draconium",
@@ -20672,9 +21723,39 @@
       "source_key": "fluid.molten.draconiumawakened",
       "value": "Molten Awakened Draconium"
     },
+    "fluid_type.gregtech.molten_dubnium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.dubnium",
+      "value": "Molten Dubnium"
+    },
+    "fluid_type.gregtech.molten_duralumin": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.duralumin",
+      "value": "Molten Duralumin"
+    },
+    "fluid_type.gregtech.molten_duranium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.duranium",
+      "value": "Molten Duranium Alloy"
+    },
+    "fluid_type.gregtech.molten_dysprosium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.dysprosium",
+      "value": "Molten Dysprosium"
+    },
     "fluid_type.gregtech.molten_efrine": {
       "source_key": "fluid.molten.efrine",
       "value": "Molten Efrine"
+    },
+    "fluid_type.gregtech.molten_einsteinium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.einsteinium",
+      "value": "Molten Einsteinium"
+    },
+    "fluid_type.gregtech.molten_electricalsteel": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.electricalsteel",
+      "value": "Molten Electrical Steel"
     },
     "fluid_type.gregtech.molten_electrotinealloy": {
       "source_key": "fluid.molten.electrotinealloy",
@@ -20683,6 +21764,21 @@
     "fluid_type.gregtech.molten_electrum": {
       "source_key": "fluid.molten.electrum",
       "value": "Molten Electrum"
+    },
+    "fluid_type.gregtech.molten_electrumflux": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.electrumflux",
+      "value": "Molten Electrum Flux"
+    },
+    "fluid_type.gregtech.molten_elvenelementium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.elvenelementium",
+      "value": "Molten Elementium"
+    },
+    "fluid_type.gregtech.molten_elvorium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.elvorium",
+      "value": "Molten Elvorium"
     },
     "fluid_type.gregtech.molten_enderium": {
       "source_key": "fluid.molten.enderium",
@@ -20696,13 +21792,73 @@
       "source_key": "fluid.molten.enderpearl",
       "value": "Molten Enderpearls"
     },
+    "fluid_type.gregtech.molten_endium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.endium",
+      "value": "Molten Endium"
+    },
+    "fluid_type.gregtech.molten_endsteel": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.endsteel",
+      "value": "Molten End Steel"
+    },
+    "fluid_type.gregtech.molten_energeticalloy": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.energeticalloy",
+      "value": "Molten Energetic Alloy"
+    },
+    "fluid_type.gregtech.molten_energeticsilver": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.energeticsilver",
+      "value": "Molten Energetic Silver"
+    },
+    "fluid_type.gregtech.molten_erbium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.erbium",
+      "value": "Molten Erbium"
+    },
+    "fluid_type.gregtech.molten_europium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.europium",
+      "value": "Molten Europium"
+    },
+    "fluid_type.gregtech.molten_eximite": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.eximite",
+      "value": "Molten Eximite"
+    },
+    "fluid_type.gregtech.molten_fermium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.fermium",
+      "value": "Molten Fermium"
+    },
+    "fluid_type.gregtech.molten_ferrite": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.ferrite",
+      "value": "Molten Ferrite"
+    },
     "fluid_type.gregtech.molten_fierysteel": {
       "source_key": "fluid.molten.fierysteel",
       "value": "Molten Fiery Steel"
     },
+    "fluid_type.gregtech.molten_fireleaf": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.fireleaf",
+      "value": "Molten Fireleaf"
+    },
     "fluid_type.gregtech.molten_flamascussteel": {
       "source_key": "fluid.molten.flamascussteel",
       "value": "Molten Flamascus Steel"
+    },
+    "fluid_type.gregtech.molten_flerovium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.flerovium",
+      "value": "Molten Flerovium"
+    },
+    "fluid_type.gregtech.molten_flerovium298": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.flerovium298",
+      "value": "Molten Flerovium-298"
     },
     "fluid_type.gregtech.molten_fluorite": {
       "source_key": "fluid.molten.fluorite",
@@ -20712,9 +21868,39 @@
       "source_key": "fluid.molten.francium",
       "value": "Molten Francium"
     },
+    "fluid_type.gregtech.molten_frozeniron": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.frozeniron",
+      "value": "Molten Frozen Iron"
+    },
+    "fluid_type.gregtech.molten_gadolinium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.gadolinium",
+      "value": "Molten Gadolinium"
+    },
+    "fluid_type.gregtech.molten_gaiaspirit": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.gaiaspirit",
+      "value": "Molten Gaia Spirit"
+    },
+    "fluid_type.gregtech.molten_gallium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.gallium",
+      "value": "Molten Gallium"
+    },
     "fluid_type.gregtech.molten_germanium": {
       "source_key": "fluid.molten.germanium",
       "value": "Molten Germanium"
+    },
+    "fluid_type.gregtech.molten_gildediron": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.gildediron",
+      "value": "Molten Gilded Iron"
+    },
+    "fluid_type.gregtech.molten_glowstonerefined": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.glowstonerefined",
+      "value": "Molten Refined Glowstone"
     },
     "fluid_type.gregtech.molten_gold": {
       "source_key": "fluid.molten.gold",
@@ -20728,6 +21914,21 @@
       "source_key": "fluid.molten.goldinductive",
       "value": "Molten Inductive Alloy"
     },
+    "fluid_type.gregtech.molten_haderoth": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.haderoth",
+      "value": "Molten Haderoth"
+    },
+    "fluid_type.gregtech.molten_hafnium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.hafnium",
+      "value": "Molten Hafnium"
+    },
+    "fluid_type.gregtech.molten_hassium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.hassium",
+      "value": "Molten Hassium"
+    },
     "fluid_type.gregtech.molten_hematite": {
       "source_key": "fluid.molten.hematite",
       "value": "Molten Hematite"
@@ -20736,13 +21937,28 @@
       "source_key": "fluid.molten.hepatizon",
       "value": "Molten Hepatizon"
     },
+    "fluid_type.gregtech.molten_holmium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.holmium",
+      "value": "Molten Holmium"
+    },
     "fluid_type.gregtech.molten_hsla": {
       "source_key": "fluid.molten hsla",
       "value": "Molten HSLA Steel"
     },
+    "fluid_type.gregtech.molten_hslaspringsteel": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.hslaspringsteel",
+      "value": "Molten Spring Steel"
+    },
     "fluid_type.gregtech.molten_hslasteel": {
       "source_key": "fluid.molten hsla",
       "value": "Molten HSLA Steel"
+    },
+    "fluid_type.gregtech.molten_hslatungstenalloy": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.hslatungstenalloy",
+      "value": "Molten Tungsten Alloy"
     },
     "fluid_type.gregtech.molten_hsse": {
       "source_key": "fluid.molten.hsse",
@@ -20756,6 +21972,31 @@
       "source_key": "fluid.molten.hsss",
       "value": "Molten HSS-S"
     },
+    "fluid_type.gregtech.molten_ignatius": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.ignatius",
+      "value": "Molten Ignatius"
+    },
+    "fluid_type.gregtech.molten_indium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.indium",
+      "value": "Molten Indium"
+    },
+    "fluid_type.gregtech.molten_infinity": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.infinity",
+      "value": "Molten Infinity"
+    },
+    "fluid_type.gregtech.molten_infuscolium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.infuscolium",
+      "value": "Molten Infuscolium"
+    },
+    "fluid_type.gregtech.molten_inolashite": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.inolashite",
+      "value": "Molten Inolashite"
+    },
     "fluid_type.gregtech.molten_invar": {
       "source_key": "fluid.molten.invar",
       "value": "Molten Invar"
@@ -20768,9 +22009,24 @@
       "source_key": "fluid.molten.iron",
       "value": "Molten Iron"
     },
+    "fluid_type.gregtech.molten_ironcompressed": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.ironcompressed",
+      "value": "Molten Compressed Iron"
+    },
+    "fluid_type.gregtech.molten_ironmagnetic": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.ironmagnetic",
+      "value": "Molten Magnetic Iron"
+    },
     "fluid_type.gregtech.molten_ironwood": {
       "source_key": "fluid.molten.ironwood",
       "value": "Molten Ironwood"
+    },
+    "fluid_type.gregtech.molten_kalendrite": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.kalendrite",
+      "value": "Molten Kalendrite"
     },
     "fluid_type.gregtech.molten_kanthal": {
       "source_key": "fluid.molten.kanthal",
@@ -20784,9 +22040,24 @@
       "source_key": "fluid.molten.kreknorite",
       "value": "Molten Kreknorite"
     },
+    "fluid_type.gregtech.molten_lanthanium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.lanthanium",
+      "value": "Molten Lanthanium"
+    },
+    "fluid_type.gregtech.molten_lawrencium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.lawrencium",
+      "value": "Molten Lawrencium"
+    },
     "fluid_type.gregtech.molten_lead": {
       "source_key": "fluid.molten.lead",
       "value": "Molten Lead"
+    },
+    "fluid_type.gregtech.molten_lemurite": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.lemurite",
+      "value": "Molten Lemurite"
     },
     "fluid_type.gregtech.molten_lithium": {
       "source_key": "fluid.molten.lithium",
@@ -20796,9 +22067,19 @@
       "source_key": "fluid.molten.lithium6",
       "value": "Molten Lithium-6"
     },
+    "fluid_type.gregtech.molten_ludicrite": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.ludicrite",
+      "value": "Molten Ludicrite"
+    },
     "fluid_type.gregtech.molten_lumium": {
       "source_key": "fluid.molten.lumium",
       "value": "Molten Lumium"
+    },
+    "fluid_type.gregtech.molten_lutetium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.lutetium",
+      "value": "Molten Lutetium"
     },
     "fluid_type.gregtech.molten_magnalium": {
       "source_key": "fluid.molten.magnalium",
@@ -20816,6 +22097,11 @@
       "source_key": "fluid.molten.magnesiumchloride",
       "value": "Molten Magnesium Chloride"
     },
+    "fluid_type.gregtech.molten_manasteel": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.manasteel",
+      "value": "Molten Manasteel"
+    },
     "fluid_type.gregtech.molten_manganese": {
       "source_key": "fluid.molten.manganese",
       "value": "Molten Manganese"
@@ -20827,6 +22113,26 @@
     "fluid_type.gregtech.molten_manyullyn": {
       "source_key": "fluid.molten.manyullyn",
       "value": "Molten Manyullyn"
+    },
+    "fluid_type.gregtech.molten_mauftrium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.mauftrium",
+      "value": "Molten Mauftrium"
+    },
+    "fluid_type.gregtech.molten_melodicalloy": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.melodicalloy",
+      "value": "Molten Melodic Alloy"
+    },
+    "fluid_type.gregtech.molten_mendelevium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.mendelevium",
+      "value": "Molten Mendelevium"
+    },
+    "fluid_type.gregtech.molten_mercury": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.mercury",
+      "value": "Molten Mercury"
     },
     "fluid_type.gregtech.molten_meteoflameblacksteel": {
       "source_key": "fluid.molten.meteoflameblacksteel",
@@ -20868,9 +22174,19 @@
       "source_key": "fluid.molten.meteorite",
       "value": "Molten Meteorite"
     },
+    "fluid_type.gregtech.molten_meutoite": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.meutoite",
+      "value": "Molten Meutoite"
+    },
     "fluid_type.gregtech.molten_midasium": {
       "source_key": "fluid.molten.midasium",
       "value": "Molten Midasium"
+    },
+    "fluid_type.gregtech.molten_mingrade": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.mingrade",
+      "value": "Molten Red Copper"
     },
     "fluid_type.gregtech.molten_mithril": {
       "source_key": "fluid.molten.mithril",
@@ -20880,13 +22196,33 @@
       "source_key": "fluid.molten.molybdenum",
       "value": "Molten Molybdenum"
     },
+    "fluid_type.gregtech.molten_muspelheimpower": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.muspelheimpower",
+      "value": "Molten Muspelheim Power"
+    },
     "fluid_type.gregtech.molten_neodymium": {
       "source_key": "fluid.molten.neodymium",
       "value": "Molten Neodymium"
     },
+    "fluid_type.gregtech.molten_neodymiummagnetic": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.neodymiummagnetic",
+      "value": "Molten Magnetic Neodymium"
+    },
+    "fluid_type.gregtech.molten_neptunium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.neptunium",
+      "value": "Molten Neptunium"
+    },
     "fluid_type.gregtech.molten_netherite": {
       "source_key": "fluid.molten.netherite",
       "value": "Molten Netherite"
+    },
+    "fluid_type.gregtech.molten_netherizeddiamond": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.netherizeddiamond",
+      "value": "Molten Netherized Diamond"
     },
     "fluid_type.gregtech.molten_nichrome": {
       "source_key": "fluid.molten.nichrome",
@@ -20896,9 +22232,44 @@
       "source_key": "fluid.molten.nickel",
       "value": "Molten Nickel"
     },
+    "fluid_type.gregtech.molten_niflheimpower": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.niflheimpower",
+      "value": "Molten Niflheim Power"
+    },
     "fluid_type.gregtech.molten_nikolinealloy": {
       "source_key": "fluid.molten.nikolinealloy",
       "value": "Molten Nikoline Alloy"
+    },
+    "fluid_type.gregtech.molten_niobium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.niobium",
+      "value": "Molten Niobium"
+    },
+    "fluid_type.gregtech.molten_niobiumnitride": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.niobiumnitride",
+      "value": "Molten Niobium Nitride"
+    },
+    "fluid_type.gregtech.molten_niobiumtitanium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.niobiumtitanium",
+      "value": "Molten Niobium Titanium"
+    },
+    "fluid_type.gregtech.molten_nobelium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.nobelium",
+      "value": "Molten Nobelium"
+    },
+    "fluid_type.gregtech.molten_obsidianrefined": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.obsidianrefined",
+      "value": "Molten Refined Obsidian"
+    },
+    "fluid_type.gregtech.molten_obsidiansteel": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.obsidiansteel",
+      "value": "Molten Obsidian Steel"
     },
     "fluid_type.gregtech.molten_octine": {
       "source_key": "fluid.molten.octine",
@@ -20908,6 +22279,11 @@
       "source_key": "fluid.molten.orichalcum",
       "value": "Molten Orichalcum"
     },
+    "fluid_type.gregtech.molten_oriharukon": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.oriharukon",
+      "value": "Molten Oriharukon"
+    },
     "fluid_type.gregtech.molten_osmiridium": {
       "source_key": "fluid.molten.osmiridium",
       "value": "Molten Osmiridium"
@@ -20916,17 +22292,92 @@
       "source_key": "fluid.molten.osmiumelemental",
       "value": "Molten Osmium"
     },
+    "fluid_type.gregtech.molten_oureclase": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.oureclase",
+      "value": "Molten Oureclase"
+    },
+    "fluid_type.gregtech.molten_palladium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.palladium",
+      "value": "Molten Palladium"
+    },
     "fluid_type.gregtech.molten_pigiron": {
       "source_key": "fluid.molten.pigiron",
       "value": "Molten Pig Iron"
+    },
+    "fluid_type.gregtech.molten_plastic": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.plastic",
+      "value": "Molten Plastic"
     },
     "fluid_type.gregtech.molten_platinum": {
       "source_key": "fluid.molten.platinum",
       "value": "Molten Platinum"
     },
+    "fluid_type.gregtech.molten_plutonium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.plutonium",
+      "value": "Molten Plutonium"
+    },
+    "fluid_type.gregtech.molten_plutonium238": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.plutonium238",
+      "value": "Molten Plutonium-238"
+    },
+    "fluid_type.gregtech.molten_plutonium239": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.plutonium239",
+      "value": "Molten Plutonium-239"
+    },
+    "fluid_type.gregtech.molten_plutonium240": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.plutonium240",
+      "value": "Molten Plutonium-240"
+    },
+    "fluid_type.gregtech.molten_plutonium241": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.plutonium241",
+      "value": "Molten Plutonium-241"
+    },
+    "fluid_type.gregtech.molten_plutonium243": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.plutonium243",
+      "value": "Molten Plutonium-243"
+    },
+    "fluid_type.gregtech.molten_polonium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.polonium",
+      "value": "Molten Polonium"
+    },
     "fluid_type.gregtech.molten_potassium": {
       "source_key": "fluid.molten.potassium",
       "value": "Molten Potassium"
+    },
+    "fluid_type.gregtech.molten_praseodymium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.praseodymium",
+      "value": "Molten Praseodymium"
+    },
+    "fluid_type.gregtech.molten_prometheum": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.prometheum",
+      "value": "Molten Prometheum"
+    },
+    "fluid_type.gregtech.molten_promethium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.promethium",
+      "value": "Molten Promethium"
+    },
+    "fluid_type.gregtech.molten_protactinium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.protactinium",
+      "value": "Molten Protactinium"
+    },
+    "fluid_type.gregtech.molten_pulsatingiron": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.pulsatingiron",
+      "value": "Molten Pulsating Iron"
     },
     "fluid_type.gregtech.molten_purplealloy": {
       "source_key": "fluid.molten.purplealloy",
@@ -20952,6 +22403,16 @@
       "source_key": "fluid.molten.redstonealloy",
       "value": "Molten Redstone Alloy"
     },
+    "fluid_type.gregtech.molten_rhenium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.rhenium",
+      "value": "Molten Rhenium"
+    },
+    "fluid_type.gregtech.molten_rhodium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.rhodium",
+      "value": "Molten Rhodium"
+    },
     "fluid_type.gregtech.molten_rosegold": {
       "source_key": "fluid.molten.rosegold",
       "value": "Molten Rose Gold"
@@ -20963,6 +22424,51 @@
     "fluid_type.gregtech.molten_rubidium": {
       "source_key": "fluid.molten.rubidium",
       "value": "Molten Rubidium"
+    },
+    "fluid_type.gregtech.molten_rubracium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.rubracium",
+      "value": "Molten Rubracium"
+    },
+    "fluid_type.gregtech.molten_ruthenium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.ruthenium",
+      "value": "Molten Ruthenium"
+    },
+    "fluid_type.gregtech.molten_rutherfordium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.rutherfordium",
+      "value": "Molten Rutherfordium"
+    },
+    "fluid_type.gregtech.molten_samarium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.samarium",
+      "value": "Molten Samarium"
+    },
+    "fluid_type.gregtech.molten_sanguinite": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.sanguinite",
+      "value": "Molten Sanguinite"
+    },
+    "fluid_type.gregtech.molten_scandium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.scandium",
+      "value": "Molten Scandium"
+    },
+    "fluid_type.gregtech.molten_seaborgium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.seaborgium",
+      "value": "Molten Seaborgium"
+    },
+    "fluid_type.gregtech.molten_shadowiron": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.shadowiron",
+      "value": "Molten Shadow Iron"
+    },
+    "fluid_type.gregtech.molten_shadowsteel": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.shadowsteel",
+      "value": "Molten Shadow Steel"
     },
     "fluid_type.gregtech.molten_signalum": {
       "source_key": "fluid.molten.signalum",
@@ -20988,6 +22494,11 @@
       "source_key": "fluid.molten.solderingalloy",
       "value": "Molten Soldering Alloy"
     },
+    "fluid_type.gregtech.molten_soularium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.soularium",
+      "value": "Molten Soularium"
+    },
     "fluid_type.gregtech.molten_spectreiron": {
       "source_key": "fluid.molten.spectreiron",
       "value": "Molten Spectre Iron"
@@ -20999,6 +22510,26 @@
     "fluid_type.gregtech.molten_steel": {
       "source_key": "fluid.molten.steel",
       "value": "Molten Steel"
+    },
+    "fluid_type.gregtech.molten_steeleaf": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.steeleaf",
+      "value": "Molten Steeleaf"
+    },
+    "fluid_type.gregtech.molten_steelgalvanized": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.steelgalvanized",
+      "value": "Molten Galvanized Steel"
+    },
+    "fluid_type.gregtech.molten_steelmagnetic": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.steelmagnetic",
+      "value": "Molten Magnetic Steel"
+    },
+    "fluid_type.gregtech.molten_stellaralloy": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.stellaralloy",
+      "value": "Molten Stellar Alloy"
     },
     "fluid_type.gregtech.molten_sterlingsilver": {
       "source_key": "fluid.molten.sterlingsilver",
@@ -21016,17 +22547,67 @@
       "source_key": "fluid.molten.sulfur",
       "value": "Molten Sulfur"
     },
+    "fluid_type.gregtech.molten_sunnarium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.sunnarium",
+      "value": "Molten Sunnarium"
+    },
     "fluid_type.gregtech.molten_syrmorite": {
       "source_key": "fluid.molten.syrmorite",
       "value": "Molten Syrmorite"
+    },
+    "fluid_type.gregtech.molten_tantalum": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.tantalum",
+      "value": "Molten Tantalum"
+    },
+    "fluid_type.gregtech.molten_tantalumhafniumcarbide": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.tantalumhafniumcarbide",
+      "value": "Molten Tantalum Hafnium Carbide"
+    },
+    "fluid_type.gregtech.molten_tartarite": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.tartarite",
+      "value": "Molten Tartarite"
+    },
+    "fluid_type.gregtech.molten_technetium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.technetium",
+      "value": "Molten Technetium"
     },
     "fluid_type.gregtech.molten_tellurium": {
       "source_key": "fluid.molten.tellurium",
       "value": "Molten Tellurium"
     },
+    "fluid_type.gregtech.molten_terbium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.terbium",
+      "value": "Molten Terbium"
+    },
+    "fluid_type.gregtech.molten_terrasteel": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.terrasteel",
+      "value": "Molten Terrasteel"
+    },
+    "fluid_type.gregtech.molten_thallium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.thallium",
+      "value": "Molten Thallium"
+    },
     "fluid_type.gregtech.molten_thaumium": {
       "source_key": "fluid.molten.thaumium",
       "value": "Molten Thaumium"
+    },
+    "fluid_type.gregtech.molten_thorium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.thorium",
+      "value": "Molten Thorium"
+    },
+    "fluid_type.gregtech.molten_thulium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.thulium",
+      "value": "Molten Thulium"
     },
     "fluid_type.gregtech.molten_tin": {
       "source_key": "fluid.molten.tin",
@@ -21040,13 +22621,48 @@
       "source_key": "fluid.molten.titanium",
       "value": "Molten Titanium"
     },
+    "fluid_type.gregtech.molten_titaniumaluminide": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.titaniumaluminide",
+      "value": "Molten Titanium Aluminide"
+    },
     "fluid_type.gregtech.molten_titaniumgold": {
       "source_key": "fluid.molten.titaniumgold",
       "value": "Molten Titanium-Gold"
     },
+    "fluid_type.gregtech.molten_titaniumiridium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.titaniumiridium",
+      "value": "Molten Iritanium"
+    },
+    "fluid_type.gregtech.molten_trinaquadalloy": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.trinaquadalloy",
+      "value": "Molten Trinaquadalloy"
+    },
+    "fluid_type.gregtech.molten_trinitanium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.trinitanium",
+      "value": "Molten Trinitanium"
+    },
+    "fluid_type.gregtech.molten_tritanium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.tritanium",
+      "value": "Molten Tritanium Alloy"
+    },
     "fluid_type.gregtech.molten_tungsten": {
       "source_key": "fluid.molten.tungsten",
       "value": "Molten Tungsten"
+    },
+    "fluid_type.gregtech.molten_tungstencarbide": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.tungstencarbide",
+      "value": "Molten Tungsten Carbide"
+    },
+    "fluid_type.gregtech.molten_tungstensintered": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.tungstensintered",
+      "value": "Molten Sintered Tungsten"
     },
     "fluid_type.gregtech.molten_tungstensteel": {
       "source_key": "fluid.molten.tungstensteel",
@@ -21056,9 +22672,19 @@
       "source_key": "fluid.molten.ultimet",
       "value": "Molten Ultimet"
     },
+    "fluid_type.gregtech.molten_unstable": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.unstable",
+      "value": "Molten Unstable"
+    },
     "fluid_type.gregtech.molten_uranium": {
       "source_key": "fluid.molten.uranium",
       "value": "Molten Uranium"
+    },
+    "fluid_type.gregtech.molten_uranium233": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.uranium233",
+      "value": "Molten Uranium-233"
     },
     "fluid_type.gregtech.molten_uranium235": {
       "source_key": "fluid.molten.uranium235",
@@ -21080,13 +22706,53 @@
       "source_key": "fluid.molten.vanadium",
       "value": "Molten Vanadium"
     },
+    "fluid_type.gregtech.molten_vanadiumgallium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.vanadiumgallium",
+      "value": "Molten Vanadium-Gallium"
+    },
     "fluid_type.gregtech.molten_vanadiumsteel": {
       "source_key": "fluid.molten.vanadiumsteel",
       "value": "Molten Vanadiumsteel"
     },
+    "fluid_type.gregtech.molten_vibramantium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.vibramantium",
+      "value": "Molten Vibramantium"
+    },
+    "fluid_type.gregtech.molten_vibraniumsilver": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.vibraniumsilver",
+      "value": "Molten Vibranium Silver"
+    },
+    "fluid_type.gregtech.molten_vibraniumsteel": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.vibraniumsteel",
+      "value": "Molten Vibranium Steel"
+    },
+    "fluid_type.gregtech.molten_vibrantalloy": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.vibrantalloy",
+      "value": "Molten Vibrant Alloy"
+    },
+    "fluid_type.gregtech.molten_vividalloy": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.vividalloy",
+      "value": "Molten Vivid Alloy"
+    },
     "fluid_type.gregtech.molten_voidmetal": {
       "source_key": "fluid.molten.voidmetal",
       "value": "Molten Void Metal"
+    },
+    "fluid_type.gregtech.molten_vulcanite": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.vulcanite",
+      "value": "Molten Vulcanite"
+    },
+    "fluid_type.gregtech.molten_vyroxeres": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.vyroxeres",
+      "value": "Molten Vyroxeres"
     },
     "fluid_type.gregtech.molten_wax": {
       "source_key": "fluid.molten.wax",
@@ -21128,9 +22794,34 @@
       "source_key": "fluid.molten.wroughtiron",
       "value": "Molten Wrought Iron"
     },
+    "fluid_type.gregtech.molten_yellorium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.yellorium",
+      "value": "Molten Yellorium"
+    },
+    "fluid_type.gregtech.molten_ytterbium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.ytterbium",
+      "value": "Molten Ytterbium"
+    },
+    "fluid_type.gregtech.molten_yttrium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.yttrium",
+      "value": "Molten Yttrium"
+    },
+    "fluid_type.gregtech.molten_yttriumbariumcuprate": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.yttriumbariumcuprate",
+      "value": "Molten Yttrium-Barium-Cuprate"
+    },
     "fluid_type.gregtech.molten_zinc": {
       "source_key": "fluid.molten.zinc",
       "value": "Molten Zinc"
+    },
+    "fluid_type.gregtech.molten_zirconium": {
+      "chinese_source_missing": true,
+      "source_key": "fluid.molten.zirconium",
+      "value": "Molten Zirconium"
     },
     "fluid_type.gregtech.mushroomsoup": {
       "source_key": "fluid.mushroomsoup",

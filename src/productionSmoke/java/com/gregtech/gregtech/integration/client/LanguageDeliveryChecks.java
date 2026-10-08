@@ -90,6 +90,7 @@ final class LanguageDeliveryChecks {
             int coinsEnglish=verifyCoins(false);
             int technologyEnglish=verifyTechnologyNames(false);
             int lootEnglish=verifyLootChestNames(false),fluidsEnglish=verifyDeclaredFluidNames();
+            int fluidFallbacksEnglish=verifyFluidMaterialFallbacks(false);
             int wiresOresEnglish=verifyAdditionalBlockNames();
             manager.setSelected("zh_cn");
             manager.onResourceManagerReload(client.getResourceManager());
@@ -100,6 +101,7 @@ final class LanguageDeliveryChecks {
             int coinsChinese=verifyCoins(true);
             int technologyChinese=verifyTechnologyNames(true);
             int lootChinese=verifyLootChestNames(true),fluidsChinese=verifyDeclaredFluidNames();
+            int fluidFallbacksChinese=verifyFluidMaterialFallbacks(true);
             int wiresOresChinese=verifyAdditionalBlockNames();
             var nameInventory=recordNameInventory(client,englishSnapshot);
             require(Language.getInstance().has("gt.multiitem.bumblebee.0"), "Original Chinese resource is loaded");
@@ -222,6 +224,8 @@ final class LanguageDeliveryChecks {
             report.addProperty("lootChestNamesChinese",lootChinese);
             report.addProperty("declaredFluidNamesEnglish",fluidsEnglish);
             report.addProperty("declaredFluidNamesChinese",fluidsChinese);
+            report.addProperty("materialFluidFallbackNamesEnglish",fluidFallbacksEnglish);
+            report.addProperty("materialFluidFallbackNamesChinese",fluidFallbacksChinese);
             report.addProperty("sourceTechnologyNamesEnglish",technologyEnglish);
             report.addProperty("sourceTechnologyNamesChinese",technologyChinese);
             report.addProperty("chineseItemNames",englishSnapshot.size());
@@ -291,6 +295,26 @@ final class LanguageDeliveryChecks {
         }
         require(checked>100,"Declared fluid catalog checked in actual locale");return checked;
     }
+    private static int verifyFluidMaterialFallbacks(boolean chinese) {
+        // Original FL helper names, plus exact existing material translations.
+        // Importing an English-only complete key must not shadow these Chinese names.
+        String[] rows={"aluminiumfluoride|Aluminium Fluoride|AluminiumFluoride",
+                "constructionfoam|C-Foam|ConstructionFoam","cryolite|Cryolite|Cryolite",
+                "freshwater|Fresh Water|FreshWater","fryingoilhot|Hot Frying Oil|FryingOilHot",
+                "iodine|Iodine|Iodine","lava|Lava|Lava",
+                "lithiumchlorate|Lithium Chlorate|LithiumChlorate","lithiumchloride|Lithium Chloride|LithiumChloride",
+                "molten_graphene|Molten Graphene|Graphene","oliveoil|Olive Oil|OliveOil",
+                "uumatter|UU-Matter|UUMatter","water|Water|Water","waterdistilled|Distilled Water|WaterDistilled"};
+        for(String row:rows) {
+            String[] parts=row.split("\\|");var stack=item("fluid_item_"+parts[0]);
+            require(!Language.getInstance().has("fluid_type.gregtech."+parts[0]),"Material fluid fallback remains available "+parts[0]);
+            String expected=chinese?original("gt.material."+parts[2]):parts[1];
+            if(chinese && parts[0].startsWith("molten_"))
+                expected=Component.translatable("fluid_type.gregtech.molten_material",expected).getString();
+            require(stack.getHoverName().getString().equals(expected),"Source formula/material fluid name "+parts[0]);
+        }
+        return rows.length;
+    }
     private static int verifyAdditionalBlockNames() {
         var ids=new ArrayList<String>();
         for(var wire:com.gregtech.gregtech.content.energy.WireCatalog.specifications())
@@ -304,13 +328,15 @@ final class LanguageDeliveryChecks {
             for(String family:new String[]{"co2_laser","flux_laser","laser_absorber"})ids.add(family+"_"+tier);
         ids.addAll(List.of("zpm","zpm_discharger_basic","zpm_discharger_advanced","zpm_discharger_elite",
                 "ingot_pile","plate_pile","plate_gem_pile","coin_pile","sandwich_block","sensor_kilogibblometer"));
+        ids.addAll(List.of("log_hole_maple","log_sap_maple","log_hole_rainbowood","log_sap_rainbowood",
+                "log_hole_rubber","log_resin_rubber"));
         for(String id:ids) {
             var stack=item(id);String key="block.gregtech."+id;
             require(stack.getDescriptionId().equals(key),"Source-bound registry description identity "+id);
             // Exact English/source-Chinese resource contents are independently pinned by the language gate.
             require(stack.getHoverName().getString().equals(original(key)),"Installed complete source block name "+id);
         }
-        require(ids.size()==688,"Complete wire, special-ore and utility catalog");return ids.size();
+        require(ids.size()==694,"Complete wire, special-ore and utility catalog");return ids.size();
     }
     private static void verifySourceTechnology(String id, String source, boolean chinese) {
         var stack=item(id);String key=stack.getDescriptionId(),expected=original(key);
