@@ -94,6 +94,7 @@ final class LanguageDeliveryChecks {
             int lootEnglish=verifyLootChestNames(false),fluidsEnglish=verifyDeclaredFluidNames();
             int fluidFallbacksEnglish=verifyFluidMaterialFallbacks(false);
             int wiresOresEnglish=verifyAdditionalBlockNames();
+            var generatedEnglish=verifyGeneratedNames();
             manager.setSelected("zh_cn");
             manager.onResourceManagerReload(client.getResourceManager());
             int machineNamesChinese=verifyMachineNames();
@@ -105,6 +106,7 @@ final class LanguageDeliveryChecks {
             int lootChinese=verifyLootChestNames(true),fluidsChinese=verifyDeclaredFluidNames();
             int fluidFallbacksChinese=verifyFluidMaterialFallbacks(true);
             int wiresOresChinese=verifyAdditionalBlockNames();
+            var generatedChinese=verifyGeneratedNames();
             var nameInventory=recordNameInventory(client,englishSnapshot);
             require(Language.getInstance().has("gt.multiitem.bumblebee.0"), "Original Chinese resource is loaded");
             int names=0, nonempty=0, empty=0;
@@ -237,6 +239,7 @@ final class LanguageDeliveryChecks {
             report.addProperty("assembledToolNames",toolSamples.size());
             report.addProperty("toolHintsEnglish",toolHintsEnglish);
             report.addProperty("toolHintsChinese",verifyToolHints(true));
+            report.add("generatedNamesEnglish",generatedEnglish);report.add("generatedNamesChinese",generatedChinese);
             report.addProperty("newSourceDescriptions",1);
             var samples=new JsonArray();for(var c:ironLines)samples.add(c.getString());report.add("moltenIronTooltip",samples);
             report.addProperty("scope","Installed resource-manager language and actual item callbacks; explicitly supplied native lookup for Neo payloads at title screen; no in-world player hover or survival claim");
@@ -245,6 +248,50 @@ final class LanguageDeliveryChecks {
             manager.setSelected(previous);manager.onResourceManagerReload(client.getResourceManager());
         }
     }
+
+    private static void requireInstalledName(ItemStack stack) {
+        String key=stack.getDescriptionId();
+        require(Language.getInstance().has(key), "Generated native name key "+key);
+        require(stack.getHoverName().getString().equals(Component.translatable(key).getString()),
+                "Generated original name reaches item callback "+key);
+    }
+    private static JsonObject verifyGeneratedNames() {
+        for(String id:ANVILS.keySet())requireInstalledName(item(id));
+        String[] states={"drone","princess","queen","dead","scanned_drone","scanned_princess","scanned_queen","scanned_dead"};
+        int bees=0;
+        for(var species:GTBumbleSpecies.SPECIES)for(String state:states) {
+            var stack=item(species.beeId(state));requireInstalledName(stack);bees++;
+            String key=stack.getDescriptionId()+".tooltip";
+            require(Language.getInstance().has(key),"Generated bee description key "+key);
+            String expected=Component.translatable(key).getString();
+            var lines=tooltip(stack).stream().filter(c->has(c,key)).toList();
+            require(lines.size()==(expected.isEmpty()?0:1),"Generated bee description count "+key);
+            if(!expected.isEmpty())require(lines.get(0).getString().equals(expected),"Generated bee description "+key);
+        }
+        var books=com.gregtech.gregtech.content.book.ColoredBookRules.VARIANTS;
+        for(var variant:books)requireInstalledName(item(variant.path()));
+        var canvases=com.gregtech.gregtech.content.cover.CanvasRules.VARIANTS;
+        for(var variant:canvases)requireInstalledName(item(variant.path()));
+        var panels=com.gregtech.gregtech.content.transport.PanelCatalog.ALL;
+        for(var spec:panels)requireInstalledName(item(spec.id()));
+        int tabs=0;
+        for(var tab:BuiltInRegistries.CREATIVE_MODE_TAB) {
+            var id=BuiltInRegistries.CREATIVE_MODE_TAB.getKey(tab);
+            if(!id.getNamespace().equals("gregtech"))continue;
+            Component title=tab.getDisplayName();
+            require(title.getContents() instanceof TranslatableContents,"Creative category uses a language key "+id);
+            String key=((TranslatableContents)title.getContents()).getKey();
+            require(Language.getInstance().has(key),"Creative category key "+key);
+            require(title.getString().equals(Component.translatable(key).getString()),"Installed creative category "+id);
+            tabs++;
+        }
+        require(bees==640&&books.size()==28&&canvases.size()==16&&tabs>100,"Complete generated name families");
+        var report=new JsonObject();report.addProperty("bees",bees);report.addProperty("anvils",ANVILS.size());
+        report.addProperty("books",books.size());report.addProperty("canvases",canvases.size());
+        report.addProperty("panels",panels.size());report.addProperty("creativeTabs",tabs);
+        return report;
+    }
+
     private static String original(String key) {
         require(Language.getInstance().has(key),"Original key present "+key);
         return Language.getInstance().getOrDefault(key);

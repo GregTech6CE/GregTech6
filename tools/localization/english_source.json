@@ -22,6 +22,10 @@
       "sha256": "aafdf56ce4b3720b314cf62fa031712b697df2bd0b7666bedc479dfe5cb9216f"
     },
     {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\block\\multitileentity\\MultiTileEntityRegistry.java",
+      "sha256": "70fb3ce00e7036e343e253e0f9fd8401b05c3f4f4e16b88f1b3fb94c3b111e83"
+    },
+    {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\compat\\thaumcraft\\CompatTC.java",
       "sha256": "b024dca96408b09a4ce7dec5f202e4b2f09e19ab3f2ef34f6b3a1bf5cf8684ba"
     },
@@ -48,6 +52,10 @@
     {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\OP.java",
       "sha256": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\CreativeTab.java",
+      "sha256": "f2d7cd61c0a10e92fbcf0a2000a7476b996a73b9d17382893ea19cd613bd590e"
     },
     {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\ItemIntegratedCircuit.java",
@@ -92,6 +100,10 @@
     {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\multiitem\\behaviors\\Behavior_TripwireCutting.java",
       "sha256": "bcce79fbbc5feeff44f73ca05c0bb0598c342ec0c076e9c3f55970616e48aab3"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\prefixitem\\PrefixItem.java",
+      "sha256": "28b7ce821756919a3140e6e4e61bd03e8b716a13e3f29cb0367bae9bef9cd843"
     },
     {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\lang\\LanguageHandler.java",
@@ -232,6 +244,10 @@
     {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tool\\BlockBarsTungstenSteel.java",
       "sha256": "50066fa067fa531801395c350d0780d4278cebb7d9bd85386b83b5db3476c081"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tool\\BlockLongDistWire.java",
+      "sha256": "6582cf7e867482c9b162c16a1527b21f542b6ed1254168bc65e193e8d7e5b854"
     },
     {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tool\\BlockSpikeFancy.java",
@@ -1670,6 +1686,46 @@
     "block.gregtech.battery_alkaline_ulv": {
       "source_key": "gt.multitileentity.14010",
       "value": "Alkaline Battery (ULV)"
+    },
+    "block.gregtech.battery_box_ev": {
+      "source_key": "gt.multitileentity.10084",
+      "value": "Battery Box (EV)"
+    },
+    "block.gregtech.battery_box_hv": {
+      "source_key": "gt.multitileentity.10083",
+      "value": "Battery Box (HV)"
+    },
+    "block.gregtech.battery_box_iv": {
+      "source_key": "gt.multitileentity.10085",
+      "value": "Battery Box (IV)"
+    },
+    "block.gregtech.battery_box_luv": {
+      "source_key": "gt.multitileentity.10086",
+      "value": "Battery Box (LuV)"
+    },
+    "block.gregtech.battery_box_lv": {
+      "source_key": "gt.multitileentity.10081",
+      "value": "Battery Box (LV)"
+    },
+    "block.gregtech.battery_box_mv": {
+      "source_key": "gt.multitileentity.10082",
+      "value": "Battery Box (MV)"
+    },
+    "block.gregtech.battery_box_ulv": {
+      "source_key": "gt.multitileentity.10080",
+      "value": "Battery Box (ULV)"
+    },
+    "block.gregtech.battery_box_uv": {
+      "source_key": "gt.multitileentity.10088",
+      "value": "Battery Box (UV)"
+    },
+    "block.gregtech.battery_box_xv": {
+      "source_key": "gt.multitileentity.10089",
+      "value": "Battery Box (PUV1)"
+    },
+    "block.gregtech.battery_box_zpm": {
+      "source_key": "gt.multitileentity.10087",
+      "value": "Battery Box (ZPM)"
     },
     "block.gregtech.battery_eu_128": {
       "source_key": "gt.multitileentity.14032",
@@ -6025,6 +6081,46 @@
       "source_key": "gt.multitileentity.32710",
       "value": "Ender Garbage Dump"
     },
+    "block.gregtech.energy_storage_ev": {
+      "source_key": "gt.multitileentity.10094",
+      "value": "Large Battery Box (EV)"
+    },
+    "block.gregtech.energy_storage_hv": {
+      "source_key": "gt.multitileentity.10093",
+      "value": "Large Battery Box (HV)"
+    },
+    "block.gregtech.energy_storage_iv": {
+      "source_key": "gt.multitileentity.10095",
+      "value": "Large Battery Box (IV)"
+    },
+    "block.gregtech.energy_storage_luv": {
+      "source_key": "gt.multitileentity.10096",
+      "value": "Large Battery Box (LuV)"
+    },
+    "block.gregtech.energy_storage_lv": {
+      "source_key": "gt.multitileentity.10091",
+      "value": "Large Battery Box (LV)"
+    },
+    "block.gregtech.energy_storage_mv": {
+      "source_key": "gt.multitileentity.10092",
+      "value": "Large Battery Box (MV)"
+    },
+    "block.gregtech.energy_storage_ulv": {
+      "source_key": "gt.multitileentity.10090",
+      "value": "Large Battery Box (ULV)"
+    },
+    "block.gregtech.energy_storage_uv": {
+      "source_key": "gt.multitileentity.10098",
+      "value": "Large Battery Box (UV)"
+    },
+    "block.gregtech.energy_storage_xv": {
+      "source_key": "gt.multitileentity.10099",
+      "value": "Large Battery Box (PUV1)"
+    },
+    "block.gregtech.energy_storage_zpm": {
+      "source_key": "gt.multitileentity.10097",
+      "value": "Large Battery Box (ZPM)"
+    },
     "block.gregtech.engine_diesel_arsenic_bronze": {
       "source_key": "gt.multitileentity.9145",
       "value": "Diesel Engine (Arsenic Bronze)"
@@ -9073,6 +9169,74 @@
       "source_key": "gt.multitileentity.10067",
       "value": "Long Distance Transformer Endpoint (ZPM)"
     },
+    "block.gregtech.long_dist_wire": {
+      "source_key": "gt.block.longdistwire.01.0",
+      "value": "Long Distance Electric Wire (EV)"
+    },
+    "block.gregtech.long_dist_wire_aluminium": {
+      "source_key": "gt.block.longdistwire.01.9",
+      "value": "Long Distance Electric Wire (ZPM)"
+    },
+    "block.gregtech.long_dist_wire_blue_alloy": {
+      "source_key": "gt.block.longdistwire.01.6",
+      "value": "Long Distance Electric Wire (LuV)"
+    },
+    "block.gregtech.long_dist_wire_electrotine_alloy": {
+      "source_key": "gt.block.longdistwire.01.7",
+      "value": "Long Distance Electric Wire (LuV)"
+    },
+    "block.gregtech.long_dist_wire_electrum": {
+      "source_key": "gt.block.longdistwire.01.5",
+      "value": "Long Distance Electric Wire (LuV)"
+    },
+    "block.gregtech.long_dist_wire_ev": {
+      "source_key": "gt.block.longdistwire.01.0",
+      "value": "Long Distance Electric Wire (EV)"
+    },
+    "block.gregtech.long_dist_wire_gold": {
+      "source_key": "gt.block.longdistwire.01.4",
+      "value": "Long Distance Electric Wire (LuV)"
+    },
+    "block.gregtech.long_dist_wire_graphene": {
+      "source_key": "gt.block.longdistwire.01.15",
+      "value": "Long Distance Electric Wire (UV)"
+    },
+    "block.gregtech.long_dist_wire_iv": {
+      "source_key": "gt.block.longdistwire.01.2",
+      "value": "Long Distance Electric Wire (IV)"
+    },
+    "block.gregtech.long_dist_wire_lead": {
+      "source_key": "gt.block.longdistwire.01.1",
+      "value": "Long Distance Electric Wire (EV)"
+    },
+    "block.gregtech.long_dist_wire_luv": {
+      "source_key": "gt.block.longdistwire.01.3",
+      "value": "Long Distance Electric Wire (LuV)"
+    },
+    "block.gregtech.long_dist_wire_naquadah": {
+      "source_key": "gt.block.longdistwire.01.14",
+      "value": "Long Distance Electric Wire (UV)"
+    },
+    "block.gregtech.long_dist_wire_platinum": {
+      "source_key": "gt.block.longdistwire.01.13",
+      "value": "Long Distance Electric Wire (UV)"
+    },
+    "block.gregtech.long_dist_wire_tungsten": {
+      "source_key": "gt.block.longdistwire.01.10",
+      "value": "Long Distance Electric Wire (ZPM)"
+    },
+    "block.gregtech.long_dist_wire_tungsten_steel": {
+      "source_key": "gt.block.longdistwire.01.11",
+      "value": "Long Distance Electric Wire (ZPM)"
+    },
+    "block.gregtech.long_dist_wire_uv": {
+      "source_key": "gt.block.longdistwire.01.12",
+      "value": "Long Distance Electric Wire (UV)"
+    },
+    "block.gregtech.long_dist_wire_zpm": {
+      "source_key": "gt.block.longdistwire.01.8",
+      "value": "Long Distance Electric Wire (ZPM)"
+    },
     "block.gregtech.loom_bronze": {
       "source_key": "gt.multitileentity.20211",
       "value": "Loom (Bronze)"
@@ -9892,6 +10056,30 @@
     "block.gregtech.oven_tungsten_carbide": {
       "source_key": "gt.multitileentity.20004",
       "value": "Oven (Tungsten Carbide)"
+    },
+    "block.gregtech.panel_asphalt": {
+      "source_key": "gt.multitileentity.32492",
+      "value": "Asphalt Panel"
+    },
+    "block.gregtech.panel_cfoam": {
+      "source_key": "gt.multitileentity.32483",
+      "value": "C-Foam Panel"
+    },
+    "block.gregtech.panel_colored_black": {
+      "source_key": "gt.multitileentity.32452",
+      "value": "Concrete Panel"
+    },
+    "block.gregtech.panel_colored_gray": {
+      "source_key": "gt.multitileentity.32460",
+      "value": "Concrete Panel"
+    },
+    "block.gregtech.panel_concrete": {
+      "source_key": "gt.multitileentity.32459",
+      "value": "Concrete Panel"
+    },
+    "block.gregtech.panel_wood": {
+      "source_key": "gt.multitileentity.32500",
+      "value": "Wooden Panel"
     },
     "block.gregtech.pipe_huge_adamantium": {
       "source_key": "gt.multitileentity.26304",
@@ -13181,6 +13369,66 @@
     "block.gregtech.steam_boiler_ultimet": {
       "source_key": "gt.multitileentity.1212",
       "value": "Steam Boiler Tank (Ultimet)"
+    },
+    "block.gregtech.steam_turbine_aluminium": {
+      "source_key": "gt.multitileentity.1535",
+      "value": "Steam Turbine (Aluminium)"
+    },
+    "block.gregtech.steam_turbine_brass": {
+      "source_key": "gt.multitileentity.1515",
+      "value": "Steam Turbine (Brass)"
+    },
+    "block.gregtech.steam_turbine_bronze": {
+      "source_key": "gt.multitileentity.1512",
+      "value": "Steam Turbine (Bronze)"
+    },
+    "block.gregtech.steam_turbine_chromium": {
+      "source_key": "gt.multitileentity.1525",
+      "value": "Steam Turbine (Chromium)"
+    },
+    "block.gregtech.steam_turbine_fiery_steel": {
+      "source_key": "gt.multitileentity.1531",
+      "value": "Steam Turbine (Fiery Steel)"
+    },
+    "block.gregtech.steam_turbine_graphene": {
+      "source_key": "gt.multitileentity.1548",
+      "value": "Steam Turbine (Graphene)"
+    },
+    "block.gregtech.steam_turbine_invar": {
+      "source_key": "gt.multitileentity.1518",
+      "value": "Steam Turbine (Invar)"
+    },
+    "block.gregtech.steam_turbine_ironwood": {
+      "source_key": "gt.multitileentity.1527",
+      "value": "Steam Turbine (Ironwood)"
+    },
+    "block.gregtech.steam_turbine_magnalium": {
+      "source_key": "gt.multitileentity.1538",
+      "value": "Steam Turbine (Magnalium)"
+    },
+    "block.gregtech.steam_turbine_steel": {
+      "source_key": "gt.multitileentity.1522",
+      "value": "Steam Turbine (Steel)"
+    },
+    "block.gregtech.steam_turbine_steeleaf": {
+      "source_key": "gt.multitileentity.1528",
+      "value": "Steam Turbine (Steeleaf)"
+    },
+    "block.gregtech.steam_turbine_thaumium": {
+      "source_key": "gt.multitileentity.1529",
+      "value": "Steam Turbine (Thaumium)"
+    },
+    "block.gregtech.steam_turbine_titanium": {
+      "source_key": "gt.multitileentity.1530",
+      "value": "Steam Turbine (Titanium)"
+    },
+    "block.gregtech.steam_turbine_trinitanium": {
+      "source_key": "gt.multitileentity.1545",
+      "value": "Steam Turbine (Trinitanium)"
+    },
+    "block.gregtech.steam_turbine_void_metal": {
+      "source_key": "gt.multitileentity.1540",
+      "value": "Steam Turbine (Void Metal)"
     },
     "block.gregtech.steamcracker_invar": {
       "source_key": "gt.multitileentity.20492",
@@ -36443,6 +36691,314 @@
       "source_key": "gt.multiitem.randomtools.1096.tooltip",
       "value": "Full"
     },
+    "item.gregtech.panel_asphalt_black": {
+      "source_key": "gt.multitileentity.32484",
+      "value": "Asphalt Panel"
+    },
+    "item.gregtech.panel_asphalt_blue": {
+      "source_key": "gt.multitileentity.32488",
+      "value": "Asphalt Panel"
+    },
+    "item.gregtech.panel_asphalt_brown": {
+      "source_key": "gt.multitileentity.32487",
+      "value": "Asphalt Panel"
+    },
+    "item.gregtech.panel_asphalt_cyan": {
+      "source_key": "gt.multitileentity.32490",
+      "value": "Asphalt Panel"
+    },
+    "item.gregtech.panel_asphalt_gray": {
+      "source_key": "gt.multitileentity.32492",
+      "value": "Asphalt Panel"
+    },
+    "item.gregtech.panel_asphalt_green": {
+      "source_key": "gt.multitileentity.32486",
+      "value": "Asphalt Panel"
+    },
+    "item.gregtech.panel_asphalt_light_blue": {
+      "source_key": "gt.multitileentity.32496",
+      "value": "Asphalt Panel"
+    },
+    "item.gregtech.panel_asphalt_light_gray": {
+      "source_key": "gt.multitileentity.32491",
+      "value": "Asphalt Panel"
+    },
+    "item.gregtech.panel_asphalt_lime": {
+      "source_key": "gt.multitileentity.32494",
+      "value": "Asphalt Panel"
+    },
+    "item.gregtech.panel_asphalt_magenta": {
+      "source_key": "gt.multitileentity.32497",
+      "value": "Asphalt Panel"
+    },
+    "item.gregtech.panel_asphalt_orange": {
+      "source_key": "gt.multitileentity.32498",
+      "value": "Asphalt Panel"
+    },
+    "item.gregtech.panel_asphalt_pink": {
+      "source_key": "gt.multitileentity.32493",
+      "value": "Asphalt Panel"
+    },
+    "item.gregtech.panel_asphalt_purple": {
+      "source_key": "gt.multitileentity.32489",
+      "value": "Asphalt Panel"
+    },
+    "item.gregtech.panel_asphalt_red": {
+      "source_key": "gt.multitileentity.32485",
+      "value": "Asphalt Panel"
+    },
+    "item.gregtech.panel_asphalt_white": {
+      "source_key": "gt.multitileentity.32499",
+      "value": "Asphalt Panel"
+    },
+    "item.gregtech.panel_asphalt_yellow": {
+      "source_key": "gt.multitileentity.32495",
+      "value": "Asphalt Panel"
+    },
+    "item.gregtech.panel_cfoam_black": {
+      "source_key": "gt.multitileentity.32468",
+      "value": "C-Foam Panel"
+    },
+    "item.gregtech.panel_cfoam_blue": {
+      "source_key": "gt.multitileentity.32472",
+      "value": "C-Foam Panel"
+    },
+    "item.gregtech.panel_cfoam_brown": {
+      "source_key": "gt.multitileentity.32471",
+      "value": "C-Foam Panel"
+    },
+    "item.gregtech.panel_cfoam_cyan": {
+      "source_key": "gt.multitileentity.32474",
+      "value": "C-Foam Panel"
+    },
+    "item.gregtech.panel_cfoam_gray": {
+      "source_key": "gt.multitileentity.32476",
+      "value": "C-Foam Panel"
+    },
+    "item.gregtech.panel_cfoam_green": {
+      "source_key": "gt.multitileentity.32470",
+      "value": "C-Foam Panel"
+    },
+    "item.gregtech.panel_cfoam_light_blue": {
+      "source_key": "gt.multitileentity.32480",
+      "value": "C-Foam Panel"
+    },
+    "item.gregtech.panel_cfoam_light_gray": {
+      "source_key": "gt.multitileentity.32475",
+      "value": "C-Foam Panel"
+    },
+    "item.gregtech.panel_cfoam_lime": {
+      "source_key": "gt.multitileentity.32478",
+      "value": "C-Foam Panel"
+    },
+    "item.gregtech.panel_cfoam_magenta": {
+      "source_key": "gt.multitileentity.32481",
+      "value": "C-Foam Panel"
+    },
+    "item.gregtech.panel_cfoam_orange": {
+      "source_key": "gt.multitileentity.32482",
+      "value": "C-Foam Panel"
+    },
+    "item.gregtech.panel_cfoam_pink": {
+      "source_key": "gt.multitileentity.32477",
+      "value": "C-Foam Panel"
+    },
+    "item.gregtech.panel_cfoam_purple": {
+      "source_key": "gt.multitileentity.32473",
+      "value": "C-Foam Panel"
+    },
+    "item.gregtech.panel_cfoam_red": {
+      "source_key": "gt.multitileentity.32469",
+      "value": "C-Foam Panel"
+    },
+    "item.gregtech.panel_cfoam_white": {
+      "source_key": "gt.multitileentity.32483",
+      "value": "C-Foam Panel"
+    },
+    "item.gregtech.panel_cfoam_yellow": {
+      "source_key": "gt.multitileentity.32479",
+      "value": "C-Foam Panel"
+    },
+    "item.gregtech.panel_concrete_black": {
+      "source_key": "gt.multitileentity.32452",
+      "value": "Concrete Panel"
+    },
+    "item.gregtech.panel_concrete_blue": {
+      "source_key": "gt.multitileentity.32456",
+      "value": "Concrete Panel"
+    },
+    "item.gregtech.panel_concrete_brown": {
+      "source_key": "gt.multitileentity.32455",
+      "value": "Concrete Panel"
+    },
+    "item.gregtech.panel_concrete_cyan": {
+      "source_key": "gt.multitileentity.32458",
+      "value": "Concrete Panel"
+    },
+    "item.gregtech.panel_concrete_gray": {
+      "source_key": "gt.multitileentity.32460",
+      "value": "Concrete Panel"
+    },
+    "item.gregtech.panel_concrete_green": {
+      "source_key": "gt.multitileentity.32454",
+      "value": "Concrete Panel"
+    },
+    "item.gregtech.panel_concrete_light_blue": {
+      "source_key": "gt.multitileentity.32464",
+      "value": "Concrete Panel"
+    },
+    "item.gregtech.panel_concrete_light_gray": {
+      "source_key": "gt.multitileentity.32459",
+      "value": "Concrete Panel"
+    },
+    "item.gregtech.panel_concrete_lime": {
+      "source_key": "gt.multitileentity.32462",
+      "value": "Concrete Panel"
+    },
+    "item.gregtech.panel_concrete_magenta": {
+      "source_key": "gt.multitileentity.32465",
+      "value": "Concrete Panel"
+    },
+    "item.gregtech.panel_concrete_orange": {
+      "source_key": "gt.multitileentity.32466",
+      "value": "Concrete Panel"
+    },
+    "item.gregtech.panel_concrete_pink": {
+      "source_key": "gt.multitileentity.32461",
+      "value": "Concrete Panel"
+    },
+    "item.gregtech.panel_concrete_purple": {
+      "source_key": "gt.multitileentity.32457",
+      "value": "Concrete Panel"
+    },
+    "item.gregtech.panel_concrete_red": {
+      "source_key": "gt.multitileentity.32453",
+      "value": "Concrete Panel"
+    },
+    "item.gregtech.panel_concrete_white": {
+      "source_key": "gt.multitileentity.32467",
+      "value": "Concrete Panel"
+    },
+    "item.gregtech.panel_concrete_yellow": {
+      "source_key": "gt.multitileentity.32463",
+      "value": "Concrete Panel"
+    },
+    "item.gregtech.panel_wood_acacia": {
+      "source_key": "gt.multitileentity.32504",
+      "value": "Wooden Panel"
+    },
+    "item.gregtech.panel_wood_bamboo": {
+      "source_key": "gt.multitileentity.32500",
+      "value": "Wooden Panel"
+    },
+    "item.gregtech.panel_wood_birch": {
+      "source_key": "gt.multitileentity.32502",
+      "value": "Wooden Panel"
+    },
+    "item.gregtech.panel_wood_blue_mahoe": {
+      "source_key": "gt.multitileentity.32538",
+      "value": "Wooden Panel"
+    },
+    "item.gregtech.panel_wood_bluespruce": {
+      "source_key": "gt.multitileentity.32291",
+      "value": "Wooden Panel"
+    },
+    "item.gregtech.panel_wood_cherry": {
+      "source_key": "gt.multitileentity.32500",
+      "value": "Wooden Panel"
+    },
+    "item.gregtech.panel_wood_cinnamon": {
+      "source_key": "gt.multitileentity.32597",
+      "value": "Wooden Panel"
+    },
+    "item.gregtech.panel_wood_coconut": {
+      "source_key": "gt.multitileentity.32598",
+      "value": "Wooden Panel"
+    },
+    "item.gregtech.panel_wood_compressed": {
+      "source_key": "gt.multitileentity.32554",
+      "value": "Wooden Panel"
+    },
+    "item.gregtech.panel_wood_crimson": {
+      "source_key": "gt.multitileentity.32500",
+      "value": "Wooden Panel"
+    },
+    "item.gregtech.panel_wood_dark_oak": {
+      "source_key": "gt.multitileentity.32505",
+      "value": "Wooden Panel"
+    },
+    "item.gregtech.panel_wood_dry": {
+      "source_key": "gt.multitileentity.32352",
+      "value": "Wooden Panel"
+    },
+    "item.gregtech.panel_wood_ebony": {
+      "source_key": "gt.multitileentity.32500",
+      "value": "Wooden Panel"
+    },
+    "item.gregtech.panel_wood_frozen": {
+      "source_key": "gt.multitileentity.32355",
+      "value": "Wooden Panel"
+    },
+    "item.gregtech.panel_wood_hazel": {
+      "source_key": "gt.multitileentity.32539",
+      "value": "Wooden Panel"
+    },
+    "item.gregtech.panel_wood_jungle": {
+      "source_key": "gt.multitileentity.32503",
+      "value": "Wooden Panel"
+    },
+    "item.gregtech.panel_wood_mangrove": {
+      "source_key": "gt.multitileentity.32500",
+      "value": "Wooden Panel"
+    },
+    "item.gregtech.panel_wood_maple": {
+      "source_key": "gt.multitileentity.32507",
+      "value": "Wooden Panel"
+    },
+    "item.gregtech.panel_wood_mossy": {
+      "source_key": "gt.multitileentity.32354",
+      "value": "Wooden Panel"
+    },
+    "item.gregtech.panel_wood_pine": {
+      "source_key": "gt.multitileentity.32500",
+      "value": "Wooden Panel"
+    },
+    "item.gregtech.panel_wood_rainbowood": {
+      "source_key": "gt.multitileentity.32599",
+      "value": "Wooden Panel"
+    },
+    "item.gregtech.panel_wood_rotten": {
+      "source_key": "gt.multitileentity.32353",
+      "value": "Wooden Panel"
+    },
+    "item.gregtech.panel_wood_rubber": {
+      "source_key": "gt.multitileentity.32506",
+      "value": "Wooden Panel"
+    },
+    "item.gregtech.panel_wood_spruce": {
+      "source_key": "gt.multitileentity.32501",
+      "value": "Wooden Panel"
+    },
+    "item.gregtech.panel_wood_treated": {
+      "source_key": "gt.multitileentity.32562",
+      "value": "Wooden Panel"
+    },
+    "item.gregtech.panel_wood_warped": {
+      "source_key": "gt.multitileentity.32500",
+      "value": "Wooden Panel"
+    },
+    "item.gregtech.panel_wood_white_mahoe": {
+      "source_key": "gt.multitileentity.32500",
+      "value": "Wooden Panel"
+    },
+    "item.gregtech.panel_wood_willow": {
+      "source_key": "gt.multitileentity.32537",
+      "value": "Wooden Panel"
+    },
+    "item.gregtech.panel_wood_wood": {
+      "source_key": "gt.multitileentity.32563",
+      "value": "Wooden Panel"
+    },
     "item.gregtech.papaya_juice": {
       "source_key": "gt.multiitem.bottles.5500",
       "value": "Papaya Juice"
@@ -41144,6 +41700,857 @@
     "item.gregtech.yellow_clay.tooltip": {
       "source_key": "gt.multiitem.food.12312.tooltip",
       "value": "Bentonite Clay"
+    },
+    "itemGroup.gregtech.arrow_gt_plastic": {
+      "source_key": "itemGroup.arrowGtPlastic",
+      "value": "Light Arrows"
+    },
+    "itemGroup.gregtech.arrow_gt_wood": {
+      "source_key": "itemGroup.arrowGtWood",
+      "value": "Regular Arrows"
+    },
+    "itemGroup.gregtech.automatic_tools": {
+      "source_key": "itemGroup.gt.multitileentity.15002",
+      "value": "Automatic Tools"
+    },
+    "itemGroup.gregtech.axles": {
+      "source_key": "itemGroup.gt.multitileentity.24819",
+      "value": "Axles and Gearboxes"
+    },
+    "itemGroup.gregtech.basic_machines": {
+      "source_key": "itemGroup.gt.multitileentity.20001",
+      "value": "Basic Machines"
+    },
+    "itemGroup.gregtech.batteries": {
+      "source_key": "itemGroup.gt.multitileentity.14013",
+      "value": "Batteries"
+    },
+    "itemGroup.gregtech.battery_boxes": {
+      "source_key": "itemGroup.gt.multitileentity.10081",
+      "value": "Battery Boxes"
+    },
+    "itemGroup.gregtech.billet": {
+      "source_key": "itemGroup.billet",
+      "value": "Billets"
+    },
+    "itemGroup.gregtech.block_dust": {
+      "source_key": "itemGroup.blockDust",
+      "value": "Blocks of Dusts"
+    },
+    "itemGroup.gregtech.block_gem": {
+      "source_key": "itemGroup.blockGem",
+      "value": "Blocks of Gems"
+    },
+    "itemGroup.gregtech.block_ingot": {
+      "source_key": "itemGroup.blockIngot",
+      "value": "Blocks of Ingots"
+    },
+    "itemGroup.gregtech.block_plate": {
+      "source_key": "itemGroup.blockPlate",
+      "value": "Blocks of Plates"
+    },
+    "itemGroup.gregtech.block_plate_gem": {
+      "source_key": "itemGroup.blockPlateGem",
+      "value": "Blocks of Gem Plates"
+    },
+    "itemGroup.gregtech.block_raw": {
+      "source_key": "itemGroup.blockRaw",
+      "value": "Blocks of Ore"
+    },
+    "itemGroup.gregtech.block_solid": {
+      "source_key": "itemGroup.blockSolid",
+      "value": "Blocks of Cast Metal"
+    },
+    "itemGroup.gregtech.bolt": {
+      "source_key": "itemGroup.bolt",
+      "value": "Bolts"
+    },
+    "itemGroup.gregtech.books": {
+      "source_key": "itemGroup.gt.multiitem.books",
+      "value": "GregTech: Books"
+    },
+    "itemGroup.gregtech.bottles": {
+      "source_key": "itemGroup.gt.multiitem.bottles",
+      "value": "GregTech: Bottles"
+    },
+    "itemGroup.gregtech.boule_gt": {
+      "source_key": "itemGroup.bouleGt",
+      "value": "Boules"
+    },
+    "itemGroup.gregtech.bullet_gt_large": {
+      "source_key": "itemGroup.bulletGtLarge",
+      "value": "Large Bullets"
+    },
+    "itemGroup.gregtech.bullet_gt_medium": {
+      "source_key": "itemGroup.bulletGtMedium",
+      "value": "Medium Bullets"
+    },
+    "itemGroup.gregtech.bullet_gt_small": {
+      "source_key": "itemGroup.bulletGtSmall",
+      "value": "Small Bullets"
+    },
+    "itemGroup.gregtech.bumblebees": {
+      "source_key": "itemGroup.gt.multiitem.bumblebee",
+      "value": "GregTech: Bumblebees"
+    },
+    "itemGroup.gregtech.burning_boxes": {
+      "source_key": "itemGroup.gt.multitileentity.1104",
+      "value": "Burning Boxes"
+    },
+    "itemGroup.gregtech.casing_machine": {
+      "source_key": "itemGroup.casingMachine",
+      "value": "Machine Casings"
+    },
+    "itemGroup.gregtech.casing_machine_dense": {
+      "source_key": "itemGroup.casingMachineDense",
+      "value": "Dense Machine Casings"
+    },
+    "itemGroup.gregtech.casing_machine_double": {
+      "source_key": "itemGroup.casingMachineDouble",
+      "value": "Robust Machine Casings"
+    },
+    "itemGroup.gregtech.casing_machine_quadruple": {
+      "source_key": "itemGroup.casingMachineQuadruple",
+      "value": "Reinforced Machine Casings"
+    },
+    "itemGroup.gregtech.casing_small": {
+      "source_key": "itemGroup.casingSmall",
+      "value": "Item Casings"
+    },
+    "itemGroup.gregtech.chain": {
+      "source_key": "itemGroup.chain",
+      "value": "Chains"
+    },
+    "itemGroup.gregtech.chemtube": {
+      "source_key": "itemGroup.chemtube",
+      "value": "Glass Tubes"
+    },
+    "itemGroup.gregtech.chests": {
+      "source_key": "itemGroup.gt.multitileentity.32745",
+      "value": "Chests"
+    },
+    "itemGroup.gregtech.chunk": {
+      "chinese_source_missing": true,
+      "source_key": "itemGroup.chunk",
+      "value": "Chunks"
+    },
+    "itemGroup.gregtech.chunk_gt": {
+      "source_key": "itemGroup.chunkGt",
+      "value": "Chunks"
+    },
+    "itemGroup.gregtech.clean_gravel": {
+      "chinese_source_missing": true,
+      "source_key": "itemGroup.cleanGravel",
+      "value": "Clean Gravels"
+    },
+    "itemGroup.gregtech.clump": {
+      "chinese_source_missing": true,
+      "source_key": "itemGroup.clump",
+      "value": "Clumps"
+    },
+    "itemGroup.gregtech.cluster": {
+      "chinese_source_missing": true,
+      "source_key": "itemGroup.cluster",
+      "value": "Native Clusters"
+    },
+    "itemGroup.gregtech.coin": {
+      "source_key": "itemGroup.gt.multitileentity.32700",
+      "value": "Coins"
+    },
+    "itemGroup.gregtech.coins": {
+      "source_key": "itemGroup.gt.multitileentity.32700",
+      "value": "Coins"
+    },
+    "itemGroup.gregtech.computing": {
+      "source_key": "itemGroup.gt.multitileentity.19000",
+      "value": "Computing"
+    },
+    "itemGroup.gregtech.construction": {
+      "source_key": "itemGroup.gt.multitileentity.32765",
+      "value": "C-Foam"
+    },
+    "itemGroup.gregtech.coolers": {
+      "source_key": "itemGroup.gt.multitileentity.10161",
+      "value": "Coolers"
+    },
+    "itemGroup.gregtech.crafting_tables": {
+      "source_key": "itemGroup.gt.multitileentity.5010",
+      "value": "Crafting Tables"
+    },
+    "itemGroup.gregtech.crate_gt64_dust": {
+      "source_key": "itemGroup.crateGt64Dust",
+      "value": "Crates of Dust"
+    },
+    "itemGroup.gregtech.crate_gt64_gem": {
+      "source_key": "itemGroup.crateGt64Gem",
+      "value": "Crates of Gems"
+    },
+    "itemGroup.gregtech.crate_gt64_ingot": {
+      "source_key": "itemGroup.crateGt64Ingot",
+      "value": "Crates of Ingots"
+    },
+    "itemGroup.gregtech.crate_gt64_plate": {
+      "source_key": "itemGroup.crateGt64Plate",
+      "value": "Crates of Plates"
+    },
+    "itemGroup.gregtech.crate_gt64_plate_gem": {
+      "source_key": "itemGroup.crateGt64PlateGem",
+      "value": "Crates of Gem Plates"
+    },
+    "itemGroup.gregtech.crate_gt64_raw": {
+      "source_key": "itemGroup.crateGt64Raw",
+      "value": "Crates of Ore"
+    },
+    "itemGroup.gregtech.crate_gt_dust": {
+      "source_key": "itemGroup.crateGt64Dust",
+      "value": "Crates of Dust"
+    },
+    "itemGroup.gregtech.crate_gt_gem": {
+      "source_key": "itemGroup.crateGt64Gem",
+      "value": "Crates of Gems"
+    },
+    "itemGroup.gregtech.crate_gt_ingot": {
+      "source_key": "itemGroup.crateGt64Ingot",
+      "value": "Crates of Ingots"
+    },
+    "itemGroup.gregtech.crate_gt_plate": {
+      "source_key": "itemGroup.crateGt64Plate",
+      "value": "Crates of Plates"
+    },
+    "itemGroup.gregtech.crate_gt_plate_gem": {
+      "source_key": "itemGroup.crateGt64PlateGem",
+      "value": "Crates of Gem Plates"
+    },
+    "itemGroup.gregtech.crate_gt_raw": {
+      "source_key": "itemGroup.crateGt64Raw",
+      "value": "Crates of Ore"
+    },
+    "itemGroup.gregtech.crucibles_faucets": {
+      "source_key": "itemGroup.gt.multitileentity.1722",
+      "value": "Crucibles Faucets"
+    },
+    "itemGroup.gregtech.crushed": {
+      "source_key": "itemGroup.crushed",
+      "value": "Crushed Ores"
+    },
+    "itemGroup.gregtech.crushed_centrifuged": {
+      "source_key": "itemGroup.crushedCentrifuged",
+      "value": "Refined Ores"
+    },
+    "itemGroup.gregtech.crushed_centrifuged_tiny": {
+      "source_key": "itemGroup.crushedCentrifugedTiny",
+      "value": "Tiny Refined Ores"
+    },
+    "itemGroup.gregtech.crushed_purified": {
+      "source_key": "itemGroup.crushedPurified",
+      "value": "Purified Ores"
+    },
+    "itemGroup.gregtech.crushed_purified_tiny": {
+      "source_key": "itemGroup.crushedPurifiedTiny",
+      "value": "Tiny Purified Ores"
+    },
+    "itemGroup.gregtech.crushed_tiny": {
+      "source_key": "itemGroup.crushedTiny",
+      "value": "Tiny Crushed Ores"
+    },
+    "itemGroup.gregtech.crystal": {
+      "chinese_source_missing": true,
+      "source_key": "itemGroup.crystal",
+      "value": "Crystals"
+    },
+    "itemGroup.gregtech.crystal_chargers": {
+      "source_key": "itemGroup.gt.multitileentity.10131",
+      "value": "Crystal Chargers"
+    },
+    "itemGroup.gregtech.crystalline": {
+      "chinese_source_missing": true,
+      "source_key": "itemGroup.crystalline",
+      "value": "Crystallised Metals"
+    },
+    "itemGroup.gregtech.dirty_gravel": {
+      "chinese_source_missing": true,
+      "source_key": "itemGroup.dirtyGravel",
+      "value": "Dirty Gravels"
+    },
+    "itemGroup.gregtech.dust": {
+      "source_key": "itemGroup.dust",
+      "value": "Dusts"
+    },
+    "itemGroup.gregtech.dust_div72": {
+      "source_key": "itemGroup.dustDiv72",
+      "value": "1/72nd Dusts"
+    },
+    "itemGroup.gregtech.dust_impure": {
+      "source_key": "itemGroup.dustImpure",
+      "value": "Impure Dusts"
+    },
+    "itemGroup.gregtech.dust_pure": {
+      "chinese_source_missing": true,
+      "source_key": "itemGroup.dustPure",
+      "value": "Purified Dusts"
+    },
+    "itemGroup.gregtech.dust_refined": {
+      "chinese_source_missing": true,
+      "source_key": "itemGroup.dustRefined",
+      "value": "Refined Dusts"
+    },
+    "itemGroup.gregtech.dust_small": {
+      "source_key": "itemGroup.dustSmall",
+      "value": "Small Dusts"
+    },
+    "itemGroup.gregtech.dust_tiny": {
+      "source_key": "itemGroup.dustTiny",
+      "value": "Tiny Dusts"
+    },
+    "itemGroup.gregtech.dynamos": {
+      "source_key": "itemGroup.gt.multitileentity.10111",
+      "value": "Dynamos"
+    },
+    "itemGroup.gregtech.energy_nodes": {
+      "source_key": "itemGroup.gt.multitileentity.10111",
+      "value": "Dynamos"
+    },
+    "itemGroup.gregtech.engines": {
+      "source_key": "itemGroup.gt.multitileentity.1304",
+      "value": "Engines"
+    },
+    "itemGroup.gregtech.equipment": {
+      "source_key": "itemGroup.gt.multiitem.randomtools",
+      "value": "GregTech: Equipment"
+    },
+    "itemGroup.gregtech.extenders": {
+      "source_key": "itemGroup.gt.multitileentity.30000",
+      "value": "Extenders"
+    },
+    "itemGroup.gregtech.fluid_containers": {
+      "source_key": "itemGroup.gt.multitileentity.32719",
+      "value": "Fluid Containers"
+    },
+    "itemGroup.gregtech.fluids": {
+      "source_key": "itemGroup.gt.multitileentity.32719",
+      "value": "Fluid Containers"
+    },
+    "itemGroup.gregtech.foam": {
+      "source_key": "itemGroup.gt.multitileentity.32765",
+      "value": "C-Foam"
+    },
+    "itemGroup.gregtech.foil": {
+      "source_key": "itemGroup.foil",
+      "value": "Foils"
+    },
+    "itemGroup.gregtech.gear_gt": {
+      "source_key": "itemGroup.gearGt",
+      "value": "Gears"
+    },
+    "itemGroup.gregtech.gear_gt_small": {
+      "source_key": "itemGroup.gearGtSmall",
+      "value": "Small Gears"
+    },
+    "itemGroup.gregtech.gem": {
+      "source_key": "itemGroup.gem",
+      "value": "Gemstones"
+    },
+    "itemGroup.gregtech.gem_chipped": {
+      "source_key": "itemGroup.gemChipped",
+      "value": "Chipped Gemstones"
+    },
+    "itemGroup.gregtech.gem_exquisite": {
+      "source_key": "itemGroup.gemExquisite",
+      "value": "Exquisite Gemstones"
+    },
+    "itemGroup.gregtech.gem_flawed": {
+      "source_key": "itemGroup.gemFlawed",
+      "value": "Flawed Gemstones"
+    },
+    "itemGroup.gregtech.gem_flawless": {
+      "source_key": "itemGroup.gemFlawless",
+      "value": "Flawless Gemstones"
+    },
+    "itemGroup.gregtech.gem_legendary": {
+      "source_key": "itemGroup.gemLegendary",
+      "value": "Legendary Gemstones"
+    },
+    "itemGroup.gregtech.glasstube": {
+      "source_key": "itemGroup.chemtube",
+      "value": "Glass Tubes"
+    },
+    "itemGroup.gregtech.heat_exchangers": {
+      "source_key": "itemGroup.gt.multitileentity.9103",
+      "value": "Heat Exchangers"
+    },
+    "itemGroup.gregtech.heaters": {
+      "source_key": "itemGroup.gt.multitileentity.10001",
+      "value": "Heaters"
+    },
+    "itemGroup.gregtech.hoppers": {
+      "source_key": "itemGroup.gt.multitileentity.8010",
+      "value": "Hoppers"
+    },
+    "itemGroup.gregtech.iconsets": {
+      "source_key": "itemGroup.blockSolid",
+      "value": "Blocks of Cast Metal"
+    },
+    "itemGroup.gregtech.ingot": {
+      "source_key": "itemGroup.ingot",
+      "value": "Ingots"
+    },
+    "itemGroup.gregtech.ingot_double": {
+      "source_key": "itemGroup.ingotDouble",
+      "value": "2x Ingots"
+    },
+    "itemGroup.gregtech.ingot_quadruple": {
+      "source_key": "itemGroup.ingotQuadruple",
+      "value": "4x Ingots"
+    },
+    "itemGroup.gregtech.ingot_quintuple": {
+      "source_key": "itemGroup.ingotQuintuple",
+      "value": "5x Ingots"
+    },
+    "itemGroup.gregtech.ingot_triple": {
+      "source_key": "itemGroup.ingotTriple",
+      "value": "3x Ingots"
+    },
+    "itemGroup.gregtech.item_casing": {
+      "source_key": "itemGroup.casingSmall",
+      "value": "Item Casings"
+    },
+    "itemGroup.gregtech.item_pipes": {
+      "source_key": "itemGroup.gt.multitileentity.25202",
+      "value": "Item Pipes"
+    },
+    "itemGroup.gregtech.laser_absorbers": {
+      "source_key": "itemGroup.gt.multitileentity.10151",
+      "value": "Laser Absorbers"
+    },
+    "itemGroup.gregtech.laser_wires": {
+      "source_key": "itemGroup.gt.multitileentity.24900",
+      "value": "Laser Wires"
+    },
+    "itemGroup.gregtech.lasers": {
+      "source_key": "itemGroup.gt.multitileentity.10071",
+      "value": "Lasers"
+    },
+    "itemGroup.gregtech.lens": {
+      "source_key": "itemGroup.lens",
+      "value": "Lenses"
+    },
+    "itemGroup.gregtech.logistics": {
+      "source_key": "itemGroup.gt.multitileentity.17997",
+      "value": "Logistics"
+    },
+    "itemGroup.gregtech.long_distance_transport": {
+      "source_key": "itemGroup.gt.multitileentity.10060",
+      "value": "Long Distance Transport"
+    },
+    "itemGroup.gregtech.magical_energy_production": {
+      "source_key": "itemGroup.gt.multitileentity.10180",
+      "value": "Magical Energy Production"
+    },
+    "itemGroup.gregtech.magnets": {
+      "source_key": "itemGroup.gt.multitileentity.10031",
+      "value": "Magnets"
+    },
+    "itemGroup.gregtech.minecart_wheels": {
+      "source_key": "itemGroup.minecartWheels",
+      "value": "Cart Wheels"
+    },
+    "itemGroup.gregtech.molds": {
+      "source_key": "itemGroup.gt.multitileentity.1072",
+      "value": "Molds"
+    },
+    "itemGroup.gregtech.motors": {
+      "source_key": "itemGroup.gt.multitileentity.10021",
+      "value": "Motors"
+    },
+    "itemGroup.gregtech.multi_items": {
+      "source_key": "itemGroup.gt.multiitem.randomtools",
+      "value": "GregTech: Equipment"
+    },
+    "itemGroup.gregtech.multiblocks": {
+      "source_key": "itemGroup.gt.multitileentity.17101",
+      "value": "Multiblock Machines"
+    },
+    "itemGroup.gregtech.nature_foods": {
+      "source_key": "itemGroup.gt.multiitem.food",
+      "value": "GregTech: Nature & Foods"
+    },
+    "itemGroup.gregtech.nugget": {
+      "source_key": "itemGroup.nugget",
+      "value": "Nuggets"
+    },
+    "itemGroup.gregtech.ore": {
+      "chinese_source_missing": true,
+      "source_key": "itemGroup.ore",
+      "value": "Ores"
+    },
+    "itemGroup.gregtech.ore_raw": {
+      "source_key": "itemGroup.oreRaw",
+      "value": "Raw Ores"
+    },
+    "itemGroup.gregtech.ore_small": {
+      "chinese_source_missing": true,
+      "source_key": "itemGroup.oreSmall",
+      "value": "Small Ores"
+    },
+    "itemGroup.gregtech.ore_vanillastone": {
+      "source_key": "itemGroup.oreVanillastone",
+      "value": "Stone Ores"
+    },
+    "itemGroup.gregtech.panels": {
+      "source_key": "itemGroup.gt.multitileentity.32500",
+      "value": "Panels"
+    },
+    "itemGroup.gregtech.pebbles": {
+      "chinese_source_missing": true,
+      "source_key": "itemGroup.pebbles",
+      "value": "Pebbles"
+    },
+    "itemGroup.gregtech.pipes": {
+      "source_key": "itemGroup.gt.multitileentity.26142",
+      "value": "Fluid Pipes"
+    },
+    "itemGroup.gregtech.plate": {
+      "source_key": "itemGroup.plate",
+      "value": "Plates"
+    },
+    "itemGroup.gregtech.plate_curved": {
+      "source_key": "itemGroup.plateCurved",
+      "value": "Curved Plates"
+    },
+    "itemGroup.gregtech.plate_dense": {
+      "source_key": "itemGroup.plateDense",
+      "value": "Dense Plates"
+    },
+    "itemGroup.gregtech.plate_double": {
+      "source_key": "itemGroup.plateDouble",
+      "value": "2x Plates"
+    },
+    "itemGroup.gregtech.plate_gem": {
+      "source_key": "itemGroup.plateGem",
+      "value": "Gem Plates"
+    },
+    "itemGroup.gregtech.plate_gem_tiny": {
+      "source_key": "itemGroup.plateGemTiny",
+      "value": "Tiny Gem Plates"
+    },
+    "itemGroup.gregtech.plate_quadruple": {
+      "source_key": "itemGroup.plateQuadruple",
+      "value": "4x Plates"
+    },
+    "itemGroup.gregtech.plate_quintuple": {
+      "source_key": "itemGroup.plateQuintuple",
+      "value": "5x Plates"
+    },
+    "itemGroup.gregtech.plate_tiny": {
+      "source_key": "itemGroup.plateTiny",
+      "value": "Tiny Plates"
+    },
+    "itemGroup.gregtech.plate_triple": {
+      "source_key": "itemGroup.plateTriple",
+      "value": "3x Plates"
+    },
+    "itemGroup.gregtech.portable_power_cells": {
+      "source_key": "itemGroup.gt.multitileentity.14700",
+      "value": "Portable Power Cells"
+    },
+    "itemGroup.gregtech.portals": {
+      "source_key": "itemGroup.gt.multitileentity.32766",
+      "value": "Portals"
+    },
+    "itemGroup.gregtech.pumps": {
+      "source_key": "itemGroup.gt.multitileentity.16002",
+      "value": "Pumps"
+    },
+    "itemGroup.gregtech.quantum_energizers": {
+      "source_key": "itemGroup.gt.multitileentity.10121",
+      "value": "Quantum Energizers"
+    },
+    "itemGroup.gregtech.rail_gt": {
+      "source_key": "itemGroup.railGt",
+      "value": "Single Rails"
+    },
+    "itemGroup.gregtech.raw_ore_chunk": {
+      "chinese_source_missing": true,
+      "source_key": "itemGroup.rawOreChunk",
+      "value": "Raw Ore Chunks"
+    },
+    "itemGroup.gregtech.reactors": {
+      "source_key": "itemGroup.gt.multitileentity.9200",
+      "value": "Reactors"
+    },
+    "itemGroup.gregtech.redstone_wires": {
+      "source_key": "itemGroup.gt.multitileentity.27050",
+      "value": "Redstone Wires"
+    },
+    "itemGroup.gregtech.reduced": {
+      "chinese_source_missing": true,
+      "source_key": "itemGroup.reduced",
+      "value": "Reduced Gravels"
+    },
+    "itemGroup.gregtech.ring": {
+      "source_key": "itemGroup.ring",
+      "value": "Rings"
+    },
+    "itemGroup.gregtech.rock_gt": {
+      "source_key": "itemGroup.rockGt",
+      "value": "Rocks"
+    },
+    "itemGroup.gregtech.ropes": {
+      "source_key": "itemGroup.gt.multitileentity.32011",
+      "value": "Ropes"
+    },
+    "itemGroup.gregtech.rotor": {
+      "source_key": "itemGroup.rotor",
+      "value": "Rotors"
+    },
+    "itemGroup.gregtech.round": {
+      "source_key": "itemGroup.round",
+      "value": "Rounds"
+    },
+    "itemGroup.gregtech.rubble": {
+      "chinese_source_missing": true,
+      "source_key": "itemGroup.rubble",
+      "value": "Rubble"
+    },
+    "itemGroup.gregtech.safes": {
+      "source_key": "itemGroup.gt.multitileentity.2010",
+      "value": "Safes"
+    },
+    "itemGroup.gregtech.scaffolds": {
+      "source_key": "itemGroup.gt.multitileentity.8410",
+      "value": "Scaffolds"
+    },
+    "itemGroup.gregtech.screw": {
+      "source_key": "itemGroup.screw",
+      "value": "Screws"
+    },
+    "itemGroup.gregtech.sensors": {
+      "source_key": "itemGroup.gt.multitileentity.31015",
+      "value": "Sensors"
+    },
+    "itemGroup.gregtech.smelting_crucibles": {
+      "source_key": "itemGroup.gt.multitileentity.1022",
+      "value": "Smelting Crucibles"
+    },
+    "itemGroup.gregtech.solar_panels": {
+      "source_key": "itemGroup.gt.multitileentity.10050",
+      "value": "Solar Panels"
+    },
+    "itemGroup.gregtech.sorting": {
+      "source_key": "itemGroup.gt.multitileentity.30256",
+      "value": "Sorting"
+    },
+    "itemGroup.gregtech.spring": {
+      "source_key": "itemGroup.spring",
+      "value": "Springs"
+    },
+    "itemGroup.gregtech.spring_small": {
+      "source_key": "itemGroup.springSmall",
+      "value": "Small Springs"
+    },
+    "itemGroup.gregtech.steam_boilers": {
+      "source_key": "itemGroup.gt.multitileentity.1204",
+      "value": "Steam Boilers"
+    },
+    "itemGroup.gregtech.stick": {
+      "source_key": "itemGroup.stick",
+      "value": "Sticks/Rods"
+    },
+    "itemGroup.gregtech.stick_long": {
+      "source_key": "itemGroup.stickLong",
+      "value": "Long Sticks/Rods"
+    },
+    "itemGroup.gregtech.stones": {
+      "source_key": "itemGroup.rockGt",
+      "value": "Rocks"
+    },
+    "itemGroup.gregtech.storage": {
+      "source_key": "itemGroup.gt.multitileentity.32751",
+      "value": "Storage"
+    },
+    "itemGroup.gregtech.technology": {
+      "source_key": "itemGroup.gt.multiitem.technological",
+      "value": "GregTech: Technology"
+    },
+    "itemGroup.gregtech.tool_blocks": {
+      "source_key": "itemGroup.gt.multitileentity.32720",
+      "value": "Misc Tool Blocks"
+    },
+    "itemGroup.gregtech.tool_head_arrow": {
+      "source_key": "itemGroup.toolHeadArrow",
+      "value": "Arrow Heads"
+    },
+    "itemGroup.gregtech.tool_head_axe": {
+      "source_key": "itemGroup.toolHeadAxe",
+      "value": "Axe Heads"
+    },
+    "itemGroup.gregtech.tool_head_axe_double": {
+      "source_key": "itemGroup.toolHeadAxeDouble",
+      "value": "Double Axe Heads"
+    },
+    "itemGroup.gregtech.tool_head_builderwand": {
+      "source_key": "itemGroup.toolHeadBuilderwand",
+      "value": "Builder's Wand Caps"
+    },
+    "itemGroup.gregtech.tool_head_buzz_saw": {
+      "source_key": "itemGroup.toolHeadBuzzSaw",
+      "value": "Buzzsaw Blades"
+    },
+    "itemGroup.gregtech.tool_head_chainsaw": {
+      "source_key": "itemGroup.toolHeadChainsaw",
+      "value": "Chainsaw Tips"
+    },
+    "itemGroup.gregtech.tool_head_chisel": {
+      "source_key": "itemGroup.toolHeadChisel",
+      "value": "Chisel Heads"
+    },
+    "itemGroup.gregtech.tool_head_construction_pickaxe": {
+      "source_key": "itemGroup.toolHeadConstructionPickaxe",
+      "value": "Construction Pickaxe Heads"
+    },
+    "itemGroup.gregtech.tool_head_drill": {
+      "source_key": "itemGroup.toolHeadDrill",
+      "value": "Drill Tips"
+    },
+    "itemGroup.gregtech.tool_head_file": {
+      "source_key": "itemGroup.toolHeadFile",
+      "value": "File Heads"
+    },
+    "itemGroup.gregtech.tool_head_hammer": {
+      "source_key": "itemGroup.toolHeadHammer",
+      "value": "Hammer Heads"
+    },
+    "itemGroup.gregtech.tool_head_hoe": {
+      "source_key": "itemGroup.toolHeadHoe",
+      "value": "Hoe Heads"
+    },
+    "itemGroup.gregtech.tool_head_pickaxe": {
+      "source_key": "itemGroup.toolHeadPickaxe",
+      "value": "Pickaxe Heads"
+    },
+    "itemGroup.gregtech.tool_head_pickaxe_gem": {
+      "source_key": "itemGroup.toolHeadPickaxeGem",
+      "value": "Gem tipped Pickaxe Heads"
+    },
+    "itemGroup.gregtech.tool_head_plow": {
+      "source_key": "itemGroup.toolHeadPlow",
+      "value": "Plow Heads"
+    },
+    "itemGroup.gregtech.tool_head_raw_arrow": {
+      "source_key": "itemGroup.toolHeadRawArrow",
+      "value": "Raw Arrow Heads"
+    },
+    "itemGroup.gregtech.tool_head_raw_axe": {
+      "source_key": "itemGroup.toolHeadRawAxe",
+      "value": "Raw Axe Heads"
+    },
+    "itemGroup.gregtech.tool_head_raw_axe_double": {
+      "source_key": "itemGroup.toolHeadRawAxeDouble",
+      "value": "Raw Double Axe Heads"
+    },
+    "itemGroup.gregtech.tool_head_raw_chisel": {
+      "source_key": "itemGroup.toolHeadRawChisel",
+      "value": "Raw Chisel Heads"
+    },
+    "itemGroup.gregtech.tool_head_raw_hoe": {
+      "source_key": "itemGroup.toolHeadRawHoe",
+      "value": "Raw Hoe Heads"
+    },
+    "itemGroup.gregtech.tool_head_raw_pickaxe": {
+      "source_key": "itemGroup.toolHeadRawPickaxe",
+      "value": "Raw Pickaxe Heads"
+    },
+    "itemGroup.gregtech.tool_head_raw_plow": {
+      "source_key": "itemGroup.toolHeadRawPlow",
+      "value": "Raw Plow Heads"
+    },
+    "itemGroup.gregtech.tool_head_raw_saw": {
+      "source_key": "itemGroup.toolHeadRawSaw",
+      "value": "Raw Saw Blades"
+    },
+    "itemGroup.gregtech.tool_head_raw_sense": {
+      "source_key": "itemGroup.toolHeadRawSense",
+      "value": "Raw Sense Blades"
+    },
+    "itemGroup.gregtech.tool_head_raw_shovel": {
+      "source_key": "itemGroup.toolHeadRawShovel",
+      "value": "Raw Shovel Heads"
+    },
+    "itemGroup.gregtech.tool_head_raw_spade": {
+      "source_key": "itemGroup.toolHeadRawSpade",
+      "value": "Raw Spade Heads"
+    },
+    "itemGroup.gregtech.tool_head_raw_sword": {
+      "source_key": "itemGroup.toolHeadRawSword",
+      "value": "Raw Sword Blades"
+    },
+    "itemGroup.gregtech.tool_head_raw_universal_spade": {
+      "source_key": "itemGroup.toolHeadRawUniversalSpade",
+      "value": "Raw Universal Spade Heads"
+    },
+    "itemGroup.gregtech.tool_head_saw": {
+      "source_key": "itemGroup.toolHeadSaw",
+      "value": "Saw Blades"
+    },
+    "itemGroup.gregtech.tool_head_screwdriver": {
+      "source_key": "itemGroup.toolHeadScrewdriver",
+      "value": "Screwdriver Tips"
+    },
+    "itemGroup.gregtech.tool_head_sense": {
+      "source_key": "itemGroup.toolHeadSense",
+      "value": "Sense Blades"
+    },
+    "itemGroup.gregtech.tool_head_shovel": {
+      "source_key": "itemGroup.toolHeadShovel",
+      "value": "Shovel Heads"
+    },
+    "itemGroup.gregtech.tool_head_spade": {
+      "source_key": "itemGroup.toolHeadSpade",
+      "value": "Spade Heads"
+    },
+    "itemGroup.gregtech.tool_head_sword": {
+      "source_key": "itemGroup.toolHeadSword",
+      "value": "Sword Blades"
+    },
+    "itemGroup.gregtech.tool_head_universal_spade": {
+      "source_key": "itemGroup.toolHeadUniversalSpade",
+      "value": "Universal Spade Heads"
+    },
+    "itemGroup.gregtech.tool_head_wrench": {
+      "source_key": "itemGroup.toolHeadWrench",
+      "value": "Wrench Tips"
+    },
+    "itemGroup.gregtech.tools": {
+      "source_key": "itemGroup.gt.multiitem.randomtools",
+      "value": "GregTech: Equipment"
+    },
+    "itemGroup.gregtech.transformers": {
+      "source_key": "itemGroup.gt.multitileentity.10041",
+      "value": "Transformers"
+    },
+    "itemGroup.gregtech.turbines": {
+      "source_key": "itemGroup.gt.multitileentity.1538",
+      "value": "Turbines"
+    },
+    "itemGroup.gregtech.untyped": {
+      "source_key": "itemGroup.gt.multitileentity.32764",
+      "value": "Untyped"
+    },
+    "itemGroup.gregtech.wire_fine": {
+      "source_key": "itemGroup.wireFine",
+      "value": "Fine Wires"
+    },
+    "itemGroup.gregtech.wires": {
+      "source_key": "itemGroup.gt.multitileentity.28366",
+      "value": "Electric Wires"
+    },
+    "itemGroup.gregtech.woods": {
+      "source_key": "itemGroup.stick",
+      "value": "Sticks/Rods"
+    },
+    "itemGroup.gregtech.zpm": {
+      "source_key": "itemGroup.gt.multitileentity.14999",
+      "value": "ZPM"
     },
     "loot.bonusChest": {
       "source_key": "loot.bonusChest",
