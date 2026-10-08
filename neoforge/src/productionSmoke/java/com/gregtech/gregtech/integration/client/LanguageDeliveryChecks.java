@@ -302,7 +302,24 @@ final class LanguageDeliveryChecks {
         report.addProperty("books",books.size());report.addProperty("canvases",canvases.size());
         report.addProperty("panels",panels.size());report.addProperty("creativeTabs",tabs);
         report.addProperty("bottles",bottles);
+        report.addProperty("faceMasks",verifyFaceNames());
         return report;
+    }
+
+    private static int verifyFaceNames() {
+        // Current public machine-relative mask layout, independent of the helper's switch.
+        int[] sides={0,1,4,2,3,5};
+        String[] names={"bottom","top","left","right","front","back"};
+        for(int i=0;i<sides.length;i++)
+            require(com.gregtech.gregtech.client.TooltipHelper.dirName(sides[i]).equals(original("gt.lang.face."+names[i])),
+                    "Installed source machine face "+names[i]);
+        for(int mask=0;mask<64;mask++) {
+            var expected=new ArrayList<String>();
+            for(int i=0;i<sides.length;i++)if((mask&(1<<sides[i]))!=0)expected.add(original("gt.lang.face."+names[i]));
+            String label=mask==0?original("gt.lang.face.none"):mask==63?original("gt.lang.face.any"):String.join(", ",expected);
+            require(com.gregtech.gregtech.client.TooltipHelper.dirMaskToString(mask).equals(label),"Installed machine face mask "+mask);
+        }
+        return 64;
     }
 
     private static String original(String key) {

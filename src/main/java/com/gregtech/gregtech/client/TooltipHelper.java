@@ -20,12 +20,12 @@ public final class TooltipHelper {
 
     public static String dirName(int dir) {
         return switch (dir) {
-            case FaceConfig.BOTTOM -> "Bottom";
-            case FaceConfig.TOP    -> "Top";
-            case FaceConfig.LEFT   -> "Left";
-            case FaceConfig.RIGHT  -> "Right";
-            case FaceConfig.FRONT  -> "Front";
-            case FaceConfig.BACK   -> "Back";
+            case FaceConfig.BOTTOM -> Component.translatable("gt.lang.face.bottom").getString();
+            case FaceConfig.TOP    -> Component.translatable("gt.lang.face.top").getString();
+            case FaceConfig.LEFT   -> Component.translatable("gt.lang.face.left").getString();
+            case FaceConfig.RIGHT  -> Component.translatable("gt.lang.face.right").getString();
+            case FaceConfig.FRONT  -> Component.translatable("gt.lang.face.front").getString();
+            case FaceConfig.BACK   -> Component.translatable("gt.lang.face.back").getString();
             default -> "Unknown";
         };
     }
@@ -33,13 +33,13 @@ public final class TooltipHelper {
     /** Converts a direction bitmask to a human-readable string.
      *  All 6 directions = "Any Side", otherwise comma-separated. */
     public static String dirMaskToString(int mask) {
-        if (mask == 0b111111) return "Any Side";
+        if (mask == 0b111111) return Component.translatable("gt.lang.face.any").getString();
         List<String> names = new ArrayList<>(6);
         for (int d : new int[]{FaceConfig.BOTTOM, FaceConfig.TOP, FaceConfig.LEFT,
                 FaceConfig.RIGHT, FaceConfig.FRONT, FaceConfig.BACK}) {
             if (FaceConfig.has(mask, d)) names.add(dirName(d));
         }
-        return names.isEmpty() ? "None" : String.join(", ", names);
+        return names.isEmpty() ? Component.translatable("gt.lang.face.none").getString() : String.join(", ", names);
     }
 
     /** Returns "(auto)" if the auto-direction matches, "(no auto)" otherwise. */

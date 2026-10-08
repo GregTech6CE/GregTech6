@@ -26437,9 +26437,477 @@
       "source_key": "gt.multiitem.books.32004.tooltip",
       "value": "With a Radiation Symbol on it"
     },
+    "gt.autocrafting.insert.blueprint": {
+      "source_key": "gt.autocrafting.insert.blueprint",
+      "value": "Insert an autocraftable Blueprint here"
+    },
+    "gt.behaviour.placedynamite": {
+      "source_key": "gt.behaviour.placedynamite",
+      "value": "Places Dynamite and links it to Remote Activators in Hotbar"
+    },
+    "gt.behaviour.washing": {
+      "source_key": "gt.behaviour.washing",
+      "value": "Throw into Cauldron to clean this Item"
+    },
     "gt.integrated_circuit.configuration": {
       "source_key": "gt.integrated_circuit.configuration",
       "value": "Configuration: "
+    },
+    "gt.lang.accepts.redstoneflux.lossless": {
+      "source_key": "gt.lang.accepts.redstoneflux.lossless",
+      "value": "Can accept Redstone Flux (RF) losslessly"
+    },
+    "gt.lang.axle.stats.power": {
+      "source_key": "gt.lang.axle.stats.power",
+      "value": "Power: "
+    },
+    "gt.lang.axle.stats.speed": {
+      "source_key": "gt.lang.axle.stats.speed",
+      "value": "Speed: "
+    },
+    "gt.lang.blast.resist.creeper.proof": {
+      "source_key": "gt.lang.blast.resist.creeper.proof",
+      "value": "(Creeper Proof)"
+    },
+    "gt.lang.blast.resist.dynamite.proof": {
+      "source_key": "gt.lang.blast.resist.dynamite.proof",
+      "value": "(Strong Dynamite Proof)"
+    },
+    "gt.lang.blast.resist.ghast.proof": {
+      "source_key": "gt.lang.blast.resist.ghast.proof",
+      "value": "(Ghast Proof)"
+    },
+    "gt.lang.blast.resist.nuke.not": {
+      "source_key": "gt.lang.blast.resist.nuke.not",
+      "value": "(IC2 Nukes can still go through!)"
+    },
+    "gt.lang.blast.resist.terrible": {
+      "source_key": "gt.lang.blast.resist.terrible",
+      "value": "(Terrible)"
+    },
+    "gt.lang.blast.resist.tnt.proof": {
+      "source_key": "gt.lang.blast.resist.tnt.proof",
+      "value": "(TNT Proof)"
+    },
+    "gt.lang.blastresistance": {
+      "source_key": "gt.lang.blastresistance",
+      "value": "Blast Resistance: "
+    },
+    "gt.lang.cheap.overclocking": {
+      "source_key": "gt.lang.cheap.overclocking",
+      "value": "Can be overclocked without additional Energy Loss"
+    },
+    "gt.lang.contained.materials": {
+      "source_key": "gt.lang.contained.materials",
+      "value": "Contained Materials:"
+    },
+    "gt.lang.efficiency": {
+      "source_key": "gt.lang.efficiency",
+      "value": "Efficiency"
+    },
+    "gt.lang.emits.redstoneflux.lossless": {
+      "source_key": "gt.lang.emits.redstoneflux.lossless",
+      "value": "Can emit Redstone Flux (RF) losslessly"
+    },
+    "gt.lang.emits.redstoneflux.lossy": {
+      "source_key": "gt.lang.emits.redstoneflux.lossy",
+      "value": "Can emit Redstone Flux (RF) with a Loss of"
+    },
+    "gt.lang.emits.used.steam": {
+      "source_key": "gt.lang.emits.used.steam",
+      "value": "Emits used Steam"
+    },
+    "gt.lang.enchantment.bonus": {
+      "source_key": "gt.lang.enchantment.bonus",
+      "value": "Can influence an Enchanting Table like a Bookshelf"
+    },
+    "gt.lang.energy.capacity": {
+      "source_key": "gt.lang.energy.capacity",
+      "value": "Capacity"
+    },
+    "gt.lang.energy.convert.from": {
+      "source_key": "gt.lang.energy.convert.from",
+      "value": "Converts"
+    },
+    "gt.lang.energy.convert.per": {
+      "source_key": "gt.lang.energy.convert.per",
+      "value": "per"
+    },
+    "gt.lang.energy.convert.to": {
+      "source_key": "gt.lang.energy.convert.to",
+      "value": "into"
+    },
+    "gt.lang.energy.convert.using": {
+      "source_key": "gt.lang.energy.convert.using",
+      "value": "using"
+    },
+    "gt.lang.energy.input": {
+      "source_key": "gt.lang.energy.input",
+      "value": "Energy IN"
+    },
+    "gt.lang.energy.output": {
+      "source_key": "gt.lang.energy.output",
+      "value": "Energy OUT"
+    },
+    "gt.lang.face.any": {
+      "source_key": "gt.lang.face.any",
+      "value": "Any Side"
+    },
+    "gt.lang.face.any.but.front": {
+      "source_key": "gt.lang.face.any.but.front",
+      "value": "Any but Front"
+    },
+    "gt.lang.face.any.but.front.back": {
+      "source_key": "gt.lang.face.any.but.front.back",
+      "value": "Any but Front and Back"
+    },
+    "gt.lang.face.any.but.sides": {
+      "source_key": "gt.lang.face.any.but.sides",
+      "value": "Any but Sides"
+    },
+    "gt.lang.face.back": {
+      "source_key": "gt.lang.face.back",
+      "value": "Back"
+    },
+    "gt.lang.face.bottom": {
+      "source_key": "gt.lang.face.bottom",
+      "value": "Bottom"
+    },
+    "gt.lang.face.front": {
+      "source_key": "gt.lang.face.front",
+      "value": "Front"
+    },
+    "gt.lang.face.front.back": {
+      "source_key": "gt.lang.face.front.back",
+      "value": "Front and Back"
+    },
+    "gt.lang.face.left": {
+      "source_key": "gt.lang.face.left",
+      "value": "Left"
+    },
+    "gt.lang.face.none": {
+      "source_key": "gt.lang.face.none",
+      "value": "None"
+    },
+    "gt.lang.face.right": {
+      "source_key": "gt.lang.face.right",
+      "value": "Right"
+    },
+    "gt.lang.face.sides": {
+      "source_key": "gt.lang.face.sides",
+      "value": "Sides"
+    },
+    "gt.lang.face.top": {
+      "source_key": "gt.lang.face.top",
+      "value": "Top"
+    },
+    "gt.lang.flammable": {
+      "source_key": "gt.lang.flammable",
+      "value": "Flammable!"
+    },
+    "gt.lang.fluid.input": {
+      "source_key": "gt.lang.fluid.input",
+      "value": "Fluids IN"
+    },
+    "gt.lang.fluid.output": {
+      "source_key": "gt.lang.fluid.output",
+      "value": "Fluids OUT"
+    },
+    "gt.lang.gravity": {
+      "source_key": "gt.lang.gravity",
+      "value": "This Block is affected by Gravity"
+    },
+    "gt.lang.hazard.contact": {
+      "source_key": "gt.lang.hazard.contact",
+      "value": "Causes Damage when touched while active!"
+    },
+    "gt.lang.hazard.explosion.steam": {
+      "source_key": "gt.lang.hazard.explosion.steam",
+      "value": "Explodes when Steam Pressure is too high!"
+    },
+    "gt.lang.hazard.fire": {
+      "source_key": "gt.lang.hazard.fire",
+      "value": "Can put Blocks around it on Fire!"
+    },
+    "gt.lang.hazard.meltdown": {
+      "source_key": "gt.lang.hazard.meltdown",
+      "value": "Melts down when stored Heat is too much!"
+    },
+    "gt.lang.item.input": {
+      "source_key": "gt.lang.item.input",
+      "value": "Items IN"
+    },
+    "gt.lang.item.output": {
+      "source_key": "gt.lang.item.output",
+      "value": "Items OUT"
+    },
+    "gt.lang.key.controlled": {
+      "source_key": "gt.lang.key.controlled",
+      "value": "This Block can only be opened with a Key!"
+    },
+    "gt.lang.no.powerconducting.fluids": {
+      "source_key": "gt.lang.no.powerconducting.fluids",
+      "value": "All entering Power Conductor Fluids will be voided!"
+    },
+    "gt.lang.nogui.funnel.tank": {
+      "source_key": "gt.lang.nogui.funnel.tank",
+      "value": "No GUI. Use Tiny Funnels to interact!"
+    },
+    "gt.lang.nogui.funnel.tap.tank": {
+      "source_key": "gt.lang.nogui.funnel.tap.tank",
+      "value": "No GUI. Use Tiny Funnels and Taps to interact!"
+    },
+    "gt.lang.nogui.rightclick.interact": {
+      "source_key": "gt.lang.nogui.rightclick.interact",
+      "value": "No GUI. Click to interact!"
+    },
+    "gt.lang.only.simple": {
+      "source_key": "gt.lang.only.simple",
+      "value": "Only accepts simple Fluids!"
+    },
+    "gt.lang.owner.controlled": {
+      "source_key": "gt.lang.owner.controlled",
+      "value": "This Block can only be interacted with by its Owner!"
+    },
+    "gt.lang.pipe.stats.amount": {
+      "source_key": "gt.lang.pipe.stats.amount",
+      "value": "Amount of Pipes: "
+    },
+    "gt.lang.pipe.stats.bandwidth": {
+      "source_key": "gt.lang.pipe.stats.bandwidth",
+      "value": "Bandwidth: "
+    },
+    "gt.lang.pipe.stats.capacity": {
+      "source_key": "gt.lang.pipe.stats.capacity",
+      "value": "Capacity: "
+    },
+    "gt.lang.pipe.stats.stepsize": {
+      "source_key": "gt.lang.pipe.stats.stepsize",
+      "value": "Stepsize: "
+    },
+    "gt.lang.pistonpush": {
+      "source_key": "gt.lang.pistonpush",
+      "value": "Pistons can push this Block"
+    },
+    "gt.lang.proof.acid": {
+      "source_key": "gt.lang.proof.acid",
+      "value": "Can handle Acids"
+    },
+    "gt.lang.proof.gas": {
+      "source_key": "gt.lang.proof.gas",
+      "value": "Can handle Gases"
+    },
+    "gt.lang.proof.magic": {
+      "source_key": "gt.lang.proof.magic",
+      "value": "Can handle Magic"
+    },
+    "gt.lang.proof.plasma": {
+      "source_key": "gt.lang.proof.plasma",
+      "value": "Can handle Plasma"
+    },
+    "gt.lang.recipes": {
+      "source_key": "gt.lang.recipes",
+      "value": "Recipes"
+    },
+    "gt.lang.recipes.bathingsink.usage": {
+      "source_key": "gt.lang.recipes.bathingsink.usage",
+      "value": "Place Input in Center, Fill with Fluid on the Rim, then rightclick it"
+    },
+    "gt.lang.recipes.grindstone.init": {
+      "source_key": "gt.lang.recipes.grindstone.init",
+      "value": "Add Sandstone Block in order to be able to use this"
+    },
+    "gt.lang.recipes.grindstone.usage": {
+      "source_key": "gt.lang.recipes.grindstone.usage",
+      "value": "Click multiple times with the Object to Sharpen or remove Enchantments"
+    },
+    "gt.lang.recipes.juicer.usage": {
+      "source_key": "gt.lang.recipes.juicer.usage",
+      "value": "Rightclick with the Item you want to get Juice from"
+    },
+    "gt.lang.recipes.mixingbowl.usage": {
+      "source_key": "gt.lang.recipes.mixingbowl.usage",
+      "value": "Place Input in Center, Fill with Fluid on the Rim, then rightclick it"
+    },
+    "gt.lang.recipes.mold": {
+      "source_key": "gt.lang.recipes.mold",
+      "value": "This Mold produces"
+    },
+    "gt.lang.recipes.mold.select": {
+      "source_key": "gt.lang.recipes.mold.select",
+      "value": "Use a Chisel in order to select the Shape of the Mold"
+    },
+    "gt.lang.recipes.mortar.usage": {
+      "source_key": "gt.lang.recipes.mortar.usage",
+      "value": "Rightclick with the Item you want to turn into Dust"
+    },
+    "gt.lang.recipes.sifter.usage": {
+      "source_key": "gt.lang.recipes.sifter.usage",
+      "value": "Place Input on Top and rightclick it"
+    },
+    "gt.lang.reminder.extenders": {
+      "source_key": "gt.lang.reminder.extenders",
+      "value": "Remember to use Universal Extenders if you need to literally cut Corners"
+    },
+    "gt.lang.requirement.ignite.fire": {
+      "source_key": "gt.lang.requirement.ignite.fire",
+      "value": "Requires ignition by Flint and Tinder or similar!"
+    },
+    "gt.lang.requirement.water.pure": {
+      "source_key": "gt.lang.requirement.water.pure",
+      "value": "Requires any Water. Use distilled Water for best efficiency!"
+    },
+    "gt.lang.structure": {
+      "source_key": "gt.lang.structure",
+      "value": "Structure"
+    },
+    "gt.lang.thermal.mass": {
+      "source_key": "gt.lang.thermal.mass",
+      "value": "Thermal Mass: "
+    },
+    "gt.lang.tool.to.harvest": {
+      "source_key": "gt.lang.tool.to.harvest",
+      "value": "Tool to Harvest"
+    },
+    "gt.lang.use.builder.wand.to.ease.building": {
+      "source_key": "gt.lang.use.builder.wand.to.ease.building",
+      "value": "Use Builder Wand to ease building"
+    },
+    "gt.lang.use.chisel.to.decalcify": {
+      "source_key": "gt.lang.use.chisel.to.decalcify",
+      "value": "Use Chisel to decalcify"
+    },
+    "gt.lang.use.crowbar.to.uncover": {
+      "source_key": "gt.lang.use.crowbar.to.uncover",
+      "value": "Use Crowbar to remove Covers"
+    },
+    "gt.lang.use.cutter.to.toggle": {
+      "source_key": "gt.lang.use.cutter.to.toggle",
+      "value": "Use Cutter to toggle Modes"
+    },
+    "gt.lang.use.magnifyingglass.to.detail": {
+      "source_key": "gt.lang.use.magnifyingglass.to.detail",
+      "value": "Use Magnifying Glass to see Details"
+    },
+    "gt.lang.use.monkey.wrench.to.set.input.side": {
+      "source_key": "gt.lang.use.monkey.wrench.to.set.input.side",
+      "value": "Use Monkey Wrench to set Input Side"
+    },
+    "gt.lang.use.monkey.wrench.to.set.output.side": {
+      "source_key": "gt.lang.use.monkey.wrench.to.set.output.side",
+      "value": "Use Monkey Wrench to set Output Side"
+    },
+    "gt.lang.use.monkey.wrench.to.toggle": {
+      "source_key": "gt.lang.use.monkey.wrench.to.toggle",
+      "value": "Use Monkey Wrench to toggle Modes"
+    },
+    "gt.lang.use.monkey.wrench.to.toggle.auto.inputs": {
+      "source_key": "gt.lang.use.monkey.wrench.to.toggle.auto.inputs",
+      "value": "Use Monkey Wrench to toggle automatic Inputs"
+    },
+    "gt.lang.use.monkey.wrench.to.toggle.auto.outputs": {
+      "source_key": "gt.lang.use.monkey.wrench.to.toggle.auto.outputs",
+      "value": "Use Monkey Wrench to toggle automatic Outputs"
+    },
+    "gt.lang.use.monkey.wrench.to.toggle.direction": {
+      "source_key": "gt.lang.use.monkey.wrench.to.toggle.direction",
+      "value": "Use Monkey Wrench to set Direction"
+    },
+    "gt.lang.use.monkey.wrench.to.toggle.inputs": {
+      "source_key": "gt.lang.use.monkey.wrench.to.toggle.inputs",
+      "value": "Use Monkey Wrench to toggle Inputs"
+    },
+    "gt.lang.use.pincers.to.take": {
+      "source_key": "gt.lang.use.pincers.to.take",
+      "value": "Use Pincers to extract Items"
+    },
+    "gt.lang.use.screwdriver.to.toggle": {
+      "source_key": "gt.lang.use.screwdriver.to.toggle",
+      "value": "Use Screwdriver to toggle Modes"
+    },
+    "gt.lang.use.shovel.to.empty": {
+      "source_key": "gt.lang.use.shovel.to.empty",
+      "value": "Use Shovel to empty this"
+    },
+    "gt.lang.use.soft.hammer.to.reset": {
+      "source_key": "gt.lang.use.soft.hammer.to.reset",
+      "value": "Use Soft Hammer to Reset"
+    },
+    "gt.lang.use.soft.hammer.to.toggle": {
+      "source_key": "gt.lang.use.soft.hammer.to.toggle",
+      "value": "Use Soft Hammer to toggle States"
+    },
+    "gt.lang.use.tape": {
+      "source_key": "gt.lang.use.tape",
+      "value": "Use Duct Tape to do anything Duct Tape can do!"
+    },
+    "gt.lang.use.thermometer.to.measure": {
+      "source_key": "gt.lang.use.thermometer.to.measure",
+      "value": "Use Thermometer to Measure"
+    },
+    "gt.lang.use.untape": {
+      "source_key": "gt.lang.use.untape",
+      "value": "Use Scissors or a Knife to remove Tape"
+    },
+    "gt.lang.use.x.to.toggle.connection.post": {
+      "source_key": "gt.lang.use.x.to.toggle.connection.post",
+      "value": " to set Connections"
+    },
+    "gt.lang.use.x.to.toggle.connection.pre": {
+      "source_key": "gt.lang.use.x.to.toggle.connection.pre",
+      "value": "Use "
+    },
+    "gt.lang.use.x.to.toggle.facing.post": {
+      "source_key": "gt.lang.use.x.to.toggle.facing.post",
+      "value": " to set Facing"
+    },
+    "gt.lang.use.x.to.toggle.facing.pre": {
+      "source_key": "gt.lang.use.x.to.toggle.facing.pre",
+      "value": "Use "
+    },
+    "gt.lang.walkspeed": {
+      "source_key": "gt.lang.walkspeed",
+      "value": "This Block alters the Walk Speed"
+    },
+    "gt.multitileentity.18022": {
+      "source_key": "gt.multitileentity.18022",
+      "value": "Dense Stainless Steel Wall"
+    },
+    "gt.multitileentity.18023": {
+      "source_key": "gt.multitileentity.18023",
+      "value": "Dense Tungstensteel Wall"
+    },
+    "gt.multitileentity.18025": {
+      "source_key": "gt.multitileentity.18025",
+      "value": "Dense Adamantium Wall"
+    },
+    "gt.multitileentity.18026": {
+      "source_key": "gt.multitileentity.18026",
+      "value": "Dense Titanium Wall"
+    },
+    "gt.multitileentity.hopper.tooltip.1": {
+      "source_key": "gt.multitileentity.hopper.tooltip.1",
+      "value": "Slot Count: "
+    },
+    "gt.multitileentity.hopper.tooltip.3": {
+      "source_key": "gt.multitileentity.hopper.tooltip.3",
+      "value": "Exact Insertion Mode"
+    },
+    "gt.multitileentity.massstorage.tooltip.1": {
+      "source_key": "gt.multitileentity.massstorage.tooltip.1",
+      "value": "Can store Items of one Type, Capacity: "
+    },
+    "gt.multitileentity.massstorage.tooltip.2": {
+      "source_key": "gt.multitileentity.massstorage.tooltip.2",
+      "value": "Can be used adjacent to Advanced Crafting Tables"
+    },
+    "gt.multitileentity.plantpot.tooltip.1": {
+      "source_key": "gt.multitileentity.plantpot.tooltip.1",
+      "value": "Can grow any Plants ontop of it!"
+    },
+    "gt.tooltip.crucible.1": {
+      "source_key": "gt.tooltip.crucible.1",
+      "value": "KU Input will turn into Air for Steelmaking"
     },
     "gt.tooltip.ender_garbage.1": {
       "source_key": "gt.multitileentity.ender.garbage.bin.tooltip.1",
@@ -26453,6 +26921,18 @@
       "source_key": "gt.multitileentity.ender.garbage.bin.tooltip.3",
       "value": "You can stop this from operating using a simple Redstone Signal"
     },
+    "gt.tooltip.energybattery.1": {
+      "source_key": "gt.tooltip.energybattery.1",
+      "value": "Selector Covers can set the amount of emitted Packets"
+    },
+    "gt.tooltip.energybattery.2": {
+      "source_key": "gt.tooltip.energybattery.2",
+      "value": "Mode 0 = Emit as much as possible, this is Default"
+    },
+    "gt.tooltip.energybattery.3": {
+      "source_key": "gt.tooltip.energybattery.3",
+      "value": "Mode 1 - 15 = Emit up to 1 - 15 Packets if enough Energy Storages"
+    },
     "gt.tooltip.garbage_dump.1": {
       "source_key": "gt.multitileentity.ender.garbage.dump.tooltip.1",
       "value": "This is where all the Trash Bin Items & Fluids go to"
@@ -26464,6 +26944,651 @@
     "gt.tooltip.garbage_dump.3": {
       "source_key": "gt.multitileentity.ender.garbage.dump.tooltip.3",
       "value": "If used properly, people could for example 'donate' Resources."
+    },
+    "gt.tooltip.gearbox.custom.1": {
+      "source_key": "gt.tooltip.gearbox.custom.1",
+      "value": "Gears are interlocked wrongly!"
+    },
+    "gt.tooltip.gearbox.custom.2": {
+      "source_key": "gt.tooltip.gearbox.custom.2",
+      "value": "Use Wrench to mount Gears from your Inventory"
+    },
+    "gt.tooltip.gearbox.custom.3": {
+      "source_key": "gt.tooltip.gearbox.custom.3",
+      "value": "Use Monkeywrench to change Axle Direction"
+    },
+    "gt.tooltip.multiblock.autoclave.1": {
+      "source_key": "gt.tooltip.multiblock.autoclave.1",
+      "value": "3x3x3 Hollow of Dense Stainless Steel Walls"
+    },
+    "gt.tooltip.multiblock.autoclave.2": {
+      "source_key": "gt.tooltip.multiblock.autoclave.2",
+      "value": "Main Block centered on Side-Bottom and facing outwards"
+    },
+    "gt.tooltip.multiblock.autoclave.3": {
+      "source_key": "gt.tooltip.multiblock.autoclave.3",
+      "value": "Input and Output at any Blocks"
+    },
+    "gt.tooltip.multiblock.bath.1": {
+      "source_key": "gt.tooltip.multiblock.bath.1",
+      "value": "5x5x2 of Stainless Steel Walls"
+    },
+    "gt.tooltip.multiblock.bath.2": {
+      "source_key": "gt.tooltip.multiblock.bath.2",
+      "value": "Main Block centered on Side-Bottom and facing outwards"
+    },
+    "gt.tooltip.multiblock.bath.3": {
+      "source_key": "gt.tooltip.multiblock.bath.3",
+      "value": "Input and Output at any Blocks"
+    },
+    "gt.tooltip.multiblock.bedrockdrill.1": {
+      "source_key": "gt.tooltip.multiblock.bedrockdrill.1",
+      "value": "3x3 Base of Bedrock Mining Drill Heads centered ontop Bedrock Ores"
+    },
+    "gt.tooltip.multiblock.bedrockdrill.2": {
+      "source_key": "gt.tooltip.multiblock.bedrockdrill.2",
+      "value": "Full 3x4x3 of Dense Titanium Walls ontop"
+    },
+    "gt.tooltip.multiblock.bedrockdrill.3": {
+      "source_key": "gt.tooltip.multiblock.bedrockdrill.3",
+      "value": "Main top-center inside the Titanium Tower facing upwards"
+    },
+    "gt.tooltip.multiblock.bedrockdrill.4": {
+      "source_key": "gt.tooltip.multiblock.bedrockdrill.4",
+      "value": "Requires Lubricant, Power and a 3x3 place on Bedrock(-Ore) to mine"
+    },
+    "gt.tooltip.multiblock.centrifuge.1": {
+      "source_key": "gt.tooltip.multiblock.centrifuge.1",
+      "value": "3x3x2 of Centrifuge Parts"
+    },
+    "gt.tooltip.multiblock.centrifuge.2": {
+      "source_key": "gt.tooltip.multiblock.centrifuge.2",
+      "value": "Main Block centered on Side-Bottom and facing outwards"
+    },
+    "gt.tooltip.multiblock.centrifuge.3": {
+      "source_key": "gt.tooltip.multiblock.centrifuge.3",
+      "value": "Input and Output at any Blocks"
+    },
+    "gt.tooltip.multiblock.coagulator.1": {
+      "source_key": "gt.tooltip.multiblock.coagulator.1",
+      "value": "5x5x2 of Stainless Steel Walls"
+    },
+    "gt.tooltip.multiblock.coagulator.2": {
+      "source_key": "gt.tooltip.multiblock.coagulator.2",
+      "value": "Main Block centered on Side-Bottom and facing outwards"
+    },
+    "gt.tooltip.multiblock.coagulator.3": {
+      "source_key": "gt.tooltip.multiblock.coagulator.3",
+      "value": "Input and Output at any Blocks"
+    },
+    "gt.tooltip.multiblock.cokeoven.1": {
+      "source_key": "gt.tooltip.multiblock.cokeoven.1",
+      "value": "3x3x3 Hollow of 25 Fire Bricks filled with Air"
+    },
+    "gt.tooltip.multiblock.cokeoven.2": {
+      "source_key": "gt.tooltip.multiblock.cokeoven.2",
+      "value": "Main Block centered on Side and facing outwards"
+    },
+    "gt.tooltip.multiblock.crucible.1": {
+      "source_key": "gt.tooltip.multiblock.crucible.1",
+      "value": "3x3x3 Hollow of Walls with opening on Top."
+    },
+    "gt.tooltip.multiblock.crucible.2": {
+      "source_key": "gt.tooltip.multiblock.crucible.2",
+      "value": "Main at Bottom-Center."
+    },
+    "gt.tooltip.multiblock.crucible.3": {
+      "source_key": "gt.tooltip.multiblock.crucible.3",
+      "value": "Energy IN from Bottom Layer, Stuff IN from Top Layer."
+    },
+    "gt.tooltip.multiblock.crucible.4": {
+      "source_key": "gt.tooltip.multiblock.crucible.4",
+      "value": "Molds usable at second Layer of Walls"
+    },
+    "gt.tooltip.multiblock.crucible.5": {
+      "source_key": "gt.tooltip.multiblock.crucible.5",
+      "value": "KU at Bottom Layer will turn into Air for Steelmaking"
+    },
+    "gt.tooltip.multiblock.crusher.1": {
+      "source_key": "gt.tooltip.multiblock.crusher.1",
+      "value": "5x5x3 'Basin' of 56 Tungstensteel Walls"
+    },
+    "gt.tooltip.multiblock.crusher.2": {
+      "source_key": "gt.tooltip.multiblock.crusher.2",
+      "value": "3x3x2 Filling with Crusher Wheels"
+    },
+    "gt.tooltip.multiblock.crusher.3": {
+      "source_key": "gt.tooltip.multiblock.crusher.3",
+      "value": "Main Block centered on Side-Bottom and facing outwards"
+    },
+    "gt.tooltip.multiblock.crusher.4": {
+      "source_key": "gt.tooltip.multiblock.crusher.4",
+      "value": "Input only at Crusher Wheels, Output at Bottom Layer"
+    },
+    "gt.tooltip.multiblock.cryodistillationtower.1": {
+      "source_key": "gt.tooltip.multiblock.cryodistillationtower.1",
+      "value": "3x3 Base of Heat Transmitters. They can also transfer Cold. ;)"
+    },
+    "gt.tooltip.multiblock.cryodistillationtower.2": {
+      "source_key": "gt.tooltip.multiblock.cryodistillationtower.2",
+      "value": "3x3x8 of Distillation Tower Parts"
+    },
+    "gt.tooltip.multiblock.cryodistillationtower.3": {
+      "source_key": "gt.tooltip.multiblock.cryodistillationtower.3",
+      "value": "Main centered on Side-Bottom of Tower facing outwards"
+    },
+    "gt.tooltip.multiblock.cryodistillationtower.4": {
+      "source_key": "gt.tooltip.multiblock.cryodistillationtower.4",
+      "value": "Outputs automatically to the Holes on the Backside"
+    },
+    "gt.tooltip.multiblock.cryodistillationtower.5": {
+      "source_key": "gt.tooltip.multiblock.cryodistillationtower.5",
+      "value": "Bottom Hole is for outputting all Items"
+    },
+    "gt.tooltip.multiblock.cryodistillationtower.6": {
+      "source_key": "gt.tooltip.multiblock.cryodistillationtower.6",
+      "value": "Input only possible at Bottom Layer of Tower"
+    },
+    "gt.tooltip.multiblock.distillationtower.1": {
+      "source_key": "gt.tooltip.multiblock.distillationtower.1",
+      "value": "3x3 Base of Heat Transmitters"
+    },
+    "gt.tooltip.multiblock.distillationtower.2": {
+      "source_key": "gt.tooltip.multiblock.distillationtower.2",
+      "value": "3x3x8 of Distillation Tower Parts"
+    },
+    "gt.tooltip.multiblock.distillationtower.3": {
+      "source_key": "gt.tooltip.multiblock.distillationtower.3",
+      "value": "Main centered on Side-Bottom of Tower facing outwards"
+    },
+    "gt.tooltip.multiblock.distillationtower.4": {
+      "source_key": "gt.tooltip.multiblock.distillationtower.4",
+      "value": "Outputs automatically to the Holes on the Backside"
+    },
+    "gt.tooltip.multiblock.distillationtower.5": {
+      "source_key": "gt.tooltip.multiblock.distillationtower.5",
+      "value": "Bottom Hole is for outputting all Items"
+    },
+    "gt.tooltip.multiblock.distillationtower.6": {
+      "source_key": "gt.tooltip.multiblock.distillationtower.6",
+      "value": "Input only possible at Bottom Layer of Tower"
+    },
+    "gt.tooltip.multiblock.dynamo.1": {
+      "source_key": "gt.tooltip.multiblock.dynamo.1",
+      "value": "Two 3x3s with 2m inbetween made of the Block you crafted this of"
+    },
+    "gt.tooltip.multiblock.dynamo.2": {
+      "source_key": "gt.tooltip.multiblock.dynamo.2",
+      "value": "a 3x3x2 of 18 Large Copper Coils inbetween"
+    },
+    "gt.tooltip.multiblock.dynamo.3": {
+      "source_key": "gt.tooltip.multiblock.dynamo.3",
+      "value": "Main centered on one of the 3x3s facing outwards"
+    },
+    "gt.tooltip.multiblock.electrolyzer.1": {
+      "source_key": "gt.tooltip.multiblock.electrolyzer.1",
+      "value": "3x3x2 of Electrolyzer Parts"
+    },
+    "gt.tooltip.multiblock.electrolyzer.2": {
+      "source_key": "gt.tooltip.multiblock.electrolyzer.2",
+      "value": "Main Block centered on Side-Bottom and facing outwards"
+    },
+    "gt.tooltip.multiblock.electrolyzer.3": {
+      "source_key": "gt.tooltip.multiblock.electrolyzer.3",
+      "value": "Bottom Half accepts Input, Top Half and Main Block emit Output"
+    },
+    "gt.tooltip.multiblock.fermenter.1": {
+      "source_key": "gt.tooltip.multiblock.fermenter.1",
+      "value": "5x5 of Heat Transmitters as bottom Layer"
+    },
+    "gt.tooltip.multiblock.fermenter.2": {
+      "source_key": "gt.tooltip.multiblock.fermenter.2",
+      "value": "5x5x2 of Stainless Steel Walls"
+    },
+    "gt.tooltip.multiblock.fermenter.3": {
+      "source_key": "gt.tooltip.multiblock.fermenter.3",
+      "value": "Main Block centered on Side-Middle and facing outwards"
+    },
+    "gt.tooltip.multiblock.fermenter.4": {
+      "source_key": "gt.tooltip.multiblock.fermenter.4",
+      "value": "Walls accept Input, Top Back emits Items, Bottom Back emits Fluids"
+    },
+    "gt.tooltip.multiblock.fusionreactor.1": {
+      "source_key": "gt.tooltip.multiblock.fusionreactor.1",
+      "value": "For Assembly Instructions read the Manual in the GUI."
+    },
+    "gt.tooltip.multiblock.fusionreactor.2": {
+      "source_key": "gt.tooltip.multiblock.fusionreactor.2",
+      "value": "144 Iridium Coils, 576 Regular Tungstensteel Walls, 50 Ventilation Units."
+    },
+    "gt.tooltip.multiblock.fusionreactor.3": {
+      "source_key": "gt.tooltip.multiblock.fusionreactor.3",
+      "value": "36 Regular Stainless Steel Walls, 53 Galvanized Steel Walls."
+    },
+    "gt.tooltip.multiblock.fusionreactor.4": {
+      "source_key": "gt.tooltip.multiblock.fusionreactor.4",
+      "value": "3 Versatile, 12 Logic and 12 Control Quadcore Processing Units."
+    },
+    "gt.tooltip.multiblock.fusionreactor.5": {
+      "source_key": "gt.tooltip.multiblock.fusionreactor.5",
+      "value": "Energy Output at the Electric Interfaces"
+    },
+    "gt.tooltip.multiblock.fusionreactor.6": {
+      "source_key": "gt.tooltip.multiblock.fusionreactor.6",
+      "value": "Laser Input at the 'Glass' Ring"
+    },
+    "gt.tooltip.multiblock.fusionreactor.7": {
+      "source_key": "gt.tooltip.multiblock.fusionreactor.7",
+      "value": "Items and Fluids are handeled at the normal Walls"
+    },
+    "gt.tooltip.multiblock.gasturbine.1": {
+      "source_key": "gt.tooltip.multiblock.gasturbine.1",
+      "value": "3x3x4 of 35 "
+    },
+    "gt.tooltip.multiblock.gasturbine.2": {
+      "source_key": "gt.tooltip.multiblock.gasturbine.2",
+      "value": "Main centered on the 3x3 facing outwards"
+    },
+    "gt.tooltip.multiblock.gasturbine.3": {
+      "source_key": "gt.tooltip.multiblock.gasturbine.3",
+      "value": "Input only possible at frontal 3x3"
+    },
+    "gt.tooltip.multiblock.gasturbine.4": {
+      "source_key": "gt.tooltip.multiblock.gasturbine.4",
+      "value": "Exhaust Gas has to be removed!"
+    },
+    "gt.tooltip.multiblock.heatexchanger.1": {
+      "source_key": "gt.tooltip.multiblock.heatexchanger.1",
+      "value": "3x3 Ring of 8 Heat Transmitters with Dense Tungsten Wall inside"
+    },
+    "gt.tooltip.multiblock.heatexchanger.2": {
+      "source_key": "gt.tooltip.multiblock.heatexchanger.2",
+      "value": "3x3 Ring of 8 Dense Tungsten Walls with Main inside"
+    },
+    "gt.tooltip.multiblock.heatexchanger.3": {
+      "source_key": "gt.tooltip.multiblock.heatexchanger.3",
+      "value": "Energy Output split over the 8 Heat Transmitters (Top)"
+    },
+    "gt.tooltip.multiblock.heatexchanger.4": {
+      "source_key": "gt.tooltip.multiblock.heatexchanger.4",
+      "value": "Input at Bottom Layer, Fluid Output at Main Block"
+    },
+    "gt.tooltip.multiblock.implosioncompressor.1": {
+      "source_key": "gt.tooltip.multiblock.implosioncompressor.1",
+      "value": "3x3x3 Hollow of 25 Dense Tungstensteel Walls filled with Air"
+    },
+    "gt.tooltip.multiblock.implosioncompressor.2": {
+      "source_key": "gt.tooltip.multiblock.implosioncompressor.2",
+      "value": "Main Block centered on Side-Bottom and facing outwards"
+    },
+    "gt.tooltip.multiblock.largeboiler.1": {
+      "source_key": "gt.tooltip.multiblock.largeboiler.1",
+      "value": "3x3 Base of Heat Transmitters"
+    },
+    "gt.tooltip.multiblock.largeboiler.2": {
+      "source_key": "gt.tooltip.multiblock.largeboiler.2",
+      "value": "3x3x3 Hollow of the Block you crafted this one with"
+    },
+    "gt.tooltip.multiblock.largeboiler.3": {
+      "source_key": "gt.tooltip.multiblock.largeboiler.3",
+      "value": "Main centered on Side-Bottom of Boiler facing outwards"
+    },
+    "gt.tooltip.multiblock.largeboiler.4": {
+      "source_key": "gt.tooltip.multiblock.largeboiler.4",
+      "value": "Input only possible at Bottom Layer of Boiler"
+    },
+    "gt.tooltip.multiblock.lightningrod.1": {
+      "source_key": "gt.tooltip.multiblock.lightningrod.1",
+      "value": "Bottom: 3x3 of Tungsten Walls with Main at Center"
+    },
+    "gt.tooltip.multiblock.lightningrod.2": {
+      "source_key": "gt.tooltip.multiblock.lightningrod.2",
+      "value": "Then: Full 3x3 of Large Niobium-Titanium Coils"
+    },
+    "gt.tooltip.multiblock.lightningrod.3": {
+      "source_key": "gt.tooltip.multiblock.lightningrod.3",
+      "value": "Then: Full 3x3 of Tungsten Walls"
+    },
+    "gt.tooltip.multiblock.lightningrod.4": {
+      "source_key": "gt.tooltip.multiblock.lightningrod.4",
+      "value": "Then: Full 3x3 of Large Niobium-Titanium Coils"
+    },
+    "gt.tooltip.multiblock.lightningrod.5": {
+      "source_key": "gt.tooltip.multiblock.lightningrod.5",
+      "value": "Top: 3x3 of Tungsten Walls"
+    },
+    "gt.tooltip.multiblock.lightningrod.6": {
+      "source_key": "gt.tooltip.multiblock.lightningrod.6",
+      "value": "Centered Above: 1x1 Pillar of simple Lightning Rod Blocks"
+    },
+    "gt.tooltip.multiblock.lightningrod.7": {
+      "source_key": "gt.tooltip.multiblock.lightningrod.7",
+      "value": "The Tip of the Rod has to be at Y = 100 or above"
+    },
+    "gt.tooltip.multiblock.lightningrod.8": {
+      "source_key": "gt.tooltip.multiblock.lightningrod.8",
+      "value": "Optimum Efficiency at a Rod Length of 100m"
+    },
+    "gt.tooltip.multiblock.lightningrod.9": {
+      "source_key": "gt.tooltip.multiblock.lightningrod.9",
+      "value": "Reduced Efficiency if too close to another Lightning Rod (256m)"
+    },
+    "gt.tooltip.multiblock.logisticscore.1": {
+      "source_key": "gt.tooltip.multiblock.logisticscore.1",
+      "value": "5x5x5 Frame made out of 44 Galvanized Steel Walls (Power Input Here)"
+    },
+    "gt.tooltip.multiblock.logisticscore.10": {
+      "source_key": "gt.tooltip.multiblock.logisticscore.10",
+      "value": "Conversion Processors increase Throughput by 1 Stack or 16000L"
+    },
+    "gt.tooltip.multiblock.logisticscore.2": {
+      "source_key": "gt.tooltip.multiblock.logisticscore.2",
+      "value": "3x3x3 Core of 27 of any Multiblock Processor Units (Customizable)"
+    },
+    "gt.tooltip.multiblock.logisticscore.3": {
+      "source_key": "gt.tooltip.multiblock.logisticscore.3",
+      "value": "The Six 3x3 Walls need to be 53 Ventilation Units"
+    },
+    "gt.tooltip.multiblock.logisticscore.4": {
+      "source_key": "gt.tooltip.multiblock.logisticscore.4",
+      "value": "Main centered at any Side facing outwards"
+    },
+    "gt.tooltip.multiblock.logisticscore.5": {
+      "source_key": "gt.tooltip.multiblock.logisticscore.5",
+      "value": "At least one of each Processor Type needed (Or use a Versatile one)"
+    },
+    "gt.tooltip.multiblock.logisticscore.6": {
+      "source_key": "gt.tooltip.multiblock.logisticscore.6",
+      "value": "You can replace CPUs with Walls should you not be able to afford that many."
+    },
+    "gt.tooltip.multiblock.logisticscore.7": {
+      "source_key": "gt.tooltip.multiblock.logisticscore.7",
+      "value": "Logic Processors increase Operation Count by 1"
+    },
+    "gt.tooltip.multiblock.logisticscore.8": {
+      "source_key": "gt.tooltip.multiblock.logisticscore.8",
+      "value": "Control Processors increase Maximum Network Range by 1m (Cubic AoE)"
+    },
+    "gt.tooltip.multiblock.logisticscore.9": {
+      "source_key": "gt.tooltip.multiblock.logisticscore.9",
+      "value": "Storage Processors increase Buffer Size by 1 Stack or 16000L"
+    },
+    "gt.tooltip.multiblock.matterfabricator.1": {
+      "source_key": "gt.tooltip.multiblock.matterfabricator.1",
+      "value": "5x5x5 'Hollow' of 97 Dense Lead Walls"
+    },
+    "gt.tooltip.multiblock.matterfabricator.2": {
+      "source_key": "gt.tooltip.multiblock.matterfabricator.2",
+      "value": "3x3x3 'Hollow' with 26 Osmium Coils inside the 5x5x5"
+    },
+    "gt.tooltip.multiblock.matterfabricator.3": {
+      "source_key": "gt.tooltip.multiblock.matterfabricator.3",
+      "value": "5x5 Ring of 16 Ventilation Units ontop"
+    },
+    "gt.tooltip.multiblock.matterfabricator.4": {
+      "source_key": "gt.tooltip.multiblock.matterfabricator.4",
+      "value": "4 Control Quadcore Processor Units in that Ring"
+    },
+    "gt.tooltip.multiblock.matterfabricator.5": {
+      "source_key": "gt.tooltip.multiblock.matterfabricator.5",
+      "value": "4 Conversion Quadcore Processor Units in that Ring"
+    },
+    "gt.tooltip.multiblock.matterfabricator.6": {
+      "source_key": "gt.tooltip.multiblock.matterfabricator.6",
+      "value": "1 Versatile Quadcore Processor Unit in the center of that Ring"
+    },
+    "gt.tooltip.multiblock.matterfabricator.7": {
+      "source_key": "gt.tooltip.multiblock.matterfabricator.7",
+      "value": "Main Block centered on Side-Bottom and facing outwards"
+    },
+    "gt.tooltip.multiblock.matterfabricator.8": {
+      "source_key": "gt.tooltip.multiblock.matterfabricator.8",
+      "value": "Stuff can go in and out on any of the Dense Lead Walls"
+    },
+    "gt.tooltip.multiblock.mixer.1": {
+      "source_key": "gt.tooltip.multiblock.mixer.1",
+      "value": "3x3x2 of Stainless Steel Walls"
+    },
+    "gt.tooltip.multiblock.mixer.2": {
+      "source_key": "gt.tooltip.multiblock.mixer.2",
+      "value": "Main Block centered on Side-Bottom and facing outwards"
+    },
+    "gt.tooltip.multiblock.mixer.3": {
+      "source_key": "gt.tooltip.multiblock.mixer.3",
+      "value": "Top Half accepts Input, Bottom Half and Main Block emit Output"
+    },
+    "gt.tooltip.multiblock.oven.1": {
+      "source_key": "gt.tooltip.multiblock.oven.1",
+      "value": "3x3 of Invar Walls"
+    },
+    "gt.tooltip.multiblock.oven.2": {
+      "source_key": "gt.tooltip.multiblock.oven.2",
+      "value": "3x3 Hollow of 8 Large Nichrome or Carborundum Coils (No Mixing)"
+    },
+    "gt.tooltip.multiblock.oven.3": {
+      "source_key": "gt.tooltip.multiblock.oven.3",
+      "value": "3x3 of Invar Walls"
+    },
+    "gt.tooltip.multiblock.oven.4": {
+      "source_key": "gt.tooltip.multiblock.oven.4",
+      "value": "Main Block centered on Side-Bottom and facing outwards"
+    },
+    "gt.tooltip.multiblock.oven.5": {
+      "source_key": "gt.tooltip.multiblock.oven.5",
+      "value": "The Coils are not accepting any Inputs or Outputs."
+    },
+    "gt.tooltip.multiblock.shredder.1": {
+      "source_key": "gt.tooltip.multiblock.shredder.1",
+      "value": "5x5x3 'Basin' of 56 Tungstensteel Walls"
+    },
+    "gt.tooltip.multiblock.shredder.2": {
+      "source_key": "gt.tooltip.multiblock.shredder.2",
+      "value": "3x3x2 Filling with Shredder Blades"
+    },
+    "gt.tooltip.multiblock.shredder.3": {
+      "source_key": "gt.tooltip.multiblock.shredder.3",
+      "value": "Main Block centered on Side-Bottom and facing outwards"
+    },
+    "gt.tooltip.multiblock.shredder.4": {
+      "source_key": "gt.tooltip.multiblock.shredder.4",
+      "value": "Input only at Shredder Blades, Output at Bottom Layer"
+    },
+    "gt.tooltip.multiblock.sluice.1": {
+      "source_key": "gt.tooltip.multiblock.sluice.1",
+      "value": "Two 3x7 Layers of Titanium Walls"
+    },
+    "gt.tooltip.multiblock.sluice.2": {
+      "source_key": "gt.tooltip.multiblock.sluice.2",
+      "value": "3x7 Layer of Sluice Parts ontop of that"
+    },
+    "gt.tooltip.multiblock.sluice.3": {
+      "source_key": "gt.tooltip.multiblock.sluice.3",
+      "value": "Main Block centered on Slim-Side-Bottom and facing outwards"
+    },
+    "gt.tooltip.multiblock.sluice.4": {
+      "source_key": "gt.tooltip.multiblock.sluice.4",
+      "value": "Input only at the Top of the Far Side"
+    },
+    "gt.tooltip.multiblock.sluice.5": {
+      "source_key": "gt.tooltip.multiblock.sluice.5",
+      "value": "Output only at the Bottom of the Close Side"
+    },
+    "gt.tooltip.multiblock.squeezer.1": {
+      "source_key": "gt.tooltip.multiblock.squeezer.1",
+      "value": "5x5x3 Hollow of 65 Steel Walls"
+    },
+    "gt.tooltip.multiblock.squeezer.2": {
+      "source_key": "gt.tooltip.multiblock.squeezer.2",
+      "value": "Main Block centered on Side-Bottom and facing outwards"
+    },
+    "gt.tooltip.multiblock.squeezer.3": {
+      "source_key": "gt.tooltip.multiblock.squeezer.3",
+      "value": "Input at Top Layer, Output at Bottom Layer"
+    },
+    "gt.tooltip.multiblock.steamturbine.1": {
+      "source_key": "gt.tooltip.multiblock.steamturbine.1",
+      "value": "3x3x4 of 35 "
+    },
+    "gt.tooltip.multiblock.steamturbine.2": {
+      "source_key": "gt.tooltip.multiblock.steamturbine.2",
+      "value": "Main centered on the 3x3 facing outwards"
+    },
+    "gt.tooltip.multiblock.steamturbine.3": {
+      "source_key": "gt.tooltip.multiblock.steamturbine.3",
+      "value": "Input only possible at frontal 3x3"
+    },
+    "gt.tooltip.multiblock.steamturbine.4": {
+      "source_key": "gt.tooltip.multiblock.steamturbine.4",
+      "value": "Distilled Water can be pumped out at Bottom Layer"
+    },
+    "gt.tooltip.multiblock.tank3x3x3.1": {
+      "source_key": "gt.tooltip.multiblock.tank3x3x3.1",
+      "value": "3x3x3 Hollow of the corresponding Walls made of this Material"
+    },
+    "gt.tooltip.multiblock.tank3x3x3.2": {
+      "source_key": "gt.tooltip.multiblock.tank3x3x3.2",
+      "value": "This Block centered on Side/Top/Bottom and facing outwards"
+    },
+    "gt.tooltip.multiblock.tank3x3x3.3": {
+      "source_key": "gt.tooltip.multiblock.tank3x3x3.3",
+      "value": "Auto-Emits Fluids from the Main Block if not against Gravity"
+    },
+    "gt.tooltip.multiblock.tank5x5x5.1": {
+      "source_key": "gt.tooltip.multiblock.tank5x5x5.1",
+      "value": "5x5x5 Hollow of the corresponding Walls made of this Material"
+    },
+    "gt.tooltip.multiblock.tank5x5x5.2": {
+      "source_key": "gt.tooltip.multiblock.tank5x5x5.2",
+      "value": "This Block centered on Side/Top/Bottom and facing outwards"
+    },
+    "gt.tooltip.multiblock.tank5x5x5.3": {
+      "source_key": "gt.tooltip.multiblock.tank5x5x5.3",
+      "value": "Auto-Emits Fluids from the Main Block if not against Gravity"
+    },
+    "gt.tooltip.multiblock.von.da.graagg.1": {
+      "source_key": "gt.tooltip.multiblock.von.da.graagg.1",
+      "value": "cornerless 5x5x2 Base of 41 Dense Galvanized Steel Wall with Main at bottom Center"
+    },
+    "gt.tooltip.multiblock.von.da.graagg.2": {
+      "source_key": "gt.tooltip.multiblock.von.da.graagg.2",
+      "value": "A 5m long Pole of Large Copper Coil with +1 Dense Steel Wall ontop"
+    },
+    "gt.tooltip.multiblock.von.da.graagg.3": {
+      "source_key": "gt.tooltip.multiblock.von.da.graagg.3",
+      "value": "Wrap a cornerless 3x3x3 of 16 Dense Steel Wall around the Top"
+    },
+    "gt.tooltip.multiblock.von.da.graagg.4": {
+      "source_key": "gt.tooltip.multiblock.von.da.graagg.4",
+      "value": "Prevents Mob Spawns except on Mossy Cobblestone, Range depends on Input."
+    },
+    "gt.tooltip.pump.1": {
+      "source_key": "gt.tooltip.pump.1",
+      "value": "Usable to clear large Bodies of Fluid"
+    },
+    "gt.tooltip.pump.2": {
+      "source_key": "gt.tooltip.pump.2",
+      "value": "Not suitable for making infinite Fluid Sources!"
+    },
+    "gt.tooltip.pump.3": {
+      "source_key": "gt.tooltip.pump.3",
+      "value": "Use a Drain Cover for that instead!"
+    },
+    "gt.tooltip.sensor.bucketometer": {
+      "source_key": "gt.tooltip.sensor.bucketometer",
+      "value": "Measures Fluids (In Cubic Meters)"
+    },
+    "gt.tooltip.sensor.chronometer": {
+      "source_key": "gt.tooltip.sensor.chronometer",
+      "value": "Measures Time of Day"
+    },
+    "gt.tooltip.sensor.electrometer": {
+      "source_key": "gt.tooltip.sensor.electrometer",
+      "value": "Measures Electricity Flow (In EU)"
+    },
+    "gt.tooltip.sensor.fluidometer": {
+      "source_key": "gt.tooltip.sensor.fluidometer",
+      "value": "Measures Fluids (In Liters)"
+    },
+    "gt.tooltip.sensor.geigercounter": {
+      "source_key": "gt.tooltip.sensor.geigercounter",
+      "value": "Measures Neutron Energy Levels"
+    },
+    "gt.tooltip.sensor.gibblometer": {
+      "source_key": "gt.tooltip.sensor.gibblometer",
+      "value": "Measures Compression (In Gibbl)"
+    },
+    "gt.tooltip.sensor.heavyweightometer": {
+      "source_key": "gt.tooltip.sensor.heavyweightometer",
+      "value": "Measures the weight of an Inventory (in Tons)"
+    },
+    "gt.tooltip.sensor.itemometer": {
+      "source_key": "gt.tooltip.sensor.itemometer",
+      "value": "Measures the precise amount of Items"
+    },
+    "gt.tooltip.sensor.kilobucketometer": {
+      "source_key": "gt.tooltip.sensor.kilobucketometer",
+      "value": "Measures Fluids (In Cubic Decameters)"
+    },
+    "gt.tooltip.sensor.kilogibblometer": {
+      "chinese_source_missing": true,
+      "source_key": "gt.tooltip.sensor.kilogibblometer",
+      "value": "Measures Compression (In Kilo-Gibbl)"
+    },
+    "gt.tooltip.sensor.laserometer": {
+      "source_key": "gt.tooltip.sensor.laserometer",
+      "value": "Measures Power transmitted through Laser Fiber (In LU)"
+    },
+    "gt.tooltip.sensor.lightweightometer": {
+      "source_key": "gt.tooltip.sensor.lightweightometer",
+      "value": "Measures the weight of an Inventory (in Gramm)"
+    },
+    "gt.tooltip.sensor.luminometer": {
+      "source_key": "gt.tooltip.sensor.luminometer",
+      "value": "Measures Light (0 - 15)"
+    },
+    "gt.tooltip.sensor.mediumweightometer": {
+      "source_key": "gt.tooltip.sensor.mediumweightometer",
+      "value": "Measures the weight of an Inventory (in Kilogramme)"
+    },
+    "gt.tooltip.sensor.playercounter": {
+      "source_key": "gt.tooltip.sensor.playercounter",
+      "value": "Measures Player Count of the whole Server"
+    },
+    "gt.tooltip.sensor.progressmeter": {
+      "source_key": "gt.tooltip.sensor.progressmeter",
+      "value": "Measures Progress (also works on Mob Spawners)"
+    },
+    "gt.tooltip.sensor.screwdrive.buttons": {
+      "source_key": "gt.tooltip.sensor.screwdrive.buttons",
+      "value": "Use Screwdriver on Buttons to enable Averaging Mode."
+    },
+    "gt.tooltip.sensor.screwdrive.display": {
+      "source_key": "gt.tooltip.sensor.screwdrive.display",
+      "value": "Use Screwdriver on Display toggle Hexadecimal Display."
+    },
+    "gt.tooltip.sensor.screwdrive.modes": {
+      "source_key": "gt.tooltip.sensor.screwdrive.modes",
+      "value": "Use Screwdriver on anything else to switch Modes."
+    },
+    "gt.tooltip.sensor.stackometer": {
+      "source_key": "gt.tooltip.sensor.stackometer",
+      "value": "Measures the precise amount of Stacks"
+    },
+    "gt.tooltip.sensor.superheavyweightometer": {
+      "source_key": "gt.tooltip.sensor.superheavyweightometer",
+      "value": "Measures the weight of an Inventory (in Kilotons)"
+    },
+    "gt.tooltip.sensor.tachometer": {
+      "source_key": "gt.tooltip.sensor.tachometer",
+      "value": "Measures Axle Rotations (In RU)"
+    },
+    "gt.tooltip.sensor.thermometer": {
+      "source_key": "gt.tooltip.sensor.thermometer",
+      "value": "Measures Temperature (In Kelvin)"
+    },
+    "gt.tooltip.sensor.tpsmeter": {
+      "source_key": "gt.tooltip.sensor.tpsmeter",
+      "value": "Measures TPS of the whole Server"
     },
     "item.gregtech.abyssal_dough": {
       "source_key": "gt.multiitem.food.32006",
@@ -50795,6 +51920,130 @@
     "material.gregtech.zr": {
       "source_key": "gt.material.Zirconium",
       "value": "Zirconium"
+    },
+    "oredict.prefix.billet": {
+      "source_key": "oredict.prefix.billet",
+      "value": "Billets"
+    },
+    "oredict.prefix.blockSolid": {
+      "source_key": "oredict.prefix.blockSolid",
+      "value": "Blocks of Cast Metal"
+    },
+    "oredict.prefix.bolt": {
+      "source_key": "oredict.prefix.bolt",
+      "value": "Bolts"
+    },
+    "oredict.prefix.casingSmall": {
+      "source_key": "oredict.prefix.casingSmall",
+      "value": "Item Casings"
+    },
+    "oredict.prefix.chunkGt": {
+      "source_key": "oredict.prefix.chunkGt",
+      "value": "Chunks"
+    },
+    "oredict.prefix.gearGt": {
+      "source_key": "oredict.prefix.gearGt",
+      "value": "Gears"
+    },
+    "oredict.prefix.gearGtSmall": {
+      "source_key": "oredict.prefix.gearGtSmall",
+      "value": "Small Gears"
+    },
+    "oredict.prefix.ingot": {
+      "source_key": "oredict.prefix.ingot",
+      "value": "Ingots"
+    },
+    "oredict.prefix.nugget": {
+      "source_key": "oredict.prefix.nugget",
+      "value": "Nuggets"
+    },
+    "oredict.prefix.plate": {
+      "source_key": "oredict.prefix.plate",
+      "value": "Plates"
+    },
+    "oredict.prefix.plateTiny": {
+      "source_key": "oredict.prefix.plateTiny",
+      "value": "Tiny Plates"
+    },
+    "oredict.prefix.ring": {
+      "source_key": "oredict.prefix.ring",
+      "value": "Rings"
+    },
+    "oredict.prefix.stick": {
+      "source_key": "oredict.prefix.stick",
+      "value": "Sticks/Rods"
+    },
+    "oredict.prefix.stickLong": {
+      "source_key": "oredict.prefix.stickLong",
+      "value": "Long Sticks/Rods"
+    },
+    "oredict.prefix.toolHeadBuilderwand": {
+      "source_key": "oredict.prefix.toolHeadBuilderwand",
+      "value": "Builder's Wand Caps"
+    },
+    "oredict.prefix.toolHeadFile": {
+      "source_key": "oredict.prefix.toolHeadFile",
+      "value": "File Heads"
+    },
+    "oredict.prefix.toolHeadHammer": {
+      "source_key": "oredict.prefix.toolHeadHammer",
+      "value": "Hammer Heads"
+    },
+    "oredict.prefix.toolHeadRawArrow": {
+      "source_key": "oredict.prefix.toolHeadRawArrow",
+      "value": "Raw Arrow Heads"
+    },
+    "oredict.prefix.toolHeadRawAxe": {
+      "source_key": "oredict.prefix.toolHeadRawAxe",
+      "value": "Raw Axe Heads"
+    },
+    "oredict.prefix.toolHeadRawAxeDouble": {
+      "source_key": "oredict.prefix.toolHeadRawAxeDouble",
+      "value": "Raw Double Axe Heads"
+    },
+    "oredict.prefix.toolHeadRawChisel": {
+      "source_key": "oredict.prefix.toolHeadRawChisel",
+      "value": "Raw Chisel Heads"
+    },
+    "oredict.prefix.toolHeadRawHoe": {
+      "source_key": "oredict.prefix.toolHeadRawHoe",
+      "value": "Raw Hoe Heads"
+    },
+    "oredict.prefix.toolHeadRawPickaxe": {
+      "source_key": "oredict.prefix.toolHeadRawPickaxe",
+      "value": "Raw Pickaxe Heads"
+    },
+    "oredict.prefix.toolHeadRawPlow": {
+      "source_key": "oredict.prefix.toolHeadRawPlow",
+      "value": "Raw Plow Heads"
+    },
+    "oredict.prefix.toolHeadRawSaw": {
+      "source_key": "oredict.prefix.toolHeadRawSaw",
+      "value": "Raw Saw Blades"
+    },
+    "oredict.prefix.toolHeadRawSense": {
+      "source_key": "oredict.prefix.toolHeadRawSense",
+      "value": "Raw Sense Blades"
+    },
+    "oredict.prefix.toolHeadRawShovel": {
+      "source_key": "oredict.prefix.toolHeadRawShovel",
+      "value": "Raw Shovel Heads"
+    },
+    "oredict.prefix.toolHeadRawSpade": {
+      "source_key": "oredict.prefix.toolHeadRawSpade",
+      "value": "Raw Spade Heads"
+    },
+    "oredict.prefix.toolHeadRawSword": {
+      "source_key": "oredict.prefix.toolHeadRawSword",
+      "value": "Raw Sword Blades"
+    },
+    "oredict.prefix.toolHeadRawUniversalSpade": {
+      "source_key": "oredict.prefix.toolHeadRawUniversalSpade",
+      "value": "Raw Universal Spade Heads"
+    },
+    "oredict.prefix.toolHeadScrewdriver": {
+      "source_key": "oredict.prefix.toolHeadScrewdriver",
+      "value": "Screwdriver Tips"
     },
     "tool.gregtech.axe": {
       "source_key": "gt.metatool.01.6",
