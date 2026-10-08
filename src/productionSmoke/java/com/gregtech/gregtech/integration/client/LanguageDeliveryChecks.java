@@ -305,7 +305,32 @@ final class LanguageDeliveryChecks {
         report.addProperty("faceMasks",verifyFaceNames());
         report.addProperty("machineLabels",verifyMachineLabels());
         report.addProperty("engineDescriptions",verifyEngineDescriptions());
+        report.addProperty("wireDescriptions",verifyWireDescriptions());
         return report;
+    }
+
+    private static int verifyWireDescriptions() {
+        int count=0;
+        for(var spec:com.gregtech.gregtech.content.energy.WireCatalog.specifications()) {
+            String id=com.gregtech.gregtech.content.energy.WireCatalog.registryId(spec);
+            var lines=tooltip(item(id));
+            String tier=com.gregtech.gregtech.api.energy.GTVoltageTiers.NAMES[
+                    com.gregtech.gregtech.api.energy.GTVoltageTiers.tierMin(spec.voltage())];
+            var suffixes=Map.of("gt.lang.wire.stats.voltage",spec.voltage()+" EU ("+tier+")",
+                    "gt.lang.wire.stats.amperage",String.valueOf(spec.amperage()),
+                    "gt.lang.wire.stats.loss",spec.lossPerBlock()+" EU/m",
+                    "gt.lang.has.shapeless","[2, 3, 4, 5, 6, 7, 8, 9]");
+            for(var entry:suffixes.entrySet()) {
+                var rows=lines.stream().filter(c->has(c,entry.getKey())).toList();
+                require(rows.size()==1&&rows.get(0).getString().equals(original(entry.getKey())+entry.getValue()),
+                        "Installed original wire label with preserved numeric data "+id+" "+entry.getKey());
+            }
+            // The common row uses a hand-harvestable hint at level zero, otherwise a harvest title.
+            require(lines.stream().filter(c->has(c,"gt.lang.tool.name.cutter")).count()==1,
+                    "Wire has exactly one localized cutter/harvest hint "+id);
+            count++;
+        }
+        require(count==620,"Complete electric wire/cable catalog");return count;
     }
 
     private static int verifyMachineLabels() {
