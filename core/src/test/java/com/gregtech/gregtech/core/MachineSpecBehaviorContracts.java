@@ -26,6 +26,7 @@ public final class MachineSpecBehaviorContracts {
         MaterialGroups.Glowstone.getClass();
         GTMaterialRegistry.init();
         GTMaterialRegistry.postInit();
+        assertions += com.gregtech.gregtech.api.material.MaterialNameContracts.verify();
 
         brickHeater();
         ceramicCrucibleAndMold();

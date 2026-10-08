@@ -43,7 +43,7 @@ public final class MaterialArrowItem extends ArrowItem implements MaterialFormIt
 
     @Override
     public Component getName(ItemStack stack) {
-        return Component.translatableWithFallback(com.gregtech.gregtech.api.prefix.PrefixRegistry.sourceTranslationKey(prefix.getName(), material.getName()), "%s",
+        return MaterialPresentation.formName(prefix.getName(), material,
                 Component.translatable(getDescriptionId(), MaterialPresentation.name(material)));
     }
 

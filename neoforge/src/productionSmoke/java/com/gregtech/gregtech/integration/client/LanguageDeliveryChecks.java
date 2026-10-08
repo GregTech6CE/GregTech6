@@ -84,6 +84,7 @@ final class LanguageDeliveryChecks {
             }
             require(unresolved.isEmpty(),"Unresolved installed English names: "+unresolved+"; total="+unresolved.size());
             int machineNamesEnglish=verifyMachineNames();
+            int originalEnglishForms=verifyOriginalEnglishForms();
             int coloredEnglish=verifyColoredConstruction(false);
             int stoneEnglish=verifySourceStones(false);
             int bushEnglish=verifyBushes(false);
@@ -209,6 +210,7 @@ final class LanguageDeliveryChecks {
             report.addProperty("fluidPropertySamples",7);report.addProperty("hotRecipeValues",2);
             report.addProperty("sourceIdentitySamples",identitySamples.size());
             report.addProperty("machineNamesEnglish",machineNamesEnglish);
+            report.addProperty("originalEnglishMaterialFormSamples",originalEnglishForms);
             report.addProperty("machineNamesChinese",machineNamesChinese);
             report.addProperty("coloredConstructionNamesEnglish",coloredEnglish);
             report.addProperty("coloredConstructionNamesChinese",coloredChinese);
@@ -296,15 +298,16 @@ final class LanguageDeliveryChecks {
         require(checked>100,"Declared fluid catalog checked in actual locale");return checked;
     }
     private static int verifyFluidMaterialFallbacks(boolean chinese) {
-        // Original FL helper names, plus exact existing material translations.
+        // Original FL helper names of twelve registered GT items. Vanilla water/lava
+        // are carried as display payloads, not registered fluid_item_water/lava items.
         // Importing an English-only complete key must not shadow these Chinese names.
         String[] rows={"aluminiumfluoride|Aluminium Fluoride|AluminiumFluoride",
                 "constructionfoam|C-Foam|ConstructionFoam","cryolite|Cryolite|Cryolite",
                 "freshwater|Fresh Water|FreshWater","fryingoilhot|Hot Frying Oil|FryingOilHot",
-                "iodine|Iodine|Iodine","lava|Lava|Lava",
+                "iodine|Iodine|Iodine",
                 "lithiumchlorate|Lithium Chlorate|LithiumChlorate","lithiumchloride|Lithium Chloride|LithiumChloride",
                 "molten_graphene|Molten Graphene|Graphene","oliveoil|Olive Oil|OliveOil",
-                "uumatter|UU-Matter|UUMatter","water|Water|Water","waterdistilled|Distilled Water|WaterDistilled"};
+                "uumatter|UU-Matter|UUMatter","waterdistilled|Distilled Water|WaterDistilled"};
         for(String row:rows) {
             String[] parts=row.split("\\|");var stack=item("fluid_item_"+parts[0]);
             require(!Language.getInstance().has("fluid_type.gregtech."+parts[0]),"Material fluid fallback remains available "+parts[0]);
@@ -389,6 +392,37 @@ final class LanguageDeliveryChecks {
         require(count>500,"Complete material coin catalog");
         return count;
     }
+
+    private static int verifyOriginalEnglishForms() {
+        // Independent examples from LanguageHandler.getLocalName and OP, through installed item callbacks.
+        var day = java.time.LocalDate.now();
+        boolean april = day.getMonthValue() == 4 && day.getDayOfMonth() <= 2;
+        var expected = Map.ofEntries(
+                Map.entry("oredict.dustWheat", "Flour"), Map.entry("oredict.dustOat", "Oatmeal"),
+                Map.entry("oredict.dustCorn", "Cornmeal"), Map.entry("oredict.rockGtStone", "Rock"),
+                Map.entry("oredict.rockGtMeteoricIron", "Meteorite"),
+                Map.entry("oredict.plateGemDiamond", "Crystalline Diamond Plate"), Map.entry("oredict.gemDiamond", "Diamond"),
+                Map.entry("oredict.gemChippedIce", "Ice Cubes"), Map.entry("oredict.plateTinyPaper", "Tiny piece of Paper"),
+                Map.entry("oredict.plateDoublePaper", "Paperboard"), Map.entry("oredict.plateTriplePaper", "Carton"),
+                Map.entry("oredict.plateQuadruplePaper", "Cardboard"), Map.entry("oredict.plateQuintuplePaper", "Thick Cardboard"),
+                Map.entry("oredict.stickWoodTreated", "Treated Stick"),
+                Map.entry("oredict.bulletGtSmallEmpty", april ? "Small Bolt Shaft" : "Small Bullet Casing"),
+                Map.entry("oredict.arrowGtPlasticEmpty", "Headless Plastic Arrow"),
+                Map.entry("oredict.oreRawGold", "Raw Native Gold Ore"), Map.entry("oredict.dustBone", "Bonemeal"));
+        var found = new java.util.HashSet<String>();
+        for (var registered : BuiltInRegistries.ITEM) {
+            if (!BuiltInRegistries.ITEM.getKey(registered).getNamespace().equals("gregtech")) continue;
+            var stack = new ItemStack(registered);
+            String source = materialSourceKey(stack);
+            if (source == null || !expected.containsKey(source)) continue;
+            require(stack.getHoverName().getString().equals(expected.get(source)),
+                    "Installed original English form " + source + ": " + stack.getHoverName().getString());
+            found.add(source);
+        }
+        require(found.equals(expected.keySet()), "All original English examples are registered: " + found);
+        return found.size();
+    }
+
     private static String materialSourceKey(ItemStack stack) {
         if(stack.getItem() instanceof com.gregtech.gregtech.item.CoinItem)return "gt.multitileentity.32700";
         if(stack.getItem() instanceof com.gregtech.gregtech.api.material.MaterialFormItem form)

@@ -1,6 +1,7 @@
 package com.gregtech.gregtech.block;
 
 import com.gregtech.gregtech.api.material.GTMaterial;
+import com.gregtech.gregtech.api.material.MaterialPresentation;
 import com.gregtech.gregtech.block.stone.GTStoneBlock;
 import com.gregtech.gregtech.block.stone.GTStoneSlabBlock;
 import net.minecraft.network.chat.Component;
@@ -20,7 +21,7 @@ public class MaterialBlockItem extends BlockItem {
     }
 
     private static Component name(GTMaterial material) {
-        return Component.translatable(material.getTranslationKey(), material.getDisplayNameFallback());
+        return MaterialPresentation.name(material);
     }
 
     @Override
@@ -28,7 +29,7 @@ public class MaterialBlockItem extends BlockItem {
         if (getBlock() instanceof OreBlock ore && OreBlock.isBrokenStack(stack))
             return Component.translatable("block.gregtech.ore_broken", name(ore.material()));
         if (material != null && getBlock() instanceof MaterialBlockLike form)
-            return Component.translatableWithFallback(com.gregtech.gregtech.api.prefix.PrefixRegistry.sourceTranslationKey(form.prefix().getName(), material.getName()), "%s",
+            return MaterialPresentation.formName(form.prefix().getName(), material,
                     Component.translatable(getDescriptionId(), name(material)));
         if (getBlock() instanceof GTStoneBlock stone)
             return Component.translatable(getDescriptionId(), name(stone.stoneMaterial()), stone.variant().displayName());
