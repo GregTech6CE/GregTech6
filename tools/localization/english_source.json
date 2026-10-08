@@ -30,6 +30,10 @@
       "sha256": "b024dca96408b09a4ce7dec5f202e4b2f09e19ab3f2ef34f6b3a1bf5cf8684ba"
     },
     {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\AM.java",
+      "sha256": "8f012b6ba27396bb799882b91ea4c46bb011f4fc1b6c150233f8078a4403beee"
+    },
+    {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\ANY.java",
       "sha256": "6a26fa2293c4a315d2594c5ac80eba689389f9b1922a33547bdd20d2df724f71"
     },
@@ -52,6 +56,10 @@
     {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\OP.java",
       "sha256": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\GT_API_Proxy_Client.java",
+      "sha256": "4ea2be4bb978e989127552dfb057e6f15415b84fe997382828123ba62c1576c8"
     },
     {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\CreativeTab.java",
@@ -18906,6 +18914,10 @@
       "source_key": "fluid.ic2biomass",
       "value": "Biomass"
     },
+    "fluid.gregtech.ic2constructionfoam": {
+      "source_key": "fluid.ic2constructionfoam",
+      "value": "C-Foam"
+    },
     "fluid.gregtech.ic2coolant": {
       "source_key": "fluid.ic2coolant",
       "value": "Industrial Coolant"
@@ -18921,6 +18933,10 @@
     "fluid.gregtech.ic2pahoehoelava": {
       "source_key": "fluid.ic2pahoehoelava",
       "value": "Pahoehoe Lava"
+    },
+    "fluid.gregtech.ic2uumatter": {
+      "source_key": "fluid.ic2uumatter",
+      "value": "UU-Matter"
     },
     "fluid.gregtech.ice": {
       "source_key": "fluid.ice",
@@ -21943,6 +21959,10 @@
       "source_key": "fluid.ic2biomass",
       "value": "Biomass"
     },
+    "fluid_type.gregtech.ic2constructionfoam": {
+      "source_key": "fluid.ic2constructionfoam",
+      "value": "C-Foam"
+    },
     "fluid_type.gregtech.ic2coolant": {
       "source_key": "fluid.ic2coolant",
       "value": "Industrial Coolant"
@@ -21958,6 +21978,10 @@
     "fluid_type.gregtech.ic2pahoehoelava": {
       "source_key": "fluid.ic2pahoehoelava",
       "value": "Pahoehoe Lava"
+    },
+    "fluid_type.gregtech.ic2uumatter": {
+      "source_key": "fluid.ic2uumatter",
+      "value": "UU-Matter"
     },
     "fluid_type.gregtech.ice": {
       "source_key": "fluid.ice",
@@ -27860,6 +27884,10 @@
     "item.gregtech.bottled_indigo_dye": {
       "source_key": "gt.multiitem.bottles.32001",
       "value": "Bottled Indigo Dye"
+    },
+    "item.gregtech.bottled_indigo_dye.tooltip": {
+      "source_key": "gt.multiitem.bottles.32001.tooltip",
+      "value": "Color: Blue"
     },
     "item.gregtech.boule_gt": {
       "chinese_source_missing": true,
@@ -34305,6 +34333,10 @@
       "source_key": "gt.multiitem.bottles.32000",
       "value": "Ink Bottle"
     },
+    "item.gregtech.ink_bottle.tooltip": {
+      "source_key": "gt.multiitem.bottles.32000.tooltip",
+      "value": "Color: Black"
+    },
     "item.gregtech.integrated_circuit_0": {
       "source_key": "gt.integrated_circuit",
       "value": "Selector Tag"
@@ -40059,6 +40091,10 @@
       "source_key": "oredict.prefix.cluster",
       "value": "Native Clusters"
     },
+    "item.gregtech.tab_icon_coin": {
+      "source_key": "oredict.prefix.coin",
+      "value": "coin"
+    },
     "item.gregtech.tab_icon_crushed": {
       "source_key": "oredict.prefix.crushed",
       "value": "Crushed Ores"
@@ -42660,6 +42696,22 @@
       "source_key": "gt.material.Adamantium",
       "value": "Adamantium"
     },
+    "material.gregtech.adamite": {
+      "source_key": "gt.material.Adamite",
+      "value": "Adamite"
+    },
+    "material.gregtech.adluorite": {
+      "source_key": "gt.material.Adluorite",
+      "value": "Adluorite"
+    },
+    "material.gregtech.advanced": {
+      "source_key": "gt.material.Advanced",
+      "value": "Advanced"
+    },
+    "material.gregtech.advancedalloy": {
+      "source_key": "gt.material.AdvancedAlloy",
+      "value": "Advanced Alloy"
+    },
     "material.gregtech.aerotheum": {
       "source_key": "gt.material.Aerotheum",
       "value": "Aerotheum"
@@ -42667,6 +42719,10 @@
     "material.gregtech.ag": {
       "source_key": "gt.material.Silver",
       "value": "Silver"
+    },
+    "material.gregtech.agate": {
+      "source_key": "gt.material.Agate",
+      "value": "Agate"
     },
     "material.gregtech.agi": {
       "source_key": "gt.material.SilverIodide",
@@ -42699,6 +42755,10 @@
     "material.gregtech.alf3": {
       "source_key": "gt.material.AluminiumFluoride",
       "value": "Aluminium Fluoride"
+    },
+    "material.gregtech.alfium": {
+      "source_key": "gt.material.Alfium",
+      "value": "Alfium"
     },
     "material.gregtech.almandine": {
       "source_key": "gt.material.Almandine",
@@ -42800,6 +42860,10 @@
       "source_key": "gt.material.Ammonia",
       "value": "Ammonia"
     },
+    "material.gregtech.ammonium": {
+      "source_key": "gt.material.Ammonium",
+      "value": "Ammonium"
+    },
     "material.gregtech.amordrine": {
       "source_key": "gt.material.Amordrine",
       "value": "Amordrine"
@@ -42832,9 +42896,1681 @@
       "source_key": "gt.material.Anthracite",
       "value": "Anthracite"
     },
+    "material.gregtech.antiactinium": {
+      "source_key": "gt.material.AntiActinium",
+      "value": "Anti-Actinium"
+    },
+    "material.gregtech.antiadamantium": {
+      "source_key": "gt.material.AntiAdamantium",
+      "value": "Anti-Adamantium"
+    },
+    "material.gregtech.antialuminium": {
+      "source_key": "gt.material.AntiAluminium",
+      "value": "Anti-Aluminium"
+    },
+    "material.gregtech.antiamericium": {
+      "source_key": "gt.material.AntiAmericium",
+      "value": "Anti-Americium"
+    },
+    "material.gregtech.antiamericium241": {
+      "source_key": "gt.material.AntiAmericium241",
+      "value": "Anti-Americium-241"
+    },
+    "material.gregtech.antiantimony": {
+      "source_key": "gt.material.AntiAntimony",
+      "value": "Anti-Antimony"
+    },
+    "material.gregtech.antiargon": {
+      "source_key": "gt.material.AntiArgon",
+      "value": "Anti-Argon"
+    },
+    "material.gregtech.antiarsenic": {
+      "source_key": "gt.material.AntiArsenic",
+      "value": "Anti-Arsenic"
+    },
+    "material.gregtech.antiastatine": {
+      "source_key": "gt.material.AntiAstatine",
+      "value": "Anti-Astatine"
+    },
+    "material.gregtech.antibarium": {
+      "source_key": "gt.material.AntiBarium",
+      "value": "Anti-Barium"
+    },
+    "material.gregtech.antiberkelium": {
+      "source_key": "gt.material.AntiBerkelium",
+      "value": "Anti-Berkelium"
+    },
+    "material.gregtech.antiberyllium": {
+      "source_key": "gt.material.AntiBeryllium",
+      "value": "Anti-Beryllium"
+    },
+    "material.gregtech.antibibiennium": {
+      "source_key": "gt.material.AntiBibiennium",
+      "value": "Anti-Bibiennium"
+    },
+    "material.gregtech.antibibihexium": {
+      "source_key": "gt.material.AntiBibihexium",
+      "value": "Anti-Bibihexium"
+    },
+    "material.gregtech.antibibinilium": {
+      "source_key": "gt.material.AntiBibinilium",
+      "value": "Anti-Bibinilium"
+    },
+    "material.gregtech.antibibioctium": {
+      "source_key": "gt.material.AntiBibioctium",
+      "value": "Anti-Bibioctium"
+    },
+    "material.gregtech.antibibipentium": {
+      "source_key": "gt.material.AntiBibipentium",
+      "value": "Anti-Bibipentium"
+    },
+    "material.gregtech.antibibiquadium": {
+      "source_key": "gt.material.AntiBibiquadium",
+      "value": "Anti-Bibiquadium"
+    },
+    "material.gregtech.antibibiseptium": {
+      "source_key": "gt.material.AntiBibiseptium",
+      "value": "Anti-Bibiseptium"
+    },
+    "material.gregtech.antibibitrium": {
+      "source_key": "gt.material.AntiBibitrium",
+      "value": "Anti-Bibitrium"
+    },
+    "material.gregtech.antibibiunium": {
+      "source_key": "gt.material.AntiBibiunium",
+      "value": "Anti-Bibiunium"
+    },
+    "material.gregtech.antibiennbium": {
+      "source_key": "gt.material.AntiBiennbium",
+      "value": "Anti-Biennbium"
+    },
+    "material.gregtech.antibiennennium": {
+      "source_key": "gt.material.AntiBiennennium",
+      "value": "Anti-Biennennium"
+    },
+    "material.gregtech.antibiennhexium": {
+      "source_key": "gt.material.AntiBiennhexium",
+      "value": "Anti-Biennhexium"
+    },
+    "material.gregtech.antibiennilium": {
+      "source_key": "gt.material.AntiBiennilium",
+      "value": "Anti-Biennilium"
+    },
+    "material.gregtech.antibiennoctium": {
+      "source_key": "gt.material.AntiBiennoctium",
+      "value": "Anti-Biennoctium"
+    },
+    "material.gregtech.antibiennpentium": {
+      "source_key": "gt.material.AntiBiennpentium",
+      "value": "Anti-Biennpentium"
+    },
+    "material.gregtech.antibiennquadium": {
+      "source_key": "gt.material.AntiBiennquadium",
+      "value": "Anti-Biennquadium"
+    },
+    "material.gregtech.antibiennseptium": {
+      "source_key": "gt.material.AntiBiennseptium",
+      "value": "Anti-Biennseptium"
+    },
+    "material.gregtech.antibienntrium": {
+      "source_key": "gt.material.AntiBienntrium",
+      "value": "Anti-Bienntrium"
+    },
+    "material.gregtech.antibiennunium": {
+      "source_key": "gt.material.AntiBiennunium",
+      "value": "Anti-Biennunium"
+    },
+    "material.gregtech.antibihexbium": {
+      "source_key": "gt.material.AntiBihexbium",
+      "value": "Anti-Bihexbium"
+    },
+    "material.gregtech.antibihexennium": {
+      "source_key": "gt.material.AntiBihexennium",
+      "value": "Anti-Bihexennium"
+    },
+    "material.gregtech.antibihexhexium": {
+      "source_key": "gt.material.AntiBihexhexium",
+      "value": "Anti-Bihexhexium"
+    },
+    "material.gregtech.antibihexnilium": {
+      "source_key": "gt.material.AntiBihexnilium",
+      "value": "Anti-Bihexnilium"
+    },
+    "material.gregtech.antibihexoctium": {
+      "source_key": "gt.material.AntiBihexoctium",
+      "value": "Anti-Bihexoctium"
+    },
+    "material.gregtech.antibihexpentium": {
+      "source_key": "gt.material.AntiBihexpentium",
+      "value": "Anti-Bihexpentium"
+    },
+    "material.gregtech.antibihexquadium": {
+      "source_key": "gt.material.AntiBihexquadium",
+      "value": "Anti-Bihexquadium"
+    },
+    "material.gregtech.antibihexseptium": {
+      "source_key": "gt.material.AntiBihexseptium",
+      "value": "Anti-Bihexseptium"
+    },
+    "material.gregtech.antibihextrium": {
+      "source_key": "gt.material.AntiBihextrium",
+      "value": "Anti-Bihextrium"
+    },
+    "material.gregtech.antibihexunium": {
+      "source_key": "gt.material.AntiBihexunium",
+      "value": "Anti-Bihexunium"
+    },
+    "material.gregtech.antibinilbium": {
+      "source_key": "gt.material.AntiBinilbium",
+      "value": "Anti-Binilbium"
+    },
+    "material.gregtech.antibinilennium": {
+      "source_key": "gt.material.AntiBinilennium",
+      "value": "Anti-Binilennium"
+    },
+    "material.gregtech.antibinilhexium": {
+      "source_key": "gt.material.AntiBinilhexium",
+      "value": "Anti-Binilhexium"
+    },
+    "material.gregtech.antibinilnilium": {
+      "source_key": "gt.material.AntiBinilnilium",
+      "value": "Anti-Binilnilium"
+    },
+    "material.gregtech.antibiniloctium": {
+      "source_key": "gt.material.AntiBiniloctium",
+      "value": "Anti-Biniloctium"
+    },
+    "material.gregtech.antibinilpentium": {
+      "source_key": "gt.material.AntiBinilpentium",
+      "value": "Anti-Binilpentium"
+    },
+    "material.gregtech.antibinilquadium": {
+      "source_key": "gt.material.AntiBinilquadium",
+      "value": "Anti-Binilquadium"
+    },
+    "material.gregtech.antibinilseptium": {
+      "source_key": "gt.material.AntiBinilseptium",
+      "value": "Anti-Binilseptium"
+    },
+    "material.gregtech.antibiniltrium": {
+      "source_key": "gt.material.AntiBiniltrium",
+      "value": "Anti-Biniltrium"
+    },
+    "material.gregtech.antibinilunium": {
+      "source_key": "gt.material.AntiBinilunium",
+      "value": "Anti-Binilunium"
+    },
+    "material.gregtech.antibioctbium": {
+      "source_key": "gt.material.AntiBioctbium",
+      "value": "Anti-Bioctbium"
+    },
+    "material.gregtech.antibioctennium": {
+      "source_key": "gt.material.AntiBioctennium",
+      "value": "Anti-Bioctennium"
+    },
+    "material.gregtech.antibiocthexium": {
+      "source_key": "gt.material.AntiBiocthexium",
+      "value": "Anti-Biocthexium"
+    },
+    "material.gregtech.antibioctnilium": {
+      "source_key": "gt.material.AntiBioctnilium",
+      "value": "Anti-Bioctnilium"
+    },
+    "material.gregtech.antibioctoctium": {
+      "source_key": "gt.material.AntiBioctoctium",
+      "value": "Anti-Bioctoctium"
+    },
+    "material.gregtech.antibioctpentium": {
+      "source_key": "gt.material.AntiBioctpentium",
+      "value": "Anti-Bioctpentium"
+    },
+    "material.gregtech.antibioctquadium": {
+      "source_key": "gt.material.AntiBioctquadium",
+      "value": "Anti-Bioctquadium"
+    },
+    "material.gregtech.antibioctseptium": {
+      "source_key": "gt.material.AntiBioctseptium",
+      "value": "Anti-Bioctseptium"
+    },
+    "material.gregtech.antibiocttrium": {
+      "source_key": "gt.material.AntiBiocttrium",
+      "value": "Anti-Biocttrium"
+    },
+    "material.gregtech.antibioctunium": {
+      "source_key": "gt.material.AntiBioctunium",
+      "value": "Anti-Bioctunium"
+    },
+    "material.gregtech.antibipentbium": {
+      "source_key": "gt.material.AntiBipentbium",
+      "value": "Anti-Bipentbium"
+    },
+    "material.gregtech.antibipentennium": {
+      "source_key": "gt.material.AntiBipentennium",
+      "value": "Anti-Bipentennium"
+    },
+    "material.gregtech.antibipenthexium": {
+      "source_key": "gt.material.AntiBipenthexium",
+      "value": "Anti-Bipenthexium"
+    },
+    "material.gregtech.antibipentnilium": {
+      "source_key": "gt.material.AntiBipentnilium",
+      "value": "Anti-Bipentnilium"
+    },
+    "material.gregtech.antibipentoctium": {
+      "source_key": "gt.material.AntiBipentoctium",
+      "value": "Anti-Bipentoctium"
+    },
+    "material.gregtech.antibipentpentium": {
+      "source_key": "gt.material.AntiBipentpentium",
+      "value": "Anti-Bipentpentium"
+    },
+    "material.gregtech.antibipentquadium": {
+      "source_key": "gt.material.AntiBipentquadium",
+      "value": "Anti-Bipentquadium"
+    },
+    "material.gregtech.antibipentseptium": {
+      "source_key": "gt.material.AntiBipentseptium",
+      "value": "Anti-Bipentseptium"
+    },
+    "material.gregtech.antibipenttrium": {
+      "source_key": "gt.material.AntiBipenttrium",
+      "value": "Anti-Bipenttrium"
+    },
+    "material.gregtech.antibipentunium": {
+      "source_key": "gt.material.AntiBipentunium",
+      "value": "Anti-Bipentunium"
+    },
+    "material.gregtech.antibiquadbium": {
+      "source_key": "gt.material.AntiBiquadbium",
+      "value": "Anti-Biquadbium"
+    },
+    "material.gregtech.antibiquadennium": {
+      "source_key": "gt.material.AntiBiquadennium",
+      "value": "Anti-Biquadennium"
+    },
+    "material.gregtech.antibiquadhexium": {
+      "source_key": "gt.material.AntiBiquadhexium",
+      "value": "Anti-Biquadhexium"
+    },
+    "material.gregtech.antibiquadnilium": {
+      "source_key": "gt.material.AntiBiquadnilium",
+      "value": "Anti-Biquadnilium"
+    },
+    "material.gregtech.antibiquadoctium": {
+      "source_key": "gt.material.AntiBiquadoctium",
+      "value": "Anti-Biquadoctium"
+    },
+    "material.gregtech.antibiquadpentium": {
+      "source_key": "gt.material.AntiBiquadpentium",
+      "value": "Anti-Biquadpentium"
+    },
+    "material.gregtech.antibiquadquadium": {
+      "source_key": "gt.material.AntiBiquadquadium",
+      "value": "Anti-Biquadquadium"
+    },
+    "material.gregtech.antibiquadseptium": {
+      "source_key": "gt.material.AntiBiquadseptium",
+      "value": "Anti-Biquadseptium"
+    },
+    "material.gregtech.antibiquadtrium": {
+      "source_key": "gt.material.AntiBiquadtrium",
+      "value": "Anti-Biquadtrium"
+    },
+    "material.gregtech.antibiquadunium": {
+      "source_key": "gt.material.AntiBiquadunium",
+      "value": "Anti-Biquadunium"
+    },
+    "material.gregtech.antibiseptbium": {
+      "source_key": "gt.material.AntiBiseptbium",
+      "value": "Anti-Biseptbium"
+    },
+    "material.gregtech.antibiseptennium": {
+      "source_key": "gt.material.AntiBiseptennium",
+      "value": "Anti-Biseptennium"
+    },
+    "material.gregtech.antibisepthexium": {
+      "source_key": "gt.material.AntiBisepthexium",
+      "value": "Anti-Bisepthexium"
+    },
+    "material.gregtech.antibiseptnilium": {
+      "source_key": "gt.material.AntiBiseptnilium",
+      "value": "Anti-Biseptnilium"
+    },
+    "material.gregtech.antibiseptoctium": {
+      "source_key": "gt.material.AntiBiseptoctium",
+      "value": "Anti-Biseptoctium"
+    },
+    "material.gregtech.antibiseptpentium": {
+      "source_key": "gt.material.AntiBiseptpentium",
+      "value": "Anti-Biseptpentium"
+    },
+    "material.gregtech.antibiseptquadium": {
+      "source_key": "gt.material.AntiBiseptquadium",
+      "value": "Anti-Biseptquadium"
+    },
+    "material.gregtech.antibiseptseptium": {
+      "source_key": "gt.material.AntiBiseptseptium",
+      "value": "Anti-Biseptseptium"
+    },
+    "material.gregtech.antibisepttrium": {
+      "source_key": "gt.material.AntiBisepttrium",
+      "value": "Anti-Bisepttrium"
+    },
+    "material.gregtech.antibiseptunium": {
+      "source_key": "gt.material.AntiBiseptunium",
+      "value": "Anti-Biseptunium"
+    },
+    "material.gregtech.antibismuth": {
+      "source_key": "gt.material.AntiBismuth",
+      "value": "Anti-Bismuth"
+    },
+    "material.gregtech.antibitribium": {
+      "source_key": "gt.material.AntiBitribium",
+      "value": "Anti-Bitribium"
+    },
+    "material.gregtech.antibitrihexium": {
+      "source_key": "gt.material.AntiBitrihexium",
+      "value": "Anti-Bitrihexium"
+    },
+    "material.gregtech.antibitrinilium": {
+      "source_key": "gt.material.AntiBitrinilium",
+      "value": "Anti-Bitrinilium"
+    },
+    "material.gregtech.antibitrioctium": {
+      "source_key": "gt.material.AntiBitrioctium",
+      "value": "Anti-Bitrioctium"
+    },
+    "material.gregtech.antibitripentium": {
+      "source_key": "gt.material.AntiBitripentium",
+      "value": "Anti-Bitripentium"
+    },
+    "material.gregtech.antibitriquadium": {
+      "source_key": "gt.material.AntiBitriquadium",
+      "value": "Anti-Bitriquadium"
+    },
+    "material.gregtech.antibitriseptium": {
+      "source_key": "gt.material.AntiBitriseptium",
+      "value": "Anti-Bitriseptium"
+    },
+    "material.gregtech.antibitritrium": {
+      "source_key": "gt.material.AntiBitritrium",
+      "value": "Anti-Bitritrium"
+    },
+    "material.gregtech.antibitriunium": {
+      "source_key": "gt.material.AntiBitriunium",
+      "value": "Anti-Bitriunium"
+    },
+    "material.gregtech.antibiunbium": {
+      "source_key": "gt.material.AntiBiunbium",
+      "value": "Anti-Biunbium"
+    },
+    "material.gregtech.antibiunennium": {
+      "source_key": "gt.material.AntiBiunennium",
+      "value": "Anti-Biunennium"
+    },
+    "material.gregtech.antibiunhexium": {
+      "source_key": "gt.material.AntiBiunhexium",
+      "value": "Anti-Biunhexium"
+    },
+    "material.gregtech.antibiunnilium": {
+      "source_key": "gt.material.AntiBiunnilium",
+      "value": "Anti-Biunnilium"
+    },
+    "material.gregtech.antibiunoctium": {
+      "source_key": "gt.material.AntiBiunoctium",
+      "value": "Anti-Biunoctium"
+    },
+    "material.gregtech.antibiunpentium": {
+      "source_key": "gt.material.AntiBiunpentium",
+      "value": "Anti-Biunpentium"
+    },
+    "material.gregtech.antibiunquadium": {
+      "source_key": "gt.material.AntiBiunquadium",
+      "value": "Anti-Biunquadium"
+    },
+    "material.gregtech.antibiunseptium": {
+      "source_key": "gt.material.AntiBiunseptium",
+      "value": "Anti-Biunseptium"
+    },
+    "material.gregtech.antibiuntrium": {
+      "source_key": "gt.material.AntiBiuntrium",
+      "value": "Anti-Biuntrium"
+    },
+    "material.gregtech.antibiununium": {
+      "source_key": "gt.material.AntiBiununium",
+      "value": "Anti-Biununium"
+    },
+    "material.gregtech.antibohrium": {
+      "source_key": "gt.material.AntiBohrium",
+      "value": "Anti-Bohrium"
+    },
+    "material.gregtech.antiboron": {
+      "source_key": "gt.material.AntiBoron",
+      "value": "Anti-Boron"
+    },
+    "material.gregtech.antibromine": {
+      "source_key": "gt.material.AntiBromine",
+      "value": "Anti-Bromine"
+    },
+    "material.gregtech.anticadmium": {
+      "source_key": "gt.material.AntiCadmium",
+      "value": "Anti-Cadmium"
+    },
+    "material.gregtech.anticaesium": {
+      "source_key": "gt.material.AntiCaesium",
+      "value": "Anti-Caesium"
+    },
+    "material.gregtech.anticalcium": {
+      "source_key": "gt.material.AntiCalcium",
+      "value": "Anti-Calcium"
+    },
+    "material.gregtech.anticalifornium": {
+      "source_key": "gt.material.AntiCalifornium",
+      "value": "Anti-Californium"
+    },
+    "material.gregtech.anticarbon": {
+      "source_key": "gt.material.AntiCarbon",
+      "value": "Anti-Carbon"
+    },
+    "material.gregtech.anticarbon13": {
+      "source_key": "gt.material.AntiCarbon13",
+      "value": "Anti-Carbon-13"
+    },
+    "material.gregtech.anticarbon14": {
+      "source_key": "gt.material.AntiCarbon14",
+      "value": "Anti-Carbon-14"
+    },
+    "material.gregtech.anticerium": {
+      "source_key": "gt.material.AntiCerium",
+      "value": "Anti-Cerium"
+    },
+    "material.gregtech.antichlorine": {
+      "source_key": "gt.material.AntiChlorine",
+      "value": "Anti-Chlorine"
+    },
+    "material.gregtech.antichromium": {
+      "source_key": "gt.material.AntiChromium",
+      "value": "Anti-Chromium"
+    },
+    "material.gregtech.anticobalt": {
+      "source_key": "gt.material.AntiCobalt",
+      "value": "Anti-Cobalt"
+    },
+    "material.gregtech.anticobalt60": {
+      "source_key": "gt.material.AntiCobalt60",
+      "value": "Anti-Cobalt-60"
+    },
+    "material.gregtech.anticopernicium": {
+      "source_key": "gt.material.AntiCopernicium",
+      "value": "Anti-Copernicium"
+    },
+    "material.gregtech.anticopper": {
+      "source_key": "gt.material.AntiCopper",
+      "value": "Anti-Copper"
+    },
+    "material.gregtech.anticurium": {
+      "source_key": "gt.material.AntiCurium",
+      "value": "Anti-Curium"
+    },
+    "material.gregtech.antidarmstadtium": {
+      "source_key": "gt.material.AntiDarmstadtium",
+      "value": "Anti-Darmstadtium"
+    },
+    "material.gregtech.antideuterium": {
+      "source_key": "gt.material.AntiDeuterium",
+      "value": "Anti-Deuterium"
+    },
+    "material.gregtech.antidubnium": {
+      "source_key": "gt.material.AntiDubnium",
+      "value": "Anti-Dubnium"
+    },
+    "material.gregtech.antidysprosium": {
+      "source_key": "gt.material.AntiDysprosium",
+      "value": "Anti-Dysprosium"
+    },
+    "material.gregtech.antieinsteinium": {
+      "source_key": "gt.material.AntiEinsteinium",
+      "value": "Anti-Einsteinium"
+    },
+    "material.gregtech.antierbium": {
+      "source_key": "gt.material.AntiErbium",
+      "value": "Anti-Erbium"
+    },
+    "material.gregtech.antieuropium": {
+      "source_key": "gt.material.AntiEuropium",
+      "value": "Anti-Europium"
+    },
+    "material.gregtech.antifarnsium": {
+      "source_key": "gt.material.AntiFarnsium",
+      "value": "Anti-Farnsium"
+    },
+    "material.gregtech.antifermium": {
+      "source_key": "gt.material.AntiFermium",
+      "value": "Anti-Fermium"
+    },
+    "material.gregtech.antiflerovium": {
+      "source_key": "gt.material.AntiFlerovium",
+      "value": "Anti-Flerovium"
+    },
+    "material.gregtech.antiflerovium298": {
+      "source_key": "gt.material.AntiFlerovium298",
+      "value": "Anti-Flerovium-298"
+    },
+    "material.gregtech.antifluorine": {
+      "source_key": "gt.material.AntiFluorine",
+      "value": "Anti-Fluorine"
+    },
+    "material.gregtech.antifrancium": {
+      "source_key": "gt.material.AntiFrancium",
+      "value": "Anti-Francium"
+    },
+    "material.gregtech.antigadolinium": {
+      "source_key": "gt.material.AntiGadolinium",
+      "value": "Anti-Gadolinium"
+    },
+    "material.gregtech.antigallium": {
+      "source_key": "gt.material.AntiGallium",
+      "value": "Anti-Gallium"
+    },
+    "material.gregtech.antigermanium": {
+      "source_key": "gt.material.AntiGermanium",
+      "value": "Anti-Germanium"
+    },
+    "material.gregtech.antigold": {
+      "source_key": "gt.material.AntiGold",
+      "value": "Anti-Gold"
+    },
+    "material.gregtech.antigravitonium": {
+      "source_key": "gt.material.AntiGravitonium",
+      "value": "Anti-Gravitonium"
+    },
+    "material.gregtech.antihafnium": {
+      "source_key": "gt.material.AntiHafnium",
+      "value": "Anti-Hafnium"
+    },
+    "material.gregtech.antihassium": {
+      "source_key": "gt.material.AntiHassium",
+      "value": "Anti-Hassium"
+    },
+    "material.gregtech.antihelium": {
+      "source_key": "gt.material.AntiHelium",
+      "value": "Anti-Helium"
+    },
+    "material.gregtech.antihelium3": {
+      "source_key": "gt.material.AntiHelium3",
+      "value": "Anti-Helium-3"
+    },
+    "material.gregtech.antiholmium": {
+      "source_key": "gt.material.AntiHolmium",
+      "value": "Anti-Holmium"
+    },
+    "material.gregtech.antihydrogen": {
+      "source_key": "gt.material.AntiHydrogen",
+      "value": "Anti-Hydrogen"
+    },
+    "material.gregtech.antiindium": {
+      "source_key": "gt.material.AntiIndium",
+      "value": "Anti-Indium"
+    },
+    "material.gregtech.antiiodine": {
+      "source_key": "gt.material.AntiIodine",
+      "value": "Anti-Iodine"
+    },
+    "material.gregtech.antiiridium": {
+      "source_key": "gt.material.AntiIridium",
+      "value": "Anti-Iridium"
+    },
+    "material.gregtech.antiiron": {
+      "source_key": "gt.material.AntiIron",
+      "value": "Anti-Iron"
+    },
+    "material.gregtech.antikrypton": {
+      "source_key": "gt.material.AntiKrypton",
+      "value": "Anti-Krypton"
+    },
+    "material.gregtech.antilanthanum": {
+      "source_key": "gt.material.AntiLanthanum",
+      "value": "Anti-Lanthanum"
+    },
+    "material.gregtech.antilawrencium": {
+      "source_key": "gt.material.AntiLawrencium",
+      "value": "Anti-Lawrencium"
+    },
+    "material.gregtech.antilead": {
+      "source_key": "gt.material.AntiLead",
+      "value": "Anti-Lead"
+    },
+    "material.gregtech.antilithium": {
+      "source_key": "gt.material.AntiLithium",
+      "value": "Anti-Lithium"
+    },
+    "material.gregtech.antilithium6": {
+      "source_key": "gt.material.AntiLithium6",
+      "value": "Anti-Lithium-6"
+    },
+    "material.gregtech.antilivermorium": {
+      "source_key": "gt.material.AntiLivermorium",
+      "value": "Anti-Livermorium"
+    },
+    "material.gregtech.antilutetium": {
+      "source_key": "gt.material.AntiLutetium",
+      "value": "Anti-Lutetium"
+    },
+    "material.gregtech.antimacguffium": {
+      "source_key": "gt.material.AntiMacGuffium",
+      "value": "Anti-Mac-Guffium"
+    },
+    "material.gregtech.antimagnesium": {
+      "source_key": "gt.material.AntiMagnesium",
+      "value": "Anti-Magnesium"
+    },
+    "material.gregtech.antimanganese": {
+      "source_key": "gt.material.AntiManganese",
+      "value": "Anti-Manganese"
+    },
+    "material.gregtech.antimatter": {
+      "source_key": "gt.material.Antimatter",
+      "value": "Antimatter"
+    },
+    "material.gregtech.antimeitnerium": {
+      "source_key": "gt.material.AntiMeitnerium",
+      "value": "Anti-Meitnerium"
+    },
+    "material.gregtech.antimendelevium": {
+      "source_key": "gt.material.AntiMendelevium",
+      "value": "Anti-Mendelevium"
+    },
+    "material.gregtech.antimercury": {
+      "source_key": "gt.material.AntiMercury",
+      "value": "Anti-Mercury"
+    },
+    "material.gregtech.antimolybdenum": {
+      "source_key": "gt.material.AntiMolybdenum",
+      "value": "Anti-Molybdenum"
+    },
     "material.gregtech.antimony": {
       "source_key": "gt.material.Antimony",
       "value": "Antimony"
+    },
+    "material.gregtech.antinaquadah": {
+      "source_key": "gt.material.AntiNaquadah",
+      "value": "Anti-Naquadah"
+    },
+    "material.gregtech.antinaquadahenriched": {
+      "source_key": "gt.material.AntiNaquadahEnriched",
+      "value": "Enriched Anti-Naquadah"
+    },
+    "material.gregtech.antinaquadria": {
+      "source_key": "gt.material.AntiNaquadria",
+      "value": "Anti-Naquadria"
+    },
+    "material.gregtech.antineodymium": {
+      "source_key": "gt.material.AntiNeodymium",
+      "value": "Anti-Neodymium"
+    },
+    "material.gregtech.antineon": {
+      "source_key": "gt.material.AntiNeon",
+      "value": "Anti-Neon"
+    },
+    "material.gregtech.antineptunium": {
+      "source_key": "gt.material.AntiNeptunium",
+      "value": "Anti-Neptunium"
+    },
+    "material.gregtech.antineutrino": {
+      "source_key": "gt.material.AntiNeutrino",
+      "value": "Anti-Neutrino"
+    },
+    "material.gregtech.antineutron": {
+      "source_key": "gt.material.AntiNeutron",
+      "value": "Anti-Neutron"
+    },
+    "material.gregtech.antinickel": {
+      "source_key": "gt.material.AntiNickel",
+      "value": "Anti-Nickel"
+    },
+    "material.gregtech.antiniobium": {
+      "source_key": "gt.material.AntiNiobium",
+      "value": "Anti-Niobium"
+    },
+    "material.gregtech.antinitrogen": {
+      "source_key": "gt.material.AntiNitrogen",
+      "value": "Anti-Nitrogen"
+    },
+    "material.gregtech.antinobelium": {
+      "source_key": "gt.material.AntiNobelium",
+      "value": "Anti-Nobelium"
+    },
+    "material.gregtech.antiosmium": {
+      "source_key": "gt.material.AntiOsmium",
+      "value": "Anti-Osmium"
+    },
+    "material.gregtech.antioxygen": {
+      "source_key": "gt.material.AntiOxygen",
+      "value": "Anti-Oxygen"
+    },
+    "material.gregtech.antipalladium": {
+      "source_key": "gt.material.AntiPalladium",
+      "value": "Anti-Palladium"
+    },
+    "material.gregtech.antiphosphor": {
+      "source_key": "gt.material.AntiPhosphor",
+      "value": "Anti-Phosphor"
+    },
+    "material.gregtech.antiphoton": {
+      "source_key": "gt.material.AntiPhoton",
+      "value": "Anti-Photon"
+    },
+    "material.gregtech.antiplatinum": {
+      "source_key": "gt.material.AntiPlatinum",
+      "value": "Anti-Platinum"
+    },
+    "material.gregtech.antiplutonium": {
+      "source_key": "gt.material.AntiPlutonium",
+      "value": "Anti-Plutonium"
+    },
+    "material.gregtech.antiplutonium241": {
+      "source_key": "gt.material.AntiPlutonium241",
+      "value": "Anti-Plutonium-241"
+    },
+    "material.gregtech.antiplutonium243": {
+      "source_key": "gt.material.AntiPlutonium243",
+      "value": "Anti-Plutonium-243"
+    },
+    "material.gregtech.antipolonium": {
+      "source_key": "gt.material.AntiPolonium",
+      "value": "Anti-Polonium"
+    },
+    "material.gregtech.antipotassium": {
+      "source_key": "gt.material.AntiPotassium",
+      "value": "Anti-Potassium"
+    },
+    "material.gregtech.antipraseodymium": {
+      "source_key": "gt.material.AntiPraseodymium",
+      "value": "Anti-Praseodymium"
+    },
+    "material.gregtech.antipromethium": {
+      "source_key": "gt.material.AntiPromethium",
+      "value": "Anti-Promethium"
+    },
+    "material.gregtech.antiprotactinium": {
+      "source_key": "gt.material.AntiProtactinium",
+      "value": "Anti-Protactinium"
+    },
+    "material.gregtech.antiproton": {
+      "source_key": "gt.material.AntiProton",
+      "value": "Anti-Proton"
+    },
+    "material.gregtech.antiradium": {
+      "source_key": "gt.material.AntiRadium",
+      "value": "Anti-Radium"
+    },
+    "material.gregtech.antiradon": {
+      "source_key": "gt.material.AntiRadon",
+      "value": "Anti-Radon"
+    },
+    "material.gregtech.antirhenium": {
+      "source_key": "gt.material.AntiRhenium",
+      "value": "Anti-Rhenium"
+    },
+    "material.gregtech.antirhodium": {
+      "source_key": "gt.material.AntiRhodium",
+      "value": "Anti-Rhodium"
+    },
+    "material.gregtech.antiroentgenium": {
+      "source_key": "gt.material.AntiRoentgenium",
+      "value": "Anti-Roentgenium"
+    },
+    "material.gregtech.antirubidium": {
+      "source_key": "gt.material.AntiRubidium",
+      "value": "Anti-Rubidium"
+    },
+    "material.gregtech.antiruthenium": {
+      "source_key": "gt.material.AntiRuthenium",
+      "value": "Anti-Ruthenium"
+    },
+    "material.gregtech.antirutherfordium": {
+      "source_key": "gt.material.AntiRutherfordium",
+      "value": "Anti-Rutherfordium"
+    },
+    "material.gregtech.antisamarium": {
+      "source_key": "gt.material.AntiSamarium",
+      "value": "Anti-Samarium"
+    },
+    "material.gregtech.antiscandium": {
+      "source_key": "gt.material.AntiScandium",
+      "value": "Anti-Scandium"
+    },
+    "material.gregtech.antiseaborgium": {
+      "source_key": "gt.material.AntiSeaborgium",
+      "value": "Anti-Seaborgium"
+    },
+    "material.gregtech.antiselenium": {
+      "source_key": "gt.material.AntiSelenium",
+      "value": "Anti-Selenium"
+    },
+    "material.gregtech.antisilicon": {
+      "source_key": "gt.material.AntiSilicon",
+      "value": "Anti-Silicon"
+    },
+    "material.gregtech.antisilver": {
+      "source_key": "gt.material.AntiSilver",
+      "value": "Anti-Silver"
+    },
+    "material.gregtech.antisodium": {
+      "source_key": "gt.material.AntiSodium",
+      "value": "Anti-Sodium"
+    },
+    "material.gregtech.antistrontium": {
+      "source_key": "gt.material.AntiStrontium",
+      "value": "Anti-Strontium"
+    },
+    "material.gregtech.antisulfur": {
+      "source_key": "gt.material.AntiSulfur",
+      "value": "Anti-Sulfur"
+    },
+    "material.gregtech.antitantalum": {
+      "source_key": "gt.material.AntiTantalum",
+      "value": "Anti-Tantalum"
+    },
+    "material.gregtech.antitechnetium": {
+      "source_key": "gt.material.AntiTechnetium",
+      "value": "Anti-Technetium"
+    },
+    "material.gregtech.antitellurium": {
+      "source_key": "gt.material.AntiTellurium",
+      "value": "Anti-Tellurium"
+    },
+    "material.gregtech.antiterbium": {
+      "source_key": "gt.material.AntiTerbium",
+      "value": "Anti-Terbium"
+    },
+    "material.gregtech.antithallium": {
+      "source_key": "gt.material.AntiThallium",
+      "value": "Anti-Thallium"
+    },
+    "material.gregtech.antithorium": {
+      "source_key": "gt.material.AntiThorium",
+      "value": "Anti-Thorium"
+    },
+    "material.gregtech.antithulium": {
+      "source_key": "gt.material.AntiThulium",
+      "value": "Anti-Thulium"
+    },
+    "material.gregtech.antitin": {
+      "source_key": "gt.material.AntiTin",
+      "value": "Anti-Tin"
+    },
+    "material.gregtech.antititanium": {
+      "source_key": "gt.material.AntiTitanium",
+      "value": "Anti-Titanium"
+    },
+    "material.gregtech.antitribibium": {
+      "source_key": "gt.material.AntiTribibium",
+      "value": "Anti-Tribibium"
+    },
+    "material.gregtech.antitribiennium": {
+      "source_key": "gt.material.AntiTribiennium",
+      "value": "Anti-Tribiennium"
+    },
+    "material.gregtech.antitribihexium": {
+      "source_key": "gt.material.AntiTribihexium",
+      "value": "Anti-Tribihexium"
+    },
+    "material.gregtech.antitribinilium": {
+      "source_key": "gt.material.AntiTribinilium",
+      "value": "Anti-Tribinilium"
+    },
+    "material.gregtech.antitribioctium": {
+      "source_key": "gt.material.AntiTribioctium",
+      "value": "Anti-Tribioctium"
+    },
+    "material.gregtech.antitribipentium": {
+      "source_key": "gt.material.AntiTribipentium",
+      "value": "Anti-Tribipentium"
+    },
+    "material.gregtech.antitribiquadium": {
+      "source_key": "gt.material.AntiTribiquadium",
+      "value": "Anti-Tribiquadium"
+    },
+    "material.gregtech.antitribiseptium": {
+      "source_key": "gt.material.AntiTribiseptium",
+      "value": "Anti-Tribiseptium"
+    },
+    "material.gregtech.antitribitrium": {
+      "source_key": "gt.material.AntiTribitrium",
+      "value": "Anti-Tribitrium"
+    },
+    "material.gregtech.antitribiunium": {
+      "source_key": "gt.material.AntiTribiunium",
+      "value": "Anti-Tribiunium"
+    },
+    "material.gregtech.antitriennbium": {
+      "source_key": "gt.material.AntiTriennbium",
+      "value": "Anti-Triennbium"
+    },
+    "material.gregtech.antitriennennium": {
+      "source_key": "gt.material.AntiTriennennium",
+      "value": "Anti-Triennennium"
+    },
+    "material.gregtech.antitriennhexium": {
+      "source_key": "gt.material.AntiTriennhexium",
+      "value": "Anti-Triennhexium"
+    },
+    "material.gregtech.antitriennilium": {
+      "source_key": "gt.material.AntiTriennilium",
+      "value": "Anti-Triennilium"
+    },
+    "material.gregtech.antitriennoctium": {
+      "source_key": "gt.material.AntiTriennoctium",
+      "value": "Anti-Triennoctium"
+    },
+    "material.gregtech.antitriennpentium": {
+      "source_key": "gt.material.AntiTriennpentium",
+      "value": "Anti-Triennpentium"
+    },
+    "material.gregtech.antitriennquadium": {
+      "source_key": "gt.material.AntiTriennquadium",
+      "value": "Anti-Triennquadium"
+    },
+    "material.gregtech.antitriennseptium": {
+      "source_key": "gt.material.AntiTriennseptium",
+      "value": "Anti-Triennseptium"
+    },
+    "material.gregtech.antitrienntrium": {
+      "source_key": "gt.material.AntiTrienntrium",
+      "value": "Anti-Trienntrium"
+    },
+    "material.gregtech.antitriennunium": {
+      "source_key": "gt.material.AntiTriennunium",
+      "value": "Anti-Triennunium"
+    },
+    "material.gregtech.antitrihexbium": {
+      "source_key": "gt.material.AntiTrihexbium",
+      "value": "Anti-Trihexbium"
+    },
+    "material.gregtech.antitrihexennium": {
+      "source_key": "gt.material.AntiTrihexennium",
+      "value": "Anti-Trihexennium"
+    },
+    "material.gregtech.antitrihexhexium": {
+      "source_key": "gt.material.AntiTrihexhexium",
+      "value": "Anti-Trihexhexium"
+    },
+    "material.gregtech.antitrihexnilium": {
+      "source_key": "gt.material.AntiTrihexnilium",
+      "value": "Anti-Trihexnilium"
+    },
+    "material.gregtech.antitrihexoctium": {
+      "source_key": "gt.material.AntiTrihexoctium",
+      "value": "Anti-Trihexoctium"
+    },
+    "material.gregtech.antitrihexpentium": {
+      "source_key": "gt.material.AntiTrihexpentium",
+      "value": "Anti-Trihexpentium"
+    },
+    "material.gregtech.antitrihexquadium": {
+      "source_key": "gt.material.AntiTrihexquadium",
+      "value": "Anti-Trihexquadium"
+    },
+    "material.gregtech.antitrihexseptium": {
+      "source_key": "gt.material.AntiTrihexseptium",
+      "value": "Anti-Trihexseptium"
+    },
+    "material.gregtech.antitrihextrium": {
+      "source_key": "gt.material.AntiTrihextrium",
+      "value": "Anti-Trihextrium"
+    },
+    "material.gregtech.antitrihexunium": {
+      "source_key": "gt.material.AntiTrihexunium",
+      "value": "Anti-Trihexunium"
+    },
+    "material.gregtech.antitrinilbium": {
+      "source_key": "gt.material.AntiTrinilbium",
+      "value": "Anti-Trinilbium"
+    },
+    "material.gregtech.antitrinilennium": {
+      "source_key": "gt.material.AntiTrinilennium",
+      "value": "Anti-Trinilennium"
+    },
+    "material.gregtech.antitrinilhexium": {
+      "source_key": "gt.material.AntiTrinilhexium",
+      "value": "Anti-Trinilhexium"
+    },
+    "material.gregtech.antitrinilnilium": {
+      "source_key": "gt.material.AntiTrinilnilium",
+      "value": "Anti-Trinilnilium"
+    },
+    "material.gregtech.antitriniloctium": {
+      "source_key": "gt.material.AntiTriniloctium",
+      "value": "Anti-Triniloctium"
+    },
+    "material.gregtech.antitrinilpentium": {
+      "source_key": "gt.material.AntiTrinilpentium",
+      "value": "Anti-Trinilpentium"
+    },
+    "material.gregtech.antitrinilquadium": {
+      "source_key": "gt.material.AntiTrinilquadium",
+      "value": "Anti-Trinilquadium"
+    },
+    "material.gregtech.antitrinilseptium": {
+      "source_key": "gt.material.AntiTrinilseptium",
+      "value": "Anti-Trinilseptium"
+    },
+    "material.gregtech.antitriniltrium": {
+      "source_key": "gt.material.AntiTriniltrium",
+      "value": "Anti-Triniltrium"
+    },
+    "material.gregtech.antitrinilunium": {
+      "source_key": "gt.material.AntiTrinilunium",
+      "value": "Anti-Trinilunium"
+    },
+    "material.gregtech.antitrioctbium": {
+      "source_key": "gt.material.AntiTrioctbium",
+      "value": "Anti-Trioctbium"
+    },
+    "material.gregtech.antitrioctennium": {
+      "source_key": "gt.material.AntiTrioctennium",
+      "value": "Anti-Trioctennium"
+    },
+    "material.gregtech.antitriocthexium": {
+      "source_key": "gt.material.AntiTriocthexium",
+      "value": "Anti-Triocthexium"
+    },
+    "material.gregtech.antitrioctnilium": {
+      "source_key": "gt.material.AntiTrioctnilium",
+      "value": "Anti-Trioctnilium"
+    },
+    "material.gregtech.antitrioctoctium": {
+      "source_key": "gt.material.AntiTrioctoctium",
+      "value": "Anti-Trioctoctium"
+    },
+    "material.gregtech.antitrioctpentium": {
+      "source_key": "gt.material.AntiTrioctpentium",
+      "value": "Anti-Trioctpentium"
+    },
+    "material.gregtech.antitrioctquadium": {
+      "source_key": "gt.material.AntiTrioctquadium",
+      "value": "Anti-Trioctquadium"
+    },
+    "material.gregtech.antitrioctseptium": {
+      "source_key": "gt.material.AntiTrioctseptium",
+      "value": "Anti-Trioctseptium"
+    },
+    "material.gregtech.antitriocttrium": {
+      "source_key": "gt.material.AntiTriocttrium",
+      "value": "Anti-Triocttrium"
+    },
+    "material.gregtech.antitrioctunium": {
+      "source_key": "gt.material.AntiTrioctunium",
+      "value": "Anti-Trioctunium"
+    },
+    "material.gregtech.antitripentbium": {
+      "source_key": "gt.material.AntiTripentbium",
+      "value": "Anti-Tripentbium"
+    },
+    "material.gregtech.antitripentennium": {
+      "source_key": "gt.material.AntiTripentennium",
+      "value": "Anti-Tripentennium"
+    },
+    "material.gregtech.antitripenthexium": {
+      "source_key": "gt.material.AntiTripenthexium",
+      "value": "Anti-Tripenthexium"
+    },
+    "material.gregtech.antitripentnilium": {
+      "source_key": "gt.material.AntiTripentnilium",
+      "value": "Anti-Tripentnilium"
+    },
+    "material.gregtech.antitripentoctium": {
+      "source_key": "gt.material.AntiTripentoctium",
+      "value": "Anti-Tripentoctium"
+    },
+    "material.gregtech.antitripentpentium": {
+      "source_key": "gt.material.AntiTripentpentium",
+      "value": "Anti-Tripentpentium"
+    },
+    "material.gregtech.antitripentquadium": {
+      "source_key": "gt.material.AntiTripentquadium",
+      "value": "Anti-Tripentquadium"
+    },
+    "material.gregtech.antitripentseptium": {
+      "source_key": "gt.material.AntiTripentseptium",
+      "value": "Anti-Tripentseptium"
+    },
+    "material.gregtech.antitripenttrium": {
+      "source_key": "gt.material.AntiTripenttrium",
+      "value": "Anti-Tripenttrium"
+    },
+    "material.gregtech.antitripentunium": {
+      "source_key": "gt.material.AntiTripentunium",
+      "value": "Anti-Tripentunium"
+    },
+    "material.gregtech.antitriquadbium": {
+      "source_key": "gt.material.AntiTriquadbium",
+      "value": "Anti-Triquadbium"
+    },
+    "material.gregtech.antitriquadennium": {
+      "source_key": "gt.material.AntiTriquadennium",
+      "value": "Anti-Triquadennium"
+    },
+    "material.gregtech.antitriquadhexium": {
+      "source_key": "gt.material.AntiTriquadhexium",
+      "value": "Anti-Triquadhexium"
+    },
+    "material.gregtech.antitriquadnilium": {
+      "source_key": "gt.material.AntiTriquadnilium",
+      "value": "Anti-Triquadnilium"
+    },
+    "material.gregtech.antitriquadoctium": {
+      "source_key": "gt.material.AntiTriquadoctium",
+      "value": "Anti-Triquadoctium"
+    },
+    "material.gregtech.antitriquadpentium": {
+      "source_key": "gt.material.AntiTriquadpentium",
+      "value": "Anti-Triquadpentium"
+    },
+    "material.gregtech.antitriquadquadium": {
+      "source_key": "gt.material.AntiTriquadquadium",
+      "value": "Anti-Triquadquadium"
+    },
+    "material.gregtech.antitriquadseptium": {
+      "source_key": "gt.material.AntiTriquadseptium",
+      "value": "Anti-Triquadseptium"
+    },
+    "material.gregtech.antitriquadtrium": {
+      "source_key": "gt.material.AntiTriquadtrium",
+      "value": "Anti-Triquadtrium"
+    },
+    "material.gregtech.antitriquadunium": {
+      "source_key": "gt.material.AntiTriquadunium",
+      "value": "Anti-Triquadunium"
+    },
+    "material.gregtech.antitriseptennium": {
+      "source_key": "gt.material.AntiTriseptennium",
+      "value": "Anti-Triseptennium"
+    },
+    "material.gregtech.antitrisepthexium": {
+      "source_key": "gt.material.AntiTrisepthexium",
+      "value": "Anti-Trisepthexium"
+    },
+    "material.gregtech.antitriseptnilium": {
+      "source_key": "gt.material.AntiTriseptnilium",
+      "value": "Anti-Triseptnilium"
+    },
+    "material.gregtech.antitriseptoctium": {
+      "source_key": "gt.material.AntiTriseptoctium",
+      "value": "Anti-Triseptoctium"
+    },
+    "material.gregtech.antitriseptpentium": {
+      "source_key": "gt.material.AntiTriseptpentium",
+      "value": "Anti-Triseptpentium"
+    },
+    "material.gregtech.antitriseptquadium": {
+      "source_key": "gt.material.AntiTriseptquadium",
+      "value": "Anti-Triseptquadium"
+    },
+    "material.gregtech.antitriseptseptium": {
+      "source_key": "gt.material.AntiTriseptseptium",
+      "value": "Anti-Triseptseptium"
+    },
+    "material.gregtech.antitrisepttrium": {
+      "source_key": "gt.material.AntiTrisepttrium",
+      "value": "Anti-Trisepttrium"
+    },
+    "material.gregtech.antitriseptunium": {
+      "source_key": "gt.material.AntiTriseptunium",
+      "value": "Anti-Triseptunium"
+    },
+    "material.gregtech.antitritium": {
+      "source_key": "gt.material.AntiTritium",
+      "value": "Anti-Tritium"
+    },
+    "material.gregtech.antitritribium": {
+      "source_key": "gt.material.AntiTritribium",
+      "value": "Anti-Tritribium"
+    },
+    "material.gregtech.antitritriennium": {
+      "source_key": "gt.material.AntiTritriennium",
+      "value": "Anti-Tritriennium"
+    },
+    "material.gregtech.antitritrihexium": {
+      "source_key": "gt.material.AntiTritrihexium",
+      "value": "Anti-Tritrihexium"
+    },
+    "material.gregtech.antitritrinilium": {
+      "source_key": "gt.material.AntiTritrinilium",
+      "value": "Anti-Tritrinilium"
+    },
+    "material.gregtech.antitritrioctium": {
+      "source_key": "gt.material.AntiTritrioctium",
+      "value": "Anti-Tritrioctium"
+    },
+    "material.gregtech.antitritripentium": {
+      "source_key": "gt.material.AntiTritripentium",
+      "value": "Anti-Tritripentium"
+    },
+    "material.gregtech.antitritriquadium": {
+      "source_key": "gt.material.AntiTritriquadium",
+      "value": "Anti-Tritriquadium"
+    },
+    "material.gregtech.antitritriseptium": {
+      "source_key": "gt.material.AntiTritriseptium",
+      "value": "Anti-Tritriseptium"
+    },
+    "material.gregtech.antitritritrium": {
+      "source_key": "gt.material.AntiTritritrium",
+      "value": "Anti-Tritritrium"
+    },
+    "material.gregtech.antitritriunium": {
+      "source_key": "gt.material.AntiTritriunium",
+      "value": "Anti-Tritriunium"
+    },
+    "material.gregtech.antitriunbium": {
+      "source_key": "gt.material.AntiTriunbium",
+      "value": "Anti-Triunbium"
+    },
+    "material.gregtech.antitriunennium": {
+      "source_key": "gt.material.AntiTriunennium",
+      "value": "Anti-Triunennium"
+    },
+    "material.gregtech.antitriunhexium": {
+      "source_key": "gt.material.AntiTriunhexium",
+      "value": "Anti-Triunhexium"
+    },
+    "material.gregtech.antitriunnilium": {
+      "source_key": "gt.material.AntiTriunnilium",
+      "value": "Anti-Triunnilium"
+    },
+    "material.gregtech.antitriunoctium": {
+      "source_key": "gt.material.AntiTriunoctium",
+      "value": "Anti-Triunoctium"
+    },
+    "material.gregtech.antitriunpentium": {
+      "source_key": "gt.material.AntiTriunpentium",
+      "value": "Anti-Triunpentium"
+    },
+    "material.gregtech.antitriunquadium": {
+      "source_key": "gt.material.AntiTriunquadium",
+      "value": "Anti-Triunquadium"
+    },
+    "material.gregtech.antitriunseptium": {
+      "source_key": "gt.material.AntiTriunseptium",
+      "value": "Anti-Triunseptium"
+    },
+    "material.gregtech.antitriuntrium": {
+      "source_key": "gt.material.AntiTriuntrium",
+      "value": "Anti-Triuntrium"
+    },
+    "material.gregtech.antitriununium": {
+      "source_key": "gt.material.AntiTriununium",
+      "value": "Anti-Triununium"
+    },
+    "material.gregtech.antitungsten": {
+      "source_key": "gt.material.AntiTungsten",
+      "value": "Anti-Tungsten"
+    },
+    "material.gregtech.antiunbibium": {
+      "source_key": "gt.material.AntiUnbibium",
+      "value": "Anti-Unbibium"
+    },
+    "material.gregtech.antiunbiennium": {
+      "source_key": "gt.material.AntiUnbiennium",
+      "value": "Anti-Unbiennium"
+    },
+    "material.gregtech.antiunbihexium": {
+      "source_key": "gt.material.AntiUnbihexium",
+      "value": "Anti-Unbihexium"
+    },
+    "material.gregtech.antiunbinilium": {
+      "source_key": "gt.material.AntiUnbinilium",
+      "value": "Anti-Unbinilium"
+    },
+    "material.gregtech.antiunbioctium": {
+      "source_key": "gt.material.AntiUnbioctium",
+      "value": "Anti-Unbioctium"
+    },
+    "material.gregtech.antiunbipentium": {
+      "source_key": "gt.material.AntiUnbipentium",
+      "value": "Anti-Unbipentium"
+    },
+    "material.gregtech.antiunbiquadium": {
+      "source_key": "gt.material.AntiUnbiquadium",
+      "value": "Anti-Unbiquadium"
+    },
+    "material.gregtech.antiunbiseptium": {
+      "source_key": "gt.material.AntiUnbiseptium",
+      "value": "Anti-Unbiseptium"
+    },
+    "material.gregtech.antiunbitrium": {
+      "source_key": "gt.material.AntiUnbitrium",
+      "value": "Anti-Unbitrium"
+    },
+    "material.gregtech.antiunbiunium": {
+      "source_key": "gt.material.AntiUnbiunium",
+      "value": "Anti-Unbiunium"
+    },
+    "material.gregtech.antiunennbium": {
+      "source_key": "gt.material.AntiUnennbium",
+      "value": "Anti-Unennbium"
+    },
+    "material.gregtech.antiunennennium": {
+      "source_key": "gt.material.AntiUnennennium",
+      "value": "Anti-Unennennium"
+    },
+    "material.gregtech.antiunennhexium": {
+      "source_key": "gt.material.AntiUnennhexium",
+      "value": "Anti-Unennhexium"
+    },
+    "material.gregtech.antiunennilium": {
+      "source_key": "gt.material.AntiUnennilium",
+      "value": "Anti-Unennilium"
+    },
+    "material.gregtech.antiunennoctium": {
+      "source_key": "gt.material.AntiUnennoctium",
+      "value": "Anti-Unennoctium"
+    },
+    "material.gregtech.antiunennpentium": {
+      "source_key": "gt.material.AntiUnennpentium",
+      "value": "Anti-Unennpentium"
+    },
+    "material.gregtech.antiunennquadium": {
+      "source_key": "gt.material.AntiUnennquadium",
+      "value": "Anti-Unennquadium"
+    },
+    "material.gregtech.antiunennseptium": {
+      "source_key": "gt.material.AntiUnennseptium",
+      "value": "Anti-Unennseptium"
+    },
+    "material.gregtech.antiunenntrium": {
+      "source_key": "gt.material.AntiUnenntrium",
+      "value": "Anti-Unenntrium"
+    },
+    "material.gregtech.antiunennunium": {
+      "source_key": "gt.material.AntiUnennunium",
+      "value": "Anti-Unennunium"
+    },
+    "material.gregtech.antiunhexbium": {
+      "source_key": "gt.material.AntiUnhexbium",
+      "value": "Anti-Unhexbium"
+    },
+    "material.gregtech.antiunhexennium": {
+      "source_key": "gt.material.AntiUnhexennium",
+      "value": "Anti-Unhexennium"
+    },
+    "material.gregtech.antiunhexhexium": {
+      "source_key": "gt.material.AntiUnhexhexium",
+      "value": "Anti-Unhexhexium"
+    },
+    "material.gregtech.antiunhexnilium": {
+      "source_key": "gt.material.AntiUnhexnilium",
+      "value": "Anti-Unhexnilium"
+    },
+    "material.gregtech.antiunhexoctium": {
+      "source_key": "gt.material.AntiUnhexoctium",
+      "value": "Anti-Unhexoctium"
+    },
+    "material.gregtech.antiunhexpentium": {
+      "source_key": "gt.material.AntiUnhexpentium",
+      "value": "Anti-Unhexpentium"
+    },
+    "material.gregtech.antiunhexquadium": {
+      "source_key": "gt.material.AntiUnhexquadium",
+      "value": "Anti-Unhexquadium"
+    },
+    "material.gregtech.antiunhexseptium": {
+      "source_key": "gt.material.AntiUnhexseptium",
+      "value": "Anti-Unhexseptium"
+    },
+    "material.gregtech.antiunhextrium": {
+      "source_key": "gt.material.AntiUnhextrium",
+      "value": "Anti-Unhextrium"
+    },
+    "material.gregtech.antiunhexunium": {
+      "source_key": "gt.material.AntiUnhexunium",
+      "value": "Anti-Unhexunium"
+    },
+    "material.gregtech.antiunoctbium": {
+      "source_key": "gt.material.AntiUnoctbium",
+      "value": "Anti-Unoctbium"
+    },
+    "material.gregtech.antiunoctennium": {
+      "source_key": "gt.material.AntiUnoctennium",
+      "value": "Anti-Unoctennium"
+    },
+    "material.gregtech.antiunocthexium": {
+      "source_key": "gt.material.AntiUnocthexium",
+      "value": "Anti-Unocthexium"
+    },
+    "material.gregtech.antiunoctnilium": {
+      "source_key": "gt.material.AntiUnoctnilium",
+      "value": "Anti-Unoctnilium"
+    },
+    "material.gregtech.antiunoctoctium": {
+      "source_key": "gt.material.AntiUnoctoctium",
+      "value": "Anti-Unoctoctium"
+    },
+    "material.gregtech.antiunoctpentium": {
+      "source_key": "gt.material.AntiUnoctpentium",
+      "value": "Anti-Unoctpentium"
+    },
+    "material.gregtech.antiunoctquadium": {
+      "source_key": "gt.material.AntiUnoctquadium",
+      "value": "Anti-Unoctquadium"
+    },
+    "material.gregtech.antiunoctseptium": {
+      "source_key": "gt.material.AntiUnoctseptium",
+      "value": "Anti-Unoctseptium"
+    },
+    "material.gregtech.antiunocttrium": {
+      "source_key": "gt.material.AntiUnocttrium",
+      "value": "Anti-Unocttrium"
+    },
+    "material.gregtech.antiunoctunium": {
+      "source_key": "gt.material.AntiUnoctunium",
+      "value": "Anti-Unoctunium"
+    },
+    "material.gregtech.antiunpentennium": {
+      "source_key": "gt.material.AntiUnpentennium",
+      "value": "Anti-Unpentennium"
+    },
+    "material.gregtech.antiunpenthexium": {
+      "source_key": "gt.material.AntiUnpenthexium",
+      "value": "Anti-Unpenthexium"
+    },
+    "material.gregtech.antiunpentnilium": {
+      "source_key": "gt.material.AntiUnpentnilium",
+      "value": "Anti-Unpentnilium"
+    },
+    "material.gregtech.antiunpentoctium": {
+      "source_key": "gt.material.AntiUnpentoctium",
+      "value": "Anti-Unpentoctium"
+    },
+    "material.gregtech.antiunpentpentium": {
+      "source_key": "gt.material.AntiUnpentpentium",
+      "value": "Anti-Unpentpentium"
+    },
+    "material.gregtech.antiunpentquadium": {
+      "source_key": "gt.material.AntiUnpentquadium",
+      "value": "Anti-Unpentquadium"
+    },
+    "material.gregtech.antiunpentseptium": {
+      "source_key": "gt.material.AntiUnpentseptium",
+      "value": "Anti-Unpentseptium"
+    },
+    "material.gregtech.antiunpenttrium": {
+      "source_key": "gt.material.AntiUnpenttrium",
+      "value": "Anti-Unpenttrium"
+    },
+    "material.gregtech.antiunpentunium": {
+      "source_key": "gt.material.AntiUnpentunium",
+      "value": "Anti-Unpentunium"
+    },
+    "material.gregtech.antiunquadbium": {
+      "source_key": "gt.material.AntiUnquadbium",
+      "value": "Anti-Unquadbium"
+    },
+    "material.gregtech.antiunquadennium": {
+      "source_key": "gt.material.AntiUnquadennium",
+      "value": "Anti-Unquadennium"
+    },
+    "material.gregtech.antiunquadhexium": {
+      "source_key": "gt.material.AntiUnquadhexium",
+      "value": "Anti-Unquadhexium"
+    },
+    "material.gregtech.antiunquadnilium": {
+      "source_key": "gt.material.AntiUnquadnilium",
+      "value": "Anti-Unquadnilium"
+    },
+    "material.gregtech.antiunquadoctium": {
+      "source_key": "gt.material.AntiUnquadoctium",
+      "value": "Anti-Unquadoctium"
+    },
+    "material.gregtech.antiunquadpentium": {
+      "source_key": "gt.material.AntiUnquadpentium",
+      "value": "Anti-Unquadpentium"
+    },
+    "material.gregtech.antiunquadquadium": {
+      "source_key": "gt.material.AntiUnquadquadium",
+      "value": "Anti-Unquadquadium"
+    },
+    "material.gregtech.antiunquadseptium": {
+      "source_key": "gt.material.AntiUnquadseptium",
+      "value": "Anti-Unquadseptium"
+    },
+    "material.gregtech.antiunquadtrium": {
+      "source_key": "gt.material.AntiUnquadtrium",
+      "value": "Anti-Unquadtrium"
+    },
+    "material.gregtech.antiunquadunium": {
+      "source_key": "gt.material.AntiUnquadunium",
+      "value": "Anti-Unquadunium"
+    },
+    "material.gregtech.antiunseptbium": {
+      "source_key": "gt.material.AntiUnseptbium",
+      "value": "Anti-Unseptbium"
+    },
+    "material.gregtech.antiunseptennium": {
+      "source_key": "gt.material.AntiUnseptennium",
+      "value": "Anti-Unseptennium"
+    },
+    "material.gregtech.antiunsepthexium": {
+      "source_key": "gt.material.AntiUnsepthexium",
+      "value": "Anti-Unsepthexium"
+    },
+    "material.gregtech.antiunseptnilium": {
+      "source_key": "gt.material.AntiUnseptnilium",
+      "value": "Anti-Unseptnilium"
+    },
+    "material.gregtech.antiunseptoctium": {
+      "source_key": "gt.material.AntiUnseptoctium",
+      "value": "Anti-Unseptoctium"
+    },
+    "material.gregtech.antiunseptpentium": {
+      "source_key": "gt.material.AntiUnseptpentium",
+      "value": "Anti-Unseptpentium"
+    },
+    "material.gregtech.antiunseptseptium": {
+      "source_key": "gt.material.AntiUnseptseptium",
+      "value": "Anti-Unseptseptium"
+    },
+    "material.gregtech.antiunsepttrium": {
+      "source_key": "gt.material.AntiUnsepttrium",
+      "value": "Anti-Unsepttrium"
+    },
+    "material.gregtech.antiunseptunium": {
+      "source_key": "gt.material.AntiUnseptunium",
+      "value": "Anti-Unseptunium"
+    },
+    "material.gregtech.antiuntribium": {
+      "source_key": "gt.material.AntiUntribium",
+      "value": "Anti-Untribium"
+    },
+    "material.gregtech.antiuntriennium": {
+      "source_key": "gt.material.AntiUntriennium",
+      "value": "Anti-Untriennium"
+    },
+    "material.gregtech.antiuntrihexium": {
+      "source_key": "gt.material.AntiUntrihexium",
+      "value": "Anti-Untrihexium"
+    },
+    "material.gregtech.antiuntrinilium": {
+      "source_key": "gt.material.AntiUntrinilium",
+      "value": "Anti-Untrinilium"
+    },
+    "material.gregtech.antiuntrioctium": {
+      "source_key": "gt.material.AntiUntrioctium",
+      "value": "Anti-Untrioctium"
+    },
+    "material.gregtech.antiuntripentium": {
+      "source_key": "gt.material.AntiUntripentium",
+      "value": "Anti-Untripentium"
+    },
+    "material.gregtech.antiuntriquadium": {
+      "source_key": "gt.material.AntiUntriquadium",
+      "value": "Anti-Untriquadium"
+    },
+    "material.gregtech.antiuntriseptium": {
+      "source_key": "gt.material.AntiUntriseptium",
+      "value": "Anti-Untriseptium"
+    },
+    "material.gregtech.antiuntritrium": {
+      "source_key": "gt.material.AntiUntritrium",
+      "value": "Anti-Untritrium"
+    },
+    "material.gregtech.antiuntriunium": {
+      "source_key": "gt.material.AntiUntriunium",
+      "value": "Anti-Untriunium"
+    },
+    "material.gregtech.antiununennium": {
+      "source_key": "gt.material.AntiUnunennium",
+      "value": "Anti-Ununennium"
+    },
+    "material.gregtech.antiununoctium": {
+      "source_key": "gt.material.AntiUnunoctium",
+      "value": "Anti-Ununoctium"
+    },
+    "material.gregtech.antiununpentium": {
+      "source_key": "gt.material.AntiUnunpentium",
+      "value": "Anti-Ununpentium"
+    },
+    "material.gregtech.antiununtrium": {
+      "source_key": "gt.material.AntiUnuntrium",
+      "value": "Anti-Ununtrium"
+    },
+    "material.gregtech.antiuranium": {
+      "source_key": "gt.material.AntiUranium",
+      "value": "Anti-Uranium"
+    },
+    "material.gregtech.antiuranium235": {
+      "source_key": "gt.material.AntiUranium235",
+      "value": "Anti-Uranium-235"
+    },
+    "material.gregtech.antivanadium": {
+      "source_key": "gt.material.AntiVanadium",
+      "value": "Anti-Vanadium"
+    },
+    "material.gregtech.antivibranium": {
+      "source_key": "gt.material.AntiVibranium",
+      "value": "Anti-Vibranium"
+    },
+    "material.gregtech.antixenon": {
+      "source_key": "gt.material.AntiXenon",
+      "value": "Anti-Xenon"
+    },
+    "material.gregtech.antiytterbium": {
+      "source_key": "gt.material.AntiYtterbium",
+      "value": "Anti-Ytterbium"
+    },
+    "material.gregtech.antiyttrium": {
+      "source_key": "gt.material.AntiYttrium",
+      "value": "Anti-Yttrium"
+    },
+    "material.gregtech.antizinc": {
+      "source_key": "gt.material.AntiZinc",
+      "value": "Anti-Zinc"
+    },
+    "material.gregtech.antizirconium": {
+      "source_key": "gt.material.AntiZirconium",
+      "value": "Anti-Zirconium"
     },
     "material.gregtech.anyamber": {
       "source_key": "gt.material.AnyAmber",
@@ -43044,6 +44780,10 @@
       "source_key": "gt.material.AnyWoodOrPlastic",
       "value": "Any Wood Or Plastic"
     },
+    "material.gregtech.apalachia": {
+      "source_key": "gt.material.Apalachia",
+      "value": "Apalachia"
+    },
     "material.gregtech.apatite": {
       "source_key": "gt.material.Apatite",
       "value": "Apatite"
@@ -43084,6 +44824,10 @@
       "source_key": "gt.material.ArcaneCompound",
       "value": "Arcane Compound"
     },
+    "material.gregtech.arcanium": {
+      "source_key": "gt.material.Arcanium",
+      "value": "Arcanium"
+    },
     "material.gregtech.ardite": {
       "source_key": "gt.material.Ardite",
       "value": "Ardite"
@@ -43095,6 +44839,10 @@
     "material.gregtech.argon": {
       "source_key": "gt.material.Argon",
       "value": "Argon"
+    },
+    "material.gregtech.arlemite": {
+      "source_key": "gt.material.Arlemite",
+      "value": "Arlemite"
     },
     "material.gregtech.arsenic": {
       "source_key": "gt.material.Arsenic",
@@ -43163,6 +44911,10 @@
     "material.gregtech.au_198": {
       "source_key": "gt.material.Gold198",
       "value": "Gold-198"
+    },
+    "material.gregtech.australium": {
+      "source_key": "gt.material.Australium",
+      "value": "Australium"
     },
     "material.gregtech.autumn": {
       "source_key": "gt.material.Autumnwood",
@@ -43259,6 +45011,10 @@
     "material.gregtech.basalz": {
       "source_key": "gt.material.Basalz",
       "value": "Basalz"
+    },
+    "material.gregtech.basic": {
+      "source_key": "gt.material.Basic",
+      "value": "Basic"
     },
     "material.gregtech.bastnasite": {
       "source_key": "gt.material.Bastnasite",
@@ -43364,6 +45120,10 @@
       "source_key": "gt.material.BismuthBronze",
       "value": "Bismuth Bronze"
     },
+    "material.gregtech.bitumen": {
+      "source_key": "gt.material.Bitumen",
+      "value": "Bitumen"
+    },
     "material.gregtech.bixbite": {
       "source_key": "gt.material.Bixbite",
       "value": "Bixbite"
@@ -43431,6 +45191,14 @@
     "material.gregtech.blizz": {
       "source_key": "gt.material.Blizz",
       "value": "Blizz"
+    },
+    "material.gregtech.bloodgem": {
+      "source_key": "gt.material.Bloodgem",
+      "value": "Bloodgem"
+    },
+    "material.gregtech.bloodstone": {
+      "source_key": "gt.material.Bloodstone",
+      "value": "Bloodstone"
     },
     "material.gregtech.blue": {
       "source_key": "gt.material.Blue",
@@ -43704,6 +45472,14 @@
       "source_key": "gt.material.CatsEye",
       "value": "Cat's Eye"
     },
+    "material.gregtech.cavenium": {
+      "source_key": "gt.material.Cavenium",
+      "value": "Cavenium"
+    },
+    "material.gregtech.caveniumrefined": {
+      "source_key": "gt.material.CaveniumRefined",
+      "value": "Refined Cavenium"
+    },
     "material.gregtech.cd": {
       "source_key": "gt.material.Cadmium",
       "value": "Cadmium"
@@ -43836,6 +45612,10 @@
       "source_key": "gt.material.ChromiumDioxide",
       "value": "Chromium Dioxide"
     },
+    "material.gregtech.chrysocolla": {
+      "source_key": "gt.material.Chrysocolla",
+      "value": "Chrysocolla"
+    },
     "material.gregtech.cinnabar": {
       "source_key": "gt.material.Cinnabar",
       "value": "Cinnabar"
@@ -43847,6 +45627,10 @@
     "material.gregtech.cinnamonwood": {
       "source_key": "gt.material.Cinnamonwood",
       "value": "Cinnawood"
+    },
+    "material.gregtech.citrine": {
+      "source_key": "gt.material.Citrine",
+      "value": "Citrine"
     },
     "material.gregtech.citrus": {
       "source_key": "gt.material.Citruswood",
@@ -43880,9 +45664,17 @@
       "source_key": "gt.material.ClayRed",
       "value": "Red Clay"
     },
+    "material.gregtech.cluster": {
+      "source_key": "gt.material.Cluster",
+      "value": "Cluster"
+    },
     "material.gregtech.cm": {
       "source_key": "gt.material.Curium",
       "value": "Curium"
+    },
+    "material.gregtech.cmbsteel": {
+      "source_key": "gt.material.CMBSteel",
+      "value": "CMB Steel"
     },
     "material.gregtech.cn": {
       "source_key": "gt.material.Copernicium",
@@ -43927,6 +45719,10 @@
     "material.gregtech.cobaltite": {
       "source_key": "gt.material.Cobaltite",
       "value": "Cobaltite"
+    },
+    "material.gregtech.cocaine": {
+      "source_key": "gt.material.Cocaine",
+      "value": "Cocaine"
     },
     "material.gregtech.cocoa": {
       "source_key": "gt.material.Cocoa",
@@ -44000,6 +45796,10 @@
       "source_key": "gt.material.Coralium",
       "value": "Coralium"
     },
+    "material.gregtech.coral": {
+      "source_key": "gt.material.Coral",
+      "value": "Coral"
+    },
     "material.gregtech.coralium": {
       "source_key": "gt.material.Coralium",
       "value": "Coralium"
@@ -44023,6 +45823,10 @@
     "material.gregtech.craponite": {
       "source_key": "gt.material.Craponite",
       "value": "Craponite"
+    },
+    "material.gregtech.cream": {
+      "source_key": "gt.material.Cream",
+      "value": "Cream"
     },
     "material.gregtech.creosote": {
       "source_key": "gt.material.Creosote",
@@ -44055,6 +45859,10 @@
     "material.gregtech.cryotheum": {
       "source_key": "gt.material.Cryotheum",
       "value": "Cryotheum"
+    },
+    "material.gregtech.crystalflux": {
+      "source_key": "gt.material.CrystalFlux",
+      "value": "Crystal Flux"
     },
     "material.gregtech.crystallinealloy": {
       "source_key": "gt.material.CrystallineAlloy",
@@ -44112,9 +45920,17 @@
       "source_key": "gt.material.Dacite",
       "value": "Dacite"
     },
+    "material.gregtech.daffergon": {
+      "source_key": "gt.material.Daffergon",
+      "value": "Daffergon"
+    },
     "material.gregtech.damascussteel": {
       "source_key": "gt.material.DamascusSteel",
       "value": "Damascus Steel"
+    },
+    "material.gregtech.dark": {
+      "source_key": "gt.material.Dark",
+      "value": "Dark"
     },
     "material.gregtech.darkash": {
       "source_key": "gt.material.DarkAshes",
@@ -44136,6 +45952,10 @@
       "source_key": "gt.material.DarkOak",
       "value": "Dark Oak"
     },
+    "material.gregtech.darkstone": {
+      "source_key": "gt.material.DarkStone",
+      "value": "Dark Stone"
+    },
     "material.gregtech.darkthaumium": {
       "source_key": "gt.material.DarkThaumium",
       "value": "Dark Thaumium"
@@ -44147,6 +45967,10 @@
     "material.gregtech.darmstadtium": {
       "source_key": "gt.material.Darmstadtium",
       "value": "Darmstadtium"
+    },
+    "material.gregtech.data": {
+      "source_key": "gt.material.Data",
+      "value": "Data"
     },
     "material.gregtech.datolite": {
       "source_key": "gt.material.Datolite",
@@ -44176,6 +46000,10 @@
       "source_key": "gt.material.DeimosRock",
       "value": "Deimos"
     },
+    "material.gregtech.demonite": {
+      "source_key": "gt.material.Demonite",
+      "value": "Demonite"
+    },
     "material.gregtech.desh": {
       "source_key": "gt.material.Desh",
       "value": "Desh"
@@ -44203,6 +46031,10 @@
     "material.gregtech.diamondblue": {
       "source_key": "gt.material.BlueDiamond",
       "value": "Blue Diamond"
+    },
+    "material.gregtech.diamondcopper": {
+      "source_key": "gt.material.DiamondCopper",
+      "value": "Diamond Copper"
     },
     "material.gregtech.diamondgreen": {
       "source_key": "gt.material.GreenDiamond",
@@ -44243,6 +46075,10 @@
     "material.gregtech.dilithium": {
       "source_key": "gt.material.Dilithium",
       "value": "Dilithium"
+    },
+    "material.gregtech.dineutronium": {
+      "source_key": "gt.material.Dineutronium",
+      "value": "Dineutronium"
     },
     "material.gregtech.dioptase": {
       "source_key": "gt.material.Dioptase",
@@ -44316,6 +46152,10 @@
       "source_key": "gt.material.Dubnium",
       "value": "Dubnium"
     },
+    "material.gregtech.dull": {
+      "source_key": "gt.material.Dull",
+      "value": "Dull"
+    },
     "material.gregtech.duralumin": {
       "source_key": "gt.material.Duralumin",
       "value": "Duralumin"
@@ -44352,6 +46192,10 @@
       "source_key": "gt.material.DuraniumHexaiodide",
       "value": "Duranium Hexaiodide"
     },
+    "material.gregtech.durasteel": {
+      "source_key": "gt.material.DuraSteel",
+      "value": "High-Speed Steel"
+    },
     "material.gregtech.dy": {
       "source_key": "gt.material.Dysprosium",
       "value": "Dysprosium"
@@ -44375,6 +46219,10 @@
     "material.gregtech.ectoplasm": {
       "source_key": "gt.material.Ectoplasm",
       "value": "Ectoplasm"
+    },
+    "material.gregtech.eden": {
+      "source_key": "gt.material.Eden",
+      "value": "Eden"
     },
     "material.gregtech.efrine": {
       "source_key": "gt.material.Efrine",
@@ -44412,6 +46260,10 @@
       "source_key": "gt.material.ElectrumFlux",
       "value": "Electrum Flux"
     },
+    "material.gregtech.elite": {
+      "source_key": "gt.material.Elite",
+      "value": "Elite"
+    },
     "material.gregtech.elm": {
       "source_key": "gt.material.Elm",
       "value": "Elm"
@@ -44443,6 +46295,10 @@
     "material.gregtech.emery": {
       "source_key": "gt.material.Emery",
       "value": "Emery"
+    },
+    "material.gregtech.empty": {
+      "source_key": "gt.material.Empty",
+      "value": "Empty"
     },
     "material.gregtech.enderamethyst": {
       "source_key": "gt.material.AmethystEnder",
@@ -44500,9 +46356,17 @@
       "source_key": "gt.material.EnergiumRed",
       "value": "Red Energium"
     },
+    "material.gregtech.energized": {
+      "source_key": "gt.material.Energized",
+      "value": "Energized"
+    },
     "material.gregtech.enori": {
       "source_key": "gt.material.Enori",
       "value": "Enori"
+    },
+    "material.gregtech.enrichedcopper": {
+      "source_key": "gt.material.EnrichedCopper",
+      "value": "Enriched Copper"
     },
     "material.gregtech.epidote": {
       "source_key": "gt.material.Epidote",
@@ -44560,6 +46424,10 @@
       "source_key": "gt.material.Eudialyte",
       "value": "Eudialyte"
     },
+    "material.gregtech.euphemium": {
+      "source_key": "gt.material.Euphemium",
+      "value": "Euphemium"
+    },
     "material.gregtech.europarock": {
       "source_key": "gt.material.EuropaRock",
       "value": "Europa"
@@ -44579,6 +46447,10 @@
     "material.gregtech.fa": {
       "source_key": "gt.material.Farnsium",
       "value": "Farnsium"
+    },
+    "material.gregtech.fairy": {
+      "source_key": "gt.material.Fairy",
+      "value": "Fairy"
     },
     "material.gregtech.farnsium": {
       "source_key": "gt.material.Farnsium",
@@ -44844,6 +46716,10 @@
       "source_key": "gt.material.Germanium",
       "value": "Germanium"
     },
+    "material.gregtech.gelatine": {
+      "source_key": "gt.material.Gelatine",
+      "value": "Gelatine"
+    },
     "material.gregtech.germanium": {
       "source_key": "gt.material.Germanium",
       "value": "Germanium"
@@ -44940,6 +46816,14 @@
       "source_key": "gt.material.Goldwood",
       "value": "Goldwood"
     },
+    "material.gregtech.good": {
+      "source_key": "gt.material.Good",
+      "value": "Good"
+    },
+    "material.gregtech.goshen": {
+      "source_key": "gt.material.Goshen",
+      "value": "Goshen"
+    },
     "material.gregtech.goshenite": {
       "source_key": "gt.material.Goshenite",
       "value": "Goshenite"
@@ -44967,6 +46851,10 @@
     "material.gregtech.graphite": {
       "source_key": "gt.material.Graphite",
       "value": "Graphite"
+    },
+    "material.gregtech.graveyarddirt": {
+      "source_key": "gt.material.GraveyardDirt",
+      "value": "Graveyard Dirt"
     },
     "material.gregtech.gravitite": {
       "source_key": "gt.material.Gravitite",
@@ -45188,6 +47076,10 @@
       "source_key": "gt.material.HexafluorosilicicAcid",
       "value": "Hexafluorosilicic Acid"
     },
+    "material.gregtech.hexcite": {
+      "source_key": "gt.material.Hexcite",
+      "value": "Hexcite"
+    },
     "material.gregtech.hexorium": {
       "source_key": "gt.material.Hexorium",
       "value": "Hexorium"
@@ -45231,6 +47123,10 @@
     "material.gregtech.honeydew": {
       "source_key": "gt.material.Honeydew",
       "value": "Honeydew"
+    },
+    "material.gregtech.hopgraphite": {
+      "source_key": "gt.material.HOPGraphite",
+      "value": "HOPGraphite"
     },
     "material.gregtech.hornbeam": {
       "source_key": "gt.material.Hornbeam",
@@ -45340,9 +47236,21 @@
       "source_key": "gt.material.GoldInductive",
       "value": "Inductive Alloy"
     },
+    "material.gregtech.infernal": {
+      "source_key": "gt.material.Infernal",
+      "value": "Infernal"
+    },
+    "material.gregtech.infinite": {
+      "source_key": "gt.material.Infinite",
+      "value": "Infinite"
+    },
     "material.gregtech.infinity": {
       "source_key": "gt.material.Infinity",
       "value": "Infinity"
+    },
+    "material.gregtech.infitite": {
+      "source_key": "gt.material.Infitite",
+      "value": "Infitite"
     },
     "material.gregtech.infuscolium": {
       "source_key": "gt.material.Infuscolium",
@@ -45372,9 +47280,17 @@
       "source_key": "gt.material.InfusedFire",
       "value": "Infused Fire"
     },
+    "material.gregtech.infusedgold": {
+      "source_key": "gt.material.InfusedGold",
+      "value": "Infused Gold"
+    },
     "material.gregtech.infusedorder": {
       "source_key": "gt.material.InfusedOrder",
       "value": "Infused Order"
+    },
+    "material.gregtech.infusedteslatite": {
+      "source_key": "gt.material.InfusedTeslatite",
+      "value": "Teslatite"
     },
     "material.gregtech.infusedvis": {
       "source_key": "gt.material.InfusedVis",
@@ -45391,6 +47307,10 @@
     "material.gregtech.invar": {
       "source_key": "gt.material.Invar",
       "value": "Invar"
+    },
+    "material.gregtech.invisium": {
+      "source_key": "gt.material.Invisium",
+      "value": "Invisium"
     },
     "material.gregtech.iodine": {
       "source_key": "gt.material.Iodine",
@@ -45416,6 +47336,18 @@
       "source_key": "gt.material.Iridium",
       "value": "Iridium"
     },
+    "material.gregtech.iridiumiron": {
+      "source_key": "gt.material.IridiumIron",
+      "value": "Iridiron"
+    },
+    "material.gregtech.iridiumironreinforced": {
+      "source_key": "gt.material.IridiumIronReinforced",
+      "value": "Reinforced Iridiron"
+    },
+    "material.gregtech.iridiumsodiumoxide": {
+      "source_key": "gt.material.IridiumSodiumOxide",
+      "value": "Iridium Sodium Oxide"
+    },
     "material.gregtech.iritanium": {
       "source_key": "gt.material.TitaniumIridium",
       "value": "Iritanium"
@@ -45440,9 +47372,25 @@
       "source_key": "gt.material.IronMagnetic",
       "value": "Magnetic Iron"
     },
+    "material.gregtech.ironsharp": {
+      "source_key": "gt.material.IronSharp",
+      "value": "Sharp Iron"
+    },
     "material.gregtech.ironwood": {
       "source_key": "gt.material.Ironwood",
       "value": "Ironwood"
+    },
+    "material.gregtech.irridantreinforced": {
+      "source_key": "gt.material.IrridantReinforced",
+      "value": "IrridantReinforced"
+    },
+    "material.gregtech.irridanturanium": {
+      "source_key": "gt.material.IrridantUranium",
+      "value": "Irridant Uranium"
+    },
+    "material.gregtech.itarius": {
+      "source_key": "gt.material.Itarius",
+      "value": "Itarius"
     },
     "material.gregtech.jacaranda": {
       "source_key": "gt.material.Jacaranda",
@@ -45479,6 +47427,14 @@
     "material.gregtech.jasperyellow": {
       "source_key": "gt.material.YellowJasper",
       "value": "Yellow Jasper"
+    },
+    "material.gregtech.jet": {
+      "source_key": "gt.material.Jet",
+      "value": "Jet"
+    },
+    "material.gregtech.joshen": {
+      "source_key": "gt.material.Joshen",
+      "value": "Joshen"
     },
     "material.gregtech.jungle": {
       "source_key": "gt.material.Junglewood",
@@ -45656,6 +47612,10 @@
       "source_key": "gt.material.Leather",
       "value": "Leather"
     },
+    "material.gregtech.legendary": {
+      "source_key": "gt.material.Legendary",
+      "value": "Legendary"
+    },
     "material.gregtech.lemurite": {
       "source_key": "gt.material.Lemurite",
       "value": "Lemurite"
@@ -45715,6 +47675,10 @@
     "material.gregtech.lime": {
       "source_key": "gt.material.Lime",
       "value": "Lime"
+    },
+    "material.gregtech.limepure": {
+      "source_key": "gt.material.LimePure",
+      "value": "Pure Lime"
     },
     "material.gregtech.limestone": {
       "source_key": "gt.material.Limestone",
@@ -45780,6 +47744,10 @@
       "source_key": "gt.material.Locust",
       "value": "Locust"
     },
+    "material.gregtech.lodestone": {
+      "source_key": "gt.material.Lodestone",
+      "value": "Lodestone"
+    },
     "material.gregtech.logwood": {
       "source_key": "gt.material.Logwood",
       "value": "Logwood"
@@ -45803,6 +47771,10 @@
     "material.gregtech.ludicrite": {
       "source_key": "gt.material.Ludicrite",
       "value": "Ludicrite"
+    },
+    "material.gregtech.luminite": {
+      "source_key": "gt.material.Luminite",
+      "value": "Luminite"
     },
     "material.gregtech.lumium": {
       "source_key": "gt.material.Lumium",
@@ -45840,6 +47812,10 @@
       "source_key": "gt.material.Magicwood",
       "value": "Magicwood"
     },
+    "material.gregtech.magma": {
+      "source_key": "gt.material.Magma",
+      "value": "Magma"
+    },
     "material.gregtech.magnalium": {
       "source_key": "gt.material.Magnalium",
       "value": "Magnalium"
@@ -45859,6 +47835,14 @@
     "material.gregtech.magnetite": {
       "source_key": "gt.material.Magnetite",
       "value": "Magnetite"
+    },
+    "material.gregtech.magnetizedtungsten": {
+      "source_key": "gt.material.MagnetizedTungsten",
+      "value": "Magnetized Tungsten"
+    },
+    "material.gregtech.magnite": {
+      "source_key": "gt.material.Magnite",
+      "value": "Magnite"
     },
     "material.gregtech.mahoe": {
       "source_key": "gt.material.Mahoe",
@@ -45928,9 +47912,17 @@
       "source_key": "gt.material.MartianVitriol",
       "value": "Martian Vitriol"
     },
+    "material.gregtech.master": {
+      "source_key": "gt.material.Master",
+      "value": "Master"
+    },
     "material.gregtech.mauftrium": {
       "source_key": "gt.material.Mauftrium",
       "value": "Mauftrium"
+    },
+    "material.gregtech.mawsitsit": {
+      "source_key": "gt.material.Mawsitsit",
+      "value": "Mawsitsit"
     },
     "material.gregtech.maxixe": {
       "source_key": "gt.material.Maxixe",
@@ -45975,6 +47967,10 @@
     "material.gregtech.mendelevium": {
       "source_key": "gt.material.Mendelevium",
       "value": "Mendelevium"
+    },
+    "material.gregtech.mercassium": {
+      "source_key": "gt.material.Mercassium",
+      "value": "Mercassium"
     },
     "material.gregtech.mercury": {
       "source_key": "gt.material.Mercury",
@@ -46052,6 +48048,10 @@
       "source_key": "gt.material.Mica",
       "value": "Mica"
     },
+    "material.gregtech.microcline": {
+      "source_key": "gt.material.Microcline",
+      "value": "Microcline"
+    },
     "material.gregtech.midasium": {
       "source_key": "gt.material.Midasium",
       "value": "Midasium"
@@ -46067,6 +48067,10 @@
     "material.gregtech.milkyquartz": {
       "source_key": "gt.material.MilkyQuartz",
       "value": "Milky Quartz"
+    },
+    "material.gregtech.mimichite": {
+      "source_key": "gt.material.Mimichite",
+      "value": "Mimichite"
     },
     "material.gregtech.mingrade": {
       "source_key": "gt.material.Mingrade",
@@ -46128,6 +48132,10 @@
       "source_key": "gt.material.Morganite",
       "value": "Morganite"
     },
+    "material.gregtech.mortum": {
+      "source_key": "gt.material.Mortum",
+      "value": "Mortum"
+    },
     "material.gregtech.moscovium": {
       "source_key": "gt.material.Moscovium",
       "value": "Moscovium"
@@ -46140,9 +48148,21 @@
       "source_key": "gt.material.Meitnerium",
       "value": "Meitnerium"
     },
+    "material.gregtech.mud": {
+      "source_key": "gt.material.Mud",
+      "value": "Mud"
+    },
     "material.gregtech.muspelheimpower": {
       "source_key": "gt.material.MuspelheimPower",
       "value": "Muspelheim Power"
+    },
+    "material.gregtech.mutatediron": {
+      "source_key": "gt.material.MutatedIron",
+      "value": "Mutated Iron"
+    },
+    "material.gregtech.mutation": {
+      "source_key": "gt.material.Mutation",
+      "value": "Mutation"
     },
     "material.gregtech.n": {
       "source_key": "gt.material.Nitrogen",
@@ -46256,6 +48276,10 @@
       "source_key": "gt.material.Neptunium",
       "value": "Neptunium"
     },
+    "material.gregtech.nether": {
+      "source_key": "gt.material.Nether",
+      "value": "Nether"
+    },
     "material.gregtech.netherbrick": {
       "source_key": "gt.material.NetherBrick",
       "value": "Nether Brick"
@@ -46280,6 +48304,10 @@
       "source_key": "gt.material.NetherStar",
       "value": "Nether Star"
     },
+    "material.gregtech.netheryte": {
+      "source_key": "gt.material.Netheryte",
+      "value": "Netheryte"
+    },
     "material.gregtech.neutrino": {
       "source_key": "gt.material.Neutrino",
       "value": "Neutrino"
@@ -46287,6 +48315,10 @@
     "material.gregtech.neutron": {
       "source_key": "gt.material.Neutron",
       "value": "Neutron"
+    },
+    "material.gregtech.neutronium": {
+      "source_key": "gt.material.Neutronium",
+      "value": "Neutronium"
     },
     "material.gregtech.nh": {
       "source_key": "gt.material.Nihonium",
@@ -46396,6 +48428,10 @@
       "source_key": "gt.material.NaquadahEnriched",
       "value": "Enriched Naquadah"
     },
+    "material.gregtech.null": {
+      "source_key": "gt.material.NULL",
+      "value": "NULL"
+    },
     "material.gregtech.nutmeg": {
       "source_key": "gt.material.Nutmeg",
       "value": "Nutmeg"
@@ -46427,6 +48463,10 @@
     "material.gregtech.obsidian": {
       "source_key": "gt.material.Obsidian",
       "value": "Obsidian"
+    },
+    "material.gregtech.obsidianflux": {
+      "source_key": "gt.material.ObsidianFlux",
+      "value": "Obsidian Flux"
     },
     "material.gregtech.obsidianrefined": {
       "source_key": "gt.material.ObsidianRefined",
@@ -46532,6 +48572,14 @@
       "source_key": "gt.material.OsmiumElemental",
       "value": "Osmium"
     },
+    "material.gregtech.osmiumtetroxide": {
+      "source_key": "gt.material.OsmiumTetroxide",
+      "value": "Osmium Tetroxide"
+    },
+    "material.gregtech.osmonium": {
+      "source_key": "gt.material.Osmonium",
+      "value": "Osmonium"
+    },
     "material.gregtech.oureclase": {
       "source_key": "gt.material.Oureclase",
       "value": "Oureclase"
@@ -46551,6 +48599,10 @@
     "material.gregtech.padauk": {
       "source_key": "gt.material.Padauk",
       "value": "Padauk"
+    },
+    "material.gregtech.painite": {
+      "source_key": "gt.material.Painite",
+      "value": "Painite"
     },
     "material.gregtech.palis": {
       "source_key": "gt.material.Palis",
@@ -46640,6 +48692,10 @@
       "source_key": "gt.material.Petrol",
       "value": "Petrol"
     },
+    "material.gregtech.petroleum": {
+      "source_key": "gt.material.Petroleum",
+      "value": "Petroleum"
+    },
     "material.gregtech.petroleumcoke": {
       "source_key": "gt.material.PetroleumCoke",
       "value": "Petroleum Coke"
@@ -46648,6 +48704,10 @@
       "source_key": "gt.material.Petrotheum",
       "value": "Petrotheum"
     },
+    "material.gregtech.pewter": {
+      "source_key": "gt.material.Pewter",
+      "value": "Pewter"
+    },
     "material.gregtech.pez": {
       "source_key": "gt.material.PEZ",
       "value": "PEZ"
@@ -46655,6 +48715,10 @@
     "material.gregtech.phobosrock": {
       "source_key": "gt.material.PhobosRock",
       "value": "Phobos"
+    },
+    "material.gregtech.phoenixite": {
+      "source_key": "gt.material.Phoenixite",
+      "value": "Phoenixite"
     },
     "material.gregtech.phosphate": {
       "source_key": "gt.material.Phosphate",
@@ -46796,6 +48860,10 @@
       "source_key": "gt.material.Phosphate",
       "value": "Phosphate"
     },
+    "material.gregtech.pokefennium": {
+      "source_key": "gt.material.Pokefennium",
+      "value": "Pokefennium"
+    },
     "material.gregtech.pollucite": {
       "source_key": "gt.material.Pollucite",
       "value": "Pollucite"
@@ -46815,6 +48883,14 @@
     "material.gregtech.porcelain": {
       "source_key": "gt.material.Porcelain",
       "value": "Porcelain"
+    },
+    "material.gregtech.positron": {
+      "source_key": "gt.material.Positron",
+      "value": "Positron"
+    },
+    "material.gregtech.potash": {
+      "source_key": "gt.material.Potash",
+      "value": "Potash"
     },
     "material.gregtech.potassium": {
       "source_key": "gt.material.Potassium",
@@ -46887,6 +48963,10 @@
     "material.gregtech.praseodymium": {
       "source_key": "gt.material.Praseodymium",
       "value": "Praseodymium"
+    },
+    "material.gregtech.primitive": {
+      "source_key": "gt.material.Primitive",
+      "value": "Primitive"
     },
     "material.gregtech.prismane": {
       "source_key": "gt.material.Prismane",
@@ -47004,6 +49084,10 @@
       "source_key": "gt.material.Pyrotheum",
       "value": "Pyrotheum"
     },
+    "material.gregtech.quantum": {
+      "source_key": "gt.material.Quantum",
+      "value": "Quantum"
+    },
     "material.gregtech.quartz": {
       "source_key": "gt.material.Quartz",
       "value": "Quartz"
@@ -47048,6 +49132,10 @@
       "source_key": "gt.material.RainforestJasper",
       "value": "Rainforest Jasper"
     },
+    "material.gregtech.randomite": {
+      "source_key": "gt.material.Randomite",
+      "value": "Randomite"
+    },
     "material.gregtech.rareearth": {
       "source_key": "gt.material.RareEarth",
       "value": "Rare Earth"
@@ -47063,6 +49151,10 @@
     "material.gregtech.realgar": {
       "source_key": "gt.material.Realgar",
       "value": "Realgar"
+    },
+    "material.gregtech.realmite": {
+      "source_key": "gt.material.Realmite",
+      "value": "Realmite"
     },
     "material.gregtech.red": {
       "source_key": "gt.material.Red",
@@ -47144,6 +49236,14 @@
       "source_key": "gt.material.ObsidianRefined",
       "value": "Refined Obsidian"
     },
+    "material.gregtech.reiium": {
+      "source_key": "gt.material.Reiium",
+      "value": "Reiium"
+    },
+    "material.gregtech.reinforced": {
+      "source_key": "gt.material.Reinforced",
+      "value": "Reinforced"
+    },
     "material.gregtech.rf": {
       "source_key": "gt.material.Rutherfordium",
       "value": "Rutherfordium"
@@ -47208,6 +49308,10 @@
       "source_key": "gt.material.Rubber",
       "value": "Rubber"
     },
+    "material.gregtech.rubbertreesap": {
+      "source_key": "gt.material.RubberTreeSap",
+      "value": "Rubber Tree Sap"
+    },
     "material.gregtech.rubidium": {
       "source_key": "gt.material.Rubidium",
       "value": "Rubidium"
@@ -47219,6 +49323,10 @@
     "material.gregtech.ruby": {
       "source_key": "gt.material.Ruby",
       "value": "Ruby"
+    },
+    "material.gregtech.rupee": {
+      "source_key": "gt.material.Rupee",
+      "value": "Rupee"
     },
     "material.gregtech.russellite": {
       "source_key": "gt.material.Russellite",
@@ -47239,6 +49347,14 @@
     "material.gregtech.rye": {
       "source_key": "gt.material.Rye",
       "value": "Rye"
+    },
+    "material.gregtech.ryu": {
+      "source_key": "gt.material.Ryu",
+      "value": "Ryu"
+    },
+    "material.gregtech.ryudragonryder": {
+      "source_key": "gt.material.RyuDragonRyder",
+      "value": "RyuDragonRyder"
     },
     "material.gregtech.s": {
       "source_key": "gt.material.Sulfur",
@@ -47284,6 +49400,14 @@
       "source_key": "gt.material.Sapphire",
       "value": "Sapphire"
     },
+    "material.gregtech.satinspar": {
+      "source_key": "gt.material.Satinspar",
+      "value": "Satinspar"
+    },
+    "material.gregtech.saturnite": {
+      "source_key": "gt.material.Saturnite",
+      "value": "Saturnite"
+    },
     "material.gregtech.saturnrock": {
       "source_key": "gt.material.SaturnRock",
       "value": "Saturn"
@@ -47308,6 +49432,10 @@
       "source_key": "gt.material.Scheelite",
       "value": "Scheelite"
     },
+    "material.gregtech.schrabidium": {
+      "source_key": "gt.material.Schrabidium",
+      "value": "Schrabidium"
+    },
     "material.gregtech.scorched": {
       "source_key": "gt.material.WoodScorched",
       "value": "Scorched Wood"
@@ -47328,6 +49456,10 @@
       "source_key": "gt.material.SeedOil",
       "value": "Seed Oil"
     },
+    "material.gregtech.selenite": {
+      "source_key": "gt.material.Selenite",
+      "value": "Selenite"
+    },
     "material.gregtech.selenium": {
       "source_key": "gt.material.Selenium",
       "value": "Selenium"
@@ -47339,6 +49471,10 @@
     "material.gregtech.sequoia": {
       "source_key": "gt.material.Sequoia",
       "value": "Sequoia"
+    },
+    "material.gregtech.serpentine": {
+      "source_key": "gt.material.Serpentine",
+      "value": "Serpentine"
     },
     "material.gregtech.sg": {
       "source_key": "gt.material.Seaborgium",
@@ -47411,6 +49547,10 @@
     "material.gregtech.skystone": {
       "source_key": "gt.material.SkyStone",
       "value": "Sky Stone"
+    },
+    "material.gregtech.skythern": {
+      "source_key": "gt.material.Skythern",
+      "value": "Skythern"
     },
     "material.gregtech.slate": {
       "source_key": "gt.material.Slate",
@@ -47488,6 +49628,10 @@
       "source_key": "gt.material.SodiumNitrate",
       "value": "Sodium Nitrate"
     },
+    "material.gregtech.sodiumperoxide": {
+      "source_key": "gt.material.SodiumPeroxide",
+      "value": "Sodium Peroxide"
+    },
     "material.gregtech.sodiumpersulfate": {
       "source_key": "gt.material.SodiumPersulfate",
       "value": "Sodium Persulfate"
@@ -47515,6 +49659,10 @@
     "material.gregtech.soularium": {
       "source_key": "gt.material.Soularium",
       "value": "Soularium"
+    },
+    "material.gregtech.soulium": {
+      "source_key": "gt.material.Soulium",
+      "value": "Soulium"
     },
     "material.gregtech.soulsand": {
       "source_key": "gt.material.Soulsand",
@@ -47579,6 +49727,14 @@
     "material.gregtech.stannite": {
       "source_key": "gt.material.Stannite",
       "value": "Stannite"
+    },
+    "material.gregtech.starconium": {
+      "source_key": "gt.material.Starconium",
+      "value": "Starconium"
+    },
+    "material.gregtech.starmetal": {
+      "source_key": "gt.material.Starmetal",
+      "value": "Starmetal"
     },
     "material.gregtech.steam": {
       "source_key": "gt.material.Steam",
@@ -47664,6 +49820,14 @@
       "source_key": "gt.material.Sunstone",
       "value": "Sunstone"
     },
+    "material.gregtech.superconductor": {
+      "source_key": "gt.material.Superconductor",
+      "value": "Superconductor"
+    },
+    "material.gregtech.sweet": {
+      "source_key": "gt.material.Sweet",
+      "value": "Sweet"
+    },
     "material.gregtech.sweetgum": {
       "source_key": "gt.material.Sweetgum",
       "value": "Sweetgum"
@@ -47736,6 +49900,18 @@
       "source_key": "gt.material.Tanzanite",
       "value": "Tanzanite"
     },
+    "material.gregtech.tapazite": {
+      "source_key": "gt.material.Tapazite",
+      "value": "Tapazite"
+    },
+    "material.gregtech.tar": {
+      "source_key": "gt.material.Tar",
+      "value": "Tar"
+    },
+    "material.gregtech.tarpitch": {
+      "source_key": "gt.material.TarPitch",
+      "value": "Tar Pitch"
+    },
     "material.gregtech.tartarite": {
       "source_key": "gt.material.Tartarite",
       "value": "Tartarite"
@@ -47776,6 +49952,10 @@
       "source_key": "gt.material.Templerock",
       "value": "Templerock"
     },
+    "material.gregtech.tennantite": {
+      "source_key": "gt.material.Tennantite",
+      "value": "Tennantite"
+    },
     "material.gregtech.terbium": {
       "source_key": "gt.material.Terbium",
       "value": "Terbium"
@@ -47783,6 +49963,14 @@
     "material.gregtech.terrasteel": {
       "source_key": "gt.material.Terrasteel",
       "value": "Terrasteel"
+    },
+    "material.gregtech.terrasteelalloyraw": {
+      "source_key": "gt.material.TerrasteelAlloyRaw",
+      "value": "Raw Terrasteel Alloy"
+    },
+    "material.gregtech.terrasteelalloystrengthened": {
+      "source_key": "gt.material.TerrasteelAlloyStrengthened",
+      "value": "Strengthened Terrasteel Alloy"
     },
     "material.gregtech.tetrahedrite": {
       "source_key": "gt.material.Tetrahedrite",
@@ -47811,6 +49999,10 @@
     "material.gregtech.thulium": {
       "source_key": "gt.material.Thulium",
       "value": "Thulium"
+    },
+    "material.gregtech.thyrium": {
+      "source_key": "gt.material.Thyrium",
+      "value": "Thyrium"
     },
     "material.gregtech.ti": {
       "source_key": "gt.material.Titanium",
@@ -47900,6 +50092,10 @@
       "source_key": "gt.material.TritaniumElemental",
       "value": "Elemental Tritanium"
     },
+    "material.gregtech.tnt": {
+      "source_key": "gt.material.TNT",
+      "value": "TNT"
+    },
     "material.gregtech.tofu": {
       "source_key": "gt.material.Tofu",
       "value": "Tofu"
@@ -47907,6 +50103,10 @@
     "material.gregtech.topaz": {
       "source_key": "gt.material.Topaz",
       "value": "Topaz"
+    },
+    "material.gregtech.tourmaline": {
+      "source_key": "gt.material.Tourmaline",
+      "value": "Tourmaline"
     },
     "material.gregtech.towerwood": {
       "source_key": "gt.material.Towerwood",
@@ -48008,6 +50208,10 @@
       "source_key": "gt.material.TungsticAcid",
       "value": "Tungstic Acid"
     },
+    "material.gregtech.turquoise": {
+      "source_key": "gt.material.Turquoise",
+      "value": "Turquoise"
+    },
     "material.gregtech.u235f4": {
       "source_key": "gt.material.Uranium235Tetrafluoride",
       "value": "Uranium-235 Tetrafluoride"
@@ -48048,6 +50252,10 @@
       "source_key": "gt.material.UraniumHexafluoride",
       "value": "Uranium Hexafluoride"
     },
+    "material.gregtech.ultimate": {
+      "source_key": "gt.material.Ultimate",
+      "value": "Ultimate"
+    },
     "material.gregtech.ultimet": {
       "source_key": "gt.material.Ultimet",
       "value": "Ultimet"
@@ -48059,6 +50267,10 @@
     "material.gregtech.unbinilium": {
       "source_key": "gt.material.Unbinilium",
       "value": "Unbinilium"
+    },
+    "material.gregtech.unobtainium": {
+      "source_key": "gt.material.Unobtainium",
+      "value": "Unobtainium"
     },
     "material.gregtech.unstable": {
       "source_key": "gt.material.Unstable",
@@ -48180,6 +50392,10 @@
       "source_key": "gt.material.Vermiculite",
       "value": "Vermiculite"
     },
+    "material.gregtech.verticium": {
+      "source_key": "gt.material.Verticium",
+      "value": "Verticium"
+    },
     "material.gregtech.vibramantium": {
       "source_key": "gt.material.Vibramantium",
       "value": "Vibramantium"
@@ -48200,6 +50416,10 @@
       "source_key": "gt.material.VibrantAlloy",
       "value": "Vibrant Alloy"
     },
+    "material.gregtech.vile": {
+      "source_key": "gt.material.Vile",
+      "value": "Vile"
+    },
     "material.gregtech.vinteum": {
       "source_key": "gt.material.Vinteum",
       "value": "Vinteum"
@@ -48207,6 +50427,10 @@
     "material.gregtech.vinteumpurified": {
       "source_key": "gt.material.VinteumPurified",
       "value": "Purified Vinteum"
+    },
+    "material.gregtech.vis": {
+      "source_key": "gt.material.Vis",
+      "value": "Vis"
     },
     "material.gregtech.vitriolofclay": {
       "source_key": "gt.material.VitriolOfClay",
@@ -48227,6 +50451,10 @@
     "material.gregtech.voidquartz": {
       "source_key": "gt.material.VoidQuartz",
       "value": "Void Quartz"
+    },
+    "material.gregtech.voidstone": {
+      "source_key": "gt.material.Voidstone",
+      "value": "Voidstone"
     },
     "material.gregtech.volcanicash": {
       "source_key": "gt.material.VolcanicAshes",
@@ -48312,6 +50540,10 @@
       "source_key": "gt.material.Weedwood",
       "value": "Weedwood"
     },
+    "material.gregtech.weidanium": {
+      "source_key": "gt.material.Weidanium",
+      "value": "Weidanium"
+    },
     "material.gregtech.wenge": {
       "source_key": "gt.material.Wenge",
       "value": "Wenge"
@@ -48356,13 +50588,25 @@
       "source_key": "gt.material.WhiteVitriol",
       "value": "White Vitriol"
     },
+    "material.gregtech.wildwood": {
+      "source_key": "gt.material.Wildwood",
+      "value": "Wildwood"
+    },
     "material.gregtech.willow": {
       "source_key": "gt.material.Willow",
       "value": "Willow"
     },
+    "material.gregtech.wimalite": {
+      "source_key": "gt.material.Wimalite",
+      "value": "Wimalite"
+    },
     "material.gregtech.witchwood": {
       "source_key": "gt.material.Witchwood",
       "value": "Witchwood"
+    },
+    "material.gregtech.witheria": {
+      "source_key": "gt.material.Witheria",
+      "value": "Witheria"
     },
     "material.gregtech.wo3": {
       "source_key": "gt.material.TungstenTrioxide",
@@ -48523,6 +50767,10 @@
     "material.gregtech.zebrawood": {
       "source_key": "gt.material.Zebrawood",
       "value": "Zebrawood"
+    },
+    "material.gregtech.zectium": {
+      "source_key": "gt.material.Zectium",
+      "value": "Zectium"
     },
     "material.gregtech.zeolite": {
       "source_key": "gt.material.Zeolite",

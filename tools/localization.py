@@ -52,8 +52,11 @@ def format_arguments(value):
     return used
 
 
-def check_english(repo, english, chinese, aliases, source):
-    pinned = read_json(repo / CONFIG_PATH / 'english_source.json')['values']
+def check_english(repo, english, chinese, aliases, source, *, pinned=None):
+    # Importers validate their proposed declarations before touching any file.
+    # Normal checks still read the accepted declarations from disk.
+    if pinned is None:
+        pinned = read_json(repo / CONFIG_PATH / 'english_source.json')['values']
     changed = [key for key, row in pinned.items() if english.get(key) != row['value']]
     if changed:
         raise ValueError('English differs from original source declarations: ' + ', '.join(changed[:12]))

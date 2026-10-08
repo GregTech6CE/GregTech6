@@ -274,6 +274,18 @@ final class LanguageDeliveryChecks {
         for(var variant:canvases)requireInstalledName(item(variant.path()));
         var panels=com.gregtech.gregtech.content.transport.PanelCatalog.ALL;
         for(var spec:panels)requireInstalledName(item(spec.id()));
+        int bottles=0;
+        for(var registered:BuiltInRegistries.ITEM)if(registered instanceof com.gregtech.gregtech.item.BottleItem) {
+            var stack=new ItemStack(registered);requireInstalledName(stack);
+            String key=stack.getDescriptionId()+".tooltip";
+            require(Language.getInstance().has(key),"Original bottle description key "+key);
+            String expected=Component.translatable(key).getString();
+            var lines=tooltip(stack).stream().filter(c->has(c,key)).toList();
+            require(lines.size()==(expected.isEmpty()?0:1),"Bottle description appears once or stays empty "+key);
+            if(!expected.isEmpty())require(lines.get(0).getString().equals(expected),"Installed bottle description "+key);
+            bottles++;
+        }
+        require(bottles>100,"Complete registered bottle family");
         int tabs=0;
         for(var tab:BuiltInRegistries.CREATIVE_MODE_TAB) {
             var id=BuiltInRegistries.CREATIVE_MODE_TAB.getKey(tab);
@@ -289,6 +301,7 @@ final class LanguageDeliveryChecks {
         var report=new JsonObject();report.addProperty("bees",bees);report.addProperty("anvils",ANVILS.size());
         report.addProperty("books",books.size());report.addProperty("canvases",canvases.size());
         report.addProperty("panels",panels.size());report.addProperty("creativeTabs",tabs);
+        report.addProperty("bottles",bottles);
         return report;
     }
 
@@ -426,6 +439,8 @@ final class LanguageDeliveryChecks {
     }
     private static int verifyTechnologyNames(boolean chinese) {
         int count=0;
+        verifySourceTechnology("ink_bottle","gt.multiitem.bottles.32000",chinese);count++;
+        verifySourceTechnology("bottled_indigo_dye","gt.multiitem.bottles.32001",chinese);count++;
         for(int tier=1;tier<=4;tier++)for(var form:Map.of("stick",32000,"cable",32010,"hdd",32020).entrySet()) {
             verifySourceTechnology("usb"+tier+"_"+form.getKey(),"gt.multiitem.technological."+(form.getValue()+tier),chinese);count++;
         }
@@ -448,7 +463,7 @@ final class LanguageDeliveryChecks {
             require(stack.getItem() instanceof com.gregtech.gregtech.item.SelectorTagItem tag && tag.isCatalyst(),"Selector keeps recipe catalyst identity");
             count++;
         }
-        require(count==84,"Complete newly source-bound technology catalog");return count;
+        require(count==86,"Complete source-bound technology and dye bottle catalog");return count;
     }
     private static int verifyCoins(boolean chinese) {
         String expected=original("item.gregtech.coin");int count=0;
