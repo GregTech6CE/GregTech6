@@ -62,15 +62,33 @@ public final class RecipePresentationRuntimeSmoke {
     }
     private static void show() {
         selected=stage==1?MachineRecipeMaps.Mortar:MachineRecipeMaps.ToolHeads;
+        Recipe compat=null;
+        if(Boolean.getBoolean("gregtech.integration.compatViewerSmoke")&&stage==1) {
+            selected=MachineRecipeMaps.Compressor;
+            compat=selected.mRecipeList.stream().filter(RecipePresentationRuntimeSmoke::isCokeBlock).findFirst()
+                    .orElseThrow(()->new IllegalStateException("IE coke compressor row missing from viewer"));
+            if(receipt!=null)receipt.addProperty("compatViewerRecipe","immersiveengineering:coke");
+        }
         if(selected.mRecipeList.stream().noneMatch(r->r.mEnabled&&!r.mHidden))selected=MachineRecipeMaps.DidYouKnow;
         require(selected.mViewerAllowed&&selected.mRecipeList.stream().anyMatch(r->r.mEnabled&&!r.mHidden),"actual displayed source recipe");
         if(EMI) {
-            var row=dev.emi.emi.api.EmiApi.getRecipeManager().getRecipes().stream().filter(r->r.getCategory().getId().getNamespace().equals("gregtech")&&r.getCategory().getId().getPath().equals(selected.mNameInternal)).findFirst().orElseThrow();
+            Recipe wanted=compat;
+            var row=dev.emi.emi.api.EmiApi.getRecipeManager().getRecipes().stream().filter(r->r.getCategory().getId().getNamespace().equals("gregtech")&&r.getCategory().getId().getPath().equals(selected.mNameInternal)&&outputsWanted(r,wanted)).findFirst().orElseThrow();
             dev.emi.emi.api.EmiApi.displayRecipe(row);
         } else {
-            var row=selected.mRecipeList.stream().filter(r->r.mEnabled&&!r.mHidden).findFirst().orElseThrow();
+            var row=compat!=null?compat:selected.mRecipeList.stream().filter(r->r.mEnabled&&!r.mHidden).findFirst().orElseThrow();
             RecipePresentationJeiSmoke.runtime.getRecipesGui().showRecipes(RecipePresentationJeiSmoke.runtime.getRecipeManager().getRecipeCategory(RecipeMapCategory.recipeType(selected)),List.of(row),List.of());
         }
+    }
+    private static boolean isCokeBlock(Recipe recipe) {
+        return recipe.mEnabled&&!recipe.mHidden&&recipe.mOutputs.length>0
+                &&net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(recipe.mOutputs[0].getItem()).toString().equals("immersiveengineering:coke");
+    }
+    private static boolean outputsWanted(dev.emi.emi.api.recipe.EmiRecipe shown,Recipe wanted) {
+        if(wanted==null)return true;
+        var id=net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(wanted.mOutputs[0].getItem());
+        for(var output:shown.getOutputs())if(output.getItemStack().is(net.minecraft.core.registries.BuiltInRegistries.ITEM.get(id)))return true;
+        return false;
     }
     public static void screen(Minecraft minecraft,net.minecraft.client.gui.screens.Screen screen) {
         if(Boolean.getBoolean("gregtech.integration.materialDataBrowserRuntimeOnly")){MaterialDataBrowserSmoke.screen(minecraft,screen);return;}

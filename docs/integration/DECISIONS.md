@@ -102,6 +102,10 @@ USB/晶体/模具字段词序差异通过显式IL规则回接原数字身份；�
 
 加工机器、能源设备、传动部件与多方块采用共享原版CR.REV及显式OM.data已知输入组成，内存保持CS.U而非显示整数；输出数量、前缀副材料和ANY/档位映射参与计算。废除合成8U壳体及引擎9U估算，未知来源返回空表，未知自动矿辞数据保留审计，绝不选择任意标签成员。独立控制器从原生方块注册表登记，F3+H提示、恢复和坩埚读同一ItemComposition。手工补的120漏斗仅是原metalset形状的代数展开。最大木轴无已知数据及XV电池盒缺失原10049引用独立记录。用户允许几轮合并双版验收，本轮编译通过不视为成品/玩法通过，新增成品自检程序仅待运行。见[边界](verification/machine-tooltip-20261007.md)。
 
+## 2026-10-06 / 联动框架与 Immersive Engineering 样板
+
+联动不改 `GregTech.java` / `GregTechNeoForge.java`。机器行自己订 `TagsUpdatedEvent`（`shouldUpdateStaticData()`），按对象身份先清后建，`ServerStoppedEvent` 清空。合成新增和按精确配方 id 删除走内存数据包，位置 TOP；Forge 用 `forge:false`，NeoForge 用 `neoforge:false`。现代 mod id 只存字符串并问 `ModList`，不新建 `ModData("immersiveengineering")`，也不用旧的 `ModData("ImmersiveEngineering")`。不加编译依赖。`-PcompatRuntime=ie` 才加入开发期 `runtimeOnly`，默认关闭，不打进成品，也不写进 `mods.toml`。外部机器镜像不恢复。目标模组没装就整组跳过；登记过的注册名找不到则该行不生成并计数，不产出空气。木板油浴继续产出 `gregtech:planks_treated`，再与 IE 横板互转。锤子只覆盖 11 个压板 id，不扫所有含锤子的配方。旧存档没有测。见 [账本](compat/immersiveengineering.md)。
+
 ## 2026-10-05 / 长距离端点源认领与双层模型
 
 共享core负责同身份BFS、首接收端/唯一活发送端认领、65度放置阈值和64tick状态；加载器负责原生能力、区块/目标存储、工具/控制和渲染。初扫允许读路径区块，建立后只保留目标坐标；取消旧4096/全网唯一端点限制，旧公共规则留deprecated兼容。拓扑版本仅在长距离线路/端点变化时更新，活动状态更新不触发重扫。接原版软锤重扫而非开关，手动工具按100/100/1耐久，电动使用已有耗电路径。平台原生composite保留彩色层tint0和固定色覆盖层，Neo强制不透明alpha，Forge防止通用回调覆盖。四状态图采用原始Java声明及_w保留的CC0原图。状态3明确采用记住目标但不可用的条件；冻结历史按原版保留。入口先判断接收目标再过压，根类最小电包门禁保留。正式成品启动与有限玩法分开，实际卸载/独立重启和完整面板未验收，见[范围](verification/long-endpoints-20261005.md)。

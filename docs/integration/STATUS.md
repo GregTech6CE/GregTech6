@@ -108,6 +108,10 @@ de26e9ed6普通双build2m33s/790类验包通过；初Forge自检误要求徒手�
 
 最终60共享断言、双版主代码和成品自检源码编译25秒通过；自检源码含逐项注册/单次提示/桶内容/406管提示检查，但尚未执行。普通JAR/启动/恢复和坩埚玩法按用户要求多轮合并验收，没有新成品交付。来源25文件/646依赖及10项_w选择性配方对照见[来源](verification/machine-tooltip-source-20261007.json)，边界见[本批](verification/machine-tooltip-20261007.md)。其他方块tooltip、抗爆/采集/接触伤害以及其余原版材料记录待续。整体goal active，仅本地，未推送，PR暂缓。
 
+## 2026-10-06 / Immersive Engineering 联动样板
+
+双版联动框架和 IE 样板已接上。IE 在场时各登记 166 条机器行、0 条解析失败、13 个合成包文件（2 条互转加 11 个锤子压板覆盖）；IE 不在场时机器行为 0、合成包为 0。两端 `gregtech_compat` GameTest（含 `/reload`）、带 IE 的专服启动、JEI/EMI 压缩机焦炭页截图，以及 714 个当前共享类验包通过。旧存档、完整生存和独立重启没有测。未推送。见 [验证](VERIFICATION.md)、[账本](compat/immersiveengineering.md)。
+
 ## 2026-10-05 / 原版长距离端点工具与RGB
 
 七端点恢复六向/原版65度放置、扳手/软锤/放大镜、16堆叠、源材料RGB及四种变压器活动模型；共享扫描支持分支与活发送端认领，初扫无4096截断。两端有限世界各42旋转/28放置/7软锤/7放大镜/7停止数据往返、132状态模型及六向真实18电包输入36864/收到35712/损耗1152 EU，40格已加载跨区块17插入/7提取通过并查看截图。Neo最终另验五档未连线过压；Forge世界后同顺序修正只编译/验包/主菜单，不重复世界。共享10294断言、正式双版4m 2s、694当前core类/原生字节/CRC/Mixin、28共享端点资源+22原生模型+62继承书籍资源验包及正式Loader/Java25主菜单通过。稳定目录 `build/verified/20261005-020818Z-d472c3af`。真实未加载路径、旧存档/重启、专服、生存及完整面板仍待续，goal active，未推送。见[边界](verification/long-endpoints-20261005.md)、[回执](verification/long-endpoints-20261005.json)、[来源](verification/long-endpoints-source-20261005.json)。
