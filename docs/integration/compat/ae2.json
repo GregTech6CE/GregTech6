@@ -1,0 +1,1385 @@
+{
+  "module": "ae2",
+  "modernId": "ae2",
+  "loaders": {
+    "forge": "1.20.1",
+    "neoforge": "1.21.1"
+  },
+  "jars": {
+    "forge": "appliedenergistics2-forge-15.4.11",
+    "neoforge": "appliedenergistics2-19.2.18"
+  },
+  "runtimeDependency": {
+    "guideme": {
+      "forge": "20.1.15",
+      "neoforge": "21.1.19"
+    }
+  },
+  "pattern": "MD.AE / IL.AE_",
+  "hitCount": 191,
+  "statusCounts": {
+    "deferred": 131,
+    "external_bridge": 7,
+    "implemented": 51,
+    "covered": 2
+  },
+  "copyright": "Copyright (c) 2026 GregTech-6 Team",
+  "license": "LGPL-3.0-or-later",
+  "files": {
+    "gregapi/data/MT.java": "926ac79117433c88f94db1793396fa7a6ced7e4247947a4e8e55dca8bce040b7",
+    "gregapi/data/RM.java": "7a10b29a135c8fc213e03e57e876d5b965b2bf904aba6c9c053089d70501ba02",
+    "gregapi/GT_API_Post.java": "103aaaeb621f94396fe00be6e73aeb4119a551a772238a2e367778b19cda710e",
+    "gregapi/GT_API_Proxy.java": "c5a0a8313c9c77cbdd7ab1229dfd60707e42197ed801e6fca6f5865e072999f8",
+    "gregapi/GT_API_Proxy_Client.java": "a21772131324e4abfec583f7fb40618a7a885a27a0728e264b2a61cc06a4c2f7",
+    "gregapi/load/LoaderBookList.java": "43e332257e1b2ca3befb5d9ae3b816bba199a87698694015793595298d8024b9",
+    "gregapi/load/LoaderItemData.java": "a4843a85e668765776ffdae24ab2ac86629f72a0482d032f172d4134a38271cf",
+    "gregapi/load/LoaderItemList.java": "b7c184ceb6470b2b79b8d1147c62e5225a92df0657cdee121e97319f88d42c58",
+    "gregapi/load/LoaderUnificationTargets.java": "9488db8f81563d4cfeb023445cb7b111392d478aceaa0b504b2e4adac1f4cca7",
+    "gregapi/util/ST.java": "cbabea3e862fd57e50550813e7d4386c831bda75de6812efff035729513e14d9",
+    "gregtech/compat/Compat_Recipes_AppliedEnergistics.java": "276755364e8efc53b3f282f28e4080d1aea29f8d10db98ca52b467a06809b87c",
+    "gregtech/GT6_Main.java": "3a0b9daa0955f7d60a1974b25c2a1194937d9cedfa9dac3367afed8f948424c9",
+    "gregtech/items/tools/machine/GT_Tool_Wrench.java": "193fc581667f332dbcd438e630cda3966e7aeb2e0e35befcc6d982c8c070146c",
+    "gregtech/loaders/b/Loader_Worldgen.java": "bf0b2f48c250cd8ba4cd9c16fa32864b28d5b9e4fc20d282170b5ca4f0bc7ca4",
+    "gregtech/loaders/c/Loader_Recipes_Replace.java": "4fb923ba76f6975c58f860cdf725ef22e68ffaf173f4459f72c26080474f31e6",
+    "gregtech/worldgen/TwilightTreasureReplacer.java": "0af1149a37ee647fd64f0b341b43dabf44f2120e807559adcf77795e074b304b"
+  },
+  "entries": [
+    {
+      "file": "gregapi/data/MT.java",
+      "line": 2336,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "material ownership stays deferred"
+    },
+    {
+      "file": "gregapi/data/MT.java",
+      "line": 2337,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "material ownership stays deferred"
+    },
+    {
+      "file": "gregapi/data/MT.java",
+      "line": 2338,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "material ownership stays deferred"
+    },
+    {
+      "file": "gregapi/data/MT.java",
+      "line": 2339,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "material ownership stays deferred"
+    },
+    {
+      "file": "gregapi/data/MT.java",
+      "line": 2340,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "material ownership stays deferred"
+    },
+    {
+      "file": "gregapi/data/RM.java",
+      "line": 967,
+      "token": "MD.AE",
+      "status": "external_bridge",
+      "note": "ae_grinder API bridge is not restored"
+    },
+    {
+      "file": "gregapi/data/RM.java",
+      "line": 968,
+      "token": "MD.AE",
+      "status": "external_bridge",
+      "note": "ae_grinder API bridge is not restored"
+    },
+    {
+      "file": "gregapi/data/RM.java",
+      "line": 969,
+      "token": "MD.AE",
+      "status": "external_bridge",
+      "note": "ae_grinder API bridge is not restored"
+    },
+    {
+      "file": "gregapi/GT_API_Post.java",
+      "line": 175,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "grinder recipe clear is an external bridge"
+    },
+    {
+      "file": "gregapi/GT_API_Post.java",
+      "line": 687,
+      "token": "MD.AE",
+      "status": "external_bridge",
+      "note": "grinder recipe clear is an external bridge"
+    },
+    {
+      "file": "gregapi/GT_API_Proxy.java",
+      "line": 1099,
+      "token": "IL.AE_",
+      "status": "deferred",
+      "note": "AE wrench recognition stays deferred"
+    },
+    {
+      "file": "gregapi/GT_API_Proxy.java",
+      "line": 1099,
+      "token": "IL.AE_",
+      "status": "deferred",
+      "note": "AE wrench recognition stays deferred"
+    },
+    {
+      "file": "gregapi/GT_API_Proxy_Client.java",
+      "line": 529,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "NEI hide stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderBookList.java",
+      "line": 367,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "AE book pages stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderBookList.java",
+      "line": 368,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "AE book pages stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderBookList.java",
+      "line": 369,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "AE book pages stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderBookList.java",
+      "line": 370,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "AE book pages stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderBookList.java",
+      "line": 371,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "AE book pages stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderBookList.java",
+      "line": 372,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "AE book pages stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderBookList.java",
+      "line": 373,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "AE book pages stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderBookList.java",
+      "line": 374,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "AE book pages stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderBookList.java",
+      "line": 375,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "AE book pages stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderBookList.java",
+      "line": 376,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "AE book pages stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderBookList.java",
+      "line": 377,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "AE book pages stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderBookList.java",
+      "line": 378,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "AE book pages stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderBookList.java",
+      "line": 379,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "AE book pages stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderBookList.java",
+      "line": 380,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "AE book pages stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderBookList.java",
+      "line": 381,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "AE book pages stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderBookList.java",
+      "line": 382,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "AE book pages stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderBookList.java",
+      "line": 383,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "AE book pages stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderBookList.java",
+      "line": 384,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "AE book pages stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderBookList.java",
+      "line": 385,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "AE book pages stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderBookList.java",
+      "line": 386,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "AE book pages stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemData.java",
+      "line": 48,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "ore-dict registration of AE items stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemData.java",
+      "line": 49,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "ore-dict registration of AE items stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemData.java",
+      "line": 50,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "ore-dict registration of AE items stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemData.java",
+      "line": 1212,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "ore-dict registration of AE items stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemData.java",
+      "line": 1213,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "ore-dict registration of AE items stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemData.java",
+      "line": 1214,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "ore-dict registration of AE items stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemData.java",
+      "line": 1215,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "ore-dict registration of AE items stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemData.java",
+      "line": 1216,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "ore-dict registration of AE items stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemData.java",
+      "line": 2095,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "ore-dict registration of AE items stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemData.java",
+      "line": 2096,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "ore-dict registration of AE items stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemData.java",
+      "line": 2097,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "ore-dict registration of AE items stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemData.java",
+      "line": 2098,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "ore-dict registration of AE items stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemData.java",
+      "line": 2099,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "ore-dict registration of AE items stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemData.java",
+      "line": 2100,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "ore-dict registration of AE items stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemData.java",
+      "line": 2101,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "ore-dict registration of AE items stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemData.java",
+      "line": 2102,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "ore-dict registration of AE items stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemData.java",
+      "line": 2103,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "ore-dict registration of AE items stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemData.java",
+      "line": 2104,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "ore-dict registration of AE items stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemData.java",
+      "line": 2105,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "ore-dict registration of AE items stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemData.java",
+      "line": 2106,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "ore-dict registration of AE items stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemData.java",
+      "line": 2107,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "ore-dict registration of AE items stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemData.java",
+      "line": 2108,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "ore-dict registration of AE items stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemData.java",
+      "line": 2109,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "ore-dict registration of AE items stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemData.java",
+      "line": 2110,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "ore-dict registration of AE items stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemData.java",
+      "line": 2111,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "ore-dict registration of AE items stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemData.java",
+      "line": 2112,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "ore-dict registration of AE items stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemData.java",
+      "line": 2113,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "ore-dict registration of AE items stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemList.java",
+      "line": 515,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "glass and replaceable-stone lists stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemList.java",
+      "line": 516,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "glass and replaceable-stone lists stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemList.java",
+      "line": 589,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "glass and replaceable-stone lists stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemList.java",
+      "line": 590,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "glass and replaceable-stone lists stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemList.java",
+      "line": 1768,
+      "token": "IL.AE_",
+      "status": "deferred",
+      "note": "glass and replaceable-stone lists stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemList.java",
+      "line": 1768,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "glass and replaceable-stone lists stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemList.java",
+      "line": 1768,
+      "token": "IL.AE_",
+      "status": "deferred",
+      "note": "glass and replaceable-stone lists stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemList.java",
+      "line": 1769,
+      "token": "IL.AE_",
+      "status": "deferred",
+      "note": "glass and replaceable-stone lists stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemList.java",
+      "line": 1769,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "glass and replaceable-stone lists stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemList.java",
+      "line": 1769,
+      "token": "IL.AE_",
+      "status": "deferred",
+      "note": "glass and replaceable-stone lists stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemList.java",
+      "line": 1770,
+      "token": "IL.AE_",
+      "status": "deferred",
+      "note": "glass and replaceable-stone lists stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemList.java",
+      "line": 1770,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "glass and replaceable-stone lists stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemList.java",
+      "line": 1770,
+      "token": "IL.AE_",
+      "status": "deferred",
+      "note": "glass and replaceable-stone lists stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemList.java",
+      "line": 1771,
+      "token": "IL.AE_",
+      "status": "deferred",
+      "note": "glass and replaceable-stone lists stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemList.java",
+      "line": 1771,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "glass and replaceable-stone lists stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemList.java",
+      "line": 1771,
+      "token": "IL.AE_",
+      "status": "deferred",
+      "note": "glass and replaceable-stone lists stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemList.java",
+      "line": 1772,
+      "token": "IL.AE_",
+      "status": "deferred",
+      "note": "glass and replaceable-stone lists stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemList.java",
+      "line": 1772,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "glass and replaceable-stone lists stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 826,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "AE items are not made the canonical GT form"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 827,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "AE items are not made the canonical GT form"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 828,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "AE items are not made the canonical GT form"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 829,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "AE items are not made the canonical GT form"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 830,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "AE items are not made the canonical GT form"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 1247,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "AE items are not made the canonical GT form"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 1248,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "AE items are not made the canonical GT form"
+    },
+    {
+      "file": "gregapi/util/ST.java",
+      "line": 808,
+      "token": "IL.AE_",
+      "status": "deferred",
+      "note": "quartz torch stays deferred"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 41,
+      "token": "MD.AE",
+      "status": "external_bridge",
+      "note": "ae_grinder bridge is not restored"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 42,
+      "token": "MD.AE",
+      "status": "external_bridge",
+      "note": "ae_grinder bridge is not restored"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 43,
+      "token": "MD.AE",
+      "status": "external_bridge",
+      "note": "ae_grinder bridge is not restored"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 45,
+      "token": "IL.AE_",
+      "status": "deferred",
+      "note": "DidYouKnow cutter rows are not restored"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 45,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "DidYouKnow cutter rows are not restored"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 46,
+      "token": "IL.AE_",
+      "status": "deferred",
+      "note": "DidYouKnow cutter rows are not restored"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 46,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "DidYouKnow cutter rows are not restored"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 48,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "shaped quartz glass replacement"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 49,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "shaped quartz glass replacement"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 49,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "shaped quartz glass replacement"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 51,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "press prints a circuit"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 51,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "press prints a circuit"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 51,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "press prints a circuit"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 52,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "press prints a circuit"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 52,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "press prints a circuit"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 54,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "press prints a circuit"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 54,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "press prints a circuit"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 55,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "press prints a circuit"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 55,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "press prints a circuit"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 56,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "press prints a circuit"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 56,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "press prints a circuit"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 57,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "Silicon has no gem plate in this port"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 57,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "Silicon has no gem plate in this port"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 60,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "press copy collapses because the press is both input and output"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 60,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "press copy collapses because the press is both input and output"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 61,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "press copy collapses because the press is both input and output"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 61,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "press copy collapses because the press is both input and output"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 62,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "press copy collapses because the press is both input and output"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 62,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "press copy collapses because the press is both input and output"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 63,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "press copy collapses because the press is both input and output"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 63,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "press copy collapses because the press is both input and output"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 65,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "saw an ingot into three cable anchors"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 68,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "saw an ingot into three cable anchors"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 69,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "saw an ingot into three cable anchors"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 70,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "saw an ingot into three cable anchors"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 71,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "saw an ingot into three cable anchors"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 72,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "saw an ingot into three cable anchors"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 73,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "saw an ingot into three cable anchors"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 74,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "saw an ingot into three cable anchors"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 75,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "saw an ingot into three cable anchors"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 76,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "saw an ingot into three cable anchors"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 78,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "press three inputs into a processor"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 78,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "press three inputs into a processor"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 78,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "press three inputs into a processor"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 79,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "press three inputs into a processor"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 79,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "press three inputs into a processor"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 79,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "press three inputs into a processor"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 80,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "press three inputs into a processor"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 80,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "press three inputs into a processor"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 80,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "press three inputs into a processor"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 82,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "crystal seeds are not registered"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 82,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "crystal seeds are not registered"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 83,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "crystal seeds are not registered"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 83,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "crystal seeds are not registered"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 84,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "crystal seeds are not registered"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 84,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "crystal seeds are not registered"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 86,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "compress certus or fluix into an AE block"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 87,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "compress certus or fluix into an AE block"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 87,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "compress certus or fluix into an AE block"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 88,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "compress certus or fluix into an AE block"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 89,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "compress certus or fluix into an AE block"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 89,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "compress certus or fluix into an AE block"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 90,
+      "token": "MD.AE",
+      "status": "covered",
+      "note": "nether quartz already compresses to the vanilla quartz block"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 92,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "crystal seeds are not registered"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 93,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "crystal seeds are not registered"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 94,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "crystal seeds are not registered"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 96,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "crystal seeds are not registered"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 97,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "crystal seeds are not registered"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 98,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "crystal seeds are not registered"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 101,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "hammer and crusher smash an AE quartz block"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 102,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "hammer and crusher smash an AE quartz block"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 103,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "hammer and crusher smash an AE quartz block"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 104,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "hammer and crusher smash an AE quartz block"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 105,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "hammer and crusher smash an AE quartz block"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 106,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "hammer and crusher smash an AE quartz block"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 107,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "hammer and crusher smash an AE quartz block"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 108,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "hammer and crusher smash an AE quartz block"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 109,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "hammer and crusher smash an AE quartz block"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 110,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "hammer and crusher smash an AE quartz block"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 111,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "hammer and crusher smash an AE quartz block"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 112,
+      "token": "MD.AE",
+      "status": "implemented",
+      "note": "hammer and crusher smash an AE quartz block"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 115,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "sky stone shapes and block-dust mortar stay deferred"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 116,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "sky stone shapes and block-dust mortar stay deferred"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 119,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "sky stone shapes and block-dust mortar stay deferred"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 119,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "sky stone shapes and block-dust mortar stay deferred"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 119,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "sky stone shapes and block-dust mortar stay deferred"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 121,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "sky stone shapes and block-dust mortar stay deferred"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 121,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "sky stone shapes and block-dust mortar stay deferred"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 121,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "sky stone shapes and block-dust mortar stay deferred"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 124,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "sky stone shapes and block-dust mortar stay deferred"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 124,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "sky stone shapes and block-dust mortar stay deferred"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 124,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "sky stone shapes and block-dust mortar stay deferred"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 126,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "sky stone shapes and block-dust mortar stay deferred"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 126,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "sky stone shapes and block-dust mortar stay deferred"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 126,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "sky stone shapes and block-dust mortar stay deferred"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 193,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "laser lens is not consumed, so the row is not emitted"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 197,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "laser lens is not consumed, so the row is not emitted"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 201,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "laser lens is not consumed, so the row is not emitted"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_AppliedEnergistics.java",
+      "line": 205,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "laser lens is not consumed, so the row is not emitted"
+    },
+    {
+      "file": "gregtech/GT6_Main.java",
+      "line": 230,
+      "token": "MD.AE",
+      "status": "covered",
+      "note": "module registration is covered by self-registration"
+    },
+    {
+      "file": "gregtech/items/tools/machine/GT_Tool_Wrench.java",
+      "line": 78,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "AE block wrench behavior stays deferred"
+    },
+    {
+      "file": "gregtech/loaders/b/Loader_Worldgen.java",
+      "line": 855,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "certus small-ore worldgen stays deferred"
+    },
+    {
+      "file": "gregtech/loaders/c/Loader_Recipes_Replace.java",
+      "line": 108,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "cutting knives stay non-replaceable and deferred"
+    },
+    {
+      "file": "gregtech/loaders/c/Loader_Recipes_Replace.java",
+      "line": 109,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "cutting knives stay non-replaceable and deferred"
+    },
+    {
+      "file": "gregtech/worldgen/TwilightTreasureReplacer.java",
+      "line": 204,
+      "token": "MD.AE",
+      "status": "deferred",
+      "note": "AE load check in treasure replacement stays deferred"
+    }
+  ]
+}

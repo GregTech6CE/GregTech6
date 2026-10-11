@@ -1,0 +1,359 @@
+{
+  "loaders": {
+    "forge": "1.20.1",
+    "neoforge": "1.21.1"
+  },
+  "license": "LGPL-3.0-or-later",
+  "copyright": "Copyright (c) GregTech-6 Team",
+  "module": "enderio",
+  "modernId": "enderio",
+  "pattern": "MD.EIO / IL.EIO",
+  "hitCount": 56,
+  "statusCounts": {
+    "deferred": 56
+  },
+  "files": {
+    "gregapi/load/LoaderUnificationTargets.java": "9488db8f81563d4cfeb023445cb7b111392d478aceaa0b504b2e4adac1f4cca7",
+    "gregapi/load/LoaderItemList.java": "b7c184ceb6470b2b79b8d1147c62e5225a92df0657cdee121e97319f88d42c58",
+    "gregapi/load/LoaderItemData.java": "a4843a85e668765776ffdae24ab2ac86629f72a0482d032f172d4134a38271cf",
+    "gregapi/data/MT.java": "926ac79117433c88f94db1793396fa7a6ced7e4247947a4e8e55dca8bce040b7"
+  },
+  "entries": [
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 861,
+      "status": "deferred",
+      "note": "EnderiumBase ingot itemPowderIngot canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 862,
+      "status": "deferred",
+      "note": "ElectricalSteel ingot itemAlloy canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 863,
+      "status": "deferred",
+      "note": "EnergeticAlloy ingot itemAlloy canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 864,
+      "status": "deferred",
+      "note": "VibrantAlloy ingot itemAlloy canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 865,
+      "status": "deferred",
+      "note": "RedstoneAlloy ingot itemAlloy canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 866,
+      "status": "deferred",
+      "note": "ConductiveIron ingot itemAlloy canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 867,
+      "status": "deferred",
+      "note": "PulsatingIron ingot itemAlloy canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 868,
+      "status": "deferred",
+      "note": "ObsidianSteel ingot itemAlloy canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 869,
+      "status": "deferred",
+      "note": "Soularium ingot itemAlloy canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 870,
+      "status": "deferred",
+      "note": "EndSteel ingot itemAlloy canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 871,
+      "status": "deferred",
+      "note": "PulsatingIron nugget itemMaterial canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 872,
+      "status": "deferred",
+      "note": "VibrantAlloy nugget itemMaterial canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 873,
+      "status": "deferred",
+      "note": "EndSteel nugget itemMaterial canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 874,
+      "status": "deferred",
+      "note": "ElectricalSteel block itemAlloy storage canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 875,
+      "status": "deferred",
+      "note": "EnergeticAlloy block itemAlloy storage canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 876,
+      "status": "deferred",
+      "note": "VibrantAlloy block itemAlloy storage canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 877,
+      "status": "deferred",
+      "note": "RedstoneAlloy block itemAlloy storage canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 878,
+      "status": "deferred",
+      "note": "ConductiveIron block itemAlloy storage canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 879,
+      "status": "deferred",
+      "note": "PulsatingIron block itemAlloy storage canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 880,
+      "status": "deferred",
+      "note": "ObsidianSteel block itemAlloy storage canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 881,
+      "status": "deferred",
+      "note": "Soularium block itemAlloy storage canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 882,
+      "status": "deferred",
+      "note": "EndSteel block itemAlloy storage canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 883,
+      "status": "deferred",
+      "note": "CrudeSteel ingot itemAlloyEndergy canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 884,
+      "status": "deferred",
+      "note": "CrystallineAlloy ingot itemAlloyEndergy canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 885,
+      "status": "deferred",
+      "note": "MelodicAlloy ingot itemAlloyEndergy canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 886,
+      "status": "deferred",
+      "note": "StellarAlloy ingot itemAlloyEndergy canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 887,
+      "status": "deferred",
+      "note": "CrystallinePinkSlime ingot itemAlloyEndergy canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 888,
+      "status": "deferred",
+      "note": "EnergeticSilver ingot itemAlloyEndergy canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 889,
+      "status": "deferred",
+      "note": "VividAlloy ingot itemAlloyEndergy canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 890,
+      "status": "deferred",
+      "note": "CrudeSteel block itemAlloyEndergy storage canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 891,
+      "status": "deferred",
+      "note": "CrystallineAlloy block itemAlloyEndergy storage canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 892,
+      "status": "deferred",
+      "note": "MelodicAlloy block itemAlloyEndergy storage canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 893,
+      "status": "deferred",
+      "note": "StellarAlloy block itemAlloyEndergy storage canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 894,
+      "status": "deferred",
+      "note": "CrystallinePinkSlime block itemAlloyEndergy storage canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 895,
+      "status": "deferred",
+      "note": "EnergeticSilver block itemAlloyEndergy storage canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 896,
+      "status": "deferred",
+      "note": "VividAlloy block itemAlloyEndergy storage canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemList.java",
+      "line": 1775,
+      "status": "deferred",
+      "note": "Yeta wrench special-case tool and crafting deletion stay deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemData.java",
+      "line": 1678,
+      "status": "deferred",
+      "note": "iron tank composition stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemData.java",
+      "line": 1679,
+      "status": "deferred",
+      "note": "obsidian steel tank composition stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemData.java",
+      "line": 1680,
+      "status": "deferred",
+      "note": "dark iron bars composition stays deferred"
+    },
+    {
+      "file": "gregapi/data/MT.java",
+      "line": 2361,
+      "status": "deferred",
+      "note": "RedstoneAlloy material ownership stays deferred"
+    },
+    {
+      "file": "gregapi/data/MT.java",
+      "line": 2362,
+      "status": "deferred",
+      "note": "EnderiumBase material ownership stays deferred"
+    },
+    {
+      "file": "gregapi/data/MT.java",
+      "line": 2363,
+      "status": "deferred",
+      "note": "PulsatingIron material ownership stays deferred"
+    },
+    {
+      "file": "gregapi/data/MT.java",
+      "line": 2364,
+      "status": "deferred",
+      "note": "ConductiveIron material ownership stays deferred"
+    },
+    {
+      "file": "gregapi/data/MT.java",
+      "line": 2365,
+      "status": "deferred",
+      "note": "EnergeticAlloy material ownership stays deferred"
+    },
+    {
+      "file": "gregapi/data/MT.java",
+      "line": 2366,
+      "status": "deferred",
+      "note": "VibrantAlloy material ownership stays deferred"
+    },
+    {
+      "file": "gregapi/data/MT.java",
+      "line": 2367,
+      "status": "deferred",
+      "note": "ElectricalSteel material ownership stays deferred"
+    },
+    {
+      "file": "gregapi/data/MT.java",
+      "line": 2368,
+      "status": "deferred",
+      "note": "Soularium material ownership stays deferred"
+    },
+    {
+      "file": "gregapi/data/MT.java",
+      "line": 2369,
+      "status": "deferred",
+      "note": "CrudeSteel material ownership stays deferred"
+    },
+    {
+      "file": "gregapi/data/MT.java",
+      "line": 2370,
+      "status": "deferred",
+      "note": "CrystallineAlloy material ownership stays deferred"
+    },
+    {
+      "file": "gregapi/data/MT.java",
+      "line": 2371,
+      "status": "deferred",
+      "note": "CrystallinePinkSlime material ownership stays deferred"
+    },
+    {
+      "file": "gregapi/data/MT.java",
+      "line": 2372,
+      "status": "deferred",
+      "note": "EndSteel material ownership stays deferred"
+    },
+    {
+      "file": "gregapi/data/MT.java",
+      "line": 2373,
+      "status": "deferred",
+      "note": "EnergeticSilver material ownership stays deferred"
+    },
+    {
+      "file": "gregapi/data/MT.java",
+      "line": 2374,
+      "status": "deferred",
+      "note": "MelodicAlloy material ownership stays deferred"
+    },
+    {
+      "file": "gregapi/data/MT.java",
+      "line": 2375,
+      "status": "deferred",
+      "note": "StellarAlloy material ownership stays deferred"
+    },
+    {
+      "file": "gregapi/data/MT.java",
+      "line": 2376,
+      "status": "deferred",
+      "note": "VividAlloy material ownership stays deferred"
+    }
+  ]
+}

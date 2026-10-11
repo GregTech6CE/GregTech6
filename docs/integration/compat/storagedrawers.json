@@ -1,0 +1,124 @@
+{
+  "loaders": {
+    "forge": "1.20.1",
+    "neoforge": "1.21.1"
+  },
+  "license": "LGPL-3.0-or-later",
+  "copyright": "Copyright (c) GregTech-6 Team",
+  "module": "storagedrawers",
+  "modernId": "storagedrawers",
+  "pattern": "MD.SD",
+  "hitCount": 17,
+  "statusCounts": {
+    "deferred": 17
+  },
+  "files": {
+    "gregapi/load/LoaderBookList.java": "43e332257e1b2ca3befb5d9ae3b816bba199a87698694015793595298d8024b9",
+    "gregtech/loaders/c/Loader_BlockResistance.java": "05d1e3a1368a797eaf6f9f3984a59c849de95ccad7c62b8555924f5e12f5b95a",
+    "gregtech/items/MultiItemBooks.java": "419e0cdcb9b1190f3f18349c05def536b56adcb6aedca0b6aae3f3c9fed4fed7"
+  },
+  "entries": [
+    {
+      "file": "gregapi/load/LoaderBookList.java",
+      "line": 275,
+      "status": "deferred",
+      "note": "book gate stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderBookList.java",
+      "line": 276,
+      "status": "deferred",
+      "note": "shroud key book stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderBookList.java",
+      "line": 277,
+      "status": "deferred",
+      "note": "lock upgrade book stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderBookList.java",
+      "line": 278,
+      "status": "deferred",
+      "note": "personal key book stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderBookList.java",
+      "line": 279,
+      "status": "deferred",
+      "note": "tape book stays deferred"
+    },
+    {
+      "file": "gregtech/loaders/c/Loader_BlockResistance.java",
+      "line": 51,
+      "status": "deferred",
+      "note": "wooden drawer material gate stays deferred"
+    },
+    {
+      "file": "gregtech/loaders/c/Loader_BlockResistance.java",
+      "line": 53,
+      "status": "deferred",
+      "note": "fullDrawers1 wooden material stays deferred"
+    },
+    {
+      "file": "gregtech/loaders/c/Loader_BlockResistance.java",
+      "line": 54,
+      "status": "deferred",
+      "note": "fullDrawers2 wooden material stays deferred"
+    },
+    {
+      "file": "gregtech/loaders/c/Loader_BlockResistance.java",
+      "line": 55,
+      "status": "deferred",
+      "note": "fullDrawers4 wooden material stays deferred"
+    },
+    {
+      "file": "gregtech/loaders/c/Loader_BlockResistance.java",
+      "line": 56,
+      "status": "deferred",
+      "note": "halfDrawers2 wooden material stays deferred"
+    },
+    {
+      "file": "gregtech/loaders/c/Loader_BlockResistance.java",
+      "line": 57,
+      "status": "deferred",
+      "note": "halfDrawers4 wooden material stays deferred"
+    },
+    {
+      "file": "gregtech/loaders/c/Loader_BlockResistance.java",
+      "line": 58,
+      "status": "deferred",
+      "note": "fullCustom1 wooden material stays deferred"
+    },
+    {
+      "file": "gregtech/loaders/c/Loader_BlockResistance.java",
+      "line": 59,
+      "status": "deferred",
+      "note": "fullCustom2 wooden material stays deferred"
+    },
+    {
+      "file": "gregtech/loaders/c/Loader_BlockResistance.java",
+      "line": 60,
+      "status": "deferred",
+      "note": "fullCustom4 wooden material stays deferred"
+    },
+    {
+      "file": "gregtech/loaders/c/Loader_BlockResistance.java",
+      "line": 61,
+      "status": "deferred",
+      "note": "halfCustom2 wooden material stays deferred"
+    },
+    {
+      "file": "gregtech/loaders/c/Loader_BlockResistance.java",
+      "line": 62,
+      "status": "deferred",
+      "note": "halfCustom4 wooden material stays deferred"
+    },
+    {
+      "file": "gregtech/items/MultiItemBooks.java",
+      "line": 65,
+      "status": "deferred",
+      "note": "aspectonomicon mod list includes Storage Drawers and stays deferred"
+    }
+  ]
+}

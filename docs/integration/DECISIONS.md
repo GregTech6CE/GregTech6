@@ -102,6 +102,50 @@ USB/晶体/模具字段词序差异通过显式IL规则回接原数字身份；�
 
 加工机器、能源设备、传动部件与多方块采用共享原版CR.REV及显式OM.data已知输入组成，内存保持CS.U而非显示整数；输出数量、前缀副材料和ANY/档位映射参与计算。废除合成8U壳体及引擎9U估算，未知来源返回空表，未知自动矿辞数据保留审计，绝不选择任意标签成员。独立控制器从原生方块注册表登记，F3+H提示、恢复和坩埚读同一ItemComposition。手工补的120漏斗仅是原metalset形状的代数展开。最大木轴无已知数据及XV电池盒缺失原10049引用独立记录。用户允许几轮合并双版验收，本轮编译通过不视为成品/玩法通过，新增成品自检程序仅待运行。见[边界](verification/machine-tooltip-20261007.md)。
 
+## 2026-10-07 / 通用形态标签补材料数据
+
+外来物品只要挂着一种没有歧义的通用形态标签，就按 GT 该形态的标准重量补上材料数据。覆盖锭、粒、宝石、粉、小粉、微粉、板、杆。杆认 `rods`。材料别名认 `aluminum`、`sulphur`、`nether_quartz`、`tungstensteel`，和标签包原来的四对写法共用一张表。
+
+不处理 `minecraft` 和 `gregtech` 的物品，也不覆盖已经明确登记的数据。一个物品同时挂着多种形态或多种材料就跳过，日志里单独计数。GT 自己生成不了的组合（例如宝石铁）也跳过。方块标签不补：群峦一个方块等于 1 锭，GT 方块等于 9 锭，混进去会刷物品。齿轮、环、螺栓、螺丝、箔、导线各模组用量不统一，这次不补。
+
+标签包只读明确登记的数据。否则重载之后，上一轮补出来的外来锭会被写进 `gregtech:ingot/lead`，第一次启动和重载就不一样。
+
+补上数据之后，这些物品可以进 GT 坩埚、进大容量存储（取出来是 GT 的物品）、在配方里和 GT 物品互相匹配，并显示材料提示。也能堆成锭堆、当燃烧箱燃料。这和原版 GT6 用矿物词典登记外来物品的结果一致。
+
+用沉浸工程的铅锭、铁杆、铅板和铝杆验证，不另写机器配方账本。群峦的红钢、蓝钢、黑钢锭和杆会跟着这层规则走，但这次没有装群峦实机测。还没做的：Forge 版群峦按物品 id 写熔化配方，GT 锭在群峦里不能熔化；群峦的板等于 2 锭，对应 GT 双层板，群峦的双锭对应 GT 双锭，这两组没有对接；NeoForge 版里 GT 方块在群峦里只熔出 100 mB。
+
+## 2026-10-06 / HarvestCraft 2 只接 Food Core 里还在的机器行
+
+`Compat_Recipes_HarvestCraft` 对着 Food Core Forge `1.0.5` 和 NeoForge `1.0.2`。作物、树木和 Food Extended 没有同时覆盖两边的 Modrinth 包，不加运行依赖。向日葵粉碎、牛肉干的三种盐量、原味甜甜圈的糖粉和 36 mB 巧克力浴，以及面粉加四种水做 `gregtech:dough` 留下。原版 `foodDonut` 监听没有对应标签，所以甜甜圈行只使用 `plaindonutitem`。关掉 `beefjerkyitem`、`powdereddonutitem`、`chocolatedonutitem` 和 `doughitem_x2`。蜡烛、硬化皮革、酸奶、奶昔、合成表改写和营养值不生成。见 [账本](compat/harvestcraft.md)。
+
+## 2026-10-06 / Storage Drawers 只记引用账本
+
+没有 `Compat_Recipes_StorageDrawers`。原版只登记钥匙、锁和胶带的书，并用反射把抽屉改成木头材质。JABBA 的木桶锯切是另一个模组，不记进这里。没有现有机器行能表达的配方。不加 `-PcompatRuntime`，不跑 GameTest。见 [账本](compat/storagedrawers.md)。
+
+## 2026-10-06 / PneumaticCraft 只记引用账本
+
+没有 `Compat_Recipes_PneumaticCraft`。`MD.PnC` 只有压缩铁的材料归属，以及锭、块、齿轮三处规范形态。源码里没有对应的书本登记或爆炸抗性赋值。这些都不是现有机器行，规范形态这批也不改。不加 `-PcompatRuntime`，不跑 GameTest。见 [账本](compat/pneumaticcraft.md)。
+
+## 2026-10-06 / Ender IO 只记引用账本
+
+没有 `Compat_Recipes_EnderIO`。原版引用是合金归属、规范形态、Yeta 扳手，以及储罐和暗铁栏杆的材料数据。这些都不是现有机器行能表达的配方，规范形态这批也不改。不加 `-PcompatRuntime`，不跑 GameTest。见 [账本](compat/enderio.md)。
+
+## 2026-10-06 / Project Red 保留硅片和红铁化合物
+
+`Compat_Recipes_ProjectRed` 对着 Forge `4.20.0` 和 NeoForge `4.23.0` 留下晶坯锯切、硅片、注红石硅和红铁化合物。`maven.modrinth:project-red-core:4.21.0` 解析出来的是 NeoForge 1.20.4 的 jar，所以 Forge 固定 `4.20.0` 并 `fg.deobf`。开发期还带上两边各自的 CodeChickenLib 和 CB Multipart。红铁化合物的禁用文件放在 TOP，但后注册的模组数据包仍会盖掉它，所以配方管理器应用完之后再按删除名单摘掉仍在的 id。硅片和注红石硅的原配方 id 不删，GT 加的是另一条合成。大理石、玄武岩和 Exploration 不在这批，也不把红石合金、蓝石合金和矿石做成规范形态。见 [账本](compat/projectred.md)。
+
+## 2026-10-06 / Applied Energistics 保留还在的冲压和石英玻璃
+
+`Compat_Recipes_AppliedEnergistics` 对着 Forge `15.4.11` 和 NeoForge `19.2.18` 只留下 jar 里还在的注册名。冲压增加三输入操作；有序合成按原版图案写进合成包，Forge 和 NeoForge 的结果字段继续分开。水晶种子已经不存在，所以没有给机器行加第二种流体。压板复制会在优化时把同一件压板从输入和输出里抵消掉，现有配方表会丢掉这种模具行，因此不生成。下界石英压缩和现有压缩机配方冲突，也不另加。石英玻璃的粉用下界石英粉标签，玻璃只用无色玻璃，都比 AE 原配方窄。硅没有宝石板。天际石整套石头加工、磨粉机桥、假配方和不消耗的激光镜头都不恢复。`-PcompatRuntime=ae` 同时带上 GuideME（Forge `20.1.15`，NeoForge `21.1.19`），因为 AE 强制依赖它。IE 不在场时不再要求全局机器行为 0，别的模组可以有自己的行。见 [账本](compat/ae2.md)。
+
+## 2026-10-06 / Mekanism 只保留盐块配方删除
+
+`Compat_Recipes_Mekanism` 的八个染色目标（气球、塑料栅栏、发光板、四种塑料方块）在 Forge `10.4.16.80` 和 NeoForge `10.7.19.85` 里都没有对应物品，这些行不生成。还在的是 2×2 `dusts/salt` → `mekanism:block_salt`，配方 id 两边都是 `mekanism:storage_blocks/salt`，用已有的精确 id 删除。不把 Mekanism 的粉、锭、矿做成 GT 的规范形态，也不接 `MekanismAPI`。`-PcompatRuntime=mek` 与 `ie` 分开，一次一个。见 [账本](compat/mekanism.md)。
+
+## 2026-10-06 / 联动框架与 Immersive Engineering 样板
+
+联动不改 `GregTech.java` / `GregTechNeoForge.java`。机器行自己订 `TagsUpdatedEvent`（`shouldUpdateStaticData()`），按对象身份先清后建，`ServerStoppedEvent` 清空。合成新增和按精确配方 id 删除走内存数据包，位置 TOP；Forge 用 `forge:false`，NeoForge 用 `neoforge:false`。现代 mod id 只存字符串并问 `ModList`，不新建 `ModData("immersiveengineering")`，也不用旧的 `ModData("ImmersiveEngineering")`。不加编译依赖。`-PcompatRuntime=ie` 才加入开发期 `runtimeOnly`，默认关闭，不打进成品，也不写进 `mods.toml`。外部机器镜像不恢复。目标模组没装就整组跳过；登记过的注册名找不到则该行不生成并计数，不产出空气。木板油浴继续产出 `gregtech:planks_treated`，再与 IE 横板互转。锤子只覆盖 11 个压板 id，不扫所有含锤子的配方。旧存档没有测。见 [账本](compat/immersiveengineering.md)。
+
 ## 2026-10-05 / 长距离端点源认领与双层模型
 
 共享core负责同身份BFS、首接收端/唯一活发送端认领、65度放置阈值和64tick状态；加载器负责原生能力、区块/目标存储、工具/控制和渲染。初扫允许读路径区块，建立后只保留目标坐标；取消旧4096/全网唯一端点限制，旧公共规则留deprecated兼容。拓扑版本仅在长距离线路/端点变化时更新，活动状态更新不触发重扫。接原版软锤重扫而非开关，手动工具按100/100/1耐久，电动使用已有耗电路径。平台原生composite保留彩色层tint0和固定色覆盖层，Neo强制不透明alpha，Forge防止通用回调覆盖。四状态图采用原始Java声明及_w保留的CC0原图。状态3明确采用记住目标但不可用的条件；冻结历史按原版保留。入口先判断接收目标再过压，根类最小电包门禁保留。正式成品启动与有限玩法分开，实际卸载/独立重启和完整面板未验收，见[范围](verification/long-endpoints-20261005.md)。

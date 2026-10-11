@@ -100,6 +100,42 @@ Java17当前core身份导出成功，154原默认模板/5Empty结果与源解析
 
 原版表252机器/档位+396稳定方块记录，120漏斗，646源组成依赖；25来源/中文文件哈希与署名许可、10个_w所选配方经过原生API改名归一一致。初次Gradle本机DLL权限失败，提升后6处WoodTreated别名失败均保留；随后28秒50断言+双版compileJava，能源扩充8秒56断言，最终25秒60断言+双原生主代码和成品自检源码通过。未运行新增自检，未生成/验包普通JAR，未启动游戏，未验证材料恢复/坩埚/玩家悬停/真实存档重启。本批合并至后续验收，上批稳定成品不含本次修改。见[回执与边界](verification/machine-tooltip-20261007.md)、[逐条来源](verification/machine-tooltip-source-20261007.json)。整体goal active，仅本地，未推送。
 
+## 2026-10-07 / 通用形态标签补材料数据
+
+共享契约通过：2762 条断言、31 组（`BUILD SUCCESSFUL in 2m 57s`）。Forge 带 `-PcompatRuntime=ie`（沉浸工程 `10.2.0-183`）：`gregtech_compat` 6 项通过，游戏日志 `All 6 required tests passed`，`BUILD SUCCESSFUL in 23m 52s`。初次加载和测试内 `/reload` 后都是 539 条外部加工行、46 条材料数据，其中矿石形态 0、通用形态 46、歧义跳过 0。铅锭、铁杆、铅板、铝杆分别得到锭、杆、板、杆，铅锭能进坩埚和大容量存储，作为配方要求时能接受 GT 铅锭，`storage_lead` 没有通用形态数据，铅锭不在 `gregtech:ingot/lead`。EMI 仍从本地副本解析。NeoForge 带 `-PcompatRuntime=ie`（`12.4.2-194`）：6 项通过（`BUILD SUCCESSFUL in 3m 44s`），同样三次绑定都是 48 条通用形态、歧义 0，reload 后仍通过。NeoForge 不带内容模组：6 项通过（`BUILD SUCCESSFUL in 2m 4s`），材料数据 0、通用形态 0、歧义 0。没有跑 Forge 无模组、主命名空间 `gregtech` 全量 GameTest、专服、客户端或验包。旧存档、完整生存和独立进程重启没有测。群峦没有装，红钢、蓝钢、黑钢只按标签数据推断。没有推送。
+
+## 2026-10-06 / HarvestCraft 2 Food Core
+
+共享契约通过：2740 条断言、31 组，含 Food Core 模块的结构检查（`BUILD SUCCESSFUL in 2m 25s`）。Forge 无 Food Core：`gregtech_compat` 5 项通过（`BUILD SUCCESSFUL in 17m 14s`），合成包 0 个文件，日志写明未加载目标模组。第一次 Forge 运行因为 `maven.terraformersmc.com` 把 Gradle 重定向到连不上的 `repo.sleeping.town`，EMI 解析失败；后面的通过运行改从本地副本解析同一份 EMI。Forge 带 `-PcompatRuntime=hc`（Food Core `1.0.5`）：游戏日志 `All 5 required tests passed`，`BUILD SUCCESSFUL in 22m 5s`。合成包 4 个文件，机器行 12、未解析 0；向日葵粉碎成 1 个种子，牛肉加小堆盐粉出牛肉干，面粉加 1000 mB 水出 `gregtech:dough`，`pamhc2foodcore:beefjerkyitem` 和 `doughitem_x2` 不在，`sunflowerseedsitem` 还在。测试内 `/reload` 后仍是 4 个文件、12 行、0 未解析，禁用文件已经生效所以没有再摘。Food Core 自己的 `caramelcupcakeitem_x4`、`melonpieitem`、`honeymuffinitem` 因物品不存在而解析失败，不是这批删除的 id。NeoForge 无 Food Core：5 项通过（`BUILD SUCCESSFUL in 2m 2s`），合成包 0、整组跳过。NeoForge 带 `-PcompatRuntime=hc`（`1.0.2`）：5 项通过（`BUILD SUCCESSFUL in 2m 22s`），同样 4 个文件、12 行、0 未解析，reload 后仍通过。没有跑专服、客户端或验包。旧存档、完整生存和独立进程重启没有测。没有推送。
+
+## 2026-10-06 / Storage Drawers 引用账本
+
+对着原版源码核对了 `MD.SD`。没有配方类。JABBA 的木桶锯切留在 `Compat_Recipes_JABBA`，没有并进这份账本。没有加运行依赖，没有跑 GameTest。旧存档没有测。没有推送。
+
+## 2026-10-06 / PneumaticCraft 引用账本
+
+对着原版源码核对了 `MD.PnC`。没有配方类，也没有书本登记或爆炸抗性赋值。没有加运行依赖，没有跑 GameTest。旧存档没有测。没有推送。
+
+## 2026-10-06 / Ender IO 引用账本
+
+对着原版源码核对了 `MD.EIO` / `IL.EIO`。没有配方类，也没有一条能用现有机器行表达、且仍然要生成的配方。没有加运行依赖，没有跑 GameTest。旧存档没有测。没有推送。
+
+## 2026-10-06 / Project Red 硅片和红铁化合物
+
+共享契约通过：2723 条断言、31 组，含 Project Red 模块的结构检查（`BUILD SUCCESSFUL in 4s`）。Forge 无 Project Red：`gregtech_compat` 4 项通过（`BUILD SUCCESSFUL in 3m 57s`），合成包 0 个文件，日志写明未加载目标模组。Forge 带 `-PcompatRuntime=pr`（核心 `4.20.0`，CodeChickenLib `4.4.0.528`，CB Multipart `3.3.0.159`）：游戏日志 `All 4 required tests passed`，进程 13m 13s 退出码 0。合成包 4 个文件，机器行 6、未解析 0；晶坯加水冷剂切成 16 个硅片，`projectred_core:red_iron_comp` 不在而 `gregtech:compat/projectred/red_iron_comp` 和 `gregtech:compat/projectred/silicon` 在。初次加载和测试内 `/reload` 后各摘掉 1 条仍由后加载数据包提供的配方，行数仍是 6。这次 Gradle 摘要被注册表调试日志截断，以上计数来自游戏日志。NeoForge 无 Project Red：4 项通过（`BUILD SUCCESSFUL in 1m 58s`），合成包 0、整组跳过。NeoForge 带 `-PcompatRuntime=pr` 的第一次运行因离线缓存里没有 `4.23.0`、CodeChickenLib `4.6.1.529` 和 CB Multipart `3.5.0.155` 而失败；在线重跑后 4 项通过（`BUILD SUCCESSFUL in 2m 41s`），同样 4 个文件、6 行、0 未解析，reload 后仍通过，禁用文件已经生效所以没有再摘。没有跑专服、客户端或验包。旧存档、完整生存和独立进程重启没有测。没有推送。
+
+## 2026-10-06 / Applied Energistics 冲压与石英玻璃
+
+共享契约通过：2718 条断言、31 组，含 AE2 模块的结构检查。Forge 无 AE2：`gregtech_compat` 3 项通过（`BUILD SUCCESSFUL in 9m 47s`），合成包 0 个文件。Forge 带 `-PcompatRuntime=ae`（AE2 `15.4.11`，GuideME `20.1.15`）：3 项通过（`BUILD SUCCESSFUL in 4m 31s`），合成包 4 个文件，机器行 163、未解析 0；测试内 `/reload` 后仍是 4 个文件、163 行，计算压板能印出印刷电路，铁锭切成 3 个线缆锚，赛特斯石英块锤成 4 个宝石，`ae2:decorative/quartz_glass` 不在而 `gregtech:compat/ae2/quartz_glass` 在。NeoForge 无 AE2：3 项通过（`BUILD SUCCESSFUL in 2m 1s`），合成包 0、整组跳过。NeoForge 带 `-PcompatRuntime=ae`（AE2 `19.2.18`，GuideME `21.1.19`）：3 项通过（`BUILD SUCCESSFUL in 2m 18s`），同样 4 个文件、163 行、0 未解析，reload 后仍通过。第一次带 AE2 的 Forge 运行因为缺 GuideME 在加载期失败，补上依赖后才进入上面的通过运行。没有跑专服、客户端或验包。旧存档、完整生存和独立进程重启没有测。没有推送。
+
+## 2026-10-06 / Mekanism 盐块配方
+
+共享契约通过：2650 条断言、31 组，含 Mekanism 模块的结构检查。Forge 无 Mekanism：`gregtech_compat` 2 项通过（`BUILD SUCCESSFUL in 5m 7s`），合成包 0 个文件，日志写明未加载目标模组。Forge 带 `-PcompatRuntime=mek`（`10.4.16.80`）：2 项通过（`BUILD SUCCESSFUL in 5m 2s`），合成包 1 个文件，机器行 0、未解析 0；测试内 `/reload` 后仍是 1 个文件、0 行，盐块配方不存在且 `mekanism:hdpe_rod` 仍在。NeoForge 无 Mekanism：2 项通过（`BUILD SUCCESSFUL in 2m 7s`），合成包 0、整组跳过。NeoForge 带 `-PcompatRuntime=mek`（`10.7.19.85`）：2 项通过（`BUILD SUCCESSFUL in 3m 1s`），同样 1 个文件、0 行、0 未解析，reload 后仍通过。没有跑专服、客户端或验包。旧存档、完整生存和独立进程重启没有测。没有推送。
+
+## 2026-10-06 / Immersive Engineering 联动样板
+
+共享契约此前通过：2644 条断言、31 组，含 `CompatSpecs.check()`。Forge 无 IE 的第一次 GameTest 在默认堆上准备出生区时 `OutOfMemoryError`，第二次缺 `gregtech_compat` 的 `test_empty` 结构；补上结构并用 4g 堆、视距 4 后，`gregtech_compat` 1 项通过（3m 37s），日志写明未加载目标模组、合成包 0 个文件。Forge 带 `-PcompatRuntime=ie` 同样 1 项通过（约 4m 18s）：166 条机器行、0 条未解析、合成包 13 个文件，测试内 `/reload` 后行数不变且铁板锤配方仍不存在。NeoForge 无 IE 2m 38s 通过（合成包 0、整组跳过）；带 IE 2m 53s 通过，同样 166 行、0 未解析、13 个文件，reload 后仍通过。Forge 专服带 IE：`Done (27.314s)`，166 行、13 个文件。NeoForge 专服带 IE：`Done (7.862s)`，同样计数。随后都已停掉。Forge 客户端第一次停在无障碍引导屏，600s 看门狗失败；写入 `onboardAccessibility:false` 后，Forge JEI、Forge EMI、NeoForge JEI、NeoForge EMI 四次世界烟测都成功退出，压缩机页是 8 个焦炭板压成 IE 焦炭块，64 EU/t、64 ticks。截图：[Forge JEI](verification/compat-ie/forge-jei-coke-compressor.png)、[Forge EMI](verification/compat-ie/forge-emi-coke-compressor.png)、[NeoForge JEI](verification/compat-ie/neoforge-jei-coke-compressor.png)、[NeoForge EMI](verification/compat-ie/neoforge-emi-coke-compressor.png)。正式 `:distributionJar :neoforge:jar` 2m 21s 通过。`verify_artifacts.py` 核对 714 个当前共享类，双版元数据、无重复项、无测试专用条目通过，回执 [compat-ie-artifacts-20261006.json](verification/compat-ie-artifacts-20261006.json)。旧存档、完整生存和独立进程重启没有测。未推送。
+
 ## 2026-10-05 / 原版长距离端点工具与RGB
 
 七端点恢复六向/原版65度放置、扳手/软锤/放大镜、16堆叠、源材料RGB及四种变压器活动模型；共享扫描支持分支与活发送端认领，初扫无4096截断。两端有限世界各42旋转/28放置/7软锤/7放大镜/7停止数据往返、132状态模型及六向真实18电包输入36864/收到35712/损耗1152 EU，40格已加载跨区块17插入/7提取通过并查看截图。Neo最终另验五档未连线过压；Forge世界后同顺序修正只编译/验包/主菜单，不重复世界。共享10294断言、正式双版4m 2s、694当前core类/原生字节/CRC/Mixin、28共享端点资源+22原生模型+62继承书籍资源验包及正式Loader/Java25主菜单通过。稳定目录 `build/verified/20261005-020818Z-d472c3af`。真实未加载路径、旧存档/重启、专服、生存及完整面板仍待续，goal active，未推送。见[边界](verification/long-endpoints-20261005.md)、[回执](verification/long-endpoints-20261005.json)、[来源](verification/long-endpoints-source-20261005.json)。
