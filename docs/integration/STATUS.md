@@ -108,6 +108,38 @@ de26e9ed6普通双build2m33s/790类验包通过；初Forge自检误要求徒手�
 
 最终60共享断言、双版主代码和成品自检源码编译25秒通过；自检源码含逐项注册/单次提示/桶内容/406管提示检查，但尚未执行。普通JAR/启动/恢复和坩埚玩法按用户要求多轮合并验收，没有新成品交付。来源25文件/646依赖及10项_w选择性配方对照见[来源](verification/machine-tooltip-source-20261007.json)，边界见[本批](verification/machine-tooltip-20261007.md)。其他方块tooltip、抗爆/采集/接触伤害以及其余原版材料记录待续。整体goal active，仅本地，未推送，PR暂缓。
 
+## 2026-10-07 / 通用形态标签补材料数据
+
+外来锭、粒、粉、宝石、板、杆只要挂着一种没有歧义的通用标签，就按 GT 形态的标准重量补上材料数据。方块不补。装了沉浸工程时，Forge 补了 46 条、NeoForge 补了 48 条，歧义跳过都是 0；没装其他内容模组时 NeoForge 是 0 条。两端 `gregtech_compat` 各 6 项 GameTest 通过，带沉浸工程的运行里 `/reload` 后条数不变，铅锭也没有被写进 `gregtech:ingot/lead`。没有跑 Forge 无模组、主命名空间全量 GameTest、专服、客户端或验包。旧存档没有测。群峦没有实机测。还在本地分支 `compat/mekanism`，没有推送。见 [验证](VERIFICATION.md)、[决策](DECISIONS.md)。
+
+## 2026-10-06 / HarvestCraft 2 Food Core
+
+第二波先做 Food Core。装了 `pamhc2foodcore` 时合成包 4 个文件，机器行 12、解析失败 0；没装时合成包 0、整组跳过。两端 `gregtech_compat` 各 5 项 GameTest（IE、Mekanism、AE2、Project Red、HarvestCraft）在有/无模组时通过，带模组的运行里 `/reload` 后仍是 4 个文件、12 行。没有跑专服、客户端或验包。旧存档没有测。还在本地分支 `compat/mekanism`，没有推送。见 [验证](VERIFICATION.md)、[账本](compat/harvestcraft.md)。
+
+## 2026-10-06 / Storage Drawers 引用账本
+
+第一波把 Storage Drawers 记成推后。17 处 `MD.SD` 都是书本登记或木头材质，没有可生成的配方行。JABBA 的木桶锯切没有算进来。没有加运行依赖，没有跑 GameTest。旧存档没有测。还在本地分支 `compat/mekanism`，没有推送。见 [账本](compat/storagedrawers.md)。
+
+## 2026-10-06 / PneumaticCraft 引用账本
+
+第一波把 PneumaticCraft 记成推后。4 处 `MD.PnC` 都是压缩铁的归属或规范形态，没有可生成的配方行。没有加运行依赖，没有跑 GameTest。旧存档没有测。还在本地分支 `compat/mekanism`，没有推送。见 [账本](compat/pneumaticcraft.md)。
+
+## 2026-10-06 / Ender IO 引用账本
+
+第一波把 Ender IO 记成推后。56 处 `MD.EIO` / `IL.EIO` 都是归属、规范形态、扳手或材料数据，没有可生成的配方行。没有加运行依赖，没有跑 GameTest。旧存档没有测。还在本地分支 `compat/mekanism`，没有推送。见 [账本](compat/enderio.md)。
+
+## 2026-10-06 / Project Red 硅片和红铁化合物
+
+第一波接着做 Project Red。装了 `projectred_core` 时合成包 4 个文件，机器行 6、解析失败 0；没装时合成包 0、整组跳过。两端 `gregtech_compat` 各 4 项 GameTest（IE、Mekanism、AE2、Project Red）在有/无模组时通过。Forge 带模组时，初次加载和 `/reload` 后各摘掉 1 条仍由后加载数据包提供的红铁配方。NeoForge 带模组时禁用文件已经生效。没有跑专服、客户端或验包。旧存档没有测。还在本地分支 `compat/mekanism`，没有推送。见 [验证](VERIFICATION.md)、[账本](compat/projectred.md)。
+
+## 2026-10-06 / Applied Energistics 冲压与石英玻璃
+
+第一波接着做 AE2。装了 AE2 和 GuideME 时合成包 4 个文件，机器行 163、解析失败 0；没装时合成包 0、整组跳过。两端 `gregtech_compat` 各 3 项 GameTest（IE、Mekanism、AE2）在有/无 AE2 时通过，带模组的运行里 `/reload` 后仍是 4 个文件、163 行。没有跑专服、客户端或验包。旧存档没有测。还在本地分支 `compat/mekanism`，没有推送。见 [验证](VERIFICATION.md)、[账本](compat/ae2.md)。
+
+## 2026-10-06 / Mekanism 盐块配方
+
+第一波先做 Mekanism。染色目标在 10.4 / 10.7 没有注册名，不生成。装了 Mekanism 时合成包 1 个文件，关掉 `mekanism:storage_blocks/salt`，机器行 0、解析失败 0；没装时合成包 0、整组跳过。两端 `gregtech_compat` 各 2 项 GameTest（IE 样板加这条）在有/无 Mekanism 时通过，带模组的运行里 `/reload` 后盐块配方仍不存在、HDPE 杆配方还在。旧存档、完整生存、专服和客户端没有测。还在本地分支 `compat/mekanism`，没有推送。IE 样板已在 [PR 25](https://github.com/SaltNya/GregTech6/pull/25)。见 [验证](VERIFICATION.md)、[账本](compat/mekanism.md)。
+
 ## 2026-10-06 / Immersive Engineering 联动样板
 
 双版联动框架和 IE 样板已接上。IE 在场时各登记 166 条机器行、0 条解析失败、13 个合成包文件（2 条互转加 11 个锤子压板覆盖）；IE 不在场时机器行为 0、合成包为 0。两端 `gregtech_compat` GameTest（含 `/reload`）、带 IE 的专服启动、JEI/EMI 压缩机焦炭页截图，以及 714 个当前共享类验包通过。旧存档、完整生存和独立重启没有测。未推送。见 [验证](VERIFICATION.md)、[账本](compat/immersiveengineering.md)。

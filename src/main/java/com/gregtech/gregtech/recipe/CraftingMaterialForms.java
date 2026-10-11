@@ -22,8 +22,8 @@ public final class CraftingMaterialForms {
     private static final Map<String, String> COMMON = Map.ofEntries(
             Map.entry("ingot", "ingots"), Map.entry("nugget", "nuggets"), Map.entry("gem", "gems"),
             Map.entry("dust", "dusts"), Map.entry("dustSmall", "small_dusts"), Map.entry("dustTiny", "tiny_dusts"),
-            Map.entry("plate", "plates"), Map.entry("oreRaw", "raw_materials"), Map.entry("ore", "ores"),
-            Map.entry("rawOreChunk", "raw_ore_chunks"));
+            Map.entry("plate", "plates"), Map.entry("stick", "rods"), Map.entry("oreRaw", "raw_materials"),
+            Map.entry("ore", "ores"), Map.entry("rawOreChunk", "raw_ore_chunks"));
     private static Map<Form, List<Item>> aliases = Map.of();
     private static Map<String, String> materialNames = Map.of();
     private static Map<String, String> prefixNames = Map.of();
@@ -36,8 +36,11 @@ public final class CraftingMaterialForms {
         var materials = new HashMap<String, String>();
         for (var material : GTMaterialRegistry.allMaterials()) if (material.isValid()) {
             String name = material.resolve().getName();
-            materials.put(MaterialEquivalence.materialName(material), name);
+            String canonical = MaterialEquivalence.materialName(material);
+            materials.put(canonical, name);
             materials.put(material.getName().toLowerCase(Locale.ROOT), name);
+            String alternate = com.gregtech.gregtech.api.material.MaterialTagAliases.ALTERNATE_SPELLINGS.get(canonical);
+            if (alternate != null) materials.put(alternate, name);
         }
         materialNames = Map.copyOf(materials);
         var prefixes = new HashMap<String, String>();
@@ -114,17 +117,35 @@ public final class CraftingMaterialForms {
         // Prefer explicit GT prefix tags over common tags (dense ores can also be in ordinary ores tags).
         var tags = stack.getTags().map(tag -> tag.location()).sorted(Comparator.comparing(id -> id.getNamespace().equals("gregtech") ? 0 : 1)).toList();
         for (var tag : tags) {
-            String namespace = tag.getNamespace(), path = tag.getPath();
-            if (!Set.of("gregtech", "forge", "c").contains(namespace)) continue;
-            int slash = path.lastIndexOf('/');
-            if (slash < 0) continue;
-            String material = materialNames.get(path.substring(slash + 1));
-            if (material == null) continue;
-            String group = path.substring(0, slash), prefix = prefixNames.get(group);
-            if (prefix == null) for (var entry : COMMON.entrySet()) if (entry.getValue().equals(group)) { prefix = entry.getKey(); break; }
-            if (prefix != null) return new Form(prefix, material);
+            var form = formOf(tag);
+            if (form != null) return form;
         }
         return null;
+    }
+
+    /** Every gregtech, forge or c form tag on this item. Callers use a single hit to reject ambiguous items. */
+    public static List<Form> taggedForms(ItemStack stack) {
+        ensureInitialized();
+        if (stack.isEmpty()) return List.of();
+        var found = new ArrayList<Form>();
+        var seen = new HashSet<Form>();
+        for (var tag : stack.getTags().map(itemTag -> itemTag.location()).toList()) {
+            var form = formOf(tag);
+            if (form != null && seen.add(form)) found.add(form);
+        }
+        return List.copyOf(found);
+    }
+
+    private static Form formOf(ResourceLocation tag) {
+        String namespace = tag.getNamespace(), path = tag.getPath();
+        if (!Set.of("gregtech", "forge", "c").contains(namespace)) return null;
+        int slash = path.lastIndexOf('/');
+        if (slash < 0) return null;
+        String material = materialNames.get(path.substring(slash + 1));
+        if (material == null) return null;
+        String group = path.substring(0, slash), prefix = prefixNames.get(group);
+        if (prefix == null) for (var entry : COMMON.entrySet()) if (entry.getValue().equals(group)) { prefix = entry.getKey(); break; }
+        return prefix == null ? null : new Form(prefix, material);
     }
 
     public static Ingredient ingredient(ItemStack input) {

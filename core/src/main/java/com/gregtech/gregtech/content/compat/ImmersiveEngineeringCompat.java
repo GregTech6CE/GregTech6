@@ -52,7 +52,7 @@ public final class ImmersiveEngineeringCompat {
                     SOURCE + ":69-93"));
         }
         return new CompatSpecs.Module("immersiveengineering", true, true, "Compat_Recipes_ImmersiveEngineering",
-                List.copyOf(machines), crafting, List.copyOf(removals), List.of(
+                List.copyOf(machines), crafting, List.of(), List.copyOf(removals), List.of(
                         SOURCE + ":51 fireproof treated planks are not registered",
                         SOURCE + ":55 fireproof treated planks are not registered",
                         SOURCE + ":58 external IC2 compressor bridge is not restored",

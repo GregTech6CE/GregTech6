@@ -1,0 +1,101 @@
+{
+  "module": "harvestcraft",
+  "modernId": "pamhc2foodcore",
+  "loaders": {
+    "forge": "1.20.1",
+    "neoforge": "1.21.1"
+  },
+  "jars": {
+    "forge": "pamhc2foodcore-1.20.4-1.0.5",
+    "neoforge": "pamhc2foodcore-NEOFORGE-1.21.1-1.0.2"
+  },
+  "pattern": "MD.HaC / IL.HaC",
+  "hitCount": 440,
+  "copyright": "Copyright (c) 2025 GregTech-6 Team",
+  "license": "LGPL-3.0-or-later",
+  "sourceCommit": "3703e40308c8c030763fd6297dea8b210d2a77b1",
+  "files": {
+    "gregtech/compat/Compat_Recipes_HarvestCraft.java": "35b9d325e0f65afeec0a5bd76be69ea28467fc4de90d1e1cf472245e8d03157f"
+  },
+  "referenceCounts": {
+    "gregtech/compat/Compat_Recipes_HarvestCraft.java": 157,
+    "gregtech/loaders/c/Loader_Loot.java": 61,
+    "gregapi/worldgen/dungeon/DungeonChunkRoomFarmCrop.java": 60,
+    "gregapi/load/LoaderItemData.java": 48,
+    "gregapi/load/LoaderWoodDictionary.java": 42,
+    "gregapi/data/MT.java": 20,
+    "gregtech/worldgen/TwilightTreasureReplacer.java": 13,
+    "gregapi/load/LoaderUnificationTargets.java": 9,
+    "gregapi/load/LoaderItemList.java": 6,
+    "gregapi/worldgen/dungeon/DungeonChunkRoomFarmFish.java": 5,
+    "gregapi/block/ToolCompat.java": 4,
+    "gregtech/entities/Override_Drops.java": 3,
+    "gregtech/worldgen/tree/WorldgenLogMossy.java": 2,
+    "gregtech/GT6_Main.java": 1,
+    "gregtech/worldgen/WorldgenBushes.java": 1,
+    "gregtech/blocks/tree/BlockTreeLogB.java": 1,
+    "gregtech/blocks/tree/BlockTreeLogBFireProof.java": 1,
+    "gregtech/loaders/c/Loader_Recipes_Temporary.java": 1,
+    "gregtech/loaders/c/Loader_Recipes_Hints.java": 1,
+    "gregtech/loaders/c/Loader_Recipes_Food.java": 1,
+    "gregtech/loaders/c/Loader_Recipes_Crops.java": 1,
+    "gregtech/loaders/b/Loader_Worldgen.java": 1,
+    "gregtech/items/MultiItemBooks.java": 1
+  },
+  "entries": [
+    {
+      "file": "gregtech/compat/Compat_Recipes_HarvestCraft.java",
+      "line": 103,
+      "status": "implemented",
+      "note": "shredder: one sunflower to one sunflowerseedsitem"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_HarvestCraft.java",
+      "line": 117,
+      "status": "implemented",
+      "note": "mixer: beef plus one small salt dust"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_HarvestCraft.java",
+      "line": 119,
+      "status": "implemented",
+      "note": "mixer: beef plus three tiny salt dust"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_HarvestCraft.java",
+      "line": 121,
+      "status": "implemented",
+      "note": "mixer: four beef plus one salt dust"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_HarvestCraft.java",
+      "line": 128,
+      "status": "implemented",
+      "note": "mixer: flouritem plus Water, MnWtr, DistW or SpDew, 1000 mB, one gregtech:dough"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_HarvestCraft.java",
+      "line": 54,
+      "status": "implemented",
+      "note": "disable beefjerkyitem, powdereddonutitem, chocolatedonutitem and doughitem_x2"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_HarvestCraft.java",
+      "line": 279,
+      "status": "implemented",
+      "note": "bath: plaindonutitem in 36 mB molten chocolate; other foodDonut entries stay deferred"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_HarvestCraft.java",
+      "line": 281,
+      "status": "implemented",
+      "note": "mixer: plaindonutitem plus sugar dust, three ratios; other donuts stay deferred"
+    }
+  ],
+  "deferredGroups": [
+    "candles, hardened leather, yogurt, bait, jerky variants and milkshakes whose items are absent from food core",
+    "shapeless recipe rewriting, nutrition, smelting and ore-dictionary listeners",
+    "crops, trees and food extended are not in this runtime",
+    "references outside Compat_Recipes_HarvestCraft stay deferred"
+  ]
+}

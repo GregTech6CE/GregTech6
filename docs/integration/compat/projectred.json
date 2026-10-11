@@ -1,0 +1,332 @@
+{
+  "module": "projectred",
+  "modernId": "projectred_core",
+  "loaders": {
+    "forge": "1.20.1",
+    "neoforge": "1.21.1"
+  },
+  "jars": {
+    "forge": "project-red-core-4.20.0",
+    "neoforge": "project-red-core-4.23.0"
+  },
+  "runtimeDependency": {
+    "codechickenlib": {
+      "forge": "4.4.0.528",
+      "neoforge": "4.6.1.529"
+    },
+    "cbmultipart": {
+      "forge": "3.3.0.159",
+      "neoforge": "3.5.0.155"
+    }
+  },
+  "pattern": "MD.PR / MD.PR_EXPLORATION / MD.PR_EXPANSION",
+  "hitCount": 48,
+  "statusCounts": {
+    "implemented": 5,
+    "covered": 1,
+    "deferred": 42
+  },
+  "copyright": "Copyright (c) 2023 GregTech-6 Team",
+  "license": "LGPL-3.0-or-later",
+  "files": {
+    "gregtech/compat/Compat_Recipes_ProjectRed.java": "0fff207a990823fe35a346e9832c59e040edccc101e88cfac998f7a95870e024",
+    "gregtech/GT6_Main.java": "3a0b9daa0955f7d60a1974b25c2a1194937d9cedfa9dac3367afed8f948424c9",
+    "gregapi/data/MT.java": "926ac79117433c88f94db1793396fa7a6ced7e4247947a4e8e55dca8bce040b7",
+    "gregtech/loaders/b/Loader_Worldgen.java": "bf0b2f48c250cd8ba4cd9c16fa32864b28d5b9e4fc20d282170b5ca4f0bc7ca4",
+    "gregtech/loaders/b/Loader_Late_Items_And_Blocks.java": "c04f4ffe2f6800cfc3fe61a27fc6d91e09796a07cad7bfe24ae26ca21a8a6399",
+    "gregapi/GT_API_Post.java": "103aaaeb621f94396fe00be6e73aeb4119a551a772238a2e367778b19cda710e",
+    "gregapi/load/LoaderItemData.java": "a4843a85e668765776ffdae24ab2ac86629f72a0482d032f172d4134a38271cf",
+    "gregapi/load/LoaderUnificationTargets.java": "9488db8f81563d4cfeb023445cb7b111392d478aceaa0b504b2e4adac1f4cca7",
+    "gregapi/load/LoaderBookList.java": "43e332257e1b2ca3befb5d9ae3b816bba199a87698694015793595298d8024b9"
+  },
+  "entries": [
+    {
+      "file": "gregtech/compat/Compat_Recipes_ProjectRed.java",
+      "line": 36,
+      "status": "implemented",
+      "note": "disable projectred_core:red_iron_comp after recipes apply"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_ProjectRed.java",
+      "line": 38,
+      "status": "implemented",
+      "note": "plus-shaped redstone dust and any copper ingot"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_ProjectRed.java",
+      "line": 39,
+      "status": "implemented",
+      "note": "plateGem Silicon plus gregtech:tool_saw yields 4 silicon"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_ProjectRed.java",
+      "line": 40,
+      "status": "implemented",
+      "note": "plateGem RedstoneAlloy plus gregtech:tool_saw yields 4 infused silicon"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_ProjectRed.java",
+      "line": 42,
+      "status": "implemented",
+      "note": "Cutter: 1 boule to 16 silicon, 64 EU/t, 64 ticks, lubricant 1000"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_ProjectRed.java",
+      "line": 45,
+      "status": "deferred",
+      "note": "basalt stoneshapes stay deferred"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_ProjectRed.java",
+      "line": 47,
+      "status": "deferred",
+      "note": "basalt stoneshapes stay deferred"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_ProjectRed.java",
+      "line": 56,
+      "status": "deferred",
+      "note": "basalt stoneshapes stay deferred"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_ProjectRed.java",
+      "line": 57,
+      "status": "deferred",
+      "note": "basalt stoneshapes stay deferred"
+    },
+    {
+      "file": "gregtech/compat/Compat_Recipes_ProjectRed.java",
+      "line": 58,
+      "status": "deferred",
+      "note": "basalt stoneshapes stay deferred"
+    },
+    {
+      "file": "gregtech/GT6_Main.java",
+      "line": 232,
+      "status": "covered",
+      "note": "module self-registers; entrypoint is not edited"
+    },
+    {
+      "file": "gregapi/data/MT.java",
+      "line": 2660,
+      "status": "deferred",
+      "note": "ElectrotineAlloy material ownership stays deferred"
+    },
+    {
+      "file": "gregapi/GT_API_Post.java",
+      "line": 155,
+      "status": "deferred",
+      "note": "Nikolite byproduct gate stays deferred"
+    },
+    {
+      "file": "gregapi/GT_API_Post.java",
+      "line": 341,
+      "status": "deferred",
+      "note": "canonical-form gate; the recipe module asks ModList for projectred_core"
+    },
+    {
+      "file": "gregapi/GT_API_Post.java",
+      "line": 342,
+      "status": "deferred",
+      "note": "RedAlloy ingot canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/GT_API_Post.java",
+      "line": 343,
+      "status": "deferred",
+      "note": "ElectrotineAlloy ingot canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/GT_API_Post.java",
+      "line": 344,
+      "status": "deferred",
+      "note": "Nikolite dust canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/GT_API_Post.java",
+      "line": 346,
+      "status": "deferred",
+      "note": "exploration marble stays deferred"
+    },
+    {
+      "file": "gregapi/GT_API_Post.java",
+      "line": 347,
+      "status": "deferred",
+      "note": "exploration marble stays deferred"
+    },
+    {
+      "file": "gregapi/GT_API_Post.java",
+      "line": 348,
+      "status": "deferred",
+      "note": "exploration basalt stays deferred"
+    },
+    {
+      "file": "gregapi/GT_API_Post.java",
+      "line": 349,
+      "status": "deferred",
+      "note": "exploration basalt stays deferred"
+    },
+    {
+      "file": "gregapi/GT_API_Post.java",
+      "line": 350,
+      "status": "deferred",
+      "note": "exploration basalt stays deferred"
+    },
+    {
+      "file": "gregapi/GT_API_Post.java",
+      "line": 352,
+      "status": "deferred",
+      "note": "exploration lily seeds stay deferred"
+    },
+    {
+      "file": "gregapi/GT_API_Post.java",
+      "line": 353,
+      "status": "deferred",
+      "note": "illuminated part composition stays deferred"
+    },
+    {
+      "file": "gregapi/GT_API_Post.java",
+      "line": 355,
+      "status": "deferred",
+      "note": "copper coil composition stays deferred"
+    },
+    {
+      "file": "gregapi/GT_API_Post.java",
+      "line": 356,
+      "status": "deferred",
+      "note": "iron coil composition stays deferred"
+    },
+    {
+      "file": "gregapi/GT_API_Post.java",
+      "line": 357,
+      "status": "deferred",
+      "note": "gold coil composition stays deferred"
+    },
+    {
+      "file": "gregapi/GT_API_Post.java",
+      "line": 359,
+      "status": "deferred",
+      "note": "exploration ore replaceable block stays deferred"
+    },
+    {
+      "file": "gregapi/GT_API_Post.java",
+      "line": 361,
+      "status": "deferred",
+      "note": "exploration ruby ore stays deferred"
+    },
+    {
+      "file": "gregapi/GT_API_Post.java",
+      "line": 362,
+      "status": "deferred",
+      "note": "exploration sapphire ore stays deferred"
+    },
+    {
+      "file": "gregapi/GT_API_Post.java",
+      "line": 363,
+      "status": "deferred",
+      "note": "exploration peridot ore stays deferred"
+    },
+    {
+      "file": "gregapi/GT_API_Post.java",
+      "line": 364,
+      "status": "deferred",
+      "note": "exploration copper ore stays deferred"
+    },
+    {
+      "file": "gregapi/GT_API_Post.java",
+      "line": 365,
+      "status": "deferred",
+      "note": "exploration tin ore stays deferred"
+    },
+    {
+      "file": "gregapi/GT_API_Post.java",
+      "line": 366,
+      "status": "deferred",
+      "note": "exploration silver ore stays deferred"
+    },
+    {
+      "file": "gregapi/GT_API_Post.java",
+      "line": 367,
+      "status": "deferred",
+      "note": "exploration nikolite ore stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderItemData.java",
+      "line": 977,
+      "status": "deferred",
+      "note": "expansion blueprint paper composition stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 1249,
+      "status": "deferred",
+      "note": "Et Futurum deepslate ruby ore stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 1250,
+      "status": "deferred",
+      "note": "Et Futurum deepslate sapphire ore stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 1251,
+      "status": "deferred",
+      "note": "Et Futurum deepslate peridot ore stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 1252,
+      "status": "deferred",
+      "note": "Et Futurum deepslate nikolite ore stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderBookList.java",
+      "line": 361,
+      "status": "deferred",
+      "note": "core book gate stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderBookList.java",
+      "line": 362,
+      "status": "deferred",
+      "note": "data card book stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderBookList.java",
+      "line": 364,
+      "status": "deferred",
+      "note": "expansion book gate stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderBookList.java",
+      "line": 365,
+      "status": "deferred",
+      "note": "blueprint book stays deferred"
+    },
+    {
+      "file": "gregtech/loaders/b/Loader_Worldgen.java",
+      "line": 232,
+      "status": "deferred",
+      "note": "basalt stone layer stays deferred"
+    },
+    {
+      "file": "gregtech/loaders/b/Loader_Worldgen.java",
+      "line": 280,
+      "status": "deferred",
+      "note": "marble stone layer stays deferred"
+    },
+    {
+      "file": "gregtech/loaders/b/Loader_Late_Items_And_Blocks.java",
+      "line": 85,
+      "status": "deferred",
+      "note": "basalt rockset stays deferred"
+    },
+    {
+      "file": "gregtech/loaders/b/Loader_Late_Items_And_Blocks.java",
+      "line": 86,
+      "status": "deferred",
+      "note": "marble rockset stays deferred"
+    }
+  ]
+}

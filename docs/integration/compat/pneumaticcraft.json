@@ -1,0 +1,45 @@
+{
+  "loaders": {
+    "forge": "1.20.1",
+    "neoforge": "1.21.1"
+  },
+  "license": "LGPL-3.0-or-later",
+  "copyright": "Copyright (c) GregTech-6 Team",
+  "module": "pneumaticcraft",
+  "modernId": "pneumaticcraft",
+  "pattern": "MD.PnC",
+  "hitCount": 4,
+  "statusCounts": {
+    "deferred": 4
+  },
+  "files": {
+    "gregapi/load/LoaderUnificationTargets.java": "9488db8f81563d4cfeb023445cb7b111392d478aceaa0b504b2e4adac1f4cca7",
+    "gregapi/data/MT.java": "926ac79117433c88f94db1793396fa7a6ced7e4247947a4e8e55dca8bce040b7"
+  },
+  "entries": [
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 321,
+      "status": "deferred",
+      "note": "compressed iron ingot canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 322,
+      "status": "deferred",
+      "note": "compressed iron block canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/load/LoaderUnificationTargets.java",
+      "line": 323,
+      "status": "deferred",
+      "note": "compressed iron gear canonical form stays deferred"
+    },
+    {
+      "file": "gregapi/data/MT.java",
+      "line": 2343,
+      "status": "deferred",
+      "note": "IronCompressed material ownership stays deferred"
+    }
+  ]
+}

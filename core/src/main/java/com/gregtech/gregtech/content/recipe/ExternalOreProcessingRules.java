@@ -23,6 +23,15 @@ public final class ExternalOreProcessingRules {
     /** Include tagged crushed/impure dust so world listeners also recognize foreign items. */
     public static final List<MaterialPrefix> COMPOSITION_FORMS = java.util.stream.Stream.concat(
             EXTERNAL_FORMS.stream(), MaterialWashingRules.ROWS.stream().map(MaterialWashingRules.Row::input)).distinct().toList();
+    /**
+     * Common item forms other mods publish under forge/c tags. Storage blocks stay out:
+     * a foreign block is not nine ingots. Gears, rings, bolts, screws, foils and wires stay
+     * out because mods do not agree how much material those forms contain.
+     */
+    public static final List<MaterialPrefix> TAGGED_MATERIAL_FORMS = List.of(
+            MaterialPrefix.ingot, MaterialPrefix.nugget, MaterialPrefix.gem,
+            MaterialPrefix.dust, MaterialPrefix.dustSmall, MaterialPrefix.dustTiny,
+            MaterialPrefix.plate, MaterialPrefix.stick);
     public record Route(String map, MaterialPrefix input, MaterialPrefix output, int count, long multiplier) {
         public long duration(int toolQuality) {
             long units = Math.max(input.getMaterialWeight(), output.getMaterialWeight() * count);
