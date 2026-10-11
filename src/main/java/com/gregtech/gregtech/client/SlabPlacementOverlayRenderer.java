@@ -1,7 +1,9 @@
 package com.gregtech.gregtech.client;
 
 import com.gregtech.gregtech.GregTech;
-import com.gregtech.gregtech.block.stone.GTStoneSlabBlockItem;
+import com.gregtech.gregtech.api.block.FaceGridSlab;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
@@ -96,8 +98,12 @@ public final class SlabPlacementOverlayRenderer {
     }
 
     private static boolean isHoldingSlab(Player player) {
-        return player.getMainHandItem().getItem() instanceof GTStoneSlabBlockItem
-                || (player.getMainHandItem().isEmpty() && player.getOffhandItem().getItem() instanceof GTStoneSlabBlockItem);
+        return usesSlabGrid(player.getMainHandItem())
+                || (player.getMainHandItem().isEmpty() && usesSlabGrid(player.getOffhandItem()));
+    }
+
+    private static boolean usesSlabGrid(ItemStack stack) {
+        return stack.getItem() instanceof BlockItem item && item.getBlock() instanceof FaceGridSlab;
     }
 
     private static com.gregtech.gregtech.api.tool.ToolInteractionSpec interaction(BlockState state, Player player) {

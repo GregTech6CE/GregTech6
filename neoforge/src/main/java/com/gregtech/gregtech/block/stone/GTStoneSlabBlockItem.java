@@ -11,7 +11,6 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 /** Places {@link GTStoneSlabBlock} with GT6 3×3 face orientation. */
@@ -27,12 +26,7 @@ public final class GTStoneSlabBlockItem extends MaterialBlockItem {
         if (state == null || !(state.getBlock() instanceof GTStoneSlabBlock)) {
             return state;
         }
-        BlockPos placePos = context.getClickedPos();
-        Vec3 click = context.getClickLocation();
-        float hitX = (float) (click.x - placePos.getX());
-        float hitY = (float) (click.y - placePos.getY());
-        float hitZ = (float) (click.z - placePos.getZ());
-        Direction facing = GTPlacementCode.resolveSlabFace(context.getClickedFace(), hitX, hitY, hitZ);
+        Direction facing = GTPlacementCode.resolveSlabFace(context);
         return state.setValue(GTStoneSlabBlock.FACING, facing);
     }
 
