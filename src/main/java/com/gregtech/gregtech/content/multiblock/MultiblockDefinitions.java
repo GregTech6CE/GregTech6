@@ -24,10 +24,12 @@ import static com.gregtech.gregtech.registry.GTMultiblocks.*;
 public final class MultiblockDefinitions {
     private MultiblockDefinitions() {}
     private static RegistryObject<Block> part(String id) {
+        var source = OriginalMultiblockPartData.byPath(id);
         return com.gregtech.gregtech.registry.MachineBlockRegistration.block(id, props ->
-                java.util.Set.of("coke_oven_wall", "distillation_tower_part", "large_gas_turbine_wall", "bedrock_drill_wall", "heat_transmitter", "boiler_wall", "tank_wall", "tank_wall_dense", "implosion_compressor_wall", "centrifuge_part", "electrolyzer_part", "turbine_wall", "large_dynamo_wall", "large_crucible_wall").contains(id)
+                java.util.Set.of("large_niobium_titanium_coil", "coke_oven_wall", "distillation_tower_part", "large_gas_turbine_wall", "bedrock_drill_wall", "heat_transmitter", "boiler_wall", "tank_wall", "tank_wall_dense", "implosion_compressor_wall", "centrifuge_part", "electrolyzer_part", "turbine_wall", "large_dynamo_wall", "large_crucible_wall").contains(id)
                         ? new com.gregtech.gregtech.block.machine.MultiblockPortBlock(props) : new Block(props))
-                .strength(6.0f, 6.0f).register();
+                .strength(source.map(OriginalMultiblockPartData.Part::hardness).orElse(6.0f),
+                        source.map(OriginalMultiblockPartData.Part::resistance).orElse(6.0f)).register();
     }
 
     public static void registerAll() {
@@ -107,20 +109,20 @@ public final class MultiblockDefinitions {
         // Wave 49: F6.9-12 multiblock parts and controllers
         BEDROCK_DRILL_WALL = part("bedrock_drill_wall");
         BEDROCK_DRILL_MAIN = com.gregtech.gregtech.registry.MachineBlockRegistration.block("bedrock_drill_main", com.gregtech.gregtech.block.machine.BedrockDrillControllerBlock::new)
-                .strength(10.0f, 10.0f).register();
+                .strength(9.0f, 9.0f).register();
 
         LIGHTNING_ROD_WALL = part("lightning_rod_wall");
         LIGHTNING_ROD_PILLAR = part("lightning_rod_pillar");
         LARGE_NIOBIUM_TITANIUM_COIL = part("large_niobium_titanium_coil");
         LIGHTNING_ROD_MAIN = com.gregtech.gregtech.registry.MachineBlockRegistration.block("lightning_rod_main", com.gregtech.gregtech.block.machine.LightningRodControllerBlock::new)
-                .strength(6.0f, 6.0f).register();
+                .strength(10.0f, 10.0f).register();
 
         IMPLOSION_COMPRESSOR_WALL = part("implosion_compressor_wall");
         IMPLOSION_COMPRESSOR_MAIN = com.gregtech.gregtech.registry.MachineBlockRegistration.block("implosion_compressor_main", com.gregtech.gregtech.block.machine.ImplosionCompressorControllerBlock::new)
-                .strength(8.0f, 8.0f).register();
+                .strength(12.5f, 12.5f).register();
 
         FUSION_REACTOR_WALL = part("fusion_reactor_wall");
         FUSION_REACTOR_MAIN = com.gregtech.gregtech.registry.MachineBlockRegistration.block("fusion_reactor_main", com.gregtech.gregtech.block.machine.FusionReactorControllerBlock::new)
-                .strength(12.0f, 12.0f).register();
+                .strength(12.5f, 12.5f).register();
     }
 }

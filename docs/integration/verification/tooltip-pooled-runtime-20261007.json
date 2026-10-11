@@ -1,0 +1,89 @@
+{
+  "date": "2026-10-07",
+  "status": "passed",
+  "production_source_commit": "68016a9bc9b8fd892149385006915dca53a31509",
+  "scope": "Finite dev-world source-parameter/storage/output scenario, separate from ordinary installed clients and natural survival",
+  "attempts": [
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\advanced-source-pooled-native-20261007.log",
+        "sha256": "f19661cd6460159176296b608c27862b0ea2c37894112b975440f6c5a1f2883a",
+        "bytes": 251094
+      },
+      "exit_code": 0,
+      "seconds": 207,
+      "tasks": [
+        ":runGameTestServer",
+        ":neoforge:runGameTestServer"
+      ],
+      "namespace": "gregtech_advanced_source",
+      "direct_core_classpath_and_resources": true
+    }
+  ],
+  "platforms": {
+    "forge": {
+      "loader": "47.4.20",
+      "java": "17.0.10",
+      "required_tests": 1,
+      "passed_required_tests": 1,
+      "native_log": {
+        "path": "C:\\Dev\\GregTech6\\build\\advanced-source-pooled-20261007\\logs\\latest.log",
+        "sha256": "db6902083ced19fdd6cfa3d35d54d5c14150a5577a1b27f12d3d8950f1384707",
+        "bytes": 44616
+      },
+      "all_dimensions_saved": true,
+      "normal_shutdown": true,
+      "heap": "3GiB"
+    },
+    "neoforge": {
+      "loader": "21.1.243",
+      "java": "21.0.7",
+      "required_tests": 1,
+      "passed_required_tests": 1,
+      "native_log": {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\build\\advanced-source-pooled-20261007\\logs\\latest.log",
+        "sha256": "de83ef891859e9d17596cda8e926c3876168739f329e263457494ce685eee3b8",
+        "bytes": 43155
+      },
+      "all_dimensions_saved": true,
+      "normal_shutdown": true,
+      "heap": "3GiB"
+    }
+  },
+  "verified_behavior": [
+    "Actual three native registered controller factories and original parameters",
+    "Native output tanks default to Long.MAX_VALUE",
+    "Placed large matter fabricator native save/load restores source output capacity while retaining500L seeded water",
+    "Stopped/unformed/no-energy explicit native tick transfers500L to real bath block below without duplication"
+  ],
+  "scope_limits": [
+    "Seeded fluid and explicit tick; no natural QU/fusion/implosion processing chain",
+    "Native save/load method round trip and orderly world save; no independent saved-world restart",
+    "No new generator world scene; earlier basic-machine world scene not rerun",
+    "Subsequent6146c57c1 and c0b870146 repair only tooltip magnetic-unit mapping/presentation, Forge fusion block hover-method wiring and probe/source contracts; constructor/factory parameters/storage/tick and world fixtures unchanged, world not rerun"
+  ],
+  "fixture_source_and_bytecode": [
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\AdvancedControllerSourceTests.java",
+      "sha256": "0af8bc753f376b05d39a162f3aa1c324fd0c967396ab962aa7a096afcb0e7db1",
+      "bytes": 3562
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\bootstrapGameTest\\com\\gregtech\\gregtech\\gametest\\AdvancedControllerSourceTests.class",
+      "sha256": "7ecf7ccba75ef9c4ba2624ae73f0b4eb3a642d67da79e31abc1942a4e5df4192",
+      "bytes": 9250
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\AdvancedControllerSourceTests.java",
+      "sha256": "4ffc59082103002c34e63b757545f4c4a17d52e91ce1b838a0c074ea217577cf",
+      "bytes": 3647
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\bootstrapGameTest\\com\\gregtech\\gregtech\\gametest\\AdvancedControllerSourceTests.class",
+      "sha256": "8cc499d4838113fe8df82d140d1b5925bfe685be81afb542b160d26cb0db27a6",
+      "bytes": 9591
+    }
+  ],
+  "goal": "active",
+  "publication": "local only; no push or PR"
+}

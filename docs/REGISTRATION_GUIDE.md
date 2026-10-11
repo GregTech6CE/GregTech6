@@ -68,9 +68,11 @@ EnergyNodeSpec spec = EnergyNodeSpec.builder("example_converter", Materials.Stee
         .input(GregTechTags.Energy.EU, 32)
         .output(GregTechTags.Energy.RU, 24)
         .capacity(128)
-        .names("Example Converter", "示例转换器")
+        .name("Example Converter")
         .build();
 ```
+
+中文名称只从共享语言文件及 `tools/localization/aliases.json` 中的原文绑定读取；定义只保存英文后备名称。旧双名称方法与构造器保留用于二进制兼容，但不再保存第二套翻译。
 
 将定义加入 `EnergyNodeDefinitions`。输入、输出、容量与名称使用具名参数，避免长串位置参数混淆。数值遵循当前设备实现的 GT6 能量包/速率语义，不能统一当作 FE。此改造没有改变转换器或汽轮机算法。
 

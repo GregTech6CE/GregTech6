@@ -1,0 +1,327 @@
+{
+  "date": "2026-10-07",
+  "status": "passed",
+  "scope": "Pooled ordinary dual jars and installed title-screen checks for cryogenic tower, adjacent energy requests and twelve large processors; finite dev-world evidence is separate",
+  "production_source_commit": "604081e3b3b1fb10b80ddbffc00459dc6199fc8e",
+  "pooled_prior_commits": [
+    "a29e49d5",
+    "176ea0fe"
+  ],
+  "probe_only_repairs": [
+    {
+      "original_path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\LargeRecipeControllerDeliveryChecks.java",
+      "original_sha256": "7e7287a48709ad6d7e7e018b85eaa3cbbe1fd38c3468dabebf60b6d13949d5bd",
+      "historical_source": {
+        "path": "C:\\Dev\\GregTech6\\work\\large-recipe-neo-first-production-probe-20261007.java",
+        "sha256": "7e7287a48709ad6d7e7e018b85eaa3cbbe1fd38c3468dabebf60b6d13949d5bd",
+        "bytes": 5338
+      },
+      "source_commit": "604081e3b3b1fb10b80ddbffc00459dc6199fc8e",
+      "current_source": {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\LargeRecipeControllerDeliveryChecks.java",
+        "sha256": "40419481f1c9758a9d3587eed7aa62bd07aa1c9a551f8e5aaabcfd24e3531c08",
+        "bytes": 5337
+      },
+      "change": "Probe-only NeoForge path recipes/ -> recipe/ required by Minecraft1.21.1; ordinary distribution and accepted world-test production sources unchanged"
+    }
+  ],
+  "ordinary_build": {
+    "log": {
+      "path": "C:\\Dev\\GregTech6\\work\\large-recipe-pooled-dual-build-20261007.log",
+      "sha256": "c1d2e9cc04b2a4cda87c185f32095e86ec8d4bbd8bb0bb9082377cc356c66917",
+      "bytes": 33219
+    },
+    "exit_code": 0,
+    "seconds": 247,
+    "tasks": [
+      ":build",
+      ":neoforge:build",
+      ":productionSmokeJar",
+      ":reobfProductionSmokeJar",
+      ":neoforge:productionSmokeJar"
+    ],
+    "direct_core_packaging": false
+  },
+  "core_check": {
+    "log": {
+      "path": "C:\\Dev\\GregTech6\\work\\large-recipe-pooled-core-check-20261007.log",
+      "sha256": "7b88bb001d86b3b0e47965676f9e17beae476d4ed4b5ff0481a94071b26e3039",
+      "bytes": 1889
+    },
+    "exit_code": 0,
+    "seconds": 7,
+    "assertions": {
+      "base": 2474,
+      "machine_source": 3997,
+      "material": 7947,
+      "thermal": 53
+    }
+  },
+  "packaging_before_clients": {
+    "path": "C:\\Dev\\GregTech6\\work\\large-recipe-pooled-artifacts-20261007.json",
+    "sha256": "4402d3c98f5a510cfcf33742e1b9bb0564ab4fee50da5d9a4521f5537d1cf5f8",
+    "bytes": 322950
+  },
+  "stable_manifest": {
+    "path": "C:\\Dev\\GregTech6\\work\\large-recipe-pooled-verified-20261007.json",
+    "sha256": "9668d58c6977a6333be9f892c6526d73089e2496f09faca58d4e9f89417d061d",
+    "bytes": 1087
+  },
+  "stable_artifacts": {
+    "forge": {
+      "name": "gregtech6-1.20.1-forge-0.0.0.jar",
+      "bytes": 41607791,
+      "sha256": "730aab784e3a27cfcca0ff0c5efb76bacaf00ef0eb0875c65e7b9935ac9d9e45",
+      "zip_crc_checked": true,
+      "path": "C:\\Dev\\GregTech6\\build\\verified\\20261007-042336Z-730aab78\\gregtech6-1.20.1-forge-0.0.0.jar"
+    },
+    "neoforge": {
+      "name": "gregtech6-neoforge-1.21.1-0.0.0.jar",
+      "bytes": 39830602,
+      "sha256": "2187146c376f566508d357a12d807d6a44c9a966430d961e8b01369361127234",
+      "zip_crc_checked": true,
+      "path": "C:\\Dev\\GregTech6\\build\\verified\\20261007-042336Z-730aab78\\gregtech6-neoforge-1.21.1-0.0.0.jar"
+    }
+  },
+  "installed_attempts": [
+    {
+      "wrapper_log": {
+        "path": "C:\\Dev\\GregTech6\\work\\large-recipe-pooled-production-20261007.log",
+        "sha256": "4887b0f7df7feb28e5eb9a3a65bb03405a924c1aec4471dc9b9e91812e6a0c8a",
+        "bytes": 807
+      },
+      "wrapper_exit_code": 1,
+      "forge": "passed; accepted receipt retained without rerun",
+      "neoforge": "probe failed at recipe resource path",
+      "failed_neo_log": {
+        "path": "C:\\Dev\\GregTech6\\build\\production-smoke\\neoforge-8b126f8f-45ae-4b17-b8a6-ed6bd411fe12\\launch.log",
+        "sha256": "6f1107707fb264b35a88e6132027232a1c4fe7ed22e81a1a70e779640297c5dc",
+        "bytes": 156590
+      },
+      "failed_neo_probe": {
+        "path": "C:\\Dev\\GregTech6\\build\\production-smoke\\neoforge-8b126f8f-45ae-4b17-b8a6-ed6bd411fe12\\mods\\gregtech-delivery-probe-0.0.0.jar",
+        "sha256": "b8022a29d7db0ec52c67a272d96f1831419c5e8e9d7f6104a5592e80e85fd38b",
+        "bytes": 101731
+      },
+      "production_changed": false
+    },
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\large-recipe-pooled-neo-probe-fix-build-20261007.log",
+        "sha256": "3095159b08f32a8796b16d6b6c0ab604d5f199f9c63dbd77d53244042e953c08",
+        "bytes": 81
+      },
+      "status": "wrapper download deliberately terminated before compilation; no build pass claim",
+      "session_exit_code": -1,
+      "reason": "Default wrapper cache lacked8.8; switched to existing workspace Gradle8.8"
+    },
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\large-recipe-pooled-neo-probe-fix-cached-build-20261007.log",
+        "sha256": "2af02e01aac75febc53e7e0d1568627432412d6f11bb8b5f4d4ea0b0bc2c40c9",
+        "bytes": 6620
+      },
+      "status": "network dependency resolution deliberately terminated before task execution",
+      "exit_code": 1,
+      "thread_evidence": {
+        "path": "C:\\Dev\\GregTech6\\work\\large-recipe-pooled-probe-build-thread-20261007.txt",
+        "sha256": "8ab375b44c81dd2c210b1ed3dd2ce0cdfe599f225b06ef5ae1f48949efe16557",
+        "bytes": 187283
+      },
+      "scope": "Switched same cached runtime to offline resolution; no compilation pass claim"
+    },
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\large-recipe-pooled-neo-probe-fix-offline-build-20261007.log",
+        "sha256": "04bf088e1568661f3c8e78342c850ded6522f1b692ad831b7367efe22c6109ab",
+        "bytes": 1947
+      },
+      "status": "failed",
+      "exit_code": 1,
+      "seconds": 7,
+      "scope": "Offline resolution lacked EMI default repository metadata; no Java compile error"
+    },
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\large-recipe-pooled-neo-probe-fix-cached-emi-build-20261007.log",
+        "sha256": "e5c9654ca41c13f13c983c9ebcd7e29e62921a7479cb0f6d8fd54ffbef8e9323",
+        "bytes": 1383
+      },
+      "status": "passed",
+      "exit_code": 0,
+      "scope": "only NeoForge production probe rebuild using cached Gradle8.8 and existing verified local EMI repository offline",
+      "local_emi_init": {
+        "path": "C:\\Dev\\GregTech6\\work\\emi-local.init.gradle",
+        "sha256": "5f0bbdba936915000a7ed7741c2d2b7a051eb3e7fc502be5bd6e69788b1e043e",
+        "bytes": 569
+      }
+    },
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\large-recipe-pooled-neo-production-retry-20261007.log",
+        "sha256": "24bf946bf85ab08034d2b52445ee08f83d24c1ba1959edb357208ec7b760d5d7",
+        "bytes": 392
+      },
+      "status": "passed",
+      "exit_code": 0,
+      "scope": "only NeoForge installed retry; same ordinary distribution SHA"
+    }
+  ],
+  "installed": {
+    "forge": {
+      "result": {
+        "path": "C:\\Dev\\GregTech6\\work\\large-recipe-pooled-forge-production-20261007.json",
+        "sha256": "305f3d48d30be21c3a24538a2d4522fd0c4a029e89ab73b5dd9dc7f3f02b871a",
+        "bytes": 11368
+      },
+      "status": "passed",
+      "exit_code": 0,
+      "seconds": 52.95,
+      "version": "1.20.1-Forge_47.4.26",
+      "java": "openjdk version \"25.0.2\" 2026-01-20 LTS\nOpenJDK Runtime Environment Zulu25.32+21-CA (build 25.0.2+10-LTS)\nOpenJDK 64-Bit Server VM Zulu25.32+21-CA (build 25.0.2+10-LTS, mixed mode, sharing)",
+      "distribution": {
+        "path": "C:\\Dev\\GregTech6\\build\\verified\\20261007-042336Z-730aab78\\gregtech6-1.20.1-forge-0.0.0.jar",
+        "sha256": "730aab784e3a27cfcca0ff0c5efb76bacaf00ef0eb0875c65e7b9935ac9d9e45",
+        "bytes": 41607791
+      },
+      "probe": {
+        "path": "C:\\Dev\\GregTech6\\build\\production-probe\\gregtech-delivery-probe-0.0.0.jar",
+        "sha256": "692fa44a633973c9bf81147093a597b11e08cf6f4aee372e716343981a2900da",
+        "bytes": 101387
+      },
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\build\\production-smoke\\forge-a293aa25-1372-4f09-a17b-58976214677a\\launch.log",
+        "sha256": "d6e078101858c44e43141ab4354e2ed3172f53b96ca240c3d493f9811f7f60e0",
+        "bytes": 158470
+      },
+      "screenshot": {
+        "path": "C:\\Dev\\GregTech6\\build\\production-smoke\\forge-a293aa25-1372-4f09-a17b-58976214677a\\screenshots\\production-forge-c39c0ca5-6a86-4687-83ae-292586a69d55.png",
+        "sha256": "c43e96039f706283aded9a67f3758ea2199213d5d7be954a9088051be0db7346",
+        "bytes": 144717
+      },
+      "width": 1280,
+      "height": 720,
+      "rendered_frames": 182,
+      "visually_reviewed": true,
+      "visual_scope": "Actual1280x720 title-screen screenshot showing existing83-panel inventory render sheet; colors/textures visible without missing checkerboards; not a new controller tooltip/player-hover/world screenshot",
+      "twelve_controller_check": {
+        "controllers": 12,
+        "sourceStructureRows": 43,
+        "exactMaterialRecords": 12
+      },
+      "five_prior_process_controllers": {
+        "originalControllers": 5,
+        "exactMaterialRecords": 5,
+        "sourceStructureRows": 28,
+        "scope": "actual installed tooltip methods/events and native parameter methods; no world tick/restart claim"
+      },
+      "actual_source_basic_machines": 263,
+      "scope": "Installed actual item tooltip/event, native getter and generated recipe resource checks at title screen; no player hover or formed-world operation claim"
+    },
+    "neoforge": {
+      "result": {
+        "path": "C:\\Dev\\GregTech6\\work\\large-recipe-pooled-neoforge-production-20261007.json",
+        "sha256": "a5f8caf87284418b7b83057a838bd03ef5defb5ef60e96402bd6d1f32d01158a",
+        "bytes": 11297
+      },
+      "status": "passed",
+      "exit_code": 0,
+      "seconds": 45.88,
+      "version": "1.21.1-NeoForge_21.1.252",
+      "java": "openjdk version \"25.0.2\" 2026-01-20 LTS\nOpenJDK Runtime Environment Zulu25.32+21-CA (build 25.0.2+10-LTS)\nOpenJDK 64-Bit Server VM Zulu25.32+21-CA (build 25.0.2+10-LTS, mixed mode, sharing)",
+      "distribution": {
+        "path": "C:\\Dev\\GregTech6\\build\\verified\\20261007-042336Z-730aab78\\gregtech6-neoforge-1.21.1-0.0.0.jar",
+        "sha256": "2187146c376f566508d357a12d807d6a44c9a966430d961e8b01369361127234",
+        "bytes": 39830602
+      },
+      "probe": {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\build\\production-probe\\gregtech-delivery-probe-0.0.0.jar",
+        "sha256": "02eba27b7f82196fce306b3d8bd535565d781f01f82e03ee0fdb1fcd6188abbf",
+        "bytes": 101731
+      },
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\build\\production-smoke\\neoforge-5ed53e0f-0634-439d-8cb4-4384527b4d88\\launch.log",
+        "sha256": "0f4934f302037e85148236df9896d03308878afbba62259b49f234f2c7e6d563",
+        "bytes": 158313
+      },
+      "screenshot": {
+        "path": "C:\\Dev\\GregTech6\\build\\production-smoke\\neoforge-5ed53e0f-0634-439d-8cb4-4384527b4d88\\screenshots\\production-neoforge-c3c584a0-b1c8-4f30-ba70-9433baa189be.png",
+        "sha256": "28fd783899ef746fcc9e1aa94f48563e41151c383befe7d4cd425019f0d1cddd",
+        "bytes": 146306
+      },
+      "width": 1280,
+      "height": 720,
+      "rendered_frames": 182,
+      "visually_reviewed": true,
+      "visual_scope": "Actual1280x720 title-screen screenshot showing existing83-panel inventory render sheet; colors/textures visible without missing checkerboards; not a new controller tooltip/player-hover/world screenshot",
+      "twelve_controller_check": {
+        "controllers": 12,
+        "sourceStructureRows": 43,
+        "exactMaterialRecords": 12
+      },
+      "five_prior_process_controllers": {
+        "originalControllers": 5,
+        "exactMaterialRecords": 5,
+        "sourceStructureRows": 28,
+        "scope": "actual installed tooltip methods/events and native parameter methods; no world tick/restart claim"
+      },
+      "actual_source_basic_machines": 264,
+      "scope": "Installed actual item tooltip/event, native getter and generated recipe resource checks at title screen; no player hover or formed-world operation claim"
+    }
+  },
+  "post_client_packaging": {
+    "report": {
+      "path": "C:\\Dev\\GregTech6\\work\\large-recipe-pooled-post-client-artifacts-20261007.json",
+      "sha256": "7844d3ceea9f68693d91481774ddc3609192920d7ee495a25c49baa93a74f181",
+      "bytes": 323002
+    },
+    "status": "passed",
+    "shared_classes": 761,
+    "complete_crc_and_stable_sha_unchanged": true
+  },
+  "current_source_receipt": {
+    "path": "C:\\Dev\\GregTech6\\docs\\integration\\verification\\large-recipe-controller-source-20261007.json",
+    "sha256": "0de093afc5582f4f78ee75056d8c396735ea8296896c41498e3174701c6dbd04",
+    "bytes": 40019
+  },
+  "current_finite_runtime_receipt": {
+    "path": "C:\\Dev\\GregTech6\\docs\\integration\\verification\\large-recipe-controller-runtime-20261007.json",
+    "sha256": "a76232e3049005072890f343d6676b6f974e2856fff8d8633a8ca93ec5f8d27a",
+    "bytes": 6253
+  },
+  "historical_prior_source_and_runtime_receipts": [
+    {
+      "path": "C:\\Dev\\GregTech6\\docs\\integration\\verification\\cryo-tower-source-20261007.json",
+      "sha256": "6847875ee61020a17d7cdf1b4dade02896e9460ae05d4971289c1c6b4ca836cc",
+      "bytes": 32177
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\docs\\integration\\verification\\cryo-tower-runtime-20261007.json",
+      "sha256": "4b6bab78a699d8c875dea4c41452313fb097b31d5b150151478669f091f7667c",
+      "bytes": 9073
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\docs\\integration\\verification\\adjacent-energy-source-20261007.json",
+      "sha256": "cd80d1487275f76eb7af4367959bc62c19c1e9114f50dfdcfffa5407fb795651",
+      "bytes": 23330
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\docs\\integration\\verification\\adjacent-energy-runtime-20261007.json",
+      "sha256": "002493c70766fe0db71acc89210369e0515b63379227186116736716016faf4a",
+      "bytes": 11168
+    }
+  ],
+  "historical_reference_scope": "Prior receipts describe their original commits; their nested current paths may have changed. No claim that historical nested hashes equal the current working tree.",
+  "finite_world_scope": "Twelve families x four facings per loader; two required dev-world cases per loader passed and all dimensions saved. Seeded items/fluid and explicit ticks do not establish natural survival or independent restart. Prior cryogenic and control scenarios not rerun during this batch.",
+  "recipe_scope": "Installed native generated resources resolve twelve controllers and corrected autoclave dense wall/bath MV arm; no claim of player crafting in a world",
+  "unverified": [
+    "natural full survival chain",
+    "player-hover screenshot",
+    "independent saved-world restart",
+    "historical-save compatibility",
+    "ordinary standalone dedicated server",
+    "remaining all-block tooltip/material gaps"
+  ],
+  "publication": "local commits only; no push or PR",
+  "goal": "active"
+}

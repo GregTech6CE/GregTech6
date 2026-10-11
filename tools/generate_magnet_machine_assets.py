@@ -10,9 +10,6 @@ GT6 = ROOT.parent / "gregtech6-master" / "gregtech6-master" / "src" / "main" / "
 ASSETS = ROOT / "src" / "main" / "resources" / "assets" / "gregtech"
 TEXTURES = ASSETS / "textures" / "block" / "machines"
 TIERS = ("lv", "mv", "hv", "ev", "iv")
-ELECTRIC_CASINGS = ("steelgalvanized", "aluminium", "stainlesssteel", "chromium", "titanium")
-FLUX_RODS = ("lead", "invar", "electrum", "enderium_base", "enderium")
-WIRE_SIZES = (1, 2, 4, 8, 16)
 
 
 def write_json(path, value):
@@ -69,28 +66,8 @@ def main():
             write_json(ASSETS / "blockstates" / f"{name}.json", blockstate(name))
             write_json(ASSETS / "models" / "item" / f"{name}.json",
                        {"parent": f"gregtech:block/machine/energy/{name}"})
-    for index, tier in enumerate(TIERS):
-        wire = "copper" if index < 2 else "annealed_copper"
-        write_json(ROOT / "src" / "main" / "resources" / "data" / "gregtech" / "recipes"
-                   / "magnets" / f"electromagnet_{tier}.json", {
-                       "type": "gregtech:tool_shaped",
-                       "pattern": ["CxC", "CMC", "CwC"],
-                       "key": {
-                           "C": {"item": f"gregtech:wire_{WIRE_SIZES[index]:02d}_{wire}"},
-                           "M": {"item": f"gregtech:casing_machine_{ELECTRIC_CASINGS[index]}"},
-                           "x": {"item": "gregtech:tool_wire_cutter"},
-                           "w": {"item": "gregtech:tool_wrench"}},
-                       "result": {"item": f"gregtech:electromagnet_{tier}"},
-                       "allow_mirror": False,
-                       "_comment": f"GT6 Loader_MultiTileEntities: {865 + index}"})
-        write_json(ROOT / "src" / "main" / "resources" / "data" / "gregtech" / "recipes"
-                   / "magnets" / f"flux_magnet_{tier}.json", {
-                       "type": "minecraft:crafting_shaped",
-                       "pattern": ["SSS", "SMS", "SSS"],
-                       "key": {"S": {"tag": f"forge:long_rods/{FLUX_RODS[index]}"},
-                               "M": {"item": f"gregtech:electromagnet_{tier}"}},
-                       "result": {"item": f"gregtech:flux_magnet_{tier}"},
-                       "_comment": f"GT6 Loader_MultiTileEntities: {872 + index}"})
+    # Recipes are resolved once from core OriginalMagnetCrafting by both native
+    # loaders. Never recreate the old unguarded static JSON recipes here.
 
 
 if __name__ == "__main__":

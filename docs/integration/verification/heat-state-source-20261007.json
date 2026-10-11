@@ -1,0 +1,274 @@
+{
+  "date": "2026-10-07",
+  "base_commit": "c9f5d197765893ff0d1bed3843c1d43e12c4ed7a",
+  "authors": [
+    "GregTech-6 Team",
+    "Gregorius Techneticies"
+  ],
+  "license": "LGPL-3.0-or-later",
+  "assets_added": false,
+  "original": [
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577",
+      "bytes": 694
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\COPYING.LESSER",
+      "sha256": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118",
+      "bytes": 7652
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "bytes": 791265
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeHeatExchanger.java",
+      "sha256": "17e76c7595c2a229efe93dcf728d9a32a3301789ee843fa2c9e9aecfca885bfb",
+      "bytes": 15439
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\multiblocks\\TileEntityBase10MultiBlockBase.java",
+      "sha256": "42ec92430ff6af7fb8d192aebfa424cc1af519d40ba2ff53a8e8c6afe8f9e738",
+      "bytes": 11378
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\behavior\\TE_Behavior_Active_Trinary.java",
+      "sha256": "ba735871ca3e15360a39824c1c1eca4d4e79ada8ec08e1f90129dd8c5533af34",
+      "bytes": 1816
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\fluid\\FluidTankGT.java",
+      "sha256": "9e9c1500fb947048cc8ddcd4a19f44561d6d1278e2208381936b1ad483b25d7d",
+      "bytes": 14914
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "bytes": 153449
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\TD.java",
+      "sha256": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea",
+      "bytes": 53981
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+      "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8",
+      "bytes": 51085
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\Recipe.java",
+      "sha256": "8bb9a0bd00aa839a48a2c082281a988e9a796a540137d1cf50249d2250ad1c7e",
+      "bytes": 105155
+    }
+  ],
+  "comparison": [
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577",
+      "bytes": 694
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\COPYING.LESSER",
+      "sha256": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118",
+      "bytes": 7652
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeHeatExchanger.java",
+      "sha256": "2e8df8a7fd02888364fc9eb9ab487b30bc5df73f816bbde2b7c33c852284b432",
+      "bytes": 16200
+    }
+  ],
+  "current": [
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\lang\\en_us.json",
+      "sha256": "98b4ca157d52f0090301fc9c7873b0aa54559d0095f8057a900cb134cc832944",
+      "bytes": 758768
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\test\\java\\com\\gregtech\\gregtech\\core\\MachineSpecBehaviorContracts.java",
+      "sha256": "2cdbae0ba48c41edf912344e5c038af9358945f3af7d5b4fedb38b75a56796a0",
+      "bytes": 91418
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\SensorSourceTests.java",
+      "sha256": "f0ba11781b259d1fdd9810a9b9ca3f9a801c4fbde1f0d06eebfacc37429bcc21",
+      "bytes": 18050
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\LargeHeatExchangerControllerBlock.java",
+      "sha256": "0e4b780d9f616eca6ac27c5bc48d457ac5fb7e700983143279765d06d76ea13c",
+      "bytes": 4833
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeHeatExchangerControllerBlockEntity.java",
+      "sha256": "391c3345e818663d67fd2c98454360483fe7b65eee8f091ea6a0277caa69ffa4",
+      "bytes": 11862
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\client\\UtilityControllerTooltips.java",
+      "sha256": "938745a345577e6f5d32f2fe6f2fb85910a7686fbaaf3aec537eed7b6111cba1",
+      "bytes": 6952
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\UtilityControllerDeliveryChecks.java",
+      "sha256": "1b5cdd03ad79b43f7b40bad1844402582ede20e3dd71f8d540afbaba9e9122ea",
+      "bytes": 8012
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\SensorSourceTests.java",
+      "sha256": "91498354a4093bde89a755bdbf4e8773beb7331ffdd3adf14cb9d55e31469ff4",
+      "bytes": 17533
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\LargeHeatExchangerControllerBlock.java",
+      "sha256": "270d1cbb146ce295e60a726db4245c03874c9bf83f37e219023400aecc9db82d",
+      "bytes": 3699
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeHeatExchangerControllerBlockEntity.java",
+      "sha256": "08fe5cc17056127d5d74ea4cf222f8fe2d47e30f3b284e59697b1f14783a0662",
+      "bytes": 12072
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\client\\UtilityControllerTooltips.java",
+      "sha256": "938745a345577e6f5d32f2fe6f2fb85910a7686fbaaf3aec537eed7b6111cba1",
+      "bytes": 6952
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\gametest\\BlueprintRegressionTests.java",
+      "sha256": "c9bed29e2a4ec2aef81f4a6e12a47842be97d094cfdbb69173f1df4edf9a1e39",
+      "bytes": 34000
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\UtilityControllerDeliveryChecks.java",
+      "sha256": "e7a07fb8c96bc716e0298e0000c63ba0e83f36fafb30fa574e50d33d51209ddb",
+      "bytes": 7829
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\HeatExchangerRules.java",
+      "sha256": "3797e6a4f0a21a091b2218c14cf31b075e5b69cd6560f3e418d5569aab455203",
+      "bytes": 2659
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\test\\java\\com\\gregtech\\gregtech\\core\\HeatExchangerContracts.java",
+      "sha256": "1f18e3ea6a18f401d30424aa6d05c8eb09d9df0f6bc62d5c4f200982b79478d5",
+      "bytes": 2668
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\api\\fluid\\HeatExchangerData.java",
+      "sha256": "342f4cf078abc03364247c17b5161a45bc687f3448f8ccc1a16c06a674872e52",
+      "bytes": 2136
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\api\\fluid\\HeatExchangerData.java",
+      "sha256": "7c3f652b4e7627456b0893e330368ac2ef404c9799c303128df4d5bb2a45f48a",
+      "bytes": 2030
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\api\\fluid\\FluidTankGT.java",
+      "sha256": "b9dd18794c95a0725782bcc24198e1495d056d031b94e618882d52f160f83942",
+      "bytes": 6447
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\api\\energy\\EnergyTransfer.java",
+      "sha256": "c6dea37b1371106526ad17ab9478c9a615854b14156a4aa0a23f1cd759899fe1",
+      "bytes": 3015
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\api\\energy\\EnergyCompat.java",
+      "sha256": "89a11717bb1fd6dcc3866142643f8b034576050c2ff47e8d50e6d56391cf2e01",
+      "bytes": 2278
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\api\\fluid\\FluidTankGT.java",
+      "sha256": "a4675e0463b03fca6e11ad8323f98cdf79e6eb21bac34f3bdaa1294a2dcb3010",
+      "bytes": 6557
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\api\\energy\\EnergyTransfer.java",
+      "sha256": "c6dea37b1371106526ad17ab9478c9a615854b14156a4aa0a23f1cd759899fe1",
+      "bytes": 3015
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\api\\energy\\EnergyCompat.java",
+      "sha256": "1452035e59b39aae88287aaf99c897f280c1241e48b5243f7bd88f8195fbbdcf",
+      "bytes": 2341
+    }
+  ],
+  "translation_patch": {
+    "path": "C:\\Dev\\GregTech_zh_cn.lang",
+    "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0",
+    "bytes": 7375784
+  },
+  "source_alignment": {
+    "default_rate": 16384,
+    "default_efficiency": 10000,
+    "input_capacity": "rate*10, saturating at Long.MAX_VALUE",
+    "output_capacity": "Long.MAX_VALUE",
+    "buffer_target": "rate*2",
+    "backpressure": "rate*20",
+    "outlets": 8,
+    "settings": [
+      "gt.output",
+      "gt.eff",
+      "gt.fuelmap",
+      "gt.energy.emitted"
+    ],
+    "energy": "write gt.energy; read gt.energy then legacy gt.hu",
+    "tanks": "write native long gt.hot/gt.cold envelopes; also read previous int stacks, envelopes and original gt.tank.0/1 LAmount fields with existing fluid identities",
+    "activity": "Port persists active/history explicitly; original Active_Trinary.save reads back instead of writing, so that apparent source bug is not copied.",
+    "source_shell_gate": false,
+    "energy_api": "emission type; top-side emitting; equal min/recommended/max rate; offered=min(rate,stored); eight push targets via existing EnergyTransfer/compat boundary",
+    "fuel": "Cached compatible one-fluid table recipe, only first liquid output as source, exact per-charge efficiency floor, refill to2rate, zero efficiency consumes available charges, 64-tick inactive remainder cleanup",
+    "bounds": "Valid nonnegative source domain retained; overflowing positive capacities saturate, unrepresentable recipe energy/remaining room cannot wrap or consume fuel as zero-energy overflow; unknown map/tag identities retained without fallback conversion.",
+    "material_counts_unchanged": {
+      "precise": 1501,
+      "harvest": 1543
+    }
+  },
+  "verification": {
+    "logs": [
+      {
+        "path": "C:\\Dev\\GregTech6\\work\\heat-state-compile-20261007.log",
+        "sha256": "2623b6741d478897a650ebd7982bf03bf95dbfe62a172ff9b0afab6a213227b3",
+        "bytes": 51163
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\work\\heat-state-color-compile-20261007.log",
+        "sha256": "923e1b2185352b2e5e567ed52d9c1a54d38ca813a104a8a7ff7cd30787b99189",
+        "bytes": 29821
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\work\\heat-state-final-compile-20261007.log",
+        "sha256": "591ffe574c126074e250baed64a0e5c8e83b99f280e83d86f2b8343a103bcadc",
+        "bytes": 50010
+      }
+    ],
+    "source_assertions": 7837,
+    "new_checks": 131,
+    "new_check_method": "125 fixed iterative original-loop comparisons plus long quantities/output room/energy overflow/outlet/default/clamp boundaries",
+    "first_compile_seconds": 32,
+    "dual_main": true,
+    "dual_probes": true,
+    "dual_bootstrap_fixtures": true,
+    "world_run": false,
+    "installed_clients": false,
+    "ordinary_jars": false,
+    "prepared_world": "Existing gregtech_sensor_source namespace now4required per loader: new heat long state /actual original fuel/500000000 rate /6250eff/5000000000 fluid native save-load/broken shell buffering/legacy int read; previous sensor three scenarios retained.",
+    "prepared_installed": "Actual BlockItem saved parameter tooltip: 500000000 EU/t,62.50%,Gas map; existing default source rows retained.",
+    "last_accepted": "build/verified/20261007-073648Z-c4aacc57 does not contain215e8bd8a or this batch",
+    "final_color_compile_seconds": 25,
+    "final_guard_compile_seconds": 28
+  },
+  "remaining": [
+    "Run new native fixtures and actual installed tooltip probes in next pooled dual acceptance; compile is not runtime proof.",
+    "Full survival chain, actual player hover, actual process restart, previous save migrations and ordinary dedicated server remain unverified.",
+    "Heat block facing/wrench semantics, tap/funnel tool dispatch and active visual state remain to compare.",
+    "Unknown external energy tags/custom dynamic fuel-map providers not newly implemented; KU to RF external compatibility remains the existing energy bridge limitation.",
+    "Jar size optimization remains investigated only; no model/texture omission or slim artifact delivery claimed."
+  ],
+  "pushed": false
+}

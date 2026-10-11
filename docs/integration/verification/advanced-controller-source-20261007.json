@@ -1,0 +1,579 @@
+{
+  "date": "2026-10-07",
+  "base_commit": "3434af735a5fbbb4f85930fe53129f7cae321caa",
+  "authors": [
+    "GregTech-6 Team",
+    "Gregorius Techneticies"
+  ],
+  "license": "LGPL-3.0-or-later",
+  "scope": "Three dedicated controllers17110/17198/17199: original17 structure tooltip rows, inherited basic rows, exact known material registration, source parameters/IO and output storage. Not all block tooltip or full port acceptance.",
+  "original": [
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577",
+      "bytes": 694
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "bytes": 791265
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\machines\\MultiTileEntityBasicMachine.java",
+      "sha256": "1798706545c33c801735ac5fb56b0ae37a8b6e3b7819f40f41183a2057b0c860",
+      "bytes": 53507
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\multiblocks\\TileEntityBase10MultiBlockMachine.java",
+      "sha256": "daaacb82489056ddf8be9c3e594541fe0ec44ef2902be190556cdea361a05e06",
+      "bytes": 8918
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\base\\TileEntityBase09FacingSingle.java",
+      "sha256": "b172aadf76d09c37ee4c7793cb784dcc97a19d999ad1737bafc60cc064bece7f",
+      "bytes": 5485
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityImplosionCompressor.java",
+      "sha256": "3284ecf1b58f79a0421c3e2cfce470b1b2b3cef60ef3ea01c51f0645c66bd3cd",
+      "bytes": 4108
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityFusionReactor.java",
+      "sha256": "5e5641a2cb69fc8402e5e8e6aec7694e9f956031e04af36f87c53835ecbdb5a4",
+      "bytes": 14276
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityMatterFabricator.java",
+      "sha256": "5e4289450f65c76c15065784b6d04a30c825f2c3b0db5d376f46c5af7dd19a17",
+      "bytes": 40814
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+      "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8",
+      "bytes": 51085
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\TD.java",
+      "sha256": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea",
+      "bytes": 53981
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "bytes": 153449
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\RM.java",
+      "sha256": "c7cb07faef0235ace4bb26656fddaabfa10da6aa4a2689a7f4cdcaef10d366e6",
+      "bytes": 93922
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\MT.java",
+      "sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2",
+      "bytes": 693183
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\ANY.java",
+      "sha256": "6a26fa2293c4a315d2594c5ac80eba689389f9b1922a33547bdd20d2df724f71",
+      "bytes": 17964
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\OP.java",
+      "sha256": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e",
+      "bytes": 162128
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemTechnological.java",
+      "sha256": "7367922c4938318dd50b1320e7fc7a7453c33cffa46f75a437325314d2536ddc",
+      "bytes": 133807
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\load\\LoaderItemData.java",
+      "sha256": "0dc916611c9a743f477e473b75b3fa3462a47d22dd75ef086c33ea18aaa9f968",
+      "bytes": 264656
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\load\\LoaderOreDictReRegistrations.java",
+      "sha256": "d34719309a5ddf5bd7fc01c0462b57af52b4cf980a69fae4d4042c2ab78b07ef",
+      "bytes": 147540
+    }
+  ],
+  "comparison": [
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577",
+      "bytes": 694
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityImplosionCompressor.java",
+      "sha256": "809da14d56a3cc1686156aba132319b3fba3ae48e755f5d02952d4053a634b49",
+      "bytes": 4351
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityFusionReactor.java",
+      "sha256": "ba3ec1d8209f3e0add7c3c015a15883e007b88dadee68d98936150d0ff2f57c8",
+      "bytes": 14505
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityMatterFabricator.java",
+      "sha256": "c803f8f7b6ddff971251478555ff628aa8c2c0fd5a6a808fc6dc99359076891a",
+      "bytes": 41057
+    }
+  ],
+  "comparison_reason": "_w has the same17 specialized English keys and inherited tooltip delegation; adopt original1.7.10 registrations and exact user patch values, using the existing modern native execution/registry boundary.",
+  "translation_patch": {
+    "path": "C:\\Dev\\GregTech_zh_cn.lang",
+    "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0",
+    "bytes": 7375784
+  },
+  "language": {
+    "patch_keys": [
+      "gt.lang.cheap.overclocking",
+      "gt.lang.efficiency",
+      "gt.lang.energy.input",
+      "gt.lang.face.any",
+      "gt.lang.face.back",
+      "gt.lang.face.bottom",
+      "gt.lang.face.front",
+      "gt.lang.face.left",
+      "gt.lang.face.right",
+      "gt.lang.face.top",
+      "gt.lang.fluid.input",
+      "gt.lang.fluid.output",
+      "gt.lang.item.input",
+      "gt.lang.item.output",
+      "gt.lang.recipes",
+      "gt.lang.requirement.ignite.fire",
+      "gt.lang.structure",
+      "gt.lang.use.builder.wand.to.ease.building",
+      "gt.lang.use.magnifyingglass.to.detail",
+      "gt.lang.use.monkey.wrench.to.toggle.auto.inputs",
+      "gt.lang.use.monkey.wrench.to.toggle.auto.outputs",
+      "gt.lang.use.screwdriver.to.toggle",
+      "gt.lang.use.soft.hammer.to.reset",
+      "gt.recipe.fusionreactor",
+      "gt.recipe.implosioncompressor",
+      "gt.recipe.massfab",
+      "gt.td.short.energy.light",
+      "gt.td.short.energy.quantum",
+      "gt.tooltip.multiblock.fusionreactor.1",
+      "gt.tooltip.multiblock.fusionreactor.2",
+      "gt.tooltip.multiblock.fusionreactor.3",
+      "gt.tooltip.multiblock.fusionreactor.4",
+      "gt.tooltip.multiblock.fusionreactor.5",
+      "gt.tooltip.multiblock.fusionreactor.6",
+      "gt.tooltip.multiblock.fusionreactor.7",
+      "gt.tooltip.multiblock.implosioncompressor.1",
+      "gt.tooltip.multiblock.implosioncompressor.2",
+      "gt.tooltip.multiblock.matterfabricator.1",
+      "gt.tooltip.multiblock.matterfabricator.2",
+      "gt.tooltip.multiblock.matterfabricator.3",
+      "gt.tooltip.multiblock.matterfabricator.4",
+      "gt.tooltip.multiblock.matterfabricator.5",
+      "gt.tooltip.multiblock.matterfabricator.6",
+      "gt.tooltip.multiblock.matterfabricator.7",
+      "gt.tooltip.multiblock.matterfabricator.8"
+    ],
+    "all_chinese_verbatim": true,
+    "chinese_changed": true,
+    "english_added": {
+      "gt.tooltip.multiblock.implosioncompressor.1": "3x3x3 Hollow of 25 Dense Tungstensteel Walls filled with Air",
+      "gt.tooltip.multiblock.implosioncompressor.2": "Main Block centered on Side-Bottom and facing outwards",
+      "gt.tooltip.multiblock.fusionreactor.1": "For Assembly Instructions read the Manual in the GUI.",
+      "gt.tooltip.multiblock.fusionreactor.2": "144 Iridium Coils, 576 Regular Tungstensteel Walls, 50 Ventilation Units.",
+      "gt.tooltip.multiblock.fusionreactor.3": "36 Regular Stainless Steel Walls, 53 Galvanized Steel Walls.",
+      "gt.tooltip.multiblock.fusionreactor.4": "3 Versatile, 12 Logic and 12 Control Quadcore Processing Units.",
+      "gt.tooltip.multiblock.fusionreactor.5": "Energy Output at the Electric Interfaces",
+      "gt.tooltip.multiblock.fusionreactor.6": "Laser Input at the 'Glass' Ring",
+      "gt.tooltip.multiblock.fusionreactor.7": "Items and Fluids are handeled at the normal Walls",
+      "gt.tooltip.multiblock.matterfabricator.1": "5x5x5 'Hollow' of 97 Dense Lead Walls",
+      "gt.tooltip.multiblock.matterfabricator.2": "3x3x3 'Hollow' with 26 Osmium Coils inside the 5x5x5",
+      "gt.tooltip.multiblock.matterfabricator.3": "5x5 Ring of 16 Ventilation Units ontop",
+      "gt.tooltip.multiblock.matterfabricator.4": "4 Control Quadcore Processor Units in that Ring",
+      "gt.tooltip.multiblock.matterfabricator.5": "4 Conversion Quadcore Processor Units in that Ring",
+      "gt.tooltip.multiblock.matterfabricator.6": "1 Versatile Quadcore Processor Unit in the center of that Ring",
+      "gt.tooltip.multiblock.matterfabricator.7": "Main Block centered on Side-Bottom and facing outwards",
+      "gt.tooltip.multiblock.matterfabricator.8": "Stuff can go in and out on any of the Dense Lead Walls",
+      "gt.recipe.fusionreactor": "Fusion Reactor",
+      "gt.recipe.implosioncompressor": "Implosion Compressor"
+    },
+    "item_names": {
+      "en_us": {
+        "block.gregtech.fusion_reactor_main": {
+          "before": "Fusion Reactor Main",
+          "after": "Fusion Reactor",
+          "source_key": "gt.multitileentity.17198"
+        },
+        "block.gregtech.implosion_compressor_main": {
+          "before": "Implosion Compressor Main",
+          "after": "Implosion Compressor",
+          "source_key": "gt.multitileentity.17110"
+        },
+        "block.gregtech.largemassfab_lead": {
+          "before": "Large Matter Fabricator (Lead)",
+          "after": "Large Matter Fabricator",
+          "source_key": "gt.multitileentity.17199"
+        }
+      },
+      "zh_cn": {
+        "block.gregtech.fusion_reactor_main": {
+          "before": "Fusion Reactor Main",
+          "after": "聚变反应堆",
+          "source_key": "gt.multitileentity.17198"
+        },
+        "block.gregtech.implosion_compressor_main": {
+          "before": "Implosion Compressor Main",
+          "after": "聚爆压缩机",
+          "source_key": "gt.multitileentity.17110"
+        },
+        "block.gregtech.largemassfab_lead": {
+          "before": "Large Matter Fabricator (Lead)",
+          "after": "大型物质制造器",
+          "source_key": "gt.multitileentity.17199"
+        }
+      }
+    },
+    "chinese_name_source_ids": [
+      17110,
+      17198,
+      17199
+    ]
+  },
+  "current": [
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\machine\\BasicMachineCatalog.java",
+      "sha256": "e2ee8a78f891db3c3df08b91d18a1f05322a12b6c84950e3d4bf823970333973",
+      "bytes": 40168
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\machine\\OriginalMachineMaterialData.java",
+      "sha256": "5f6f442f8fb7d3265531b00c667c93850fa41d28e2f93d9ec307c59ec14e20c9",
+      "bytes": 206052
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\OriginalMultiblockMachineParameters.java",
+      "sha256": "c9704435f9115d7e9990c74ba78d823e92a23efa118b24407e59a2cb99ca65a6",
+      "bytes": 2030
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\data\\BasicMachineOriginalParams.java",
+      "sha256": "7432073717be1f3239fb9bd36e508950f4e594ebb0de953850bd449ad986fb47",
+      "bytes": 28758
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\data\\SourceBlockProperties.java",
+      "sha256": "4c5e67c29854d38e5f17cce7db6bd5e826ed059eed6e9d627f0198d36b65971a",
+      "bytes": 104871
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\lang\\en_us.json",
+      "sha256": "9ec3ec0784bf21616633b49f115d1bc80b2ce151e5b453bd7f5c484b035b40b6",
+      "bytes": 743704
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\lang\\zh_cn.json",
+      "sha256": "6f27c9adfc87e33e29d47f260cb25a9718be70af3a0517e618ed648b37623415",
+      "bytes": 8315753
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\test\\java\\com\\gregtech\\gregtech\\core\\MachineSpecBehaviorContracts.java",
+      "sha256": "9774c64ea65f6321a9633529a6711b4460e796721209b6c8d603d2478819794a",
+      "bytes": 90143
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\ImplosionCompressorControllerBlockEntity.java",
+      "sha256": "2f3d9f37fd64409f8d07d19346103b5e0a687a8828aefb9a8480c5ad72eb5572",
+      "bytes": 3703
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeRecipeMachineBlockEntity.java",
+      "sha256": "79d2c086e4ee79f3caf993027094b287b9145ad67affb9a46619beee634d9eab",
+      "bytes": 14313
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\client\\BasicMachineSourceTooltips.java",
+      "sha256": "b409684d681253f25d2f4e19688910985c46f45437147ae60fded1bfa72e821e",
+      "bytes": 5939
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\client\\MachineTooltips.java",
+      "sha256": "562b2cd3d8b0cc981f751a49c52c3538a824673b5774c0b215261a8d1e306e36",
+      "bytes": 9743
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\content\\machine\\BasicMachineDefinitions.java",
+      "sha256": "633640f543eacff1a4644413bd500a89137860654e59fc0b1e34ff79fa1c4307",
+      "bytes": 1365
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\ProductionClientSmoke.java",
+      "sha256": "752d9f76ebd033a6cbafdf53ba7a1fcf9289c227276c3f318cdf2ceda38b53c9",
+      "bytes": 5068
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\FusionReactorControllerBlock.java",
+      "sha256": "eb5a4ba3c8800125b296e5791f01143c885b5b7f78ef7f15bc94ec4cb55fbc6b",
+      "bytes": 1490
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\ImplosionCompressorControllerBlock.java",
+      "sha256": "371997485e2d4454df29fee07fec5fcb65b9296c76cfab7bc287df89127bb444",
+      "bytes": 4477
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\ImplosionCompressorControllerBlockEntity.java",
+      "sha256": "d5d2d1acf0eb3c18430382d81ea39ae2996aac180ba67747e2b2fbc1bd348db3",
+      "bytes": 3747
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeRecipeMachineBlockEntity.java",
+      "sha256": "7bd6fd36ed34c283eaef2533fce795cf61beb8234ff2d4a0519f7aaef22db43b",
+      "bytes": 14396
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\client\\BasicMachineSourceTooltips.java",
+      "sha256": "b409684d681253f25d2f4e19688910985c46f45437147ae60fded1bfa72e821e",
+      "bytes": 5939
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\client\\MachineTooltips.java",
+      "sha256": "de3aaf02ddf2f7f543c81c2677c86db66dfa0d029a91a469d9059cbe3410cfe1",
+      "bytes": 9950
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\content\\machine\\BasicMachineDefinitions.java",
+      "sha256": "efe978e86e442f8b4fb90329d768959b550e6fcee1a2b683fd752b7b5b8da79c",
+      "bytes": 972
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\MultiblockDefinitions.java",
+      "sha256": "4ab67571b25fd083de37b81e12c1e1606611ce7522ea89ebe07c57d457c6ec46",
+      "bytes": 7674
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\ProductionClientSmoke.java",
+      "sha256": "52e268a5554a47b80a4c697cdc181acd7c186f073b6481fd0c4789734bb67990",
+      "bytes": 7196
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\generate_machine_params_table.py",
+      "sha256": "db59f8b6bfac2d3b0398fece7ec1531ca35bd7a7735c6ea13fd4f9b2016f525a",
+      "bytes": 6180
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\gt6_machine_map.py",
+      "sha256": "fb673b786ec36ee9524be4a2e9dfd2aaef8040efe28016ad35fd9eae757d0cfe",
+      "bytes": 8091
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\OriginalAdvancedControllerData.java",
+      "sha256": "e3698e7674a5e1860f2f30b01fafd94b3483318cef3660d7568f9dc69601ebf3",
+      "bytes": 2549
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\client\\AdvancedControllerTooltips.java",
+      "sha256": "3029f9ae9c96c66ace315d0159969f263231bff85667abb5083f1408c26228f5",
+      "bytes": 1167
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\AdvancedControllerDeliveryChecks.java",
+      "sha256": "b0a836d3b1f2f71a6c5c1461959e8d490216c0239c81f67e3ee8b162a34d9f7b",
+      "bytes": 3530
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\AdvancedControllerSourceTests.java",
+      "sha256": "0af8bc753f376b05d39a162f3aa1c324fd0c967396ab962aa7a096afcb0e7db1",
+      "bytes": 3562
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\resources\\data\\gregtech_advanced_source\\structures\\test_empty.nbt",
+      "sha256": "147ef3e2c39e8d261ff2287395af00d734ccd13b196abdea0c0334e11fdde075",
+      "bytes": 110
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\client\\AdvancedControllerTooltips.java",
+      "sha256": "3029f9ae9c96c66ace315d0159969f263231bff85667abb5083f1408c26228f5",
+      "bytes": 1167
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\AdvancedControllerDeliveryChecks.java",
+      "sha256": "f91ae148cfc1971beec677307b22505c08c79ad81837cd8cdc2c2e78c1ed5b28",
+      "bytes": 3582
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\AdvancedControllerSourceTests.java",
+      "sha256": "4ffc59082103002c34e63b757545f4c4a17d52e91ce1b838a0c074ea217577cf",
+      "bytes": 3647
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\resources\\data\\gregtech_advanced_source\\structure\\test_empty.nbt",
+      "sha256": "ea4b3ed88dbb879fc3b86b9bceca2961af8248069c6420a4136eba192ec7b9b7",
+      "bytes": 113
+    }
+  ],
+  "source_registrations": [
+    {
+      "display": "\"Implosion Compressor\"",
+      "machine": "Implosion Compressor",
+      "tier": "MT.TungstenSteel",
+      "registryId": "17110",
+      "pattern": [
+        "CPC",
+        "PAP",
+        "RMR"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem(18023)",
+        "R": "IL.Processor_Crystal_Ruby",
+        "C": "OD_CIRCUITS[6]",
+        "P": "OP.plateDense.dat(aMat)",
+        "A": "IL.ROBOT_ARMS[2]"
+      },
+      "params": {
+        "energy": "TU",
+        "energy2": null,
+        "input": 1,
+        "inputMin": 1,
+        "inputMax": 16,
+        "parallel": 64,
+        "parallelDuration": false,
+        "hardness": 12.5,
+        "resistance": 12.5,
+        "overflow": null,
+        "texture": null
+      },
+      "line": 1228
+    },
+    {
+      "display": "\"Large Matter Fabricator\"",
+      "machine": "Large Matter Fabricator",
+      "tier": "MT.Pb",
+      "registryId": "17199",
+      "pattern": [
+        "FFF",
+        "FMF",
+        "FFF"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem(18031)",
+        "F": "IL.FIELD_GENERATORS[5]"
+      },
+      "params": {
+        "energy": "QU",
+        "energy2": null,
+        "input": 1,
+        "inputMin": 1,
+        "inputMax": 2097152,
+        "parallel": 64,
+        "parallelDuration": true,
+        "hardness": 6.0,
+        "resistance": 6.0,
+        "overflow": null,
+        "texture": null
+      },
+      "line": 1241
+    },
+    {
+      "display": "\"Fusion Reactor\"",
+      "machine": "Fusion Reactor",
+      "tier": "MT.SteelGalvanized",
+      "registryId": "17198",
+      "pattern": [
+        "FFF",
+        "FMF",
+        "FFF"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem(18003)",
+        "F": "IL.FIELD_GENERATORS[5]"
+      },
+      "params": {
+        "energy": "TU",
+        "energy2": "LU",
+        "input": 8192,
+        "inputMin": 1,
+        "inputMax": 16384,
+        "parallel": null,
+        "parallelDuration": false,
+        "hardness": 12.5,
+        "resistance": 12.5,
+        "overflow": null,
+        "texture": null
+      },
+      "line": 1242
+    }
+  ],
+  "new_material_source_row": {
+    "machine": "largemassfab",
+    "tier": 1,
+    "source_id": 17199,
+    "source_line": 1241,
+    "components": {
+      "Os": 83026944000,
+      "Ti": 20756736000,
+      "NetherStar": 5189184000,
+      "Pb": 23351328000
+    },
+    "pattern": [
+      "FFF",
+      "FMF",
+      "FFF"
+    ],
+    "keys": {
+      "M": "aRegistry.getItem(18031)",
+      "F": "IL.FIELD_GENERATORS[5]"
+    }
+  },
+  "material_policy": "Original known CR.REV component data only:17199=36U Pb,128U Os,32U Ti,8U NetherStar; unknown automatic ore/tag data is not replaced with an arbitrary concrete member. Full source resolution audit retains unresolved data across all registrations.",
+  "source_audits": [
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\advanced-controller-material-source-20261007.json",
+      "sha256": "f68f57adbd85dad837d701f08fd463a4a54268f6e403743ed8cc53b8b495a9f2",
+      "bytes": 1153127
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\advanced-controller-harvest-source-20261007.json",
+      "sha256": "d4d738b542edf2ec0fb34fa4dd215fb2f4b0f3c83251e98893314730a6a19c31",
+      "bytes": 296694
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\advanced-controller-language-20261007.json",
+      "sha256": "e7a62da48d5600fca82957df0f5e47950c900a7e50437ab33abdd07b975ce0bd",
+      "bytes": 5062
+    }
+  ],
+  "preservation": {
+    "original_parameters": {
+      "before": 264,
+      "after": 265,
+      "existing_rows_identical": true,
+      "generated_current_bytes_reproduced": true
+    },
+    "original_machine_materials": {
+      "before": 264,
+      "after": 265,
+      "existing_rows_identical": true
+    },
+    "original_basic_harvest": {
+      "before": 264,
+      "after": 265,
+      "existing_rows_identical": true
+    },
+    "existing_named_material_1465_and_harvest_1507_tables": "unchanged; not recomputed as a new installed acceptance"
+  },
+  "implementation": {
+    "fusion": "TU nominal8192/range1..16384 is source acceptance; LU charged input8192 and source short name/color shown once. Source parent does not show an emitted-EU row; structure names the electrical interfaces. Native existing dedicated LU startup/EU job executor retained. Source output tank long maximum restored at spec setup/load.",
+    "implosion": "64 parallel TU1/range1..16, ANY item/fluid masks, no auto inputs, bottom item/fluid auto outputs,12.5 hardness/resistance in shared/native specs and Forge physical registration; original structure2 rows plus inherited tool rows.",
+    "large_matter": "Missing17199 mapping added; QU1/range1..2097152,64 parallel/parallel duration,6 hardness/resistance, ANY input/output/no auto input/bottom auto output and known36Pb+128Os+32Ti+8NetherStar U. Existing native cheap/noncontinuous execution retained; source output long maximum and existing-fluid transfer-before-work policy now applies to matter too.",
+    "platform_boundary": "Forge custom implosion Block.appendHoverText and FusionReactorControllerBlock use shared source spec adapter. Neo uses its already registered BasicMachineBlock definitions/factories for both; no synthetic new Neo block class.",
+    "ordinary_tooltip_parent": "Existing247 ordinary source helper delegates the same values to an overload adding explicit source cheap/efficiency/multiblock/charged-energy arguments; avoids a second divergent parent implementation."
+  },
+  "remaining": [
+    "Current runtime/ordinary dual packaging/installed probes pending pooled acceptance",
+    "Source manual-in-GUI integration and implosion process-start sound remain outside this tooltip/parameter batch",
+    "Arbitrary original saved-property overrides/input tank capacity/part design modes and full1.7.10 save format",
+    "Natural fusion/matter/implosion survival chains, player hover, independent process restart, old-save backups and ordinary dedicated server",
+    "Other generators/multiblocks and all remaining block tooltips/material records"
+  ]
+}

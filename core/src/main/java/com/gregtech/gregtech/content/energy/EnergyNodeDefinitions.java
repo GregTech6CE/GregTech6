@@ -31,7 +31,7 @@ public final class EnergyNodeDefinitions {
             result.add(EnergyNodeSpec.builder("electric_motor_" + tiers[i].name(), tiers[i].mat())
                     .kind(Kind.CONVERTER).texture("motors/rotation_electric")
                     .input(GregTechTags.Energy.EU, tiers[i].v()).output(GregTechTags.Energy.RU, motorOut[i])
-                    .capacity(tiers[i].v() * 4).names("Electric Motor (" + tiers[i].name().toUpperCase() + ")", "电动机(" + tiers[i].name().toUpperCase() + ")").build());
+                    .capacity(tiers[i].v() * 2).name("Electric Motor (" + tiers[i].name().toUpperCase() + ")").build());
         }
 
         // Electric dynamos: RU in → EU out at 11/16 rate (GT6 10111-10115)
@@ -40,7 +40,7 @@ public final class EnergyNodeDefinitions {
             result.add(EnergyNodeSpec.builder("electric_dynamo_" + tiers[i].name(), tiers[i].mat())
                     .kind(Kind.CONVERTER).texture("dynamos/electric_rotation")
                     .input(GregTechTags.Energy.RU, tiers[i].v()).output(GregTechTags.Energy.EU, dynamoOut[i])
-                    .capacity(tiers[i].v() * 2).names("Electric Dynamo (" + tiers[i].name().toUpperCase() + ")", "发电机(" + tiers[i].name().toUpperCase() + ")").build());
+                    .capacity(tiers[i].v() * 2).name("Electric Dynamo (" + tiers[i].name().toUpperCase() + ")").build());
         }
 
         // Transformers: step-down — accept the higher voltage, emit the lower (GT6 10040+).
@@ -62,7 +62,7 @@ public final class EnergyNodeDefinitions {
             result.add(EnergyNodeSpec.builder("transformer_" + s.name(), s.mat())
                     .kind(Kind.CONVERTER).texture("transformers/transformer_electric")
                     .input(GregTechTags.Energy.EU, s.hi()).output(GregTechTags.Energy.EU, s.lo())
-                    .capacity(s.hi() * 2).names("Transformer (" + s.name().replace('_', '-').toUpperCase() + ")", "变压器(" + s.name().replace('_', '-').toUpperCase() + ")").build());
+                    .capacity(s.hi() * 2).name("Transformer (" + s.name().replace('_', '-').toUpperCase() + ")").build());
         }
 
         // Flux motors/dynamos: Forge Energy bridge (GT6 4 RF = 1 EU, 2 EU = 1 RU).
@@ -70,82 +70,36 @@ public final class EnergyNodeDefinitions {
         result.add(EnergyNodeSpec.builder("flux_motor_lv", Materials.Lead)
                     .kind(Kind.CONVERTER).texture("motors/rotation_flux")
                     .input(GregTechTags.Energy.RF, 128).output(GregTechTags.Energy.RU, 16)
-                    .capacity(128 * 4).names("Flux Motor (LV)", "通量电动机(LV)").build());
+                    .capacity(128 * 2).name("Flux Motor (LV)").build());
         result.add(EnergyNodeSpec.builder("flux_motor_mv", Materials.Invar)
                     .kind(Kind.CONVERTER).texture("motors/rotation_flux")
                     .input(GregTechTags.Energy.RF, 512).output(GregTechTags.Energy.RU, 64)
-                    .capacity(512 * 4).names("Flux Motor (MV)", "通量电动机(MV)").build());
+                    .capacity(512 * 2).name("Flux Motor (MV)").build());
         result.add(EnergyNodeSpec.builder("flux_dynamo_lv", Materials.Lead)
                     .kind(Kind.CONVERTER).texture("dynamos/flux_rotation")
                     .input(GregTechTags.Energy.RU, 32).output(GregTechTags.Energy.RF, 88)
-                    .capacity(32 * 4).names("Flux Dynamo (LV)", "通量发电机(LV)").build());
+                    .capacity(32 * 2).name("Flux Dynamo (LV)").build());
         result.add(EnergyNodeSpec.builder("flux_dynamo_mv", Materials.Invar)
                     .kind(Kind.CONVERTER).texture("dynamos/flux_rotation")
                     .input(GregTechTags.Energy.RU, 128).output(GregTechTags.Energy.RF, 352)
-                    .capacity(128 * 4).names("Flux Dynamo (MV)", "通量发电机(MV)").build());
+                    .capacity(128 * 2).name("Flux Dynamo (MV)").build());
 
-        // Steam turbines: steam L → RU (GT6 1512+, STEAM_PER_EU = 2, waste energy)
-        record Turbine(String name, GTMaterial mat, long steamLt, long ruOut, String zh) {}
-        Turbine[] turbines = {
-                new Turbine("bronze", Materials.Bronze, 48, 16, "青铜"),
-                new Turbine("brass", Materials.Brass, 72, 24, "黄铜"),
-                new Turbine("invar", Materials.Invar, 96, 32, "殷钢"),
-                new Turbine("steel", Materials.Steel, 192, 64, "钢"),
-                new Turbine("chromium", Materials.Chromium, 288, 96, "铬"),
-        };
-        for (Turbine t : turbines) {
-            result.add(EnergyNodeSpec.builder("steam_turbine_" + t.name(), t.mat())
-                    .kind(Kind.TURBINE).texture("turbines/rotation_steam")
-                    .input(GregTechTags.Energy.STEAM, t.steamLt()).output(GregTechTags.Energy.RU, t.ruOut())
-                    .capacity(t.steamLt() * 2).names("Steam Turbine (" + t.mat().getLocalName() + ")", "蒸汽轮机(" + t.zh() + ")").build());
-        }
+        result.addAll(OriginalSteamTurbines.specifications());
 
         // Solar panels (GT6 10050/10051): silicon is the ULV panel (Electric_T[0] = tin alloy),
         // germanium uses Electric_T[2] = aluminium. Both keep only the current tick's output.
         result.add(EnergyNodeSpec.builder("solar_panel_silicon", Materials.TinAlloy)
                     .kind(Kind.SOLAR).texture("solarpanels/solarpanel_electric_8eu")
                     .input(GregTechTags.Energy.EU, 0).output(GregTechTags.Energy.EU, 8)
-                    .capacity(8).names("Solar Panel (Silicon)", "太阳能板(硅)").build());
+                    .capacity(8).name("Solar Panel (Silicon)").build());
         result.add(EnergyNodeSpec.builder("solar_panel_germanium", Materials.Aluminium)
                     .kind(Kind.SOLAR).texture("solarpanels/solarpanel_electric_8eu")
                     .input(GregTechTags.Energy.EU, 0).output(GregTechTags.Energy.EU, 16)
-                    .capacity(16).names("Solar Panel (Germanium)", "太阳能板(锗)").build());
+                    .capacity(16).name("Solar Panel (Germanium)").build());
 
         result.addAll(BatteryBoxDefinitions.specifications());
 
-        // Electric heaters (GT6 10001-10005): EU → HU. GT6 registers them for VN[1..5] only —
-        // there is no ULV heater — and the conversion is 2 EU = 1 HU (32→16, 8192→4096).
-        record Heater(String name, long euIn, long huOut, GTMaterial mat, String zh) {}
-        Heater[] heaters = {
-                new Heater("lv", 32, 16, Materials.SteelGalvanized, "LV"),
-                new Heater("mv", 128, 64, Materials.Aluminium, "MV"),
-                new Heater("hv", 512, 256, Materials.StainlessSteel, "HV"),
-                new Heater("ev", 2048, 1024, Materials.Chromium, "EV"),
-                new Heater("iv", 8192, 4096, Materials.Titanium, "IV"),
-        };
-        for (Heater h : heaters) {
-            result.add(EnergyNodeSpec.builder("electric_heater_" + h.name(), h.mat())
-                    .kind(Kind.CONVERTER).texture("heaters/heat_electric")
-                    .input(GregTechTags.Energy.EU, h.euIn()).output(GregTechTags.Energy.HU, h.huOut())
-                    .capacity(h.euIn() * 4).names("Electric Heater (" + h.zh() + ")", "电加热器(" + h.zh() + ")").build());
-        }
-
-        // Thermoelectric coolers (GT6 10161-10165): EU → CU at 4 EU = 1 CU (32→8, 8192→2048),
-        // with the remainder wasted as HU; the port models the primary CU output only.
-        record Cooler(String name, long euIn, long cuOut, GTMaterial mat, String zh) {}
-        Cooler[] coolers = {
-                new Cooler("lv", 32, 8, Materials.SteelGalvanized, "LV"),
-                new Cooler("mv", 128, 32, Materials.Aluminium, "MV"),
-                new Cooler("hv", 512, 128, Materials.StainlessSteel, "HV"),
-                new Cooler("ev", 2048, 512, Materials.Chromium, "EV"),
-                new Cooler("iv", 8192, 2048, Materials.Titanium, "IV"),
-        };
-        for (Cooler c : coolers) {
-            result.add(EnergyNodeSpec.builder("electric_cooler_" + c.name(), c.mat())
-                    .kind(Kind.CONVERTER).texture("cooler/cryo_electric")
-                    .input(GregTechTags.Energy.EU, c.euIn()).output(GregTechTags.Energy.CU, c.cuOut())
-                    .capacity(c.euIn() * 4).names("Electric Cooler (" + c.zh() + ")", "电冷却器(" + c.zh() + ")").build());
-        }
+        result.addAll(OriginalThermalConverter.specifications());
         return com.gregtech.gregtech.api.definition.DefinitionCatalog.validated(result, EnergyNodeSpec::id);
     }
 }

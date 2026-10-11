@@ -383,11 +383,11 @@ public class RecipeMap {
         // Copy fluids, dropping null/empty entries entirely.
         FluidStack[] tFluidInputs = copyFluids(aFluidInputs);
         FluidStack[] tFluidOutputs = copyFluids(aFluidOutputs);
-        // Require at least one input and at least one output overall.
+        // Fuel may produce energy alone (original Blaze hot fuel). Ordinary work still needs a product.
         if (tInputs.length + tFluidInputs.length <= 0) return null;
         int tRealOutputs = tFluidOutputs.length;
         for (ItemStack s : tOutputs) if (!empty(s)) tRealOutputs++;
-        if (tRealOutputs <= 0) return null;
+        if (tRealOutputs <= 0 && aEUt >= 0) return null;
         // Align chance array with output array.
         long[] tChances = (aChances == null || aChances.length == 0) ? null : Arrays.copyOf(aChances, tOutputs.length);
 
@@ -445,7 +445,7 @@ public class RecipeMap {
         }
         int tRealOutputsAfterOptimize = tFluidOutputs.length;
         for (ItemStack s : tOutputs) if (!empty(s)) tRealOutputsAfterOptimize++;
-        if (tInputs.length + tFluidInputs.length <= 0 || tRealOutputsAfterOptimize <= 0) {
+        if (tInputs.length + tFluidInputs.length <= 0 || tRealOutputsAfterOptimize <= 0 && aEUt >= 0) {
             COLLAPSED_RECIPES_DROPPED++;
             tLastMakeCollapsed = true;
             if (COLLAPSED_SAMPLES.size() < 64) {

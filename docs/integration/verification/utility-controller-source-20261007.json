@@ -1,0 +1,608 @@
+{
+  "date": "2026-10-07",
+  "base_commit": "ae7ad10a728ebc2ce86eeb2771536d70a083757b",
+  "authors": [
+    "GregTech-6 Team",
+    "Gregorius Techneticies"
+  ],
+  "license": "LGPL-3.0-or-later",
+  "scope": "17197 large heat exchanger and17998 lightning output; three existing block identities. Tooltip defaults and exact known CR.REV /harvest aliases only. No new fuel/strike execution or save format.",
+  "original": [
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577",
+      "bytes": 694
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\COPYING.LESSER",
+      "sha256": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118",
+      "bytes": 7652
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "bytes": 791265
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeHeatExchanger.java",
+      "sha256": "17e76c7595c2a229efe93dcf728d9a32a3301789ee843fa2c9e9aecfca885bfb",
+      "bytes": 15439
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLightningRod.java",
+      "sha256": "c6129225a4ed16acbb0b10661bf1e4dac0a3c5c4c7c62010c1e56308a276c83a",
+      "bytes": 10060
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\multiblocks\\TileEntityBase10MultiBlockBase.java",
+      "sha256": "42ec92430ff6af7fb8d192aebfa424cc1af519d40ba2ff53a8e8c6afe8f9e738",
+      "bytes": 11378
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\base\\TileEntityBase09FacingSingle.java",
+      "sha256": "b172aadf76d09c37ee4c7793cb784dcc97a19d999ad1737bafc60cc064bece7f",
+      "bytes": 5485
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "bytes": 153449
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\TD.java",
+      "sha256": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea",
+      "bytes": 53981
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+      "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8",
+      "bytes": 51085
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\FM.java",
+      "sha256": "374772472db8a786a8a0af2408ad71ae2500481e258ee1c6815fcd87f7cbec64",
+      "bytes": 4536
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\OP.java",
+      "sha256": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e",
+      "bytes": 162128
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\ANY.java",
+      "sha256": "6a26fa2293c4a315d2594c5ac80eba689389f9b1922a33547bdd20d2df724f71",
+      "bytes": 17964
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\MT.java",
+      "sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2",
+      "bytes": 693183
+    }
+  ],
+  "comparison": [
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577",
+      "bytes": 694
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\COPYING.LESSER",
+      "sha256": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118",
+      "bytes": 7652
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeHeatExchanger.java",
+      "sha256": "2e8df8a7fd02888364fc9eb9ab487b30bc5df73f816bbde2b7c33c852284b432",
+      "bytes": 16200
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLightningRod.java",
+      "sha256": "070e39e3e4114d23dbe68d769bb9c25d8f82c31ae785febe14138ef121da3405",
+      "bytes": 10647
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\multiblocks\\TileEntityBase10MultiBlockBase.java",
+      "sha256": "17299983c220fe186f50adeaa3d584cf9e41fa956a072ef7e3fff3a3526df941",
+      "bytes": 11555
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\base\\TileEntityBase09FacingSingle.java",
+      "sha256": "a5f2184a58e7280aa82aabb2f4a8ea453e797d49347b464a92f83a6337e99155",
+      "bytes": 6196
+    }
+  ],
+  "comparison_scope": "Same four/nine specialized structure strings and original parent tool hints; _w runtime algorithms not adopted. Its LH.tt wrapper around strike suffixes differs from the primary hardcoded literals.",
+  "current": [
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\machine\\MachineConstructionMaterials.java",
+      "sha256": "9aa272fe9a0ade82a7d1c9b205016a06c912119f5c6c847f2e31b3cc6ea6384b",
+      "bytes": 2473
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\machine\\OriginalMachineMaterialData.java",
+      "sha256": "1ffcc85143684f8f13741795dac52fc655529fa47239a1d4358a1cff48b7d9ac",
+      "bytes": 206347
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\AdvancedControllerRules.java",
+      "sha256": "5bccebaf263d5f508e8de24ba9d06930bb98586593886397d1bdb35a99b7eee6",
+      "bytes": 779
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\OriginalGeneratorParameters.java",
+      "sha256": "c8ed5e80e09ad6005258d227ec3322cbc5c401ed182ad296972ec69a5744f300",
+      "bytes": 2054
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\OriginalUtilityControllerData.java",
+      "sha256": "c12ac2a7e797e47623342213a4fb4b57a3faa9ad85727413d0684a2c7c63bda5",
+      "bytes": 1512
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\SharedHeatExchangerStructure.java",
+      "sha256": "1307fcf31ea1b0cedef63547c39f7201b2cc2b4bc43aadbb638c256b2a001e5a",
+      "bytes": 676
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\data\\SourceBlockProperties.java",
+      "sha256": "cb3632ff56eb0773194d7cfeff75ddede35fed044a1e0ca6a2db8f0a83c164b0",
+      "bytes": 105373
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\lang\\en_us.json",
+      "sha256": "bfd8730e2e234671958bf63ccfe252870ba41e2836b0e085b5852118966f173d",
+      "bytes": 756632
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\lang\\zh_cn.json",
+      "sha256": "cc97fc78b6a1d248fa6928db523b633907b6ebc66de592834e3a74e9ea26f767",
+      "bytes": 8454246
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\test\\java\\com\\gregtech\\gregtech\\core\\MachineSpecBehaviorContracts.java",
+      "sha256": "6fdd5bce53906b1aa0731ef7c018fdb69b08315a4ee5e1e1f0ad0e2f69be1cae",
+      "bytes": 91303
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\test\\java\\com\\gregtech\\gregtech\\core\\UtilityControllerContracts.java",
+      "sha256": "33d04b1c901fffd0ebc2ebe300ba9256ac1d84aac730330f650b96330e102ed8",
+      "bytes": 3759
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\LargeHeatExchangerControllerBlock.java",
+      "sha256": "dac8c0daa34b4667a251fcc483c24fc0888459c564f25e5fb289cc6c69c9e7d8",
+      "bytes": 4822
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\LightningRodControllerBlock.java",
+      "sha256": "29e107e7aac17265044dd729b18a38e1ed66ca2b72dde411b8260abeb8798720",
+      "bytes": 2527
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\OriginalLightningRodControllerBlock.java",
+      "sha256": "8650e13413279baac12b8e025ef64d82b77be92345af79eb3ef2e1205c550175",
+      "bytes": 4036
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeHeatExchangerControllerBlockEntity.java",
+      "sha256": "08b4731a495418df62a123b511f64d739ae687765ff60b89807173d090dd6b23",
+      "bytes": 7421
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LightningRodControllerBlockEntity.java",
+      "sha256": "7d69e9056fa4c2dc74b3316c0f3ad8ca679bb56f645b87de7567a2066a8930b3",
+      "bytes": 6848
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\client\\CommonBlockTooltips.java",
+      "sha256": "2aee573f7b0af6ef0e3cb73eda2d50f807651e480de28327c2615917788e8e3f",
+      "bytes": 7936
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\client\\MachineTooltips.java",
+      "sha256": "562b2cd3d8b0cc981f751a49c52c3538a824673b5774c0b215261a8d1e306e36",
+      "bytes": 9743
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\client\\StorageBlockTooltips.java",
+      "sha256": "46ea5b6cd3b3744a219a70757c1f9434eb8410d449dc3080c1c1c2f9e650c868",
+      "bytes": 4259
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\client\\UtilityControllerTooltips.java",
+      "sha256": "9c1532a4ea3cebd3a6a2ec53cb34ae0b8fac7b7d43a78083359f2d70a3a76f69",
+      "bytes": 3818
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\CommonBlockDeliveryChecks.java",
+      "sha256": "ee9427e166dc3688b9ea995637288d16622b2bca5ba6ba09ad8a39495b17e9fc",
+      "bytes": 20528
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\ProductionClientSmoke.java",
+      "sha256": "1cc68bc33390988f45c262f16e0527459db736f935a6ef6d3a48987e5519b488",
+      "bytes": 5387
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\UtilityControllerDeliveryChecks.java",
+      "sha256": "f8a61f3cb5bb355ff050f16461af66490620c1d02d2cbc87dd43e2aa29784d1d",
+      "bytes": 6134
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\LargeHeatExchangerControllerBlock.java",
+      "sha256": "391e24805d8f42d75a0d1a95d2f587d0de6111da0453afa55af3d8f72090646d",
+      "bytes": 3688
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\LightningRodControllerBlock.java",
+      "sha256": "6c627523729c4a2c29920703df4aa550604e2272a21cdd384cccc6e64d3f4a12",
+      "bytes": 2373
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\OriginalLightningRodControllerBlock.java",
+      "sha256": "ac3c4c9f9dcad5453ddc07ef8f3d6b6342440be263093d3a9c0c3963e91c696c",
+      "bytes": 3467
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeHeatExchangerControllerBlockEntity.java",
+      "sha256": "076150ec2fd827d49f3e6fb8ab1a9915c0a1f40d12cd152a2fad980c93d52f41",
+      "bytes": 7800
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LightningRodControllerBlockEntity.java",
+      "sha256": "e5e2ec7c1df13da9f25ebbdc70cd26011c9de8eecafa07980467b21ae0d81410",
+      "bytes": 6582
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\client\\CommonBlockTooltips.java",
+      "sha256": "74405494c19a9362be9fcd63650bcf56885b4f618685284984410c03b7a8ed94",
+      "bytes": 7719
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\client\\MachineTooltips.java",
+      "sha256": "de3aaf02ddf2f7f543c81c2677c86db66dfa0d029a91a469d9059cbe3410cfe1",
+      "bytes": 9950
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\client\\StorageBlockTooltips.java",
+      "sha256": "ee2bde8e970ea5f7f655e75e6538308251696a5232b25ab1c5151f1f3cf8ac19",
+      "bytes": 4072
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\client\\UtilityControllerTooltips.java",
+      "sha256": "9c1532a4ea3cebd3a6a2ec53cb34ae0b8fac7b7d43a78083359f2d70a3a76f69",
+      "bytes": 3818
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\MultiblockDefinitions.java",
+      "sha256": "d7650ca998296fd695505190766053a390f294e0cd4dca32a945b35ba8694ba8",
+      "bytes": 7676
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\CommonBlockDeliveryChecks.java",
+      "sha256": "96ba655911ea42595fc59b1d083855d4bf4b37eec14f763a29933034861e7640",
+      "bytes": 18942
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\ProductionClientSmoke.java",
+      "sha256": "e0d30627c50c8dadf9055e74f501b0ede5d00515620d6711810861d7500b7044",
+      "bytes": 7549
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\UtilityControllerDeliveryChecks.java",
+      "sha256": "a42116e7a961856fee1abd45d27824adeca87deffd4c25a1b6f8bdc33a38dae5",
+      "bytes": 6080
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\integration\\generate_machine_material_data.py",
+      "sha256": "6d51ac383c3e4b1d1e3758187be7d868aa1701b959ad2c2c9898096bbf5fad09",
+      "bytes": 33413
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\integration\\generate_source_block_properties.py",
+      "sha256": "e9cb7f8d1a42affc730e5fcbf1e9a42b75e8cb58bc212d89cfea12bc4f254666",
+      "bytes": 7982
+    }
+  ],
+  "chinese_patch": {
+    "path": "C:\\Dev\\GregTech_zh_cn.lang",
+    "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0",
+    "bytes": 7375784
+  },
+  "source_material_rows": [
+    {
+      "path": "heat_exchanger_main",
+      "source_id": 17197,
+      "source_line": 1245,
+      "components": {
+        "AnnealedCopper": 35026992000,
+        "Cu": 15567552000,
+        "W": 23351328000
+      },
+      "pattern": [
+        "DDD",
+        "PMP",
+        "DDD"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem(18024)",
+        "D": "OP.plateDense.dat(MT.AnnealedCopper)",
+        "P": "OP.pipeHuge.dat(ANY.Cu)"
+      }
+    },
+    {
+      "path": "lightning_rod_electric_output",
+      "source_id": 17998,
+      "source_line": 1282,
+      "components": {
+        "NiobiumTitanium": 10378368000,
+        "Pt": 1297296000,
+        "Sapphire": 1297296000,
+        "W": 5189184000
+      },
+      "pattern": [
+        "CWC",
+        "PMP",
+        "CWC"
+      ],
+      "keys": {
+        "M": "OP.casingMachine.dat(aMat)",
+        "W": "OP.wireGt16.dat(MT.NiobiumTitanium)",
+        "P": "IL.Processor_Crystal_Sapphire",
+        "C": "OD_CIRCUITS[6]"
+      }
+    }
+  ],
+  "full_original_registration_lines": [
+    {
+      "source_id": 17197,
+      "line": 1245,
+      "text": "\t\taMat = ANY.W;                   aRegistry.add(\"Large Heat Exchanger\"                                , \"Multiblock Machines\", 17197, 17101, MultiTileEntityLargeHeatExchanger.class  , aMat.mToolQuality, 16, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   6.0F, NBT_RESISTANCE,   6.0F, NBT_TEXTURE, \"largeheatexchanger\"      , NBT_OUTPUT, 16384, NBT_FUELMAP, FM.Hot, NBT_ENERGY_EMITTED, TD.Energy.HU), \"DDD\", \"PMP\", \"DDD\", 'M', aRegistry.getItem(18024), 'D', OP.plateDense.dat(MT.AnnealedCopper), 'P', OP.pipeHuge.dat(ANY.Cu));"
+    },
+    {
+      "source_id": 17998,
+      "line": 1282,
+      "text": "\t\taMat = ANY.W;                   aRegistry.add(\"Lightning Rod Electric Output\"                       , \"Multiblock Machines\", 17998, 17101, MultiTileEntityLightningRod.class        , aMat.mToolQuality, 16, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,  10.0F, NBT_RESISTANCE,  10.0F, NBT_TEXTURE, \"lightningrod\"            , NBT_ENERGY_EMITTED, TD.Energy.EU, NBT_CAPACITY, 18000 * VREC[6]), \"CWC\", \"PMP\", \"CWC\", 'M', OP.casingMachine.dat(aMat), 'W', OP.wireGt16.dat(MT.NiobiumTitanium), 'P', IL.Processor_Crystal_Sapphire, 'C', OD_CIRCUITS[6]);"
+    }
+  ],
+  "source_parameters": [
+    {
+      "id": 17197,
+      "line": 1245,
+      "casing": "ANY.W",
+      "quality_material": "ANY.W",
+      "harvest_expression": "aMat.mToolQuality",
+      "block_group": "aMachine",
+      "nbt_parameters": {
+        "NBT_MATERIAL": "aMat",
+        "NBT_HARDNESS": "6.0F",
+        "NBT_RESISTANCE": "6.0F",
+        "NBT_TEXTURE": "\"largeheatexchanger\"",
+        "NBT_OUTPUT": "16384",
+        "NBT_FUELMAP": "FM.Hot",
+        "NBT_ENERGY_EMITTED": "TD.Energy.HU"
+      }
+    },
+    {
+      "id": 17998,
+      "line": 1282,
+      "casing": "ANY.W",
+      "quality_material": "ANY.W",
+      "harvest_expression": "aMat.mToolQuality",
+      "block_group": "aMachine",
+      "nbt_parameters": {
+        "NBT_MATERIAL": "aMat",
+        "NBT_HARDNESS": "10.0F",
+        "NBT_RESISTANCE": "10.0F",
+        "NBT_TEXTURE": "\"lightningrod\"",
+        "NBT_ENERGY_EMITTED": "TD.Energy.EU",
+        "NBT_CAPACITY": "18000*VREC[6]"
+      }
+    }
+  ],
+  "source_harvest": {
+    "heat_exchanger_main": {
+      "source_id": 17197,
+      "source_line": 1245,
+      "tool": "wrench",
+      "hand_harvestable": false,
+      "material": "ImportedMaterialData.W",
+      "explicit_level": -1,
+      "original_expression": "aMat.mToolQuality",
+      "block_group": "aMachine"
+    },
+    "lightning_rod_electric_output": {
+      "source_id": 17998,
+      "source_line": 1282,
+      "tool": "wrench",
+      "hand_harvestable": false,
+      "material": "ImportedMaterialData.W",
+      "explicit_level": -1,
+      "original_expression": "aMat.mToolQuality",
+      "block_group": "aMachine"
+    }
+  },
+  "table_audit": {
+    "core/src/main/java/com/gregtech/gregtech/content/machine/OriginalMachineMaterialData.java": {
+      "BLOCK_DATA": {
+        "previous": 625,
+        "current": 626,
+        "additions": [
+          "heat_exchanger_main"
+        ],
+        "previous_rows_unchanged": true,
+        "all_current_rows_match_source_generator": true
+      },
+      "DATA": {
+        "previous": 265,
+        "current": 265,
+        "additions": [],
+        "previous_rows_unchanged": true,
+        "all_current_rows_match_source_generator": true
+      }
+    },
+    "core/src/main/java/com/gregtech/gregtech/data/SourceBlockProperties.java": {
+      "BLOCKS": {
+        "previous": 667,
+        "current": 668,
+        "additions": [
+          "heat_exchanger_main"
+        ],
+        "previous_rows_unchanged": true,
+        "all_current_rows_match_source_generator": true
+      },
+      "BASICS": {
+        "previous": 265,
+        "current": 265,
+        "additions": [],
+        "previous_rows_unchanged": true,
+        "all_current_rows_match_source_generator": true
+      }
+    }
+  },
+  "language_audit": {
+    "patch_keys_verified": [
+      "gt.tooltip.multiblock.heatexchanger.1",
+      "gt.tooltip.multiblock.heatexchanger.2",
+      "gt.tooltip.multiblock.heatexchanger.3",
+      "gt.tooltip.multiblock.heatexchanger.4",
+      "gt.tooltip.multiblock.lightningrod.1",
+      "gt.tooltip.multiblock.lightningrod.2",
+      "gt.tooltip.multiblock.lightningrod.3",
+      "gt.tooltip.multiblock.lightningrod.4",
+      "gt.tooltip.multiblock.lightningrod.5",
+      "gt.tooltip.multiblock.lightningrod.6",
+      "gt.tooltip.multiblock.lightningrod.7",
+      "gt.tooltip.multiblock.lightningrod.8",
+      "gt.tooltip.multiblock.lightningrod.9",
+      "gt.lang.structure",
+      "gt.lang.recipes",
+      "gt.lang.efficiency",
+      "gt.lang.energy.output",
+      "gt.recipe.fuels.hot",
+      "gt.td.short.energy.heat",
+      "gt.td.short.energy.electricity",
+      "gt.lang.nogui.funnel.tap.tank",
+      "gt.lang.use.builder.wand.to.ease.building",
+      "gt.lang.use.magnifyingglass.to.detail",
+      "gt.lang.use.x.to.toggle.facing.pre",
+      "gt.lang.tool.name.wrench",
+      "gt.lang.use.x.to.toggle.facing.post"
+    ],
+    "changes": {
+      "en_us": {
+        "changed": {
+          "block.gregtech.heat_exchanger_main": {
+            "before": "Heat Exchanger Main",
+            "after": "Large Heat Exchanger"
+          },
+          "block.gregtech.lightning_rod_main": {
+            "before": "Lightning Rod Main",
+            "after": "Lightning Rod Electric Output"
+          },
+          "gt.tooltip.multiblock.heatexchanger.1": {
+            "before": null,
+            "after": "3x3 Ring of 8 Heat Transmitters with Dense Tungsten Wall inside"
+          },
+          "gt.tooltip.multiblock.heatexchanger.2": {
+            "before": null,
+            "after": "3x3 Ring of 8 Dense Tungsten Walls with Main inside"
+          },
+          "gt.tooltip.multiblock.heatexchanger.3": {
+            "before": null,
+            "after": "Energy Output split over the 8 Heat Transmitters (Top)"
+          },
+          "gt.tooltip.multiblock.heatexchanger.4": {
+            "before": null,
+            "after": "Input at Bottom Layer, Fluid Output at Main Block"
+          },
+          "gt.recipe.fuels.hot": {
+            "before": null,
+            "after": "Hot Fuels"
+          }
+        },
+        "removed": {
+          "gt.tooltip.multiblock.lightningrod.output": "Bottom output: 32768 EU per packet, up to 16 packets per tick"
+        }
+      },
+      "zh_cn": {
+        "changed": {
+          "block.gregtech.heat_exchanger_main": {
+            "before": "Heat Exchanger Main",
+            "after": "大型热交换器"
+          },
+          "block.gregtech.lightning_rod_main": {
+            "before": "Lightning Rod Main",
+            "after": "避雷针电力输出口"
+          }
+        },
+        "removed": {
+          "gt.tooltip.multiblock.lightningrod.output": "Bottom output: 32768 EU per packet, up to 16 packets per tick"
+        }
+      }
+    }
+  },
+  "generator_audits": [
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\utility-controller-material-candidate-20261007.json",
+      "sha256": "b30423f8ff7f9fd87bfd5bb023e1305216a8e738df95af1fcc78ed630ba79192",
+      "bytes": 1153639
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\utility-controller-material-candidate-20261007.java",
+      "sha256": "073ab64109cd5a4d1d047729d87297cb3ab710bdb423d4d03587bcc37bc4e381",
+      "bytes": 207215
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\utility-controller-harvest-candidate-20261007.json",
+      "sha256": "d9369bd0827254f80cf1724f9229fcc4da5b360c93a147fc38a492f8db892308",
+      "bytes": 297090
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\utility-controller-harvest-candidate-20261007.java",
+      "sha256": "2772486c1e2d8bea11aee06ee8d0c55568c7e5699fb9a7e80956c7f3d3d2d7fe",
+      "bytes": 106283
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\utility-controller-table-audit-20261007.json",
+      "sha256": "f1faaede00bc8b902d30d82e825faf38c6562be217c4dfe18b73e476ffcb4de1",
+      "bytes": 1036
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\utility-controller-language-audit-20261007.json",
+      "sha256": "52bca0fb58a513cf0f54011e3b3330c45cfa6f308d7ace8e69bea1689f3eb7de",
+      "bytes": 2885
+    }
+  ],
+  "exact_quantities_units": {
+    "heat_exchanger_main": {
+      "W": 36,
+      "AnnealedCopper": 54,
+      "Cu": 24
+    },
+    "lightning_rod_electric_output": {
+      "W": 8,
+      "NiobiumTitanium": 16,
+      "Pt": 2,
+      "Sapphire": 2
+    }
+  },
+  "unknown_components": "17998 OD_CIRCUITS[6] has no exact automatic material record: no guessed tag member /amount. Only known CR.REV components recorded; entire assembled structures are not added to the main item.",
+  "quantities": {
+    "fixed_precision": 626,
+    "fixed_harvest": 668,
+    "basics": 265,
+    "total_named_precision": 1479,
+    "total_named_harvest": 1521,
+    "added_fixed_heat": 1,
+    "added_legacy_lightning_alias": 1
+  },
+  "defaults": {
+    "heat_rate": 16384,
+    "heat_efficiency": 10000,
+    "heat_min_equals_rec_equals_max": true,
+    "lightning_packet": 32768,
+    "lightning_amps": 16,
+    "lightning_capacity": 589824000
+  }
+}

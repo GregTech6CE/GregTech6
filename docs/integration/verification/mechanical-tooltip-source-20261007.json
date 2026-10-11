@@ -1,0 +1,325 @@
+{
+  "date": "2026-10-07",
+  "baseline": "a5b0ccfbf338203c18dd3fe7e5d3d9e6f874ee6f",
+  "authors": [
+    "GregTech-6 Team",
+    "Gregorius Techneticies"
+  ],
+  "license": "LGPL-3.0-or-later",
+  "source_files": [
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\connectors\\MultiTileEntityAxle.java",
+      "sha256": "033cbb9dc03d4d2471cdcb544ac9c566337acf393f79c8e4cfc97eb3dac790f7",
+      "bytes": 10272,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\connectors\\TileEntityBase09Connector.java",
+      "sha256": "7c77c0fd093e5ff5fb889ad7f3cf6e0b75f5f7390a637b1ce76a2252269526ff",
+      "bytes": 8927,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\connectors\\TileEntityBase10ConnectorRendered.java",
+      "sha256": "4337cc83a2d68d44525e973faf3a7a4383bb56166562cc60f1bce77b8f9b0ad0",
+      "bytes": 17883,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\connectors\\TileEntityBase11ConnectorStraight.java",
+      "sha256": "befbd090a8b539d589aa33e0e5570deb00821c9c185a989ab47eaf814cd063b2",
+      "bytes": 3973,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\transformers\\MultiTileEntityGearBox.java",
+      "sha256": "8196babc3f0682d441cfbbdd3461cb55a6a10629709acef6bf869dac83cee5a6",
+      "bytes": 21776,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeBoiler.java",
+      "sha256": "38d82c11fc57094c9ba8db5c88325b65d847cff40726e084dce87c8b7935ffb6",
+      "bytes": 23904,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\multiblocks\\TileEntityBase10MultiBlockBase.java",
+      "sha256": "42ec92430ff6af7fb8d192aebfa424cc1af519d40ba2ff53a8e8c6afe8f9e738",
+      "bytes": 11378,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\base\\TileEntityBase09FacingSingle.java",
+      "sha256": "b172aadf76d09c37ee4c7793cb784dcc97a19d999ad1737bafc60cc064bece7f",
+      "bytes": 5485,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\block\\multitileentity\\MultiTileEntityItemInternal.java",
+      "sha256": "7e103a13f02097dcfd1c91334cb3da238b9f509ee4cbb584dfd7267bf26f8bb1",
+      "bytes": 40205,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "bytes": 791265,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+      "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8",
+      "bytes": 51085,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "bytes": 153449,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\RM.java",
+      "sha256": "c7cb07faef0235ace4bb26656fddaabfa10da6aa4a2689a7f4cdcaef10d366e6",
+      "bytes": 93922,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\TD.java",
+      "sha256": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea",
+      "bytes": 53981,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\code\\TagData.java",
+      "sha256": "afa72881ee6c421c094ce27e3cef2701374257cb1dd2f099293cceb3e91b4a64",
+      "bytes": 3636,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\GregTech_zh_cn.lang",
+      "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0",
+      "bytes": 7375784,
+      "license": "User-provided Chinese localization, copied verbatim"
+    }
+  ],
+  "comparison_files": [
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\connectors\\MultiTileEntityAxle.java",
+      "sha256": "4ec5d3859f5defdc078044c19459ee9db32f253329bd5ba4ceb8e4832779ff5e"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\energy\\transformers\\MultiTileEntityGearBox.java",
+      "sha256": "a38f698633ffe66b34354ffb066558d9942bfd7085ca75028b1fd279be25794d"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeBoiler.java",
+      "sha256": "7f49636900489ffd3641a59e8873664307962380b9fff8dd97cb0b4a0298d847"
+    }
+  ],
+  "other_comparison_record": "functional-tooltip-source-20261007.json",
+  "comparison_decision": "Original is the requested authority. _w retains the same axle/gearbox/large boiler tooltip lines with newer storage APIs; _w also wraps hardcoded boiler face labels in LH.tt, but original1.7.10 has no canonical localization keys. Keep original literals without inventing Chinese. The previously reviewed yizhi positional catalog and CrucibleCraft IO formatter are not alternate machine/material graphs to import.",
+  "adoption": {
+    "axles": 52,
+    "custom_gearboxes": 13,
+    "source_large_boilers": 5,
+    "axle": "Original Speed+RU, Power and wrench connection hints; omit the non-original per-block Loss line.",
+    "gearbox": "Read actual native item gearMask/axisCode, normalize as native BE load, use existing shared original checkGears; warn only for invalid saved configuration. Wrench/monkeywrench/soft-hammer/magnifier source instructions.",
+    "large_boiler": "Structure header and all4 lines; original water/HU/Steam conversion, saved efficiency/floor output, heat input/capacity, Steam output/capacity, water requirement, hazards, chisel/builder-wand/magnifier/wrench instructions. Use native variant rates via shared source parameters.",
+    "large_saved_efficiency": "Source readFromNBT2 clamps0..10000, not5000..10000; restore0..10000 in both native load and item display. Natural calcification floor remains5000.",
+    "capacities": "Use configured variant capacities; current native load resets saved tank capacity to variant, so do not display unsupported capacity overrides.",
+    "material_data": "Existing439 fixed/252 tier/120 hopper data tables and material event unchanged; these devices retain the same precise source components."
+  },
+  "fixed_source_large_boiler_parameters": [
+    {
+      "source_id": 17201,
+      "source_line": 1248,
+      "output_expression": "4096*STEAM_PER_EU",
+      "output": 8192
+    },
+    {
+      "source_id": 17205,
+      "source_line": 1249,
+      "output_expression": "4096*STEAM_PER_EU",
+      "output": 8192
+    },
+    {
+      "source_id": 17202,
+      "source_line": 1250,
+      "output_expression": "8192*STEAM_PER_EU",
+      "output": 16384
+    },
+    {
+      "source_id": 17203,
+      "source_line": 1251,
+      "output_expression": "16384*STEAM_PER_EU",
+      "output": 32768
+    },
+    {
+      "source_id": 17204,
+      "source_line": 1252,
+      "output_expression": "131072*STEAM_PER_EU",
+      "output": 262144
+    }
+  ],
+  "language_import": {
+    "keys": [
+      "gt.lang.axle.stats.power",
+      "gt.lang.axle.stats.speed",
+      "gt.lang.efficiency",
+      "gt.lang.energy.capacity",
+      "gt.lang.energy.convert.from",
+      "gt.lang.energy.convert.to",
+      "gt.lang.energy.convert.using",
+      "gt.lang.energy.input",
+      "gt.lang.energy.output",
+      "gt.lang.face.any",
+      "gt.lang.face.any.but.sides",
+      "gt.lang.face.top",
+      "gt.lang.hazard.explosion.steam",
+      "gt.lang.hazard.meltdown",
+      "gt.lang.nogui.funnel.tank",
+      "gt.lang.nogui.rightclick.interact",
+      "gt.lang.recipes",
+      "gt.lang.recipes.bathingsink.usage",
+      "gt.lang.recipes.grindstone.init",
+      "gt.lang.recipes.grindstone.usage",
+      "gt.lang.recipes.juicer.usage",
+      "gt.lang.recipes.mixingbowl.usage",
+      "gt.lang.recipes.mortar.usage",
+      "gt.lang.recipes.sifter.usage",
+      "gt.lang.requirement.water.pure",
+      "gt.lang.structure",
+      "gt.lang.tool.name.wrench",
+      "gt.lang.use.builder.wand.to.ease.building",
+      "gt.lang.use.chisel.to.decalcify",
+      "gt.lang.use.magnifyingglass.to.detail",
+      "gt.lang.use.soft.hammer.to.toggle",
+      "gt.lang.use.x.to.toggle.connection.post",
+      "gt.lang.use.x.to.toggle.connection.pre",
+      "gt.lang.use.x.to.toggle.facing.post",
+      "gt.lang.use.x.to.toggle.facing.pre",
+      "gt.recipe.bath",
+      "gt.recipe.juicer",
+      "gt.recipe.mixer",
+      "gt.recipe.mortar",
+      "gt.recipe.sharpener",
+      "gt.recipe.sifter",
+      "gt.td.long.energy.steam",
+      "gt.td.short.energy.heat",
+      "gt.td.short.energy.kinetic_rotation",
+      "gt.tooltip.gearbox.custom.1",
+      "gt.tooltip.gearbox.custom.2",
+      "gt.tooltip.gearbox.custom.3",
+      "gt.tooltip.multiblock.largeboiler.1",
+      "gt.tooltip.multiblock.largeboiler.2",
+      "gt.tooltip.multiblock.largeboiler.3",
+      "gt.tooltip.multiblock.largeboiler.4"
+    ],
+    "aliases": {},
+    "changes": {
+      "en_us": {
+        "gt.lang.axle.stats.power": {
+          "before": null,
+          "after": "Power: "
+        },
+        "gt.lang.axle.stats.speed": {
+          "before": null,
+          "after": "Speed: "
+        },
+        "gt.lang.structure": {
+          "before": null,
+          "after": "Structure"
+        },
+        "gt.lang.use.builder.wand.to.ease.building": {
+          "before": null,
+          "after": "Use Builder Wand to ease building"
+        },
+        "gt.td.short.energy.kinetic_rotation": {
+          "before": null,
+          "after": "RU"
+        },
+        "gt.tooltip.gearbox.custom.1": {
+          "before": null,
+          "after": "Gears are interlocked wrongly!"
+        },
+        "gt.tooltip.gearbox.custom.2": {
+          "before": null,
+          "after": "Use Wrench to mount Gears from your Inventory"
+        },
+        "gt.tooltip.gearbox.custom.3": {
+          "before": null,
+          "after": "Use Monkeywrench to change Axle Direction"
+        },
+        "gt.tooltip.multiblock.largeboiler.2": {
+          "before": "3x3x3 of Boiler Walls above, Main front-center bottom",
+          "after": "3x3x3 Hollow of the Block you crafted this one with"
+        },
+        "gt.tooltip.multiblock.largeboiler.3": {
+          "before": "HU + Water -> Steam (1 HU = 2 L, 1 L Water = 200 L Steam)",
+          "after": "Main centered on Side-Bottom of Boiler facing outwards"
+        },
+        "gt.tooltip.multiblock.largeboiler.4": {
+          "before": "Water enters only through the bottom wall; steam exits at the top and upper sides",
+          "after": "Input only possible at Bottom Layer of Boiler"
+        }
+      },
+      "zh_cn": {}
+    },
+    "missing_chinese": [],
+    "source_files": [
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+        "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+        "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\RM.java",
+        "sha256": "c7cb07faef0235ace4bb26656fddaabfa10da6aa4a2689a7f4cdcaef10d366e6"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\TD.java",
+        "sha256": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\..\\code\\TagData.java",
+        "sha256": "afa72881ee6c421c094ce27e3cef2701374257cb1dd2f099293cceb3e91b4a64"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\transformers\\MultiTileEntityGearBox.java",
+        "sha256": "8196babc3f0682d441cfbbdd3461cb55a6a10629709acef6bf869dac83cee5a6"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeBoiler.java",
+        "sha256": "38d82c11fc57094c9ba8db5c88325b65d847cff40726e084dce87c8b7935ffb6"
+      },
+      {
+        "path": "C:\\Dev\\GregTech_zh_cn.lang",
+        "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0"
+      }
+    ],
+    "license": "Original LH/CS/RM/TD/TagData: LGPL-3.0-or-later; Chinese strings copied verbatim from the user-provided patch."
+  },
+  "verification": {
+    "core_source_pins": 123,
+    "shared_and_native_and_probe_compile": "passed25s",
+    "log": {
+      "path": "work/mechanical-tooltips-compile-20261007.log",
+      "sha256": "e1c53ad3dff8ef54024293f1ef2d569b94f6d9b6b74bcf5e08e64fc7e0953b84"
+    },
+    "installed_new_probe": "compiled only; not run this round",
+    "ordinary_new_jars": "not generated; combine with subsequent rounds per user",
+    "source_hashes_rechecked": true
+  },
+  "limitations": [
+    "Remaining generic harvest-tool/level/flammability/ownership/cover-state fidelity and other device-specific tooltips remain pending.",
+    "Original wrong-gear warning blinks; native uses static red pending blinking text support.",
+    "Legacy generic large_boiler_main is a separate port prototype; only original IDs17201..17205 adopted here. Its full source replacement remains pending.",
+    "Hardcoded Heat Transmitters/Pipe Holes labels retained verbatim; no invented localization.",
+    "No new ordinary installed runtime, player hover, rotation/energy transport, large-boiler operation or real saved-world restart evidence."
+  ]
+}

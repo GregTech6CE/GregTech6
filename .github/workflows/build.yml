@@ -38,6 +38,14 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Check source and bilingual language guards
+        run: >-
+          python -X utf8 -m unittest
+          tools.tests.test_source_policy tools.tests.test_standard_chinese
+          tools.tests.test_jade_translations tools.tests.test_localization_coverage
+          tools.tests.test_identity_localization tools.tests.test_numbered_language
+          tools.tests.test_material_names tools.tests.test_creative_language
+          tools.tests.test_delivery_language
       - name: Install JDK 21 toolchain
         uses: actions/setup-java@v4
         with:
@@ -132,6 +140,7 @@ jobs:
             build/test-results/
             core/build/reports/
             core/build/test-results/
+            build/reports/source-policy.json
             neoforge/build/reports/
             neoforge/build/test-results/
           if-no-files-found: ignore

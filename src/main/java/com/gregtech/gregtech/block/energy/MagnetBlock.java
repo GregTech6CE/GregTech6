@@ -27,6 +27,7 @@ public class MagnetBlock extends Block {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("gt.tooltip.magnet"));
+        // Material names/properties are supplied by the shared material tooltip handler.
+        // There is no original gt.tooltip.magnet declaration.
     }
 }

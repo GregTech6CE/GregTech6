@@ -24,13 +24,13 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 /** Large Crucible multiblock controller. 3x3x3 hollow of crucible wall blocks, HU-powered.
- *  4x capacity of single-block crucible. */
+ *  27x capacity of single-block crucible. */
 public class LargeCrucibleControllerBlock extends HorizontalDirectionalBlock implements EntityBlock {
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, net.minecraft.world.entity.Entity entity) {
         if (!level.isClientSide && !entity.isSpectator() && entity instanceof net.minecraft.world.entity.LivingEntity
                 && level.getBlockEntity(pos) instanceof LargeCrucibleControllerBlockEntity crucible)
-            com.gregtech.gregtech.util.GTEntityHelper.applyTemperatureDamage(entity, crucible.getTemperature(), 1F, 10F);
+            com.gregtech.gregtech.util.GTEntityHelper.applyTemperatureDamage(entity, crucible.getTemperature());
         super.stepOn(level, pos, state, entity);
     }
     private final com.gregtech.gregtech.content.multiblock.LargeCrucibleSpecs.Variant variant;
@@ -90,11 +90,7 @@ public class LargeCrucibleControllerBlock extends HorizontalDirectionalBlock imp
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @Nullable BlockGetter level,
                                 @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
-        tooltip.add(Component.translatable("tooltip.gregtech.large_crucible.structure"));
-        tooltip.add(Component.translatable("tooltip.gregtech.large_crucible.ports"));
-        tooltip.add(Component.translatable("tooltip.gregtech.large_crucible.capacity"));
-        tooltip.add(Component.translatable("tooltip.gregtech.large_crucible.meltdown",
-                Math.round(variant.material().getMeltingPoint() * 1.10D)));
+        com.gregtech.gregtech.client.CrucibleTooltips.appendLargeCrucible(variant.crucible(), tooltip);
     }
     @Override public void onRemove(net.minecraft.world.level.block.state.BlockState state,
             net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos,

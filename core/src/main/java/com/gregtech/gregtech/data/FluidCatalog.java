@@ -125,6 +125,11 @@ public class FluidCatalog {
 
         public boolean hasFlag(long f) { return (flags & f) != 0; }
         public boolean isHidden() { return hasFlag(FluidFlags.HIDDEN); }
+
+        /** Registry identity, independent of the sprite used to draw this fluid. */
+        public boolean isVanillaWater() { return "water".equals(registryName); }
+        public boolean isVanillaLava() { return "lava".equals(registryName); }
+        public boolean usesVanillaFluid() { return isVanillaWater() || isVanillaLava(); }
     }
 
     private static final Map<String, FluidEntry> REGISTRY = new LinkedHashMap<>();
@@ -716,7 +721,7 @@ public class FluidCatalog {
 
             Lava = fluid("Lava", "lava", FluidTextureMode.VANILLA_LAVA),
             Lava_Volcanic = fluid("Lava_Volcanic", "volcanic_lava_fluid", FluidTextureMode.VANILLA_LAVA),
-            Lava_Pahoehoe = fluid("Lava_Pahoehoe", "ic2pahoehoelava", FluidTextureMode.VANILLA_LAVA).withLuminosity(10).withDensity(50000).withViscosity(250000),
+            Lava_Pahoehoe = fluid("Lava_Pahoehoe", "ic2pahoehoelava", FluidTextureMode.VANILLA_LAVA).withTemperature(1200).withLuminosity(10).withDensity(50000).withViscosity(250000),
             Lava_Pure = fluid("Lava_Pure", "purelava", FluidTextureMode.VANILLA_LAVA).withFlags(FluidFlags.BROKEN | FluidFlags.INFINITE),
             Ender_Goo = fluid("Ender_Goo", "endergoo").withFlags(FluidFlags.MAGIC),
 

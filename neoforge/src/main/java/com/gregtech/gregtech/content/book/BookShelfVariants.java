@@ -36,10 +36,7 @@ public final class BookShelfVariants {
         }
 
         public MutableComponent displayName() {
-            if (path().equals("bookshelf")) return Component.translatable("block.gregtech.bookshelf");
-            return Component.translatable("block.gregtech.bookshelf_variant",
-                    Component.translatable("material.gregtech."
-                            + displayMaterialName().toLowerCase(java.util.Locale.ROOT)));
+            return Component.translatable("block.gregtech." + path());
         }
     }
 

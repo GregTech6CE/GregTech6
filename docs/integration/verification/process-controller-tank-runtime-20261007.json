@@ -1,0 +1,110 @@
+{
+  "date": "2026-10-07",
+  "scope": "Two finite native world scenarios per platform, pooled for current tower defaults and previous4417a2cf tank loading; no natural recipe/survival/restart claim",
+  "source_receipt": {
+    "path": "C:\\Dev\\GregTech6\\docs\\integration\\verification\\process-controller-tooltip-source-20261007.json",
+    "sha256": "648aed2ac17074ae65297b09205c8d9b7d33e0ed89a434ab20e5102e9f3c3575",
+    "bytes": 39668
+  },
+  "fixtures_at_execution": [
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\ProcessControllerPortTests.java",
+      "sha256": "740e67cb9d445d6536bf76608e27352f6bd81b865df6bc2fb9b904a84c7ad819",
+      "bytes": 3688
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\MultiblockTankTooltipStateTests.java",
+      "sha256": "93dd4dada08dab4873deca7bc953ca256dd20fda16db49057a3dcb1ed512e725",
+      "bytes": 3856
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\process-controller-neoforge-world-fixture-at-execution-20261007.java",
+      "sha256": "c3b9717e080bfdc3b553b0a2f59dd2c8d24ed004d158806182af63de2972c005",
+      "bytes": 3592,
+      "source_path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\ProcessControllerPortTests.java",
+      "final_source": {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\ProcessControllerPortTests.java",
+        "sha256": "ed05f0bd34ed8af585c5b59e99038b3a60d3f549c2b5083ae093b7f92eb93807",
+        "bytes": 3590
+      },
+      "post_execution_edit": "Only trailing blank line removed; no runtime logic/class bytecode change."
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\MultiblockTankTooltipStateTests.java",
+      "sha256": "1666eeff74c5c07fcc27ab78f724cab0aebd828455e7275b6f3ae6915caf08a4",
+      "bytes": 4121
+    }
+  ],
+  "shared_check": {
+    "log": {
+      "path": "C:\\Dev\\GregTech6\\work\\process-controller-compile-20261007.log",
+      "sha256": "21e851ae958425791e64da965a2a8af049561dfada68e6c2b51b22e7d3993422",
+      "bytes": 32654
+    },
+    "assertions": 3773,
+    "new_assertions": 9,
+    "passed": true
+  },
+  "compile_attempts": [
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\process-controller-compile-20261007.log",
+        "sha256": "21e851ae958425791e64da965a2a8af049561dfada68e6c2b51b22e7d3993422",
+        "bytes": 32654
+      },
+      "exit_code": 1,
+      "elapsed": "29s",
+      "description": "Shared check, both main modules and Forge probe passed; copied Neo probe used old getTooltipLines signature."
+    },
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\process-controller-probes-compile-20261007.log",
+        "sha256": "4ee3b3ad5330aeb108042a0aa8b2586469602e83629356290f38e4c14c6f4e07",
+        "bytes": 2418
+      },
+      "exit_code": 0,
+      "elapsed": "16s",
+      "description": "Neo uses native EMPTY tooltip context; both independent probes and both finite world fixtures compile."
+    }
+  ],
+  "launch_preparation_attempt": {
+    "exit_code": 1,
+    "game_process_started": false,
+    "description": "PowerShell rejected the unquoted comma in the namespace argument before Gradle executed; quoted the same two namespaces and launched once."
+  },
+  "world": {
+    "log": {
+      "path": "C:\\Dev\\GregTech6\\work\\controller-tank-world-20261007.log",
+      "sha256": "d2970dfdbcbcf3a85020e6d8bff500c8f683edd776a057cb796d3805144524a2",
+      "bytes": 251603
+    },
+    "exit_code": 0,
+    "elapsed": "3m22s",
+    "required_scenarios_per_platform": 2,
+    "namespaces": [
+      "gregtech_multiblock_tanks",
+      "gregtech_process_controllers"
+    ],
+    "worlds": [
+      "C:\\Dev\\GregTech6\\build\\controller-tank-gametest-20261007",
+      "C:\\Dev\\GregTech6\\neoforge\\build\\controller-tank-gametest-20261007"
+    ],
+    "scope": [
+      "Actual placed wood/small stainless/large dense adamantium tank load, refresh and native save preserve3.5 billion Water and fixed valve capacity; int capability representation only is bounded; read-only item tooltip.",
+      "Actual tower formed from80 source parts; all6 main fluid-side simulations accept100 Water with input state unchanged; explicit1..1024 HU methods; all80 bound parts preserve bottom IO, upper output and heat-only base and reject EU."
+    ],
+    "all_dimensions_saved": true,
+    "ordinary_installed_runtime": false,
+    "independent_restart": false,
+    "natural_survival_chain": false,
+    "actual_recipe_progression": false
+  },
+  "prepared_installed_probe": {
+    "original_controllers": 4,
+    "exact_material_records": 4,
+    "structure_rows": 22,
+    "executed": false
+  },
+  "goal": "active",
+  "publication": "Local work only; no push or PR"
+}

@@ -1,0 +1,280 @@
+{
+  "variants": {
+    "facing=north,activity=0,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene"
+    },
+    "facing=north,activity=0,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene"
+    },
+    "facing=north,activity=0,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene"
+    },
+    "facing=north,activity=0,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene"
+    },
+    "facing=north,activity=1,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_rs"
+    },
+    "facing=north,activity=1,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_rf"
+    },
+    "facing=north,activity=1,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_ls"
+    },
+    "facing=north,activity=1,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_lf"
+    },
+    "facing=north,activity=2,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_rs"
+    },
+    "facing=north,activity=2,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_rf"
+    },
+    "facing=north,activity=2,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_ls"
+    },
+    "facing=north,activity=2,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_lf"
+    },
+    "facing=east,activity=0,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene",
+      "y": 90
+    },
+    "facing=east,activity=0,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene",
+      "y": 90
+    },
+    "facing=east,activity=0,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene",
+      "y": 90
+    },
+    "facing=east,activity=0,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene",
+      "y": 90
+    },
+    "facing=east,activity=1,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_rs",
+      "y": 90
+    },
+    "facing=east,activity=1,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_rf",
+      "y": 90
+    },
+    "facing=east,activity=1,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_ls",
+      "y": 90
+    },
+    "facing=east,activity=1,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_lf",
+      "y": 90
+    },
+    "facing=east,activity=2,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_rs",
+      "y": 90
+    },
+    "facing=east,activity=2,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_rf",
+      "y": 90
+    },
+    "facing=east,activity=2,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_ls",
+      "y": 90
+    },
+    "facing=east,activity=2,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_lf",
+      "y": 90
+    },
+    "facing=south,activity=0,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene",
+      "y": 180
+    },
+    "facing=south,activity=0,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene",
+      "y": 180
+    },
+    "facing=south,activity=0,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene",
+      "y": 180
+    },
+    "facing=south,activity=0,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene",
+      "y": 180
+    },
+    "facing=south,activity=1,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_rs",
+      "y": 180
+    },
+    "facing=south,activity=1,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_rf",
+      "y": 180
+    },
+    "facing=south,activity=1,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_ls",
+      "y": 180
+    },
+    "facing=south,activity=1,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_lf",
+      "y": 180
+    },
+    "facing=south,activity=2,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_rs",
+      "y": 180
+    },
+    "facing=south,activity=2,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_rf",
+      "y": 180
+    },
+    "facing=south,activity=2,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_ls",
+      "y": 180
+    },
+    "facing=south,activity=2,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_lf",
+      "y": 180
+    },
+    "facing=west,activity=0,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene",
+      "y": 270
+    },
+    "facing=west,activity=0,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene",
+      "y": 270
+    },
+    "facing=west,activity=0,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene",
+      "y": 270
+    },
+    "facing=west,activity=0,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene",
+      "y": 270
+    },
+    "facing=west,activity=1,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_rs",
+      "y": 270
+    },
+    "facing=west,activity=1,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_rf",
+      "y": 270
+    },
+    "facing=west,activity=1,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_ls",
+      "y": 270
+    },
+    "facing=west,activity=1,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_lf",
+      "y": 270
+    },
+    "facing=west,activity=2,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_rs",
+      "y": 270
+    },
+    "facing=west,activity=2,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_rf",
+      "y": 270
+    },
+    "facing=west,activity=2,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_ls",
+      "y": 270
+    },
+    "facing=west,activity=2,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_lf",
+      "y": 270
+    },
+    "facing=up,activity=0,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene",
+      "x": 270
+    },
+    "facing=up,activity=0,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene",
+      "x": 270
+    },
+    "facing=up,activity=0,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene",
+      "x": 270
+    },
+    "facing=up,activity=0,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene",
+      "x": 270
+    },
+    "facing=up,activity=1,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_rs",
+      "x": 270
+    },
+    "facing=up,activity=1,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_rf",
+      "x": 270
+    },
+    "facing=up,activity=1,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_ls",
+      "x": 270
+    },
+    "facing=up,activity=1,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_lf",
+      "x": 270
+    },
+    "facing=up,activity=2,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_rs",
+      "x": 270
+    },
+    "facing=up,activity=2,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_rf",
+      "x": 270
+    },
+    "facing=up,activity=2,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_ls",
+      "x": 270
+    },
+    "facing=up,activity=2,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_lf",
+      "x": 270
+    },
+    "facing=down,activity=0,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene",
+      "x": 90
+    },
+    "facing=down,activity=0,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene",
+      "x": 90
+    },
+    "facing=down,activity=0,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene",
+      "x": 90
+    },
+    "facing=down,activity=0,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene",
+      "x": 90
+    },
+    "facing=down,activity=1,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_rs",
+      "x": 90
+    },
+    "facing=down,activity=1,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_rf",
+      "x": 90
+    },
+    "facing=down,activity=1,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_ls",
+      "x": 90
+    },
+    "facing=down,activity=1,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_lf",
+      "x": 90
+    },
+    "facing=down,activity=2,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_rs",
+      "x": 90
+    },
+    "facing=down,activity=2,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_rf",
+      "x": 90
+    },
+    "facing=down,activity=2,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_ls",
+      "x": 90
+    },
+    "facing=down,activity=2,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_graphene_lf",
+      "x": 90
+    }
+  }
+}

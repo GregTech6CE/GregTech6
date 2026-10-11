@@ -1,0 +1,147 @@
+{
+  "date": "2026-10-07",
+  "base_commit": "08a076ab3b4182d4369ab3e3c8f69ddeb4fcfa85",
+  "status": "Source7568 contracts and dual main/installed probe compilation accepted; runtime/ordinary dual packages/installed execution deferred; whole goal active",
+  "source_receipt": {
+    "path": "C:\\Dev\\GregTech6\\docs\\integration\\verification\\generator-tooltip-source-20261007.json",
+    "sha256": "bb3293d7c16d1e07f35e9eeb994f26ad3e0704d483163e18ce744e98138e1a6a",
+    "bytes": 42465
+  },
+  "compile_log": {
+    "path": "C:\\Dev\\GregTech6\\work\\generator-tooltip-compile-20261007.log",
+    "sha256": "a7581993592362e90130f22c0800dd3021e6050253f382d3863100bcdf402be6",
+    "bytes": 30781
+  },
+  "exit_code": 0,
+  "seconds": 28,
+  "shared_source_assertions": 7568,
+  "new_fixed_source_assertions": 90,
+  "compiled_byte_references": [
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\content\\machine\\MachineConstructionMaterials.class",
+      "sha256": "d39170faba2030bdb0d9a38b63aaee7f51e5658c0c16ae21811343731609a902",
+      "bytes": 4830
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\data\\SourceBlockProperties.class",
+      "sha256": "7865f691b7e40e803c2c2268f3eda78967c0fef917bd753e1017092e61b8f2fb",
+      "bytes": 61660
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\content\\multiblock\\OriginalGeneratorTooltipData$1.class",
+      "sha256": "9315c9c86df553a298541b52e85788a4dc774146179d0e2001434fabb6cac5d4",
+      "bytes": 1057
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\content\\multiblock\\OriginalGeneratorTooltipData$Converter.class",
+      "sha256": "1134599c9c190249657f2ffde445c4183d147fdc2d79b0c689927ba21dd39ce0",
+      "bytes": 5684
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\content\\multiblock\\OriginalGeneratorTooltipData$Kind.class",
+      "sha256": "6557af0893014840987410254ce69c09dfcdcd3af08f58488ac54a3770361d21",
+      "bytes": 1510
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\content\\multiblock\\OriginalGeneratorTooltipData.class",
+      "sha256": "b0f09025695a78e9a00be1221ae61eeba0662e0f19807a2c1aaa8a3f84c8fa25",
+      "bytes": 6621
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\client\\GeneratorSourceTooltips.class",
+      "sha256": "a98b7fa44f8a2fd83cfb6c2096c1d3e9ea25166a190ecc722b1b09d316388c18",
+      "bytes": 5282
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\block\\machine\\AxialGeneratorBlock.class",
+      "sha256": "fa086fcc6c72d7f1e02c62f050d9a2e28e1bdb69b375acaedb53f2be08f5a487",
+      "bytes": 10818
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\block\\machine\\LargeGasTurbineControllerBlock.class",
+      "sha256": "57e53341a271fce504d0f10bf680c1d2c341cb44aa36bd0dc8b7cb8c1b441ae2",
+      "bytes": 11331
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\productionSmoke\\com\\gregtech\\gregtech\\integration\\client\\GeneratorTooltipDeliveryChecks.class",
+      "sha256": "ad4998e63f1c598f814c1640331d573b8cc95b65ecf8cf415692a6eb3b16f480",
+      "bytes": 9433
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\productionSmoke\\com\\gregtech\\gregtech\\integration\\client\\CommonBlockDeliveryChecks.class",
+      "sha256": "fa6114d820e4a5f23652a6f3ef7416bf8afe30c3cdd3bc5e40cf510576d1968e",
+      "bytes": 25071
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\productionSmoke\\com\\gregtech\\gregtech\\integration\\client\\ProductionClientSmoke.class",
+      "sha256": "fae88eac5f55a00f8bb8559987593cd834749e1012750a8d443a2c8c2d18d09c",
+      "bytes": 11482
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\client\\GeneratorSourceTooltips.class",
+      "sha256": "3fbec098b6a3ec43f3b1afcc30d9cab1c67fbb184515fa23c2f2f48001f1019d",
+      "bytes": 5282
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\block\\machine\\AxialGeneratorBlock.class",
+      "sha256": "614d9b2985e972fc58ef82401ac952b4d2ecac0590667f63ee5eb5d1c4ae0302",
+      "bytes": 13036
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\block\\machine\\LargeGasTurbineControllerBlock.class",
+      "sha256": "fe1655b7d9f6baae7557b39681c85c8b8b1ad52b5ea1d2c4236c0ae5a60054f6",
+      "bytes": 13646
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\productionSmoke\\com\\gregtech\\gregtech\\integration\\client\\GeneratorTooltipDeliveryChecks.class",
+      "sha256": "d5330dbda13f6d3e1d90a9c9d6f25c3065e66b7c4e53e734cc6fa2a0257de517",
+      "bytes": 9680
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\productionSmoke\\com\\gregtech\\gregtech\\integration\\client\\CommonBlockDeliveryChecks.class",
+      "sha256": "2e22bd5f88e2921dd0af743620ea1262dac8e23d21a6647dace64faa877e8832",
+      "bytes": 26611
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\productionSmoke\\com\\gregtech\\gregtech\\integration\\client\\ProductionClientSmoke.class",
+      "sha256": "87c67e5485306b40d934a0df68d33acfdd3a7f647f3fa5170d4c5a3df07c52a8",
+      "bytes": 9311
+    }
+  ],
+  "prepared_installed_probe": {
+    "items": 24,
+    "distinct_source_controllers": 12,
+    "source_specialized_keys": 11,
+    "actual_structure_rows": 88,
+    "compiled": true,
+    "executed": false,
+    "checks": [
+      "Actual source item identity/loaded language/structure rows and source wall name",
+      "Actual tooltip methods/events source input/output/efficiency/used-steam and parent tools exactly once",
+      "Native item material registration and advanced quantity section for12 original /12 legacy identities",
+      "Native source harvest identity; obsolete two-row axial tooltip removed"
+    ]
+  },
+  "deferred_native_world": "Previous batch gregtech_advanced_source each loader1 required fixed500L stopped output scenario remains unexecuted. This batch has no new native world scenario or gameplay execution; unchanged generators execution is not newly verified.",
+  "last_accepted_distribution": {
+    "directory": "C:/Dev/GregTech6/build/verified/20261007-042336Z-730aab78",
+    "manifest": {
+      "path": "C:\\Dev\\GregTech6\\docs\\integration\\verification\\large-recipe-pooled-delivery-20261007.json",
+      "sha256": "16c773e6638b568cf72d877c650c69cbaf3b11751b8ba7ec54faff26af2e50bd",
+      "bytes": 15492
+    },
+    "contains_3434af73_08a076ab_or_this_batch": false
+  },
+  "preparation_diagnostics": [
+    "Initial preparation audit found guessed electric key missing; corrected to actual existing electricity key before Gradle. Source values were restored from git baseline order to avoid unrelated JSON key reordering.",
+    "New test material-name accessor adjusted to actual getName() before first compilation; no failed compile/world for that preparation.",
+    "First regeneration invocation omitted required --material-audit and exited at argument parsing without output; corrected invocation generated ignored candidate667/265, matched all source rows and retained alias code.",
+    "Read-only CIM process inventory was unavailable in sandbox; known previous Gradle handles were terminal. Only one Gradle invocation launched and completed; no user game process modified."
+  ],
+  "not_verified": [
+    "Current ordinary dual JAR and isolated installed clients",
+    "Actual hovered tooltip screenshots and natural survival/recycling/energy generation",
+    "Independent saved-world process restart/historical save backup compatibility/ordinary dedicated server"
+  ],
+  "no_push_or_PR": true
+}

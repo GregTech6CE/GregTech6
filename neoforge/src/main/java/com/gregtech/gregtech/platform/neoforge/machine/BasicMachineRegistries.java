@@ -65,13 +65,17 @@ public final class BasicMachineRegistries {
   event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,com.gregtech.gregtech.registry.GTBlockEntities.COKE_OVEN.get(),com.gregtech.gregtech.blockentity.machine.CokeOvenControllerBlockEntity::itemCapability);
   event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,com.gregtech.gregtech.registry.GTBlockEntities.COKE_OVEN.get(),com.gregtech.gregtech.blockentity.machine.CokeOvenControllerBlockEntity::fluidCapability);
   event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,com.gregtech.gregtech.registry.GTBlockEntities.CRYO_DISTILLATION.get(),com.gregtech.gregtech.blockentity.machine.CryoDistillationControllerBlockEntity::fluidCapability);
+  event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,com.gregtech.gregtech.registry.GTBlockEntities.CRYO_DISTILLATION.get(),com.gregtech.gregtech.blockentity.machine.CryoDistillationControllerBlockEntity::itemCapability);
   event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,com.gregtech.gregtech.registry.GTBlockEntities.MULTIBLOCK_PORT.get(),com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity::itemCapability);
   event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,com.gregtech.gregtech.registry.GTBlockEntities.MULTIBLOCK_PORT.get(),com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity::fluidCapability);
   for(var type:TYPES){event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,type.get(),BasicMachineBlockEntity::itemCapability);event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,type.get(),BasicMachineBlockEntity::fluidCapability);}
  }
  public static void registerCompositions(){
-  for(var holder:MACHINES){var spec=holder.get().basicSpec();var components=spec.constructionMaterials().stream().filter(w->w.material().isValid()&&w.amount()>0).map(w->MaterialComponent.of(w.material(),w.amount())).toList();
-   if(!components.isEmpty())ItemMaterialRegistry.register(holder.get().asItem(),new ItemComposition(null,components,"GT6 basic machine construction",true));
+  for(var block:net.minecraft.core.registries.BuiltInRegistries.BLOCK){
+   if(!(block instanceof BasicMachineBlock machine))continue;
+   var spec=machine.basicSpec();
+   com.gregtech.gregtech.content.machine.OriginalMachineMaterialData.find(spec.machineName(),spec.tier())
+    .ifPresent(data->ItemMaterialRegistry.register(block.asItem(),data));
   }
  }
 }

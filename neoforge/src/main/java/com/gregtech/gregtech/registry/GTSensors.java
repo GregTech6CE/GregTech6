@@ -26,8 +26,7 @@ public final class GTSensors {
         DeferredHolder<net.minecraft.world.level.block.Block,SensorBlock> block = GTBlocks.BLOCKS.register(id, () ->
                 new SensorBlock(kind, BlockBehaviour.Properties.of()
                         .mapColor(MapColor.METAL)
-                        .strength(2.0f, 2.0f)
-                        .requiresCorrectToolForDrops()));
+                        .strength(1.0f, 3.0f)));
         ALL.add(block);
         GTBlocks.BLOCK_ITEMS.register(id, () -> new BlockItem(block.get(), new Item.Properties()));
     }

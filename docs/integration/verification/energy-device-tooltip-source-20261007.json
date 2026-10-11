@@ -1,0 +1,312 @@
+{
+  "date": "2026-10-07",
+  "baseline": "d7b7c3d33a55487a26a22065411c8d0578d9f43a",
+  "authors": [
+    "GregTech-6 Team",
+    "Gregorius Techneticies"
+  ],
+  "license": "LGPL-3.0-or-later",
+  "source_files": [
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\base\\TileEntityBase01Root.java",
+      "sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+      "bytes": 59432,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\base\\TileEntityBase09FacingSingle.java",
+      "sha256": "b172aadf76d09c37ee4c7793cb784dcc97a19d999ad1737bafc60cc064bece7f",
+      "bytes": 5485,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\energy\\TileEntityBase10EnergyBatBox.java",
+      "sha256": "21ee1d11820ce91c0f693d4bf7684503ed29d8b8fa2cf7b434ebbd2143338fd7",
+      "bytes": 14967,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\energy\\TileEntityBase10EnergyConverter.java",
+      "sha256": "52cb409c7d35a8731338527301e09c8b779548e1851d5fe7fe91242fd25b9c44",
+      "bytes": 9515,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\energy\\TileEntityBase11Bidirectional.java",
+      "sha256": "e03bb5ec9205a3e9526782cf9fd145c2ee85d3a0e8632fad953674bd23202062",
+      "bytes": 4424,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\behavior\\TE_Behavior_Energy_Stats.java",
+      "sha256": "d66cd7885b7053510d40c054dd6b87ef7a2aab23ee6e554e33af726fc4dddbbf",
+      "bytes": 2994,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\storage\\MultiTileEntityBatteryBox.java",
+      "sha256": "950a267dbb2f35248a064e5797e3658e6396c4f5a2f06cefcec7cd2e04f4b5fe",
+      "bytes": 2661,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\storage\\MultiTileEntityBatteryBoxLarge.java",
+      "sha256": "0df829051bc1a876cd3ef0410fc4c484d1f8851034aade2b55c88a4dfdc46834",
+      "bytes": 2535,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\generators\\MultiTileEntitySolarPanelElectric.java",
+      "sha256": "d7846445443eb27ab50a211cf1d7fec1dee069c2fb0ae1826b9e046c9b7871d5",
+      "bytes": 9438,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\transformers\\MultiTileEntityTransformerElectric.java",
+      "sha256": "4f82fe03faa362df6df7bddfbb4017fb94096a73dc70097f39c50acde1f977b5",
+      "bytes": 3159,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\transformers\\MultiTileEntityTransformerRotation.java",
+      "sha256": "8d4afc56a27b87ae9f978d1cee0d1c624b9309a4b5ba346b57c517d021c18bda",
+      "bytes": 3648,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "bytes": 791265,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+      "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8",
+      "bytes": 51085,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "bytes": 153449,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\TD.java",
+      "sha256": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea",
+      "bytes": 53981,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\code\\TagData.java",
+      "sha256": "afa72881ee6c421c094ce27e3cef2701374257cb1dd2f099293cceb3e91b4a64",
+      "bytes": 3636,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577",
+      "bytes": 694,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\COPYING.LESSER",
+      "sha256": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118",
+      "bytes": 7652,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\GregTech_zh_cn.lang",
+      "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0",
+      "bytes": 7375784,
+      "license": "user-provided original Chinese patch; copied verbatim"
+    }
+  ],
+  "comparison_files": [
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\energy\\TileEntityBase10EnergyBatBox.java",
+      "sha256": "1f4f107e0b4d1afe9eebdf5b5bcd6c14a6deff0fe4c676156ba50da37d4d44d6",
+      "bytes": 15567,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\energy\\TileEntityBase10EnergyConverter.java",
+      "sha256": "442b940b7b21519e73b8bcdccadf8e568ac9ece7d953152c117d10b6984b1389",
+      "bytes": 9803,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\energy\\TileEntityBase11Bidirectional.java",
+      "sha256": "72137306c90c013099cc1681520e84ab4d1f2175a8b9da1c171c746bff04061e",
+      "bytes": 4711,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\energy\\generators\\MultiTileEntitySolarPanelElectric.java",
+      "sha256": "bf7d634b73b20f8d66c0dfe01c278a637ff81bd731daf4f9d6eab53627e49d40",
+      "bytes": 9678,
+      "license": "LGPL-3.0-or-later"
+    }
+  ],
+  "adoption": [
+    "Adopt canonical1.7.10 battery input Root min = recommended/2, fixed output and all three selector/packet mode hints; ULV changes1 to4. Existing original battery item/buffer controls remain unchanged.",
+    "Adopt solar output-only source range recommended/8..recommended and FacingSingle Wrench hint; no fabricated storage or efficiency line.",
+    "Adopt electric/rotational transformer normal and reversed converter ranges, deliberately high reverse input recommendation, original100percent efficiency and source Wrench/MonkeyWrench hints.",
+    "Preserve the original localized face labels even in reversed mode, as Bidirectional.getLocalisedInputSide/OutputSide do. Physical reversed faces remain native existing behavior.",
+    "Preserve LH fixed-output omission of range and face, converter always-range branch, raw integer values and hardcoded up to/to fragments. Unit colors follow TD/TagData: EU blue, RU green.",
+    "The _w battery, solar, converter and bidirectional paths keep the same tooltip/rating structure. Canonical1.7.10 and the user Chinese patch are authority; no duplicate loader implementation imported."
+  ],
+  "other_reference_comparison_context": "functional-tooltip-source-20261007.json records the gregtech6yizhi/CrucibleCraft/saltnya material tooltip comparison; those are not the source of original energy device ratings.",
+  "coverage": {
+    "battery_boxes": 20,
+    "solar_panels": 2,
+    "electric_transformers": 9,
+    "rotational_transformers": 13,
+    "total_devices": 44,
+    "reversed_transformer_profiles": 22,
+    "unchanged_fixed_material_records": 439,
+    "unchanged_machine_tier_records": 252,
+    "unchanged_hopper_records": 120
+  },
+  "material_files_unchanged": [
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\machine\\OriginalMachineMaterialData.java",
+      "sha256": "231205d64d43c4c5f0e2086a50979eead8c621d79631c5f7ab55c4ec974f9bd9",
+      "bytes": 164155,
+      "license": "existing port source; unchanged from baseline"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\machine\\MachineConstructionMaterials.java",
+      "sha256": "7003f8847de5719791d04421886d9ca11c8ff0212344ed991413eb1d86db6db2",
+      "bytes": 1667,
+      "license": "existing port source; unchanged from baseline"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\integration\\generate_machine_material_data.py",
+      "sha256": "446f16ff787bdf40d340f7658e96cc53f09209f27ee8d8e001a0486d4be0ceb1",
+      "bytes": 27483,
+      "license": "existing port source; unchanged from baseline"
+    }
+  ],
+  "attempts": [
+    "First source-ledger writer guessed addBlock rows and failed count0; inspection confirmed BLOCK_DATA.put rows. Corrected the audit parser only; no production/material/test changes."
+  ],
+  "language_import": {
+    "keys": [
+      "gt.lang.efficiency",
+      "gt.lang.energy.input",
+      "gt.lang.energy.output",
+      "gt.lang.face.any.but.front",
+      "gt.lang.face.back",
+      "gt.lang.face.front",
+      "gt.lang.tool.name.wrench",
+      "gt.lang.use.monkey.wrench.to.toggle.direction",
+      "gt.lang.use.x.to.toggle.facing.post",
+      "gt.lang.use.x.to.toggle.facing.pre",
+      "gt.td.short.energy.electricity",
+      "gt.td.short.energy.kinetic_rotation",
+      "gt.tooltip.energybattery.1",
+      "gt.tooltip.energybattery.2",
+      "gt.tooltip.energybattery.3"
+    ],
+    "aliases": {},
+    "changes": {
+      "en_us": {
+        "gt.lang.face.any.but.front": {
+          "before": null,
+          "after": "Any but Front"
+        },
+        "gt.lang.face.back": {
+          "before": null,
+          "after": "Back"
+        },
+        "gt.lang.face.front": {
+          "before": null,
+          "after": "Front"
+        },
+        "gt.lang.use.monkey.wrench.to.toggle.direction": {
+          "before": null,
+          "after": "Use Monkey Wrench to set Direction"
+        },
+        "gt.td.short.energy.electricity": {
+          "before": null,
+          "after": "EU"
+        },
+        "gt.tooltip.energybattery.1": {
+          "before": null,
+          "after": "Selector Covers can set the amount of emitted Packets"
+        },
+        "gt.tooltip.energybattery.2": {
+          "before": null,
+          "after": "Mode 0 = Emit as much as possible, this is Default"
+        },
+        "gt.tooltip.energybattery.3": {
+          "before": null,
+          "after": "Mode 1 - 15 = Emit up to 1 - 15 Packets if enough Energy Storages"
+        }
+      },
+      "zh_cn": {}
+    },
+    "missing_chinese": [],
+    "source_files": [
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+        "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+        "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\RM.java",
+        "sha256": "c7cb07faef0235ace4bb26656fddaabfa10da6aa4a2689a7f4cdcaef10d366e6"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\TD.java",
+        "sha256": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\..\\code\\TagData.java",
+        "sha256": "afa72881ee6c421c094ce27e3cef2701374257cb1dd2f099293cceb3e91b4a64"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\energy\\TileEntityBase10EnergyBatBox.java",
+        "sha256": "21ee1d11820ce91c0f693d4bf7684503ed29d8b8fa2cf7b434ebbd2143338fd7"
+      },
+      {
+        "path": "C:\\Dev\\GregTech_zh_cn.lang",
+        "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0"
+      }
+    ],
+    "license": "Original LH/CS/RM/TD/TagData: LGPL-3.0-or-later; Chinese strings copied verbatim from the user-provided patch."
+  },
+  "verification": {
+    "source_pins": 199,
+    "first_shared_and_native_and_probe_compile": "passed23s",
+    "final_shared_and_native_and_probe_compile": "passed21s; core/probe tasks up-to-date after final native unit color correction",
+    "logs": [
+      {
+        "path": "C:\\Dev\\GregTech6\\work\\energy-device-tooltips-compile-20261007.log",
+        "sha256": "1a95fdd0d5664648a590cddedede71ce315c2a15116ec5af950b7e8dec51a34d",
+        "bytes": 33946,
+        "license": "local verification log"
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\work\\energy-device-tooltips-final-compile-20261007.log",
+        "sha256": "8e5d2e0a06425705eb6c079fef41c825ff0bd1cf98883ca4c984ca4d102563db",
+        "bytes": 31005,
+        "license": "local verification log"
+      }
+    ],
+    "ordinary_new_jars": "not generated; combine rounds as requested",
+    "installed_new_probe": "compiled only; not run this round",
+    "source_hashes_rechecked": true,
+    "chinese_values_unchanged_and_all15_keys_exact_patch": true
+  },
+  "limitations": [
+    "Other energy converters (motors/dynamos/heaters/coolers/magnets/turbines) retain separate pending original behavior/tooltip work; not covered by these44 profiles.",
+    "No new installed runtime, hovered player screenshot, physical energy transfer, world save/restart or historical save evidence. Minimum input change is source arithmetic/gating and native compilation evidence only.",
+    "General original block harvest-tool/level, flammability, ownership, cover-state and remaining device/material records remain pending.",
+    "Last accepted ordinary pair remains ae3e1857 at build/verified/20261006-195055Z-1fceed96, without this or preceding d7b7c3d3 batch."
+  ]
+}

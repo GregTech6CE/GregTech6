@@ -1,0 +1,708 @@
+{
+  "date": "2026-10-07",
+  "baseline": "4d2f91e186803908ab69ae99bed67211b2661977",
+  "authors": [
+    "GregTech-6 Team",
+    "Gregorius Techneticies"
+  ],
+  "license": {
+    "code": "LGPL-3.0-or-later",
+    "assets": "CC0-1.0 per preserved LICENSE.assets"
+  },
+  "source_files": [
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemTechnological.java",
+      "sha256": "7367922c4938318dd50b1320e7fc7a7453c33cffa46f75a437325314d2536ddc"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\MT.java",
+      "sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\ANY.java",
+      "sha256": "6a26fa2293c4a315d2594c5ac80eba689389f9b1922a33547bdd20d2df724f71"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\OP.java",
+      "sha256": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\load\\LoaderItemData.java",
+      "sha256": "0dc916611c9a743f477e473b75b3fa3462a47d22dd75ef086c33ea18aaa9f968"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\load\\LoaderOreDictReRegistrations.java",
+      "sha256": "d34719309a5ddf5bd7fc01c0462b57af52b4cf980a69fae4d4042c2ab78b07ef"
+    },
+    {
+      "path": "C:\\Dev\\GregTech_zh_cn.lang",
+      "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\LICENSE.assets",
+      "sha256": "e2aaec4ccc681649063335b6c4991fd52570d15f45bd0af97c1cee3cb0375299"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+      "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\RM.java",
+      "sha256": "c7cb07faef0235ace4bb26656fddaabfa10da6aa4a2689a7f4cdcaef10d366e6"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\TD.java",
+      "sha256": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\code\\TagData.java",
+      "sha256": "afa72881ee6c421c094ce27e3cef2701374257cb1dd2f099293cceb3e91b4a64"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\energy\\TileEntityBase10EnergyBatBox.java",
+      "sha256": "21ee1d11820ce91c0f693d4bf7684503ed29d8b8fa2cf7b434ebbd2143338fd7"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\energy\\TileEntityBase10EnergyConverter.java",
+      "sha256": "52cb409c7d35a8731338527301e09c8b779548e1851d5fe7fe91242fd25b9c44"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\energy\\TileEntityBase11Bipolar.java",
+      "sha256": "1c7c50eb72bff3bbff7a00075354e362c94552b2564836ead20dde9db6093a0c"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\behavior\\TE_Behavior_Energy_Stats.java",
+      "sha256": "d66cd7885b7053510d40c054dd6b87ef7a2aab23ee6e554e33af726fc4dddbbf"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\behavior\\TE_Behavior_Energy_Converter.java",
+      "sha256": "db1e31ed18e62bc9d261e33edcf338ed9717fc1ee088eab8de2baff69c9e59d4"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\behavior\\TE_Behavior_Active_Trinary.java",
+      "sha256": "ba735871ca3e15360a39824c1c1eca4d4e79ada8ec08e1f90129dd8c5533af34"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\behavior\\TE_Behavior_Energy_Capacitor.java",
+      "sha256": "4977ba698373a42ddadfbc5de00daf67d38a4daa2062103aa038ba84318f57c4"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\energy\\ITileEntityEnergy.java",
+      "sha256": "cea0d5624209029f4d8b77d52be7b5fbff7a2d6ed73e9632a89d98e13b86a904"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\energy\\ITileEntityEnergyElectricityAcceptor.java",
+      "sha256": "0b084fcbf40ce1b3c0e850baaa7fff35f5dd04ea4e70a5f89d1c21c217d6a887"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\energy\\ITileEntityEnergyFluxHandler.java",
+      "sha256": "f5a680a58e3c547bca1b17fd77f2008b81ed0bbb51c9be1259949e836d670f57"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\machines\\ITileEntityAdjacentOnOff.java",
+      "sha256": "cad19d3c3d6a418fdda7b8a844c9781f76a1d686ffa455a32671cfe694902e59"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\machines\\ITileEntitySwitchableOnOff.java",
+      "sha256": "c51180b3f3f6918b838a682af7850b3a26036f9491c0052e899e806a39ea8a35"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\machines\\ITileEntitySwitchableMode.java",
+      "sha256": "854a13a4879b9b27a66b4889a0d6922cb7b3d48b23eb4a854cbf2353b738dbc2"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityMagnetElectric.java",
+      "sha256": "56064498ce55e12a87325fcf8be3bf12be04efb721ceef88e28f3fcc70a75c89"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityMagnetFlux.java",
+      "sha256": "99e76b79b2a740378d17460934affd8053e534adb1265a962c3347356f3a7bce"
+    }
+  ],
+  "comparison_files": [
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\energy\\TileEntityBase11Bipolar.java",
+      "sha256": "c71c7cc4e60be462948a226b963247dae3bf8dfd4f61c43451be10b3d8d0a47c",
+      "role": "Read-only behavior / original registration comparison; canonical source adopted."
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\behavior\\TE_Behavior_Energy_Converter.java",
+      "sha256": "afd8078303cd1be0341cdcf0400a1eb37d5fa2086680009360e8434028773085",
+      "role": "Read-only behavior / original registration comparison; canonical source adopted."
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityMagnetElectric.java",
+      "sha256": "b9c853d2831654c63ed37ea2a187fd23ec43b0cfb55d04b2eddcfb6cd27fa0ee",
+      "role": "Read-only behavior / original registration comparison; canonical source adopted."
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityMagnetFlux.java",
+      "sha256": "0497121301f13035425ede53e377e5007a3de7b80569b96c92bd714e0cd6206c",
+      "role": "Read-only behavior / original registration comparison; canonical source adopted."
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "4d87cacde8defa33df30359d345046daa8e901ab0419dca2766d2140d8af1562",
+      "role": "Read-only behavior / original registration comparison; canonical source adopted."
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\data\\MT.java",
+      "sha256": "22591e92616d6f503191ba58548d68cd6b113fc615f118e987a1353b1db84858",
+      "role": "Read-only behavior / original registration comparison; canonical source adopted."
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\data\\OP.java",
+      "sha256": "d51273c614c5845c42a53c92f86c9a9b3f31a4d3256001198f4fee50e23c70cf",
+      "role": "Read-only behavior / original registration comparison; canonical source adopted."
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\data\\ANY.java",
+      "sha256": "6a26fa2293c4a315d2594c5ac80eba689389f9b1922a33547bdd20d2df724f71",
+      "role": "Read-only behavior / original registration comparison; canonical source adopted."
+    }
+  ],
+  "assets": {
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\magnets\\magnet_electric\\colored\\front.png": {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\magnets\\magnet_electric\\colored\\front.png",
+      "sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e",
+      "canonical_available": false
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\magnets\\magnet_electric\\colored\\back.png": {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\magnets\\magnet_electric\\colored\\back.png",
+      "sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e",
+      "canonical_available": false
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\magnets\\magnet_electric\\colored\\side.png": {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\magnets\\magnet_electric\\colored\\side.png",
+      "sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e",
+      "canonical_available": false
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\magnets\\magnet_electric\\overlay\\front.png": {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\magnets\\magnet_electric\\overlay\\front.png",
+      "sha256": "c715e24a4b4e1d0907d4298bb49776a11b5d933058d8f67ce155ea0a0d880a61",
+      "canonical_available": false
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\magnets\\magnet_electric\\overlay\\back.png": {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\magnets\\magnet_electric\\overlay\\back.png",
+      "sha256": "e793156b5becd4e06aed513ed7b70011cb09e41b8313c9bd3631012d5b6ba248",
+      "canonical_available": false
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\magnets\\magnet_electric\\overlay\\side.png": {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\magnets\\magnet_electric\\overlay\\side.png",
+      "sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+      "canonical_available": false
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\magnets\\magnet_electric\\overlay_active\\front.png": {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\magnets\\magnet_electric\\overlay_active\\front.png",
+      "sha256": "48d19f3c35caaa299b0ec3f6c3da80392a67e13c3f600769067b1b9a3a3072a2",
+      "canonical_available": false
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\magnets\\magnet_electric\\overlay_active\\back.png": {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\magnets\\magnet_electric\\overlay_active\\back.png",
+      "sha256": "459e103aca025ed194bb31b62a54d96067c6706cbc82b7506fbd5e477571ec7c",
+      "canonical_available": false
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\magnets\\magnet_electric\\overlay_active\\side.png": {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\magnets\\magnet_electric\\overlay_active\\side.png",
+      "sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+      "canonical_available": false
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\magnets\\magnet_flux\\colored\\front.png": {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\magnets\\magnet_flux\\colored\\front.png",
+      "sha256": "b94934858d010e0381fd5056dbc0ec00e964cad00c152944b2e6e0918991f977",
+      "canonical_available": false
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\magnets\\magnet_flux\\colored\\back.png": {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\magnets\\magnet_flux\\colored\\back.png",
+      "sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e",
+      "canonical_available": false
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\magnets\\magnet_flux\\colored\\side.png": {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\magnets\\magnet_flux\\colored\\side.png",
+      "sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e",
+      "canonical_available": false
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\magnets\\magnet_flux\\overlay\\front.png": {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\magnets\\magnet_flux\\overlay\\front.png",
+      "sha256": "a9a2affb678dd0cc98c97ebd532cad92af4d79fbc9438a57bf76e1e728746e1d",
+      "canonical_available": false
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\magnets\\magnet_flux\\overlay\\back.png": {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\magnets\\magnet_flux\\overlay\\back.png",
+      "sha256": "a060bbf6baa53576e3dd832772ffafc747f2837d907b2b9542a2b7d09de068b3",
+      "canonical_available": false
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\magnets\\magnet_flux\\overlay\\side.png": {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\magnets\\magnet_flux\\overlay\\side.png",
+      "sha256": "ea63a03b226d86607f2fcf091d36d3118b2c88d5f6f43227319639eb3abc469b",
+      "canonical_available": false
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\magnets\\magnet_flux\\overlay_active\\front.png": {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\magnets\\magnet_flux\\overlay_active\\front.png",
+      "sha256": "baf9e260f0a467f5448013fe9380f262cb68dd4fbbb82b483f7acc18fa591cde",
+      "canonical_available": false
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\magnets\\magnet_flux\\overlay_active\\back.png": {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\magnets\\magnet_flux\\overlay_active\\back.png",
+      "sha256": "900c16439063249545d6ffe2122f61fc08f9aa39085d08d96c245bb071a99499",
+      "canonical_available": false
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\magnets\\magnet_flux\\overlay_active\\side.png": {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\magnets\\magnet_flux\\overlay_active\\side.png",
+      "sha256": "ea63a03b226d86607f2fcf091d36d3118b2c88d5f6f43227319639eb3abc469b",
+      "canonical_available": false
+    }
+  },
+  "static_models": {
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electromagnet_lv.json": "f750573cc3d93376d4dec9a0fde8e3942a1f61e74038a141ba76e7ff1e50cffa",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electromagnet_lv_active.json": "02a7d8114a03600606065b9d405a8e56a1c50561f5a8ca6041195968120063b8",
+    "src\\main\\resources\\assets\\gregtech\\blockstates\\electromagnet_lv.json": "f4c8147dafcfcdee6aecb69f386813cda18b6cb7dfd3c86955d72ea9277f6d1d",
+    "src\\main\\resources\\assets\\gregtech\\models\\item\\electromagnet_lv.json": "ee26e9fed5cba097355ed21ffef1df3e262b10f44a952a8dce56122b66f3a349",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electromagnet_lv.json": "029c7e1580a010f3af5722ff3525c8c0ae2bb72db22c5be7d101525c5e7d08d1",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electromagnet_lv_active.json": "adfb8e13af3092b2df56b77c769f3c070efe87afe17f675c1d9e88c07b5f0a26",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\electromagnet_lv.json": "f4c8147dafcfcdee6aecb69f386813cda18b6cb7dfd3c86955d72ea9277f6d1d",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\electromagnet_lv.json": "ee26e9fed5cba097355ed21ffef1df3e262b10f44a952a8dce56122b66f3a349",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electromagnet_mv.json": "f750573cc3d93376d4dec9a0fde8e3942a1f61e74038a141ba76e7ff1e50cffa",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electromagnet_mv_active.json": "02a7d8114a03600606065b9d405a8e56a1c50561f5a8ca6041195968120063b8",
+    "src\\main\\resources\\assets\\gregtech\\blockstates\\electromagnet_mv.json": "109462e57fb06cf298fa8b01088f230a56240f9d695bd9177e4d9a971777858a",
+    "src\\main\\resources\\assets\\gregtech\\models\\item\\electromagnet_mv.json": "eeb568eae04eb5b4e777ad0c229e817765555c0bd164fd23799dda656e048f9b",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electromagnet_mv.json": "029c7e1580a010f3af5722ff3525c8c0ae2bb72db22c5be7d101525c5e7d08d1",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electromagnet_mv_active.json": "adfb8e13af3092b2df56b77c769f3c070efe87afe17f675c1d9e88c07b5f0a26",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\electromagnet_mv.json": "109462e57fb06cf298fa8b01088f230a56240f9d695bd9177e4d9a971777858a",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\electromagnet_mv.json": "eeb568eae04eb5b4e777ad0c229e817765555c0bd164fd23799dda656e048f9b",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electromagnet_hv.json": "f750573cc3d93376d4dec9a0fde8e3942a1f61e74038a141ba76e7ff1e50cffa",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electromagnet_hv_active.json": "02a7d8114a03600606065b9d405a8e56a1c50561f5a8ca6041195968120063b8",
+    "src\\main\\resources\\assets\\gregtech\\blockstates\\electromagnet_hv.json": "135271e4e512b9a11559ce511a0976d6d70f3d0e84d8bfbfaf29c4bea696ca63",
+    "src\\main\\resources\\assets\\gregtech\\models\\item\\electromagnet_hv.json": "0ff548939e8fa2f4a9287f5fa04f63e35121cf2dd0297e10b449b20ffd884957",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electromagnet_hv.json": "029c7e1580a010f3af5722ff3525c8c0ae2bb72db22c5be7d101525c5e7d08d1",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electromagnet_hv_active.json": "adfb8e13af3092b2df56b77c769f3c070efe87afe17f675c1d9e88c07b5f0a26",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\electromagnet_hv.json": "135271e4e512b9a11559ce511a0976d6d70f3d0e84d8bfbfaf29c4bea696ca63",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\electromagnet_hv.json": "0ff548939e8fa2f4a9287f5fa04f63e35121cf2dd0297e10b449b20ffd884957",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electromagnet_ev.json": "f750573cc3d93376d4dec9a0fde8e3942a1f61e74038a141ba76e7ff1e50cffa",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electromagnet_ev_active.json": "02a7d8114a03600606065b9d405a8e56a1c50561f5a8ca6041195968120063b8",
+    "src\\main\\resources\\assets\\gregtech\\blockstates\\electromagnet_ev.json": "b61decd2a77e7fa3e7bc32535852697a04ec1623d7862c7bae8b85d53a36e7a4",
+    "src\\main\\resources\\assets\\gregtech\\models\\item\\electromagnet_ev.json": "ffccfc5adf64f76a33d0f7adc5e2d5f2cbfb337ffd8752ba00a3101b7182a1bc",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electromagnet_ev.json": "029c7e1580a010f3af5722ff3525c8c0ae2bb72db22c5be7d101525c5e7d08d1",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electromagnet_ev_active.json": "adfb8e13af3092b2df56b77c769f3c070efe87afe17f675c1d9e88c07b5f0a26",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\electromagnet_ev.json": "b61decd2a77e7fa3e7bc32535852697a04ec1623d7862c7bae8b85d53a36e7a4",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\electromagnet_ev.json": "ffccfc5adf64f76a33d0f7adc5e2d5f2cbfb337ffd8752ba00a3101b7182a1bc",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electromagnet_iv.json": "f750573cc3d93376d4dec9a0fde8e3942a1f61e74038a141ba76e7ff1e50cffa",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electromagnet_iv_active.json": "02a7d8114a03600606065b9d405a8e56a1c50561f5a8ca6041195968120063b8",
+    "src\\main\\resources\\assets\\gregtech\\blockstates\\electromagnet_iv.json": "9558d005c304410dc30cd04e3ffc6ebd8942f92f474d43c4103d329ade969be4",
+    "src\\main\\resources\\assets\\gregtech\\models\\item\\electromagnet_iv.json": "aaef984a6bb5a871091c780410e75a70de18c0bd5f0fb4493019516f745a1bcf",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electromagnet_iv.json": "029c7e1580a010f3af5722ff3525c8c0ae2bb72db22c5be7d101525c5e7d08d1",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electromagnet_iv_active.json": "adfb8e13af3092b2df56b77c769f3c070efe87afe17f675c1d9e88c07b5f0a26",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\electromagnet_iv.json": "9558d005c304410dc30cd04e3ffc6ebd8942f92f474d43c4103d329ade969be4",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\electromagnet_iv.json": "aaef984a6bb5a871091c780410e75a70de18c0bd5f0fb4493019516f745a1bcf",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_magnet_lv.json": "ac963f2544b9804d42a5ea08ec34d49897edb04541dd7dcdd66a344ad667f70a",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_magnet_lv_active.json": "14fecfeafc03c794c1ecfeb51ec3f92a326a2269bd06bff855369d712bc4ca97",
+    "src\\main\\resources\\assets\\gregtech\\blockstates\\flux_magnet_lv.json": "98b95557a5673d6efb5fde8f4789406646be5401ce7954021821422a582e3a03",
+    "src\\main\\resources\\assets\\gregtech\\models\\item\\flux_magnet_lv.json": "648fdb55d1abad2ddb399fb39098539df947b25606824c3b6d94db65607ddb84",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_magnet_lv.json": "2bc7b7093431cfa2610f4ca28e4e7009fbcd36b8e38cd45b2c46a9a16fb56c1c",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_magnet_lv_active.json": "0ce6231dc9353af0e2cd9b19cd3864465093cbdba43b4859051e9831e19b3cb1",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\flux_magnet_lv.json": "98b95557a5673d6efb5fde8f4789406646be5401ce7954021821422a582e3a03",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\flux_magnet_lv.json": "648fdb55d1abad2ddb399fb39098539df947b25606824c3b6d94db65607ddb84",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_magnet_mv.json": "ac963f2544b9804d42a5ea08ec34d49897edb04541dd7dcdd66a344ad667f70a",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_magnet_mv_active.json": "14fecfeafc03c794c1ecfeb51ec3f92a326a2269bd06bff855369d712bc4ca97",
+    "src\\main\\resources\\assets\\gregtech\\blockstates\\flux_magnet_mv.json": "3c718d297c66c8826849da64fb6bfded852f34c5b45ffd6c9958cf8faf4f38f8",
+    "src\\main\\resources\\assets\\gregtech\\models\\item\\flux_magnet_mv.json": "599c3a786c7ebdc9f951451f637f2f90d5293f6e6023078505902e9d1fbd480a",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_magnet_mv.json": "2bc7b7093431cfa2610f4ca28e4e7009fbcd36b8e38cd45b2c46a9a16fb56c1c",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_magnet_mv_active.json": "0ce6231dc9353af0e2cd9b19cd3864465093cbdba43b4859051e9831e19b3cb1",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\flux_magnet_mv.json": "3c718d297c66c8826849da64fb6bfded852f34c5b45ffd6c9958cf8faf4f38f8",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\flux_magnet_mv.json": "599c3a786c7ebdc9f951451f637f2f90d5293f6e6023078505902e9d1fbd480a",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_magnet_hv.json": "ac963f2544b9804d42a5ea08ec34d49897edb04541dd7dcdd66a344ad667f70a",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_magnet_hv_active.json": "14fecfeafc03c794c1ecfeb51ec3f92a326a2269bd06bff855369d712bc4ca97",
+    "src\\main\\resources\\assets\\gregtech\\blockstates\\flux_magnet_hv.json": "f37df0e72c02970f726fb29bfac867c2d87deb005fa62adeda90879042e64919",
+    "src\\main\\resources\\assets\\gregtech\\models\\item\\flux_magnet_hv.json": "148da2bdfd9f7c32e26827a449050931900bb1a45f1e1e653007d3900c7fb707",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_magnet_hv.json": "2bc7b7093431cfa2610f4ca28e4e7009fbcd36b8e38cd45b2c46a9a16fb56c1c",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_magnet_hv_active.json": "0ce6231dc9353af0e2cd9b19cd3864465093cbdba43b4859051e9831e19b3cb1",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\flux_magnet_hv.json": "f37df0e72c02970f726fb29bfac867c2d87deb005fa62adeda90879042e64919",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\flux_magnet_hv.json": "148da2bdfd9f7c32e26827a449050931900bb1a45f1e1e653007d3900c7fb707",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_magnet_ev.json": "ac963f2544b9804d42a5ea08ec34d49897edb04541dd7dcdd66a344ad667f70a",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_magnet_ev_active.json": "14fecfeafc03c794c1ecfeb51ec3f92a326a2269bd06bff855369d712bc4ca97",
+    "src\\main\\resources\\assets\\gregtech\\blockstates\\flux_magnet_ev.json": "5947df871c2e727c4461b3cb878ed9308a5ccd09494ed938fce2d743e464f757",
+    "src\\main\\resources\\assets\\gregtech\\models\\item\\flux_magnet_ev.json": "7331ab5ba68942d2aff4698e50556e8d9c9ad4a58e6ec08a842203a8742a2c89",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_magnet_ev.json": "2bc7b7093431cfa2610f4ca28e4e7009fbcd36b8e38cd45b2c46a9a16fb56c1c",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_magnet_ev_active.json": "0ce6231dc9353af0e2cd9b19cd3864465093cbdba43b4859051e9831e19b3cb1",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\flux_magnet_ev.json": "5947df871c2e727c4461b3cb878ed9308a5ccd09494ed938fce2d743e464f757",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\flux_magnet_ev.json": "7331ab5ba68942d2aff4698e50556e8d9c9ad4a58e6ec08a842203a8742a2c89",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_magnet_iv.json": "ac963f2544b9804d42a5ea08ec34d49897edb04541dd7dcdd66a344ad667f70a",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_magnet_iv_active.json": "14fecfeafc03c794c1ecfeb51ec3f92a326a2269bd06bff855369d712bc4ca97",
+    "src\\main\\resources\\assets\\gregtech\\blockstates\\flux_magnet_iv.json": "7b274b42e7ba7a58f46fa202f7ab6d0a68b7f4e40c3c0037bc4c93af0a855f25",
+    "src\\main\\resources\\assets\\gregtech\\models\\item\\flux_magnet_iv.json": "dcc2c99ef8588097d7ed5dfeebdc9532caa53abf89a42f4c62176be802ec072c",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_magnet_iv.json": "2bc7b7093431cfa2610f4ca28e4e7009fbcd36b8e38cd45b2c46a9a16fb56c1c",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_magnet_iv_active.json": "0ce6231dc9353af0e2cd9b19cd3864465093cbdba43b4859051e9831e19b3cb1",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\flux_magnet_iv.json": "7b274b42e7ba7a58f46fa202f7ab6d0a68b7f4e40c3c0037bc4c93af0a855f25",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\flux_magnet_iv.json": "dcc2c99ef8588097d7ed5dfeebdc9532caa53abf89a42f4c62176be802ec072c"
+  },
+  "variants": [
+    {
+      "id": "electromagnet_lv",
+      "source_id": 10031,
+      "source_key": "gt.multitileentity.10031",
+      "en_us": "Electromagnet (LV)",
+      "zh_cn": "电磁铁 (LV)",
+      "source_order": 425,
+      "creative_family": "magnets"
+    },
+    {
+      "id": "electromagnet_mv",
+      "source_id": 10032,
+      "source_key": "gt.multitileentity.10032",
+      "en_us": "Electromagnet (MV)",
+      "zh_cn": "电磁铁 (MV)",
+      "source_order": 426,
+      "creative_family": "magnets"
+    },
+    {
+      "id": "electromagnet_hv",
+      "source_id": 10033,
+      "source_key": "gt.multitileentity.10033",
+      "en_us": "Electromagnet (HV)",
+      "zh_cn": "电磁铁 (HV)",
+      "source_order": 427,
+      "creative_family": "magnets"
+    },
+    {
+      "id": "electromagnet_ev",
+      "source_id": 10034,
+      "source_key": "gt.multitileentity.10034",
+      "en_us": "Electromagnet (EV)",
+      "zh_cn": "电磁铁 (EV)",
+      "source_order": 428,
+      "creative_family": "magnets"
+    },
+    {
+      "id": "electromagnet_iv",
+      "source_id": 10035,
+      "source_key": "gt.multitileentity.10035",
+      "en_us": "Electromagnet (IV)",
+      "zh_cn": "电磁铁 (IV)",
+      "source_order": 429,
+      "creative_family": "magnets"
+    },
+    {
+      "id": "flux_magnet_lv",
+      "source_id": 11031,
+      "source_key": "gt.multitileentity.11031",
+      "en_us": "Flux Magnet (Lead)",
+      "zh_cn": "红石通量磁场产生器 (铅)",
+      "source_order": 430,
+      "creative_family": "magnets"
+    },
+    {
+      "id": "flux_magnet_mv",
+      "source_id": 11032,
+      "source_key": "gt.multitileentity.11032",
+      "en_us": "Flux Magnet (Invar)",
+      "zh_cn": "红石通量磁场产生器 (殷钢)",
+      "source_order": 431,
+      "creative_family": "magnets"
+    },
+    {
+      "id": "flux_magnet_hv",
+      "source_id": 11033,
+      "source_key": "gt.multitileentity.11033",
+      "en_us": "Flux Magnet (Electrum)",
+      "zh_cn": "红石通量磁场产生器 (琥珀金)",
+      "source_order": 432,
+      "creative_family": "magnets"
+    },
+    {
+      "id": "flux_magnet_ev",
+      "source_id": 11034,
+      "source_key": "gt.multitileentity.11034",
+      "en_us": "Flux Magnet (Enderium Base)",
+      "zh_cn": "红石通量磁场产生器 (末影粗胚)",
+      "source_order": 433,
+      "creative_family": "magnets"
+    },
+    {
+      "id": "flux_magnet_iv",
+      "source_id": 11035,
+      "source_key": "gt.multitileentity.11035",
+      "en_us": "Flux Magnet (Enderium)",
+      "zh_cn": "红石通量磁场产生器 (末影)",
+      "source_order": 434,
+      "creative_family": "magnets"
+    }
+  ],
+  "known_materials": [
+    {
+      "path": "electromagnet_lv",
+      "source_id": 10031,
+      "source_line": 865,
+      "components": {
+        "Cu": 1945944000,
+        "SteelGalvanized": 5189184000
+      },
+      "pattern": [
+        "CxC",
+        "CMC",
+        "CwC"
+      ],
+      "keys": {
+        "M": "OP.casingMachine.dat(aMat)",
+        "C": "OP.wireGt01.dat(ANY.Cu)"
+      }
+    },
+    {
+      "path": "flux_magnet_lv",
+      "source_id": 11031,
+      "source_line": 872,
+      "components": {
+        "Pb": 5189184000,
+        "Cu": 1945944000,
+        "SteelGalvanized": 5189184000
+      },
+      "pattern": [
+        "SSS",
+        "SMS",
+        "SSS"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem(10031)",
+        "S": "OP.stickLong.dat(aMat)"
+      }
+    },
+    {
+      "path": "electromagnet_mv",
+      "source_id": 10032,
+      "source_line": 866,
+      "components": {
+        "Cu": 3891888000,
+        "Al": 5189184000
+      },
+      "pattern": [
+        "CxC",
+        "CMC",
+        "CwC"
+      ],
+      "keys": {
+        "M": "OP.casingMachine.dat(aMat)",
+        "C": "OP.wireGt02.dat(ANY.Cu)"
+      }
+    },
+    {
+      "path": "flux_magnet_mv",
+      "source_id": 11032,
+      "source_line": 873,
+      "components": {
+        "Invar": 5189184000,
+        "Cu": 3891888000,
+        "Al": 5189184000
+      },
+      "pattern": [
+        "SSS",
+        "SMS",
+        "SSS"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem(10032)",
+        "S": "OP.stickLong.dat(aMat)"
+      }
+    },
+    {
+      "path": "electromagnet_hv",
+      "source_id": 10033,
+      "source_line": 867,
+      "components": {
+        "AnnealedCopper": 7783776000,
+        "StainlessSteel": 5189184000
+      },
+      "pattern": [
+        "CxC",
+        "CMC",
+        "CwC"
+      ],
+      "keys": {
+        "M": "OP.casingMachine.dat(aMat)",
+        "C": "OP.wireGt04.dat(MT.AnnealedCopper)"
+      }
+    },
+    {
+      "path": "flux_magnet_hv",
+      "source_id": 11033,
+      "source_line": 874,
+      "components": {
+        "Electrum": 5189184000,
+        "AnnealedCopper": 7783776000,
+        "StainlessSteel": 5189184000
+      },
+      "pattern": [
+        "SSS",
+        "SMS",
+        "SSS"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem(10033)",
+        "S": "OP.stickLong.dat(aMat)"
+      }
+    },
+    {
+      "path": "electromagnet_ev",
+      "source_id": 10034,
+      "source_line": 868,
+      "components": {
+        "AnnealedCopper": 15567552000,
+        "Cr": 5189184000
+      },
+      "pattern": [
+        "CxC",
+        "CMC",
+        "CwC"
+      ],
+      "keys": {
+        "M": "OP.casingMachine.dat(aMat)",
+        "C": "OP.wireGt08.dat(MT.AnnealedCopper)"
+      }
+    },
+    {
+      "path": "flux_magnet_ev",
+      "source_id": 11034,
+      "source_line": 875,
+      "components": {
+        "EnderiumBase": 5189184000,
+        "AnnealedCopper": 15567552000,
+        "Cr": 5189184000
+      },
+      "pattern": [
+        "SSS",
+        "SMS",
+        "SSS"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem(10034)",
+        "S": "OP.stickLong.dat(aMat)"
+      }
+    },
+    {
+      "path": "electromagnet_iv",
+      "source_id": 10035,
+      "source_line": 869,
+      "components": {
+        "AnnealedCopper": 31135104000,
+        "Ti": 5189184000
+      },
+      "pattern": [
+        "CxC",
+        "CMC",
+        "CwC"
+      ],
+      "keys": {
+        "M": "OP.casingMachine.dat(aMat)",
+        "C": "OP.wireGt16.dat(MT.AnnealedCopper)"
+      }
+    },
+    {
+      "path": "flux_magnet_iv",
+      "source_id": 11035,
+      "source_line": 876,
+      "components": {
+        "Enderium": 5189184000,
+        "AnnealedCopper": 31135104000,
+        "Ti": 5189184000
+      },
+      "pattern": [
+        "SSS",
+        "SMS",
+        "SSS"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem(10035)",
+        "S": "OP.stickLong.dat(aMat)"
+      }
+    }
+  ],
+  "material_preservation": {
+    "prior_fixed_entries_identical": 449,
+    "current_fixed_entries": 459,
+    "prior_machine_tiers_identical": 252,
+    "existing_hoppers": 120
+  },
+  "selected_tooltip_keys": [
+    "gt.lang.accepts.redstoneflux.lossless",
+    "gt.lang.efficiency",
+    "gt.lang.emits.redstoneflux.lossless",
+    "gt.lang.energy.input",
+    "gt.lang.energy.output",
+    "gt.lang.face.any.but.front",
+    "gt.lang.face.any.but.front.back",
+    "gt.lang.face.back",
+    "gt.lang.face.front",
+    "gt.lang.face.front.back",
+    "gt.lang.hazard.contact",
+    "gt.lang.reminder.extenders",
+    "gt.lang.tool.name.wrench",
+    "gt.lang.use.monkey.wrench.to.toggle.direction",
+    "gt.lang.use.x.to.toggle.facing.post",
+    "gt.lang.use.x.to.toggle.facing.pre",
+    "gt.td.short.energy.cryo",
+    "gt.td.short.energy.electricity",
+    "gt.td.short.energy.heat",
+    "gt.td.short.energy.kinetic_rotation",
+    "gt.td.short.energy.magnetic",
+    "gt.td.short.energy.redstone_flux",
+    "gt.tooltip.energybattery.1",
+    "gt.tooltip.energybattery.2",
+    "gt.tooltip.energybattery.3"
+  ],
+  "verbatim_chinese_keys_checked": 35,
+  "recipes": {
+    "shared_rows_added": 10,
+    "shared_catalog_total": 524,
+    "retained_native_ids": "gregtech:magnets/<id>",
+    "removed_static_json": 10,
+    "tool_and_stored_input_guards": "Native shared input resolution; ANY.Cu and actual uninsulated width; require_empty_fluid_containers=true."
+  },
+  "verification": {
+    "source_and_selected_assets_rehashed": true,
+    "shared_machine_assertions": 654,
+    "native_main_compile": [
+      "Forge1.20.1",
+      "NeoForge1.21.1"
+    ],
+    "production_probe_and_world_fixture_compile": true,
+    "attempts": [
+      {
+        "log": "work/magnet-compile-20261007.log",
+        "result": "failed",
+        "seconds": 18,
+        "reason": "Existing Forge main GameTests referenced removed invented cycleMagnetMode; source core654 passed."
+      },
+      {
+        "log": "work/magnet-compile-final-20261007.log",
+        "result": "passed",
+        "seconds": 25,
+        "scope": "Both main / probe / finite-world fixture source compiled; shared654."
+      }
+    ],
+    "static_import_attempt": "Initial script assumed24 literal selectors/layer0 names; current twelve wildcards cover waterlogged states and existing colored/overlay children. Corrected before language/order writes.",
+    "ordinary_dual_build_this_batch": true,
+    "runtime_probe": true,
+    "runtime_world_fixtures": true,
+    "saved_world_restart": false,
+    "ordinary_packages_and_installed_client": "passed pooled delivery; see converter-pooled-delivery-20261007.json",
+    "native_world": "Each platform two corresponding fixtures passed within six-test pool; see converter-pooled-runtime-20261007.json",
+    "source_and_asset_references_rechecked_after_startup": 262
+  },
+  "pending": [
+    "Historical world compatibility and independent restart, full survival, dedicated server, physical tooltip hover.",
+    "Source blinking reminder, generic harvest/fire/ownership/cover tooltip lines, configuration and saved rated-stat overrides, structural checks.",
+    "Other engine/turbine families and remaining blocks/material records. Fifteen small steam turbines and local200L-per-water rule subsequently ported in e97e9b86; see its source ledger."
+  ],
+  "publication": "Local commit only; no push or PR. Overall goal remains active.",
+  "delivery_ledger": "converter-pooled-delivery-20261007.json"
+}

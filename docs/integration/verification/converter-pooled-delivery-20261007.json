@@ -1,0 +1,617 @@
+{
+  "date": "2026-10-07",
+  "source_commit": "12010bfa8a09329ef5bd36e304f2a348cbafc583",
+  "included_batches": [
+    "4d2f91e1",
+    "a1b36036",
+    "e97e9b86",
+    "5e4e52c5"
+  ],
+  "build": {
+    "log": {
+      "path": "C:\\Dev\\GregTech6\\work\\converter-pooled-name-fixed-build-20261007.log",
+      "sha256": "6797092b6ce2eb5cb45565f8c59860fde5f3778bc16d100a872e15b16fb6adcf",
+      "bytes": 4112
+    },
+    "elapsed": "1m 11s",
+    "exit_code": 0,
+    "core_assertions": 2474,
+    "machine_source_assertions": 855,
+    "material_assertions": 7947,
+    "thermal_assertions": 53
+  },
+  "native_world": {
+    "forge": {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\converter-pooled-native-world-final-20261007.log",
+        "bytes": 281841,
+        "sha256": "cca18c5e9f4d98c666163817f55e956a62e3fb9bcfdc2a41f299b7a335b01a58"
+      },
+      "required_tests_passed": 6,
+      "java": "17.0.10",
+      "gradle_overall": "failed only on subsequent Neo stale catalog"
+    },
+    "neoforge": {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\converter-pooled-neoforge-native-world-20261007.log",
+        "bytes": 39295,
+        "sha256": "e6b53b4af5181ec34c3b97affe148d83898ba4a0c9fe60755eac658364bc9ddc"
+      },
+      "required_tests_passed": 6,
+      "java": "21.0.7",
+      "exit_code": 0
+    }
+  },
+  "native_scope": "Each platform:3 converter behavior fixtures and3 real crafting/recipe synchronization/recovery fixtures;20 thermal+10 magnets+15 turbines. Actual native receivers, stored-input protection, tool wear, material targets/amounts and crucible parsing. Manual ticker scenarios; development GameTest worlds.",
+  "native_attempts": [
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\converter-pooled-native-world-20261007.log",
+        "bytes": 206513,
+        "sha256": "2c6e8eefa537044255ef5d3816506576a34a42ad5d2212ee2e454b230f4a10eb"
+      },
+      "elapsed": "7m30s",
+      "result": "Forge spawn preparation exhausted 1536MiB heap; no scenarios ran. Only the identified test child was stopped; unrelated Java process left untouched."
+    },
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\converter-pooled-native-world-3g-20261007.log",
+        "bytes": 217335,
+        "sha256": "fc78bac5eb491e8ed85dcd60c7c661cdec40d47c29c0cd259e7ace0f7b88b889"
+      },
+      "elapsed": "2m18s",
+      "result": "Forge behavior3 passed; crafting3 failed because exact machine compositions were excluded from recovery registration. Neo not run."
+    },
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\converter-pooled-native-world-recovery-20261007.log",
+        "bytes": 245398,
+        "sha256": "d620fa2eca05bc95ffabb92d188a819c7b14d59aa700cc95fafb2ad381b3d7d3"
+      },
+      "elapsed": "2m52s",
+      "result": "Forge5 passed; thermal fixture incorrectly required every OM.dust rounding remainder below U/72. Neo not run."
+    },
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\converter-pooled-native-world-final-20261007.log",
+        "bytes": 281841,
+        "sha256": "cca18c5e9f4d98c666163817f55e956a62e3fb9bcfdc2a41f299b7a335b01a58"
+      },
+      "elapsed": "3m15s",
+      "result": "Forge6 passed and saved dimensions; Neo failed before world load on stale electromagnet_ev.json catalog reference."
+    },
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\converter-pooled-neoforge-native-world-20261007.log",
+        "bytes": 39295,
+        "sha256": "e6b53b4af5181ec34c3b97affe148d83898ba4a0c9fe60755eac658364bc9ddc"
+      },
+      "elapsed": "1m19s",
+      "result": "After removal of ten stale references, only Neo6 rerun; passed and saved all dimensions, exit0."
+    }
+  ],
+  "installed_attempts": [
+    {
+      "result": "Ordinary build4m8s and CRC/current classes passed; actual Forge reached title but probe rejected RF heater internal display Flux Heater(Pb) vs original language Flux Heater(Lead). Pair53899d2d not accepted for delivery.",
+      "records": [
+        {
+          "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\oredict\\OreDictMaterial.java",
+          "sha256": "768707d5eeeb6b60f0c5d0a24b39ab50f6f173a29a40f0fa3365308cf0688371",
+          "bytes": 88912
+        },
+        {
+          "path": "C:\\Dev\\GregTech6\\build\\production-smoke\\forge-c550b1cc-1e93-4c0d-9664-f84c1dcddeaf\\launch.log",
+          "sha256": "4a7e89f0970891fac5791df9de51f0f49e45633f54aca89fcd6963d0093b758b",
+          "bytes": 155818
+        },
+        {
+          "path": "C:\\Dev\\GregTech6\\work\\converter-pooled-dual-build-20261007.log",
+          "sha256": "adc2d33e9c8acd39437a570f2aa27482d3b4392f33068a7760346259870a07ee",
+          "bytes": 33592
+        },
+        {
+          "path": "C:\\Dev\\GregTech6\\work\\converter-pooled-artifacts-20261007.json",
+          "sha256": "bf1298488d3f60bf86cadd27e84c112b9afdb2ac07a5dc011b39115dcc16ba32",
+          "bytes": 313365
+        },
+        {
+          "path": "C:\\Dev\\GregTech6\\work\\converter-pooled-verified-20261007.json",
+          "sha256": "b6bfe30327119d38f806ab806362adfeb3582cf43ac6235b8d92f8e233d54c53",
+          "bytes": 1084
+        }
+      ]
+    }
+  ],
+  "name_fix": "Original getLocal uses translated display name; imported Lead.localName is Pb while display fallback is Lead. Thermal spec now uses English display fallback; Chinese names and all quantities/behavior unchanged. Added20 independent original name assertions. Native6/platform behavior results remain valid; final ordinary build/start pending.",
+  "artifact_verification": {
+    "report": {
+      "path": "C:\\Dev\\GregTech6\\work\\converter-pooled-name-fixed-artifacts-20261007.json",
+      "sha256": "0ec05593654dbff3e0fe760ed4b24f4eed823a5ee66687aed1c976251a52397f",
+      "bytes": 313365
+    },
+    "shared_current_classes": 740,
+    "native_current_classes": {
+      "forge": 1767,
+      "neoforge": 1574
+    },
+    "crc_metadata_mixin_fixture_exclusion": true
+  },
+  "verified_pair": {
+    "status": "passed",
+    "scope": "Verified complete copies; runtime evidence is recorded separately",
+    "directory": "C:\\Dev\\GregTech6\\build\\verified\\20261006-230254Z-c1f1e1bc",
+    "verification_report": "C:\\Dev\\GregTech6\\work\\converter-pooled-name-fixed-artifacts-20261007.json",
+    "verification_report_sha256": "0ec05593654dbff3e0fe760ed4b24f4eed823a5ee66687aed1c976251a52397f",
+    "artifacts": {
+      "forge": {
+        "name": "gregtech6-1.20.1-forge-0.0.0.jar",
+        "bytes": 41518733,
+        "sha256": "c1f1e1bce8f55c3da8a4b07e899c51bdcbd4f0cf1390faa3be854b691bb126fc",
+        "zip_crc_checked": true,
+        "path": "C:\\Dev\\GregTech6\\build\\verified\\20261006-230254Z-c1f1e1bc\\gregtech6-1.20.1-forge-0.0.0.jar"
+      },
+      "neoforge": {
+        "name": "gregtech6-neoforge-1.21.1-0.0.0.jar",
+        "bytes": 39739769,
+        "sha256": "6d35d3a4ae837fae31b4531c3acd51605a7108496f5acc6367fb7de5a88b21cc",
+        "zip_crc_checked": true,
+        "path": "C:\\Dev\\GregTech6\\build\\verified\\20261006-230254Z-c1f1e1bc\\gregtech6-neoforge-1.21.1-0.0.0.jar"
+      }
+    }
+  },
+  "production": {
+    "forge": {
+      "report": {
+        "path": "C:\\Dev\\GregTech6\\work\\converter-pooled-forge-production-20261007.json",
+        "sha256": "e863b8dc76fc1ab0ea179f1dfb7f75860153e135fb5ef87c612e070fc7143c9a",
+        "bytes": 9250
+      },
+      "evidence": {
+        "status": "passed",
+        "scope": "Actual distribution jar in isolated installed-loader client; title screen only",
+        "platform": "forge",
+        "version": "1.20.1-Forge_47.4.26",
+        "java": "C:\\Program Files\\Zulu\\zulu-25\\bin\\java.exe",
+        "java_version": "openjdk version \"25.0.2\" 2026-01-20 LTS\nOpenJDK Runtime Environment Zulu25.32+21-CA (build 25.0.2+10-LTS)\nOpenJDK 64-Bit Server VM Zulu25.32+21-CA (build 25.0.2+10-LTS, mixed mode, sharing)",
+        "exit_code": 0,
+        "elapsed_seconds": 53.3,
+        "installed_files_modified": false,
+        "version_json_sha256": "8f5956d1d4431a635b550d189a906cd60b4cded129fa6a1fbfed8328c8b2b8e1",
+        "distribution": {
+          "path": "C:\\Dev\\GregTech6\\build\\verified\\20261006-230254Z-c1f1e1bc\\gregtech6-1.20.1-forge-0.0.0.jar",
+          "sha256": "c1f1e1bce8f55c3da8a4b07e899c51bdcbd4f0cf1390faa3be854b691bb126fc"
+        },
+        "probe": {
+          "path": "C:\\Dev\\GregTech6\\build\\production-probe\\gregtech-delivery-probe-0.0.0.jar",
+          "sha256": "5d2b19e1b13e0f3889b7882d5ef804d0fdc6a3c20f23d3d3455337836e0fa23e"
+        },
+        "mods": [
+          {
+            "name": "gregtech6-1.20.1-forge-0.0.0.jar",
+            "sha256": "c1f1e1bce8f55c3da8a4b07e899c51bdcbd4f0cf1390faa3be854b691bb126fc",
+            "bytes": 41518733
+          },
+          {
+            "name": "gregtech-delivery-probe-0.0.0.jar",
+            "sha256": "5d2b19e1b13e0f3889b7882d5ef804d0fdc6a3c20f23d3d3455337836e0fa23e",
+            "bytes": 63419
+          },
+          {
+            "name": "Jade-1.20.1-Forge-11.13.3.jar",
+            "sha256": "a632c77975e5aedff6322b0072f8b0db3f5d4bf914df6bdcc87d1aea4d5f55f4",
+            "bytes": 553487
+          },
+          {
+            "name": "jei-1.20.1-forge-15.62.0.217.jar",
+            "sha256": "6ca167d7cd730c437618e6795971bdb451b84500883b0a5d0155af70bdc32b25",
+            "bytes": 2232172
+          },
+          {
+            "name": "mezz_config-1.20.1-forge-0.6.8.jar",
+            "sha256": "93d04b64ed5120350aed8a6d25efe5703fdbc720c233d7da3274feafd076c7e1",
+            "bytes": 364842
+          }
+        ],
+        "log": "C:\\Dev\\GregTech6\\build\\production-smoke\\forge-750fc7bb-82b1-4060-a1f4-7585110484df\\launch.log",
+        "log_sha256": "fb45100266723e9a9c080c400abc00179f15eeeb0b0356063472fd07f7dd1e94",
+        "receipt": {
+          "surfaceChecks": {
+            "materialBushInventoryModelsColorsNamesChecked": 1034,
+            "surfaceItems": [
+              "gregtech:bush_cotton",
+              "gregtech:bush_blueberry",
+              "gregtech:bush_candleberry",
+              "gregtech:bush_cranberry",
+              "gregtech:bush_black_currants",
+              "gregtech:bush_white_currants",
+              "gregtech:bush_red_currants",
+              "gregtech:bush_blackberry",
+              "gregtech:bush_raspberry",
+              "gregtech:fluid_spring_liquid_extra_heavy_oil",
+              "gregtech:fluid_spring_liquid_heavy_oil",
+              "gregtech:fluid_spring_liquid_medium_oil",
+              "gregtech:fluid_spring_liquid_light_oil",
+              "gregtech:fluid_spring_gas_natural_gas",
+              "gregtech:fluid_spring_watergeothermal",
+              "gregtech:fluid_spring_lava"
+            ],
+            "machineItems": [
+              "lightning_galvanized_steel",
+              "lightning_aluminium",
+              "lightning_stainless_steel",
+              "lightning_chromium",
+              "lightning_titanium",
+              "melter_stainless_steel"
+            ],
+            "machineModelsChecked": 6,
+            "surfaceItemModelsChecked": 16,
+            "surfaceSpringSpritesChecked": 7,
+            "surfaceBerryStageColorsChecked": 36,
+            "sandwich": {
+              "customInventoryModelsChecked": 3,
+              "ingredientLayerCounts": [
+                10,
+                4,
+                6
+              ],
+              "sourceLayerTexturesChecked": 22,
+              "sourceSauceColorsChecked": 2,
+              "cans": {
+                "inventoryModelsChecked": 57,
+                "renderedCanSamples": [
+                  "tiny_food_can_meat",
+                  "small_food_can_fish",
+                  "tall_food_can_vegetables",
+                  "wide_food_can_fruits",
+                  "large_food_can_bread",
+                  "huge_food_can_cookies",
+                  "canned_air",
+                  "canned_hot_air",
+                  "canned_space_air",
+                  "huge_food_can_rotten",
+                  "tiny_food_can_chum",
+                  "empty_food_can"
+                ]
+              }
+            },
+            "canvas": {
+              "originalCircuitTagGrades": 10,
+              "externalHighBatteryBoxRecipes": 5,
+              "originalMolecularDataFields": true,
+              "mercuryAmbientUnitMb": 1000,
+              "originalCanvasItemModels": 16,
+              "printedPageModels": 2,
+              "coloredBookScanHints": 28,
+              "directionalAndFluidFaces": 4,
+              "brightImage": true
+            },
+            "decorativePanels": {
+              "installedItemModels": 83,
+              "canonicalColoredModels": 48,
+              "canonicalWoodModels": 30,
+              "centeredTwoPixelMesh": true,
+              "sourceRgbAndTextures": true,
+              "legacyAliasesHiddenFromCreative": true,
+              "originalPerItemMaterialsAndAdvancedTooltip": 83,
+              "installedShredderEntries": 83,
+              "transportMaterialItemsAndShredderEntries": 441,
+              "originalTankGroupFormVariants": 10,
+              "resolvedTransportCraftingRows": 539,
+              "preferredTransportForms": 406,
+              "materialDataDisplay": {
+                "scans": 1003,
+                "prints": 1105,
+                "replications": 565
+              },
+              "usbFileDisplayTypes": 4,
+              "tankItemData": {
+                "cheapSourceVariants": 4,
+                "knownLogisticsComponents": 7,
+                "cleanItemData": 35,
+                "storedItemDataProtected": 35,
+                "completeWorldSaveRetained": true,
+                "observedEmptyLoaderWrappers": 0,
+                "scope": "installed methods at title screen; actual harvest tested separately in native server worlds",
+                "originalFunctionalTooltips": {
+                  "manualStations": 14,
+                  "boilersDefaultAndSavedEfficiency": 26,
+                  "scope": "installed actual item tooltip methods at title screen; no player hover or machine operation claim"
+                },
+                "sourceMechanicalTooltips": {
+                  "axles": 52,
+                  "customGearboxesDefaultAndSavedConfigurations": 13,
+                  "originalLargeBoilersDefaultAndSavedEfficiencies": 5,
+                  "scope": "installed item methods at title screen; no mechanical transport or boiler operation claim"
+                },
+                "sourceEnergyDeviceTooltips": {
+                  "batteryBoxes": 20,
+                  "solarPanels": 2,
+                  "electricTransformers": 9,
+                  "rotationalTransformers": 13,
+                  "savedDirectionItemTooltipsAndNativeToggleStatistics": 22,
+                  "scope": "installed item methods and native factory rating getters at title screen; no energy transfer or saved-world restart claim"
+                },
+                "sourceThermalConverters": {
+                  "heaters": 10,
+                  "coolers": 10,
+                  "rfDevices": 10,
+                  "actualBakedStates": 720,
+                  "sourceMaterialsAndSingleAdvancedSection": true,
+                  "scope": "installed title-screen native factories, methods, tooltip events and baked models; world output/contact checked separately"
+                },
+                "sourceBipolarMagnets": {
+                  "magnets": 10,
+                  "actualBakedStates": 240,
+                  "exactMaterialQuantitiesAndSourceTooltips": true,
+                  "scope": "installed native factories, tooltip methods and baked models at title screen; no world restart claim"
+                },
+                "sourceSteamTurbines": {
+                  "steamTurbines": 15,
+                  "actualBakedStates": 2160,
+                  "exactMaterialQuantitiesAndSourceTooltips": true,
+                  "scope": "installed title-screen factories, tooltip methods, sided capability visibility and baked models; no world or restart claim"
+                },
+                "sourceRotaryConverters": {
+                  "motors": 7,
+                  "dynamos": 7,
+                  "actualBakedStates": 1260,
+                  "exactMaterialsAndSingleAdvancedSection": true,
+                  "scope": "installed title-screen native factories, methods, tooltip events and baked models; actual world chain checked separately"
+                },
+                "machineSourceMaterials": {
+                  "sourceBlockIdentities": 589,
+                  "nativeBasicMachinesAndControllers": 250,
+                  "singleAdvancedMaterialSection": true,
+                  "exactSourceComponentAmounts": true,
+                  "scope": "installed item methods and tooltip event at title screen; no recovery gameplay claim"
+                },
+                "sourceFluidPipeTooltips": 280,
+                "storedTankTooltips": 35
+              }
+            }
+          },
+          "platform": "forge",
+          "screen": "net.minecraft.client.gui.screens.TitleScreen",
+          "screenshot": "C:\\Dev\\GregTech6\\build\\production-smoke\\forge-750fc7bb-82b1-4060-a1f4-7585110484df\\screenshots\\production-forge-ec2fefea-1fea-4b2e-83d0-1bac9870e9e8.png",
+          "width": 1280,
+          "height": 720,
+          "renderedFrames": 182,
+          "loaderWarnings": 0,
+          "elapsedMs": 47087
+        },
+        "screenshot_sha256": "b908ed5ab8c4c0acbff9fc920705222cfdc0395228bcb6858823b100e033bde8",
+        "visually_reviewed": true,
+        "screenshot_scope": "Existing colored/wood panel atlas at title screen was viewed. New converter tooltips and3120 added state checks use actual native methods/models, not player hovering or a depicted world operation."
+      }
+    },
+    "neoforge": {
+      "report": {
+        "path": "C:\\Dev\\GregTech6\\work\\converter-pooled-neoforge-production-20261007.json",
+        "sha256": "b2a0904eecb2b8cc20c3076a05ef2ce6f94f5ec69be99f879ebac59e41b2685f",
+        "bytes": 9085
+      },
+      "evidence": {
+        "status": "passed",
+        "scope": "Actual distribution jar in isolated installed-loader client; title screen only",
+        "platform": "neoforge",
+        "version": "1.21.1-NeoForge_21.1.252",
+        "java": "C:\\Program Files\\Zulu\\zulu-25\\bin\\java.exe",
+        "java_version": "openjdk version \"25.0.2\" 2026-01-20 LTS\nOpenJDK Runtime Environment Zulu25.32+21-CA (build 25.0.2+10-LTS)\nOpenJDK 64-Bit Server VM Zulu25.32+21-CA (build 25.0.2+10-LTS, mixed mode, sharing)",
+        "exit_code": 0,
+        "elapsed_seconds": 45.53,
+        "installed_files_modified": false,
+        "version_json_sha256": "2bc1c6df818257a3543bad63115059e6e5f423ae86de49de9a3ccc48dda0e2e4",
+        "distribution": {
+          "path": "C:\\Dev\\GregTech6\\build\\verified\\20261006-230254Z-c1f1e1bc\\gregtech6-neoforge-1.21.1-0.0.0.jar",
+          "sha256": "6d35d3a4ae837fae31b4531c3acd51605a7108496f5acc6367fb7de5a88b21cc"
+        },
+        "probe": {
+          "path": "C:\\Dev\\GregTech6\\neoforge\\build\\production-probe\\gregtech-delivery-probe-0.0.0.jar",
+          "sha256": "339cd00a9a274285b5035d926657415256f7c04c34274498486c6de5ccc2800b"
+        },
+        "mods": [
+          {
+            "name": "gregtech6-neoforge-1.21.1-0.0.0.jar",
+            "sha256": "6d35d3a4ae837fae31b4531c3acd51605a7108496f5acc6367fb7de5a88b21cc",
+            "bytes": 39739769
+          },
+          {
+            "name": "gregtech-delivery-probe-0.0.0.jar",
+            "sha256": "339cd00a9a274285b5035d926657415256f7c04c34274498486c6de5ccc2800b",
+            "bytes": 62440
+          },
+          {
+            "name": "emi-1.1.24+1.21.1+neoforge.jar",
+            "sha256": "b68691f94f0727fc517cac2ab55bd6658d1179cc8cc715fe610b60c37469bc4c",
+            "bytes": 1111538
+          },
+          {
+            "name": "Jade-1.21.1-NeoForge-15.10.6.jar",
+            "sha256": "276f1f65a20d04f536989c4f311949d770b52c440c23c2b904a08860f3c93810",
+            "bytes": 726853
+          }
+        ],
+        "log": "C:\\Dev\\GregTech6\\build\\production-smoke\\neoforge-d5cc3342-b663-49b8-bfcd-df7d87c1c1b4\\launch.log",
+        "log_sha256": "b0395956a678dde132b7528dc1b9a6da8541a28ffa853b0ea0dfc14f7ad3f4b4",
+        "receipt": {
+          "surfaceChecks": {
+            "materialBushInventoryModelsColorsNamesChecked": 1034,
+            "surfaceItems": [
+              "gregtech:bush_cotton",
+              "gregtech:bush_blueberry",
+              "gregtech:bush_candleberry",
+              "gregtech:bush_cranberry",
+              "gregtech:bush_black_currants",
+              "gregtech:bush_white_currants",
+              "gregtech:bush_red_currants",
+              "gregtech:bush_blackberry",
+              "gregtech:bush_raspberry",
+              "gregtech:fluid_spring_liquid_extra_heavy_oil",
+              "gregtech:fluid_spring_liquid_heavy_oil",
+              "gregtech:fluid_spring_liquid_medium_oil",
+              "gregtech:fluid_spring_liquid_light_oil",
+              "gregtech:fluid_spring_gas_natural_gas",
+              "gregtech:fluid_spring_watergeothermal",
+              "gregtech:fluid_spring_lava"
+            ],
+            "machineItems": [
+              "lightning_galvanized_steel",
+              "lightning_aluminium",
+              "lightning_stainless_steel",
+              "lightning_chromium",
+              "lightning_titanium",
+              "melter_stainless_steel"
+            ],
+            "machineModelsChecked": 6,
+            "surfaceItemModelsChecked": 16,
+            "surfaceSpringSpritesChecked": 7,
+            "surfaceBerryStageColorsChecked": 36,
+            "sandwich": {
+              "customInventoryModelsChecked": 3,
+              "ingredientLayerCounts": [
+                10,
+                4,
+                6
+              ],
+              "sourceLayerTexturesChecked": 22,
+              "sourceSauceColorsChecked": 2,
+              "cans": {
+                "inventoryModelsChecked": 57,
+                "renderedCanSamples": [
+                  "tiny_food_can_meat",
+                  "small_food_can_fish",
+                  "tall_food_can_vegetables",
+                  "wide_food_can_fruits",
+                  "large_food_can_bread",
+                  "huge_food_can_cookies",
+                  "canned_air",
+                  "canned_hot_air",
+                  "canned_space_air",
+                  "huge_food_can_rotten",
+                  "tiny_food_can_chum",
+                  "empty_food_can"
+                ]
+              }
+            },
+            "canvas": {
+              "originalCircuitTagGrades": 10,
+              "externalHighBatteryBoxRecipes": 5,
+              "originalMolecularDataFields": true,
+              "mercuryAmbientUnitMb": 1000,
+              "originalCanvasItemModels": 16,
+              "printedPageModels": 2,
+              "coloredBookScanHints": 28,
+              "directionalAndFluidFaces": 4,
+              "brightImage": true
+            },
+            "decorativePanels": {
+              "installedItemModels": 83,
+              "canonicalColoredModels": 48,
+              "canonicalWoodModels": 30,
+              "centeredTwoPixelMesh": true,
+              "sourceRgbAndTextures": true,
+              "legacyAliasesHiddenFromCreative": true,
+              "originalPerItemMaterialsAndAdvancedTooltip": 83,
+              "installedShredderEntries": 83,
+              "transportMaterialItemsAndShredderEntries": 441,
+              "originalTankGroupFormVariants": 10,
+              "resolvedTransportCraftingRows": 539,
+              "preferredTransportForms": 406,
+              "materialDataDisplay": {
+                "scans": 1003,
+                "prints": 1105,
+                "replications": 565
+              },
+              "usbFileDisplayTypes": 4,
+              "tankItemData": {
+                "cheapSourceVariants": 4,
+                "knownLogisticsComponents": 7,
+                "cleanItemData": 35,
+                "storedItemDataProtected": 35,
+                "completeWorldSaveRetained": true,
+                "observedEmptyLoaderWrappers": 0,
+                "scope": "installed methods at title screen; actual harvest tested separately in native server worlds",
+                "originalFunctionalTooltips": {
+                  "manualStations": 14,
+                  "boilersDefaultAndSavedEfficiency": 26,
+                  "scope": "installed actual item tooltip methods at title screen; no player hover or machine operation claim"
+                },
+                "sourceMechanicalTooltips": {
+                  "axles": 52,
+                  "customGearboxesDefaultAndSavedConfigurations": 13,
+                  "originalLargeBoilersDefaultAndSavedEfficiencies": 5,
+                  "scope": "installed item methods at title screen; no mechanical transport or boiler operation claim"
+                },
+                "sourceEnergyDeviceTooltips": {
+                  "batteryBoxes": 20,
+                  "solarPanels": 2,
+                  "electricTransformers": 9,
+                  "rotationalTransformers": 13,
+                  "savedDirectionItemTooltipsAndNativeToggleStatistics": 22,
+                  "scope": "installed item methods and native factory rating getters at title screen; no energy transfer or saved-world restart claim"
+                },
+                "sourceThermalConverters": {
+                  "heaters": 10,
+                  "coolers": 10,
+                  "rfDevices": 10,
+                  "actualBakedStates": 720,
+                  "sourceMaterialsAndSingleAdvancedSection": true,
+                  "scope": "installed title-screen native factories, methods, tooltip events and baked models; world output/contact checked separately"
+                },
+                "sourceBipolarMagnets": {
+                  "magnets": 10,
+                  "actualBakedStates": 240,
+                  "exactMaterialQuantitiesAndSourceTooltips": true,
+                  "scope": "installed native factories, tooltip methods and baked models at title screen; no world restart claim"
+                },
+                "sourceSteamTurbines": {
+                  "steamTurbines": 15,
+                  "actualBakedStates": 2160,
+                  "exactMaterialQuantitiesAndSourceTooltips": true,
+                  "scope": "installed title-screen factories, tooltip methods, sided capability visibility and baked models; no world or restart claim"
+                },
+                "sourceRotaryConverters": {
+                  "motors": 7,
+                  "dynamos": 7,
+                  "actualBakedStates": 1260,
+                  "exactMaterialsAndSingleAdvancedSection": true,
+                  "scope": "installed title-screen native factories, methods, tooltip events and baked models; actual world chain checked separately"
+                },
+                "machineSourceMaterials": {
+                  "sourceBlockIdentities": 589,
+                  "nativeBasicMachinesAndControllers": 251,
+                  "singleAdvancedMaterialSection": true,
+                  "exactSourceComponentAmounts": true,
+                  "scope": "installed item methods and tooltip event at title screen; no recovery gameplay claim"
+                },
+                "sourceFluidPipeTooltips": 280,
+                "storedTankTooltips": 35
+              }
+            }
+          },
+          "platform": "neoforge",
+          "screen": "net.minecraft.client.gui.screens.TitleScreen",
+          "screenshot": "C:\\Dev\\GregTech6\\build\\production-smoke\\neoforge-d5cc3342-b663-49b8-bfcd-df7d87c1c1b4\\screenshots\\production-neoforge-6a37f03c-c46b-4290-ab3a-fb23ea35bc88.png",
+          "width": 1280,
+          "height": 720,
+          "renderedFrames": 182,
+          "elapsedMs": 38680
+        },
+        "screenshot_sha256": "3ff9a01c1b2f592ba4c211e23c400841bf50979622c631d4f493cc3a6017ef19",
+        "visually_reviewed": true,
+        "screenshot_scope": "Existing colored/wood panel atlas at title screen was viewed. New converter tooltips and3120 added state checks use actual native methods/models, not player hovering or a depicted world operation."
+      }
+    }
+  },
+  "source_and_asset_references_rechecked": 262,
+  "post_launch_sha_and_crc_rechecked": true,
+  "warnings": "Existing model/leaf/animation/shader and Java/loader WARN remain in actual logs. Probe loaderWarnings=0 is not an all-WARN-free claim.",
+  "limitations": [
+    "Large source quantities requiring missing blockDust remain omitted from shredder recovery; exact material quantities are intact.",
+    "Installed ordinary JAR methods/factories/events and3120 new baked states are verified. Manual ticker energy/crafting/recovery behavior uses development native servers.",
+    "Full naturally scheduled survival, independent saved-world restart, historical save compatibility, physical player-hover and new dedicated-server distribution acceptance are unverified.",
+    "Original flashing reminder, generic harvest/fire/ownership/cover tooltips, configuration/rated-save overrides and remaining block/material families stay under active audit."
+  ],
+  "goal": "active; batch acceptance does not finish full port",
+  "publication": "local commits only; no push or PR operation"
+}

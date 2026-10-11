@@ -66,8 +66,7 @@ public record Loader_Fluids(IEventBus bus) implements IGTLoader {
             String field = entry.getKey();
             RegisteredFluids.FluidEntry flEntry = entry.getValue();
 
-            if (flEntry.textureMode() == RegisteredFluids.FluidTextureMode.VANILLA_WATER
-                    || flEntry.textureMode() == RegisteredFluids.FluidTextureMode.VANILLA_LAVA) {
+            if (flEntry.usesVanillaFluid()) {
                 continue;
             }
 

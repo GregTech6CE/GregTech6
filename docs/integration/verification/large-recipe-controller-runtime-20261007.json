@@ -1,0 +1,128 @@
+{
+  "date": "2026-10-07",
+  "base_commit": "176ea0fe",
+  "status": "finite affected scenarios passed; whole goal remains active",
+  "compile": {
+    "log": {
+      "path": "C:\\Dev\\GregTech6\\work\\large-recipe-compile-20261007.log",
+      "sha256": "88de347d235d39522a395b476cb4c99b3c796ac70193390bdab88abe21e7dddd",
+      "bytes": 65826
+    },
+    "exit_code": 0,
+    "duration_seconds": 40,
+    "source_assertions": 3995,
+    "scope": "dual main, finite fixtures and initial installed probes compiled; later probe resource checks require ordinary packaging compile"
+  },
+  "attempts": [
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\large-recipe-world-20261007.log",
+        "sha256": "d52418eef2c4e08d544e1c860e1089947b7a0b3069b07df264ecf07571a8a126",
+        "bytes": 214073
+      },
+      "exit_code": 1,
+      "seconds": 130,
+      "Forge": {
+        "required": 2,
+        "passed": 0,
+        "dimensions_saved": true
+      },
+      "NeoForge": "not started",
+      "cause": "Fixture assumed TU theoretical main input false and assumed every recipe map has output fluid tank0; source/native behavior was correct; fixed fixture only.",
+      "executed_Forge_fixture": {
+        "path": "C:\\Dev\\GregTech6\\work\\large-recipe-forge-first-fixture-20261007.java",
+        "sha256": "8b59fe3891024555993adbf32ed9e7feadf74016ecf659ae1a3d35db3ebe883a",
+        "bytes": 7864
+      },
+      "prepared_unexecuted_Neo_fixture": {
+        "path": "C:\\Dev\\GregTech6\\work\\large-recipe-neo-first-prepared-fixture-20261007.java",
+        "sha256": "323f9fc589bf4f4fd6bfe4ba0bd06d25330251e44a83d45fdbb00ad05f863497",
+        "bytes": 7949
+      }
+    },
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\large-recipe-world-fixed-20261007.log",
+        "sha256": "59a95b42bc38bca3191bb77cb4fd1285c56ef5b9b75b389d9ea1d3929c158164",
+        "bytes": 744413
+      },
+      "exit_code": 0,
+      "seconds": 204,
+      "source_assertions": 3997,
+      "Forge": {
+        "required": 2,
+        "passed": 2,
+        "dimensions_saved": true,
+        "loader": "47.4.20",
+        "Java": "17.0.10",
+        "heap": "3GiB",
+        "world": "build/large-recipe-gametest-20261007"
+      },
+      "NeoForge": {
+        "required": 2,
+        "passed": 2,
+        "dimensions_saved": true,
+        "loader": "21.1.243",
+        "Java": "21.0.7",
+        "heap": "3GiB",
+        "world": "neoforge/build/large-recipe-gametest-20261007"
+      }
+    }
+  ],
+  "current_native_and_fixture_byte_references": [
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\blockentity\\machine\\BasicMachineBlockEntity.class",
+      "sha256": "a8ab581b1efb0e2dc7bc45ae0516568980f8a5f9644b7a85684db8db56a11946",
+      "bytes": 65295
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeRecipeMachineBlockEntity.class",
+      "sha256": "d1b7fefcf034fbd4a582a2478ea4a5241bd797fe0f3033464dbfa8dc201231cc",
+      "bytes": 21623
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\LargeRecipeControllerSourceTests.java",
+      "sha256": "4c2597574ced824f043c7e171b444f776aa457a687c0ee8354bb197d0cb36218",
+      "bytes": 7931
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\resources\\data\\gregtech_large_recipe\\structures\\test_empty.nbt",
+      "sha256": "147ef3e2c39e8d261ff2287395af00d734ccd13b196abdea0c0334e11fdde075",
+      "bytes": 110
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\blockentity\\machine\\BasicMachineBlockEntity.class",
+      "sha256": "c3a82647cac75062b8283d12124a456622423e19f221e17085dcceb2af2c525d",
+      "bytes": 63160
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeRecipeMachineBlockEntity.class",
+      "sha256": "1c6bed058bd142963fb8fd91671ead9d15b148e174835d2ed9f5a4b939efdc51",
+      "bytes": 21851
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\LargeRecipeControllerSourceTests.java",
+      "sha256": "581779285daf2508f4d7de881c1035acfaa216fbfa0663d33e3ecd98203d6727",
+      "bytes": 8016
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\resources\\data\\gregtech_large_recipe\\structure\\test_empty.nbt",
+      "sha256": "ea4b3ed88dbb879fc3b86b9bceca2961af8248069c6420a4136eba192ec7b9b7",
+      "bytes": 113
+    }
+  ],
+  "actual_world_scope": [
+    "Twelve registered layouts across four horizontal facings (48 builds): formed parts and per-role native energy interface.",
+    "Actual original-positioned motor/dynamo providers stop/resume and actual removal releases them; not simply arbitrary neighboring manual switches.",
+    "Actual seven-stick seeded output in every built controller goes to native chest at source target after controlled512 energy packet or autonomous TU tick.",
+    "Each family with real output-fluid slots across four facings: native save/load method restores original unlimited capacity from old8000, preserves500L water and emits into real drum even stopped, unformed and unpowered.",
+    "Zero-output-fluid source recipe maps deliberately excluded from fluid-only scenario rather than inventing an output tank."
+  ],
+  "limits": [
+    "Direct core classpath/resources development world, not ordinary distribution acceptance.",
+    "Seeded items/fluids and controlled injection/explicit ticks are not natural processing/survival or a complete recipe chain.",
+    "Native save/load methods plus ordinary world shutdown do not prove selected-state independent saved-world restart or historical-save compatibility.",
+    "Source17112 dense wall and17104 MV robot-arm corrected before accepted world; manufacturing not performed in these scenarios.",
+    "Installed12 item/native generated-recipe resources prepared; their actual execution is separately recorded in pooled ordinary delivery."
+  ]
+}

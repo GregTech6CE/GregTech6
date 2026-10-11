@@ -1,0 +1,657 @@
+{
+  "date": "2026-10-07",
+  "base_commit": "ac55a6dbbf8ffead4268b3afae490ef0142dab13",
+  "scope": "Source17111 actual CU recipe tower and specialized/inherited tooltips; shared original17101/17111 rear outlets; remove legacy air recipe shadowing",
+  "authors": [
+    "GregTech-6 Team",
+    "Gregorius Techneticies"
+  ],
+  "license": "LGPL-3.0-or-later; original and comparison notices preserved; Chinese verbatim from user patch",
+  "original_files": [
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577",
+      "bytes": 694
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "bytes": 153449
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+      "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8",
+      "bytes": 51085
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\TD.java",
+      "sha256": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea",
+      "bytes": 53981
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\FL.java",
+      "sha256": "87ec6759b7c3b1ad7d7c6d574e24ec7d7371fa285e93ab67cfa26cd83f2b18b3",
+      "bytes": 106275
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\RM.java",
+      "sha256": "c7cb07faef0235ace4bb26656fddaabfa10da6aa4a2689a7f4cdcaef10d366e6",
+      "bytes": 93922
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\MT.java",
+      "sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2",
+      "bytes": 693183
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\OP.java",
+      "sha256": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e",
+      "bytes": 162128
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\fluid\\FluidTankGT.java",
+      "sha256": "9e9c1500fb947048cc8ddcd4a19f44561d6d1278e2208381936b1ad483b25d7d",
+      "bytes": 14914
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\base\\TileEntityBase09FacingSingle.java",
+      "sha256": "b172aadf76d09c37ee4c7793cb784dcc97a19d999ad1737bafc60cc064bece7f",
+      "bytes": 5485
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\machines\\MultiTileEntityBasicMachine.java",
+      "sha256": "1798706545c33c801735ac5fb56b0ae37a8b6e3b7819f40f41183a2057b0c860",
+      "bytes": 53507
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\machines\\ITileEntityAdjacentOnOff.java",
+      "sha256": "cad19d3c3d6a418fdda7b8a844c9781f76a1d686ffa455a32671cfe694902e59",
+      "bytes": 959
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\multiblocks\\TileEntityBase10MultiBlockBase.java",
+      "sha256": "42ec92430ff6af7fb8d192aebfa424cc1af519d40ba2ff53a8e8c6afe8f9e738",
+      "bytes": 11378
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\multiblocks\\TileEntityBase10MultiBlockMachine.java",
+      "sha256": "daaacb82489056ddf8be9c3e594541fe0ec44ef2902be190556cdea361a05e06",
+      "bytes": 8918
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\multiblocks\\MultiTileEntityMultiBlockPart.java",
+      "sha256": "b00725df4301983e6fd51aea6519ab3304e85315ec01f338cc27b6a448a6bfda",
+      "bytes": 31052
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\util\\CR.java",
+      "sha256": "952f94e0dfff66d27d2ac2b97ed47b6aa0c8250aa19babd5cc528c89616c0760",
+      "bytes": 39113
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\util\\ST.java",
+      "sha256": "5ff16d9051e2744a66c711bd5f2581785ba8af7b2272fb1023a6d2f4ddb783a8",
+      "bytes": 100719
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\util\\WD.java",
+      "sha256": "c8335988b7bd9dbf44df6790d867ac6cfe2e6414793abb0cdd14c32cd342f095",
+      "bytes": 72414
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "bytes": 791265
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\c\\Loader_Recipes_Chem.java",
+      "sha256": "92b3aff4549ad511b1e6fe5a24219f230ac581569d8666adc80266d2e4fdcf5c",
+      "bytes": 75891
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityDistillationTower.java",
+      "sha256": "ec6dbfc721eaf72d8986556222059f5bfe06d0c9bde8e2776f8dd35c6261a3ce",
+      "bytes": 13667
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityCryoDistillationTower.java",
+      "sha256": "a172629cf5660aa99869d9d3e1ed48e5499fbaf2b121c7c50d2be8721aacb4f5",
+      "bytes": 13682
+    }
+  ],
+  "comparison_files": [
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577",
+      "bytes": 694
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\data\\CS.java",
+      "sha256": "e6e330961c416e104ea5a58dd8282d286d1e27292a9f6d9955c9569c39af87c9",
+      "bytes": 172344
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\data\\LH.java",
+      "sha256": "2df45cee1047b522593f4f42c70a3acb2c5d8a425399b9a3c83ed022b7115b0f",
+      "bytes": 51804
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\data\\TD.java",
+      "sha256": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea",
+      "bytes": 53981
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\data\\FL.java",
+      "sha256": "c0236a11ef88293c102fd853cd8e9a874e4a4858a06b5c6ad5c0e0de20228b64",
+      "bytes": 121916
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\data\\RM.java",
+      "sha256": "1a0f393018ce444d643dd2e797ac9c25260671a788515b2106df61ea770c605d",
+      "bytes": 93628
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\fluid\\FluidTankGT.java",
+      "sha256": "14e1e8940e0ecda9bf1bb78ff3be552880411ff0b9d36c44999151523f1ac7f9",
+      "bytes": 20977
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\machines\\MultiTileEntityBasicMachine.java",
+      "sha256": "bebb775405c34e9c1d5be0a6db7a5debc097c45eb2241fc73d75037317fd67b4",
+      "bytes": 55096
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\machines\\ITileEntityAdjacentOnOff.java",
+      "sha256": "cad19d3c3d6a418fdda7b8a844c9781f76a1d686ffa455a32671cfe694902e59",
+      "bytes": 959
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\multiblocks\\TileEntityBase10MultiBlockMachine.java",
+      "sha256": "d9c40e4839faa551e51a15ffe20fd76d5aabc4602ac03c27c6b7e16294884ea3",
+      "bytes": 9090
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "4d87cacde8defa33df30359d345046daa8e901ab0419dca2766d2140d8af1562",
+      "bytes": 791308
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\loaders\\c\\Loader_Recipes_Chem.java",
+      "sha256": "7c0fab70c9e8234aa341341e86ddf96eed88ef39334876cb58bca303323c69e9",
+      "bytes": 76087
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityDistillationTower.java",
+      "sha256": "2e2f0e666113c58b5b6b10e487a6d0c7f615e7c7089d6ab0c0c6238bdad88848",
+      "bytes": 13986
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityCryoDistillationTower.java",
+      "sha256": "de6296b9a8bd75c6c138d69af811bb9f0a2b4d12ded2956ea87080baf23cba46",
+      "bytes": 14001
+    }
+  ],
+  "comparison_assessment": "_w keeps original solid8-layer/base geometry, CU and species outlet heights, adapting Minecraft/NeoForge boundary APIs. This batch uses canonical1.7.10 rules through existing native adapters, rather than importing its compatibility architecture.",
+  "user_chinese_patch": {
+    "path": "C:\\Dev\\GregTech_zh_cn.lang",
+    "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0",
+    "bytes": 7375784
+  },
+  "language": {
+    "audit": {
+      "keys": [
+        "gt.lang.cheap.overclocking",
+        "gt.lang.energy.input",
+        "gt.lang.face.back",
+        "gt.lang.face.bottom",
+        "gt.lang.face.front",
+        "gt.lang.face.left",
+        "gt.lang.face.right",
+        "gt.lang.face.top",
+        "gt.lang.fluid.output",
+        "gt.lang.item.input",
+        "gt.lang.item.output",
+        "gt.lang.recipes",
+        "gt.lang.requirement.ignite.fire",
+        "gt.lang.structure",
+        "gt.lang.use.builder.wand.to.ease.building",
+        "gt.lang.use.magnifyingglass.to.detail",
+        "gt.lang.use.monkey.wrench.to.toggle.auto.inputs",
+        "gt.lang.use.monkey.wrench.to.toggle.auto.outputs",
+        "gt.lang.use.screwdriver.to.toggle",
+        "gt.lang.use.soft.hammer.to.reset",
+        "gt.recipe.cokeoven",
+        "gt.recipe.cryodistillationtower",
+        "gt.recipe.distillationtower",
+        "gt.td.short.energy.cryo",
+        "gt.td.short.energy.electricity",
+        "gt.td.short.energy.heat",
+        "gt.td.short.energy.kinetic_rotation",
+        "gt.tooltip.multiblock.bedrockdrill.1",
+        "gt.tooltip.multiblock.bedrockdrill.2",
+        "gt.tooltip.multiblock.bedrockdrill.3",
+        "gt.tooltip.multiblock.bedrockdrill.4",
+        "gt.tooltip.multiblock.cokeoven.1",
+        "gt.tooltip.multiblock.cokeoven.2",
+        "gt.tooltip.multiblock.cryodistillationtower.1",
+        "gt.tooltip.multiblock.cryodistillationtower.2",
+        "gt.tooltip.multiblock.cryodistillationtower.3",
+        "gt.tooltip.multiblock.cryodistillationtower.4",
+        "gt.tooltip.multiblock.cryodistillationtower.5",
+        "gt.tooltip.multiblock.cryodistillationtower.6",
+        "gt.tooltip.multiblock.distillationtower.1",
+        "gt.tooltip.multiblock.distillationtower.2",
+        "gt.tooltip.multiblock.distillationtower.3",
+        "gt.tooltip.multiblock.distillationtower.4",
+        "gt.tooltip.multiblock.distillationtower.5",
+        "gt.tooltip.multiblock.distillationtower.6",
+        "gt.tooltip.multiblock.logisticscore.1",
+        "gt.tooltip.multiblock.logisticscore.10",
+        "gt.tooltip.multiblock.logisticscore.2",
+        "gt.tooltip.multiblock.logisticscore.3",
+        "gt.tooltip.multiblock.logisticscore.4",
+        "gt.tooltip.multiblock.logisticscore.5",
+        "gt.tooltip.multiblock.logisticscore.6",
+        "gt.tooltip.multiblock.logisticscore.7",
+        "gt.tooltip.multiblock.logisticscore.8",
+        "gt.tooltip.multiblock.logisticscore.9"
+      ],
+      "aliases": {},
+      "changes": {
+        "en_us": {
+          "gt.recipe.cryodistillationtower": {
+            "before": null,
+            "after": "Cryo Distillation Tower"
+          },
+          "gt.tooltip.multiblock.cryodistillationtower.1": {
+            "before": null,
+            "after": "3x3 Base of Heat Transmitters. They can also transfer Cold. ;)"
+          },
+          "gt.tooltip.multiblock.cryodistillationtower.2": {
+            "before": null,
+            "after": "3x3x8 of Distillation Tower Parts"
+          },
+          "gt.tooltip.multiblock.cryodistillationtower.3": {
+            "before": null,
+            "after": "Main centered on Side-Bottom of Tower facing outwards"
+          },
+          "gt.tooltip.multiblock.cryodistillationtower.4": {
+            "before": null,
+            "after": "Outputs automatically to the Holes on the Backside"
+          },
+          "gt.tooltip.multiblock.cryodistillationtower.5": {
+            "before": null,
+            "after": "Bottom Hole is for outputting all Items"
+          },
+          "gt.tooltip.multiblock.cryodistillationtower.6": {
+            "before": null,
+            "after": "Input only possible at Bottom Layer of Tower"
+          }
+        },
+        "zh_cn": {}
+      },
+      "missing_chinese": [],
+      "source_files": [
+        {
+          "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+          "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8"
+        },
+        {
+          "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+          "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5"
+        },
+        {
+          "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\RM.java",
+          "sha256": "c7cb07faef0235ace4bb26656fddaabfa10da6aa4a2689a7f4cdcaef10d366e6"
+        },
+        {
+          "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\TD.java",
+          "sha256": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea"
+        },
+        {
+          "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\OP.java",
+          "sha256": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e"
+        },
+        {
+          "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\..\\GT_API_Proxy_Client.java",
+          "sha256": "4ea2be4bb978e989127552dfb057e6f15415b84fe997382828123ba62c1576c8"
+        },
+        {
+          "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\..\\code\\TagData.java",
+          "sha256": "afa72881ee6c421c094ce27e3cef2701374257cb1dd2f099293cceb3e91b4a64"
+        },
+        {
+          "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityCokeOven.java",
+          "sha256": "26ba343b5b4d6a2b7e2c7dd2c6dfbc1b48b5b03345adcb3420e798f091d16066"
+        },
+        {
+          "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityDistillationTower.java",
+          "sha256": "ec6dbfc721eaf72d8986556222059f5bfe06d0c9bde8e2776f8dd35c6261a3ce"
+        },
+        {
+          "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityCryoDistillationTower.java",
+          "sha256": "a172629cf5660aa99869d9d3e1ed48e5499fbaf2b121c7c50d2be8721aacb4f5"
+        },
+        {
+          "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLogisticsCore.java",
+          "sha256": "b23b182503bedd96a13bc040035037792810b01894e8350301622f464c777fd3"
+        },
+        {
+          "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityBedrockDrill.java",
+          "sha256": "fd111e1e53ff208b425ad166419b1a381c8ef5b0e2d26d586bd1da8ac07abd08"
+        },
+        {
+          "path": "C:\\Dev\\GregTech_zh_cn.lang",
+          "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0"
+        }
+      ],
+      "license": "Original LH/CS/RM/TD/TagData: LGPL-3.0-or-later; Chinese strings copied verbatim from the user-provided patch."
+    },
+    "audit_file": {
+      "path": "C:\\Dev\\GregTech6\\work\\cryo-tower-tooltip-lang-20261007.json",
+      "sha256": "0ad4566fdd6d5952e3a948252b1b8faacd87f1799c428fea08c4476b7e83fd5a",
+      "bytes": 6499
+    },
+    "verified_chinese_keys": 55,
+    "chinese_changes": 0,
+    "english_changes": 7,
+    "verbatim_against_current_user_patch": true
+  },
+  "current_port_files": [
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\machine\\MachineConstructionMaterials.java",
+      "sha256": "2aace1aa37b76a34edf5793bd6bb29a5745a7a5bc496fa315cb762a8c2f6793e",
+      "bytes": 1856
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\machine\\OriginalMachineMaterialData.java",
+      "sha256": "7bcdc80a8c301f7aca0e5eca87e2910a8157f228f3a51c2fbaab133d7facc663",
+      "bytes": 204300
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\OriginalControllerTooltipData.java",
+      "sha256": "4e26416e94ba12042a75c9078d777e84324e41389a2defd105589e5c97271204",
+      "bytes": 3322
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\OriginalDistillationOutputRules.java",
+      "sha256": "09f3e4b709f03a27a706a5f4ec7c23a42dc8cf0be3c192a416981eafad985cbc",
+      "bytes": 1255
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\OriginalMultiblockMachineParameters.java",
+      "sha256": "c9b0afa81b77e9ad420999d6f46b094321b3740274de07a7a47e1dda5bc2e8f0",
+      "bytes": 2612
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\SharedDistillationTowerStructure.java",
+      "sha256": "669104b6d651fc3ba6b4b90628d80427b9f9e4102d82cd0115e1041531cda0e3",
+      "bytes": 768
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\data\\SourceBlockProperties.java",
+      "sha256": "2d7df9a28b7bfd4311afbd41340bdfed3ee53d8d7d39c5b0e733e60c3890ca81",
+      "bytes": 104357
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\c\\GTChemGen.java",
+      "sha256": "3daaffa45ac9d0e4fe98996c4b34bec5e49044072bbba20bee7dcf829cee0165",
+      "bytes": 44381
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\lang\\en_us.json",
+      "sha256": "89478ef59441019761cde78a1492907af15d584653388e14026fd4b12ee6fb58",
+      "bytes": 747223
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\lang\\zh_cn.json",
+      "sha256": "a09d19d30fab37adfb5f93b54e35d3b8119da156d0a083e6c5505a4987f1a1e5",
+      "bytes": 8454561
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\test\\java\\com\\gregtech\\gregtech\\core\\MachineSpecBehaviorContracts.java",
+      "sha256": "b6eb28eb2a9237e33778309de09b822572bb2b9d97bda8a881f191c0dbbd6b10",
+      "bytes": 85065
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\CryoDistillationSourceTests.java",
+      "sha256": "974c906f6dd49b4c3a4b6700d40bdc4cd96912e541e0a504a9f0d4a957a4f916",
+      "bytes": 8664
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\resources\\data\\gregtech_cryo_tower\\structure\\test_empty.nbt",
+      "sha256": "ea4b3ed88dbb879fc3b86b9bceca2961af8248069c6420a4136eba192ec7b9b7",
+      "bytes": 113
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\BasicMachineBlock.java",
+      "sha256": "e75dbe26b2bfe06b2d2d38ce8e79bea802a78756a8fecdc392809b8a4cd4a0db",
+      "bytes": 15741
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\CryoDistillationControllerBlock.java",
+      "sha256": "251d0163dea8be260345884965265b9b4ebd142aa74644655530380144cd77ed",
+      "bytes": 2285
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\BasicMachineBlockEntity.java",
+      "sha256": "5363da0f4d4ff505bc4ff5ccab2e95af9bf8f3d7440a07b04311930186ae6a0e",
+      "bytes": 87034
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\CryoDistillationControllerBlockEntity.java",
+      "sha256": "d47216ecce051f75c16a07e0e6786f1b3b3063344f2d10ff2276aba378aa42db",
+      "bytes": 1622
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\DistillationTowerControllerBlockEntity.java",
+      "sha256": "71bf0ec6879cd8d83d2735b24adbde042c9b2637e4ad9d1fa8781f2074061ee5",
+      "bytes": 4383
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeRecipeMachineBlockEntity.java",
+      "sha256": "3232d04b2f04a8dfc1b305711006ec990e06fc552a87f3dbec83ee7f2bc18bd0",
+      "bytes": 9060
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\client\\OriginalControllerTooltips.java",
+      "sha256": "5da95b4f0a47c8a2de5248eab864996f807b56945ee42708012110d46bf1de58",
+      "bytes": 6340
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\ControllerStructureLayouts.java",
+      "sha256": "86fdb055407c6121b22ac8a599b184bd1e0f4916b5c28d7463b127e47c0c5f44",
+      "bytes": 7549
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\data\\MachineRecipeMaps.java",
+      "sha256": "2c34512a14ad592d8d688fe3281361de154c9cf2362f176ad0b81b88efe8268e",
+      "bytes": 25508
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\c\\GTGeneratedChem.java",
+      "sha256": "6e2f528f0b8790ae93b2ecb6a7231c15e9e40dff2c8ba553df485aca3971f2f3",
+      "bytes": 19953
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\c\\Loader_Recipes_Chem.java",
+      "sha256": "6add1cbf061adf12d2eae2a8a8211a9e1cc46347a44c94fa0a62efe77058954a",
+      "bytes": 11569
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\platform\\neoforge\\machine\\BasicMachineRegistries.java",
+      "sha256": "c2ed9d1bccc37e360c59ae03464f7206bf3d2336077c755b215de14d560bf953",
+      "bytes": 9124
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTBlockEntities.java",
+      "sha256": "4fc967d6fde8adebd361556564d03aa1fc0a9f57ab3fbc6e6edc9e939a68d965",
+      "bytes": 28693
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTFluids.java",
+      "sha256": "a0e068febf6b127304a18ba2b07d022581a36bbd17938aaad369331ccff45e10",
+      "bytes": 4756
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\ProcessControllerDeliveryChecks.java",
+      "sha256": "c8b569e15f5b231f1cfe6be075599d59ac6f64419ca64f7324490df0ebb751ee",
+      "bytes": 8270
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\CryoDistillationSourceTests.java",
+      "sha256": "30427339a0c378329a2d7585ac82a3ea71b9d73bed514fe37762ce700b03f5e3",
+      "bytes": 8641
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\resources\\data\\gregtech_cryo_tower\\structures\\test_empty.nbt",
+      "sha256": "147ef3e2c39e8d261ff2287395af00d734ccd13b196abdea0c0334e11fdde075",
+      "bytes": 110
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\BasicMachineBlock.java",
+      "sha256": "302f8506dbadc3424d0aead9838c657205687b6a3494527f9344ec5da809e712",
+      "bytes": 14191
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\CryoDistillationControllerBlock.java",
+      "sha256": "c5b04f27003e237494282776b819f3447ca849b35ccb2ab18e22a13949e5cda8",
+      "bytes": 2278
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\BasicMachineBlockEntity.java",
+      "sha256": "63949c34b50ba775c2913a5478cd244f66b65afa55079ef7343a0fac6f0ef254",
+      "bytes": 89511
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\CryoDistillationControllerBlockEntity.java",
+      "sha256": "c941399f31dc46d6a86d38cb9d0738a403a3bd2ff3d3cb0b1be748473e10f074",
+      "bytes": 1547
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\DistillationTowerControllerBlockEntity.java",
+      "sha256": "418f6e4deb7bddcbbf06943a30d592f4d1857f2e231bb989d4b0103bb2ae9415",
+      "bytes": 4545
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeRecipeMachineBlockEntity.java",
+      "sha256": "cfb0b35b2942ad98f188f67dc482e9b0319d729b6488f5965e0d9b8493f65bf8",
+      "bytes": 9048
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\client\\OriginalControllerTooltips.java",
+      "sha256": "5da95b4f0a47c8a2de5248eab864996f807b56945ee42708012110d46bf1de58",
+      "bytes": 6340
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\ControllerStructureLayouts.java",
+      "sha256": "bfd15b67e1fe5174d4ef882f461301b9bf8146930f3ce466593901768637139c",
+      "bytes": 7517
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\data\\MachineRecipeMaps.java",
+      "sha256": "0c308bfadc4f6d912652e8b4297bb3849a3abfc40efe6d21b3f8fa75323207f7",
+      "bytes": 32733
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\c\\GTGeneratedChem.java",
+      "sha256": "df89e2dd1729cbbd4228294c98998b5c33cee3b15a770fd3b45bc5b1264cbea8",
+      "bytes": 19587
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\c\\Loader_Recipes_Chem.java",
+      "sha256": "54f74965a9e96762c31f209ab04b2f1f60a179cf0e4be9304591b711124ea0a5",
+      "bytes": 11297
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\mixin\\ComponentCoverCapabilitiesMixin.java",
+      "sha256": "9e33ab7fb664c57e2ff79154fcb92ad7956c166e334d65232b3dd4a49494d7a4",
+      "bytes": 5818
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTBlockEntities.java",
+      "sha256": "34ab1405c61c72283fa9628dd7108f3019cd33c8ab9afb52a2e8cee4ef602f77",
+      "bytes": 46766
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTFluids.java",
+      "sha256": "1f449088e6d686436e80074c6eb56e3ebc4bc30fb88ba1adb9e18aa1baba49c0",
+      "bytes": 13320
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\ProcessControllerDeliveryChecks.java",
+      "sha256": "563188e52191cf7b5ad6ba9166be8d8a2d116d749126ffbaf315bab5e45e9f28",
+      "bytes": 8218
+    }
+  ],
+  "parameters": {
+    "source_id": 17111,
+    "registered_block": "cryo_distillation_main",
+    "registered_block_entity": "cryo_distillation",
+    "energy": "CU",
+    "nominal": 512,
+    "minimum": 1,
+    "maximum": 1024,
+    "parallel": 1,
+    "cheap_overclocking": true,
+    "input_and_output_masks": 63,
+    "automatic_inputs": -1,
+    "automatic_outputs": "back",
+    "hardness": 6,
+    "blast_resistance": 6,
+    "structure_rows": 6,
+    "parts_excluding_controller": {
+      "base18101_energy_in": 9,
+      "bottom18102_item_fluid": 8,
+      "upper18102_fluid_out": 63
+    },
+    "input_tanks": 1,
+    "output_tanks": 9,
+    "output_capacity": "Long.MAX_VALUE restored after source-native setSpec and load",
+    "controller_positive_REV_in_U": {
+      "Cu": "72",
+      "StainlessSteel": "31/9"
+    }
+  },
+  "material_boundary": {
+    "existing_exact_material_records": 1465,
+    "existing_source_harvest_identities": 1507,
+    "existing_composition_tables_changed": false,
+    "controller_materials_are_not_whole_tower_parts": true
+  },
+  "cryo_fluid_heights": {
+    "helium": 7,
+    "neon": 6,
+    "nitrogen": 5,
+    "oxygen": 4,
+    "argon": 3,
+    "carbondioxide": 2,
+    "sulfurdioxide": 2,
+    "all_other_species": 1
+  },
+  "normal_fluid_heights": {
+    "propane/methane": 7,
+    "butane": 6,
+    "petrol/gasoline/bioethanol": 5,
+    "kerosene/kerosine/glycerol": 4,
+    "diesel/biodiesel": 3,
+    "fuel/fueloil/biofuel": 2,
+    "all_other_species": 1
+  },
+  "decisions": [
+    "Keep existing registry IDs. Replace the HU three-way splitter with native BasicMachine/LargeRecipeMachine, CU spec, actual CryoDistillationTower recipe map, rotation/tools/menu and inherited covers.",
+    "Share original80-cell source geometry with normal tower and both JEI/EMI previews. Old cryo_distillation_wall remains registered but is not relabeled as original18102.",
+    "Delete only same-input legacy three-product air rows from each native chemistry loader, allowing existing generated canonical six-product rows to resolve.",
+    "Fluid output follows original onTick2 order before work, including unpowered, stopped or currently unformed controllers with saved outputs. Send each species three blocks behind main, at its source height.",
+    "Only subtract actual receiver acceptance. Item output uses the bottom rear inventory, not adjacent main faces or items dropped into air.",
+    "Old port-native gt.input and three gt.outputN compounds migrate verbatim; false HU buffer and false progress are not converted into CU, completed recipes or invented products."
+  ],
+  "remaining_boundaries": [
+    "Old hollow five-layer cryo towers need rebuilding to the canonical solid eight-layer tower plus transmitter base.",
+    "Source nine adjacent toggleable energy providers below the base remain pending: native manual enable and adjacent state need distinct controls; generic setEnabled is not an exact substitute.",
+    "Source design1 backside-hole part overlays and complete cover/face transfer protocol remain separate gaps.",
+    "Original input-tank source capacity/parallel multiplier, mutable saved machine configuration and full source overcharge behavior are not claimed complete.",
+    "Natural CU production/full survival, player tooltip hover, ordinary installed distribution, independent saved-world restart, historical saves and ordinary dedicated server are not verified by this batch.",
+    "All remaining block-specific tooltip/material families continue under the active goal."
+  ]
+}

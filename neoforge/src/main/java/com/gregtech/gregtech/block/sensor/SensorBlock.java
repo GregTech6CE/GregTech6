@@ -43,11 +43,24 @@ public class SensorBlock extends DirectionalBlock implements EntityBlock, com.gr
         return Block.box(b[0], b[1], b[2], b[3], b[4], b[5]);
     }
     @Override public com.gregtech.gregtech.api.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
-        return com.gregtech.gregtech.api.tool.GTToolHelper.isMachineWrench(tool)
+        return com.gregtech.gregtech.api.tool.GTToolHelper.matchesTool(tool, com.gregtech.gregtech.api.tool.GTToolType.WRENCH)
                 ? com.gregtech.gregtech.api.tool.ToolInteractionSpec.facing(FACING, com.gregtech.gregtech.block.machine.MachineRotationType.ALL) : null;
     }
     public net.minecraft.world.InteractionResult interact(BlockState state, Level level, BlockPos pos,
             net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
+        var tool = player.getItemInHand(hand);
+        if (com.gregtech.gregtech.api.tool.GTToolHelper.isMonkeyWrench(tool)) {
+            var side = com.gregtech.gregtech.api.tool.ToolInteractions.selectedFace(hit);
+            if (!player.mayBuild() || !level.mayInteract(player, pos)
+                    || side == state.getValue(FACING)) return net.minecraft.world.InteractionResult.PASS;
+            if (tool.getItem() instanceof com.gregtech.gregtech.item.ElectricToolItem electric
+                    && !electric.canInteract(tool)) return net.minecraft.world.InteractionResult.PASS;
+            if (!level.isClientSide && level.getBlockEntity(pos) instanceof SensorBlockEntity sensor) {
+                sensor.setInputSide(side);
+                com.gregtech.gregtech.api.tool.GTToolHelper.damageForToolClickReturn(tool, 10000, player);
+            }
+            return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
+        }
         if (com.gregtech.gregtech.api.tool.ToolInteractions.use(state, level, pos, player, hand, hit))
             return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
         if (hit.getDirection() != state.getValue(FACING) || !player.mayBuild() || !level.mayInteract(player,pos)) return net.minecraft.world.InteractionResult.PASS;
@@ -66,6 +79,10 @@ public class SensorBlock extends DirectionalBlock implements EntityBlock, com.gr
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING);
+    }
+
+    @Override public void toolStateChanged(Level level, BlockPos pos, BlockState state) {
+        if (level.getBlockEntity(pos) instanceof SensorBlockEntity sensor) sensor.resetInputSide();
     }
 
     @Override
@@ -106,7 +123,6 @@ public class SensorBlock extends DirectionalBlock implements EntityBlock, com.gr
 
     @Override
     public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("gt.tooltip.sensor." + kind.name().toLowerCase()));
-        tooltip.add(Component.translatable("gt.tooltip.sensor.common"));
+        com.gregtech.gregtech.client.SensorTooltips.add(tooltip, kind.name());
     }
 }

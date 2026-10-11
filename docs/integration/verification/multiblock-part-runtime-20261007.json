@@ -1,0 +1,150 @@
+{
+  "date": "2026-10-07",
+  "status": "passed",
+  "base_commit": "c27ffbfc901ca6203942738de5e7ea3ab983c59b",
+  "source_receipt": {
+    "path": "C:\\Dev\\GregTech6\\docs\\integration\\verification\\multiblock-part-source-20261007.json",
+    "sha256": "a7f0f3fe713e8a55dcd8fd24c845d10acd38c684489ca0da12e400c894acb1c7",
+    "bytes": 51340
+  },
+  "attempts": [
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\sensor-parts-pooled-native-20261007.log",
+        "sha256": "68324e7a3ec73023d08ecc18e50f282500749ecbb935cbad437c3f489e9e2274",
+        "bytes": 267805
+      },
+      "seconds": 156,
+      "exit_code": 1,
+      "stage": "Forge missing previous sensor namespace template before scenarios; Neo world not started",
+      "source_assertions": 7693,
+      "main_and_probe_compilation": "both passed"
+    },
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\sensor-parts-pooled-native-r2-20261007.log",
+        "sha256": "34bfda936e391379d1effa884b46bacebc5e897ddf99a10f5eb131f884872fbf",
+        "bytes": 280476
+      },
+      "seconds": 233,
+      "exit_code": 0,
+      "stage": "Both native worlds and both probes compiled; each2 required passed",
+      "shared_contracts_repeated": false
+    }
+  ],
+  "settings": {
+    "offline": true,
+    "no_parallel": true,
+    "direct_core_classpath_and_resources": true,
+    "namespace": "gregtech_sensor_source",
+    "heap": "3GiB"
+  },
+  "platforms": {
+    "forge": {
+      "loader": "47.4.20",
+      "java": "17.0.10",
+      "required_passed": 2,
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\build\\sensor-parts-pooled-20261007-r2\\logs\\latest.log",
+        "sha256": "5251d62a25cfcfe43bebe2a5021aac99a400f3672c680d1caa977ba9452bb053",
+        "bytes": 44625
+      },
+      "world_saved": true
+    },
+    "neoforge": {
+      "loader": "21.1.243",
+      "java": "21.0.7",
+      "required_passed": 2,
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\build\\sensor-parts-pooled-20261007-r2\\logs\\latest.log",
+        "sha256": "660dd243269fc45a8e018284986ea797705049d12db7df3b384927b42383de0b",
+        "bytes": 43155
+      },
+      "world_saved": true
+    }
+  },
+  "compiled_classes": [
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\block\\machine\\MultiblockPortBlock.class",
+      "sha256": "9ae05580a6278fc2882212b39c23082751f151a8988372ff7d976f4e3a24d9ba",
+      "bytes": 12616
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\blockentity\\machine\\MultiblockPortBlockEntity.class",
+      "sha256": "b08d51b03b92a6950cfdded4a327d8133f04242cb586ca898bd00fe0c47d0145",
+      "bytes": 14595
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\blockentity\\sensor\\SensorBlockEntity.class",
+      "sha256": "b214f9bec59d92c052562e43a8f8563bad5feb0d1f4633a99d1e170b756f9344",
+      "bytes": 18653
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\productionSmoke\\com\\gregtech\\gregtech\\integration\\client\\MultiblockPartDeliveryChecks.class",
+      "sha256": "49a7ee9bf2fc5677ba57b5ce029d9b4ce20adf5db90625de1f8014ef92df9664",
+      "bytes": 9137
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\bootstrapGameTest\\com\\gregtech\\gregtech\\gametest\\SensorSourceTests.class",
+      "sha256": "8364bac248c1951e340f0e3e82d85685151b209bcfd8f17b8bb7e007913ea11c",
+      "bytes": 16906
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\block\\machine\\MultiblockPortBlock.class",
+      "sha256": "e8c3edc58242a403a161a77b87e667d73f4e53f53cc6c865d21860e87e420752",
+      "bytes": 14346
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\blockentity\\machine\\MultiblockPortBlockEntity.class",
+      "sha256": "e6aa6d35ca386757d8eff42ce800442b5a08fcf4803e15ca4ef2442294f66cf8",
+      "bytes": 12606
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\blockentity\\sensor\\SensorBlockEntity.class",
+      "sha256": "b76d74a7fe545bed28856d92744ebad75e19b5087021a3194f034d957523cc73",
+      "bytes": 18987
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\productionSmoke\\com\\gregtech\\gregtech\\integration\\client\\MultiblockPartDeliveryChecks.class",
+      "sha256": "92c7ca1ae6bbafae334f6ec841bd4c2407550189edf391821e694c7eb9a0958b",
+      "bytes": 9353
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\bootstrapGameTest\\com\\gregtech\\gregtech\\gametest\\SensorSourceTests.class",
+      "sha256": "5c90b88695aaea6c3b5fb897bea3f89a9ef1bc614f63b415c5feb47c2899549c",
+      "bytes": 17234
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\content\\multiblock\\OriginalMultiblockPartData.class",
+      "sha256": "4c51e158127870fc22b0e149362232f230045d392c853a31e18db9b226d0269e",
+      "bytes": 5102
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\content\\multiblock\\OriginalMultiblockPartData$Part.class",
+      "sha256": "64cf8e888058f8bc90ac957ca0233c2a75aa61894d12addf98f3153114b00290",
+      "bytes": 2260
+    }
+  ],
+  "observations": [
+    "21 real sensor factories and independent selected-input direction /native save-load methods/default missing-key behavior",
+    "Direct real seeded boiler 1234567 steam ->1234Gibbl/1KiloGibbl; BasicMachine counts input5000 and excludes output7000",
+    "45 actual part factories and BE type validity including Forge niobium titanium coil",
+    "Real complete large boiler binds heat-only part; both pressure scales and fluidometer read whole controller while port exposes zero fluid transport tanks",
+    "Broken shell plus controller validation clears reading, repair restores same content, removed controller clears reading"
+  ],
+  "limits": [
+    "Fixed injected contents and synchronous native measure, not natural steam generation or complete survival",
+    "Native save/load roundtrip plus world save, not an independent saved-world restart",
+    "Tool state hook checked; no real player tool-click/hover or fire-spread simulation",
+    "Ordinary dual jars / installed current probes pending pooled delivery record"
+  ],
+  "prepared_installed_checks": {
+    "parts": 45,
+    "part_tooltip_rows": 90,
+    "sensors": 21,
+    "sensor_tooltip_rows": 147,
+    "utility_items": 3,
+    "utility_structure_rows": 22
+  },
+  "goal": "active"
+}

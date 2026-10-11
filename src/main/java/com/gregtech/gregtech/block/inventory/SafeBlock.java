@@ -139,8 +139,6 @@ public class SafeBlock extends DirectionalBlock implements EntityBlock, SimpleWa
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("gt.tooltip.safe.1"));
-        tooltip.add(Component.translatable(keyLocked ? "gt.lang.key.controlled" : "gt.lang.owner.controlled"));
-        tooltip.add(Component.translatable("gt.tooltip.safe.2"));
+        com.gregtech.gregtech.client.StorageBlockTooltips.safe(stack, keyLocked, tooltip);
     }
 }

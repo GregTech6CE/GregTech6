@@ -1,0 +1,2117 @@
+{
+  "date": "2026-10-07",
+  "base_commit": "c8cb6bb4d0603cf5f5dd9238aee8d65925c83ca4",
+  "authors": [
+    "GregTech-6 Team",
+    "Gregorius Techneticies"
+  ],
+  "code_license": "LGPL-3.0-or-later",
+  "asset_license": "CC0-1.0 under comparison LICENSE.assets; six PNGs unchanged",
+  "scope": "All21 current original sensors: source tooltips/known REV/metadata, missing31023 registration/recipe/assets/scaling, independent measuring side; EU flow and typed compressed volume. No whole survival/restart or all-sensor measurement acceptance.",
+  "original": [
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577",
+      "bytes": 694
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\COPYING.LESSER",
+      "sha256": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118",
+      "bytes": 7652
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "bytes": 791265
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\machines\\MultiTileEntitySensor.java",
+      "sha256": "2bf9bc42503a926e97c0ea45109a7cc936e5493cc49a41313b7d526fea485477",
+      "bytes": 14843
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\machines\\MultiTileEntitySensorTE.java",
+      "sha256": "494f1305c7e2a0a20fb60d20dd1f5cbcfb8c96024cb344ac6fe48826c7aa5a94",
+      "bytes": 15676
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\base\\TileEntityBase10FacingDouble.java",
+      "sha256": "e2720a010f4d1e0e4c492686c6499b4fdc8fe27e8b3cb8ad08c9f13e7bdb2b73",
+      "bytes": 5578
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\base\\TileEntityBase07Paintable.java",
+      "sha256": "5d1319131c91d93690e5f6ece787210de15756283103a4ec6b94738bb07c5b28",
+      "bytes": 5561
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\data\\ITileEntityGibbl.java",
+      "sha256": "73eeddcbe3442a47d8c71f5ae955f9866f43f0aa63dc6b347f2b7d3a70901143",
+      "bytes": 1343
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\machines\\MultiTileEntityBasicMachine.java",
+      "sha256": "1798706545c33c801735ac5fb56b0ae37a8b6e3b7819f40f41183a2057b0c860",
+      "bytes": 53507
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\connectors\\MultiTileEntityPipeFluid.java",
+      "sha256": "3a6850055375e7975145b03abab44c5922746a6f4053dd8d3163de989f37b110",
+      "bytes": 30631
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityBoilerTank.java",
+      "sha256": "3669a4447e3ef2fc2074470f3b272aa8796f3a0d785135bdcd151b07544553c3",
+      "bytes": 13881
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeBoiler.java",
+      "sha256": "38d82c11fc57094c9ba8db5c88325b65d847cff40726e084dce87c8b7935ffb6",
+      "bytes": 23904
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\OP.java",
+      "sha256": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e",
+      "bytes": 162128
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\ANY.java",
+      "sha256": "6a26fa2293c4a315d2594c5ac80eba689389f9b1922a33547bdd20d2df724f71",
+      "bytes": 17964
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemTechnological.java",
+      "sha256": "7367922c4938318dd50b1320e7fc7a7453c33cffa46f75a437325314d2536ddc",
+      "bytes": 133807
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\load\\LoaderItemData.java",
+      "sha256": "0dc916611c9a743f477e473b75b3fa3462a47d22dd75ef086c33ea18aaa9f968",
+      "bytes": 264656
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityBucketometer.java",
+      "sha256": "64de1df253b4faf7db718c9dd59e0aed23ed9ebe5e78916a6726dcf38d3a2a19",
+      "bytes": 4401
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityChronometer.java",
+      "sha256": "b74c4b6f24dcd00b6b8eda0d30cc1711d5458fab32072e3ff075a3925f23b71c",
+      "bytes": 3031
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityElectrometer.java",
+      "sha256": "26056b15ed5f03a9a881eda905d4cce8688ab866a1d4fd2806b701eade62692d",
+      "bytes": 4963
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityFluidometer.java",
+      "sha256": "c0f490c610e74bc834eb2bda40fa3c8fa64a39d5e37fa7cf52fac873c16af235",
+      "bytes": 4365
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityGeigerCounter.java",
+      "sha256": "12199d6ca0c11d872472bc462dc60d391d92c9a07884a2f9b075af0e2cd406cb",
+      "bytes": 4359
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityGibblometer.java",
+      "sha256": "f2cfe639b77b1bed7af763d2349b2f0d93342394ba88a92855dcfcd1c36a71ab",
+      "bytes": 3337
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityItemometer.java",
+      "sha256": "74b527cf81330b9fd1e046ca816920247d1bcea30ef1dc1b8bdcea5c1c157347",
+      "bytes": 4541
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityKiloBucketometer.java",
+      "sha256": "14893480722ddb8b9de23c9e1cde30e6a71a8d55e72b4ad31e2a783676eec745",
+      "bytes": 4240
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityKiloGibblometer.java",
+      "sha256": "4b39a6267c6c83a32e2f56c3eb3b00d72248b97261ddf231881a51e13a004d61",
+      "bytes": 3393
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityLaserometer.java",
+      "sha256": "0ce0c9006d9173d213f5b92fe7dac44b0dcbb4a1f1e79f0851b5a1900bbd06ba",
+      "bytes": 3282
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityLuminometer.java",
+      "sha256": "d7bb0a8aff94008a82c6d8170cde548fb2717eb013407bf9c8b4807cc8f77559",
+      "bytes": 3132
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityPlayerCounter.java",
+      "sha256": "2732be6ca4d00d61fb091a1f0a39ce930879d8dd291f0831ffc1c50dfab1ab7f",
+      "bytes": 3171
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityProgressmeter.java",
+      "sha256": "abacf7a552e8ed6987a62011408cef029363c9f955c51e7da0e643572966c234",
+      "bytes": 3927
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityStackometer.java",
+      "sha256": "93d9e29ee45126f5510ed710a027f6f82fc60adf8ab501e8517649f670036899",
+      "bytes": 4424
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityTachometer.java",
+      "sha256": "bc93e9a5516c1d8aa8803dc962527efc1771de5135f21a9c1f4b83963ac26d07",
+      "bytes": 3696
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityThermometer.java",
+      "sha256": "4fd1c78b969ce28a0c745d58b1303affc56ce980f563f16a3cf5130f37154e26",
+      "bytes": 4258
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityTPSmeter.java",
+      "sha256": "fdb1b1e94aff56cf9a0f2b149d14d789831b80fc04e548f730d7a1e561814bfb",
+      "bytes": 3445
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityWeightometerHeavy.java",
+      "sha256": "e251c54a9b2304ab5d720b4c2eb5b27680ea425f41b2dce4ecff77324f61113c",
+      "bytes": 4158
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityWeightometerLight.java",
+      "sha256": "2b4426415dd6ea23982b2c1fb0da6a3b0e9de489a2a72d29a0c52eb1ec44e648",
+      "bytes": 4161
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityWeightometerMedium.java",
+      "sha256": "9dee7bac16a3b1cea17ca365f9c0f57cbba8ac522e0fc5e835fb3c3b875144d8",
+      "bytes": 4164
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityWeightometerSuperHeavy.java",
+      "sha256": "863c4f1e8338e8260fdea1355162816892c3290c7a1eeada2062869a17fe3ac2",
+      "bytes": 4222
+    }
+  ],
+  "comparison": [
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577",
+      "bytes": 694
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\COPYING.LESSER",
+      "sha256": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118",
+      "bytes": 7652
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\LICENSE.assets",
+      "sha256": "e2aaec4ccc681649063335b6c4991fd52570d15f45bd0af97c1cee3cb0375299",
+      "bytes": 500
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\COPYING.assets",
+      "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499",
+      "bytes": 7048
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\machines\\MultiTileEntitySensor.java",
+      "sha256": "eb0a8e21f4f0100b80c3dd84e582caaace0d60ed8c8b6842874749eeda268501",
+      "bytes": 15088
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityBucketometer.java",
+      "sha256": "c33ffc14321e6590ba218d3835a46c1ae00b433ad83a8f6d28b12ce152cd78db",
+      "bytes": 4562
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityChronometer.java",
+      "sha256": "3eae33243532c5581d04cab877bebc81622d076a39e441762d5ee9e13b603f53",
+      "bytes": 3232
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityElectrometer.java",
+      "sha256": "780867c75c6cd38506896cfa2be2410ac62d9e81569de4faa444674514c8a494",
+      "bytes": 5159
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityFluidometer.java",
+      "sha256": "cf619ffc0426f2c36ff402808e30de0e96f28e3dae97e9c42cc333b330b1e54c",
+      "bytes": 4523
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityGeigerCounter.java",
+      "sha256": "1c3612eba1e0863bdc71e7cf36a2c42d04e5ec9534bf812c4b9f60dfdc7472b9",
+      "bytes": 4553
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityGibblometer.java",
+      "sha256": "bb69272f599f79af59397d7abffceca9009beb9eb010e47ddfb9c780541313a2",
+      "bytes": 3531
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityItemometer.java",
+      "sha256": "75ec796f303d064c00f5cfa663f6f59e61fe12a4ca80adcbad8950ede1c11493",
+      "bytes": 4704
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityKiloBucketometer.java",
+      "sha256": "9bd6b572814914084f149d4f53966e4f516b0e03851b1611913d6840e717f48d",
+      "bytes": 4543
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityKiloGibblometer.java",
+      "sha256": "b51487bc924bf62a84cb2be7b447b4f5472aba16f64c0d4cde032f19cb1b6d57",
+      "bytes": 3587
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityLaserometer.java",
+      "sha256": "7f09f2e5685eca556e89f53d66f25ebe29d83309319df7140318390b8048dba5",
+      "bytes": 3476
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityLuminometer.java",
+      "sha256": "e2f865b4c4f10d3c2c3c9c09428c76f5744ce0abce86852e0fff154830354897",
+      "bytes": 3398
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityPlayerCounter.java",
+      "sha256": "3ae14fef2ed0d9431409e4d7d9d219f01fa3b792c3419ddc277c8c012ec02b29",
+      "bytes": 3353
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityProgressmeter.java",
+      "sha256": "c22de2d9b694beae617085fcd54c97d2547a001f6e169d4efcb5ef17f8dfe00e",
+      "bytes": 4163
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityStackometer.java",
+      "sha256": "e391b3dd3b4923b7e5edae835e3993b083ba82501c161934249639a0350526c5",
+      "bytes": 4603
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityTachometer.java",
+      "sha256": "1a04f25caff2ff46b0a74d094698fa4361ee53b071e4aa3b62fc3826ddf4308d",
+      "bytes": 3890
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityThermometer.java",
+      "sha256": "bdd0c77366e5cec1da012bc3177ec52ab890703942a99f49446a38553a7bee7c",
+      "bytes": 4452
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityTPSmeter.java",
+      "sha256": "d85b6d6ed29d7ede1c6fccacad444f0a07180db998f05c60be32258105da0b9f",
+      "bytes": 3639
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityWeightometerHeavy.java",
+      "sha256": "51ba24636461e00b6e0e4780111d3b1af5df314fc7998573fe4fed3bc50dd3e0",
+      "bytes": 4328
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityWeightometerLight.java",
+      "sha256": "16f63b4ad7b2b6264a0bed905b0fe3bdada8c880ffe5d95c0161dc2d6820526c",
+      "bytes": 4331
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityWeightometerMedium.java",
+      "sha256": "4619880c9edefab3a2044f6d66a75631e52ddb992fa5ff97ab04b10c2ce8b6b9",
+      "bytes": 4334
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityWeightometerSuperHeavy.java",
+      "sha256": "0cb18ce83e66b88c33ffa5c701d534a21c8a488e735920c8cb46a3912ffb7991",
+      "bytes": 4392
+    }
+  ],
+  "comparison_assets": [
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\redstone\\sensors\\kilogibblometer\\colored\\front.png",
+      "sha256": "947c71acd0246ce6c3173f72ed1c71559653b9e7f043e6e42e28a50d101f2ae4",
+      "bytes": 610
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\redstone\\sensors\\kilogibblometer\\colored\\back.png",
+      "sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e",
+      "bytes": 532
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\redstone\\sensors\\kilogibblometer\\colored\\side.png",
+      "sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e",
+      "bytes": 532
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\redstone\\sensors\\kilogibblometer\\overlay\\front.png",
+      "sha256": "78da3cd21c1255fe113801929e624dcf99b2756bbf695b33d56d86e769830c83",
+      "bytes": 7019
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\redstone\\sensors\\kilogibblometer\\overlay\\back.png",
+      "sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+      "bytes": 141
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\redstone\\sensors\\kilogibblometer\\overlay\\side.png",
+      "sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+      "bytes": 141
+    }
+  ],
+  "comparison_scope": "All21 specialized English descriptions identical; seven-line source parent tooltip/monkey and wrench behavior checked. Primary snapshot contains no sensor texture folder; _w supplies six corresponding CC0 resources.",
+  "current": [
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\api\\sensor\\CompressionSensorSource.java",
+      "sha256": "535b7262de8142cb619ce87007d91300d854cae32f5a560906ce11d1f9daa1a5",
+      "bytes": 395
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\api\\sensor\\SensorCatalog.java",
+      "sha256": "bdcfdbe8b6a4930c8876357ef8320fb93aa21a1b8a01293a6733c42194e38226",
+      "bytes": 2554
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\api\\sensor\\SensorMeasurements.java",
+      "sha256": "84a6ffeda1d3f2e8181933a10feafceedbe214353086c3219f9af6f6ad846ed7",
+      "bytes": 2669
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\api\\sensor\\SensorPanelRules.java",
+      "sha256": "29040fab238d7268d8e2fd525623b34f0d22a205c827ac8c4d4cb7bada433ab8",
+      "bytes": 2238
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\machine\\OriginalMachineMaterialData.java",
+      "sha256": "e38fbced7a63769aebe9d66dd22a031e399b638cff3a4e8adccdb198ecc72b94",
+      "bytes": 213071
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\data\\SourceBlockProperties.java",
+      "sha256": "89d378e8c17b45bcd27431af43d5278669257a65b5c00e68f9c3eef0c2c456d8",
+      "bytes": 107151
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\data\\generated\\GTSensorRecipesGen.java",
+      "sha256": "f63be48c26c782cea3331f45266ed0d4908b825db3244816bedbd42109f6e4c2",
+      "bytes": 10204
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\blockstates\\sensor_kilogibblometer.json",
+      "sha256": "1ee0380c672ffe7a0fb2eaf31bb1e8d547af3729222fa7f5a9a86b41e087c26d",
+      "bytes": 708
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\lang\\en_us.json",
+      "sha256": "9c0912e9a50afb100cccfd0fa264f5b1109026d7a62cc6fc77c8f44469ec1e83",
+      "bytes": 758705
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\lang\\zh_cn.json",
+      "sha256": "18ae19bf9a1ec81d6235f57b339c700b42f4fce4eee1fd88eb6766874109ecf5",
+      "bytes": 8454496
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\models\\item\\sensor_kilogibblometer.json",
+      "sha256": "d9c2d6bb82237e45d79050aed22400ccc8e7a693d495083143f8eb1c3d501bdb",
+      "bytes": 67
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\redstone\\sensors\\kilogibblometer\\colored\\back.png",
+      "sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e",
+      "bytes": 532
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\redstone\\sensors\\kilogibblometer\\colored\\front.png",
+      "sha256": "947c71acd0246ce6c3173f72ed1c71559653b9e7f043e6e42e28a50d101f2ae4",
+      "bytes": 610
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\redstone\\sensors\\kilogibblometer\\colored\\side.png",
+      "sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e",
+      "bytes": 532
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\redstone\\sensors\\kilogibblometer\\overlay\\back.png",
+      "sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+      "bytes": 141
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\redstone\\sensors\\kilogibblometer\\overlay\\front.png",
+      "sha256": "78da3cd21c1255fe113801929e624dcf99b2756bbf695b33d56d86e769830c83",
+      "bytes": 7019
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\redstone\\sensors\\kilogibblometer\\overlay\\side.png",
+      "sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+      "bytes": 141
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\test\\java\\com\\gregtech\\gregtech\\core\\MachineSpecBehaviorContracts.java",
+      "sha256": "fe54b665184e2c263a791dd770e398586e5e7bcd70ca41d72f366df9f5452f55",
+      "bytes": 91358
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\test\\java\\com\\gregtech\\gregtech\\core\\SensorSourceContracts.java",
+      "sha256": "e35ec182112bd649ec8188f69b77a360a4cf22bf2df122b5db8b4df8a616374d",
+      "bytes": 4287
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\SensorSourceTests.java",
+      "sha256": "6dfc3fd30bb74bbc77b704f2c52f55a2434adfd20e607c7aee3588389a6eb0a4",
+      "bytes": 5912
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\block\\sensor\\SensorBlock.java",
+      "sha256": "ff17f71e7757426d38c31ac10bef2b5044aa4c989c545623b51ca7b01ee985de",
+      "bytes": 7939
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\energy\\ElectricWireBlockEntity.java",
+      "sha256": "dc210d9bc00a0901d79b8034df531ca6c1fc5501c294d1ef0b2b1685f325a58f",
+      "bytes": 14214
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\BasicMachineBlockEntity.java",
+      "sha256": "9ce0f6a6a792e4fdf646916fe7de6b0b1b1e3b526dac8c142d697f98f5f84a32",
+      "bytes": 88863
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\BoilerTankBlockEntity.java",
+      "sha256": "cdb44d65d23493ef430e5a4b242d13c3fc211b92a4361de6030bfbee8b5c724b",
+      "bytes": 18084
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\FluidPipeBlockEntity.java",
+      "sha256": "450d8a44a06d5295b314a1115699ac13f4657d85b1e5482adbbc3efc09fde92a",
+      "bytes": 54239
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\OriginalLargeBoilerControllerBlockEntity.java",
+      "sha256": "72899a39d99104f73359720906dbdfa5729e54281db15ba3faf83c5e13b4c58d",
+      "bytes": 23674
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\sensor\\SensorBlockEntity.java",
+      "sha256": "b03cad9e444d4d44db81d6a8027c2668896ef1dc98c5d4de0f8e9674ea829171",
+      "bytes": 20977
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\client\\SensorTooltips.java",
+      "sha256": "587773952178f35fdbe8d3bee80086d61a2504fbe8e87879a7f82e0b194a0549",
+      "bytes": 1165
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\client\\StorageBlockTooltips.java",
+      "sha256": "46ea5b6cd3b3744a219a70757c1f9434eb8410d449dc3080c1c1c2f9e650c868",
+      "bytes": 4259
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\data\\SensorRecipePack.java",
+      "sha256": "eb82b4dba1fe2437dd5c9c488cca76210beec8f253f98081eaf5b72406582ffd",
+      "bytes": 11230
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTBlockEntities.java",
+      "sha256": "4fc967d6fde8adebd361556564d03aa1fc0a9f57ab3fbc6e6edc9e939a68d965",
+      "bytes": 28693
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTSensors.java",
+      "sha256": "d180778ff5be8e52a5dacca18df18ebc9602d10a4ece8c0284aefd16054e6067",
+      "bytes": 1549
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\kilogibblometer.json",
+      "sha256": "41c28f24646fab0b373b42b28f1268b0d5d6797c931e330d61183f435f95fa67",
+      "bytes": 4591
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\CommonBlockDeliveryChecks.java",
+      "sha256": "fe3f6efe8610c37c9a91b980cc63f467febaf9d05f8c75d015e7488a1363e221",
+      "bytes": 20528
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\ProductionClientSmoke.java",
+      "sha256": "ec9606e20a3f95bcfd03464adcc1dae15e2c14cf48df301180eab47d305c104b",
+      "bytes": 5491
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\SensorSourceDeliveryChecks.java",
+      "sha256": "f03ed891b175c1c890618ef6fccf456e325bcd8caea2d588d478eec3910f1518",
+      "bytes": 4099
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\SensorSourceTests.java",
+      "sha256": "e91e81fa965b61ef506d97a65b8c659b44fd4cec6e93b6b37c5337c81af6d966",
+      "bytes": 5605
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\block\\sensor\\SensorBlock.java",
+      "sha256": "f09f06d336e0612a3b3a69e769d219a5f726e310946a49e828ab44a8f9b5ac6a",
+      "bytes": 6856
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\energy\\ElectricWireBlockEntity.java",
+      "sha256": "0742d8f7ff42831ba20e6019e1d6e570829c6f302b81aa013f6c8772db5f38a6",
+      "bytes": 14074
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\BasicMachineBlockEntity.java",
+      "sha256": "f60329e05adb5c7ea9124a0a28a6920bacd984ecfd74a04e197ad7e3ab6f1abe",
+      "bytes": 91264
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\BoilerTankBlockEntity.java",
+      "sha256": "680057dbf56dec25ec6fcd7557d00acf685a5be3ed5aa5fbea041583572d6bc7",
+      "bytes": 19025
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\FluidPipeBlockEntity.java",
+      "sha256": "65abdec5e8428d6de1314c20408b1556e19ec5f9c871415f1e033f55adbe63ca",
+      "bytes": 54688
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\OriginalLargeBoilerControllerBlockEntity.java",
+      "sha256": "57c0d60d85b3af0d711c0d774ae3a6f96758022bccd416f2f0d66a012ffa450d",
+      "bytes": 24286
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\sensor\\SensorBlockEntity.java",
+      "sha256": "181436c00a16ddd707a765adc0add30c58f010a9016e45ce5a0a3a91c34b7a29",
+      "bytes": 20706
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\client\\SensorTooltips.java",
+      "sha256": "587773952178f35fdbe8d3bee80086d61a2504fbe8e87879a7f82e0b194a0549",
+      "bytes": 1165
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\client\\StorageBlockTooltips.java",
+      "sha256": "ee2bde8e970ea5f7f655e75e6538308251696a5232b25ab1c5151f1f3cf8ac19",
+      "bytes": 4072
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\data\\SensorRecipePack.java",
+      "sha256": "b628461cfe53358fb93946eaa621c974733607f51f1c2e450348c47f944f6457",
+      "bytes": 10427
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\gametest\\SensorMatrixTests.java",
+      "sha256": "0ef2101ceb8df1f7086d4686b5ce810ceb2daa995e1697b9ea1c80858854f4eb",
+      "bytes": 24361
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTBlockEntities.java",
+      "sha256": "34ab1405c61c72283fa9628dd7108f3019cd33c8ab9afb52a2e8cee4ef602f77",
+      "bytes": 46766
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTSensors.java",
+      "sha256": "26cb6abc32a044c666030a4bcf5e9186634b6c5b41494860ffdafe5ffee5bb62",
+      "bytes": 1431
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\sensor\\kilogibblometer.json",
+      "sha256": "e3f8555a81e2adfc656ea1dd590c8b3c1bd09016fb734dfcd38adeb959e72ced",
+      "bytes": 4588
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\CommonBlockDeliveryChecks.java",
+      "sha256": "a241a1c1b009c23cbc3c2f88f46e1a1ee500ad600782a3347d4812fd5fb1621f",
+      "bytes": 18942
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\ProductionClientSmoke.java",
+      "sha256": "d498aaacb8d77a9dfa7a2a048ad77c61cfcc5e090e54e8500ebb93343779095b",
+      "bytes": 7653
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\SensorSourceDeliveryChecks.java",
+      "sha256": "17b5d6be5ef6f9ffaccbb60d99d38a584c2e4a0d96d7c30cd4c1e1043f326f21",
+      "bytes": 3994
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\extract_gt6_sensor_recipes.py",
+      "sha256": "c0669908db3083faf8df85f03622eba1c9aa7ea0c36ffc74ef086e7316c5c68f",
+      "bytes": 10687
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\integration\\generate_machine_material_data.py",
+      "sha256": "2004bf659cd15cfbe5864a654f09cbc5cd4116192cd9cee0b249aa3d9293c6ff",
+      "bytes": 33852
+    }
+  ],
+  "chinese_patch": {
+    "path": "C:\\Dev\\GregTech_zh_cn.lang",
+    "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0",
+    "bytes": 7375784
+  },
+  "source_material_rows": [
+    {
+      "path": "sensor_fluidometer",
+      "source_id": 31006,
+      "source_line": 1986,
+      "components": {
+        "RedAlloy": 324324000,
+        "Fe": 1945944000,
+        "TinAlloy": 1459458000
+      },
+      "pattern": [
+        "WYW",
+        "BXB",
+        "WPW"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(MT.TinAlloy)",
+        "W": "OP.wireFine.dat(MT.RedAlloy)",
+        "R": "OD.itemRedstone",
+        "G": "OD.blockGlassColorless",
+        "B": "OP.bolt.dat(MT.TinAlloy)",
+        "C": "Items.comparator",
+        "X": "OD.pressurePlateStone",
+        "Y": "Items.bucket"
+      }
+    },
+    {
+      "path": "sensor_itemometer",
+      "source_id": 31004,
+      "source_line": 1984,
+      "components": {
+        "RedAlloy": 324324000,
+        "Wood": 2594592000,
+        "TinAlloy": 1459458000
+      },
+      "pattern": [
+        "WYW",
+        "BXB",
+        "WPW"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(MT.TinAlloy)",
+        "W": "OP.wireFine.dat(MT.RedAlloy)",
+        "R": "OD.itemRedstone",
+        "G": "OD.blockGlassColorless",
+        "B": "OP.bolt.dat(MT.TinAlloy)",
+        "C": "Items.comparator",
+        "X": "OD.pressurePlateGold",
+        "Y": "OD.craftingChest"
+      }
+    },
+    {
+      "path": "sensor_electrometer",
+      "source_id": 31015,
+      "source_line": 1997,
+      "components": {
+        "RedAlloy": 324324000,
+        "Glass": 5837832000,
+        "Cu": 648648000,
+        "TinAlloy": 1297296000
+      },
+      "pattern": [
+        "WGW",
+        "YXY",
+        "WPW"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(MT.TinAlloy)",
+        "W": "OP.wireFine.dat(MT.RedAlloy)",
+        "R": "OD.itemRedstone",
+        "G": "OD.blockGlassColorless",
+        "B": "OP.bolt.dat(MT.TinAlloy)",
+        "C": "Items.comparator",
+        "X": "IL.Electro_Meter",
+        "Y": "OP.wireGt01.dat(ANY.Cu)"
+      }
+    },
+    {
+      "path": "sensor_progressmeter",
+      "source_id": 31018,
+      "source_line": 1995,
+      "components": {
+        "RedAlloy": 324324000,
+        "Glass": 5837832000,
+        "Brass": 648648000,
+        "TinAlloy": 1297296000
+      },
+      "pattern": [
+        "WGW",
+        "CXC",
+        "WPW"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(MT.TinAlloy)",
+        "W": "OP.wireFine.dat(MT.RedAlloy)",
+        "R": "OD.itemRedstone",
+        "G": "OD.blockGlassColorless",
+        "B": "OP.bolt.dat(MT.TinAlloy)",
+        "C": "Items.comparator",
+        "X": "OP.gearGtSmall.dat(MT.Brass)"
+      }
+    },
+    {
+      "path": "sensor_thermometer",
+      "source_id": 31000,
+      "source_line": 1979,
+      "components": {
+        "RedAlloy": 324324000,
+        "Redstone": 1945944000,
+        "TinAlloy": 1297296000
+      },
+      "pattern": [
+        "WRW",
+        "RXR",
+        "WPW"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(MT.TinAlloy)",
+        "W": "OP.wireFine.dat(MT.RedAlloy)",
+        "R": "OD.itemRedstone",
+        "G": "OD.blockGlassColorless",
+        "B": "OP.bolt.dat(MT.TinAlloy)",
+        "C": "Items.comparator",
+        "X": "IL.Thermometer_Quicksilver"
+      }
+    },
+    {
+      "path": "sensor_tachometer",
+      "source_id": 31019,
+      "source_line": 1998,
+      "components": {
+        "RedAlloy": 324324000,
+        "Glass": 5837832000,
+        "Brass": 5189184000,
+        "TinAlloy": 1297296000
+      },
+      "pattern": [
+        "WGW",
+        "YXY",
+        "WPW"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(MT.TinAlloy)",
+        "W": "OP.wireFine.dat(MT.RedAlloy)",
+        "R": "OD.itemRedstone",
+        "G": "OD.blockGlassColorless",
+        "B": "OP.bolt.dat(MT.TinAlloy)",
+        "C": "Items.comparator",
+        "X": "IL.Tacho_Meter",
+        "Y": "OP.gearGt.dat(MT.Brass)"
+      }
+    },
+    {
+      "path": "sensor_weightometric",
+      "source_id": 31012,
+      "source_line": 1991,
+      "components": {
+        "RedAlloy": 324324000,
+        "TinAlloy": 2756754000
+      },
+      "pattern": [
+        "WPW",
+        "BXB",
+        "WPW"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(MT.TinAlloy)",
+        "W": "OP.wireFine.dat(MT.RedAlloy)",
+        "R": "OD.itemRedstone",
+        "G": "OD.blockGlassColorless",
+        "B": "OP.bolt.dat(MT.TinAlloy)",
+        "C": "Items.comparator",
+        "X": "OD.pressurePlateGold"
+      }
+    },
+    {
+      "path": "sensor_weightometer_light",
+      "source_id": 31010,
+      "source_line": 1989,
+      "components": {
+        "RedAlloy": 324324000,
+        "TinAlloy": 2756754000
+      },
+      "pattern": [
+        "WPW",
+        "BXB",
+        "WPW"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(MT.TinAlloy)",
+        "W": "OP.wireFine.dat(MT.RedAlloy)",
+        "R": "OD.itemRedstone",
+        "G": "OD.blockGlassColorless",
+        "B": "OP.bolt.dat(MT.TinAlloy)",
+        "C": "Items.comparator",
+        "X": "OD.pressurePlateWood"
+      }
+    },
+    {
+      "path": "sensor_weightometer_medium",
+      "source_id": 31011,
+      "source_line": 1990,
+      "components": {
+        "RedAlloy": 324324000,
+        "TinAlloy": 2756754000
+      },
+      "pattern": [
+        "WPW",
+        "BXB",
+        "WPW"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(MT.TinAlloy)",
+        "W": "OP.wireFine.dat(MT.RedAlloy)",
+        "R": "OD.itemRedstone",
+        "G": "OD.blockGlassColorless",
+        "B": "OP.bolt.dat(MT.TinAlloy)",
+        "C": "Items.comparator",
+        "X": "OD.pressurePlateStone"
+      }
+    },
+    {
+      "path": "sensor_weightometer_super_heavy",
+      "source_id": 31013,
+      "source_line": 1992,
+      "components": {
+        "RedAlloy": 324324000,
+        "TinAlloy": 2756754000
+      },
+      "pattern": [
+        "WPW",
+        "BXB",
+        "WPW"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(MT.TinAlloy)",
+        "W": "OP.wireFine.dat(MT.RedAlloy)",
+        "R": "OD.itemRedstone",
+        "G": "OD.blockGlassColorless",
+        "B": "OP.bolt.dat(MT.TinAlloy)",
+        "C": "Items.comparator",
+        "X": "OD.pressurePlateIron"
+      }
+    },
+    {
+      "path": "sensor_bucketometer",
+      "source_id": 31007,
+      "source_line": 1987,
+      "components": {
+        "RedAlloy": 324324000,
+        "Fe": 1945944000,
+        "TinAlloy": 1459458000
+      },
+      "pattern": [
+        "WYW",
+        "BXB",
+        "WPW"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(MT.TinAlloy)",
+        "W": "OP.wireFine.dat(MT.RedAlloy)",
+        "R": "OD.itemRedstone",
+        "G": "OD.blockGlassColorless",
+        "B": "OP.bolt.dat(MT.TinAlloy)",
+        "C": "Items.comparator",
+        "X": "OD.pressurePlateGold",
+        "Y": "Items.bucket"
+      }
+    },
+    {
+      "path": "sensor_kilobucketometer",
+      "source_id": 31022,
+      "source_line": 1988,
+      "components": {
+        "RedAlloy": 324324000,
+        "Fe": 1945944000,
+        "TinAlloy": 1459458000
+      },
+      "pattern": [
+        "WYW",
+        "BXB",
+        "WPW"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(MT.TinAlloy)",
+        "W": "OP.wireFine.dat(MT.RedAlloy)",
+        "R": "OD.itemRedstone",
+        "G": "OD.blockGlassColorless",
+        "B": "OP.bolt.dat(MT.TinAlloy)",
+        "C": "Items.comparator",
+        "X": "OD.pressurePlateIron",
+        "Y": "Items.bucket"
+      }
+    },
+    {
+      "path": "sensor_gibblometer",
+      "source_id": 31001,
+      "source_line": 1982,
+      "components": {
+        "RedAlloy": 324324000,
+        "TinAlloy": 2756754000,
+        "SiO2": 648648000
+      },
+      "pattern": [
+        "WPW",
+        "BXB",
+        "WPW"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(MT.TinAlloy)",
+        "W": "OP.wireFine.dat(MT.RedAlloy)",
+        "R": "OD.itemRedstone",
+        "G": "OD.blockGlassColorless",
+        "B": "OP.bolt.dat(MT.TinAlloy)",
+        "C": "Items.comparator",
+        "X": "OP.gem.dat(ANY.SiO2)"
+      }
+    },
+    {
+      "path": "sensor_stackometer",
+      "source_id": 31005,
+      "source_line": 1985,
+      "components": {
+        "RedAlloy": 324324000,
+        "Wood": 2594592000,
+        "TinAlloy": 1459458000
+      },
+      "pattern": [
+        "WYW",
+        "BXB",
+        "WPW"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(MT.TinAlloy)",
+        "W": "OP.wireFine.dat(MT.RedAlloy)",
+        "R": "OD.itemRedstone",
+        "G": "OD.blockGlassColorless",
+        "B": "OP.bolt.dat(MT.TinAlloy)",
+        "C": "Items.comparator",
+        "X": "OD.pressurePlateIron",
+        "Y": "OD.craftingChest"
+      }
+    },
+    {
+      "path": "sensor_luminometer",
+      "source_id": 31002,
+      "source_line": 1980,
+      "components": {
+        "RedAlloy": 324324000,
+        "Glass": 5837832000,
+        "Cu": 162162000,
+        "Si": 648648000,
+        "TinAlloy": 1297296000
+      },
+      "pattern": [
+        "WGW",
+        "YXY",
+        "WPW"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(MT.TinAlloy)",
+        "W": "OP.wireFine.dat(MT.RedAlloy)",
+        "R": "OD.itemRedstone",
+        "G": "OD.blockGlassColorless",
+        "B": "OP.bolt.dat(MT.TinAlloy)",
+        "C": "Items.comparator",
+        "X": "OP.plate.dat(ANY.Si)",
+        "Y": "OP.wireFine.dat(ANY.Cu)"
+      }
+    },
+    {
+      "path": "sensor_playercounter",
+      "source_id": 31017,
+      "source_line": 1994,
+      "components": {
+        "RedAlloy": 324324000,
+        "Glass": 5837832000,
+        "TinAlloy": 1297296000
+      },
+      "pattern": [
+        "WGW",
+        "CXC",
+        "WPW"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(MT.TinAlloy)",
+        "W": "OP.wireFine.dat(MT.RedAlloy)",
+        "R": "OD.itemRedstone",
+        "G": "OD.blockGlassColorless",
+        "B": "OP.bolt.dat(MT.TinAlloy)",
+        "C": "Items.comparator",
+        "X": "OD.pressurePlateStone"
+      }
+    },
+    {
+      "path": "sensor_chronometer",
+      "source_id": 31003,
+      "source_line": 1981,
+      "components": {
+        "RedAlloy": 324324000,
+        "Glass": 17513496000,
+        "Au": 2594592000,
+        "Redstone": 648648000,
+        "TinAlloy": 1297296000
+      },
+      "pattern": [
+        "WGW",
+        "GXG",
+        "WPW"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(MT.TinAlloy)",
+        "W": "OP.wireFine.dat(MT.RedAlloy)",
+        "R": "OD.itemRedstone",
+        "G": "OD.blockGlassColorless",
+        "B": "OP.bolt.dat(MT.TinAlloy)",
+        "C": "Items.comparator",
+        "X": "Items.clock"
+      }
+    },
+    {
+      "path": "sensor_geiger",
+      "source_id": 31020,
+      "source_line": 1996,
+      "components": {
+        "RedAlloy": 324324000,
+        "Glass": 5837832000,
+        "Pb": 2594592000,
+        "TinAlloy": 1297296000
+      },
+      "pattern": [
+        "WGW",
+        "YXY",
+        "WPW"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(MT.TinAlloy)",
+        "W": "OP.wireFine.dat(MT.RedAlloy)",
+        "R": "OD.itemRedstone",
+        "G": "OD.blockGlassColorless",
+        "B": "OP.bolt.dat(MT.TinAlloy)",
+        "C": "Items.comparator",
+        "X": "IL.Geiger_Counter",
+        "Y": "OP.plateDouble.dat(MT.Pb)"
+      }
+    },
+    {
+      "path": "sensor_laserometer",
+      "source_id": 31021,
+      "source_line": 1999,
+      "components": {
+        "RedAlloy": 324324000,
+        "Glass": 5837832000,
+        "Cu": 162162000,
+        "SteelGalvanized": 2594592000,
+        "SiO2": 648648000,
+        "Sn": 324324000,
+        "TinAlloy": 1297296000
+      },
+      "pattern": [
+        "WGW",
+        "YXY",
+        "WPW"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(MT.TinAlloy)",
+        "W": "OP.wireFine.dat(MT.RedAlloy)",
+        "R": "OD.itemRedstone",
+        "G": "OD.blockGlassColorless",
+        "B": "OP.bolt.dat(MT.TinAlloy)",
+        "C": "Items.comparator",
+        "X": "IL.SENSORS[1]",
+        "Y": "OP.wireFine.dat(ANY.Cu)"
+      }
+    },
+    {
+      "path": "sensor_tpsmeter",
+      "source_id": 31016,
+      "source_line": 1993,
+      "components": {
+        "RedAlloy": 324324000,
+        "Glass": 5837832000,
+        "Au": 7783776000,
+        "Redstone": 1945944000,
+        "TinAlloy": 1297296000
+      },
+      "pattern": [
+        "WGW",
+        "XXX",
+        "WPW"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(MT.TinAlloy)",
+        "W": "OP.wireFine.dat(MT.RedAlloy)",
+        "R": "OD.itemRedstone",
+        "G": "OD.blockGlassColorless",
+        "B": "OP.bolt.dat(MT.TinAlloy)",
+        "C": "Items.comparator",
+        "X": "Items.clock"
+      }
+    },
+    {
+      "path": "sensor_kilogibblometer",
+      "source_id": 31023,
+      "source_line": 1983,
+      "components": {
+        "RedAlloy": 324324000,
+        "TinAlloy": 2756754000,
+        "Diamond": 648648000
+      },
+      "pattern": [
+        "WPW",
+        "BXB",
+        "WPW"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(MT.TinAlloy)",
+        "W": "OP.wireFine.dat(MT.RedAlloy)",
+        "R": "OD.itemRedstone",
+        "G": "OD.blockGlassColorless",
+        "B": "OP.bolt.dat(MT.TinAlloy)",
+        "C": "Items.comparator",
+        "X": "OP.gem.dat(ANY.Diamond)"
+      }
+    }
+  ],
+  "source_parameters": [
+    {
+      "id": 31000,
+      "line": 1979,
+      "casing": "MT.NULL",
+      "quality_material": "MT.NULL",
+      "harvest_expression": "1",
+      "block_group": "aUtilMetal",
+      "nbt_parameters": {}
+    },
+    {
+      "id": 31002,
+      "line": 1980,
+      "casing": "MT.NULL",
+      "quality_material": "MT.NULL",
+      "harvest_expression": "1",
+      "block_group": "aUtilMetal",
+      "nbt_parameters": {}
+    },
+    {
+      "id": 31003,
+      "line": 1981,
+      "casing": "MT.NULL",
+      "quality_material": "MT.NULL",
+      "harvest_expression": "1",
+      "block_group": "aUtilMetal",
+      "nbt_parameters": {}
+    },
+    {
+      "id": 31001,
+      "line": 1982,
+      "casing": "MT.NULL",
+      "quality_material": "MT.NULL",
+      "harvest_expression": "1",
+      "block_group": "aUtilMetal",
+      "nbt_parameters": {}
+    },
+    {
+      "id": 31023,
+      "line": 1983,
+      "casing": "MT.NULL",
+      "quality_material": "MT.NULL",
+      "harvest_expression": "1",
+      "block_group": "aUtilMetal",
+      "nbt_parameters": {}
+    },
+    {
+      "id": 31004,
+      "line": 1984,
+      "casing": "MT.NULL",
+      "quality_material": "MT.NULL",
+      "harvest_expression": "1",
+      "block_group": "aUtilMetal",
+      "nbt_parameters": {}
+    },
+    {
+      "id": 31005,
+      "line": 1985,
+      "casing": "MT.NULL",
+      "quality_material": "MT.NULL",
+      "harvest_expression": "1",
+      "block_group": "aUtilMetal",
+      "nbt_parameters": {}
+    },
+    {
+      "id": 31006,
+      "line": 1986,
+      "casing": "MT.NULL",
+      "quality_material": "MT.NULL",
+      "harvest_expression": "1",
+      "block_group": "aUtilMetal",
+      "nbt_parameters": {}
+    },
+    {
+      "id": 31007,
+      "line": 1987,
+      "casing": "MT.NULL",
+      "quality_material": "MT.NULL",
+      "harvest_expression": "1",
+      "block_group": "aUtilMetal",
+      "nbt_parameters": {}
+    },
+    {
+      "id": 31022,
+      "line": 1988,
+      "casing": "MT.NULL",
+      "quality_material": "MT.NULL",
+      "harvest_expression": "1",
+      "block_group": "aUtilMetal",
+      "nbt_parameters": {}
+    },
+    {
+      "id": 31010,
+      "line": 1989,
+      "casing": "MT.NULL",
+      "quality_material": "MT.NULL",
+      "harvest_expression": "1",
+      "block_group": "aUtilMetal",
+      "nbt_parameters": {}
+    },
+    {
+      "id": 31011,
+      "line": 1990,
+      "casing": "MT.NULL",
+      "quality_material": "MT.NULL",
+      "harvest_expression": "1",
+      "block_group": "aUtilMetal",
+      "nbt_parameters": {}
+    },
+    {
+      "id": 31012,
+      "line": 1991,
+      "casing": "MT.NULL",
+      "quality_material": "MT.NULL",
+      "harvest_expression": "1",
+      "block_group": "aUtilMetal",
+      "nbt_parameters": {}
+    },
+    {
+      "id": 31013,
+      "line": 1992,
+      "casing": "MT.NULL",
+      "quality_material": "MT.NULL",
+      "harvest_expression": "1",
+      "block_group": "aUtilMetal",
+      "nbt_parameters": {}
+    },
+    {
+      "id": 31016,
+      "line": 1993,
+      "casing": "MT.NULL",
+      "quality_material": "MT.NULL",
+      "harvest_expression": "1",
+      "block_group": "aUtilMetal",
+      "nbt_parameters": {}
+    },
+    {
+      "id": 31017,
+      "line": 1994,
+      "casing": "MT.NULL",
+      "quality_material": "MT.NULL",
+      "harvest_expression": "1",
+      "block_group": "aUtilMetal",
+      "nbt_parameters": {}
+    },
+    {
+      "id": 31018,
+      "line": 1995,
+      "casing": "MT.NULL",
+      "quality_material": "MT.NULL",
+      "harvest_expression": "1",
+      "block_group": "aUtilMetal",
+      "nbt_parameters": {}
+    },
+    {
+      "id": 31020,
+      "line": 1996,
+      "casing": "MT.NULL",
+      "quality_material": "MT.NULL",
+      "harvest_expression": "1",
+      "block_group": "aUtilMetal",
+      "nbt_parameters": {}
+    },
+    {
+      "id": 31015,
+      "line": 1997,
+      "casing": "MT.NULL",
+      "quality_material": "MT.NULL",
+      "harvest_expression": "1",
+      "block_group": "aUtilMetal",
+      "nbt_parameters": {}
+    },
+    {
+      "id": 31019,
+      "line": 1998,
+      "casing": "MT.NULL",
+      "quality_material": "MT.NULL",
+      "harvest_expression": "1",
+      "block_group": "aUtilMetal",
+      "nbt_parameters": {}
+    },
+    {
+      "id": 31021,
+      "line": 1999,
+      "casing": "MT.NULL",
+      "quality_material": "MT.NULL",
+      "harvest_expression": "1",
+      "block_group": "aUtilMetal",
+      "nbt_parameters": {}
+    }
+  ],
+  "source_harvest": {
+    "sensor_fluidometer": {
+      "source_id": 31006,
+      "source_line": 1986,
+      "tool": "pickaxe",
+      "hand_harvestable": true,
+      "material": "null",
+      "explicit_level": 1,
+      "original_expression": "1",
+      "block_group": "aUtilMetal"
+    },
+    "sensor_itemometer": {
+      "source_id": 31004,
+      "source_line": 1984,
+      "tool": "pickaxe",
+      "hand_harvestable": true,
+      "material": "null",
+      "explicit_level": 1,
+      "original_expression": "1",
+      "block_group": "aUtilMetal"
+    },
+    "sensor_electrometer": {
+      "source_id": 31015,
+      "source_line": 1997,
+      "tool": "pickaxe",
+      "hand_harvestable": true,
+      "material": "null",
+      "explicit_level": 1,
+      "original_expression": "1",
+      "block_group": "aUtilMetal"
+    },
+    "sensor_progressmeter": {
+      "source_id": 31018,
+      "source_line": 1995,
+      "tool": "pickaxe",
+      "hand_harvestable": true,
+      "material": "null",
+      "explicit_level": 1,
+      "original_expression": "1",
+      "block_group": "aUtilMetal"
+    },
+    "sensor_thermometer": {
+      "source_id": 31000,
+      "source_line": 1979,
+      "tool": "pickaxe",
+      "hand_harvestable": true,
+      "material": "null",
+      "explicit_level": 1,
+      "original_expression": "1",
+      "block_group": "aUtilMetal"
+    },
+    "sensor_tachometer": {
+      "source_id": 31019,
+      "source_line": 1998,
+      "tool": "pickaxe",
+      "hand_harvestable": true,
+      "material": "null",
+      "explicit_level": 1,
+      "original_expression": "1",
+      "block_group": "aUtilMetal"
+    },
+    "sensor_weightometric": {
+      "source_id": 31012,
+      "source_line": 1991,
+      "tool": "pickaxe",
+      "hand_harvestable": true,
+      "material": "null",
+      "explicit_level": 1,
+      "original_expression": "1",
+      "block_group": "aUtilMetal"
+    },
+    "sensor_weightometer_light": {
+      "source_id": 31010,
+      "source_line": 1989,
+      "tool": "pickaxe",
+      "hand_harvestable": true,
+      "material": "null",
+      "explicit_level": 1,
+      "original_expression": "1",
+      "block_group": "aUtilMetal"
+    },
+    "sensor_weightometer_medium": {
+      "source_id": 31011,
+      "source_line": 1990,
+      "tool": "pickaxe",
+      "hand_harvestable": true,
+      "material": "null",
+      "explicit_level": 1,
+      "original_expression": "1",
+      "block_group": "aUtilMetal"
+    },
+    "sensor_weightometer_super_heavy": {
+      "source_id": 31013,
+      "source_line": 1992,
+      "tool": "pickaxe",
+      "hand_harvestable": true,
+      "material": "null",
+      "explicit_level": 1,
+      "original_expression": "1",
+      "block_group": "aUtilMetal"
+    },
+    "sensor_bucketometer": {
+      "source_id": 31007,
+      "source_line": 1987,
+      "tool": "pickaxe",
+      "hand_harvestable": true,
+      "material": "null",
+      "explicit_level": 1,
+      "original_expression": "1",
+      "block_group": "aUtilMetal"
+    },
+    "sensor_kilobucketometer": {
+      "source_id": 31022,
+      "source_line": 1988,
+      "tool": "pickaxe",
+      "hand_harvestable": true,
+      "material": "null",
+      "explicit_level": 1,
+      "original_expression": "1",
+      "block_group": "aUtilMetal"
+    },
+    "sensor_gibblometer": {
+      "source_id": 31001,
+      "source_line": 1982,
+      "tool": "pickaxe",
+      "hand_harvestable": true,
+      "material": "null",
+      "explicit_level": 1,
+      "original_expression": "1",
+      "block_group": "aUtilMetal"
+    },
+    "sensor_stackometer": {
+      "source_id": 31005,
+      "source_line": 1985,
+      "tool": "pickaxe",
+      "hand_harvestable": true,
+      "material": "null",
+      "explicit_level": 1,
+      "original_expression": "1",
+      "block_group": "aUtilMetal"
+    },
+    "sensor_luminometer": {
+      "source_id": 31002,
+      "source_line": 1980,
+      "tool": "pickaxe",
+      "hand_harvestable": true,
+      "material": "null",
+      "explicit_level": 1,
+      "original_expression": "1",
+      "block_group": "aUtilMetal"
+    },
+    "sensor_playercounter": {
+      "source_id": 31017,
+      "source_line": 1994,
+      "tool": "pickaxe",
+      "hand_harvestable": true,
+      "material": "null",
+      "explicit_level": 1,
+      "original_expression": "1",
+      "block_group": "aUtilMetal"
+    },
+    "sensor_chronometer": {
+      "source_id": 31003,
+      "source_line": 1981,
+      "tool": "pickaxe",
+      "hand_harvestable": true,
+      "material": "null",
+      "explicit_level": 1,
+      "original_expression": "1",
+      "block_group": "aUtilMetal"
+    },
+    "sensor_geiger": {
+      "source_id": 31020,
+      "source_line": 1996,
+      "tool": "pickaxe",
+      "hand_harvestable": true,
+      "material": "null",
+      "explicit_level": 1,
+      "original_expression": "1",
+      "block_group": "aUtilMetal"
+    },
+    "sensor_laserometer": {
+      "source_id": 31021,
+      "source_line": 1999,
+      "tool": "pickaxe",
+      "hand_harvestable": true,
+      "material": "null",
+      "explicit_level": 1,
+      "original_expression": "1",
+      "block_group": "aUtilMetal"
+    },
+    "sensor_tpsmeter": {
+      "source_id": 31016,
+      "source_line": 1993,
+      "tool": "pickaxe",
+      "hand_harvestable": true,
+      "material": "null",
+      "explicit_level": 1,
+      "original_expression": "1",
+      "block_group": "aUtilMetal"
+    },
+    "sensor_kilogibblometer": {
+      "source_id": 31023,
+      "source_line": 1983,
+      "tool": "pickaxe",
+      "hand_harvestable": true,
+      "material": "null",
+      "explicit_level": 1,
+      "original_expression": "1",
+      "block_group": "aUtilMetal"
+    }
+  },
+  "full_original_registration_lines": [
+    {
+      "source_id": 31006,
+      "line": 1986,
+      "text": "\t\taRegistry.add(\"Fluid-O-Meter Sensor\"                                , \"Sensors\"                             , 31006, 31015, MultiTileEntityFluidometer.class                        ,                 1, 16, aUtilMetal     , null, \"WYW\", \"BXB\", \"WPW\", 'P', OP.plateDouble.dat(MT.TinAlloy), 'W', OP.wireFine.dat(MT.RedAlloy), 'R', OD.itemRedstone, 'G', OD.blockGlassColorless, 'B', OP.bolt.dat(MT.TinAlloy), 'C', Items.comparator, 'X', OD.pressurePlateStone, 'Y', Items.bucket                  ); CR.shapeless(aRegistry.getItem(), CR.DEF_NCC, new Object[] {aRegistry.getItem()});"
+    },
+    {
+      "source_id": 31004,
+      "line": 1984,
+      "text": "\t\taRegistry.add(\"Item-O-Meter Sensor\"                                 , \"Sensors\"                             , 31004, 31015, MultiTileEntityItemometer.class                         ,                 1, 16, aUtilMetal     , null, \"WYW\", \"BXB\", \"WPW\", 'P', OP.plateDouble.dat(MT.TinAlloy), 'W', OP.wireFine.dat(MT.RedAlloy), 'R', OD.itemRedstone, 'G', OD.blockGlassColorless, 'B', OP.bolt.dat(MT.TinAlloy), 'C', Items.comparator, 'X', OD.pressurePlateGold , 'Y', OD.craftingChest              ); CR.shapeless(aRegistry.getItem(), CR.DEF_NCC, new Object[] {aRegistry.getItem()});"
+    },
+    {
+      "source_id": 31015,
+      "line": 1997,
+      "text": "\t\taRegistry.add(\"Electrometer Sensor\"                                 , \"Sensors\"                             , 31015, 31015, MultiTileEntityElectrometer.class                       ,                 1, 16, aUtilMetal     , null, \"WGW\", \"YXY\", \"WPW\", 'P', OP.plateDouble.dat(MT.TinAlloy), 'W', OP.wireFine.dat(MT.RedAlloy), 'R', OD.itemRedstone, 'G', OD.blockGlassColorless, 'B', OP.bolt.dat(MT.TinAlloy), 'C', Items.comparator, 'X', IL.Electro_Meter , 'Y', OP.wireGt01.dat(ANY.Cu)           ); CR.shapeless(aRegistry.getItem(), CR.DEF_NCC, new Object[] {aRegistry.getItem()});"
+    },
+    {
+      "source_id": 31018,
+      "line": 1995,
+      "text": "\t\taRegistry.add(\"Progress Sensor\"                                     , \"Sensors\"                             , 31018, 31015, MultiTileEntityProgressmeter.class                      ,                 1, 16, aUtilMetal     , null, \"WGW\", \"CXC\", \"WPW\", 'P', OP.plateDouble.dat(MT.TinAlloy), 'W', OP.wireFine.dat(MT.RedAlloy), 'R', OD.itemRedstone, 'G', OD.blockGlassColorless, 'B', OP.bolt.dat(MT.TinAlloy), 'C', Items.comparator, 'X', OP.gearGtSmall.dat(MT.Brass)                              ); CR.shapeless(aRegistry.getItem(), CR.DEF_NCC, new Object[] {aRegistry.getItem()});"
+    },
+    {
+      "source_id": 31000,
+      "line": 1979,
+      "text": "\t\taRegistry.add(\"Thermometer Sensor\"                                  , \"Sensors\"                             , 31000, 31015, MultiTileEntityThermometer.class                        ,                 1, 16, aUtilMetal     , null, \"WRW\", \"RXR\", \"WPW\", 'P', OP.plateDouble.dat(MT.TinAlloy), 'W', OP.wireFine.dat(MT.RedAlloy), 'R', OD.itemRedstone, 'G', OD.blockGlassColorless, 'B', OP.bolt.dat(MT.TinAlloy), 'C', Items.comparator, 'X', IL.Thermometer_Quicksilver                                ); CR.shapeless(aRegistry.getItem(), CR.DEF_NCC, new Object[] {aRegistry.getItem()});"
+    },
+    {
+      "source_id": 31019,
+      "line": 1998,
+      "text": "\t\taRegistry.add(\"Tachometer Sensor\"                                   , \"Sensors\"                             , 31019, 31015, MultiTileEntityTachometer.class                         ,                 1, 16, aUtilMetal     , null, \"WGW\", \"YXY\", \"WPW\", 'P', OP.plateDouble.dat(MT.TinAlloy), 'W', OP.wireFine.dat(MT.RedAlloy), 'R', OD.itemRedstone, 'G', OD.blockGlassColorless, 'B', OP.bolt.dat(MT.TinAlloy), 'C', Items.comparator, 'X', IL.Tacho_Meter   , 'Y', OP.gearGt.dat(MT.Brass)           ); CR.shapeless(aRegistry.getItem(), CR.DEF_NCC, new Object[] {aRegistry.getItem()});"
+    },
+    {
+      "source_id": 31012,
+      "line": 1991,
+      "text": "\t\taRegistry.add(\"Heavy Weight-O-Meter Sensor\"                         , \"Sensors\"                             , 31012, 31015, MultiTileEntityWeightometerHeavy.class                  ,                 1, 16, aUtilMetal     , null, \"WPW\", \"BXB\", \"WPW\", 'P', OP.plateDouble.dat(MT.TinAlloy), 'W', OP.wireFine.dat(MT.RedAlloy), 'R', OD.itemRedstone, 'G', OD.blockGlassColorless, 'B', OP.bolt.dat(MT.TinAlloy), 'C', Items.comparator, 'X', OD.pressurePlateGold                                      ); CR.shapeless(aRegistry.getItem(), CR.DEF_NCC, new Object[] {aRegistry.getItem()});"
+    },
+    {
+      "source_id": 31010,
+      "line": 1989,
+      "text": "\t\taRegistry.add(\"Light Weight-O-Meter Sensor\"                         , \"Sensors\"                             , 31010, 31015, MultiTileEntityWeightometerLight.class                  ,                 1, 16, aUtilMetal     , null, \"WPW\", \"BXB\", \"WPW\", 'P', OP.plateDouble.dat(MT.TinAlloy), 'W', OP.wireFine.dat(MT.RedAlloy), 'R', OD.itemRedstone, 'G', OD.blockGlassColorless, 'B', OP.bolt.dat(MT.TinAlloy), 'C', Items.comparator, 'X', OD.pressurePlateWood                                      ); CR.shapeless(aRegistry.getItem(), CR.DEF_NCC, new Object[] {aRegistry.getItem()});"
+    },
+    {
+      "source_id": 31011,
+      "line": 1990,
+      "text": "\t\taRegistry.add(\"Medium Weight-O-Meter Sensor\"                        , \"Sensors\"                             , 31011, 31015, MultiTileEntityWeightometerMedium.class                 ,                 1, 16, aUtilMetal     , null, \"WPW\", \"BXB\", \"WPW\", 'P', OP.plateDouble.dat(MT.TinAlloy), 'W', OP.wireFine.dat(MT.RedAlloy), 'R', OD.itemRedstone, 'G', OD.blockGlassColorless, 'B', OP.bolt.dat(MT.TinAlloy), 'C', Items.comparator, 'X', OD.pressurePlateStone                                     ); CR.shapeless(aRegistry.getItem(), CR.DEF_NCC, new Object[] {aRegistry.getItem()});"
+    },
+    {
+      "source_id": 31013,
+      "line": 1992,
+      "text": "\t\taRegistry.add(\"Super Heavy Weight-O-Meter Sensor\"                   , \"Sensors\"                             , 31013, 31015, MultiTileEntityWeightometerSuperHeavy.class             ,                 1, 16, aUtilMetal     , null, \"WPW\", \"BXB\", \"WPW\", 'P', OP.plateDouble.dat(MT.TinAlloy), 'W', OP.wireFine.dat(MT.RedAlloy), 'R', OD.itemRedstone, 'G', OD.blockGlassColorless, 'B', OP.bolt.dat(MT.TinAlloy), 'C', Items.comparator, 'X', OD.pressurePlateIron                                      ); CR.shapeless(aRegistry.getItem(), CR.DEF_NCC, new Object[] {aRegistry.getItem()});"
+    },
+    {
+      "source_id": 31007,
+      "line": 1987,
+      "text": "\t\taRegistry.add(\"Bucket-O-Meter Sensor\"                               , \"Sensors\"                             , 31007, 31015, MultiTileEntityBucketometer.class                       ,                 1, 16, aUtilMetal     , null, \"WYW\", \"BXB\", \"WPW\", 'P', OP.plateDouble.dat(MT.TinAlloy), 'W', OP.wireFine.dat(MT.RedAlloy), 'R', OD.itemRedstone, 'G', OD.blockGlassColorless, 'B', OP.bolt.dat(MT.TinAlloy), 'C', Items.comparator, 'X', OD.pressurePlateGold , 'Y', Items.bucket                  ); CR.shapeless(aRegistry.getItem(), CR.DEF_NCC, new Object[] {aRegistry.getItem()});"
+    },
+    {
+      "source_id": 31022,
+      "line": 1988,
+      "text": "\t\taRegistry.add(\"Kilo-Bucket-O-Meter Sensor\"                          , \"Sensors\"                             , 31022, 31015, MultiTileEntityKiloBucketometer.class                   ,                 1, 16, aUtilMetal     , null, \"WYW\", \"BXB\", \"WPW\", 'P', OP.plateDouble.dat(MT.TinAlloy), 'W', OP.wireFine.dat(MT.RedAlloy), 'R', OD.itemRedstone, 'G', OD.blockGlassColorless, 'B', OP.bolt.dat(MT.TinAlloy), 'C', Items.comparator, 'X', OD.pressurePlateIron , 'Y', Items.bucket                  ); CR.shapeless(aRegistry.getItem(), CR.DEF_NCC, new Object[] {aRegistry.getItem()});"
+    },
+    {
+      "source_id": 31001,
+      "line": 1982,
+      "text": "\t\taRegistry.add(\"Gibbl-O-Meter Sensor\"                                , \"Sensors\"                             , 31001, 31015, MultiTileEntityGibblometer.class                        ,                 1, 16, aUtilMetal     , null, \"WPW\", \"BXB\", \"WPW\", 'P', OP.plateDouble.dat(MT.TinAlloy), 'W', OP.wireFine.dat(MT.RedAlloy), 'R', OD.itemRedstone, 'G', OD.blockGlassColorless, 'B', OP.bolt.dat(MT.TinAlloy), 'C', Items.comparator, 'X', OP.gem.dat(ANY.SiO2)                                      ); CR.shapeless(aRegistry.getItem(), CR.DEF_NCC, new Object[] {aRegistry.getItem()});"
+    },
+    {
+      "source_id": 31005,
+      "line": 1985,
+      "text": "\t\taRegistry.add(\"Stack-O-Meter Sensor\"                                , \"Sensors\"                             , 31005, 31015, MultiTileEntityStackometer.class                        ,                 1, 16, aUtilMetal     , null, \"WYW\", \"BXB\", \"WPW\", 'P', OP.plateDouble.dat(MT.TinAlloy), 'W', OP.wireFine.dat(MT.RedAlloy), 'R', OD.itemRedstone, 'G', OD.blockGlassColorless, 'B', OP.bolt.dat(MT.TinAlloy), 'C', Items.comparator, 'X', OD.pressurePlateIron , 'Y', OD.craftingChest              ); CR.shapeless(aRegistry.getItem(), CR.DEF_NCC, new Object[] {aRegistry.getItem()});"
+    },
+    {
+      "source_id": 31002,
+      "line": 1980,
+      "text": "\t\taRegistry.add(\"Luminometer Sensor\"                                  , \"Sensors\"                             , 31002, 31015, MultiTileEntityLuminometer.class                        ,                 1, 16, aUtilMetal     , null, \"WGW\", \"YXY\", \"WPW\", 'P', OP.plateDouble.dat(MT.TinAlloy), 'W', OP.wireFine.dat(MT.RedAlloy), 'R', OD.itemRedstone, 'G', OD.blockGlassColorless, 'B', OP.bolt.dat(MT.TinAlloy), 'C', Items.comparator, 'X', OP.plate.dat(ANY.Si), 'Y', OP.wireFine.dat(ANY.Cu)        ); CR.shapeless(aRegistry.getItem(), CR.DEF_NCC, new Object[] {aRegistry.getItem()});"
+    },
+    {
+      "source_id": 31017,
+      "line": 1994,
+      "text": "\t\taRegistry.add(\"Player Counter Sensor\"                               , \"Sensors\"                             , 31017, 31015, MultiTileEntityPlayerCounter.class                      ,                 1, 16, aUtilMetal     , null, \"WGW\", \"CXC\", \"WPW\", 'P', OP.plateDouble.dat(MT.TinAlloy), 'W', OP.wireFine.dat(MT.RedAlloy), 'R', OD.itemRedstone, 'G', OD.blockGlassColorless, 'B', OP.bolt.dat(MT.TinAlloy), 'C', Items.comparator, 'X', OD.pressurePlateStone                                     ); CR.shapeless(aRegistry.getItem(), CR.DEF_NCC, new Object[] {aRegistry.getItem()});"
+    },
+    {
+      "source_id": 31003,
+      "line": 1981,
+      "text": "\t\taRegistry.add(\"Chronometer Sensor\"                                  , \"Sensors\"                             , 31003, 31015, MultiTileEntityChronometer.class                        ,                 1, 16, aUtilMetal     , null, \"WGW\", \"GXG\", \"WPW\", 'P', OP.plateDouble.dat(MT.TinAlloy), 'W', OP.wireFine.dat(MT.RedAlloy), 'R', OD.itemRedstone, 'G', OD.blockGlassColorless, 'B', OP.bolt.dat(MT.TinAlloy), 'C', Items.comparator, 'X', Items.clock                                               ); CR.shapeless(aRegistry.getItem(), CR.DEF_NCC, new Object[] {aRegistry.getItem()});"
+    },
+    {
+      "source_id": 31020,
+      "line": 1996,
+      "text": "\t\taRegistry.add(\"Geiger Counter Sensor\"                               , \"Sensors\"                             , 31020, 31015, MultiTileEntityGeigerCounter.class                      ,                 1, 16, aUtilMetal     , null, \"WGW\", \"YXY\", \"WPW\", 'P', OP.plateDouble.dat(MT.TinAlloy), 'W', OP.wireFine.dat(MT.RedAlloy), 'R', OD.itemRedstone, 'G', OD.blockGlassColorless, 'B', OP.bolt.dat(MT.TinAlloy), 'C', Items.comparator, 'X', IL.Geiger_Counter, 'Y', OP.plateDouble.dat(MT.Pb)         ); CR.shapeless(aRegistry.getItem(), CR.DEF_NCC, new Object[] {aRegistry.getItem()});"
+    },
+    {
+      "source_id": 31021,
+      "line": 1999,
+      "text": "\t\taRegistry.add(\"Laser-O-Meter Sensor\"                                , \"Sensors\"                             , 31021, 31015, MultiTileEntityLaserometer.class                        ,                 1, 16, aUtilMetal     , null, \"WGW\", \"YXY\", \"WPW\", 'P', OP.plateDouble.dat(MT.TinAlloy), 'W', OP.wireFine.dat(MT.RedAlloy), 'R', OD.itemRedstone, 'G', OD.blockGlassColorless, 'B', OP.bolt.dat(MT.TinAlloy), 'C', Items.comparator, 'X', IL.SENSORS[1]    , 'Y', OP.wireFine.dat(ANY.Cu)           ); CR.shapeless(aRegistry.getItem(), CR.DEF_NCC, new Object[] {aRegistry.getItem()});"
+    },
+    {
+      "source_id": 31016,
+      "line": 1993,
+      "text": "\t\taRegistry.add(\"TPS Sensor\"                                          , \"Sensors\"                             , 31016, 31015, MultiTileEntityTPSmeter.class                           ,                 1, 16, aUtilMetal     , null, \"WGW\", \"XXX\", \"WPW\", 'P', OP.plateDouble.dat(MT.TinAlloy), 'W', OP.wireFine.dat(MT.RedAlloy), 'R', OD.itemRedstone, 'G', OD.blockGlassColorless, 'B', OP.bolt.dat(MT.TinAlloy), 'C', Items.comparator, 'X', Items.clock                                               ); CR.shapeless(aRegistry.getItem(), CR.DEF_NCC, new Object[] {aRegistry.getItem()});"
+    },
+    {
+      "source_id": 31023,
+      "line": 1983,
+      "text": "\t\taRegistry.add(\"Kilo-Gibbl-O-Meter Sensor\"                           , \"Sensors\"                             , 31023, 31015, MultiTileEntityKiloGibblometer.class                    ,                 1, 16, aUtilMetal     , null, \"WPW\", \"BXB\", \"WPW\", 'P', OP.plateDouble.dat(MT.TinAlloy), 'W', OP.wireFine.dat(MT.RedAlloy), 'R', OD.itemRedstone, 'G', OD.blockGlassColorless, 'B', OP.bolt.dat(MT.TinAlloy), 'C', Items.comparator, 'X', OP.gem.dat(ANY.Diamond)                                   ); CR.shapeless(aRegistry.getItem(), CR.DEF_NCC, new Object[] {aRegistry.getItem()});"
+    }
+  ],
+  "table_audit": {
+    "core/src/main/java/com/gregtech/gregtech/content/machine/OriginalMachineMaterialData.java": {
+      "BLOCK_DATA": {
+        "previous": 626,
+        "current": 647,
+        "added": [
+          "sensor_bucketometer",
+          "sensor_chronometer",
+          "sensor_electrometer",
+          "sensor_fluidometer",
+          "sensor_geiger",
+          "sensor_gibblometer",
+          "sensor_itemometer",
+          "sensor_kilobucketometer",
+          "sensor_kilogibblometer",
+          "sensor_laserometer",
+          "sensor_luminometer",
+          "sensor_playercounter",
+          "sensor_progressmeter",
+          "sensor_stackometer",
+          "sensor_tachometer",
+          "sensor_thermometer",
+          "sensor_tpsmeter",
+          "sensor_weightometer_light",
+          "sensor_weightometer_medium",
+          "sensor_weightometer_super_heavy",
+          "sensor_weightometric"
+        ],
+        "previous_rows_unchanged": true,
+        "all_current_rows_match_source_generator": true
+      },
+      "DATA": {
+        "previous": 265,
+        "current": 265,
+        "added": [],
+        "previous_rows_unchanged": true,
+        "all_current_rows_match_source_generator": true
+      }
+    },
+    "core/src/main/java/com/gregtech/gregtech/data/SourceBlockProperties.java": {
+      "BLOCKS": {
+        "previous": 668,
+        "current": 689,
+        "added": [
+          "sensor_bucketometer",
+          "sensor_chronometer",
+          "sensor_electrometer",
+          "sensor_fluidometer",
+          "sensor_geiger",
+          "sensor_gibblometer",
+          "sensor_itemometer",
+          "sensor_kilobucketometer",
+          "sensor_kilogibblometer",
+          "sensor_laserometer",
+          "sensor_luminometer",
+          "sensor_playercounter",
+          "sensor_progressmeter",
+          "sensor_stackometer",
+          "sensor_tachometer",
+          "sensor_thermometer",
+          "sensor_tpsmeter",
+          "sensor_weightometer_light",
+          "sensor_weightometer_medium",
+          "sensor_weightometer_super_heavy",
+          "sensor_weightometric"
+        ],
+        "previous_rows_unchanged": true,
+        "all_current_rows_match_source_generator": true
+      },
+      "BASICS": {
+        "previous": 265,
+        "current": 265,
+        "added": [],
+        "previous_rows_unchanged": true,
+        "all_current_rows_match_source_generator": true
+      }
+    }
+  },
+  "language_audit": {
+    "source_keys": [
+      "gt.tooltip.sensor.fluidometer",
+      "gt.tooltip.sensor.itemometer",
+      "gt.tooltip.sensor.electrometer",
+      "gt.tooltip.sensor.progressmeter",
+      "gt.tooltip.sensor.thermometer",
+      "gt.tooltip.sensor.tachometer",
+      "gt.tooltip.sensor.heavyweightometer",
+      "gt.tooltip.sensor.lightweightometer",
+      "gt.tooltip.sensor.mediumweightometer",
+      "gt.tooltip.sensor.superheavyweightometer",
+      "gt.tooltip.sensor.bucketometer",
+      "gt.tooltip.sensor.kilobucketometer",
+      "gt.tooltip.sensor.gibblometer",
+      "gt.tooltip.sensor.stackometer",
+      "gt.tooltip.sensor.luminometer",
+      "gt.tooltip.sensor.playercounter",
+      "gt.tooltip.sensor.chronometer",
+      "gt.tooltip.sensor.geigercounter",
+      "gt.tooltip.sensor.laserometer",
+      "gt.tooltip.sensor.tpsmeter",
+      "gt.tooltip.sensor.kilogibblometer",
+      "gt.tooltip.sensor.screwdrive.buttons",
+      "gt.tooltip.sensor.screwdrive.display",
+      "gt.tooltip.sensor.screwdrive.modes",
+      "gt.lang.nogui.rightclick.interact",
+      "gt.lang.use.monkey.wrench.to.set.input.side",
+      "gt.lang.use.x.to.toggle.facing.pre",
+      "gt.lang.tool.name.wrench",
+      "gt.lang.use.x.to.toggle.facing.post"
+    ],
+    "changes": {
+      "en_us": {
+        "block.gregtech.sensor_bucketometer": {
+          "before": "Sensor Bucketometer",
+          "after": "Bucket-O-Meter Sensor"
+        },
+        "block.gregtech.sensor_chronometer": {
+          "before": "Sensor Chronometer",
+          "after": "Chronometer Sensor"
+        },
+        "block.gregtech.sensor_electrometer": {
+          "before": "Electrometer",
+          "after": "Electrometer Sensor"
+        },
+        "block.gregtech.sensor_fluidometer": {
+          "before": "Fluidometer",
+          "after": "Fluid-O-Meter Sensor"
+        },
+        "block.gregtech.sensor_geiger": {
+          "before": "Sensor Geiger",
+          "after": "Geiger Counter Sensor"
+        },
+        "block.gregtech.sensor_gibblometer": {
+          "before": "Sensor Gibblometer",
+          "after": "Gibbl-O-Meter Sensor"
+        },
+        "block.gregtech.sensor_itemometer": {
+          "before": "Itemometer",
+          "after": "Item-O-Meter Sensor"
+        },
+        "block.gregtech.sensor_kilobucketometer": {
+          "before": "Sensor Kilobucketometer",
+          "after": "Kilo-Bucket-O-Meter Sensor"
+        },
+        "block.gregtech.sensor_laserometer": {
+          "before": "Sensor Laserometer",
+          "after": "Laser-O-Meter Sensor"
+        },
+        "block.gregtech.sensor_luminometer": {
+          "before": "Sensor Luminometer",
+          "after": "Luminometer Sensor"
+        },
+        "block.gregtech.sensor_playercounter": {
+          "before": "Sensor Playercounter",
+          "after": "Player Counter Sensor"
+        },
+        "block.gregtech.sensor_progressmeter": {
+          "before": "Progressmeter",
+          "after": "Progress Sensor"
+        },
+        "block.gregtech.sensor_stackometer": {
+          "before": "Sensor Stackometer",
+          "after": "Stack-O-Meter Sensor"
+        },
+        "block.gregtech.sensor_tachometer": {
+          "before": "Sensor Tachometer",
+          "after": "Tachometer Sensor"
+        },
+        "block.gregtech.sensor_thermometer": {
+          "before": "Sensor Thermometer",
+          "after": "Thermometer Sensor"
+        },
+        "block.gregtech.sensor_weightometric": {
+          "before": "Sensor Weightometric",
+          "after": "Heavy Weight-O-Meter Sensor"
+        },
+        "gt.tooltip.sensor.bucketometer": {
+          "before": null,
+          "after": "Measures Fluids (In Cubic Meters)"
+        },
+        "gt.tooltip.sensor.chronometer": {
+          "before": null,
+          "after": "Measures Time of Day"
+        },
+        "gt.tooltip.sensor.electrometer": {
+          "before": null,
+          "after": "Measures Electricity Flow (In EU)"
+        },
+        "gt.tooltip.sensor.fluidometer": {
+          "before": null,
+          "after": "Measures Fluids (In Liters)"
+        },
+        "gt.tooltip.sensor.geigercounter": {
+          "before": null,
+          "after": "Measures Neutron Energy Levels"
+        },
+        "gt.tooltip.sensor.gibblometer": {
+          "before": null,
+          "after": "Measures Compression (In Gibbl)"
+        },
+        "gt.tooltip.sensor.itemometer": {
+          "before": null,
+          "after": "Measures the precise amount of Items"
+        },
+        "gt.tooltip.sensor.kilobucketometer": {
+          "before": null,
+          "after": "Measures Fluids (In Cubic Decameters)"
+        },
+        "gt.tooltip.sensor.kilogibblometer": {
+          "before": null,
+          "after": "Measures Compression (In Kilo-Gibbl)"
+        },
+        "gt.tooltip.sensor.laserometer": {
+          "before": null,
+          "after": "Measures Power transmitted through Laser Fiber (In LU)"
+        },
+        "gt.tooltip.sensor.luminometer": {
+          "before": null,
+          "after": "Measures Light (0 - 15)"
+        },
+        "gt.tooltip.sensor.playercounter": {
+          "before": null,
+          "after": "Measures Player Count of the whole Server"
+        },
+        "gt.tooltip.sensor.progressmeter": {
+          "before": null,
+          "after": "Measures Progress (also works on Mob Spawners)"
+        },
+        "gt.tooltip.sensor.stackometer": {
+          "before": null,
+          "after": "Measures the precise amount of Stacks"
+        },
+        "gt.tooltip.sensor.tachometer": {
+          "before": null,
+          "after": "Measures Axle Rotations (In RU)"
+        },
+        "gt.tooltip.sensor.thermometer": {
+          "before": null,
+          "after": "Measures Temperature (In Kelvin)"
+        },
+        "gt.tooltip.sensor.tpsmeter": {
+          "before": null,
+          "after": "Measures TPS of the whole Server"
+        },
+        "gt.tooltip.sensor.heavyweightometer": {
+          "before": null,
+          "after": "Measures the weight of an Inventory (in Tons)"
+        },
+        "gt.tooltip.sensor.lightweightometer": {
+          "before": null,
+          "after": "Measures the weight of an Inventory (in Gramm)"
+        },
+        "gt.tooltip.sensor.mediumweightometer": {
+          "before": null,
+          "after": "Measures the weight of an Inventory (in Kilogramme)"
+        },
+        "gt.tooltip.sensor.superheavyweightometer": {
+          "before": null,
+          "after": "Measures the weight of an Inventory (in Kilotons)"
+        },
+        "gt.tooltip.sensor.screwdrive.buttons": {
+          "before": null,
+          "after": "Use Screwdriver on Buttons to enable Averaging Mode."
+        },
+        "gt.tooltip.sensor.screwdrive.display": {
+          "before": null,
+          "after": "Use Screwdriver on Display toggle Hexadecimal Display."
+        },
+        "gt.tooltip.sensor.screwdrive.modes": {
+          "before": null,
+          "after": "Use Screwdriver on anything else to switch Modes."
+        },
+        "block.gregtech.sensor_kilogibblometer": {
+          "before": null,
+          "after": "Kilo-Gibbl-O-Meter Sensor"
+        }
+      },
+      "zh_cn": {
+        "block.gregtech.sensor_bucketometer": {
+          "before": "Sensor Bucketometer",
+          "after": "流体体积传感器(单位: 桶)"
+        },
+        "block.gregtech.sensor_chronometer": {
+          "before": "Sensor Chronometer",
+          "after": "精确时间传感器"
+        },
+        "block.gregtech.sensor_electrometer": {
+          "before": "电力计",
+          "after": "电力传感器"
+        },
+        "block.gregtech.sensor_fluidometer": {
+          "before": "Fluidometer",
+          "after": "流体体积传感器(单位: 升)"
+        },
+        "block.gregtech.sensor_geiger": {
+          "before": "Sensor Geiger",
+          "after": "盖革传感器"
+        },
+        "block.gregtech.sensor_gibblometer": {
+          "before": "Sensor Gibblometer",
+          "after": "锅炉压力传感器(单位: Gibbl)"
+        },
+        "block.gregtech.sensor_itemometer": {
+          "before": "Itemometer",
+          "after": "库存数量传感器"
+        },
+        "block.gregtech.sensor_kilobucketometer": {
+          "before": "Sensor Kilobucketometer",
+          "after": "流体体积传感器(单位: 千桶)"
+        },
+        "block.gregtech.sensor_laserometer": {
+          "before": "Sensor Laserometer",
+          "after": "激光传感器"
+        },
+        "block.gregtech.sensor_luminometer": {
+          "before": "Sensor Luminometer",
+          "after": "环境光度传感器"
+        },
+        "block.gregtech.sensor_playercounter": {
+          "before": "Sensor Playercounter",
+          "after": "玩家数量传感器"
+        },
+        "block.gregtech.sensor_progressmeter": {
+          "before": "Progressmeter",
+          "after": "进度传感器"
+        },
+        "block.gregtech.sensor_stackometer": {
+          "before": "Sensor Stackometer",
+          "after": "库存堆栈传感器"
+        },
+        "block.gregtech.sensor_tachometer": {
+          "before": "Sensor Tachometer",
+          "after": "转速传感器"
+        },
+        "block.gregtech.sensor_thermometer": {
+          "before": "Sensor Thermometer",
+          "after": "温度传感器"
+        },
+        "block.gregtech.sensor_weightometric": {
+          "before": "Sensor Weightometric",
+          "after": "重量级质量传感器"
+        },
+        "gt.tooltip.sensor.kilogibblometer": {
+          "before": null,
+          "after": "Measures Compression (In Kilo-Gibbl)"
+        },
+        "block.gregtech.sensor_kilogibblometer": {
+          "before": null,
+          "after": "Kilo-Gibbl-O-Meter Sensor"
+        }
+      }
+    },
+    "patch_missing": [
+      "gt.tooltip.sensor.kilogibblometer",
+      "gt.multitileentity.31023"
+    ]
+  },
+  "chinese_patch_verified_keys": 28,
+  "chinese_patch_verified_names": 20,
+  "chinese_missing_policy": "31023 name and kilogibblometer description are absent in the user patch. Retain original English in both locales rather than invent a Chinese translation.",
+  "generator_audits": [
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\sensor-material-candidate-20261007.json",
+      "sha256": "e8544c24dc03e260c3bc2f46f08cb5c3ea77fc9a86ac5f9aef4080d8f3bde74d",
+      "bytes": 1172970
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\sensor-material-candidate-20261007.java",
+      "sha256": "9b715d336dc4b5dad478cc54216cf9b8ad3154b3d162903d33e1a746b39a2589",
+      "bytes": 213960
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\sensor-harvest-candidate-20261007.json",
+      "sha256": "887d817d80b1cb2b6f5d23c7f9086d608a1b8a260ba0fcaeac76cba397cde2bd",
+      "bytes": 302921
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\sensor-harvest-candidate-20261007.java",
+      "sha256": "d64e169a92c344985d681c06666e911ef61f9498136dde3eb65a0cac7a66c9e4",
+      "bytes": 108082
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\sensor-table-audit-20261007.json",
+      "sha256": "0a5421631db133fa2751f1374bdf4f31a39675662cba4551da20ce8caf53232f",
+      "bytes": 2328
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\sensor-recipes-candidate-20261007.java",
+      "sha256": "f63be48c26c782cea3331f45266ed0d4908b825db3244816bedbd42109f6e4c2",
+      "bytes": 10204
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\sensor-language-audit-20261007.json",
+      "sha256": "8823caac6e3f8e03446c499314fb5d778ae2944f07d791b8ddf957d91a5fe5af",
+      "bytes": 9543
+    }
+  ],
+  "quantities": {
+    "fixed_precision": 647,
+    "fixed_harvest": 689,
+    "basics": 265,
+    "total_named_precision": 1500,
+    "total_named_harvest": 1542
+  },
+  "unknown_data_policy": "Known original automatic material components only. Unrecorded pressure plate tags, comparators and instrument item data are not replaced with arbitrary ingredients or guessed quantities.",
+  "runtime_changes": {
+    "sensor_count": [
+      20,
+      21
+    ],
+    "new_source_id": 31023,
+    "source_physics": {
+      "hardness": 1,
+      "resistance": 3,
+      "hand_harvestable": true,
+      "explicit_level": 1
+    },
+    "input_key": "gt.sensor_input",
+    "old_missing_key": "opposite display",
+    "invalid_saved_direction": "opposite display",
+    "wrench": "reset measuring side to opposite new display",
+    "monkey_wrench": "select any valid side except display; native permission/electric charge checks and10000 source tool-return cost",
+    "electrometer": "ElectricWire.lastWattage and voltage*amperage; never generic machine stored energy",
+    "gibbl": "Raw CompressionSensorSource value/max, divided by1000 or1000000; no generic fluid-handler fallback",
+    "adopted_compression_providers": [
+      "BoilerTank steam",
+      "OriginalLargeBoiler steam",
+      "FluidPipe all channels",
+      "BasicMachine input tanks only"
+    ]
+  }
+}

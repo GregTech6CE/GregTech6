@@ -180,7 +180,7 @@ public class MetalChestBlock extends HorizontalDirectionalBlock implements Entit
 
     @Override
     public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("gt.tooltip.metal_chest.1")
-                .withStyle(net.minecraft.ChatFormatting.GRAY));
+        com.gregtech.gregtech.client.StorageBlockTooltips.chest(stack,
+                this instanceof LootChestBlock lootChest ? lootChest.lootTable() : null, tooltip);
     }
 }

@@ -1,0 +1,487 @@
+{
+  "date": "2026-10-07",
+  "base_commit": "ef9b18d7b481ce098093bc70acb88f83ad91d67b",
+  "scope": "25 existing original multiblock tank valves and two retained aliases: original specialized tooltips and saved long contents preservation",
+  "authors": [
+    "GregTech-6 Team",
+    "Gregorius Techneticies"
+  ],
+  "license": "LGPL-3.0-or-later; Chinese values copied verbatim from user patch",
+  "original_files": [
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityTank.java",
+      "sha256": "ecf0694699f793359d0787d2169c98774428825acf098527fc19dc6fee06a1e4",
+      "bytes": 5625
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityTank3x3x3.java",
+      "sha256": "84114f5a8e4828b324c67a6dfb5528140e0d263bf389b13f0970e9cf4ff4eacb",
+      "bytes": 5892
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityTank5x5x5.java",
+      "sha256": "1336944ac940ac7f0f4dee911cd4ae5f108a10d7bf8e221c87126f2ddf797d39",
+      "bytes": 5838
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityTank3x3x3Wood.java",
+      "sha256": "2ba5c052e8b4369a8fb9cb2fbde4b870d63f2890d24be25fce8d6129264c9a7e",
+      "bytes": 1088
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityTank3x3x3Metal.java",
+      "sha256": "9197e6f5b33499c51172471e10d868a76a548e4fc1f8639caaf592b2c9bba269",
+      "bytes": 1010
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityTank5x5x5Metal.java",
+      "sha256": "2e8c46fd5f00fb565f425514065fb2d20545542c686b173570cf02c3875ede21",
+      "bytes": 1013
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\multiblocks\\TileEntityBase10MultiBlockBase.java",
+      "sha256": "42ec92430ff6af7fb8d192aebfa424cc1af519d40ba2ff53a8e8c6afe8f9e738",
+      "bytes": 11378
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\base\\TileEntityBase09FacingSingle.java",
+      "sha256": "b172aadf76d09c37ee4c7793cb784dcc97a19d999ad1737bafc60cc064bece7f",
+      "bytes": 5485
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\fluid\\FluidTankGT.java",
+      "sha256": "9e9c1500fb947048cc8ddcd4a19f44561d6d1278e2208381936b1ad483b25d7d",
+      "bytes": 14914
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\util\\UT.java",
+      "sha256": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709",
+      "bytes": 213872
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+      "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8",
+      "bytes": 51085
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "bytes": 153449
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "bytes": 791265
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577",
+      "bytes": 694
+    }
+  ],
+  "comparison_files": [
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityTank.java",
+      "sha256": "965eb56c81e401cd694774ee74d2ec25ab9c08a1836c5c856491cc8301daf89f",
+      "bytes": 5890
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityTank3x3x3.java",
+      "sha256": "c952c15807f18f52156fb8aaee1dd1b6f95aca64f54eb859dfb39ed9a57c978e",
+      "bytes": 6084
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityTank5x5x5.java",
+      "sha256": "84284764fc45c89c2a6aa50c7c0a036147fea829252e2b05eeb882e280c06aa2",
+      "bytes": 6042
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityTank3x3x3Wood.java",
+      "sha256": "2ba5c052e8b4369a8fb9cb2fbde4b870d63f2890d24be25fce8d6129264c9a7e",
+      "bytes": 1088
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityTank3x3x3Metal.java",
+      "sha256": "9197e6f5b33499c51172471e10d868a76a548e4fc1f8639caaf592b2c9bba269",
+      "bytes": 1010
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityTank5x5x5Metal.java",
+      "sha256": "2e8c46fd5f00fb565f425514065fb2d20545542c686b173570cf02c3875ede21",
+      "bytes": 1013
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\multiblocks\\TileEntityBase10MultiBlockBase.java",
+      "sha256": "17299983c220fe186f50adeaa3d584cf9e41fa956a072ef7e3fff3a3526df941",
+      "bytes": 11555
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\base\\TileEntityBase09FacingSingle.java",
+      "sha256": "a5f2184a58e7280aa82aabb2f4a8ea453e797d49347b464a92f83a6337e99155",
+      "bytes": 6196
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\fluid\\FluidTankGT.java",
+      "sha256": "14e1e8940e0ecda9bf1bb78ff3be552880411ff0b9d36c44999151523f1ac7f9",
+      "bytes": 20977
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\util\\UT.java",
+      "sha256": "464429017d2a7f5332eb283a698cd4a28ee4bbbf4ba2f23228d401e3b46a7774",
+      "bytes": 243859
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\data\\LH.java",
+      "sha256": "2df45cee1047b522593f4f42c70a3acb2c5d8a425399b9a3c83ed022b7115b0f",
+      "bytes": 51804
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\data\\CS.java",
+      "sha256": "e6e330961c416e104ea5a58dd8282d286d1e27292a9f6d9955c9569c39af87c9",
+      "bytes": 172344
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "4d87cacde8defa33df30359d345046daa8e901ab0419dca2766d2140d8af1562",
+      "bytes": 791308
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577",
+      "bytes": 694
+    }
+  ],
+  "chinese_patch": {
+    "path": "C:\\Dev\\GregTech_zh_cn.lang",
+    "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0",
+    "bytes": 7375784
+  },
+  "current_port_files": [
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\api\\fluid\\LongFluidStorage.java",
+      "sha256": "7f55c3840735034235560d0f46311fa1bbd561650ceb0614661f149d8ebad2bb",
+      "bytes": 2891
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\machine\\MachineConstructionMaterials.java",
+      "sha256": "2aace1aa37b76a34edf5793bd6bb29a5745a7a5bc496fa315cb762a8c2f6793e",
+      "bytes": 1856
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\machine\\OriginalMachineMaterialData.java",
+      "sha256": "c9d5a38ebca543f6bb1f057e3b13e5408e3f30a724a0036fa3fb64f723373d2a",
+      "bytes": 204005
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\OriginalTankTooltipData.java",
+      "sha256": "8364eba8c0769998d44dec8421b47030a5ab801d72de11d0d552173cb51f5d28",
+      "bytes": 1397
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\SharedLargeMachineParts.java",
+      "sha256": "4343b816d7097a9852a97a55c192d04fe3fe739f79a96b727700db33b58c88b7",
+      "bytes": 6772
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\TankValveParameters.java",
+      "sha256": "f4af2ea80a749f10656e5f55b7eb3e17354672cf7d1602d175e014792c9ff3dd",
+      "bytes": 4404
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\lang\\en_us.json",
+      "sha256": "a709874591067c809355a441f31dfece6cde20452bf0181604b4fd53a3708f31",
+      "bytes": 745534
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\lang\\zh_cn.json",
+      "sha256": "a09d19d30fab37adfb5f93b54e35d3b8119da156d0a083e6c5505a4987f1a1e5",
+      "bytes": 8454561
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\test\\java\\com\\gregtech\\gregtech\\core\\MachineSpecBehaviorContracts.java",
+      "sha256": "b0e2411a026fd7235363f9bf755cc61a645b2c44f0f4b88b1eae428ae290ec49",
+      "bytes": 78313
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\MultiblockTankTooltipStateTests.java",
+      "sha256": "1666eeff74c5c07fcc27ab78f724cab0aebd828455e7275b6f3ae6915caf08a4",
+      "bytes": 4121
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\resources\\data\\gregtech_multiblock_tanks\\structure\\test_empty.nbt",
+      "sha256": "ea4b3ed88dbb879fc3b86b9bceca2961af8248069c6420a4136eba192ec7b9b7",
+      "bytes": 113
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\api\\fluid\\FluidTankGT.java",
+      "sha256": "a4675e0463b03fca6e11ad8323f98cdf79e6eb21bac34f3bdaa1294a2dcb3010",
+      "bytes": 6557
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\api\\fluid\\MultiblockTankData.java",
+      "sha256": "35c40cd115c4869981d4dad10033eac3974a8bf256243594e4d797d805e19958",
+      "bytes": 1344
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\api\\material\\ItemMaterialRegistry.java",
+      "sha256": "cd486710098190c4c54140dc77f19309dd243b6d8858afd67cdf5f9a9d297e81",
+      "bytes": 4243
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\TankControllerBlock.java",
+      "sha256": "b8418fffe6f4115a5380919da68ef5cb6a620797100de439f26371d043673e37",
+      "bytes": 8063
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\MultiblockTankControllerBlockEntity.java",
+      "sha256": "57cc2fa16b737a56f86f04bb4d1f780423aeacaf6b00feea0a8fb004d4241b4b",
+      "bytes": 15198
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\client\\CommonBlockTooltips.java",
+      "sha256": "2aee573f7b0af6ef0e3cb73eda2d50f807651e480de28327c2615917788e8e3f",
+      "bytes": 7936
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\client\\MultiblockTankTooltips.java",
+      "sha256": "b4d4855c08e75f11ddb53a9418242fcf527a81cc3a4ec58bb06f805c404882b3",
+      "bytes": 3326
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\client\\StorageBlockTooltips.java",
+      "sha256": "46ea5b6cd3b3744a219a70757c1f9434eb8410d449dc3080c1c1c2f9e650c868",
+      "bytes": 4259
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\TankValveSpec.java",
+      "sha256": "e2725d91d564e235a5edefcd0e4c08aa6f61158497831faccc7266e065c8b919",
+      "bytes": 1536
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\item\\behavior\\BehaviorBuilderWand.java",
+      "sha256": "18045271db86665291549e68e5080876a180fdda8852ecd6e6f72115f6f942fb",
+      "bytes": 8685
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTBlockEntities.java",
+      "sha256": "4fc967d6fde8adebd361556564d03aa1fc0a9f57ab3fbc6e6edc9e939a68d965",
+      "bytes": 28693
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\MultiblockTankDeliveryChecks.java",
+      "sha256": "eac01f23d06fec22195341f827cf6e14c41e656258444087177d40b74eedd649",
+      "bytes": 8287
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\ProductionClientSmoke.java",
+      "sha256": "b1fc3c47267715596b6bd95cab7010ac3c25c00257ae3c65344637d2e7a7ed72",
+      "bytes": 4706
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\MultiblockTankTooltipStateTests.java",
+      "sha256": "93dd4dada08dab4873deca7bc953ca256dd20fda16db49057a3dcb1ed512e725",
+      "bytes": 3856
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\resources\\data\\gregtech_multiblock_tanks\\structures\\test_empty.nbt",
+      "sha256": "147ef3e2c39e8d261ff2287395af00d734ccd13b196abdea0c0334e11fdde075",
+      "bytes": 110
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\api\\fluid\\FluidTankGT.java",
+      "sha256": "b9dd18794c95a0725782bcc24198e1495d056d031b94e618882d52f160f83942",
+      "bytes": 6447
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\api\\fluid\\MultiblockTankData.java",
+      "sha256": "a54d5d150e8bb23fa118f74b6eaa88cd1b494c45179dedaef889aa8b10b916b7",
+      "bytes": 1288
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\api\\material\\ItemMaterialRegistry.java",
+      "sha256": "3851d26a5aef6aa84cb40dd5349f5d845a982f365391e66c4c9a99af67127804",
+      "bytes": 3364
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\TankControllerBlock.java",
+      "sha256": "af2ca25bc1bf08aef601aab27e30dd22fbc96286bcf8d7a71145011fc3206b8a",
+      "bytes": 6562
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\MultiblockTankControllerBlockEntity.java",
+      "sha256": "f4f3cd746f7319d58e72328195fe3424394db1c0814d422c69886f6b435a9cff",
+      "bytes": 15769
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\client\\CommonBlockTooltips.java",
+      "sha256": "74405494c19a9362be9fcd63650bcf56885b4f618685284984410c03b7a8ed94",
+      "bytes": 7719
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\client\\MultiblockTankTooltips.java",
+      "sha256": "de21b35f036757993ee9ec1e4db57ec24a7b0d68dbac2c8706c1d3d97c0d7419",
+      "bytes": 3133
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\client\\StorageBlockTooltips.java",
+      "sha256": "ee2bde8e970ea5f7f655e75e6538308251696a5232b25ab1c5151f1f3cf8ac19",
+      "bytes": 4072
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\TankValveSpec.java",
+      "sha256": "e2725d91d564e235a5edefcd0e4c08aa6f61158497831faccc7266e065c8b919",
+      "bytes": 1536
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\item\\behavior\\BehaviorBuilderWand.java",
+      "sha256": "0a59733f726fe20a1a264afad8eb5d930977895bba9d60e61ad7df892d7e7c08",
+      "bytes": 8581
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTBlockEntities.java",
+      "sha256": "34ab1405c61c72283fa9628dd7108f3019cd33c8ab9afb52a2e8cee4ef602f77",
+      "bytes": 46766
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\MultiblockTankDeliveryChecks.java",
+      "sha256": "aabbcb842a0d7a873ca152f9830090aa5156578691c052e1f3572eca4d2af4bb",
+      "bytes": 7898
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\ProductionClientSmoke.java",
+      "sha256": "d8d2a36785fc0d0fed24e22c54788dfb434f2c862ebd31d62d75a45bc0581a5e",
+      "bytes": 6868
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\integration\\import_source_tooltip_lang.py",
+      "sha256": "a115ebdfb0491c28723b185b428ae0360db90f2b4e477714144d3178f0de19d4",
+      "bytes": 5531
+    }
+  ],
+  "language_import": {
+    "keys": [
+      "gt.lang.hazard.meltdown",
+      "gt.lang.no.powerconducting.fluids",
+      "gt.lang.nogui.funnel.tap.tank",
+      "gt.lang.only.simple",
+      "gt.lang.pipe.stats.capacity",
+      "gt.lang.proof.acid",
+      "gt.lang.proof.gas",
+      "gt.lang.proof.magic",
+      "gt.lang.proof.plasma",
+      "gt.lang.structure",
+      "gt.lang.tool.name.wrench",
+      "gt.lang.use.builder.wand.to.ease.building",
+      "gt.lang.use.magnifyingglass.to.detail",
+      "gt.lang.use.x.to.toggle.facing.post",
+      "gt.lang.use.x.to.toggle.facing.pre",
+      "gt.tooltip.multiblock.tank3x3x3.1",
+      "gt.tooltip.multiblock.tank3x3x3.2",
+      "gt.tooltip.multiblock.tank3x3x3.3",
+      "gt.tooltip.multiblock.tank5x5x5.1",
+      "gt.tooltip.multiblock.tank5x5x5.2",
+      "gt.tooltip.multiblock.tank5x5x5.3"
+    ],
+    "aliases": {},
+    "changes": {
+      "en_us": {
+        "gt.tooltip.multiblock.tank3x3x3.1": {
+          "before": null,
+          "after": "3x3x3 Hollow of the corresponding Walls made of this Material"
+        },
+        "gt.tooltip.multiblock.tank3x3x3.2": {
+          "before": null,
+          "after": "This Block centered on Side/Top/Bottom and facing outwards"
+        },
+        "gt.tooltip.multiblock.tank3x3x3.3": {
+          "before": null,
+          "after": "Auto-Emits Fluids from the Main Block if not against Gravity"
+        },
+        "gt.tooltip.multiblock.tank5x5x5.1": {
+          "before": null,
+          "after": "5x5x5 Hollow of the corresponding Walls made of this Material"
+        },
+        "gt.tooltip.multiblock.tank5x5x5.2": {
+          "before": null,
+          "after": "This Block centered on Side/Top/Bottom and facing outwards"
+        },
+        "gt.tooltip.multiblock.tank5x5x5.3": {
+          "before": null,
+          "after": "Auto-Emits Fluids from the Main Block if not against Gravity"
+        }
+      },
+      "zh_cn": {}
+    },
+    "missing_chinese": [],
+    "source_files": [
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+        "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+        "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\RM.java",
+        "sha256": "c7cb07faef0235ace4bb26656fddaabfa10da6aa4a2689a7f4cdcaef10d366e6"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\TD.java",
+        "sha256": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\OP.java",
+        "sha256": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\..\\GT_API_Proxy_Client.java",
+        "sha256": "4ea2be4bb978e989127552dfb057e6f15415b84fe997382828123ba62c1576c8"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\..\\code\\TagData.java",
+        "sha256": "afa72881ee6c421c094ce27e3cef2701374257cb1dd2f099293cceb3e91b4a64"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityTank3x3x3.java",
+        "sha256": "84114f5a8e4828b324c67a6dfb5528140e0d263bf389b13f0970e9cf4ff4eacb"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityTank5x5x5.java",
+        "sha256": "1336944ac940ac7f0f4dee911cd4ae5f108a10d7bf8e221c87126f2ddf797d39"
+      },
+      {
+        "path": "C:\\Dev\\GregTech_zh_cn.lang",
+        "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0"
+      }
+    ],
+    "license": "Original LH/CS/RM/TD/TagData: LGPL-3.0-or-later; Chinese strings copied verbatim from the user-provided patch."
+  },
+  "source_controller_materials": {
+    "registrations": 25,
+    "new_material_registrations": 0,
+    "wood": {
+      "WoodTreated_U": 4,
+      "Pb_U": 1.5
+    },
+    "small_regular_U": 4.5,
+    "small_dense_U": 36.5,
+    "large_regular_U": 10.5,
+    "large_dense_U": 90.5,
+    "whole_structure_materials_added_to_valve": false
+  },
+  "decisions": [
+    "Original shape lines precede contentcap, no-GUI funnel/tap, no power-conducting fluids, conditional simple/gas/acid/plasma/magic, material melting point, builder wand/magnifier/facing.",
+    "Empty capacity uses the existing translated original capacity heading; saved fluid shows original liters/content/phase/max formatting, including zero-amount identity.",
+    "Original UT number grouping uses underscores for at least five digits; four digits remain ungrouped.",
+    "Both native load and read-only hover use the same current-port gt.tank envelope reader. Placed identity continues to own nominal capacity/size/proof flags.",
+    "Multiblock-specific capacity refresh retains all existing long contents instead of the generic storage setter discarding the surplus; effective capacity stays max(nominal, amount).",
+    "All 25 existing controller REV components and source capacities independently checked; two legacy aliases receive compatible shape/content/tool rows without invented material melting limits."
+  ],
+  "boundaries": [
+    "Original top-level gt.tankcap and mutable saved proof/configuration overrides remain unimplemented; the existing fixed-valve ownership policy is explicit.",
+    "The current modern nested fluid envelope is preserved; no claim of direct original 1.7.10 NBT compatibility or historical-world migration.",
+    "Generic LongFluidStorage.setCapacity remains unchanged; this batch fixes multiblock tank load and refresh only.",
+    "Existing formed-tank flow, hazard disposal, player tool actions, break behavior and source output timing are not newly exercised or declared fully aligned."
+  ]
+}

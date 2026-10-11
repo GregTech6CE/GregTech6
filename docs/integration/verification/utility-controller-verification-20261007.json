@@ -1,0 +1,182 @@
+{
+  "date": "2026-10-07",
+  "base_commit": "ae7ad10a728ebc2ce86eeb2771536d70a083757b",
+  "status": "Source contracts and dual main/probe compilation accepted; ordinary packages and installed execution deferred; whole goal active",
+  "source_receipt": {
+    "path": "C:\\Dev\\GregTech6\\docs\\integration\\verification\\utility-controller-source-20261007.json",
+    "sha256": "486027cd965f96b993a970f3475e00fa1b3d5ad179519b1c806e3580e2411ff0",
+    "bytes": 25780
+  },
+  "compile_log": {
+    "path": "C:\\Dev\\GregTech6\\work\\utility-controller-compile-20261007.log",
+    "sha256": "9026aba74f07fbcdeb5641581e8ff8d545cd89a1d609c6ceaa5eca70aa1dd489",
+    "bytes": 30781
+  },
+  "compile": {
+    "exit_code": 0,
+    "seconds": 30,
+    "shared_source_assertions": 7584,
+    "new_fixed_source_assertions": 15,
+    "tasks": [
+      ":core:machineSpecBehaviorContracts",
+      ":compileJava",
+      ":neoforge:compileJava",
+      ":compileProductionSmokeJava",
+      ":neoforge:compileProductionSmokeJava"
+    ],
+    "offline": true,
+    "no_parallel": true,
+    "direct_core_classpath": true,
+    "direct_core_resources": true,
+    "java_home": "C:/Program Files/Java/jdk-21",
+    "forge_toolchain": 17,
+    "neoforge_toolchain": 21
+  },
+  "compiled_byte_references": [
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\content\\multiblock\\OriginalUtilityControllerData.class",
+      "sha256": "4569c12c681c6a427dc048d96d00e2c9296b4d8866b08441b4da810bfff125bd",
+      "bytes": 3148
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\content\\machine\\MachineConstructionMaterials.class",
+      "sha256": "9d02409bec13f16f41905d0d28770d8be6d05a6fcc1172851c61545d2c3011ae",
+      "bytes": 5092
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\content\\machine\\OriginalMachineMaterialData.class",
+      "sha256": "81f69e4102fb26ac5da126c04c0e946d7b5fbbaa789a5fd200297ad9f3e4f8e1",
+      "bytes": 108117
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\data\\SourceBlockProperties.class",
+      "sha256": "95e95a1fac45ff4c620e275a15246c457aec3903546b7cbb25757ddc4eb1fc39",
+      "bytes": 61959
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\build\\classes\\java\\test\\com\\gregtech\\gregtech\\core\\UtilityControllerContracts.class",
+      "sha256": "521605499d92c5c7a1f9f50edcf0db5f94bb8ae5ddbc16d4e9f43bb748cfbbdc",
+      "bytes": 6287
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\build\\classes\\java\\test\\com\\gregtech\\gregtech\\core\\MachineSpecBehaviorContracts.class",
+      "sha256": "9f609ff80976473bbe7749845e0467874620e02a9fcd189a24d7331daa1a69b9",
+      "bytes": 90471
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\client\\UtilityControllerTooltips.class",
+      "sha256": "082b3cd9121fdc09baa479b7e7de59c4aae1ebbbf2d8c5e2bffbd24728027a9b",
+      "bytes": 4014
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\block\\machine\\LargeHeatExchangerControllerBlock.class",
+      "sha256": "3bb450e62c398dd936b60a2fd8249d84d14373d0b029e853dae4b7c95173f758",
+      "bytes": 9387
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\block\\machine\\LightningRodControllerBlock.class",
+      "sha256": "e848c631ffd5af4e2915d79bae08de853714cb45cae7eb02d35f03c166598139",
+      "bytes": 6556
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\block\\machine\\OriginalLightningRodControllerBlock.class",
+      "sha256": "ea246dae253350486416d3ea7d8658dd43c68de0b9ff29ae61dc3ca6573871ef",
+      "bytes": 7287
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\productionSmoke\\com\\gregtech\\gregtech\\integration\\client\\UtilityControllerDeliveryChecks.class",
+      "sha256": "75f869b4cb980ea77683ce4b13075fb028aa689008f7ca9ee26259acfa4a810e",
+      "bytes": 10630
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\productionSmoke\\com\\gregtech\\gregtech\\integration\\client\\CommonBlockDeliveryChecks.class",
+      "sha256": "4ee18dd4eb37d5153a0d1bec9ac8368c45733d42a4feca542831f32e3e28aba4",
+      "bytes": 25071
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\productionSmoke\\com\\gregtech\\gregtech\\integration\\client\\ProductionClientSmoke.class",
+      "sha256": "bacd4d9056dbc3181ca19ae1439d98530c88672dcca7730d1f10d0e1dbf78d97",
+      "bytes": 11624
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\client\\UtilityControllerTooltips.class",
+      "sha256": "9e4a354676df9b9e93f6f36407cf551e49f01424012e91095390da2df8cd8e3c",
+      "bytes": 4014
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\block\\machine\\LargeHeatExchangerControllerBlock.class",
+      "sha256": "e1e155571e356c67b707cca388b4f3c8f39020b5fe0ebebdea95f2826676a14b",
+      "bytes": 11659
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\block\\machine\\LightningRodControllerBlock.class",
+      "sha256": "a97a04f6cbc0d06fc75637b930a3155a11d4f5d482c5fb481f15ef8302219970",
+      "bytes": 6983
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\block\\machine\\OriginalLightningRodControllerBlock.class",
+      "sha256": "e5cac6898d98bf3adb0e4f8b5e11d44f405253a836272f43b9c27400ac073d4b",
+      "bytes": 8642
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\productionSmoke\\com\\gregtech\\gregtech\\integration\\client\\UtilityControllerDeliveryChecks.class",
+      "sha256": "6e1047d4c99c2a74dff9b7536de112f80c99eac4838eb729c58bf1799faffa89",
+      "bytes": 10882
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\productionSmoke\\com\\gregtech\\gregtech\\integration\\client\\CommonBlockDeliveryChecks.class",
+      "sha256": "aaf27b0cb109c890c1fa386ed55bdfcdcc9d7e87844c06c9dc70dd4a19c8c54c",
+      "bytes": 26611
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\productionSmoke\\com\\gregtech\\gregtech\\integration\\client\\ProductionClientSmoke.class",
+      "sha256": "e0deec4db9efe661ad59cda04854d2b040a7c9b961c9af4c42871f421bcca8f8",
+      "bytes": 9453
+    }
+  ],
+  "preparation_attempts": [
+    {
+      "action": "finish_utility_controller_checks_20261007.py",
+      "exit_code": 1,
+      "reason": "After check/probe edits, audit regex assumed literal DATA.put rows; real basic records use add(machine,tier,id,...). No production/compile failure. Separate audit fixed parser; mutation portion not rerun.",
+      "corrected_audit": {
+        "path": "C:\\Dev\\GregTech6\\work\\audit_utility_controller_tables_20261007.py",
+        "sha256": "2f3fb17d9af13cef19b97b4ffd60f32c8573d818f703d9e332977be4252cf6ce",
+        "bytes": 1712
+      }
+    }
+  ],
+  "prepared_installed_checks": {
+    "per_loader_items": 3,
+    "per_loader_structure_rows": 22,
+    "compiled": true,
+    "executed": false,
+    "scope": "Actual normal/advanced tooltip events, original structure colors, output/recipe/efficiency/no-GUI/tool conditions, known materials and source harvest identities, old invented row absent."
+  },
+  "current_runtime": false,
+  "current_world": false,
+  "current_ordinary_dual_build": false,
+  "current_installed_client": false,
+  "last_accepted_jars": [
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\verified\\20261007-061418Z-10bc6a82\\gregtech6-1.20.1-forge-0.0.0.jar",
+      "sha256": "10bc6a82e3d85c481263e0abbf2826354497ec9f1b1755cb8e44e9836421c8a1",
+      "bytes": 41637337
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\verified\\20261007-061418Z-10bc6a82\\gregtech6-neoforge-1.21.1-0.0.0.jar",
+      "sha256": "5b6cd982b767ee8409e2ea78e4bb05969c072fe8d19167926856b9622bfd528e",
+      "bytes": 39859863
+    }
+  ],
+  "last_accepted_jars_include_this_batch": false,
+  "jar_verification_scope": "SHA only rechecked this batch; original pooled report holds prior full CRC /bytecode /installed acceptance. Current compiled classes intentionally differ from accepted jars.",
+  "deferred": [
+    "Ordinary dual JAR and formal installed client checks pooled across subsequent batches as requested.",
+    "Source variable saved rate/efficiency/fuel/emitted type/capacity; heat exchanger long output storage, drain fallback and public HU offer/size API parity.",
+    "Natural hot fuel /heat receiver /lightning generation /recycling survival chain; manual hover, independent saved-world restart, historical saves and ordinary dedicated server.",
+    "421 preexisting model-reference warnings and remaining all-block source tooltips/materials; source manual GUI /implosion start sound."
+  ],
+  "pushed": false,
+  "pull_request_work": false
+}

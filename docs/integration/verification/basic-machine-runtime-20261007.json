@@ -1,0 +1,219 @@
+{
+  "date": "2026-10-07",
+  "base_commit": "352d1f62d748fe606d3b7fbf8a26568f54df1ba6",
+  "status": "finite affected dev-world scenarios accepted; ordinary packaging/installed current probes deferred to pooled delivery; goal active",
+  "attempts": [
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\basic-source-first-compile-20261007.log",
+        "sha256": "cdbd6c0cd3d87ee7f1b41a10d2b412a93909bdab66a629472926144999b25140",
+        "bytes": 1597
+      },
+      "exit_code": 1,
+      "seconds": 7,
+      "scope_and_cause": "Shared main compiled; fixture illegal Java escape prevented tests and dual main compilation. Language preparation initially found missing gt.lang.fluid.input, then added exact source English."
+    },
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\basic-source-fixed-compile-20261007.log",
+        "sha256": "bd11d86980d0f1a8aab81d54f8ca92f149eb731422bcca71082b74c13d7f6411",
+        "bytes": 58305
+      },
+      "exit_code": 0,
+      "seconds": 27,
+      "scope_and_cause": "Shared5243 source contracts and dual main compilation accepted before source face restoration."
+    },
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\basic-source-probes-compile-20261007.log",
+        "sha256": "0aa65dcb7e5d3010303f6a7382fccd7c40bfd53a8448d2ea1036faff68177346",
+        "bytes": 8702
+      },
+      "exit_code": 0,
+      "seconds": 19,
+      "scope_and_cause": "Initial finite fixtures and deferred installed probes compiled only."
+    },
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\basic-source-world-20261007.log",
+        "sha256": "478a6eca77044b21d5439c2b842d90f7a1464ebe9a6a963349970f5a939e4432",
+        "bytes": 1517
+      },
+      "exit_code": 1,
+      "seconds": 8,
+      "scope_and_cause": "Wrong runBootstrapGameTestServer task name; no game started."
+    },
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\basic-source-world-running-20261007.log",
+        "sha256": "ec4feaddea103e1b09dbbef0bb77975c0d716852dd2f822b2da27728c99c42d7",
+        "bytes": 213947
+      },
+      "exit_code": 1,
+      "seconds": 133,
+      "scope_and_cause": "Forge factory flags and isolated job costs reached final burner assertion, which incorrectly searched the machine slot after auto-output ejected the item; Forge required test failed, dimensions saved; Neo did not start.",
+      "executed_Forge_fixture": {
+        "path": "C:\\Dev\\GregTech6\\work\\basic-source-first-forge-fixture-20261007.java",
+        "sha256": "4840370d8219446683d9ce1affe129807be5a315ca008898a772e86f02f8f803",
+        "bytes": 5895
+      },
+      "prepared_unexecuted_Neo_fixture": {
+        "path": "C:\\Dev\\GregTech6\\work\\basic-source-first-unexecuted-neo-fixture-20261007.java",
+        "sha256": "514c1ac9523b63203dbe947d1f359e1d22d0925fa09c166a2e22df4045d7c353",
+        "bytes": 5980
+      }
+    },
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\basic-source-world-fixed-20261007.log",
+        "sha256": "cfe1ec4f81f919d6b65adfb1b28669d04323523b522554e916ae6aa1a4796936",
+        "bytes": 1764
+      },
+      "exit_code": 1,
+      "seconds": 7,
+      "scope_and_cause": "Source face restoration used tier instead of tierNumber at main catalogue call; shared compilation failed, no game started."
+    },
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\basic-source-world-final-20261007.log",
+        "sha256": "de869a8cb59c7e2a966727833c9f08fcfb756968aff20127af19f1416c018ace",
+        "bytes": 773785
+      },
+      "exit_code": 0,
+      "seconds": 222,
+      "scope_and_cause": "Final shared7466 contracts, dual main/probes/fixtures compiled; required finite test1/1 per loader accepted and both saved all dimensions.",
+      "source_assertions": 7466,
+      "Forge": {
+        "required": 1,
+        "passed": 1,
+        "dimensions_saved": true,
+        "loader": "47.4.20",
+        "Java": "17.0.10",
+        "heap": "3GiB",
+        "world": "build/basic-source-gametest-run"
+      },
+      "NeoForge": {
+        "required": 1,
+        "passed": 1,
+        "dimensions_saved": true,
+        "loader": "21.1.243",
+        "Java": "21.0.7",
+        "heap": "3GiB",
+        "world": "neoforge/build/basic-source-gametest-run"
+      }
+    },
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\basic-source-final-probes-20261007.log",
+        "sha256": "32b86804e34acae4bd525d5062cbfcecda58a7551bfa4c8976fbb9751eb47f57",
+        "bytes": 1716
+      },
+      "exit_code": 0,
+      "seconds": 17,
+      "scope_and_cause": "After accepted world execution, only installed probes gained IO row-presence/language checks; dual probes recompiled. English resources gained54 source recipe names; world-affected native/core source and fixtures unchanged."
+    }
+  ],
+  "current_compiled_byte_references": [
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\content\\machine\\OriginalBasicMachineRules.class",
+      "sha256": "9b40fbb532dfa69492ad32095d9faee1994ab235082d86c88158ac9c3c0d92ce",
+      "bytes": 7976
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\content\\machine\\OriginalBasicMachineRules$IoRow.class",
+      "sha256": "22574c29d098ccab8bba59b2a409c391190cbf4a71e2828ce228b6664f52053f",
+      "bytes": 2411
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\content\\machine\\OriginalBasicMachineRules$IoFace.class",
+      "sha256": "f29eebc4a1b090a3dbeb54794e156fdd655097056e1c29c849f7bb12720fe90c",
+      "bytes": 1824
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\content\\machine\\OriginalBasicMachineFaces.class",
+      "sha256": "14d8b12a66936e3b6a4aa34daff859adb033a658a1a52d406f998e9fb6b22cfe",
+      "bytes": 5716
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\content\\machine\\BasicMachineCatalog.class",
+      "sha256": "19d0e080dd643613a8752bf139736dfea37168c144d36895ab12c294f9697ab5",
+      "bytes": 25451
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\blockentity\\machine\\BasicMachineBlockEntity.class",
+      "sha256": "045eb661da98429e43cef9e0739ddd91490a4e88a49ac05aab9834eb0639f1b7",
+      "bytes": 66517
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\client\\BasicMachineSourceTooltips.class",
+      "sha256": "26542d3b23d2615082bcdc739edcf44d933218eec6c8f3a09d94bb4dd8fa414c",
+      "bytes": 8045
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\bootstrapGameTest\\com\\gregtech\\gregtech\\gametest\\BasicMachineSourceTests.class",
+      "sha256": "c5174b76c3f307f3d2cd13e56a9112e5ed30bf2998304fce80f049db011ecba3",
+      "bytes": 14908
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\productionSmoke\\com\\gregtech\\gregtech\\integration\\client\\BasicMachineSourceDeliveryChecks.class",
+      "sha256": "07fa6b6d99550a6baabafe062035d56ec83ada0d07e8390db73f811f26e0302c",
+      "bytes": 8105
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\blockentity\\machine\\BasicMachineBlockEntity.class",
+      "sha256": "3a6529bbc9a3aff337b45c0a0243f04578b704aaa4265395ad54d165d695b834",
+      "bytes": 64382
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\client\\BasicMachineSourceTooltips.class",
+      "sha256": "47ae0950f96e8de7d1988f6f66f7cd67d1ffe6c12eefe9763a612358c72a8c30",
+      "bytes": 8045
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\bootstrapGameTest\\com\\gregtech\\gregtech\\gametest\\BasicMachineSourceTests.class",
+      "sha256": "4bd0b714a724293250c0e03d427d7901715f04f4ce78067b7b6ae02348c156c4",
+      "bytes": 15229
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\productionSmoke\\com\\gregtech\\gregtech\\integration\\client\\BasicMachineSourceDeliveryChecks.class",
+      "sha256": "14dea337c8a4ef063db77c48ddc38c92e6e9c02873b62a0de4b3e865dbce67f5",
+      "bytes": 8334
+    }
+  ],
+  "source_receipt": {
+    "path": "C:\\Dev\\GregTech6\\docs\\integration\\verification\\basic-machine-source-20261007.json",
+    "sha256": "fa881466799cc3730697bc2fd7b13943e1bc98124529ec68b5c5f235c95e31c9",
+    "bytes": 18286
+  },
+  "world_command": "cached Gradle8.8 :core:machineSpecBehaviorContracts :compileProductionSmokeJava :neoforge:compileProductionSmokeJava :runGameTestServer :neoforge:runGameTestServer --offline --no-daemon --console=plain -I work/emi-local.init.gradle -PdirectCoreClasspath=true -PdirectCoreResources=true -PgameTestNamespaces=gregtech_basic_source -PgameTestHeap=3g -PgameTestDirectory=build/basic-source-gametest-run -PneoforgeGameTestDirectory=build/basic-source-gametest-run",
+  "acceptance_scope": [
+    "247 actual registered native factories per loader: efficiency, cheap overclocking and constant-power method dispatch; independently source-keyed shared fixture verifies original IDs, flags and nine face defaults.",
+    "Actual placed electric mixer, roaster and burn mixer with native inventories and explicitly injected packets/ticks. Temporary synthetic marker recipes: max work320/80/1280; fixtures remove recipes in finally, not survival recipes or shipped recipe rows.",
+    "Burn mixer refuses unignited reservation; actual onIgnite cost10000, original gt.ignite byte40, native save/load method roundtrip,40 explicitly driven work ticks deliver STICK to a real chest at source RIGHT and renew40.",
+    "One required finite GameTest per platform; graceful dimension saves do not prove process restart.",
+    "Final dual installed tooltip probes compiled only:247 actual tooltip/event calls, conditional IO, efficiency/ignition/tools, recipe language presence and single advanced material section await ordinary pooled clients."
+  ],
+  "not_verified": [
+    "Current ordinary dual JAR build/verification and installed clients",
+    "Player hovered tooltips/screenshot",
+    "Natural energy source chain or survival recipe reachability",
+    "Independent process restart/old-save migration",
+    "Ordinary standalone dedicated server"
+  ],
+  "last_accepted_distribution": {
+    "directory": "C:/Dev/GregTech6/build/verified/20261007-042336Z-730aab78",
+    "manifest": {
+      "path": "C:\\Dev\\GregTech6\\docs\\integration\\verification\\large-recipe-pooled-delivery-20261007.json",
+      "sha256": "16c773e6638b568cf72d877c650c69cbaf3b11751b8ba7ec54faff26af2e50bd",
+      "bytes": 15492
+    },
+    "contains_this_batch": false
+  },
+  "auxiliary_audit_notes": [
+    "Fresh primary source extraction uses parse_source rather than stale external paths in preserved JSON. Block comments are stripped before splitting NBT pairs, including the molecular-scanner alternative auto face.",
+    "Read-only baseline face audit initially failed with Windows javac default GBK; adding explicit UTF-8 accepted247 baseline specs with228 differences. This helper failure did not start Minecraft or alter production sources.",
+    "Initial recipe-name audit used a whitespace-specific default -> match and failed; fixed regex then found54 missing English keys. Chinese58 recipe names were already verbatim.",
+    "Generator regenerated the source faces and247 flag/face fixture with identical bytes.",
+    "No source-table, zh_cn, historical-world or existing user-instance mutations; no push or PR."
+  ]
+}

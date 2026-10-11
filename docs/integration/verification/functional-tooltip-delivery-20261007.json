@@ -1,0 +1,271 @@
+{
+  "date": "2026-10-07",
+  "status": "passed",
+  "mod_source_commit": "ae3e1857",
+  "scope": "Grouped ordinary dual build, packaging and installed title-screen item method acceptance of machine-tooltip rounds; no full gameplay claim.",
+  "core_contracts": {
+    "core": 2472,
+    "machine": 107,
+    "material": 7947,
+    "thermal": 53
+  },
+  "build_elapsed": "4m18s",
+  "logs": [
+    {
+      "path": "work/functional-tooltips-build-20261007.log",
+      "sha256": "646604c68ef6a30882344ba0467b81e34978dca7248b1e2b728b66851ccddb8b"
+    },
+    {
+      "path": "work/functional-tooltips-build-final-20261007.log",
+      "sha256": "61f6d730f3092192fd4b06cc4901b6ab889067dcbac765a7d30205b3e7249eb8"
+    },
+    {
+      "path": "work/functional-tooltips-build-complete-20261007.log",
+      "sha256": "65f384a0de7475585eacc2e9c2b5d48c22773791ad14183806b7b966becc5edb"
+    },
+    {
+      "path": "work/functional-tooltips-probe-diagnostics-20261007.log",
+      "sha256": "42fef046b5c2afdfde72803457d49cf5309d00afb5a4a79d5e8bcfb4f9d8647b"
+    },
+    {
+      "path": "work/functional-tooltips-probe-final-20261007.log",
+      "sha256": "833a2c30282bc8e7a32be944f9a7cb62cbc2a00b1e1d738ff67ec66515cc1290"
+    },
+    {
+      "path": "work/functional-tooltips-probe-counts-20261007.log",
+      "sha256": "42fef046b5c2afdfde72803457d49cf5309d00afb5a4a79d5e8bcfb4f9d8647b"
+    }
+  ],
+  "packaging": {
+    "report": "work/functional-tooltips-packaging-20261007.json",
+    "sha256": "06f324dd6a130daae41cf36361c3f338d3a9a4b5de4dc41e825f3ac0a71f2bfb",
+    "shared_current_classes": 729,
+    "native_current_classes": {
+      "forge": 1760,
+      "neoforge": 1567
+    },
+    "crc_metadata_mixins_and_probe_exclusion": true
+  },
+  "artifacts": {
+    "status": "passed",
+    "scope": "Verified complete copies; runtime evidence is recorded separately",
+    "directory": "C:\\Dev\\GregTech6\\build\\verified\\20261006-195055Z-1fceed96",
+    "verification_report": "C:\\Dev\\GregTech6\\work\\functional-tooltips-packaging-20261007.json",
+    "verification_report_sha256": "06f324dd6a130daae41cf36361c3f338d3a9a4b5de4dc41e825f3ac0a71f2bfb",
+    "artifacts": {
+      "forge": {
+        "name": "gregtech6-1.20.1-forge-0.0.0.jar",
+        "bytes": 41324193,
+        "sha256": "1fceed961295282995b5e2343c2598fd644f5903f9236af54bdada9e6639de63",
+        "zip_crc_checked": true,
+        "path": "C:\\Dev\\GregTech6\\build\\verified\\20261006-195055Z-1fceed96\\gregtech6-1.20.1-forge-0.0.0.jar"
+      },
+      "neoforge": {
+        "name": "gregtech6-neoforge-1.21.1-0.0.0.jar",
+        "bytes": 39544602,
+        "sha256": "bfbd8baedb45549abbc36e9dfd22034831a7a62b2aef5d52daaf707d10e8ac47",
+        "zip_crc_checked": true,
+        "path": "C:\\Dev\\GregTech6\\build\\verified\\20261006-195055Z-1fceed96\\gregtech6-neoforge-1.21.1-0.0.0.jar"
+      }
+    }
+  },
+  "startups": {
+    "forge": {
+      "scope": "Actual distribution jar in isolated installed-loader client; title screen only",
+      "platform": "forge",
+      "version": "1.20.1-Forge_47.4.26",
+      "java": "C:\\Program Files\\Zulu\\zulu-25\\bin\\java.exe",
+      "java_version": "openjdk version \"25.0.2\" 2026-01-20 LTS\nOpenJDK Runtime Environment Zulu25.32+21-CA (build 25.0.2+10-LTS)\nOpenJDK 64-Bit Server VM Zulu25.32+21-CA (build 25.0.2+10-LTS, mixed mode, sharing)",
+      "exit_code": 0,
+      "elapsed_seconds": 51.78,
+      "installed_files_modified": false,
+      "version_json_sha256": "8f5956d1d4431a635b550d189a906cd60b4cded129fa6a1fbfed8328c8b2b8e1",
+      "distribution": {
+        "path": "C:\\Dev\\GregTech6\\build\\verified\\20261006-195055Z-1fceed96\\gregtech6-1.20.1-forge-0.0.0.jar",
+        "sha256": "1fceed961295282995b5e2343c2598fd644f5903f9236af54bdada9e6639de63"
+      },
+      "probe": {
+        "path": "C:\\Dev\\GregTech6\\build\\production-probe\\gregtech-delivery-probe-0.0.0.jar",
+        "sha256": "6fee63cd46d621741eec186a246bb0761c7f095c92ed2edf9ed4f0d152e77d78"
+      },
+      "mods": [
+        {
+          "name": "gregtech6-1.20.1-forge-0.0.0.jar",
+          "sha256": "1fceed961295282995b5e2343c2598fd644f5903f9236af54bdada9e6639de63",
+          "bytes": 41324193
+        },
+        {
+          "name": "gregtech-delivery-probe-0.0.0.jar",
+          "sha256": "6fee63cd46d621741eec186a246bb0761c7f095c92ed2edf9ed4f0d152e77d78",
+          "bytes": 48333
+        },
+        {
+          "name": "Jade-1.20.1-Forge-11.13.3.jar",
+          "sha256": "a632c77975e5aedff6322b0072f8b0db3f5d4bf914df6bdcc87d1aea4d5f55f4",
+          "bytes": 553487
+        },
+        {
+          "name": "jei-1.20.1-forge-15.62.0.217.jar",
+          "sha256": "6ca167d7cd730c437618e6795971bdb451b84500883b0a5d0155af70bdc32b25",
+          "bytes": 2232172
+        },
+        {
+          "name": "mezz_config-1.20.1-forge-0.6.8.jar",
+          "sha256": "93d04b64ed5120350aed8a6d25efe5703fdbc720c233d7da3274feafd076c7e1",
+          "bytes": 364842
+        }
+      ],
+      "log": "C:\\Dev\\GregTech6\\build\\production-smoke\\forge-39656f66-6e29-4f16-a65a-814a0a1e4738\\launch.log",
+      "log_sha256": "113577168112066b1c22d857f706db633282c42325e06cb046f995f7d7f2d44a",
+      "screenshot_sha256": "b908ed5ab8c4c0acbff9fc920705222cfdc0395228bcb6858823b100e033bde8",
+      "receipt": {
+        "platform": "forge",
+        "screen": "net.minecraft.client.gui.screens.TitleScreen",
+        "screenshot": "C:\\Dev\\GregTech6\\build\\production-smoke\\forge-39656f66-6e29-4f16-a65a-814a0a1e4738\\screenshots\\production-forge-02160f0e-a21e-4412-a51a-33fa2fb0992f.png",
+        "width": 1280,
+        "height": 720,
+        "renderedFrames": 181,
+        "loaderWarnings": 0,
+        "elapsedMs": 45443
+      },
+      "checks": {
+        "cheapSourceVariants": 4,
+        "knownLogisticsComponents": 7,
+        "cleanItemData": 35,
+        "storedItemDataProtected": 35,
+        "completeWorldSaveRetained": true,
+        "observedEmptyLoaderWrappers": 0,
+        "scope": "installed methods at title screen; actual harvest tested separately in native server worlds",
+        "originalFunctionalTooltips": {
+          "manualStations": 14,
+          "boilersDefaultAndSavedEfficiency": 26,
+          "scope": "installed actual item tooltip methods at title screen; no player hover or machine operation claim"
+        },
+        "machineSourceMaterials": {
+          "sourceBlockIdentities": 559,
+          "nativeBasicMachinesAndControllers": 250,
+          "singleAdvancedMaterialSection": true,
+          "exactSourceComponentAmounts": true,
+          "scope": "installed item methods and tooltip event at title screen; no recovery gameplay claim"
+        },
+        "sourceFluidPipeTooltips": 280,
+        "storedTankTooltips": 35
+      },
+      "visually_reviewed": true,
+      "raw_report": "work\\functional-tooltips-forge-accepted-20261007.json",
+      "raw_report_sha256": "729275133a40e712d76d017747c4aaf823cee0913090aded86f1f26f634bf171"
+    },
+    "neoforge": {
+      "scope": "Actual distribution jar in isolated installed-loader client; title screen only",
+      "platform": "neoforge",
+      "version": "1.21.1-NeoForge_21.1.252",
+      "java": "C:\\Program Files\\Zulu\\zulu-25\\bin\\java.exe",
+      "java_version": "openjdk version \"25.0.2\" 2026-01-20 LTS\nOpenJDK Runtime Environment Zulu25.32+21-CA (build 25.0.2+10-LTS)\nOpenJDK 64-Bit Server VM Zulu25.32+21-CA (build 25.0.2+10-LTS, mixed mode, sharing)",
+      "exit_code": 0,
+      "elapsed_seconds": 45.78,
+      "installed_files_modified": false,
+      "version_json_sha256": "2bc1c6df818257a3543bad63115059e6e5f423ae86de49de9a3ccc48dda0e2e4",
+      "distribution": {
+        "path": "C:\\Dev\\GregTech6\\build\\verified\\20261006-195055Z-1fceed96\\gregtech6-neoforge-1.21.1-0.0.0.jar",
+        "sha256": "bfbd8baedb45549abbc36e9dfd22034831a7a62b2aef5d52daaf707d10e8ac47"
+      },
+      "probe": {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\build\\production-probe\\gregtech-delivery-probe-0.0.0.jar",
+        "sha256": "4483d0791c92122d112f4444266fd3a062d76845ffbd2a3472253d6bee9f1d7d"
+      },
+      "mods": [
+        {
+          "name": "gregtech6-neoforge-1.21.1-0.0.0.jar",
+          "sha256": "bfbd8baedb45549abbc36e9dfd22034831a7a62b2aef5d52daaf707d10e8ac47",
+          "bytes": 39544602
+        },
+        {
+          "name": "gregtech-delivery-probe-0.0.0.jar",
+          "sha256": "4483d0791c92122d112f4444266fd3a062d76845ffbd2a3472253d6bee9f1d7d",
+          "bytes": 47531
+        },
+        {
+          "name": "emi-1.1.24+1.21.1+neoforge.jar",
+          "sha256": "b68691f94f0727fc517cac2ab55bd6658d1179cc8cc715fe610b60c37469bc4c",
+          "bytes": 1111538
+        },
+        {
+          "name": "Jade-1.21.1-NeoForge-15.10.6.jar",
+          "sha256": "276f1f65a20d04f536989c4f311949d770b52c440c23c2b904a08860f3c93810",
+          "bytes": 726853
+        }
+      ],
+      "log": "C:\\Dev\\GregTech6\\build\\production-smoke\\neoforge-0767eb3c-fd89-4517-88ac-72ee3f023846\\launch.log",
+      "log_sha256": "1304c28070b344b41024da571981184170285d4459ce33e5a6b22bafa37eb66f",
+      "screenshot_sha256": "26e70320e22451aa8e8465147038c854d9ee5be4e9d2ad57b38d73b76ee32aca",
+      "receipt": {
+        "platform": "neoforge",
+        "screen": "net.minecraft.client.gui.screens.TitleScreen",
+        "screenshot": "C:\\Dev\\GregTech6\\build\\production-smoke\\neoforge-0767eb3c-fd89-4517-88ac-72ee3f023846\\screenshots\\production-neoforge-42ac3ea0-cdad-4cd5-b307-79bf2ac65d13.png",
+        "width": 1280,
+        "height": 720,
+        "renderedFrames": 181,
+        "elapsedMs": 38874
+      },
+      "checks": {
+        "cheapSourceVariants": 4,
+        "knownLogisticsComponents": 7,
+        "cleanItemData": 35,
+        "storedItemDataProtected": 35,
+        "completeWorldSaveRetained": true,
+        "observedEmptyLoaderWrappers": 0,
+        "scope": "installed methods at title screen; actual harvest tested separately in native server worlds",
+        "originalFunctionalTooltips": {
+          "manualStations": 14,
+          "boilersDefaultAndSavedEfficiency": 26,
+          "scope": "installed actual item tooltip methods at title screen; no player hover or machine operation claim"
+        },
+        "machineSourceMaterials": {
+          "sourceBlockIdentities": 559,
+          "nativeBasicMachinesAndControllers": 251,
+          "singleAdvancedMaterialSection": true,
+          "exactSourceComponentAmounts": true,
+          "scope": "installed item methods and tooltip event at title screen; no recovery gameplay claim"
+        },
+        "sourceFluidPipeTooltips": 280,
+        "storedTankTooltips": 35
+      },
+      "visually_reviewed": true,
+      "raw_report": "work\\functional-tooltips-neoforge-accepted-20261007.json",
+      "raw_report_sha256": "31bb677c0bacdb0a896d5e2e384cdab02d1f43343a3beb7c3654459155ee8717"
+    }
+  },
+  "earlier_failures": [
+    {
+      "platform": "forge",
+      "log": "build/production-smoke/forge-9d20d63c-94d0-42ee-925f-cc81ca158321/launch.log",
+      "reason": "Probe startsWith(name+space) counted Clay Brick as Clay; actual registered quantities and tooltip rows are correct.",
+      "sha256": "f9a56dc1782a98644f146cbf96502fbf7411bfdc3684ad4230afaf0827029dad"
+    },
+    {
+      "platform": "forge",
+      "log": "build/production-smoke/forge-c59c39eb-654e-43a3-a191-6d628d62e800/launch.log",
+      "reason": "Diagnostic run confirmed only3 name-prefix collisions in coke oven wall/controller; kept strict zero mismatches condition.",
+      "sha256": "0d34ecc655a37b6df1bc40178f3579cd389f095477a60a9fefbd6a38601eb7c8"
+    },
+    {
+      "platform": "forge",
+      "log": "build/production-smoke/forge-093923fb-506b-4928-9af3-f4bbccb0572e/launch.log",
+      "reason": "Probe incorrectly expected406 fluid pipes; catalog has280 fluid and126 item pipes. All individual pipe tooltips passed before erroneous aggregate count.",
+      "sha256": "2532c847901b01030642da0cfcef35e0be64d295f279ef2d7dad5cc92835d146"
+    }
+  ],
+  "probe_sources_sha256": {
+    "src/productionSmoke/java/com/gregtech/gregtech/integration/client/TankItemDeliveryChecks.java": "201b7850d76810c25825ca848cd8f3ee12ef1010e1d87b049dafdaf124c5eb8a",
+    "neoforge/src/productionSmoke/java/com/gregtech/gregtech/integration/client/TankItemDeliveryChecks.java": "aea08ace7472416340608fcc21145e6e6e061f3c6467b10f042de1180268c512"
+  },
+  "source_record": "functional-tooltip-source-20261007.json",
+  "readonly_source_records_verified": 33,
+  "limits": [
+    "Screenshots show the existing title-screen panel gallery, not actual hovered machine tooltips.",
+    "No new material recycling/crucible processing, complete survival or independent real-world restart acceptance.",
+    "Class-based BasicMachine coverage counts differ250/251; do not sum source rows or claim equal unique inventory coverage.",
+    "Existing model/leaf/sprite/shader WARNs are still present; probe loaderWarnings is not a count of all log WARNs.",
+    "Remaining all-block dedicated tooltip/material and source harvest-tool fidelity work continues."
+  ]
+}

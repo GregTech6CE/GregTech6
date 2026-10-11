@@ -158,8 +158,11 @@ public class GearboxBlock extends Block implements EntityBlock {
 
     @Override
     public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("gt.tooltip.gearbox.speed", spec.maxSpeed()));
-        tooltip.add(Component.translatable("gt.tooltip.gearbox.use"));
+        var component = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
+        var data = component == null ? null : component.copyTag();
+        int gears = data == null ? 0 : data.getByte("gearMask") & 63;
+        int axis = data == null ? 0 : Math.min(3, data.getByte("axisCode") & 255);
+        com.gregtech.gregtech.client.MechanicalBlockTooltips.appendGearbox(spec, gears, axis, getExplosionResistance(), tooltip);
     }    @Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return interact(state,level,pos,player,hand,hit).consumesAction()?net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide):net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;}
 
 }

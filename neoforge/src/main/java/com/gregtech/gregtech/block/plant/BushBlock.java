@@ -75,9 +75,8 @@ public class BushBlock extends Block implements EntityBlock {
     }
 
     @Override public net.minecraft.network.chat.MutableComponent getName() {
-        if (!berryId.startsWith("gregtech:plant_gt_berry_")) return super.getName();
-        var berry=net.minecraft.core.registries.BuiltInRegistries.ITEM.get(GTBerryBushes.itemId(berryId));
-        return net.minecraft.network.chat.Component.translatable("block.gregtech.material_bush",new ItemStack(berry).getHoverName());
+        // GT6 32759 keeps one name; BushBlockItem shows the localized output separately.
+        return net.minecraft.network.chat.Component.translatable("block.gregtech.bush");
     }
 
     public String berryId() { return berryId; }

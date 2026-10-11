@@ -112,7 +112,6 @@ public class ManualToolBlock extends net.minecraft.world.level.block.HorizontalD
 
     @Override
     public void appendHoverText(ItemStack stack,net.minecraft.world.item.Item.TooltipContext context,List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("gt.tooltip.tool." + kind.name().toLowerCase()));
-        tooltip.add(Component.translatable("gt.tooltip.tool." + kind.name().toLowerCase(java.util.Locale.ROOT) + ".usage"));
+        com.gregtech.gregtech.client.FunctionalBlockTooltips.appendManual(kind.name(), getExplosionResistance(), tooltip);
     }
 }

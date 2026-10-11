@@ -73,8 +73,9 @@ public final class GTToolTooltips {
                     .withStyle(ChatFormatting.DARK_GRAY));
         }
         if (type.tooltipKey() != null) {
-            tooltip.add(Component.translatable("tooltip." + "gregtech" + ".tool_hint." + type.tooltipKey())
-                    .withStyle(ChatFormatting.DARK_GRAY));
+            var hint = Component.translatable("tooltip." + "gregtech" + ".tool_hint." + type.tooltipKey());
+            // The original Chinese patch intentionally leaves some tool descriptions empty.
+            if (!hint.getString().isEmpty()) tooltip.add(hint.withStyle(ChatFormatting.DARK_GRAY));
         }
     }
 }

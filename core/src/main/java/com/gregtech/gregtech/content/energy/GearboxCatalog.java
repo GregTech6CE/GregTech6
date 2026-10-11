@@ -26,5 +26,5 @@ public final class GearboxCatalog {private GearboxCatalog(){}
 
  public static Tier[] tiers(){return TIERS.clone();}
  public static GearboxSpec gearbox(Tier tier){return new GearboxSpec("gearbox_"+tier.suffix(),tier.material(),tier.maxSpeed(),tier.maxSpeed()/4);}
- public static EnergyNodeSpec transformer(Tier tier){int t=tier.voltageTier();long input=V[t],output=t==0?2:V[t-1];return new EnergyNodeSpec("rotation_transformer_"+tier.suffix(),tier.material(),EnergyNodeSpec.Kind.CONVERTER,"transformers/rotation_transformer",GregTechTags.Energy.RU,GregTechTags.Energy.RU,input,output,input*2,tier.material().getLocalName()+" Transformer Gearbox",tier.material().getLocalName()+"变速箱",0);}
+ public static EnergyNodeSpec transformer(Tier tier){int t=tier.voltageTier();long input=V[t],output=t==0?2:V[t-1];return new EnergyNodeSpec("rotation_transformer_"+tier.suffix(),tier.material(),EnergyNodeSpec.Kind.CONVERTER,"transformers/rotation_transformer",GregTechTags.Energy.RU,GregTechTags.Energy.RU,input,output,input*2,tier.material().getLocalName()+" Transformer Gearbox",0);}
 }

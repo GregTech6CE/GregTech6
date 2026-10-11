@@ -1,0 +1,789 @@
+{
+  "date": "2026-10-07",
+  "code_head": "215e8bd8a",
+  "artifacts": {
+    "gregtech6-1.20.1-forge-0.0.0.jar": {
+      "bytes": 41663507,
+      "entries": 81272,
+      "directories": 1804,
+      "uncompressed": 60536402,
+      "compressed": 23325835,
+      "container_overhead": 18337672,
+      "compression_methods": {
+        "8": 81272
+      },
+      "duplicate_names": [],
+      "groups": {
+        "assets/gregtech/textures": [
+          19051,
+          8995899,
+          8450295,
+          4178102
+        ],
+        "assets/gregtech/models": [
+          40439,
+          19452124,
+          4537875,
+          7983410
+        ],
+        "com": [
+          2555,
+          17129886,
+          6701371,
+          504598
+        ],
+        "assets/gregtech/blockstates": [
+          15868,
+          3930540,
+          1494737,
+          2998118
+        ],
+        "assets/gregtech/lang": [
+          2,
+          9213177,
+          1430350,
+          276
+        ],
+        "data/gregtech/recipes": [
+          3085,
+          1331296,
+          608769,
+          603850
+        ],
+        "META-INF": [
+          11,
+          68318,
+          26680,
+          1488
+        ],
+        "data/gregtech/tags": [
+          76,
+          76734,
+          12646,
+          13722
+        ],
+        "assets/gregtech/sounds": [
+          3,
+          28145,
+          25513,
+          432
+        ],
+        "data/gregtech/loot_tables": [
+          47,
+          15458,
+          5780,
+          9378
+        ],
+        "data/gregtech/materials": [
+          1,
+          215008,
+          14222,
+          174
+        ],
+        "data/gregtech/worldgen": [
+          44,
+          2790,
+          2607,
+          8382
+        ],
+        "data/minecraft/tags": [
+          25,
+          18967,
+          3531,
+          4200
+        ],
+        "data/gregtech/forge": [
+          22,
+          3586,
+          2656,
+          4030
+        ],
+        "data/gregtech/damage_type": [
+          18,
+          1862,
+          1557,
+          2752
+        ],
+        "data/gregtech/bookshelf_variants.json": [
+          1,
+          22635,
+          1947,
+          150
+        ],
+        "gregtech.refmap.json": [
+          1,
+          19454,
+          1773,
+          116
+        ],
+        "data/gregtech_repair/structures": [
+          5,
+          1554,
+          869,
+          904
+        ],
+        "data/forge/tags": [
+          6,
+          3494,
+          786,
+          896
+        ],
+        "data/gregtech/structures": [
+          5,
+          560,
+          576,
+          844
+        ],
+        "data/gregtech_repair/loot_tables": [
+          2,
+          405,
+          215,
+          346
+        ],
+        "gregtech.mixins.json": [
+          1,
+          1002,
+          411,
+          116
+        ],
+        "assets/minecraft/atlases": [
+          1,
+          2696,
+          362,
+          148
+        ],
+        "assets/gregtech/geometry": [
+          1,
+          365,
+          111,
+          156
+        ],
+        "assets/gregtech/sounds.json": [
+          1,
+          342,
+          113,
+          130
+        ],
+        "pack.mcmeta": [
+          1,
+          105,
+          83,
+          98
+        ]
+      },
+      "extensions": {
+        ".json": [
+          59641,
+          34311935,
+          8120448,
+          11630350
+        ],
+        ".png": [
+          18402,
+          8920670,
+          8414077,
+          4035004
+        ],
+        ".class": [
+          2555,
+          17129886,
+          6701371,
+          504598
+        ],
+        ".mcmeta": [
+          639,
+          54133,
+          32838,
+          140988
+        ],
+        ".ogg": [
+          3,
+          28145,
+          25513,
+          432
+        ],
+        ".txt": [
+          3,
+          36555,
+          12947,
+          480
+        ],
+        "": [
+          5,
+          20622,
+          8146,
+          678
+        ],
+        ".bat": [
+          10,
+          21094,
+          3368,
+          2014
+        ],
+        ".md": [
+          2,
+          5157,
+          3116,
+          296
+        ],
+        ".nbt": [
+          10,
+          2114,
+          1445,
+          1748
+        ],
+        ".toml": [
+          1,
+          5737,
+          2395,
+          112
+        ],
+        ".MF": [
+          1,
+          354,
+          171,
+          116
+        ]
+      },
+      "duplicate_png_groups": 831,
+      "duplicate_png_files": 14315,
+      "duplicate_png_compressed_bytes": 4764098,
+      "artifact": {
+        "path": "C:\\Dev\\GregTech6\\build\\verified\\20261007-073648Z-c4aacc57\\gregtech6-1.20.1-forge-0.0.0.jar",
+        "bytes": 41663507,
+        "sha256": "c4aacc57abecc978d087bbf35f13744d6d06ad2b33250dbbbcdfe0bf6880d178"
+      },
+      "models_and_blockstates_bytes_including_file_headers": 18140280,
+      "header_estimate_note": "Per file: compressed payload + local/central name/header bytes; observed local ZIP64 extra20 bytes. Directory entries excluded from category allocation.",
+      "duplicate_png_examples": [
+        {
+          "copies": 750,
+          "example_paths": [
+            "assets/gregtech/textures/block/iconsets/machine.png",
+            "assets/gregtech/textures/block/machines/autotools/hammer/colored/back.png",
+            "assets/gregtech/textures/block/machines/autotools/igniter/colored/front.png"
+          ]
+        },
+        {
+          "copies": 3094,
+          "example_paths": [
+            "assets/gregtech/textures/block/material_icons/brick/void.png",
+            "assets/gregtech/textures/block/material_icons/copper/void.png",
+            "assets/gregtech/textures/block/material_icons/cube/void.png"
+          ]
+        },
+        {
+          "copies": 1495,
+          "example_paths": [
+            "assets/gregtech/textures/block/void.png",
+            "assets/gregtech/textures/block/iconsets/void.png",
+            "assets/gregtech/textures/block/machines/gearbox/overlay/back.png"
+          ]
+        }
+      ]
+    },
+    "gregtech6-neoforge-1.21.1-0.0.0.jar": {
+      "bytes": 39885829,
+      "entries": 80236,
+      "directories": 1809,
+      "uncompressed": 56304839,
+      "compressed": 21768513,
+      "container_overhead": 18117316,
+      "compression_methods": {
+        "8": 80236
+      },
+      "duplicate_names": [],
+      "groups": {
+        "assets/gregtech/textures": [
+          19045,
+          8985245,
+          8448516,
+          4176906
+        ],
+        "assets/gregtech/models": [
+          39642,
+          18464583,
+          4361431,
+          7827068
+        ],
+        "com": [
+          2362,
+          13879029,
+          5328715,
+          468028
+        ],
+        "assets/gregtech/blockstates": [
+          15818,
+          3924775,
+          1490365,
+          2989250
+        ],
+        "assets/gregtech/lang": [
+          2,
+          9213177,
+          1430350,
+          276
+        ],
+        "data/gregtech/recipes": [
+          3085,
+          1331296,
+          608769,
+          603850
+        ],
+        "META-INF": [
+          11,
+          62989,
+          24561,
+          1506
+        ],
+        "assets/gregtech/sounds": [
+          3,
+          28145,
+          25513,
+          432
+        ],
+        "data/gregtech/tags": [
+          76,
+          105270,
+          11729,
+          13624
+        ],
+        "data/gregtech/materials": [
+          1,
+          215008,
+          14222,
+          174
+        ],
+        "data/gregtech/loot_tables": [
+          31,
+          14642,
+          5012,
+          6386
+        ],
+        "data/gregtech/worldgen": [
+          44,
+          2790,
+          2607,
+          8382
+        ],
+        "data/gregtech/loot_table": [
+          33,
+          10685,
+          3569,
+          6514
+        ],
+        "data/minecraft/tags": [
+          22,
+          29853,
+          3368,
+          3712
+        ],
+        "data/gregtech/neoforge": [
+          22,
+          3652,
+          2690,
+          4162
+        ],
+        "data/gregtech/damage_type": [
+          18,
+          1862,
+          1557,
+          2752
+        ],
+        "data/gregtech/recipe": [
+          6,
+          2456,
+          1249,
+          1016
+        ],
+        "data/gregtech/bookshelf_variants.json": [
+          1,
+          22635,
+          1947,
+          150
+        ],
+        "data/gregtech/enchantment": [
+          5,
+          1819,
+          989,
+          796
+        ],
+        "data/forge/tags": [
+          5,
+          569,
+          365,
+          740
+        ],
+        "gregtech-neoforge.mixins.json": [
+          1,
+          956,
+          403,
+          134
+        ],
+        "assets/minecraft/atlases": [
+          1,
+          2696,
+          362,
+          148
+        ],
+        "assets/gregtech/geometry": [
+          1,
+          365,
+          111,
+          156
+        ],
+        "assets/gregtech/sounds.json": [
+          1,
+          342,
+          113,
+          130
+        ]
+      },
+      "extensions": {
+        ".json": [
+          58815,
+          33349431,
+          7941208,
+          11469420
+        ],
+        ".png": [
+          18402,
+          8920670,
+          8414077,
+          4035004
+        ],
+        ".class": [
+          2362,
+          13879029,
+          5328715,
+          468028
+        ],
+        ".mcmeta": [
+          638,
+          54028,
+          32755,
+          140890
+        ],
+        ".ogg": [
+          3,
+          28145,
+          25513,
+          432
+        ],
+        ".txt": [
+          2,
+          36448,
+          12852,
+          286
+        ],
+        "": [
+          5,
+          20622,
+          8146,
+          678
+        ],
+        ".md": [
+          2,
+          5157,
+          3116,
+          296
+        ],
+        ".bat": [
+          5,
+          10547,
+          1684,
+          1012
+        ],
+        ".toml": [
+          1,
+          706,
+          401,
+          130
+        ],
+        ".MF": [
+          1,
+          56,
+          46,
+          116
+        ]
+      },
+      "duplicate_png_groups": 831,
+      "duplicate_png_files": 14315,
+      "duplicate_png_compressed_bytes": 4764098,
+      "artifact": {
+        "path": "C:\\Dev\\GregTech6\\build\\verified\\20261007-073648Z-c4aacc57\\gregtech6-neoforge-1.21.1-0.0.0.jar",
+        "bytes": 39885829,
+        "sha256": "ffaf844c842ccec36dd4aab690d9e47487754dea357b4b09356edae4208db3b8"
+      },
+      "models_and_blockstates_bytes_including_file_headers": 17777314,
+      "header_estimate_note": "Per file: compressed payload + local/central name/header bytes; observed local ZIP64 extra20 bytes. Directory entries excluded from category allocation.",
+      "duplicate_png_examples": [
+        {
+          "copies": 750,
+          "example_paths": [
+            "assets/gregtech/textures/block/iconsets/machine.png",
+            "assets/gregtech/textures/block/machines/autotools/hammer/colored/back.png",
+            "assets/gregtech/textures/block/machines/autotools/igniter/colored/front.png"
+          ]
+        },
+        {
+          "copies": 3094,
+          "example_paths": [
+            "assets/gregtech/textures/block/material_icons/brick/void.png",
+            "assets/gregtech/textures/block/material_icons/copper/void.png",
+            "assets/gregtech/textures/block/material_icons/cube/void.png"
+          ]
+        },
+        {
+          "copies": 1495,
+          "example_paths": [
+            "assets/gregtech/textures/block/void.png",
+            "assets/gregtech/textures/block/iconsets/void.png",
+            "assets/gregtech/textures/block/machines/gearbox/overlay/back.png"
+          ]
+        }
+      ]
+    }
+  },
+  "comparison": {
+    "comparison_source_only": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main",
+    "note": "No comparison built JAR present. Source resource counts/compressed payload estimates only, excludes Java classes and ZIP headers.",
+    "resource_count": 20267,
+    "groups": {
+      "assets/gregtech/textures": [
+        19961,
+        9045228,
+        8557270
+      ],
+      "assets/gregtech6/lang": [
+        3,
+        15324173,
+        2195903
+      ],
+      "assets/gregapi/textures": [
+        225,
+        380589,
+        370073
+      ],
+      "assets/gregapi/sounds": [
+        3,
+        28145,
+        25513
+      ],
+      "COPYING": [
+        1,
+        35147,
+        12119
+      ],
+      "COPYING.logos": [
+        1,
+        19341,
+        6111
+      ],
+      "data/minecraft/tags": [
+        9,
+        35042,
+        3902
+      ],
+      "data/c/tags": [
+        10,
+        34225,
+        3265
+      ],
+      "COPYING.assets": [
+        1,
+        7048,
+        2808
+      ],
+      "COPYING.LESSER": [
+        1,
+        7652,
+        2618
+      ],
+      "NOTICE": [
+        1,
+        4468,
+        1981
+      ],
+      "supporterlist.txt": [
+        1,
+        2546,
+        1671
+      ],
+      "data/gregapi/damage_type": [
+        13,
+        1281,
+        1128
+      ],
+      "data/gregapi/enchantment": [
+        4,
+        2388,
+        1077
+      ],
+      "ae2replacegen": [
+        2,
+        1134,
+        748
+      ],
+      "data/gregapi/neoforge": [
+        5,
+        1658,
+        691
+      ],
+      "data/gregapi/recipe": [
+        11,
+        648,
+        643
+      ],
+      "supporterlistgold.txt": [
+        1,
+        573,
+        412
+      ],
+      "LICENSE": [
+        1,
+        694,
+        407
+      ],
+      "ae2gtrecipes": [
+        2,
+        629,
+        405
+      ],
+      "data/gregtech6/structure": [
+        1,
+        351,
+        293
+      ],
+      "LICENSE.assets": [
+        1,
+        500,
+        290
+      ],
+      "LICENSE.logos": [
+        1,
+        451,
+        265
+      ],
+      "data/gregtech/tags": [
+        1,
+        1066,
+        197
+      ],
+      "gregapi.mixins.json": [
+        1,
+        285,
+        185
+      ],
+      "assets/minecraft/atlases": [
+        2,
+        233,
+        169
+      ],
+      "data/gregapi/worldgen": [
+        2,
+        157,
+        140
+      ],
+      "assets/gregapi/sounds.json": [
+        1,
+        276,
+        114
+      ],
+      "data/exmachina/data_maps": [
+        1,
+        112,
+        92
+      ]
+    },
+    "current_details": {
+      "extra_lengths": {
+        "0": 83076
+      },
+      "scripts": [
+        "assets/gregtech/textures/block/material_icons/copy_into_all.bat",
+        "assets/gregtech/textures/block/material_icons/copy_into_dull.bat",
+        "assets/gregtech/textures/block/material_icons/copy_into_gems.bat",
+        "assets/gregtech/textures/block/material_icons/copy_into_shiny.bat",
+        "assets/gregtech/textures/block/material_icons/copythings.bat",
+        "assets/gregtech/textures/item/material_icons/copy_into_all.bat",
+        "assets/gregtech/textures/item/material_icons/copy_into_dull.bat",
+        "assets/gregtech/textures/item/material_icons/copy_into_gems.bat",
+        "assets/gregtech/textures/item/material_icons/copy_into_shiny.bat",
+        "assets/gregtech/textures/item/material_icons/copythings.bat"
+      ],
+      "test_class_compressed_bytes": 1562014,
+      "sample_local_headers": [
+        {
+          "path": "com/gregtech/gregtech/api/inventory/",
+          "central_extra": 0,
+          "local_extra": 20,
+          "flag": 2048
+        },
+        {
+          "path": "com/gregtech/gregtech/api/inventory/BulkStorageState.class",
+          "central_extra": 0,
+          "local_extra": 20,
+          "flag": 2048
+        },
+        {
+          "path": "com/gregtech/gregtech/api/inventory/ContainerShapeLike.class",
+          "central_extra": 0,
+          "local_extra": 20,
+          "flag": 2048
+        }
+      ],
+      "json_hash_duplicates": {
+        "assets/gregtech/models/": {
+          "duplicate_files": 15874,
+          "duplicate_payload_bytes": 1722353
+        },
+        "assets/gregtech/blockstates/": {
+          "duplicate_files": 1917,
+          "duplicate_payload_bytes": 232771
+        }
+      }
+    }
+  },
+  "scope": "Read-only inspection of last accepted ordinary dual artifacts and local _w source resources; no _w built artifact provided, no game run or packaging change.",
+  "references": [
+    {
+      "path": "C:\\Dev\\GregTech6\\build.gradle",
+      "bytes": 23456,
+      "sha256": "a7d538965048c6ddf3496859e0851057f7e10a3a038f932987b5c97db6dffa1a"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build.gradle",
+      "bytes": 11180,
+      "sha256": "c06542037613b86d5adf658cc8bca0bec2d2531257794cd53b34984cc79487d0"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\integration\\verify_artifacts.py",
+      "bytes": 17873,
+      "sha256": "895e585add8815f1e2537fa33593461bdd2e47d9a48bb3eae0baf5de48f929b8"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\build.gradle",
+      "bytes": 25250,
+      "sha256": "e286706fbb228d05563d5b364a3a193f566bfa4ce3ad18fffeee6b009e565f78"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\render\\GT6BlockModel.java",
+      "bytes": 19173,
+      "sha256": "198906b5f676ab74ae7983e4fdbc8bcca2e5b784498f46209774971e3dd819cc"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\render\\GT6ItemModel.java",
+      "bytes": 28862,
+      "sha256": "6de79ab92d38b892cdff78ff97f89f2d18d1caba9b3daf0f80693dc6eab1dee7"
+    }
+  ],
+  "findings": [
+    "Dominant structural difference: current static model/blockstate assets vs _w shared dynamic rendering; current Forge56307/Neo55460 files account for approximately17.3/17.0MiB including headers.",
+    "Repeated PNG contents are real but not proven unique to this port: _w source textures are actually slightly larger. Do not claim all4.54MiB duplicate payload explains artifact delta.",
+    "Forge has294 baseline main-source GameTest classes /1562014 compressed bytes; artifact verifier explicitly preserves them. Any removal must retain dev regression access and audit runtime references.",
+    "No duplicate archive paths; no embedded dependency jar entries. Chinese localization8.45MBraw compresses to1.318MB, not the20MB cause.",
+    "Ten/5 source asset-preparation BAT files ship in Forge/Neo; tiny ancillary cleanup, not the size cause.",
+    "A smaller archive requires model-resource sharing/dynamic generation and reference-preserving texture deduplication; blindly excluding resources risks missing textures. No such change claimed here."
+  ]
+}

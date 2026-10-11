@@ -1,0 +1,239 @@
+{
+  "boundaries": [
+    "No complete fluid material-volume mapping is currently stored: Worth / Units of remains unimplemented, not guessed from a generic 144 or 1000.",
+    "NONSTANDARD flag is supported; original fluid-renaming-target warnings and Error-fluid special-case are not fully ported.",
+    "Modern isLighterThanAir substitutes the removed isGaseous API, consistent with existing native FluidHazards and the comparison port; it is not a change to native gas physics.",
+    "Creative fill and warning colors use fixed modern colors, not original animated rainbow/blink.",
+    "No regular JAR, client hover, external-fluid runtime, saved-world or survival validation this batch. These and the previous bee/anvil batch remain pending combined acceptance."
+  ],
+  "comparison": {
+    "bytes": 22615,
+    "path": "C:/Dev/gregtech6_w-main/gregtech6_w-main/src/main/java/gregapi/item/ItemFluidDisplay.java",
+    "sha256": "1c45290b5285d24a18e19cfc84bc19bf74651577ce36eaa9dd467df5844d9d90"
+  },
+  "comparison_choice": "Original 1.7.10 branches/wording are authoritative; _w confirms modern FluidType getters and isLighterThanAir adaptation. Its LH.tt localization mechanism is not imported.",
+  "copyright": "Copyright (c) 2025 GregTech-6 Team; @author Gregorius Techneticies",
+  "date": "2026-10-08",
+  "language": {
+    "changes": {
+      "changed": 0,
+      "missing": 0,
+      "unexpected": 0
+    },
+    "chinese_keys": 139264,
+    "english_fallback_count": 5585,
+    "native_aliases": 8003,
+    "source_keys": 125676,
+    "source_sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0"
+  },
+  "language_delta": {
+    "en_us": {
+      "changed": [],
+      "missing": [
+        "gregtech.fluid_display.acid",
+        "gregtech.fluid_display.amount",
+        "gregtech.fluid_display.castable",
+        "gregtech.fluid_display.conducting",
+        "gregtech.fluid_display.cooking_oil",
+        "gregtech.fluid_display.creative_fill",
+        "gregtech.fluid_display.density_equal",
+        "gregtech.fluid_display.density_heavier",
+        "gregtech.fluid_display.density_lighter",
+        "gregtech.fluid_display.gas",
+        "gregtech.fluid_display.gu_per_liter",
+        "gregtech.fluid_display.gu_total",
+        "gregtech.fluid_display.industrial",
+        "gregtech.fluid_display.liquid",
+        "gregtech.fluid_display.luminosity",
+        "gregtech.fluid_display.magic",
+        "gregtech.fluid_display.missing",
+        "gregtech.fluid_display.native_gas_note",
+        "gregtech.fluid_display.native_gas_warning",
+        "gregtech.fluid_display.native_liquid",
+        "gregtech.fluid_display.no_tanks",
+        "gregtech.fluid_display.nonstandard",
+        "gregtech.fluid_display.not_flammable",
+        "gregtech.fluid_display.owner_gt6",
+        "gregtech.fluid_display.owner_other",
+        "gregtech.fluid_display.owner_vanilla",
+        "gregtech.fluid_display.plasma",
+        "gregtech.fluid_display.registry",
+        "gregtech.fluid_display.simple",
+        "gregtech.fluid_display.state",
+        "gregtech.fluid_display.temperature",
+        "gregtech.fluid_display.viscosity"
+      ],
+      "unexpected": []
+    },
+    "zh_cn": {
+      "changed": [],
+      "missing": [
+        "gregtech.fluid_display.acid",
+        "gregtech.fluid_display.amount",
+        "gregtech.fluid_display.castable",
+        "gregtech.fluid_display.conducting",
+        "gregtech.fluid_display.cooking_oil",
+        "gregtech.fluid_display.creative_fill",
+        "gregtech.fluid_display.density_equal",
+        "gregtech.fluid_display.density_heavier",
+        "gregtech.fluid_display.density_lighter",
+        "gregtech.fluid_display.gas",
+        "gregtech.fluid_display.gu_per_liter",
+        "gregtech.fluid_display.gu_total",
+        "gregtech.fluid_display.industrial",
+        "gregtech.fluid_display.liquid",
+        "gregtech.fluid_display.luminosity",
+        "gregtech.fluid_display.magic",
+        "gregtech.fluid_display.missing",
+        "gregtech.fluid_display.native_gas_note",
+        "gregtech.fluid_display.native_gas_warning",
+        "gregtech.fluid_display.native_liquid",
+        "gregtech.fluid_display.no_tanks",
+        "gregtech.fluid_display.nonstandard",
+        "gregtech.fluid_display.not_flammable",
+        "gregtech.fluid_display.owner_gt6",
+        "gregtech.fluid_display.owner_other",
+        "gregtech.fluid_display.owner_vanilla",
+        "gregtech.fluid_display.plasma",
+        "gregtech.fluid_display.registry",
+        "gregtech.fluid_display.simple",
+        "gregtech.fluid_display.state",
+        "gregtech.fluid_display.temperature",
+        "gregtech.fluid_display.viscosity"
+      ],
+      "unexpected": []
+    }
+  },
+  "license": "LGPL-3.0-or-later; full original notice retained in shared display rules",
+  "original_english_lines": {
+    "gregtech.fluid_display.acid": "Acidic! Handle with Care!",
+    "gregtech.fluid_display.amount": "Amount: %s L",
+    "gregtech.fluid_display.castable": " (Might able to cast into Molds)",
+    "gregtech.fluid_display.conducting": "This is a Power Conducting Fluid",
+    "gregtech.fluid_display.cooking_oil": "Usable as Cooking Oil in a GT Oven to duplicate Meat and Fish",
+    "gregtech.fluid_display.creative_fill": "Rightclick Blocks to fill their Tanks with this Fluid!",
+    "gregtech.fluid_display.density_equal": "Density: %s ; As dense as Air (typically still moves down)",
+    "gregtech.fluid_display.density_heavier": "Density: %s ; Heavier than Air (typically moves down)",
+    "gregtech.fluid_display.density_lighter": "Density: %s ; Lighter than Air (typically moves up)",
+    "gregtech.fluid_display.gas": "Gas",
+    "gregtech.fluid_display.gu_per_liter": " GU/L",
+    "gregtech.fluid_display.gu_total": " GU total",
+    "gregtech.fluid_display.industrial": "Industrial Use ONLY!",
+    "gregtech.fluid_display.liquid": "Liquid",
+    "gregtech.fluid_display.luminosity": "Luminosity: %s",
+    "gregtech.fluid_display.magic": "Magical! Handle with Care!",
+    "gregtech.fluid_display.missing": "CLIENTSIDE FLUID IS NULL!!!",
+    "gregtech.fluid_display.native_gas_note": " (Note: Considered a Gas by Mods other than GT!)",
+    "gregtech.fluid_display.native_gas_warning": " (Warning: Considered a Gas by Mods other than GT!)",
+    "gregtech.fluid_display.native_liquid": " (Warning: Considered a Liquid by Mods other than GT!)",
+    "gregtech.fluid_display.no_tanks": "Cannot be stored in any normal GT6 Storage Tanks!",
+    "gregtech.fluid_display.nonstandard": "NON-STANDARD FLUID!",
+    "gregtech.fluid_display.not_flammable": "Not Flammable!",
+    "gregtech.fluid_display.owner_gt6": "Fluid owned by GT6",
+    "gregtech.fluid_display.owner_other": "Fluid NOT owned by GT6",
+    "gregtech.fluid_display.owner_vanilla": "Fluid owned by vanilla Minecraft",
+    "gregtech.fluid_display.plasma": "Plasma",
+    "gregtech.fluid_display.registry": "Registry: %s",
+    "gregtech.fluid_display.simple": "This is a simple Fluid that is easy to handle",
+    "gregtech.fluid_display.state": "State: ",
+    "gregtech.fluid_display.temperature": "Temperature: %s K (%s°C)",
+    "gregtech.fluid_display.viscosity": "Viscosity: %s"
+  },
+  "outputs": [
+    {
+      "bytes": 7057,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/fluid/OriginalFluidDisplayRules.java",
+      "sha256": "454ad772bf6b2d7cca6e125a5714673214468d0e2fe51f909ec6817eeddf5333"
+    },
+    {
+      "bytes": 7337,
+      "path": "core/src/test/java/com/gregtech/gregtech/core/OriginalFluidDisplayChecks.java",
+      "sha256": "ab9384755cadc2c14d9a07b88a413abb1a5acfd4c1f63e3f5a4465d9d1083bab"
+    },
+    {
+      "bytes": 5184,
+      "path": "src/main/java/com/gregtech/gregtech/registry/GTFluidType.java",
+      "sha256": "e0800eeef31b54dfc29d0d84d94d94e6be13645465993b6e164dd6eb0441c21f"
+    },
+    {
+      "bytes": 3294,
+      "path": "src/main/java/com/gregtech/gregtech/data/FuelRecipeMaps.java",
+      "sha256": "19f1d180a20ea708efde854be74938bd22850da2987224774d303d8ce46ace71"
+    },
+    {
+      "bytes": 997,
+      "path": "src/main/java/com/gregtech/gregtech/client/FluidDisplayTooltips.java",
+      "sha256": "2538a9c84cacb8c86e89549cb17e5c05b1706c027b4edf129dcdd9f4d4f5ca9e"
+    },
+    {
+      "bytes": 5188,
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/registry/GTFluidType.java",
+      "sha256": "1d4cf9716bac8fb8ebb167a4df6061f547f3266acd20e8fb2a93223c9257dfb0"
+    },
+    {
+      "bytes": 3294,
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/data/FuelRecipeMaps.java",
+      "sha256": "19f1d180a20ea708efde854be74938bd22850da2987224774d303d8ce46ace71"
+    },
+    {
+      "bytes": 1018,
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/client/FluidDisplayTooltips.java",
+      "sha256": "7c23bc99f1a70cf987387f990c29321ca2e56a622b73d292353ac814cadb67b8"
+    }
+  ],
+  "parent_commit": "f5c72769429712499796616692d5522c0b11f065",
+  "sources": [
+    {
+      "bytes": 13126,
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/ItemFluidDisplay.java",
+      "sha256": "028627070df4cbab14f8b3239e6ee34623e937233c8d189830381ba9f2f2cef2"
+    },
+    {
+      "bytes": 106275,
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/FL.java",
+      "sha256": "87ec6759b7c3b1ad7d7c6d574e24ec7d7371fa285e93ab67cfa26cd83f2b18b3"
+    },
+    {
+      "bytes": 153449,
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5"
+    },
+    {
+      "bytes": 4536,
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/FM.java",
+      "sha256": "374772472db8a786a8a0af2408ad71ae2500481e258ee1c6815fcd87f7cbec64"
+    },
+    {
+      "bytes": 88912,
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/oredict/OreDictMaterial.java",
+      "sha256": "768707d5eeeb6b60f0c5d0a24b39ab50f6f173a29a40f0fa3365308cf0688371"
+    }
+  ],
+  "validation": {
+    "core_assertions_total": 18414,
+    "final_compile_seconds": 28,
+    "final_source_policy_seconds": 1.009,
+    "initial_compile_seconds": 30,
+    "logs": [
+      {
+        "bytes": 32919,
+        "path": "C:/Dev/GregTech6/work/fluid-display-compile-20261008.log",
+        "sha256": "557320a5ffb2f2b08768424b1c25fd9f8a0bedc0639d16e653352becf4aff0f4"
+      },
+      {
+        "bytes": 122,
+        "path": "C:/Dev/GregTech6/work/fluid-display-language-tests-20261008.log",
+        "sha256": "7615c82e7e34632c00b7a11dfe90256a1cd1e55fc9dcfc4e02ee86513d4f347d"
+      },
+      {
+        "bytes": 28982,
+        "path": "C:/Dev/GregTech6/work/fluid-display-final-compile-20261008.log",
+        "sha256": "1a38a6af963ede59bbfbdd4d040383b3a4ec349992a84b885ccae52e4b8e6c67"
+      }
+    ],
+    "new_core_assertions": 29,
+    "ordinary_jar_or_game_launch": false,
+    "python_seconds": 0.992,
+    "python_suites": 18
+  }
+}

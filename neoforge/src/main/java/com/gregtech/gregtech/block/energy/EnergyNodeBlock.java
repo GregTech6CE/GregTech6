@@ -42,6 +42,7 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
 
     @Override public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         boolean fixed = spec.id().startsWith("battery_eu");
+        if ((com.gregtech.gregtech.content.energy.OriginalThermalConverter.handles(spec) || com.gregtech.gregtech.content.energy.MagnetMachineDefinitions.handles(spec)) && GTToolHelper.isMonkeyWrench(tool)) return null;
         // GT6's rotational transformer reserves the monkey wrench for mode reversal.
         // A regular wrench still rotates the block itself.
         if ((spec.id().startsWith("rotation_transformer_") || spec.id().startsWith("transformer_")) && GTToolHelper.isMonkeyWrench(tool)) return null;
@@ -129,6 +130,21 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
         }
         if (ToolInteractions.use(state,level,pos,player,hand,hit))
             return InteractionResult.sidedSuccess(level.isClientSide);
+        if (node.isOriginalMotor() && com.gregtech.gregtech.platform.neoforge.NeoToolBindings.isMonkeyWrench(held)) {
+            if (!level.isClientSide) {
+                node.reverseMotor();
+                com.gregtech.gregtech.platform.neoforge.NeoToolBindings.damageForUse(held, 1, player);
+                player.displayClientMessage(Component.literal(node.motorCounterClockwise() ? "Counterclockwise" : "Clockwise"), true);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        if (node.isOriginalMotor() && GTToolHelper.isMagnifyingGlass(held)) {
+            if (!level.isClientSide) {
+                GTToolHelper.damageForUse(held, 1, player);
+                player.displayClientMessage(Component.literal(node.motorCounterClockwise() ? "Counterclockwise" : "Clockwise"), true);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
         // GT6 rotational transformers reverse with a monkey wrench; the other
         // invertible energy nodes keep their existing soft-hammer interaction.
         boolean modeTool = node.isRotationTransformer() || node.isElectricTransformer()
@@ -139,6 +155,13 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
                 if (node.isRotationTransformer() || node.isElectricTransformer()) com.gregtech.gregtech.platform.neoforge.NeoToolBindings.damageForUse(held, 1, player);
                 player.displayClientMessage(Component.translatable(
                         up ? "message.gregtech.transformer.step_up" : "message.gregtech.transformer.step_down"), true);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        if (node.isTurbine() && GTToolHelper.matchesTool(held, com.gregtech.gregtech.api.tool.GTToolType.PLUNGER)) {
+            if (!level.isClientSide) {
+                long removed = node.purgeTurbineSteam();
+                if (removed > 0) GTToolHelper.damageForToolClickReturn(held, removed, player);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
@@ -179,15 +202,23 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
 
     @Override
     public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+        if (com.gregtech.gregtech.content.energy.OriginalEnergyDeviceTooltipData.handles(spec)) {
+            var component = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
+            var data = component == null ? new net.minecraft.nbt.CompoundTag() : component.copyTag();
+            com.gregtech.gregtech.client.EnergyDeviceTooltips.append(spec,
+                    data.getBoolean("gt.inverted"), getExplosionResistance(), tooltip);
+            return;
+        }
         String outUnit = spec.outType().getShortName();
         switch (spec.kind()) {
             case MAGNET -> {
                 tooltip.add(com.gregtech.gregtech.client.TooltipHelper.energyInLine(
                         spec.inputRate(), spec.inputRate(), spec.inputRate() * 2,
-                        spec.inType().getShortName(), "four sides"));
+                        spec.inType().getShortName(), Component.translatable("gt.lang.face.sides").getString()));
                 tooltip.add(com.gregtech.gregtech.client.TooltipHelper.energyOutLine(
                         spec.outputRate(), outUnit)
-                        .append(Component.literal(" (+ front, - back)")
+                        .append(Component.literal(" (+ ").append(Component.translatable("gt.lang.face.front"))
+                                .append(", - ").append(Component.translatable("gt.lang.face.back")).append(")")
                                 .withStyle(net.minecraft.ChatFormatting.WHITE)));
                 tooltip.add(Component.translatable("tooltip.gregtech.magnet.controls")
                         .withStyle(net.minecraft.ChatFormatting.GRAY));
@@ -198,9 +229,9 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
                                 .withStyle(net.minecraft.ChatFormatting.WHITE)));
             }
             case TURBINE -> {
-                tooltip.add(Component.translatable("tooltip.gregtech.machine.energy_in")
+                tooltip.add(Component.translatable("gt.lang.energy.input").append(": ")
                         .withStyle(net.minecraft.ChatFormatting.GREEN)
-                        .append(Component.literal(spec.inputRate() + " L/t Steam")
+                        .append(Component.literal(spec.inputRate() + " L/t ").append(Component.translatable("fluid_type.gregtech.steam"))
                                 .withStyle(net.minecraft.ChatFormatting.WHITE)));
                 tooltip.add(com.gregtech.gregtech.client.TooltipHelper.energyOutLine(spec.outputRate(), outUnit));
             }
@@ -208,16 +239,18 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
                 tooltip.add(com.gregtech.gregtech.client.TooltipHelper.energyInLine(
                         spec.inputRate(), spec.inputRate(), spec.inputRate(),
                         spec.inType().getShortName(),
-                        (spec.id().startsWith("rotation_transformer_") || spec.id().startsWith("transformer_")) ? "front" : "sides"));
+                        Component.translatable((spec.id().startsWith("rotation_transformer_") || spec.id().startsWith("transformer_"))
+                                ? "gt.lang.face.front" : "gt.lang.face.sides").getString()));
                 tooltip.add(com.gregtech.gregtech.client.TooltipHelper.energyOutLine(spec.outputRate(), outUnit)
-                        .append(Component.literal(spec.id().startsWith("rotation_transformer_")
-                                ? " (back)" : spec.id().startsWith("transformer_") ? " (sides)" : " (front)").withStyle(net.minecraft.ChatFormatting.WHITE)));
+                        .append(Component.literal(" (").append(Component.translatable(spec.id().startsWith("rotation_transformer_")
+                                ? "gt.lang.face.back" : spec.id().startsWith("transformer_") ? "gt.lang.face.sides" : "gt.lang.face.front"))
+                                .append(")").withStyle(net.minecraft.ChatFormatting.WHITE)));
                 if (spec.kind() == EnergyNodeSpec.Kind.STORAGE) {
                     if (spec.batterySlots() > 0) {
                         tooltip.add(Component.translatable("tooltip.gregtech.node.battery_slots",spec.batterySlots())
                                 .withStyle(net.minecraft.ChatFormatting.GRAY));
                     } else {
-                        tooltip.add(Component.literal("Capacity: "
+                        tooltip.add(Component.translatable("gt.lang.energy.capacity").append(": "
                                 + com.gregtech.gregtech.client.TooltipHelper.formatLong(spec.capacity()) + " " + outUnit)
                                 .withStyle(net.minecraft.ChatFormatting.YELLOW));
                     }

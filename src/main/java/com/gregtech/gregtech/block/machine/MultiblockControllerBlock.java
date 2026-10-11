@@ -28,9 +28,8 @@ public class MultiblockControllerBlock extends BasicMachineBlock {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
-        super.appendHoverText(stack, level, tooltip, flag);
-        tooltip.add(Component.translatable("gt.tooltip.multiblock.distillationtower.1"));
-        tooltip.add(Component.translatable("gt.tooltip.multiblock.distillationtower.2"));
-        tooltip.add(Component.translatable("gt.tooltip.multiblock.distillationtower.3"));
+        com.gregtech.gregtech.client.OriginalControllerTooltips.structure(
+                com.gregtech.gregtech.content.multiblock.OriginalControllerTooltipData.Family.DISTILLATION_TOWER,tooltip);
+        com.gregtech.gregtech.client.OriginalControllerTooltips.basic(basicSpec(),tooltip);
     }
 }

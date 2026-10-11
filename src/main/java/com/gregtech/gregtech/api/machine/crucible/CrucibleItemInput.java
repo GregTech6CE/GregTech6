@@ -62,14 +62,7 @@ public final class CrucibleItemInput {
                 }
                 return result;
             }
-            if (block instanceof SmeltingCrucibleBlock crucibleBlock) {
-                CrucibleSpec spec = crucibleBlock.spec();
-                GTMaterial hull = spec.material().resolve();
-                if (hull.isValid()) {
-                    result.add(CrucibleMaterialStack.of(hull, spec.hullMaterialUnits()));
-                }
-                return result;
-            }
+
             if (block instanceof GTStoneBlock stoneBlock) {
                 addStoneMaterials(result, stoneBlock.stoneMaterial(), stoneBlock.variant(), false);
                 return result;

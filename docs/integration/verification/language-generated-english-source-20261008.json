@@ -1,0 +1,2360 @@
+{
+  "authors": "GregTech-6 Team / Gregorius Techneticies; original Java LGPL-3.0-or-later. User Chinese source unchanged; local only.",
+  "base_commit": "d9a2fb8e4",
+  "checks": {
+    "after_counter_parser_tests": {
+      "passed": true,
+      "seconds": 0.193,
+      "tests": 24
+    },
+    "complete_fast_tests": {
+      "passed": true,
+      "seconds": 1.334,
+      "tests": 62
+    },
+    "numbered_export": {
+      "bindings_changed": 0,
+      "names": 675,
+      "tooltips": 640,
+      "unified_english_gate_before_write": true
+    },
+    "source_gate": {
+      "java_sources": 2602,
+      "passed": true,
+      "seconds": 2.811
+    }
+  },
+  "chinese_diff": {
+    "added": {},
+    "changed": {},
+    "removed": []
+  },
+  "counter_optimization": {
+    "after": {
+      "declarations": 13493,
+      "elapsed_seconds": 1.224783199999365,
+      "files": [
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\MT.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\a\\Loader_Woods.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\a\\Loader_Blocks.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\oredict\\OreDictMaterial.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\ANY.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\a\\Loader_Rocks.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\block\\metatype\\BlockStones.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\stone\\BlockStonesGT.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\block\\metatype\\BlockMetaType.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\compat\\thaumcraft\\CompatTC.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\OP.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\ItemIntegratedCircuit.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\multiitem\\behaviors\\Behavior_CureZombie.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\multiitem\\behaviors\\Behavior_FeedCat.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\multiitem\\behaviors\\Behavior_FeedChocolate.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\multiitem\\behaviors\\Behavior_FeedDog.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\multiitem\\behaviors\\Behavior_FeedGrass.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\multiitem\\behaviors\\Behavior_FeedPig.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\multiitem\\behaviors\\Behavior_Place_Paddy.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\multiitem\\behaviors\\Behavior_Place_Path.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\multiitem\\behaviors\\Behavior_Shears.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\multiitem\\behaviors\\Behavior_TripwireCutting.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\oredict\\listeners\\OreDictListenerItem_Rocks.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\oredict\\listeners\\OreDictListenerItem_Washing.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\computer\\TileEntityBase08DataSwitch.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\delegate\\ITileEntityDelegating.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\energy\\TileEntityBase10EnergyBatBox.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\inventories\\MultiTileEntityMassStorage.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\machines\\MultiTileEntitySensor.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\block\\metatype\\BlockColored.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockAsphalt.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockBaleCrop.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockBaleGrass.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockCFoam.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockCFoamFresh.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockConcrete.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockConcreteReinforced.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockDiggable.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockGlassClear.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockGlassGlow.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockGrass.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockSands.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\plants\\BlockFlowersA.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\plants\\BlockFlowersB.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\plants\\BlockGlowtus.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\stone\\BlockCrystalOres.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\stone\\BlockRockOres.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\stone\\BlockVanillaOresA.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tool\\BlockBarsBrass.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tool\\BlockBarsSteel.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tool\\BlockBarsTungstenSteel.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tool\\BlockSpikeFancy.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tool\\BlockSpikeMetal.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tool\\BlockSpikeSharp.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tool\\BlockSpikeSteel.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tool\\BlockSpikeSuper.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tree\\BlockTreeLeavesAB.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tree\\BlockTreeLeavesCD.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tree\\BlockTreeLog1.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tree\\BlockTreeLog1FireProof.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tree\\BlockTreeLogA.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tree\\BlockTreeLogAFireProof.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tree\\BlockTreeLogB.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tree\\BlockTreeLogBFireProof.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tree\\BlockTreeLogC.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tree\\BlockTreeLogCFireProof.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tree\\BlockTreeSaplingAB.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tree\\BlockTreeSaplingCD.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\wood\\BlockTreeBeam1.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\wood\\BlockTreeBeam1FireProof.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\wood\\BlockTreeBeam2.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\wood\\BlockTreeBeam2FireProof.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\wood\\BlockTreeBeam3.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\wood\\BlockTreeBeam3FireProof.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\wood\\BlockTreeBeamA.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\wood\\BlockTreeBeamAFireProof.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\wood\\BlockTreeBeamB.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\wood\\BlockTreeBeamBFireProof.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\wood\\BlockTreeBeamC.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\wood\\BlockTreeBeamCFireProof.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\wood\\BlockTreePlanks.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\wood\\BlockTreePlanks2.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\wood\\BlockTreePlanks2FireProof.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\wood\\BlockTreePlanksFireProof.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Chunk_Remover.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Cropnalyzer.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Duct_Tape.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_FlintAndTinder.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Key.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Lighter.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Place_Dynamite.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Plunger_Essentia.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Plunger_Fluid.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Plunger_Item.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Remote.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Scanner.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Scoop.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_SensorKit.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Spray_Color.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Spray_Color_Remover.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Spray_Extinguisher.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Spray_Foam.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Spray_Foam_Hardener.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Spray_Foam_Remover.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Worldgen_Debugger.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemBooks.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemBottles.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemBumbles.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemCans.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemFood.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemRandomTools.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemTechnological.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\FL.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\a\\Loader_Fluids.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\a\\Loader_Rails.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\a\\Loader_Tools.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\connectors\\MultiTileEntityWireElectric.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\connectors\\MultiTileEntityPipeItem.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\connectors\\MultiTileEntityPipeFluid.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\computer\\MultiTileEntityHDDSwitch.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\computer\\MultiTileEntityUSBSwitch.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityLaserBuildcraft.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\generators\\MultiTileEntityMagicFieldAbsorber.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\reactors\\MultiTileEntityReactorCore.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\transformers\\MultiTileEntityGearBox.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\inventories\\MultiTileEntityEnderGarbageBin.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\inventories\\MultiTileEntityEnderGarbageDump.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\inventories\\MultiTileEntityHopper.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\inventories\\MultiTileEntityQueueHopper.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\misc\\MultiTileEntityCertificate.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityAutoclave.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityBath.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityBedrockDrill.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityCentrifuge.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityCoagulator.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityCokeOven.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityCrucible.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityCrusher.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityCryoDistillationTower.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityDistillationTower.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityElectrolyzer.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityFermenter.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityFusionReactor.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityImplosionCompressor.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeBoiler.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeDynamo.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeHeatExchanger.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeTurbineGas.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeTurbineSteam.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLightningRod.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLogisticsCore.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityMatterFabricator.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityMixer.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityOven.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityShredder.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntitySluice.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntitySqueezer.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityTank3x3x3.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityTank5x5x5.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityVonDaGraagg.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\placeables\\MultiTileEntityCoin.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalAether.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalAlfheim.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalAroma.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalAtum.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalBetweenlands.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalCandyCraft.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalCW2AquaCavern.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalCW2Caveland.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalCW2Cavenia.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalCW2Cavern.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalCW2Caveworld.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalDeepDark.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalEnd.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalEndOfTime.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalEnviromine.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalErebus.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalNether.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalTropics.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalTwilight.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityBucketometer.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityChronometer.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityElectrometer.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityFluidometer.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityGeigerCounter.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityGibblometer.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityItemometer.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityKiloBucketometer.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityKiloGibblometer.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityLaserometer.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityLuminometer.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityPlayerCounter.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityProgressmeter.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityStackometer.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityTachometer.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityThermometer.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityTPSmeter.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityWeightometerHeavy.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityWeightometerLight.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityWeightometerMedium.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityWeightometerSuperHeavy.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\tanks\\MultiTileEntityPump.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntityPlantPot.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntitySmeltery.java"
+      ],
+      "same_outputs_and_provenance": true,
+      "values_sha256": "a2238568df9ca3139118d6a223974a072b56a496cfd91dc874907b4a3a65b550"
+    },
+    "before": {
+      "declarations": 13493,
+      "elapsed_seconds": 1.4128342999974848,
+      "files": [
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\MT.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\a\\Loader_Woods.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\a\\Loader_Blocks.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\oredict\\OreDictMaterial.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\ANY.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\a\\Loader_Rocks.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\block\\metatype\\BlockStones.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\stone\\BlockStonesGT.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\block\\metatype\\BlockMetaType.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\compat\\thaumcraft\\CompatTC.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\OP.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\ItemIntegratedCircuit.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\multiitem\\behaviors\\Behavior_CureZombie.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\multiitem\\behaviors\\Behavior_FeedCat.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\multiitem\\behaviors\\Behavior_FeedChocolate.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\multiitem\\behaviors\\Behavior_FeedDog.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\multiitem\\behaviors\\Behavior_FeedGrass.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\multiitem\\behaviors\\Behavior_FeedPig.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\multiitem\\behaviors\\Behavior_Place_Paddy.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\multiitem\\behaviors\\Behavior_Place_Path.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\multiitem\\behaviors\\Behavior_Shears.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\multiitem\\behaviors\\Behavior_TripwireCutting.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\oredict\\listeners\\OreDictListenerItem_Rocks.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\oredict\\listeners\\OreDictListenerItem_Washing.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\computer\\TileEntityBase08DataSwitch.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\delegate\\ITileEntityDelegating.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\energy\\TileEntityBase10EnergyBatBox.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\inventories\\MultiTileEntityMassStorage.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\machines\\MultiTileEntitySensor.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\block\\metatype\\BlockColored.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockAsphalt.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockBaleCrop.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockBaleGrass.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockCFoam.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockCFoamFresh.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockConcrete.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockConcreteReinforced.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockDiggable.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockGlassClear.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockGlassGlow.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockGrass.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\BlockSands.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\plants\\BlockFlowersA.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\plants\\BlockFlowersB.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\plants\\BlockGlowtus.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\stone\\BlockCrystalOres.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\stone\\BlockRockOres.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\stone\\BlockVanillaOresA.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tool\\BlockBarsBrass.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tool\\BlockBarsSteel.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tool\\BlockBarsTungstenSteel.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tool\\BlockSpikeFancy.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tool\\BlockSpikeMetal.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tool\\BlockSpikeSharp.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tool\\BlockSpikeSteel.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tool\\BlockSpikeSuper.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tree\\BlockTreeLeavesAB.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tree\\BlockTreeLeavesCD.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tree\\BlockTreeLog1.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tree\\BlockTreeLog1FireProof.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tree\\BlockTreeLogA.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tree\\BlockTreeLogAFireProof.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tree\\BlockTreeLogB.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tree\\BlockTreeLogBFireProof.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tree\\BlockTreeLogC.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tree\\BlockTreeLogCFireProof.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tree\\BlockTreeSaplingAB.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tree\\BlockTreeSaplingCD.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\wood\\BlockTreeBeam1.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\wood\\BlockTreeBeam1FireProof.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\wood\\BlockTreeBeam2.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\wood\\BlockTreeBeam2FireProof.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\wood\\BlockTreeBeam3.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\wood\\BlockTreeBeam3FireProof.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\wood\\BlockTreeBeamA.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\wood\\BlockTreeBeamAFireProof.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\wood\\BlockTreeBeamB.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\wood\\BlockTreeBeamBFireProof.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\wood\\BlockTreeBeamC.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\wood\\BlockTreeBeamCFireProof.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\wood\\BlockTreePlanks.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\wood\\BlockTreePlanks2.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\wood\\BlockTreePlanks2FireProof.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\wood\\BlockTreePlanksFireProof.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Chunk_Remover.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Cropnalyzer.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Duct_Tape.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_FlintAndTinder.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Key.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Lighter.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Place_Dynamite.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Plunger_Essentia.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Plunger_Fluid.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Plunger_Item.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Remote.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Scanner.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Scoop.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_SensorKit.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Spray_Color.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Spray_Color_Remover.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Spray_Extinguisher.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Spray_Foam.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Spray_Foam_Hardener.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Spray_Foam_Remover.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\behaviors\\Behavior_Worldgen_Debugger.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemBooks.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemBottles.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemBumbles.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemCans.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemFood.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemRandomTools.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemTechnological.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\FL.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\a\\Loader_Fluids.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\a\\Loader_Rails.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\a\\Loader_Tools.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\connectors\\MultiTileEntityWireElectric.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\connectors\\MultiTileEntityPipeItem.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\connectors\\MultiTileEntityPipeFluid.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\computer\\MultiTileEntityHDDSwitch.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\computer\\MultiTileEntityUSBSwitch.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityLaserBuildcraft.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\generators\\MultiTileEntityMagicFieldAbsorber.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\reactors\\MultiTileEntityReactorCore.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\transformers\\MultiTileEntityGearBox.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\inventories\\MultiTileEntityEnderGarbageBin.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\inventories\\MultiTileEntityEnderGarbageDump.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\inventories\\MultiTileEntityHopper.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\inventories\\MultiTileEntityQueueHopper.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\misc\\MultiTileEntityCertificate.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityAutoclave.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityBath.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityBedrockDrill.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityCentrifuge.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityCoagulator.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityCokeOven.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityCrucible.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityCrusher.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityCryoDistillationTower.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityDistillationTower.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityElectrolyzer.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityFermenter.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityFusionReactor.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityImplosionCompressor.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeBoiler.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeDynamo.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeHeatExchanger.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeTurbineGas.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeTurbineSteam.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLightningRod.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLogisticsCore.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityMatterFabricator.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityMixer.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityOven.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityShredder.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntitySluice.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntitySqueezer.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityTank3x3x3.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityTank5x5x5.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityVonDaGraagg.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\placeables\\MultiTileEntityCoin.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalAether.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalAlfheim.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalAroma.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalAtum.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalBetweenlands.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalCandyCraft.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalCW2AquaCavern.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalCW2Caveland.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalCW2Cavenia.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalCW2Cavern.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalCW2Caveworld.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalDeepDark.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalEnd.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalEndOfTime.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalEnviromine.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalErebus.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalNether.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalTropics.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\portals\\MultiTileEntityMiniPortalTwilight.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityBucketometer.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityChronometer.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityElectrometer.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityFluidometer.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityGeigerCounter.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityGibblometer.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityItemometer.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityKiloBucketometer.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityKiloGibblometer.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityLaserometer.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityLuminometer.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityPlayerCounter.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityProgressmeter.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityStackometer.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityTachometer.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityThermometer.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityTPSmeter.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityWeightometerHeavy.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityWeightometerLight.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityWeightometerMedium.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityWeightometerSuperHeavy.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\tanks\\MultiTileEntityPump.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntityPlantPot.java",
+        "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntitySmeltery.java"
+      ],
+      "values_sha256": "a2238568df9ca3139118d6a223974a072b56a496cfd91dc874907b4a3a65b550"
+    },
+    "interpretation": "One observed run before and after; identical 13493 declarations, exact value digest and ordered source provenance. Removes repeated summation over all accumulated declarations for each source file; not a general performance guarantee."
+  },
+  "english_diff": {
+    "added": {
+      "fluid.gregtech.cfoam.black": "Black C-Foam",
+      "fluid.gregtech.cfoam.blue": "Blue C-Foam",
+      "fluid.gregtech.cfoam.brown": "Brown C-Foam",
+      "fluid.gregtech.cfoam.cyan": "Cyan C-Foam",
+      "fluid.gregtech.cfoam.gray": "Gray C-Foam",
+      "fluid.gregtech.cfoam.green": "Green C-Foam",
+      "fluid.gregtech.cfoam.lightblue": "Light Blue C-Foam",
+      "fluid.gregtech.cfoam.lightgray": "Light Gray C-Foam",
+      "fluid.gregtech.cfoam.lime": "Lime C-Foam",
+      "fluid.gregtech.cfoam.magenta": "Magenta C-Foam",
+      "fluid.gregtech.cfoam.orange": "Orange C-Foam",
+      "fluid.gregtech.cfoam.owned.black": "Advanced Black C-Foam",
+      "fluid.gregtech.cfoam.owned.blue": "Advanced Blue C-Foam",
+      "fluid.gregtech.cfoam.owned.brown": "Advanced Brown C-Foam",
+      "fluid.gregtech.cfoam.owned.cyan": "Advanced Cyan C-Foam",
+      "fluid.gregtech.cfoam.owned.gray": "Advanced Gray C-Foam",
+      "fluid.gregtech.cfoam.owned.green": "Advanced Green C-Foam",
+      "fluid.gregtech.cfoam.owned.lightblue": "Advanced Light Blue C-Foam",
+      "fluid.gregtech.cfoam.owned.lightgray": "Advanced Light Gray C-Foam",
+      "fluid.gregtech.cfoam.owned.lime": "Advanced Lime C-Foam",
+      "fluid.gregtech.cfoam.owned.magenta": "Advanced Magenta C-Foam",
+      "fluid.gregtech.cfoam.owned.orange": "Advanced Orange C-Foam",
+      "fluid.gregtech.cfoam.owned.pink": "Advanced Pink C-Foam",
+      "fluid.gregtech.cfoam.owned.purple": "Advanced Purple C-Foam",
+      "fluid.gregtech.cfoam.owned.red": "Advanced Red C-Foam",
+      "fluid.gregtech.cfoam.owned.white": "Advanced White C-Foam",
+      "fluid.gregtech.cfoam.owned.yellow": "Advanced Yellow C-Foam",
+      "fluid.gregtech.cfoam.pink": "Pink C-Foam",
+      "fluid.gregtech.cfoam.purple": "Purple C-Foam",
+      "fluid.gregtech.cfoam.red": "Red C-Foam",
+      "fluid.gregtech.cfoam.white": "White C-Foam",
+      "fluid.gregtech.cfoam.yellow": "Yellow C-Foam",
+      "fluid.gregtech.dye.chemical.black": "Chemical Black Dye",
+      "fluid.gregtech.dye.chemical.blue": "Chemical Blue Dye",
+      "fluid.gregtech.dye.chemical.brown": "Chemical Brown Dye",
+      "fluid.gregtech.dye.chemical.cyan": "Chemical Cyan Dye",
+      "fluid.gregtech.dye.chemical.gray": "Chemical Gray Dye",
+      "fluid.gregtech.dye.chemical.green": "Chemical Green Dye",
+      "fluid.gregtech.dye.chemical.lightblue": "Chemical Light Blue Dye",
+      "fluid.gregtech.dye.chemical.lightgray": "Chemical Light Gray Dye",
+      "fluid.gregtech.dye.chemical.lime": "Chemical Lime Dye",
+      "fluid.gregtech.dye.chemical.magenta": "Chemical Magenta Dye",
+      "fluid.gregtech.dye.chemical.orange": "Chemical Orange Dye",
+      "fluid.gregtech.dye.chemical.pink": "Chemical Pink Dye",
+      "fluid.gregtech.dye.chemical.purple": "Chemical Purple Dye",
+      "fluid.gregtech.dye.chemical.red": "Chemical Red Dye",
+      "fluid.gregtech.dye.chemical.white": "Chemical White Dye",
+      "fluid.gregtech.dye.chemical.yellow": "Chemical Yellow Dye",
+      "fluid.gregtech.dye.flower.black": "Black Flower Dye",
+      "fluid.gregtech.dye.flower.blue": "Blue Flower Dye",
+      "fluid.gregtech.dye.flower.brown": "Brown Flower Dye",
+      "fluid.gregtech.dye.flower.cyan": "Cyan Flower Dye",
+      "fluid.gregtech.dye.flower.gray": "Gray Flower Dye",
+      "fluid.gregtech.dye.flower.green": "Green Flower Dye",
+      "fluid.gregtech.dye.flower.lightblue": "Light Blue Flower Dye",
+      "fluid.gregtech.dye.flower.lightgray": "Light Gray Flower Dye",
+      "fluid.gregtech.dye.flower.lime": "Lime Flower Dye",
+      "fluid.gregtech.dye.flower.magenta": "Magenta Flower Dye",
+      "fluid.gregtech.dye.flower.orange": "Orange Flower Dye",
+      "fluid.gregtech.dye.flower.pink": "Pink Flower Dye",
+      "fluid.gregtech.dye.flower.purple": "Purple Flower Dye",
+      "fluid.gregtech.dye.flower.red": "Red Flower Dye",
+      "fluid.gregtech.dye.flower.white": "White Flower Dye",
+      "fluid.gregtech.dye.flower.yellow": "Yellow Flower Dye",
+      "fluid.gregtech.dye.watermixed.black": "Water Mixed Black Dye",
+      "fluid.gregtech.dye.watermixed.blue": "Water Mixed Blue Dye",
+      "fluid.gregtech.dye.watermixed.brown": "Water Mixed Brown Dye",
+      "fluid.gregtech.dye.watermixed.cyan": "Water Mixed Cyan Dye",
+      "fluid.gregtech.dye.watermixed.gray": "Water Mixed Gray Dye",
+      "fluid.gregtech.dye.watermixed.green": "Water Mixed Green Dye",
+      "fluid.gregtech.dye.watermixed.lightblue": "Water Mixed Light Blue Dye",
+      "fluid.gregtech.dye.watermixed.lightgray": "Water Mixed Light Gray Dye",
+      "fluid.gregtech.dye.watermixed.lime": "Water Mixed Lime Dye",
+      "fluid.gregtech.dye.watermixed.magenta": "Water Mixed Magenta Dye",
+      "fluid.gregtech.dye.watermixed.orange": "Water Mixed Orange Dye",
+      "fluid.gregtech.dye.watermixed.pink": "Water Mixed Pink Dye",
+      "fluid.gregtech.dye.watermixed.purple": "Water Mixed Purple Dye",
+      "fluid.gregtech.dye.watermixed.red": "Water Mixed Red Dye",
+      "fluid.gregtech.dye.watermixed.white": "Water Mixed White Dye",
+      "fluid.gregtech.dye.watermixed.yellow": "Water Mixed Yellow Dye",
+      "fluid.gregtech.potion.damage": "Harming Brew",
+      "fluid.gregtech.potion.damage.lingering": "Lingering Harming Brew",
+      "fluid.gregtech.potion.damage.splash": "Splash Harming Brew",
+      "fluid.gregtech.potion.damage.strong": "Strong Harming Brew",
+      "fluid.gregtech.potion.damage.strong.lingering": "Strong Lingering Harming Brew",
+      "fluid.gregtech.potion.damage.strong.splash": "Strong Splash Harming Brew",
+      "fluid.gregtech.potion.fireresistance": "Fire Resistant Brew",
+      "fluid.gregtech.potion.fireresistance.lingering": "Lingering Fire Resistant Brew",
+      "fluid.gregtech.potion.fireresistance.long": "Stretched Fire Resistant Brew",
+      "fluid.gregtech.potion.fireresistance.long.lingering": "Stretched Lingering Fire Resistant Brew",
+      "fluid.gregtech.potion.fireresistance.long.splash": "Stretched Splash Fire Resistant Brew",
+      "fluid.gregtech.potion.fireresistance.splash": "Splash Fire Resistant Brew",
+      "fluid.gregtech.potion.health": "Healing Brew",
+      "fluid.gregtech.potion.health.lingering": "Lingering Healing Brew",
+      "fluid.gregtech.potion.health.splash": "Splash Healing Brew",
+      "fluid.gregtech.potion.health.strong": "Strong Healing Brew",
+      "fluid.gregtech.potion.health.strong.lingering": "Strong Lingering Healing Brew",
+      "fluid.gregtech.potion.health.strong.splash": "Strong Splash Healing Brew",
+      "fluid.gregtech.potion.invisibility": "Invisible Brew",
+      "fluid.gregtech.potion.invisibility.lingering": "Lingering Invisible Brew",
+      "fluid.gregtech.potion.invisibility.long": "Stretched Invisible Brew",
+      "fluid.gregtech.potion.invisibility.long.lingering": "Stretched Lingering Invisible Brew",
+      "fluid.gregtech.potion.invisibility.long.splash": "Stretched Splash Invisible Brew",
+      "fluid.gregtech.potion.invisibility.splash": "Splash Invisible Brew",
+      "fluid.gregtech.potion.jump": "Jumpy Brew",
+      "fluid.gregtech.potion.jump.lingering": "Lingering Jumpy Brew",
+      "fluid.gregtech.potion.jump.splash": "Splash Jumpy Brew",
+      "fluid.gregtech.potion.jump.strong": "Strong Jumpy Brew",
+      "fluid.gregtech.potion.jump.strong.lingering": "Strong Lingering Jumpy Brew",
+      "fluid.gregtech.potion.jump.strong.splash": "Strong Splash Jumpy Brew",
+      "fluid.gregtech.potion.nightvision": "Night Vision Brew",
+      "fluid.gregtech.potion.nightvision.lingering": "Lingering Night Vision Brew",
+      "fluid.gregtech.potion.nightvision.long": "Stretched Night Vision Brew",
+      "fluid.gregtech.potion.nightvision.long.lingering": "Stretched Lingering Night Vision Brew",
+      "fluid.gregtech.potion.nightvision.long.splash": "Stretched Splash Night Vision Brew",
+      "fluid.gregtech.potion.nightvision.splash": "Splash Night Vision Brew",
+      "fluid.gregtech.potion.poison": "Poisonous Brew",
+      "fluid.gregtech.potion.poison.lingering": "Lingering Poisonous Brew",
+      "fluid.gregtech.potion.poison.long": "Stretched Poisonous Brew",
+      "fluid.gregtech.potion.poison.long.lingering": "Stretched Lingering Poisonous Brew",
+      "fluid.gregtech.potion.poison.long.splash": "Stretched Splash Poisonous Brew",
+      "fluid.gregtech.potion.poison.splash": "Splash Poisonous Brew",
+      "fluid.gregtech.potion.poison.strong": "Strong Poisonous Brew",
+      "fluid.gregtech.potion.poison.strong.lingering": "Strong Lingering Poisonous Brew",
+      "fluid.gregtech.potion.poison.strong.splash": "Strong Splash Poisonous Brew",
+      "fluid.gregtech.potion.regen": "Regenerating Brew",
+      "fluid.gregtech.potion.regen.lingering": "Lingering Regenerating Brew",
+      "fluid.gregtech.potion.regen.long": "Stretched Regenerating Brew",
+      "fluid.gregtech.potion.regen.long.lingering": "Stretched Lingering Regenerating Brew",
+      "fluid.gregtech.potion.regen.long.splash": "Stretched Splash Regenerating Brew",
+      "fluid.gregtech.potion.regen.splash": "Splash Regenerating Brew",
+      "fluid.gregtech.potion.regen.strong": "Strong Regenerating Brew",
+      "fluid.gregtech.potion.regen.strong.lingering": "Strong Lingering Regenerating Brew",
+      "fluid.gregtech.potion.regen.strong.splash": "Strong Splash Regenerating Brew",
+      "fluid.gregtech.potion.slowness": "Lame Brew",
+      "fluid.gregtech.potion.slowness.lingering": "Lingering Lame Brew",
+      "fluid.gregtech.potion.slowness.long": "Stretched Lame Brew",
+      "fluid.gregtech.potion.slowness.long.lingering": "Stretched Lingering Lame Brew",
+      "fluid.gregtech.potion.slowness.long.splash": "Stretched Splash Lame Brew",
+      "fluid.gregtech.potion.slowness.splash": "Splash Lame Brew",
+      "fluid.gregtech.potion.speed": "Swiftness Brew",
+      "fluid.gregtech.potion.speed.lingering": "Lingering Swiftness Brew",
+      "fluid.gregtech.potion.speed.long": "Stretched Swiftness Brew",
+      "fluid.gregtech.potion.speed.long.lingering": "Stretched Lingering Swiftness Brew",
+      "fluid.gregtech.potion.speed.long.splash": "Stretched Splash Swiftness Brew",
+      "fluid.gregtech.potion.speed.splash": "Splash Swiftness Brew",
+      "fluid.gregtech.potion.speed.strong": "Strong Swiftness Brew",
+      "fluid.gregtech.potion.speed.strong.lingering": "Strong Lingering Swiftness Brew",
+      "fluid.gregtech.potion.speed.strong.splash": "Strong Splash Swiftness Brew",
+      "fluid.gregtech.potion.strength": "Strength Brew",
+      "fluid.gregtech.potion.strength.lingering": "Lingering Strength Brew",
+      "fluid.gregtech.potion.strength.long": "Stretched Strength Brew",
+      "fluid.gregtech.potion.strength.long.lingering": "Stretched Lingering Strength Brew",
+      "fluid.gregtech.potion.strength.long.splash": "Stretched Splash Strength Brew",
+      "fluid.gregtech.potion.strength.splash": "Splash Strength Brew",
+      "fluid.gregtech.potion.strength.strong": "Strong Strength Brew",
+      "fluid.gregtech.potion.strength.strong.lingering": "Strong Lingering Strength Brew",
+      "fluid.gregtech.potion.strength.strong.splash": "Strong Splash Strength Brew",
+      "fluid.gregtech.potion.waterbreathing": "Fishy Brew",
+      "fluid.gregtech.potion.waterbreathing.lingering": "Lingering Fishy Brew",
+      "fluid.gregtech.potion.waterbreathing.long": "Stretched Fishy Brew",
+      "fluid.gregtech.potion.waterbreathing.long.lingering": "Stretched Lingering Fishy Brew",
+      "fluid.gregtech.potion.waterbreathing.long.splash": "Stretched Splash Fishy Brew",
+      "fluid.gregtech.potion.waterbreathing.splash": "Splash Fishy Brew",
+      "fluid.gregtech.potion.weakness": "Weakening Brew",
+      "fluid.gregtech.potion.weakness.lingering": "Lingering Weakening Brew",
+      "fluid.gregtech.potion.weakness.long": "Stretched Weakening Brew",
+      "fluid.gregtech.potion.weakness.long.lingering": "Stretched Lingering Weakening Brew",
+      "fluid.gregtech.potion.weakness.long.splash": "Stretched Splash Weakening Brew",
+      "fluid.gregtech.potion.weakness.splash": "Splash Weakening Brew",
+      "item.gregtech.book_black.tooltip": "",
+      "item.gregtech.book_blue.tooltip": "",
+      "item.gregtech.book_brown.tooltip": "",
+      "item.gregtech.book_cyan.tooltip": "",
+      "item.gregtech.book_green.tooltip": "",
+      "item.gregtech.book_magenta.tooltip": "",
+      "item.gregtech.book_orange.tooltip": "",
+      "item.gregtech.book_purple.tooltip": "",
+      "item.gregtech.book_red.tooltip": "",
+      "item.gregtech.book_white.tooltip": "",
+      "item.gregtech.book_yellow.tooltip": "",
+      "item.gregtech.large_book_black.tooltip": "",
+      "item.gregtech.large_book_blue.tooltip": "",
+      "item.gregtech.large_book_brown.tooltip": "",
+      "item.gregtech.large_book_cyan.tooltip": "",
+      "item.gregtech.large_book_green.tooltip": "",
+      "item.gregtech.large_book_magenta.tooltip": "",
+      "item.gregtech.large_book_orange.tooltip": "",
+      "item.gregtech.large_book_purple.tooltip": "",
+      "item.gregtech.large_book_red.tooltip": "",
+      "item.gregtech.large_book_white.tooltip": "",
+      "item.gregtech.large_book_yellow.tooltip": ""
+    },
+    "changed": {
+      "block.gregtech.anvil": {
+        "after": "Steel Anvil",
+        "before": "Anvil (Steel)"
+      },
+      "block.gregtech.anvil_adamantium": {
+        "after": "Adamantium Anvil",
+        "before": "Anvil (Adamantium)"
+      },
+      "block.gregtech.anvil_arsenicbronze": {
+        "after": "Arsenic Bronze Anvil",
+        "before": "Anvil (Arsenic Bronze)"
+      },
+      "block.gregtech.anvil_arseniccopper": {
+        "after": "Arsenic Copper Anvil",
+        "before": "Anvil (Arsenic Copper)"
+      },
+      "block.gregtech.anvil_blacksteel": {
+        "after": "Black Steel Anvil",
+        "before": "Anvil (Black Steel)"
+      },
+      "block.gregtech.anvil_blackstone": {
+        "after": "Blackstone Anvil",
+        "before": "Anvil (Blackstone)"
+      },
+      "block.gregtech.anvil_bluesteel": {
+        "after": "Blue Steel Anvil",
+        "before": "Anvil (Blue Steel)"
+      },
+      "block.gregtech.anvil_bronze": {
+        "after": "Bronze Anvil",
+        "before": "Anvil (Bronze)"
+      },
+      "block.gregtech.anvil_desh": {
+        "after": "Desh Anvil",
+        "before": "Anvil (Desh)"
+      },
+      "block.gregtech.anvil_draconium": {
+        "after": "Draconium Anvil",
+        "before": "Anvil (Draconium)"
+      },
+      "block.gregtech.anvil_draconiumawakened": {
+        "after": "Awakened Draconium Anvil",
+        "before": "Anvil (DraconiumAwakened)"
+      },
+      "block.gregtech.anvil_efrine": {
+        "after": "Efrine Anvil",
+        "before": "Anvil (Efrine)"
+      },
+      "block.gregtech.anvil_fierysteel": {
+        "after": "Fiery Steel Anvil",
+        "before": "Anvil (Fiery Steel)"
+      },
+      "block.gregtech.anvil_gaiaspirit": {
+        "after": "Gaia Spirit Anvil",
+        "before": "Anvil (Gaia Spirit)"
+      },
+      "block.gregtech.anvil_graniteblack": {
+        "after": "Black Granite Anvil",
+        "before": "Anvil (GraniteBlack)"
+      },
+      "block.gregtech.anvil_granitered": {
+        "after": "Red Granite Anvil",
+        "before": "Anvil (GraniteRed)"
+      },
+      "block.gregtech.anvil_hslatungstenalloy": {
+        "after": "Tungsten Alloy Anvil",
+        "before": "Anvil (HSLA-Tungsten-Alloy)"
+      },
+      "block.gregtech.anvil_infinity": {
+        "after": "Infinity Anvil",
+        "before": "Anvil (Infinity)"
+      },
+      "block.gregtech.anvil_iridium": {
+        "after": "Iridium Anvil",
+        "before": "Anvil (Iridium)"
+      },
+      "block.gregtech.anvil_ironwood": {
+        "after": "Ironwood Anvil",
+        "before": "Anvil (Ironwood)"
+      },
+      "block.gregtech.anvil_lead": {
+        "after": "Lead Anvil",
+        "before": "Anvil (Lead)"
+      },
+      "block.gregtech.anvil_manasteel": {
+        "after": "Manasteel Anvil",
+        "before": "Anvil (Manasteel)"
+      },
+      "block.gregtech.anvil_netherite": {
+        "after": "Netherite Anvil",
+        "before": "Anvil (Netherite)"
+      },
+      "block.gregtech.anvil_octine": {
+        "after": "Octine Anvil",
+        "before": "Anvil (Octine)"
+      },
+      "block.gregtech.anvil_redsteel": {
+        "after": "Red Steel Anvil",
+        "before": "Anvil (Red Steel)"
+      },
+      "block.gregtech.anvil_stone": {
+        "after": "Stone Anvil",
+        "before": "Anvil (Stone)"
+      },
+      "block.gregtech.anvil_syrmorite": {
+        "after": "Syrmorite Anvil",
+        "before": "Anvil (Syrmorite)"
+      },
+      "block.gregtech.anvil_terrasteel": {
+        "after": "Terrasteel Anvil",
+        "before": "Anvil (Terrasteel)"
+      },
+      "block.gregtech.anvil_thaumium": {
+        "after": "Thaumium Anvil",
+        "before": "Anvil (Thaumium)"
+      },
+      "block.gregtech.anvil_titanium": {
+        "after": "Titanium Anvil",
+        "before": "Anvil (Titanium)"
+      },
+      "block.gregtech.anvil_titaniumgold": {
+        "after": "Titanium-Gold Anvil",
+        "before": "Anvil (Titanium-Gold)"
+      },
+      "block.gregtech.anvil_tungsten": {
+        "after": "Tungsten Anvil",
+        "before": "Anvil (Tungsten)"
+      },
+      "block.gregtech.anvil_tungstensteel": {
+        "after": "Tungstensteel Anvil",
+        "before": "Anvil (Tungstensteel)"
+      },
+      "block.gregtech.anvil_vanadiumsteel": {
+        "after": "Vanadiumsteel Anvil",
+        "before": "Anvil (VanadiumSteel)"
+      },
+      "block.gregtech.anvil_voidmetal": {
+        "after": "Void Metal Anvil",
+        "before": "Anvil (Void Metal)"
+      },
+      "fluid_type.gregtech.cfoam.black": {
+        "after": "Black C-Foam",
+        "before": "Cfoam Black"
+      },
+      "fluid_type.gregtech.cfoam.blue": {
+        "after": "Blue C-Foam",
+        "before": "Cfoam Blue"
+      },
+      "fluid_type.gregtech.cfoam.brown": {
+        "after": "Brown C-Foam",
+        "before": "Cfoam Brown"
+      },
+      "fluid_type.gregtech.cfoam.cyan": {
+        "after": "Cyan C-Foam",
+        "before": "Cfoam Cyan"
+      },
+      "fluid_type.gregtech.cfoam.gray": {
+        "after": "Gray C-Foam",
+        "before": "Cfoam Gray"
+      },
+      "fluid_type.gregtech.cfoam.green": {
+        "after": "Green C-Foam",
+        "before": "Cfoam Green"
+      },
+      "fluid_type.gregtech.cfoam.lightblue": {
+        "after": "Light Blue C-Foam",
+        "before": "Cfoam Lightblue"
+      },
+      "fluid_type.gregtech.cfoam.lightgray": {
+        "after": "Light Gray C-Foam",
+        "before": "Cfoam Lightgray"
+      },
+      "fluid_type.gregtech.cfoam.lime": {
+        "after": "Lime C-Foam",
+        "before": "Cfoam Lime"
+      },
+      "fluid_type.gregtech.cfoam.magenta": {
+        "after": "Magenta C-Foam",
+        "before": "Cfoam Magenta"
+      },
+      "fluid_type.gregtech.cfoam.orange": {
+        "after": "Orange C-Foam",
+        "before": "Cfoam Orange"
+      },
+      "fluid_type.gregtech.cfoam.owned.black": {
+        "after": "Advanced Black C-Foam",
+        "before": "Cfoam Owned Black"
+      },
+      "fluid_type.gregtech.cfoam.owned.blue": {
+        "after": "Advanced Blue C-Foam",
+        "before": "Cfoam Owned Blue"
+      },
+      "fluid_type.gregtech.cfoam.owned.brown": {
+        "after": "Advanced Brown C-Foam",
+        "before": "Cfoam Owned Brown"
+      },
+      "fluid_type.gregtech.cfoam.owned.cyan": {
+        "after": "Advanced Cyan C-Foam",
+        "before": "Cfoam Owned Cyan"
+      },
+      "fluid_type.gregtech.cfoam.owned.gray": {
+        "after": "Advanced Gray C-Foam",
+        "before": "Cfoam Owned Gray"
+      },
+      "fluid_type.gregtech.cfoam.owned.green": {
+        "after": "Advanced Green C-Foam",
+        "before": "Cfoam Owned Green"
+      },
+      "fluid_type.gregtech.cfoam.owned.lightblue": {
+        "after": "Advanced Light Blue C-Foam",
+        "before": "Cfoam Owned Lightblue"
+      },
+      "fluid_type.gregtech.cfoam.owned.lightgray": {
+        "after": "Advanced Light Gray C-Foam",
+        "before": "Cfoam Owned Lightgray"
+      },
+      "fluid_type.gregtech.cfoam.owned.lime": {
+        "after": "Advanced Lime C-Foam",
+        "before": "Cfoam Owned Lime"
+      },
+      "fluid_type.gregtech.cfoam.owned.magenta": {
+        "after": "Advanced Magenta C-Foam",
+        "before": "Cfoam Owned Magenta"
+      },
+      "fluid_type.gregtech.cfoam.owned.orange": {
+        "after": "Advanced Orange C-Foam",
+        "before": "Cfoam Owned Orange"
+      },
+      "fluid_type.gregtech.cfoam.owned.pink": {
+        "after": "Advanced Pink C-Foam",
+        "before": "Cfoam Owned Pink"
+      },
+      "fluid_type.gregtech.cfoam.owned.purple": {
+        "after": "Advanced Purple C-Foam",
+        "before": "Cfoam Owned Purple"
+      },
+      "fluid_type.gregtech.cfoam.owned.red": {
+        "after": "Advanced Red C-Foam",
+        "before": "Cfoam Owned Red"
+      },
+      "fluid_type.gregtech.cfoam.owned.white": {
+        "after": "Advanced White C-Foam",
+        "before": "Cfoam Owned White"
+      },
+      "fluid_type.gregtech.cfoam.owned.yellow": {
+        "after": "Advanced Yellow C-Foam",
+        "before": "Cfoam Owned Yellow"
+      },
+      "fluid_type.gregtech.cfoam.pink": {
+        "after": "Pink C-Foam",
+        "before": "Cfoam Pink"
+      },
+      "fluid_type.gregtech.cfoam.purple": {
+        "after": "Purple C-Foam",
+        "before": "Cfoam Purple"
+      },
+      "fluid_type.gregtech.cfoam.red": {
+        "after": "Red C-Foam",
+        "before": "Cfoam Red"
+      },
+      "fluid_type.gregtech.cfoam.white": {
+        "after": "White C-Foam",
+        "before": "Cfoam White"
+      },
+      "fluid_type.gregtech.cfoam.yellow": {
+        "after": "Yellow C-Foam",
+        "before": "Cfoam Yellow"
+      },
+      "fluid_type.gregtech.cfoam_black": {
+        "after": "Black C-Foam",
+        "before": "Cfoam Black"
+      },
+      "fluid_type.gregtech.cfoam_blue": {
+        "after": "Blue C-Foam",
+        "before": "Cfoam Blue"
+      },
+      "fluid_type.gregtech.cfoam_brown": {
+        "after": "Brown C-Foam",
+        "before": "Cfoam Brown"
+      },
+      "fluid_type.gregtech.cfoam_cyan": {
+        "after": "Cyan C-Foam",
+        "before": "Cfoam Cyan"
+      },
+      "fluid_type.gregtech.cfoam_gray": {
+        "after": "Gray C-Foam",
+        "before": "Cfoam Gray"
+      },
+      "fluid_type.gregtech.cfoam_green": {
+        "after": "Green C-Foam",
+        "before": "Cfoam Green"
+      },
+      "fluid_type.gregtech.cfoam_lightblue": {
+        "after": "Light Blue C-Foam",
+        "before": "Cfoam Lightblue"
+      },
+      "fluid_type.gregtech.cfoam_lightgray": {
+        "after": "Light Gray C-Foam",
+        "before": "Cfoam Lightgray"
+      },
+      "fluid_type.gregtech.cfoam_lime": {
+        "after": "Lime C-Foam",
+        "before": "Cfoam Lime"
+      },
+      "fluid_type.gregtech.cfoam_magenta": {
+        "after": "Magenta C-Foam",
+        "before": "Cfoam Magenta"
+      },
+      "fluid_type.gregtech.cfoam_orange": {
+        "after": "Orange C-Foam",
+        "before": "Cfoam Orange"
+      },
+      "fluid_type.gregtech.cfoam_owned_black": {
+        "after": "Advanced Black C-Foam",
+        "before": "Cfoam Owned Black"
+      },
+      "fluid_type.gregtech.cfoam_owned_blue": {
+        "after": "Advanced Blue C-Foam",
+        "before": "Cfoam Owned Blue"
+      },
+      "fluid_type.gregtech.cfoam_owned_brown": {
+        "after": "Advanced Brown C-Foam",
+        "before": "Cfoam Owned Brown"
+      },
+      "fluid_type.gregtech.cfoam_owned_cyan": {
+        "after": "Advanced Cyan C-Foam",
+        "before": "Cfoam Owned Cyan"
+      },
+      "fluid_type.gregtech.cfoam_owned_gray": {
+        "after": "Advanced Gray C-Foam",
+        "before": "Cfoam Owned Gray"
+      },
+      "fluid_type.gregtech.cfoam_owned_green": {
+        "after": "Advanced Green C-Foam",
+        "before": "Cfoam Owned Green"
+      },
+      "fluid_type.gregtech.cfoam_owned_lightblue": {
+        "after": "Advanced Light Blue C-Foam",
+        "before": "Cfoam Owned Lightblue"
+      },
+      "fluid_type.gregtech.cfoam_owned_lightgray": {
+        "after": "Advanced Light Gray C-Foam",
+        "before": "Cfoam Owned Lightgray"
+      },
+      "fluid_type.gregtech.cfoam_owned_lime": {
+        "after": "Advanced Lime C-Foam",
+        "before": "Cfoam Owned Lime"
+      },
+      "fluid_type.gregtech.cfoam_owned_magenta": {
+        "after": "Advanced Magenta C-Foam",
+        "before": "Cfoam Owned Magenta"
+      },
+      "fluid_type.gregtech.cfoam_owned_orange": {
+        "after": "Advanced Orange C-Foam",
+        "before": "Cfoam Owned Orange"
+      },
+      "fluid_type.gregtech.cfoam_owned_pink": {
+        "after": "Advanced Pink C-Foam",
+        "before": "Cfoam Owned Pink"
+      },
+      "fluid_type.gregtech.cfoam_owned_purple": {
+        "after": "Advanced Purple C-Foam",
+        "before": "Cfoam Owned Purple"
+      },
+      "fluid_type.gregtech.cfoam_owned_red": {
+        "after": "Advanced Red C-Foam",
+        "before": "Cfoam Owned Red"
+      },
+      "fluid_type.gregtech.cfoam_owned_white": {
+        "after": "Advanced White C-Foam",
+        "before": "Cfoam Owned White"
+      },
+      "fluid_type.gregtech.cfoam_owned_yellow": {
+        "after": "Advanced Yellow C-Foam",
+        "before": "Cfoam Owned Yellow"
+      },
+      "fluid_type.gregtech.cfoam_pink": {
+        "after": "Pink C-Foam",
+        "before": "Cfoam Pink"
+      },
+      "fluid_type.gregtech.cfoam_purple": {
+        "after": "Purple C-Foam",
+        "before": "Cfoam Purple"
+      },
+      "fluid_type.gregtech.cfoam_red": {
+        "after": "Red C-Foam",
+        "before": "Cfoam Red"
+      },
+      "fluid_type.gregtech.cfoam_white": {
+        "after": "White C-Foam",
+        "before": "Cfoam White"
+      },
+      "fluid_type.gregtech.cfoam_yellow": {
+        "after": "Yellow C-Foam",
+        "before": "Cfoam Yellow"
+      },
+      "fluid_type.gregtech.dye.chemical.black": {
+        "after": "Chemical Black Dye",
+        "before": "Dye Chemical Black"
+      },
+      "fluid_type.gregtech.dye.chemical.blue": {
+        "after": "Chemical Blue Dye",
+        "before": "Dye Chemical Blue"
+      },
+      "fluid_type.gregtech.dye.chemical.brown": {
+        "after": "Chemical Brown Dye",
+        "before": "Dye Chemical Brown"
+      },
+      "fluid_type.gregtech.dye.chemical.cyan": {
+        "after": "Chemical Cyan Dye",
+        "before": "Dye Chemical Cyan"
+      },
+      "fluid_type.gregtech.dye.chemical.gray": {
+        "after": "Chemical Gray Dye",
+        "before": "Dye Chemical Gray"
+      },
+      "fluid_type.gregtech.dye.chemical.green": {
+        "after": "Chemical Green Dye",
+        "before": "Dye Chemical Green"
+      },
+      "fluid_type.gregtech.dye.chemical.lightblue": {
+        "after": "Chemical Light Blue Dye",
+        "before": "Dye Chemical Lightblue"
+      },
+      "fluid_type.gregtech.dye.chemical.lightgray": {
+        "after": "Chemical Light Gray Dye",
+        "before": "Dye Chemical Lightgray"
+      },
+      "fluid_type.gregtech.dye.chemical.lime": {
+        "after": "Chemical Lime Dye",
+        "before": "Dye Chemical Lime"
+      },
+      "fluid_type.gregtech.dye.chemical.magenta": {
+        "after": "Chemical Magenta Dye",
+        "before": "Dye Chemical Magenta"
+      },
+      "fluid_type.gregtech.dye.chemical.orange": {
+        "after": "Chemical Orange Dye",
+        "before": "Dye Chemical Orange"
+      },
+      "fluid_type.gregtech.dye.chemical.pink": {
+        "after": "Chemical Pink Dye",
+        "before": "Dye Chemical Pink"
+      },
+      "fluid_type.gregtech.dye.chemical.purple": {
+        "after": "Chemical Purple Dye",
+        "before": "Dye Chemical Purple"
+      },
+      "fluid_type.gregtech.dye.chemical.red": {
+        "after": "Chemical Red Dye",
+        "before": "Dye Chemical Red"
+      },
+      "fluid_type.gregtech.dye.chemical.white": {
+        "after": "Chemical White Dye",
+        "before": "Dye Chemical White"
+      },
+      "fluid_type.gregtech.dye.chemical.yellow": {
+        "after": "Chemical Yellow Dye",
+        "before": "Dye Chemical Yellow"
+      },
+      "fluid_type.gregtech.dye.flower.black": {
+        "after": "Black Flower Dye",
+        "before": "Dye Flower Black"
+      },
+      "fluid_type.gregtech.dye.flower.blue": {
+        "after": "Blue Flower Dye",
+        "before": "Dye Flower Blue"
+      },
+      "fluid_type.gregtech.dye.flower.brown": {
+        "after": "Brown Flower Dye",
+        "before": "Dye Flower Brown"
+      },
+      "fluid_type.gregtech.dye.flower.cyan": {
+        "after": "Cyan Flower Dye",
+        "before": "Dye Flower Cyan"
+      },
+      "fluid_type.gregtech.dye.flower.gray": {
+        "after": "Gray Flower Dye",
+        "before": "Dye Flower Gray"
+      },
+      "fluid_type.gregtech.dye.flower.green": {
+        "after": "Green Flower Dye",
+        "before": "Dye Flower Green"
+      },
+      "fluid_type.gregtech.dye.flower.lightblue": {
+        "after": "Light Blue Flower Dye",
+        "before": "Dye Flower Lightblue"
+      },
+      "fluid_type.gregtech.dye.flower.lightgray": {
+        "after": "Light Gray Flower Dye",
+        "before": "Dye Flower Lightgray"
+      },
+      "fluid_type.gregtech.dye.flower.lime": {
+        "after": "Lime Flower Dye",
+        "before": "Dye Flower Lime"
+      },
+      "fluid_type.gregtech.dye.flower.magenta": {
+        "after": "Magenta Flower Dye",
+        "before": "Dye Flower Magenta"
+      },
+      "fluid_type.gregtech.dye.flower.orange": {
+        "after": "Orange Flower Dye",
+        "before": "Dye Flower Orange"
+      },
+      "fluid_type.gregtech.dye.flower.pink": {
+        "after": "Pink Flower Dye",
+        "before": "Dye Flower Pink"
+      },
+      "fluid_type.gregtech.dye.flower.purple": {
+        "after": "Purple Flower Dye",
+        "before": "Dye Flower Purple"
+      },
+      "fluid_type.gregtech.dye.flower.red": {
+        "after": "Red Flower Dye",
+        "before": "Dye Flower Red"
+      },
+      "fluid_type.gregtech.dye.flower.white": {
+        "after": "White Flower Dye",
+        "before": "Dye Flower White"
+      },
+      "fluid_type.gregtech.dye.flower.yellow": {
+        "after": "Yellow Flower Dye",
+        "before": "Dye Flower Yellow"
+      },
+      "fluid_type.gregtech.dye.watermixed.black": {
+        "after": "Water Mixed Black Dye",
+        "before": "Dye Watermixed Black"
+      },
+      "fluid_type.gregtech.dye.watermixed.blue": {
+        "after": "Water Mixed Blue Dye",
+        "before": "Dye Watermixed Blue"
+      },
+      "fluid_type.gregtech.dye.watermixed.brown": {
+        "after": "Water Mixed Brown Dye",
+        "before": "Dye Watermixed Brown"
+      },
+      "fluid_type.gregtech.dye.watermixed.cyan": {
+        "after": "Water Mixed Cyan Dye",
+        "before": "Dye Watermixed Cyan"
+      },
+      "fluid_type.gregtech.dye.watermixed.gray": {
+        "after": "Water Mixed Gray Dye",
+        "before": "Dye Watermixed Gray"
+      },
+      "fluid_type.gregtech.dye.watermixed.green": {
+        "after": "Water Mixed Green Dye",
+        "before": "Dye Watermixed Green"
+      },
+      "fluid_type.gregtech.dye.watermixed.lightblue": {
+        "after": "Water Mixed Light Blue Dye",
+        "before": "Dye Watermixed Lightblue"
+      },
+      "fluid_type.gregtech.dye.watermixed.lightgray": {
+        "after": "Water Mixed Light Gray Dye",
+        "before": "Dye Watermixed Lightgray"
+      },
+      "fluid_type.gregtech.dye.watermixed.lime": {
+        "after": "Water Mixed Lime Dye",
+        "before": "Dye Watermixed Lime"
+      },
+      "fluid_type.gregtech.dye.watermixed.magenta": {
+        "after": "Water Mixed Magenta Dye",
+        "before": "Dye Watermixed Magenta"
+      },
+      "fluid_type.gregtech.dye.watermixed.orange": {
+        "after": "Water Mixed Orange Dye",
+        "before": "Dye Watermixed Orange"
+      },
+      "fluid_type.gregtech.dye.watermixed.pink": {
+        "after": "Water Mixed Pink Dye",
+        "before": "Dye Watermixed Pink"
+      },
+      "fluid_type.gregtech.dye.watermixed.purple": {
+        "after": "Water Mixed Purple Dye",
+        "before": "Dye Watermixed Purple"
+      },
+      "fluid_type.gregtech.dye.watermixed.red": {
+        "after": "Water Mixed Red Dye",
+        "before": "Dye Watermixed Red"
+      },
+      "fluid_type.gregtech.dye.watermixed.white": {
+        "after": "Water Mixed White Dye",
+        "before": "Dye Watermixed White"
+      },
+      "fluid_type.gregtech.dye.watermixed.yellow": {
+        "after": "Water Mixed Yellow Dye",
+        "before": "Dye Watermixed Yellow"
+      },
+      "fluid_type.gregtech.dye_chemical_black": {
+        "after": "Chemical Black Dye",
+        "before": "Dye Chemical Black"
+      },
+      "fluid_type.gregtech.dye_chemical_blue": {
+        "after": "Chemical Blue Dye",
+        "before": "Dye Chemical Blue"
+      },
+      "fluid_type.gregtech.dye_chemical_brown": {
+        "after": "Chemical Brown Dye",
+        "before": "Dye Chemical Brown"
+      },
+      "fluid_type.gregtech.dye_chemical_cyan": {
+        "after": "Chemical Cyan Dye",
+        "before": "Dye Chemical Cyan"
+      },
+      "fluid_type.gregtech.dye_chemical_gray": {
+        "after": "Chemical Gray Dye",
+        "before": "Dye Chemical Gray"
+      },
+      "fluid_type.gregtech.dye_chemical_green": {
+        "after": "Chemical Green Dye",
+        "before": "Dye Chemical Green"
+      },
+      "fluid_type.gregtech.dye_chemical_lightblue": {
+        "after": "Chemical Light Blue Dye",
+        "before": "Dye Chemical Lightblue"
+      },
+      "fluid_type.gregtech.dye_chemical_lightgray": {
+        "after": "Chemical Light Gray Dye",
+        "before": "Dye Chemical Lightgray"
+      },
+      "fluid_type.gregtech.dye_chemical_lime": {
+        "after": "Chemical Lime Dye",
+        "before": "Dye Chemical Lime"
+      },
+      "fluid_type.gregtech.dye_chemical_magenta": {
+        "after": "Chemical Magenta Dye",
+        "before": "Dye Chemical Magenta"
+      },
+      "fluid_type.gregtech.dye_chemical_orange": {
+        "after": "Chemical Orange Dye",
+        "before": "Dye Chemical Orange"
+      },
+      "fluid_type.gregtech.dye_chemical_pink": {
+        "after": "Chemical Pink Dye",
+        "before": "Dye Chemical Pink"
+      },
+      "fluid_type.gregtech.dye_chemical_purple": {
+        "after": "Chemical Purple Dye",
+        "before": "Dye Chemical Purple"
+      },
+      "fluid_type.gregtech.dye_chemical_red": {
+        "after": "Chemical Red Dye",
+        "before": "Dye Chemical Red"
+      },
+      "fluid_type.gregtech.dye_chemical_white": {
+        "after": "Chemical White Dye",
+        "before": "Dye Chemical White"
+      },
+      "fluid_type.gregtech.dye_chemical_yellow": {
+        "after": "Chemical Yellow Dye",
+        "before": "Dye Chemical Yellow"
+      },
+      "fluid_type.gregtech.dye_flower_black": {
+        "after": "Black Flower Dye",
+        "before": "Dye Flower Black"
+      },
+      "fluid_type.gregtech.dye_flower_blue": {
+        "after": "Blue Flower Dye",
+        "before": "Dye Flower Blue"
+      },
+      "fluid_type.gregtech.dye_flower_brown": {
+        "after": "Brown Flower Dye",
+        "before": "Dye Flower Brown"
+      },
+      "fluid_type.gregtech.dye_flower_cyan": {
+        "after": "Cyan Flower Dye",
+        "before": "Dye Flower Cyan"
+      },
+      "fluid_type.gregtech.dye_flower_gray": {
+        "after": "Gray Flower Dye",
+        "before": "Dye Flower Gray"
+      },
+      "fluid_type.gregtech.dye_flower_green": {
+        "after": "Green Flower Dye",
+        "before": "Dye Flower Green"
+      },
+      "fluid_type.gregtech.dye_flower_lightblue": {
+        "after": "Light Blue Flower Dye",
+        "before": "Dye Flower Lightblue"
+      },
+      "fluid_type.gregtech.dye_flower_lightgray": {
+        "after": "Light Gray Flower Dye",
+        "before": "Dye Flower Lightgray"
+      },
+      "fluid_type.gregtech.dye_flower_lime": {
+        "after": "Lime Flower Dye",
+        "before": "Dye Flower Lime"
+      },
+      "fluid_type.gregtech.dye_flower_magenta": {
+        "after": "Magenta Flower Dye",
+        "before": "Dye Flower Magenta"
+      },
+      "fluid_type.gregtech.dye_flower_orange": {
+        "after": "Orange Flower Dye",
+        "before": "Dye Flower Orange"
+      },
+      "fluid_type.gregtech.dye_flower_pink": {
+        "after": "Pink Flower Dye",
+        "before": "Dye Flower Pink"
+      },
+      "fluid_type.gregtech.dye_flower_purple": {
+        "after": "Purple Flower Dye",
+        "before": "Dye Flower Purple"
+      },
+      "fluid_type.gregtech.dye_flower_red": {
+        "after": "Red Flower Dye",
+        "before": "Dye Flower Red"
+      },
+      "fluid_type.gregtech.dye_flower_white": {
+        "after": "White Flower Dye",
+        "before": "Dye Flower White"
+      },
+      "fluid_type.gregtech.dye_flower_yellow": {
+        "after": "Yellow Flower Dye",
+        "before": "Dye Flower Yellow"
+      },
+      "fluid_type.gregtech.dye_watermixed_black": {
+        "after": "Water Mixed Black Dye",
+        "before": "Dye Watermixed Black"
+      },
+      "fluid_type.gregtech.dye_watermixed_blue": {
+        "after": "Water Mixed Blue Dye",
+        "before": "Dye Watermixed Blue"
+      },
+      "fluid_type.gregtech.dye_watermixed_brown": {
+        "after": "Water Mixed Brown Dye",
+        "before": "Dye Watermixed Brown"
+      },
+      "fluid_type.gregtech.dye_watermixed_cyan": {
+        "after": "Water Mixed Cyan Dye",
+        "before": "Dye Watermixed Cyan"
+      },
+      "fluid_type.gregtech.dye_watermixed_gray": {
+        "after": "Water Mixed Gray Dye",
+        "before": "Dye Watermixed Gray"
+      },
+      "fluid_type.gregtech.dye_watermixed_green": {
+        "after": "Water Mixed Green Dye",
+        "before": "Dye Watermixed Green"
+      },
+      "fluid_type.gregtech.dye_watermixed_lightblue": {
+        "after": "Water Mixed Light Blue Dye",
+        "before": "Dye Watermixed Lightblue"
+      },
+      "fluid_type.gregtech.dye_watermixed_lightgray": {
+        "after": "Water Mixed Light Gray Dye",
+        "before": "Dye Watermixed Lightgray"
+      },
+      "fluid_type.gregtech.dye_watermixed_lime": {
+        "after": "Water Mixed Lime Dye",
+        "before": "Dye Watermixed Lime"
+      },
+      "fluid_type.gregtech.dye_watermixed_magenta": {
+        "after": "Water Mixed Magenta Dye",
+        "before": "Dye Watermixed Magenta"
+      },
+      "fluid_type.gregtech.dye_watermixed_orange": {
+        "after": "Water Mixed Orange Dye",
+        "before": "Dye Watermixed Orange"
+      },
+      "fluid_type.gregtech.dye_watermixed_pink": {
+        "after": "Water Mixed Pink Dye",
+        "before": "Dye Watermixed Pink"
+      },
+      "fluid_type.gregtech.dye_watermixed_purple": {
+        "after": "Water Mixed Purple Dye",
+        "before": "Dye Watermixed Purple"
+      },
+      "fluid_type.gregtech.dye_watermixed_red": {
+        "after": "Water Mixed Red Dye",
+        "before": "Dye Watermixed Red"
+      },
+      "fluid_type.gregtech.dye_watermixed_white": {
+        "after": "Water Mixed White Dye",
+        "before": "Dye Watermixed White"
+      },
+      "fluid_type.gregtech.dye_watermixed_yellow": {
+        "after": "Water Mixed Yellow Dye",
+        "before": "Dye Watermixed Yellow"
+      },
+      "fluid_type.gregtech.potion.damage": {
+        "after": "Harming Brew",
+        "before": "Potion Damage"
+      },
+      "fluid_type.gregtech.potion.damage.lingering": {
+        "after": "Lingering Harming Brew",
+        "before": "Potion Damage Lingering"
+      },
+      "fluid_type.gregtech.potion.damage.splash": {
+        "after": "Splash Harming Brew",
+        "before": "Potion Damage Splash"
+      },
+      "fluid_type.gregtech.potion.damage.strong": {
+        "after": "Strong Harming Brew",
+        "before": "Potion Damage Strong"
+      },
+      "fluid_type.gregtech.potion.damage.strong.lingering": {
+        "after": "Strong Lingering Harming Brew",
+        "before": "Potion Damage Strong Lingering"
+      },
+      "fluid_type.gregtech.potion.damage.strong.splash": {
+        "after": "Strong Splash Harming Brew",
+        "before": "Potion Damage Strong Splash"
+      },
+      "fluid_type.gregtech.potion.fireresistance": {
+        "after": "Fire Resistant Brew",
+        "before": "Potion Fireresistance"
+      },
+      "fluid_type.gregtech.potion.fireresistance.lingering": {
+        "after": "Lingering Fire Resistant Brew",
+        "before": "Potion Fireresistance Lingering"
+      },
+      "fluid_type.gregtech.potion.fireresistance.long": {
+        "after": "Stretched Fire Resistant Brew",
+        "before": "Potion Fireresistance Long"
+      },
+      "fluid_type.gregtech.potion.fireresistance.long.lingering": {
+        "after": "Stretched Lingering Fire Resistant Brew",
+        "before": "Potion Fireresistance Long Lingering"
+      },
+      "fluid_type.gregtech.potion.fireresistance.long.splash": {
+        "after": "Stretched Splash Fire Resistant Brew",
+        "before": "Potion Fireresistance Long Splash"
+      },
+      "fluid_type.gregtech.potion.fireresistance.splash": {
+        "after": "Splash Fire Resistant Brew",
+        "before": "Potion Fireresistance Splash"
+      },
+      "fluid_type.gregtech.potion.health": {
+        "after": "Healing Brew",
+        "before": "Potion Health"
+      },
+      "fluid_type.gregtech.potion.health.lingering": {
+        "after": "Lingering Healing Brew",
+        "before": "Potion Health Lingering"
+      },
+      "fluid_type.gregtech.potion.health.splash": {
+        "after": "Splash Healing Brew",
+        "before": "Potion Health Splash"
+      },
+      "fluid_type.gregtech.potion.health.strong": {
+        "after": "Strong Healing Brew",
+        "before": "Potion Health Strong"
+      },
+      "fluid_type.gregtech.potion.health.strong.lingering": {
+        "after": "Strong Lingering Healing Brew",
+        "before": "Potion Health Strong Lingering"
+      },
+      "fluid_type.gregtech.potion.health.strong.splash": {
+        "after": "Strong Splash Healing Brew",
+        "before": "Potion Health Strong Splash"
+      },
+      "fluid_type.gregtech.potion.invisibility": {
+        "after": "Invisible Brew",
+        "before": "Potion Invisibility"
+      },
+      "fluid_type.gregtech.potion.invisibility.lingering": {
+        "after": "Lingering Invisible Brew",
+        "before": "Potion Invisibility Lingering"
+      },
+      "fluid_type.gregtech.potion.invisibility.long": {
+        "after": "Stretched Invisible Brew",
+        "before": "Potion Invisibility Long"
+      },
+      "fluid_type.gregtech.potion.invisibility.long.lingering": {
+        "after": "Stretched Lingering Invisible Brew",
+        "before": "Potion Invisibility Long Lingering"
+      },
+      "fluid_type.gregtech.potion.invisibility.long.splash": {
+        "after": "Stretched Splash Invisible Brew",
+        "before": "Potion Invisibility Long Splash"
+      },
+      "fluid_type.gregtech.potion.invisibility.splash": {
+        "after": "Splash Invisible Brew",
+        "before": "Potion Invisibility Splash"
+      },
+      "fluid_type.gregtech.potion.jump": {
+        "after": "Jumpy Brew",
+        "before": "Potion Jump"
+      },
+      "fluid_type.gregtech.potion.jump.lingering": {
+        "after": "Lingering Jumpy Brew",
+        "before": "Potion Jump Lingering"
+      },
+      "fluid_type.gregtech.potion.jump.splash": {
+        "after": "Splash Jumpy Brew",
+        "before": "Potion Jump Splash"
+      },
+      "fluid_type.gregtech.potion.jump.strong": {
+        "after": "Strong Jumpy Brew",
+        "before": "Potion Jump Strong"
+      },
+      "fluid_type.gregtech.potion.jump.strong.lingering": {
+        "after": "Strong Lingering Jumpy Brew",
+        "before": "Potion Jump Strong Lingering"
+      },
+      "fluid_type.gregtech.potion.jump.strong.splash": {
+        "after": "Strong Splash Jumpy Brew",
+        "before": "Potion Jump Strong Splash"
+      },
+      "fluid_type.gregtech.potion.nightvision": {
+        "after": "Night Vision Brew",
+        "before": "Potion Nightvision"
+      },
+      "fluid_type.gregtech.potion.nightvision.lingering": {
+        "after": "Lingering Night Vision Brew",
+        "before": "Potion Nightvision Lingering"
+      },
+      "fluid_type.gregtech.potion.nightvision.long": {
+        "after": "Stretched Night Vision Brew",
+        "before": "Potion Nightvision Long"
+      },
+      "fluid_type.gregtech.potion.nightvision.long.lingering": {
+        "after": "Stretched Lingering Night Vision Brew",
+        "before": "Potion Nightvision Long Lingering"
+      },
+      "fluid_type.gregtech.potion.nightvision.long.splash": {
+        "after": "Stretched Splash Night Vision Brew",
+        "before": "Potion Nightvision Long Splash"
+      },
+      "fluid_type.gregtech.potion.nightvision.splash": {
+        "after": "Splash Night Vision Brew",
+        "before": "Potion Nightvision Splash"
+      },
+      "fluid_type.gregtech.potion.poison": {
+        "after": "Poisonous Brew",
+        "before": "Potion Poison"
+      },
+      "fluid_type.gregtech.potion.poison.lingering": {
+        "after": "Lingering Poisonous Brew",
+        "before": "Potion Poison Lingering"
+      },
+      "fluid_type.gregtech.potion.poison.long": {
+        "after": "Stretched Poisonous Brew",
+        "before": "Potion Poison Long"
+      },
+      "fluid_type.gregtech.potion.poison.long.lingering": {
+        "after": "Stretched Lingering Poisonous Brew",
+        "before": "Potion Poison Long Lingering"
+      },
+      "fluid_type.gregtech.potion.poison.long.splash": {
+        "after": "Stretched Splash Poisonous Brew",
+        "before": "Potion Poison Long Splash"
+      },
+      "fluid_type.gregtech.potion.poison.splash": {
+        "after": "Splash Poisonous Brew",
+        "before": "Potion Poison Splash"
+      },
+      "fluid_type.gregtech.potion.poison.strong": {
+        "after": "Strong Poisonous Brew",
+        "before": "Potion Poison Strong"
+      },
+      "fluid_type.gregtech.potion.poison.strong.lingering": {
+        "after": "Strong Lingering Poisonous Brew",
+        "before": "Potion Poison Strong Lingering"
+      },
+      "fluid_type.gregtech.potion.poison.strong.splash": {
+        "after": "Strong Splash Poisonous Brew",
+        "before": "Potion Poison Strong Splash"
+      },
+      "fluid_type.gregtech.potion.regen": {
+        "after": "Regenerating Brew",
+        "before": "Potion Regen"
+      },
+      "fluid_type.gregtech.potion.regen.lingering": {
+        "after": "Lingering Regenerating Brew",
+        "before": "Potion Regen Lingering"
+      },
+      "fluid_type.gregtech.potion.regen.long": {
+        "after": "Stretched Regenerating Brew",
+        "before": "Potion Regen Long"
+      },
+      "fluid_type.gregtech.potion.regen.long.lingering": {
+        "after": "Stretched Lingering Regenerating Brew",
+        "before": "Potion Regen Long Lingering"
+      },
+      "fluid_type.gregtech.potion.regen.long.splash": {
+        "after": "Stretched Splash Regenerating Brew",
+        "before": "Potion Regen Long Splash"
+      },
+      "fluid_type.gregtech.potion.regen.splash": {
+        "after": "Splash Regenerating Brew",
+        "before": "Potion Regen Splash"
+      },
+      "fluid_type.gregtech.potion.regen.strong": {
+        "after": "Strong Regenerating Brew",
+        "before": "Potion Regen Strong"
+      },
+      "fluid_type.gregtech.potion.regen.strong.lingering": {
+        "after": "Strong Lingering Regenerating Brew",
+        "before": "Potion Regen Strong Lingering"
+      },
+      "fluid_type.gregtech.potion.regen.strong.splash": {
+        "after": "Strong Splash Regenerating Brew",
+        "before": "Potion Regen Strong Splash"
+      },
+      "fluid_type.gregtech.potion.slowness": {
+        "after": "Lame Brew",
+        "before": "Potion Slowness"
+      },
+      "fluid_type.gregtech.potion.slowness.lingering": {
+        "after": "Lingering Lame Brew",
+        "before": "Potion Slowness Lingering"
+      },
+      "fluid_type.gregtech.potion.slowness.long": {
+        "after": "Stretched Lame Brew",
+        "before": "Potion Slowness Long"
+      },
+      "fluid_type.gregtech.potion.slowness.long.lingering": {
+        "after": "Stretched Lingering Lame Brew",
+        "before": "Potion Slowness Long Lingering"
+      },
+      "fluid_type.gregtech.potion.slowness.long.splash": {
+        "after": "Stretched Splash Lame Brew",
+        "before": "Potion Slowness Long Splash"
+      },
+      "fluid_type.gregtech.potion.slowness.splash": {
+        "after": "Splash Lame Brew",
+        "before": "Potion Slowness Splash"
+      },
+      "fluid_type.gregtech.potion.speed": {
+        "after": "Swiftness Brew",
+        "before": "Potion Speed"
+      },
+      "fluid_type.gregtech.potion.speed.lingering": {
+        "after": "Lingering Swiftness Brew",
+        "before": "Potion Speed Lingering"
+      },
+      "fluid_type.gregtech.potion.speed.long": {
+        "after": "Stretched Swiftness Brew",
+        "before": "Potion Speed Long"
+      },
+      "fluid_type.gregtech.potion.speed.long.lingering": {
+        "after": "Stretched Lingering Swiftness Brew",
+        "before": "Potion Speed Long Lingering"
+      },
+      "fluid_type.gregtech.potion.speed.long.splash": {
+        "after": "Stretched Splash Swiftness Brew",
+        "before": "Potion Speed Long Splash"
+      },
+      "fluid_type.gregtech.potion.speed.splash": {
+        "after": "Splash Swiftness Brew",
+        "before": "Potion Speed Splash"
+      },
+      "fluid_type.gregtech.potion.speed.strong": {
+        "after": "Strong Swiftness Brew",
+        "before": "Potion Speed Strong"
+      },
+      "fluid_type.gregtech.potion.speed.strong.lingering": {
+        "after": "Strong Lingering Swiftness Brew",
+        "before": "Potion Speed Strong Lingering"
+      },
+      "fluid_type.gregtech.potion.speed.strong.splash": {
+        "after": "Strong Splash Swiftness Brew",
+        "before": "Potion Speed Strong Splash"
+      },
+      "fluid_type.gregtech.potion.strength": {
+        "after": "Strength Brew",
+        "before": "Potion Strength"
+      },
+      "fluid_type.gregtech.potion.strength.lingering": {
+        "after": "Lingering Strength Brew",
+        "before": "Potion Strength Lingering"
+      },
+      "fluid_type.gregtech.potion.strength.long": {
+        "after": "Stretched Strength Brew",
+        "before": "Potion Strength Long"
+      },
+      "fluid_type.gregtech.potion.strength.long.lingering": {
+        "after": "Stretched Lingering Strength Brew",
+        "before": "Potion Strength Long Lingering"
+      },
+      "fluid_type.gregtech.potion.strength.long.splash": {
+        "after": "Stretched Splash Strength Brew",
+        "before": "Potion Strength Long Splash"
+      },
+      "fluid_type.gregtech.potion.strength.splash": {
+        "after": "Splash Strength Brew",
+        "before": "Potion Strength Splash"
+      },
+      "fluid_type.gregtech.potion.strength.strong": {
+        "after": "Strong Strength Brew",
+        "before": "Potion Strength Strong"
+      },
+      "fluid_type.gregtech.potion.strength.strong.lingering": {
+        "after": "Strong Lingering Strength Brew",
+        "before": "Potion Strength Strong Lingering"
+      },
+      "fluid_type.gregtech.potion.strength.strong.splash": {
+        "after": "Strong Splash Strength Brew",
+        "before": "Potion Strength Strong Splash"
+      },
+      "fluid_type.gregtech.potion.waterbreathing": {
+        "after": "Fishy Brew",
+        "before": "Potion Waterbreathing"
+      },
+      "fluid_type.gregtech.potion.waterbreathing.lingering": {
+        "after": "Lingering Fishy Brew",
+        "before": "Potion Waterbreathing Lingering"
+      },
+      "fluid_type.gregtech.potion.waterbreathing.long": {
+        "after": "Stretched Fishy Brew",
+        "before": "Potion Waterbreathing Long"
+      },
+      "fluid_type.gregtech.potion.waterbreathing.long.lingering": {
+        "after": "Stretched Lingering Fishy Brew",
+        "before": "Potion Waterbreathing Long Lingering"
+      },
+      "fluid_type.gregtech.potion.waterbreathing.long.splash": {
+        "after": "Stretched Splash Fishy Brew",
+        "before": "Potion Waterbreathing Long Splash"
+      },
+      "fluid_type.gregtech.potion.waterbreathing.splash": {
+        "after": "Splash Fishy Brew",
+        "before": "Potion Waterbreathing Splash"
+      },
+      "fluid_type.gregtech.potion.weakness": {
+        "after": "Weakening Brew",
+        "before": "Potion Weakness"
+      },
+      "fluid_type.gregtech.potion.weakness.lingering": {
+        "after": "Lingering Weakening Brew",
+        "before": "Potion Weakness Lingering"
+      },
+      "fluid_type.gregtech.potion.weakness.long": {
+        "after": "Stretched Weakening Brew",
+        "before": "Potion Weakness Long"
+      },
+      "fluid_type.gregtech.potion.weakness.long.lingering": {
+        "after": "Stretched Lingering Weakening Brew",
+        "before": "Potion Weakness Long Lingering"
+      },
+      "fluid_type.gregtech.potion.weakness.long.splash": {
+        "after": "Stretched Splash Weakening Brew",
+        "before": "Potion Weakness Long Splash"
+      },
+      "fluid_type.gregtech.potion.weakness.splash": {
+        "after": "Splash Weakening Brew",
+        "before": "Potion Weakness Splash"
+      },
+      "fluid_type.gregtech.potion_damage": {
+        "after": "Harming Brew",
+        "before": "Potion Damage"
+      },
+      "fluid_type.gregtech.potion_damage_lingering": {
+        "after": "Lingering Harming Brew",
+        "before": "Potion Damage Lingering"
+      },
+      "fluid_type.gregtech.potion_damage_splash": {
+        "after": "Splash Harming Brew",
+        "before": "Potion Damage Splash"
+      },
+      "fluid_type.gregtech.potion_damage_strong": {
+        "after": "Strong Harming Brew",
+        "before": "Potion Damage Strong"
+      },
+      "fluid_type.gregtech.potion_damage_strong_lingering": {
+        "after": "Strong Lingering Harming Brew",
+        "before": "Potion Damage Strong Lingering"
+      },
+      "fluid_type.gregtech.potion_damage_strong_splash": {
+        "after": "Strong Splash Harming Brew",
+        "before": "Potion Damage Strong Splash"
+      },
+      "fluid_type.gregtech.potion_fireresistance": {
+        "after": "Fire Resistant Brew",
+        "before": "Potion Fireresistance"
+      },
+      "fluid_type.gregtech.potion_fireresistance_lingering": {
+        "after": "Lingering Fire Resistant Brew",
+        "before": "Potion Fireresistance Lingering"
+      },
+      "fluid_type.gregtech.potion_fireresistance_long": {
+        "after": "Stretched Fire Resistant Brew",
+        "before": "Potion Fireresistance Long"
+      },
+      "fluid_type.gregtech.potion_fireresistance_long_lingering": {
+        "after": "Stretched Lingering Fire Resistant Brew",
+        "before": "Potion Fireresistance Long Lingering"
+      },
+      "fluid_type.gregtech.potion_fireresistance_long_splash": {
+        "after": "Stretched Splash Fire Resistant Brew",
+        "before": "Potion Fireresistance Long Splash"
+      },
+      "fluid_type.gregtech.potion_fireresistance_splash": {
+        "after": "Splash Fire Resistant Brew",
+        "before": "Potion Fireresistance Splash"
+      },
+      "fluid_type.gregtech.potion_health": {
+        "after": "Healing Brew",
+        "before": "Potion Health"
+      },
+      "fluid_type.gregtech.potion_health_lingering": {
+        "after": "Lingering Healing Brew",
+        "before": "Potion Health Lingering"
+      },
+      "fluid_type.gregtech.potion_health_splash": {
+        "after": "Splash Healing Brew",
+        "before": "Potion Health Splash"
+      },
+      "fluid_type.gregtech.potion_health_strong": {
+        "after": "Strong Healing Brew",
+        "before": "Potion Health Strong"
+      },
+      "fluid_type.gregtech.potion_health_strong_lingering": {
+        "after": "Strong Lingering Healing Brew",
+        "before": "Potion Health Strong Lingering"
+      },
+      "fluid_type.gregtech.potion_health_strong_splash": {
+        "after": "Strong Splash Healing Brew",
+        "before": "Potion Health Strong Splash"
+      },
+      "fluid_type.gregtech.potion_invisibility": {
+        "after": "Invisible Brew",
+        "before": "Potion Invisibility"
+      },
+      "fluid_type.gregtech.potion_invisibility_lingering": {
+        "after": "Lingering Invisible Brew",
+        "before": "Potion Invisibility Lingering"
+      },
+      "fluid_type.gregtech.potion_invisibility_long": {
+        "after": "Stretched Invisible Brew",
+        "before": "Potion Invisibility Long"
+      },
+      "fluid_type.gregtech.potion_invisibility_long_lingering": {
+        "after": "Stretched Lingering Invisible Brew",
+        "before": "Potion Invisibility Long Lingering"
+      },
+      "fluid_type.gregtech.potion_invisibility_long_splash": {
+        "after": "Stretched Splash Invisible Brew",
+        "before": "Potion Invisibility Long Splash"
+      },
+      "fluid_type.gregtech.potion_invisibility_splash": {
+        "after": "Splash Invisible Brew",
+        "before": "Potion Invisibility Splash"
+      },
+      "fluid_type.gregtech.potion_jump": {
+        "after": "Jumpy Brew",
+        "before": "Potion Jump"
+      },
+      "fluid_type.gregtech.potion_jump_lingering": {
+        "after": "Lingering Jumpy Brew",
+        "before": "Potion Jump Lingering"
+      },
+      "fluid_type.gregtech.potion_jump_splash": {
+        "after": "Splash Jumpy Brew",
+        "before": "Potion Jump Splash"
+      },
+      "fluid_type.gregtech.potion_jump_strong": {
+        "after": "Strong Jumpy Brew",
+        "before": "Potion Jump Strong"
+      },
+      "fluid_type.gregtech.potion_jump_strong_lingering": {
+        "after": "Strong Lingering Jumpy Brew",
+        "before": "Potion Jump Strong Lingering"
+      },
+      "fluid_type.gregtech.potion_jump_strong_splash": {
+        "after": "Strong Splash Jumpy Brew",
+        "before": "Potion Jump Strong Splash"
+      },
+      "fluid_type.gregtech.potion_nightvision": {
+        "after": "Night Vision Brew",
+        "before": "Potion Nightvision"
+      },
+      "fluid_type.gregtech.potion_nightvision_lingering": {
+        "after": "Lingering Night Vision Brew",
+        "before": "Potion Nightvision Lingering"
+      },
+      "fluid_type.gregtech.potion_nightvision_long": {
+        "after": "Stretched Night Vision Brew",
+        "before": "Potion Nightvision Long"
+      },
+      "fluid_type.gregtech.potion_nightvision_long_lingering": {
+        "after": "Stretched Lingering Night Vision Brew",
+        "before": "Potion Nightvision Long Lingering"
+      },
+      "fluid_type.gregtech.potion_nightvision_long_splash": {
+        "after": "Stretched Splash Night Vision Brew",
+        "before": "Potion Nightvision Long Splash"
+      },
+      "fluid_type.gregtech.potion_nightvision_splash": {
+        "after": "Splash Night Vision Brew",
+        "before": "Potion Nightvision Splash"
+      },
+      "fluid_type.gregtech.potion_poison": {
+        "after": "Poisonous Brew",
+        "before": "Potion Poison"
+      },
+      "fluid_type.gregtech.potion_poison_lingering": {
+        "after": "Lingering Poisonous Brew",
+        "before": "Potion Poison Lingering"
+      },
+      "fluid_type.gregtech.potion_poison_long": {
+        "after": "Stretched Poisonous Brew",
+        "before": "Potion Poison Long"
+      },
+      "fluid_type.gregtech.potion_poison_long_lingering": {
+        "after": "Stretched Lingering Poisonous Brew",
+        "before": "Potion Poison Long Lingering"
+      },
+      "fluid_type.gregtech.potion_poison_long_splash": {
+        "after": "Stretched Splash Poisonous Brew",
+        "before": "Potion Poison Long Splash"
+      },
+      "fluid_type.gregtech.potion_poison_splash": {
+        "after": "Splash Poisonous Brew",
+        "before": "Potion Poison Splash"
+      },
+      "fluid_type.gregtech.potion_poison_strong": {
+        "after": "Strong Poisonous Brew",
+        "before": "Potion Poison Strong"
+      },
+      "fluid_type.gregtech.potion_poison_strong_lingering": {
+        "after": "Strong Lingering Poisonous Brew",
+        "before": "Potion Poison Strong Lingering"
+      },
+      "fluid_type.gregtech.potion_poison_strong_splash": {
+        "after": "Strong Splash Poisonous Brew",
+        "before": "Potion Poison Strong Splash"
+      },
+      "fluid_type.gregtech.potion_regen": {
+        "after": "Regenerating Brew",
+        "before": "Potion Regen"
+      },
+      "fluid_type.gregtech.potion_regen_lingering": {
+        "after": "Lingering Regenerating Brew",
+        "before": "Potion Regen Lingering"
+      },
+      "fluid_type.gregtech.potion_regen_long": {
+        "after": "Stretched Regenerating Brew",
+        "before": "Potion Regen Long"
+      },
+      "fluid_type.gregtech.potion_regen_long_lingering": {
+        "after": "Stretched Lingering Regenerating Brew",
+        "before": "Potion Regen Long Lingering"
+      },
+      "fluid_type.gregtech.potion_regen_long_splash": {
+        "after": "Stretched Splash Regenerating Brew",
+        "before": "Potion Regen Long Splash"
+      },
+      "fluid_type.gregtech.potion_regen_splash": {
+        "after": "Splash Regenerating Brew",
+        "before": "Potion Regen Splash"
+      },
+      "fluid_type.gregtech.potion_regen_strong": {
+        "after": "Strong Regenerating Brew",
+        "before": "Potion Regen Strong"
+      },
+      "fluid_type.gregtech.potion_regen_strong_lingering": {
+        "after": "Strong Lingering Regenerating Brew",
+        "before": "Potion Regen Strong Lingering"
+      },
+      "fluid_type.gregtech.potion_regen_strong_splash": {
+        "after": "Strong Splash Regenerating Brew",
+        "before": "Potion Regen Strong Splash"
+      },
+      "fluid_type.gregtech.potion_slowness": {
+        "after": "Lame Brew",
+        "before": "Potion Slowness"
+      },
+      "fluid_type.gregtech.potion_slowness_lingering": {
+        "after": "Lingering Lame Brew",
+        "before": "Potion Slowness Lingering"
+      },
+      "fluid_type.gregtech.potion_slowness_long": {
+        "after": "Stretched Lame Brew",
+        "before": "Potion Slowness Long"
+      },
+      "fluid_type.gregtech.potion_slowness_long_lingering": {
+        "after": "Stretched Lingering Lame Brew",
+        "before": "Potion Slowness Long Lingering"
+      },
+      "fluid_type.gregtech.potion_slowness_long_splash": {
+        "after": "Stretched Splash Lame Brew",
+        "before": "Potion Slowness Long Splash"
+      },
+      "fluid_type.gregtech.potion_slowness_splash": {
+        "after": "Splash Lame Brew",
+        "before": "Potion Slowness Splash"
+      },
+      "fluid_type.gregtech.potion_speed": {
+        "after": "Swiftness Brew",
+        "before": "Potion Speed"
+      },
+      "fluid_type.gregtech.potion_speed_lingering": {
+        "after": "Lingering Swiftness Brew",
+        "before": "Potion Speed Lingering"
+      },
+      "fluid_type.gregtech.potion_speed_long": {
+        "after": "Stretched Swiftness Brew",
+        "before": "Potion Speed Long"
+      },
+      "fluid_type.gregtech.potion_speed_long_lingering": {
+        "after": "Stretched Lingering Swiftness Brew",
+        "before": "Potion Speed Long Lingering"
+      },
+      "fluid_type.gregtech.potion_speed_long_splash": {
+        "after": "Stretched Splash Swiftness Brew",
+        "before": "Potion Speed Long Splash"
+      },
+      "fluid_type.gregtech.potion_speed_splash": {
+        "after": "Splash Swiftness Brew",
+        "before": "Potion Speed Splash"
+      },
+      "fluid_type.gregtech.potion_speed_strong": {
+        "after": "Strong Swiftness Brew",
+        "before": "Potion Speed Strong"
+      },
+      "fluid_type.gregtech.potion_speed_strong_lingering": {
+        "after": "Strong Lingering Swiftness Brew",
+        "before": "Potion Speed Strong Lingering"
+      },
+      "fluid_type.gregtech.potion_speed_strong_splash": {
+        "after": "Strong Splash Swiftness Brew",
+        "before": "Potion Speed Strong Splash"
+      },
+      "fluid_type.gregtech.potion_strength": {
+        "after": "Strength Brew",
+        "before": "Potion Strength"
+      },
+      "fluid_type.gregtech.potion_strength_lingering": {
+        "after": "Lingering Strength Brew",
+        "before": "Potion Strength Lingering"
+      },
+      "fluid_type.gregtech.potion_strength_long": {
+        "after": "Stretched Strength Brew",
+        "before": "Potion Strength Long"
+      },
+      "fluid_type.gregtech.potion_strength_long_lingering": {
+        "after": "Stretched Lingering Strength Brew",
+        "before": "Potion Strength Long Lingering"
+      },
+      "fluid_type.gregtech.potion_strength_long_splash": {
+        "after": "Stretched Splash Strength Brew",
+        "before": "Potion Strength Long Splash"
+      },
+      "fluid_type.gregtech.potion_strength_splash": {
+        "after": "Splash Strength Brew",
+        "before": "Potion Strength Splash"
+      },
+      "fluid_type.gregtech.potion_strength_strong": {
+        "after": "Strong Strength Brew",
+        "before": "Potion Strength Strong"
+      },
+      "fluid_type.gregtech.potion_strength_strong_lingering": {
+        "after": "Strong Lingering Strength Brew",
+        "before": "Potion Strength Strong Lingering"
+      },
+      "fluid_type.gregtech.potion_strength_strong_splash": {
+        "after": "Strong Splash Strength Brew",
+        "before": "Potion Strength Strong Splash"
+      },
+      "fluid_type.gregtech.potion_waterbreathing": {
+        "after": "Fishy Brew",
+        "before": "Potion Waterbreathing"
+      },
+      "fluid_type.gregtech.potion_waterbreathing_lingering": {
+        "after": "Lingering Fishy Brew",
+        "before": "Potion Waterbreathing Lingering"
+      },
+      "fluid_type.gregtech.potion_waterbreathing_long": {
+        "after": "Stretched Fishy Brew",
+        "before": "Potion Waterbreathing Long"
+      },
+      "fluid_type.gregtech.potion_waterbreathing_long_lingering": {
+        "after": "Stretched Lingering Fishy Brew",
+        "before": "Potion Waterbreathing Long Lingering"
+      },
+      "fluid_type.gregtech.potion_waterbreathing_long_splash": {
+        "after": "Stretched Splash Fishy Brew",
+        "before": "Potion Waterbreathing Long Splash"
+      },
+      "fluid_type.gregtech.potion_waterbreathing_splash": {
+        "after": "Splash Fishy Brew",
+        "before": "Potion Waterbreathing Splash"
+      },
+      "fluid_type.gregtech.potion_weakness": {
+        "after": "Weakening Brew",
+        "before": "Potion Weakness"
+      },
+      "fluid_type.gregtech.potion_weakness_lingering": {
+        "after": "Lingering Weakening Brew",
+        "before": "Potion Weakness Lingering"
+      },
+      "fluid_type.gregtech.potion_weakness_long": {
+        "after": "Stretched Weakening Brew",
+        "before": "Potion Weakness Long"
+      },
+      "fluid_type.gregtech.potion_weakness_long_lingering": {
+        "after": "Stretched Lingering Weakening Brew",
+        "before": "Potion Weakness Long Lingering"
+      },
+      "fluid_type.gregtech.potion_weakness_long_splash": {
+        "after": "Stretched Splash Weakening Brew",
+        "before": "Potion Weakness Long Splash"
+      },
+      "fluid_type.gregtech.potion_weakness_splash": {
+        "after": "Splash Weakening Brew",
+        "before": "Potion Weakness Splash"
+      },
+      "item.gregtech.book_black": {
+        "after": "Book",
+        "before": "Black Book"
+      },
+      "item.gregtech.book_blue": {
+        "after": "Book",
+        "before": "Blue Book"
+      },
+      "item.gregtech.book_brown": {
+        "after": "Book",
+        "before": "Brown Book"
+      },
+      "item.gregtech.book_cyan": {
+        "after": "Book",
+        "before": "Cyan Book"
+      },
+      "item.gregtech.book_green": {
+        "after": "Book",
+        "before": "Green Book"
+      },
+      "item.gregtech.book_magenta": {
+        "after": "Book",
+        "before": "Magenta Book"
+      },
+      "item.gregtech.book_orange": {
+        "after": "Book",
+        "before": "Orange Book"
+      },
+      "item.gregtech.book_purple": {
+        "after": "Book",
+        "before": "Purple Book"
+      },
+      "item.gregtech.book_red": {
+        "after": "Book",
+        "before": "Red Book"
+      },
+      "item.gregtech.book_white": {
+        "after": "Book",
+        "before": "White Book"
+      },
+      "item.gregtech.book_yellow": {
+        "after": "Book",
+        "before": "Yellow Book"
+      },
+      "item.gregtech.large_book_black": {
+        "after": "Large Book",
+        "before": "Black Large Book"
+      },
+      "item.gregtech.large_book_blue": {
+        "after": "Large Book",
+        "before": "Blue Large Book"
+      },
+      "item.gregtech.large_book_brown": {
+        "after": "Large Book",
+        "before": "Brown Large Book"
+      },
+      "item.gregtech.large_book_cyan": {
+        "after": "Large Book",
+        "before": "Cyan Large Book"
+      },
+      "item.gregtech.large_book_green": {
+        "after": "Large Book",
+        "before": "Green Large Book"
+      },
+      "item.gregtech.large_book_magenta": {
+        "after": "Large Book",
+        "before": "Magenta Large Book"
+      },
+      "item.gregtech.large_book_orange": {
+        "after": "Large Book",
+        "before": "Orange Large Book"
+      },
+      "item.gregtech.large_book_purple": {
+        "after": "Large Book",
+        "before": "Purple Large Book"
+      },
+      "item.gregtech.large_book_red": {
+        "after": "Large Book",
+        "before": "Red Large Book"
+      },
+      "item.gregtech.large_book_white": {
+        "after": "Large Book",
+        "before": "White Large Book"
+      },
+      "item.gregtech.large_book_yellow": {
+        "after": "Large Book",
+        "before": "Yellow Large Book"
+      }
+    },
+    "removed": []
+  },
+  "language_gate": {
+    "changes": {
+      "changed": 0,
+      "missing": 0,
+      "unexpected": 0
+    },
+    "chinese_keys": 141356,
+    "english": {
+      "exact_original_declarations": 11550,
+      "formatted_keys": 391,
+      "intentional_empty_tooltips": 689,
+      "keys": 14957,
+      "original_english_without_chinese_source": 461
+    },
+    "english_fallback_count": 3075,
+    "native_aliases": 12624,
+    "source_keys": 125676,
+    "source_sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0"
+  },
+  "last_verified_artifacts": "build/verified/20261008-014141Z-9c02b4a2/",
+  "last_verified_artifacts_include_this_batch": false,
+  "lost_previous_english_source_checks": [],
+  "new_english_source_checks": {
+    "bumble_names_and_tooltips": 1280,
+    "canvas_and_tooltips": 32,
+    "colored_books_and_tooltips": 44,
+    "fluids_and_legacy_aliases": 510,
+    "numbered_blocks": 119
+  },
+  "pending": "Supplemental Chinese policy unanswered. Full Chinese completion not claimed; continue language/self-check scope, pool delivery verification with next English-source corrections.",
+  "raw_reports": [
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-generated-english-final-import-20261008.json",
+      "sha256": "5ac0d2fdb1ed7773ababcf94ee3a0943ab76b4984603402cbcecebf409df7482"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-generated-english-final-idempotence-20261008.json",
+      "sha256": "f4ceb37e02c1c7aec989345ace66344fdb298bec1cefe56815c1298204106dd1"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-generated-english-final-numbered-20261008.json",
+      "sha256": "7340a9db8a2857b57eeaa1aea4de90b484d13b3f90196d0e86c84c115a5815f4"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-generated-english-localization-20261008.json",
+      "sha256": "71756ca937ef77d10bcb5c4591913c66b9fa8574850c1842808c21efbcf28724"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-generated-english-sourcecheck-20261008.json",
+      "sha256": "36b1addb96b266a0ad2aa25991e6022d22ba3968fbc0f7abce424459e022824a"
+    }
+  ],
+  "scope": "Original English parser/gates and English resources only. No production Java or gameplay changes; no new build or client launch this batch.",
+  "source_files": [
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemBumbles.java",
+      "sha256": "9659bf3392efb96b876b02601322825e77f0ec6418af4dc4c07bb57f88285a6a"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemBooks.java",
+      "sha256": "beb02a2bf256b9fa6c568c7ad411b622ba892a1fd2f9c6cf4733117911aafcc0"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemRandomTools.java",
+      "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\a\\Loader_Fluids.java",
+      "sha256": "fdc9a697adc7822159cb8ea82389cc83e6494fc9723551f2983607ed46505fcb"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\FL.java",
+      "sha256": "87ec6759b7c3b1ad7d7c6d574e24ec7d7371fa285e93ab67cfa26cd83f2b18b3"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\MT.java",
+      "sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2"
+    }
+  ],
+  "tool_files": [
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\integration\\source_numbered_language.py",
+      "sha256": "ede819b2d8891544fb845f8a396064b00ac64c0c6177a249dcbd98d665927ebc"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\integration\\import_numbered_localization.py",
+      "sha256": "2809104656b9f152318aadbd46dd361e8b1bda21366c0caa5c6fc6212935e4df"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\integration\\import_identity_localization.py",
+      "sha256": "54d1f5028b69ebe2a0ca21b4f633d02743076db862c346e3814f09932b9fed18"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\tests\\test_numbered_language.py",
+      "sha256": "a0d7b5c9165908d88aecf1412448bf65362eaf4b7a7a902da3969598b71a218a"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\tests\\test_identity_localization.py",
+      "sha256": "27edea6ce8254c2301fc28788c3f62bf38f6ebccd9b3f531fa1cce518bdc6e4f"
+    }
+  ]
+}

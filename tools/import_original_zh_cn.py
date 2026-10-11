@@ -11,24 +11,10 @@ import hashlib
 import json
 from pathlib import Path
 import re
+from localization import read_patch
 
 ROOT = Path(__file__).resolve().parents[1]
 LANG = ROOT / 'core/src/main/resources/assets/gregtech/lang'
-
-
-def read_patch(path):
-    values = {}
-    for line in path.read_text(encoding='utf-8-sig').splitlines():
-        match = re.fullmatch(r'\s*S:(.*?)=(.*)', line)
-        if match:
-            key, value = match.groups()
-            key = key.strip('"')
-            if key in values and values[key] != value:
-                raise ValueError('Conflicting source key: ' + key)
-            values[key] = value
-    if len(values) < 1000:
-        raise ValueError('Not a GT6 language configuration')
-    return values
 
 
 def snake(text):
@@ -39,6 +25,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--patch', type=Path, required=True)
     parser.add_argument('--source', type=Path, required=True, help='Original src/main/java directory')
+    parser.add_argument('--proposal', type=Path, required=True,
+                        help='Write discovery evidence here; never overwrite runtime language or accepted bindings')
     args = parser.parse_args()
     patch = read_patch(args.patch)
     english = json.loads((LANG / 'en_us.json').read_text(encoding='utf-8-sig'))
@@ -181,16 +169,19 @@ def main():
         alias('item.gregtech.' + ident, 'gt.multiitem.books.' + original)
         alias('item.gregtech.' + ident + '.tooltip', 'gt.multiitem.books.' + original + '.tooltip')
 
-    (LANG / 'en_us.json').write_text(json.dumps(english, ensure_ascii=False, indent=2, sort_keys=True) + '\n', encoding='utf-8')
-    (LANG / 'zh_cn.json').write_text(json.dumps(output, ensure_ascii=False, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+    # Discovery is reviewable data. Only localization.py may regenerate Chinese.
+    accepted = json.loads((ROOT / 'tools/localization/aliases.json').read_text(encoding='utf-8'))
     report = {'patch':str(args.patch.resolve()), 'sha256':hashlib.sha256(args.patch.read_bytes()).hexdigest(),
               'author':'User-supplied original GregTech Chinese patch; no author attribution present in the configuration header',
               'license':'Not declared in the supplied language file; preserved local source, no publication in this batch',
               'policy':'All imported Chinese values copied verbatim; unmapped port-only values use English fallback',
-              'source_keys':len(patch), 'native_aliases':aliases, 'ambiguous':ambiguous,
+              'source_keys':len(patch),
+              'proposed_aliases':{k:v for k,v in aliases.items() if k not in accepted and k not in patch},
+              'ambiguous':ambiguous,
               'unmapped_native_keys':[k for k in english if k not in aliases],
               'source_declaration_sha256':files}
-    (ROOT / 'docs/integration/verification/original-zh-cn-source-20261005.json').write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    args.proposal.parent.mkdir(parents=True, exist_ok=True)
+    args.proposal.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     print(json.dumps({'source_keys':len(patch), 'aliases':len(aliases), 'ambiguous':len(ambiguous),
                       'unmapped':len(report['unmapped_native_keys'])}))
 

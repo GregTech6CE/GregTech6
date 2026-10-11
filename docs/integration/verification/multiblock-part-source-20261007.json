@@ -1,0 +1,1068 @@
+{
+  "date": "2026-10-07",
+  "base_commit": "c27ffbfc901ca6203942738de5e7ea3ab983c59b",
+  "authors": [
+    "GregTech-6 Team",
+    "Gregorius Techneticies"
+  ],
+  "license": "LGPL-3.0-or-later",
+  "original": [
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577",
+      "bytes": 694
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\COPYING.LESSER",
+      "sha256": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118",
+      "bytes": 7652
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "bytes": 791265
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\multiblocks\\MultiTileEntityMultiBlockPart.java",
+      "sha256": "b00725df4301983e6fd51aea6519ab3304e85315ec01f338cc27b6a448a6bfda",
+      "bytes": 31052
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\machines\\MultiTileEntitySensorTE.java",
+      "sha256": "494f1305c7e2a0a20fb60d20dd1f5cbcfb8c96024cb344ac6fe48826c7aa5a94",
+      "bytes": 15676
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\notick\\TileEntityBase05Paintable.java",
+      "sha256": "9b07753fc1105f3b91f15ea634dbb58e5051d1c3b242c5ce8e5db875d7261590",
+      "bytes": 5843
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+      "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8",
+      "bytes": 51085
+    }
+  ],
+  "comparison": [
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577",
+      "bytes": 694
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\COPYING.LESSER",
+      "sha256": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118",
+      "bytes": 7652
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "4d87cacde8defa33df30359d345046daa8e901ab0419dca2766d2140d8af1562",
+      "bytes": 791308
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\multiblocks\\MultiTileEntityMultiBlockPart.java",
+      "sha256": "50ee4bb1545a6d4f4bfd29da7fa262429b9607f1688820719c1dbc6b31c99bfb",
+      "bytes": 36588
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\machines\\MultiTileEntitySensorTE.java",
+      "sha256": "c186cd16e9a60f4a3baff2fadf588b96eddf75d6101f191f8ce746ea5fab52dd",
+      "bytes": 15980
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\notick\\TileEntityBase05Paintable.java",
+      "sha256": "0e4ee2d718965817b3fc30b53ef794882ba478d2299c60054c7ebffe5985c346",
+      "bytes": 6252
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\data\\LH.java",
+      "sha256": "2df45cee1047b522593f4f42c70a3acb2c5d8a425399b9a3c83ed022b7115b0f",
+      "bytes": 51804
+    }
+  ],
+  "chinese_patch": {
+    "path": "C:\\Dev\\GregTech_zh_cn.lang",
+    "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0",
+    "bytes": 7375784
+  },
+  "current": [
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\machine\\OriginalMachineMaterialData.java",
+      "sha256": "e38fbced7a63769aebe9d66dd22a031e399b638cff3a4e8adccdb198ecc72b94",
+      "bytes": 213071
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\OriginalMultiblockPartData.java",
+      "sha256": "380db8afca33f952ef56e2bd4f9c96fb0b2b97da01c78c206f229171c14023ea",
+      "bytes": 4110
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\SharedLargeMachineParts.java",
+      "sha256": "4343b816d7097a9852a97a55c192d04fe3fe739f79a96b727700db33b58c88b7",
+      "bytes": 6772
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\data\\SourceBlockProperties.java",
+      "sha256": "89d378e8c17b45bcd27431af43d5278669257a65b5c00e68f9c3eef0c2c456d8",
+      "bytes": 107151
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\data\\generated\\GT6MultiblockIds.java",
+      "sha256": "4188aa09ec74423ddd8f9c4b75fdf3786d0d9816436dbbdf6619fb896f6d789a",
+      "bytes": 12324
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\lang\\en_us.json",
+      "sha256": "16beb1d95fdfae98677edd245cfc43fa4696db3ac435c7b719e16b48ea1abc2b",
+      "bytes": 758702
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\lang\\zh_cn.json",
+      "sha256": "b10607ca23de1a97b9ccee00c495adc5d28021d15121bc2bfaa491586d53f5fb",
+      "bytes": 8454475
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\SensorSourceTests.java",
+      "sha256": "526a18f31897adeb96ac483d7cb6f6d5577a4700f6c9277b289a677e8d73952f",
+      "bytes": 11230
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\resources\\data\\gregtech_sensor_source\\structure\\test_empty.nbt",
+      "sha256": "ea4b3ed88dbb879fc3b86b9bceca2961af8248069c6420a4136eba192ec7b9b7",
+      "bytes": 113
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\MultiblockPortBlock.java",
+      "sha256": "6c2b67d20f93e2f5bd8af6dffe2e83c4eed3b6d508064cbbaa077711d3668179",
+      "bytes": 7213
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\MultiblockPortBlockEntity.java",
+      "sha256": "8c2cf3681bd8d479eaf11444bb8224e17711c938089adf37a67725874985c3ea",
+      "bytes": 10367
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\OriginalLargeBoilerControllerBlockEntity.java",
+      "sha256": "72899a39d99104f73359720906dbdfa5729e54281db15ba3faf83c5e13b4c58d",
+      "bytes": 23674
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\sensor\\SensorBlockEntity.java",
+      "sha256": "a19581711483c160f1f6c97ec2e67c8f475fef8a2bee17396b042a8ccbe7a83d",
+      "bytes": 21601
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\client\\CommonBlockTooltips.java",
+      "sha256": "2aee573f7b0af6ef0e3cb73eda2d50f807651e480de28327c2615917788e8e3f",
+      "bytes": 7936
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTBlockEntities.java",
+      "sha256": "4fc967d6fde8adebd361556564d03aa1fc0a9f57ab3fbc6e6edc9e939a68d965",
+      "bytes": 28693
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTMultiblocks.java",
+      "sha256": "ab692cd0eb77886ec00537fbaf188a7959bfbab45b1caa4b89ab98767d5696b5",
+      "bytes": 11171
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\MultiblockPartDeliveryChecks.java",
+      "sha256": "213483d4e7f698531e6774eacb3ddd8794a8e986d9ba548c338538202338a11c",
+      "bytes": 4310
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\ProductionClientSmoke.java",
+      "sha256": "5acd043e622f7d32941b6d98baf146363b50965a92aa1f9486a87d7ac5e2b51c",
+      "bytes": 5588
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\SensorSourceTests.java",
+      "sha256": "1cbfe34a0e3fb0f31bfff89e8d141624a324193ecf426886fdcad0f941fc9ce9",
+      "bytes": 10893
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\resources\\data\\gregtech_sensor_source\\structures\\test_empty.nbt",
+      "sha256": "ea4b3ed88dbb879fc3b86b9bceca2961af8248069c6420a4136eba192ec7b9b7",
+      "bytes": 113
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\MultiblockPortBlock.java",
+      "sha256": "6627886edf676cc433605bf9ec3cc7513d810d9bd2a9ea3110f4493fcf553abf",
+      "bytes": 6163
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\MultiblockPortBlockEntity.java",
+      "sha256": "1e57bc127dbeedd556acec038c18bb55cba7e101132556e61f77416894868c07",
+      "bytes": 10928
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\OriginalLargeBoilerControllerBlockEntity.java",
+      "sha256": "57c0d60d85b3af0d711c0d774ae3a6f96758022bccd416f2f0d66a012ffa450d",
+      "bytes": 24286
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\sensor\\SensorBlockEntity.java",
+      "sha256": "07b42e66eb21c5a8daa66be28b666cdc8275864b869c77e7f93c45fa222553c1",
+      "bytes": 21335
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\client\\CommonBlockTooltips.java",
+      "sha256": "74405494c19a9362be9fcd63650bcf56885b4f618685284984410c03b7a8ed94",
+      "bytes": 7719
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\LargeMachineParts.java",
+      "sha256": "9276e2f8239c40cd3a2b6d1e88aee169e5d64b777bd9bbda1bb1a0dc120d178a",
+      "bytes": 7206
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\MultiblockDefinitions.java",
+      "sha256": "69a6f0c6514b8193cb034db33694e24dfbe5736eb8fc1a10fe82d2bca9e66918",
+      "bytes": 8045
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTBlockEntities.java",
+      "sha256": "34ab1405c61c72283fa9628dd7108f3019cd33c8ab9afb52a2e8cee4ef602f77",
+      "bytes": 46766
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\MultiblockPartDeliveryChecks.java",
+      "sha256": "abd0eced11d9b6f5868ffd86a062e00cc87fdfa1bc06932d955e1dec4e09887a",
+      "bytes": 4258
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\ProductionClientSmoke.java",
+      "sha256": "cb97ec90415f968c4cc9b3b880a09001f7fd9f47a4964187840e1522e7dd9786",
+      "bytes": 7750
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\integration\\generate_machine_material_data.py",
+      "sha256": "2004bf659cd15cfbe5864a654f09cbc5cd4116192cd9cee0b249aa3d9293c6ff",
+      "bytes": 33852
+    }
+  ],
+  "original_registration_rows": [
+    {
+      "id": 18000,
+      "name": "Fire Bricks",
+      "paths": [
+        "coke_oven_wall"
+      ],
+      "hardness": 5.0,
+      "resistance": 5.0,
+      "line": 1138,
+      "original": "aMat = MT.Ceramic;              aRegistry.add(\"Fire Bricks\"                                         , \"Multiblock Machines\", 18000, 17101, aClass                                   , aMat.mToolQuality, 64, aStone     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   5.0F, NBT_RESISTANCE,   5.0F, NBT_TEXTURE, \"firebricks\"              , NBT_DESIGNS, 0                        ), \"CBC\", \"BWB\", \"CBC\", 'B', OP.ingot.dat(MT.Brick), 'C', OP.dust.dat(ANY.Clay), 'W', OD.container1000water);"
+    },
+    {
+      "id": 18001,
+      "name": "Wood Wall",
+      "paths": [
+        "wood_wall"
+      ],
+      "hardness": 5.0,
+      "resistance": 5.0,
+      "line": 1139,
+      "original": "aMat = MT.WoodTreated;          aRegistry.add(\"Wood Wall\"                                           , \"Multiblock Machines\", 18001, 17101, aClass                                   , aMat.mToolQuality, 64, aWooden    , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   5.0F, NBT_RESISTANCE,   5.0F, NBT_TEXTURE, \"woodwall\"                , NBT_DESIGNS, 0, NBT_FLAMMABILITY,  150), \"W W\", \"sPh\", \"W W\", 'W', OP.plate.dat(aMat), 'P', OP.plate.dat(MT.Pb));"
+    },
+    {
+      "id": 18011,
+      "name": "Lead Wall",
+      "paths": [
+        "lead_wall"
+      ],
+      "hardness": 6.0,
+      "resistance": 6.0,
+      "line": 1143,
+      "original": "aMat = MT.Pb;                   aRegistry.add(\"Lead Wall\"                                           , \"Multiblock Machines\", 18011, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   6.0F, NBT_RESISTANCE,   6.0F, NBT_TEXTURE, \"metalwall\"               , NBT_DESIGNS, 7), \"wPP\", \"hPP\"       , 'P', OP.plate.dat(aMat)); RM.Welder.addRecipe2(F, 16, 256, OP.plate.mat(aMat, 4), ST.tag(10), aRegistry.getItem());"
+    },
+    {
+      "id": 18010,
+      "name": "Bronze Wall",
+      "paths": [
+        "bronze_wall"
+      ],
+      "hardness": 6.0,
+      "resistance": 6.0,
+      "line": 1144,
+      "original": "aMat = MT.Bronze;               aRegistry.add(\"Bronze Wall\"                                         , \"Multiblock Machines\", 18010, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   6.0F, NBT_RESISTANCE,   6.0F, NBT_TEXTURE, \"metalwall\"               , NBT_DESIGNS, 7), \"wPP\", \"hPP\"       , 'P', OP.plate.dat(aMat)); RM.Welder.addRecipe2(F, 16, 256, OP.plate.mat(aMat, 4), ST.tag(10), aRegistry.getItem());"
+    },
+    {
+      "id": 18009,
+      "name": "Steel Wall",
+      "paths": [
+        "steel_wall"
+      ],
+      "hardness": 6.0,
+      "resistance": 6.0,
+      "line": 1145,
+      "original": "aMat = ANY.Steel;               aRegistry.add(\"Steel Wall\"                                          , \"Multiblock Machines\", 18009, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   6.0F, NBT_RESISTANCE,   6.0F, NBT_TEXTURE, \"metalwall\"               , NBT_DESIGNS, 7), \"wPP\", \"hPP\"       , 'P', OP.plate.dat(aMat)); RM.Welder.addRecipe2(F, 16, 256, OP.plate.mat(aMat, 4), ST.tag(10), aRegistry.getItem());"
+    },
+    {
+      "id": 18008,
+      "name": "Galvanized Steel Wall",
+      "paths": [
+        "galvanized_steel_wall"
+      ],
+      "hardness": 6.0,
+      "resistance": 6.0,
+      "line": 1146,
+      "original": "aMat = MT.SteelGalvanized;      aRegistry.add(\"Galvanized Steel Wall\"                               , \"Multiblock Machines\", 18008, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   6.0F, NBT_RESISTANCE,   6.0F, NBT_TEXTURE, \"metalwall\"               , NBT_DESIGNS, 7), \"wPP\", \"hPP\"       , 'P', OP.plate.dat(aMat)); RM.Welder.addRecipe2(F, 16, 256, OP.plate.mat(aMat, 4), ST.tag(10), aRegistry.getItem());"
+    },
+    {
+      "id": 18002,
+      "name": "Stainless Steel Wall",
+      "paths": [
+        "tank_wall"
+      ],
+      "hardness": 6.0,
+      "resistance": 6.0,
+      "line": 1147,
+      "original": "aMat = MT.StainlessSteel;       aRegistry.add(\"Stainless Steel Wall\"                                , \"Multiblock Machines\", 18002, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   6.0F, NBT_RESISTANCE,   6.0F, NBT_TEXTURE, \"metalwall\"               , NBT_DESIGNS, 7), \"wPP\", \"hPP\"       , 'P', OP.plate.dat(aMat)); RM.Welder.addRecipe2(F, 16, 256, OP.plate.mat(aMat, 4), ST.tag(10), aRegistry.getItem());"
+    },
+    {
+      "id": 18007,
+      "name": "Invar Wall",
+      "paths": [
+        "invar_wall"
+      ],
+      "hardness": 6.0,
+      "resistance": 6.0,
+      "line": 1148,
+      "original": "aMat = MT.Invar;                aRegistry.add(\"Invar Wall\"                                          , \"Multiblock Machines\", 18007, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   6.0F, NBT_RESISTANCE,   6.0F, NBT_TEXTURE, \"metalwall\"               , NBT_DESIGNS, 7), \"wPP\", \"hPP\"       , 'P', OP.plate.dat(aMat)); RM.Welder.addRecipe2(F, 16, 256, OP.plate.mat(aMat, 4), ST.tag(10), aRegistry.getItem());"
+    },
+    {
+      "id": 18006,
+      "name": "Titanium Wall",
+      "paths": [
+        "titanium_wall"
+      ],
+      "hardness": 9.0,
+      "resistance": 9.0,
+      "line": 1149,
+      "original": "aMat = MT.Ti;                   aRegistry.add(\"Titanium Wall\"                                       , \"Multiblock Machines\", 18006, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   9.0F, NBT_RESISTANCE,   9.0F, NBT_TEXTURE, \"metalwall\"               , NBT_DESIGNS, 7), \"wPP\", \"hPP\"       , 'P', OP.plate.dat(aMat)); RM.Welder.addRecipe2(F, 16, 256, OP.plate.mat(aMat, 4), ST.tag(10), aRegistry.getItem());"
+    },
+    {
+      "id": 18003,
+      "name": "Tungstensteel Wall",
+      "paths": [
+        "tungstensteel_wall"
+      ],
+      "hardness": 12.5,
+      "resistance": 12.5,
+      "line": 1150,
+      "original": "aMat = MT.TungstenSteel;        aRegistry.add(\"Tungstensteel Wall\"                                  , \"Multiblock Machines\", 18003, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,  12.5F, NBT_RESISTANCE,  12.5F, NBT_TEXTURE, \"metalwall\"               , NBT_DESIGNS, 7), \"wPP\", \"hPP\"       , 'P', OP.plate.dat(aMat)); RM.Welder.addRecipe2(F, 16, 256, OP.plate.mat(aMat, 4), ST.tag(10), aRegistry.getItem());"
+    },
+    {
+      "id": 18004,
+      "name": "Tungsten Wall",
+      "paths": [
+        "tungsten_wall"
+      ],
+      "hardness": 10.0,
+      "resistance": 10.0,
+      "line": 1151,
+      "original": "aMat = ANY.W;                   aRegistry.add(\"Tungsten Wall\"                                       , \"Multiblock Machines\", 18004, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,  10.0F, NBT_RESISTANCE,  10.0F, NBT_TEXTURE, \"metalwall\"               , NBT_DESIGNS, 7), \"wPP\", \"hPP\"       , 'P', OP.plate.dat(aMat)); RM.Welder.addRecipe2(F, 16, 256, OP.plate.mat(aMat, 4), ST.tag(10), aRegistry.getItem());"
+    },
+    {
+      "id": 18012,
+      "name": "Tantalum Hafnium Carbide Wall",
+      "paths": [
+        "tantalum_hafnium_carbide_wall"
+      ],
+      "hardness": 12.5,
+      "resistance": 12.5,
+      "line": 1152,
+      "original": "aMat = MT.Ta4HfC5;              aRegistry.add(\"Tantalum Hafnium Carbide Wall\"                       , \"Multiblock Machines\", 18012, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,  12.5F, NBT_RESISTANCE,  12.5F, NBT_TEXTURE, \"metalwall\"               , NBT_DESIGNS, 7), \"wPP\", \"hPP\"       , 'P', OP.plate.dat(aMat)); RM.Welder.addRecipe2(F, 16, 256, OP.plate.mat(aMat, 4), ST.tag(10), aRegistry.getItem());"
+    },
+    {
+      "id": 18005,
+      "name": "Adamantium Wall",
+      "paths": [
+        "adamantium_wall"
+      ],
+      "hardness": 100.0,
+      "resistance": 100.0,
+      "line": 1153,
+      "original": "aMat = MT.Ad;                   aRegistry.add(\"Adamantium Wall\"                                     , \"Multiblock Machines\", 18005, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS, 100.0F, NBT_RESISTANCE, 100.0F, NBT_TEXTURE, \"metalwall\"               , NBT_DESIGNS, 7), \"wPP\", \"hPP\"       , 'P', OP.plate.dat(aMat)); RM.Welder.addRecipe2(F, 16, 256, OP.plate.mat(aMat, 4), ST.tag(10), aRegistry.getItem());"
+    },
+    {
+      "id": 18031,
+      "name": "Dense Lead Wall",
+      "paths": [
+        "dense_lead_wall"
+      ],
+      "hardness": 6.0,
+      "resistance": 6.0,
+      "line": 1155,
+      "original": "aMat = MT.Pb;                   aRegistry.add(\"Dense Lead Wall\"                                     , \"Multiblock Machines\", 18031, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   6.0F, NBT_RESISTANCE,   6.0F, NBT_TEXTURE, \"metalwalldense\"          , NBT_DESIGNS, 7)); OM.data(aRegistry.getItem(), aMat, U*36); RM.Welder.addRecipe2(F, 64, 512, OP.plateDense.mat(aMat, 4), ST.tag(10), aRegistry.getItem());"
+    },
+    {
+      "id": 18030,
+      "name": "Dense Bronze Wall",
+      "paths": [
+        "dense_bronze_wall"
+      ],
+      "hardness": 6.0,
+      "resistance": 6.0,
+      "line": 1156,
+      "original": "aMat = MT.Bronze;               aRegistry.add(\"Dense Bronze Wall\"                                   , \"Multiblock Machines\", 18030, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   6.0F, NBT_RESISTANCE,   6.0F, NBT_TEXTURE, \"metalwalldense\"          , NBT_DESIGNS, 7)); OM.data(aRegistry.getItem(), aMat, U*36); RM.Welder.addRecipe2(F, 64, 512, OP.plateDense.mat(aMat, 4), ST.tag(10), aRegistry.getItem());"
+    },
+    {
+      "id": 18029,
+      "name": "Dense Steel Wall",
+      "paths": [
+        "dense_steel_wall"
+      ],
+      "hardness": 6.0,
+      "resistance": 6.0,
+      "line": 1157,
+      "original": "aMat = ANY.Steel;               aRegistry.add(\"Dense Steel Wall\"                                    , \"Multiblock Machines\", 18029, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   6.0F, NBT_RESISTANCE,   6.0F, NBT_TEXTURE, \"metalwalldense\"          , NBT_DESIGNS, 7)); OM.data(aRegistry.getItem(), aMat, U*36); RM.Welder.addRecipe2(F, 64, 512, OP.plateDense.mat(aMat, 4), ST.tag(10), aRegistry.getItem());"
+    },
+    {
+      "id": 18028,
+      "name": "Dense Galvanized Steel Wall",
+      "paths": [
+        "dense_galvanized_steel_wall"
+      ],
+      "hardness": 6.0,
+      "resistance": 6.0,
+      "line": 1158,
+      "original": "aMat = MT.SteelGalvanized;      aRegistry.add(\"Dense Galvanized Steel Wall\"                         , \"Multiblock Machines\", 18028, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   6.0F, NBT_RESISTANCE,   6.0F, NBT_TEXTURE, \"metalwalldense\"          , NBT_DESIGNS, 7)); OM.data(aRegistry.getItem(), aMat, U*36); RM.Welder.addRecipe2(F, 64, 512, OP.plateDense.mat(aMat, 4), ST.tag(10), aRegistry.getItem());"
+    },
+    {
+      "id": 18022,
+      "name": "Dense Stainless Steel Wall",
+      "paths": [
+        "tank_wall_dense"
+      ],
+      "hardness": 6.0,
+      "resistance": 6.0,
+      "line": 1159,
+      "original": "aMat = MT.StainlessSteel;       aRegistry.add(\"Dense Stainless Steel Wall\"                          , \"Multiblock Machines\", 18022, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   6.0F, NBT_RESISTANCE,   6.0F, NBT_TEXTURE, \"metalwalldense\"          , NBT_DESIGNS, 7)); OM.data(aRegistry.getItem(), aMat, U*36); RM.Welder.addRecipe2(F, 64, 512, OP.plateDense.mat(aMat, 4), ST.tag(10), aRegistry.getItem());"
+    },
+    {
+      "id": 18027,
+      "name": "Dense Invar Wall",
+      "paths": [
+        "dense_invar_wall"
+      ],
+      "hardness": 6.0,
+      "resistance": 6.0,
+      "line": 1160,
+      "original": "aMat = MT.Invar;                aRegistry.add(\"Dense Invar Wall\"                                    , \"Multiblock Machines\", 18027, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   6.0F, NBT_RESISTANCE,   6.0F, NBT_TEXTURE, \"metalwalldense\"          , NBT_DESIGNS, 7)); OM.data(aRegistry.getItem(), aMat, U*36); RM.Welder.addRecipe2(F, 64, 512, OP.plateDense.mat(aMat, 4), ST.tag(10), aRegistry.getItem());"
+    },
+    {
+      "id": 18026,
+      "name": "Dense Titanium Wall",
+      "paths": [
+        "dense_titanium_wall"
+      ],
+      "hardness": 9.0,
+      "resistance": 9.0,
+      "line": 1161,
+      "original": "aMat = MT.Ti;                   aRegistry.add(\"Dense Titanium Wall\"                                 , \"Multiblock Machines\", 18026, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   9.0F, NBT_RESISTANCE,   9.0F, NBT_TEXTURE, \"metalwalldense\"          , NBT_DESIGNS, 7)); OM.data(aRegistry.getItem(), aMat, U*36); RM.Welder.addRecipe2(F, 64, 512, OP.plateDense.mat(aMat, 4), ST.tag(10), aRegistry.getItem());"
+    },
+    {
+      "id": 18023,
+      "name": "Dense Tungstensteel Wall",
+      "paths": [
+        "implosion_compressor_wall"
+      ],
+      "hardness": 12.5,
+      "resistance": 12.5,
+      "line": 1162,
+      "original": "aMat = MT.TungstenSteel;        aRegistry.add(\"Dense Tungstensteel Wall\"                            , \"Multiblock Machines\", 18023, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,  12.5F, NBT_RESISTANCE,  12.5F, NBT_TEXTURE, \"metalwalldense\"          , NBT_DESIGNS, 7)); OM.data(aRegistry.getItem(), aMat, U*36); RM.Welder.addRecipe2(F, 64, 512, OP.plateDense.mat(aMat, 4), ST.tag(10), aRegistry.getItem());"
+    },
+    {
+      "id": 18024,
+      "name": "Dense Tungsten Wall",
+      "paths": [
+        "dense_tungsten_wall"
+      ],
+      "hardness": 10.0,
+      "resistance": 10.0,
+      "line": 1163,
+      "original": "aMat = ANY.W;                   aRegistry.add(\"Dense Tungsten Wall\"                                 , \"Multiblock Machines\", 18024, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,  10.0F, NBT_RESISTANCE,  10.0F, NBT_TEXTURE, \"metalwalldense\"          , NBT_DESIGNS, 7)); OM.data(aRegistry.getItem(), aMat, U*36); RM.Welder.addRecipe2(F, 64, 512, OP.plateDense.mat(aMat, 4), ST.tag(10), aRegistry.getItem());"
+    },
+    {
+      "id": 18032,
+      "name": "Dense Tantalum Hafnium Carbide Wall",
+      "paths": [
+        "dense_tantalum_hafnium_carbide_wall"
+      ],
+      "hardness": 12.5,
+      "resistance": 12.5,
+      "line": 1164,
+      "original": "aMat = MT.Ta4HfC5;              aRegistry.add(\"Dense Tantalum Hafnium Carbide Wall\"                 , \"Multiblock Machines\", 18032, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,  12.5F, NBT_RESISTANCE,  12.5F, NBT_TEXTURE, \"metalwalldense\"          , NBT_DESIGNS, 7)); OM.data(aRegistry.getItem(), aMat, U*36); RM.Welder.addRecipe2(F, 64, 512, OP.plateDense.mat(aMat, 4), ST.tag(10), aRegistry.getItem());"
+    },
+    {
+      "id": 18025,
+      "name": "Dense Adamantium Wall",
+      "paths": [
+        "dense_adamantium_wall"
+      ],
+      "hardness": 100.0,
+      "resistance": 100.0,
+      "line": 1165,
+      "original": "aMat = MT.Ad;                   aRegistry.add(\"Dense Adamantium Wall\"                               , \"Multiblock Machines\", 18025, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS, 100.0F, NBT_RESISTANCE, 100.0F, NBT_TEXTURE, \"metalwalldense\"          , NBT_DESIGNS, 7)); OM.data(aRegistry.getItem(), aMat, U*36); RM.Welder.addRecipe2(F, 64, 512, OP.plateDense.mat(aMat, 4), ST.tag(10), aRegistry.getItem());"
+    },
+    {
+      "id": 18040,
+      "name": "Large Copper Coil",
+      "paths": [
+        "large_copper_coil"
+      ],
+      "hardness": 6.0,
+      "resistance": 6.0,
+      "line": 1167,
+      "original": "aMat = MT.AnnealedCopper;       aRegistry.add(\"Large Copper Coil\"                                   , \"Multiblock Machines\", 18040, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   6.0F, NBT_RESISTANCE,   6.0F, NBT_TEXTURE, \"coil\"                    , NBT_DESIGNS, 1), \"WWW\", \"WxW\", \"WWW\", 'W', OP.wireGt04.dat(aMat));"
+    },
+    {
+      "id": 18041,
+      "name": "Large Niobium-Titanium Coil",
+      "paths": [
+        "large_niobium_titanium_coil"
+      ],
+      "hardness": 6.0,
+      "resistance": 6.0,
+      "line": 1168,
+      "original": "aMat = MT.NiobiumTitanium;      aRegistry.add(\"Large Niobium-Titanium Coil\"                         , \"Multiblock Machines\", 18041, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   6.0F, NBT_RESISTANCE,   6.0F, NBT_TEXTURE, \"coil\"                    , NBT_DESIGNS, 1), \"WWW\", \"WxW\", \"WWW\", 'W', OP.wireGt04.dat(aMat));"
+    },
+    {
+      "id": 18042,
+      "name": "Large Nichrome Coil",
+      "paths": [
+        "large_nichrome_coil"
+      ],
+      "hardness": 6.0,
+      "resistance": 6.0,
+      "line": 1169,
+      "original": "aMat = MT.Nichrome;             aRegistry.add(\"Large Nichrome Coil\"                                 , \"Multiblock Machines\", 18042, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   6.0F, NBT_RESISTANCE,   6.0F, NBT_TEXTURE, \"coil\"                    , NBT_DESIGNS, 1), \"WWW\", \"WxW\", \"WWW\", 'W', OP.wireGt04.dat(aMat));"
+    },
+    {
+      "id": 18043,
+      "name": "Large Carborundum Coil",
+      "paths": [
+        "large_carborundum_coil"
+      ],
+      "hardness": 6.0,
+      "resistance": 6.0,
+      "line": 1170,
+      "original": "aMat = MT.SiC;                  aRegistry.add(\"Large Carborundum Coil\"                              , \"Multiblock Machines\", 18043, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   6.0F, NBT_RESISTANCE,   6.0F, NBT_TEXTURE, \"coil\"                    , NBT_DESIGNS, 1), \"WWW\", \"WxW\", \"WWW\", 'W', OP.wireGt04.dat(aMat));"
+    },
+    {
+      "id": 18044,
+      "name": "Large Osmium Coil",
+      "paths": [
+        "large_osmium_coil"
+      ],
+      "hardness": 6.0,
+      "resistance": 6.0,
+      "line": 1171,
+      "original": "aMat = MT.Os;                   aRegistry.add(\"Large Osmium Coil\"                                   , \"Multiblock Machines\", 18044, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   6.0F, NBT_RESISTANCE,   6.0F, NBT_TEXTURE, \"coil\"                    , NBT_DESIGNS, 1), \"WWW\", \"WxW\", \"WWW\", 'W', OP.wireGt04.dat(aMat));"
+    },
+    {
+      "id": 18045,
+      "name": "Large Iridium Coil",
+      "paths": [
+        "large_iridium_coil"
+      ],
+      "hardness": 6.0,
+      "resistance": 6.0,
+      "line": 1172,
+      "original": "aMat = MT.Ir;                   aRegistry.add(\"Large Iridium Coil\"                                  , \"Multiblock Machines\", 18045, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   6.0F, NBT_RESISTANCE,   6.0F, NBT_TEXTURE, \"coil\"                    , NBT_DESIGNS, 1), \"WWW\", \"WxW\", \"WWW\", 'W', OP.wireGt04.dat(aMat));"
+    },
+    {
+      "id": 18100,
+      "name": "Centrifuge Part",
+      "paths": [
+        "centrifuge_part"
+      ],
+      "hardness": 12.5,
+      "resistance": 12.5,
+      "line": 1174,
+      "original": "aMat = MT.TungstenSteel;        aRegistry.add(\"Centrifuge Part\"                                     , \"Multiblock Machines\", 18100, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,  12.5F, NBT_RESISTANCE,  12.5F, NBT_TEXTURE, \"centrifugeparts\"         , NBT_DESIGNS, 8), \"TwT\", \"GMG\", \"TdT\", 'M', OP.casingMachine.dat(aMat), 'G', OP.gearGt.dat(aMat), 'T', OP.screw.dat(aMat));"
+    },
+    {
+      "id": 18105,
+      "name": "Electrolyzer Part",
+      "paths": [
+        "electrolyzer_part"
+      ],
+      "hardness": 12.5,
+      "resistance": 12.5,
+      "line": 1175,
+      "original": "aMat = MT.StainlessSteel;       aRegistry.add(\"Electrolyzer Part\"                                   , \"Multiblock Machines\", 18105, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,  12.5F, NBT_RESISTANCE,  12.5F, NBT_TEXTURE, \"electrolyzerparts\"       , NBT_DESIGNS, 7), \"WwW\", \"WMW\", \"CCC\", 'M', OP.casingMachine.dat(aMat), 'W', OP.wireGt01.dat(MT.Pt), 'C', OD_CIRCUITS[6]);"
+    },
+    {
+      "id": 18101,
+      "name": "Heat Transmitter",
+      "paths": [
+        "heat_transmitter"
+      ],
+      "hardness": 10.0,
+      "resistance": 10.0,
+      "line": 1176,
+      "original": "aMat = MT.Invar;                aRegistry.add(\"Heat Transmitter\"                                    , \"Multiblock Machines\", 18101, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,  10.0F, NBT_RESISTANCE,  10.0F, NBT_TEXTURE, \"heatacceptor\"            , NBT_DESIGNS, 0), \"MPM\", \"hRw\", \"MPM\", 'M', OP.plate.dat(aMat), 'P', OP.plateTriple.dat(ANY.Cu), 'R', OP.stickLong.dat(ANY.Cu));"
+    },
+    {
+      "id": 18102,
+      "name": "Distillation Tower Part",
+      "paths": [
+        "distillation_tower_part"
+      ],
+      "hardness": 6.0,
+      "resistance": 6.0,
+      "line": 1177,
+      "original": "aMat = MT.StainlessSteel;       aRegistry.add(\"Distillation Tower Part\"                             , \"Multiblock Machines\", 18102, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   6.0F, NBT_RESISTANCE,   6.0F, NBT_TEXTURE, \"distillationtowerparts\"  , NBT_DESIGNS, 1), \"TMT\", \"hPd\", \"TMT\", 'M', OP.plate.dat(aMat), 'P', OP.pipeSmall.dat(aMat), 'T', OP.screw.dat(aMat));"
+    },
+    {
+      "id": 18103,
+      "name": "Bedrock Mining Drill Head",
+      "paths": [
+        "bedrock_mining_drill_head"
+      ],
+      "hardness": 12.5,
+      "resistance": 12.5,
+      "line": 1178,
+      "original": "aMat = MT.TungstenSteel;        aRegistry.add(\"Bedrock Mining Drill Head\"                           , \"Multiblock Machines\", 18103, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,  12.5F, NBT_RESISTANCE,  12.5F, NBT_TEXTURE, \"bedrockdrill\"            , NBT_DESIGNS, 0), \"DID\", \"GMG\", \"DID\", 'M', OP.casingMachineDense.dat(aMat), 'G', OP.gearGt.dat(aMat), 'I', OP.toolHeadDrill.dat(aMat), 'D', OP.gem.dat(ANY.Diamond));"
+    },
+    {
+      "id": 18104,
+      "name": "Lightning Rod",
+      "paths": [
+        "lightning_rod"
+      ],
+      "hardness": 8.0,
+      "resistance": 8.0,
+      "line": 1179,
+      "original": "aMat = MT.SteelGalvanized;      aRegistry.add(\"Lightning Rod\"                                       , \"Multiblock Machines\", 18104, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   8.0F, NBT_RESISTANCE,   8.0F, NBT_TEXTURE, \"lightningrod\"            , NBT_DESIGNS, 0), \"MWM\", \"WRW\", \"MWM\", 'M', OP.plate.dat(aMat), 'R', OP.stick.dat(MT.Ir), 'W', OP.wireGt01.dat(MT.NiobiumTitanium));"
+    },
+    {
+      "id": 18106,
+      "name": "Sluice Part",
+      "paths": [
+        "sluice_part"
+      ],
+      "hardness": 9.0,
+      "resistance": 9.0,
+      "line": 1180,
+      "original": "aMat = MT.Ti;                   aRegistry.add(\"Sluice Part\"                                         , \"Multiblock Machines\", 18106, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   9.0F, NBT_RESISTANCE,   9.0F, NBT_TEXTURE, \"sluiceparts\"             , NBT_DESIGNS, 7), \"GGG\", \"PMP\", \"PwP\", 'M', OP.casingMachine.dat(aMat), 'G', OP.gearGt.dat(aMat), 'P', OP.pipeMedium.dat(aMat));"
+    },
+    {
+      "id": 18107,
+      "name": "Crusher Wheels",
+      "paths": [
+        "crusher_wheels"
+      ],
+      "hardness": 9.0,
+      "resistance": 9.0,
+      "line": 1181,
+      "original": "aMat = MT.TungstenSteel;        aRegistry.add(\"Crusher Wheels\"                                      , \"Multiblock Machines\", 18107, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   9.0F, NBT_RESISTANCE,   9.0F, NBT_TEXTURE, \"crusherwheels\"           , NBT_DESIGNS, 3), \"DDD\", \"GDG\", \"GMG\", 'M', OP.casingMachineDouble.dat(aMat), 'G', OP.gearGt.dat(aMat), 'D', OP.gem.dat(ANY.Diamond));"
+    },
+    {
+      "id": 18108,
+      "name": "Shredder Blades",
+      "paths": [
+        "shredder_blades"
+      ],
+      "hardness": 9.0,
+      "resistance": 9.0,
+      "line": 1182,
+      "original": "aMat = MT.TungstenSteel;        aRegistry.add(\"Shredder Blades\"                                     , \"Multiblock Machines\", 18108, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   9.0F, NBT_RESISTANCE,   9.0F, NBT_TEXTURE, \"shredderblades\"          , NBT_DESIGNS, 3), \"DGD\", \"GwG\", \"GMG\", 'M', OP.casingMachineDouble.dat(aMat), 'G', OP.gearGt.dat(aMat), 'D', OP.plateGem.dat(ANY.Diamond));"
+    },
+    {
+      "id": 18299,
+      "name": "Ventilation Unit",
+      "paths": [
+        "fusion_ventilation_unit"
+      ],
+      "hardness": 6.0,
+      "resistance": 6.0,
+      "line": 1184,
+      "original": "aMat = MT.SteelGalvanized;      aRegistry.add(\"Ventilation Unit\"                                    , \"Multiblock Machines\", 18299, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   6.0F, NBT_RESISTANCE,   6.0F, NBT_TEXTURE, \"ventilationunit\"         , NBT_DESIGNS, 0), \"FwF\", \"CMC\", \"EdE\", 'M', OP.casingMachine.dat(aMat), 'C', OD_CIRCUITS[3], 'F', IL.Cover_Vent, 'E', IL.MOTORS[1]);"
+    },
+    {
+      "id": 18200,
+      "name": "Versatile Quadcore Processor Unit",
+      "paths": [
+        "versatile_processor_unit"
+      ],
+      "hardness": 6.0,
+      "resistance": 6.0,
+      "line": 1185,
+      "original": "aMat = MT.SteelGalvanized;      aRegistry.add(\"Versatile Quadcore Processor Unit\"                   , \"Multiblock Machines\", 18200, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   6.0F, NBT_RESISTANCE,   6.0F, NBT_TEXTURE, \"processorversatile\"      , NBT_DESIGNS, 0), \"DCS\", \"CMC\", \"RCE\", 'M', OP.casingMachine.dat(aMat), 'C', OD_CIRCUITS[6], 'S', IL.Processor_Crystal_Sapphire, 'D', IL.Processor_Crystal_Diamond, 'R', IL.Processor_Crystal_Ruby, 'E', IL.Processor_Crystal_Emerald);"
+    },
+    {
+      "id": 18201,
+      "name": "Logic Quadcore Processor Unit",
+      "paths": [
+        "logic_processor_unit"
+      ],
+      "hardness": 6.0,
+      "resistance": 6.0,
+      "line": 1186,
+      "original": "aMat = MT.SteelGalvanized;      aRegistry.add(\"Logic Quadcore Processor Unit\"                       , \"Multiblock Machines\", 18201, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   6.0F, NBT_RESISTANCE,   6.0F, NBT_TEXTURE, \"processorlogic\"          , NBT_DESIGNS, 0), \"PCP\", \"CMC\", \"PCP\", 'M', OP.casingMachine.dat(aMat), 'C', OD_CIRCUITS[6], 'P', IL.Processor_Crystal_Diamond );"
+    },
+    {
+      "id": 18202,
+      "name": "Control Quadcore Processor Unit",
+      "paths": [
+        "control_processor_unit"
+      ],
+      "hardness": 6.0,
+      "resistance": 6.0,
+      "line": 1187,
+      "original": "aMat = MT.SteelGalvanized;      aRegistry.add(\"Control Quadcore Processor Unit\"                     , \"Multiblock Machines\", 18202, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   6.0F, NBT_RESISTANCE,   6.0F, NBT_TEXTURE, \"processorcontrol\"        , NBT_DESIGNS, 0), \"PCP\", \"CMC\", \"PCP\", 'M', OP.casingMachine.dat(aMat), 'C', OD_CIRCUITS[6], 'P', IL.Processor_Crystal_Ruby    );"
+    },
+    {
+      "id": 18203,
+      "name": "Storage Quadcore Processor Unit",
+      "paths": [
+        "storage_quadcore_processor_unit"
+      ],
+      "hardness": 6.0,
+      "resistance": 6.0,
+      "line": 1188,
+      "original": "aMat = MT.SteelGalvanized;      aRegistry.add(\"Storage Quadcore Processor Unit\"                     , \"Multiblock Machines\", 18203, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   6.0F, NBT_RESISTANCE,   6.0F, NBT_TEXTURE, \"processorstorage\"        , NBT_DESIGNS, 0), \"PCP\", \"CMC\", \"PCP\", 'M', OP.casingMachine.dat(aMat), 'C', OD_CIRCUITS[6], 'P', IL.Processor_Crystal_Emerald );"
+    },
+    {
+      "id": 18204,
+      "name": "Conversion Quadcore Processor Unit",
+      "paths": [
+        "conversion_processor_unit"
+      ],
+      "hardness": 6.0,
+      "resistance": 6.0,
+      "line": 1189,
+      "original": "aMat = MT.SteelGalvanized;      aRegistry.add(\"Conversion Quadcore Processor Unit\"                  , \"Multiblock Machines\", 18204, 17101, aClass                                   , aMat.mToolQuality, 64, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   6.0F, NBT_RESISTANCE,   6.0F, NBT_TEXTURE, \"processorconversion\"     , NBT_DESIGNS, 0), \"PCP\", \"CMC\", \"PCP\", 'M', OP.casingMachine.dat(aMat), 'C', OD_CIRCUITS[6], 'P', IL.Processor_Crystal_Sapphire);"
+    }
+  ],
+  "static_audit": {
+    "part_count": 45,
+    "known_material_rows": 45,
+    "all_existing_material_rows_match_current_source_extraction": 647,
+    "comparison_physical_differences": [],
+    "chinese_names_verbatim": 45,
+    "chinese_tooltip_keys_verbatim": [
+      "gt.lang.use.builder.wand.to.ease.building",
+      "gt.lang.use.magnifyingglass.to.detail"
+    ],
+    "materials_changed": false,
+    "scope": "Static source correspondence, separate from native execution"
+  },
+  "changed_physical_values": [
+    {
+      "id": 18000,
+      "path": "coke_oven_wall",
+      "before": 6,
+      "after": 5.0
+    },
+    {
+      "id": 18001,
+      "path": "wood_wall",
+      "before": 8,
+      "after": 5.0
+    },
+    {
+      "id": 18011,
+      "path": "lead_wall",
+      "before": 8,
+      "after": 6.0
+    },
+    {
+      "id": 18010,
+      "path": "bronze_wall",
+      "before": 8,
+      "after": 6.0
+    },
+    {
+      "id": 18009,
+      "path": "steel_wall",
+      "before": 8,
+      "after": 6.0
+    },
+    {
+      "id": 18008,
+      "path": "galvanized_steel_wall",
+      "before": 8,
+      "after": 6.0
+    },
+    {
+      "id": 18007,
+      "path": "invar_wall",
+      "before": 8,
+      "after": 6.0
+    },
+    {
+      "id": 18006,
+      "path": "titanium_wall",
+      "before": 8,
+      "after": 9.0
+    },
+    {
+      "id": 18003,
+      "path": "tungstensteel_wall",
+      "before": 8,
+      "after": 12.5
+    },
+    {
+      "id": 18004,
+      "path": "tungsten_wall",
+      "before": 8,
+      "after": 10.0
+    },
+    {
+      "id": 18012,
+      "path": "tantalum_hafnium_carbide_wall",
+      "before": 8,
+      "after": 12.5
+    },
+    {
+      "id": 18005,
+      "path": "adamantium_wall",
+      "before": 8,
+      "after": 100.0
+    },
+    {
+      "id": 18031,
+      "path": "dense_lead_wall",
+      "before": 8,
+      "after": 6.0
+    },
+    {
+      "id": 18030,
+      "path": "dense_bronze_wall",
+      "before": 8,
+      "after": 6.0
+    },
+    {
+      "id": 18029,
+      "path": "dense_steel_wall",
+      "before": 8,
+      "after": 6.0
+    },
+    {
+      "id": 18028,
+      "path": "dense_galvanized_steel_wall",
+      "before": 8,
+      "after": 6.0
+    },
+    {
+      "id": 18027,
+      "path": "dense_invar_wall",
+      "before": 8,
+      "after": 6.0
+    },
+    {
+      "id": 18026,
+      "path": "dense_titanium_wall",
+      "before": 8,
+      "after": 9.0
+    },
+    {
+      "id": 18023,
+      "path": "implosion_compressor_wall",
+      "before": 6,
+      "after": 12.5
+    },
+    {
+      "id": 18024,
+      "path": "dense_tungsten_wall",
+      "before": 8,
+      "after": 10.0
+    },
+    {
+      "id": 18032,
+      "path": "dense_tantalum_hafnium_carbide_wall",
+      "before": 8,
+      "after": 12.5
+    },
+    {
+      "id": 18040,
+      "path": "large_copper_coil",
+      "before": 8,
+      "after": 6.0
+    },
+    {
+      "id": 18042,
+      "path": "large_nichrome_coil",
+      "before": 8,
+      "after": 6.0
+    },
+    {
+      "id": 18043,
+      "path": "large_carborundum_coil",
+      "before": 8,
+      "after": 6.0
+    },
+    {
+      "id": 18044,
+      "path": "large_osmium_coil",
+      "before": 8,
+      "after": 6.0
+    },
+    {
+      "id": 18045,
+      "path": "large_iridium_coil",
+      "before": 8,
+      "after": 6.0
+    },
+    {
+      "id": 18100,
+      "path": "centrifuge_part",
+      "before": 6,
+      "after": 12.5
+    },
+    {
+      "id": 18105,
+      "path": "electrolyzer_part",
+      "before": 6,
+      "after": 12.5
+    },
+    {
+      "id": 18101,
+      "path": "heat_transmitter",
+      "before": 6,
+      "after": 10.0
+    },
+    {
+      "id": 18103,
+      "path": "bedrock_mining_drill_head",
+      "before": 8,
+      "after": 12.5
+    },
+    {
+      "id": 18106,
+      "path": "sluice_part",
+      "before": 8,
+      "after": 9.0
+    },
+    {
+      "id": 18107,
+      "path": "crusher_wheels",
+      "before": 8,
+      "after": 9.0
+    },
+    {
+      "id": 18108,
+      "path": "shredder_blades",
+      "before": 8,
+      "after": 9.0
+    },
+    {
+      "id": 18299,
+      "path": "fusion_ventilation_unit",
+      "before": 8,
+      "after": 6.0
+    },
+    {
+      "id": 18200,
+      "path": "versatile_processor_unit",
+      "before": 8,
+      "after": 6.0
+    },
+    {
+      "id": 18201,
+      "path": "logic_processor_unit",
+      "before": 8,
+      "after": 6.0
+    },
+    {
+      "id": 18202,
+      "path": "control_processor_unit",
+      "before": 8,
+      "after": 6.0
+    },
+    {
+      "id": 18203,
+      "path": "storage_quadcore_processor_unit",
+      "before": 8,
+      "after": 6.0
+    },
+    {
+      "id": 18204,
+      "path": "conversion_processor_unit",
+      "before": 8,
+      "after": 6.0
+    }
+  ],
+  "language_changes": {
+    "en_us": [
+      {
+        "key": "block.gregtech.coke_oven_wall",
+        "before": "Coke Oven Wall",
+        "after": "Fire Bricks"
+      },
+      {
+        "key": "block.gregtech.tank_wall",
+        "before": "Tank Wall",
+        "after": "Stainless Steel Wall"
+      },
+      {
+        "key": "block.gregtech.tank_wall_dense",
+        "before": "Tank Wall Dense",
+        "after": "Dense Stainless Steel Wall"
+      },
+      {
+        "key": "block.gregtech.implosion_compressor_wall",
+        "before": "Dense Tungstensteel Wall (Implosion / Turbine)",
+        "after": "Dense Tungstensteel Wall"
+      }
+    ],
+    "zh_cn": [
+      {
+        "key": "block.gregtech.coke_oven_wall",
+        "before": "Coke Oven Wall",
+        "after": "耐火砖"
+      },
+      {
+        "key": "block.gregtech.tank_wall",
+        "before": "Tank Wall",
+        "after": "不锈钢壁板"
+      },
+      {
+        "key": "block.gregtech.tank_wall_dense",
+        "before": "Tank Wall Dense",
+        "after": "致密不锈钢壁板"
+      },
+      {
+        "key": "block.gregtech.implosion_compressor_wall",
+        "before": "Dense Tungstensteel Wall (Implosion / Turbine)",
+        "after": "致密钨钢壁板"
+      }
+    ]
+  },
+  "wood_flammability": {
+    "source_id": 18001,
+    "value": 150,
+    "fire_spread_speed": 150,
+    "other44_default": 0,
+    "source": "notick.TileEntityBase05Paintable.readFromNBT2/getFlammability/getFireSpreadSpeed"
+  },
+  "source_material_candidate": {
+    "path": "C:\\Dev\\GregTech6\\work\\parts-material-candidate-20261007.java",
+    "sha256": "9b715d336dc4b5dad478cc54216cf9b8ad3154b3d162903d33e1a746b39a2589",
+    "bytes": 213960
+  },
+  "source_material_audit": {
+    "path": "C:\\Dev\\GregTech6\\work\\parts-material-candidate-20261007.json",
+    "sha256": "e8544c24dc03e260c3bc2f46f08cb5c3ea77fc9a86ac5f9aef4080d8f3bde74d",
+    "bytes": 1172970
+  },
+  "scope": [
+    "All45 canonical original parts have two source DARK_GRAY tool rows and actual source hardness/resistance",
+    "Known REV material data for all45 already present; all647 fixed source rows regenerate unchanged",
+    "39 native part physical values corrected, plus treated wood flame150 and spread150",
+    "Forge18041 becomes actual part BE as already in Neo; source controller sensor unwrapping preserves measured side and does not change transport roles",
+    "45 Chinese names and two tooltip keys verbatim user patch; four names corrected in each language"
+  ],
+  "remaining": [
+    "Part designs/colored face state and source saved target/mode persistence not implemented by this batch",
+    "Native bindings remain transient/rebuilt by controllers; no original1.7.10 save compatibility claim",
+    "Other sensor measurement/provider gaps, other blocks source tooltips/materials, full survival and independent restart remain open"
+  ],
+  "goal": "active",
+  "publication": "local only"
+}

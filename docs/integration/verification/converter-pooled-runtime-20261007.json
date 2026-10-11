@@ -1,0 +1,176 @@
+{
+  "date": "2026-10-07",
+  "baseline_commit": "e97e9b867bfeb39889302abaaa2046a17e7bc49d",
+  "included_batches": [
+    "4d2f91e1",
+    "a1b36036",
+    "e97e9b86"
+  ],
+  "changes": [
+    "Both loaders admit original source machine compositions only when registered components exactly equal MachineConstructionMaterials or OriginalMachineMaterialData. Legacy coarse hull estimates remain excluded.",
+    "Recovery still rejects stored/configured inputs at consumption time. Missing blockDust or stack caps cannot silently erase a full pile of an audited machine; incomplete recovery rows are omitted.",
+    "Fixture follows canonical OM.dust selected-pile rounding: first LV heater14+1/3U becomes57 quarter piles, leaving1/12U. No production dust balance changed.",
+    "Ten magnets now have shared recipe rows with existing gregtech:magnets identities. Removed their obsolete static-file catalog entries; all2318 remaining static references exist. Missing-file failures are still fatal."
+  ],
+  "source_files": [
+    {
+      "role": "canonical original",
+      "authors": "GregTech-6 Team / Gregorius Techneticies",
+      "license": "LGPL-3.0-or-later",
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapShredder.java",
+      "bytes": 4063,
+      "sha256": "b963307f82df8cb595f4d0927d969b603f57a792596ec642bb31f6aaee01d1f4"
+    },
+    {
+      "role": "canonical original",
+      "authors": "GregTech-6 Team / Gregorius Techneticies",
+      "license": "LGPL-3.0-or-later",
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\util\\OM.java",
+      "bytes": 34107,
+      "sha256": "3c2cc710d62373460d1854f60a7383ec0a5b7969877dbbcb3f5c9b5a0b4c5cbb"
+    },
+    {
+      "role": "canonical original",
+      "authors": "GregTech-6 Team / Gregorius Techneticies",
+      "license": "LGPL-3.0-or-later",
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\LICENSE",
+      "bytes": 694,
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577"
+    },
+    {
+      "role": "comparison snapshot",
+      "authors": "GregTech-6 Team / Gregorius Techneticies",
+      "license": "LGPL-3.0-or-later",
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapShredder.java",
+      "bytes": 4246,
+      "sha256": "6cba8106eb29643cdb23aab98e4ed45ebb3d34959e20a3953eb57b093557f865"
+    },
+    {
+      "role": "comparison snapshot",
+      "authors": "GregTech-6 Team / Gregorius Techneticies",
+      "license": "LGPL-3.0-or-later",
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\util\\OM.java",
+      "bytes": 34292,
+      "sha256": "eb08daaf04a7fc433386a9356ee1cfcd5487a8035bfe5498e52fe4944784d921"
+    },
+    {
+      "role": "comparison snapshot",
+      "authors": "GregTech-6 Team / Gregorius Techneticies",
+      "license": "LGPL-3.0-or-later",
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\LICENSE",
+      "bytes": 694,
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577"
+    }
+  ],
+  "comparison": "The _w snapshot retains the same original anydata/targetPulver and OM.dust contract; use canonical1.7.10 amounts, preserving modern loader boundaries and conservative full-output guards.",
+  "native_world": {
+    "forge": {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\converter-pooled-native-world-final-20261007.log",
+        "bytes": 281841,
+        "sha256": "cca18c5e9f4d98c666163817f55e956a62e3fb9bcfdc2a41f299b7a335b01a58"
+      },
+      "required_tests_passed": 6,
+      "java": "17.0.10",
+      "gradle_overall": "failed only on subsequent Neo stale catalog"
+    },
+    "neoforge": {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\converter-pooled-neoforge-native-world-20261007.log",
+        "bytes": 39295,
+        "sha256": "e6b53b4af5181ec34c3b97affe148d83898ba4a0c9fe60755eac658364bc9ddc"
+      },
+      "required_tests_passed": 6,
+      "java": "21.0.7",
+      "exit_code": 0
+    }
+  },
+  "scenario_scope": "Each platform:3 converter behavior fixtures and3 real crafting/recipe synchronization/recovery fixtures;20 thermal+10 magnets+15 turbines. Actual native receivers, stored-input protection, tool wear, material targets/amounts and crucible parsing. Manual ticker scenarios; development GameTest worlds.",
+  "attempts": [
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\converter-pooled-native-world-20261007.log",
+        "bytes": 206513,
+        "sha256": "2c6e8eefa537044255ef5d3816506576a34a42ad5d2212ee2e454b230f4a10eb"
+      },
+      "elapsed": "7m30s",
+      "result": "Forge spawn preparation exhausted 1536MiB heap; no scenarios ran. Only the identified test child was stopped; unrelated Java process left untouched."
+    },
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\converter-pooled-native-world-3g-20261007.log",
+        "bytes": 217335,
+        "sha256": "fc78bac5eb491e8ed85dcd60c7c661cdec40d47c29c0cd259e7ace0f7b88b889"
+      },
+      "elapsed": "2m18s",
+      "result": "Forge behavior3 passed; crafting3 failed because exact machine compositions were excluded from recovery registration. Neo not run."
+    },
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\converter-pooled-native-world-recovery-20261007.log",
+        "bytes": 245398,
+        "sha256": "d620fa2eca05bc95ffabb92d188a819c7b14d59aa700cc95fafb2ad381b3d7d3"
+      },
+      "elapsed": "2m52s",
+      "result": "Forge5 passed; thermal fixture incorrectly required every OM.dust rounding remainder below U/72. Neo not run."
+    },
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\converter-pooled-native-world-final-20261007.log",
+        "bytes": 281841,
+        "sha256": "cca18c5e9f4d98c666163817f55e956a62e3fb9bcfdc2a41f299b7a335b01a58"
+      },
+      "elapsed": "3m15s",
+      "result": "Forge6 passed and saved dimensions; Neo failed before world load on stale electromagnet_ev.json catalog reference."
+    },
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\converter-pooled-neoforge-native-world-20261007.log",
+        "bytes": 39295,
+        "sha256": "e6b53b4af5181ec34c3b97affe148d83898ba4a0c9fe60755eac658364bc9ddc"
+      },
+      "elapsed": "1m19s",
+      "result": "After removal of ten stale references, only Neo6 rerun; passed and saved all dimensions, exit0."
+    }
+  ],
+  "boundaries": [
+    "Large source quantities requiring blockDust remain deferred; precise material records are preserved.",
+    "No full naturally scheduled survival chain, independent saved-world restart, historical-save compatibility or player-hover screenshot claim.",
+    "Ordinary dual packages and installed-loader client acceptance still pending in this receipt; recorded separately after completion."
+  ],
+  "publication": "local commits only; no push or PR operation",
+  "goal": "active",
+  "installed_attempts": [
+    {
+      "result": "Ordinary build4m8s and CRC/current classes passed; actual Forge reached title but probe rejected RF heater internal display Flux Heater(Pb) vs original language Flux Heater(Lead). Pair53899d2d not accepted for delivery.",
+      "records": [
+        {
+          "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\oredict\\OreDictMaterial.java",
+          "sha256": "768707d5eeeb6b60f0c5d0a24b39ab50f6f173a29a40f0fa3365308cf0688371",
+          "bytes": 88912
+        },
+        {
+          "path": "C:\\Dev\\GregTech6\\build\\production-smoke\\forge-c550b1cc-1e93-4c0d-9664-f84c1dcddeaf\\launch.log",
+          "sha256": "4a7e89f0970891fac5791df9de51f0f49e45633f54aca89fcd6963d0093b758b",
+          "bytes": 155818
+        },
+        {
+          "path": "C:\\Dev\\GregTech6\\work\\converter-pooled-dual-build-20261007.log",
+          "sha256": "adc2d33e9c8acd39437a570f2aa27482d3b4392f33068a7760346259870a07ee",
+          "bytes": 33592
+        },
+        {
+          "path": "C:\\Dev\\GregTech6\\work\\converter-pooled-artifacts-20261007.json",
+          "sha256": "bf1298488d3f60bf86cadd27e84c112b9afdb2ac07a5dc011b39115dcc16ba32",
+          "bytes": 313365
+        },
+        {
+          "path": "C:\\Dev\\GregTech6\\work\\converter-pooled-verified-20261007.json",
+          "sha256": "b6bfe30327119d38f806ab806362adfeb3582cf43ac6235b8d92f8e233d54c53",
+          "bytes": 1084
+        }
+      ]
+    }
+  ],
+  "name_fix": "Original getLocal uses translated display name; imported Lead.localName is Pb while display fallback is Lead. Thermal spec now uses English display fallback; Chinese names and all quantities/behavior unchanged. Added20 independent original name assertions. Native6/platform behavior results remain valid; final ordinary build/start pending."
+}

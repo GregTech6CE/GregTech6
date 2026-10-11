@@ -1,0 +1,142 @@
+{
+  "variants": {
+    "activity=0,facing=north,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv"
+    },
+    "activity=0,facing=north,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv"
+    },
+    "activity=0,facing=east,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv",
+      "y": 90
+    },
+    "activity=0,facing=east,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv",
+      "y": 90
+    },
+    "activity=0,facing=south,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv",
+      "y": 180
+    },
+    "activity=0,facing=south,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv",
+      "y": 180
+    },
+    "activity=0,facing=west,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv",
+      "y": 270
+    },
+    "activity=0,facing=west,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv",
+      "y": 270
+    },
+    "activity=0,facing=up,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv",
+      "x": 270
+    },
+    "activity=0,facing=up,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv",
+      "x": 270
+    },
+    "activity=0,facing=down,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv",
+      "x": 90
+    },
+    "activity=0,facing=down,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv",
+      "x": 90
+    },
+    "activity=1,facing=north,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv_active"
+    },
+    "activity=1,facing=north,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv_active"
+    },
+    "activity=1,facing=east,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv_active",
+      "y": 90
+    },
+    "activity=1,facing=east,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv_active",
+      "y": 90
+    },
+    "activity=1,facing=south,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv_active",
+      "y": 180
+    },
+    "activity=1,facing=south,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv_active",
+      "y": 180
+    },
+    "activity=1,facing=west,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv_active",
+      "y": 270
+    },
+    "activity=1,facing=west,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv_active",
+      "y": 270
+    },
+    "activity=1,facing=up,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv_active",
+      "x": 270
+    },
+    "activity=1,facing=up,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv_active",
+      "x": 270
+    },
+    "activity=1,facing=down,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv_active",
+      "x": 90
+    },
+    "activity=1,facing=down,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv_active",
+      "x": 90
+    },
+    "activity=2,facing=north,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv_active"
+    },
+    "activity=2,facing=north,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv_active"
+    },
+    "activity=2,facing=east,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv_active",
+      "y": 90
+    },
+    "activity=2,facing=east,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv_active",
+      "y": 90
+    },
+    "activity=2,facing=south,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv_active",
+      "y": 180
+    },
+    "activity=2,facing=south,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv_active",
+      "y": 180
+    },
+    "activity=2,facing=west,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv_active",
+      "y": 270
+    },
+    "activity=2,facing=west,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv_active",
+      "y": 270
+    },
+    "activity=2,facing=up,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv_active",
+      "x": 270
+    },
+    "activity=2,facing=up,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv_active",
+      "x": 270
+    },
+    "activity=2,facing=down,waterlogged=false": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv_active",
+      "x": 90
+    },
+    "activity=2,facing=down,waterlogged=true": {
+      "model": "gregtech:block/machine/energy/flux_cooler_iv_active",
+      "x": 90
+    }
+  }
+}

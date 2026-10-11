@@ -1,0 +1,1049 @@
+{
+  "date": "2026-10-07",
+  "baseline": "3735a567bd2fa4ba078d1494929535c3b17434a6",
+  "authors": [
+    "GregTech-6 Team",
+    "Gregorius Techneticies"
+  ],
+  "license": "LGPL-3.0-or-later code; CC0-1.0 selected textures",
+  "source_files": [
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\base\\TileEntityBase01Root.java",
+      "sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+      "bytes": 59432,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\base\\TileEntityBase09FacingSingle.java",
+      "sha256": "b172aadf76d09c37ee4c7793cb784dcc97a19d999ad1737bafc60cc064bece7f",
+      "bytes": 5485,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\energy\\TileEntityBase10EnergyConverter.java",
+      "sha256": "52cb409c7d35a8731338527301e09c8b779548e1851d5fe7fe91242fd25b9c44",
+      "bytes": 9515,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\energy\\TileEntityBase11Motor.java",
+      "sha256": "debce53cfd8ccea8a4ff5da9bade918c0ba0f1be3bc88786d5b2dd530e78b6d8",
+      "bytes": 4886,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\behavior\\TE_Behavior_Energy_Stats.java",
+      "sha256": "d66cd7885b7053510d40c054dd6b87ef7a2aab23ee6e554e33af726fc4dddbbf",
+      "bytes": 2994,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\behavior\\TE_Behavior_Energy_Converter.java",
+      "sha256": "db1e31ed18e62bc9d261e33edcf338ed9717fc1ee088eab8de2baff69c9e59d4",
+      "bytes": 9249,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\behavior\\TE_Behavior_Energy_Capacitor.java",
+      "sha256": "4977ba698373a42ddadfbc5de00daf67d38a4daa2062103aa038ba84318f57c4",
+      "bytes": 1393,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\behavior\\TE_Behavior_Active_Trinary.java",
+      "sha256": "ba735871ca3e15360a39824c1c1eca4d4e79ada8ec08e1f90129dd8c5533af34",
+      "bytes": 1816,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityMotorElectric.java",
+      "sha256": "59bf671a3ae48806ed6a31d3bf9febd4be17d68851eb2626376cf074701aa8a9",
+      "bytes": 4365,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityMotorFlux.java",
+      "sha256": "15f47e6aec9ba27cf834ab9d1531ecf45c3817cd5270ea8a93d17389554cee76",
+      "bytes": 4269,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityDynamoElectric.java",
+      "sha256": "eac85bb43a7f9e54f295eb4ffcde1682413c60643b1d73948a3c23bec58ca9ef",
+      "bytes": 3125,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityDynamoFlux.java",
+      "sha256": "5e93977844849505b905d776ecb9e42d60e59df3bf257edd393f84f221e2d9f0",
+      "bytes": 3174,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "bytes": 791265,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+      "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8",
+      "bytes": 51085,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "bytes": 153449,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\TD.java",
+      "sha256": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea",
+      "bytes": 53981,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\code\\TagData.java",
+      "sha256": "afa72881ee6c421c094ce27e3cef2701374257cb1dd2f099293cceb3e91b4a64",
+      "bytes": 3636,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\util\\UT.java",
+      "sha256": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709",
+      "bytes": 213872,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\resources\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577",
+      "bytes": 694,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\resources\\COPYING.LESSER",
+      "sha256": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118",
+      "bytes": 7652,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\resources\\LICENSE.assets",
+      "sha256": "e2aaec4ccc681649063335b6c4991fd52570d15f45bd0af97c1cee3cb0375299",
+      "bytes": 500,
+      "license": "CC0-1.0 assets, unless otherwise stated"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\resources\\COPYING.assets",
+      "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499",
+      "bytes": 7048,
+      "license": "CC0-1.0 assets, unless otherwise stated"
+    },
+    {
+      "path": "C:\\Dev\\GregTech_zh_cn.lang",
+      "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0",
+      "bytes": 7375784,
+      "license": "User-provided original translation patch; verbatim values only"
+    }
+  ],
+  "comparison_files": [
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\energy\\TileEntityBase11Motor.java",
+      "sha256": "ac9a048368786133d42a96a59e18d54c93b5e26fa86088d5c849c802deceba26",
+      "bytes": 5242,
+      "license": "Original notices retained, LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\behavior\\TE_Behavior_Energy_Converter.java",
+      "sha256": "afd8078303cd1be0341cdcf0400a1eb37d5fa2086680009360e8434028773085",
+      "bytes": 9461,
+      "license": "Original notices retained, LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityMotorElectric.java",
+      "sha256": "d1e096dca1a71125b0ff419674e3768f833000e8d194de3586dbee38d0125f84",
+      "bytes": 4542,
+      "license": "Original notices retained, LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityDynamoElectric.java",
+      "sha256": "2d9e7782a6d36e317d7986faa89001e875a11a6f8b4e5bb365d281d71289c473",
+      "bytes": 3314,
+      "license": "Original notices retained, LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\LICENSE.assets",
+      "sha256": "e2aaec4ccc681649063335b6c4991fd52570d15f45bd0af97c1cee3cb0375299",
+      "bytes": 500,
+      "license": "CC0-1.0 asset license evidence"
+    }
+  ],
+  "existing_active_textures": [
+    {
+      "port": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_electric\\overlay_active_ls\\front.png",
+        "sha256": "91aeaf0401e6262f3c4051895e56f439f0cc3edd35108a569ad67e032a9c1a6c",
+        "bytes": 908,
+        "license": "CC0-1.0 assets"
+      },
+      "source": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\motors\\rotation_electric\\overlay_active_ls\\front.png",
+        "sha256": "91aeaf0401e6262f3c4051895e56f439f0cc3edd35108a569ad67e032a9c1a6c",
+        "bytes": 908,
+        "license": "CC0-1.0 assets"
+      },
+      "asset_origin": "_w snapshot; canonical snapshot does not contain this selected active PNG",
+      "byte_identical": true,
+      "port_animation": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_electric\\overlay_active_ls\\front.png.mcmeta",
+        "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138",
+        "bytes": 46,
+        "license": "CC0-1.0 assets"
+      },
+      "source_animation": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\motors\\rotation_electric\\overlay_active_ls\\front.png.mcmeta",
+        "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138",
+        "bytes": 46,
+        "license": "CC0-1.0 assets"
+      }
+    },
+    {
+      "port": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_electric\\overlay_active_ls\\back.png",
+        "sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+        "bytes": 141,
+        "license": "CC0-1.0 assets"
+      },
+      "source": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\motors\\rotation_electric\\overlay_active_ls\\back.png",
+        "sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+        "bytes": 141,
+        "license": "CC0-1.0 assets"
+      },
+      "asset_origin": "_w snapshot; canonical snapshot does not contain this selected active PNG",
+      "byte_identical": true
+    },
+    {
+      "port": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_electric\\overlay_active_ls\\side.png",
+        "sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+        "bytes": 141,
+        "license": "CC0-1.0 assets"
+      },
+      "source": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\motors\\rotation_electric\\overlay_active_ls\\side.png",
+        "sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+        "bytes": 141,
+        "license": "CC0-1.0 assets"
+      },
+      "asset_origin": "_w snapshot; canonical snapshot does not contain this selected active PNG",
+      "byte_identical": true
+    },
+    {
+      "port": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_electric\\overlay_active_lf\\front.png",
+        "sha256": "91aeaf0401e6262f3c4051895e56f439f0cc3edd35108a569ad67e032a9c1a6c",
+        "bytes": 908,
+        "license": "CC0-1.0 assets"
+      },
+      "source": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\motors\\rotation_electric\\overlay_active_lf\\front.png",
+        "sha256": "91aeaf0401e6262f3c4051895e56f439f0cc3edd35108a569ad67e032a9c1a6c",
+        "bytes": 908,
+        "license": "CC0-1.0 assets"
+      },
+      "asset_origin": "_w snapshot; canonical snapshot does not contain this selected active PNG",
+      "byte_identical": true,
+      "port_animation": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_electric\\overlay_active_lf\\front.png.mcmeta",
+        "sha256": "01a4ea56f3505704d42cfa5437d69d4dab7815a3ffbec1761cc4c66e270bfdf4",
+        "bytes": 46,
+        "license": "CC0-1.0 assets"
+      },
+      "source_animation": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\motors\\rotation_electric\\overlay_active_lf\\front.png.mcmeta",
+        "sha256": "01a4ea56f3505704d42cfa5437d69d4dab7815a3ffbec1761cc4c66e270bfdf4",
+        "bytes": 46,
+        "license": "CC0-1.0 assets"
+      }
+    },
+    {
+      "port": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_electric\\overlay_active_lf\\back.png",
+        "sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+        "bytes": 141,
+        "license": "CC0-1.0 assets"
+      },
+      "source": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\motors\\rotation_electric\\overlay_active_lf\\back.png",
+        "sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+        "bytes": 141,
+        "license": "CC0-1.0 assets"
+      },
+      "asset_origin": "_w snapshot; canonical snapshot does not contain this selected active PNG",
+      "byte_identical": true
+    },
+    {
+      "port": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_electric\\overlay_active_lf\\side.png",
+        "sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+        "bytes": 141,
+        "license": "CC0-1.0 assets"
+      },
+      "source": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\motors\\rotation_electric\\overlay_active_lf\\side.png",
+        "sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+        "bytes": 141,
+        "license": "CC0-1.0 assets"
+      },
+      "asset_origin": "_w snapshot; canonical snapshot does not contain this selected active PNG",
+      "byte_identical": true
+    },
+    {
+      "port": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_electric\\overlay_active_rs\\front.png",
+        "sha256": "e80333c7c21264823fa005235da55f7aabde38d6c50f922e51f5df51c446d569",
+        "bytes": 899,
+        "license": "CC0-1.0 assets"
+      },
+      "source": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\motors\\rotation_electric\\overlay_active_rs\\front.png",
+        "sha256": "e80333c7c21264823fa005235da55f7aabde38d6c50f922e51f5df51c446d569",
+        "bytes": 899,
+        "license": "CC0-1.0 assets"
+      },
+      "asset_origin": "_w snapshot; canonical snapshot does not contain this selected active PNG",
+      "byte_identical": true,
+      "port_animation": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_electric\\overlay_active_rs\\front.png.mcmeta",
+        "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138",
+        "bytes": 46,
+        "license": "CC0-1.0 assets"
+      },
+      "source_animation": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\motors\\rotation_electric\\overlay_active_rs\\front.png.mcmeta",
+        "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138",
+        "bytes": 46,
+        "license": "CC0-1.0 assets"
+      }
+    },
+    {
+      "port": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_electric\\overlay_active_rs\\back.png",
+        "sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+        "bytes": 141,
+        "license": "CC0-1.0 assets"
+      },
+      "source": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\motors\\rotation_electric\\overlay_active_rs\\back.png",
+        "sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+        "bytes": 141,
+        "license": "CC0-1.0 assets"
+      },
+      "asset_origin": "_w snapshot; canonical snapshot does not contain this selected active PNG",
+      "byte_identical": true
+    },
+    {
+      "port": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_electric\\overlay_active_rs\\side.png",
+        "sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+        "bytes": 141,
+        "license": "CC0-1.0 assets"
+      },
+      "source": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\motors\\rotation_electric\\overlay_active_rs\\side.png",
+        "sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+        "bytes": 141,
+        "license": "CC0-1.0 assets"
+      },
+      "asset_origin": "_w snapshot; canonical snapshot does not contain this selected active PNG",
+      "byte_identical": true
+    },
+    {
+      "port": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_electric\\overlay_active_rf\\front.png",
+        "sha256": "e80333c7c21264823fa005235da55f7aabde38d6c50f922e51f5df51c446d569",
+        "bytes": 899,
+        "license": "CC0-1.0 assets"
+      },
+      "source": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\motors\\rotation_electric\\overlay_active_rf\\front.png",
+        "sha256": "e80333c7c21264823fa005235da55f7aabde38d6c50f922e51f5df51c446d569",
+        "bytes": 899,
+        "license": "CC0-1.0 assets"
+      },
+      "asset_origin": "_w snapshot; canonical snapshot does not contain this selected active PNG",
+      "byte_identical": true,
+      "port_animation": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_electric\\overlay_active_rf\\front.png.mcmeta",
+        "sha256": "01a4ea56f3505704d42cfa5437d69d4dab7815a3ffbec1761cc4c66e270bfdf4",
+        "bytes": 46,
+        "license": "CC0-1.0 assets"
+      },
+      "source_animation": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\motors\\rotation_electric\\overlay_active_rf\\front.png.mcmeta",
+        "sha256": "01a4ea56f3505704d42cfa5437d69d4dab7815a3ffbec1761cc4c66e270bfdf4",
+        "bytes": 46,
+        "license": "CC0-1.0 assets"
+      }
+    },
+    {
+      "port": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_electric\\overlay_active_rf\\back.png",
+        "sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+        "bytes": 141,
+        "license": "CC0-1.0 assets"
+      },
+      "source": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\motors\\rotation_electric\\overlay_active_rf\\back.png",
+        "sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+        "bytes": 141,
+        "license": "CC0-1.0 assets"
+      },
+      "asset_origin": "_w snapshot; canonical snapshot does not contain this selected active PNG",
+      "byte_identical": true
+    },
+    {
+      "port": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_electric\\overlay_active_rf\\side.png",
+        "sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+        "bytes": 141,
+        "license": "CC0-1.0 assets"
+      },
+      "source": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\motors\\rotation_electric\\overlay_active_rf\\side.png",
+        "sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+        "bytes": 141,
+        "license": "CC0-1.0 assets"
+      },
+      "asset_origin": "_w snapshot; canonical snapshot does not contain this selected active PNG",
+      "byte_identical": true
+    },
+    {
+      "port": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\dynamos\\electric_rotation\\overlay_active\\front.png",
+        "sha256": "c3325fa4e7a6d1e479212c6406fc28f4a78c227e8ffbe9d1f051e2ea36acbd56",
+        "bytes": 356,
+        "license": "CC0-1.0 assets"
+      },
+      "source": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\dynamos\\electric_rotation\\overlay_active\\front.png",
+        "sha256": "c3325fa4e7a6d1e479212c6406fc28f4a78c227e8ffbe9d1f051e2ea36acbd56",
+        "bytes": 356,
+        "license": "CC0-1.0 assets"
+      },
+      "asset_origin": "_w snapshot; canonical snapshot does not contain this selected active PNG",
+      "byte_identical": true
+    },
+    {
+      "port": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\dynamos\\electric_rotation\\overlay_active\\back.png",
+        "sha256": "4da8c35319cd5b640d5d2363df857edcef1c58a26545a6f1a689f5d0b8d196cb",
+        "bytes": 400,
+        "license": "CC0-1.0 assets"
+      },
+      "source": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\dynamos\\electric_rotation\\overlay_active\\back.png",
+        "sha256": "4da8c35319cd5b640d5d2363df857edcef1c58a26545a6f1a689f5d0b8d196cb",
+        "bytes": 400,
+        "license": "CC0-1.0 assets"
+      },
+      "asset_origin": "_w snapshot; canonical snapshot does not contain this selected active PNG",
+      "byte_identical": true
+    },
+    {
+      "port": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\dynamos\\electric_rotation\\overlay_active\\side.png",
+        "sha256": "6569a89537bc53d51e88c51edc435b8b8cf66d1bc2a040cec6b36d2c0074b736",
+        "bytes": 354,
+        "license": "CC0-1.0 assets"
+      },
+      "source": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\dynamos\\electric_rotation\\overlay_active\\side.png",
+        "sha256": "6569a89537bc53d51e88c51edc435b8b8cf66d1bc2a040cec6b36d2c0074b736",
+        "bytes": 354,
+        "license": "CC0-1.0 assets"
+      },
+      "asset_origin": "_w snapshot; canonical snapshot does not contain this selected active PNG",
+      "byte_identical": true
+    },
+    {
+      "port": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_flux\\overlay_active_ls\\front.png",
+        "sha256": "11a13633f7c8b4e659c8365aa47ae1922e50461acc5fca0878383d9a9a0d1dd2",
+        "bytes": 775,
+        "license": "CC0-1.0 assets"
+      },
+      "source": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\motors\\rotation_flux\\overlay_active_ls\\front.png",
+        "sha256": "11a13633f7c8b4e659c8365aa47ae1922e50461acc5fca0878383d9a9a0d1dd2",
+        "bytes": 775,
+        "license": "CC0-1.0 assets"
+      },
+      "asset_origin": "_w snapshot; canonical snapshot does not contain this selected active PNG",
+      "byte_identical": true,
+      "port_animation": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_flux\\overlay_active_ls\\front.png.mcmeta",
+        "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138",
+        "bytes": 46,
+        "license": "CC0-1.0 assets"
+      },
+      "source_animation": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\motors\\rotation_flux\\overlay_active_ls\\front.png.mcmeta",
+        "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138",
+        "bytes": 46,
+        "license": "CC0-1.0 assets"
+      }
+    },
+    {
+      "port": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_flux\\overlay_active_ls\\back.png",
+        "sha256": "ea63a03b226d86607f2fcf091d36d3118b2c88d5f6f43227319639eb3abc469b",
+        "bytes": 265,
+        "license": "CC0-1.0 assets"
+      },
+      "source": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\motors\\rotation_flux\\overlay_active_ls\\back.png",
+        "sha256": "ea63a03b226d86607f2fcf091d36d3118b2c88d5f6f43227319639eb3abc469b",
+        "bytes": 265,
+        "license": "CC0-1.0 assets"
+      },
+      "asset_origin": "_w snapshot; canonical snapshot does not contain this selected active PNG",
+      "byte_identical": true
+    },
+    {
+      "port": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_flux\\overlay_active_ls\\side.png",
+        "sha256": "ea63a03b226d86607f2fcf091d36d3118b2c88d5f6f43227319639eb3abc469b",
+        "bytes": 265,
+        "license": "CC0-1.0 assets"
+      },
+      "source": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\motors\\rotation_flux\\overlay_active_ls\\side.png",
+        "sha256": "ea63a03b226d86607f2fcf091d36d3118b2c88d5f6f43227319639eb3abc469b",
+        "bytes": 265,
+        "license": "CC0-1.0 assets"
+      },
+      "asset_origin": "_w snapshot; canonical snapshot does not contain this selected active PNG",
+      "byte_identical": true
+    },
+    {
+      "port": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_flux\\overlay_active_lf\\front.png",
+        "sha256": "617c09bb7d3a2380b6a39897ec8055f7119692338c17dbf9cab7ce2aa5e82f64",
+        "bytes": 775,
+        "license": "CC0-1.0 assets"
+      },
+      "source": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\motors\\rotation_flux\\overlay_active_lf\\front.png",
+        "sha256": "617c09bb7d3a2380b6a39897ec8055f7119692338c17dbf9cab7ce2aa5e82f64",
+        "bytes": 775,
+        "license": "CC0-1.0 assets"
+      },
+      "asset_origin": "_w snapshot; canonical snapshot does not contain this selected active PNG",
+      "byte_identical": true,
+      "port_animation": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_flux\\overlay_active_lf\\front.png.mcmeta",
+        "sha256": "01a4ea56f3505704d42cfa5437d69d4dab7815a3ffbec1761cc4c66e270bfdf4",
+        "bytes": 46,
+        "license": "CC0-1.0 assets"
+      },
+      "source_animation": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\motors\\rotation_flux\\overlay_active_lf\\front.png.mcmeta",
+        "sha256": "01a4ea56f3505704d42cfa5437d69d4dab7815a3ffbec1761cc4c66e270bfdf4",
+        "bytes": 46,
+        "license": "CC0-1.0 assets"
+      }
+    },
+    {
+      "port": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_flux\\overlay_active_lf\\back.png",
+        "sha256": "ea63a03b226d86607f2fcf091d36d3118b2c88d5f6f43227319639eb3abc469b",
+        "bytes": 265,
+        "license": "CC0-1.0 assets"
+      },
+      "source": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\motors\\rotation_flux\\overlay_active_lf\\back.png",
+        "sha256": "ea63a03b226d86607f2fcf091d36d3118b2c88d5f6f43227319639eb3abc469b",
+        "bytes": 265,
+        "license": "CC0-1.0 assets"
+      },
+      "asset_origin": "_w snapshot; canonical snapshot does not contain this selected active PNG",
+      "byte_identical": true
+    },
+    {
+      "port": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_flux\\overlay_active_lf\\side.png",
+        "sha256": "ea63a03b226d86607f2fcf091d36d3118b2c88d5f6f43227319639eb3abc469b",
+        "bytes": 265,
+        "license": "CC0-1.0 assets"
+      },
+      "source": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\motors\\rotation_flux\\overlay_active_lf\\side.png",
+        "sha256": "ea63a03b226d86607f2fcf091d36d3118b2c88d5f6f43227319639eb3abc469b",
+        "bytes": 265,
+        "license": "CC0-1.0 assets"
+      },
+      "asset_origin": "_w snapshot; canonical snapshot does not contain this selected active PNG",
+      "byte_identical": true
+    },
+    {
+      "port": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_flux\\overlay_active_rs\\front.png",
+        "sha256": "a3abded54e77b997b3ed387fae4980c6dbb5f239148cb913075c447062ad7cd6",
+        "bytes": 766,
+        "license": "CC0-1.0 assets"
+      },
+      "source": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\motors\\rotation_flux\\overlay_active_rs\\front.png",
+        "sha256": "a3abded54e77b997b3ed387fae4980c6dbb5f239148cb913075c447062ad7cd6",
+        "bytes": 766,
+        "license": "CC0-1.0 assets"
+      },
+      "asset_origin": "_w snapshot; canonical snapshot does not contain this selected active PNG",
+      "byte_identical": true,
+      "port_animation": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_flux\\overlay_active_rs\\front.png.mcmeta",
+        "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138",
+        "bytes": 46,
+        "license": "CC0-1.0 assets"
+      },
+      "source_animation": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\motors\\rotation_flux\\overlay_active_rs\\front.png.mcmeta",
+        "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138",
+        "bytes": 46,
+        "license": "CC0-1.0 assets"
+      }
+    },
+    {
+      "port": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_flux\\overlay_active_rs\\back.png",
+        "sha256": "ea63a03b226d86607f2fcf091d36d3118b2c88d5f6f43227319639eb3abc469b",
+        "bytes": 265,
+        "license": "CC0-1.0 assets"
+      },
+      "source": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\motors\\rotation_flux\\overlay_active_rs\\back.png",
+        "sha256": "ea63a03b226d86607f2fcf091d36d3118b2c88d5f6f43227319639eb3abc469b",
+        "bytes": 265,
+        "license": "CC0-1.0 assets"
+      },
+      "asset_origin": "_w snapshot; canonical snapshot does not contain this selected active PNG",
+      "byte_identical": true
+    },
+    {
+      "port": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_flux\\overlay_active_rs\\side.png",
+        "sha256": "ea63a03b226d86607f2fcf091d36d3118b2c88d5f6f43227319639eb3abc469b",
+        "bytes": 265,
+        "license": "CC0-1.0 assets"
+      },
+      "source": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\motors\\rotation_flux\\overlay_active_rs\\side.png",
+        "sha256": "ea63a03b226d86607f2fcf091d36d3118b2c88d5f6f43227319639eb3abc469b",
+        "bytes": 265,
+        "license": "CC0-1.0 assets"
+      },
+      "asset_origin": "_w snapshot; canonical snapshot does not contain this selected active PNG",
+      "byte_identical": true
+    },
+    {
+      "port": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_flux\\overlay_active_rf\\front.png",
+        "sha256": "65f58e5e0b6d277fe74f8cad906e574a1fcf9401aba38d30e14d249d884bae67",
+        "bytes": 766,
+        "license": "CC0-1.0 assets"
+      },
+      "source": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\motors\\rotation_flux\\overlay_active_rf\\front.png",
+        "sha256": "65f58e5e0b6d277fe74f8cad906e574a1fcf9401aba38d30e14d249d884bae67",
+        "bytes": 766,
+        "license": "CC0-1.0 assets"
+      },
+      "asset_origin": "_w snapshot; canonical snapshot does not contain this selected active PNG",
+      "byte_identical": true,
+      "port_animation": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_flux\\overlay_active_rf\\front.png.mcmeta",
+        "sha256": "01a4ea56f3505704d42cfa5437d69d4dab7815a3ffbec1761cc4c66e270bfdf4",
+        "bytes": 46,
+        "license": "CC0-1.0 assets"
+      },
+      "source_animation": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\motors\\rotation_flux\\overlay_active_rf\\front.png.mcmeta",
+        "sha256": "01a4ea56f3505704d42cfa5437d69d4dab7815a3ffbec1761cc4c66e270bfdf4",
+        "bytes": 46,
+        "license": "CC0-1.0 assets"
+      }
+    },
+    {
+      "port": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_flux\\overlay_active_rf\\back.png",
+        "sha256": "ea63a03b226d86607f2fcf091d36d3118b2c88d5f6f43227319639eb3abc469b",
+        "bytes": 265,
+        "license": "CC0-1.0 assets"
+      },
+      "source": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\motors\\rotation_flux\\overlay_active_rf\\back.png",
+        "sha256": "ea63a03b226d86607f2fcf091d36d3118b2c88d5f6f43227319639eb3abc469b",
+        "bytes": 265,
+        "license": "CC0-1.0 assets"
+      },
+      "asset_origin": "_w snapshot; canonical snapshot does not contain this selected active PNG",
+      "byte_identical": true
+    },
+    {
+      "port": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_flux\\overlay_active_rf\\side.png",
+        "sha256": "ea63a03b226d86607f2fcf091d36d3118b2c88d5f6f43227319639eb3abc469b",
+        "bytes": 265,
+        "license": "CC0-1.0 assets"
+      },
+      "source": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\motors\\rotation_flux\\overlay_active_rf\\side.png",
+        "sha256": "ea63a03b226d86607f2fcf091d36d3118b2c88d5f6f43227319639eb3abc469b",
+        "bytes": 265,
+        "license": "CC0-1.0 assets"
+      },
+      "asset_origin": "_w snapshot; canonical snapshot does not contain this selected active PNG",
+      "byte_identical": true
+    },
+    {
+      "port": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\dynamos\\flux_rotation\\overlay_active\\front.png",
+        "sha256": "924f1db7ac9163f972c97388986eef35e01672eb41ab5ecc3200d092bb477032",
+        "bytes": 273,
+        "license": "CC0-1.0 assets"
+      },
+      "source": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\dynamos\\flux_rotation\\overlay_active\\front.png",
+        "sha256": "924f1db7ac9163f972c97388986eef35e01672eb41ab5ecc3200d092bb477032",
+        "bytes": 273,
+        "license": "CC0-1.0 assets"
+      },
+      "asset_origin": "_w snapshot; canonical snapshot does not contain this selected active PNG",
+      "byte_identical": true
+    },
+    {
+      "port": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\dynamos\\flux_rotation\\overlay_active\\back.png",
+        "sha256": "4da8c35319cd5b640d5d2363df857edcef1c58a26545a6f1a689f5d0b8d196cb",
+        "bytes": 400,
+        "license": "CC0-1.0 assets"
+      },
+      "source": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\dynamos\\flux_rotation\\overlay_active\\back.png",
+        "sha256": "4da8c35319cd5b640d5d2363df857edcef1c58a26545a6f1a689f5d0b8d196cb",
+        "bytes": 400,
+        "license": "CC0-1.0 assets"
+      },
+      "asset_origin": "_w snapshot; canonical snapshot does not contain this selected active PNG",
+      "byte_identical": true
+    },
+    {
+      "port": {
+        "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\dynamos\\flux_rotation\\overlay_active\\side.png",
+        "sha256": "31ccc7d6d08c1a978af3c6fe288b2e9a0a2282ab7d5d0a687661743e7561d770",
+        "bytes": 345,
+        "license": "CC0-1.0 assets"
+      },
+      "source": {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\dynamos\\flux_rotation\\overlay_active\\side.png",
+        "sha256": "31ccc7d6d08c1a978af3c6fe288b2e9a0a2282ab7d5d0a687661743e7561d770",
+        "bytes": 345,
+        "license": "CC0-1.0 assets"
+      },
+      "asset_origin": "_w snapshot; canonical snapshot does not contain this selected active PNG",
+      "byte_identical": true
+    }
+  ],
+  "adopted_rules": [
+    "Source Stats whole-packet injection, root below-min swallowing and pure simulation; two-input storage",
+    "Source registered WASTE_ENERGY=T, floor output, mode ceiling, fixed ceil waste, input sign and reverse factor",
+    "EU/RF input output cap, RU input overload, first two chunk-load suppression, source overload tier/prevention",
+    "Seven motor and seven dynamo exact ratings, input/output faces, efficiency and RF hints",
+    "Source gt.mode/gt.reversed/gt.visual/gt.can.energy/gt.active.energy fields; native gt.buffer/gt.converter_stopped retained",
+    "Source 64-tick trinary activity, active left/right fast/slow overlays, upward walk rotation, Monkey Wrench and magnifier status"
+  ],
+  "comparison_decision": "Canonical 1.7.10 source remains authority. _w keeps the same converter arithmetic and motor API; its newer BlockEntity/NBT framework is not imported into the two native boundaries. Previous three-snapshot material/registry decisions remain in the linked source receipts.",
+  "material_data": {
+    "record": {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\machine\\OriginalMachineMaterialData.java",
+      "sha256": "231205d64d43c4c5f0e2086a50979eead8c621d79631c5f7ab55c4ec974f9bd9",
+      "bytes": 164155,
+      "license": "Adapted source material records, LGPL-3.0-or-later"
+    },
+    "unchanged_from_baseline": true,
+    "fixed_records": 439,
+    "tier_records": 252,
+    "hopper_records": 120,
+    "selected14_records": {
+      "electric_motor_lv": "ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.SteelGalvanized, 11891880000L), part(ImportedMaterialData.IronMagnetic, 648648000L), part(ImportedMaterialData.Cu, 648648000L)), 1, \"GT6 Loader_MultiTileEntities 10021 known CR.REV inputs\"));",
+      "electric_motor_mv": "ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Al, 11891880000L), part(ImportedMaterialData.SteelMagnetic, 648648000L), part(ImportedMaterialData.Cu, 1297296000L)), 1, \"GT6 Loader_MultiTileEntities 10022 known CR.REV inputs\"));",
+      "electric_motor_hv": "ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.StainlessSteel, 11891880000L), part(ImportedMaterialData.SteelMagnetic, 648648000L), part(ImportedMaterialData.AnnealedCopper, 2594592000L)), 1, \"GT6 Loader_MultiTileEntities 10023 known CR.REV inputs\"));",
+      "electric_motor_ev": "ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Cr, 11891880000L), part(ImportedMaterialData.NeodymiumMagnetic, 648648000L), part(ImportedMaterialData.AnnealedCopper, 5189184000L)), 1, \"GT6 Loader_MultiTileEntities 10024 known CR.REV inputs\"));",
+      "electric_motor_iv": "ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ti, 11891880000L), part(ImportedMaterialData.NeodymiumMagnetic, 648648000L), part(ImportedMaterialData.AnnealedCopper, 10378368000L)), 1, \"GT6 Loader_MultiTileEntities 10025 known CR.REV inputs\"));",
+      "electric_dynamo_lv": "ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.SteelGalvanized, 11891880000L), part(ImportedMaterialData.Cu, 648648000L), part(ImportedMaterialData.IronMagnetic, 648648000L)), 1, \"GT6 Loader_MultiTileEntities 10111 known CR.REV inputs\"));",
+      "electric_dynamo_mv": "ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Al, 11891880000L), part(ImportedMaterialData.Cu, 1297296000L), part(ImportedMaterialData.SteelMagnetic, 648648000L)), 1, \"GT6 Loader_MultiTileEntities 10112 known CR.REV inputs\"));",
+      "electric_dynamo_hv": "ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.StainlessSteel, 11891880000L), part(ImportedMaterialData.AnnealedCopper, 2594592000L), part(ImportedMaterialData.SteelMagnetic, 648648000L)), 1, \"GT6 Loader_MultiTileEntities 10113 known CR.REV inputs\"));",
+      "electric_dynamo_ev": "ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Cr, 11891880000L), part(ImportedMaterialData.AnnealedCopper, 5189184000L), part(ImportedMaterialData.NeodymiumMagnetic, 648648000L)), 1, \"GT6 Loader_MultiTileEntities 10114 known CR.REV inputs\"));",
+      "electric_dynamo_iv": "ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Ti, 11891880000L), part(ImportedMaterialData.AnnealedCopper, 10378368000L), part(ImportedMaterialData.NeodymiumMagnetic, 648648000L)), 1, \"GT6 Loader_MultiTileEntities 10115 known CR.REV inputs\"));",
+      "flux_motor_lv": "ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Pb, 5189184000L), part(ImportedMaterialData.SteelGalvanized, 11891880000L), part(ImportedMaterialData.IronMagnetic, 648648000L), part(ImportedMaterialData.Cu, 648648000L)), 1, \"GT6 Loader_MultiTileEntities 11021 known CR.REV inputs\"));",
+      "flux_motor_mv": "ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Invar, 5189184000L), part(ImportedMaterialData.Al, 11891880000L), part(ImportedMaterialData.SteelMagnetic, 648648000L), part(ImportedMaterialData.Cu, 1297296000L)), 1, \"GT6 Loader_MultiTileEntities 11022 known CR.REV inputs\"));",
+      "flux_dynamo_lv": "ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Pb, 5189184000L), part(ImportedMaterialData.SteelGalvanized, 11891880000L), part(ImportedMaterialData.Cu, 648648000L), part(ImportedMaterialData.IronMagnetic, 648648000L)), 1, \"GT6 Loader_MultiTileEntities 11111 known CR.REV inputs\"));",
+      "flux_dynamo_mv": "ReversibleCraftingData.perItem(List.of(part(ImportedMaterialData.Invar, 5189184000L), part(ImportedMaterialData.Al, 11891880000L), part(ImportedMaterialData.Cu, 1297296000L), part(ImportedMaterialData.SteelMagnetic, 648648000L)), 1, \"GT6 Loader_MultiTileEntities 11112 known CR.REV inputs\"));"
+    },
+    "policy": "Existing precise automatic CR.REV known components; one advanced material section. No guessed circuit, glue or missing XV predecessor quantity."
+  },
+  "language_import": {
+    "keys": [
+      "gt.lang.accepts.redstoneflux.lossless",
+      "gt.lang.efficiency",
+      "gt.lang.emits.redstoneflux.lossless",
+      "gt.lang.energy.input",
+      "gt.lang.energy.output",
+      "gt.lang.face.any.but.front",
+      "gt.lang.face.back",
+      "gt.lang.face.front",
+      "gt.lang.tool.name.wrench",
+      "gt.lang.use.monkey.wrench.to.toggle.direction",
+      "gt.lang.use.x.to.toggle.facing.post",
+      "gt.lang.use.x.to.toggle.facing.pre",
+      "gt.td.short.energy.electricity",
+      "gt.td.short.energy.kinetic_rotation",
+      "gt.td.short.energy.redstone_flux",
+      "gt.tooltip.energybattery.1",
+      "gt.tooltip.energybattery.2",
+      "gt.tooltip.energybattery.3"
+    ],
+    "aliases": {},
+    "changes": {
+      "en_us": {
+        "gt.lang.accepts.redstoneflux.lossless": {
+          "before": null,
+          "after": "Can accept Redstone Flux (RF) losslessly"
+        },
+        "gt.lang.emits.redstoneflux.lossless": {
+          "before": null,
+          "after": "Can emit Redstone Flux (RF) losslessly"
+        },
+        "gt.td.short.energy.redstone_flux": {
+          "before": null,
+          "after": "RF"
+        }
+      },
+      "zh_cn": {}
+    },
+    "missing_chinese": [],
+    "source_files": [
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+        "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+        "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\RM.java",
+        "sha256": "c7cb07faef0235ace4bb26656fddaabfa10da6aa4a2689a7f4cdcaef10d366e6"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\TD.java",
+        "sha256": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\..\\code\\TagData.java",
+        "sha256": "afa72881ee6c421c094ce27e3cef2701374257cb1dd2f099293cceb3e91b4a64"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\energy\\TileEntityBase10EnergyBatBox.java",
+        "sha256": "21ee1d11820ce91c0f693d4bf7684503ed29d8b8fa2cf7b434ebbd2143338fd7"
+      },
+      {
+        "path": "C:\\Dev\\GregTech_zh_cn.lang",
+        "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0"
+      }
+    ],
+    "license": "Original LH/CS/RM/TD/TagData: LGPL-3.0-or-later; Chinese strings copied verbatim from the user-provided patch."
+  },
+  "generated_model_audit": {
+    "devices": 14,
+    "motor_variants_per_device": 72,
+    "dynamo_variants_per_device": 18,
+    "files": [
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_lv_ls.json",
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_lv_lf.json",
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_lv_rs.json",
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_lv_rf.json",
+      "src\\main\\resources\\assets\\gregtech\\blockstates\\electric_motor_lv.json",
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_mv_ls.json",
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_mv_lf.json",
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_mv_rs.json",
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_mv_rf.json",
+      "src\\main\\resources\\assets\\gregtech\\blockstates\\electric_motor_mv.json",
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_hv_ls.json",
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_hv_lf.json",
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_hv_rs.json",
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_hv_rf.json",
+      "src\\main\\resources\\assets\\gregtech\\blockstates\\electric_motor_hv.json",
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_ev_ls.json",
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_ev_lf.json",
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_ev_rs.json",
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_ev_rf.json",
+      "src\\main\\resources\\assets\\gregtech\\blockstates\\electric_motor_ev.json",
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_iv_ls.json",
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_iv_lf.json",
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_iv_rs.json",
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_iv_rf.json",
+      "src\\main\\resources\\assets\\gregtech\\blockstates\\electric_motor_iv.json",
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_dynamo_lv_active.json",
+      "src\\main\\resources\\assets\\gregtech\\blockstates\\electric_dynamo_lv.json",
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_dynamo_mv_active.json",
+      "src\\main\\resources\\assets\\gregtech\\blockstates\\electric_dynamo_mv.json",
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_dynamo_hv_active.json",
+      "src\\main\\resources\\assets\\gregtech\\blockstates\\electric_dynamo_hv.json",
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_dynamo_ev_active.json",
+      "src\\main\\resources\\assets\\gregtech\\blockstates\\electric_dynamo_ev.json",
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_dynamo_iv_active.json",
+      "src\\main\\resources\\assets\\gregtech\\blockstates\\electric_dynamo_iv.json",
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_motor_lv_ls.json",
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_motor_lv_lf.json",
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_motor_lv_rs.json",
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_motor_lv_rf.json",
+      "src\\main\\resources\\assets\\gregtech\\blockstates\\flux_motor_lv.json",
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_motor_mv_ls.json",
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_motor_mv_lf.json",
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_motor_mv_rs.json",
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_motor_mv_rf.json",
+      "src\\main\\resources\\assets\\gregtech\\blockstates\\flux_motor_mv.json",
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_dynamo_lv_active.json",
+      "src\\main\\resources\\assets\\gregtech\\blockstates\\flux_dynamo_lv.json",
+      "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_dynamo_mv_active.json",
+      "src\\main\\resources\\assets\\gregtech\\blockstates\\flux_dynamo_mv.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_lv_ls.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_lv_lf.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_lv_rs.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_lv_rf.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\electric_motor_lv.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_mv_ls.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_mv_lf.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_mv_rs.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_mv_rf.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\electric_motor_mv.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_hv_ls.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_hv_lf.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_hv_rs.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_hv_rf.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\electric_motor_hv.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_ev_ls.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_ev_lf.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_ev_rs.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_ev_rf.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\electric_motor_ev.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_iv_ls.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_iv_lf.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_iv_rs.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_motor_iv_rf.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\electric_motor_iv.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_dynamo_lv_active.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\electric_dynamo_lv.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_dynamo_mv_active.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\electric_dynamo_mv.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_dynamo_hv_active.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\electric_dynamo_hv.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_dynamo_ev_active.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\electric_dynamo_ev.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_dynamo_iv_active.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\electric_dynamo_iv.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_motor_lv_ls.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_motor_lv_lf.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_motor_lv_rs.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_motor_lv_rf.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\flux_motor_lv.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_motor_mv_ls.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_motor_mv_lf.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_motor_mv_rs.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_motor_mv_rf.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\flux_motor_mv.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_dynamo_lv_active.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\flux_dynamo_lv.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_dynamo_mv_active.json",
+      "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\flux_dynamo_mv.json"
+    ],
+    "existing_shared_texture_sha256": {
+      "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_electric\\overlay_active_ls\\front.png": "91aeaf0401e6262f3c4051895e56f439f0cc3edd35108a569ad67e032a9c1a6c",
+      "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_electric\\overlay_active_ls\\back.png": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+      "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_electric\\overlay_active_ls\\side.png": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+      "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_electric\\overlay_active_lf\\front.png": "91aeaf0401e6262f3c4051895e56f439f0cc3edd35108a569ad67e032a9c1a6c",
+      "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_electric\\overlay_active_lf\\back.png": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+      "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_electric\\overlay_active_lf\\side.png": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+      "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_electric\\overlay_active_rs\\front.png": "e80333c7c21264823fa005235da55f7aabde38d6c50f922e51f5df51c446d569",
+      "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_electric\\overlay_active_rs\\back.png": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+      "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_electric\\overlay_active_rs\\side.png": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+      "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_electric\\overlay_active_rf\\front.png": "e80333c7c21264823fa005235da55f7aabde38d6c50f922e51f5df51c446d569",
+      "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_electric\\overlay_active_rf\\back.png": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+      "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_electric\\overlay_active_rf\\side.png": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+      "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\dynamos\\electric_rotation\\overlay_active\\front.png": "c3325fa4e7a6d1e479212c6406fc28f4a78c227e8ffbe9d1f051e2ea36acbd56",
+      "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\dynamos\\electric_rotation\\overlay_active\\back.png": "4da8c35319cd5b640d5d2363df857edcef1c58a26545a6f1a689f5d0b8d196cb",
+      "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\dynamos\\electric_rotation\\overlay_active\\side.png": "6569a89537bc53d51e88c51edc435b8b8cf66d1bc2a040cec6b36d2c0074b736",
+      "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_flux\\overlay_active_ls\\front.png": "11a13633f7c8b4e659c8365aa47ae1922e50461acc5fca0878383d9a9a0d1dd2",
+      "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_flux\\overlay_active_ls\\back.png": "ea63a03b226d86607f2fcf091d36d3118b2c88d5f6f43227319639eb3abc469b",
+      "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_flux\\overlay_active_ls\\side.png": "ea63a03b226d86607f2fcf091d36d3118b2c88d5f6f43227319639eb3abc469b",
+      "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_flux\\overlay_active_lf\\front.png": "617c09bb7d3a2380b6a39897ec8055f7119692338c17dbf9cab7ce2aa5e82f64",
+      "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_flux\\overlay_active_lf\\back.png": "ea63a03b226d86607f2fcf091d36d3118b2c88d5f6f43227319639eb3abc469b",
+      "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_flux\\overlay_active_lf\\side.png": "ea63a03b226d86607f2fcf091d36d3118b2c88d5f6f43227319639eb3abc469b",
+      "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_flux\\overlay_active_rs\\front.png": "a3abded54e77b997b3ed387fae4980c6dbb5f239148cb913075c447062ad7cd6",
+      "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_flux\\overlay_active_rs\\back.png": "ea63a03b226d86607f2fcf091d36d3118b2c88d5f6f43227319639eb3abc469b",
+      "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_flux\\overlay_active_rs\\side.png": "ea63a03b226d86607f2fcf091d36d3118b2c88d5f6f43227319639eb3abc469b",
+      "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_flux\\overlay_active_rf\\front.png": "65f58e5e0b6d277fe74f8cad906e574a1fcf9401aba38d30e14d249d884bae67",
+      "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_flux\\overlay_active_rf\\back.png": "ea63a03b226d86607f2fcf091d36d3118b2c88d5f6f43227319639eb3abc469b",
+      "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\motors\\rotation_flux\\overlay_active_rf\\side.png": "ea63a03b226d86607f2fcf091d36d3118b2c88d5f6f43227319639eb3abc469b",
+      "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\dynamos\\flux_rotation\\overlay_active\\front.png": "924f1db7ac9163f972c97388986eef35e01672eb41ab5ecc3200d092bb477032",
+      "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\dynamos\\flux_rotation\\overlay_active\\back.png": "4da8c35319cd5b640d5d2363df857edcef1c58a26545a6f1a689f5d0b8d196cb",
+      "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\dynamos\\flux_rotation\\overlay_active\\side.png": "31ccc7d6d08c1a978af3c6fe288b2e9a0a2282ab7d5d0a687661743e7561d770"
+    }
+  },
+  "boundaries": [
+    "Heaters/coolers/magnets/turbines and general harvest/fire/ownership/cover tooltip work remain separate",
+    "Client sound, structural checks, source BREAKING config variant and saved rated overrides still pending",
+    "Native finite chain and installed model checks do not prove full survival, player hovering, historical save compatibility or independent restart"
+  ],
+  "verification": {
+    "core_assertions": 272,
+    "native_main_and_probe_and_fixture_compile": "passed46s",
+    "native_world": {
+      "required_tests_per_platform": 1,
+      "all_dimensions_saved_per_platform": true,
+      "exit_code": 0,
+      "elapsed": "6m24s",
+      "scope": "Deterministic manual native ticks in real isolated worlds; actual mod network and rechargeable item. No complete survival or independent restart claim."
+    },
+    "logs": [
+      {
+        "path": "C:\\Dev\\GregTech6\\work\\rotary-converter-first-compile-20261007.log",
+        "sha256": "f2307afafc3b1b55e84bcb5b17c106444af92318f2a5945e91a1708a2078286d",
+        "bytes": 34823
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\work\\rotary-converter-native-compile-20261007.log",
+        "sha256": "b832503c96760b44f8c94a39fc502100cea16b8f0a5163607ff6601778ffd8fa",
+        "bytes": 34005
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\work\\rotary-converter-native-compile-fixed-20261007.log",
+        "sha256": "729de9c30df5417c9627f093194df7ebc7a9e3fb02d24f2cba25b4ea5899bbad",
+        "bytes": 12606
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\work\\rotary-converter-native-world-20261007.log",
+        "sha256": "2b1e77d927293bc892746f222e1277bbecc20d4bf6c6ada0cc542b729dbc7d7b",
+        "bytes": 282309
+      }
+    ],
+    "ordinary_packages_and_installed_client": "Passed combined d7b7c3d3/3735a567/6c136a60 acceptance; see rotary-converter-delivery-20261007.json",
+    "source_hashes_rechecked": true,
+    "language_chinese_exact18": true,
+    "model_generator_repeat_audit_identical": true,
+    "source_and_asset_references_rechecked_after_startup": 111
+  }
+}

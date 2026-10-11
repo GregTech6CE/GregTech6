@@ -33,4 +33,9 @@ public class LightningRodControllerBlock extends HorizontalDirectionalBlock impl
         if (level.isClientSide || type != com.gregtech.gregtech.registry.GTBlockEntities.LIGHTNING_ROD.get()) return null;
         return (l, p, s, be) -> LightningRodControllerBlockEntity.serverTick(l, p, s, (LightningRodControllerBlockEntity) be);
     }
+
+    @Override public void appendHoverText(net.minecraft.world.item.ItemStack stack,@Nullable net.minecraft.world.level.BlockGetter level,
+            java.util.List<net.minecraft.network.chat.Component> tooltip,net.minecraft.world.item.TooltipFlag flag) {
+        com.gregtech.gregtech.client.UtilityControllerTooltips.lightning(tooltip);
+    }
 }

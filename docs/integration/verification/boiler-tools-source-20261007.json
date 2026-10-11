@@ -1,0 +1,423 @@
+{
+  "date": "2026-10-07",
+  "base_commit": "a0ef996303997adb7df2760446138b821044d962",
+  "authors": "GregTech-6 Team / Gregorius Techneticies",
+  "license": "LGPL-3.0-or-later",
+  "sources": [
+    {
+      "tree": "original",
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeBoiler.java",
+      "sha256": "38d82c11fc57094c9ba8db5c88325b65d847cff40726e084dce87c8b7935ffb6"
+    },
+    {
+      "tree": "original",
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\multiblocks\\TileEntityBase10MultiBlockBase.java",
+      "sha256": "42ec92430ff6af7fb8d192aebfa424cc1af519d40ba2ff53a8e8c6afe8f9e738"
+    },
+    {
+      "tree": "original",
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\multiblocks\\ITileEntityMultiBlockController.java",
+      "sha256": "66203e93bd5b309b442e37d89f707de71c2cf967fc33c217c577dd8c2f7ed5d9"
+    },
+    {
+      "tree": "original",
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\fluid\\FluidTankGT.java",
+      "sha256": "9e9c1500fb947048cc8ddcd4a19f44561d6d1278e2208381936b1ad483b25d7d"
+    },
+    {
+      "tree": "original",
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+      "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8"
+    },
+    {
+      "tree": "original",
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\base\\TileEntityBase01Root.java",
+      "sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95"
+    },
+    {
+      "tree": "original",
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577"
+    },
+    {
+      "tree": "original",
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\COPYING.LESSER",
+      "sha256": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118"
+    },
+    {
+      "tree": "comparison",
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeBoiler.java",
+      "sha256": "7f49636900489ffd3641a59e8873664307962380b9fff8dd97cb0b4a0298d847"
+    },
+    {
+      "tree": "comparison",
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\multiblocks\\TileEntityBase10MultiBlockBase.java",
+      "sha256": "17299983c220fe186f50adeaa3d584cf9e41fa956a072ef7e3fff3a3526df941"
+    },
+    {
+      "tree": "comparison",
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\multiblocks\\ITileEntityMultiBlockController.java",
+      "sha256": "4842381903c6f8405ceac3e0c9106c9fbd59f651881ab05e502e25b0a959013d"
+    },
+    {
+      "tree": "comparison",
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\fluid\\FluidTankGT.java",
+      "sha256": "14e1e8940e0ecda9bf1bb78ff3be552880411ff0b9d36c44999151523f1ac7f9"
+    },
+    {
+      "tree": "comparison",
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\data\\LH.java",
+      "sha256": "2df45cee1047b522593f4f42c70a3acb2c5d8a425399b9a3c83ed022b7115b0f"
+    },
+    {
+      "tree": "comparison",
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\base\\TileEntityBase01Root.java",
+      "sha256": "cdc9aacd740d024dd92d002c6deb5cfecf0a07668a88f8dd7b1fe64b9313a7a2"
+    },
+    {
+      "tree": "comparison",
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577"
+    },
+    {
+      "tree": "comparison",
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\COPYING.LESSER",
+      "sha256": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118"
+    }
+  ],
+  "original_and_comparison_check_order_identical": true,
+  "source_check_order": [
+    [
+      0,
+      1,
+      0,
+      "AIR"
+    ],
+    [
+      -1,
+      -1,
+      -1,
+      "HEAT_INPUT"
+    ],
+    [
+      0,
+      -1,
+      -1,
+      "HEAT_INPUT"
+    ],
+    [
+      1,
+      -1,
+      -1,
+      "HEAT_INPUT"
+    ],
+    [
+      -1,
+      -1,
+      0,
+      "HEAT_INPUT"
+    ],
+    [
+      0,
+      -1,
+      0,
+      "HEAT_INPUT"
+    ],
+    [
+      1,
+      -1,
+      0,
+      "HEAT_INPUT"
+    ],
+    [
+      -1,
+      -1,
+      1,
+      "HEAT_INPUT"
+    ],
+    [
+      0,
+      -1,
+      1,
+      "HEAT_INPUT"
+    ],
+    [
+      1,
+      -1,
+      1,
+      "HEAT_INPUT"
+    ],
+    [
+      -1,
+      0,
+      -1,
+      "FLUID_INPUT"
+    ],
+    [
+      0,
+      0,
+      -1,
+      "FLUID_INPUT"
+    ],
+    [
+      1,
+      0,
+      -1,
+      "FLUID_INPUT"
+    ],
+    [
+      -1,
+      0,
+      0,
+      "FLUID_INPUT"
+    ],
+    [
+      0,
+      0,
+      0,
+      "FLUID_INPUT"
+    ],
+    [
+      1,
+      0,
+      0,
+      "FLUID_INPUT"
+    ],
+    [
+      -1,
+      0,
+      1,
+      "FLUID_INPUT"
+    ],
+    [
+      0,
+      0,
+      1,
+      "FLUID_INPUT"
+    ],
+    [
+      1,
+      0,
+      1,
+      "FLUID_INPUT"
+    ],
+    [
+      0,
+      2,
+      0,
+      "FLUID_OUTPUT"
+    ],
+    [
+      -1,
+      1,
+      -1,
+      "FLUID_OUTPUT"
+    ],
+    [
+      0,
+      1,
+      -1,
+      "FLUID_OUTPUT"
+    ],
+    [
+      1,
+      1,
+      -1,
+      "FLUID_OUTPUT"
+    ],
+    [
+      -1,
+      1,
+      0,
+      "FLUID_OUTPUT"
+    ],
+    [
+      1,
+      1,
+      0,
+      "FLUID_OUTPUT"
+    ],
+    [
+      -1,
+      1,
+      1,
+      "FLUID_OUTPUT"
+    ],
+    [
+      0,
+      1,
+      1,
+      "FLUID_OUTPUT"
+    ],
+    [
+      1,
+      1,
+      1,
+      "FLUID_OUTPUT"
+    ],
+    [
+      -1,
+      2,
+      -1,
+      "FLUID_OUTPUT"
+    ],
+    [
+      0,
+      2,
+      -1,
+      "FLUID_OUTPUT"
+    ],
+    [
+      1,
+      2,
+      -1,
+      "FLUID_OUTPUT"
+    ],
+    [
+      -1,
+      2,
+      0,
+      "FLUID_OUTPUT"
+    ],
+    [
+      1,
+      2,
+      0,
+      "FLUID_OUTPUT"
+    ],
+    [
+      -1,
+      2,
+      1,
+      "FLUID_OUTPUT"
+    ],
+    [
+      0,
+      2,
+      1,
+      "FLUID_OUTPUT"
+    ],
+    [
+      1,
+      2,
+      1,
+      "FLUID_OUTPUT"
+    ]
+  ],
+  "chinese_patch_sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0",
+  "source_diagnostic_literals_missing_from_patch": true,
+  "current_code": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalLargeBoilerParameters.java",
+      "sha256": "d091075b8940ca168a3e21fac1b24851179cf2998eaf725984058a56410efb20"
+    },
+    {
+      "path": "core/src/test/java/com/gregtech/gregtech/core/MachineSpecBehaviorContracts.java",
+      "sha256": "c64cab50cc08edebdc68ee82a0d0690d856c109ca2c765f7e57678632d9f073d"
+    },
+    {
+      "path": "neoforge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/SensorSourceTests.java",
+      "sha256": "1e7b74fd602d5a943537d0e1be0a05a609129a89fe3dbe006fbeb388972e315f"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockTools.java",
+      "sha256": "39aa688e0f5c16ae00e313f4abec426e7ada8148361dd5c6ff2f10037a31856d"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/LargeHeatExchangerControllerBlockEntity.java",
+      "sha256": "6188ec2d82e85089082c1e26924f25aa180f65da10647b9420c168e5d5551b3a"
+    },
+    {
+      "path": "neoforge/src/main/java/com/gregtech/gregtech/blockentity/machine/OriginalLargeBoilerControllerBlockEntity.java",
+      "sha256": "25289e750f7476d8dcb671455e783d35c116a6850be65383b17b166af5e08a71"
+    },
+    {
+      "path": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/SensorSourceTests.java",
+      "sha256": "8b91dbec0ac7f3e72f71f91855b644eda5dc9142165e811b3ec6fa0eafa85fc9"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockTools.java",
+      "sha256": "39aa688e0f5c16ae00e313f4abec426e7ada8148361dd5c6ff2f10037a31856d"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/blockentity/machine/LargeHeatExchangerControllerBlockEntity.java",
+      "sha256": "2ba9e1f5e57832cf6d921e1b7a991909c861017854b0c2fbf3eb5fbaaffe35d5"
+    },
+    {
+      "path": "src/main/java/com/gregtech/gregtech/blockentity/machine/OriginalLargeBoilerControllerBlockEntity.java",
+      "sha256": "0f9dc9102d222769639f7a2e3fb0804455ec43f82c5e7eb25ef7b3fd5ee4f20a"
+    },
+    {
+      "path": "core/src/test/java/com/gregtech/gregtech/core/BoilerToolContracts.java",
+      "sha256": "535ea3be1cc6294d8f27b2832d5079bea577ae17ba1918388f7b80e9ae7412c4"
+    }
+  ],
+  "compiled_classes": [
+    {
+      "path": "build\\classes\\java\\main\\com\\gregtech\\gregtech\\api\\multiblock\\MultiblockTools.class",
+      "sha256": "47946b3c0137272a56f48ac11b92e35dd42d7957e959ff048dc017bd60d9c767"
+    },
+    {
+      "path": "build\\classes\\java\\main\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeHeatExchangerControllerBlockEntity.class",
+      "sha256": "635b807a31dd2e4372601787f829577df436609a9dc84ec7497fe8235670ea05"
+    },
+    {
+      "path": "build\\classes\\java\\main\\com\\gregtech\\gregtech\\blockentity\\machine\\OriginalLargeBoilerControllerBlockEntity.class",
+      "sha256": "160cb27d648719819698f1aecc79f81e6b22538d9a8c2970954193dd881aa13f"
+    },
+    {
+      "path": "build\\classes\\java\\bootstrapGameTest\\com\\gregtech\\gregtech\\gametest\\SensorSourceTests.class",
+      "sha256": "e213e694c4179f61ae786f2cb6dbe3da11ac123e13207741bf2cd6609d28faca"
+    },
+    {
+      "path": "neoforge\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\api\\multiblock\\MultiblockTools.class",
+      "sha256": "8b07051b8eb73bf7eb800609b45db03227386f229ea2b1be53681f0c178d491a"
+    },
+    {
+      "path": "neoforge\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeHeatExchangerControllerBlockEntity.class",
+      "sha256": "d497b3d538249bcdb13f1caca88708ac0f97c10ffa2cf0eb34f3aa885d6dcb60"
+    },
+    {
+      "path": "neoforge\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\blockentity\\machine\\OriginalLargeBoilerControllerBlockEntity.class",
+      "sha256": "0d90e66b9f5b123e02b0360238be2a34473c980aa33af7c80a688639e94b6da5"
+    },
+    {
+      "path": "neoforge\\build\\classes\\java\\bootstrapGameTest\\com\\gregtech\\gregtech\\gametest\\SensorSourceTests.class",
+      "sha256": "df45a04e4e2d4e251f8271ae3bc224059f1868b571ed3ca8e421cc3d06fa8ab4"
+    }
+  ],
+  "compile_checks": [
+    {
+      "path": "work/boiler-tools-compile-20261007.log",
+      "sha256": "c42de124aeb443ed4ccb923d614efce6ef50dabebd19dc72c48a942697bcb1e0",
+      "seconds": 30,
+      "exit": 0
+    },
+    {
+      "path": "work/boiler-tools-sync-compile-20261007.log",
+      "sha256": "2b34e54805ef7ad52f62bf43ada5004d5bbfc2106af50462d093a5eaa5621a1a",
+      "seconds": 25,
+      "exit": 0
+    }
+  ],
+  "shared_assertions": 7872,
+  "new_shared_assertions": 11,
+  "new_native_scenarios_per_platform": 1,
+  "boiler_native_scenario_cases": {
+    "variants": 5,
+    "facings": 4
+  },
+  "total_sensor_source_scenarios_per_platform": 7,
+  "native_worlds_run": false,
+  "formal_builds_run": false,
+  "installed_clients_run": false,
+  "preparation_or_compile_failures": [],
+  "limitations": [
+    "Pooled world/client/build acceptance pending; these scenarios compiled but have not run.",
+    "Source physical role locations preserved; existing source port design textures, other controller tools, and unrelated boiler maintenance differences are outside this batch.",
+    "Server structure changes now use existing syncToClient packet path for both boiler and heat exchanger; no claim of live multiplayer client acceptance.",
+    "Native BlockItem placement and source-diagnostic cache adaptation are as recorded in heat-builder-20261007.md.",
+    "Independent restart, natural survival, old saves and ordinary dedicated-server acceptance remain open.",
+    "No new slimmed JAR or push."
+  ]
+}
