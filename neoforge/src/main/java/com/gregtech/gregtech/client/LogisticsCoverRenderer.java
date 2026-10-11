@@ -35,6 +35,7 @@ public final class LogisticsCoverRenderer<T extends BlockEntity & LogisticsCover
             var vc = buffers.getBuffer(RenderType.cutout());
             double out = 0;
             var base = ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gregtech", "block/machines/covers/logistics/base"));
+            CoverSurfaceRenderer.attachment(be,side,pose,vc,base,light,-1);
             CoverSurfaceRenderer.draw(pose,vc,side,base,light,0);
             if (type.role() == LogisticsCoverType.Role.DISPLAY) {
                 String name = switch (type) {

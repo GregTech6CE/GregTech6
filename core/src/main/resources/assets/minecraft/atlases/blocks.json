@@ -94,6 +94,16 @@
     {
       "type": "minecraft:single",
       "resource": "gregtech:block/machines/covers/canvas"
+    },
+    {
+      "type": "minecraft:directory",
+      "source": "block/machines/covers/redstonetorch",
+      "prefix": "block/machines/covers/redstonetorch/"
+    },
+    {
+      "type": "minecraft:directory",
+      "source": "block/machines/covers/redstonerepeater",
+      "prefix": "block/machines/covers/redstonerepeater/"
     }
   ]
 }

@@ -6,6 +6,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.*;
 public final class CoverWorldInteraction {
     private CoverWorldInteraction(){}
+    /** Whether the underlying host already supplies a full face at the block boundary. */
+    public static boolean isCoverSurface(net.minecraft.world.level.block.entity.BlockEntity owner, Direction side) {
+        var level=owner.getLevel();
+        return level!=null && net.minecraft.world.level.block.Block.isFaceFull(
+                owner.getBlockState().getShape(level,owner.getBlockPos(),CollisionContext.empty()),side);
+    }
     public static void walk(Level level,BlockPos pos,Entity entity){
         if(!(level.getBlockEntity(pos) instanceof PanelCoverHost host)||!ComponentCoverFallback.ownClass(host.coverOwner()))return;
         var id=CoverItems.behavior(host.getCover(Direction.UP));
@@ -21,10 +27,8 @@ public final class CoverWorldInteraction {
             if(stack.isEmpty())continue;
             var id=CoverItems.behavior(stack);
             boolean torch=CoverItems.REDSTONE_TORCH.equals(id)||CoverItems.REDSTONE_REPEATER.equals(id);
-            double minX=torch?7/16.0:0,minY=minX,minZ=minX,maxX=torch?9/16.0:1,maxY=maxX,maxZ=maxX;
-            double inner=torch?.5:.125;
-            switch(side){case DOWN->{minY=0;maxY=inner;}case UP->{minY=1-inner;maxY=1;}case NORTH->{minZ=0;maxZ=inner;}case SOUTH->{minZ=1-inner;maxZ=1;}case WEST->{minX=0;maxX=inner;}case EAST->{minX=1-inner;maxX=1;}}
-            shape=Shapes.or(shape,Shapes.box(minX,minY,minZ,maxX,maxY,maxZ));
+            var box=torch?CoverPlateGeometry.holder(side.ordinal()):CoverPlateGeometry.plate(side.ordinal());
+            shape=Shapes.or(shape,Shapes.box(box.minX(),box.minY(),box.minZ(),box.maxX(),box.maxY(),box.maxZ()));
         }
         return shape;
     }

@@ -9,7 +9,7 @@ Categories:
 
 Skips: pipes/wires/axles/molds/crucibles/crossing/ender_garbage (all use ""
   catch-all variant), energy_storage (5, not waterloggable), large_turbine_main
-  (multiblock part, not waterloggable).
+  (multiblock part, not waterloggable); solar_panel_* (full cubes, not waterloggable).
 """
 
 import json
@@ -40,7 +40,6 @@ def needs_waterlogged(filename: str) -> bool:
             or filename.startswith("steam_turbine_")
             or filename.startswith("rotation_transformer_")
             or filename.startswith("transformer_")
-            or filename.startswith("solar_panel_")
             or filename.startswith("battery_box_")):
         return True
 

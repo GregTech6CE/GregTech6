@@ -1,0 +1,100 @@
+{
+  "sourceRoot": "C:\\Dev\\gregtech6-master\\gregtech6-master",
+  "authors": "Gregorius Techneticies; GregTech-6 Team",
+  "license": "LGPL-3.0-or-later",
+  "adopted": "ICover BOXES_COVERS/BOXES_HOLDERS, full surface vs attachment rendering and reversed component back faces",
+  "sources": [
+    {
+      "path": "LICENSE",
+      "bytes": 694,
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577"
+    },
+    {
+      "path": "src/main/java/gregapi/cover/ICover.java",
+      "bytes": 10529,
+      "sha256": "fb7e24cd269f453d6a944ccbb0768a41644229b0083971e66dd2006e93e22547"
+    },
+    {
+      "path": "src/main/java/gregapi/cover/covers/AbstractCoverDefault.java",
+      "bytes": 8921,
+      "sha256": "9a8913fdd2cd2358790d4aef90d11d5aac0087c6eb5eb9f13615656d9151e7fd"
+    },
+    {
+      "path": "src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "bytes": 27572,
+      "sha256": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9"
+    },
+    {
+      "path": "src/main/java/gregapi/cover/covers/CoverPump.java",
+      "bytes": 4890,
+      "sha256": "d7425ae66212cbf5ffb8ab2ffb51e3b257a0e491166d7a25533017db2d1a7bf6"
+    },
+    {
+      "path": "src/main/java/gregapi/cover/covers/CoverConveyor.java",
+      "bytes": 4628,
+      "sha256": "8b182ba4124f66e48b31b4f9863c00bfe6cf57f51fa7a5ef4b62dbe3a12bb8c4"
+    },
+    {
+      "path": "src/main/java/gregapi/cover/covers/CoverRobotArm.java",
+      "bytes": 6102,
+      "sha256": "e275a5c8d62660085040e53d68390462e1f22e3c7964ea003a3e8626bd9616fc"
+    },
+    {
+      "path": "src/main/java/gregapi/cover/covers/AbstractCoverAttachmentTorch.java",
+      "bytes": 3965,
+      "sha256": "f06eb2fe7ea68c62d3bbc69083219970069acdb16ec21b6add0160c2b300c9fb"
+    },
+    {
+      "path": "src/main/java/gregapi/cover/covers/CoverRedstoneTorch.java",
+      "bytes": 2282,
+      "sha256": "ef54cfcd0bf336cf0fc17e668e520a6efa815d3aed8cc24481c54e25241427f2"
+    },
+    {
+      "path": "src/main/java/gregapi/cover/covers/CoverRedstoneRepeater.java",
+      "bytes": 2298,
+      "sha256": "6d92b4dc06e0670838ee54cb4bb84664c79b6571e0cbc495784c41224b23089a"
+    }
+  ],
+  "textures": [
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\covers\\redstonetorch\\on\\front.png",
+      "target": "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\covers\\redstonetorch\\on\\front.png",
+      "sha256": "cae80c687b1917b32a52c7179ab63cf278e2ff31d9198d98bc522acf6a4953c5"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\covers\\redstonetorch\\on\\side.png",
+      "target": "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\covers\\redstonetorch\\on\\side.png",
+      "sha256": "a58121160dd506784dff49be8492a437417c8ab48caacfb888e285da133b1ea9"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\covers\\redstonetorch\\off\\front.png",
+      "target": "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\covers\\redstonetorch\\off\\front.png",
+      "sha256": "522ae23c6a316f624c060924a0537609a18e1b887264fa343ddaf92a98dc16d9"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\covers\\redstonetorch\\off\\side.png",
+      "target": "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\covers\\redstonetorch\\off\\side.png",
+      "sha256": "2f281922af37ac78a366ce361653792887c2b356f71c36dc7e3ea67d61506d81"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\covers\\redstonerepeater\\on\\front.png",
+      "target": "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\covers\\redstonerepeater\\on\\front.png",
+      "sha256": "cae80c687b1917b32a52c7179ab63cf278e2ff31d9198d98bc522acf6a4953c5"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\covers\\redstonerepeater\\on\\side.png",
+      "target": "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\covers\\redstonerepeater\\on\\side.png",
+      "sha256": "27563e76ff1704ddbc589bc26aa82e45aeb8000a3a4bf7b517335937ce42fb24"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\covers\\redstonerepeater\\off\\front.png",
+      "target": "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\covers\\redstonerepeater\\off\\front.png",
+      "sha256": "522ae23c6a316f624c060924a0537609a18e1b887264fa343ddaf92a98dc16d9"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\covers\\redstonerepeater\\off\\side.png",
+      "target": "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\covers\\redstonerepeater\\off\\side.png",
+      "sha256": "0d2420057748e7aad4cfc958015ebf94aed224294315107cb373aaec45a11c54"
+    }
+  ]
+}

@@ -7494,5 +7494,37 @@
   "textures/block/machines/covers/canvas.png": {
     "sha256": "e88b94385e26aa95737338cc4e2f3dcc36f193a8dbd6567b195494eed28684b3",
     "source": "src/main/resources/assets/gregtech/textures/blocks/machines/covers/canvas.png"
+  },
+  "textures/block/machines/covers/redstonetorch/on/front.png": {
+    "sha256": "cae80c687b1917b32a52c7179ab63cf278e2ff31d9198d98bc522acf6a4953c5",
+    "source": "src/main/resources/assets/gregtech/textures/blocks/machines/covers/redstonetorch/on/front.png"
+  },
+  "textures/block/machines/covers/redstonetorch/on/side.png": {
+    "sha256": "a58121160dd506784dff49be8492a437417c8ab48caacfb888e285da133b1ea9",
+    "source": "src/main/resources/assets/gregtech/textures/blocks/machines/covers/redstonetorch/on/side.png"
+  },
+  "textures/block/machines/covers/redstonetorch/off/front.png": {
+    "sha256": "522ae23c6a316f624c060924a0537609a18e1b887264fa343ddaf92a98dc16d9",
+    "source": "src/main/resources/assets/gregtech/textures/blocks/machines/covers/redstonetorch/off/front.png"
+  },
+  "textures/block/machines/covers/redstonetorch/off/side.png": {
+    "sha256": "2f281922af37ac78a366ce361653792887c2b356f71c36dc7e3ea67d61506d81",
+    "source": "src/main/resources/assets/gregtech/textures/blocks/machines/covers/redstonetorch/off/side.png"
+  },
+  "textures/block/machines/covers/redstonerepeater/on/front.png": {
+    "sha256": "cae80c687b1917b32a52c7179ab63cf278e2ff31d9198d98bc522acf6a4953c5",
+    "source": "src/main/resources/assets/gregtech/textures/blocks/machines/covers/redstonerepeater/on/front.png"
+  },
+  "textures/block/machines/covers/redstonerepeater/on/side.png": {
+    "sha256": "27563e76ff1704ddbc589bc26aa82e45aeb8000a3a4bf7b517335937ce42fb24",
+    "source": "src/main/resources/assets/gregtech/textures/blocks/machines/covers/redstonerepeater/on/side.png"
+  },
+  "textures/block/machines/covers/redstonerepeater/off/front.png": {
+    "sha256": "522ae23c6a316f624c060924a0537609a18e1b887264fa343ddaf92a98dc16d9",
+    "source": "src/main/resources/assets/gregtech/textures/blocks/machines/covers/redstonerepeater/off/front.png"
+  },
+  "textures/block/machines/covers/redstonerepeater/off/side.png": {
+    "sha256": "0d2420057748e7aad4cfc958015ebf94aed224294315107cb373aaec45a11c54",
+    "source": "src/main/resources/assets/gregtech/textures/blocks/machines/covers/redstonerepeater/off/side.png"
   }
 }
