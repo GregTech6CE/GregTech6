@@ -1,0 +1,60 @@
+{
+  "date": "2026-10-11",
+  "source_commit": "ff7c85cead3186e9d662920490e9189ed1c5b464",
+  "artifacts": {
+    "forge": {
+      "path": "C:\\Dev\\GregTech6\\build\\verified\\20261011-152946Z-ff7c85ce\\gregtech6-1.20.1-forge-0.0.0.jar",
+      "bytes": 40207746,
+      "sha256": "65e3614589716a753543eba4fa935f29a16c6c81b226f4c1a85e88c71a87be15",
+      "zip_crc": "passed",
+      "cover_textures": 8,
+      "shared_classes": 810
+    },
+    "neoforge": {
+      "path": "C:\\Dev\\GregTech6\\build\\verified\\20261011-152946Z-ff7c85ce\\gregtech6-neoforge-1.21.1-0.0.0.jar",
+      "bytes": 40063737,
+      "sha256": "25cce968f9490964b76688f295f1481dcad8f07774796e9c8e074ae35e0ba790",
+      "zip_crc": "passed",
+      "cover_textures": 8,
+      "shared_classes": 810
+    }
+  },
+  "pr_merges": {
+    "25": "d71e605c78784576eb60e5351623ac15f4b03dbc",
+    "26": "da9a9a1d9b20a9962c17f8d495c3daf342e831ea"
+  },
+  "native_tests": {
+    "forge": {
+      "required_passed": 9,
+      "heap": "3g",
+      "initial_default_heap": "OOM before tests; not counted as pass"
+    },
+    "neoforge": {
+      "required_passed": 9
+    }
+  },
+  "language_source_policy_tests": 75,
+  "limitations": [
+    "No client visual acceptance for cover sides",
+    "AE2 additional runtime test stopped at dependency download",
+    "No user saved-world restart or complete survival acceptance"
+  ],
+  "logs": {
+    "cover-solar-20261011.log": {
+      "sha256": "c8f2a874f92b339e42f75895473dec9d071f9c9714082267b7d27254a74704f2",
+      "bytes": 17476177
+    },
+    "cover-solar-forge-retry-20261011.log": {
+      "sha256": "c5a220ebaafaf1f0bffe87c122bd81b5b68dcb0b608b8684fea9b46a63b4c19f",
+      "bytes": 17440403
+    },
+    "cover-solar-dual-build-20261011.log": {
+      "sha256": "ae561c9c29dbe80852c550c1a66104e124d56d37276711d852346112608e3a49",
+      "bytes": 33911
+    },
+    "cover-solar-source-guards-20261011.log": {
+      "sha256": "11dd55345699402d7bf75b7d0a847bf7f7b5025d232c491eb11901a198d46360",
+      "bytes": 180
+    }
+  }
+}
