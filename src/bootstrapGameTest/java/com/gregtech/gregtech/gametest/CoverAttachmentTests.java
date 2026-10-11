@@ -184,15 +184,15 @@ public final class CoverAttachmentTests {
         helper.assertTrue(machine.attachCover(Direction.UP, cover(CoverAttachmentBehaviors.DRAIN)),
                 "the machine face accepts the drain cover");
 
-        tick(machine, 25);
+        CoverAttachmentBehaviors.tickDrain(level, pos, Direction.UP, machine.getTanksInput()[0], 5);
 
         var tank = machine.getTanksInput()[0];
         helper.assertTrue(tank.getFluid().getFluid() == seaFluid,
                 "the tank holds seawater, not water, got " + tank.getFluid().getFluid());
-        helper.assertTrue(tank.getAmount() == CoverAttachmentBehaviors.FLUID_BLOCK_AMOUNT,
-                "the GT6 water block fills 1000 mB, got " + tank.getAmount() + " mB");
-        helper.assertTrue(level.getBlockState(sea).getFluidState().isEmpty(),
-                "the drained GT6 water block is gone, got " + level.getBlockState(sea));
+        helper.assertTrue(tank.getAmount() == Math.min(16000, tank.getCapacity()),
+                "the GT6 water block offers 16000 mB up to tank capacity, got " + tank.getAmount() + " mB");
+        helper.assertTrue(!level.getBlockState(sea).getFluidState().isEmpty(),
+                "the GT6 ocean block is retained, got " + level.getBlockState(sea));
         helper.succeed();
     }
 

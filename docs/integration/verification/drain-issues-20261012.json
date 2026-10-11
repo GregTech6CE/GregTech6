@@ -1,0 +1,89 @@
+{
+  "date": "2026-10-12",
+  "baseCommit": "c8e007589",
+  "issue": 24,
+  "openIssueNumbers": [
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24
+  ],
+  "nativeResult": {
+    "forge": {
+      "required": 3,
+      "failed": 0
+    },
+    "neoforge": {
+      "required": 3,
+      "failed": 0
+    },
+    "elapsed": "3m34s",
+    "exitCode": 0,
+    "heap": "3g",
+    "namespace": "gregtech_drain_regression",
+    "tests": [
+      "solidWaterloggedHostsAndPartialTanksArePreserved",
+      "bulkWatersUseOriginalProductsAndKeepFlowingBlocks",
+      "rainNeedsAnOpenFaceAndSideSupport"
+    ]
+  },
+  "sourcePolicy": {
+    "tests": 20,
+    "passed": 20,
+    "elapsedSeconds": 0.263
+  },
+  "earlierFailures": [
+    "Gradle native DLL initialization blocked in sandbox before tests",
+    "source-policy temporary directory cleanup denied in sandbox; normal permissions retry passed",
+    "missing new test namespace template, no tests executed",
+    "Forge roof check failed; original precipitation height rule restored before final pair"
+  ],
+  "notPerformed": [
+    "full GameTests",
+    "ordinary release build",
+    "client visual acceptance",
+    "user save load/restart",
+    "external compatibility acceptance",
+    "push/comments/issue closure"
+  ],
+  "logs": [
+    {
+      "path": "work/issues-20261012/drain-tests.log",
+      "bytes": 17453636,
+      "sha256": "8eba1bb554b44e8749b4d170590428fbc94509edb773740d435953f286d36556"
+    },
+    {
+      "path": "work/issues-20261012/drain-tests-retry.log",
+      "bytes": 17416194,
+      "sha256": "89695a2391c5e5f04b91304a88c2d9a5983d2b4e7a7b7b93bc0d1fc2587978ac"
+    },
+    {
+      "path": "work/issues-20261012/drain-tests-final.log",
+      "bytes": 17478337,
+      "sha256": "4bcc5ec718055538bbde1949512c3ce8b84d17205bc3a08bb2e25f7388371529"
+    },
+    {
+      "path": "work/issues-20261012/source-policy.log",
+      "bytes": 58916,
+      "sha256": "e3fcf1e9bb205ce8d12c929fd7be44ea91898a1f033e3f2050c73bc0c14751e4"
+    },
+    {
+      "path": "work/issues-20261012/source-policy-retry.log",
+      "bytes": 124,
+      "sha256": "03b1dac4113ec31aa495c415615b51e726f6d4d0ab37125a4daeae7d0851cc53"
+    }
+  ],
+  "issueSnapshot": {
+    "path": "work/issues-20261012/open.json",
+    "bytes": 57740,
+    "sha256": "9166e7ce6d324897f92fd1c461d53e5dcbc7cd648c86958c8ead5202d21213ca"
+  }
+}

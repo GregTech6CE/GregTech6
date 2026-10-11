@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-12",
+  "issue": 24,
+  "sourceRoot": "C:\\Dev\\gregtech6-master\\gregtech6-master",
+  "authors": "Gregorius Techneticies; GregTech-6 Team",
+  "license": "LGPL-3.0-or-later",
+  "adopted": "CoverDrain rain obstruction/support, bulk world water conversion and fluid-block-only consumption; WD infinite-water height range",
+  "sources": [
+    {
+      "path": "LICENSE",
+      "bytes": 694,
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577"
+    },
+    {
+      "path": "src/main/java/gregapi/cover/covers/CoverDrain.java",
+      "bytes": 14291,
+      "sha256": "6ffe36e186e9a72e5c3747a742bc4563d9af02f926a6ad5fbae98458bb9b5abb"
+    },
+    {
+      "path": "src/main/java/gregapi/util/WD.java",
+      "bytes": 72414,
+      "sha256": "c8335988b7bd9dbf44df6790d867ac6cfe2e6414793abb0cdd14c32cd342f095"
+    },
+    {
+      "path": "src/main/java/gregapi/tileentity/base/TileEntityBase01Root.java",
+      "bytes": 59432,
+      "sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95"
+    }
+  ]
+}

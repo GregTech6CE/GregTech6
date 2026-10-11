@@ -109,23 +109,30 @@ public final class CoverAttachmentBehaviors {
         BlockPos front = machinePos.relative(side);
         if (!level.hasChunkAt(front)) return false;
         BlockState state = level.getBlockState(front);
+        // A waterlogged chest/slab is not a fluid block. Never delete its solid host or contents.
+        if (!(state.getBlock() instanceof LiquidBlock)) return false;
         FluidState fluidState = state.getFluidState();
         if (fluidState.isEmpty()) return false;
-        // CoverDrain:125,134 drain vanilla water and lava only at getMetaDataAtSide(...) == 0, i.e.
-        // source blocks; a flowing level is left to flow.
-        if (!fluidState.isSource()) return false;
         Fluid fluid = fluidState.getType();
+        var entry = GTFluids.entryForFluid(fluid);
+        String bulkField = DrainCoverRules.bulkWaterField(entry == null ? null : entry.registryName());
+        // Original River/Ocean/Swamp blocks supply bulk water independently of source level/gravity.
+        if (bulkField != null) {
+            var bulk = GTFluids.still(bulkField);
+            Fluid collected = "Water".equals(bulkField) ? Fluids.WATER : bulk == null ? Fluids.EMPTY : bulk.get();
+            return collected != Fluids.EMPTY
+                    && sink.fill(new FluidStack(collected, 16000), IFluidHandler.FluidAction.EXECUTE) > 0;
+        }
+        if (!fluidState.isSource()) return false;
+        var biome = level.getBiome(front);
+        int waterLevel = level.getSeaLevel();
+        boolean infiniteVanilla = fluid == Fluids.WATER && front.getY() >= waterLevel - 15
+                && front.getY() <= waterLevel && biome.is(net.minecraft.tags.BiomeTags.IS_RIVER);
+        if (infiniteVanilla) return sink.fill(new FluidStack(fluid, 16000), IFluidHandler.FluidAction.EXECUTE) > 0;
         if (!drainsAt(side, fluid)) return false;
-
-        var entry=GTFluids.entryForFluid(fluid);
-        boolean worldWater=entry!=null&&com.gregtech.gregtech.api.fluid.GTWaterParity.isWorldWater(entry.registryName());
-        var biome=level.getBiome(front);int waterLevel=level.getSeaLevel();
-        boolean infiniteVanilla=fluid==Fluids.WATER&&front.getY()>=waterLevel-15&&front.getY()<=waterLevel&&biome.is(net.minecraft.tags.BiomeTags.IS_RIVER);
-        if(worldWater||infiniteVanilla)return sink.fill(new FluidStack(fluid,16000),IFluidHandler.FluidAction.EXECUTE)>0;
         FluidStack bucket = new FluidStack(fluid, FLUID_BLOCK_AMOUNT);
         if (sink.fill(bucket, IFluidHandler.FluidAction.SIMULATE) < FLUID_BLOCK_AMOUNT) return false;
-        sink.fill(bucket, IFluidHandler.FluidAction.EXECUTE);
-        // CoverDrain:152 setBlockToAir, with GT6's own update flag WD.set(..., 3).
+        if (sink.fill(bucket, IFluidHandler.FluidAction.EXECUTE) != FLUID_BLOCK_AMOUNT) return false;
         level.setBlock(front, Blocks.AIR.defaultBlockState(), 3);
         return true;
     }
@@ -153,14 +160,36 @@ public final class CoverAttachmentBehaviors {
         if (!level.isRaining()) return false;
         BlockPos front = machinePos.relative(side);
         if (!level.hasChunkAt(front)) return false;
-        if (!level.canSeeSky(front)) return false;                      // getRainOffset, CoverDrain:77-79
-        if (!level.getBlockState(front).getFluidState().isEmpty()) return false; // CoverDrain:74
+        if (!canCollectRainAt(level, machinePos, side)) return false;
 
         var climate = level.getBiome(front).value().getModifiedClimateSettings();
         long amount = rainAmount(climate.downfall(), climate.temperature(), level.isThundering());
         if (amount <= 0) return false;
         FluidStack rain = new FluidStack(Fluids.WATER, (int) Math.min(Integer.MAX_VALUE, amount));
         return sink.fill(rain, IFluidHandler.FluidAction.EXECUTE) > 0;
+    }
+
+    /** Original rain obstruction and support checks; exposed for finite native world checks. */
+    public static boolean canCollectRainAt(Level level, BlockPos machinePos, Direction side) {
+        if (side == Direction.DOWN) return false;
+        BlockPos front = machinePos.relative(side);
+        if (!level.hasChunkAt(front)) return false;
+        BlockState state = level.getBlockState(front);
+        if (!state.getFluidState().isEmpty() || state.getBlock() instanceof LiquidBlock
+                || state.isFaceSturdy(level, front, side.getOpposite())
+                || state.isFaceSturdy(level, front, Direction.UP)) return false;
+        if (state.getBlock() instanceof net.minecraft.world.level.block.SlabBlock
+                || state.getBlock() instanceof net.minecraft.world.level.block.StairBlock)
+            return rainReaches(level, front.above());
+        return rainReaches(level, front) && (side == Direction.UP
+                || level.getBlockState(front.below()).isFaceSturdy(level, front.below(), Direction.UP));
+    }
+
+    // TileEntityBase01Root.getRain uses precipitation height, not skylight brightness.
+    private static boolean rainReaches(Level level, BlockPos pos) {
+        return level.dimensionType().hasSkyLight()
+                && level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING,
+                        pos.getX(), pos.getZ()) <= pos.getY();
     }
 
     /**
@@ -176,8 +205,7 @@ public final class CoverAttachmentBehaviors {
      * @return the millibuckets one operation delivers, or {@code 0} when the biome cannot rain
      */
     public static long rainAmount(float downfall, float temperature, boolean thundering) {
-        if (downfall <= 0 || temperature < 0.2F) return 0;
-        return Math.max(1L, (long) (downfall * 10000)) * (thundering ? 2 : 1);
+        return DrainCoverRules.rainAmount(downfall, temperature, thundering);
     }
 
     /**
