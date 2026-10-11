@@ -26,9 +26,14 @@ public final class ItemMaterialRegistry {
     public static void register(Item item, ItemComposition data) {
         if (item != null && data != null) BY_ITEM.put(item, data);
     }
-    public static Optional<ItemComposition> base(Item item) {
+    /** Data registered for this item. Tag-derived compositions are not included. */
+    public static Optional<ItemComposition> explicit(Item item) {
         var data = BY_ITEM.get(item);
-        return data == null ? com.gregtech.gregtech.content.recipe.ExternalOreProcessing.composition(item) : Optional.of(data);
+        return data == null ? Optional.empty() : Optional.of(data);
+    }
+    public static Optional<ItemComposition> base(Item item) {
+        var data = explicit(item);
+        return data.isPresent() ? data : com.gregtech.gregtech.content.recipe.ExternalOreProcessing.composition(item);
     }
     public static Map<Item, ItemComposition> entries() { return Collections.unmodifiableMap(BY_ITEM); }
     public static Optional<ItemComposition> get(ItemStack stack) {

@@ -7,17 +7,25 @@ import com.gregtech.gregtech.data.MachineRecipeMaps;
 import com.gregtech.gregtech.data.MaterialPrefix;
 import com.gregtech.gregtech.recipe.CraftingMaterialForms;
 import com.mojang.logging.LogUtils;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import java.util.*;
 
 /** Tag-bound source prefix handlers. GT registers metadata for these forms, never new owned items. */
 public final class ExternalOreProcessing {
     private ExternalOreProcessing() {}
     private static final Map<RecipeMap, Set<Recipe>> OWNED = new IdentityHashMap<>();
+    /** Distinct from ore-prefix compositions so callers can tell tag-derived ingots, dusts and rods apart. */
+    public static final String TAGGED_COMPOSITION_SOURCE = "GT6 common form tags";
     private static volatile Map<Item, ItemComposition> compositions = Map.of();
+    private static volatile int taggedCompositions;
+    private static volatile int ambiguousTaggedItems;
 
     private static volatile Map<Item, FurnaceSmeltingRecipes.CookingData> cooking = Map.of();
+    public static int taggedCompositions() { return taggedCompositions; }
+    public static int ambiguousTaggedItems() { return ambiguousTaggedItems; }
     public static Optional<FurnaceSmeltingRecipes.CookingData> cooking(Item item) { return Optional.ofNullable(cooking.get(item)); }
 
     public static Optional<ItemComposition> composition(Item item) { return Optional.ofNullable(compositions.get(item)); }
@@ -34,6 +42,8 @@ public final class ExternalOreProcessing {
         OWNED.clear();
         compositions = Map.of();
         cooking = Map.of();
+        taggedCompositions = 0;
+        ambiguousTaggedItems = 0;
     }
 
     public static synchronized int rebuild() {
@@ -50,6 +60,8 @@ public final class ExternalOreProcessing {
                         List.of(MaterialComponent.of(material, prefix.getMaterialWeight())),
                         "GT6 OP external ore-prefix tags", true));
         }
+        int oreCompositions = materialData.size();
+        taggedCompositions = bindCommonForms(materialData);
         compositions = Collections.unmodifiableMap(materialData);
         int added = 0;
         for (var route : ExternalOreProcessingRules.ROUTES) {
@@ -133,8 +145,37 @@ public final class ExternalOreProcessing {
                 added++;
             }
         }
-        LogUtils.getLogger().info("[gregtech] Bound {} external ore processing rows and {} material compositions from loaded tags",
-                added, compositions.size());
+        LogUtils.getLogger().info("[gregtech] Bound {} external ore processing rows and {} material compositions from loaded tags ({} ore prefix, {} common form); skipped {} ambiguous common-form items",
+                added, compositions.size(), oreCompositions, taggedCompositions, ambiguousTaggedItems);
+        return added;
+    }
+
+    /** One unambiguous common-form tag becomes one unit of that GT prefix. Conflicting tags are left untouched. */
+    private static int bindCommonForms(Map<Item, ItemComposition> materialData) {
+        var allowed = new HashSet<String>();
+        for (var prefix : ExternalOreProcessingRules.TAGGED_MATERIAL_FORMS) allowed.add(prefix.getName());
+        int added = 0;
+        int ambiguous = 0;
+        for (var item : BuiltInRegistries.ITEM) {
+            var id = BuiltInRegistries.ITEM.getKey(item);
+            if (id == null || item == Items.AIR) continue;
+            String namespace = id.getNamespace();
+            if (namespace.equals("minecraft") || namespace.equals("gregtech")) continue;
+            if (ItemMaterialRegistry.explicit(item).isPresent() || materialData.containsKey(item)) continue;
+            var forms = CraftingMaterialForms.taggedForms(new ItemStack(item));
+            boolean common = false;
+            for (var form : forms) if (allowed.contains(form.prefix())) { common = true; break; }
+            if (!common) continue;
+            if (forms.size() != 1) { ambiguous++; continue; }
+            var prefix = com.gregtech.gregtech.api.prefix.PrefixRegistry.byName(forms.get(0).prefix());
+            var material = GTMaterialRegistry.get(forms.get(0).material()).resolve();
+            if (prefix == null || !allowed.contains(prefix.getName()) || !material.isValid() || !prefix.isValidFor(material)) continue;
+            materialData.put(item, new ItemComposition(prefix,
+                    List.of(MaterialComponent.of(material, prefix.getMaterialWeight())),
+                    TAGGED_COMPOSITION_SOURCE, true));
+            added++;
+        }
+        ambiguousTaggedItems = ambiguous;
         return added;
     }
 

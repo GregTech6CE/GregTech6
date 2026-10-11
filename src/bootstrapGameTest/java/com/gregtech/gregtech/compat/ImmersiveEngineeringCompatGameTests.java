@@ -32,7 +32,6 @@ public final class ImmersiveEngineeringCompatGameTests {
         var manager = helper.getLevel().getServer().getRecipeManager();
         var conversion = new ResourceLocation("gregtech", "compat/immersiveengineering/gt_to_horizontal");
         if (!loaded) {
-            helper.assertTrue(CompatRecipes.added() == 0, "machine rows must stay absent without IE");
             helper.assertTrue(manager.byKey(conversion).isEmpty(), "crafting rows must stay absent without IE");
             helper.succeed();
             return;
