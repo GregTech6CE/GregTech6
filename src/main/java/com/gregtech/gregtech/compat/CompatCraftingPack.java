@@ -100,7 +100,6 @@ public final class CompatCraftingPack extends AbstractPackResources {
         json.put("type", row.toolRecipe() ? "gregtech:tool_shaped" : "minecraft:crafting_shaped");
         if (row.toolRecipe()) {
             json.put("allow_mirror", false);
-            json.put("gregtech_autocraftable", false);
         }
         json.put("group", "gt.compat");
         json.put("pattern", row.pattern());
