@@ -1,0 +1,240 @@
+{
+  "authors": "Original GregTech-6 Team / Gregorius Techneticies, original LH/CS and connector rules LGPL-3.0-or-later; unchanged user Chinese source.",
+  "base_commit": "de26e9ed6",
+  "changed_probe_and_checker_files": [
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\LanguageDeliveryChecks.java",
+      "sha256": "01cdd64b2a727c06b4711a447e78c487c8e0ce72098249313a237f6460dbeb2f"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\LanguageDeliveryChecks.java",
+      "sha256": "59699db9cd6db82f663b814278f050a808e2605fb199844beb653b83b3c6e9bd"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\integration\\launch_production_smoke.py",
+      "sha256": "3629bbdb5c38ecf6c52c138686a66e756a3a34d43274a92206dd5cb74348ebd8"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\tests\\test_delivery_language.py",
+      "sha256": "6ddb5d022f4937eae287312fe149074a2faba86963f504ce6d59284dcbb9b3bd"
+    }
+  ],
+  "checks": {
+    "external_source_bytes_unchanged": true,
+    "ordinary_dual_build": {
+      "elapsed": "2m 33s",
+      "passed": true
+    },
+    "packaging": {
+      "current_shared_classes": 790,
+      "passed": true
+    },
+    "probe_only_rebuild": {
+      "elapsed": "26s",
+      "passed": true
+    },
+    "receipt_unit_checks": {
+      "passed": true,
+      "seconds": 0.001,
+      "tests": 6
+    },
+    "source_gate": {
+      "java_sources": 2602,
+      "passed": true,
+      "seconds": 2.149
+    }
+  },
+  "completion_dependency": "Human clarification required: allow supplemental Chinese using original terminology, or retain English where gregtech.lang has no translation. Same unanswered choice was recorded in the material/face turn, machine/wire turn, and this delivery continuation. No further broad port work while the latest human language-only scope is pending.",
+  "copies": {
+    "artifacts": {
+      "forge": {
+        "bytes": 40140674,
+        "name": "gregtech6-1.20.1-forge-0.0.0.jar",
+        "path": "C:\\Dev\\GregTech6\\build\\verified\\20261008-042403Z-10b5173d\\gregtech6-1.20.1-forge-0.0.0.jar",
+        "sha256": "10b5173db71f8090c58dc92238e821477d1db96aa8a7792665182e74f251f714",
+        "zip_crc_checked": true
+      },
+      "neoforge": {
+        "bytes": 39995551,
+        "name": "gregtech6-neoforge-1.21.1-0.0.0.jar",
+        "path": "C:\\Dev\\GregTech6\\build\\verified\\20261008-042403Z-10b5173d\\gregtech6-neoforge-1.21.1-0.0.0.jar",
+        "sha256": "242fea331421409659baaf5da14377cc9ec0bec096cec2eb04b075274b5fec79",
+        "zip_crc_checked": true
+      }
+    },
+    "directory": "C:\\Dev\\GregTech6\\build\\verified\\20261008-042403Z-10b5173d",
+    "scope": "Verified complete copies; runtime evidence is recorded separately",
+    "status": "passed",
+    "verification_report": "C:\\Dev\\GregTech6\\work\\language-wire-delivery-artifacts-20261008.json",
+    "verification_report_sha256": "82c7cad0fb73a2c7ac4e48b0005ec6dfadb7e5fa5bfd769b0c7503a5783eb783"
+  },
+  "language_gate": {
+    "changes": {
+      "changed": 0,
+      "missing": 0,
+      "unexpected": 0
+    },
+    "chinese_keys": 141372,
+    "english": {
+      "exact_original_declarations": 12836,
+      "formatted_keys": 391,
+      "intentional_empty_tooltips": 689,
+      "keys": 15521,
+      "original_english_without_chinese_source": 477
+    },
+    "english_fallback_count": 3091,
+    "native_aliases": 12624,
+    "source_keys": 125676,
+    "source_sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0"
+  },
+  "limits": "Actual tooltip callbacks at title screen, no player-hover/world/survival/save/server acceptance. Source Chinese missing for 477 checked original English declarations and additional port-specific text. Full Chinese not complete; no publication.",
+  "literal_candidate_audit": {
+    "classification": "Six Capacity strings are persisted data keys, two strings belong to original WD raw scanner diagnostics, one None is a fuel enum label, and one Tool is a creative fallback category. No automatic remapping by phrase similarity.",
+    "forge_candidates": 10,
+    "neoforge_candidates": 10,
+    "original_scanner_source": {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\util\\WD.java",
+      "sha256": "c8335988b7bd9dbf44df6790d867ac6cfe2e6414793abb0cdd14c32cd342f095"
+    },
+    "reports": [
+      {
+        "path": "C:\\Dev\\GregTech6\\work\\language-original-all-literals-20261008.json",
+        "sha256": "ded4eba6c6615f80e8c25023da0bfa5bbe77cf9533a5d68dcfd98a35c0cb3272"
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\work\\language-original-neo-literals-20261008.json",
+        "sha256": "e2d37a4ff4ac445df0e3ad72cf420e58307abd30fb5433c8c9241fe8e4ae3132"
+      }
+    ],
+    "scope": "Exact/colon-normalized nonempty original LH phrases that also have Chinese, across each platform main Java source. This is not all English text coverage."
+  },
+  "raw_reports": [
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-wire-delivery-artifacts-20261008.json",
+      "sha256": "82c7cad0fb73a2c7ac4e48b0005ec6dfadb7e5fa5bfd769b0c7503a5783eb783"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-wire-delivery-forge-20261008.json",
+      "sha256": "dae5445b4e5d050e7993b307ef7fb4bed66ddf921ea5723e6a82fc5120301985"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-wire-delivery-neoforge-20261008.json",
+      "sha256": "95636669e72c4c1c0a57714c586c0e8848412080ce4f1f928a2707b3f98d5b6b"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-wire-delivery-copies-20261008.json",
+      "sha256": "c1e56abb0dd5ce10a9f534f4e809dcc93538ff0aab6184d53ee1fea31ead8984"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-wire-delivery-sourcecheck-20261008.json",
+      "sha256": "3dfd27a31ea1792dfbccb29cb257abea9ee89e56964f7d86aa1d89ccbc755e51"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-wire-delivery-localization-20261008.json",
+      "sha256": "a8f4c3689fd2880ff90dfcd81d123241863231ca5e74784df835689233d2cb4f"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-wire-delivery-rejected-20261008.json",
+      "sha256": "de43ebbb70283d458814b4b46fd8e494bc37f5d4c5533cfe82cd739a49d26f88"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-wire-delivery-build-20261008.log",
+      "sha256": "9993b9019bcd789808d151820d9ed041f700b76a6835c85eedc2d3e847f90842"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-wire-delivery-probe-20261008.log",
+      "sha256": "243157ab87bd6a608275ea290e96dc2a66a48e6192f68ecd3a6ac449d2e2dbe4"
+    }
+  ],
+  "rejected_run": {
+    "checker_exit_code": 1,
+    "log": "build\\production-smoke\\forge-aaf01128-b29d-49d4-88b4-becc54095bd0\\launch.log",
+    "log_sha256": "86a89733b037a4c62f77b3cfbb6dcc24c6b0809d11a52f5ba9d143c627ddd441",
+    "neoforge_run": false,
+    "probe": {
+      "path": "C:\\Dev\\GregTech6\\build\\production-smoke\\forge-aaf01128-b29d-49d4-88b4-becc54095bd0\\mods\\gregtech-delivery-probe-0.0.0.jar",
+      "sha256": "7c4b17fd95451b0aa39ae3c447586625af329d7f8e63e8ce3f31f1428c3bf679"
+    },
+    "production_jars_unchanged": true,
+    "reason": "Probe required a harvest-title row for hand-harvestable wires; actual common row legitimately contains a localized cutter name inside the hand-harvestable hint. Retain exactly one cutter hint and full source label/value checks."
+  },
+  "runtime": {
+    "forge": {
+      "distribution": {
+        "path": "C:\\Dev\\GregTech6\\build\\libs\\gregtech6-1.20.1-forge-0.0.0.jar",
+        "sha256": "10b5173db71f8090c58dc92238e821477d1db96aa8a7792665182e74f251f714"
+      },
+      "elapsed_seconds": 53.66,
+      "exit_code": 0,
+      "generated_bilingual_checks": {
+        "anvils": 35,
+        "bees": 640,
+        "books": 28,
+        "bottles": 169,
+        "canvases": 16,
+        "creativeTabs": 185,
+        "engineDescriptions": 59,
+        "faceMasks": 64,
+        "machineLabels": 7,
+        "panels": 83,
+        "wireDescriptions": 620
+      },
+      "installed_files_modified": false,
+      "java": "C:\\Program Files\\Zulu\\zulu-25\\bin\\java.exe",
+      "language_name_inventory": {
+        "latin_candidates": 13825,
+        "path": "C:\\Dev\\GregTech6\\build\\production-smoke\\forge-dbd2c203-1621-4f43-80a0-42e7ce3e66da\\language-names.json",
+        "registered_items": 75856,
+        "sha256": "b3662fd317e0b387ac537737c96a73de22f2f58833f2d332882f4e1955305519"
+      },
+      "log_sha256": "0439a73dea926d2156eebe99c50cefef1474a04df4d667e13ce48608539fae78",
+      "probe": {
+        "path": "C:\\Dev\\GregTech6\\build\\production-probe\\gregtech-delivery-probe-0.0.0.jar",
+        "sha256": "06e4e6734d4b0a058892d5b2e44cc5816d107b092f07b94bc6c7bece8a4811c4"
+      },
+      "screenshot": "C:\\Dev\\GregTech6\\build\\production-smoke\\forge-dbd2c203-1621-4f43-80a0-42e7ce3e66da\\screenshots\\production-forge-c70f9acb-8a12-4a0c-a359-c13679d85e62.png",
+      "screenshot_sha256": "7eeb7b26a91b6828cb2542c09e2219fa1971b1854d024330c8d60ea2c1b32e3d",
+      "version": "1.20.1-Forge_47.4.26",
+      "visual_review_scope": "Viewed existing 1280x720 fluid/bee/anvil preview. Wire labels checked through installed item tooltip callbacks, not a wire player-hover screenshot. Original missing translations remain English."
+    },
+    "neoforge": {
+      "distribution": {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\build\\libs\\gregtech6-neoforge-1.21.1-0.0.0.jar",
+        "sha256": "242fea331421409659baaf5da14377cc9ec0bec096cec2eb04b075274b5fec79"
+      },
+      "elapsed_seconds": 46.41,
+      "exit_code": 0,
+      "generated_bilingual_checks": {
+        "anvils": 35,
+        "bees": 640,
+        "books": 28,
+        "bottles": 169,
+        "canvases": 16,
+        "creativeTabs": 185,
+        "engineDescriptions": 59,
+        "faceMasks": 64,
+        "machineLabels": 7,
+        "panels": 83,
+        "wireDescriptions": 620
+      },
+      "installed_files_modified": false,
+      "java": "C:\\Program Files\\Zulu\\zulu-25\\bin\\java.exe",
+      "language_name_inventory": {
+        "latin_candidates": 13825,
+        "path": "C:\\Dev\\GregTech6\\build\\production-smoke\\neoforge-7336904c-0819-4f13-87c0-97788885eef2\\language-names.json",
+        "registered_items": 75855,
+        "sha256": "588ff318afa6baa8b3f555aa900f28a4de7a65975034a4f34ada55fb74db31a7"
+      },
+      "log_sha256": "191c677a419082eb509bd9ee2e39a72b645f946877c2bda617bfbf415a0aeb93",
+      "probe": {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\build\\production-probe\\gregtech-delivery-probe-0.0.0.jar",
+        "sha256": "f11456f97143ad1354f3645d573066fc85957c7718ad5c75894642cce065ca83"
+      },
+      "screenshot": "C:\\Dev\\GregTech6\\build\\production-smoke\\neoforge-7336904c-0819-4f13-87c0-97788885eef2\\screenshots\\production-neoforge-03d36239-4c34-4685-a651-bd63609e1586.png",
+      "screenshot_sha256": "6d0ba9f8b1b018aa167ca016da7ae330cba6188e86523060e933cc8d7d5d1411",
+      "version": "1.21.1-NeoForge_21.1.252",
+      "visual_review_scope": "Viewed existing 1280x720 fluid/bee/anvil preview. Wire labels checked through installed item tooltip callbacks, not a wire player-hover screenshot. Original missing translations remain English."
+    }
+  },
+  "scope": "Finish ordinary artifact and installed bilingual tooltip acceptance for the previous wire-label change; no new main code or language values."
+}

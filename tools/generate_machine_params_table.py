@@ -17,6 +17,7 @@ Output : core/src/main/java/com/gregtech/gregtech/data/BasicMachineOriginalParam
 from __future__ import annotations
 
 import json
+import argparse
 from pathlib import Path
 
 import gt6_machine_map as mapping
@@ -51,8 +52,17 @@ def params_of(entry: dict) -> dict:
 
 
 def main() -> int:
-    basic = json.loads(BASIC.read_text(encoding="utf-8"))["entries"]
-    multiblock = json.loads(MULTIBLOCK.read_text(encoding="utf-8"))["entries"]
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--source", type=Path, help="Read the preserved Loader_MultiTileEntities.java directly")
+    ap.add_argument("--out", type=Path, default=OUT)
+    args = ap.parse_args()
+    if args.source:
+        from extract_basic_machine_recipes import parse_source
+        basic = parse_source(args.source, "Basic Machines")
+        multiblock = parse_source(args.source, "Multiblock Machines")
+    else:
+        basic = json.loads(BASIC.read_text(encoding="utf-8"))["entries"]
+        multiblock = json.loads(MULTIBLOCK.read_text(encoding="utf-8"))["entries"]
     basic_index = mapping.index_entries(basic)
     multiblock_index = mapping.index_entries(multiblock)
 
@@ -109,8 +119,8 @@ public final class BasicMachineOriginalParams {
     private BasicMachineOriginalParams() {}
 }
 '''
-    OUT.write_text(header + ",\n".join(rows) + "\n" + footer, encoding="utf-8", newline="\n")
-    print("wrote %s (%d entries)" % (OUT, len(rows)))
+    args.out.write_text(header + ",\n".join(rows) + "\n" + footer, encoding="utf-8", newline="\n")
+    print("wrote %s (%d entries)" % (args.out, len(rows)))
     if missing:
         print("WARNING no original registration for:")
         for name in missing:

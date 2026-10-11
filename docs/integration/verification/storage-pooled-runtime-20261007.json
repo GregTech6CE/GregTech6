@@ -1,0 +1,225 @@
+{
+  "date": "2026-10-07",
+  "source_commit": "e692ec5efd4c2d89b96cac7f4b5cdc568d59308e",
+  "included_batches": [
+    "9d386098",
+    "62d60705",
+    "e692ec5e"
+  ],
+  "source_files": [
+    {
+      "role": "canonical original",
+      "authors": [
+        "GregTech-6 Team",
+        "Gregorius Techneticies"
+      ],
+      "license": "LGPL-3.0-or-later",
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\block\\multitileentity\\MultiTileEntityBlock.java",
+      "sha256": "78ef2ca64595500bb841faec8304dee0f3e276e14b54c62f494c3116c29ce0b7",
+      "bytes": 60410
+    },
+    {
+      "role": "canonical original",
+      "authors": [
+        "GregTech-6 Team",
+        "Gregorius Techneticies"
+      ],
+      "license": "LGPL-3.0-or-later",
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "bytes": 791265
+    },
+    {
+      "role": "canonical original",
+      "authors": [
+        "GregTech-6 Team",
+        "Gregorius Techneticies"
+      ],
+      "license": "LGPL-3.0-or-later",
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\util\\CR.java",
+      "sha256": "952f94e0dfff66d27d2ac2b97ed47b6aa0c8250aa19babd5cc528c89616c0760",
+      "bytes": 39113
+    },
+    {
+      "role": "canonical original",
+      "authors": [
+        "GregTech-6 Team",
+        "Gregorius Techneticies"
+      ],
+      "license": "LGPL-3.0-or-later",
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\util\\OM.java",
+      "sha256": "3c2cc710d62373460d1854f60a7383ec0a5b7969877dbbcb3f5c9b5a0b4c5cbb",
+      "bytes": 34107
+    },
+    {
+      "role": "canonical original",
+      "authors": [
+        "GregTech-6 Team",
+        "Gregorius Techneticies"
+      ],
+      "license": "LGPL-3.0-or-later",
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapShredder.java",
+      "sha256": "b963307f82df8cb595f4d0927d969b603f57a792596ec642bb31f6aaee01d1f4",
+      "bytes": 4063
+    },
+    {
+      "role": "canonical original",
+      "authors": [
+        "GregTech-6 Team",
+        "Gregorius Techneticies"
+      ],
+      "license": "LGPL-3.0-or-later",
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577",
+      "bytes": 694
+    },
+    {
+      "role": "comparison only",
+      "authors": [
+        "GregTech-6 Team",
+        "Gregorius Techneticies"
+      ],
+      "license": "LGPL-3.0-or-later",
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\block\\multitileentity\\MultiTileEntityBlock.java",
+      "sha256": "f68016c929c5d2ba455c037a623a07c57c8e1edb33eabf956cbf130399e12678",
+      "bytes": 113514
+    },
+    {
+      "role": "comparison only",
+      "authors": [
+        "GregTech-6 Team",
+        "Gregorius Techneticies"
+      ],
+      "license": "LGPL-3.0-or-later",
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "4d87cacde8defa33df30359d345046daa8e901ab0419dca2766d2140d8af1562",
+      "bytes": 791308
+    },
+    {
+      "role": "comparison only",
+      "authors": [
+        "GregTech-6 Team",
+        "Gregorius Techneticies"
+      ],
+      "license": "LGPL-3.0-or-later",
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\util\\CR.java",
+      "sha256": "a71c640dd339f0720d726fb7b412d3a3de49a9e285e4aa1f1f6f4d7f453e857e",
+      "bytes": 44071
+    },
+    {
+      "role": "comparison only",
+      "authors": [
+        "GregTech-6 Team",
+        "Gregorius Techneticies"
+      ],
+      "license": "LGPL-3.0-or-later",
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\util\\OM.java",
+      "sha256": "eb08daaf04a7fc433386a9356ee1cfcd5487a8035bfe5498e52fe4944784d921",
+      "bytes": 34292
+    },
+    {
+      "role": "comparison only",
+      "authors": [
+        "GregTech-6 Team",
+        "Gregorius Techneticies"
+      ],
+      "license": "LGPL-3.0-or-later",
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapShredder.java",
+      "sha256": "6cba8106eb29643cdb23aab98e4ed45ebb3d34959e20a3953eb57b093557f865",
+      "bytes": 4246
+    },
+    {
+      "role": "comparison only",
+      "authors": [
+        "GregTech-6 Team",
+        "Gregorius Techneticies"
+      ],
+      "license": "LGPL-3.0-or-later",
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577",
+      "bytes": 694
+    }
+  ],
+  "native_world": {
+    "log": {
+      "path": "C:\\Dev\\GregTech6\\work\\storage-pooled-native-world-20261007.log",
+      "sha256": "55ccc0e7e1aa83914820a20c35f7cccd9babd36975501db0a98746ed50d1adac",
+      "bytes": 282278
+    },
+    "elapsed": "3m 47s",
+    "gradle_exit_code": 0,
+    "forge_required_tests_passed": 3,
+    "neoforge_required_tests_passed": 3,
+    "forge_java": "17.0.10",
+    "neoforge_java": "21.0.7",
+    "heap": "3g",
+    "worlds": [
+      "C:\\Dev\\GregTech6\\build\\storage-pooled-gametest-20261007",
+      "C:\\Dev\\GregTech6\\neoforge\\build\\storage-pooled-gametest-20261007"
+    ]
+  },
+  "scenarios_per_platform": [
+    "Actual survival hand harvesting: wood gearbox, diamond mortar and ironwood steam engine; exactly one native block drop each.",
+    "Iridium gearbox: actual native harvest event rejects hand, netherite pickaxe and Steel wrench; matching Iridium wrench drops one block and incurs wear.",
+    "Six native crafted storage representatives: Steel advanced table, Gold charging table, Aluminium and Platinum logistics storage, StainlessSteel metal bookshelf, Steel scaffold. Native recipe assembly, serializer roundtrip, crafting tool wear, exact registered material data, native crucible input, clean shredder input/outputs selected-pile conservation and rejection of configured/stored block items."
+  ],
+  "fixture_files": [
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\SourceBlockHarvestTests.java",
+      "sha256": "77641830573c464a3352b057c0623358f45ef1f887d4ef92c99bcec1ed23f8ec",
+      "bytes": 4348
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\SourceStorageRecipeTests.java",
+      "sha256": "aae8fea19e4b6c2c0d3aea4b1ab6078d51ca4ae55afb1d936d73929fdc033e4c",
+      "bytes": 5421
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\TransportMaterialPortTests.java",
+      "sha256": "cfa7eb9f2b3f0f6d432d7f4b98f7d0dc463684bcb267293d7abec128529309a5",
+      "bytes": 9568
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\SourceBlockHarvestTests.java",
+      "sha256": "bd450d9f9cef24169a712c3905bd44961dca4ea7b058e654265f5d4edb15ce16",
+      "bytes": 4411
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\SourceStorageRecipeTests.java",
+      "sha256": "9a2ffe9655cb342e18a0301adab36f2187f0691167024b850a837861212311f5",
+      "bytes": 5437
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\TransportMaterialPortTests.java",
+      "sha256": "a3125b2f82403bbfe547799c641c700a5dfbc1e57480adc93b884f9703e0e03b",
+      "bytes": 9182
+    }
+  ],
+  "verification": {
+    "development_native_worlds": true,
+    "ordinary_dual_jars": false,
+    "installed_client_startup": false,
+    "complete_naturally_scheduled_survival": false,
+    "independent_saved_world_restart": false,
+    "historical_save_compatibility": false
+  },
+  "attempts": [
+    {
+      "description": "First pooled finite native run; both platforms pass, save and stop. No retry or extra broad suite.",
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\storage-pooled-native-world-20261007.log",
+        "sha256": "55ccc0e7e1aa83914820a20c35f7cccd9babd36975501db0a98746ed50d1adac",
+        "bytes": 282278
+      },
+      "exit_code": 0
+    }
+  ],
+  "limitations": [
+    "Six representative recipes do not establish every storage variant survival chain.",
+    "World save on shutdown is distinct from an independent world restart.",
+    "Runtime tooltip methods/events and all1309 registered block compositions will be checked separately in the ordinary installed JAR startup.",
+    "Original locker families, wood shelf compositions, capacity overrides/blinking colours and remaining tooltip/material gaps are not closed by this acceptance."
+  ],
+  "goal": "active",
+  "publication": "Local only; no push or PR"
+}

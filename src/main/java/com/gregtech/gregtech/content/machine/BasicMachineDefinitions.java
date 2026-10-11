@@ -7,6 +7,9 @@ import java.util.List;
 public final class BasicMachineDefinitions {
  private BasicMachineDefinitions() {}
  public static List<BasicMachineSpec> specifications() {
-  return BasicMachineCatalog.specifications().stream().map(p->new BasicMachineSpec(p.id(),p.material(),p.machineName(),p.energyType(),p.tier(),p.energyIn(),p.energyOut(),p.hardness(),p.blastResistance(),FaceConfig.from(p.faceConfig()),p.constructionMaterials(),MachineRecipeMaps.byMachineName(p.machineName()),p.parallelLimit(),p.energyInMin(),p.energyInMax())).toList();
+  return BasicMachineCatalog.specifications().stream().map(BasicMachineDefinitions::from).toList();
+ }
+ public static BasicMachineSpec from(com.gregtech.gregtech.api.machine.BasicMachineParameters p) {
+  return new BasicMachineSpec(p.id(),p.material(),p.machineName(),p.energyType(),p.tier(),p.energyIn(),p.energyOut(),p.hardness(),p.blastResistance(),FaceConfig.from(p.faceConfig()),p.constructionMaterials(),MachineRecipeMaps.byMachineName(p.machineName()),p.parallelLimit(),p.energyInMin(),p.energyInMax());
  }
 }

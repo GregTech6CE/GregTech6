@@ -19,7 +19,7 @@ class JadeTranslations(unittest.TestCase):
             keys.update(f'config.jade.plugin_{namespace}.{name}' for namespace, name in identifiers)
         self.assertTrue(keys)
         for locale in ('en_us', 'zh_cn'):
-            translations = json.loads((ROOT / f'src/main/resources/assets/gregtech/lang/{locale}.json')
+            translations = json.loads((ROOT / f'core/src/main/resources/assets/gregtech/lang/{locale}.json')
                                       .read_text(encoding='utf-8'))
             for key in sorted(keys):
                 with self.subTest(locale=locale, key=key):

@@ -1,0 +1,295 @@
+{
+  "date": "2026-10-07",
+  "base_commit": "c8cb6bb4d0603cf5f5dd9238aee8d65925c83ca4",
+  "status": "7693 fixed-source contracts and dual main/probe/world-fixture compilation accepted; execution and ordinary dual jars deferred; goal active",
+  "source_receipt": {
+    "path": "C:\\Dev\\GregTech6\\docs\\integration\\verification\\sensor-source-20261007.json",
+    "sha256": "d1ffdcf812d40c3522f372b7952fc2988b2a5683e8050ba8e285573f6b8b2046",
+    "bytes": 87165
+  },
+  "compile_attempts": [
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\sensor-source-compile-20261007.log",
+        "sha256": "bb7348fd3e9d48e3f02e2dbf83310191845c45ca3cb0832d6a50071ba192c7fd",
+        "bytes": 59938
+      },
+      "seconds": 104,
+      "exit_code": 0,
+      "source_assertions": 7693,
+      "new_source_assertions": 109,
+      "tasks": [
+        ":core:machineSpecBehaviorContracts",
+        ":compileJava",
+        ":neoforge:compileJava",
+        ":compileProductionSmokeJava",
+        ":neoforge:compileProductionSmokeJava",
+        ":compileBootstrapGameTestJava",
+        ":neoforge:compileBootstrapGameTestJava"
+      ]
+    },
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\sensor-input-compression-compile-20261007.log",
+        "sha256": "f4905a3b70986d395f4485b5f791ee5d8486e904f6fd44657f742c7a6c6fb613",
+        "bytes": 65005
+      },
+      "seconds": 31,
+      "exit_code": 0,
+      "reason": "Added original basic-machine input-only compressed volume after source comparison; only affected dual main and world fixture compilation repeated",
+      "tasks": [
+        ":compileJava",
+        ":neoforge:compileJava",
+        ":compileBootstrapGameTestJava",
+        ":neoforge:compileBootstrapGameTestJava"
+      ]
+    }
+  ],
+  "settings": {
+    "offline": true,
+    "no_parallel": true,
+    "direct_core_classpath": true,
+    "direct_core_resources": true,
+    "forge_java": 17,
+    "neoforge_java": 21
+  },
+  "compiled_byte_references": [
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\api\\sensor\\SensorCatalog.class",
+      "sha256": "34c7affcbdbae56ae82fa03a5e5ff7f052436c0384d5215be41afcec6f76c409",
+      "bytes": 4623
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\api\\sensor\\SensorCatalog$Entry.class",
+      "sha256": "55e606a75d996aac81de676dca4b56b8fd6901ceb5dde00851a66a65aa63bc56",
+      "bytes": 2427
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\api\\sensor\\SensorMeasurements.class",
+      "sha256": "2374f04f8dfc47584637cbe7d0beee35ea5011134d2653784939d8648c32b4af",
+      "bytes": 1422
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\api\\sensor\\SensorPanelRules.class",
+      "sha256": "ace3a23fedb79131faa11daa0a05ed18a53bb1120bae40a8466fdb129cc66243",
+      "bytes": 3706
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\api\\sensor\\CompressionSensorSource.class",
+      "sha256": "8c5ab54b5e017cafd812fd0dc05f116a19e48ccf533c39b55589ac4798a7b597",
+      "bytes": 211
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\build\\classes\\java\\test\\com\\gregtech\\gregtech\\core\\SensorSourceContracts.class",
+      "sha256": "153383d9c520d4278fca63bb795f97748b5381332eb0125c25fb2a291000c88b",
+      "bytes": 8306
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\content\\machine\\OriginalMachineMaterialData.class",
+      "sha256": "4b56b6ae2215b8a32902dafd6f1ebf1855e13636181897f61b5fc09d31e05a1e",
+      "bytes": 111188
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\data\\SourceBlockProperties.class",
+      "sha256": "a73f9f81f07609868a19477ab383c0a586cad6f16e86aaa0ac72c95289cef868",
+      "bytes": 62936
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\data\\generated\\GTSensorRecipesGen.class",
+      "sha256": "b7caf0afacd43ad05e79963e35f62b8dc0d5928d4863de425c71d700424a18a7",
+      "bytes": 6063
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\client\\SensorTooltips.class",
+      "sha256": "cd464228846add5937aed020d93f2655530a081f930fa5c52d160bebd7007846",
+      "bytes": 2359
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\block\\sensor\\SensorBlock.class",
+      "sha256": "608ed40037f4b9e4eb4028ceb0d800e842cb679a929faa0e509f50441b81b618",
+      "bytes": 13035
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\blockentity\\sensor\\SensorBlockEntity.class",
+      "sha256": "40ef07a14742867173bb602ad641ee6f6f616ad83d34d2d7cfef1aa1fa9ca6bc",
+      "bytes": 18380
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\blockentity\\sensor\\SensorBlockEntity$Kind.class",
+      "sha256": "9ade8fe572f9bea275aaa30610f9549c7422b8bc26589d8b051a93b73b2e4fbc",
+      "bytes": 2474
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\registry\\GTSensors.class",
+      "sha256": "4b403eb0dd967c56c9e419b4339ba7bc8d3cf6d49be083dd94746273f8ed6a21",
+      "bytes": 4848
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\blockentity\\machine\\BoilerTankBlockEntity.class",
+      "sha256": "d450068f53c14506c569aff7d76161b78d3afde4b733934a3bb15bf27345b806",
+      "bytes": 21668
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\blockentity\\machine\\OriginalLargeBoilerControllerBlockEntity.class",
+      "sha256": "48bf64f0d68e0d8e98d72337398c2646e7f9a09155a536089559e54c7116963e",
+      "bytes": 29427
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\blockentity\\machine\\FluidPipeBlockEntity.class",
+      "sha256": "77a923a1733f34bbb333c554ed42b9dece8e8ed9154c8002ae88fbd7e4febe81",
+      "bytes": 44462
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\blockentity\\machine\\BasicMachineBlockEntity.class",
+      "sha256": "853622507eb7178c8d0188af4a994ab38d0b6e69d84ad99d84ba0223bf49ff35",
+      "bytes": 67112
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\productionSmoke\\com\\gregtech\\gregtech\\integration\\client\\SensorSourceDeliveryChecks.class",
+      "sha256": "24eabfcc10ccab823a365f5cbfd70922f8feada8dcdaf0105757011fd35c11e9",
+      "bytes": 8939
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\productionSmoke\\com\\gregtech\\gregtech\\integration\\client\\CommonBlockDeliveryChecks.class",
+      "sha256": "46fd6ec06d867812c3c298011ecf672d85eed1663148d9f59575d75fd0d14807",
+      "bytes": 25071
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\productionSmoke\\com\\gregtech\\gregtech\\integration\\client\\ProductionClientSmoke.class",
+      "sha256": "1b17bbf6753c1e90f292402c4e2a6fb25c9c93b7ee901bf2fffd1a0f67ab4c8e",
+      "bytes": 11756
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\bootstrapGameTest\\com\\gregtech\\gregtech\\gametest\\SensorSourceTests.class",
+      "sha256": "f99ca7b48f0460b48edf99c8231fbde9aa3f83d1b8f9ac466c9ecd9aab9e12ba",
+      "bytes": 11032
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\client\\SensorTooltips.class",
+      "sha256": "e3b7453e73ef7f3d585977e4ff35ec1c75fbc454eb85a9caa9e4f89b370a2b49",
+      "bytes": 2359
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\block\\sensor\\SensorBlock.class",
+      "sha256": "080119c25d57b11520236008c6185ba26ff3efa549b9c746e8e0ff3ecebc3acb",
+      "bytes": 14791
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\blockentity\\sensor\\SensorBlockEntity.class",
+      "sha256": "50950bee2173c9311a3f193d09d3151cb0766e466901ac73b740873ed8c3dd87",
+      "bytes": 18714
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\blockentity\\sensor\\SensorBlockEntity$Kind.class",
+      "sha256": "8e79da30d43f6bc9189d93c7c76405093ceac6388c80f72fe19c52900a272ec9",
+      "bytes": 2519
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\registry\\GTSensors.class",
+      "sha256": "19bad3809dd4d10a7fbec4ca8982a77a72adbad62de2f91fe367e21eab9cda56",
+      "bytes": 5005
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\blockentity\\machine\\BoilerTankBlockEntity.class",
+      "sha256": "64ac74763bc911a23a822bec6d57976f60806bd2f8c8c1cb98c7f867ca72db42",
+      "bytes": 20426
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\blockentity\\machine\\OriginalLargeBoilerControllerBlockEntity.class",
+      "sha256": "0bff1e1ff7ea1639acc1fbf6215223a1afdeb4b8a4610a8ceef7e7df3a089ddc",
+      "bytes": 28429
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\blockentity\\machine\\FluidPipeBlockEntity.class",
+      "sha256": "fdac072cc8a516b670193b75334587a4ce326ac1ed7dbe701501692e18789974",
+      "bytes": 43174
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\blockentity\\machine\\BasicMachineBlockEntity.class",
+      "sha256": "d312fc017534e7731a23b25cf2574c406d51b5cc7195a670bc9c9c1cb81393c8",
+      "bytes": 64977
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\productionSmoke\\com\\gregtech\\gregtech\\integration\\client\\SensorSourceDeliveryChecks.class",
+      "sha256": "057dc54c14e312c3b3a40d06e7d7e43ec6381b6da8763a17236e18db12a9e502",
+      "bytes": 9152
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\productionSmoke\\com\\gregtech\\gregtech\\integration\\client\\CommonBlockDeliveryChecks.class",
+      "sha256": "abc6f26a31cf38fe9541ade9857fb7c7af54165912f09372bd41a7cf2518d067",
+      "bytes": 26611
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\productionSmoke\\com\\gregtech\\gregtech\\integration\\client\\ProductionClientSmoke.class",
+      "sha256": "5d9e59851dfa021eb9d0ad8762c77ff8ad291d5882b5220e8f9baf26bc67a733",
+      "bytes": 9586
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\bootstrapGameTest\\com\\gregtech\\gregtech\\gametest\\SensorSourceTests.class",
+      "sha256": "ddd1c02cef923eaf3335259b08ca9524dce2dad87a8c4b29467857cabb5383b6",
+      "bytes": 11394
+    }
+  ],
+  "preparation_attempts": [
+    {
+      "action": "apply_patch first combined delete/add SensorCatalog",
+      "result": "Rejected duplicate target before applying any files; corrected update applied"
+    },
+    {
+      "action": "apply_sensor_source_20261007.py",
+      "exit_code": 1,
+      "result": "Native/material/model changes applied before PNG copy assertion: original sensor asset folder absent. Remaining six unchanged PNGs copied from inspected _w CC0 source and language portion run separately; mutations not rerun"
+    }
+  ],
+  "source_table_audit": {
+    "path": "C:\\Dev\\GregTech6\\work\\sensor-table-audit-20261007.json",
+    "sha256": "0a5421631db133fa2751f1374bdf4f31a39675662cba4551da20ce8caf53232f",
+    "bytes": 2328
+  },
+  "prepared_installed_checks": {
+    "items_per_loader": 21,
+    "source_tooltip_rows_per_loader": 147,
+    "compiled": true,
+    "executed": false
+  },
+  "prepared_world_checks": {
+    "namespace": "gregtech_sensor_source",
+    "required_per_loader": 1,
+    "compiled": true,
+    "executed": false,
+    "scope": "21 actual native factories; selected east real chest13 items; source front rejection; native save/load and missing-key fallback; wrench hook reset; seeded1234567 steam in actual large boiler /1234 Gibbl and1 kilo-Gibbl; basic5000 input excludes7000 output"
+  },
+  "resources": {
+    "models": 2,
+    "texture_references": 6,
+    "all_exist": true,
+    "pngs_unchanged_from_comparison": true,
+    "source_recipe_generator_idempotency_rows": 21
+  },
+  "current_world": false,
+  "current_installed_client": false,
+  "current_ordinary_dual_build": false,
+  "last_accepted_jars": [
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\verified\\20261007-061418Z-10bc6a82\\gregtech6-1.20.1-forge-0.0.0.jar",
+      "sha256": "10bc6a82e3d85c481263e0abbf2826354497ec9f1b1755cb8e44e9836421c8a1",
+      "bytes": 41637337
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\verified\\20261007-061418Z-10bc6a82\\gregtech6-neoforge-1.21.1-0.0.0.jar",
+      "sha256": "5b6cd982b767ee8409e2ea78e4bb05969c072fe8d19167926856b9622bfd528e",
+      "bytes": 39859863
+    }
+  ],
+  "last_accepted_include_this_batch": false,
+  "last_accepted_scope": "Only SHA checked this batch. Prior full CRC/bytecode/installed report is historical and excludes current plus c8cb6bb4d.",
+  "deferred": [
+    "Pooled ordinary dual JAR, installed title probes and bounded native sensor worlds in subsequent batches as user requested.",
+    "Actual tool clicks/secondary-face overlay, full inventory/stack/progress/mob-spawner/temperature and external sensor-provider parity; remaining compressed providers including crucibles and multiblock-part delegation.",
+    "Source 1.7.10 item/connection save format, dropped sensor configuration, variable saved settings; no native method round trip presented as independent world restart.",
+    "Natural EU traffic/pressure/fuel/crafting/recycling survival chain, player hover/model screenshots, independent restart, historical saves and ordinary dedicated server.",
+    "User Chinese patch lacks two new31023 strings; original English retained. Existing421 model-reference warnings and remaining all-block source tooltips/materials remain open."
+  ],
+  "pushed": false,
+  "pull_request_work": false
+}

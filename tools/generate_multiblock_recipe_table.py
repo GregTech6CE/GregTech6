@@ -59,7 +59,7 @@ TARGETS = {
     "Large Centrifuge": ([], "centrifuge_part"),
     "Large Electrolyzer": ([], "electrolyzer_part"),
     "Large Coagulator Array": ([], "tank_wall"),
-    "Large Autoclave": ([], "tank_wall"),
+    "Large Autoclave": ([], "tank_wall_dense"),
     "Large Bathing Vat": ([], "tank_wall"),
     "Large Batch Mixer": ([], "tank_wall"),
     "Large Fermenter": ([], "tank_wall"),
@@ -367,7 +367,12 @@ def main() -> int:
         # this port keeps them as their own blocks, so the original "aMat" is spelled out.
         material = FIXED_MATERIAL.get(entry["tier"].strip()) or own_material
         keys: dict[str, str] = {}
+        # Original17104 explicitly references IL.ROBOT_ARMS[2] (MV), independent of the one-tier hull.
+        fixed_robot_arm = gt6_name == "Large Bathing Vat"
         for symbol, value in entry["keys"].items():
+            if fixed_robot_arm and norm(value) == "IL.ROBOT_ARMS[2]":
+                keys[symbol] = "item:gregtech:compact_robot_arm_mv"
+                continue
             if allow_m_override and symbol == "M":
                 keys[symbol] = "item:gregtech:" + structural
                 continue

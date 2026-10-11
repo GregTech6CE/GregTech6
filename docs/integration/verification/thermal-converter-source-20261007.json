@@ -1,0 +1,2066 @@
+{
+  "date": "2026-10-07",
+  "baseline": "102ceb8272fa0740e9145949ef77ba55f7d714d5",
+  "authors": [
+    "GregTech-6 Team",
+    "Gregorius Techneticies"
+  ],
+  "license": "LGPL-3.0-or-later code; CC0-1.0 selected assets",
+  "source_files": [
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemTechnological.java",
+      "sha256": "7367922c4938318dd50b1320e7fc7a7453c33cffa46f75a437325314d2536ddc"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\MT.java",
+      "sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\ANY.java",
+      "sha256": "6a26fa2293c4a315d2594c5ac80eba689389f9b1922a33547bdd20d2df724f71"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\OP.java",
+      "sha256": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\load\\LoaderItemData.java",
+      "sha256": "0dc916611c9a743f477e473b75b3fa3462a47d22dd75ef086c33ea18aaa9f968"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\load\\LoaderOreDictReRegistrations.java",
+      "sha256": "d34719309a5ddf5bd7fc01c0462b57af52b4cf980a69fae4d4042c2ab78b07ef"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+      "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\RM.java",
+      "sha256": "c7cb07faef0235ace4bb26656fddaabfa10da6aa4a2689a7f4cdcaef10d366e6"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\TD.java",
+      "sha256": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\..\\code\\TagData.java",
+      "sha256": "afa72881ee6c421c094ce27e3cef2701374257cb1dd2f099293cceb3e91b4a64"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\energy\\TileEntityBase10EnergyBatBox.java",
+      "sha256": "21ee1d11820ce91c0f693d4bf7684503ed29d8b8fa2cf7b434ebbd2143338fd7"
+    },
+    {
+      "path": "C:\\Dev\\GregTech_zh_cn.lang",
+      "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577",
+      "bytes": 694,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\LICENSE.assets",
+      "sha256": "e2aaec4ccc681649063335b6c4991fd52570d15f45bd0af97c1cee3cb0375299"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\base\\TileEntityBase01Root.java",
+      "sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+      "bytes": 59432,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\base\\TileEntityBase09FacingSingle.java",
+      "sha256": "b172aadf76d09c37ee4c7793cb784dcc97a19d999ad1737bafc60cc064bece7f",
+      "bytes": 5485,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\energy\\TileEntityBase10EnergyConverter.java",
+      "sha256": "52cb409c7d35a8731338527301e09c8b779548e1851d5fe7fe91242fd25b9c44",
+      "bytes": 9515,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\energy\\TileEntityBase11Twotypes.java",
+      "sha256": "eec57ddb5f9d74b84599bf5dcbee331f8a62e468c5e4acaa54b351bcbe70e711",
+      "bytes": 3943,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\energy\\ITileEntityEnergyFluxHandler.java",
+      "sha256": "f5a680a58e3c547bca1b17fd77f2008b81ed0bbb51c9be1259949e836d670f57",
+      "bytes": 1156,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\behavior\\TE_Behavior_Energy_Capacitor.java",
+      "sha256": "4977ba698373a42ddadfbc5de00daf67d38a4daa2062103aa038ba84318f57c4",
+      "bytes": 1393,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\behavior\\TE_Behavior_Energy_Stats.java",
+      "sha256": "d66cd7885b7053510d40c054dd6b87ef7a2aab23ee6e554e33af726fc4dddbbf",
+      "bytes": 2994,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\behavior\\TE_Behavior_Energy_Converter.java",
+      "sha256": "db1e31ed18e62bc9d261e33edcf338ed9717fc1ee088eab8de2baff69c9e59d4",
+      "bytes": 9249,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\behavior\\TE_Behavior_Active_Trinary.java",
+      "sha256": "ba735871ca3e15360a39824c1c1eca4d4e79ada8ec08e1f90129dd8c5533af34",
+      "bytes": 1816,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\oredict\\OreDictItemData.java",
+      "sha256": "d44471d8e7d2d732891e79a0f234045a693290e29f3d463dbc79633283d8517f",
+      "bytes": 8695,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\util\\CR.java",
+      "sha256": "952f94e0dfff66d27d2ac2b97ed47b6aa0c8250aa19babd5cc528c89616c0760",
+      "bytes": 39113,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\util\\UT.java",
+      "sha256": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709",
+      "bytes": 213872,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\GT_API_Proxy_Client.java",
+      "sha256": "4ea2be4bb978e989127552dfb057e6f15415b84fe997382828123ba62c1576c8",
+      "bytes": 36465,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityHeaterElectric.java",
+      "sha256": "5ad74046ba8946a8f624658822afc47a2f1fedd3ad079b570735e30bb4f5c77a",
+      "bytes": 4097,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityHeaterFlux.java",
+      "sha256": "3416f2625b932f6af7e1fb93a93332879611fbe2e7038af1de2f59f65fb2f71f",
+      "bytes": 4037,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityCoolerElectric.java",
+      "sha256": "dc989a05d1249e60de32c7cb35bf3179aec370a5f5c7921d0b418bb098781a67",
+      "bytes": 2830,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityCoolerFlux.java",
+      "sha256": "ffef8f07205b6e42752ae89636fe5dc0344edb8dd7e09daa218fc142827f3ab3",
+      "bytes": 2681,
+      "license": "LGPL-3.0-or-later"
+    }
+  ],
+  "comparison_files": [
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\energy\\TileEntityBase10EnergyConverter.java",
+      "sha256": "442b940b7b21519e73b8bcdccadf8e568ac9ece7d953152c117d10b6984b1389",
+      "bytes": 9803,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\energy\\TileEntityBase11Twotypes.java",
+      "sha256": "373120bc7434bb4ca7fccc8f276fc542b5aeb7b5ae46b27a92d0c288d0e07113",
+      "bytes": 4166,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\behavior\\TE_Behavior_Energy_Converter.java",
+      "sha256": "afd8078303cd1be0341cdcf0400a1eb37d5fa2086680009360e8434028773085",
+      "bytes": 9461,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityHeaterElectric.java",
+      "sha256": "c37357f5f1c97973a05ae747c510b14aca60d6dcf18c387ef9d424ad8ccd22be",
+      "bytes": 4286,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityHeaterFlux.java",
+      "sha256": "6c07ff4dbb18cfcd1cb92597c9c9983d6aaaa7953b95d61e4d4f4eea97dafb39",
+      "bytes": 4226,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityCoolerElectric.java",
+      "sha256": "e5d51ce17ca7ba50cd4934cda57a71df83f4f0509b9997f2b8a9662c0479c7a1",
+      "bytes": 3019,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityCoolerFlux.java",
+      "sha256": "4cf20cb55d7188654c1329bc272aaf30cbd0075d9fd713e922d147ebc5d04154",
+      "bytes": 2870,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577",
+      "bytes": 694,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\LICENSE.assets",
+      "sha256": "e2aaec4ccc681649063335b6c4991fd52570d15f45bd0af97c1cee3cb0375299",
+      "bytes": 500,
+      "license": "CC0-1.0"
+    }
+  ],
+  "asset_import": {
+    "variants": [
+      {
+        "id": "electric_heater_lv",
+        "source_id": 10001,
+        "source_key": "gt.multitileentity.10001",
+        "en_us": "Electric Heater (LV)",
+        "zh_cn": "电力加热器 (LV)",
+        "folder": "heaters/heat_electric",
+        "creative_family": "heaters",
+        "source_order": 395
+      },
+      {
+        "id": "electric_heater_mv",
+        "source_id": 10002,
+        "source_key": "gt.multitileentity.10002",
+        "en_us": "Electric Heater (MV)",
+        "zh_cn": "电力加热器 (MV)",
+        "folder": "heaters/heat_electric",
+        "creative_family": "heaters",
+        "source_order": 396
+      },
+      {
+        "id": "electric_heater_hv",
+        "source_id": 10003,
+        "source_key": "gt.multitileentity.10003",
+        "en_us": "Electric Heater (HV)",
+        "zh_cn": "电力加热器 (HV)",
+        "folder": "heaters/heat_electric",
+        "creative_family": "heaters",
+        "source_order": 397
+      },
+      {
+        "id": "electric_heater_ev",
+        "source_id": 10004,
+        "source_key": "gt.multitileentity.10004",
+        "en_us": "Electric Heater (EV)",
+        "zh_cn": "电力加热器 (EV)",
+        "folder": "heaters/heat_electric",
+        "creative_family": "heaters",
+        "source_order": 398
+      },
+      {
+        "id": "electric_heater_iv",
+        "source_id": 10005,
+        "source_key": "gt.multitileentity.10005",
+        "en_us": "Electric Heater (IV)",
+        "zh_cn": "电力加热器 (IV)",
+        "folder": "heaters/heat_electric",
+        "creative_family": "heaters",
+        "source_order": 399
+      },
+      {
+        "id": "flux_heater_lv",
+        "source_id": 11001,
+        "source_key": "gt.multitileentity.11001",
+        "en_us": "Flux Heater (Lead)",
+        "zh_cn": "红石通量加热器 (铅)",
+        "folder": "heaters/heat_flux",
+        "creative_family": "heaters",
+        "source_order": 400
+      },
+      {
+        "id": "flux_heater_mv",
+        "source_id": 11002,
+        "source_key": "gt.multitileentity.11002",
+        "en_us": "Flux Heater (Invar)",
+        "zh_cn": "红石通量加热器 (殷钢)",
+        "folder": "heaters/heat_flux",
+        "creative_family": "heaters",
+        "source_order": 401
+      },
+      {
+        "id": "flux_heater_hv",
+        "source_id": 11003,
+        "source_key": "gt.multitileentity.11003",
+        "en_us": "Flux Heater (Electrum)",
+        "zh_cn": "红石通量加热器 (琥珀金)",
+        "folder": "heaters/heat_flux",
+        "creative_family": "heaters",
+        "source_order": 402
+      },
+      {
+        "id": "flux_heater_ev",
+        "source_id": 11004,
+        "source_key": "gt.multitileentity.11004",
+        "en_us": "Flux Heater (Enderium Base)",
+        "zh_cn": "红石通量加热器 (末影粗胚)",
+        "folder": "heaters/heat_flux",
+        "creative_family": "heaters",
+        "source_order": 403
+      },
+      {
+        "id": "flux_heater_iv",
+        "source_id": 11005,
+        "source_key": "gt.multitileentity.11005",
+        "en_us": "Flux Heater (Enderium)",
+        "zh_cn": "红石通量加热器 (末影)",
+        "folder": "heaters/heat_flux",
+        "creative_family": "heaters",
+        "source_order": 404
+      },
+      {
+        "id": "electric_cooler_lv",
+        "source_id": 10161,
+        "source_key": "gt.multitileentity.10161",
+        "en_us": "Thermoelectric Cooler (LV)",
+        "zh_cn": "半导体制冷器 (LV)",
+        "folder": "cooler/cryo_electric",
+        "creative_family": "coolers",
+        "source_order": 492
+      },
+      {
+        "id": "electric_cooler_mv",
+        "source_id": 10162,
+        "source_key": "gt.multitileentity.10162",
+        "en_us": "Thermoelectric Cooler (MV)",
+        "zh_cn": "半导体制冷器 (MV)",
+        "folder": "cooler/cryo_electric",
+        "creative_family": "coolers",
+        "source_order": 493
+      },
+      {
+        "id": "electric_cooler_hv",
+        "source_id": 10163,
+        "source_key": "gt.multitileentity.10163",
+        "en_us": "Thermoelectric Cooler (HV)",
+        "zh_cn": "半导体制冷器 (HV)",
+        "folder": "cooler/cryo_electric",
+        "creative_family": "coolers",
+        "source_order": 494
+      },
+      {
+        "id": "electric_cooler_ev",
+        "source_id": 10164,
+        "source_key": "gt.multitileentity.10164",
+        "en_us": "Thermoelectric Cooler (EV)",
+        "zh_cn": "半导体制冷器 (EV)",
+        "folder": "cooler/cryo_electric",
+        "creative_family": "coolers",
+        "source_order": 495
+      },
+      {
+        "id": "electric_cooler_iv",
+        "source_id": 10165,
+        "source_key": "gt.multitileentity.10165",
+        "en_us": "Thermoelectric Cooler (IV)",
+        "zh_cn": "半导体制冷器 (IV)",
+        "folder": "cooler/cryo_electric",
+        "creative_family": "coolers",
+        "source_order": 496
+      },
+      {
+        "id": "flux_cooler_lv",
+        "source_id": 11161,
+        "source_key": "gt.multitileentity.11161",
+        "en_us": "Thermofluxic Cooler (Lead)",
+        "zh_cn": "红石通量半导体制冷器 (铅)",
+        "folder": "cooler/cryo_flux",
+        "creative_family": "coolers",
+        "source_order": 497
+      },
+      {
+        "id": "flux_cooler_mv",
+        "source_id": 11162,
+        "source_key": "gt.multitileentity.11162",
+        "en_us": "Thermofluxic Cooler (Invar)",
+        "zh_cn": "红石通量半导体制冷器 (殷钢)",
+        "folder": "cooler/cryo_flux",
+        "creative_family": "coolers",
+        "source_order": 498
+      },
+      {
+        "id": "flux_cooler_hv",
+        "source_id": 11163,
+        "source_key": "gt.multitileentity.11163",
+        "en_us": "Thermofluxic Cooler (Electrum)",
+        "zh_cn": "红石通量半导体制冷器 (琥珀金)",
+        "folder": "cooler/cryo_flux",
+        "creative_family": "coolers",
+        "source_order": 499
+      },
+      {
+        "id": "flux_cooler_ev",
+        "source_id": 11164,
+        "source_key": "gt.multitileentity.11164",
+        "en_us": "Thermofluxic Cooler (Enderium Base)",
+        "zh_cn": "红石通量半导体制冷器 (末影粗胚)",
+        "folder": "cooler/cryo_flux",
+        "creative_family": "coolers",
+        "source_order": 500
+      },
+      {
+        "id": "flux_cooler_iv",
+        "source_id": 11165,
+        "source_key": "gt.multitileentity.11165",
+        "en_us": "Thermofluxic Cooler (Enderium)",
+        "zh_cn": "红石通量半导体制冷器 (末影)",
+        "folder": "cooler/cryo_flux",
+        "creative_family": "coolers",
+        "source_order": 501
+      }
+    ],
+    "assets": {
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\heaters\\heat_electric\\colored\\front.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\heaters\\heat_electric\\colored\\front.png",
+        "sha256": "b94934858d010e0381fd5056dbc0ec00e964cad00c152944b2e6e0918991f977",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\heaters\\heat_electric\\colored\\back.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\heaters\\heat_electric\\colored\\back.png",
+        "sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\heaters\\heat_electric\\colored\\side.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\heaters\\heat_electric\\colored\\side.png",
+        "sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\heaters\\heat_electric\\overlay\\front.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\heaters\\heat_electric\\overlay\\front.png",
+        "sha256": "5cfdf5978d60090e2f470106b0d45a7125cb9611aaebf239fd749dcbe902a1ba",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\heaters\\heat_electric\\overlay\\back.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\heaters\\heat_electric\\overlay\\back.png",
+        "sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\heaters\\heat_electric\\overlay\\side.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\heaters\\heat_electric\\overlay\\side.png",
+        "sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\heaters\\heat_electric\\overlay_active\\front.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\heaters\\heat_electric\\overlay_active\\front.png",
+        "sha256": "1255b278daa0cdc7b771188b06c87e0f27edb2b09cf5b2bdda1113204b295612",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\heaters\\heat_electric\\overlay_active\\back.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\heaters\\heat_electric\\overlay_active\\back.png",
+        "sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\heaters\\heat_electric\\overlay_active\\side.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\heaters\\heat_electric\\overlay_active\\side.png",
+        "sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\heaters\\heat_flux\\colored\\front.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\heaters\\heat_flux\\colored\\front.png",
+        "sha256": "b94934858d010e0381fd5056dbc0ec00e964cad00c152944b2e6e0918991f977",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\heaters\\heat_flux\\colored\\back.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\heaters\\heat_flux\\colored\\back.png",
+        "sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\heaters\\heat_flux\\colored\\side.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\heaters\\heat_flux\\colored\\side.png",
+        "sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\heaters\\heat_flux\\overlay\\front.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\heaters\\heat_flux\\overlay\\front.png",
+        "sha256": "cd72370027fc1fc99083aa82907876a09e407c3912cca696cf98cefd0fcedf54",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\heaters\\heat_flux\\overlay\\back.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\heaters\\heat_flux\\overlay\\back.png",
+        "sha256": "ea63a03b226d86607f2fcf091d36d3118b2c88d5f6f43227319639eb3abc469b",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\heaters\\heat_flux\\overlay\\side.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\heaters\\heat_flux\\overlay\\side.png",
+        "sha256": "ea63a03b226d86607f2fcf091d36d3118b2c88d5f6f43227319639eb3abc469b",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\heaters\\heat_flux\\overlay_active\\front.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\heaters\\heat_flux\\overlay_active\\front.png",
+        "sha256": "7f0d6b4f8fea044c77a7320af52f5b986851e7857d71a947ae79c29b43c49e3d",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\heaters\\heat_flux\\overlay_active\\back.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\heaters\\heat_flux\\overlay_active\\back.png",
+        "sha256": "ea63a03b226d86607f2fcf091d36d3118b2c88d5f6f43227319639eb3abc469b",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\heaters\\heat_flux\\overlay_active\\side.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\heaters\\heat_flux\\overlay_active\\side.png",
+        "sha256": "ea63a03b226d86607f2fcf091d36d3118b2c88d5f6f43227319639eb3abc469b",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\cooler\\cryo_electric\\colored\\front.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\cooler\\cryo_electric\\colored\\front.png",
+        "sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\cooler\\cryo_electric\\colored\\back.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\cooler\\cryo_electric\\colored\\back.png",
+        "sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\cooler\\cryo_electric\\colored\\side.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\cooler\\cryo_electric\\colored\\side.png",
+        "sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\cooler\\cryo_electric\\overlay\\front.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\cooler\\cryo_electric\\overlay\\front.png",
+        "sha256": "273613adbb8def1d541e3365954afef7e12c46e4a8eaa79897ff2293f3ab38af",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\cooler\\cryo_electric\\overlay\\back.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\cooler\\cryo_electric\\overlay\\back.png",
+        "sha256": "564059a4f9674a510621236dfca34a8a3dc19b5a272f4ff9d981102942ed1fb8",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\cooler\\cryo_electric\\overlay\\side.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\cooler\\cryo_electric\\overlay\\side.png",
+        "sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\cooler\\cryo_electric\\overlay_active\\front.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\cooler\\cryo_electric\\overlay_active\\front.png",
+        "sha256": "e0bdc99363efc7803e304bf692353b27a71e29811247a091977aa81e2416cd61",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\cooler\\cryo_electric\\overlay_active\\back.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\cooler\\cryo_electric\\overlay_active\\back.png",
+        "sha256": "d8c19f92b7ff47b24528d7ea033c45ae5e75c084d97dd21bbfcc48ab367b58bf",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\cooler\\cryo_electric\\overlay_active\\side.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\cooler\\cryo_electric\\overlay_active\\side.png",
+        "sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\cooler\\cryo_flux\\colored\\front.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\cooler\\cryo_flux\\colored\\front.png",
+        "sha256": "b94934858d010e0381fd5056dbc0ec00e964cad00c152944b2e6e0918991f977",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\cooler\\cryo_flux\\colored\\back.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\cooler\\cryo_flux\\colored\\back.png",
+        "sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\cooler\\cryo_flux\\colored\\side.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\cooler\\cryo_flux\\colored\\side.png",
+        "sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\cooler\\cryo_flux\\overlay\\front.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\cooler\\cryo_flux\\overlay\\front.png",
+        "sha256": "273613adbb8def1d541e3365954afef7e12c46e4a8eaa79897ff2293f3ab38af",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\cooler\\cryo_flux\\overlay\\back.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\cooler\\cryo_flux\\overlay\\back.png",
+        "sha256": "564059a4f9674a510621236dfca34a8a3dc19b5a272f4ff9d981102942ed1fb8",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\cooler\\cryo_flux\\overlay\\side.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\cooler\\cryo_flux\\overlay\\side.png",
+        "sha256": "ea63a03b226d86607f2fcf091d36d3118b2c88d5f6f43227319639eb3abc469b",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\cooler\\cryo_flux\\overlay_active\\front.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\cooler\\cryo_flux\\overlay_active\\front.png",
+        "sha256": "e0bdc99363efc7803e304bf692353b27a71e29811247a091977aa81e2416cd61",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\cooler\\cryo_flux\\overlay_active\\back.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\cooler\\cryo_flux\\overlay_active\\back.png",
+        "sha256": "d8c19f92b7ff47b24528d7ea033c45ae5e75c084d97dd21bbfcc48ab367b58bf",
+        "canonical_available": false
+      },
+      "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\cooler\\cryo_flux\\overlay_active\\side.png": {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\cooler\\cryo_flux\\overlay_active\\side.png",
+        "sha256": "ea63a03b226d86607f2fcf091d36d3118b2c88d5f6f43227319639eb3abc469b",
+        "canonical_available": false
+      }
+    },
+    "source_files": [
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+        "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393"
+      },
+      {
+        "path": "C:\\Dev\\GregTech_zh_cn.lang",
+        "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\LICENSE",
+        "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\LICENSE.assets",
+        "sha256": "e2aaec4ccc681649063335b6c4991fd52570d15f45bd0af97c1cee3cb0375299"
+      }
+    ],
+    "authors": [
+      "GregTech-6 Team",
+      "Gregorius Techneticies"
+    ],
+    "code_license": "LGPL-3.0-or-later",
+    "asset_license": "CC0-1.0 unless otherwise stated, per preserved LICENSE.assets",
+    "scope": "Exact source names/order and selected assets; model state enumeration is static, not runtime baking.",
+    "native_states_per_platform": 720
+  },
+  "language_import": {
+    "keys": [
+      "gt.lang.accepts.redstoneflux.lossless",
+      "gt.lang.efficiency",
+      "gt.lang.emits.redstoneflux.lossless",
+      "gt.lang.energy.input",
+      "gt.lang.energy.output",
+      "gt.lang.face.any.but.front",
+      "gt.lang.face.any.but.front.back",
+      "gt.lang.face.back",
+      "gt.lang.face.front",
+      "gt.lang.hazard.contact",
+      "gt.lang.reminder.extenders",
+      "gt.lang.tool.name.wrench",
+      "gt.lang.use.monkey.wrench.to.toggle.direction",
+      "gt.lang.use.x.to.toggle.facing.post",
+      "gt.lang.use.x.to.toggle.facing.pre",
+      "gt.td.short.energy.cryo",
+      "gt.td.short.energy.electricity",
+      "gt.td.short.energy.heat",
+      "gt.td.short.energy.kinetic_rotation",
+      "gt.td.short.energy.redstone_flux",
+      "gt.tooltip.energybattery.1",
+      "gt.tooltip.energybattery.2",
+      "gt.tooltip.energybattery.3"
+    ],
+    "aliases": {},
+    "changes": {
+      "en_us": {},
+      "zh_cn": {}
+    },
+    "missing_chinese": [],
+    "source_files": [
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+        "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+        "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\RM.java",
+        "sha256": "c7cb07faef0235ace4bb26656fddaabfa10da6aa4a2689a7f4cdcaef10d366e6"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\TD.java",
+        "sha256": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\..\\code\\TagData.java",
+        "sha256": "afa72881ee6c421c094ce27e3cef2701374257cb1dd2f099293cceb3e91b4a64"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\energy\\TileEntityBase10EnergyBatBox.java",
+        "sha256": "21ee1d11820ce91c0f693d4bf7684503ed29d8b8fa2cf7b434ebbd2143338fd7"
+      },
+      {
+        "path": "C:\\Dev\\GregTech_zh_cn.lang",
+        "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0"
+      }
+    ],
+    "license": "Original LH/CS/RM/TD/TagData: LGPL-3.0-or-later; Chinese strings copied verbatim from the user-provided patch."
+  },
+  "material_data": {
+    "unchanged_previous_fixed_blocks": 439,
+    "unchanged_machine_tiers": 252,
+    "current_fixed_blocks": 449,
+    "existing_hopper_mappings": 120,
+    "unit": 648648000,
+    "new_fixed_ids": [
+      "flux_cooler_ev",
+      "flux_cooler_hv",
+      "flux_cooler_iv",
+      "flux_cooler_lv",
+      "flux_cooler_mv",
+      "flux_heater_ev",
+      "flux_heater_hv",
+      "flux_heater_iv",
+      "flux_heater_lv",
+      "flux_heater_mv"
+    ],
+    "source_thermal_rows": [
+      {
+        "path": "electric_heater_lv",
+        "source_id": 10001,
+        "source_line": 817,
+        "components": {
+          "SteelGalvanized": 9297288000,
+          "Cu": 1297296000
+        },
+        "pattern": [
+          "TCT",
+          "CMC",
+          "TCd"
+        ],
+        "keys": {
+          "M": "OP.casingMachineDouble.dat(aMat)",
+          "T": "OP.screw.dat(aMat)",
+          "C": "OP.wireGt01.dat(ANY.Cu       )"
+        }
+      },
+      {
+        "path": "electric_cooler_lv",
+        "source_id": 10161,
+        "source_line": 985,
+        "components": {
+          "Sn": 648648000,
+          "Rubber": 1297296000,
+          "Si": 1297296000,
+          "Cu": 1297296000,
+          "SteelGalvanized": 5189184000
+        },
+        "pattern": [
+          "WPw",
+          "CMC",
+          "xPW"
+        ],
+        "keys": {
+          "M": "OP.casingMachine.dat(aMat)",
+          "W": "MT.DATA.CABLES_01[1]",
+          "P": "OP.plate           .dat(MT.Si)",
+          "C": "OP.plate          .dat(ANY.Cu)"
+        }
+      },
+      {
+        "path": "flux_heater_lv",
+        "source_id": 11001,
+        "source_line": 824,
+        "components": {
+          "Pb": 5189184000,
+          "SteelGalvanized": 9297288000,
+          "Cu": 1297296000
+        },
+        "pattern": [
+          "SSS",
+          "SMS",
+          "SSS"
+        ],
+        "keys": {
+          "M": "aRegistry.getItem(10001)",
+          "S": "OP.stickLong.dat(aMat)"
+        }
+      },
+      {
+        "path": "flux_cooler_lv",
+        "source_id": 11161,
+        "source_line": 992,
+        "components": {
+          "Pb": 5189184000,
+          "Sn": 648648000,
+          "Rubber": 1297296000,
+          "Si": 1297296000,
+          "Cu": 1297296000,
+          "SteelGalvanized": 5189184000
+        },
+        "pattern": [
+          "PSP",
+          "PMP",
+          "PSP"
+        ],
+        "keys": {
+          "M": "aRegistry.getItem(10161)",
+          "P": "OP.plate.dat(aMat)",
+          "S": "OP.stickLong.dat(aMat)"
+        }
+      },
+      {
+        "path": "electric_heater_mv",
+        "source_id": 10002,
+        "source_line": 818,
+        "components": {
+          "Al": 9297288000,
+          "Constantan": 2594592000
+        },
+        "pattern": [
+          "TCT",
+          "CMC",
+          "TCd"
+        ],
+        "keys": {
+          "M": "OP.casingMachineDouble.dat(aMat)",
+          "T": "OP.screw.dat(aMat)",
+          "C": "OP.wireGt02.dat(MT.Constantan)"
+        }
+      },
+      {
+        "path": "electric_cooler_mv",
+        "source_id": 10162,
+        "source_line": 986,
+        "components": {
+          "Cu": 3243240000,
+          "Rubber": 1297296000,
+          "Si": 2594592000,
+          "Al": 5189184000
+        },
+        "pattern": [
+          "WPw",
+          "CMC",
+          "xPW"
+        ],
+        "keys": {
+          "M": "OP.casingMachine.dat(aMat)",
+          "W": "MT.DATA.CABLES_01[2]",
+          "P": "OP.plateDouble     .dat(MT.Si)",
+          "C": "OP.plateDouble    .dat(ANY.Cu)"
+        }
+      },
+      {
+        "path": "flux_heater_mv",
+        "source_id": 11002,
+        "source_line": 825,
+        "components": {
+          "Invar": 5189184000,
+          "Al": 9297288000,
+          "Constantan": 2594592000
+        },
+        "pattern": [
+          "SSS",
+          "SMS",
+          "SSS"
+        ],
+        "keys": {
+          "M": "aRegistry.getItem(10002)",
+          "S": "OP.stickLong.dat(aMat)"
+        }
+      },
+      {
+        "path": "flux_cooler_mv",
+        "source_id": 11162,
+        "source_line": 993,
+        "components": {
+          "Invar": 5189184000,
+          "Cu": 3243240000,
+          "Rubber": 1297296000,
+          "Si": 2594592000,
+          "Al": 5189184000
+        },
+        "pattern": [
+          "PSP",
+          "PMP",
+          "PSP"
+        ],
+        "keys": {
+          "M": "aRegistry.getItem(10162)",
+          "P": "OP.plate.dat(aMat)",
+          "S": "OP.stickLong.dat(aMat)"
+        }
+      },
+      {
+        "path": "electric_heater_hv",
+        "source_id": 10003,
+        "source_line": 819,
+        "components": {
+          "StainlessSteel": 9297288000,
+          "Kanthal": 5189184000
+        },
+        "pattern": [
+          "TCT",
+          "CMC",
+          "TCd"
+        ],
+        "keys": {
+          "M": "OP.casingMachineDouble.dat(aMat)",
+          "T": "OP.screw.dat(aMat)",
+          "C": "OP.wireGt04.dat(MT.Kanthal   )"
+        }
+      },
+      {
+        "path": "electric_cooler_hv",
+        "source_id": 10163,
+        "source_line": 987,
+        "components": {
+          "Au": 648648000,
+          "Rubber": 1297296000,
+          "Si": 3891888000,
+          "Cu": 3891888000,
+          "StainlessSteel": 5189184000
+        },
+        "pattern": [
+          "WPw",
+          "CMC",
+          "xPW"
+        ],
+        "keys": {
+          "M": "OP.casingMachine.dat(aMat)",
+          "W": "MT.DATA.CABLES_01[3]",
+          "P": "OP.plateTriple     .dat(MT.Si)",
+          "C": "OP.plateTriple    .dat(ANY.Cu)"
+        }
+      },
+      {
+        "path": "flux_heater_hv",
+        "source_id": 11003,
+        "source_line": 826,
+        "components": {
+          "Electrum": 5189184000,
+          "StainlessSteel": 9297288000,
+          "Kanthal": 5189184000
+        },
+        "pattern": [
+          "SSS",
+          "SMS",
+          "SSS"
+        ],
+        "keys": {
+          "M": "aRegistry.getItem(10003)",
+          "S": "OP.stickLong.dat(aMat)"
+        }
+      },
+      {
+        "path": "flux_cooler_hv",
+        "source_id": 11163,
+        "source_line": 994,
+        "components": {
+          "Electrum": 5189184000,
+          "Au": 648648000,
+          "Rubber": 1297296000,
+          "Si": 3891888000,
+          "Cu": 3891888000,
+          "StainlessSteel": 5189184000
+        },
+        "pattern": [
+          "PSP",
+          "PMP",
+          "PSP"
+        ],
+        "keys": {
+          "M": "aRegistry.getItem(10163)",
+          "P": "OP.plate.dat(aMat)",
+          "S": "OP.stickLong.dat(aMat)"
+        }
+      },
+      {
+        "path": "electric_heater_ev",
+        "source_id": 10004,
+        "source_line": 820,
+        "components": {
+          "Cr": 9297288000,
+          "Nichrome": 10378368000
+        },
+        "pattern": [
+          "TCT",
+          "CMC",
+          "TCd"
+        ],
+        "keys": {
+          "M": "OP.casingMachineDouble.dat(aMat)",
+          "T": "OP.screw.dat(aMat)",
+          "C": "OP.wireGt08.dat(MT.Nichrome  )"
+        }
+      },
+      {
+        "path": "electric_cooler_ev",
+        "source_id": 10164,
+        "source_line": 988,
+        "components": {
+          "Al": 648648000,
+          "Rubber": 1297296000,
+          "Si": 5189184000,
+          "Cu": 5189184000,
+          "Cr": 5189184000
+        },
+        "pattern": [
+          "WPw",
+          "CMC",
+          "xPW"
+        ],
+        "keys": {
+          "M": "OP.casingMachine.dat(aMat)",
+          "W": "MT.DATA.CABLES_01[4]",
+          "P": "OP.plateQuadruple  .dat(MT.Si)",
+          "C": "OP.plateQuadruple .dat(ANY.Cu)"
+        }
+      },
+      {
+        "path": "flux_heater_ev",
+        "source_id": 11004,
+        "source_line": 827,
+        "components": {
+          "EnderiumBase": 5189184000,
+          "Cr": 9297288000,
+          "Nichrome": 10378368000
+        },
+        "pattern": [
+          "SSS",
+          "SMS",
+          "SSS"
+        ],
+        "keys": {
+          "M": "aRegistry.getItem(10004)",
+          "S": "OP.stickLong.dat(aMat)"
+        }
+      },
+      {
+        "path": "flux_cooler_ev",
+        "source_id": 11164,
+        "source_line": 995,
+        "components": {
+          "EnderiumBase": 5189184000,
+          "Al": 648648000,
+          "Rubber": 1297296000,
+          "Si": 5189184000,
+          "Cu": 5189184000,
+          "Cr": 5189184000
+        },
+        "pattern": [
+          "PSP",
+          "PMP",
+          "PSP"
+        ],
+        "keys": {
+          "M": "aRegistry.getItem(10164)",
+          "P": "OP.plate.dat(aMat)",
+          "S": "OP.stickLong.dat(aMat)"
+        }
+      },
+      {
+        "path": "electric_heater_iv",
+        "source_id": 10005,
+        "source_line": 821,
+        "components": {
+          "Ti": 9297288000,
+          "SiC": 20756736000
+        },
+        "pattern": [
+          "TCT",
+          "CMC",
+          "TCd"
+        ],
+        "keys": {
+          "M": "OP.casingMachineDouble.dat(aMat)",
+          "T": "OP.screw.dat(aMat)",
+          "C": "OP.wireGt16.dat(MT.SiC       )"
+        }
+      },
+      {
+        "path": "electric_cooler_iv",
+        "source_id": 10165,
+        "source_line": 989,
+        "components": {
+          "Pt": 648648000,
+          "Rubber": 1297296000,
+          "Si": 6486480000,
+          "Cu": 6486480000,
+          "Ti": 5189184000
+        },
+        "pattern": [
+          "WPw",
+          "CMC",
+          "xPW"
+        ],
+        "keys": {
+          "M": "OP.casingMachine.dat(aMat)",
+          "W": "MT.DATA.CABLES_01[5]",
+          "P": "OP.plateQuintuple  .dat(MT.Si)",
+          "C": "OP.plateQuintuple .dat(ANY.Cu)"
+        }
+      },
+      {
+        "path": "flux_heater_iv",
+        "source_id": 11005,
+        "source_line": 828,
+        "components": {
+          "Enderium": 5189184000,
+          "Ti": 9297288000,
+          "SiC": 20756736000
+        },
+        "pattern": [
+          "SSS",
+          "SMS",
+          "SSS"
+        ],
+        "keys": {
+          "M": "aRegistry.getItem(10005)",
+          "S": "OP.stickLong.dat(aMat)"
+        }
+      },
+      {
+        "path": "flux_cooler_iv",
+        "source_id": 11165,
+        "source_line": 996,
+        "components": {
+          "Enderium": 5189184000,
+          "Pt": 648648000,
+          "Rubber": 1297296000,
+          "Si": 6486480000,
+          "Cu": 6486480000,
+          "Ti": 5189184000
+        },
+        "pattern": [
+          "PSP",
+          "PMP",
+          "PSP"
+        ],
+        "keys": {
+          "M": "aRegistry.getItem(10165)",
+          "P": "OP.plate.dat(aMat)",
+          "S": "OP.stickLong.dat(aMat)"
+        }
+      }
+    ],
+    "source_unknown_automatic_inputs": {
+      "\"gt:re-battery1\"": 5,
+      "\"gt:re-battery2\"": 1,
+      "\"gt:re-battery3\"": 1,
+      "\"gt:re-battery4\"": 1,
+      "DYE_OREDICTS_LENS[DYE_INDEX_Yellow]": 5,
+      "OD.beamWood": 1,
+      "OD.container1000creosote": 1,
+      "OD.container1000honey": 5,
+      "OD.container1000water": 1,
+      "OD.craftingFirestarter": 1,
+      "OD.itemGlue": 1,
+      "OD.itemLubricant": 32,
+      "OD.itemLubricantEarly": 15,
+      "OD.sandstone": 12,
+      "OD_CIRCUITS[0]": 4,
+      "OD_CIRCUITS[1]": 33,
+      "OD_CIRCUITS[2]": 32,
+      "OD_CIRCUITS[3]": 33,
+      "OD_CIRCUITS[4]": 31,
+      "OD_CIRCUITS[5]": 31,
+      "OD_CIRCUITS[6]": 63,
+      "OD_CIRCUITS[7]": 4,
+      "OD_CIRCUITS[8]": 4,
+      "OD_CIRCUITS[9]": 4,
+      "OP.treeSapling": 5
+    },
+    "source_invalid_recipes": [
+      {
+        "path": "energy_storage_xv",
+        "source_id": 10099,
+        "source_line": 895,
+        "pattern": [
+          "WCW",
+          "WCW",
+          "XMX"
+        ],
+        "keys": {
+          "C": "MT.DATA.CABLES_04[9]",
+          "X": "OD_CIRCUITS[9]",
+          "W": "MT.DATA.WIRES_04[9]",
+          "M": "aRegistry.getItem(10040+9)"
+        },
+        "unresolved_source_item_references": [
+          "aRegistry.getItem(10049)"
+        ],
+        "source_recipe_rejection": "CR.shaped returns false on a null item input before reversible OM.data registration.",
+        "known_parts_before_rejection": {
+          "Graphene": 7783776000
+        }
+      }
+    ],
+    "scope": "Only known original CR.REV inputs, not arbitrary representative tag substitution; no guessed glue/circuit quantities."
+  },
+  "model_checks": {
+    "physical_states_per_platform": 720,
+    "models_and_states_and_item_refs": [
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_heater_lv.json",
+        "sha256": "c903d28112cb5e4124af8e7605817ed6b91011ad9c37e876762c705e8042a00b",
+        "bytes": 4641
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_heater_lv_active.json",
+        "sha256": "2c7e56d2f65743886b25871d4c133a52a274adcbd313344bf7f436ac4b305bef",
+        "bytes": 4906
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\blockstates\\electric_heater_lv.json",
+        "sha256": "ea380ca60bcc6e9afe97307f5447dc09fb80d18af7bf8b847fd5c8e8c074cbfe",
+        "bytes": 5211
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\item\\electric_heater_lv.json",
+        "sha256": "d4200234bc0129dadf2882faeba0d52b0bc21a0ddc1c84e384ada3e7a09624d6",
+        "bytes": 62
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_heater_mv.json",
+        "sha256": "c903d28112cb5e4124af8e7605817ed6b91011ad9c37e876762c705e8042a00b",
+        "bytes": 4641
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_heater_mv_active.json",
+        "sha256": "2c7e56d2f65743886b25871d4c133a52a274adcbd313344bf7f436ac4b305bef",
+        "bytes": 4906
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\blockstates\\electric_heater_mv.json",
+        "sha256": "896f2b81d513df93f05c253fb71392045055a57a75dc0a89caab35f1590ba881",
+        "bytes": 5211
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\item\\electric_heater_mv.json",
+        "sha256": "7368882763ad349591e426dceaf23d5c2829bf1d436164cd6682a3a6df93df5e",
+        "bytes": 62
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_heater_hv.json",
+        "sha256": "c903d28112cb5e4124af8e7605817ed6b91011ad9c37e876762c705e8042a00b",
+        "bytes": 4641
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_heater_hv_active.json",
+        "sha256": "2c7e56d2f65743886b25871d4c133a52a274adcbd313344bf7f436ac4b305bef",
+        "bytes": 4906
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\blockstates\\electric_heater_hv.json",
+        "sha256": "b259ddf73fe39ceff9014c93e663dd720ada109add29c4ff5b6cbdfdfc9b6429",
+        "bytes": 5211
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\item\\electric_heater_hv.json",
+        "sha256": "dc87dc4e52206d0864bd12b9e680c6e5a701b471c5104eb023a46ef92e72c568",
+        "bytes": 62
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_heater_ev.json",
+        "sha256": "c903d28112cb5e4124af8e7605817ed6b91011ad9c37e876762c705e8042a00b",
+        "bytes": 4641
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_heater_ev_active.json",
+        "sha256": "2c7e56d2f65743886b25871d4c133a52a274adcbd313344bf7f436ac4b305bef",
+        "bytes": 4906
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\blockstates\\electric_heater_ev.json",
+        "sha256": "42ff1f6722b9bef08dc242d22b2c318680c95c133b7c56e5bd36d0aabeb75d60",
+        "bytes": 5211
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\item\\electric_heater_ev.json",
+        "sha256": "2f2c54f4fe383acaf315913e5bdb793078a288959f0fffe3b69cd00c194a7ff0",
+        "bytes": 62
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_heater_iv.json",
+        "sha256": "c903d28112cb5e4124af8e7605817ed6b91011ad9c37e876762c705e8042a00b",
+        "bytes": 4641
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_heater_iv_active.json",
+        "sha256": "2c7e56d2f65743886b25871d4c133a52a274adcbd313344bf7f436ac4b305bef",
+        "bytes": 4906
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\blockstates\\electric_heater_iv.json",
+        "sha256": "f19afae4544dec151935897ff141326d2fd787d3f8e3e350b440c2f052f45229",
+        "bytes": 5211
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\item\\electric_heater_iv.json",
+        "sha256": "f105237bb59e3dd36b48d3d3a91c641839024d76a7c381e5c8c4351345c9bf0a",
+        "bytes": 62
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_heater_lv.json",
+        "sha256": "e3a089a7c1b464113d5dcd3e9620458efc7a52b6f7486d8a4fdf9a01db047173",
+        "bytes": 4812
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_heater_lv_active.json",
+        "sha256": "3935ef87f22fb4d7ca88d6ba967ce0e76eaaf5316cbdc113c9ddfdd046db8133",
+        "bytes": 4854
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\blockstates\\flux_heater_lv.json",
+        "sha256": "ddc5505314afa06e61ddff8e97a4c1ab6b09481190506baff7a5a4f9d7572fea",
+        "bytes": 5067
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\item\\flux_heater_lv.json",
+        "sha256": "49557c1c3312626f13b4bea5311b5f8f0562fac37dfb2b413c251be87ac5aa81",
+        "bytes": 66
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_heater_mv.json",
+        "sha256": "e3a089a7c1b464113d5dcd3e9620458efc7a52b6f7486d8a4fdf9a01db047173",
+        "bytes": 4812
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_heater_mv_active.json",
+        "sha256": "3935ef87f22fb4d7ca88d6ba967ce0e76eaaf5316cbdc113c9ddfdd046db8133",
+        "bytes": 4854
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\blockstates\\flux_heater_mv.json",
+        "sha256": "4d47bc7a03475e3376074de7744f98b534f75aea35ef9b0049e6c9339323350b",
+        "bytes": 5067
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\item\\flux_heater_mv.json",
+        "sha256": "5fb56d030cf42bb4e1492e5de0ba63487252cd5c902e594726cc2beeeb6ac648",
+        "bytes": 66
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_heater_hv.json",
+        "sha256": "e3a089a7c1b464113d5dcd3e9620458efc7a52b6f7486d8a4fdf9a01db047173",
+        "bytes": 4812
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_heater_hv_active.json",
+        "sha256": "3935ef87f22fb4d7ca88d6ba967ce0e76eaaf5316cbdc113c9ddfdd046db8133",
+        "bytes": 4854
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\blockstates\\flux_heater_hv.json",
+        "sha256": "c5ffe5780e858767ec5557b72bb5ff0901d7e71edda4dbde02d4f8fdfd66586f",
+        "bytes": 5067
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\item\\flux_heater_hv.json",
+        "sha256": "ef4461a080f82844220e27e5b77f6faff93f8d6cf3e983d67d255053c414e787",
+        "bytes": 66
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_heater_ev.json",
+        "sha256": "e3a089a7c1b464113d5dcd3e9620458efc7a52b6f7486d8a4fdf9a01db047173",
+        "bytes": 4812
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_heater_ev_active.json",
+        "sha256": "3935ef87f22fb4d7ca88d6ba967ce0e76eaaf5316cbdc113c9ddfdd046db8133",
+        "bytes": 4854
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\blockstates\\flux_heater_ev.json",
+        "sha256": "1060d5f3e78bff0570a5dd21d6fffd6fbaa6dc106015d3952784161b3a9ee481",
+        "bytes": 5067
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\item\\flux_heater_ev.json",
+        "sha256": "c42110f4d565fba55081126b289da33887a8825b56d8a222e74ed1be74b6c541",
+        "bytes": 66
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_heater_iv.json",
+        "sha256": "e3a089a7c1b464113d5dcd3e9620458efc7a52b6f7486d8a4fdf9a01db047173",
+        "bytes": 4812
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_heater_iv_active.json",
+        "sha256": "3935ef87f22fb4d7ca88d6ba967ce0e76eaaf5316cbdc113c9ddfdd046db8133",
+        "bytes": 4854
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\blockstates\\flux_heater_iv.json",
+        "sha256": "4fed50b300d030a46ab30783149dad9e516322551df9fb373de32b0a9e4fee56",
+        "bytes": 5067
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\item\\flux_heater_iv.json",
+        "sha256": "12ffaf0d4b65914ee6d3f27f4710ffb0925b105b6ea36911533014db5b1131df",
+        "bytes": 66
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_cooler_lv.json",
+        "sha256": "d9da14daaaa5cc140ce15382c93b850c4b0a92f87ad4a9b5b06240bb2c1a09f3",
+        "bytes": 4628
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_cooler_lv_active.json",
+        "sha256": "ae1d0a35b223b81e4b5f7bbeef1c17a5fcf9f2eaa15a82d655228f2f64f62a22",
+        "bytes": 4893
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\blockstates\\electric_cooler_lv.json",
+        "sha256": "dd5ceab7d2a180d9a93e3cbbeec2308c774e72db0319e2233eb3e2fd97da17bd",
+        "bytes": 5211
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\item\\electric_cooler_lv.json",
+        "sha256": "0267e6793fb1f5c12a398539db8a1546eca8dd23d65fa1a9bd78c89b608a0322",
+        "bytes": 62
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_cooler_mv.json",
+        "sha256": "d9da14daaaa5cc140ce15382c93b850c4b0a92f87ad4a9b5b06240bb2c1a09f3",
+        "bytes": 4628
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_cooler_mv_active.json",
+        "sha256": "ae1d0a35b223b81e4b5f7bbeef1c17a5fcf9f2eaa15a82d655228f2f64f62a22",
+        "bytes": 4893
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\blockstates\\electric_cooler_mv.json",
+        "sha256": "7debcab107855480ff31db2ad27719ca90efd7b3639a99ce87e5b6fe3b5d6e59",
+        "bytes": 5211
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\item\\electric_cooler_mv.json",
+        "sha256": "1fd779ef22b9048e3832b049cd5e26000de3db86fd8a02a835888f37bf309eb1",
+        "bytes": 62
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_cooler_hv.json",
+        "sha256": "d9da14daaaa5cc140ce15382c93b850c4b0a92f87ad4a9b5b06240bb2c1a09f3",
+        "bytes": 4628
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_cooler_hv_active.json",
+        "sha256": "ae1d0a35b223b81e4b5f7bbeef1c17a5fcf9f2eaa15a82d655228f2f64f62a22",
+        "bytes": 4893
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\blockstates\\electric_cooler_hv.json",
+        "sha256": "0d94c5818e4ebaf04a9144ca96ddfc4f19d4b8f1d8c66d616823c176fac2cbe7",
+        "bytes": 5211
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\item\\electric_cooler_hv.json",
+        "sha256": "ce2a2c35dc2a45583362ff6491d77ab5807bcc140c8a6999c4bed093eba542df",
+        "bytes": 62
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_cooler_ev.json",
+        "sha256": "d9da14daaaa5cc140ce15382c93b850c4b0a92f87ad4a9b5b06240bb2c1a09f3",
+        "bytes": 4628
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_cooler_ev_active.json",
+        "sha256": "ae1d0a35b223b81e4b5f7bbeef1c17a5fcf9f2eaa15a82d655228f2f64f62a22",
+        "bytes": 4893
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\blockstates\\electric_cooler_ev.json",
+        "sha256": "3f42351a6a7f44273714b70e503067f22d2fc1c50509b73d4346d1bf708dbe9b",
+        "bytes": 5211
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\item\\electric_cooler_ev.json",
+        "sha256": "680dd98b20fd1229725f8d7fb7372307ec041d55e12551c8e3f92388d18403d5",
+        "bytes": 62
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_cooler_iv.json",
+        "sha256": "d9da14daaaa5cc140ce15382c93b850c4b0a92f87ad4a9b5b06240bb2c1a09f3",
+        "bytes": 4628
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_cooler_iv_active.json",
+        "sha256": "ae1d0a35b223b81e4b5f7bbeef1c17a5fcf9f2eaa15a82d655228f2f64f62a22",
+        "bytes": 4893
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\blockstates\\electric_cooler_iv.json",
+        "sha256": "392edd3d57bf7c3d990f6dd87477bce8b448b6783554bcddcf1cf153f29bbde7",
+        "bytes": 5211
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\item\\electric_cooler_iv.json",
+        "sha256": "c3a437c9d6fd6d9b14479554ee3b240290ca4a92e64873a61d0755ebec3a40c0",
+        "bytes": 62
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_cooler_lv.json",
+        "sha256": "aa46507d8fe255806e8b31ed448bab4d1bcc71f78913a6e720d5d15a8fa49e1d",
+        "bytes": 4799
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_cooler_lv_active.json",
+        "sha256": "eb5de5f02560a69072eaead7587394750dbe8b47b346659a877c6ff77132fcce",
+        "bytes": 4841
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\blockstates\\flux_cooler_lv.json",
+        "sha256": "54996587e0d0e36159a4163e2adb8b2d9ac7f6f624e110f905a84111600d7877",
+        "bytes": 5067
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\item\\flux_cooler_lv.json",
+        "sha256": "43c5cde499ae5fc2c5d8a8400dfd5744bceecd77e334d3d95d5269b99d85bede",
+        "bytes": 66
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_cooler_mv.json",
+        "sha256": "aa46507d8fe255806e8b31ed448bab4d1bcc71f78913a6e720d5d15a8fa49e1d",
+        "bytes": 4799
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_cooler_mv_active.json",
+        "sha256": "eb5de5f02560a69072eaead7587394750dbe8b47b346659a877c6ff77132fcce",
+        "bytes": 4841
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\blockstates\\flux_cooler_mv.json",
+        "sha256": "b3fbc21e2eaa041e92104e25649fda161a08c54e1022e08c958b3581b3fa9a22",
+        "bytes": 5067
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\item\\flux_cooler_mv.json",
+        "sha256": "4d474963f63b1f4b689082acf9282e507497eadcbad2921d1591ba2ac4f002f5",
+        "bytes": 66
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_cooler_hv.json",
+        "sha256": "aa46507d8fe255806e8b31ed448bab4d1bcc71f78913a6e720d5d15a8fa49e1d",
+        "bytes": 4799
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_cooler_hv_active.json",
+        "sha256": "eb5de5f02560a69072eaead7587394750dbe8b47b346659a877c6ff77132fcce",
+        "bytes": 4841
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\blockstates\\flux_cooler_hv.json",
+        "sha256": "0ab53eb3672b0ae1a0800b48ba51c0b2c0c4289fa94b017d767b84b7f4200a2a",
+        "bytes": 5067
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\item\\flux_cooler_hv.json",
+        "sha256": "cf048eb359a7063edc68feeaa081059907945fc1e1ef19913200c351bd2aa280",
+        "bytes": 66
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_cooler_ev.json",
+        "sha256": "aa46507d8fe255806e8b31ed448bab4d1bcc71f78913a6e720d5d15a8fa49e1d",
+        "bytes": 4799
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_cooler_ev_active.json",
+        "sha256": "eb5de5f02560a69072eaead7587394750dbe8b47b346659a877c6ff77132fcce",
+        "bytes": 4841
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\blockstates\\flux_cooler_ev.json",
+        "sha256": "21e87d3397bfbb903a181b8f8fc38ec8f6e20f8d5b279063e64db14584d1897f",
+        "bytes": 5067
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\item\\flux_cooler_ev.json",
+        "sha256": "cd2e00b78b5ef7045448e5fe1db7129ebc20a13675afad2f51bbff2c4724cadc",
+        "bytes": 66
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_cooler_iv.json",
+        "sha256": "aa46507d8fe255806e8b31ed448bab4d1bcc71f78913a6e720d5d15a8fa49e1d",
+        "bytes": 4799
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_cooler_iv_active.json",
+        "sha256": "eb5de5f02560a69072eaead7587394750dbe8b47b346659a877c6ff77132fcce",
+        "bytes": 4841
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\blockstates\\flux_cooler_iv.json",
+        "sha256": "15c25e758df48382efd32c99db034a4ede4c25caa66ce6e2a51b51a41c1f95eb",
+        "bytes": 5067
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\item\\flux_cooler_iv.json",
+        "sha256": "58fdf30343d9c84ac813e7a2eaa946b97005a7325d81cc310c8d59a5641d98df",
+        "bytes": 66
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_heater_lv.json",
+        "sha256": "3d0f6135965b32f9a8ec85ab57b7e2dcc576b1d95a3e3d38aa729c6b3d8fe1d7",
+        "bytes": 4644
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_heater_lv_active.json",
+        "sha256": "36204001afb8750f684ac936388b8463354b047d73c3a3168b4db9f8dd0405dd",
+        "bytes": 4909
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\electric_heater_lv.json",
+        "sha256": "ea380ca60bcc6e9afe97307f5447dc09fb80d18af7bf8b847fd5c8e8c074cbfe",
+        "bytes": 5211
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\electric_heater_lv.json",
+        "sha256": "d4200234bc0129dadf2882faeba0d52b0bc21a0ddc1c84e384ada3e7a09624d6",
+        "bytes": 62
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_heater_mv.json",
+        "sha256": "3d0f6135965b32f9a8ec85ab57b7e2dcc576b1d95a3e3d38aa729c6b3d8fe1d7",
+        "bytes": 4644
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_heater_mv_active.json",
+        "sha256": "36204001afb8750f684ac936388b8463354b047d73c3a3168b4db9f8dd0405dd",
+        "bytes": 4909
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\electric_heater_mv.json",
+        "sha256": "896f2b81d513df93f05c253fb71392045055a57a75dc0a89caab35f1590ba881",
+        "bytes": 5211
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\electric_heater_mv.json",
+        "sha256": "7368882763ad349591e426dceaf23d5c2829bf1d436164cd6682a3a6df93df5e",
+        "bytes": 62
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_heater_hv.json",
+        "sha256": "3d0f6135965b32f9a8ec85ab57b7e2dcc576b1d95a3e3d38aa729c6b3d8fe1d7",
+        "bytes": 4644
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_heater_hv_active.json",
+        "sha256": "36204001afb8750f684ac936388b8463354b047d73c3a3168b4db9f8dd0405dd",
+        "bytes": 4909
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\electric_heater_hv.json",
+        "sha256": "b259ddf73fe39ceff9014c93e663dd720ada109add29c4ff5b6cbdfdfc9b6429",
+        "bytes": 5211
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\electric_heater_hv.json",
+        "sha256": "dc87dc4e52206d0864bd12b9e680c6e5a701b471c5104eb023a46ef92e72c568",
+        "bytes": 62
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_heater_ev.json",
+        "sha256": "3d0f6135965b32f9a8ec85ab57b7e2dcc576b1d95a3e3d38aa729c6b3d8fe1d7",
+        "bytes": 4644
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_heater_ev_active.json",
+        "sha256": "36204001afb8750f684ac936388b8463354b047d73c3a3168b4db9f8dd0405dd",
+        "bytes": 4909
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\electric_heater_ev.json",
+        "sha256": "42ff1f6722b9bef08dc242d22b2c318680c95c133b7c56e5bd36d0aabeb75d60",
+        "bytes": 5211
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\electric_heater_ev.json",
+        "sha256": "2f2c54f4fe383acaf315913e5bdb793078a288959f0fffe3b69cd00c194a7ff0",
+        "bytes": 62
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_heater_iv.json",
+        "sha256": "3d0f6135965b32f9a8ec85ab57b7e2dcc576b1d95a3e3d38aa729c6b3d8fe1d7",
+        "bytes": 4644
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_heater_iv_active.json",
+        "sha256": "36204001afb8750f684ac936388b8463354b047d73c3a3168b4db9f8dd0405dd",
+        "bytes": 4909
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\electric_heater_iv.json",
+        "sha256": "f19afae4544dec151935897ff141326d2fd787d3f8e3e350b440c2f052f45229",
+        "bytes": 5211
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\electric_heater_iv.json",
+        "sha256": "f105237bb59e3dd36b48d3d3a91c641839024d76a7c381e5c8c4351345c9bf0a",
+        "bytes": 62
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_heater_lv.json",
+        "sha256": "56869918259ffd361d74896c059d1fdf446f3a1981f5474131b9d82f7e685ee5",
+        "bytes": 4815
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_heater_lv_active.json",
+        "sha256": "d20e109f76ed808787e91d88563864917c9ff2c2838e3a5e627ee94d30e1e1c0",
+        "bytes": 4857
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\flux_heater_lv.json",
+        "sha256": "ddc5505314afa06e61ddff8e97a4c1ab6b09481190506baff7a5a4f9d7572fea",
+        "bytes": 5067
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\flux_heater_lv.json",
+        "sha256": "49557c1c3312626f13b4bea5311b5f8f0562fac37dfb2b413c251be87ac5aa81",
+        "bytes": 66
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_heater_mv.json",
+        "sha256": "56869918259ffd361d74896c059d1fdf446f3a1981f5474131b9d82f7e685ee5",
+        "bytes": 4815
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_heater_mv_active.json",
+        "sha256": "d20e109f76ed808787e91d88563864917c9ff2c2838e3a5e627ee94d30e1e1c0",
+        "bytes": 4857
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\flux_heater_mv.json",
+        "sha256": "4d47bc7a03475e3376074de7744f98b534f75aea35ef9b0049e6c9339323350b",
+        "bytes": 5067
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\flux_heater_mv.json",
+        "sha256": "5fb56d030cf42bb4e1492e5de0ba63487252cd5c902e594726cc2beeeb6ac648",
+        "bytes": 66
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_heater_hv.json",
+        "sha256": "56869918259ffd361d74896c059d1fdf446f3a1981f5474131b9d82f7e685ee5",
+        "bytes": 4815
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_heater_hv_active.json",
+        "sha256": "d20e109f76ed808787e91d88563864917c9ff2c2838e3a5e627ee94d30e1e1c0",
+        "bytes": 4857
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\flux_heater_hv.json",
+        "sha256": "c5ffe5780e858767ec5557b72bb5ff0901d7e71edda4dbde02d4f8fdfd66586f",
+        "bytes": 5067
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\flux_heater_hv.json",
+        "sha256": "ef4461a080f82844220e27e5b77f6faff93f8d6cf3e983d67d255053c414e787",
+        "bytes": 66
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_heater_ev.json",
+        "sha256": "56869918259ffd361d74896c059d1fdf446f3a1981f5474131b9d82f7e685ee5",
+        "bytes": 4815
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_heater_ev_active.json",
+        "sha256": "d20e109f76ed808787e91d88563864917c9ff2c2838e3a5e627ee94d30e1e1c0",
+        "bytes": 4857
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\flux_heater_ev.json",
+        "sha256": "1060d5f3e78bff0570a5dd21d6fffd6fbaa6dc106015d3952784161b3a9ee481",
+        "bytes": 5067
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\flux_heater_ev.json",
+        "sha256": "c42110f4d565fba55081126b289da33887a8825b56d8a222e74ed1be74b6c541",
+        "bytes": 66
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_heater_iv.json",
+        "sha256": "56869918259ffd361d74896c059d1fdf446f3a1981f5474131b9d82f7e685ee5",
+        "bytes": 4815
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_heater_iv_active.json",
+        "sha256": "d20e109f76ed808787e91d88563864917c9ff2c2838e3a5e627ee94d30e1e1c0",
+        "bytes": 4857
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\flux_heater_iv.json",
+        "sha256": "4fed50b300d030a46ab30783149dad9e516322551df9fb373de32b0a9e4fee56",
+        "bytes": 5067
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\flux_heater_iv.json",
+        "sha256": "12ffaf0d4b65914ee6d3f27f4710ffb0925b105b6ea36911533014db5b1131df",
+        "bytes": 66
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_cooler_lv.json",
+        "sha256": "92ae766c8135fda0c65e499e539b1a3ac6474de5380591d60487301a10b7b2ca",
+        "bytes": 4631
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_cooler_lv_active.json",
+        "sha256": "068eb0c8e674f3b7ab602f2c72747236ad0d797a5ab27411c7def1117b9867a2",
+        "bytes": 4896
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\electric_cooler_lv.json",
+        "sha256": "dd5ceab7d2a180d9a93e3cbbeec2308c774e72db0319e2233eb3e2fd97da17bd",
+        "bytes": 5211
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\electric_cooler_lv.json",
+        "sha256": "0267e6793fb1f5c12a398539db8a1546eca8dd23d65fa1a9bd78c89b608a0322",
+        "bytes": 62
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_cooler_mv.json",
+        "sha256": "92ae766c8135fda0c65e499e539b1a3ac6474de5380591d60487301a10b7b2ca",
+        "bytes": 4631
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_cooler_mv_active.json",
+        "sha256": "068eb0c8e674f3b7ab602f2c72747236ad0d797a5ab27411c7def1117b9867a2",
+        "bytes": 4896
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\electric_cooler_mv.json",
+        "sha256": "7debcab107855480ff31db2ad27719ca90efd7b3639a99ce87e5b6fe3b5d6e59",
+        "bytes": 5211
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\electric_cooler_mv.json",
+        "sha256": "1fd779ef22b9048e3832b049cd5e26000de3db86fd8a02a835888f37bf309eb1",
+        "bytes": 62
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_cooler_hv.json",
+        "sha256": "92ae766c8135fda0c65e499e539b1a3ac6474de5380591d60487301a10b7b2ca",
+        "bytes": 4631
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_cooler_hv_active.json",
+        "sha256": "068eb0c8e674f3b7ab602f2c72747236ad0d797a5ab27411c7def1117b9867a2",
+        "bytes": 4896
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\electric_cooler_hv.json",
+        "sha256": "0d94c5818e4ebaf04a9144ca96ddfc4f19d4b8f1d8c66d616823c176fac2cbe7",
+        "bytes": 5211
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\electric_cooler_hv.json",
+        "sha256": "ce2a2c35dc2a45583362ff6491d77ab5807bcc140c8a6999c4bed093eba542df",
+        "bytes": 62
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_cooler_ev.json",
+        "sha256": "92ae766c8135fda0c65e499e539b1a3ac6474de5380591d60487301a10b7b2ca",
+        "bytes": 4631
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_cooler_ev_active.json",
+        "sha256": "068eb0c8e674f3b7ab602f2c72747236ad0d797a5ab27411c7def1117b9867a2",
+        "bytes": 4896
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\electric_cooler_ev.json",
+        "sha256": "3f42351a6a7f44273714b70e503067f22d2fc1c50509b73d4346d1bf708dbe9b",
+        "bytes": 5211
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\electric_cooler_ev.json",
+        "sha256": "680dd98b20fd1229725f8d7fb7372307ec041d55e12551c8e3f92388d18403d5",
+        "bytes": 62
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_cooler_iv.json",
+        "sha256": "92ae766c8135fda0c65e499e539b1a3ac6474de5380591d60487301a10b7b2ca",
+        "bytes": 4631
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\electric_cooler_iv_active.json",
+        "sha256": "068eb0c8e674f3b7ab602f2c72747236ad0d797a5ab27411c7def1117b9867a2",
+        "bytes": 4896
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\electric_cooler_iv.json",
+        "sha256": "392edd3d57bf7c3d990f6dd87477bce8b448b6783554bcddcf1cf153f29bbde7",
+        "bytes": 5211
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\electric_cooler_iv.json",
+        "sha256": "c3a437c9d6fd6d9b14479554ee3b240290ca4a92e64873a61d0755ebec3a40c0",
+        "bytes": 62
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_cooler_lv.json",
+        "sha256": "81af1a218c29234a982a743517d0699b2283425eebac838cd45f606d9ce8f14f",
+        "bytes": 4802
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_cooler_lv_active.json",
+        "sha256": "3e0f6e31efa4ace26aa9592f17f1fdb7e0b087a75cc24585fd598aeacce7fd09",
+        "bytes": 4844
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\flux_cooler_lv.json",
+        "sha256": "54996587e0d0e36159a4163e2adb8b2d9ac7f6f624e110f905a84111600d7877",
+        "bytes": 5067
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\flux_cooler_lv.json",
+        "sha256": "43c5cde499ae5fc2c5d8a8400dfd5744bceecd77e334d3d95d5269b99d85bede",
+        "bytes": 66
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_cooler_mv.json",
+        "sha256": "81af1a218c29234a982a743517d0699b2283425eebac838cd45f606d9ce8f14f",
+        "bytes": 4802
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_cooler_mv_active.json",
+        "sha256": "3e0f6e31efa4ace26aa9592f17f1fdb7e0b087a75cc24585fd598aeacce7fd09",
+        "bytes": 4844
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\flux_cooler_mv.json",
+        "sha256": "b3fbc21e2eaa041e92104e25649fda161a08c54e1022e08c958b3581b3fa9a22",
+        "bytes": 5067
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\flux_cooler_mv.json",
+        "sha256": "4d474963f63b1f4b689082acf9282e507497eadcbad2921d1591ba2ac4f002f5",
+        "bytes": 66
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_cooler_hv.json",
+        "sha256": "81af1a218c29234a982a743517d0699b2283425eebac838cd45f606d9ce8f14f",
+        "bytes": 4802
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_cooler_hv_active.json",
+        "sha256": "3e0f6e31efa4ace26aa9592f17f1fdb7e0b087a75cc24585fd598aeacce7fd09",
+        "bytes": 4844
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\flux_cooler_hv.json",
+        "sha256": "0ab53eb3672b0ae1a0800b48ba51c0b2c0c4289fa94b017d767b84b7f4200a2a",
+        "bytes": 5067
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\flux_cooler_hv.json",
+        "sha256": "cf048eb359a7063edc68feeaa081059907945fc1e1ef19913200c351bd2aa280",
+        "bytes": 66
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_cooler_ev.json",
+        "sha256": "81af1a218c29234a982a743517d0699b2283425eebac838cd45f606d9ce8f14f",
+        "bytes": 4802
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_cooler_ev_active.json",
+        "sha256": "3e0f6e31efa4ace26aa9592f17f1fdb7e0b087a75cc24585fd598aeacce7fd09",
+        "bytes": 4844
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\flux_cooler_ev.json",
+        "sha256": "21e87d3397bfbb903a181b8f8fc38ec8f6e20f8d5b279063e64db14584d1897f",
+        "bytes": 5067
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\flux_cooler_ev.json",
+        "sha256": "cd2e00b78b5ef7045448e5fe1db7129ebc20a13675afad2f51bbff2c4724cadc",
+        "bytes": 66
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_cooler_iv.json",
+        "sha256": "81af1a218c29234a982a743517d0699b2283425eebac838cd45f606d9ce8f14f",
+        "bytes": 4802
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\flux_cooler_iv_active.json",
+        "sha256": "3e0f6e31efa4ace26aa9592f17f1fdb7e0b087a75cc24585fd598aeacce7fd09",
+        "bytes": 4844
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\flux_cooler_iv.json",
+        "sha256": "15c25e758df48382efd32c99db034a4ede4c25caa66ce6e2a51b51a41c1f95eb",
+        "bytes": 5067
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\flux_cooler_iv.json",
+        "sha256": "58fdf30343d9c84ac813e7a2eaa946b97005a7325d81cc310c8d59a5641d98df",
+        "bytes": 66
+      }
+    ],
+    "all_references_exist": true,
+    "colored_tint0_and_untinted_overlay": true,
+    "scope": "Static JSON/reference audit; actual client baking/visible rendering is not run this batch."
+  },
+  "adopted_rules": [
+    "Keep10 existing electric IDs; register10 original RF variants and20 exact original shaped recipes. Same shared source material registration and advanced single-header tooltip mechanism.",
+    "Share source base packet conversion with14 rotary devices: thermal2N storage, minN/2,max2N,primary minM/2,max2M,saved mode0..15,selector only heaters/electric coolers (source RF cooler omits interface),fixed ceil waste each tick,HU/CU unit packets and active64sample history.",
+    "Coolers output CU front and HU back independently at the same amount; four input sides; one input waste per tick. Preserve original twin secondary API zero-size getters while advertising HU and showing real secondary tooltip range.",
+    "Heaters accept every side except front; source two-pixel front collision inset, active ratedHU/10 capped10 heat damage, existing protections. World behavior fixtures are compiled but not executed.",
+    "Preserve original LH per-channel efficiencies: EU heater50%; RF heater50%; electric cooler25% twice; RF cooler50% twice (source twin uses8 RF factor). Material header is still single.",
+    "Exact native names20 and source category ordinals395..404,492..501; all23 selected tooltip Chinese keys and20 native names verbatim patch; four source icon folders and trinary activity layers."
+  ],
+  "comparison_decision": "Canonical1.7.10 defines behavior/quantities. _w shows corresponding native adaptations and retains the named original assets; use selected CC0 images, not a second loader/registry/storage graph. Prior other source comparisons remain referenced in earlier receipts.",
+  "boundaries": [
+    "Original blinking-gray extender animation is pending: original client toggles gray/dark_gray every25ticks; current fixed gray reminder is explicit.",
+    "General harvest/fire/ownership/cover tooltips, other machines and missing original material mappings, client sound, source BREAKING config and saved rated overrides remain pending. Full survival/historical saves/independent restart are unverified."
+  ],
+  "verification": {
+    "shared_machine_assertions": 533,
+    "native_main_probe_fixture_compile": "passed24s final; main/probe/fixture on both platforms; shared533 assertions",
+    "attempts": [
+      {
+        "path": "C:\\Dev\\GregTech6\\work\\thermal-converter-compile-20261007.log",
+        "sha256": "4d2dc1854afd1c7f22293eeb28c72bc296595cd05d927f981932a79d5e949bf6",
+        "result": "failed55s Neo probe protected collision API;513core passed and both mains compiled"
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\work\\thermal-converter-compile-fixed-20261007.log",
+        "sha256": "21f01a184212438437b180e978d2e84a9beeeb4003a284caff0913b199d177c0",
+        "result": "failed14s Neo fixture referred to absent GTBasicMachines;513core and both probes passed"
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\work\\thermal-converter-compile-final-20261007.log",
+        "sha256": "db632f0de440ee32e130c0a7e1bbeb9c496e08390fe0b3114421ef0f59f5509f",
+        "result": "passed12s core513 and both mains/probes/fixtures; before final source RF selector correction"
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\work\\thermal-converter-selector-compile-20261007.log",
+        "sha256": "c57eeab92d3c07ddf1709c3f6aa4dcef2f62cb427220f1b0b58f8769e89ae715",
+        "result": "passed24s core533 and both mains/probes/fixtures; no game process"
+      }
+    ],
+    "other_attempts": [
+      "Tooltip import first omitted TileEntityBase10EnergyBatBox literal keys and failed before writing languages; source input corrected,23keys imported with no missing Chinese.",
+      "Initial creative ordinal parser excluded dynamic source registrations; corrected to full source enumeration before acceptance.",
+      "Final interface review found source RF Cooler lacks ITileEntitySwitchableMode; corrected both controls/probes/fixtures, then24s533-assertion compile passed."
+    ],
+    "ordinary_packages_and_installed_client": "passed pooled delivery; see converter-pooled-delivery-20261007.json",
+    "native_world": "Each platform two corresponding fixtures passed within six-test pool; see converter-pooled-runtime-20261007.json",
+    "source_hashes_rechecked": true,
+    "asset_and_names_generator_idempotent": true,
+    "repeat_checked_model_state_item_language_catalog_paths": 163,
+    "source_and_asset_references_rechecked_after_compile": 78,
+    "ordinary_dual_build_this_batch": true,
+    "runtime_probe": true,
+    "runtime_world_fixtures": true,
+    "source_and_asset_references_rechecked_after_startup": 262
+  },
+  "delivery_ledger": "converter-pooled-delivery-20261007.json"
+}

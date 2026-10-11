@@ -54,6 +54,9 @@ public class GTToolItem extends Item {
     /** GT6 crucible shovel scrape — runs on server via {@code onItemUseFirst} before {@code Block#use}. */
     @Override
     public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
+        // Original Behavior_Tool takes priority over the ordinary builder plane copy.
+        var multiblock = com.gregtech.gregtech.api.multiblock.MultiblockTools.use(context);
+        if (multiblock.consumesAction()) return multiblock;
         // §108: GT6's TOOL_plunger and TOOL_igniter clicks are onItemUseFirst behaviours as well, so
         // they run before Block#use (Behavior_Plunger_Fluid:49-62, Behavior_FlintAndTinder:45-61).
         if (!context.getLevel().isClientSide()) {
@@ -230,9 +233,6 @@ public class GTToolItem extends Item {
             return super.getName(stack);
         }
         GTMaterial head = GTToolHelper.getHead(stack);
-        if (toolType == GTToolType.GEM_PICK) {
-            return Component.translatable("item." + GregTech.NAMESPACE + ".tool.gem_tipped_pickaxe.named", MaterialPresentation.name(head));
-        }
         return Component.translatable("item." + GregTech.NAMESPACE + ".tool." + toolType.id() + ".named",
                 MaterialPresentation.name(head), Component.translatable(toolType.translationKey()));
     }

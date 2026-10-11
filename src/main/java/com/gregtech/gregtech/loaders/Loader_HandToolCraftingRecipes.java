@@ -419,7 +419,7 @@ public final class Loader_HandToolCraftingRecipes {
         for(var row:com.gregtech.gregtech.content.transport.TransportCraftingCatalog.rows()) {
             var json=com.gregtech.gregtech.content.recipe.TransportCraftingInputs.json(row);
             if(json.isEmpty()) { GregTech.LOGGER.warn("Missing original transport crafting form: {}",row.path()); continue; }
-            var id=ResourceLocation.parse("gregtech:hand/"+row.path());
+            var id=ResourceLocation.parse("gregtech:"+(row.path().startsWith("magnets/")?"":"hand/")+row.path());
             recipes.add(row.unpack()?com.gregtech.gregtech.recipe.ToolShapelessRecipe.SERIALIZER.fromJson(id,json.get()):ToolShapedRecipe.SERIALIZER.fromJson(id,json.get()));
             REGISTERED.add(id.toString()); count++;
         }

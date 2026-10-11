@@ -110,7 +110,7 @@ public record BasicMachineSpec(
 
         private Builder(String id, GTMaterial casing) {
             this.id = id; material = casing; machineType = id;
-            construction = List.of(new WeightedMaterial(casing, 8));
+            construction = List.of(); // No guessed material amount for definitions without source data.
         }
         public Builder machineType(String value) { machineType = value; return this; }
         public Builder recipes(RecipeMap value) { recipes = value; return this; }

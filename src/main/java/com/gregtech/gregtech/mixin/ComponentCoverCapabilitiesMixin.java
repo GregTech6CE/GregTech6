@@ -48,7 +48,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
     com.gregtech.gregtech.blockentity.machine.BoilerTankBlockEntity.class,
     com.gregtech.gregtech.blockentity.machine.BurningBoxBlockEntity.class,
     com.gregtech.gregtech.blockentity.machine.CokeOvenControllerBlockEntity.class,
-    com.gregtech.gregtech.blockentity.machine.CryoDistillationControllerBlockEntity.class,
     com.gregtech.gregtech.blockentity.machine.FluidPipeBlockEntity.class,
     com.gregtech.gregtech.blockentity.machine.HopperBlockEntity.class,
     com.gregtech.gregtech.blockentity.machine.ImplosionCompressorControllerBlockEntity.class,

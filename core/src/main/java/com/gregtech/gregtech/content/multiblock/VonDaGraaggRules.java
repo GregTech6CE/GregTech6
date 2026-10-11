@@ -1,6 +1,6 @@
 package com.gregtech.gregtech.content.multiblock;
 /** Original full tower shape; live byte range clamp agrees with brokestar and masson. */
-public final class VonDaGraaggRules {private VonDaGraaggRules(){}public static final long CAPACITY=4096;public record Cell(int x,int y,int z,int partId,boolean energyInput){}public static java.util.List<Cell> layout(){var out=new java.util.ArrayList<Cell>();
+public final class VonDaGraaggRules {private VonDaGraaggRules(){}public static final long CAPACITY=4096, INPUT_MIN=256, INPUT_RECOMMENDED=2048;public static final int SENSOR_MAXIMUM=256;public record Cell(int x,int y,int z,int partId,boolean energyInput){}public static java.util.List<Cell> layout(){var out=new java.util.ArrayList<Cell>();
         // GT6 MultiTileEntityVonDaGraagg.checkStructure2: omit only the four 5x5 corners.
         for (int x = -2; x <= 2; x++) for (int z = -2; z <= 2; z++) {
             if (Math.abs(x * z) >= 4) continue;

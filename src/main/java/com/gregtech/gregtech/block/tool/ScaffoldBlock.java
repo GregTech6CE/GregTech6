@@ -52,6 +52,12 @@ public final class ScaffoldBlock extends ShapedToolBlock {
     }
 
     public com.gregtech.gregtech.api.material.GTMaterial material() { return material; }
+    /** Original scaffold inherits the facing-wrench row without extra instructions. */
+    @Override
+    public void appendHoverText(ItemStack stack, @org.jetbrains.annotations.Nullable BlockGetter level,
+                                List<net.minecraft.network.chat.Component> tooltip, net.minecraft.world.item.TooltipFlag flag) {
+        com.gregtech.gregtech.client.StorageBlockTooltips.facing(tooltip);
+    }
     @Override public int tintRgb() { return material.getColor(); }
     private static boolean isScaffold(BlockState state) { return state.getBlock() instanceof ScaffoldBlock; }
 

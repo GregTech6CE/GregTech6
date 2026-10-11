@@ -1,19 +1,7 @@
 {
   "variants": {
-    "facing=north": {
+    "": {
       "model": "gregtech:block/machine/multiblock/heat_exchanger_main"
-    },
-    "facing=east": {
-      "model": "gregtech:block/machine/multiblock/heat_exchanger_main",
-      "y": 90
-    },
-    "facing=south": {
-      "model": "gregtech:block/machine/multiblock/heat_exchanger_main",
-      "y": 180
-    },
-    "facing=west": {
-      "model": "gregtech:block/machine/multiblock/heat_exchanger_main",
-      "y": 270
     }
   }
 }

@@ -1,0 +1,159 @@
+{
+  "date": "2026-10-07",
+  "base_commit": "3434af735a5fbbb4f85930fe53129f7cae321caa",
+  "status": "Shared source contracts and dual main/probe/fixture compilation accepted; native world/ordinary packaging/installed checks deferred; goal active",
+  "source_receipt": {
+    "path": "C:\\Dev\\GregTech6\\docs\\integration\\verification\\advanced-controller-source-20261007.json",
+    "sha256": "855ff6e2694d0068222f715209e97a3d9465471b9e68357f2134a5e5501776cf",
+    "bytes": 26384
+  },
+  "attempts": [
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\advanced-controller-compile-20261007.log",
+        "sha256": "802c689aa325737458584c0364b4f7f014da714ea723e2115bdb99edc0fc3241",
+        "bytes": 53158
+      },
+      "exit_code": 1,
+      "seconds": 30,
+      "scope": "Shared7478 source contracts accepted; both main code and Forge installed probe compiled. Neo installed probe called1.20.1 two-argument tooltip API; Neo probe failed and bootstrap fixtures had not started compilation.",
+      "failed_prepared_Neo_probe_source": {
+        "path": "C:\\Dev\\GregTech6\\work\\advanced-controller-first-neo-probe-20261007.java",
+        "sha256": "67dd37fbf2e8e8e5c16d1b5047c4ad0ac53697c2905ad1757020c5ad54e15e72",
+        "bytes": 3363
+      },
+      "source_assertions_passed": 7478
+    },
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\advanced-controller-compile-fixed-20261007.log",
+        "sha256": "854d6f5bfd7a9004ba55fa3f403f0c0661d74f80b5b16bf2303dd2547b838e22",
+        "bytes": 1925
+      },
+      "exit_code": 0,
+      "seconds": 19,
+      "scope": "Corrected Neo TooltipContext and, before first fixture compilation, long tank fixture methods to capacity()/getAmount(). Both installed probes and both native fixtures compiled. No game executed; did not repeat accepted core contracts."
+    },
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\advanced-controller-final-probes-20261007.log",
+        "sha256": "7fac0ac11bb78cfcf39f673f6d00ad6a7495ec856e312eddf354d0c575232558",
+        "bytes": 1716
+      },
+      "exit_code": 0,
+      "seconds": 17,
+      "scope": "After correcting three English/Chinese item names from source, dual installed probes gained name checks and recompiled only. World fixture/main logic unchanged; no game or installed client executed."
+    }
+  ],
+  "current_compiled_byte_references": [
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\content\\multiblock\\OriginalAdvancedControllerData.class",
+      "sha256": "049ac685e3fba7510fcdeae4bf424c2ba6e3703d97afc98f92521eac210a646b",
+      "bytes": 4846
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\client\\AdvancedControllerTooltips.class",
+      "sha256": "13ea06e4bd0d55bf40df4f7d21d553d627089098c5b939a1ddcc094074991d53",
+      "bytes": 2365
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\client\\BasicMachineSourceTooltips.class",
+      "sha256": "bb454cc9a6b008d2ae5266fc106c334872b374aa2a074b294c6d6524e9c15fb1",
+      "bytes": 8626
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\blockentity\\machine\\ImplosionCompressorControllerBlockEntity.class",
+      "sha256": "0a298c16afbf92c5bf5891a899bd4164158293ea54b9757c77832f211adcb920",
+      "bytes": 9456
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeRecipeMachineBlockEntity.class",
+      "sha256": "9669f1e13454b2eb0021b583584f60e649a89dee52381ed1e11cbe2842841a61",
+      "bytes": 21855
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\bootstrapGameTest\\com\\gregtech\\gregtech\\gametest\\AdvancedControllerSourceTests.class",
+      "sha256": "7ecf7ccba75ef9c4ba2624ae73f0b4eb3a642d67da79e31abc1942a4e5df4192",
+      "bytes": 9250
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\classes\\java\\productionSmoke\\com\\gregtech\\gregtech\\integration\\client\\AdvancedControllerDeliveryChecks.class",
+      "sha256": "9ed363a296cefd13aa7b96260e4e6dd6b1649d70fbb239d3f57eb9d4c504e12f",
+      "bytes": 7620
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\client\\AdvancedControllerTooltips.class",
+      "sha256": "438a7f75c5904e98465f2a26216292609457da1c383fee4bd2df7379d019bf3a",
+      "bytes": 2365
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\client\\BasicMachineSourceTooltips.class",
+      "sha256": "ad1eca7a10a5ed7df1a8ed49691cfcea748ba626171b3705067b8f73fccd59bb",
+      "bytes": 8626
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\blockentity\\machine\\ImplosionCompressorControllerBlockEntity.class",
+      "sha256": "d84f30b7c2fdecd90a5ca686b6342ef5dc8e3e46d1fde1007c1730d7f6ee198e",
+      "bytes": 9299
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeRecipeMachineBlockEntity.class",
+      "sha256": "cfa1867f5f4eeef21ce701b7e67824f8cd19c51e6bb1faa779be4ee22a13394b",
+      "bytes": 22083
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\bootstrapGameTest\\com\\gregtech\\gregtech\\gametest\\AdvancedControllerSourceTests.class",
+      "sha256": "8cc499d4838113fe8df82d140d1b5925bfe685be81afb542b160d26cb0db27a6",
+      "bytes": 9591
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\classes\\java\\productionSmoke\\com\\gregtech\\gregtech\\integration\\client\\AdvancedControllerDeliveryChecks.class",
+      "sha256": "6803e63277aeda87eaa26a4eccfbfa0dac5e72b74f4cfcddb7bcc3a0eed051b4",
+      "bytes": 7854
+    }
+  ],
+  "deferred_native_scenario": {
+    "namespace": "gregtech_advanced_source",
+    "required_per_loader": 1,
+    "prepared_checks": [
+      "Actual three registered factory parameters and source output tank maxima",
+      "Actual placed large matter output500L water loaded through native save/load with old8000 capacity then source maximum restored",
+      "Existing fluid transfer to real bath below while stopped/unformed/no energy"
+    ],
+    "executed": false,
+    "scope": "Fixed seeded contents/native method roundtrip/explicit tick; not natural recipes/energy, real restart or historical save acceptance"
+  },
+  "deferred_installed_probe": {
+    "controllers": 3,
+    "source_structure_rows": 17,
+    "compiled": true,
+    "executed": false,
+    "prepared_checks": [
+      "Actual tooltip calls/events and loaded17 structure keys, inherited source energy/tools once",
+      "TU omission with QU / chargedLU input and no invented emitted-EU row",
+      "Original localized item names and one advanced material section per controller"
+    ]
+  },
+  "last_accepted_distribution": {
+    "directory": "C:/Dev/GregTech6/build/verified/20261007-042336Z-730aab78",
+    "manifest": {
+      "path": "C:\\Dev\\GregTech6\\docs\\integration\\verification\\large-recipe-pooled-delivery-20261007.json",
+      "sha256": "16c773e6638b568cf72d877c650c69cbaf3b11751b8ba7ec54faff26af2e50bd",
+      "bytes": 15492
+    },
+    "contains_3434af73_or_this_batch": false
+  },
+  "not_verified": [
+    "Current world fixture execution and ordinary dual JAR/installed clients",
+    "Natural complete survival chains, actual hovered tooltip screenshots",
+    "Independent saved-world process restart or old-save backup compatibility",
+    "Ordinary standalone dedicated server"
+  ],
+  "auxiliary_notes": [
+    "Source preparation initially found no separate Neo Fusion/Implosion block classes; completed through the actual existing shared BasicMachineBlock definitions/factories, retaining source snapshot boundaries.",
+    "Source-property insertion brace and scratch test unit class were fixed before Gradle compilation; no world or production runtime was started for those edits.",
+    "Primary generator --source/--out accepts explicit original path; existing264 rows and named material/harvest rows compared unchanged, current265 table regenerated identically.",
+    "Chinese changed only the three previously English controller names using exact gt.multitileentity17110/17198/17199 patch values;45 source tooltip/recipe keys also checked verbatim.",
+    "No ordinary rebuild, live user instance mutation, screenshots, pushes or PR work."
+  ]
+}

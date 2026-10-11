@@ -105,14 +105,7 @@ public class TankControllerBlock extends DirectionalBlock implements EntityBlock
     @Override
     public void appendHoverText(@NotNull ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
                                 @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
-        int dim = size; // e.g. 3
-        tooltip.add(Component.literal("Tank " + dim + "x" + dim + "x" + dim + " Multiblock"));
-        long capacity = valveSpec == null ? (size == 5 ? 1_024_000 : 320_000) : valveSpec.capacity();
-        tooltip.add(Component.literal("Capacity: " + String.format(java.util.Locale.ROOT, "%,d", capacity) + " mB"));
-        if (valveSpec != null) {
-            tooltip.add(Component.literal("Required wall: " + valveSpec.wall().getName().getString()));
-            if (valveSpec.simpleOnly()) tooltip.add(Component.literal("Simple fluids only"));
-        }
+        com.gregtech.gregtech.client.MultiblockTankTooltips.append(size,valveSpec,stack,context.registries(),tooltip);
     }
 
     @Override public java.util.List<ItemStack> getDrops(BlockState state,

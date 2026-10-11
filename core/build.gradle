@@ -11,6 +11,9 @@ java {
 apply from: rootProject.file('gradle/incremental-resources.gradle')
 tasks.named('processResources').configure { filteringCharset = 'UTF-8' }
 
+// The root task also runs for NeoForge-only builds via :core:check.
+tasks.named('check').configure { dependsOn ':sourcePolicyCheck' }
+
 // Optional development launch path: these shared resources are static and need no expansion.
 // Keep normal CI/release behavior; local launches can avoid copying the entire asset catalog.
 if (rootProject.findProperty('directCoreResources')?.toString() == 'true') {
@@ -48,41 +51,30 @@ tasks.register('addonApiJar', Jar) {
     reproducibleFileOrder = true
 }
 
-tasks.register('coreBehaviorContracts', JavaExec) {
-    description = 'Runs fixed GT6 behavior fixtures without Minecraft, Forge, or NeoForge.'
-    group = 'verification'
-    dependsOn tasks.named('testClasses')
-    classpath = sourceSets.test.runtimeClasspath
-    mainClass = 'com.gregtech.gregtech.core.CoreBehaviorContracts'
-}
-
-tasks.named('check').configure {
-    dependsOn tasks.named('coreBehaviorContracts')
-    dependsOn tasks.named('materialBehaviorContracts')
-    dependsOn tasks.named('thermalBehaviorContracts')
-    dependsOn tasks.named('machineSpecBehaviorContracts')
-}
-
-tasks.register('materialBehaviorContracts', JavaExec) {
-    description = 'Checks the full original material graph, exact units and reaction fixtures without a game.'
-    group = 'verification'
-    dependsOn tasks.named('testClasses')
-    classpath = sourceSets.test.runtimeClasspath
-    mainClass = 'com.gregtech.gregtech.core.MaterialBehaviorContracts'
-}
-
-tasks.register('thermalBehaviorContracts', JavaExec) {
-    description = 'Runs pinned signed thermal-step, Kelvin-floor and integer mixing fixtures.'
-    group = 'verification'
-    dependsOn tasks.named('testClasses')
-    classpath = sourceSets.test.runtimeClasspath
-    mainClass = 'com.gregtech.gregtech.core.ThermalBehaviorContracts'
-}
-
-tasks.register('machineSpecBehaviorContracts', JavaExec) {
-    description = 'Checks pinned original brick and ceramic hull parameters without Minecraft.'
-    group = 'verification'
-    dependsOn tasks.named('testClasses')
-    classpath = sourceSets.test.runtimeClasspath
-    mainClass = 'com.gregtech.gregtech.core.MachineSpecBehaviorContracts'
+// These deterministic contracts consume only compiled core/test classes and test
+// resources. JavaExec tracks its classpath, arguments and toolchain as inputs.
+// A success marker lets unchanged local builds reuse a pass without launching
+// four more JVMs. A changed input, missing marker or --rerun-tasks executes again.
+[
+    coreBehaviorContracts: 'CoreBehaviorContracts',
+    materialBehaviorContracts: 'MaterialBehaviorContracts',
+    thermalBehaviorContracts: 'ThermalBehaviorContracts',
+    machineSpecBehaviorContracts: 'MachineSpecBehaviorContracts'
+].each { taskName, entryPoint ->
+    def contract = tasks.register(taskName, JavaExec) {
+        description = "Runs ${entryPoint} without Minecraft; reuses unchanged successful inputs."
+        group = 'verification'
+        dependsOn tasks.named('testClasses')
+        classpath = sourceSets.test.runtimeClasspath
+        mainClass = "com.gregtech.gregtech.core.${entryPoint}"
+        javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
+        def marker = layout.buildDirectory.file("reports/contracts/${taskName}.passed")
+        outputs.file(marker)
+        doFirst { marker.get().asFile.delete() }
+        doLast {
+            marker.get().asFile.parentFile.mkdirs()
+            marker.get().asFile.setText("${entryPoint}: passed\n", 'UTF-8')
+        }
+    }
+    tasks.named('check').configure { dependsOn contract }
 }

@@ -24,7 +24,7 @@ import java.util.List;
 
 /** GT6 standard bulk storage core. Item identity and long count share one transaction path. */
 public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctTape.Tapeable {
-    public static final long CAPACITY = 1_000_000;
+    public static final long CAPACITY = com.gregtech.gregtech.content.storage.OriginalStorageTooltipData.MASS_CAPACITY;
     private final com.gregtech.gregtech.api.inventory.BulkStorageState<ItemStack> storage =
             new com.gregtech.gregtech.api.inventory.BulkStorageState<>(CAPACITY, ItemStack::isSameItemSameTags, stack -> stack.copyWithCount(1));
     private int mode;

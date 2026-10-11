@@ -42,8 +42,8 @@ public final class OriginCreativeContents {
             if(id.startsWith("solar_panel"))return "solar_panels";
             if(id.startsWith("electric_motor")||id.startsWith("flux_motor"))return "motors";
             if(id.startsWith("electric_generator")||id.startsWith("electric_dynamo")||id.startsWith("flux_dynamo")||id.startsWith("dynamo"))return "dynamos";
-            if(id.startsWith("electric_heater"))return "heaters";
-            if(id.startsWith("electric_cooler"))return "coolers";
+            if(id.startsWith("electric_heater")||id.startsWith("flux_heater"))return "heaters";
+            if(id.startsWith("electric_cooler")||id.startsWith("flux_cooler"))return "coolers";
             if(id.contains("turbine") && !id.startsWith("large_"))return "turbines";
             if(id.startsWith("boiler_tank"))return "steam_boilers";
             if(id.startsWith("engine_")||id.startsWith("steam_engine_")||id.startsWith("gas_engine_"))return "engines";

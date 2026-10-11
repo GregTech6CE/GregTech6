@@ -1,0 +1,182 @@
+{
+  "date": "2026-10-07",
+  "source_receipt": {
+    "path": "C:\\Dev\\GregTech6\\docs\\integration\\verification\\cryo-tower-source-20261007.json",
+    "sha256": "6847875ee61020a17d7cdf1b4dade02896e9460ae05d4971289c1c6b4ca836cc",
+    "bytes": 32177
+  },
+  "scope": "Two finite real placed-world cases per platform; controlled native tick/energy injection and legacy fluid load/save method checks",
+  "shared_check": {
+    "log": {
+      "path": "C:\\Dev\\GregTech6\\work\\cryo-tower-compile-20261007.log",
+      "sha256": "35883126b1f0d04aa42d740fc8e8c93cdf2173735f0147cee55d1cf2b753c167",
+      "bytes": 58726
+    },
+    "assertions": 3804,
+    "new_assertions": 31,
+    "passed": true
+  },
+  "compile_attempts": [
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\cryo-tower-compile-20261007.log",
+        "sha256": "35883126b1f0d04aa42d740fc8e8c93cdf2173735f0147cee55d1cf2b753c167",
+        "bytes": 58726
+      },
+      "exit_code": 0,
+      "elapsed": "22s",
+      "scope": "Shared source assertions and both native main modules before final outlet hooks"
+    },
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\cryo-tower-final-compile-20261007.log",
+        "sha256": "5dd0a4e2389599250b5257c2e858c9b64111a127ac64f2a04659c74ef9f8f4a2",
+        "bytes": 65840
+      },
+      "exit_code": 0,
+      "elapsed": "28s",
+      "scope": "Both final main modules, both independent installed-client probes and both finite-world fixtures"
+    },
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\cryo-comment-final-compile-20261007.log",
+        "sha256": "dd8acd6155cd596cbe291df030104b44589cdc023a0efe96db5a0dac048d0b2a",
+        "bytes": 1621
+      },
+      "exit_code": 0,
+      "elapsed": "11s",
+      "scope": "Only affected Neo main module after two comment line-ending cleanup; no gameplay logic changed"
+    }
+  ],
+  "world": {
+    "log": {
+      "path": "C:\\Dev\\GregTech6\\work\\cryo-tower-world-20261007.log",
+      "sha256": "95dc61024a502bc773eb2161657308aeb47b14da52f829d781d403600f87b423",
+      "bytes": 279929
+    },
+    "exit_code": 0,
+    "elapsed": "3m32s",
+    "required_tests_per_platform": 2,
+    "namespace": "gregtech_cryo_tower",
+    "attempts": 1,
+    "both_required_passes_seen": true,
+    "both_worlds_saved_all_dimensions": true,
+    "world_directories": [
+      "C:\\Dev\\GregTech6\\build\\cryo-tower-gametest-20261007",
+      "C:\\Dev\\GregTech6\\neoforge\\build\\cryo-tower-gametest-20261007"
+    ],
+    "Forge": {
+      "development_loader": "47.4.20",
+      "Java": "17.0.10",
+      "heap": "3GiB"
+    },
+    "NeoForge": {
+      "development_loader": "21.1.243",
+      "Java": "21.0.7",
+      "heap": "3GiB"
+    },
+    "direct_core_classpath_and_resources": true,
+    "ordinary_distribution_claimed": false,
+    "nonfatal_startup_messages": "Both fresh test worlds logged missing server.properties before generating defaults; no required scenario failed.",
+    "cases": [
+      {
+        "name": "originalColdRecipeAndSpeciesOutlets",
+        "verified": [
+          "Placed source80 parts form and native preview has80; each base accepts only CU, bottom fluid input roles and upper output roles match source.",
+          "Controlled CU64 injection and66 native ticks consume exactly200 registered Air using actual canonical recipe and yield N143/O50/CO2 10/He1/Ne1/Ar1.",
+          "Seven real stainless-steel receivers at source heights receive correct fluid identity/quantity; default height1 receives no falsely split air.",
+          "Controlled seven-stick output-slot fixture reaches actual vanilla chest three blocks behind at bottom. This is not a check of randomly rolled recipe ice."
+        ]
+      },
+      {
+        "name": "legacyFluidsAndUnpoweredStoppedOutput",
+        "verified": [
+          "Actual native load method retains old water75 and helium13/neon29/argon31 across three old tanks; output capacity restored to source unlimited and nine slots.",
+          "Former256000 HU is not converted into CU. Deliberately unformed, stopped and unpowered controller outputs saved species before work on one native tick.",
+          "Actual native save method writes upgraded tank keys without false heat; this is not an independent historical-world restart."
+        ]
+      }
+    ]
+  },
+  "fixtures_at_execution": [
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\CryoDistillationSourceTests.java",
+      "sha256": "30427339a0c378329a2d7585ac82a3ea71b9d73bed514fe37762ce700b03f5e3",
+      "bytes": 8641
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\resources\\data\\gregtech_cryo_tower\\structures\\test_empty.nbt",
+      "sha256": "147ef3e2c39e8d261ff2287395af00d734ccd13b196abdea0c0334e11fdde075",
+      "bytes": 110
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\CryoDistillationSourceTests.java",
+      "sha256": "974c906f6dd49b4c3a4b6700d40bdc4cd96912e541e0a504a9f0d4a957a4f916",
+      "bytes": 8664
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\resources\\data\\gregtech_cryo_tower\\structure\\test_empty.nbt",
+      "sha256": "ea4b3ed88dbb879fc3b86b9bceca2961af8248069c6420a4136eba192ec7b9b7",
+      "bytes": 113
+    }
+  ],
+  "receipt_preparation_attempt": {
+    "succeeded_on_retry": true,
+    "first_attempt_wrote_receipts": false,
+    "description": "Initial direct patch parser omitted legacy S: prefixes and stopped before writing on a missing-key assertion. Corrected only parser key syntax; current Chinese values unchanged and55 keys checked verbatim."
+  },
+  "post_world_comment_cleanup": {
+    "at_execution": {
+      "path": "C:\\Dev\\GregTech6\\work\\cryo-neo-chem-at-world-execution-20261007.java",
+      "sha256": "2be313cb2dc0ead5a6d33b6e6c2dfbba00376e85bdb8c43463ff00d15b751bd0",
+      "bytes": 11573
+    },
+    "final_source": {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\c\\Loader_Recipes_Chem.java",
+      "sha256": "6add1cbf061adf12d2eae2a8a8211a9e1cc46347a44c94fa0a62efe77058954a",
+      "bytes": 11569
+    },
+    "post_execution_change": "Removed exactly four carriage-return bytes in two newly added comment lines. All executable text and all original-file bytes outside these two comments unchanged.",
+    "class_before_recompile_sha256": "1659d21c05be32b3b4a37bbbbf006b840cac06af6a1d4c35d65891f0936f3787",
+    "class_after_recompile_sha256": "a2a30f8a11be8e16f2ba0438deffa7e443ab50e2418674772ec5df24b146b73e",
+    "class_byte_equality_claimed": false,
+    "note": "Compiler output hashes differ after comment line-ending cleanup; no identical bytecode claim. Exactly two comment-line endings changed, followed by a successful affected-module compile; finite worlds executed the retained pre-cleanup source snapshot."
+  },
+  "installed_client_probes": {
+    "compiled": true,
+    "executed": false,
+    "controllers_per_platform": 5,
+    "structure_rows_per_platform": 28,
+    "pending": "Pool ordinary dual JAR packaging and installed client self-start with subsequent batches, per user request."
+  },
+  "last_accepted_ordinary_jars_rechecked": [
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\verified\\20261007-025206Z-919fa083\\gregtech6-1.20.1-forge-0.0.0.jar",
+      "sha256": "919fa0836b7ff98c691de2f26a72c0d81dd85a7b619f6a66895ed290832daa22",
+      "bytes": 41588072,
+      "all_zip_crc_passed": true,
+      "contains_this_batch": false
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\build\\verified\\20261007-025206Z-919fa083\\gregtech6-neoforge-1.21.1-0.0.0.jar",
+      "sha256": "55edc8b7b0ba8b01fe3d1a62a3c51f29da5c875bc48ca8e029197a463dfbc4c3",
+      "bytes": 39809918,
+      "all_zip_crc_passed": true,
+      "contains_this_batch": false
+    }
+  ],
+  "not_verified": [
+    "Old hollow five-layer cryo towers need rebuilding to the canonical solid eight-layer tower plus transmitter base.",
+    "Source nine adjacent toggleable energy providers below the base remain pending: native manual enable and adjacent state need distinct controls; generic setEnabled is not an exact substitute.",
+    "Source design1 backside-hole part overlays and complete cover/face transfer protocol remain separate gaps.",
+    "Original input-tank source capacity/parallel multiplier, mutable saved machine configuration and full source overcharge behavior are not claimed complete.",
+    "Natural CU production/full survival, player tooltip hover, ordinary installed distribution, independent saved-world restart, historical saves and ordinary dedicated server are not verified by this batch.",
+    "All remaining block-specific tooltip/material families continue under the active goal."
+  ],
+  "publishing": {
+    "local_commit_only": true,
+    "pushed": false,
+    "PR_deferred": true,
+    "goal_status": "active"
+  }
+}

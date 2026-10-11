@@ -71,9 +71,8 @@ public final class OriginalBedrockDrillControllerBlock extends Block implements 
 
     @Override public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
                                           List<Component> tooltip, TooltipFlag flag) {
-        for (int line = 1; line <= 4; line++)
-            tooltip.add(Component.translatable("gt.tooltip.multiblock.bedrockdrill." + line));
-        tooltip.add(Component.translatable("gt.tooltip.multiblock.bedrockdrill.input"));
+        com.gregtech.gregtech.client.OriginalControllerTooltips.standalone(
+                com.gregtech.gregtech.content.multiblock.OriginalControllerTooltipData.Family.BEDROCK_DRILL,tooltip);
     }
 
     @Override public List<ItemStack> getDrops(BlockState state, LootParams.Builder context) {

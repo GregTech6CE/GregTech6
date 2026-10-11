@@ -1,0 +1,409 @@
+{
+  "adopted_sources": {
+    "definitions_after": [
+      {
+        "bytes": 1974,
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/block/wood/WoodSpecies.java",
+        "sha256": "af34ee55c6aa3e9b1be896a91d333131f77bf32c2c9024230cb18a2b93fbcd4d"
+      },
+      {
+        "bytes": 1881,
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/energy/BatteryBoxDefinitions.java",
+        "sha256": "690097332af4a5764dbb34b90046e02bdcbc4753e14cccbb093f6e96f6fea007"
+      },
+      {
+        "bytes": 2356,
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/energy/BoilerCatalog.java",
+        "sha256": "b3831f2b374419e78ab4b3ad61e14716f0d07dacc59f4d61ae94ce8a7a9f899e"
+      },
+      {
+        "bytes": 6625,
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/energy/EnergyNodeDefinitions.java",
+        "sha256": "61055f405067b1dab5c72403119a2385176aceeca918643db602d33d58b552b6"
+      },
+      {
+        "bytes": 2184,
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/energy/GearboxCatalog.java",
+        "sha256": "73f02dde77ed05ba8a98b0feee50a5a7195792d143d50b9c775b8e7b19961950"
+      },
+      {
+        "bytes": 3126,
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/energy/MagnetMachineDefinitions.java",
+        "sha256": "88cf6b75d3c39707f646b111d5198077649c8d4681b3d2be5bc00bf30cb32245"
+      }
+    ],
+    "definitions_before": [
+      {
+        "git_blob_sha256": "d68c7cdc2b1fc07fdc1cbdf2c05fb33789f8099af29d4d118652cdcc85ea4937",
+        "path": "core/src/main/java/com/gregtech/gregtech/block/wood/WoodSpecies.java"
+      },
+      {
+        "git_blob_sha256": "b2bf754df845165b36d95caf8b2fb66226c59ffa7974a0bc110eee81d4fca408",
+        "path": "core/src/main/java/com/gregtech/gregtech/content/energy/BatteryBoxDefinitions.java"
+      },
+      {
+        "git_blob_sha256": "a060cf250cb3971959382c83295a3b981e9271341994e73f2458dd672bee67ca",
+        "path": "core/src/main/java/com/gregtech/gregtech/content/energy/BoilerCatalog.java"
+      },
+      {
+        "git_blob_sha256": "ccd0954988b10fb42e0ea546cb88a3c825518309e276422bbaff1ce4cb31373b",
+        "path": "core/src/main/java/com/gregtech/gregtech/content/energy/EnergyNodeDefinitions.java"
+      },
+      {
+        "git_blob_sha256": "e74702c78ee8178df810ae59bb54b110136d98508f070550cf32b028827e96cd",
+        "path": "core/src/main/java/com/gregtech/gregtech/content/energy/GearboxCatalog.java"
+      },
+      {
+        "git_blob_sha256": "7ccc1df74817d5141186d568fa50b1b43ce9eaf622926a80970f721bbc50461b",
+        "path": "core/src/main/java/com/gregtech/gregtech/content/energy/MagnetMachineDefinitions.java"
+      }
+    ],
+    "kind": "Existing local definitions and user-supplied language policy; no external implementation imported",
+    "original_patch": {
+      "bytes": 7375784,
+      "path": "C:/Dev/GregTech_zh_cn.lang",
+      "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0"
+    }
+  },
+  "change": "Remove duplicate Chinese metadata and enforce language/code boundaries with Java-aware literal handling",
+  "copyright_license": "Existing notices preserved; no new copied upstream code. Chinese patch remains the pinned user source; authorship/license evidence unchanged.",
+  "date": "2026-10-08",
+  "limitations": [
+    "Binary test covers retained constructors/builders/accessors only, not arbitrary addon reflection over record components.",
+    "Existing Chinese metadata was unused by repository UI consumers; this removes a bypass, it does not add 46 translated UI entries.",
+    "Java gate is a lightweight source lexer, not a full Java parser or proof of complete gameplay localization. Compilation and explicit source-key aliases are still necessary.",
+    "No new JAR/client/world acceptance: three batches since the last accepted artifact remain pending combined validation."
+  ],
+  "parent_commit": "3644226d2c076ecbf144b2a0964b1f3da218dd67",
+  "removed_java_chinese_literals": [
+    {
+      "line": 14,
+      "path": "core/src/main/java/com/gregtech/gregtech/block/wood/WoodSpecies.java",
+      "value": "\"橡胶\""
+    },
+    {
+      "line": 15,
+      "path": "core/src/main/java/com/gregtech/gregtech/block/wood/WoodSpecies.java",
+      "value": "\"枫\""
+    },
+    {
+      "line": 16,
+      "path": "core/src/main/java/com/gregtech/gregtech/block/wood/WoodSpecies.java",
+      "value": "\"彩虹木\""
+    },
+    {
+      "line": 17,
+      "path": "core/src/main/java/com/gregtech/gregtech/block/wood/WoodSpecies.java",
+      "value": "\"柳\""
+    },
+    {
+      "line": 18,
+      "path": "core/src/main/java/com/gregtech/gregtech/block/wood/WoodSpecies.java",
+      "value": "\"蓝桃花心\""
+    },
+    {
+      "line": 19,
+      "path": "core/src/main/java/com/gregtech/gregtech/block/wood/WoodSpecies.java",
+      "value": "\"榛\""
+    },
+    {
+      "line": 20,
+      "path": "core/src/main/java/com/gregtech/gregtech/block/wood/WoodSpecies.java",
+      "value": "\"桂皮\""
+    },
+    {
+      "line": 21,
+      "path": "core/src/main/java/com/gregtech/gregtech/block/wood/WoodSpecies.java",
+      "value": "\"椰\""
+    },
+    {
+      "line": 22,
+      "path": "core/src/main/java/com/gregtech/gregtech/block/wood/WoodSpecies.java",
+      "value": "\"蓝云杉\""
+    },
+    {
+      "line": 24,
+      "path": "core/src/main/java/com/gregtech/gregtech/block/wood/WoodSpecies.java",
+      "value": "\"松\""
+    },
+    {
+      "line": 25,
+      "path": "core/src/main/java/com/gregtech/gregtech/block/wood/WoodSpecies.java",
+      "value": "\"黑檀\""
+    },
+    {
+      "line": 26,
+      "path": "core/src/main/java/com/gregtech/gregtech/block/wood/WoodSpecies.java",
+      "value": "\"白桃花心\""
+    },
+    {
+      "line": 24,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/BatteryBoxDefinitions.java",
+      "value": "\"大型电池盒 (\""
+    },
+    {
+      "line": 24,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/BatteryBoxDefinitions.java",
+      "value": "\"电池盒 (\""
+    },
+    {
+      "line": 8,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/BoilerCatalog.java",
+      "value": "\"铅\""
+    },
+    {
+      "line": 9,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/BoilerCatalog.java",
+      "value": "\"铋\""
+    },
+    {
+      "line": 10,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/BoilerCatalog.java",
+      "value": "\"青铜\""
+    },
+    {
+      "line": 11,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/BoilerCatalog.java",
+      "value": "\"砷铜\""
+    },
+    {
+      "line": 12,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/BoilerCatalog.java",
+      "value": "\"砷青铜\""
+    },
+    {
+      "line": 13,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/BoilerCatalog.java",
+      "value": "\"殷钢\""
+    },
+    {
+      "line": 14,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/BoilerCatalog.java",
+      "value": "\"钢\""
+    },
+    {
+      "line": 15,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/BoilerCatalog.java",
+      "value": "\"铬\""
+    },
+    {
+      "line": 16,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/BoilerCatalog.java",
+      "value": "\"钛\""
+    },
+    {
+      "line": 17,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/BoilerCatalog.java",
+      "value": "\"下界合金\""
+    },
+    {
+      "line": 18,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/BoilerCatalog.java",
+      "value": "\"钨\""
+    },
+    {
+      "line": 19,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/BoilerCatalog.java",
+      "value": "\"钨钢\""
+    },
+    {
+      "line": 20,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/BoilerCatalog.java",
+      "value": "\"高温合金\""
+    },
+    {
+      "line": 27,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/BoilerCatalog.java",
+      "value": "\"蒸汽锅炉(\""
+    },
+    {
+      "line": 31,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/BoilerCatalog.java",
+      "value": "\"强力蒸汽锅炉(\""
+    },
+    {
+      "line": 34,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/EnergyNodeDefinitions.java",
+      "value": "\"电动机(\""
+    },
+    {
+      "line": 43,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/EnergyNodeDefinitions.java",
+      "value": "\"发电机(\""
+    },
+    {
+      "line": 65,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/EnergyNodeDefinitions.java",
+      "value": "\"变压器(\""
+    },
+    {
+      "line": 73,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/EnergyNodeDefinitions.java",
+      "value": "\"通量电动机(LV)\""
+    },
+    {
+      "line": 77,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/EnergyNodeDefinitions.java",
+      "value": "\"通量电动机(MV)\""
+    },
+    {
+      "line": 81,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/EnergyNodeDefinitions.java",
+      "value": "\"通量发电机(LV)\""
+    },
+    {
+      "line": 85,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/EnergyNodeDefinitions.java",
+      "value": "\"通量发电机(MV)\""
+    },
+    {
+      "line": 94,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/EnergyNodeDefinitions.java",
+      "value": "\"太阳能板(硅)\""
+    },
+    {
+      "line": 98,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/EnergyNodeDefinitions.java",
+      "value": "\"太阳能板(锗)\""
+    },
+    {
+      "line": 29,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/GearboxCatalog.java",
+      "value": "\"变速箱\""
+    },
+    {
+      "line": 26,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/MagnetMachineDefinitions.java",
+      "value": "\"铅\""
+    },
+    {
+      "line": 26,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/MagnetMachineDefinitions.java",
+      "value": "\"殷钢\""
+    },
+    {
+      "line": 26,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/MagnetMachineDefinitions.java",
+      "value": "\"琥珀金\""
+    },
+    {
+      "line": 26,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/MagnetMachineDefinitions.java",
+      "value": "\"末影粗胚\""
+    },
+    {
+      "line": 26,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/MagnetMachineDefinitions.java",
+      "value": "\"末影\""
+    },
+    {
+      "line": 49,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/MagnetMachineDefinitions.java",
+      "value": "\"电磁铁 (\""
+    },
+    {
+      "line": 57,
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/MagnetMachineDefinitions.java",
+      "value": "\"红石通量磁场产生器 (\""
+    }
+  ],
+  "unchanged_language": {
+    "core/src/main/resources/assets/gregtech/lang/en_us.json": "da76903e35db56f3eec7b56c9489ca7b0c83034583f8785750e111b3f9d0f5b2",
+    "core/src/main/resources/assets/gregtech/lang/zh_cn.json": "a81b8ca825ab47d3c65e1448b2966d32ee1568d1ff9474211c207c0bc29e5bdb",
+    "tools/localization/GregTech_zh_cn.lang.gz": "42f67db8c7e6979b59ad570af3c6dc1d87b6600e770382b9feea6fc371d6b31a",
+    "tools/localization/aliases.json": "9af9d11b5c5692c05d1b3d1e67b794f48bacc37449d3ed46c1888560a15ea42c"
+  },
+  "validation": {
+    "bootstrap_test_sources_compiled": true,
+    "bootstrap_test_world_executed": false,
+    "consumer_source": "import com.gregtech.gregtech.api.energy.EnergyNodeSpec;\nimport com.gregtech.gregtech.api.machine.BoilerSpec;\nimport com.gregtech.gregtech.api.material.GTMaterialRegistry;\nimport com.gregtech.gregtech.api.prefix.PrefixRegistry;\nimport com.gregtech.gregtech.api.mod.ModData;\nimport com.gregtech.gregtech.block.wood.WoodSpecies;\nimport com.gregtech.gregtech.content.material.Materials;\nimport com.gregtech.gregtech.data.GregTechTags;\npublic class LegacyLanguageApiConsumer {\n    public static void main(String[] args) {\n        ModData.bindPresence(id -> id.equals(\"minecraft\") || id.equals(\"gregtech\"));\n        GTMaterialRegistry.setLogSink((warning, message) -> {});\n        PrefixRegistry.ensurePrefixesLoaded();\n        com.gregtech.gregtech.data.ModReferences.UNKNOWN.getClass();\n        com.gregtech.gregtech.data.MaterialGroups.Glowstone.getClass();\n        GTMaterialRegistry.init();\n        var energy = new EnergyNodeSpec(\"legacy_language\", Materials.Lead, EnergyNodeSpec.Kind.CONVERTER,\n                \"fixture\", GregTechTags.Energy.EU, GregTechTags.Energy.RU, 32, 16, 64, \"Legacy energy\", \"Ignored old translation\", 0);\n        var built = EnergyNodeSpec.builder(\"legacy_builder\", Materials.Lead).texture(\"fixture\")\n                .input(GregTechTags.Energy.EU,32).output(GregTechTags.Energy.RU,16).names(\"Legacy builder\", \"Ignored old translation\").build();\n        var boiler = new BoilerSpec(\"legacy_boiler\", Materials.Lead, false, 32, 4.0F, \"Legacy boiler\", \"Ignored old translation\");\n        if (!energy.displayZh().equals(\"Legacy energy\") || !built.displayZh().equals(\"Legacy builder\")\n                || !boiler.displayZh().equals(\"Legacy boiler\") || !WoodSpecies.RUBBER.zhName().equals(\"Rubber\"))\n            throw new AssertionError(\"A legacy metadata call must not restore a shadow translation catalog\");\n        System.out.println(\"Legacy language API binary linkage passed: old energy constructor, builder, boiler constructor and wood accessor\");\n    }\n}\n\n",
+    "core_assertions": 18414,
+    "dual_compile_seconds": 43,
+    "initial_fixture_error": "First scratch consumer compilation used api.material.PrefixRegistry instead of api.prefix.PrefixRegistry; corrected before compiling against the old API. Production compilation had no failure.",
+    "last_gate": {
+      "java_sources": 2597,
+      "language": {
+        "changes": {
+          "changed": 0,
+          "missing": 0,
+          "unexpected": 0
+        },
+        "chinese_keys": 139264,
+        "english_fallback_count": 5585,
+        "native_aliases": 8003,
+        "source_keys": 125676,
+        "source_sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0"
+      },
+      "scope": "Code boundaries, Chinese literal exclusion and exact language only; not runtime/gameplay acceptance.",
+      "seconds": 1.93,
+      "status": "passed"
+    },
+    "legacy_binary_compatibility": [
+      {
+        "after_sha256": "2f71d6cc076357abd2de76b3678d1fbf736b665e19fdc19b42d264ccf3105133",
+        "changed": true,
+        "path": "core\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\api\\energy\\EnergyNodeSpec.class",
+        "sha256": "f7dc4b2a8eca08592131b8348b8cddb43162e223b6e7fca4722bf35a7163c286"
+      },
+      {
+        "after_sha256": "fb299f1fe14c2e2ba55bb39bbbf28233dd9463a65f5112d6012bc995fea0a40c",
+        "changed": true,
+        "path": "core\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\api\\energy\\EnergyNodeSpec$Builder.class",
+        "sha256": "5ea782b697615edc29dd85d804184a379fbed751af465fe4bcdcd268693a5d76"
+      },
+      {
+        "after_sha256": "7875c258e84594e4d00bac3ba1891e3d43da87e3b7216e34c38b6db879835cb0",
+        "changed": true,
+        "path": "core\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\api\\machine\\BoilerSpec.class",
+        "sha256": "6d9ac706a40da4116b88fd7050801e077c01133a53105ffa7287fd05256f815a"
+      },
+      {
+        "after_sha256": "73a86b07d573c72a1e4bd448d284960cf07632d8f1cd08bc28681efcabb0004f",
+        "changed": true,
+        "path": "core\\build\\classes\\java\\main\\com\\gregtech\\gregtech\\block\\wood\\WoodSpecies.class",
+        "sha256": "5e103999dfceef6f393635fb6b0d9e9bafe56eee4eb2070bb64ad3d60b7b75e3"
+      },
+      {
+        "after_sha256": "85f885ea5985b4faf355be163b196ade0451dc30b81d3703ad705e1c815973e4",
+        "changed": false,
+        "path": "work\\legacy-language-api-20261008\\LegacyLanguageApiConsumer.class",
+        "sha256": "85f885ea5985b4faf355be163b196ade0451dc30b81d3703ad705e1c815973e4"
+      }
+    ],
+    "logs": [
+      {
+        "bytes": 127,
+        "path": "C:/Dev/GregTech6/work/language-boundary-tests-20261008.log",
+        "sha256": "66c9a4da1876861c3f73960a68a7eb38dc2d982072f00c35d480c53eabe3ed9d"
+      },
+      {
+        "bytes": 58534,
+        "path": "C:/Dev/GregTech6/work/language-boundary-compile-20261008.log",
+        "sha256": "0a0ac56c6cb2180921a8c0b06675a3102aeb40f7346028df9119b95d87633997"
+      },
+      {
+        "bytes": 2183,
+        "path": "C:/Dev/GregTech6/work/legacy-language-api-20261008/old-api.txt",
+        "sha256": "39fff83d07f88854a36bc812e1095e4f3faadf20bcdf84ca7a454ac930a1a360"
+      },
+      {
+        "bytes": 2671,
+        "path": "C:/Dev/GregTech6/work/legacy-language-api-20261008/new-api.txt",
+        "sha256": "576c4d9fe1d5544687c08692199bcecdf3baa82219a6c060a2bc5bd6e762874c"
+      },
+      {
+        "bytes": 0,
+        "path": "C:/Dev/GregTech6/work/legacy-language-api-20261008/compile.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 114,
+        "path": "C:/Dev/GregTech6/work/legacy-language-api-20261008/run.log",
+        "sha256": "1ff06d59700e72bd423c3cb2f2a0effdfeab13c3d361e60dca48f3bd6e23d62a"
+      }
+    ],
+    "ordinary_jar_client_and_world": false,
+    "python_seconds": 1.054,
+    "python_tests": 23
+  }
+}

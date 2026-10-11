@@ -1,0 +1,80 @@
+{
+  "date": "2026-10-07",
+  "source_receipt": {
+    "path": "C:\\Dev\\GregTech6\\docs\\integration\\verification\\large-smeltery-source-20261007.json",
+    "sha256": "b9ac6011364166dc22dd8160db97bece886a0b4dd3412e87ef73bc3d7db27835",
+    "bytes": 19096
+  },
+  "compile": {
+    "log": {
+      "path": "C:\\Dev\\GregTech6\\work\\large-smeltery-compile-20261007.log",
+      "sha256": "4d5b00f6e332dd7d3e0c6d54e6cafebdc3462d7dae057413a1bc60a3889cb987",
+      "bytes": 56169
+    },
+    "elapsed": "29s",
+    "shared_assertions": 3679,
+    "new_source_hazard_assertions": 24,
+    "dual_main": true,
+    "dual_production_probe": true,
+    "dual_game_fixture": true
+  },
+  "limited_world": {
+    "log": {
+      "path": "C:\\Dev\\GregTech6\\work\\large-smeltery-world-20261007.log",
+      "sha256": "2b2580d9c85325e37960b67c744e7a5b732699dd95645c9ee88d4f75bdeeceb4",
+      "bytes": 778720
+    },
+    "elapsed": "3m 49s",
+    "tests_per_platform": 3,
+    "scope": [
+      "373K Water gas in original small/large bounds,2/4 multipliers, isolated air/chest/solid/carpet ignition checks.",
+      "Actual ordinary Steel crucible tick: Water steam empties contents with no fire;314K Gunpowder destroys hull and contents.",
+      "Actual formed large Steel main and bound-wall1000K contact14damage;2250K survives;2251K melts all27 positions to lavaLEVEL1."
+    ],
+    "worlds": [
+      "C:\\Dev\\GregTech6\\build\\large-smeltery-gametest-20261007",
+      "C:\\Dev\\GregTech6\\neoforge\\build\\large-smeltery-gametest-20261007"
+    ],
+    "source_forced_temperatures": true,
+    "natural_survival_chain": false,
+    "independent_restart": false
+  },
+  "attempts": [
+    {
+      "description": "Initial run lacked the new namespace empty template; Forge stopped before machine scenarios and Neo did not start.",
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\large-smeltery-world-missing-template-20261007.log",
+        "sha256": "d449a3726ecd764442b7e8d238aaf89a0ff419c8a6a0cc4ab58f3b27bcb5f48f",
+        "bytes": 217204
+      },
+      "exit_code": 1,
+      "elapsed": "4m25s"
+    },
+    {
+      "description": "Namespace templates restored; same3 tests per platform, direct shared output avoids another large resource archive.",
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\large-smeltery-world-20261007.log",
+        "sha256": "2b2580d9c85325e37960b67c744e7a5b732699dd95645c9ee88d4f75bdeeceb4",
+        "bytes": 778720
+      },
+      "exit_code": 0
+    }
+  ],
+  "prepared_not_executed": {
+    "installed_large_controller_tooltips_and_native_parameter_methods": 9,
+    "all_original_REV4U_advanced_tooltips": 8
+  },
+  "verification": {
+    "ordinary_dual_jars_this_batch": false,
+    "installed_client_this_batch": false,
+    "new_gui_hover": false,
+    "historical_save_compatibility": false,
+    "ordinary_dedicated_server": false
+  },
+  "last_accepted_jars": {
+    "directory": "C:\\Dev\\GregTech6\\build\\verified\\20261007-013857Z-b5d8b66a",
+    "includes_this_batch": false
+  },
+  "goal": "active",
+  "publication": "Local commit only; no push or PR"
+}

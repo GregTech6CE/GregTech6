@@ -24,7 +24,6 @@ public record EnergyNodeSpec(
         long outputRate,
         long capacity,
         String displayEn,
-        String displayZh,
         int batterySlots
 ) {
     public EnergyNodeSpec {
@@ -33,7 +32,6 @@ public record EnergyNodeSpec(
         java.util.Objects.requireNonNull(kind, "Device kind");
         java.util.Objects.requireNonNull(textureFolder, "Device texture folder");
         java.util.Objects.requireNonNull(displayEn, "English name");
-        java.util.Objects.requireNonNull(displayZh, "Chinese name");
         if (!GregTechTags.Energy.ALL.contains(inType) || !GregTechTags.Energy.ALL.contains(outType))
             throw new IllegalArgumentException("Unknown energy type for " + id);
         if (batterySlots != 0 && batterySlots != 4 && batterySlots != 16)
@@ -41,6 +39,20 @@ public record EnergyNodeSpec(
         if (inputRate < 0 || outputRate < 0 || capacity < 0)
             throw new IllegalArgumentException("Negative energy device rate/capacity: " + id);
     }
+
+    /** Compatibility for addons compiled against the old bilingual metadata constructor.
+     * Translations are now exclusively supplied by language resources. */
+    @Deprecated
+    public EnergyNodeSpec(String id, GTMaterial material, Kind kind, String textureFolder,
+                          GregTechTags.Tag inType, GregTechTags.Tag outType, long inputRate,
+                          long outputRate, long capacity, String displayEn, String ignoredTranslation,
+                          int batterySlots) {
+        this(id, material, kind, textureFolder, inType, outType, inputRate, outputRate, capacity, displayEn, batterySlots);
+    }
+
+    /** Legacy metadata accessor; a language-neutral core cannot resolve the player's locale. */
+    @Deprecated
+    public String displayZh() { return displayEn; }
 
     public static Builder builder(String id, GTMaterial casing) { return new Builder(id, casing); }
 
@@ -56,7 +68,6 @@ public record EnergyNodeSpec(
         private long capacity;
         private int batterySlots;
         private String english;
-        private String chinese;
         private Builder(String id, GTMaterial casing) { this.id = id; this.casing = casing; }
         public Builder kind(Kind value) { kind = value; return this; }
         public Builder texture(String value) { texture = value; return this; }
@@ -64,9 +75,12 @@ public record EnergyNodeSpec(
         public Builder output(GregTechTags.Tag type, long rate) { outputType = type; output = rate; return this; }
         public Builder capacity(long value) { capacity = value; return this; }
         public Builder batterySlots(int count) { batterySlots=count; return this; }
-        public Builder names(String english, String chinese) { this.english = english; this.chinese = chinese; return this; }
+        public Builder name(String english) { this.english = english; return this; }
+        /** Compatibility only; translated names must use the shared language resources. */
+        @Deprecated
+        public Builder names(String english, String ignoredTranslation) { return name(english); }
         public EnergyNodeSpec build() {
-            return new EnergyNodeSpec(id, casing, kind, texture, inputType, outputType, input, output, capacity, english, chinese, batterySlots);
+            return new EnergyNodeSpec(id, casing, kind, texture, inputType, outputType, input, output, capacity, english, batterySlots);
         }
     }
     public enum Kind { CONVERTER, MAGNET, TURBINE, SOLAR, STORAGE }

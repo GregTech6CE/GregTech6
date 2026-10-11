@@ -1,0 +1,2152 @@
+{
+  "added_aliases": {
+    "block.gregtech.bedrock_drill_main": "gt.multitileentity.17999",
+    "block.gregtech.coke_oven_wall": "gt.multitileentity.18000",
+    "block.gregtech.electric_cooler_ev": "gt.multitileentity.10164",
+    "block.gregtech.electric_cooler_hv": "gt.multitileentity.10163",
+    "block.gregtech.electric_cooler_iv": "gt.multitileentity.10165",
+    "block.gregtech.electric_cooler_lv": "gt.multitileentity.10161",
+    "block.gregtech.electric_cooler_mv": "gt.multitileentity.10162",
+    "block.gregtech.electric_heater_ev": "gt.multitileentity.10004",
+    "block.gregtech.electric_heater_hv": "gt.multitileentity.10003",
+    "block.gregtech.electric_heater_iv": "gt.multitileentity.10005",
+    "block.gregtech.electric_heater_lv": "gt.multitileentity.10001",
+    "block.gregtech.electric_heater_mv": "gt.multitileentity.10002",
+    "block.gregtech.electromagnet_ev": "gt.multitileentity.10034",
+    "block.gregtech.electromagnet_hv": "gt.multitileentity.10033",
+    "block.gregtech.electromagnet_iv": "gt.multitileentity.10035",
+    "block.gregtech.electromagnet_lv": "gt.multitileentity.10031",
+    "block.gregtech.electromagnet_mv": "gt.multitileentity.10032",
+    "block.gregtech.flux_cooler_ev": "gt.multitileentity.11164",
+    "block.gregtech.flux_cooler_hv": "gt.multitileentity.11163",
+    "block.gregtech.flux_cooler_iv": "gt.multitileentity.11165",
+    "block.gregtech.flux_cooler_lv": "gt.multitileentity.11161",
+    "block.gregtech.flux_cooler_mv": "gt.multitileentity.11162",
+    "block.gregtech.flux_heater_ev": "gt.multitileentity.11004",
+    "block.gregtech.flux_heater_hv": "gt.multitileentity.11003",
+    "block.gregtech.flux_heater_iv": "gt.multitileentity.11005",
+    "block.gregtech.flux_heater_lv": "gt.multitileentity.11001",
+    "block.gregtech.flux_heater_mv": "gt.multitileentity.11002",
+    "block.gregtech.flux_magnet_ev": "gt.multitileentity.11034",
+    "block.gregtech.flux_magnet_hv": "gt.multitileentity.11033",
+    "block.gregtech.flux_magnet_iv": "gt.multitileentity.11035",
+    "block.gregtech.flux_magnet_lv": "gt.multitileentity.11031",
+    "block.gregtech.flux_magnet_mv": "gt.multitileentity.11032",
+    "block.gregtech.fusion_reactor_main": "gt.multitileentity.17198",
+    "block.gregtech.heat_exchanger_main": "gt.multitileentity.17197",
+    "block.gregtech.implosion_compressor_main": "gt.multitileentity.17110",
+    "block.gregtech.implosion_compressor_wall": "gt.multitileentity.18023",
+    "block.gregtech.large_dynamo_adamantium": "gt.multitileentity.17224",
+    "block.gregtech.large_dynamo_main": "gt.multitileentity.17221",
+    "block.gregtech.large_dynamo_titanium": "gt.multitileentity.17222",
+    "block.gregtech.large_dynamo_tungstensteel": "gt.multitileentity.17223",
+    "block.gregtech.large_steam_turbine_graphene": "gt.multitileentity.17213",
+    "block.gregtech.large_steam_turbine_trinitanium": "gt.multitileentity.17212",
+    "block.gregtech.large_steam_turbine_vibramantium": "gt.multitileentity.17214",
+    "block.gregtech.large_turbine_main": "gt.multitileentity.17211",
+    "block.gregtech.largeautoclave_stainless_steel": "gt.multitileentity.17112",
+    "block.gregtech.largebath_stainless_steel": "gt.multitileentity.17104",
+    "block.gregtech.largecentrifuge_tungsten_steel": "gt.multitileentity.17100",
+    "block.gregtech.largecoagulator_stainless_steel": "gt.multitileentity.17105",
+    "block.gregtech.largecrusher_tungsten_steel": "gt.multitileentity.17108",
+    "block.gregtech.largeelectrolyzer_stainless_steel": "gt.multitileentity.17103",
+    "block.gregtech.largefermenter_stainless_steel": "gt.multitileentity.17113",
+    "block.gregtech.largemassfab_lead": "gt.multitileentity.17199",
+    "block.gregtech.largemixer_stainless_steel": "gt.multitileentity.17102",
+    "block.gregtech.largeoven_invar": "gt.multitileentity.17106",
+    "block.gregtech.largeshredder_tungsten_steel": "gt.multitileentity.17109",
+    "block.gregtech.largesluice_titanium": "gt.multitileentity.17107",
+    "block.gregtech.largesqueezer_steel": "gt.multitileentity.17114",
+    "block.gregtech.lightning_rod_main": "gt.multitileentity.17998",
+    "block.gregtech.panel_asphalt": "gt.multitileentity.32492",
+    "block.gregtech.panel_cfoam": "gt.multitileentity.32483",
+    "block.gregtech.panel_colored_black": "gt.multitileentity.32452",
+    "block.gregtech.panel_colored_gray": "gt.multitileentity.32460",
+    "block.gregtech.panel_concrete": "gt.multitileentity.32459",
+    "block.gregtech.panel_wood": "gt.multitileentity.32500",
+    "block.gregtech.sensor_bucketometer": "gt.multitileentity.31007",
+    "block.gregtech.sensor_chronometer": "gt.multitileentity.31003",
+    "block.gregtech.sensor_fluidometer": "gt.multitileentity.31006",
+    "block.gregtech.sensor_geiger": "gt.multitileentity.31020",
+    "block.gregtech.sensor_gibblometer": "gt.multitileentity.31001",
+    "block.gregtech.sensor_itemometer": "gt.multitileentity.31004",
+    "block.gregtech.sensor_kilobucketometer": "gt.multitileentity.31022",
+    "block.gregtech.sensor_laserometer": "gt.multitileentity.31021",
+    "block.gregtech.sensor_luminometer": "gt.multitileentity.31002",
+    "block.gregtech.sensor_playercounter": "gt.multitileentity.31017",
+    "block.gregtech.sensor_progressmeter": "gt.multitileentity.31018",
+    "block.gregtech.sensor_stackometer": "gt.multitileentity.31005",
+    "block.gregtech.sensor_tachometer": "gt.multitileentity.31019",
+    "block.gregtech.sensor_thermometer": "gt.multitileentity.31000",
+    "block.gregtech.sensor_weightometric": "gt.multitileentity.31012",
+    "block.gregtech.steam_turbine_aluminium": "gt.multitileentity.1535",
+    "block.gregtech.steam_turbine_brass": "gt.multitileentity.1515",
+    "block.gregtech.steam_turbine_bronze": "gt.multitileentity.1512",
+    "block.gregtech.steam_turbine_chromium": "gt.multitileentity.1525",
+    "block.gregtech.steam_turbine_fiery_steel": "gt.multitileentity.1531",
+    "block.gregtech.steam_turbine_graphene": "gt.multitileentity.1548",
+    "block.gregtech.steam_turbine_invar": "gt.multitileentity.1518",
+    "block.gregtech.steam_turbine_ironwood": "gt.multitileentity.1527",
+    "block.gregtech.steam_turbine_magnalium": "gt.multitileentity.1538",
+    "block.gregtech.steam_turbine_steel": "gt.multitileentity.1522",
+    "block.gregtech.steam_turbine_steeleaf": "gt.multitileentity.1528",
+    "block.gregtech.steam_turbine_thaumium": "gt.multitileentity.1529",
+    "block.gregtech.steam_turbine_titanium": "gt.multitileentity.1530",
+    "block.gregtech.steam_turbine_trinitanium": "gt.multitileentity.1545",
+    "block.gregtech.steam_turbine_void_metal": "gt.multitileentity.1540",
+    "block.gregtech.tank_wall": "gt.multitileentity.18002",
+    "block.gregtech.tank_wall_dense": "gt.multitileentity.18022",
+    "block.gregtech.wood_barrel_bismuth": "gt.multitileentity.32752",
+    "block.gregtech.wood_barrel_brass": "gt.multitileentity.32754",
+    "block.gregtech.wood_barrel_bronze": "gt.multitileentity.32753",
+    "item.gregtech.canvas_black": "gt.multiitem.randomtools.7030",
+    "item.gregtech.canvas_black.tooltip": "gt.multiitem.randomtools.7030.tooltip",
+    "item.gregtech.canvas_blue": "gt.multiitem.randomtools.7034",
+    "item.gregtech.canvas_blue.tooltip": "gt.multiitem.randomtools.7034.tooltip",
+    "item.gregtech.canvas_brown": "gt.multiitem.randomtools.7033",
+    "item.gregtech.canvas_brown.tooltip": "gt.multiitem.randomtools.7033.tooltip",
+    "item.gregtech.canvas_cyan": "gt.multiitem.randomtools.7036",
+    "item.gregtech.canvas_cyan.tooltip": "gt.multiitem.randomtools.7036.tooltip",
+    "item.gregtech.canvas_gray": "gt.multiitem.randomtools.7038",
+    "item.gregtech.canvas_gray.tooltip": "gt.multiitem.randomtools.7038.tooltip",
+    "item.gregtech.canvas_green": "gt.multiitem.randomtools.7032",
+    "item.gregtech.canvas_green.tooltip": "gt.multiitem.randomtools.7032.tooltip",
+    "item.gregtech.canvas_light_blue": "gt.multiitem.randomtools.7042",
+    "item.gregtech.canvas_light_blue.tooltip": "gt.multiitem.randomtools.7042.tooltip",
+    "item.gregtech.canvas_light_gray": "gt.multiitem.randomtools.7037",
+    "item.gregtech.canvas_light_gray.tooltip": "gt.multiitem.randomtools.7037.tooltip",
+    "item.gregtech.canvas_lime": "gt.multiitem.randomtools.7040",
+    "item.gregtech.canvas_lime.tooltip": "gt.multiitem.randomtools.7040.tooltip",
+    "item.gregtech.canvas_magenta": "gt.multiitem.randomtools.7043",
+    "item.gregtech.canvas_magenta.tooltip": "gt.multiitem.randomtools.7043.tooltip",
+    "item.gregtech.canvas_orange": "gt.multiitem.randomtools.7044",
+    "item.gregtech.canvas_orange.tooltip": "gt.multiitem.randomtools.7044.tooltip",
+    "item.gregtech.canvas_pink": "gt.multiitem.randomtools.7039",
+    "item.gregtech.canvas_pink.tooltip": "gt.multiitem.randomtools.7039.tooltip",
+    "item.gregtech.canvas_purple": "gt.multiitem.randomtools.7035",
+    "item.gregtech.canvas_purple.tooltip": "gt.multiitem.randomtools.7035.tooltip",
+    "item.gregtech.canvas_red": "gt.multiitem.randomtools.7031",
+    "item.gregtech.canvas_red.tooltip": "gt.multiitem.randomtools.7031.tooltip",
+    "item.gregtech.canvas_white": "gt.multiitem.randomtools.7045",
+    "item.gregtech.canvas_white.tooltip": "gt.multiitem.randomtools.7045.tooltip",
+    "item.gregtech.canvas_yellow": "gt.multiitem.randomtools.7041",
+    "item.gregtech.canvas_yellow.tooltip": "gt.multiitem.randomtools.7041.tooltip",
+    "item.gregtech.panel_asphalt_black": "gt.multitileentity.32484",
+    "item.gregtech.panel_asphalt_blue": "gt.multitileentity.32488",
+    "item.gregtech.panel_asphalt_brown": "gt.multitileentity.32487",
+    "item.gregtech.panel_asphalt_cyan": "gt.multitileentity.32490",
+    "item.gregtech.panel_asphalt_gray": "gt.multitileentity.32492",
+    "item.gregtech.panel_asphalt_green": "gt.multitileentity.32486",
+    "item.gregtech.panel_asphalt_light_blue": "gt.multitileentity.32496",
+    "item.gregtech.panel_asphalt_light_gray": "gt.multitileentity.32491",
+    "item.gregtech.panel_asphalt_lime": "gt.multitileentity.32494",
+    "item.gregtech.panel_asphalt_magenta": "gt.multitileentity.32497",
+    "item.gregtech.panel_asphalt_orange": "gt.multitileentity.32498",
+    "item.gregtech.panel_asphalt_pink": "gt.multitileentity.32493",
+    "item.gregtech.panel_asphalt_purple": "gt.multitileentity.32489",
+    "item.gregtech.panel_asphalt_red": "gt.multitileentity.32485",
+    "item.gregtech.panel_asphalt_white": "gt.multitileentity.32499",
+    "item.gregtech.panel_asphalt_yellow": "gt.multitileentity.32495",
+    "item.gregtech.panel_cfoam_black": "gt.multitileentity.32468",
+    "item.gregtech.panel_cfoam_blue": "gt.multitileentity.32472",
+    "item.gregtech.panel_cfoam_brown": "gt.multitileentity.32471",
+    "item.gregtech.panel_cfoam_cyan": "gt.multitileentity.32474",
+    "item.gregtech.panel_cfoam_gray": "gt.multitileentity.32476",
+    "item.gregtech.panel_cfoam_green": "gt.multitileentity.32470",
+    "item.gregtech.panel_cfoam_light_blue": "gt.multitileentity.32480",
+    "item.gregtech.panel_cfoam_light_gray": "gt.multitileentity.32475",
+    "item.gregtech.panel_cfoam_lime": "gt.multitileentity.32478",
+    "item.gregtech.panel_cfoam_magenta": "gt.multitileentity.32481",
+    "item.gregtech.panel_cfoam_orange": "gt.multitileentity.32482",
+    "item.gregtech.panel_cfoam_pink": "gt.multitileentity.32477",
+    "item.gregtech.panel_cfoam_purple": "gt.multitileentity.32473",
+    "item.gregtech.panel_cfoam_red": "gt.multitileentity.32469",
+    "item.gregtech.panel_cfoam_white": "gt.multitileentity.32483",
+    "item.gregtech.panel_cfoam_yellow": "gt.multitileentity.32479",
+    "item.gregtech.panel_concrete_black": "gt.multitileentity.32452",
+    "item.gregtech.panel_concrete_blue": "gt.multitileentity.32456",
+    "item.gregtech.panel_concrete_brown": "gt.multitileentity.32455",
+    "item.gregtech.panel_concrete_cyan": "gt.multitileentity.32458",
+    "item.gregtech.panel_concrete_gray": "gt.multitileentity.32460",
+    "item.gregtech.panel_concrete_green": "gt.multitileentity.32454",
+    "item.gregtech.panel_concrete_light_blue": "gt.multitileentity.32464",
+    "item.gregtech.panel_concrete_light_gray": "gt.multitileentity.32459",
+    "item.gregtech.panel_concrete_lime": "gt.multitileentity.32462",
+    "item.gregtech.panel_concrete_magenta": "gt.multitileentity.32465",
+    "item.gregtech.panel_concrete_orange": "gt.multitileentity.32466",
+    "item.gregtech.panel_concrete_pink": "gt.multitileentity.32461",
+    "item.gregtech.panel_concrete_purple": "gt.multitileentity.32457",
+    "item.gregtech.panel_concrete_red": "gt.multitileentity.32453",
+    "item.gregtech.panel_concrete_white": "gt.multitileentity.32467",
+    "item.gregtech.panel_concrete_yellow": "gt.multitileentity.32463",
+    "item.gregtech.panel_wood_acacia": "gt.multitileentity.32504",
+    "item.gregtech.panel_wood_bamboo": "gt.multitileentity.32500",
+    "item.gregtech.panel_wood_birch": "gt.multitileentity.32502",
+    "item.gregtech.panel_wood_blue_mahoe": "gt.multitileentity.32538",
+    "item.gregtech.panel_wood_bluespruce": "gt.multitileentity.32291",
+    "item.gregtech.panel_wood_cherry": "gt.multitileentity.32500",
+    "item.gregtech.panel_wood_cinnamon": "gt.multitileentity.32597",
+    "item.gregtech.panel_wood_coconut": "gt.multitileentity.32598",
+    "item.gregtech.panel_wood_compressed": "gt.multitileentity.32554",
+    "item.gregtech.panel_wood_crimson": "gt.multitileentity.32500",
+    "item.gregtech.panel_wood_dark_oak": "gt.multitileentity.32505",
+    "item.gregtech.panel_wood_dry": "gt.multitileentity.32352",
+    "item.gregtech.panel_wood_ebony": "gt.multitileentity.32500",
+    "item.gregtech.panel_wood_frozen": "gt.multitileentity.32355",
+    "item.gregtech.panel_wood_hazel": "gt.multitileentity.32539",
+    "item.gregtech.panel_wood_jungle": "gt.multitileentity.32503",
+    "item.gregtech.panel_wood_mangrove": "gt.multitileentity.32500",
+    "item.gregtech.panel_wood_maple": "gt.multitileentity.32507",
+    "item.gregtech.panel_wood_mossy": "gt.multitileentity.32354",
+    "item.gregtech.panel_wood_pine": "gt.multitileentity.32500",
+    "item.gregtech.panel_wood_rainbowood": "gt.multitileentity.32599",
+    "item.gregtech.panel_wood_rotten": "gt.multitileentity.32353",
+    "item.gregtech.panel_wood_rubber": "gt.multitileentity.32506",
+    "item.gregtech.panel_wood_spruce": "gt.multitileentity.32501",
+    "item.gregtech.panel_wood_treated": "gt.multitileentity.32562",
+    "item.gregtech.panel_wood_warped": "gt.multitileentity.32500",
+    "item.gregtech.panel_wood_white_mahoe": "gt.multitileentity.32500",
+    "item.gregtech.panel_wood_willow": "gt.multitileentity.32537",
+    "item.gregtech.panel_wood_wood": "gt.multitileentity.32563",
+    "tooltip.gregtech.contained_materials": "gt.lang.contained.materials",
+    "tooltip.gregtech.machine.contained_materials": "gt.lang.contained.materials",
+    "tooltip.gregtech.wire.contained_materials": "gt.lang.contained.materials"
+  },
+  "corrected_aliases": {
+    "block.gregtech.sensor_electrometer": "gt.multitileentity.31015"
+  },
+  "delta": {
+    "changed": [],
+    "missing": [
+      "gt.tooltip.canvas.image",
+      "gt.tooltip.usb.charged_antimatter",
+      "gt.tooltip.usb.neutral_antimatter"
+    ],
+    "unexpected": []
+  },
+  "source_sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0",
+  "alias_count": 6688,
+  "binding_references": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/transport/PanelCatalog.java",
+      "sha256": "ae6a4fcf217f4e2b281d2afc0745de0a0dbee058509815089453e69c96966176"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/transport/fluid/CheapWoodBarrelCatalog.java",
+      "sha256": "2eb3cc39255379f00b4f7c62fab20aadd51580a9028ca8396222275992f91a3d"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/cover/CanvasRules.java",
+      "sha256": "ee283c664f51a35c997e895db4790d0e4ec05c470d6ecdc79adc13143aecee37"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/tool/PaintingRules.java",
+      "sha256": "8f04eef92f3d9a63f6c140ab679e94ae991bf5ed8e2cd0c01c6c8e808757d6a0"
+    },
+    {
+      "path": "docs/integration/verification/original-zh-cn-source-20261005.json",
+      "sha256": "dd85fc3129acb779cfad207e4478ac292b06361e91012c432357e9add3757141"
+    }
+  ],
+  "current_files": [
+    {
+      "path": "tools/localization.py",
+      "sha256": "8cfbcbd999e3c129172a8bf8ebe0b4da20395ecafd70a684bafb0acef2569fff"
+    },
+    {
+      "path": "tools/localization/aliases.json",
+      "sha256": "f5cc2a854283dfa467461438f3cff4d8a5c32270b7f4341a345b1768cad3e205"
+    },
+    {
+      "path": "tools/localization/source.json",
+      "sha256": "5e0a0b8d2a2703ad47509d89d2faf1bf28eac7b96c77c915d0056fca0e4f89f3"
+    },
+    {
+      "path": "tools/localization/GregTech_zh_cn.lang.gz",
+      "sha256": "42f67db8c7e6979b59ad570af3c6dc1d87b6600e770382b9feea6fc371d6b31a"
+    },
+    {
+      "path": "tools/integration/check_source.py",
+      "sha256": "c156e5fe71f996245310806e4eb0471d9396d9ac4ea2210a46c44d8e8b94c600"
+    },
+    {
+      "path": "tools/integration/verify_artifacts.py",
+      "sha256": "f95522bbf0c14cbf3c77a8f1c13cbd0d6ecfb5f8474d772da10d272b36d10f06"
+    }
+  ],
+  "local_patch_author": "No author/license declared in user-provided patch; source record retained; no remote publication.",
+  "isolated_test_files": {
+    "java": 243,
+    "resources": 12,
+    "unchanged_git_blobs": 255,
+    "paths": [
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/AdvancedBumbliaryRecipeTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/AdvancedBumbliaryRecipeTests.java",
+        "git_blob": "a2d1bf12f5864f56d881b20d7a98c3fb08d8f976"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/AdvancedCraftingRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/AdvancedCraftingRepairTests.java",
+        "git_blob": "57e72c96162d8014909410026b23202b708b441c"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/AlloyDictionaryTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/AlloyDictionaryTests.java",
+        "git_blob": "9c1bf393ced4906c8bd0b8bc196b207bb3da7491"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/AmmunitionRecipesTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/AmmunitionRecipesTests.java",
+        "git_blob": "8a8a6fd67eed8b5dcb84e825e2c06fd0f211ca21"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/AnvilSmashingTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/AnvilSmashingTests.java",
+        "git_blob": "955f071f792988a49c525cbf942685f4a8e72835"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/AnvilStorageTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/AnvilStorageTests.java",
+        "git_blob": "887f3cd8d8c86aca37c877c9c034f00028342c42"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/AxialBatteryRecipeTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/AxialBatteryRecipeTests.java",
+        "git_blob": "445c60376df8535792e2c871a24f0b52c085c5f2"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/AxialGeneratorTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/AxialGeneratorTests.java",
+        "git_blob": "362772c53b072f285ddf992c9c4c0dbc5e97d37c"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/AxleRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/AxleRepairTests.java",
+        "git_blob": "12b42b3451b906d114eb1ff805ec50bf661deaa2"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/BaleRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BaleRepairTests.java",
+        "git_blob": "1bab6adcfea8e0cfaacb5a30623785169d0adbe8"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/BarrelFermentationTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BarrelFermentationTests.java",
+        "git_blob": "e388d774e69ce758a5560aeda6e24a6ee158ff4f"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/BarsRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BarsRepairTests.java",
+        "git_blob": "ed8162af8ee2be0ed4a39f26f303bf4bd9a8446e"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/BasicMachineCraftingTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BasicMachineCraftingTests.java",
+        "git_blob": "aa6e3c522afce0f1b61d9117315574c0b531c8a8"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/BatteryBoxEnergyTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BatteryBoxEnergyTests.java",
+        "git_blob": "296610fcf4e1b68b0c8d7c5ee0254f6e566dc6b5"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/BatteryBoxInventoryTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BatteryBoxInventoryTests.java",
+        "git_blob": "9c88bbb8c896a2eede5bd2c593d0846ff508fec5"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/BatteryBoxPanelTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BatteryBoxPanelTests.java",
+        "git_blob": "987dd1e07b98e6f0af354eab05e263c8d8eef3ec"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/BedrockBrokenOreRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BedrockBrokenOreRepairTests.java",
+        "git_blob": "3f63de850c186a5a74379ec1bee66fe1252a9c4e"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/BedrockFlowerRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BedrockFlowerRepairTests.java",
+        "git_blob": "8ce1d6cf88ff03cb2072b23bcc4bec98e6294193"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/BedrockVeinTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BedrockVeinTests.java",
+        "git_blob": "a4c0cc4efaa21d4b2e758a50f4b301b00199c363"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/BlackSandTurfTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BlackSandTurfTests.java",
+        "git_blob": "61978cb85518161d2cf9ac61ef5cd74b3a6e7717"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/BlockHarvestTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BlockHarvestTests.java",
+        "git_blob": "3328cab9d9acbf1f686c37d80cb135e9d30a7b75"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/BlueprintRegressionTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BlueprintRegressionTests.java",
+        "git_blob": "b7db59fe11067463585e649ad745f9b86d053b6f"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/BookLootAndCoinTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BookLootAndCoinTests.java",
+        "git_blob": "0c4378fd89538482d45976559242c6c96a0d4d65"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/BookShelfCraftingTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BookShelfCraftingTests.java",
+        "git_blob": "33d3c66d8fe4e1260f182e1e0678ea9bf93deea3"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/BookShelfFamilyTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BookShelfFamilyTests.java",
+        "git_blob": "40bb5200b80c3a742413e0605dc3da14e5abf4cd"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/BookShelfGeometryTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BookShelfGeometryTests.java",
+        "git_blob": "992419ea0111025f27d711e5a15eb04638b1320e"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/BookShelfSpecialRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BookShelfSpecialRepairTests.java",
+        "git_blob": "51c6d07bc00815b263634426e87a81add52edee2"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/BookShelfTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BookShelfTests.java",
+        "git_blob": "5ec2d50cf54a965b97f7507890517ba682863b1f"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/BottleCrateRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BottleCrateRepairTests.java",
+        "git_blob": "8b7fea2bac0227830ee483344e311a37f998db2a"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/BumbleBeeGeneticsTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BumbleBeeGeneticsTests.java",
+        "git_blob": "956bd750f1e7a6f525f934c651645fb0019651b5"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/BumbleBeeScanningTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BumbleBeeScanningTests.java",
+        "git_blob": "52b7005ce1a71221ac5e0460e933688e94eda195"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/BumbleBreedingTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BumbleBreedingTests.java",
+        "git_blob": "6001882a163ab80412d2d886a393bb3075f3bc73"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/BumbleHiveTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BumbleHiveTests.java",
+        "git_blob": "10d5aadd097379be76b0361c68c571dd1ac83c88"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/BumbleStingTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BumbleStingTests.java",
+        "git_blob": "796c9858a76b6522a96d3129ccbc76410cad2be7"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/BumbleWorkplaceTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BumbleWorkplaceTests.java",
+        "git_blob": "853343038ecf82365373f4cf1999ff34512df29e"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/BumbleWorldgenRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BumbleWorldgenRepairTests.java",
+        "git_blob": "d65abe50dac9e75ad425f678386d97f2f8c24f66"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/BumbliaryTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BumbliaryTests.java",
+        "git_blob": "7def39d20ed191ffdeb1662f4a699ef947731642"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/BushTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BushTests.java",
+        "git_blob": "650705c48569ad2502885d7f2a83c1e28a542da0"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/CFoamTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CFoamTests.java",
+        "git_blob": "1486998dd04c5ea0a03ef70fb98486d0974831df"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/CapabilityHandleTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CapabilityHandleTests.java",
+        "git_blob": "af40fcd694a630821a157de7c1fe725f1d03e00a"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/CapsuleCasingTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CapsuleCasingTests.java",
+        "git_blob": "1bb1c88dd9df2467f4b5a1be49a0f4ce1e0dd9df"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/ChargingCraftingRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ChargingCraftingRepairTests.java",
+        "git_blob": "df99b2f11afe257b4fc013637de922cdd2b82c91"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/ChemicalBatteryTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ChemicalBatteryTests.java",
+        "git_blob": "f269b01d57aa3a347dc4927413f27027e1fd7097"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/CoinAndPileAssetTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CoinAndPileAssetTests.java",
+        "git_blob": "c4e49b6fc8d135efe9a14e67f9e7ef0ed97233d1"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/CoinItemExpireTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CoinItemExpireTests.java",
+        "git_blob": "e7b004d19081d720d151aadb474112d299c6be94"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/CoinModelRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CoinModelRepairTests.java",
+        "git_blob": "51a63ccdbb548d6246dfd972911bb9113cdc762b"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/CoinMoldCompletionTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CoinMoldCompletionTests.java",
+        "git_blob": "14ba4c83451d6953ebfbce029c549b1ed3fa7946"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/ColtanTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ColtanTests.java",
+        "git_blob": "bed563dd58926c1b665a542f0590563ed16a78f9"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/CombProcessingTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CombProcessingTests.java",
+        "git_blob": "1b56bc2413f7b95ac2cbccbfcba41a208c7eb193"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/ControlCoverTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ControlCoverTests.java",
+        "git_blob": "80e38f766b0fb476a3930113b840c88d5c9926e8"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/CoverAttachmentTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CoverAttachmentTests.java",
+        "git_blob": "eaf882579a492b2d29d4484bbce842059816ddf8"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/CoverBehaviorTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CoverBehaviorTests.java",
+        "git_blob": "26e991dbac14db743b451d32fb631b631c6c8712"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/CraftingCoverageTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CraftingCoverageTests.java",
+        "git_blob": "f6c8dabf5e528950f222d4324c5b5f0153a8bef5"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/CrankTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CrankTests.java",
+        "git_blob": "d4173ea7f42d012f642b29d9d0c54b90472911ac"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/CrucibleSurvivalTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CrucibleSurvivalTests.java",
+        "git_blob": "96b3a0e1aeb92a012af79ac79e3f9d1319144469"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/CrucibleTemperatureTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CrucibleTemperatureTests.java",
+        "git_blob": "4bf09fc5f938a5a2ea447f145810e47b2f18e247"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/CrystalOreRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CrystalOreRepairTests.java",
+        "git_blob": "bd5a031879a7c5eb08db6acfb186856b4bf212e3"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/DataInventoryRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DataInventoryRepairTests.java",
+        "git_blob": "ca58d9e55044bf439d7832ff0cf010dc69e1d4be"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/DebugToolBehaviorTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DebugToolBehaviorTests.java",
+        "git_blob": "3b5019eaa0c81115c4d6a4b8ab81f7b7e2d96b79"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/DecorBlockRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DecorBlockRepairTests.java",
+        "git_blob": "55906c34d9cc3b4c5fe26eb7359c21363b6e78a5"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/DiggableBlockTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DiggableBlockTests.java",
+        "git_blob": "149feaebd5c5e7b4889eb1235b194e7344ae8baf"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/DiggableRecipesTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DiggableRecipesTests.java",
+        "git_blob": "50012cb2dd1e08579d575dd7898edeb6f10d380d"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/DrawerRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DrawerRepairTests.java",
+        "git_blob": "5cae5efe1faa7f1e66283f64d7e9f06b7e8387a3"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/DrillDynamiteTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DrillDynamiteTests.java",
+        "git_blob": "ffa4e7d8e5bd1fa227fcdc79be53c0e21cf72055"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/DrinkTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DrinkTests.java",
+        "git_blob": "8cbc776dda1458156a3da93ba442d1206d716e01"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/DungeonBlueSpruceSlabTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DungeonBlueSpruceSlabTests.java",
+        "git_blob": "0f85f43530e56bcc90eb55a74288ce4a93ac83dc"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/DungeonChestLifecycleTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DungeonChestLifecycleTests.java",
+        "git_blob": "619de22b8ab8d6de84f6c2b86f10db18934559ca"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/DungeonColorPaletteTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DungeonColorPaletteTests.java",
+        "git_blob": "eb66309d46ee379c4cdc7939ef37d96ad94a974b"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/DungeonCupRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DungeonCupRepairTests.java",
+        "git_blob": "385e06c287f9bf922266693646f34dcaf87a84c1"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/DungeonFlowerPotTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DungeonFlowerPotTests.java",
+        "git_blob": "7ba6d13769a46f51c6d54e516d0fd8744e3ae301"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/DungeonKeysAndPortalsTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DungeonKeysAndPortalsTests.java",
+        "git_blob": "fa06a0fff6bb4bbf0d5aa7a7877c873140776a81"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/DungeonLocateAndSlabsTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DungeonLocateAndSlabsTests.java",
+        "git_blob": "0dd0d14af3b0a724ac34ead565f49424735f90d3"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/DungeonMobFarmOuterTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DungeonMobFarmOuterTests.java",
+        "git_blob": "5afcbd620321e8cd116d603faae205abede1a975"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/DungeonMobFarmRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DungeonMobFarmRepairTests.java",
+        "git_blob": "290ef6509c3e5e7f44ff26ed0aeab4f8c621414b"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/DungeonPortalSuppliesRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DungeonPortalSuppliesRepairTests.java",
+        "git_blob": "8bc4419a4caa66001f8aabc5b3d966598aad4f18"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/DungeonSharedStateTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DungeonSharedStateTests.java",
+        "git_blob": "5fdcc890edfc99929b03b965885b7b27633f1b73"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/DungeonSkyStoneRockTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DungeonSkyStoneRockTests.java",
+        "git_blob": "6d4d9745ddd197d360e7c72c634ec38a2adde76a"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/DungeonTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DungeonTests.java",
+        "git_blob": "3d1363b7ea0d111c4aeb4cfc647d9bb2ddc2db84"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/DungeonWorkshopDrinkRandomTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DungeonWorkshopDrinkRandomTests.java",
+        "git_blob": "374f8d6d3ebb267aed6614ce9ab312cc23c5fa0c"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/DyeProcessingTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DyeProcessingTests.java",
+        "git_blob": "488d81173c971968966732c583e90525e0295b1f"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/DynamiteRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DynamiteRepairTests.java",
+        "git_blob": "d6404b5771ad84f8a822672c449c3938ac478571"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/ElectricChainsawHarvestTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ElectricChainsawHarvestTests.java",
+        "git_blob": "0bcfb46242e7f66f0f5873d58cadd7d4fa23f466"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/ElectricToolAssemblyTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ElectricToolAssemblyTests.java",
+        "git_blob": "27e7d64be0920379529418a3e5a226d9c6426812"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/ElectricToolInteractionTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ElectricToolInteractionTests.java",
+        "git_blob": "ef4e62bf7ca3b3285d76a75e41c76ecd1d3d139f"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/ElectricToolWearTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ElectricToolWearTests.java",
+        "git_blob": "ef4bfb990c370f186ffe9240d402c521391172e9"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/ElectricTransformerControlTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ElectricTransformerControlTests.java",
+        "git_blob": "de2fbb6d9b14517507ad10d1e1f95db86014f006"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/ElectricWireRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ElectricWireRepairTests.java",
+        "git_blob": "bc0b921503244fe174e5d70ed68d81cb9bf221a4"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/ElectricWrenchHarvestTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ElectricWrenchHarvestTests.java",
+        "git_blob": "70ddd66d178600bd77a6075ceb3c4f0dabe0cd3e"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/ElectricWrenchModeTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ElectricWrenchModeTests.java",
+        "git_blob": "8e71ec3b2c0b2d67cb9287798d684cad240972a0"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/ElectronicsTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ElectronicsTests.java",
+        "git_blob": "32809787dc7e95e4ef4e2301397c63befc74926d"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/EnchantmentDictionaryTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/EnchantmentDictionaryTests.java",
+        "git_blob": "50e7a05dff23aa39288ddcd3ccef9adb980203c8"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/EnergySurvivalGateTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/EnergySurvivalGateTests.java",
+        "git_blob": "4688a88826387f03d72e1ac5a34e3359f2db19b1"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/ExtenderEnergyTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ExtenderEnergyTests.java",
+        "git_blob": "81c36937b764e88a81baab101cbd4edfcbf4795c"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/ExtruderMatrixTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ExtruderMatrixTests.java",
+        "git_blob": "8adb275cca71daeaf695fede869339aade0123c0"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/FallenLogRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/FallenLogRepairTests.java",
+        "git_blob": "49176d32c25d46e1d971da47a35b89de60ce3ca6"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/FiniteBottleFillingTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/FiniteBottleFillingTests.java",
+        "git_blob": "df5b2d59bf299817e1cc8d3dcc2fd4db4e52931d"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/FluidAttachmentInteractionTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/FluidAttachmentInteractionTests.java",
+        "git_blob": "eff78a343f22c7cb51b52811b0441d1b4f050651"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/FluidHazardTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/FluidHazardTests.java",
+        "git_blob": "8fb39518a267ababc938584ed650a2fb0e3532b4"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/FluidSpringTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/FluidSpringTests.java",
+        "git_blob": "3e7504b931552cfe948d65388d4838caa7b63709"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/FluidToolVariantTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/FluidToolVariantTests.java",
+        "git_blob": "85f3e3bad7607a49271cb165d40644b35f787c97"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/FluidVisualTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/FluidVisualTests.java",
+        "git_blob": "35d6e0698a4948221712fa8b323a002a8c5816dd"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/FoodItemTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/FoodItemTests.java",
+        "git_blob": "68138aa9797fdacbcf2575a350d378296c6fe2f5"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/FoodStatsTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/FoodStatsTests.java",
+        "git_blob": "b36ef4e0c705d8cb0a606e2c18ee96fe3841b919"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/FurnaceSmeltingTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/FurnaceSmeltingTests.java",
+        "git_blob": "53a1083eac58b247149d49fc53d6c22079f36a65"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/FusionRegressionTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/FusionRegressionTests.java",
+        "git_blob": "83fc7cea38248d8a4fe4aca18854f4d4b93f1f12"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/GTGrassRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/GTGrassRepairTests.java",
+        "git_blob": "24a447a9d5ede598239ee5d85303483874749911"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/GTMainRecipesTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/GTMainRecipesTests.java",
+        "git_blob": "e57500d2f82eb572167b8485e690fe44bee6ee68"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/GasTurbineGradeTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/GasTurbineGradeTests.java",
+        "git_blob": "ec1ab004f47c1a8c2c733b0bb264d8726b5ccae3"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/GearboxMechanicsRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/GearboxMechanicsRepairTests.java",
+        "git_blob": "e7e13033bc795afbe25224ad9d1c4d662adfeaa8"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/GearboxRegistrationRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/GearboxRegistrationRepairTests.java",
+        "git_blob": "5ac54769449a6828b4820de53e1794cc8475e156"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/GearboxRegistrationTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/GearboxRegistrationTests.java",
+        "git_blob": "1c990570152976115fb6c78028a0188c66871dc6"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/GearboxVisualSyncTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/GearboxVisualSyncTests.java",
+        "git_blob": "6a6fcfdf60cba369ee04f3827c3a1203b4438117"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/GeneratedChemistryTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/GeneratedChemistryTests.java",
+        "git_blob": "29dc3fa72b2dc5fe72b49f60e12f3459075f62f3"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/GlowtusProcessingTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/GlowtusProcessingTests.java",
+        "git_blob": "e91dacde9bd62fa2e422cd662068905116ff0cc7"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/HandCraftingTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/HandCraftingTests.java",
+        "git_blob": "104799063550347bfeadd5ab5234830ba7ba2047"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/HazardDamageTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/HazardDamageTests.java",
+        "git_blob": "eba46012144a062426797527fb9f40c067175c6a"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/ItemBehaviorTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ItemBehaviorTests.java",
+        "git_blob": "9696176d610604635eecb215ce4ff0ae7380e144"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/ItemPipeCoverTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ItemPipeCoverTests.java",
+        "git_blob": "68fbe22bdc71082070716bf8d2a256d9d1c46f87"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/JuicerInteractionTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/JuicerInteractionTests.java",
+        "git_blob": "655cdc5811bcd72d9f2f6bcecc73cf57c022ebb7"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/LargeBatteryTransformerTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/LargeBatteryTransformerTests.java",
+        "git_blob": "5dc62f492eea10e82358dc0b58f5ecbb2b9b5de2"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/LargeCrucibleControllerTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/LargeCrucibleControllerTests.java",
+        "git_blob": "d9a4143073dbe3cd84f4284900faf60488f2b191"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/LaserometerRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/LaserometerRepairTests.java",
+        "git_blob": "16249704f2f1a2e6ab01d93fc539c75e129a37b9"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/LeafDecayTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/LeafDecayTests.java",
+        "git_blob": "d67a19113dbaaf30471da8b6cb9f0f226307a373"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/LegacyBatteryStandardizationTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/LegacyBatteryStandardizationTests.java",
+        "git_blob": "9f8efe9e349f4b3c56018dade0f31bb7aff267f3"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/LegacyBatteryVoltageTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/LegacyBatteryVoltageTests.java",
+        "git_blob": "f0f397739e6061937c416fab31e51f7d8abb43a2"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/LegacyRecipeRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/LegacyRecipeRepairTests.java",
+        "git_blob": "7dc48cc039620fd159611f2f75679a6291293fe9"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/LogisticsCoreTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/LogisticsCoreTests.java",
+        "git_blob": "0b50b302eac6ae6266878ce4b1acd9a4bce7c832"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/LogisticsCoverRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/LogisticsCoverRepairTests.java",
+        "git_blob": "9f0df7e5c6b8a618bee71d464b4ca8127bcadbb0"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/LogisticsCpuDisplayTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/LogisticsCpuDisplayTests.java",
+        "git_blob": "4f38a1f6c999f2cb6803ce36eaba0b15896bfd41"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/LogisticsFilterRoutingTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/LogisticsFilterRoutingTests.java",
+        "git_blob": "220b92187db18289dc79610a18e8cafe3d9046f1"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/LogisticsFluidRoutingTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/LogisticsFluidRoutingTests.java",
+        "git_blob": "91f80cb4f01cc950a38a3b344713e30a8b26fb1a"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/LogisticsMassStorageTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/LogisticsMassStorageTests.java",
+        "git_blob": "d231059d55420cedb0fabd6792c7ec66e73184ad"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/LogisticsNetworkTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/LogisticsNetworkTests.java",
+        "git_blob": "a93ee6e3bd60fa4087c60128f2a2f8c4c9f859b0"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/LogisticsStorageRoutingTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/LogisticsStorageRoutingTests.java",
+        "git_blob": "0df5d114b5f40506eb8eafa73782bcb5791a913b"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/LogisticsTankTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/LogisticsTankTests.java",
+        "git_blob": "6576107a19b19a6f14d963ff69300c225ffbe34d"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/LongDistPipelineTypeTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/LongDistPipelineTypeTests.java",
+        "git_blob": "cc11d71add8c85ef871e57d11178aa5b714cfb8c"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/LongDistancePowerTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/LongDistancePowerTests.java",
+        "git_blob": "9b50a5f815a8175a94469df42d814cfaa1f51dea"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/LootCrateTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/LootCrateTests.java",
+        "git_blob": "6fcac25708d7e11c559e30907b3f7b8a1638f830"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/LootInjectionTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/LootInjectionTests.java",
+        "git_blob": "606cbffacd8561ffd97bfd69d13d8151e9dcddcc"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/MachineControlTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MachineControlTests.java",
+        "git_blob": "c50523210f94f97ee4f24f26b18da65539b4fd82"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/MachineFluidMenuTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MachineFluidMenuTests.java",
+        "git_blob": "2664410273784c05e03c4f5075531523bc0384ab"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/MachineOutputTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MachineOutputTests.java",
+        "git_blob": "2010a66e3ce76947b8e131dd80014898ec03338c"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/MagnetMachineRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MagnetMachineRepairTests.java",
+        "git_blob": "01b827ea0a97af3277288f1bfdd5f3768a035f6d"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/ManufacturingTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ManufacturingTests.java",
+        "git_blob": "1c718a208450d51819824fc305b1d714ab6c9481"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/MassStorageHarvestTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MassStorageHarvestTests.java",
+        "git_blob": "57efeea7b0f5eead13691ee9668539953f424656"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/MassStorageMaterialFamilyTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MassStorageMaterialFamilyTests.java",
+        "git_blob": "ffa625c166d76119dd5ad4077004c1e21381e92d"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/MaterialCompatibilityTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MaterialCompatibilityTests.java",
+        "git_blob": "16d7e2679c747581b531c4d50f925cf662d053db"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/MaterialDataChainTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MaterialDataChainTests.java",
+        "git_blob": "3955aacc378d38c4ac6ef72352a1891ef1e60b48"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/MaterialDictionaryTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MaterialDictionaryTests.java",
+        "git_blob": "63956e0b63ff878824229e503db5ee6075a1b483"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/MaterialFormConversionTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MaterialFormConversionTests.java",
+        "git_blob": "f2fda2b6e737dcb964069f1aec60c3cbbbd82e20"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/MaterialFormGapTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MaterialFormGapTests.java",
+        "git_blob": "2d8b78aea2d0d095c37e5d35136a577f71f7803c"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/MaterialFormParityTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MaterialFormParityTests.java",
+        "git_blob": "34a722daaaa02c63ed43bcb5a77ba48daab2a17c"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/MaterialTagTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MaterialTagTests.java",
+        "git_blob": "48e98c06747e2e73e4e2b9afe534b4a602eb9ee2"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/MatterFabricatorRegressionTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MatterFabricatorRegressionTests.java",
+        "git_blob": "923de7bd58faabb86e5e652f3bc8f202c7bc8737"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/MemoryGrowthTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MemoryGrowthTests.java",
+        "git_blob": "0a3b2ecd5596d315826d797cb7bb8a44b99e41a0"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/MortarGrindingTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MortarGrindingTests.java",
+        "git_blob": "8aab35286c09dc1f9a646c7c8069a7ed34420d8c"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/MultiblockCoverageTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MultiblockCoverageTests.java",
+        "git_blob": "e83f733114d589ef080eeefdb3e082d53f570c31"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/MultiblockCraftingTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MultiblockCraftingTests.java",
+        "git_blob": "b949dbfef95ce20196832f38db16e968911b5327"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/NetherQuartzTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/NetherQuartzTests.java",
+        "git_blob": "59900845177f8318b48bbba514b45b3f75b692d7"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/NetherScatterTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/NetherScatterTests.java",
+        "git_blob": "71047802915e23e978d52d6b2904f51058c01214"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/NetherWorldgenTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/NetherWorldgenTests.java",
+        "git_blob": "2a5842039ba98864b40590153c3c8b1e52a76561"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/NuclearReactorTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/NuclearReactorTests.java",
+        "git_blob": "bef8466686d65345472041aef7fd9994d94c4373"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/NuclearSurvivalTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/NuclearSurvivalTests.java",
+        "git_blob": "89925658e4de1cd189c322fef14127991bdff17e"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/OpticalEnergyRegressionTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/OpticalEnergyRegressionTests.java",
+        "git_blob": "94f25be1afeb8b6311f9baf0efe7ad1cb016d960"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/OreAssetCoverageTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/OreAssetCoverageTests.java",
+        "git_blob": "976ed0aa5039422ec38ae51d3609e040ad7bf818"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/OreBlockStateTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/OreBlockStateTests.java",
+        "git_blob": "7c54ed5e10c935b5cbb8434700fbcd6be7667e70"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/OrePurificationRoutesTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/OrePurificationRoutesTests.java",
+        "git_blob": "705e9e284446389da6e56de4958a3a9436356ccc"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/OriginalAxialControllerTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/OriginalAxialControllerTests.java",
+        "git_blob": "2de5a46bf050c8acc7e4a92e316a9de900c0d3c0"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/OriginalHighTechControllerRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/OriginalHighTechControllerRepairTests.java",
+        "git_blob": "8724529dacaf569e96de6fefaeafed2e4389a9fe"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/OriginalLargeBoilerRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/OriginalLargeBoilerRepairTests.java",
+        "git_blob": "dff988453c97681309b51de76a33f3b225cf4cc6"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/OriginalTankAndAxialRecipeTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/OriginalTankAndAxialRecipeTests.java",
+        "git_blob": "5ebdf46b783daccd0423e7ea9f12fd34e85a00e3"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/PanelCoverTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/PanelCoverTests.java",
+        "git_blob": "ff4493f6ad16de353f2411ace20184c84660ec70"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/PileBlockTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/PileBlockTests.java",
+        "git_blob": "f9a1e509c45edae87a220e804f4ffc83f0d5025a"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/PileShapeAndSyncTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/PileShapeAndSyncTests.java",
+        "git_blob": "13cfb60aa5615cec832a7d6a77cbeed52119dc57"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/PipeCoverTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/PipeCoverTests.java",
+        "git_blob": "dcd77a040103194c573f50f4d30be981e9343beb"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/PipeLightThreadSafetyTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/PipeLightThreadSafetyTests.java",
+        "git_blob": "5f4f49c5e564bb3e0794b434269b947b50729202"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/PitTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/PitTests.java",
+        "git_blob": "e8330cad8cd0d6ec8183c65ff996223085314181"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/PlantPotTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/PlantPotTests.java",
+        "git_blob": "3a812187a2103c07467bfe9fc7a3263d1cd8b4d8"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/PortRegressionTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/PortRegressionTests.java",
+        "git_blob": "6d3eedbe8d389ab6a6eddedcf125e25c6b9940ff"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/PortableContainerLimitTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/PortableContainerLimitTests.java",
+        "git_blob": "589ca908f2d671e926665165c8fc56d186680f0a"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/PrefixConditionParityTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/PrefixConditionParityTests.java",
+        "git_blob": "bc48e6d6102eb7d13f53a3c24a78d79d5bd3df4f"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/PumpTransferRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/PumpTransferRepairTests.java",
+        "git_blob": "12b870784a29a4c30b45bf1144b765cb133e9ce0"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/QueueHopperConservationTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/QueueHopperConservationTests.java",
+        "git_blob": "db247200f7837fcfb80c7ab9ad677cb88320811a"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/RecipeFamilyCoverageTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/RecipeFamilyCoverageTests.java",
+        "git_blob": "d727d72e241c4b605080c173e9f6a780a464a107"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/RecipeHintTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/RecipeHintTests.java",
+        "git_blob": "23e5f4c76867264c32533dc3b6b3e66e1e1e805f"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/ReinforcedChestTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ReinforcedChestTests.java",
+        "git_blob": "8c9e02bcce0d89ca8a91fcff4fe7cbf811220b45"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/ResinConservationTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ResinConservationTests.java",
+        "git_blob": "8076a8dc83279ead312090a4889679fe272409dd"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/RockAndDeepOceanTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/RockAndDeepOceanTests.java",
+        "git_blob": "0b68fef66d55c8e60c35ea14b23855d6c5a6cf57"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/RotationEngineFacingTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/RotationEngineFacingTests.java",
+        "git_blob": "849a7434f9e27e541f48554c159e803d8633ec9f"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/RotationEngineRegistrationTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/RotationEngineRegistrationTests.java",
+        "git_blob": "d443d518de06dd97852d7619d2a1099df558b407"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/RotationEngineRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/RotationEngineRepairTests.java",
+        "git_blob": "89e9434e694e65ca4a502fbbf39fdbb3d40d84c5"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/RotationTransformerRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/RotationTransformerRepairTests.java",
+        "git_blob": "8ca3f753713f186c2f9fca6290fb6f5c495db506"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/RuntimeRecipeReloadTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/RuntimeRecipeReloadTests.java",
+        "git_blob": "b98b77f7b837ca7646446e33452b055fa3290757"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/SafeAccessTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/SafeAccessTests.java",
+        "git_blob": "65e34f3f7b06373f5c2ad29d18746f6c6080d9f9"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/SafeRotationTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/SafeRotationTests.java",
+        "git_blob": "d7e3ea450843d636cc5bc277df10f0a5c93ef4e3"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/SandwichBlockTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/SandwichBlockTests.java",
+        "git_blob": "fef6ff69b4429b08c88620254e6708b1355e85fc"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/SapBagTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/SapBagTests.java",
+        "git_blob": "9178509cac03521e1d58deb59b6b41046cf38334"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/ScaffoldFamilyTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ScaffoldFamilyTests.java",
+        "git_blob": "17347e45a88032f300786e1de2d6fa65ae4238bc"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/SensorMatrixTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/SensorMatrixTests.java",
+        "git_blob": "2537908274900d576437a8182829aa61d3436b87"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/SignalWireTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/SignalWireTests.java",
+        "git_blob": "7655a09a6f01a4090e047aa1e1655929131ca2bc"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/SixWayAxialControllerTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/SixWayAxialControllerTests.java",
+        "git_blob": "776159277831211e09061d62fa5b75bb3a89d9fe"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/SourceExtenderTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/SourceExtenderTests.java",
+        "git_blob": "1f99fa8863b7b59995fc83d99bc311176b7f011f"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/SourceFilterTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/SourceFilterTests.java",
+        "git_blob": "e0481edc3500220c7e0708603c20755efe5fbf2f"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/SpikeBlockTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/SpikeBlockTests.java",
+        "git_blob": "a95dd094f5cfafb27aff54b991deb04d1b720f7a"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/SteamChainTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/SteamChainTests.java",
+        "git_blob": "af2c5aba430f89ead094642fe06206bdd9261858"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/StoneExtrusionTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/StoneExtrusionTests.java",
+        "git_blob": "ba02444015adfd4685b099922e03229db724df14"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/StoneVariantRecipesTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/StoneVariantRecipesTests.java",
+        "git_blob": "d4a629db5d48c5b759ad0d155607534c2c5f4526"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/SurfaceFloraTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/SurfaceFloraTests.java",
+        "git_blob": "61d25ae2e3a44aed41c228eca35e07cce7d21762"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/SurvivalExtensionTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/SurvivalExtensionTests.java",
+        "git_blob": "297de3dd90e250643a23ff3e62be8aa5f8fabaf3"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/SurvivalProcessingTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/SurvivalProcessingTests.java",
+        "git_blob": "e0beb75377a327ebf29547d40e2072dd5bae7ad4"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/SurvivalStandardizationTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/SurvivalStandardizationTests.java",
+        "git_blob": "bc394eb9a84707e03e9c9ea1805e86f9d59339d8"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/TankValveRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/TankValveRepairTests.java",
+        "git_blob": "f1c97ce2473089db6e787c943469b0b5c1e0bf9f"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/ToolAssemblyTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ToolAssemblyTests.java",
+        "git_blob": "c48896c866a29061023165a05d55730381fd0789"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/ToolBlockConversionTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ToolBlockConversionTests.java",
+        "git_blob": "02090e5fef4e3fc554c1c8e3e07ab2f7253e6006"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/ToolBlockTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ToolBlockTests.java",
+        "git_blob": "6d57e3e62da650bcdd750eb031d7d2866d66ca48"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/ToolCapabilityLifecycleTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ToolCapabilityLifecycleTests.java",
+        "git_blob": "74140b7aeec465b472402bccecb9eebde45a3b5b"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/ToolPlaceholderRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ToolPlaceholderRepairTests.java",
+        "git_blob": "3341a085424e95746b344c4d482c6f1cea631d5c"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/ToolRecipeNetworkTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ToolRecipeNetworkTests.java",
+        "git_blob": "9dff11d3fccbfc260f8c3733a9aed25a2fb0a9a6"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/TowerAndPreviewRegressionTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/TowerAndPreviewRegressionTests.java",
+        "git_blob": "411c4591bf4003ba374bfbdd8ad42491a334668c"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/TrackTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/TrackTests.java",
+        "git_blob": "72f4501f5aa55bc5c11d465bf684e745cad74393"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/TreatedWoodSurvivalTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/TreatedWoodSurvivalTests.java",
+        "git_blob": "ad4f48b8671fd7406df3c398c618e13fd59b19a4"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/TreeGrowthTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/TreeGrowthTests.java",
+        "git_blob": "ab7fa8b4e15f569b8f5e7d18dcdccaaaac0f53fa"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/TreeHoleTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/TreeHoleTests.java",
+        "git_blob": "b84468b6faf98c84f32f64d2e3550e81cc4be955"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/UniversalExtenderTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/UniversalExtenderTests.java",
+        "git_blob": "59b2064e7994196e3059f832d4958dec6abe388f"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/UsbCableMachineTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/UsbCableMachineTests.java",
+        "git_blob": "07583b45a44ab7df8d90489fc4debc6e93329212"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/UsbSwitchTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/UsbSwitchTests.java",
+        "git_blob": "4ea626966bfa7d9ba36fabf0fa1b6a5cc4cabfed"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/VanillaBlockProcessingTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/VanillaBlockProcessingTests.java",
+        "git_blob": "867484614ffd46ab0389a49327692732c65caf8f"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/VanillaCompositionTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/VanillaCompositionTests.java",
+        "git_blob": "e49255f5251ec13d56731840aa5bc3f59e8d40bd"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/VanillaOreRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/VanillaOreRepairTests.java",
+        "git_blob": "18d9c356d646c5578de21e4bbd90337f0244ad69"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/VeinTableTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/VeinTableTests.java",
+        "git_blob": "20641a1e26226f180a5523ca0b7ead0541aa01c2"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/VoltageTierAlignmentTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/VoltageTierAlignmentTests.java",
+        "git_blob": "a626c964a9fb7737131f76f5a323b5ca52e633b7"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/VonDaGraaggRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/VonDaGraaggRepairTests.java",
+        "git_blob": "f5378d348e59627b3a8d99985e65118e2278d039"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/WaterBodyTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/WaterBodyTests.java",
+        "git_blob": "8c3664874c9f461f1cbdd3a9db77f0c13723cbb4"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/WaterFluidParityTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/WaterFluidParityTests.java",
+        "git_blob": "f4b665fa44264d04cdffb71df98f56f518d9cf85"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/WireDefinitionRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/WireDefinitionRepairTests.java",
+        "git_blob": "88de38291aae54b6fb96ac82da9cd8ba52ce797a"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/WoodLogToolClickTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/WoodLogToolClickTests.java",
+        "git_blob": "c2f1c2aa21aa678c2d393d96da1fe88c5b8d5f97"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/WoodRecipeTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/WoodRecipeTests.java",
+        "git_blob": "534c3e495db86af4dc673472bd567cff63bd5e9b"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/WoodworkingPlacementTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/WoodworkingPlacementTests.java",
+        "git_blob": "87ee42a677ac252d9b6152ab8b741e09926d0a8a"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/WorkshopSupplyRepairTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/WorkshopSupplyRepairTests.java",
+        "git_blob": "3ff1ed94b8fe80152109ce4a16ac4deb297caf36"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/WorldFluidEffectTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/WorldFluidEffectTests.java",
+        "git_blob": "e9b324a429c9e42344471ee95e63ca1f2749c15f"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/WorldgenStatefulDropsTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/WorldgenStatefulDropsTests.java",
+        "git_blob": "25f252878457314950fefa7d8e8809f805b19cea"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/gametest/ZpmRegressionTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ZpmRegressionTests.java",
+        "git_blob": "e970ced505bf9c0df6c63924330a19fa4a5b70f7"
+      },
+      {
+        "old": "src/main/java/com/gregtech/gregtech/jei/JeiMachineIndexTests.java",
+        "new": "src/bootstrapGameTest/java/com/gregtech/gregtech/jei/JeiMachineIndexTests.java",
+        "git_blob": "c90cfe7cfa03b2d4656f4c56a4e3b88c26b6cd1f"
+      },
+      {
+        "old": "src/main/resources/data/gregtech/structures/test_blueprint_empty.nbt",
+        "new": "src/bootstrapGameTest/resources/data/gregtech/structures/test_blueprint_empty.nbt",
+        "git_blob": "3c94ac7ceff9d792f9821f4a117bfb35181e874d"
+      },
+      {
+        "old": "src/main/resources/data/gregtech/structures/test_blueprint_large.nbt",
+        "new": "src/bootstrapGameTest/resources/data/gregtech/structures/test_blueprint_large.nbt",
+        "git_blob": "396949da4f08c70fde4cfb51f0e84e9563cabd16"
+      },
+      {
+        "old": "src/main/resources/data/gregtech/structures/test_empty.nbt",
+        "new": "src/bootstrapGameTest/resources/data/gregtech/structures/test_empty.nbt",
+        "git_blob": "4aaa7998e6446b136abcb198fdc0c3b679bac50b"
+      },
+      {
+        "old": "src/main/resources/data/gregtech/structures/test_fusion_empty.nbt",
+        "new": "src/bootstrapGameTest/resources/data/gregtech/structures/test_fusion_empty.nbt",
+        "git_blob": "1e7682ceccaf435f529ac973b05920f66e8f6c1f"
+      },
+      {
+        "old": "src/main/resources/data/gregtech/structures/test_lightning_empty.nbt",
+        "new": "src/bootstrapGameTest/resources/data/gregtech/structures/test_lightning_empty.nbt",
+        "git_blob": "79285b28c63b7491b0c0bbd176168a32f28ebd8e"
+      },
+      {
+        "old": "src/main/resources/data/gregtech_repair/loot_tables/shelf_maps.json",
+        "new": "src/bootstrapGameTest/resources/data/gregtech_repair/loot_tables/shelf_maps.json",
+        "git_blob": "64a6c9606e8e01514482daa748158db58902062b"
+      },
+      {
+        "old": "src/main/resources/data/gregtech_repair/loot_tables/shelf_paper.json",
+        "new": "src/bootstrapGameTest/resources/data/gregtech_repair/loot_tables/shelf_paper.json",
+        "git_blob": "0f520f9d54508c92ee52dec92f6c74455fa2d35e"
+      },
+      {
+        "old": "src/main/resources/data/gregtech_repair/structures/coin_pile_space.nbt",
+        "new": "src/bootstrapGameTest/resources/data/gregtech_repair/structures/coin_pile_space.nbt",
+        "git_blob": "709386b6bdb0332068c2aa0127b30f6b03a87dac"
+      },
+      {
+        "old": "src/main/resources/data/gregtech_repair/structures/test_blueprint_empty.nbt",
+        "new": "src/bootstrapGameTest/resources/data/gregtech_repair/structures/test_blueprint_empty.nbt",
+        "git_blob": "3c94ac7ceff9d792f9821f4a117bfb35181e874d"
+      },
+      {
+        "old": "src/main/resources/data/gregtech_repair/structures/test_blueprint_large.nbt",
+        "new": "src/bootstrapGameTest/resources/data/gregtech_repair/structures/test_blueprint_large.nbt",
+        "git_blob": "396949da4f08c70fde4cfb51f0e84e9563cabd16"
+      },
+      {
+        "old": "src/main/resources/data/gregtech_repair/structures/test_empty.nbt",
+        "new": "src/bootstrapGameTest/resources/data/gregtech_repair/structures/test_empty.nbt",
+        "git_blob": "4aaa7998e6446b136abcb198fdc0c3b679bac50b"
+      },
+      {
+        "old": "src/main/resources/data/gregtech_repair/structures/test_fusion_empty.nbt",
+        "new": "src/bootstrapGameTest/resources/data/gregtech_repair/structures/test_fusion_empty.nbt",
+        "git_blob": "1e7682ceccaf435f529ac973b05920f66e8f6c1f"
+      }
+    ]
+  },
+  "verification": {
+    "python_tests": 16,
+    "java_contract_assertions": 18385,
+    "core_tasks_reused_on_second_run": 4,
+    "world_tests": {
+      "forge": 7,
+      "neoforge": 7
+    },
+    "world_seconds": 235,
+    "dual_build_seconds": 300,
+    "packaging": {
+      "core_classes": 780,
+      "forge_bytes": 40049285,
+      "neoforge_bytes": 39904401
+    },
+    "production_clients": {
+      "forge": {
+        "status": "passed",
+        "scope": "Actual distribution jar in isolated installed-loader client; title screen only",
+        "version": "1.20.1-Forge_47.4.26",
+        "exit_code": 0,
+        "elapsed_seconds": 74.69,
+        "distribution": {
+          "path": "C:\\Dev\\GregTech6\\build\\libs\\gregtech6-1.20.1-forge-0.0.0.jar",
+          "sha256": "6d4941c5bbe760987989d71ba3db09cfd53cebdf391d81c752cd2647b2fb2352"
+        },
+        "probe": {
+          "path": "C:\\Dev\\GregTech6\\build\\production-probe\\gregtech-delivery-probe-0.0.0.jar",
+          "sha256": "e62354ce038d117078e5d95b7bad28f67c105c8c519d212142c2a30902725b1d"
+        },
+        "log": "C:\\Dev\\GregTech6\\build\\production-smoke\\forge-4ae53008-783b-4981-8bf9-5f76337bdef3\\launch.log",
+        "log_sha256": "a54671fce3208721527edb9dc2b55a37416acd128b72a73b9faa200a23607924",
+        "receipt": {
+          "surfaceChecks": {
+            "materialBushInventoryModelsColorsNamesChecked": 1034,
+            "surfaceItems": [
+              "gregtech:bush_cotton",
+              "gregtech:bush_blueberry",
+              "gregtech:bush_candleberry",
+              "gregtech:bush_cranberry",
+              "gregtech:bush_black_currants",
+              "gregtech:bush_white_currants",
+              "gregtech:bush_red_currants",
+              "gregtech:bush_blackberry",
+              "gregtech:bush_raspberry",
+              "gregtech:fluid_spring_liquid_extra_heavy_oil",
+              "gregtech:fluid_spring_liquid_heavy_oil",
+              "gregtech:fluid_spring_liquid_medium_oil",
+              "gregtech:fluid_spring_liquid_light_oil",
+              "gregtech:fluid_spring_gas_natural_gas",
+              "gregtech:fluid_spring_watergeothermal",
+              "gregtech:fluid_spring_lava"
+            ],
+            "machineItems": [
+              "lightning_galvanized_steel",
+              "lightning_aluminium",
+              "lightning_stainless_steel",
+              "lightning_chromium",
+              "lightning_titanium",
+              "melter_stainless_steel"
+            ],
+            "machineModelsChecked": 6,
+            "surfaceItemModelsChecked": 16,
+            "surfaceSpringSpritesChecked": 7,
+            "surfaceBerryStageColorsChecked": 36,
+            "sandwich": {
+              "customInventoryModelsChecked": 3,
+              "ingredientLayerCounts": [
+                10,
+                4,
+                6
+              ],
+              "sourceLayerTexturesChecked": 22,
+              "sourceSauceColorsChecked": 2,
+              "cans": {
+                "inventoryModelsChecked": 57,
+                "renderedCanSamples": [
+                  "tiny_food_can_meat",
+                  "small_food_can_fish",
+                  "tall_food_can_vegetables",
+                  "wide_food_can_fruits",
+                  "large_food_can_bread",
+                  "huge_food_can_cookies",
+                  "canned_air",
+                  "canned_hot_air",
+                  "canned_space_air",
+                  "huge_food_can_rotten",
+                  "tiny_food_can_chum",
+                  "empty_food_can"
+                ]
+              }
+            },
+            "canvas": {
+              "originalCircuitTagGrades": 10,
+              "externalHighBatteryBoxRecipes": 5,
+              "originalMolecularDataFields": true,
+              "mercuryAmbientUnitMb": 1000,
+              "originalCanvasItemModels": 16,
+              "printedPageModels": 2,
+              "coloredBookScanHints": 28,
+              "directionalAndFluidFaces": 4,
+              "brightImage": true
+            },
+            "decorativePanels": {
+              "installedItemModels": 83,
+              "canonicalColoredModels": 48,
+              "canonicalWoodModels": 30,
+              "centeredTwoPixelMesh": true,
+              "sourceRgbAndTextures": true,
+              "legacyAliasesHiddenFromCreative": true,
+              "originalPerItemMaterialsAndAdvancedTooltip": 83,
+              "installedShredderEntries": 83,
+              "transportMaterialItemsAndShredderEntries": 441,
+              "originalTankGroupFormVariants": 10,
+              "resolvedTransportCraftingRows": 539,
+              "preferredTransportForms": 406,
+              "materialDataDisplay": {
+                "scans": 1003,
+                "prints": 1105,
+                "replications": 565
+              },
+              "usbFileDisplayTypes": 4,
+              "tankItemData": {
+                "cheapSourceVariants": 4,
+                "knownLogisticsComponents": 7,
+                "cleanItemData": 35,
+                "storedItemDataProtected": 35,
+                "completeWorldSaveRetained": true,
+                "observedEmptyLoaderWrappers": 0,
+                "scope": "installed methods at title screen; actual harvest tested separately in native server worlds",
+                "originalFunctionalTooltips": {
+                  "manualStations": 14,
+                  "boilersDefaultAndSavedEfficiency": 26,
+                  "scope": "installed actual item tooltip methods at title screen; no player hover or machine operation claim"
+                },
+                "sourceMechanicalTooltips": {
+                  "axles": 52,
+                  "customGearboxesDefaultAndSavedConfigurations": 13,
+                  "originalLargeBoilersDefaultAndSavedEfficiencies": 5,
+                  "scope": "installed item methods at title screen; no mechanical transport or boiler operation claim"
+                },
+                "sourceEnergyDeviceTooltips": {
+                  "batteryBoxes": 20,
+                  "solarPanels": 2,
+                  "electricTransformers": 9,
+                  "rotationalTransformers": 13,
+                  "savedDirectionItemTooltipsAndNativeToggleStatistics": 22,
+                  "scope": "installed item methods and native factory rating getters at title screen; no energy transfer or saved-world restart claim"
+                },
+                "sourceThermalConverters": {
+                  "heaters": 10,
+                  "coolers": 10,
+                  "rfDevices": 10,
+                  "actualBakedStates": 720,
+                  "sourceMaterialsAndSingleAdvancedSection": true,
+                  "scope": "installed title-screen native factories, methods, tooltip events and baked models; world output/contact checked separately"
+                },
+                "sourceBipolarMagnets": {
+                  "magnets": 10,
+                  "actualBakedStates": 240,
+                  "exactMaterialQuantitiesAndSourceTooltips": true,
+                  "scope": "installed native factories, tooltip methods and baked models at title screen; no world restart claim"
+                },
+                "sourceSteamTurbines": {
+                  "steamTurbines": 15,
+                  "actualBakedStates": 2160,
+                  "exactMaterialQuantitiesAndSourceTooltips": true,
+                  "scope": "installed title-screen factories, tooltip methods, sided capability visibility and baked models; no world or restart claim"
+                },
+                "sourceRotaryConverters": {
+                  "motors": 7,
+                  "dynamos": 7,
+                  "actualBakedStates": 1260,
+                  "exactMaterialsAndSingleAdvancedSection": true,
+                  "scope": "installed title-screen native factories, methods, tooltip events and baked models; actual world chain checked separately"
+                },
+                "machineSourceMaterials": {
+                  "sourceBlockIdentities": 1501,
+                  "nativeBasicMachinesAndControllers": 264,
+                  "singleAdvancedMaterialSection": true,
+                  "exactSourceComponentAmounts": true,
+                  "scope": "installed item methods and tooltip event at title screen; no recovery gameplay claim"
+                },
+                "sourceFluidPipeTooltips": 280,
+                "storedTankTooltips": 35
+              }
+            },
+            "commonBlockTooltips": {
+              "sourceBlockAndHopperIdentities": 1543,
+              "actualSourceBasicMachines": 264,
+              "nativeBlockClasses": 150,
+              "overlappingNamedBasicMachines": 4,
+              "nativeSavedCoverFaces": 12,
+              "scope": "native installed item tooltip events, source policy and sparse saved face data; no hover screenshot, actual harvest or world restart claim",
+              "storageTooltips": {
+                "safes": 120,
+                "drawers": 60,
+                "craftingTables": 120,
+                "bottleCrates": 90,
+                "massStorages": 121,
+                "hoppers": 120,
+                "bookShelves": 75,
+                "scaffolds": 60,
+                "savedMassConfigurations": 4,
+                "scope": "actual native tooltip calls/events and saved item state; no world interaction or screen hover claim"
+              }
+            },
+            "smelteryTooltipsAndMaterials": {
+              "vessels": 39,
+              "companions": 156,
+              "exactSourceCompositions": 155,
+              "undefinedSourceAmountsPreserved": 40,
+              "savedShapeTooltipAndProtectionCases": 156,
+              "nativeThermalParameterMethods": 39,
+              "largeVesselTooltipAndNativeParameterMethods": 9,
+              "scope": "installed tooltip calls/events, saved item state, entity thermal parameter methods and recovery parsing; no world ticking or restart"
+            },
+            "multiblockTankTooltipsAndMaterials": {
+              "originalControllers": 25,
+              "retainedAliases": 2,
+              "savedTooltipAndActualEntityLoadCases": 162,
+              "scope": "installed item tooltips/events and actual native entity data loading; no formed-tank flow or restart claim"
+            },
+            "processControllerTooltipsAndMaterials": {
+              "originalControllers": 6,
+              "exactMaterialRecords": 6,
+              "sourceStructureRows": 32,
+              "scope": "actual installed tooltip methods/events and native parameter methods; no world tick/restart claim"
+            },
+            "largeRecipeControllerTooltipsAndMaterials": {
+              "controllers": 12,
+              "sourceStructureRows": 43,
+              "exactMaterialRecords": 12
+            },
+            "sourceBasicMachineTooltips": {
+              "sourceBasicMachines": 247,
+              "magneticMachines": 10,
+              "exactAdvancedMaterialSections": 247,
+              "scope": "installed actual tooltip calls/events at title screen; not player hover or world operations"
+            },
+            "advancedControllerTooltipsAndMaterials": {
+              "controllers": 3,
+              "sourceStructureRows": 17,
+              "scope": "installed actual tooltip calls/events only; not player hover, natural processing or restart"
+            },
+            "generatorSourceTooltipsAndMaterials": {
+              "items": 24,
+              "sourceStructureRows": 88,
+              "materialAndHarvestAliases": 12,
+              "scope": "installed actual tooltip calls/events and registrations; not natural generation/recycling or player hover/restart"
+            },
+            "utilityControllerTooltipsAndMaterials": {
+              "items": 4,
+              "sourceStructureRows": 26,
+              "fixedBottomHeatModels": 6,
+              "distinctLavaFluidModels": 3,
+              "originalHotRecipes": 16,
+              "scope": "Installed tooltip calls/events, baked heat/fluid models and hot recipe registry; not world fuel/strike generation, player hover or restart"
+            },
+            "sensorSourceTooltipsAndMaterials": {
+              "items": 21,
+              "sourceTooltipRows": 147,
+              "scope": "Installed native tooltip events and material/harvest registration only; measurements, player hover and save restart are separate"
+            },
+            "originalMultiblockParts": {
+              "parts": 45,
+              "sourceTooltipRows": 90,
+              "scope": "Actual installed tooltip/material/physical registration; structure binding and player hover are separate"
+            }
+          },
+          "platform": "forge",
+          "screen": "net.minecraft.client.gui.screens.TitleScreen",
+          "screenshot": "C:\\Dev\\GregTech6\\build\\production-smoke\\forge-4ae53008-783b-4981-8bf9-5f76337bdef3\\screenshots\\production-forge-11d7c984-3825-4907-abb4-d4141feda937.png",
+          "width": 1280,
+          "height": 720,
+          "renderedFrames": 181,
+          "loaderWarnings": 0,
+          "elapsedMs": 65314
+        },
+        "screenshot_sha256": "c432b30a490933c4ded3ece440ed758e3a9d9f0ede916f48a77814696004c4ef",
+        "visually_reviewed": true,
+        "installed_files_modified": false,
+        "unable_to_load_model_warnings": 421
+      },
+      "neoforge": {
+        "status": "passed",
+        "scope": "Actual distribution jar in isolated installed-loader client; title screen only",
+        "version": "1.21.1-NeoForge_21.1.252",
+        "exit_code": 0,
+        "elapsed_seconds": 63.95,
+        "distribution": {
+          "path": "C:\\Dev\\GregTech6\\neoforge\\build\\libs\\gregtech6-neoforge-1.21.1-0.0.0.jar",
+          "sha256": "fb29b47bd71570edfdcd8d68dc82ba1707e900915f0c02c62baedd04eb77c882"
+        },
+        "probe": {
+          "path": "C:\\Dev\\GregTech6\\neoforge\\build\\production-probe\\gregtech-delivery-probe-0.0.0.jar",
+          "sha256": "6fb7af904e83b0d5223294e1241340b6030ec0533d6833cca85b598fe4e70d2e"
+        },
+        "log": "C:\\Dev\\GregTech6\\build\\production-smoke\\neoforge-18524565-f7cc-4545-b7fc-98ae3304ddf7\\launch.log",
+        "log_sha256": "e0ed4e6ffd64416fc0a465ffbd46fc4495384ea66455c02d5b506ace10a8dceb",
+        "receipt": {
+          "surfaceChecks": {
+            "materialBushInventoryModelsColorsNamesChecked": 1034,
+            "surfaceItems": [
+              "gregtech:bush_cotton",
+              "gregtech:bush_blueberry",
+              "gregtech:bush_candleberry",
+              "gregtech:bush_cranberry",
+              "gregtech:bush_black_currants",
+              "gregtech:bush_white_currants",
+              "gregtech:bush_red_currants",
+              "gregtech:bush_blackberry",
+              "gregtech:bush_raspberry",
+              "gregtech:fluid_spring_liquid_extra_heavy_oil",
+              "gregtech:fluid_spring_liquid_heavy_oil",
+              "gregtech:fluid_spring_liquid_medium_oil",
+              "gregtech:fluid_spring_liquid_light_oil",
+              "gregtech:fluid_spring_gas_natural_gas",
+              "gregtech:fluid_spring_watergeothermal",
+              "gregtech:fluid_spring_lava"
+            ],
+            "machineItems": [
+              "lightning_galvanized_steel",
+              "lightning_aluminium",
+              "lightning_stainless_steel",
+              "lightning_chromium",
+              "lightning_titanium",
+              "melter_stainless_steel"
+            ],
+            "machineModelsChecked": 6,
+            "surfaceItemModelsChecked": 16,
+            "surfaceSpringSpritesChecked": 7,
+            "surfaceBerryStageColorsChecked": 36,
+            "sandwich": {
+              "customInventoryModelsChecked": 3,
+              "ingredientLayerCounts": [
+                10,
+                4,
+                6
+              ],
+              "sourceLayerTexturesChecked": 22,
+              "sourceSauceColorsChecked": 2,
+              "cans": {
+                "inventoryModelsChecked": 57,
+                "renderedCanSamples": [
+                  "tiny_food_can_meat",
+                  "small_food_can_fish",
+                  "tall_food_can_vegetables",
+                  "wide_food_can_fruits",
+                  "large_food_can_bread",
+                  "huge_food_can_cookies",
+                  "canned_air",
+                  "canned_hot_air",
+                  "canned_space_air",
+                  "huge_food_can_rotten",
+                  "tiny_food_can_chum",
+                  "empty_food_can"
+                ]
+              }
+            },
+            "canvas": {
+              "originalCircuitTagGrades": 10,
+              "externalHighBatteryBoxRecipes": 5,
+              "originalMolecularDataFields": true,
+              "mercuryAmbientUnitMb": 1000,
+              "originalCanvasItemModels": 16,
+              "printedPageModels": 2,
+              "coloredBookScanHints": 28,
+              "directionalAndFluidFaces": 4,
+              "brightImage": true
+            },
+            "decorativePanels": {
+              "installedItemModels": 83,
+              "canonicalColoredModels": 48,
+              "canonicalWoodModels": 30,
+              "centeredTwoPixelMesh": true,
+              "sourceRgbAndTextures": true,
+              "legacyAliasesHiddenFromCreative": true,
+              "originalPerItemMaterialsAndAdvancedTooltip": 83,
+              "installedShredderEntries": 83,
+              "transportMaterialItemsAndShredderEntries": 441,
+              "originalTankGroupFormVariants": 10,
+              "resolvedTransportCraftingRows": 539,
+              "preferredTransportForms": 406,
+              "materialDataDisplay": {
+                "scans": 1003,
+                "prints": 1105,
+                "replications": 565
+              },
+              "usbFileDisplayTypes": 4,
+              "tankItemData": {
+                "cheapSourceVariants": 4,
+                "knownLogisticsComponents": 7,
+                "cleanItemData": 35,
+                "storedItemDataProtected": 35,
+                "completeWorldSaveRetained": true,
+                "observedEmptyLoaderWrappers": 0,
+                "scope": "installed methods at title screen; actual harvest tested separately in native server worlds",
+                "originalFunctionalTooltips": {
+                  "manualStations": 14,
+                  "boilersDefaultAndSavedEfficiency": 26,
+                  "scope": "installed actual item tooltip methods at title screen; no player hover or machine operation claim"
+                },
+                "sourceMechanicalTooltips": {
+                  "axles": 52,
+                  "customGearboxesDefaultAndSavedConfigurations": 13,
+                  "originalLargeBoilersDefaultAndSavedEfficiencies": 5,
+                  "scope": "installed item methods at title screen; no mechanical transport or boiler operation claim"
+                },
+                "sourceEnergyDeviceTooltips": {
+                  "batteryBoxes": 20,
+                  "solarPanels": 2,
+                  "electricTransformers": 9,
+                  "rotationalTransformers": 13,
+                  "savedDirectionItemTooltipsAndNativeToggleStatistics": 22,
+                  "scope": "installed item methods and native factory rating getters at title screen; no energy transfer or saved-world restart claim"
+                },
+                "sourceThermalConverters": {
+                  "heaters": 10,
+                  "coolers": 10,
+                  "rfDevices": 10,
+                  "actualBakedStates": 720,
+                  "sourceMaterialsAndSingleAdvancedSection": true,
+                  "scope": "installed title-screen native factories, methods, tooltip events and baked models; world output/contact checked separately"
+                },
+                "sourceBipolarMagnets": {
+                  "magnets": 10,
+                  "actualBakedStates": 240,
+                  "exactMaterialQuantitiesAndSourceTooltips": true,
+                  "scope": "installed native factories, tooltip methods and baked models at title screen; no world restart claim"
+                },
+                "sourceSteamTurbines": {
+                  "steamTurbines": 15,
+                  "actualBakedStates": 2160,
+                  "exactMaterialQuantitiesAndSourceTooltips": true,
+                  "scope": "installed title-screen factories, tooltip methods, sided capability visibility and baked models; no world or restart claim"
+                },
+                "sourceRotaryConverters": {
+                  "motors": 7,
+                  "dynamos": 7,
+                  "actualBakedStates": 1260,
+                  "exactMaterialsAndSingleAdvancedSection": true,
+                  "scope": "installed title-screen native factories, methods, tooltip events and baked models; actual world chain checked separately"
+                },
+                "machineSourceMaterials": {
+                  "sourceBlockIdentities": 1501,
+                  "nativeBasicMachinesAndControllers": 265,
+                  "singleAdvancedMaterialSection": true,
+                  "exactSourceComponentAmounts": true,
+                  "scope": "installed item methods and tooltip event at title screen; no recovery gameplay claim"
+                },
+                "sourceFluidPipeTooltips": 280,
+                "storedTankTooltips": 35
+              }
+            },
+            "commonBlockTooltips": {
+              "sourceBlockAndHopperIdentities": 1543,
+              "actualSourceBasicMachines": 265,
+              "nativeBlockClasses": 147,
+              "overlappingNamedBasicMachines": 5,
+              "nativeSavedCoverFaces": 12,
+              "scope": "native installed item tooltip events, source policy and sparse saved face data; no hover screenshot, actual harvest or world restart claim",
+              "storageTooltips": {
+                "safes": 120,
+                "drawers": 60,
+                "craftingTables": 120,
+                "bottleCrates": 90,
+                "massStorages": 121,
+                "hoppers": 120,
+                "bookShelves": 75,
+                "scaffolds": 60,
+                "savedMassConfigurations": 4,
+                "scope": "default rows through native tooltip calls/events; four saved-template rows through actual BlockItem.appendHoverText with built-in item lookup at title; no world interaction or screen hover claim"
+              }
+            },
+            "smelteryTooltipsAndMaterials": {
+              "vessels": 39,
+              "companions": 156,
+              "exactSourceCompositions": 155,
+              "undefinedSourceAmountsPreserved": 40,
+              "savedShapeTooltipAndProtectionCases": 156,
+              "nativeThermalParameterMethods": 39,
+              "largeVesselTooltipAndNativeParameterMethods": 9,
+              "scope": "installed tooltip calls/events, saved item state, entity thermal parameter methods and recovery parsing; no world ticking or restart"
+            },
+            "multiblockTankTooltipsAndMaterials": {
+              "originalControllers": 25,
+              "retainedAliases": 2,
+              "savedTooltipAndActualEntityLoadCases": 162,
+              "scope": "installed item tooltips/events and actual native entity data loading; no formed-tank flow or restart claim"
+            },
+            "processControllerTooltipsAndMaterials": {
+              "originalControllers": 6,
+              "exactMaterialRecords": 6,
+              "sourceStructureRows": 32,
+              "scope": "actual installed tooltip methods/events and native parameter methods; no world tick/restart claim"
+            },
+            "largeRecipeControllerTooltipsAndMaterials": {
+              "controllers": 12,
+              "sourceStructureRows": 43,
+              "exactMaterialRecords": 12
+            },
+            "sourceBasicMachineTooltips": {
+              "sourceBasicMachines": 247,
+              "magneticMachines": 10,
+              "exactAdvancedMaterialSections": 247,
+              "scope": "installed actual tooltip calls/events at title screen; not player hover or world operations"
+            },
+            "advancedControllerTooltipsAndMaterials": {
+              "controllers": 3,
+              "sourceStructureRows": 17,
+              "scope": "installed actual tooltip calls/events only; not player hover, natural processing or restart"
+            },
+            "generatorSourceTooltipsAndMaterials": {
+              "items": 24,
+              "sourceStructureRows": 88,
+              "materialAndHarvestAliases": 12,
+              "scope": "installed actual tooltip calls/events and registrations; not natural generation/recycling or player hover/restart"
+            },
+            "utilityControllerTooltipsAndMaterials": {
+              "items": 4,
+              "sourceStructureRows": 26,
+              "fixedBottomHeatModels": 6,
+              "distinctLavaFluidModels": 3,
+              "originalHotRecipes": 16,
+              "scope": "Installed tooltip calls/events, baked heat/fluid models and hot recipe registry; not world fuel/strike generation, player hover or restart"
+            },
+            "sensorSourceTooltipsAndMaterials": {
+              "items": 21,
+              "sourceTooltipRows": 147,
+              "scope": "Installed native tooltip events and material/harvest registration only; measurements, player hover and save restart are separate"
+            },
+            "originalMultiblockParts": {
+              "parts": 45,
+              "sourceTooltipRows": 90,
+              "scope": "Actual installed tooltip/material/physical registration; structure binding and player hover are separate"
+            }
+          },
+          "platform": "neoforge",
+          "screen": "net.minecraft.client.gui.screens.TitleScreen",
+          "screenshot": "C:\\Dev\\GregTech6\\build\\production-smoke\\neoforge-18524565-f7cc-4545-b7fc-98ae3304ddf7\\screenshots\\production-neoforge-a5672c40-8997-4ad4-a49e-f10e4c5045da.png",
+          "width": 1280,
+          "height": 720,
+          "renderedFrames": 181,
+          "elapsedMs": 54178
+        },
+        "screenshot_sha256": "85d185053e53368a81f89db593e7e6c058fc1bb8b9cf2269175e6ec45eb346d1",
+        "visually_reviewed": true,
+        "installed_files_modified": false,
+        "unable_to_load_model_warnings": 421
+      }
+    }
+  },
+  "verified_artifacts": {
+    "forge": {
+      "name": "gregtech6-1.20.1-forge-0.0.0.jar",
+      "bytes": 40049285,
+      "sha256": "6d4941c5bbe760987989d71ba3db09cfd53cebdf391d81c752cd2647b2fb2352",
+      "zip_crc_checked": true,
+      "path": "C:\\Dev\\GregTech6\\build\\verified\\20261007-181313Z-6d4941c5\\gregtech6-1.20.1-forge-0.0.0.jar"
+    },
+    "neoforge": {
+      "name": "gregtech6-neoforge-1.21.1-0.0.0.jar",
+      "bytes": 39904401,
+      "sha256": "fb29b47bd71570edfdcd8d68dc82ba1707e900915f0c02c62baedd04eb77c882",
+      "zip_crc_checked": true,
+      "path": "C:\\Dev\\GregTech6\\build\\verified\\20261007-181313Z-6d4941c5\\gregtech6-neoforge-1.21.1-0.0.0.jar"
+    }
+  },
+  "verified_directory": "C:\\Dev\\GregTech6\\build\\verified\\20261007-181313Z-6d4941c5",
+  "logs": [
+    {
+      "path": "work/source-policy-compile-20261008.log",
+      "sha256": "1db9f51c01b273cf1a28286d202d4d6c655ceb0b320c30c88da96e00ab74a3e4"
+    },
+    {
+      "path": "work/source-policy-world-20261008.log",
+      "sha256": "0bcb62f5aecd82ad1c5765fb035205edaa86cce282cbc135d2a4884c0ac203e3"
+    },
+    {
+      "path": "work/source-policy-build-20261008.log",
+      "sha256": "b7d56f4fd2eb174dcdf0897b83f704d34ab451a5d57139071a16889c3804cbcf"
+    },
+    {
+      "path": "work/source-policy-tests-20261008.log",
+      "sha256": "33f534b975ae612949f2f33e9e8485cecdb16c3fd12a119cc3047b219ce55f26"
+    },
+    {
+      "path": "work/source-policy-artifacts-20261008.json",
+      "sha256": "deb72e32f86e931a6c440de93397861c906de118200bf639e2458b200dfcf5d8"
+    }
+  ]
+}

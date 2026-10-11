@@ -1,0 +1,1359 @@
+{
+  "authors": "GregTech-6 Team / Gregorius Techneticies, LGPL-3.0-or-later original Java. User Chinese unchanged; local only, no push.",
+  "base_commit": "2bcf5bdc6",
+  "checks": {
+    "ci_fast_checks": {
+      "passed": true,
+      "seconds": 2.113,
+      "tests": 68
+    },
+    "dual_build": {
+      "core_contract_tasks": "UP-TO-DATE; not counted as a new execution",
+      "elapsed": "2m 22s",
+      "passed": true
+    },
+    "idempotence": true,
+    "packaging": {
+      "passed": true,
+      "shared_classes": 790
+    },
+    "source_gate": {
+      "java_sources": 2602,
+      "passed": true,
+      "seconds": 3.067
+    }
+  },
+  "chinese_diff": {
+    "added": {
+      "itemGroup.gregtech.chunk": "Chunks",
+      "itemGroup.gregtech.clean_gravel": "Clean Gravels",
+      "itemGroup.gregtech.clump": "Clumps",
+      "itemGroup.gregtech.cluster": "Native Clusters",
+      "itemGroup.gregtech.crystal": "Crystals",
+      "itemGroup.gregtech.crystalline": "Crystallised Metals",
+      "itemGroup.gregtech.dirty_gravel": "Dirty Gravels",
+      "itemGroup.gregtech.dust_pure": "Purified Dusts",
+      "itemGroup.gregtech.dust_refined": "Refined Dusts",
+      "itemGroup.gregtech.ore": "Ores",
+      "itemGroup.gregtech.ore_small": "Small Ores",
+      "itemGroup.gregtech.pebbles": "Pebbles",
+      "itemGroup.gregtech.raw_ore_chunk": "Raw Ore Chunks",
+      "itemGroup.gregtech.reduced": "Reduced Gravels",
+      "itemGroup.gregtech.rubble": "Rubble",
+      "itemGroup.gregtech.unit": "Unit"
+    },
+    "changed": {},
+    "removed": []
+  },
+  "english_diff": {
+    "added": {
+      "itemGroup.gregtech.casing_small": "Item Casings",
+      "itemGroup.gregtech.chemtube": "Glass Tubes",
+      "itemGroup.gregtech.chunk": "Chunks",
+      "itemGroup.gregtech.clean_gravel": "Clean Gravels",
+      "itemGroup.gregtech.clump": "Clumps",
+      "itemGroup.gregtech.cluster": "Native Clusters",
+      "itemGroup.gregtech.crystal": "Crystals",
+      "itemGroup.gregtech.crystalline": "Crystallised Metals",
+      "itemGroup.gregtech.dirty_gravel": "Dirty Gravels",
+      "itemGroup.gregtech.dust_pure": "Purified Dusts",
+      "itemGroup.gregtech.dust_refined": "Refined Dusts",
+      "itemGroup.gregtech.iconsets": "Blocks of Cast Metal",
+      "itemGroup.gregtech.ore": "Ores",
+      "itemGroup.gregtech.ore_small": "Small Ores",
+      "itemGroup.gregtech.ore_vanillastone": "Stone Ores",
+      "itemGroup.gregtech.pebbles": "Pebbles",
+      "itemGroup.gregtech.raw_ore_chunk": "Raw Ore Chunks",
+      "itemGroup.gregtech.reduced": "Reduced Gravels",
+      "itemGroup.gregtech.rubble": "Rubble",
+      "itemGroup.gregtech.technology": "GregTech: Technology",
+      "itemGroup.gregtech.unit": "Unit"
+    },
+    "changed": {
+      "block.gregtech.long_dist_wire": {
+        "after": "Long Distance Electric Wire (EV)",
+        "before": "Long Dist Wire"
+      },
+      "block.gregtech.panel_cfoam": {
+        "after": "C-Foam Panel",
+        "before": "Construction Foam Panel"
+      },
+      "item.gregtech.panel_cfoam_black": {
+        "after": "C-Foam Panel",
+        "before": "Construction Foam Panel"
+      },
+      "item.gregtech.panel_cfoam_blue": {
+        "after": "C-Foam Panel",
+        "before": "Construction Foam Panel"
+      },
+      "item.gregtech.panel_cfoam_brown": {
+        "after": "C-Foam Panel",
+        "before": "Construction Foam Panel"
+      },
+      "item.gregtech.panel_cfoam_cyan": {
+        "after": "C-Foam Panel",
+        "before": "Construction Foam Panel"
+      },
+      "item.gregtech.panel_cfoam_gray": {
+        "after": "C-Foam Panel",
+        "before": "Construction Foam Panel"
+      },
+      "item.gregtech.panel_cfoam_green": {
+        "after": "C-Foam Panel",
+        "before": "Construction Foam Panel"
+      },
+      "item.gregtech.panel_cfoam_light_blue": {
+        "after": "C-Foam Panel",
+        "before": "Construction Foam Panel"
+      },
+      "item.gregtech.panel_cfoam_light_gray": {
+        "after": "C-Foam Panel",
+        "before": "Construction Foam Panel"
+      },
+      "item.gregtech.panel_cfoam_lime": {
+        "after": "C-Foam Panel",
+        "before": "Construction Foam Panel"
+      },
+      "item.gregtech.panel_cfoam_magenta": {
+        "after": "C-Foam Panel",
+        "before": "Construction Foam Panel"
+      },
+      "item.gregtech.panel_cfoam_orange": {
+        "after": "C-Foam Panel",
+        "before": "Construction Foam Panel"
+      },
+      "item.gregtech.panel_cfoam_pink": {
+        "after": "C-Foam Panel",
+        "before": "Construction Foam Panel"
+      },
+      "item.gregtech.panel_cfoam_purple": {
+        "after": "C-Foam Panel",
+        "before": "Construction Foam Panel"
+      },
+      "item.gregtech.panel_cfoam_red": {
+        "after": "C-Foam Panel",
+        "before": "Construction Foam Panel"
+      },
+      "item.gregtech.panel_cfoam_white": {
+        "after": "C-Foam Panel",
+        "before": "Construction Foam Panel"
+      },
+      "item.gregtech.panel_cfoam_yellow": {
+        "after": "C-Foam Panel",
+        "before": "Construction Foam Panel"
+      },
+      "itemGroup.gregtech.arrow_gt_plastic": {
+        "after": "Light Arrows",
+        "before": "GregTech Plastic Arrows"
+      },
+      "itemGroup.gregtech.arrow_gt_wood": {
+        "after": "Regular Arrows",
+        "before": "GregTech Wood Arrows"
+      },
+      "itemGroup.gregtech.automatic_tools": {
+        "after": "Automatic Tools",
+        "before": "GregTech: Automatic Tools"
+      },
+      "itemGroup.gregtech.axles": {
+        "after": "Axles and Gearboxes",
+        "before": "GregTech: Axles and Gearboxes"
+      },
+      "itemGroup.gregtech.basic_machines": {
+        "after": "Basic Machines",
+        "before": "GregTech: Basic Machines"
+      },
+      "itemGroup.gregtech.batteries": {
+        "after": "Batteries",
+        "before": "GregTech: Batteries"
+      },
+      "itemGroup.gregtech.battery_boxes": {
+        "after": "Battery Boxes",
+        "before": "GregTech: Battery Boxes"
+      },
+      "itemGroup.gregtech.billet": {
+        "after": "Billets",
+        "before": "GregTech Billets"
+      },
+      "itemGroup.gregtech.block_dust": {
+        "after": "Blocks of Dusts",
+        "before": "GregTech Block of Dusts"
+      },
+      "itemGroup.gregtech.block_gem": {
+        "after": "Blocks of Gems",
+        "before": "GregTech Block of Gemss"
+      },
+      "itemGroup.gregtech.block_ingot": {
+        "after": "Blocks of Ingots",
+        "before": "GregTech Block of Ingotss"
+      },
+      "itemGroup.gregtech.block_plate": {
+        "after": "Blocks of Plates",
+        "before": "GregTech Block of Platess"
+      },
+      "itemGroup.gregtech.block_plate_gem": {
+        "after": "Blocks of Gem Plates",
+        "before": "GregTech Block of Gem Platess"
+      },
+      "itemGroup.gregtech.block_raw": {
+        "after": "Blocks of Ore",
+        "before": "GregTech Block of Ores"
+      },
+      "itemGroup.gregtech.block_solid": {
+        "after": "Blocks of Cast Metal",
+        "before": "GregTech Block of Cast Metals"
+      },
+      "itemGroup.gregtech.bolt": {
+        "after": "Bolts",
+        "before": "GregTech Bolts"
+      },
+      "itemGroup.gregtech.boule_gt": {
+        "after": "Boules",
+        "before": "GregTech Boules"
+      },
+      "itemGroup.gregtech.bullet_gt_large": {
+        "after": "Large Bullets",
+        "before": "GregTech Large Bullets"
+      },
+      "itemGroup.gregtech.bullet_gt_medium": {
+        "after": "Medium Bullets",
+        "before": "GregTech Medium Bullets"
+      },
+      "itemGroup.gregtech.bullet_gt_small": {
+        "after": "Small Bullets",
+        "before": "GregTech Small Bullets"
+      },
+      "itemGroup.gregtech.burning_boxes": {
+        "after": "Burning Boxes",
+        "before": "GregTech: Burning Boxes"
+      },
+      "itemGroup.gregtech.casing_machine": {
+        "after": "Machine Casings",
+        "before": "GregTech Machine Casings"
+      },
+      "itemGroup.gregtech.casing_machine_dense": {
+        "after": "Dense Machine Casings",
+        "before": "GregTech Dense Machine Casings"
+      },
+      "itemGroup.gregtech.casing_machine_double": {
+        "after": "Robust Machine Casings",
+        "before": "GregTech Robust Machine Casings"
+      },
+      "itemGroup.gregtech.casing_machine_quadruple": {
+        "after": "Reinforced Machine Casings",
+        "before": "GregTech Reinforced Machine Casings"
+      },
+      "itemGroup.gregtech.chain": {
+        "after": "Chains",
+        "before": "GregTech Chains"
+      },
+      "itemGroup.gregtech.chests": {
+        "after": "Chests",
+        "before": "GregTech: Chests"
+      },
+      "itemGroup.gregtech.chunk_gt": {
+        "after": "Chunks",
+        "before": "GregTech Chunks"
+      },
+      "itemGroup.gregtech.coin": {
+        "after": "Coins",
+        "before": "GregTech Coins"
+      },
+      "itemGroup.gregtech.coins": {
+        "after": "Coins",
+        "before": "GregTech: Coins"
+      },
+      "itemGroup.gregtech.computing": {
+        "after": "Computing",
+        "before": "GregTech: Computing"
+      },
+      "itemGroup.gregtech.construction": {
+        "after": "C-Foam",
+        "before": "GregTech: Construction"
+      },
+      "itemGroup.gregtech.coolers": {
+        "after": "Coolers",
+        "before": "GregTech: Coolers"
+      },
+      "itemGroup.gregtech.crafting_tables": {
+        "after": "Crafting Tables",
+        "before": "GregTech: Crafting Tables"
+      },
+      "itemGroup.gregtech.crate_gt64_dust": {
+        "after": "Crates of Dust",
+        "before": "GregTech Crate of Dusts"
+      },
+      "itemGroup.gregtech.crate_gt64_gem": {
+        "after": "Crates of Gems",
+        "before": "GregTech Crate of Gemss"
+      },
+      "itemGroup.gregtech.crate_gt64_ingot": {
+        "after": "Crates of Ingots",
+        "before": "GregTech Crate of Ingotss"
+      },
+      "itemGroup.gregtech.crate_gt64_plate": {
+        "after": "Crates of Plates",
+        "before": "GregTech Crate of Platess"
+      },
+      "itemGroup.gregtech.crate_gt64_plate_gem": {
+        "after": "Crates of Gem Plates",
+        "before": "GregTech Crate of Gem Platess"
+      },
+      "itemGroup.gregtech.crate_gt64_raw": {
+        "after": "Crates of Ore",
+        "before": "GregTech Crate of Ores"
+      },
+      "itemGroup.gregtech.crate_gt_dust": {
+        "after": "Crates of Dust",
+        "before": "GregTech Partial Crate of Dusts"
+      },
+      "itemGroup.gregtech.crate_gt_gem": {
+        "after": "Crates of Gems",
+        "before": "GregTech Partial Crate of Gemss"
+      },
+      "itemGroup.gregtech.crate_gt_ingot": {
+        "after": "Crates of Ingots",
+        "before": "GregTech Partial Crate of Ingotss"
+      },
+      "itemGroup.gregtech.crate_gt_plate": {
+        "after": "Crates of Plates",
+        "before": "GregTech Partial Crate of Platess"
+      },
+      "itemGroup.gregtech.crate_gt_plate_gem": {
+        "after": "Crates of Gem Plates",
+        "before": "GregTech Partial Crate of Gem Platess"
+      },
+      "itemGroup.gregtech.crate_gt_raw": {
+        "after": "Crates of Ore",
+        "before": "GregTech Partial Crate of Ores"
+      },
+      "itemGroup.gregtech.crucibles_faucets": {
+        "after": "Crucibles Faucets",
+        "before": "GregTech: Crucibles Faucets"
+      },
+      "itemGroup.gregtech.crushed": {
+        "after": "Crushed Ores",
+        "before": "GregTech Crushed Ores"
+      },
+      "itemGroup.gregtech.crushed_centrifuged": {
+        "after": "Refined Ores",
+        "before": "GregTech Refined Crushed Ores"
+      },
+      "itemGroup.gregtech.crushed_centrifuged_tiny": {
+        "after": "Tiny Refined Ores",
+        "before": "GregTech Tiny Refined Crushed Ores"
+      },
+      "itemGroup.gregtech.crushed_purified": {
+        "after": "Purified Ores",
+        "before": "GregTech Purified Crushed Ores"
+      },
+      "itemGroup.gregtech.crushed_purified_tiny": {
+        "after": "Tiny Purified Ores",
+        "before": "GregTech Tiny Purified Crushed Ores"
+      },
+      "itemGroup.gregtech.crushed_tiny": {
+        "after": "Tiny Crushed Ores",
+        "before": "GregTech Tiny Crushed Ores"
+      },
+      "itemGroup.gregtech.crystal_chargers": {
+        "after": "Crystal Chargers",
+        "before": "GregTech: Crystal Chargers"
+      },
+      "itemGroup.gregtech.dust": {
+        "after": "Dusts",
+        "before": "GregTech Dusts"
+      },
+      "itemGroup.gregtech.dust_div72": {
+        "after": "1/72nd Dusts",
+        "before": "GregTech 1/72 Dusts"
+      },
+      "itemGroup.gregtech.dust_impure": {
+        "after": "Impure Dusts",
+        "before": "GregTech Impure Dusts"
+      },
+      "itemGroup.gregtech.dust_small": {
+        "after": "Small Dusts",
+        "before": "GregTech Small Dusts"
+      },
+      "itemGroup.gregtech.dust_tiny": {
+        "after": "Tiny Dusts",
+        "before": "GregTech Tiny Dusts"
+      },
+      "itemGroup.gregtech.dynamos": {
+        "after": "Dynamos",
+        "before": "GregTech: Dynamos"
+      },
+      "itemGroup.gregtech.energy_nodes": {
+        "after": "Dynamos",
+        "before": "GregTech Energy Units"
+      },
+      "itemGroup.gregtech.engines": {
+        "after": "Engines",
+        "before": "GregTech: Engines"
+      },
+      "itemGroup.gregtech.extenders": {
+        "after": "Extenders",
+        "before": "GregTech: Extenders"
+      },
+      "itemGroup.gregtech.fluid_containers": {
+        "after": "Fluid Containers",
+        "before": "GregTech: Fluid Containers"
+      },
+      "itemGroup.gregtech.fluids": {
+        "after": "Fluid Containers",
+        "before": "GregTech Fluids"
+      },
+      "itemGroup.gregtech.foam": {
+        "after": "C-Foam",
+        "before": "GregTech: C-Foam"
+      },
+      "itemGroup.gregtech.foil": {
+        "after": "Foils",
+        "before": "GregTech Foils"
+      },
+      "itemGroup.gregtech.gear_gt": {
+        "after": "Gears",
+        "before": "GregTech Gears"
+      },
+      "itemGroup.gregtech.gear_gt_small": {
+        "after": "Small Gears",
+        "before": "GregTech Small Gears"
+      },
+      "itemGroup.gregtech.gem": {
+        "after": "Gemstones",
+        "before": "GregTech Gems"
+      },
+      "itemGroup.gregtech.gem_chipped": {
+        "after": "Chipped Gemstones",
+        "before": "GregTech Chipped Gems"
+      },
+      "itemGroup.gregtech.gem_exquisite": {
+        "after": "Exquisite Gemstones",
+        "before": "GregTech Exquisite Gems"
+      },
+      "itemGroup.gregtech.gem_flawed": {
+        "after": "Flawed Gemstones",
+        "before": "GregTech Flawed Gems"
+      },
+      "itemGroup.gregtech.gem_flawless": {
+        "after": "Flawless Gemstones",
+        "before": "GregTech Flawless Gems"
+      },
+      "itemGroup.gregtech.gem_legendary": {
+        "after": "Legendary Gemstones",
+        "before": "GregTech Legendary Gems"
+      },
+      "itemGroup.gregtech.glasstube": {
+        "after": "Glass Tubes",
+        "before": "GregTech Glass Tubes"
+      },
+      "itemGroup.gregtech.heat_exchangers": {
+        "after": "Heat Exchangers",
+        "before": "GregTech: Heat Exchangers"
+      },
+      "itemGroup.gregtech.heaters": {
+        "after": "Heaters",
+        "before": "GregTech: Heaters"
+      },
+      "itemGroup.gregtech.hoppers": {
+        "after": "Hoppers",
+        "before": "GregTech: Hoppers"
+      },
+      "itemGroup.gregtech.ingot": {
+        "after": "Ingots",
+        "before": "GregTech Ingots"
+      },
+      "itemGroup.gregtech.ingot_double": {
+        "after": "2x Ingots",
+        "before": "GregTech Double Ingots"
+      },
+      "itemGroup.gregtech.ingot_quadruple": {
+        "after": "4x Ingots",
+        "before": "GregTech Quadruple Ingots"
+      },
+      "itemGroup.gregtech.ingot_quintuple": {
+        "after": "5x Ingots",
+        "before": "GregTech Quintuple Ingots"
+      },
+      "itemGroup.gregtech.ingot_triple": {
+        "after": "3x Ingots",
+        "before": "GregTech Triple Ingots"
+      },
+      "itemGroup.gregtech.item_casing": {
+        "after": "Item Casings",
+        "before": "GregTech Item Casings"
+      },
+      "itemGroup.gregtech.laser_absorbers": {
+        "after": "Laser Absorbers",
+        "before": "GregTech: Laser Absorbers"
+      },
+      "itemGroup.gregtech.laser_wires": {
+        "after": "Laser Wires",
+        "before": "GregTech: Laser Wires"
+      },
+      "itemGroup.gregtech.lasers": {
+        "after": "Lasers",
+        "before": "GregTech: Lasers"
+      },
+      "itemGroup.gregtech.lens": {
+        "after": "Lenses",
+        "before": "GregTech Lenss"
+      },
+      "itemGroup.gregtech.logistics": {
+        "after": "Logistics",
+        "before": "GregTech: Logistics"
+      },
+      "itemGroup.gregtech.long_distance_transport": {
+        "after": "Long Distance Transport",
+        "before": "GregTech: Long Distance Transport"
+      },
+      "itemGroup.gregtech.magical_energy_production": {
+        "after": "Magical Energy Production",
+        "before": "GregTech: Magical Energy Production"
+      },
+      "itemGroup.gregtech.magnets": {
+        "after": "Magnets",
+        "before": "GregTech: Magnets"
+      },
+      "itemGroup.gregtech.minecart_wheels": {
+        "after": "Cart Wheels",
+        "before": "GregTech Minecart Wheelss"
+      },
+      "itemGroup.gregtech.molds": {
+        "after": "Molds",
+        "before": "GregTech: Molds"
+      },
+      "itemGroup.gregtech.motors": {
+        "after": "Motors",
+        "before": "GregTech: Motors"
+      },
+      "itemGroup.gregtech.multi_items": {
+        "after": "GregTech: Equipment",
+        "before": "GregTech Items (Tools/Bottles/Food/Bees)"
+      },
+      "itemGroup.gregtech.multiblocks": {
+        "after": "Multiblock Machines",
+        "before": "GregTech: Multiblock Machines"
+      },
+      "itemGroup.gregtech.nugget": {
+        "after": "Nuggets",
+        "before": "GregTech Nuggets"
+      },
+      "itemGroup.gregtech.ore_raw": {
+        "after": "Raw Ores",
+        "before": "GregTech Raw Ores"
+      },
+      "itemGroup.gregtech.panels": {
+        "after": "Panels",
+        "before": "GregTech: Panels"
+      },
+      "itemGroup.gregtech.plate": {
+        "after": "Plates",
+        "before": "GregTech Plates"
+      },
+      "itemGroup.gregtech.plate_curved": {
+        "after": "Curved Plates",
+        "before": "GregTech Curved Plates"
+      },
+      "itemGroup.gregtech.plate_dense": {
+        "after": "Dense Plates",
+        "before": "GregTech Dense Plates"
+      },
+      "itemGroup.gregtech.plate_double": {
+        "after": "2x Plates",
+        "before": "GregTech Double Plates"
+      },
+      "itemGroup.gregtech.plate_gem": {
+        "after": "Gem Plates",
+        "before": "GregTech Gem Plates"
+      },
+      "itemGroup.gregtech.plate_gem_tiny": {
+        "after": "Tiny Gem Plates",
+        "before": "GregTech Tiny Gem Plates"
+      },
+      "itemGroup.gregtech.plate_quadruple": {
+        "after": "4x Plates",
+        "before": "GregTech Quadruple Plates"
+      },
+      "itemGroup.gregtech.plate_quintuple": {
+        "after": "5x Plates",
+        "before": "GregTech Quintuple Plates"
+      },
+      "itemGroup.gregtech.plate_tiny": {
+        "after": "Tiny Plates",
+        "before": "GregTech Tiny Plates"
+      },
+      "itemGroup.gregtech.plate_triple": {
+        "after": "3x Plates",
+        "before": "GregTech Triple Plates"
+      },
+      "itemGroup.gregtech.portable_power_cells": {
+        "after": "Portable Power Cells",
+        "before": "GregTech: Portable Power Cells"
+      },
+      "itemGroup.gregtech.portals": {
+        "after": "Portals",
+        "before": "GregTech: Portals"
+      },
+      "itemGroup.gregtech.pumps": {
+        "after": "Pumps",
+        "before": "GregTech: Pumps"
+      },
+      "itemGroup.gregtech.quantum_energizers": {
+        "after": "Quantum Energizers",
+        "before": "GregTech: Quantum Energizers"
+      },
+      "itemGroup.gregtech.rail_gt": {
+        "after": "Single Rails",
+        "before": "GregTech Rails"
+      },
+      "itemGroup.gregtech.reactors": {
+        "after": "Reactors",
+        "before": "GregTech: Reactors"
+      },
+      "itemGroup.gregtech.redstone_wires": {
+        "after": "Redstone Wires",
+        "before": "GregTech: Redstone Wires"
+      },
+      "itemGroup.gregtech.ring": {
+        "after": "Rings",
+        "before": "GregTech Rings"
+      },
+      "itemGroup.gregtech.rock_gt": {
+        "after": "Rocks",
+        "before": "GregTech Rocks"
+      },
+      "itemGroup.gregtech.ropes": {
+        "after": "Ropes",
+        "before": "GregTech: Ropes"
+      },
+      "itemGroup.gregtech.rotor": {
+        "after": "Rotors",
+        "before": "GregTech Rotors"
+      },
+      "itemGroup.gregtech.round": {
+        "after": "Rounds",
+        "before": "GregTech Rounds"
+      },
+      "itemGroup.gregtech.safes": {
+        "after": "Safes",
+        "before": "GregTech: Safes"
+      },
+      "itemGroup.gregtech.scaffolds": {
+        "after": "Scaffolds",
+        "before": "GregTech: Scaffolds"
+      },
+      "itemGroup.gregtech.screw": {
+        "after": "Screws",
+        "before": "GregTech Screws"
+      },
+      "itemGroup.gregtech.sensors": {
+        "after": "Sensors",
+        "before": "GregTech: Sensors"
+      },
+      "itemGroup.gregtech.smelting_crucibles": {
+        "after": "Smelting Crucibles",
+        "before": "GregTech: Smelting Crucibles"
+      },
+      "itemGroup.gregtech.solar_panels": {
+        "after": "Solar Panels",
+        "before": "GregTech: Solar Panels"
+      },
+      "itemGroup.gregtech.sorting": {
+        "after": "Sorting",
+        "before": "GregTech: Sorting"
+      },
+      "itemGroup.gregtech.spring": {
+        "after": "Springs",
+        "before": "GregTech Springs"
+      },
+      "itemGroup.gregtech.spring_small": {
+        "after": "Small Springs",
+        "before": "GregTech Small Springs"
+      },
+      "itemGroup.gregtech.steam_boilers": {
+        "after": "Steam Boilers",
+        "before": "GregTech: Steam Boilers"
+      },
+      "itemGroup.gregtech.stick": {
+        "after": "Sticks/Rods",
+        "before": "GregTech Rods"
+      },
+      "itemGroup.gregtech.stick_long": {
+        "after": "Long Sticks/Rods",
+        "before": "GregTech Long Rods"
+      },
+      "itemGroup.gregtech.stones": {
+        "after": "Rocks",
+        "before": "GregTech Stones"
+      },
+      "itemGroup.gregtech.storage": {
+        "after": "Storage",
+        "before": "GregTech: Storage"
+      },
+      "itemGroup.gregtech.tool_blocks": {
+        "after": "Misc Tool Blocks",
+        "before": "GregTech: Misc Tool Blocks"
+      },
+      "itemGroup.gregtech.tool_head_arrow": {
+        "after": "Arrow Heads",
+        "before": "GregTech Arrow Heads"
+      },
+      "itemGroup.gregtech.tool_head_axe": {
+        "after": "Axe Heads",
+        "before": "GregTech Axe Heads"
+      },
+      "itemGroup.gregtech.tool_head_axe_double": {
+        "after": "Double Axe Heads",
+        "before": "GregTech Double Axe Heads"
+      },
+      "itemGroup.gregtech.tool_head_builderwand": {
+        "after": "Builder's Wand Caps",
+        "before": "GregTech Builder Wand Heads"
+      },
+      "itemGroup.gregtech.tool_head_buzz_saw": {
+        "after": "Buzzsaw Blades",
+        "before": "GregTech Buzz Saw Blades"
+      },
+      "itemGroup.gregtech.tool_head_chainsaw": {
+        "after": "Chainsaw Tips",
+        "before": "GregTech Chainsaw Heads"
+      },
+      "itemGroup.gregtech.tool_head_chisel": {
+        "after": "Chisel Heads",
+        "before": "GregTech Chisel Heads"
+      },
+      "itemGroup.gregtech.tool_head_construction_pickaxe": {
+        "after": "Construction Pickaxe Heads",
+        "before": "GregTech Construction Pickaxe Heads"
+      },
+      "itemGroup.gregtech.tool_head_drill": {
+        "after": "Drill Tips",
+        "before": "GregTech Drill Heads"
+      },
+      "itemGroup.gregtech.tool_head_file": {
+        "after": "File Heads",
+        "before": "GregTech File Heads"
+      },
+      "itemGroup.gregtech.tool_head_hammer": {
+        "after": "Hammer Heads",
+        "before": "GregTech Hammer Heads"
+      },
+      "itemGroup.gregtech.tool_head_hoe": {
+        "after": "Hoe Heads",
+        "before": "GregTech Hoe Heads"
+      },
+      "itemGroup.gregtech.tool_head_pickaxe": {
+        "after": "Pickaxe Heads",
+        "before": "GregTech Pickaxe Heads"
+      },
+      "itemGroup.gregtech.tool_head_pickaxe_gem": {
+        "after": "Gem tipped Pickaxe Heads",
+        "before": "GregTech Gem Pickaxe Heads"
+      },
+      "itemGroup.gregtech.tool_head_plow": {
+        "after": "Plow Heads",
+        "before": "GregTech Plow Heads"
+      },
+      "itemGroup.gregtech.tool_head_raw_arrow": {
+        "after": "Raw Arrow Heads",
+        "before": "GregTech Raw Arrow Heads"
+      },
+      "itemGroup.gregtech.tool_head_raw_axe": {
+        "after": "Raw Axe Heads",
+        "before": "GregTech Raw Axe Heads"
+      },
+      "itemGroup.gregtech.tool_head_raw_axe_double": {
+        "after": "Raw Double Axe Heads",
+        "before": "GregTech Raw Double Axe Heads"
+      },
+      "itemGroup.gregtech.tool_head_raw_chisel": {
+        "after": "Raw Chisel Heads",
+        "before": "GregTech Raw Chisel Heads"
+      },
+      "itemGroup.gregtech.tool_head_raw_hoe": {
+        "after": "Raw Hoe Heads",
+        "before": "GregTech Raw Hoe Heads"
+      },
+      "itemGroup.gregtech.tool_head_raw_pickaxe": {
+        "after": "Raw Pickaxe Heads",
+        "before": "GregTech Raw Pickaxe Heads"
+      },
+      "itemGroup.gregtech.tool_head_raw_plow": {
+        "after": "Raw Plow Heads",
+        "before": "GregTech Raw Plow Heads"
+      },
+      "itemGroup.gregtech.tool_head_raw_saw": {
+        "after": "Raw Saw Blades",
+        "before": "GregTech Raw Saw Blades"
+      },
+      "itemGroup.gregtech.tool_head_raw_sense": {
+        "after": "Raw Sense Blades",
+        "before": "GregTech Raw Sense Tool Heads"
+      },
+      "itemGroup.gregtech.tool_head_raw_shovel": {
+        "after": "Raw Shovel Heads",
+        "before": "GregTech Raw Shovel Heads"
+      },
+      "itemGroup.gregtech.tool_head_raw_spade": {
+        "after": "Raw Spade Heads",
+        "before": "GregTech Raw Spade Heads"
+      },
+      "itemGroup.gregtech.tool_head_raw_sword": {
+        "after": "Raw Sword Blades",
+        "before": "GregTech Raw Sword Blades"
+      },
+      "itemGroup.gregtech.tool_head_raw_universal_spade": {
+        "after": "Raw Universal Spade Heads",
+        "before": "GregTech Raw Universal Spade Heads"
+      },
+      "itemGroup.gregtech.tool_head_saw": {
+        "after": "Saw Blades",
+        "before": "GregTech Saw Blades"
+      },
+      "itemGroup.gregtech.tool_head_screwdriver": {
+        "after": "Screwdriver Tips",
+        "before": "GregTech Screwdriver Heads"
+      },
+      "itemGroup.gregtech.tool_head_sense": {
+        "after": "Sense Blades",
+        "before": "GregTech Sense Tool Heads"
+      },
+      "itemGroup.gregtech.tool_head_shovel": {
+        "after": "Shovel Heads",
+        "before": "GregTech Shovel Heads"
+      },
+      "itemGroup.gregtech.tool_head_spade": {
+        "after": "Spade Heads",
+        "before": "GregTech Spade Heads"
+      },
+      "itemGroup.gregtech.tool_head_sword": {
+        "after": "Sword Blades",
+        "before": "GregTech Sword Blades"
+      },
+      "itemGroup.gregtech.tool_head_universal_spade": {
+        "after": "Universal Spade Heads",
+        "before": "GregTech Universal Spade Heads"
+      },
+      "itemGroup.gregtech.tool_head_wrench": {
+        "after": "Wrench Tips",
+        "before": "GregTech Wrench Heads"
+      },
+      "itemGroup.gregtech.tools": {
+        "after": "GregTech: Equipment",
+        "before": "GregTech: Tools"
+      },
+      "itemGroup.gregtech.transformers": {
+        "after": "Transformers",
+        "before": "GregTech: Transformers"
+      },
+      "itemGroup.gregtech.turbines": {
+        "after": "Turbines",
+        "before": "GregTech: Turbines"
+      },
+      "itemGroup.gregtech.untyped": {
+        "after": "Untyped",
+        "before": "GregTech: Untyped"
+      },
+      "itemGroup.gregtech.wire_fine": {
+        "after": "Fine Wires",
+        "before": "GregTech Fine Wires"
+      },
+      "itemGroup.gregtech.wires": {
+        "after": "Electric Wires",
+        "before": "Wires & Cables"
+      },
+      "itemGroup.gregtech.woods": {
+        "after": "Sticks/Rods",
+        "before": "GregTech: Woods"
+      },
+      "itemGroup.gregtech.zpm": {
+        "after": "ZPM",
+        "before": "GregTech: ZPM"
+      }
+    },
+    "removed": []
+  },
+  "language_gate": {
+    "changes": {
+      "changed": 0,
+      "missing": 0,
+      "unexpected": 0
+    },
+    "chinese_keys": 141372,
+    "english": {
+      "exact_original_declarations": 11894,
+      "formatted_keys": 391,
+      "intentional_empty_tooltips": 689,
+      "keys": 14978,
+      "original_english_without_chinese_source": 476
+    },
+    "english_fallback_count": 3091,
+    "native_aliases": 12624,
+    "source_keys": 125676,
+    "source_sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0"
+  },
+  "limitations": "No new world/player-hover/save/survival check. Source-missing Chinese policy unanswered; full Chinese completion is not claimed. Goal continues language/self-check scope until the requested condition to pause is met.",
+  "lost_english_source_checks": [],
+  "new_english_source_checks": {
+    "categories": 209,
+    "long_distance_wires": 17,
+    "numbered_blocks": 118
+  },
+  "raw_reports": [
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-categories-proposal-20261008.json",
+      "sha256": "da8429b3a173408b6ef249eb76df0cd25d7d0b793b05c0d872607ce7541d4cb5"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-categories-import-20261008.json",
+      "sha256": "da8429b3a173408b6ef249eb76df0cd25d7d0b793b05c0d872607ce7541d4cb5"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-categories-repair-proposal-20261008.json",
+      "sha256": "d59f44f52f9384d1689bb95eabf1b179ba69a3ba471abd23362096b1a361d9b6"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-categories-repair-import-20261008.json",
+      "sha256": "d59f44f52f9384d1689bb95eabf1b179ba69a3ba471abd23362096b1a361d9b6"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-categories-idempotence-20261008.json",
+      "sha256": "ac772da1f7ca7be63589e9a6adeb184bd6a282dcbd9185032dd00f3c616dbc2d"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-categories-localization-20261008.json",
+      "sha256": "90c84ff3e2a7eb9df937ebaa1b58fc966f3413776fa40cb186d73275ebdc2325"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-categories-sourcecheck-20261008.json",
+      "sha256": "b28da73af1435819244af0f18ff157313c7cba6c6e691c2f236ca2d20de951e2"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-categories-artifacts-20261008.json",
+      "sha256": "3269b0f0c394317b6153290356e6778292ab0d43a847c87ae0719e62885eb3c8"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-categories-forge-20261008.json",
+      "sha256": "3c6931f3c4b5dd1967224fa6677ded87b4d2d7688827efce52301649e83b4d3d"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-categories-neoforge-20261008.json",
+      "sha256": "052b74b414e1d798d1c8b98d7dfb015aebaf22296f77b5fe9b49c1a39d58ddf7"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-categories-copies-20261008.json",
+      "sha256": "d5f2da672b147254cfc86c1a3ca944d63deb83eca9455e431a58e5301a45a3a0"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-categories-build-20261008.log",
+      "sha256": "238ec561ff050ff4f690b4a858ff6a344bd2337357e011ecb99032f9a734e5cf"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-categories-repair-build-20261008.log",
+      "sha256": "2de233a3841664314b97faced830dfb004c16a150e64cbf29d06d899439d0f66"
+    }
+  ],
+  "rejected_run": {
+    "log": "C:\\Dev\\GregTech6\\build\\production-smoke\\forge-3bcd47c4-a6d6-456d-8c3e-c273ca60424e\\launch.log",
+    "log_sha256": "2c4cd4510f92709f32d2e51aaabb280c0b4ccfe16ef55cb32408a9993d9db03a",
+    "reason": "Real registered creative category itemGroup.gregtech.unit was missing its language key. Full exported prefix-category set checked and 16 missing English entries added; no production Java change.",
+    "rejected_forge_sha256": "8f98eff9e1c362299fc4229f2ae120412bebdbdc442bac1ebc801b2211191b5d",
+    "rejected_neoforge_sha256_not_launched": "160d085ac69da83770c98cf2a2705cbc7722c7981794ff69f2bace778b84a863",
+    "status": "rejected"
+  },
+  "remaining_source_bound_unpinned_english": {
+    "block.gregtech.long_dist_pipe_adamantium": "gt.block.longdistpipe.01.3",
+    "block.gregtech.long_dist_pipe_draconium": "gt.block.longdistpipe.01.4",
+    "block.gregtech.long_dist_pipe_fluid": "gt.block.longdistpipe.01.1",
+    "block.gregtech.long_dist_pipe_item": "gt.block.longdistpipe.01.0",
+    "block.gregtech.long_dist_pipe_tungsten": "gt.block.longdistpipe.01.2",
+    "fluid_type.gregtech.blood": "fluid.blood",
+    "fluid_type.gregtech.ic2constructionfoam": "fluid.ic2constructionfoam",
+    "fluid_type.gregtech.ic2uumatter": "fluid.ic2uumatter",
+    "fluid_type.gregtech.molten.abyssalnite": "fluid.molten.abyssalnite",
+    "fluid_type.gregtech.molten.aluminiumfluoride": "fluid.molten.aluminiumfluoride",
+    "fluid_type.gregtech.molten.asphalt": "fluid.molten.asphalt",
+    "fluid_type.gregtech.molten.atlarus": "fluid.molten.atlarus",
+    "fluid_type.gregtech.molten.carbon14": "fluid.molten.carbon14",
+    "fluid_type.gregtech.molten.coralium": "fluid.molten.coralium",
+    "fluid_type.gregtech.molten.cryolite": "fluid.molten.cryolite",
+    "fluid_type.gregtech.molten.dreadium": "fluid.molten.dreadium",
+    "fluid_type.gregtech.molten.duraniumelemental": "fluid.molten.duraniumelemental",
+    "fluid_type.gregtech.molten.ethaxium": "fluid.molten.ethaxium",
+    "fluid_type.gregtech.molten.ferrouschloride": "fluid.molten.ferrouschloride",
+    "fluid_type.gregtech.molten.gloomstone": "fluid.molten.gloomstone",
+    "fluid_type.gregtech.molten.glowstone": "fluid.molten.glowstone",
+    "fluid_type.gregtech.molten.glowstoneceres": "fluid.molten.glowstoneceres",
+    "fluid_type.gregtech.molten.glowstoneenceladus": "fluid.molten.glowstoneenceladus",
+    "fluid_type.gregtech.molten.glowstoneio": "fluid.molten.glowstoneio",
+    "fluid_type.gregtech.molten.glowstonepluto": "fluid.molten.glowstonepluto",
+    "fluid_type.gregtech.molten.glowstoneproteus": "fluid.molten.glowstoneproteus",
+    "fluid_type.gregtech.molten.ilmenite": "fluid.molten.ilmenite",
+    "fluid_type.gregtech.molten.lithiumchlorate": "fluid.molten.lithiumchlorate",
+    "fluid_type.gregtech.molten.lithiumchloride": "fluid.molten.lithiumchloride",
+    "fluid_type.gregtech.molten.lithiumperchlorate": "fluid.molten.lithiumperchlorate",
+    "fluid_type.gregtech.molten.marsstone": "fluid.molten.marsstone",
+    "fluid_type.gregtech.molten.moonstone": "fluid.molten.moonstone",
+    "fluid_type.gregtech.molten.naquadah": "fluid.molten.naquadah",
+    "fluid_type.gregtech.molten.naquadahenriched": "fluid.molten.naquadahenriched",
+    "fluid_type.gregtech.molten.naquadria": "fluid.molten.naquadria",
+    "fluid_type.gregtech.molten.nikolite": "fluid.molten.nikolite",
+    "fluid_type.gregtech.molten.potassiumcarbonate": "fluid.molten.potassiumcarbonate",
+    "fluid_type.gregtech.molten.rutile": "fluid.molten.rutile",
+    "fluid_type.gregtech.molten.spacestone": "fluid.molten.spacestone",
+    "fluid_type.gregtech.molten.stone": "fluid.molten.stone",
+    "fluid_type.gregtech.molten.tallow": "fluid.molten.tallow",
+    "fluid_type.gregtech.molten.trinium": "fluid.molten.trinium",
+    "fluid_type.gregtech.molten.tritaniumelemental": "fluid.molten.tritaniumelemental",
+    "fluid_type.gregtech.molten.tungstentrioxide": "fluid.molten.tungstentrioxide",
+    "fluid_type.gregtech.molten.vanadiummagnetite": "fluid.molten.vanadiummagnetite",
+    "item.gregtech.bottled_indigo_dye.tooltip": "gt.multiitem.bottles.32001.tooltip",
+    "item.gregtech.ink_bottle.tooltip": "gt.multiitem.bottles.32000.tooltip",
+    "item.gregtech.tab_icon_coin": "oredict.prefix.coin",
+    "item.gregtech.tool.carbine": "gt.metatool.01.5002",
+    "item.gregtech.tool.pistol": "gt.metatool.01.5000",
+    "item.gregtech.tool.rifle": "gt.metatool.01.5004",
+    "material.gregtech.anticopper": "gt.material.AntiCopper",
+    "material.gregtech.antihelium": "gt.material.AntiHelium",
+    "material.gregtech.antihydrogen": "gt.material.AntiHydrogen",
+    "material.gregtech.antiiron": "gt.material.AntiIron",
+    "material.gregtech.antineutrino": "gt.material.AntiNeutrino",
+    "material.gregtech.antineutron": "gt.material.AntiNeutron",
+    "material.gregtech.antiphoton": "gt.material.AntiPhoton",
+    "material.gregtech.antiproton": "gt.material.AntiProton",
+    "material.gregtech.ash": "gt.material.Ash",
+    "material.gregtech.bloodstone": "gt.material.Bloodstone",
+    "material.gregtech.chrysocolla": "gt.material.Chrysocolla",
+    "material.gregtech.coral": "gt.material.Coral",
+    "material.gregtech.empty": "gt.material.Empty",
+    "material.gregtech.jet": "gt.material.Jet",
+    "material.gregtech.null": "gt.material.NULL",
+    "material.gregtech.positron": "gt.material.Positron",
+    "material.gregtech.selenite": "gt.material.Selenite",
+    "material.gregtech.superconductor": "gt.material.Superconductor",
+    "tool.gregtech.carbine": "gt.metatool.01.5002",
+    "tool.gregtech.pistol": "gt.metatool.01.5000",
+    "tool.gregtech.rifle": "gt.metatool.01.5004",
+    "tooltip.gregtech.hopper.slot_size": "gt.multitileentity.hopper.tooltip.2"
+  },
+  "runtime": {
+    "forge": {
+      "actual_language_checks": {
+        "additionalSourceBlockNamesChinese": 708,
+        "additionalSourceBlockNamesEnglish": 708,
+        "anvilNames": 35,
+        "assembledToolNames": 3,
+        "beeDescriptions": 360,
+        "beeNames": 640,
+        "bushNamesAndOutputsChinese": 1044,
+        "bushNamesAndOutputsEnglish": 1044,
+        "chineseItemNames": 75856,
+        "coinNamesAndMaterialsChinese": 597,
+        "coinNamesAndMaterialsEnglish": 597,
+        "coloredConstructionNamesChinese": 144,
+        "coloredConstructionNamesEnglish": 144,
+        "declaredFluidNamesChinese": 916,
+        "declaredFluidNamesEnglish": 916,
+        "emptyBeeDescriptions": 280,
+        "englishItemNames": 75856,
+        "fluidNameSamples": 3,
+        "fluidPropertySamples": 7,
+        "generatedNamesChinese": {
+          "anvils": 35,
+          "bees": 640,
+          "books": 28,
+          "canvases": 16,
+          "creativeTabs": 185,
+          "panels": 83
+        },
+        "generatedNamesEnglish": {
+          "anvils": 35,
+          "bees": 640,
+          "books": 28,
+          "canvases": 16,
+          "creativeTabs": 185,
+          "panels": 83
+        },
+        "hotRecipeValues": 2,
+        "latinNameCandidates": 13825,
+        "locale": "zh_cn",
+        "lootChestNamesChinese": 18,
+        "lootChestNamesEnglish": 18,
+        "machineNamesChinese": 949,
+        "machineNamesEnglish": 949,
+        "materialFluidFallbackNamesChinese": 12,
+        "materialFluidFallbackNamesEnglish": 12,
+        "materialFormNames": {
+          "exactOriginal": 53695,
+          "missingOriginal": 13750,
+          "originalCasingNames": 309,
+          "registered": 67445
+        },
+        "moltenIronTooltip": [
+          "Amount: 144 L",
+          "Fe",
+          "Temperature: 1811 K (1538°C)",
+          "State: Liquid (Might able to cast into Molds)",
+          "Density: 3000 ; Heavier than Air (typically moves down)",
+          "Viscosity: 6000",
+          "Fluid owned by GT6"
+        ],
+        "newSourceDescriptions": 1,
+        "originalEnglishMaterialFormSamples": 18,
+        "scope": "Installed resource-manager language and actual item callbacks; explicitly supplied native lookup for Neo payloads at title screen; no in-world player hover or survival claim",
+        "sourceIdentitySamples": 20,
+        "sourceStoneNamesChinese": 544,
+        "sourceStoneNamesEnglish": 544,
+        "sourceTechnologyNamesChinese": 84,
+        "sourceTechnologyNamesEnglish": 84,
+        "toolHintsChinese": 10,
+        "toolHintsEnglish": 10
+      },
+      "distribution": {
+        "path": "C:\\Dev\\GregTech6\\build\\libs\\gregtech6-1.20.1-forge-0.0.0.jar",
+        "sha256": "c578486320356a07520025e046d33d82a0b45eef17aee4093b0be45ccdcfd0ad"
+      },
+      "elapsed_seconds": 54.45,
+      "exit_code": 0,
+      "installed_files_modified": false,
+      "java": "C:\\Program Files\\Zulu\\zulu-25\\bin\\java.exe",
+      "language_name_inventory": {
+        "latin_candidates": 13825,
+        "path": "C:\\Dev\\GregTech6\\build\\production-smoke\\forge-cca05940-d4bf-423e-b210-e3922f06f455\\language-names.json",
+        "registered_items": 75856,
+        "sha256": "0e8e5ce88e35fa0887bbff6864a54796256da021cc087b5df626d7fd4b23f483"
+      },
+      "log_sha256": "6514401309bc251e9766a4fcbd6b68279f36d9568a6a11a34aacda64daa60b2d",
+      "platform": "forge",
+      "probe": {
+        "path": "C:\\Dev\\GregTech6\\build\\production-probe\\gregtech-delivery-probe-0.0.0.jar",
+        "sha256": "16b84c28f702e4737114e8565a4270ba03876248c480e9d10cbaa76acd5ae50b"
+      },
+      "screenshot": "C:\\Dev\\GregTech6\\build\\production-smoke\\forge-cca05940-d4bf-423e-b210-e3922f06f455\\screenshots\\production-forge-b02b16f5-9ef4-4bf2-a1c5-90a210d63ba5.png",
+      "screenshot_sha256": "7eeb7b26a91b6828cb2542c09e2219fa1971b1854d024330c8d60ea2c1b32e3d",
+      "status": "passed",
+      "version": "1.20.1-Forge_47.4.26",
+      "visual_review_scope": "Viewed 1280x720 installed Chinese fluid/bee/anvil preview. Source-missing English fallback text remains visible. New book/panel/category and English-name assertions are callback checks, not screenshots of their tooltips.",
+      "visually_reviewed": true
+    },
+    "neoforge": {
+      "actual_language_checks": {
+        "additionalSourceBlockNamesChinese": 707,
+        "additionalSourceBlockNamesEnglish": 707,
+        "anvilNames": 35,
+        "assembledToolNames": 3,
+        "beeDescriptions": 360,
+        "beeNames": 640,
+        "bushNamesAndOutputsChinese": 1044,
+        "bushNamesAndOutputsEnglish": 1044,
+        "chineseItemNames": 75855,
+        "coinNamesAndMaterialsChinese": 597,
+        "coinNamesAndMaterialsEnglish": 597,
+        "coloredConstructionNamesChinese": 144,
+        "coloredConstructionNamesEnglish": 144,
+        "declaredFluidNamesChinese": 916,
+        "declaredFluidNamesEnglish": 916,
+        "emptyBeeDescriptions": 280,
+        "englishItemNames": 75855,
+        "fluidNameSamples": 3,
+        "fluidPropertySamples": 7,
+        "generatedNamesChinese": {
+          "anvils": 35,
+          "bees": 640,
+          "books": 28,
+          "canvases": 16,
+          "creativeTabs": 185,
+          "panels": 83
+        },
+        "generatedNamesEnglish": {
+          "anvils": 35,
+          "bees": 640,
+          "books": 28,
+          "canvases": 16,
+          "creativeTabs": 185,
+          "panels": 83
+        },
+        "hotRecipeValues": 2,
+        "latinNameCandidates": 13825,
+        "locale": "zh_cn",
+        "lootChestNamesChinese": 18,
+        "lootChestNamesEnglish": 18,
+        "machineNamesChinese": 516,
+        "machineNamesEnglish": 516,
+        "materialFluidFallbackNamesChinese": 12,
+        "materialFluidFallbackNamesEnglish": 12,
+        "materialFormNames": {
+          "exactOriginal": 53695,
+          "missingOriginal": 13750,
+          "originalCasingNames": 309,
+          "registered": 67445
+        },
+        "moltenIronTooltip": [
+          "Amount: 144 L",
+          "Fe",
+          "Temperature: 1811 K (1538°C)",
+          "State: Liquid (Might able to cast into Molds)",
+          "Density: 3000 ; Heavier than Air (typically moves down)",
+          "Viscosity: 6000",
+          "Fluid owned by GT6"
+        ],
+        "newSourceDescriptions": 1,
+        "originalEnglishMaterialFormSamples": 18,
+        "scope": "Installed resource-manager language and actual item callbacks; explicitly supplied native lookup for Neo payloads at title screen; no in-world player hover or survival claim",
+        "sourceIdentitySamples": 20,
+        "sourceStoneNamesChinese": 544,
+        "sourceStoneNamesEnglish": 544,
+        "sourceTechnologyNamesChinese": 84,
+        "sourceTechnologyNamesEnglish": 84,
+        "toolHintsChinese": 10,
+        "toolHintsEnglish": 10
+      },
+      "distribution": {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\build\\libs\\gregtech6-neoforge-1.21.1-0.0.0.jar",
+        "sha256": "14ee3b365e115fe5ec316418b3aa40e2828826a44a5d9eb5575b70c629eecb91"
+      },
+      "elapsed_seconds": 46.84,
+      "exit_code": 0,
+      "installed_files_modified": false,
+      "java": "C:\\Program Files\\Zulu\\zulu-25\\bin\\java.exe",
+      "language_name_inventory": {
+        "latin_candidates": 13825,
+        "path": "C:\\Dev\\GregTech6\\build\\production-smoke\\neoforge-8e62baeb-29f0-4696-9f1a-0eefdc17180b\\language-names.json",
+        "registered_items": 75855,
+        "sha256": "9cce709c8c94db6c4add3e8e548e5212820f6d7fe57b6e1bf9e091b07d114827"
+      },
+      "log_sha256": "ff778cbcd6dd3074d981a79ed792754bde3efbb38afeaaa96eee533985b8b865",
+      "platform": "neoforge",
+      "probe": {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\build\\production-probe\\gregtech-delivery-probe-0.0.0.jar",
+        "sha256": "0e2a4ee9f908916276d7f0981340b8281aed0a05a852b3d135dd7889126e926a"
+      },
+      "screenshot": "C:\\Dev\\GregTech6\\build\\production-smoke\\neoforge-8e62baeb-29f0-4696-9f1a-0eefdc17180b\\screenshots\\production-neoforge-09f0f8cb-c804-4695-9361-839f0e1440ef.png",
+      "screenshot_sha256": "23cf780c1b1391e2d5e9d9418eccc82f7b374277aa58220a7542bb320e3d1dae",
+      "status": "passed",
+      "version": "1.21.1-NeoForge_21.1.252",
+      "visual_review_scope": "Viewed 1280x720 installed Chinese fluid/bee/anvil preview. Source-missing English fallback text remains visible. New book/panel/category and English-name assertions are callback checks, not screenshots of their tooltips.",
+      "visually_reviewed": true
+    }
+  },
+  "scope": "English categories and loop registration declarations; no production Java/gameplay changes. Delivery includes preceding generated-English commit 2bcf5bdc6.",
+  "source_files": [
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\CreativeTab.java",
+      "sha256": "f2d7cd61c0a10e92fbcf0a2000a7476b996a73b9d17382893ea19cd613bd590e"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\prefixitem\\PrefixItem.java",
+      "sha256": "28b7ce821756919a3140e6e4e61bd03e8b716a13e3f29cb0367bae9bef9cd843"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\oredict\\OreDictPrefix.java",
+      "sha256": "89c94fd1149297496e2904a7897b3ab33c02991009b232df0d70febabb8888f5"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\block\\multitileentity\\MultiTileEntityRegistry.java",
+      "sha256": "70fb3ce00e7036e343e253e0f9fd8401b05c3f4f4e16b88f1b3fb94c3b111e83"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\OP.java",
+      "sha256": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\MT.java",
+      "sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\a\\Loader_Blocks.java",
+      "sha256": "4215d81610616b406af400c98ddaee3b0d266cb187c9335d2d6a5dd851284abb"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\blocks\\tool\\BlockLongDistWire.java",
+      "sha256": "6582cf7e867482c9b162c16a1527b21f542b6ed1254168bc65e193e8d7e5b854"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\connectors\\MultiTileEntityPipeFluid.java",
+      "sha256": "3a6850055375e7975145b03abab44c5922746a6f4053dd8d3163de989f37b110"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\connectors\\MultiTileEntityPipeItem.java",
+      "sha256": "0e9aa956b807d8390b20dd70f224b2b8d0a7be8df25fe66660abffda8b88069b"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\connectors\\MultiTileEntityWireElectric.java",
+      "sha256": "60dd3bf9147a220ab327a1aed3f0081382678eb0d6190e865e84e1b7dae89724"
+    }
+  ],
+  "tool_files": [
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\integration\\LanguageIdentities.java",
+      "sha256": "ada70c3e18aedbcd03f70c30bfe32f16a379c8fda6de26b1dcaf17e2020a3460"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\integration\\import_identity_localization.py",
+      "sha256": "4ba1171b1a3cf22c064143a17e1d93580d4fd142f4e863ee0986d2ed7bcf2337"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\integration\\source_language_common.py",
+      "sha256": "3976a5af92ddde0cd74557996ed8ea329375dd70d8b8d046a73f71c1c29f954d"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\integration\\source_creative_language.py",
+      "sha256": "1031a605fc06966227018671d6bfc93910ebcdb35ef08eac1c910745360e7c67"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\tests\\test_creative_language.py",
+      "sha256": "77325f40a89ee6aff273fbe0d5f320e97f5718cb6b7b5069da7281e191a84b64"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\tests\\test_delivery_language.py",
+      "sha256": "82d13c66389471f67321dff4d9b391047d166ee0cf266703e3923663430f67a1"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\integration\\launch_production_smoke.py",
+      "sha256": "c28379d0203b1e86835cb091899005a37fa53d6b9077bc5321dfd65e29accac7"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\.github\\workflows\\build.yml",
+      "sha256": "c47d33df857288670e088a1202aa5fbe86e46830f9d2cc17c46f93ea6b1d5ef2"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\LanguageDeliveryChecks.java",
+      "sha256": "ab1101169697cba50a2263105d0b005a735e0841fa3d34fd713aa23ef44fc0ee"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\LanguageDeliveryChecks.java",
+      "sha256": "134cf0415f23c602b1a685ddfb1fa86396a6b2e651e9556402b6fa738f991203"
+    }
+  ],
+  "verified_copies": {
+    "artifacts": {
+      "forge": {
+        "bytes": 40134991,
+        "name": "gregtech6-1.20.1-forge-0.0.0.jar",
+        "path": "C:\\Dev\\GregTech6\\build\\verified\\20261008-023954Z-c5784863\\gregtech6-1.20.1-forge-0.0.0.jar",
+        "sha256": "c578486320356a07520025e046d33d82a0b45eef17aee4093b0be45ccdcfd0ad",
+        "zip_crc_checked": true
+      },
+      "neoforge": {
+        "bytes": 39989897,
+        "name": "gregtech6-neoforge-1.21.1-0.0.0.jar",
+        "path": "C:\\Dev\\GregTech6\\build\\verified\\20261008-023954Z-c5784863\\gregtech6-neoforge-1.21.1-0.0.0.jar",
+        "sha256": "14ee3b365e115fe5ec316418b3aa40e2828826a44a5d9eb5575b70c629eecb91",
+        "zip_crc_checked": true
+      }
+    },
+    "directory": "C:\\Dev\\GregTech6\\build\\verified\\20261008-023954Z-c5784863",
+    "scope": "Verified complete copies; runtime evidence is recorded separately",
+    "status": "passed",
+    "verification_report": "C:\\Dev\\GregTech6\\work\\language-categories-artifacts-20261008.json",
+    "verification_report_sha256": "3269b0f0c394317b6153290356e6778292ab0d43a847c87ae0719e62885eb3c8"
+  }
+}

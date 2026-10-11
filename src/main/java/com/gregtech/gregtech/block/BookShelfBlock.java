@@ -228,12 +228,7 @@ public class BookShelfBlock extends HorizontalDirectionalBlock implements Entity
     @Override
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip,
                                 TooltipFlag flag) {
-        tooltip.add(Component.translatable("tooltip.gregtech.machine.nogui.click_front")
-                .withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("tooltip.gregtech.smeltery.tool.pincers")
-                .withStyle(ChatFormatting.DARK_GRAY));
-        tooltip.add(Component.translatable("tooltip.gregtech.machine.tool.magnifying_glass")
-                .withStyle(ChatFormatting.DARK_GRAY));
+        com.gregtech.gregtech.client.StorageBlockTooltips.bookShelf(tooltip);
     }
 
     /** GT6 converts twelve book points into one enchanting-power unit. */

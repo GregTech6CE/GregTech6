@@ -1,0 +1,1092 @@
+{
+  "date": "2026-10-07",
+  "base_commit": "176ea0fe",
+  "authors": [
+    "GregTech-6 Team",
+    "Gregorius Techneticies"
+  ],
+  "license": "LGPL-3.0-or-later",
+  "scope": "Twelve already-registered large processing families: source tooltip/quantity/harvest defaults and specialized IO/source-control behavior; not all controllers or all block tooltips.",
+  "original": [
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577",
+      "bytes": 694
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityCentrifuge.java",
+      "sha256": "a9eeca6dc1887c35b669384418104c92bc916f5ecd283a099a43d4dc1dc1ec19",
+      "bytes": 8742
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityElectrolyzer.java",
+      "sha256": "4b4e79f91b9f636fb933c2e80af905a2e99658d6216bb07e4d0510a6811a60ab",
+      "bytes": 8709
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityCoagulator.java",
+      "sha256": "3162bff4b83c7e6da823294656a5ed5f7995a34bf060cb65935d7ccffc3a117d",
+      "bytes": 14876
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityAutoclave.java",
+      "sha256": "c8fad765d8e224f9a469a5f1836d1ea9a04ce6982b29c0b58c3d07fcc3fbafa2",
+      "bytes": 4043
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityBath.java",
+      "sha256": "fecee7c08a7da1ffbe920ad9b205fa3dc4de218ead332fcbc7c468b5abe75b82",
+      "bytes": 14828
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityMixer.java",
+      "sha256": "7d387c3eb158db463eca78e4397dc0d6c8c7ef10a96500fcab71f08982b125fd",
+      "bytes": 8811
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityFermenter.java",
+      "sha256": "14cc122d3a4220a147cdc5dd8ad9ad6b7a301370a345db9c931ca1625578180c",
+      "bytes": 21244
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityOven.java",
+      "sha256": "9165cd20f7e7ecd9df1d4c961e00406c85a3bf708dec9845388d0a26c2b7d7cc",
+      "bytes": 10120
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntitySluice.java",
+      "sha256": "12a4affe160b5febe9f848988f455dd2effc9418a24ec4256f2941c5002f6b3b",
+      "bytes": 7993
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityCrusher.java",
+      "sha256": "b4a94c2f84d93d357d4cede81480bfea001ed18e845575843c4aef4d7b0185c1",
+      "bytes": 23840
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityShredder.java",
+      "sha256": "179f7ced95334bcc899fbaefe8984777c90668c84825543e35bfbdeccee17419",
+      "bytes": 23853
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntitySqueezer.java",
+      "sha256": "f2891a6e2ac77266ae676a1b2a8bcdee695236ca0d698970cdc0cd9e0512bfb6",
+      "bytes": 21733
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "bytes": 791265
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemTechnological.java",
+      "sha256": "7367922c4938318dd50b1320e7fc7a7453c33cffa46f75a437325314d2536ddc",
+      "bytes": 133807
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "bytes": 153449
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+      "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8",
+      "bytes": 51085
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\RM.java",
+      "sha256": "c7cb07faef0235ace4bb26656fddaabfa10da6aa4a2689a7f4cdcaef10d366e6",
+      "bytes": 93922
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\MT.java",
+      "sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2",
+      "bytes": 693183
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\ANY.java",
+      "sha256": "6a26fa2293c4a315d2594c5ac80eba689389f9b1922a33547bdd20d2df724f71",
+      "bytes": 17964
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\OP.java",
+      "sha256": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e",
+      "bytes": 162128
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\load\\LoaderOreDictReRegistrations.java",
+      "sha256": "d34719309a5ddf5bd7fc01c0462b57af52b4cf980a69fae4d4042c2ab78b07ef",
+      "bytes": 147540
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\load\\LoaderItemData.java",
+      "sha256": "0dc916611c9a743f477e473b75b3fa3462a47d22dd75ef086c33ea18aaa9f968",
+      "bytes": 264656
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\util\\CR.java",
+      "sha256": "952f94e0dfff66d27d2ac2b97ed47b6aa0c8250aa19babd5cc528c89616c0760",
+      "bytes": 39113
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\machines\\MultiTileEntityBasicMachine.java",
+      "sha256": "1798706545c33c801735ac5fb56b0ae37a8b6e3b7819f40f41183a2057b0c860",
+      "bytes": 53507
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\multiblocks\\TileEntityBase10MultiBlockMachine.java",
+      "sha256": "daaacb82489056ddf8be9c3e594541fe0ec44ef2902be190556cdea361a05e06",
+      "bytes": 8918
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\multiblocks\\MultiTileEntityMultiBlockPart.java",
+      "sha256": "b00725df4301983e6fd51aea6519ab3304e85315ec01f338cc27b6a448a6bfda",
+      "bytes": 31052
+    }
+  ],
+  "comparison": [
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577",
+      "bytes": 694
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityCentrifuge.java",
+      "sha256": "c8c7a6c2f76cb8187196818448ca8e7dd61248991b5cd927d786fa6d48710d61",
+      "bytes": 8983
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityElectrolyzer.java",
+      "sha256": "2f15739dd2b36df39ca5bfadb61b8f128e7d6e24595dfadea0bdc00b13f6aad4",
+      "bytes": 8939
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityCoagulator.java",
+      "sha256": "e653b2c037e33b0e203fff3c426f1a9202862d01cf4cac2c18cba82571f54232",
+      "bytes": 15118
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityAutoclave.java",
+      "sha256": "42002c1bc0a773f9573ae1e0eb02f7f98cc35f00e064bff9b1066b5465b83e36",
+      "bytes": 4286
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityBath.java",
+      "sha256": "87e697b45f61b39b08b3459c5ec5332edb40af71481f2632e11f4e53e5f214f7",
+      "bytes": 15070
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityMixer.java",
+      "sha256": "6c80fd6153a4d67ddb5295f713fd1d5d8f4fb2a7b205eddc65bcd1f389a0292b",
+      "bytes": 9052
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityFermenter.java",
+      "sha256": "170e7f083984c601975a5f5b12b310b2591582ef06f9913b42e654c6e6e32162",
+      "bytes": 21484
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityOven.java",
+      "sha256": "8d5096952f722c3ad0769d6787c872e0f2747c01bee5dd30631b6b7711aa5c6e",
+      "bytes": 10363
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntitySluice.java",
+      "sha256": "279ed8b969bd561244e2631581b11b773b72fbabe755715dbddddca28a1b7ebd",
+      "bytes": 8656
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityCrusher.java",
+      "sha256": "a6cac7e4f1a1010518f5b0cbd50611063e8ffa72752c7a481812167a05d5f736",
+      "bytes": 24153
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityShredder.java",
+      "sha256": "5345733fa56cc5b868dacdcf7617fad643c84110623092a908bf1324a5c084d9",
+      "bytes": 24166
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntitySqueezer.java",
+      "sha256": "146ec7ad461e4ff4da382a8a3b373a8694e8259dc53111bad34ff6920f426902",
+      "bytes": 22061
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\data\\LH.java",
+      "sha256": "2df45cee1047b522593f4f42c70a3acb2c5d8a425399b9a3c83ed022b7115b0f",
+      "bytes": 51804
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\machines\\MultiTileEntityBasicMachine.java",
+      "sha256": "bebb775405c34e9c1d5be0a6db7a5debc097c45eb2241fc73d75037317fd67b4",
+      "bytes": 55096
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\multiblocks\\MultiTileEntityMultiBlockPart.java",
+      "sha256": "50ee4bb1545a6d4f4bfd29da7fa262429b9607f1688820719c1dbc6b31c99bfb",
+      "bytes": 36588
+    }
+  ],
+  "current": [
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\api\\material\\ReversibleCraftingData.java",
+      "sha256": "b54213e2c66afd967f2e39be48fc9e090760dd15531b71f9633ee5e6feea165d",
+      "bytes": 2196
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\machine\\BasicMachineCatalog.java",
+      "sha256": "ab5652451e362d850b59863920a0182a0b1ea5681712d302a6b1aebd6afe3fb2",
+      "bytes": 40525
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\machine\\MachineConstructionMaterials.java",
+      "sha256": "2aace1aa37b76a34edf5793bd6bb29a5745a7a5bc496fa315cb762a8c2f6793e",
+      "bytes": 1856
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\machine\\OriginalMachineMaterialData.java",
+      "sha256": "0dd4394b4c970f0110c83ed7d06691a2829129272a86b84b3b2bb98e3698c1f3",
+      "bytes": 206763
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\LargeMachineProcessingRules.java",
+      "sha256": "bc3e5e2d149373dcb7b69633ac206fe285578de313dffbeb73e81bb0e245d324",
+      "bytes": 914
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\OriginalLargeRecipeMachineData.java",
+      "sha256": "d022dc37ff9f295f884c47053e03470888d685120744db03cbdd07148149b012",
+      "bytes": 4178
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\SharedLargeMachineLayouts.java",
+      "sha256": "f0138329b69dc1e58952f6ffe8c0b7978ba45cc0347b689d3d5fffcedb6bc3ec",
+      "bytes": 33192
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\data\\BasicMachineOriginalParams.java",
+      "sha256": "fddea561c427cc5465bbf37269b394733a57e6370a2655d03054a0ecd9803cb5",
+      "bytes": 28642
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\data\\MultiblockCraftingRecipes.java",
+      "sha256": "8769ffc2189182825ed95f837f48d7f83fed0bf08c4a3b107b9bbee4b23a8f06",
+      "bytes": 21162
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\data\\SourceBlockProperties.java",
+      "sha256": "3de7cfec94db4ba8309615e289fe64948c05bc359112792217f35ba8da3eb67f",
+      "bytes": 105751
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\lang\\en_us.json",
+      "sha256": "4c133e78bf6f4009475b47d2a1c5c279517de7e1ce6eba6e09bea0ef341bffb5",
+      "bytes": 750888
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\lang\\zh_cn.json",
+      "sha256": "cdfd9935f295fc10c86574ccb51a9efc99b6d20aa154839f231e4ff09a719c8c",
+      "bytes": 8454366
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\test\\java\\com\\gregtech\\gregtech\\core\\LargeRecipeControllerContracts.java",
+      "sha256": "52dcdd68a5c2dbd0e1934c483ac73f3a476a69604be23334513d94aa0efb8180",
+      "bytes": 6107
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\test\\java\\com\\gregtech\\gregtech\\core\\MachineSpecBehaviorContracts.java",
+      "sha256": "5acce84fb622808f572014f019e673cc43b8af7dd152ad81bc28bf62e4398a74",
+      "bytes": 86910
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\LargeRecipeControllerSourceTests.java",
+      "sha256": "581779285daf2508f4d7de881c1035acfaa216fbfa0663d33e3ecd98203d6727",
+      "bytes": 8016
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\resources\\data\\gregtech_large_recipe\\structure\\test_empty.nbt",
+      "sha256": "ea4b3ed88dbb879fc3b86b9bceca2961af8248069c6420a4136eba192ec7b9b7",
+      "bytes": 113
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\api\\machine\\AdjacentEnergyControl.java",
+      "sha256": "28449f7479ee106a58a3f7fa8b34ac25ff39ee3536602f668bc66ba7fddf7b68",
+      "bytes": 1264
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\BasicMachineBlockEntity.java",
+      "sha256": "73031c2080ab3c622aafefbdba206a6b747d32b05316edefd353d3b2d8f59f9b",
+      "bytes": 88597
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeRecipeMachineBlockEntity.java",
+      "sha256": "9b9f7ded496077c44513808154237bb8b22f3955414cd495a8060b935b83f76d",
+      "bytes": 14132
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\MultiblockPortBlockEntity.java",
+      "sha256": "15d6c38e1ae805f9298a98868f38bc4b7ff38f2ca4a7cb90dda95944d54f78a3",
+      "bytes": 9785
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\client\\CommonBlockTooltips.java",
+      "sha256": "2aee573f7b0af6ef0e3cb73eda2d50f807651e480de28327c2615917788e8e3f",
+      "bytes": 7936
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\client\\LargeRecipeMachineTooltips.java",
+      "sha256": "7e344ea5f35472600cb782ef270528802cf7ef2db8851e9712ef3d0b11b2d5fd",
+      "bytes": 4271
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\client\\MachineTooltips.java",
+      "sha256": "5e4f357369d9b0985625462246358e43845af169c3872bf8f5406a000f123c51",
+      "bytes": 9556
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\LargeMachineLayouts.java",
+      "sha256": "4809d20387917cab3962dc293626c844b0742bcde5c5eb237f4a79ed67910102",
+      "bytes": 1940
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\LargeMachineParts.java",
+      "sha256": "4f3f0e3fe9099362112673e8f2971fbe817e3299cece272f960e0d2ffcb0afc7",
+      "bytes": 926
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\data\\MachineRecipeIngredients.java",
+      "sha256": "572488c69c7c4fecaa1d7931dde034ab1e34a3b90ff85eacc651ef4b8a4524d8",
+      "bytes": 25881
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\data\\MultiblockRecipePack.java",
+      "sha256": "25673277ee9866d9bb6c3615c105c4ff7f0a6504e665708f6f9c8c987d0aea8d",
+      "bytes": 7879
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\LargeRecipeControllerDeliveryChecks.java",
+      "sha256": "7e7287a48709ad6d7e7e018b85eaa3cbbe1fd38c3468dabebf60b6d13949d5bd",
+      "bytes": 5338
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\ProductionClientSmoke.java",
+      "sha256": "453600102074bc47be8c0b8158ed7dd59e45902bb6d57ef24af9afcbe5ea2d10",
+      "bytes": 4942
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\LargeRecipeControllerSourceTests.java",
+      "sha256": "4c2597574ced824f043c7e171b444f776aa457a687c0ee8354bb197d0cb36218",
+      "bytes": 7931
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\resources\\data\\gregtech_large_recipe\\structures\\test_empty.nbt",
+      "sha256": "147ef3e2c39e8d261ff2287395af00d734ccd13b196abdea0c0334e11fdde075",
+      "bytes": 110
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\api\\machine\\AdjacentEnergyControl.java",
+      "sha256": "28449f7479ee106a58a3f7fa8b34ac25ff39ee3536602f668bc66ba7fddf7b68",
+      "bytes": 1264
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\BasicMachineBlockEntity.java",
+      "sha256": "da2ca6db41d610804a76b08f957c5b2312bd482c84e2c06a26c4d8b56a8817ba",
+      "bytes": 91074
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeRecipeMachineBlockEntity.java",
+      "sha256": "9044599c8a21e919c123add3e752849f99ed39f9c39d24953b66663ac56f00cb",
+      "bytes": 14215
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\MultiblockPortBlockEntity.java",
+      "sha256": "8976b89ee135ec7c29629fb7a0132092f1562a0a2667dade699d23379e613afb",
+      "bytes": 10333
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\client\\CommonBlockTooltips.java",
+      "sha256": "74405494c19a9362be9fcd63650bcf56885b4f618685284984410c03b7a8ed94",
+      "bytes": 7719
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\client\\LargeRecipeMachineTooltips.java",
+      "sha256": "7e344ea5f35472600cb782ef270528802cf7ef2db8851e9712ef3d0b11b2d5fd",
+      "bytes": 4271
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\client\\MachineTooltips.java",
+      "sha256": "823116edc34a83802831c52c91cc9d1ae925addc8a27350c5738f9ac3bcf5255",
+      "bytes": 9759
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\LargeMachineLayouts.java",
+      "sha256": "4809d20387917cab3962dc293626c844b0742bcde5c5eb237f4a79ed67910102",
+      "bytes": 1940
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\LargeMachineParts.java",
+      "sha256": "4105f53ffc9d24fb7b573ce2e68cb2e2b54856084d73b440945b990e05080dac",
+      "bytes": 7130
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\data\\MachineRecipeIngredients.java",
+      "sha256": "d3069ab3a6bf1f1b67184b457721bde1398720f4f7c0505a1e9f811774a441af",
+      "bytes": 26361
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\data\\MultiblockRecipePack.java",
+      "sha256": "fd1ccd3745c6f710c637387ce6428d53e6e646fc94766475f4143c6b46bbaf41",
+      "bytes": 7208
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\LargeRecipeControllerDeliveryChecks.java",
+      "sha256": "6dbeef634238dd44238621ba1b42974ca21dbb0fd07ecae0d0ed62b6526c8c24",
+      "bytes": 5132
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\ProductionClientSmoke.java",
+      "sha256": "a39f059451f78adf92ce95e2b082403ef24e0ac1bbd4a39943dbb27e720ddd09",
+      "bytes": 7104
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\generate_multiblock_recipe_table.py",
+      "sha256": "977b53d7dc71e706de6279136418c98b1e346af0508bd44508c5de21b2f3d225",
+      "bytes": 23187
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\gt6_machine_map.py",
+      "sha256": "580f2d994e20e8c84ab514aed97f8d31de3997df7162efe7a3a9ea0afb0358a1",
+      "bytes": 8043
+    }
+  ],
+  "human_translation_patch": {
+    "path": "C:\\Dev\\GregTech_zh_cn.lang",
+    "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0",
+    "bytes": 7375784
+  },
+  "registrations": [
+    {
+      "name": "Centrifuge",
+      "machine": "largecentrifuge",
+      "original": "Large Centrifuge",
+      "id": 17100,
+      "energy": "RU",
+      "values": [
+        512,
+        512,
+        4096,
+        16
+      ],
+      "hardness": 12.5,
+      "resistance": 12.5
+    },
+    {
+      "name": "Electrolyzer",
+      "machine": "largeelectrolyzer",
+      "original": "Large Electrolyzer",
+      "id": 17103,
+      "energy": "EU",
+      "values": [
+        512,
+        512,
+        4096,
+        16
+      ],
+      "hardness": 6.0,
+      "resistance": 6.0
+    },
+    {
+      "name": "Coagulator",
+      "machine": "largecoagulator",
+      "original": "Large Coagulator Array",
+      "id": 17105,
+      "energy": "TU",
+      "values": [
+        1,
+        1,
+        16,
+        64
+      ],
+      "hardness": 6.0,
+      "resistance": 6.0
+    },
+    {
+      "name": "Autoclave",
+      "machine": "largeautoclave",
+      "original": "Large Autoclave",
+      "id": 17112,
+      "energy": "TU",
+      "values": [
+        1,
+        1,
+        16,
+        16
+      ],
+      "hardness": 6.0,
+      "resistance": 6.0
+    },
+    {
+      "name": "Bath",
+      "machine": "largebath",
+      "original": "Large Bathing Vat",
+      "id": 17104,
+      "energy": "TU",
+      "values": [
+        1,
+        1,
+        16,
+        64
+      ],
+      "hardness": 6.0,
+      "resistance": 6.0
+    },
+    {
+      "name": "Mixer",
+      "machine": "largemixer",
+      "original": "Large Batch Mixer",
+      "id": 17102,
+      "energy": "RU",
+      "values": [
+        512,
+        512,
+        4096,
+        256
+      ],
+      "hardness": 6.0,
+      "resistance": 6.0
+    },
+    {
+      "name": "Fermenter",
+      "machine": "largefermenter",
+      "original": "Large Fermenter",
+      "id": 17113,
+      "energy": "HU",
+      "values": [
+        512,
+        1,
+        4096,
+        256
+      ],
+      "hardness": 6.0,
+      "resistance": 6.0
+    },
+    {
+      "name": "Oven",
+      "machine": "largeoven",
+      "original": "Large Electric Oven",
+      "id": 17106,
+      "energy": "EU",
+      "values": [
+        512,
+        512,
+        4096,
+        64
+      ],
+      "hardness": 6.0,
+      "resistance": 6.0
+    },
+    {
+      "name": "Sluice",
+      "machine": "largesluice",
+      "original": "Large Sluice",
+      "id": 17107,
+      "energy": "RU",
+      "values": [
+        512,
+        512,
+        4096,
+        64
+      ],
+      "hardness": 9.0,
+      "resistance": 9.0
+    },
+    {
+      "name": "Crusher",
+      "machine": "largecrusher",
+      "original": "Large Crusher",
+      "id": 17108,
+      "energy": "RU",
+      "values": [
+        512,
+        512,
+        4096,
+        64
+      ],
+      "hardness": 12.5,
+      "resistance": 12.5
+    },
+    {
+      "name": "Shredder",
+      "machine": "largeshredder",
+      "original": "Large Shredder",
+      "id": 17109,
+      "energy": "RU",
+      "values": [
+        512,
+        512,
+        4096,
+        64
+      ],
+      "hardness": 12.5,
+      "resistance": 12.5
+    },
+    {
+      "name": "Squeezer",
+      "machine": "largesqueezer",
+      "original": "Large Squeezer",
+      "id": 17114,
+      "energy": "RU",
+      "values": [
+        512,
+        512,
+        4096,
+        64
+      ],
+      "hardness": 6.0,
+      "resistance": 6.0
+    }
+  ],
+  "material_recipes": [
+    {
+      "machine": "largecentrifuge",
+      "tier": 1,
+      "source_id": 17100,
+      "source_line": 1229,
+      "components": {
+        "TungstenSteel": 10666656000,
+        "Pt": 1297296000,
+        "Ruby": 1297296000
+      },
+      "pattern": [
+        "CMC",
+        "RCR"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem(18100)",
+        "R": "IL.Processor_Crystal_Ruby",
+        "C": "OD_CIRCUITS[6]"
+      }
+    },
+    {
+      "machine": "largeelectrolyzer",
+      "tier": 1,
+      "source_id": 17103,
+      "source_line": 1230,
+      "components": {
+        "Pt": 2594592000,
+        "StainlessSteel": 5189184000,
+        "Ruby": 1297296000
+      },
+      "pattern": [
+        "CMC",
+        "RCR"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem(18105)",
+        "R": "IL.Processor_Crystal_Ruby",
+        "C": "OD_CIRCUITS[6]"
+      }
+    },
+    {
+      "machine": "largecoagulator",
+      "tier": 1,
+      "source_id": 17105,
+      "source_line": 1231,
+      "components": {
+        "Pt": 648648000,
+        "Ruby": 648648000,
+        "StainlessSteel": 31783752000
+      },
+      "pattern": [
+        "CRC",
+        "PMP",
+        "PPP"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem(18002)",
+        "R": "IL.Processor_Crystal_Ruby",
+        "C": "OD_CIRCUITS[6]",
+        "P": "OP.plateDense.dat(aMat)"
+      }
+    },
+    {
+      "machine": "largeautoclave",
+      "tier": 1,
+      "source_id": 17112,
+      "source_line": 1232,
+      "components": {
+        "Pt": 648648000,
+        "Ruby": 648648000,
+        "StainlessSteel": 52540488000
+      },
+      "pattern": [
+        "CRC",
+        "PMP",
+        "PPP"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem(18022)",
+        "R": "IL.Processor_Crystal_Ruby",
+        "C": "OD_CIRCUITS[6]",
+        "P": "OP.plateDense.dat(aMat)"
+      }
+    },
+    {
+      "machine": "largebath",
+      "tier": 1,
+      "source_id": 17104,
+      "source_line": 1233,
+      "components": {
+        "Pt": 648648000,
+        "Ruby": 648648000,
+        "StainlessSteel": 20108088000,
+        "Cu": 21405384000,
+        "Rubber": 11675664000,
+        "Al": 12612600000,
+        "SteelMagnetic": 1945944000
+      },
+      "pattern": [
+        "CRC",
+        "PMP",
+        "APA"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem(18002)",
+        "R": "IL.Processor_Crystal_Ruby",
+        "C": "OD_CIRCUITS[6]",
+        "P": "OP.plateDense.dat(aMat)",
+        "A": "IL.ROBOT_ARMS[2]"
+      }
+    },
+    {
+      "machine": "largemixer",
+      "tier": 1,
+      "source_id": 17102,
+      "source_line": 1234,
+      "components": {
+        "StainlessSteel": 27243216000,
+        "Pt": 648648000,
+        "Ruby": 648648000
+      },
+      "pattern": [
+        "PSP",
+        "PSP",
+        "RMC"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem(18002)",
+        "R": "IL.Processor_Crystal_Ruby",
+        "C": "OD_CIRCUITS[6]",
+        "P": "OP.plateDense.dat(aMat)",
+        "S": "OP.stickLong.dat(aMat)"
+      }
+    },
+    {
+      "machine": "largefermenter",
+      "tier": 1,
+      "source_id": 17113,
+      "source_line": 1235,
+      "components": {
+        "StainlessSteel": 31783752000,
+        "Pt": 648648000,
+        "Ruby": 648648000
+      },
+      "pattern": [
+        "PPP",
+        "CRC",
+        "PMP"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem(18002)",
+        "R": "IL.Processor_Crystal_Ruby",
+        "C": "OD_CIRCUITS[6]",
+        "P": "OP.plateDense.dat(aMat)"
+      }
+    },
+    {
+      "machine": "largeoven",
+      "tier": 1,
+      "source_id": 17106,
+      "source_line": 1236,
+      "components": {
+        "Invar": 31783752000,
+        "Pt": 648648000,
+        "Ruby": 648648000
+      },
+      "pattern": [
+        "PPP",
+        "PwP",
+        "RMC"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem(18007)",
+        "R": "IL.Processor_Crystal_Ruby",
+        "C": "OD_CIRCUITS[6]",
+        "P": "OP.plateDense.dat(aMat)"
+      }
+    },
+    {
+      "machine": "largesluice",
+      "tier": 1,
+      "source_id": 17107,
+      "source_line": 1237,
+      "components": {
+        "Ti": 11027016000,
+        "Pt": 648648000,
+        "Ruby": 648648000
+      },
+      "pattern": [
+        "GGG",
+        "SwS",
+        "RMC"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem(18006)",
+        "R": "IL.Processor_Crystal_Ruby",
+        "C": "OD_CIRCUITS[6]",
+        "G": "OP.gearGt.dat(aMat)",
+        "S": "OP.stick.dat(aMat)"
+      }
+    },
+    {
+      "machine": "largecrusher",
+      "tier": 1,
+      "source_id": 17108,
+      "source_line": 1238,
+      "components": {
+        "TungstenSteel": 12324312000,
+        "Pt": 648648000,
+        "Ruby": 648648000
+      },
+      "pattern": [
+        "GSG",
+        "SGS",
+        "RMC"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem(18003)",
+        "R": "IL.Processor_Crystal_Ruby",
+        "C": "OD_CIRCUITS[6]",
+        "G": "OP.gearGt.dat(aMat)",
+        "S": "OP.gearGtSmall.dat(aMat)"
+      }
+    },
+    {
+      "machine": "largeshredder",
+      "tier": 1,
+      "source_id": 17109,
+      "source_line": 1239,
+      "components": {
+        "TungstenSteel": 12324312000,
+        "Pt": 648648000,
+        "Ruby": 648648000
+      },
+      "pattern": [
+        "SGS",
+        "GSG",
+        "RMC"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem(18003)",
+        "R": "IL.Processor_Crystal_Ruby",
+        "C": "OD_CIRCUITS[6]",
+        "G": "OP.gearGt.dat(aMat)",
+        "S": "OP.gearGtSmall.dat(aMat)"
+      }
+    },
+    {
+      "machine": "largesqueezer",
+      "tier": 1,
+      "source_id": 17114,
+      "source_line": 1240,
+      "components": {
+        "Steel": 14270256000,
+        "Pt": 648648000,
+        "Ruby": 648648000
+      },
+      "pattern": [
+        "GSG",
+        "GSG",
+        "RMC"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem(18009)",
+        "R": "IL.Processor_Crystal_Ruby",
+        "C": "OD_CIRCUITS[6]",
+        "G": "OP.gearGt.dat(aMat)",
+        "S": "OP.gearGtSmall.dat(aMat)"
+      }
+    }
+  ],
+  "generator_audit": {
+    "path": "C:\\Dev\\GregTech6\\work\\large-recipe-material-audit-20261007.json",
+    "sha256": "4af20d0bd9a569256a4ca1f0f26dd40938b8444f8e1fd276717043605ba14268",
+    "bytes": 1152632
+  },
+  "harvest_audit": {
+    "path": "C:\\Dev\\GregTech6\\work\\large-recipe-harvest-audit-20261007.json",
+    "sha256": "180108fcffee4653bd1574c6cf19a22410ca2a12b242df73634b4dd218cc77eb",
+    "bytes": 296388
+  },
+  "translations": {
+    "keys": [
+      "gt.lang.cheap.overclocking",
+      "gt.lang.efficiency",
+      "gt.lang.energy.input",
+      "gt.lang.face.any",
+      "gt.lang.fluid.input",
+      "gt.lang.fluid.output",
+      "gt.lang.item.input",
+      "gt.lang.item.output",
+      "gt.lang.recipes",
+      "gt.lang.structure",
+      "gt.lang.tool.name.wrench",
+      "gt.lang.use.builder.wand.to.ease.building",
+      "gt.lang.use.magnifyingglass.to.detail",
+      "gt.lang.use.monkey.wrench.to.toggle.auto.outputs",
+      "gt.lang.use.screwdriver.to.toggle",
+      "gt.lang.use.soft.hammer.to.reset",
+      "gt.lang.use.x.to.toggle.facing.post",
+      "gt.lang.use.x.to.toggle.facing.pre",
+      "gt.recipe.autoclave",
+      "gt.recipe.bath",
+      "gt.recipe.centrifuge",
+      "gt.recipe.coagulator",
+      "gt.recipe.crusher",
+      "gt.recipe.electrolyzer",
+      "gt.recipe.fermenter",
+      "gt.recipe.mixer",
+      "gt.recipe.shredder",
+      "gt.recipe.sluice",
+      "gt.recipe.squeezer",
+      "gt.td.short.energy.electricity",
+      "gt.td.short.energy.heat",
+      "gt.td.short.energy.kinetic_rotation",
+      "gt.tooltip.multiblock.autoclave.1",
+      "gt.tooltip.multiblock.autoclave.2",
+      "gt.tooltip.multiblock.autoclave.3",
+      "gt.tooltip.multiblock.bath.1",
+      "gt.tooltip.multiblock.bath.2",
+      "gt.tooltip.multiblock.bath.3",
+      "gt.tooltip.multiblock.centrifuge.1",
+      "gt.tooltip.multiblock.centrifuge.2",
+      "gt.tooltip.multiblock.centrifuge.3",
+      "gt.tooltip.multiblock.coagulator.1",
+      "gt.tooltip.multiblock.coagulator.2",
+      "gt.tooltip.multiblock.coagulator.3",
+      "gt.tooltip.multiblock.crusher.1",
+      "gt.tooltip.multiblock.crusher.2",
+      "gt.tooltip.multiblock.crusher.3",
+      "gt.tooltip.multiblock.crusher.4",
+      "gt.tooltip.multiblock.electrolyzer.1",
+      "gt.tooltip.multiblock.electrolyzer.2",
+      "gt.tooltip.multiblock.electrolyzer.3",
+      "gt.tooltip.multiblock.fermenter.1",
+      "gt.tooltip.multiblock.fermenter.2",
+      "gt.tooltip.multiblock.fermenter.3",
+      "gt.tooltip.multiblock.fermenter.4",
+      "gt.tooltip.multiblock.mixer.1",
+      "gt.tooltip.multiblock.mixer.2",
+      "gt.tooltip.multiblock.mixer.3",
+      "gt.tooltip.multiblock.oven.1",
+      "gt.tooltip.multiblock.oven.2",
+      "gt.tooltip.multiblock.oven.3",
+      "gt.tooltip.multiblock.oven.4",
+      "gt.tooltip.multiblock.oven.5",
+      "gt.tooltip.multiblock.shredder.1",
+      "gt.tooltip.multiblock.shredder.2",
+      "gt.tooltip.multiblock.shredder.3",
+      "gt.tooltip.multiblock.shredder.4",
+      "gt.tooltip.multiblock.sluice.1",
+      "gt.tooltip.multiblock.sluice.2",
+      "gt.tooltip.multiblock.sluice.3",
+      "gt.tooltip.multiblock.sluice.4",
+      "gt.tooltip.multiblock.sluice.5",
+      "gt.tooltip.multiblock.squeezer.1",
+      "gt.tooltip.multiblock.squeezer.2",
+      "gt.tooltip.multiblock.squeezer.3",
+      "mc.recipe.furnace"
+    ],
+    "allChineseVerbatim": true,
+    "structureRows": 43,
+    "englishAdded": 43,
+    "ChineseChanged": true,
+    "originalItemNames": [
+      {
+        "port": "block.gregtech.largecentrifuge_tungsten_steel",
+        "source": "gt.multitileentity.17100",
+        "value": "大型离心机核心"
+      },
+      {
+        "port": "block.gregtech.largeelectrolyzer_stainless_steel",
+        "source": "gt.multitileentity.17103",
+        "value": "大型电解器"
+      },
+      {
+        "port": "block.gregtech.largecoagulator_stainless_steel",
+        "source": "gt.multitileentity.17105",
+        "value": "大型凝结器"
+      },
+      {
+        "port": "block.gregtech.largeautoclave_stainless_steel",
+        "source": "gt.multitileentity.17112",
+        "value": "大型高压釜"
+      },
+      {
+        "port": "block.gregtech.largebath_stainless_steel",
+        "source": "gt.multitileentity.17104",
+        "value": "大型浸洗器"
+      },
+      {
+        "port": "block.gregtech.largemixer_stainless_steel",
+        "source": "gt.multitileentity.17102",
+        "value": "大型搅拌机"
+      },
+      {
+        "port": "block.gregtech.largefermenter_stainless_steel",
+        "source": "gt.multitileentity.17113",
+        "value": "大型发酵室"
+      },
+      {
+        "port": "block.gregtech.largeoven_invar",
+        "source": "gt.multitileentity.17106",
+        "value": "大型电炉"
+      },
+      {
+        "port": "block.gregtech.largesluice_titanium",
+        "source": "gt.multitileentity.17107",
+        "value": "大型洗矿厂"
+      },
+      {
+        "port": "block.gregtech.largecrusher_tungsten_steel",
+        "source": "gt.multitileentity.17108",
+        "value": "大型破碎机"
+      },
+      {
+        "port": "block.gregtech.largeshredder_tungsten_steel",
+        "source": "gt.multitileentity.17109",
+        "value": "大型研磨机"
+      },
+      {
+        "port": "block.gregtech.largesqueezer_steel",
+        "source": "gt.multitileentity.17114",
+        "value": "大型榨汁机"
+      }
+    ],
+    "ChineseKeysChanged": 12
+  },
+  "invariants": [
+    "Earlier252 machine REV rows and919 literal harvest rows unchanged; first audit guard incorrectly expected723 and refused before modifying harvest data; corrected to667 fixed+252basic=919.",
+    "Named block composition1465 and named source block1507 counts stay unchanged; twelve new basic metadata/material keys extend252 to264.",
+    "Only twelve Chinese item-name values changed, verbatim original171xx patch values;76 tooltip/recipe/energy-unit keys match patch;43 English structure values added verbatim.",
+    "Controller quantities count its source REV recipe, never the complete assembled structure; unknown automatic circuit data is excluded exactly as before.",
+    "Original basic main masks default to ANY, without auto-input targets; specialized parts keep existing source roles.",
+    "Original fluid output runs before work even stopped/unformed; saved native tank contents retained while old8000 capacity is restored to unlimited source default.",
+    "Original17112 requires dense18022 wall;17104 requires fixedMV robot-arm[2], independent of hull tier1; corrected both table and generator."
+  ],
+  "pending": [
+    "Source design indicators/active part textures and capacity倍率/input-source polling remain outside this batch.",
+    "Original per-save configurable source machine flags and 1.7.10 native NBT formats remain pending.",
+    "No complete natural survival chain or independent real saved-world restart/old-save proof.",
+    "Other energy converters/controllers and remaining all-block tooltip/material gaps remain active."
+  ]
+}

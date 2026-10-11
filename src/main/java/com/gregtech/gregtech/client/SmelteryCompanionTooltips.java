@@ -1,103 +1,60 @@
+/* Copyright GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later.
+ * MultiTileEntityMold/Basin/Faucet/Crossing.addToolTips, with native saved item shape data. */
 package com.gregtech.gregtech.client;
 
-import com.gregtech.gregtech.GregTech;
 import com.gregtech.gregtech.api.machine.CrucibleSpec;
+import com.gregtech.gregtech.api.machine.crucible.MoldShapes;
+import com.gregtech.gregtech.block.machine.MoldItemData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-
+import net.minecraft.world.item.ItemStack;
 import java.util.List;
 
-/** GT6 smeltery companion item tooltips ({@code MultiTileEntityMold}, {@code Basin}, {@code Faucet}). */
 public final class SmelteryCompanionTooltips {
     private SmelteryCompanionTooltips() {}
-
-    /** {@code MultiTileEntityMold#addToolTips} (unplaced item — shape not selected). */
-    public static void appendMold(CrucibleSpec spec, List<Component> tooltip) {
-        appendMoldSelect(tooltip);
-        appendInteractTop(tooltip);
-        appendAcidProofIfNeeded(spec, tooltip);
-        appendMeltdown(spec, tooltip);
-        appendContactDamage(tooltip);
-        appendPincers(tooltip);
-        appendMonkeyWrenchAutoInputs(tooltip);
-        appendSoftHammerReset(tooltip);
-    }
-
-    /** {@code MultiTileEntityBasin#addToolTips}. */
-    public static void appendMoldBasin(CrucibleSpec spec, List<Component> tooltip) {
-        appendProducesBlockSolid(tooltip);
-        appendInteractTop(tooltip);
-        appendAcidProofIfNeeded(spec, tooltip);
-        appendMeltdown(spec, tooltip);
-        appendContactDamage(tooltip);
-        appendPincers(tooltip);
-    }
-
-    /** {@code MultiTileEntityFaucet#addToolTips}. */
-    public static void appendCrucibleFaucet(CrucibleSpec spec, List<Component> tooltip) {
-        appendInteract(tooltip);
-        appendAcidProofIfNeeded(spec, tooltip);
-        appendMeltdown(spec, tooltip);
-        appendMonkeyWrenchAutoInputs(tooltip);
-    }
-
-    /** {@code MultiTileEntityCrossing} — GT6 adds no tooltips. */
-    public static void appendCrucibleCrossing(CrucibleSpec spec, List<Component> tooltip) {
-        // Intentionally empty — matches GT6.
-    }
-
-    private static void appendMoldSelect(List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".smeltery.mold.select")
-                .withStyle(ChatFormatting.AQUA));
-    }
-
-    private static void appendProducesBlockSolid(List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".smeltery.mold.produces",
-                        Component.translatable("tooltip." + GregTech.NAMESPACE + ".smeltery.product.block_solid"))
-                .withStyle(ChatFormatting.AQUA));
-    }
-
-    private static void appendInteractTop(List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".smeltery.interact_top",
-                        Component.translatable("tooltip." + GregTech.NAMESPACE + ".smeltery.face.top"))
-                .withStyle(ChatFormatting.GOLD));
-    }
-
-    private static void appendInteract(List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".smeltery.interact")
-                .withStyle(ChatFormatting.GOLD));
-    }
-
-    private static void appendAcidProofIfNeeded(CrucibleSpec spec, List<Component> tooltip) {
-        if (spec.acidProof()) {
-            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".crucible.acidproof")
-                    .withStyle(ChatFormatting.GOLD));
+    public static void appendMold(ItemStack stack, CrucibleSpec spec, List<Component> tooltip) {
+        int shape = MoldItemData.shape(stack);
+        if (shape == 0) tooltip.add(Component.translatable("gt.lang.recipes.mold.select").withStyle(ChatFormatting.AQUA));
+        else {
+            var recipe = MoldShapes.recipe(shape);
+            String prefix = MoldShapes.sourcePrefixName(recipe);
+            tooltip.add(Component.translatable("gt.lang.recipes.mold").append(" ")
+                    .append(Component.translatable("oredict.prefix." + prefix))
+                    .append(Component.literal(MaterialTooltips.displayUnits(MoldShapes.requiredMaterialUnits(shape)) + " Units")
+                            .withStyle(ChatFormatting.WHITE)).withStyle(ChatFormatting.AQUA));
         }
+        appendInteract(tooltip, true);
+        appendHeat(spec, tooltip, true);
+        add(tooltip, "gt.lang.use.pincers.to.take", ChatFormatting.DARK_GRAY);
+        add(tooltip, "gt.lang.use.monkey.wrench.to.toggle.auto.inputs", ChatFormatting.DARK_GRAY);
+        add(tooltip, "gt.lang.use.soft.hammer.to.reset", ChatFormatting.DARK_GRAY);
     }
-
-    private static void appendMeltdown(CrucibleSpec spec, List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".crucible.meltdown",
-                        spec.meltDownTemperatureK())
-                .withStyle(ChatFormatting.DARK_RED));
+    public static void appendMoldBasin(CrucibleSpec spec, List<Component> tooltip) {
+        tooltip.add(Component.translatable("gt.lang.recipes.mold").append(" ")
+                .append(Component.translatable("oredict.prefix.blockSolid")).withStyle(ChatFormatting.AQUA));
+        appendInteract(tooltip, true);
+        appendHeat(spec, tooltip, true);
+        add(tooltip, "gt.lang.use.pincers.to.take", ChatFormatting.DARK_GRAY);
     }
-
-    private static void appendContactDamage(List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".crucible.contact_damage")
-                .withStyle(ChatFormatting.DARK_RED));
+    public static void appendCrucibleFaucet(CrucibleSpec spec, List<Component> tooltip) {
+        appendInteract(tooltip, false);
+        appendHeat(spec, tooltip, false);
+        add(tooltip, "gt.lang.use.monkey.wrench.to.toggle.auto.inputs", ChatFormatting.DARK_GRAY);
     }
-
-    private static void appendPincers(List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".smeltery.tool.pincers")
-                .withStyle(ChatFormatting.GRAY));
+    /** Crossing defines no specialized rows in the original. */
+    public static void appendCrucibleCrossing(CrucibleSpec spec, List<Component> tooltip) {}
+    private static void appendInteract(List<Component> tooltip, boolean top) {
+        var line = Component.translatable("gt.lang.nogui.rightclick.interact");
+        if (top) line.append(" (").append(Component.translatable("gt.lang.face.top")).append(")");
+        tooltip.add(line.withStyle(ChatFormatting.GOLD));
     }
-
-    private static void appendMonkeyWrenchAutoInputs(List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".smeltery.tool.monkey_wrench_auto_inputs")
-                .withStyle(ChatFormatting.GRAY));
+    private static void appendHeat(CrucibleSpec spec, List<Component> tooltip, boolean contact) {
+        if (spec.acidProof()) add(tooltip, "gt.lang.proof.acid", ChatFormatting.GOLD);
+        tooltip.add(Component.translatable("gt.lang.hazard.meltdown")
+                .append(" (" + spec.meltDownTemperatureK() + " K)").withStyle(ChatFormatting.DARK_RED));
+        if (contact) add(tooltip, "gt.lang.hazard.contact", ChatFormatting.DARK_RED);
     }
-
-    private static void appendSoftHammerReset(List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".smeltery.tool.soft_hammer_reset")
-                .withStyle(ChatFormatting.GRAY));
+    private static void add(List<Component> tooltip, String key, ChatFormatting color) {
+        tooltip.add(Component.translatable(key).withStyle(color));
     }
 }

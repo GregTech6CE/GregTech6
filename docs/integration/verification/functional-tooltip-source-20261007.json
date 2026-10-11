@@ -1,0 +1,815 @@
+{
+  "date": "2026-10-07",
+  "baseline": "1401467d409a58a384315df7eb15043bcfd6b8ba",
+  "authors": [
+    "GregTech-6 Team",
+    "Gregorius Techneticies"
+  ],
+  "license": "LGPL-3.0-or-later",
+  "prior_full_source_records": [
+    "machine-tooltip-source-20261007.json",
+    "machine-tooltip-followup-source-20261007.json"
+  ],
+  "source_files": [
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "bytes": 791265,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemTechnological.java",
+      "sha256": "7367922c4938318dd50b1320e7fc7a7453c33cffa46f75a437325314d2536ddc",
+      "bytes": 133807,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\MT.java",
+      "sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2",
+      "bytes": 693183,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\ANY.java",
+      "sha256": "6a26fa2293c4a315d2594c5ac80eba689389f9b1922a33547bdd20d2df724f71",
+      "bytes": 17964,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\OP.java",
+      "sha256": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e",
+      "bytes": 162128,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\load\\LoaderItemData.java",
+      "sha256": "0dc916611c9a743f477e473b75b3fa3462a47d22dd75ef086c33ea18aaa9f968",
+      "bytes": 264656,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\load\\LoaderOreDictReRegistrations.java",
+      "sha256": "d34719309a5ddf5bd7fc01c0462b57af52b4cf980a69fae4d4042c2ab78b07ef",
+      "bytes": 147540,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntityMortar.java",
+      "sha256": "fc407a0bc979f88fc4209160005c53a32ff78c673dc352fc39244fbfe7ad5d2c",
+      "bytes": 11098,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntityGrindStone.java",
+      "sha256": "e11ee2f62b895f81077bfdf612015122079ff9b88361d729c6794160b97f9528",
+      "bytes": 11818,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntitySiftingTable.java",
+      "sha256": "aa16e493f135dcc0722499d3cfc1970d05161b39e53241e11c65cab179081b3d",
+      "bytes": 27518,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntityJuicer.java",
+      "sha256": "2c98bf960cc89cd5c5477f66c71ab9ba013265a6d651bb76225e0c099bba572c",
+      "bytes": 16530,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntityMixingBowl.java",
+      "sha256": "c5a3e1422ca4113b8e95e40dd02ce34313ec4ab85c53d01368956300532cc08c",
+      "bytes": 23953,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntityMixingBowlTable.java",
+      "sha256": "f8ec5640c025e9df10db5b4726528dadc8ebd43edb5f42bf64bdb8f0bcbc5d93",
+      "bytes": 3871,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntityBathingPot.java",
+      "sha256": "fef4fb033b46670651307a6127c220f04d2a7fcfb11058345b32a0f43c8d7eab",
+      "bytes": 23058,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntityBathingPotTable.java",
+      "sha256": "7b01ff5ec63d87fa8416fff72db0b8dfcb991657bf99a0288f288c3762ee120f",
+      "bytes": 3871,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntityBathingPotWood.java",
+      "sha256": "b6e9cb0db00bb61cfa952e728701d64e74507c0e231ebdab771145b428070d49",
+      "bytes": 6425,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntityBathingPotTableWood.java",
+      "sha256": "b2a89718f05ccdd7aedec954c4e6654a4ab90ebb848153281af9024e883e32d1",
+      "bytes": 3884,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityBoilerTank.java",
+      "sha256": "3669a4447e3ef2fc2074470f3b272aa8796f3a0d785135bdcd151b07544553c3",
+      "bytes": 13881,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\block\\multitileentity\\MultiTileEntityItemInternal.java",
+      "sha256": "7e103a13f02097dcfd1c91334cb3da238b9f509ee4cbb584dfd7267bf26f8bb1",
+      "bytes": 40205,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\block\\multitileentity\\MultiTileEntityBlock.java",
+      "sha256": "78ef2ca64595500bb841faec8304dee0f3e276e14b54c62f494c3116c29ce0b7",
+      "bytes": 60410,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\base\\TileEntityBase09FacingSingle.java",
+      "sha256": "b172aadf76d09c37ee4c7793cb784dcc97a19d999ad1737bafc60cc064bece7f",
+      "bytes": 5485,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+      "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8",
+      "bytes": 51085,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "bytes": 153449,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\RM.java",
+      "sha256": "c7cb07faef0235ace4bb26656fddaabfa10da6aa4a2689a7f4cdcaef10d366e6",
+      "bytes": 93922,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\TD.java",
+      "sha256": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea",
+      "bytes": 53981,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\code\\TagData.java",
+      "sha256": "afa72881ee6c421c094ce27e3cef2701374257cb1dd2f099293cceb3e91b4a64",
+      "bytes": 3636,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\GregTech_zh_cn.lang",
+      "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0",
+      "bytes": 7375784,
+      "license": "User-provided Chinese localization, copied verbatim"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\GT_API_Proxy_Client.java",
+      "sha256": "4ea2be4bb978e989127552dfb057e6f15415b84fe997382828123ba62c1576c8",
+      "bytes": 36465,
+      "license": "LGPL-3.0-or-later"
+    }
+  ],
+  "comparison_files": [
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntityMortar.java",
+      "sha256": "eb428ca92674b3626f0f7318f7a84bcca478d2a7685f0acc406c47346882db57"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntityGrindStone.java",
+      "sha256": "3a1b776864e8f858d16af206516cb4df6bd71749ff981e360073cd76b8f125b0"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityBoilerTank.java",
+      "sha256": "d39bc5b2a62c284a48232f94043436204973cc191bd913c5f95da33c9d6f512e"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6yizhi-main\\gregtech6-main\\mdk\\src\\main\\java\\gregtech6\\tooltip\\GT6Tooltips.java",
+      "sha256": "9c67def837c37cfdffa874581395f4f82a25866b12be8d6150ffc4dfb3681f37"
+    },
+    {
+      "path": "C:\\Dev\\cruciblecraft-master\\cruciblecraft-master\\src\\main\\java\\com\\masson\\cruciblecraft\\machine\\processing\\ProcessingMachineIoTooltips.java",
+      "sha256": "2c77e15d2e74e9edb33d9572cd6c92b68d97c1fb0779190c4d177d1d95e6ab72"
+    }
+  ],
+  "comparison_decision": "Original 1.7.10 code is the requested authority; _w preserves the same manual and boiler lines with native storage changes. The yizhi catalog copies original positional boiler lines plus port-only annexes; CrucibleCraft formats processing IO. Adopt original canonical keys and arithmetic in shared core, with platform storage/formatting adapters. No port-only annex or alternate recipe/registry graph copied.",
+  "counts": {
+    "machine_tiers": 252,
+    "stable_block_rows": 439,
+    "hopper_rows": 120,
+    "added_manual_rows": 14,
+    "dependency_recipes_parsed": 688
+  },
+  "added_material_rows": [
+    {
+      "path": "bathing_pot",
+      "source_id": 32708,
+      "source_line": 2175,
+      "components": {
+        "StainlessSteel": 3243240000
+      },
+      "pattern": [
+        " f ",
+        "PhP",
+        "PPP"
+      ],
+      "keys": {
+        "P": "OP.plate.dat(aMat)"
+      }
+    },
+    {
+      "path": "bathing_pot_table",
+      "source_id": 32707,
+      "source_line": 2176,
+      "components": {
+        "StainlessSteel": 3243240000,
+        "Brick": 1297296000
+      },
+      "pattern": [
+        "M",
+        "S"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem()",
+        "S": "ST.make(Blocks.stone_slab, 1, 4)"
+      },
+      "previous_registry_id": 32708
+    },
+    {
+      "path": "bathing_pot_table_wood",
+      "source_id": 32720,
+      "source_line": 2174,
+      "components": {
+        "Wood": 3243240000,
+        "Pb": 648648000,
+        "Brick": 1297296000
+      },
+      "pattern": [
+        "M",
+        "S"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem()",
+        "S": "ST.make(Blocks.stone_slab, 1, 4)"
+      },
+      "previous_registry_id": 32721
+    },
+    {
+      "path": "bathing_pot_wood",
+      "source_id": 32721,
+      "source_line": 2173,
+      "components": {
+        "Wood": 3243240000,
+        "Pb": 648648000
+      },
+      "pattern": [
+        "sGh",
+        "PLP",
+        "PPP"
+      ],
+      "keys": {
+        "P": "OD.plankAnyWood",
+        "L": "OP.stickLong.dat(MT.Pb)",
+        "G": "OD.itemGlue"
+      }
+    },
+    {
+      "path": "grindstone_block",
+      "source_id": 32703,
+      "source_line": 2226,
+      "components": {
+        "Fe": 6810804000
+      },
+      "pattern": [
+        "SAS",
+        "SwS",
+        "PPP"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(ANY.Iron)",
+        "S": "OP.stickLong.dat(ANY.Iron)",
+        "A": "OP.stick.dat(ANY.Iron)"
+      }
+    },
+    {
+      "path": "juicer",
+      "source_id": 32722,
+      "source_line": 2184,
+      "components": {
+        "Ceramic": 2594592000
+      },
+      "pattern": [],
+      "keys": {}
+    },
+    {
+      "path": "mixing_bowl",
+      "source_id": 32706,
+      "source_line": 2177,
+      "components": {
+        "Ceramic": 3243240000
+      },
+      "pattern": [],
+      "keys": {}
+    },
+    {
+      "path": "mixing_bowl_table",
+      "source_id": 32705,
+      "source_line": 2178,
+      "components": {
+        "Ceramic": 3243240000,
+        "Brick": 1297296000
+      },
+      "pattern": [
+        "M",
+        "S"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem()",
+        "S": "ST.make(Blocks.stone_slab, 1, 4)"
+      },
+      "previous_registry_id": 32706
+    },
+    {
+      "path": "mortar_amethyst",
+      "source_id": 32089,
+      "source_line": 2183,
+      "components": {
+        "Amethyst": 648648000,
+        "Ceramic": 3243240000
+      },
+      "pattern": [
+        "P",
+        "B"
+      ],
+      "keys": {
+        "B": "IL.Ceramic_Bowl",
+        "P": "OP.gem.dat(ANY.Amethyst)"
+      }
+    },
+    {
+      "path": "mortar_block",
+      "source_id": 32735,
+      "source_line": 2179,
+      "components": {
+        "Fe": 648648000,
+        "Ceramic": 3243240000
+      },
+      "pattern": [
+        "P",
+        "B"
+      ],
+      "keys": {
+        "B": "IL.Ceramic_Bowl",
+        "P": "OP.ingot.dat(ANY.Iron)"
+      }
+    },
+    {
+      "path": "mortar_diamond",
+      "source_id": 32076,
+      "source_line": 2182,
+      "components": {
+        "Diamond": 648648000,
+        "Ceramic": 3243240000
+      },
+      "pattern": [
+        "P",
+        "B"
+      ],
+      "keys": {
+        "B": "IL.Ceramic_Bowl",
+        "P": "OP.gem.dat(ANY.Diamond)"
+      }
+    },
+    {
+      "path": "mortar_netherite",
+      "source_id": 32094,
+      "source_line": 2180,
+      "components": {
+        "Netherite": 648648000,
+        "Ceramic": 3243240000
+      },
+      "pattern": [
+        "P",
+        "B"
+      ],
+      "keys": {
+        "B": "IL.Ceramic_Bowl",
+        "P": "OP.ingot.dat(MT.Netherite)"
+      }
+    },
+    {
+      "path": "mortar_sapphire",
+      "source_id": 32075,
+      "source_line": 2181,
+      "components": {
+        "Sapphire": 648648000,
+        "Ceramic": 3243240000
+      },
+      "pattern": [
+        "P",
+        "B"
+      ],
+      "keys": {
+        "B": "IL.Ceramic_Bowl",
+        "P": "OP.gem.dat(ANY.Sapphire)"
+      }
+    },
+    {
+      "path": "sifting_table",
+      "source_id": 32702,
+      "source_line": 2227,
+      "components": {
+        "Fe": 2900898000
+      },
+      "pattern": [
+        "TdT",
+        "WxW",
+        "SPS"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(ANY.Iron)",
+        "S": "OP.stickLong.dat(ANY.Iron)",
+        "T": "OP.screw.dat(ANY.Iron)",
+        "W": "OP.wireFine.dat(ANY.Iron)"
+      }
+    }
+  ],
+  "differential": {
+    "unchanged_prior_block_compositions": 425,
+    "unchanged_prior_machine_tiers": 252
+  },
+  "parser_semantics": [
+    "Keep vanilla item metadata: brick slab metadata4 contains Brick2U.",
+    "Recipe arguments use aRegistry.getItem() before the new registration; following IL.set/OM.data use the current registration.",
+    "Explicit Ceramic_Bowl5U and Ceramic_Juicer4U item data take precedence.",
+    "Distinguish registered items with no automatic data from absent IDs; reject absent10049 before CR.REV."
+  ],
+  "language_import": {
+    "keys": [
+      "gt.lang.efficiency",
+      "gt.lang.energy.capacity",
+      "gt.lang.energy.convert.from",
+      "gt.lang.energy.convert.to",
+      "gt.lang.energy.convert.using",
+      "gt.lang.energy.input",
+      "gt.lang.energy.output",
+      "gt.lang.face.any",
+      "gt.lang.face.any.but.sides",
+      "gt.lang.face.top",
+      "gt.lang.hazard.explosion.steam",
+      "gt.lang.hazard.meltdown",
+      "gt.lang.nogui.funnel.tank",
+      "gt.lang.nogui.rightclick.interact",
+      "gt.lang.recipes",
+      "gt.lang.recipes.bathingsink.usage",
+      "gt.lang.recipes.grindstone.init",
+      "gt.lang.recipes.grindstone.usage",
+      "gt.lang.recipes.juicer.usage",
+      "gt.lang.recipes.mixingbowl.usage",
+      "gt.lang.recipes.mortar.usage",
+      "gt.lang.recipes.sifter.usage",
+      "gt.lang.requirement.water.pure",
+      "gt.lang.tool.name.wrench",
+      "gt.lang.use.chisel.to.decalcify",
+      "gt.lang.use.magnifyingglass.to.detail",
+      "gt.lang.use.x.to.toggle.facing.post",
+      "gt.lang.use.x.to.toggle.facing.pre",
+      "gt.recipe.bath",
+      "gt.recipe.juicer",
+      "gt.recipe.mixer",
+      "gt.recipe.mortar",
+      "gt.recipe.sharpener",
+      "gt.recipe.sifter",
+      "gt.td.long.energy.steam",
+      "gt.td.short.energy.heat"
+    ],
+    "aliases": {},
+    "changes": {
+      "en_us": {
+        "gt.lang.efficiency": {
+          "before": null,
+          "after": "Efficiency"
+        },
+        "gt.lang.energy.capacity": {
+          "before": null,
+          "after": "Capacity"
+        },
+        "gt.lang.energy.convert.from": {
+          "before": null,
+          "after": "Converts"
+        },
+        "gt.lang.energy.convert.to": {
+          "before": null,
+          "after": "into"
+        },
+        "gt.lang.energy.convert.using": {
+          "before": null,
+          "after": "using"
+        },
+        "gt.lang.energy.input": {
+          "before": null,
+          "after": "Energy IN"
+        },
+        "gt.lang.energy.output": {
+          "before": null,
+          "after": "Energy OUT"
+        },
+        "gt.lang.face.any": {
+          "before": null,
+          "after": "Any Side"
+        },
+        "gt.lang.face.any.but.sides": {
+          "before": null,
+          "after": "Any but Sides"
+        },
+        "gt.lang.face.top": {
+          "before": null,
+          "after": "Top"
+        },
+        "gt.lang.hazard.explosion.steam": {
+          "before": null,
+          "after": "Explodes when Steam Pressure is too high!"
+        },
+        "gt.lang.nogui.funnel.tank": {
+          "before": null,
+          "after": "No GUI. Use Tiny Funnels to interact!"
+        },
+        "gt.lang.nogui.rightclick.interact": {
+          "before": null,
+          "after": "No GUI. Click to interact!"
+        },
+        "gt.lang.recipes": {
+          "before": null,
+          "after": "Recipes"
+        },
+        "gt.lang.recipes.bathingsink.usage": {
+          "before": null,
+          "after": "Place Input in Center, Fill with Fluid on the Rim, then rightclick it"
+        },
+        "gt.lang.recipes.grindstone.init": {
+          "before": null,
+          "after": "Add Sandstone Block in order to be able to use this"
+        },
+        "gt.lang.recipes.grindstone.usage": {
+          "before": null,
+          "after": "Click multiple times with the Object to Sharpen or remove Enchantments"
+        },
+        "gt.lang.recipes.juicer.usage": {
+          "before": null,
+          "after": "Rightclick with the Item you want to get Juice from"
+        },
+        "gt.lang.recipes.mixingbowl.usage": {
+          "before": null,
+          "after": "Place Input in Center, Fill with Fluid on the Rim, then rightclick it"
+        },
+        "gt.lang.recipes.mortar.usage": {
+          "before": null,
+          "after": "Rightclick with the Item you want to turn into Dust"
+        },
+        "gt.lang.recipes.sifter.usage": {
+          "before": null,
+          "after": "Place Input on Top and rightclick it"
+        },
+        "gt.lang.requirement.water.pure": {
+          "before": null,
+          "after": "Requires any Water. Use distilled Water for best efficiency!"
+        },
+        "gt.lang.use.chisel.to.decalcify": {
+          "before": null,
+          "after": "Use Chisel to decalcify"
+        },
+        "gt.lang.use.x.to.toggle.facing.post": {
+          "before": null,
+          "after": " to set Facing"
+        },
+        "gt.lang.use.x.to.toggle.facing.pre": {
+          "before": null,
+          "after": "Use "
+        },
+        "gt.recipe.bath": {
+          "before": null,
+          "after": "Bath"
+        },
+        "gt.recipe.juicer": {
+          "before": null,
+          "after": "Juicer"
+        },
+        "gt.recipe.mixer": {
+          "before": null,
+          "after": "Mixer"
+        },
+        "gt.recipe.mortar": {
+          "before": null,
+          "after": "Mortar"
+        },
+        "gt.recipe.sharpener": {
+          "before": null,
+          "after": "Sharpener"
+        },
+        "gt.recipe.sifter": {
+          "before": null,
+          "after": "Sifter"
+        },
+        "gt.td.long.energy.steam": {
+          "before": null,
+          "after": "Steam"
+        },
+        "gt.td.short.energy.heat": {
+          "before": null,
+          "after": "HU"
+        }
+      },
+      "zh_cn": {}
+    },
+    "missing_chinese": [],
+    "source_files": [
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+        "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+        "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\RM.java",
+        "sha256": "c7cb07faef0235ace4bb26656fddaabfa10da6aa4a2689a7f4cdcaef10d366e6"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\TD.java",
+        "sha256": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\..\\code\\TagData.java",
+        "sha256": "afa72881ee6c421c094ce27e3cef2701374257cb1dd2f099293cceb3e91b4a64"
+      },
+      {
+        "path": "C:\\Dev\\GregTech_zh_cn.lang",
+        "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0"
+      }
+    ],
+    "license": "Original LH/CS/RM/TD/TagData: LGPL-3.0-or-later; Chinese strings copied verbatim from the user-provided patch."
+  },
+  "functional_profiles": [
+    "14 manual station variants use original recipe category, preparation, usage, interaction face and actual source tool hints.",
+    "26 boilers use original water80HU/160Steam conversion, saved efficiency floor output, input/output faces, both capacities, requirements, hazards and tool hints.",
+    "Original efficiency load clamp0..10000 is shared by native load and item tooltip.",
+    "MTE item blast line is suppressed below4, while standalone LH rating thresholds remain unchanged.",
+    "Original manual physical properties: mortar1/5, grindstone1/6, sifting1/6, juicer1/5, metal bath1/6. Pestle render Steel is preserved although source recipe records Iron1U."
+  ],
+  "source_without_known_data": [
+    {
+      "path": "axle_wood_4",
+      "source_id": 24803,
+      "source_line": 1666,
+      "components": {},
+      "pattern": [
+        "rS",
+        "Bf"
+      ],
+      "keys": {
+        "S": "OD.beamWood",
+        "B": "OD.container1000creosote"
+      }
+    }
+  ],
+  "source_invalid_recipes": [
+    {
+      "path": "energy_storage_xv",
+      "source_id": 10099,
+      "source_line": 895,
+      "pattern": [
+        "WCW",
+        "WCW",
+        "XMX"
+      ],
+      "keys": {
+        "C": "MT.DATA.CABLES_04[9]",
+        "X": "OD_CIRCUITS[9]",
+        "W": "MT.DATA.WIRES_04[9]",
+        "M": "aRegistry.getItem(10040+9)"
+      },
+      "unresolved_source_item_references": [
+        "aRegistry.getItem(10049)"
+      ],
+      "source_recipe_rejection": "CR.shaped returns false on a null item input before reversible OM.data registration.",
+      "known_parts_before_rejection": {
+        "Graphene": 7783776000
+      }
+    }
+  ],
+  "unknown_automatic_data": {
+    "\"gt:re-battery1\"": 5,
+    "\"gt:re-battery2\"": 1,
+    "\"gt:re-battery3\"": 1,
+    "\"gt:re-battery4\"": 1,
+    "DYE_OREDICTS_LENS[DYE_INDEX_Yellow]": 5,
+    "OD.beamWood": 1,
+    "OD.container1000creosote": 1,
+    "OD.container1000honey": 5,
+    "OD.container1000water": 1,
+    "OD.craftingFirestarter": 1,
+    "OD.itemGlue": 1,
+    "OD.itemLubricant": 32,
+    "OD.itemLubricantEarly": 15,
+    "OD.sandstone": 12,
+    "OD_CIRCUITS[0]": 4,
+    "OD_CIRCUITS[1]": 33,
+    "OD_CIRCUITS[2]": 32,
+    "OD_CIRCUITS[3]": 33,
+    "OD_CIRCUITS[4]": 31,
+    "OD_CIRCUITS[5]": 31,
+    "OD_CIRCUITS[6]": 63,
+    "OD_CIRCUITS[7]": 4,
+    "OD_CIRCUITS[8]": 4,
+    "OD_CIRCUITS[9]": 4,
+    "OP.treeSapling": 5
+  },
+  "limitations": [
+    "Remaining block-specific tooltips/materials are still incomplete; no fixed hull estimate is restored.",
+    "No extra glue/circuit material is invented when original automatic data is absent.",
+    "Native harvest-tool/level fidelity, original blinking text, and full rotational pump functionality remain pending.",
+    "Installed item methods are not player hover, recycling gameplay, full survival or independent saved-world restart."
+  ],
+  "verification": {
+    "core_fixed_source_contracts": 107,
+    "native_build": "passed4m18s; both ordinary builds and separate startup probes",
+    "installed_runtime": {
+      "status": "passed",
+      "forge_seconds": 51.78,
+      "neoforge_seconds": 45.78,
+      "normal_exit_both": true,
+      "block_identities_each": 559,
+      "basic_machine_class_objects": {
+        "forge": 250,
+        "neoforge": 251
+      },
+      "manual_each": 14,
+      "boiler_default_and_saved_efficiency_each": 26,
+      "fluid_pipes_each": 280,
+      "stored_tanks_each": 35,
+      "scope": "Ordinary installed item tooltip APIs and material event at title screen; no recycling gameplay/player hover/survival/saved-world restart claim."
+    },
+    "chinese_keys": 36,
+    "chinese_exact_patch_matches": 36,
+    "chinese_changed_values": 0,
+    "readonly_source_hashes_verified": true,
+    "core_contracts": {
+      "core": 2472,
+      "machine": 107,
+      "material": 7947,
+      "thermal": 53
+    },
+    "packaging": {
+      "shared_classes": 729,
+      "native_classes": {
+        "forge": 1760,
+        "neoforge": 1567
+      },
+      "artifacts": {
+        "forge": {
+          "name": "gregtech6-1.20.1-forge-0.0.0.jar",
+          "bytes": 41324193,
+          "sha256": "1fceed961295282995b5e2343c2598fd644f5903f9236af54bdada9e6639de63",
+          "zip_crc_checked": true,
+          "path": "C:\\Dev\\GregTech6\\build\\verified\\20261006-195055Z-1fceed96\\gregtech6-1.20.1-forge-0.0.0.jar"
+        },
+        "neoforge": {
+          "name": "gregtech6-neoforge-1.21.1-0.0.0.jar",
+          "bytes": 39544602,
+          "sha256": "bfbd8baedb45549abbc36e9dfd22034831a7a62b2aef5d52daaf707d10e8ac47",
+          "zip_crc_checked": true,
+          "path": "C:\\Dev\\GregTech6\\build\\verified\\20261006-195055Z-1fceed96\\gregtech6-neoforge-1.21.1-0.0.0.jar"
+        }
+      }
+    },
+    "first_installed_probe_failures": [
+      {
+        "platform": "forge",
+        "log": "build/production-smoke/forge-9d20d63c-94d0-42ee-925f-cc81ca158321/launch.log",
+        "reason": "Probe startsWith(name+space) counted Clay Brick as Clay; actual registered quantities and tooltip rows are correct."
+      },
+      {
+        "platform": "forge",
+        "log": "build/production-smoke/forge-c59c39eb-654e-43a3-a191-6d628d62e800/launch.log",
+        "reason": "Diagnostic run confirmed only3 name-prefix collisions in coke oven wall/controller; kept strict zero mismatches condition."
+      },
+      {
+        "platform": "forge",
+        "log": "build/production-smoke/forge-093923fb-506b-4928-9af3-f4bbccb0572e/launch.log",
+        "reason": "Probe incorrectly expected406 fluid pipes; catalog has280 fluid and126 item pipes. All individual pipe tooltips passed before erroneous aggregate count."
+      }
+    ],
+    "probe_repairs": "Strict full material-name boundary eliminates Clay/Clay Brick ambiguity; assert280 fluid independently of126 item. Diagnostic13s, delimiter13s and count13s rebuilds affect separate probe only; production artifacts unchanged."
+  }
+}

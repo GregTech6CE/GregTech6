@@ -373,7 +373,7 @@ def port_tier_counts() -> dict[str, int]:
     }
     counts: dict[str, int] = {}
     for m in re.finditer(
-        r'new MachineDef\("([a-z_0-9]+)",\s*"(\w+)",\s*([^,]+?),\s*m ->',
+        r'new MachineDef\("([a-z_0-9]+)",\s*"(\w+)",\s*(\w+|new GTMaterial\[\]\{[^}]+\})(?:,\s*\d+)?\)',
         src,
     ):
         name, tier_expr = m.group(1), m.group(3).strip()

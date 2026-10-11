@@ -32,6 +32,9 @@ init3();
 init4();
 init5();
 init6();
+initThermal();
+initMagnets();
+initSteamTurbines();
 }
 private static void init0(){
 ITEMS.put("abyssal_dough",new Entry("nature_foods",568));
@@ -2584,6 +2587,57 @@ ITEMS.put("wood_wall",new Entry("multiblocks",564));
 ITEMS.put("worldgen_debug_wand",new Entry("equipment",114));
 ITEMS.put("yellow_clay",new Entry("nature_foods",476));
 ITEMS.put("zpm",new Entry("zpm",546));
+}
+private static void initThermal(){
+ITEMS.put("electric_heater_lv",new Entry("heaters",395));
+ITEMS.put("electric_heater_mv",new Entry("heaters",396));
+ITEMS.put("electric_heater_hv",new Entry("heaters",397));
+ITEMS.put("electric_heater_ev",new Entry("heaters",398));
+ITEMS.put("electric_heater_iv",new Entry("heaters",399));
+ITEMS.put("flux_heater_lv",new Entry("heaters",400));
+ITEMS.put("flux_heater_mv",new Entry("heaters",401));
+ITEMS.put("flux_heater_hv",new Entry("heaters",402));
+ITEMS.put("flux_heater_ev",new Entry("heaters",403));
+ITEMS.put("flux_heater_iv",new Entry("heaters",404));
+ITEMS.put("electric_cooler_lv",new Entry("coolers",492));
+ITEMS.put("electric_cooler_mv",new Entry("coolers",493));
+ITEMS.put("electric_cooler_hv",new Entry("coolers",494));
+ITEMS.put("electric_cooler_ev",new Entry("coolers",495));
+ITEMS.put("electric_cooler_iv",new Entry("coolers",496));
+ITEMS.put("flux_cooler_lv",new Entry("coolers",497));
+ITEMS.put("flux_cooler_mv",new Entry("coolers",498));
+ITEMS.put("flux_cooler_hv",new Entry("coolers",499));
+ITEMS.put("flux_cooler_ev",new Entry("coolers",500));
+ITEMS.put("flux_cooler_iv",new Entry("coolers",501));
+}
+private static void initMagnets(){
+ITEMS.put("electromagnet_lv",new Entry("magnets",425));
+ITEMS.put("electromagnet_mv",new Entry("magnets",426));
+ITEMS.put("electromagnet_hv",new Entry("magnets",427));
+ITEMS.put("electromagnet_ev",new Entry("magnets",428));
+ITEMS.put("electromagnet_iv",new Entry("magnets",429));
+ITEMS.put("flux_magnet_lv",new Entry("magnets",430));
+ITEMS.put("flux_magnet_mv",new Entry("magnets",431));
+ITEMS.put("flux_magnet_hv",new Entry("magnets",432));
+ITEMS.put("flux_magnet_ev",new Entry("magnets",433));
+ITEMS.put("flux_magnet_iv",new Entry("magnets",434));
+}
+private static void initSteamTurbines(){
+ITEMS.put("steam_turbine_bronze",new Entry("turbines",380));
+ITEMS.put("steam_turbine_brass",new Entry("turbines",381));
+ITEMS.put("steam_turbine_invar",new Entry("turbines",382));
+ITEMS.put("steam_turbine_steel",new Entry("turbines",383));
+ITEMS.put("steam_turbine_chromium",new Entry("turbines",384));
+ITEMS.put("steam_turbine_ironwood",new Entry("turbines",385));
+ITEMS.put("steam_turbine_steeleaf",new Entry("turbines",386));
+ITEMS.put("steam_turbine_thaumium",new Entry("turbines",387));
+ITEMS.put("steam_turbine_titanium",new Entry("turbines",388));
+ITEMS.put("steam_turbine_fiery_steel",new Entry("turbines",389));
+ITEMS.put("steam_turbine_aluminium",new Entry("turbines",390));
+ITEMS.put("steam_turbine_magnalium",new Entry("turbines",391));
+ITEMS.put("steam_turbine_void_metal",new Entry("turbines",392));
+ITEMS.put("steam_turbine_trinitanium",new Entry("turbines",393));
+ITEMS.put("steam_turbine_graphene",new Entry("turbines",394));
 }
 public static Entry entry(String id){return ITEMS.get(id.startsWith("bush_plant_gt_berry_")?"bush":id);}
 }

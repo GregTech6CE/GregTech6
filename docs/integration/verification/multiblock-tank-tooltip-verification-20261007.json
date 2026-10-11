@@ -1,0 +1,94 @@
+{
+  "date": "2026-10-07",
+  "source_receipt": {
+    "path": "C:\\Dev\\GregTech6\\docs\\integration\\verification\\multiblock-tank-tooltip-source-20261007.json",
+    "sha256": "a2ab57bc01e49e219b95167520b06e44ff1576f7445360d7ded890430463b7e6",
+    "bytes": 23955
+  },
+  "shared_check": {
+    "log": {
+      "path": "C:\\Dev\\GregTech6\\work\\multiblock-tank-compile-20261007.log",
+      "sha256": "029e899ce3b8c8f2873519fc37a58305fc3cbbdc0d92c46c860a79b9a2dcf4df",
+      "bytes": 52064
+    },
+    "assertions": 3764,
+    "new_fixed_source_assertions": 85,
+    "passed": true,
+    "scope": "Java shared source contracts; not native gameplay"
+  },
+  "compile_attempts": [
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\multiblock-tank-compile-20261007.log",
+        "sha256": "029e899ce3b8c8f2873519fc37a58305fc3cbbdc0d92c46c860a79b9a2dcf4df",
+        "bytes": 52064
+      },
+      "exit_code": 1,
+      "elapsed": "28s",
+      "description": "Shared 3764 and dual main passed; Forge production probe used an unavailable STEAM field. Remaining probes not accepted."
+    },
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\multiblock-tank-repaired-compile-20261007.log",
+        "sha256": "96d30128b7db81d950d3204bfa65f1b5ffa8bb94c60051c66c2707a684f3e6eb",
+        "bytes": 31240
+      },
+      "exit_code": 0,
+      "elapsed": "26s",
+      "description": "Probe corrected to actual Steam registry stack; dual main/production/world fixtures compile."
+    },
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\multiblock-tank-final-compile-20261007.log",
+        "sha256": "6046b587178478fa05570e6860fdd450f38159aa2328beac25e92ee4bf26311e",
+        "bytes": 51416
+      },
+      "exit_code": 0,
+      "elapsed": "29s",
+      "description": "Final capacity-refresh preservation plus refreshed-state probes compile on both loaders."
+    }
+  ],
+  "prepared_not_executed": {
+    "installed_original_valves_per_platform": 25,
+    "retained_aliases_per_platform": 2,
+    "saved_tooltip_and_actual_entity_load_cases_per_platform": 162,
+    "world_scenarios_per_platform": 1,
+    "world_representatives": [
+      "wood",
+      "small stainless steel",
+      "large dense adamantium"
+    ],
+    "world_fixture_scope": "Actual placed entity load/refresh/save, 3.5 billion Water, int capability representation, read-only item tooltip; no formation or tick claim"
+  },
+  "verification": {
+    "ordinary_dual_build_this_batch": false,
+    "installed_client_this_batch": false,
+    "world_fixture_executed_this_batch": false,
+    "natural_survival_chain": false,
+    "independent_world_restart": false,
+    "historical_save_compatibility": false,
+    "ordinary_dedicated_server": false,
+    "actual_player_hover": false
+  },
+  "last_accepted_jars": {
+    "directory": "C:\\Dev\\GregTech6\\build\\verified\\20261007-013857Z-b5d8b66a",
+    "includes_this_batch": false,
+    "includes_large_smeltery_commit_ef9b18d7": false,
+    "files": [
+      {
+        "path": "C:\\Dev\\GregTech6\\build\\verified\\20261007-013857Z-b5d8b66a\\gregtech6-1.20.1-forge-0.0.0.jar",
+        "sha256": "b5d8b66a06fb3a85be5b855adbc2606f74c90a939d4b7f66b16296a222daee83",
+        "bytes": 41566130,
+        "crc_all_entries_passed": true
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\build\\verified\\20261007-013857Z-b5d8b66a\\gregtech6-neoforge-1.21.1-0.0.0.jar",
+        "sha256": "fec189457928e2ae790eea29910efc0c6955f9f61226934d18f580e3e8f7f8a6",
+        "bytes": 39787602,
+        "crc_all_entries_passed": true
+      }
+    ]
+  },
+  "goal": "active",
+  "publication": "Local commit only; no push or PR"
+}

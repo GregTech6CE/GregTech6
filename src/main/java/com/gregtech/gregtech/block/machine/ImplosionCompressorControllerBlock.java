@@ -23,6 +23,10 @@ public class ImplosionCompressorControllerBlock extends HorizontalDirectionalBlo
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
+    @Override public void appendHoverText(net.minecraft.world.item.ItemStack stack,net.minecraft.world.level.BlockGetter context,java.util.List<net.minecraft.network.chat.Component> lines,net.minecraft.world.item.TooltipFlag flag) {
+        com.gregtech.gregtech.client.AdvancedControllerTooltips.append(com.gregtech.gregtech.content.machine.BasicMachineDefinitions.from(com.gregtech.gregtech.content.multiblock.OriginalMultiblockMachineParameters.implosionCompressor()),lines);
+    }
+
     @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> b) { b.add(FACING); }
     @Override public BlockState getStateForPlacement(BlockPlaceContext ctx) { return defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite()); }
 

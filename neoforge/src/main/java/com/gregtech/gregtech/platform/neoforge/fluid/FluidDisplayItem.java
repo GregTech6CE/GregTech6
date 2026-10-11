@@ -39,7 +39,7 @@ public final class FluidDisplayItem extends Item {
                 return GTFluidType.describe(entry, path);
             }
         }
-        String path = RegisteredFluids.sanitizeTextureId(fluidEntry.registryName()).replace('-', '_');
+        String path = RegisteredFluids.sanitizePath(fluidEntry.registryName());
         return GTFluidType.describe(fluidEntry, path);
     }
 
@@ -71,8 +71,8 @@ public final class FluidDisplayItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         var actual=com.gregtech.gregtech.api.fluid.FluidDisplayBinding.resolve(context.registries(),stack);
-        var entry=actual.isEmpty()?null:com.gregtech.gregtech.registry.GTFluids.entryForFluid(actual.getFluid());
-        if(entry!=null) tooltip.addAll(GTFluidType.describeTooltip(entry));
+        long amount = com.gregtech.gregtech.api.fluid.FluidDisplayBinding.hasPayload(stack) ? actual.getAmount() : 0;
+        tooltip.addAll(GTFluidType.describeTooltip(actual, amount, flag.isAdvanced()));
     }
 
     @Override

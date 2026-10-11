@@ -1,0 +1,1253 @@
+{
+  "date": "2026-10-07",
+  "parent_commit": "9d386098744c6687bb2771096d053b2121c86a1d",
+  "authors": [
+    "GregTech-6 Team",
+    "Gregorius Techneticies"
+  ],
+  "adopted_license": "LGPL-3.0-or-later",
+  "source_files": [
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\OP.java",
+      "sha256": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\ANY.java",
+      "sha256": "6a26fa2293c4a315d2594c5ac80eba689389f9b1922a33547bdd20d2df724f71"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\MT.java",
+      "sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+      "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\load\\LoaderOreDictReRegistrations.java",
+      "sha256": "d34719309a5ddf5bd7fc01c0462b57af52b4cf980a69fae4d4042c2ab78b07ef"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\util\\CR.java",
+      "sha256": "952f94e0dfff66d27d2ac2b97ed47b6aa0c8250aa19babd5cc528c89616c0760"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\block\\multitileentity\\MultiTileEntityClassContainer.java",
+      "sha256": "ea006ef8b03ffd30044da0bb044dfcc8227f37712becd555f7bc5a9747f3af8a"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\block\\multitileentity\\MultiTileEntityBlock.java",
+      "sha256": "78ef2ca64595500bb841faec8304dee0f3e276e14b54c62f494c3116c29ce0b7"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\inventories\\MultiTileEntityMassStorage.java",
+      "sha256": "ecf73ec1fba294c5f137cc814ea2152aa372861f4e60a1f81939ea60c2dc70cd"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\inventories\\MultiTileEntitySafe.java",
+      "sha256": "237d91b4321fc770472224f08b908521f11c6a5b3c918687042ecf9c378b77c5"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\inventories\\MultiTileEntitySafeMechanical.java",
+      "sha256": "504a6ab85f00aaf65fc8db2f8031d81817dd56a9ecd25fc547dc77a314d63d27"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\inventories\\MultiTileEntitySafeKeyLocked.java",
+      "sha256": "aa6c037968b88c8980ea69f8fec978ffd8ddc719076d30bdb3239dbc43e9852e"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\inventories\\MultiTileEntityDrawerQuad.java",
+      "sha256": "7f75cbc83af271a1c6d92fafe9e3bab90bd05e95249a1dbdba455a7b3cb9adde"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\inventories\\MultiTileEntityBottleCrate.java",
+      "sha256": "bb6f17b3a1237539fedef6d3dd62c7ff4eb505ecc22647f5aa3b8b3cf5e17f90"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\tools\\MultiTileEntityAdvancedCraftingTable.java",
+      "sha256": "730747ed9b5c401c6128ec09a481c9b0bcbc68c186c46f231afb07b4bf8231d0"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\inventories\\MultiTileEntityHopper.java",
+      "sha256": "70670f0cd2232a0e5cac49603b1014991c16819e9294d49968fc44b217b9c4a6"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\inventories\\MultiTileEntityQueueHopper.java",
+      "sha256": "324b8ffa681347a9d41acce42ff719345bfb79d60b30c6f67a4a8c699205eaa9"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\base\\TileEntityBase09FacingSingle.java",
+      "sha256": "b172aadf76d09c37ee4c7793cb784dcc97a19d999ad1737bafc60cc064bece7f"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577"
+    },
+    {
+      "path": "C:\\Dev\\GregTech_zh_cn.lang",
+      "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0"
+    }
+  ],
+  "comparison_files": [
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "4d87cacde8defa33df30359d345046daa8e901ab0419dca2766d2140d8af1562"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\inventories\\MultiTileEntityMassStorage.java",
+      "sha256": "7fcea4b904202f05a1f12da6149756ea2a7f39e9388e26ca39cc16c13bab1724"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\inventories\\MultiTileEntitySafe.java",
+      "sha256": "e4481cb54da03775a59bf9965a0c707b6ec29d5491ee1e1ed35688d0fd6d4b7d"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\inventories\\MultiTileEntitySafeMechanical.java",
+      "sha256": "ec8669c96a33bec5caeb83a0794b6e94316797f4b0ab86e0cf43569d20fa9338"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\inventories\\MultiTileEntitySafeKeyLocked.java",
+      "sha256": "f4006c3b4e0da2e409a4cc391d8c9c0f0fbd7c2dff1b86198a359df8615ab3d5"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\inventories\\MultiTileEntityDrawerQuad.java",
+      "sha256": "fb18bbfc30b2627d28379f2b406e69ba21fb64ad02679971fc02215243b570e0"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\inventories\\MultiTileEntityBottleCrate.java",
+      "sha256": "c73ec81afc305c75f2ff94b25d1a34cf9939730f15c6bdbf17c06b7e09dbdbbc"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\tools\\MultiTileEntityAdvancedCraftingTable.java",
+      "sha256": "ee572c30f3fc77d02a2d4bdae3ed6823fafe7ea4d41c8a48badfb4fd7bd95eef"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\inventories\\MultiTileEntityHopper.java",
+      "sha256": "7539dafcaffe7bf94243042973fe8a1009e221e52f6846e2f66fbab92b471c80"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\inventories\\MultiTileEntityQueueHopper.java",
+      "sha256": "149df566d6ae30675afa8ffc8eccc6096c3df38de2423ca086f25c79e3ae84ec"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\base\\TileEntityBase09FacingSingle.java",
+      "sha256": "a5f2184a58e7280aa82aabb2f4a8ea453e797d49347b464a92f83a6337e99155"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577"
+    }
+  ],
+  "comparison": [
+    {
+      "path": "src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "has_tooltip_method": false,
+      "normalized_method_matches": true
+    },
+    {
+      "path": "src/main/java/gregapi/tileentity/inventories/MultiTileEntityMassStorage.java",
+      "has_tooltip_method": true,
+      "normalized_method_matches": false
+    },
+    {
+      "path": "src/main/java/gregapi/tileentity/inventories/MultiTileEntitySafe.java",
+      "has_tooltip_method": true,
+      "normalized_method_matches": false
+    },
+    {
+      "path": "src/main/java/gregtech/tileentity/inventories/MultiTileEntitySafeMechanical.java",
+      "has_tooltip_method": true,
+      "normalized_method_matches": true
+    },
+    {
+      "path": "src/main/java/gregtech/tileentity/inventories/MultiTileEntitySafeKeyLocked.java",
+      "has_tooltip_method": true,
+      "normalized_method_matches": true
+    },
+    {
+      "path": "src/main/java/gregtech/tileentity/inventories/MultiTileEntityDrawerQuad.java",
+      "has_tooltip_method": true,
+      "normalized_method_matches": true
+    },
+    {
+      "path": "src/main/java/gregtech/tileentity/inventories/MultiTileEntityBottleCrate.java",
+      "has_tooltip_method": true,
+      "normalized_method_matches": true
+    },
+    {
+      "path": "src/main/java/gregapi/tileentity/tools/MultiTileEntityAdvancedCraftingTable.java",
+      "has_tooltip_method": true,
+      "normalized_method_matches": true
+    },
+    {
+      "path": "src/main/java/gregtech/tileentity/inventories/MultiTileEntityHopper.java",
+      "has_tooltip_method": true,
+      "normalized_method_matches": true
+    },
+    {
+      "path": "src/main/java/gregtech/tileentity/inventories/MultiTileEntityQueueHopper.java",
+      "has_tooltip_method": true,
+      "normalized_method_matches": true
+    },
+    {
+      "path": "src/main/java/gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "has_tooltip_method": true,
+      "normalized_method_matches": true
+    },
+    {
+      "path": "LICENSE",
+      "has_tooltip_method": false,
+      "normalized_method_matches": true
+    }
+  ],
+  "adoption": "Canonical original storage row choices and CR.REV known inputs, adapted to shared core and native saved item formats. _w is comparison only; its ghost/logical count display agrees with native retained zero-filter display.",
+  "material_audit": {
+    "families": {
+      "0": {
+        "source_offset": 0,
+        "pattern": [
+          "sPw",
+          "RSR",
+          "PPP"
+        ],
+        "ingredients": {
+          "P": "OP.plate.dat(aMat)",
+          "R": "OP.ring.dat(aMat)",
+          "S": "OP.stick.dat(aMat)"
+        },
+        "harvest": "0",
+        "group": "aMetal",
+        "tool": "pickaxe",
+        "hand": false,
+        "material_units": {
+          "metal": 3243240000
+        }
+      },
+      "500": {
+        "source_offset": 500,
+        "pattern": [
+          "sSw",
+          "RCR",
+          "SSS"
+        ],
+        "ingredients": {
+          "C": "OD.craftingChest",
+          "R": "OP.ring.dat(aMat)",
+          "S": "OP.stick.dat(aMat)"
+        },
+        "harvest": "0",
+        "group": "aWooden",
+        "tool": "axe",
+        "hand": true,
+        "material_units": {
+          "metal": 1621620000,
+          "Wood": 2594592000
+        }
+      },
+      "2000": {
+        "source_offset": 2000,
+        "pattern": [
+          "PGP",
+          "GOS",
+          "PGP"
+        ],
+        "ingredients": {
+          "P": "OP.plateQuintuple.dat(aMat)",
+          "G": "OP.gearGtSmall.dat(aMat)",
+          "O": "OP.gearGt.dat(aMat)",
+          "S": "OP.stick.dat(aMat)"
+        },
+        "harvest": "aMat.mToolQuality",
+        "group": "aMachine",
+        "tool": "wrench",
+        "hand": false,
+        "material_units": {
+          "metal": 17837820000
+        }
+      },
+      "3000": {
+        "source_offset": 3000,
+        "pattern": [
+          "PGP",
+          "OGS",
+          "PGP"
+        ],
+        "ingredients": {
+          "P": "OP.plateQuintuple.dat(aMat)",
+          "G": "OP.gearGtSmall.dat(aMat)",
+          "O": "OP.gearGt.dat(aMat)",
+          "S": "OP.stick.dat(aMat)"
+        },
+        "harvest": "aMat.mToolQuality",
+        "group": "aMachine",
+        "tool": "wrench",
+        "hand": false,
+        "material_units": {
+          "metal": 17837820000
+        }
+      },
+      "4000": {
+        "source_offset": 4000,
+        "pattern": [
+          "CTC",
+          "TdT",
+          "CTC"
+        ],
+        "ingredients": {
+          "T": "OP.screw.dat(aMat)",
+          "C": "aRegistry.getItem(aID)"
+        },
+        "harvest": "aMat.mToolQuality",
+        "group": "aMachine",
+        "tool": "wrench",
+        "hand": false,
+        "material_units": {
+          "metal": 13261248000
+        }
+      },
+      "6000": {
+        "source_offset": 6000,
+        "pattern": [
+          "TCT",
+          "wMd",
+          "TCT"
+        ],
+        "ingredients": {
+          "T": "OP.screw.dat(aMat)",
+          "C": "aRegistry.getItem(aID)",
+          "M": "OP.casingMachine.dat(aMat)"
+        },
+        "harvest": "aMat.mToolQuality",
+        "group": "aMachine",
+        "tool": "wrench",
+        "hand": false,
+        "material_units": {
+          "metal": 11963952000
+        }
+      },
+      "8600": {
+        "source_offset": 8600,
+        "pattern": [
+          "CdC",
+          "TCT"
+        ],
+        "ingredients": {
+          "T": "OP.screw.dat(aMat)",
+          "C": "OP.casingSmall.dat(aMat)"
+        },
+        "harvest": "0",
+        "group": "aUtilMetal",
+        "tool": "pickaxe",
+        "hand": true,
+        "material_units": {
+          "metal": 1117116000
+        }
+      }
+    },
+    "metalsets": [
+      {
+        "suffix": "lead",
+        "source_id": 0,
+        "source_material": "MT.Pb",
+        "java_material": "ImportedMaterialData.Pb",
+        "source_line": 186
+      },
+      {
+        "suffix": "bismuth",
+        "source_id": 16,
+        "source_material": "MT.Bi",
+        "java_material": "ImportedMaterialData.Bi",
+        "source_line": 187
+      },
+      {
+        "suffix": "antimony",
+        "source_id": 47,
+        "source_material": "MT.Sb",
+        "java_material": "ImportedMaterialData.Sb",
+        "source_line": 188
+      },
+      {
+        "suffix": "nickel",
+        "source_id": 22,
+        "source_material": "MT.Ni",
+        "java_material": "ImportedMaterialData.Ni",
+        "source_line": 189
+      },
+      {
+        "suffix": "constantan",
+        "source_id": 37,
+        "source_material": "MT.Constantan",
+        "java_material": "ImportedMaterialData.Constantan",
+        "source_line": 190
+      },
+      {
+        "suffix": "bronze",
+        "source_id": 9,
+        "source_material": "MT.Bronze",
+        "java_material": "ImportedMaterialData.Bronze",
+        "source_line": 191
+      },
+      {
+        "suffix": "arsenic_copper",
+        "source_id": 57,
+        "source_material": "MT.ArsenicCopper",
+        "java_material": "ImportedMaterialData.ArsenicCopper",
+        "source_line": 192
+      },
+      {
+        "suffix": "aluminium",
+        "source_id": 1,
+        "source_material": "MT.Al",
+        "java_material": "ImportedMaterialData.Al",
+        "source_line": 193
+      },
+      {
+        "suffix": "brass",
+        "source_id": 8,
+        "source_material": "MT.Brass",
+        "java_material": "ImportedMaterialData.Brass",
+        "source_line": 194
+      },
+      {
+        "suffix": "tin_alloy",
+        "source_id": 5,
+        "source_material": "MT.TinAlloy",
+        "java_material": "ImportedMaterialData.TinAlloy",
+        "source_line": 195
+      },
+      {
+        "suffix": "cobalt",
+        "source_id": 21,
+        "source_material": "MT.Co",
+        "java_material": "ImportedMaterialData.Co",
+        "source_line": 196
+      },
+      {
+        "suffix": "ardite",
+        "source_id": 38,
+        "source_material": "MT.Ardite",
+        "java_material": "ImportedMaterialData.Ardite",
+        "source_line": 197
+      },
+      {
+        "suffix": "arsenic_bronze",
+        "source_id": 58,
+        "source_material": "MT.ArsenicBronze",
+        "java_material": "ImportedMaterialData.ArsenicBronze",
+        "source_line": 198
+      },
+      {
+        "suffix": "bismuth_bronze",
+        "source_id": 56,
+        "source_material": "MT.BismuthBronze",
+        "java_material": "ImportedMaterialData.BismuthBronze",
+        "source_line": 199
+      },
+      {
+        "suffix": "germanium",
+        "source_id": 23,
+        "source_material": "MT.Ge",
+        "java_material": "ImportedMaterialData.Ge",
+        "source_line": 200
+      },
+      {
+        "suffix": "invar",
+        "source_id": 6,
+        "source_material": "MT.Invar",
+        "java_material": "ImportedMaterialData.Invar",
+        "source_line": 201
+      },
+      {
+        "suffix": "steel",
+        "source_id": 10,
+        "source_material": "MT.Steel",
+        "java_material": "ImportedMaterialData.Steel",
+        "source_line": 202
+      },
+      {
+        "suffix": "hsla",
+        "source_id": 18,
+        "source_material": "MT.HSLA",
+        "java_material": "ImportedMaterialData.HSLA",
+        "source_line": 203
+      },
+      {
+        "suffix": "gold",
+        "source_id": 2,
+        "source_material": "MT.Au",
+        "java_material": "ImportedMaterialData.Au",
+        "source_line": 204
+      },
+      {
+        "suffix": "silver",
+        "source_id": 3,
+        "source_material": "MT.Ag",
+        "java_material": "ImportedMaterialData.Ag",
+        "source_line": 205
+      },
+      {
+        "suffix": "manganese",
+        "source_id": 46,
+        "source_material": "MT.Mn",
+        "java_material": "ImportedMaterialData.Mn",
+        "source_line": 206
+      },
+      {
+        "suffix": "manyullyn",
+        "source_id": 39,
+        "source_material": "MT.Manyullyn",
+        "java_material": "ImportedMaterialData.Manyullyn",
+        "source_line": 207
+      },
+      {
+        "suffix": "lumium",
+        "source_id": 54,
+        "source_material": "MT.Lumium",
+        "java_material": "ImportedMaterialData.Lumium",
+        "source_line": 208
+      },
+      {
+        "suffix": "knightmetal",
+        "source_id": 25,
+        "source_material": "MT.Knightmetal",
+        "java_material": "ImportedMaterialData.Knightmetal",
+        "source_line": 209
+      },
+      {
+        "suffix": "steel_galvanized",
+        "source_id": 19,
+        "source_material": "MT.SteelGalvanized",
+        "java_material": "ImportedMaterialData.SteelGalvanized",
+        "source_line": 210
+      },
+      {
+        "suffix": "meteorite",
+        "source_id": 43,
+        "source_material": "MT.Meteorite",
+        "java_material": "ImportedMaterialData.Meteorite",
+        "source_line": 211
+      },
+      {
+        "suffix": "meteoric_steel",
+        "source_id": 24,
+        "source_material": "MT.MeteoricSteel",
+        "java_material": "ImportedMaterialData.MeteoricSteel",
+        "source_line": 212
+      },
+      {
+        "suffix": "gilded_iron",
+        "source_id": 20,
+        "source_material": "MT.GildedIron",
+        "java_material": "ImportedMaterialData.GildedIron",
+        "source_line": 213
+      },
+      {
+        "suffix": "molybdenum",
+        "source_id": 49,
+        "source_material": "MT.Mo",
+        "java_material": "ImportedMaterialData.Mo",
+        "source_line": 214
+      },
+      {
+        "suffix": "syrmorite",
+        "source_id": 44,
+        "source_material": "MT.Syrmorite",
+        "java_material": "ImportedMaterialData.Syrmorite",
+        "source_line": 215
+      },
+      {
+        "suffix": "electrum",
+        "source_id": 7,
+        "source_material": "MT.Electrum",
+        "java_material": "ImportedMaterialData.Electrum",
+        "source_line": 216
+      },
+      {
+        "suffix": "stainless_steel",
+        "source_id": 11,
+        "source_material": "MT.StainlessSteel",
+        "java_material": "ImportedMaterialData.StainlessSteel",
+        "source_line": 217
+      },
+      {
+        "suffix": "thaumium",
+        "source_id": 27,
+        "source_material": "MT.Thaumium",
+        "java_material": "ImportedMaterialData.Thaumium",
+        "source_line": 218
+      },
+      {
+        "suffix": "manasteel",
+        "source_id": 40,
+        "source_material": "MT.Manasteel",
+        "java_material": "ImportedMaterialData.Manasteel",
+        "source_line": 219
+      },
+      {
+        "suffix": "efrine",
+        "source_id": 53,
+        "source_material": "MT.Efrine",
+        "java_material": "ImportedMaterialData.Efrine",
+        "source_line": 220
+      },
+      {
+        "suffix": "tungsten_alloy",
+        "source_id": 52,
+        "source_material": "MT.TungstenAlloy",
+        "java_material": "ImportedMaterialData.TungstenAlloy",
+        "source_line": 221
+      },
+      {
+        "suffix": "titanium",
+        "source_id": 12,
+        "source_material": "MT.Ti",
+        "java_material": "ImportedMaterialData.Ti",
+        "source_line": 222
+      },
+      {
+        "suffix": "netherite",
+        "source_id": 51,
+        "source_material": "MT.Netherite",
+        "java_material": "ImportedMaterialData.Netherite",
+        "source_line": 223
+      },
+      {
+        "suffix": "chromium",
+        "source_id": 13,
+        "source_material": "MT.Cr",
+        "java_material": "ImportedMaterialData.Cr",
+        "source_line": 224
+      },
+      {
+        "suffix": "platinum",
+        "source_id": 4,
+        "source_material": "MT.Pt",
+        "java_material": "ImportedMaterialData.Pt",
+        "source_line": 225
+      },
+      {
+        "suffix": "octine",
+        "source_id": 45,
+        "source_material": "MT.Octine",
+        "java_material": "ImportedMaterialData.Octine",
+        "source_line": 226
+      },
+      {
+        "suffix": "desh",
+        "source_id": 30,
+        "source_material": "MT.Desh",
+        "java_material": "ImportedMaterialData.Desh",
+        "source_line": 227
+      },
+      {
+        "suffix": "terrasteel",
+        "source_id": 42,
+        "source_material": "MT.Terrasteel",
+        "java_material": "ImportedMaterialData.Terrasteel",
+        "source_line": 228
+      },
+      {
+        "suffix": "tungstensteel",
+        "source_id": 14,
+        "source_material": "MT.TungstenSteel",
+        "java_material": "ImportedMaterialData.TungstenSteel",
+        "source_line": 229
+      },
+      {
+        "suffix": "tungsten_carbide",
+        "source_id": 17,
+        "source_material": "MT.TungstenCarbide",
+        "java_material": "ImportedMaterialData.TungstenCarbide",
+        "source_line": 230
+      },
+      {
+        "suffix": "duranium",
+        "source_id": 31,
+        "source_material": "MT.DuraniumAlloy",
+        "java_material": "ImportedMaterialData.DuraniumAlloy",
+        "source_line": 231
+      },
+      {
+        "suffix": "draconium",
+        "source_id": 35,
+        "source_material": "MT.Draconium",
+        "java_material": "ImportedMaterialData.Draconium",
+        "source_line": 232
+      },
+      {
+        "suffix": "ultimet",
+        "source_id": 48,
+        "source_material": "MT.Ultimet",
+        "java_material": "ImportedMaterialData.Ultimet",
+        "source_line": 233
+      },
+      {
+        "suffix": "desh_alloy",
+        "source_id": 55,
+        "source_material": "MT.DeshAlloy",
+        "java_material": "ImportedMaterialData.DeshAlloy",
+        "source_line": 234
+      },
+      {
+        "suffix": "tungsten",
+        "source_id": 26,
+        "source_material": "ANY.W",
+        "java_material": "ImportedMaterialData.W",
+        "source_line": 235
+      },
+      {
+        "suffix": "palladium",
+        "source_id": 59,
+        "source_material": "MT.Pd",
+        "java_material": "ImportedMaterialData.Pd",
+        "source_line": 236
+      },
+      {
+        "suffix": "iridium",
+        "source_id": 15,
+        "source_material": "MT.Ir",
+        "java_material": "ImportedMaterialData.Ir",
+        "source_line": 237
+      },
+      {
+        "suffix": "osmium",
+        "source_id": 29,
+        "source_material": "MT.Os",
+        "java_material": "ImportedMaterialData.Os",
+        "source_line": 238
+      },
+      {
+        "suffix": "void_metal",
+        "source_id": 28,
+        "source_material": "MT.VoidMetal",
+        "java_material": "ImportedMaterialData.VoidMetal",
+        "source_line": 239
+      },
+      {
+        "suffix": "elven_elementium",
+        "source_id": 41,
+        "source_material": "MT.ElvenElementium",
+        "java_material": "ImportedMaterialData.ElvenElementium",
+        "source_line": 240
+      },
+      {
+        "suffix": "tritanium",
+        "source_id": 32,
+        "source_material": "MT.TritaniumAlloy",
+        "java_material": "ImportedMaterialData.TritaniumAlloy",
+        "source_line": 241
+      },
+      {
+        "suffix": "adamantium",
+        "source_id": 33,
+        "source_material": "MT.Ad",
+        "java_material": "ImportedMaterialData.Ad",
+        "source_line": 242
+      },
+      {
+        "suffix": "bedrock_hsla",
+        "source_id": 34,
+        "source_material": "MT.Bedrock_HSLA_Alloy",
+        "java_material": "ImportedMaterialData.Bedrock_HSLA_Alloy",
+        "source_line": 243
+      },
+      {
+        "suffix": "draconium_awakened",
+        "source_id": 36,
+        "source_material": "MT.DraconiumAwakened",
+        "java_material": "ImportedMaterialData.DraconiumAwakened",
+        "source_line": 244
+      },
+      {
+        "suffix": "infinity",
+        "source_id": 50,
+        "source_material": "MT.Infinity",
+        "java_material": "ImportedMaterialData.Infinity",
+        "source_line": 245
+      }
+    ],
+    "identities": 420,
+    "source_files": [
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+        "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\OP.java",
+        "sha256": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\load\\LoaderOreDictReRegistrations.java",
+        "sha256": "d34719309a5ddf5bd7fc01c0462b57af52b4cf980a69fae4d4042c2ab78b07ef"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\ANY.java",
+        "sha256": "6a26fa2293c4a315d2594c5ac80eba689389f9b1922a33547bdd20d2df724f71"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\LICENSE",
+        "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577"
+      }
+    ],
+    "authors": [
+      "GregTech-6 Team",
+      "Gregorius Techneticies"
+    ],
+    "license": "LGPL-3.0-or-later",
+    "boundaries": "Seven adopted native metalset families; exact original units. No invented material for charging/logistics/lockers or unrelated legacy IDs. Native suffix order and material identities verified by shared source contracts."
+  },
+  "registration_audit_summary": {
+    "fixed": 471,
+    "basic_machine_keys": 252,
+    "hoppers": 120,
+    "storage": 420,
+    "total_block_identities": 1011,
+    "hopper_level": "Explicit0 in canonical lines145..146; replaces incorrect material-derived quality from9d386098 and supplies actual8000/8200+metalset source IDs",
+    "previous_fixed_and_basic_generated_rows_unchanged": true
+  },
+  "language": {
+    "keys": [
+      "gt.lang.key.controlled",
+      "gt.lang.nogui.rightclick.interact",
+      "gt.lang.owner.controlled",
+      "gt.lang.tool.name.wrench",
+      "gt.lang.use.cutter.to.toggle",
+      "gt.lang.use.magnifyingglass.to.detail",
+      "gt.lang.use.monkey.wrench.to.toggle",
+      "gt.lang.use.monkey.wrench.to.toggle.auto.outputs",
+      "gt.lang.use.monkey.wrench.to.toggle.inputs",
+      "gt.lang.use.pincers.to.take",
+      "gt.lang.use.screwdriver.to.toggle",
+      "gt.lang.use.soft.hammer.to.reset",
+      "gt.lang.use.tape",
+      "gt.lang.use.untape",
+      "gt.lang.use.x.to.toggle.facing.post",
+      "gt.lang.use.x.to.toggle.facing.pre",
+      "gt.multitileentity.hopper.tooltip.1",
+      "gt.multitileentity.hopper.tooltip.2",
+      "gt.multitileentity.hopper.tooltip.3",
+      "gt.multitileentity.massstorage.tooltip.1",
+      "gt.multitileentity.massstorage.tooltip.2",
+      "loot.bonusChest",
+      "loot.dungeonChest",
+      "loot.mineshaftCorridor",
+      "loot.pyramidDesertyChest",
+      "loot.pyramidJungleChest",
+      "loot.pyramidJungleDispenser",
+      "loot.strongholdCorridor",
+      "loot.strongholdCrossing",
+      "loot.strongholdLibrary",
+      "loot.villageBlacksmith"
+    ],
+    "count": 31,
+    "changed": {
+      "en_us": {
+        "gt.lang.use.cutter.to.toggle": {
+          "before": null,
+          "after": "Use Cutter to toggle Modes"
+        },
+        "gt.lang.use.monkey.wrench.to.toggle": {
+          "before": null,
+          "after": "Use Monkey Wrench to toggle Modes"
+        },
+        "gt.lang.use.monkey.wrench.to.toggle.inputs": {
+          "before": null,
+          "after": "Use Monkey Wrench to toggle Inputs"
+        },
+        "gt.lang.use.pincers.to.take": {
+          "before": null,
+          "after": "Use Pincers to extract Items"
+        },
+        "gt.lang.use.screwdriver.to.toggle": {
+          "before": null,
+          "after": "Use Screwdriver to toggle Modes"
+        },
+        "gt.lang.use.soft.hammer.to.reset": {
+          "before": null,
+          "after": "Use Soft Hammer to Reset"
+        },
+        "gt.lang.use.tape": {
+          "before": null,
+          "after": "Use Duct Tape to do anything Duct Tape can do!"
+        },
+        "gt.lang.use.untape": {
+          "before": null,
+          "after": "Use Scissors or a Knife to remove Tape"
+        },
+        "gt.multitileentity.hopper.tooltip.1": {
+          "before": null,
+          "after": "Slot Count: "
+        },
+        "gt.multitileentity.hopper.tooltip.2": {
+          "before": null,
+          "after": "Slot Size: "
+        },
+        "gt.multitileentity.hopper.tooltip.3": {
+          "before": null,
+          "after": "Exact Insertion Mode"
+        },
+        "gt.multitileentity.massstorage.tooltip.1": {
+          "before": null,
+          "after": "Can store Items of one Type, Capacity: "
+        },
+        "gt.multitileentity.massstorage.tooltip.2": {
+          "before": null,
+          "after": "Can be used adjacent to Advanced Crafting Tables"
+        },
+        "loot.bonusChest": {
+          "before": null,
+          "after": "-Bonus Chest-"
+        },
+        "loot.dungeonChest": {
+          "before": null,
+          "after": "*Dungeon*"
+        },
+        "loot.mineshaftCorridor": {
+          "before": null,
+          "after": "+Mineshaft+"
+        },
+        "loot.pyramidDesertyChest": {
+          "before": null,
+          "after": "*Desert Pyramid*"
+        },
+        "loot.pyramidJungleChest": {
+          "before": null,
+          "after": "*Jungle Temple*"
+        },
+        "loot.pyramidJungleDispenser": {
+          "before": null,
+          "after": "-Dispenser-"
+        },
+        "loot.strongholdCorridor": {
+          "before": null,
+          "after": "-Corridor-"
+        },
+        "loot.strongholdCrossing": {
+          "before": null,
+          "after": "+Storage+"
+        },
+        "loot.strongholdLibrary": {
+          "before": null,
+          "after": "+Library+"
+        },
+        "loot.villageBlacksmith": {
+          "before": null,
+          "after": "*Blacksmith*"
+        }
+      },
+      "zh_cn": {}
+    },
+    "chinese_exact_original_patch": true,
+    "english_hopper_shared_key": "Queue Hopper original LH.add follows Hopper and overrides tooltip.2 with Slot Size: ",
+    "files": [
+      {
+        "path": "C:\\Dev\\GregTech_zh_cn.lang",
+        "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+        "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\inventories\\MultiTileEntityMassStorage.java",
+        "sha256": "ecf73ec1fba294c5f137cc814ea2152aa372861f4e60a1f81939ea60c2dc70cd"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\inventories\\MultiTileEntityHopper.java",
+        "sha256": "70670f0cd2232a0e5cac49603b1014991c16819e9294d49968fc44b217b9c4a6"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\inventories\\MultiTileEntityQueueHopper.java",
+        "sha256": "324b8ffa681347a9d41acce42ff719345bfb79d60b30c6f67a4a8c699205eaa9"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+        "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5"
+      }
+    ]
+  },
+  "port_files": [
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\client\\StorageBlockTooltips.java",
+      "sha256": "7790a01cdda955cf9d5ebb1aee783ffb03f3b51a7f6c74229bb1f52e32de09df"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\client\\HopperTooltips.java",
+      "sha256": "5bd45bfcf4faec431569b908ac298c3685595929fcc509cae9a60cf1a103abfc"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\client\\CommonBlockTooltips.java",
+      "sha256": "a88866edfd2346ddd78771e737ca6c2f2a5a8f1b69c233e57fb2c84de957211d"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\block\\inventory\\SafeBlock.java",
+      "sha256": "6357953e5c2125d73f7f125a507eb62e08090a08950f8c84cf492831a2faf601"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\block\\inventory\\MassStorageBlock.java",
+      "sha256": "04d08fb869d2c17dd3f0327cac38d5c85abdead61dc9cee96a9930eadef5a209"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\block\\inventory\\DrawerQuadBlock.java",
+      "sha256": "c34b9e6a337c67c12f0c1ed19d787fc8236d1482182b5fa5327d9e587f5e1458"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\block\\inventory\\BottleCrateBlock.java",
+      "sha256": "f56d3c98c1a5dc8c20905b4d068f7e011d6d5243a4e7c2a9142f241ab7e1f6a9"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\AdvancedCraftingTableBlock.java",
+      "sha256": "cbef5895d054451667d8d314661c200da2d1676b448bfcf25fbcf73385f456fa"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\HopperBlockItem.java",
+      "sha256": "552e6eb4e3d1e2a0ee5e9292f8b26e9713ba0ad275183fdada3b1f8cfd660184"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\QueueHopperBlockItem.java",
+      "sha256": "2f59845b1d7c2a2681e9635c085e3059cbc384f212926a6387f542661ed68bef"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\inventory\\MassStorageBlockEntity.java",
+      "sha256": "6de3917b61f6433d2bdb695d485f2eaaea2becdc97b2d52cd68e2318f11dbda2"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\data\\BlockHarvestPolicy.java",
+      "sha256": "a2e95c69c1b2ac80b5f34b5c52e7506f3419829476bfd53ed91b0831b28d4a4e"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\data\\BlockLootPack.java",
+      "sha256": "afd94c3e60d9e401cc0d5e5601ab0715f0802a7a62eaac0791bffcc57e954b89"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\api\\material\\ItemMaterialRegistry.java",
+      "sha256": "3851d26a5aef6aa84cb40dd5349f5d845a982f365391e66c4c9a99af67127804"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\Loader_HandToolCraftingRecipes.java",
+      "sha256": "00a31f63f6f8bd26b6049e25a666fd59efe555ac4fba9f379af47ee84d4774bc"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\content\\recipe\\VanillaRecoveryRecipes.java",
+      "sha256": "da7f3920a6010f44f67773f6eb1a7541788f9fc0d74dc83ae2abe9ddac0a95cd"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\client\\StorageBlockTooltips.java",
+      "sha256": "06b16ba6c4f1631558cb696d387e2f60c93b1a2f57553b574f66ed5ef2efbe7b"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\client\\HopperTooltips.java",
+      "sha256": "5bd45bfcf4faec431569b908ac298c3685595929fcc509cae9a60cf1a103abfc"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\client\\CommonBlockTooltips.java",
+      "sha256": "b8a6fd9edadb1ea05dd0af7ad8a0f9ba08eaddfd7d1e84f79dc13e9ea4afb841"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\block\\inventory\\SafeBlock.java",
+      "sha256": "f90a964a1bd5e394e7c26b548ed2db33abe106ea00dca0ecd484454e55abcf1f"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\block\\inventory\\MassStorageBlock.java",
+      "sha256": "27d947a535b9d3773c557a1e157092f8d702018b1ba831c8e274ab12bfc8f122"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\block\\inventory\\DrawerQuadBlock.java",
+      "sha256": "374ba7768b65b17338e4b8969f0d6d809777dcc6368d06dde78d3af9fbe75a1c"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\block\\inventory\\BottleCrateBlock.java",
+      "sha256": "d12952d73b14b75cf4ad7220fdef2fc75d1af995e88e9822675c752baff11f09"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\block\\misc\\AdvancedCraftingTableBlock.java",
+      "sha256": "d34f26fe0f8617307c411de14da2ce25b2c6f2b0220bdbd9fc1aeec08ae6a37d"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\HopperBlockItem.java",
+      "sha256": "c5cd7fb857d59a00825003b562aa20f357d5f3d419abf88fcd18ebeb0bbb29a2"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\QueueHopperBlockItem.java",
+      "sha256": "1a52c6f28d3c145fdb760a754de0aa5ef719fef052f8a6129645977510ad0239"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\inventory\\MassStorageBlockEntity.java",
+      "sha256": "846a7b9eeebb7505669c44081cb91c1809bfb97c44abe50d2c07c929e7a76349"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\data\\BlockHarvestPolicy.java",
+      "sha256": "5d73e950807693fb520f88ec7dab3df99c34045b5db3dce785af7c233131b7d3"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\data\\BlockLootPack.java",
+      "sha256": "b2d2c4f7ebd870a75928dc52c09a423e6421a9587f98266749876327f5386e30"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\api\\material\\ItemMaterialRegistry.java",
+      "sha256": "cd486710098190c4c54140dc77f19309dd243b6d8858afd67cdf5f9a9d297e81"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\data\\OriginalHandCraftingRows.java",
+      "sha256": "fcde68ceb51b711c12d5a6c29bcf8c5b5a77c30b7567f64b37cd35ac78ef7e93"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\content\\recipe\\VanillaRecoveryRecipes.java",
+      "sha256": "0ec28b8bef9a8120b6d02d1b955a011e6519dae43805789bd438e7570c163e6c"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTMaterialRegistration.java",
+      "sha256": "9087cc5f8a857dfce0d1c703d96216d6770712f6db3a2b9b4e3eb1a9a12bf861"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\platform\\neoforge\\GregTechNeoForge.java",
+      "sha256": "eb0f5df4d46d1854651ec6d51f6b75c4e57d0ec8ab4b228dba2077331aa0ab38"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\CommonBlockDeliveryChecks.java",
+      "sha256": "bff29a852743fbd80298fc39c74f59c4c0f0841538c01030e7942657092d1865"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\CommonBlockDeliveryChecks.java",
+      "sha256": "055e4f0f522053c651ed56f5a2f82f0007bde47182c64fc896c4d432b7cc4170"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\machine\\OriginalStorageMaterialData.java",
+      "sha256": "216ee148452d8f3891847bfd9767811f33d5400257424f58504a7e7d527a3d9d"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\machine\\MachineConstructionMaterials.java",
+      "sha256": "2aace1aa37b76a34edf5793bd6bb29a5745a7a5bc496fa315cb762a8c2f6793e"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\storage\\OriginalStorageTooltipData.java",
+      "sha256": "12edefea9d7c26a77bd7d384f474979b7c4d7c8add106e32dc82640ceb1f396d"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\data\\SourceBlockProperties.java",
+      "sha256": "d6ab7e0773737f5ea4e7f0f8dee66557e363d482ed3d7c95260a53b94d52581a"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\test\\java\\com\\gregtech\\gregtech\\core\\MachineSpecBehaviorContracts.java",
+      "sha256": "9399f3c0d2f2cbd4e0b6780194896817ec36aabe225a26f6dd237a8c8c9a9f18"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\lang\\en_us.json",
+      "sha256": "c7ed0f904183b020a8d718ac36012f9063dadbbe0198fad82a6d7dada96c59d2"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\lang\\zh_cn.json",
+      "sha256": "a09d19d30fab37adfb5f93b54e35d3b8119da156d0a083e6c5505a4987f1a1e5"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\integration\\generate_storage_material_data.py",
+      "sha256": "a99130271fee83110be4f5b4daed17e590149bb1bcaceb02d4d9bcf1aab33990"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\integration\\generate_source_block_properties.py",
+      "sha256": "6500d32f03e662d41bd95ac83f4865e1e8380b174a33ef37a47dfccaff0e50f5"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTStorageMetals.java",
+      "sha256": "fcbc5bebe0864e864934791dc3e2b2142cf0f24463ca8f1b56407ca0b5aabe23"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\transport\\HopperCatalog.java",
+      "sha256": "bad6e2ad4400bdf4bcad328b47273c5e2721e392fdbaa77cf4bc8ff4ee154889"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\machine\\OriginalMachineMaterialData.java",
+      "sha256": "57bba827902f40b8aa2de4b007d550a0ddfd11b87eb1d77dd585032155f57123"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\api\\material\\ReversibleCraftingData.java",
+      "sha256": "b54213e2c66afd967f2e39be48fc9e090760dd15531b71f9633ee5e6feea165d"
+    }
+  ],
+  "attempts": [
+    {
+      "status": "failed",
+      "gradle_seconds": 9,
+      "source_assertions": null,
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\storage-source-compile-20261007.log",
+        "sha256": "65229837bea4d9194f31a6a9b3337fa709e9435a23cbaaab1dccefece65b067f"
+      },
+      "description": "initial fixture expected4012 rather than canonical4011"
+    },
+    {
+      "status": "passed",
+      "gradle_seconds": 24,
+      "source_assertions": 2282,
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\storage-source-compile-20261007-retry.log",
+        "sha256": "8107d20cce51a3f7d214ad583a5f17e24e12bf89a18d2bb19b7e0c81d1a7898d"
+      },
+      "description": "native main/probe compilation with source contracts"
+    },
+    {
+      "status": "passed",
+      "gradle_seconds": 11,
+      "source_assertions": 2402,
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\storage-source-compile-20261007-final.log",
+        "sha256": "7afa38013ec4faf26ba347e58f215dc3cde7b12f8bfd6de2cba6e35fae008a27"
+      },
+      "description": "real hopper source IDs; native compiler outputs remain current by Gradle ABI tracking"
+    },
+    {
+      "status": "passed",
+      "gradle_seconds": 24,
+      "source_assertions": null,
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\storage-source-compile-20261007-empty-loot.log",
+        "sha256": "31580e3f114053b888fc000253a6f99b046695d5e28ceec52615d2461de047a2"
+      },
+      "description": "native main and probes recompiled after absent/empty saved loot-name guard; no source domain change"
+    }
+  ],
+  "shared_source_assertions": 2402,
+  "native_probe_prepared": {
+    "source_block_identities": 1011,
+    "safes": 120,
+    "drawers": 60,
+    "crafting_tables": 120,
+    "hoppers": 120,
+    "mass_storages": 121,
+    "bottle_crates": "61+BottleCrateVariants.WOODS.size",
+    "saved_mass_states": "taped/untaped; retained zero filter and legacy overcapacity; custom item name",
+    "saved_hopper_states": "configured16/exact ordinary vs queue; queue minimum2/default64",
+    "loot": "explicit modern/source label mapping and custom identity",
+    "recovery": "all stored/configured block items remain excluded",
+    "executed": false
+  },
+  "verification": {
+    "core_source_checks": true,
+    "forge_main_compiled": true,
+    "neo_main_compiled": true,
+    "both_probes_compiled": true,
+    "ordinary_dual_jars": false,
+    "installed_client_startup": false,
+    "native_world_harvest": false,
+    "complete_survival": false,
+    "independent_world_restart": false,
+    "old_saves": false
+  },
+  "last_accepted_pair": "C:/Dev/GregTech6/build/verified/20261006-230254Z-c1f1e1bc",
+  "limitations": [
+    "Remaining storage/charging/logistics/locker/book/scaffold compositions are not guessed.",
+    "This batch does not restore chest/locker/etc remaining class-specific rows.",
+    "Source blinking loot colour is static cyan at the native text boundary.",
+    "Saved original variable capacity not implemented: runtime and tooltip both use current source default1000000.",
+    "Compile/probe preparation does not prove native tooltip events, harvesting, recovery recipes, game startup or world restart."
+  ],
+  "publication": "Local only; no push or PR; whole port goal active"
+}

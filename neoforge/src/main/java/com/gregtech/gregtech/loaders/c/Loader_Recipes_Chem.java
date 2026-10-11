@@ -78,16 +78,8 @@ public class Loader_Recipes_Chem implements IGTLoader {
         biomassDistillation("Biomass");
         biomassDistillation("BiomassIC2");
 
-        // ── Cryogenic air separation: 200 mB air → N/O/CO2 fractions ────────
-        FluidStack air = make("Air", 200);
-        FluidStack nitrogen = gasOrLiquid("N", 0.937);
-        FluidStack oxygen = gasOrLiquid("O", 0.328);
-        FluidStack carbonDioxide = gasOrLiquid("CO2", 0.06);
-        if (air != null && nitrogen != null && oxygen != null && carbonDioxide != null) {
-            MachineRecipeMaps.CryoDistillationTower.addRecipe0(true, 64, 64, new long[]{9000},
-                    new FluidStack[]{air}, new FluidStack[]{nitrogen, oxygen, carbonDioxide});
-            added++;
-        } else skipped++;
+        // The original six-product air separation rows are registered by GTGeneratedChem.
+        // Do not shadow them with a same-input three-product approximation.
 
         LOGGER.info("[gregtech] Chemistry recipes: {} added, {} skipped (missing fluids/materials)", added, skipped);
 

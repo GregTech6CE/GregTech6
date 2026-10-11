@@ -1,3 +1,5 @@
+/* GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later.
+ * RecipeMapShredder.getRecipeFor accepts original OM.anydata/CR.REV machine data. */
 package com.gregtech.gregtech.content.recipe;
 
 import com.gregtech.gregtech.api.material.*;
@@ -16,7 +18,9 @@ public final class VanillaRecoveryRecipes {
     public static int register() {
         for (var item : BuiltInRegistries.ITEM.stream().sorted(Comparator.comparing(i -> BuiltInRegistries.ITEM.getKey(i).toString())).toList()) {
             var id = BuiltInRegistries.ITEM.getKey(item);
-            if (!id.getNamespace().equals("minecraft") && !PanelMaterialRegistration.recoveryItems().contains(item) && !TransportMaterialRegistration.recoveryItems().contains(item)) continue;
+            boolean auditedMachine = originalMachine(item);
+            if (!id.getNamespace().equals("minecraft") && !PanelMaterialRegistration.recoveryItems().contains(item)
+                    && !TransportMaterialRegistration.recoveryItems().contains(item) && !auditedMachine) continue;
             if (id.getPath().endsWith("_ore") || id.getPath().startsWith("raw_")) continue;
             var stack = new ItemStack(item);
             if (!ItemMaterialRegistry.canRecover(stack)) continue;
@@ -34,6 +38,14 @@ public final class VanillaRecoveryRecipes {
             for (var c : crushed.entrySet()) {
                 var dust = dust(c.getKey(), c.getValue());
                 if (dust.isEmpty()) { complete = false; break; }
+                // Missing blockDust must not silently truncate a large audited machine to64 piles.
+                // Fractional OM.dust rounding below one selected pile is retained.
+                if (auditedMachine) {
+                    var form = MaterialEquivalence.form(dust);
+                    if (form == null || c.getValue() - form.prefix().getMaterialWeight() * dust.getCount() >= form.prefix().getMaterialWeight()) {
+                        complete = false; break;
+                    }
+                }
                 outputs.add(dust);
                 long work = MaterialRecoveryRules.shredderWork(c.getKey());
                 duration += (c.getValue()*work+GTValues.U-1)/GTValues.U;
@@ -45,6 +57,19 @@ public final class VanillaRecoveryRecipes {
             if (MachineRecipeMaps.Shredder.addRecipe(recipe) != null) RECIPES.add(recipe);
         }
         return RECIPES.size();
+    }
+    /** Admit audited source compositions; coarse legacy hull estimates are not recovery data. */
+    private static boolean originalMachine(Item item) {
+        if (!(item instanceof BlockItem blockItem)) return false;
+        var block = blockItem.getBlock();
+        var id = BuiltInRegistries.BLOCK.getKey(block);
+        if (!id.getNamespace().equals("gregtech")) return false;
+        var expected = com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block(id.getPath());
+        if (expected.isEmpty() && block instanceof com.gregtech.gregtech.block.machine.BasicMachineBlock machine)
+            expected = com.gregtech.gregtech.content.machine.OriginalMachineMaterialData.find(machine.basicSpec().machineName(), machine.basicSpec().tier());
+        if (expected.isEmpty()) return false;
+        var registered = ItemMaterialRegistry.base(item);
+        return registered.isPresent() && registered.get().components().equals(expected.get().components());
     }
     /** OM.dust pile choice; floor any unrepresentable fraction, never manufacture extra mass. */
     private static ItemStack dust(GTMaterial material,long amount) {

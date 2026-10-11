@@ -1,0 +1,353 @@
+{
+  "date": "2026-10-07",
+  "base_commit": "61e66394db6340692eb96f5e61a1c45e64b7b271",
+  "authors": [
+    "GregTech-6 Team",
+    "Gregorius Techneticies"
+  ],
+  "license": "LGPL-3.0-or-later",
+  "new_assets": false,
+  "original": [
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577",
+      "bytes": 694
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\COPYING.LESSER",
+      "sha256": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118",
+      "bytes": 7652
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "bytes": 791265
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityVonDaGraagg.java",
+      "sha256": "8c6e65cb6766a4c9173dc5ee476b575775b437f6fc6a4f2a0984d20daa78ce59",
+      "bytes": 10274
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityBedrockDrill.java",
+      "sha256": "fd111e1e53ff208b425ad166419b1a381c8ef5b0e2d26d586bd1da8ac07abd08",
+      "bytes": 16591
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\sensors\\MultiTileEntityProgressmeter.java",
+      "sha256": "abacf7a552e8ed6987a62011408cef029363c9f955c51e7da0e643572966c234",
+      "bytes": 3927
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\machines\\MultiTileEntitySensorTE.java",
+      "sha256": "494f1305c7e2a0a20fb60d20dd1f5cbcfb8c96024cb344ac6fe48826c7aa5a94",
+      "bytes": 15676
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\multiblocks\\TileEntityBase10MultiBlockBase.java",
+      "sha256": "42ec92430ff6af7fb8d192aebfa424cc1af519d40ba2ff53a8e8c6afe8f9e738",
+      "bytes": 11378
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\base\\TileEntityBase09FacingSingle.java",
+      "sha256": "b172aadf76d09c37ee4c7793cb784dcc97a19d999ad1737bafc60cc064bece7f",
+      "bytes": 5485
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\data\\ITileEntityProgress.java",
+      "sha256": "cb6dee3cb77b507adae51146beca44ef8e79100b3503d2c61f516c8c83c46774",
+      "bytes": 1200
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\data\\ITileEntityGibbl.java",
+      "sha256": "73eeddcbe3442a47d8c71f5ae955f9866f43f0aa63dc6b347f2b7d3a70901143",
+      "bytes": 1343
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+      "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8",
+      "bytes": 51085
+    }
+  ],
+  "translation_patch": {
+    "path": "C:\\Dev\\GregTech_zh_cn.lang",
+    "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0",
+    "bytes": 7375784
+  },
+  "current": [
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\OriginalUtilityControllerData.java",
+      "sha256": "26f65ddc22c7beb08c18e4cb7ba0bc7952f44392dd025334b446b4a6bff28fde",
+      "bytes": 1670
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\VonDaGraaggRules.java",
+      "sha256": "988ab26decbf293eed4f42a6c9b789bef478af000c44e5bfe911ae4d226edfd2",
+      "bytes": 1727
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\lang\\en_us.json",
+      "sha256": "bef2d8fbd2729633a19a25c1ebd8793c212ad0a0d711d1af1d295c932e933b8e",
+      "bytes": 758683
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\lang\\zh_cn.json",
+      "sha256": "1f0cccd6612bc2d2b2c65de2b420ac36538d23965883ba122a676a28dc934a65",
+      "bytes": 8454469
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\test\\java\\com\\gregtech\\gregtech\\core\\MachineSpecBehaviorContracts.java",
+      "sha256": "29ecf0b30ed7e3f78762221a32659b0dbdec3dc97ddea3d5803d675ae3adc210",
+      "bytes": 91362
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\test\\java\\com\\gregtech\\gregtech\\core\\UtilityControllerContracts.java",
+      "sha256": "67629f264e96a10dc8b3d09f50b0448fd13de724b951bc3a2eedce5201af22b7",
+      "bytes": 5299
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\SensorSourceTests.java",
+      "sha256": "447b04ab4b97fb441e4fe051bfe5dc2f8b543b4febf7180f71331c530184cb74",
+      "bytes": 13701
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\BedrockDrillControllerBlock.java",
+      "sha256": "a45da3ec4cb8eebb8ec06f6c5b3d95e81d59e1159faedb3dac3be07c26455e8a",
+      "bytes": 5738
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\VonDaGraaggControllerBlock.java",
+      "sha256": "da241858114fed3702e9649fc9978b67a7f21128c94be700af0fa3a1f7684b61",
+      "bytes": 2472
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\VonDaGraaggControllerBlockEntity.java",
+      "sha256": "0f6ec3c64548f1cdc6039ac57dea4f582407eb38941b7edca9aa82d21d105e22",
+      "bytes": 9225
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\sensor\\SensorBlockEntity.java",
+      "sha256": "00696ea0a2fde88d9bbd7c50ebf910bd79b953bbda947eb5721c2b7bfd2653e3",
+      "bytes": 22411
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\client\\UtilityControllerTooltips.java",
+      "sha256": "d63bc925fb332624465bc1588e59ff677801e9449d82c99e993532aea479d786",
+      "bytes": 5169
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTMultiblocks.java",
+      "sha256": "9a810879950212b59abcdd29791c0931954f7fbba9ad08fb78292f242c14d271",
+      "bytes": 11171
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\gregtech-neoforge.mixins.json",
+      "sha256": "1ce291ff0b8cabc5dc8294d23a0bb9a98b1a5130db258b6e128d0deb12694e1a",
+      "bytes": 984
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\CommonBlockDeliveryChecks.java",
+      "sha256": "3cfdfa5c368816ec3160a5380a231c44c1796ae8504fe53ad90e2d53aa7e7b6c",
+      "bytes": 20528
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\ProcessControllerDeliveryChecks.java",
+      "sha256": "b82ab89a5378aa86b2087ca22018e46da85d243cf95ea16374775ad137a5179d",
+      "bytes": 8436
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\UtilityControllerDeliveryChecks.java",
+      "sha256": "a632085128a541c24afbdf8adc08bfc476e938c01b8e29fbeb111e343f18eeb9",
+      "bytes": 6986
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\SensorSourceTests.java",
+      "sha256": "70041b9ec773ec9816bec3269be023f7b62b0a426ad8bf212c571df02c1952ea",
+      "bytes": 13305
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\BedrockDrillControllerBlock.java",
+      "sha256": "a2bad54115db98ebb074bcd9751fb3ae1c11fb1de9451c09d65933fe026e2b0c",
+      "bytes": 4790
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\VonDaGraaggControllerBlock.java",
+      "sha256": "22928401592bcd85772f87ff49f32e5085413f22d91ec9e1486055348d4410fc",
+      "bytes": 2310
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\VonDaGraaggControllerBlockEntity.java",
+      "sha256": "168b1b73f31e7d9ae5a7b1b71e7b44523edb45afe80f1f69b9fd2ece0bda1174",
+      "bytes": 9088
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\sensor\\SensorBlockEntity.java",
+      "sha256": "e4552a1b830ca19e0bd282f41daffdbb3cf9c8aef7d056e507374b2b426272db",
+      "bytes": 22145
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\client\\UtilityControllerTooltips.java",
+      "sha256": "d63bc925fb332624465bc1588e59ff677801e9449d82c99e993532aea479d786",
+      "bytes": 5169
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\LargeMachineParts.java",
+      "sha256": "1ad7502248451260ba8969245204fef45f3415890946b9b1b34ec39cb000868e",
+      "bytes": 7206
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\MultiblockDefinitions.java",
+      "sha256": "a554ffc239796042f1133f95bcb7aa3dbd03480d75eb76a4e1ddfefcb0616028",
+      "bytes": 8043
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\gametest\\VonDaGraaggRepairTests.java",
+      "sha256": "bb93011a1996a4e2f04186f768bf025795e9fad86d3cff09d8c4bfd7875a2935",
+      "bytes": 8184
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\gregtech.mixins.json",
+      "sha256": "61ffd2338f69852eb88abab987f9e0935bc71359739238802e6dddfaddbf9ce5",
+      "bytes": 1030
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\CommonBlockDeliveryChecks.java",
+      "sha256": "1cf0728e376dff3b04a45663302499b8aad8289000b739632db919896302f7d9",
+      "bytes": 18942
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\ProcessControllerDeliveryChecks.java",
+      "sha256": "ce87a7345b642e7e980aff3f795eb9d81451b802a781f57d8c076258a8956623",
+      "bytes": 8384
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\UtilityControllerDeliveryChecks.java",
+      "sha256": "971bb06b69a257bff8b4263657f02d9b41d360086b12d55ff28e19bede8d68d6",
+      "bytes": 6932
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\integration\\generate_source_block_properties.py",
+      "sha256": "696cd50d6bb4e1fdf21f4c7ba569468e54ef1ee04ea301b44bf778ec79694ed5",
+      "bytes": 8085
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\api\\sensor\\ProgressSensorSource.java",
+      "sha256": "4d1466367e14f35096dc97811f6d62157aaba391a8b75cc29b2d90427e8aa311",
+      "bytes": 384
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\mixin\\BaseSpawnerAccessor.java",
+      "sha256": "2f9d8d0d392afe0cc05c9745c0a1a28ebdeebf5a3efbec6071bb4a351b76cc39",
+      "bytes": 389
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\mixin\\BaseSpawnerAccessor.java",
+      "sha256": "2f9d8d0d392afe0cc05c9745c0a1a28ebdeebf5a3efbec6071bb4a351b76cc39",
+      "bytes": 389
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\machine\\OriginalMachineMaterialData.java",
+      "sha256": "e38fbced7a63769aebe9d66dd22a031e399b638cff3a4e8adccdb198ecc72b94",
+      "bytes": 213071
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\machine\\MachineConstructionMaterials.java",
+      "sha256": "9aa272fe9a0ade82a7d1c9b205016a06c912119f5c6c847f2e31b3cc6ea6384b",
+      "bytes": 2473
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\data\\SourceBlockProperties.java",
+      "sha256": "89d378e8c17b45bcd27431af43d5278669257a65b5c00e68f9c3eef0c2c456d8",
+      "bytes": 107151
+    }
+  ],
+  "source_contract": {
+    "utility_aliases": 2,
+    "precise_material_paths": 1501,
+    "source_harvest_paths": 1543,
+    "fixed_material_rows_unchanged": 647,
+    "fixed_harvest_rows_unchanged": 689,
+    "basic_rows_unchanged": 265,
+    "vdg": {
+      "source_id": 17996,
+      "hardness": 6,
+      "resistance": 6,
+      "inputEU": [
+        256,
+        2048,
+        4096
+      ],
+      "liveRangeMaximum": 255,
+      "sensorRangeMaximum": 256,
+      "rawCompressionMaximum": 256000,
+      "knownMaterialU": {
+        "NetherStar": 1,
+        "Pt": 2,
+        "Ruby": 2,
+        "SteelGalvanized": 8,
+        "EnderEye": 1
+      }
+    },
+    "bedrock": {
+      "source_id": 17999,
+      "legacy": "bedrock_drill_main",
+      "canonical": "bedrock_mining_drill_controller",
+      "hardness": 9,
+      "resistance": 9,
+      "knownMaterialU": {
+        "Pt": 4.5,
+        "Ruby": 2,
+        "Rubber": 11,
+        "AnnealedCopper": 20,
+        "Ti": 59,
+        "NeodymiumMagnetic": 1,
+        "TungstenSteel": 12,
+        "Steel": 4
+      }
+    },
+    "source_english_structure_lines": 4,
+    "verbatim_patch_tooltip_keys": 12,
+    "verbatim_patch_names": 3
+  },
+  "verification": {
+    "logs": [
+      {
+        "path": "C:\\Dev\\GregTech6\\work\\special-controller-compile-20261007.log",
+        "sha256": "aef5ea38b5303df100dae8d39431bce6c1931c1a23fb1853eb05f299a70e25ac",
+        "bytes": 52664
+      },
+      {
+        "path": "C:\\Dev\\GregTech6\\work\\special-controller-probe-20261007.log",
+        "sha256": "9da9f751b262bf50c09781cf21ffb9ece0c75d4924f3ae2020dd19e0c8b506b5",
+        "bytes": 1715
+      }
+    ],
+    "first_build_seconds": 72,
+    "source_assertions": 7706,
+    "second_probe_compile_seconds": 18,
+    "dual_main_compile": true,
+    "dual_probe_compile": true,
+    "dual_bootstrap_compile": true,
+    "forge_accessor_mapping": "spawnDelay -> f_45442_:I",
+    "world_executed": false,
+    "installed_clients_executed": false,
+    "ordinary_artifacts_built": false,
+    "prepared": {
+      "utility_items": 4,
+      "utility_structure_rows": 26,
+      "process_items": 6,
+      "process_structure_rows": 32,
+      "sensor_world_required_scenarios_per_loader": 3,
+      "new_scenario": "original_raw_progress_and_spawner"
+    },
+    "preparation_failure": "Initial language extraction expected plain keys; patch uses S: prefixes. Stopped with KeyError before zh edit, corrected extraction, all12 keys/3names verified."
+  },
+  "remaining": [
+    "Actual new sensor/spawner mixin behavior, saved range fixture and native tooltip/material probes await pooled world/installed execution.",
+    "No fresh JAR acceptance. Last accepted 20261007-073648Z-c4aacc57 excludes this batch.",
+    "VDG configurable energy type, facing/wrench behavior, source storage differences and native demand unit adaptation remain to review.",
+    "Heat exchanger variable/long output and source storage remain open; other sensor measurements and all-block source tooltips/materials continue.",
+    "No full natural survival chain, player hover capture, independent restart, old-world migration or ordinary dedicated server acceptance."
+  ],
+  "pushed": false
+}

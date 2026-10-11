@@ -1,0 +1,921 @@
+{
+  "date": "2026-10-07",
+  "baseline": "aaf60eb2ffa967702e9f4e25df04a4b414410069",
+  "authors": [
+    "GregTech-6 Team",
+    "Gregorius Techneticies"
+  ],
+  "license": "LGPL-3.0-or-later",
+  "prior_full_source_record": "machine-tooltip-source-20261007.json",
+  "source_files": [
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "bytes": 791265,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemTechnological.java",
+      "sha256": "7367922c4938318dd50b1320e7fc7a7453c33cffa46f75a437325314d2536ddc",
+      "bytes": 133807,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\MT.java",
+      "sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2",
+      "bytes": 693183,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\ANY.java",
+      "sha256": "6a26fa2293c4a315d2594c5ac80eba689389f9b1922a33547bdd20d2df724f71",
+      "bytes": 17964,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\OP.java",
+      "sha256": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e",
+      "bytes": 162128,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\load\\LoaderItemData.java",
+      "sha256": "0dc916611c9a743f477e473b75b3fa3462a47d22dd75ef086c33ea18aaa9f968",
+      "bytes": 264656,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\load\\LoaderOreDictReRegistrations.java",
+      "sha256": "d34719309a5ddf5bd7fc01c0462b57af52b4cf980a69fae4d4042c2ab78b07ef",
+      "bytes": 147540,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+      "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8",
+      "bytes": 51085,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "bytes": 153449,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\fluid\\FluidTankGT.java",
+      "sha256": "9e9c1500fb947048cc8ddcd4a19f44561d6d1278e2208381936b1ad483b25d7d",
+      "bytes": 14914,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\tank\\TileEntityBase08Barrel.java",
+      "sha256": "4723bed8e3871eee500b2ac988f60c899897629e9b4f5aefc028df6c7958fc45",
+      "bytes": 13190,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\block\\multitileentity\\MultiTileEntityRegistry.java",
+      "sha256": "70fb3ce00e7036e343e253e0f9fd8401b05c3f4f4e16b88f1b3fb94c3b111e83",
+      "bytes": 18347,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\block\\multitileentity\\MultiTileEntityItemInternal.java",
+      "sha256": "7e103a13f02097dcfd1c91334cb3da238b9f509ee4cbb584dfd7267bf26f8bb1",
+      "bytes": 40205,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\connectors\\TileEntityBase09Connector.java",
+      "sha256": "7c77c0fd093e5ff5fb889ad7f3cf6e0b75f5f7390a637b1ce76a2252269526ff",
+      "bytes": 8927,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\connectors\\TileEntityBase10ConnectorRendered.java",
+      "sha256": "4337cc83a2d68d44525e973faf3a7a4383bb56166562cc60f1bce77b8f9b0ad0",
+      "bytes": 17883,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\connectors\\MultiTileEntityPipeFluid.java",
+      "sha256": "3a6850055375e7975145b03abab44c5922746a6f4053dd8d3163de989f37b110",
+      "bytes": 30631,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\connectors\\MultiTileEntityPipeItem.java",
+      "sha256": "0e9aa956b807d8390b20dd70f224b2b8d0a7be8df25fe66660abffda8b88069b",
+      "bytes": 18620,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\util\\CR.java",
+      "sha256": "952f94e0dfff66d27d2ac2b97ed47b6aa0c8250aa19babd5cc528c89616c0760",
+      "bytes": 39113,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\oredict\\OreDictManager.java",
+      "sha256": "41376372c077030142a6e95385a74f9dde79c3b15d9a4de95cff99f371b44801",
+      "bytes": 45600,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\oredict\\OreDictItemData.java",
+      "sha256": "d44471d8e7d2d732891e79a0f234045a693290e29f3d463dbc79633283d8517f",
+      "bytes": 8695,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\oredict\\OreDictMaterial.java",
+      "sha256": "768707d5eeeb6b60f0c5d0a24b39ab50f6f173a29a40f0fa3365308cf0688371",
+      "bytes": 88912,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\oredict\\OreDictPrefix.java",
+      "sha256": "89c94fd1149297496e2904a7897b3ab33c02991009b232df0d70febabb8888f5",
+      "bytes": 31002,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\GT_API_Proxy_Client.java",
+      "sha256": "4ea2be4bb978e989127552dfb057e6f15415b84fe997382828123ba62c1576c8",
+      "bytes": 36465,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577",
+      "bytes": 694,
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:\\Dev\\GregTech_zh_cn.lang",
+      "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0",
+      "bytes": 7375784,
+      "usage": "Chinese keys copied verbatim from user-provided original patch; no new translation generated"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "4d87cacde8defa33df30359d345046daa8e901ab0419dca2766d2140d8af1562",
+      "bytes": 791308,
+      "usage": "read-only selected recipe comparison; entire source differs"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\items\\MultiItemTechnological.java",
+      "sha256": "0db7cdb85fa9601043c44b79d413df023e1d19e350f3d9e107fa8c3cc0aad374",
+      "bytes": 134120,
+      "usage": "read-only selected recipe comparison; entire source differs"
+    }
+  ],
+  "counts": {
+    "machine_tier_rows": 252,
+    "stable_block_rows": 425,
+    "hopper_rows": 120,
+    "additional_boiler_and_pump_rows": 30,
+    "component_recipe_dependencies": 676
+  },
+  "added_material_rows": [
+    {
+      "path": "rotational_pump_bronze",
+      "source_id": 16001,
+      "source_line": 1125,
+      "components": {
+        "Bronze": 14270256000,
+        "StainlessSteel": 7459452000
+      },
+      "pattern": [
+        "GwG",
+        "PMP",
+        "RPR"
+      ],
+      "keys": {
+        "M": "OP.casingMachineDouble.dat(aMat)",
+        "G": "OP.gearGt.dat(aMat)",
+        "R": "OP.rotor.dat(MT.StainlessSteel)",
+        "P": "OP.pipeSmall .dat(MT.StainlessSteel)"
+      }
+    },
+    {
+      "path": "rotational_pump_steel",
+      "source_id": 16002,
+      "source_line": 1126,
+      "components": {
+        "Steel": 14270256000,
+        "StainlessSteel": 11351340000
+      },
+      "pattern": [
+        "GwG",
+        "PMP",
+        "RPR"
+      ],
+      "keys": {
+        "M": "OP.casingMachineDouble.dat(aMat)",
+        "G": "OP.gearGt.dat(aMat)",
+        "R": "OP.rotor.dat(MT.StainlessSteel)",
+        "P": "OP.pipeMedium.dat(MT.StainlessSteel)"
+      }
+    },
+    {
+      "path": "rotational_pump_titanium",
+      "source_id": 16003,
+      "source_line": 1127,
+      "components": {
+        "Ti": 14270256000,
+        "StainlessSteel": 17189172000
+      },
+      "pattern": [
+        "GwG",
+        "PMP",
+        "RPR"
+      ],
+      "keys": {
+        "M": "OP.casingMachineDouble.dat(aMat)",
+        "G": "OP.gearGt.dat(aMat)",
+        "R": "OP.rotor.dat(MT.StainlessSteel)",
+        "P": "OP.pipeLarge .dat(MT.StainlessSteel)"
+      }
+    },
+    {
+      "path": "rotational_pump_tungstensteel",
+      "source_id": 16004,
+      "source_line": 1128,
+      "components": {
+        "TungstenSteel": 14270256000,
+        "StainlessSteel": 28864836000
+      },
+      "pattern": [
+        "GwG",
+        "PMP",
+        "RPR"
+      ],
+      "keys": {
+        "M": "OP.casingMachineDouble.dat(aMat)",
+        "G": "OP.gearGt.dat(aMat)",
+        "R": "OP.rotor.dat(MT.StainlessSteel)",
+        "P": "OP.pipeHuge  .dat(MT.StainlessSteel)"
+      }
+    },
+    {
+      "path": "steam_boiler_lead",
+      "source_id": 1200,
+      "source_line": 553,
+      "components": {
+        "Pb": 6486480000
+      },
+      "pattern": [
+        " P ",
+        "PwP",
+        "PhP"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(aMat)"
+      }
+    },
+    {
+      "path": "steam_boiler_bismuth",
+      "source_id": 1201,
+      "source_line": 554,
+      "components": {
+        "Bi": 6486480000
+      },
+      "pattern": [
+        " P ",
+        "PwP",
+        "PhP"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(aMat)"
+      }
+    },
+    {
+      "path": "steam_boiler_bronze",
+      "source_id": 1202,
+      "source_line": 555,
+      "components": {
+        "Bronze": 6486480000
+      },
+      "pattern": [
+        " P ",
+        "PwP",
+        "PhP"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(aMat)"
+      }
+    },
+    {
+      "path": "steam_boiler_arsenic_copper",
+      "source_id": 1210,
+      "source_line": 556,
+      "components": {
+        "ArsenicCopper": 6486480000
+      },
+      "pattern": [
+        " P ",
+        "PwP",
+        "PhP"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(aMat)"
+      }
+    },
+    {
+      "path": "steam_boiler_arsenic_bronze",
+      "source_id": 1211,
+      "source_line": 557,
+      "components": {
+        "ArsenicBronze": 6486480000
+      },
+      "pattern": [
+        " P ",
+        "PwP",
+        "PhP"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(aMat)"
+      }
+    },
+    {
+      "path": "steam_boiler_invar",
+      "source_id": 1203,
+      "source_line": 558,
+      "components": {
+        "Invar": 6486480000
+      },
+      "pattern": [
+        " P ",
+        "PwP",
+        "PhP"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(aMat)"
+      }
+    },
+    {
+      "path": "steam_boiler_steel",
+      "source_id": 1204,
+      "source_line": 559,
+      "components": {
+        "Steel": 6486480000
+      },
+      "pattern": [
+        " P ",
+        "PwP",
+        "PhP"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(aMat)"
+      }
+    },
+    {
+      "path": "steam_boiler_chromium",
+      "source_id": 1205,
+      "source_line": 560,
+      "components": {
+        "Cr": 6486480000
+      },
+      "pattern": [
+        " P ",
+        "PwP",
+        "PhP"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(aMat)"
+      }
+    },
+    {
+      "path": "steam_boiler_titanium",
+      "source_id": 1206,
+      "source_line": 561,
+      "components": {
+        "Ti": 6486480000
+      },
+      "pattern": [
+        " P ",
+        "PwP",
+        "PhP"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(aMat)"
+      }
+    },
+    {
+      "path": "steam_boiler_netherite",
+      "source_id": 1209,
+      "source_line": 562,
+      "components": {
+        "Netherite": 6486480000
+      },
+      "pattern": [
+        " P ",
+        "PwP",
+        "PhP"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(aMat)"
+      }
+    },
+    {
+      "path": "steam_boiler_tungsten",
+      "source_id": 1207,
+      "source_line": 563,
+      "components": {
+        "W": 6486480000
+      },
+      "pattern": [
+        " P ",
+        "PwP",
+        "PhP"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(aMat)"
+      }
+    },
+    {
+      "path": "steam_boiler_tungsten_steel",
+      "source_id": 1208,
+      "source_line": 564,
+      "components": {
+        "TungstenSteel": 6486480000
+      },
+      "pattern": [
+        " P ",
+        "PwP",
+        "PhP"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(aMat)"
+      }
+    },
+    {
+      "path": "steam_boiler_ultimet",
+      "source_id": 1212,
+      "source_line": 565,
+      "components": {
+        "Ultimet": 6486480000
+      },
+      "pattern": [
+        " P ",
+        "PwP",
+        "PhP"
+      ],
+      "keys": {
+        "P": "OP.plateDouble.dat(aMat)"
+      }
+    },
+    {
+      "path": "strong_steam_boiler_lead",
+      "source_id": 1250,
+      "source_line": 567,
+      "components": {
+        "Pb": 29189160000
+      },
+      "pattern": [
+        " P ",
+        "PwP",
+        "PhP"
+      ],
+      "keys": {
+        "P": "MD.HBM.mLoaded ? OP.plateDense.mat(aMat, 1) : OP.plateDense.dat(aMat)"
+      }
+    },
+    {
+      "path": "strong_steam_boiler_bismuth",
+      "source_id": 1251,
+      "source_line": 568,
+      "components": {
+        "Bi": 29189160000
+      },
+      "pattern": [
+        " P ",
+        "PwP",
+        "PhP"
+      ],
+      "keys": {
+        "P": "OP.plateDense.dat(aMat)"
+      }
+    },
+    {
+      "path": "strong_steam_boiler_bronze",
+      "source_id": 1252,
+      "source_line": 569,
+      "components": {
+        "Bronze": 29189160000
+      },
+      "pattern": [
+        " P ",
+        "PwP",
+        "PhP"
+      ],
+      "keys": {
+        "P": "OP.plateDense.dat(aMat)"
+      }
+    },
+    {
+      "path": "strong_steam_boiler_arsenic_copper",
+      "source_id": 1260,
+      "source_line": 570,
+      "components": {
+        "ArsenicCopper": 29189160000
+      },
+      "pattern": [
+        " P ",
+        "PwP",
+        "PhP"
+      ],
+      "keys": {
+        "P": "OP.plateDense.dat(aMat)"
+      }
+    },
+    {
+      "path": "strong_steam_boiler_arsenic_bronze",
+      "source_id": 1261,
+      "source_line": 571,
+      "components": {
+        "ArsenicBronze": 29189160000
+      },
+      "pattern": [
+        " P ",
+        "PwP",
+        "PhP"
+      ],
+      "keys": {
+        "P": "OP.plateDense.dat(aMat)"
+      }
+    },
+    {
+      "path": "strong_steam_boiler_invar",
+      "source_id": 1253,
+      "source_line": 572,
+      "components": {
+        "Invar": 29189160000
+      },
+      "pattern": [
+        " P ",
+        "PwP",
+        "PhP"
+      ],
+      "keys": {
+        "P": "OP.plateDense.dat(aMat)"
+      }
+    },
+    {
+      "path": "strong_steam_boiler_steel",
+      "source_id": 1254,
+      "source_line": 573,
+      "components": {
+        "Steel": 29189160000
+      },
+      "pattern": [
+        " P ",
+        "PwP",
+        "PhP"
+      ],
+      "keys": {
+        "P": "OP.plateDense.dat(aMat)"
+      }
+    },
+    {
+      "path": "strong_steam_boiler_chromium",
+      "source_id": 1255,
+      "source_line": 574,
+      "components": {
+        "Cr": 29189160000
+      },
+      "pattern": [
+        " P ",
+        "PwP",
+        "PhP"
+      ],
+      "keys": {
+        "P": "OP.plateDense.dat(aMat)"
+      }
+    },
+    {
+      "path": "strong_steam_boiler_titanium",
+      "source_id": 1256,
+      "source_line": 575,
+      "components": {
+        "Ti": 29189160000
+      },
+      "pattern": [
+        " P ",
+        "PwP",
+        "PhP"
+      ],
+      "keys": {
+        "P": "OP.plateDense.dat(aMat)"
+      }
+    },
+    {
+      "path": "strong_steam_boiler_netherite",
+      "source_id": 1259,
+      "source_line": 576,
+      "components": {
+        "Netherite": 29189160000
+      },
+      "pattern": [
+        " P ",
+        "PwP",
+        "PhP"
+      ],
+      "keys": {
+        "P": "OP.plateDense.dat(aMat)"
+      }
+    },
+    {
+      "path": "strong_steam_boiler_tungsten",
+      "source_id": 1257,
+      "source_line": 577,
+      "components": {
+        "W": 29189160000
+      },
+      "pattern": [
+        " P ",
+        "PwP",
+        "PhP"
+      ],
+      "keys": {
+        "P": "OP.plateDense.dat(aMat)"
+      }
+    },
+    {
+      "path": "strong_steam_boiler_tungsten_steel",
+      "source_id": 1258,
+      "source_line": 578,
+      "components": {
+        "TungstenSteel": 29189160000
+      },
+      "pattern": [
+        " P ",
+        "PwP",
+        "PhP"
+      ],
+      "keys": {
+        "P": "OP.plateDense.dat(aMat)"
+      }
+    },
+    {
+      "path": "strong_steam_boiler_ultimet",
+      "source_id": 1262,
+      "source_line": 579,
+      "components": {
+        "Ultimet": 29189160000
+      },
+      "pattern": [
+        " P ",
+        "PwP",
+        "PhP"
+      ],
+      "keys": {
+        "P": "OP.plateDense.dat(aMat)"
+      }
+    }
+  ],
+  "removed_incomplete_material_rows": [
+    {
+      "path": "energy_storage_xv",
+      "source_id": 10099,
+      "source_line": 895,
+      "components": {
+        "Graphene": 7783776000
+      },
+      "pattern": [
+        "WCW",
+        "WCW",
+        "XMX"
+      ],
+      "keys": {
+        "C": "MT.DATA.CABLES_04[9]",
+        "X": "OD_CIRCUITS[9]",
+        "W": "MT.DATA.WIRES_04[9]",
+        "M": "aRegistry.getItem(10040+9)"
+      },
+      "unresolved_source_item_references": [
+        "aRegistry.getItem(10049)"
+      ]
+    }
+  ],
+  "source_invalid_recipes": [
+    {
+      "path": "energy_storage_xv",
+      "source_id": 10099,
+      "source_line": 895,
+      "pattern": [
+        "WCW",
+        "WCW",
+        "XMX"
+      ],
+      "keys": {
+        "C": "MT.DATA.CABLES_04[9]",
+        "X": "OD_CIRCUITS[9]",
+        "W": "MT.DATA.WIRES_04[9]",
+        "M": "aRegistry.getItem(10040+9)"
+      },
+      "unresolved_source_item_references": [
+        "aRegistry.getItem(10049)"
+      ],
+      "source_recipe_rejection": "CR.shaped returns false on a null item input before reversible OM.data registration.",
+      "known_parts_before_rejection": {
+        "Graphene": 7783776000
+      }
+    }
+  ],
+  "source_without_known_data": [
+    {
+      "path": "axle_wood_4",
+      "source_id": 24803,
+      "source_line": 1666,
+      "components": {},
+      "pattern": [
+        "rS",
+        "Bf"
+      ],
+      "keys": {
+        "S": "OD.beamWood",
+        "B": "OD.container1000creosote"
+      }
+    }
+  ],
+  "unknown_automatic_data": {
+    "\"gt:re-battery1\"": 5,
+    "\"gt:re-battery2\"": 1,
+    "\"gt:re-battery3\"": 1,
+    "\"gt:re-battery4\"": 1,
+    "DYE_OREDICTS_LENS[DYE_INDEX_Yellow]": 5,
+    "OD.beamWood": 1,
+    "OD.container1000creosote": 1,
+    "OD.container1000honey": 5,
+    "OD.container1000water": 1,
+    "OD.craftingFirestarter": 1,
+    "OD.itemLubricant": 32,
+    "OD.itemLubricantEarly": 15,
+    "OD.sandstone": 12,
+    "OD_CIRCUITS[0]": 4,
+    "OD_CIRCUITS[1]": 33,
+    "OD_CIRCUITS[2]": 32,
+    "OD_CIRCUITS[3]": 33,
+    "OD_CIRCUITS[4]": 31,
+    "OD_CIRCUITS[5]": 31,
+    "OD_CIRCUITS[6]": 63,
+    "OD_CIRCUITS[7]": 4,
+    "OD_CIRCUITS[8]": 4,
+    "OD_CIRCUITS[9]": 4,
+    "OP.treeSapling": 5
+  },
+  "unresolved_source_item_references": {
+    "aRegistry.getItem(10049)": 1
+  },
+  "source_recipe_rejection": "CR.shaped lines375-378 returns false for null key/input before REV OM.data lines404-408; absent transformer10049 makes energy_storage_xv invalid. Do not register its partial Graphene as recoverable source data.",
+  "blast_rule": {
+    "source": "gregapi/data/LH.java:272",
+    "thresholds": "<4 terrible; <12 ghast; <16 creeper; <=40 TNT; otherwise strong dynamite unless original IC2 provider is present, >=3330 and not whitelisted",
+    "number": "truncate one decimal",
+    "native_compatibility": "No original IC2 explosion compatibility provider is integrated; native callers use the absent-provider branch. Blinking colors are not ported. Native explosion mechanics are unchanged."
+  },
+  "language_imports": [
+    {
+      "keys": [
+        "gt.lang.blast.resist.creeper.proof",
+        "gt.lang.blast.resist.dynamite.proof",
+        "gt.lang.blast.resist.ghast.proof",
+        "gt.lang.blast.resist.nuke.not",
+        "gt.lang.blast.resist.terrible",
+        "gt.lang.blast.resist.tnt.proof",
+        "gt.lang.blastresistance"
+      ],
+      "changes": {
+        "en_us": {
+          "gt.lang.blast.resist.creeper.proof": {
+            "before": null,
+            "after": "(Creeper Proof)"
+          },
+          "gt.lang.blast.resist.dynamite.proof": {
+            "before": null,
+            "after": "(Strong Dynamite Proof)"
+          },
+          "gt.lang.blast.resist.ghast.proof": {
+            "before": null,
+            "after": "(Ghast Proof)"
+          },
+          "gt.lang.blast.resist.nuke.not": {
+            "before": null,
+            "after": "(IC2 Nukes can still go through!)"
+          },
+          "gt.lang.blast.resist.terrible": {
+            "before": null,
+            "after": "(Terrible)"
+          },
+          "gt.lang.blast.resist.tnt.proof": {
+            "before": null,
+            "after": "(TNT Proof)"
+          },
+          "gt.lang.blastresistance": {
+            "before": null,
+            "after": "Blast Resistance: "
+          }
+        },
+        "zh_cn": {}
+      },
+      "missing_chinese": [],
+      "source_files": [
+        {
+          "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+          "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8"
+        },
+        {
+          "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+          "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5"
+        },
+        {
+          "path": "C:\\Dev\\GregTech_zh_cn.lang",
+          "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0"
+        }
+      ],
+      "license": "Original LH/CS: LGPL-3.0-or-later; Chinese strings copied verbatim from the user-provided patch."
+    },
+    {
+      "keys": [
+        "gt.lang.blastresistance",
+        "gt.lang.contained.materials",
+        "tooltip.gregtech.contained_materials",
+        "tooltip.gregtech.machine.contained_materials",
+        "tooltip.gregtech.wire.contained_materials"
+      ],
+      "aliases": {
+        "tooltip.gregtech.contained_materials": "gt.lang.contained.materials",
+        "tooltip.gregtech.machine.contained_materials": "gt.lang.contained.materials",
+        "tooltip.gregtech.wire.contained_materials": "gt.lang.contained.materials"
+      },
+      "changes": {
+        "en_us": {
+          "gt.lang.contained.materials": {
+            "before": null,
+            "after": "Contained Materials:"
+          }
+        },
+        "zh_cn": {
+          "tooltip.gregtech.contained_materials": {
+            "before": "Contained Materials:",
+            "after": "含有材料:"
+          },
+          "tooltip.gregtech.machine.contained_materials": {
+            "before": "Contained Materials:",
+            "after": "含有材料:"
+          },
+          "tooltip.gregtech.wire.contained_materials": {
+            "before": "Contained Materials:",
+            "after": "含有材料:"
+          }
+        }
+      },
+      "missing_chinese": [],
+      "source_files": [
+        {
+          "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+          "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8"
+        },
+        {
+          "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+          "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5"
+        },
+        {
+          "path": "C:\\Dev\\GregTech_zh_cn.lang",
+          "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0"
+        }
+      ],
+      "license": "Original LH/CS: LGPL-3.0-or-later; Chinese strings copied verbatim from the user-provided patch."
+    }
+  ],
+  "verification": {
+    "checks": [
+      {
+        "path": "work/machine-tooltip-followup-compile-20261007.log",
+        "sha256": "f92c3ae0a15bda78291fdf6c10ba60dc5692947104a6355d58ddbce46a3a5a15",
+        "outcome": "21s pass: 78 core assertions and both native compileJava tasks before rejecting XV material row"
+      },
+      {
+        "path": "work/machine-tooltip-source-rejection-20261007.log",
+        "sha256": "9edc35bf990305a2e7bea5c70600bc9770ac3c760199718e4dfbc88b929dc804",
+        "outcome": "9s pass: latest 79 core assertions and current core generated table; native sources unchanged since prior compile"
+      }
+    ],
+    "language": "7 original blast keys and raw contained-material key validated; three existing port title aliases copied verbatim from original patch",
+    "source": "25 original/patch and 2 comparison hashes unchanged",
+    "ordinary_JAR": "not built; grouped acceptance pending",
+    "installed_probe": "compiled in prior batch, not executed",
+    "gameplay": "not run for this followup",
+    "goal": "active",
+    "publication": "local only"
+  },
+  "limitations": [
+    "Other machine/block quantities and family-specific tooltip sections remain in the port gap ledger.",
+    "Source unknown automatic data and actual crafted tag inputs are distinct from a source null item; unknown ore keys add no guessed material.",
+    "Removing XV source data does not repair the missing source transformer or certify its native crafting behavior.",
+    "No player hover, survival recovery/melting chain, historical save migration or independent world restart was performed."
+  ]
+}

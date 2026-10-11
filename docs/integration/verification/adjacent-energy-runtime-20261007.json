@@ -1,0 +1,218 @@
+{
+  "date": "2026-10-07",
+  "source_receipt": {
+    "path": "C:\\Dev\\GregTech6\\docs\\integration\\verification\\adjacent-energy-source-20261007.json",
+    "sha256": "cd80d1487275f76eb7af4367959bc62c19c1e9114f50dfdcfffa5407fb795651",
+    "bytes": 23330
+  },
+  "shared_source_check": {
+    "assertions": 3836,
+    "new_assertions": 32,
+    "passed": true,
+    "log": {
+      "path": "C:\\Dev\\GregTech6\\work\\adjacent-energy-compile-fixed-20261007.log",
+      "sha256": "5506cb06b60cabd95d846ec2ff4a195202a893f0d9daa0ad04426bd6cf843f18",
+      "bytes": 67614
+    }
+  },
+  "compile_attempts": [
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\adjacent-energy-compile-20261007.log",
+        "sha256": "51acf70b90b45ad12b9b2c2bdd24a26ecabebbf8b87926654efe2868f44edb4e",
+        "bytes": 2605
+      },
+      "elapsed": "9s",
+      "exit_code": 1,
+      "scope": "Initial source fixture builder omitted mandatory texture/name metadata; stopped at shared assertions before platform compile."
+    },
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\adjacent-energy-compile-fixed-20261007.log",
+        "sha256": "5506cb06b60cabd95d846ec2ff4a195202a893f0d9daa0ad04426bd6cf843f18",
+        "bytes": 67614
+      },
+      "elapsed": "30s",
+      "exit_code": 1,
+      "scope": "Shared3836 assertions, both main modules and Forge fixture passed; Neo fixture called a protected parent neighborChanged API."
+    },
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\adjacent-energy-probes-compile-20261007.log",
+        "sha256": "09689881958b8f27d94d283747322c2f68db1996d2eeeee9097da2b3cc47f873",
+        "bytes": 4143
+      },
+      "elapsed": "18s",
+      "exit_code": 0,
+      "scope": "Both pre-runtime fixtures use actual adjacent stone placement for neighbor event; both finite fixtures and existing installed probes compile. Corrected freezer face assertions compiled subsequently in final world run; core source unchanged after3836 pass."
+    }
+  ],
+  "preparation_scripts": [
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\apply_adjacent_energy_20261007.py",
+      "sha256": "62dea472009a25dcfb69abac7feda92267a3ef9d47a35887c3561eb26122b77b",
+      "bytes": 11539
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\prepare_adjacent_world_20261007.py",
+      "sha256": "dfd766349e9b8bb129a0d58b1d8e1b0811846355c029e25e56dc90eb8bc6b0ef",
+      "bytes": 10586
+    }
+  ],
+  "initial_world_attempt": {
+    "log": {
+      "path": "C:\\Dev\\GregTech6\\work\\adjacent-energy-world-20261007.log",
+      "sha256": "5b27a4b8a91f116dc05dab41095bc506ab6973eef5a38a81913be02afb604a69",
+      "bytes": 214820
+    },
+    "exit_code": 1,
+    "elapsed": "2m14s",
+    "Forge_required_cases": 4,
+    "Forge_passed_cases": 3,
+    "Neo_world_started": false,
+    "failure": "Fixture incorrectly assumed source20561 freezer energy input allowed all faces. Canonical registration uses only SBIT_B, matching current native implementation. Production source unchanged; corrected fixture to verify back-only request and other five untouched.",
+    "passed_Forge_current_source_regressions": [
+      "nineRealSourcesAllTowerFacingsAndBreakRelease",
+      "originalColdRecipeAndSpeciesOutlets",
+      "legacyFluidsAndUnpoweredStoppedOutput"
+    ],
+    "fixture_at_execution": {
+      "path": "C:\\Dev\\GregTech6\\work\\adjacent-energy-forge-fixture-first-world-20261007.java",
+      "sha256": "2ce29d74a06c66e44c7166636f0afd78c307a5be1dd7c4fe0112898849f5716b",
+      "bytes": 9596
+    },
+    "Neo_fixture_prepared_not_executed": {
+      "path": "C:\\Dev\\GregTech6\\work\\adjacent-energy-neo-fixture-first-world-prepared-20261007.java",
+      "sha256": "3e067e00081bbd6f2b0108cf151f0c15038a8a66f0458665d399d14f8dcbdb45",
+      "bytes": 9613
+    }
+  },
+  "second_world_attempt": {
+    "log": {
+      "path": "C:\\Dev\\GregTech6\\work\\adjacent-energy-world-fixed-20261007.log",
+      "sha256": "cb1039740b94fe6111c472ff07db04d554e61beedcda2c2a5e70d5e419282c4a",
+      "bytes": 262598
+    },
+    "exit_code": 1,
+    "elapsed": "3m24s",
+    "Forge_required_cases": 2,
+    "Forge_passed_cases": 2,
+    "Forge_task_exit_code": 0,
+    "Neo_required_scenarios_started": false,
+    "failure": "Neo fixture omitted PrefixGameTestTemplate(false), causing an erroneous class-prefixed structure name before any scenario ran. Added native annotation only; final retry is Neo-only, with no repeated passed Forge world.",
+    "Neo_fixture_at_registration": {
+      "path": "C:\\Dev\\GregTech6\\work\\adjacent-energy-neo-fixture-missing-prefix-20261007.java",
+      "sha256": "5f4a450c5580a1c1c6b88a0231362aac164a229dfb028a0616f945e9547dfe14",
+      "bytes": 9757
+    },
+    "Neo_crash_report": {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\build\\adjacent-energy-gametest-fixed-20261007\\crash-reports\\crash-2026-10-07_11.44.53-server.txt",
+      "sha256": "fc27a8bfc9be47a7671977f1b35f8ab61bc7cc19311fe386d0b684d7e936e691",
+      "bytes": 8320
+    }
+  },
+  "world": {
+    "attempts_total": 3,
+    "both_platforms_have_accepted_current_source_cases": true,
+    "accepted_Forge": {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\adjacent-energy-world-fixed-20261007.log",
+        "sha256": "cb1039740b94fe6111c472ff07db04d554e61beedcda2c2a5e70d5e419282c4a",
+        "bytes": 262598
+      },
+      "development_loader": "47.4.20",
+      "Java": "17.0.10",
+      "heap": "3GiB",
+      "namespace": "gregtech_adjacent_energy",
+      "required_cases": 2,
+      "passed_cases": 2,
+      "task_exit_code": 0,
+      "saved_all_dimensions": true,
+      "directory": "C:\\Dev\\GregTech6\\build\\adjacent-energy-gametest-fixed-20261007",
+      "note": "Combined second Gradle command later exited1 because Neo fixture registration failed; Forge world stage had passed and saved normally. Previous2 cryo cases also passed on current main source in initial Forge attempt."
+    },
+    "accepted_NeoForge": {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\adjacent-energy-neo-world-final-20261007.log",
+        "sha256": "f1c171d348ac2a5d8ccad689b52fbd22a666be6de144a41e0b96dda5bc9a1938",
+        "bytes": 39433
+      },
+      "development_loader": "21.1.243",
+      "Java": "21.0.7",
+      "heap": "3GiB",
+      "namespaces": [
+        "gregtech_adjacent_energy",
+        "gregtech_cryo_tower"
+      ],
+      "required_cases": 4,
+      "passed_cases": 4,
+      "task_exit_code": 0,
+      "command_exit_code": 0,
+      "elapsed": "1m 19s",
+      "saved_all_dimensions": true,
+      "directory": "C:\\Dev\\GregTech6\\neoforge\\build\\adjacent-energy-gametest-neo-final-20261007"
+    },
+    "direct_core_classpath_and_resources": true,
+    "ordinary_distribution_claimed": false,
+    "verified": [
+      "Both tower families and all four horizontal facings: actual80-part structures form; nine native EU thermal devices receive stop/resume, refuse real energy after stopping and transmit9*32HU/9*16CU via actual bound base ports after resuming.",
+      "Adjacent stop preserves converter64EU remainder; stopped conversion drains it normally; actual native saved stopped flag method roundtrip retains it.",
+      "Later manual source stop survives ordinary machine tick; real adjacent stone placement causes native neighbor callback to reissue request. Breaking stopped controller releases all nine sources.",
+      "Both unformed tower families ignore a generic manually switchable matching-energy node without source contract, wrong upward energy type and wrong emitter face; eligible other six sources switch. No generic manual switch override on resume.",
+      "Actual source20561 basic freezer checks all six neighboring coolers but sends stop/resume only through its original accepted back energy face; other five manual states remain unchanged. Resume uses theoretical output eligibility even for stopped source.",
+      "Prior two actual source air/rear-item and legacy fluid/stopped-output cases passed on current main source: Forge initial attempt, Neo final retry."
+    ]
+  },
+  "fixtures_at_execution": [
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\AdjacentEnergySourceTests.java",
+      "sha256": "d4dc3bb813f9981ef74888feee3592ba6d8488d37ce9a01b1b2d6df458c76e7c",
+      "bytes": 9740
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\resources\\data\\gregtech_adjacent_energy\\structures\\test_empty.nbt",
+      "sha256": "147ef3e2c39e8d261ff2287395af00d734ccd13b196abdea0c0334e11fdde075",
+      "bytes": 110
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\CryoDistillationSourceTests.java",
+      "sha256": "30427339a0c378329a2d7585ac82a3ea71b9d73bed514fe37762ce700b03f5e3",
+      "bytes": 8641
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\AdjacentEnergySourceTests.java",
+      "sha256": "bbc9e2dd441cb679030bcc2211ad87e9ae8f9bf424ed6aa78ac6a057844ff45c",
+      "bytes": 9821
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\resources\\data\\gregtech_adjacent_energy\\structure\\test_empty.nbt",
+      "sha256": "ea4b3ed88dbb879fc3b86b9bceca2961af8248069c6420a4136eba192ec7b9b7",
+      "bytes": 113
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\CryoDistillationSourceTests.java",
+      "sha256": "974c906f6dd49b4c3a4b6700d40bdc4cd96912e541e0a504a9f0d4a957a4f916",
+      "bytes": 8664
+    }
+  ],
+  "new_installation_probe_executed": false,
+  "ordinary_dual_jar_build_and_installed_self_start": "Deferred to subsequent pooled batches per user instruction.",
+  "last_accepted_ordinary_delivery_receipt": {
+    "path": "C:\\Dev\\GregTech6\\docs\\integration\\verification\\controller-pooled-delivery-20261007.json",
+    "sha256": "bfa8281091e2ad77635fd132a14edf14d31e80a1c5cd307241db2f7a5f6c818f",
+    "bytes": 356165
+  },
+  "last_accepted_jars_contain_this_batch": false,
+  "remaining_boundaries": [
+    "Other original multi-block families have their own source-control geometry and are not falsely covered by the tower override.",
+    "Other registered source adjacent implementations including rotational transformer, laser, engines and generators still need individual native entry-point/control alignment; current generic non-adopted nodes return no adjacent contract.",
+    "All remaining block-specific tooltip/material families, source part design1 holes, mutable configuration and input capacity/overcharge boundaries remain pending.",
+    "Controlled native energy injection and load/save method checks are not natural survival, ordinary installed clients, independent saved-world restart, historical saves or ordinary dedicated-server acceptance."
+  ],
+  "publishing": {
+    "local_commit_only": true,
+    "pushed": false,
+    "PR_deferred": true,
+    "goal_status": "active"
+  }
+}

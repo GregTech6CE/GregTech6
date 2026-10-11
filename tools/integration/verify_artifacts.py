@@ -12,6 +12,10 @@ import zipfile
 from collections import Counter
 from pathlib import Path
 import tomllib
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from localization import synchronize
 
 
 PLATFORMS = {
@@ -94,7 +98,7 @@ def current_platform_hashes(repo, platform, artifact, required_core):
 
 
 def test_only_entries(repo):
-    """Only forbid explicitly separate test source sets, preserving baseline main GameTests."""
+    """All test source sets are separate; none belong in a production mod JAR."""
     roots = (repo / 'core/src/test', repo / 'src/bootstrapGameTest',
              repo / 'neoforge/src/bootstrapGameTest', repo / 'src/productionSmoke',
              repo / 'neoforge/src/productionSmoke')
@@ -111,8 +115,20 @@ def test_only_entries(repo):
         'com/gregtech/gregtech/core/CoreBehaviorContracts',
         'com/gregtech/gregtech/gametest/IntegrationBootstrapTests',
         'com/gregtech/gregtech/platform/neoforge/gametest/SharedCoreBootstrapGameTests',
+        'com/gregtech/gregtech/jei/JeiMachineIndexTests',
     })
     return class_stems, resources
+
+
+def is_test_entry(name, stems, resources):
+    # Constant-time class lookup instead of testing every entry against every
+    # fixture. Keep namespace exclusions even if a test is moved/deleted later.
+    return (name in resources or name.startswith((
+        'data/gregtech_bootstrap/', 'data/gregtech_repair/', 'data/gregtech_sensor_source/',
+        'com/gregtech/gregtech/core/',
+        'com/gregtech/gregtech/gametest/',
+        'com/gregtech/gregtech/platform/neoforge/gametest/'))
+        or (name.endswith('.class') and name[:-6].split('$', 1)[0] in stems))
 
 
 def check_metadata(raw, platform, properties):
@@ -204,12 +220,13 @@ def inspect(path, platform, required_core, properties, forbidden_tests):
             if any('META-INF/gregtech6/' + name in counts for name in ('COPYING.LESSER', 'COPYING', 'LICENSE.txt')):
                 raise ValueError(f'{path}: contains the superseded duplicate license layout')
         stems, resources = forbidden_tests
-        contamination = [name for name in counts
-                         if name in resources or name.startswith('data/gregtech_bootstrap/')
-                         or (name.endswith('.class') and any(
-                             name == stem + '.class' or name.startswith(stem + '$') for stem in stems))]
+        contamination = [name for name in counts if is_test_entry(name, stems, resources)]
         if contamination:
             raise ValueError(f'{path}: test-only entries: {contamination[:10]}')
+        for locale in ('en_us', 'zh_cn'):
+            language = f'assets/gregtech/lang/{locale}.json'
+            if archive.read(language) != (repo / 'core/src/main/resources' / language).read_bytes():
+                raise ValueError(f'{path}: language differs from the checked shared source: {language}')
         mixin_verification = None
         if platform == 'forge':
             config = json.loads(archive.read('gregtech.mixins.json'))
@@ -280,6 +297,7 @@ def main():
         targets = {'forge': args.forge, 'neoforge': args.neoforge}
     repo = Path(__file__).resolve().parents[2]
     try:
+        language = synchronize(repo)
         properties = read_properties(repo / 'gradle.properties')
         core = compiled_core_hashes(repo / 'core/build/classes/java/main')
         forbidden_tests = test_only_entries(repo)
@@ -292,6 +310,8 @@ def main():
     result = {'status': 'passed', 'scope': 'packaging-only; no gameplay or runtime claim',
               'mod_id': properties['mod_id'], 'mod_version': properties['mod_version'],
               'build_commit': os.environ.get('GITHUB_SHA'),
+              'language_source_sha256': language['source_sha256'],
+              'language_aliases': language['native_aliases'],
               'shared_classes': len(core), 'compiled_core_class_sha256': core, **artifacts}
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)

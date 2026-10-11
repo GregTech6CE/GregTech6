@@ -1,0 +1,914 @@
+{
+  "date": "2026-10-07",
+  "base_commit": "08a076ab3b4182d4369ab3e3c8f69ddeb4fcfa85",
+  "authors": [
+    "GregTech-6 Team",
+    "Gregorius Techneticies"
+  ],
+  "license": "LGPL-3.0-or-later",
+  "scope": "Original12 steam-turbine/dynamo/gas-turbine converters,24 existing block identities.11 distinct source structure keys /88 prepared actual item rows. Existing five original large boiler tooltips inspected and preserved; not claimed newly implemented or runtime verified.",
+  "original": [
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577",
+      "bytes": 694
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "bytes": 791265
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeBoiler.java",
+      "sha256": "38d82c11fc57094c9ba8db5c88325b65d847cff40726e084dce87c8b7935ffb6",
+      "bytes": 23904
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeTurbine.java",
+      "sha256": "7de79e0daf4eb4e6e3d3f272f3ac2f9230bbca9c51a8b6614935e8c54fb23019",
+      "bytes": 6711
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeTurbineSteam.java",
+      "sha256": "47d7aa9648009c7b72eb42121ca3a955d58d1c556075ce60483b4a7c096bf83c",
+      "bytes": 7210
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeTurbineGas.java",
+      "sha256": "4cb779b6e63b3348cf4eec1cc6af36faac9748ebdcc953d8ef8c24c0f7edbbab",
+      "bytes": 6559
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeDynamo.java",
+      "sha256": "dc08705104ad7de394530a8d4cff857da35d90286d709e5ae4c34899ea476dd0",
+      "bytes": 5294
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\multiblocks\\TileEntityBase10MultiBlockBase.java",
+      "sha256": "42ec92430ff6af7fb8d192aebfa424cc1af519d40ba2ff53a8e8c6afe8f9e738",
+      "bytes": 11378
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\multiblocks\\TileEntityBase11MultiBlockConverter.java",
+      "sha256": "38b9df583b72f6ab97ae23f8533b54a8d82fead147c026053230e2cc59533afc",
+      "bytes": 8437
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\base\\TileEntityBase09FacingSingle.java",
+      "sha256": "b172aadf76d09c37ee4c7793cb784dcc97a19d999ad1737bafc60cc064bece7f",
+      "bytes": 5485
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\behavior\\TE_Behavior_Energy_Stats.java",
+      "sha256": "d66cd7885b7053510d40c054dd6b87ef7a2aab23ee6e554e33af726fc4dddbbf",
+      "bytes": 2994
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\behavior\\TE_Behavior_Energy_Converter.java",
+      "sha256": "db1e31ed18e62bc9d261e33edcf338ed9717fc1ee088eab8de2baff69c9e59d4",
+      "bytes": 9249
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "bytes": 153449
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\TD.java",
+      "sha256": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea",
+      "bytes": 53981
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+      "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8",
+      "bytes": 51085
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\MT.java",
+      "sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2",
+      "bytes": 693183
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\OP.java",
+      "sha256": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e",
+      "bytes": 162128
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\ANY.java",
+      "sha256": "6a26fa2293c4a315d2594c5ac80eba689389f9b1922a33547bdd20d2df724f71",
+      "bytes": 17964
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemTechnological.java",
+      "sha256": "7367922c4938318dd50b1320e7fc7a7453c33cffa46f75a437325314d2536ddc",
+      "bytes": 133807
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\load\\LoaderItemData.java",
+      "sha256": "0dc916611c9a743f477e473b75b3fa3462a47d22dd75ef086c33ea18aaa9f968",
+      "bytes": 264656
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\load\\LoaderOreDictReRegistrations.java",
+      "sha256": "d34719309a5ddf5bd7fc01c0462b57af52b4cf980a69fae4d4042c2ab78b07ef",
+      "bytes": 147540
+    }
+  ],
+  "comparison": [
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577",
+      "bytes": 694
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeBoiler.java",
+      "sha256": "7f49636900489ffd3641a59e8873664307962380b9fff8dd97cb0b4a0298d847",
+      "bytes": 24372
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeTurbine.java",
+      "sha256": "2732b1e037595e433f0fed0e553417de2b3d87b5690ba43bca10e5d9a1682c1e",
+      "bytes": 7151
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeTurbineSteam.java",
+      "sha256": "70934543e83c4e5905238bff3b0aff9d3ea68fd9d783d3ae68c8e466266d12d1",
+      "bytes": 7533
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeTurbineGas.java",
+      "sha256": "5f8503202c8a7290c2b5700a3b609002acb3464cce8f1c15ae59ce4001104f1a",
+      "bytes": 6864
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeDynamo.java",
+      "sha256": "d00e7c9b9a144eebe12d1337124ec77d74116757041125043e21a07c6edbdd9a",
+      "bytes": 5671
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\multiblocks\\TileEntityBase10MultiBlockBase.java",
+      "sha256": "17299983c220fe186f50adeaa3d584cf9e41fa956a072ef7e3fff3a3526df941",
+      "bytes": 11555
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\multiblocks\\TileEntityBase11MultiBlockConverter.java",
+      "sha256": "b6c4d33932a6fbe2af02289621343930708cf7515a106323c9c8d064a563edb2",
+      "bytes": 8723
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\behavior\\TE_Behavior_Energy_Stats.java",
+      "sha256": "bdcd0b788793e185cf59b683267868a652b2ca582d62d3a00a333f2833c42126",
+      "bytes": 3201
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\data\\LH.java",
+      "sha256": "2df45cee1047b522593f4f42c70a3acb2c5d8a425399b9a3c83ed022b7115b0f",
+      "bytes": 51804
+    }
+  ],
+  "comparison_reason": "All11 specialized English keys agree. Original converter/EnergyStats/LH conditional parent is authoritative; native1.20/1.21 registry and item API boundary retained. No alternative converter execution engine imported.",
+  "translation_patch": {
+    "path": "C:\\Dev\\GregTech_zh_cn.lang",
+    "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0",
+    "bytes": 7375784
+  },
+  "language": {
+    "source_tooltip_keys": [
+      "gt.tooltip.multiblock.dynamo.1",
+      "gt.tooltip.multiblock.dynamo.2",
+      "gt.tooltip.multiblock.dynamo.3",
+      "gt.tooltip.multiblock.gasturbine.1",
+      "gt.tooltip.multiblock.gasturbine.2",
+      "gt.tooltip.multiblock.gasturbine.3",
+      "gt.tooltip.multiblock.gasturbine.4",
+      "gt.tooltip.multiblock.steamturbine.1",
+      "gt.tooltip.multiblock.steamturbine.2",
+      "gt.tooltip.multiblock.steamturbine.3",
+      "gt.tooltip.multiblock.steamturbine.4",
+      "gt.lang.structure",
+      "gt.lang.energy.input",
+      "gt.lang.energy.output",
+      "gt.lang.efficiency",
+      "gt.lang.emits.used.steam",
+      "gt.lang.face.sides",
+      "gt.lang.use.builder.wand.to.ease.building",
+      "gt.lang.use.magnifyingglass.to.detail",
+      "gt.lang.use.x.to.toggle.facing.pre",
+      "gt.lang.use.x.to.toggle.facing.post",
+      "gt.lang.tool.name.wrench",
+      "gt.td.short.energy.steam",
+      "gt.td.short.energy.kinetic_rotation",
+      "gt.td.short.energy.electricity",
+      "gt.multitileentity.18022",
+      "gt.multitileentity.18023",
+      "gt.multitileentity.18025",
+      "gt.multitileentity.18026"
+    ],
+    "verbatim": true,
+    "item_name_source_ids": {
+      "large_turbine_main": 17211,
+      "magnalium_steam_turbine_main_housing": 17211,
+      "large_steam_turbine_trinitanium": 17212,
+      "trinitanium_steam_turbine_main_housing": 17212,
+      "large_steam_turbine_graphene": 17213,
+      "graphene_steam_turbine_main_housing": 17213,
+      "large_steam_turbine_vibramantium": 17214,
+      "vibramantium_steam_turbine_main_housing": 17214,
+      "large_dynamo_main": 17221,
+      "stainless_steel_dynamo_main_housing": 17221,
+      "large_dynamo_titanium": 17222,
+      "titanium_dynamo_main_housing": 17222,
+      "large_dynamo_tungstensteel": 17223,
+      "tungstensteel_dynamo_main_housing": 17223,
+      "large_dynamo_adamantium": 17224,
+      "adamantium_dynamo_main_housing": 17224,
+      "large_gas_turbine_main": 17231,
+      "magnalium_gas_turbine_main_housing": 17231,
+      "large_gas_turbine_trinitanium": 17232,
+      "trinitanium_gas_turbine_main_housing": 17232,
+      "large_gas_turbine_graphene": 17233,
+      "graphene_gas_turbine_main_housing": 17233,
+      "large_gas_turbine_vibramantium": 17234,
+      "vibramantium_gas_turbine_main_housing": 17234
+    },
+    "changes": {
+      "en_us": {
+        "block.gregtech.large_dynamo_adamantium": {
+          "before": "Adamantium Large Dynamo",
+          "after": "Adamantium Dynamo Main Housing"
+        },
+        "block.gregtech.large_dynamo_main": {
+          "before": "Stainlesssteel Large Dynamo",
+          "after": "Stainless Steel Dynamo Main Housing"
+        },
+        "block.gregtech.large_dynamo_titanium": {
+          "before": "Titanium Large Dynamo",
+          "after": "Titanium Dynamo Main Housing"
+        },
+        "block.gregtech.large_dynamo_tungstensteel": {
+          "before": "Tungstensteel Large Dynamo",
+          "after": "Tungstensteel Dynamo Main Housing"
+        },
+        "block.gregtech.large_steam_turbine_graphene": {
+          "before": "Graphene Large Steam Turbine",
+          "after": "Graphene Steam Turbine Main Housing"
+        },
+        "block.gregtech.large_steam_turbine_trinitanium": {
+          "before": "Trinitanium Large Steam Turbine",
+          "after": "Trinitanium Steam Turbine Main Housing"
+        },
+        "block.gregtech.large_steam_turbine_vibramantium": {
+          "before": "Vibramantium Large Steam Turbine",
+          "after": "Vibramantium Steam Turbine Main Housing"
+        },
+        "block.gregtech.large_turbine_main": {
+          "before": "Magnalium Large Steam Turbine",
+          "after": "Magnalium Steam Turbine Main Housing"
+        },
+        "gt.multitileentity.18022": {
+          "before": null,
+          "after": "Dense Stainless Steel Wall"
+        },
+        "gt.multitileentity.18023": {
+          "before": null,
+          "after": "Dense Tungstensteel Wall"
+        },
+        "gt.multitileentity.18025": {
+          "before": null,
+          "after": "Dense Adamantium Wall"
+        },
+        "gt.multitileentity.18026": {
+          "before": null,
+          "after": "Dense Titanium Wall"
+        },
+        "gt.tooltip.multiblock.dynamo.1": {
+          "before": null,
+          "after": "Two 3x3s with 2m inbetween made of the Block you crafted this of"
+        },
+        "gt.tooltip.multiblock.dynamo.2": {
+          "before": null,
+          "after": "a 3x3x2 of 18 Large Copper Coils inbetween"
+        },
+        "gt.tooltip.multiblock.dynamo.3": {
+          "before": null,
+          "after": "Main centered on one of the 3x3s facing outwards"
+        },
+        "gt.tooltip.multiblock.gasturbine.1": {
+          "before": null,
+          "after": "3x3x4 of 35 "
+        },
+        "gt.tooltip.multiblock.gasturbine.2": {
+          "before": null,
+          "after": "Main centered on the 3x3 facing outwards"
+        },
+        "gt.tooltip.multiblock.gasturbine.3": {
+          "before": null,
+          "after": "Input only possible at frontal 3x3"
+        },
+        "gt.tooltip.multiblock.gasturbine.4": {
+          "before": null,
+          "after": "Exhaust Gas has to be removed!"
+        },
+        "gt.tooltip.multiblock.steamturbine.1": {
+          "before": null,
+          "after": "3x3x4 of 35 "
+        },
+        "gt.tooltip.multiblock.steamturbine.2": {
+          "before": null,
+          "after": "Main centered on the 3x3 facing outwards"
+        },
+        "gt.tooltip.multiblock.steamturbine.3": {
+          "before": null,
+          "after": "Input only possible at frontal 3x3"
+        },
+        "gt.tooltip.multiblock.steamturbine.4": {
+          "before": null,
+          "after": "Distilled Water can be pumped out at Bottom Layer"
+        }
+      },
+      "zh_cn": {
+        "block.gregtech.large_dynamo_adamantium": {
+          "before": "Adamantium Large Dynamo",
+          "after": "艾德曼合金发电机核心"
+        },
+        "block.gregtech.large_dynamo_main": {
+          "before": "Stainlesssteel Large Dynamo",
+          "after": "不锈钢发电机核心"
+        },
+        "block.gregtech.large_dynamo_titanium": {
+          "before": "Titanium Large Dynamo",
+          "after": "钛发电机核心"
+        },
+        "block.gregtech.large_dynamo_tungstensteel": {
+          "before": "Tungstensteel Large Dynamo",
+          "after": "钨钢发电机核心"
+        },
+        "block.gregtech.large_steam_turbine_graphene": {
+          "before": "Graphene Large Steam Turbine",
+          "after": "石墨烯蒸汽涡轮机核心"
+        },
+        "block.gregtech.large_steam_turbine_trinitanium": {
+          "before": "Trinitanium Large Steam Turbine",
+          "after": "特林钛合金蒸汽涡轮机核心"
+        },
+        "block.gregtech.large_steam_turbine_vibramantium": {
+          "before": "Vibramantium Large Steam Turbine",
+          "after": "艾德曼振金蒸汽涡轮机核心"
+        },
+        "block.gregtech.large_turbine_main": {
+          "before": "Magnalium Large Steam Turbine",
+          "after": "镁铝合金蒸汽涡轮机核心"
+        }
+      }
+    }
+  },
+  "current": [
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\machine\\MachineConstructionMaterials.java",
+      "sha256": "2dca313a0614a872a01e031247c500a35c834d40e74c8339c45da5dbd561171f",
+      "bytes": 2154
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\data\\SourceBlockProperties.java",
+      "sha256": "c58e637a9530c77d59cf956d6ff78b45e53c619562e9a58bc406c07736154183",
+      "bytes": 105070
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\lang\\en_us.json",
+      "sha256": "fa0b0d1d1d5700c61d905ef1bb5e963001166eb20a3afb5499180957576f124a",
+      "bytes": 756285
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\lang\\zh_cn.json",
+      "sha256": "d7a2e538298152e9d2a1c72db0f4d9f83b0196502d6587bb14bc827c9bbed4c8",
+      "bytes": 8454354
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\test\\java\\com\\gregtech\\gregtech\\core\\MachineSpecBehaviorContracts.java",
+      "sha256": "8519fd377652cdbf3843fcd10da4f385b29234d9c55756ec402d9266ba3e0d67",
+      "bytes": 91207
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\AxialGeneratorBlock.java",
+      "sha256": "85e32f843019def14db242f3f9568537d57c55f0db73c63caab175c16d79be13",
+      "bytes": 6126
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\LargeGasTurbineControllerBlock.java",
+      "sha256": "a77a200d5c900130d25638dcfd9ed6c9e646411ea2fd2731d0002d6280a6910a",
+      "bytes": 5658
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\CommonBlockDeliveryChecks.java",
+      "sha256": "aa61ec6bc60d9eeb9dfd46369e979deb09ca94cc4552aa49b3fd8d9d7a2a3a7e",
+      "bytes": 20528
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\ProductionClientSmoke.java",
+      "sha256": "0ae5a68ffb84f46ae8610ed0d63311cfcdd9d02ddefaa162bcdd218c492ae242",
+      "bytes": 5273
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\AxialGeneratorBlock.java",
+      "sha256": "3a239ad5e14c872d6252ea4e6375bcfaac0addcbb73725a762c2057de41e15c1",
+      "bytes": 4962
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\LargeGasTurbineControllerBlock.java",
+      "sha256": "7c08d3d85252d8961bc3548761a6e83e3da0fb53a75e2fb157d13f28d8503965",
+      "bytes": 4524
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\CommonBlockDeliveryChecks.java",
+      "sha256": "47b18b86da03d25d98f9d273a15ad56ebde74bba7019e2de9463c67b59df4b34",
+      "bytes": 18942
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\ProductionClientSmoke.java",
+      "sha256": "bee3b25b52a364dc3d3e86e171b3894fed9cf0b47e5ab0bbdea0febd5ab99b28",
+      "bytes": 7435
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\integration\\generate_source_block_properties.py",
+      "sha256": "c0429cc61365c563411debe6c5561474233437a640fe70d797eb5cf9879a7bf3",
+      "bytes": 7742
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\OriginalGeneratorTooltipData.java",
+      "sha256": "be235dc14ac3dc9b29dc1e00544833de58ad2689d0bae27e5e2e1209973bf7f2",
+      "bytes": 3398
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\test\\java\\com\\gregtech\\gregtech\\core\\GeneratorTooltipContracts.java",
+      "sha256": "ffdab977ba98042632d7aba3d0e9e14df8af03a8271f88b3b6ce0bdedcee9592",
+      "bytes": 3747
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\client\\GeneratorSourceTooltips.java",
+      "sha256": "e9aadcd08635666399d4c704176883efe1aef26b52b6b21ded49d9e12900304d",
+      "bytes": 3021
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\GeneratorTooltipDeliveryChecks.java",
+      "sha256": "a9c2bbe14e4f1dac44b2b80666dac059b63e663e33edf23285e89ad78bbe0f92",
+      "bytes": 4158
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\client\\GeneratorSourceTooltips.java",
+      "sha256": "e9aadcd08635666399d4c704176883efe1aef26b52b6b21ded49d9e12900304d",
+      "bytes": 3021
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\GeneratorTooltipDeliveryChecks.java",
+      "sha256": "270b31e286497ef24ea841cbe7b6f17484551063abca74c76fcee9af41f0ece6",
+      "bytes": 4255
+    }
+  ],
+  "source_registrations": [
+    {
+      "source_id": 17211,
+      "source_line": 1254,
+      "source_line_text": "\t\taMat = MT.StainlessSteel;       aRegistry.add(\"Magnalium Steam Turbine Main Housing\"                , \"Multiblock Machines\", 17211, 17101, MultiTileEntityLargeTurbineSteam.class   , aMat.mToolQuality, 16, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   6.0F, NBT_RESISTANCE,   6.0F, NBT_TEXTURE, \"largeturbine\"            , NBT_DESIGN, 18022, NBT_INPUT,   6144*STEAM_PER_EU, NBT_OUTPUT,   4096, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.STEAM, NBT_ENERGY_EMITTED, TD.Energy.RU), \"PPP\", \"PMP\", \"PPP\", 'M', aRegistry.getItem(18022), 'P', OP.blockPlate.dat(MT.Magnalium));",
+      "name": "Magnalium Steam Turbine Main Housing",
+      "hull_material": "MT.StainlessSteel",
+      "nbt_expressions": {
+        "NBT_INPUT": "6144*STEAM_PER_EU",
+        "NBT_OUTPUT": "4096"
+      },
+      "input": 12288,
+      "output": 4096
+    },
+    {
+      "source_id": 17212,
+      "source_line": 1255,
+      "source_line_text": "\t\taMat = MT.Ti;                   aRegistry.add(\"Trinitanium Steam Turbine Main Housing\"              , \"Multiblock Machines\", 17212, 17101, MultiTileEntityLargeTurbineSteam.class   , aMat.mToolQuality, 16, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   9.0F, NBT_RESISTANCE,   9.0F, NBT_TEXTURE, \"largeturbine\"            , NBT_DESIGN, 18026, NBT_INPUT,  12288*STEAM_PER_EU, NBT_OUTPUT,   8192, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.STEAM, NBT_ENERGY_EMITTED, TD.Energy.RU), \"PPP\", \"PMP\", \"PPP\", 'M', aRegistry.getItem(18026), 'P', OP.blockPlate.dat(MT.Trinitanium));",
+      "name": "Trinitanium Steam Turbine Main Housing",
+      "hull_material": "MT.Ti",
+      "nbt_expressions": {
+        "NBT_INPUT": "12288*STEAM_PER_EU",
+        "NBT_OUTPUT": "8192"
+      },
+      "input": 24576,
+      "output": 8192
+    },
+    {
+      "source_id": 17213,
+      "source_line": 1256,
+      "source_line_text": "\t\taMat = MT.TungstenSteel;        aRegistry.add(\"Graphene Steam Turbine Main Housing\"                 , \"Multiblock Machines\", 17213, 17101, MultiTileEntityLargeTurbineSteam.class   , aMat.mToolQuality, 16, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,  12.5F, NBT_RESISTANCE,  12.5F, NBT_TEXTURE, \"largeturbine\"            , NBT_DESIGN, 18023, NBT_INPUT,  24576*STEAM_PER_EU, NBT_OUTPUT,  16384, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.STEAM, NBT_ENERGY_EMITTED, TD.Energy.RU), \"PPP\", \"PMP\", \"PPP\", 'M', aRegistry.getItem(18023), 'P', OP.blockPlate.dat(MT.Graphene));",
+      "name": "Graphene Steam Turbine Main Housing",
+      "hull_material": "MT.TungstenSteel",
+      "nbt_expressions": {
+        "NBT_INPUT": "24576*STEAM_PER_EU",
+        "NBT_OUTPUT": "16384"
+      },
+      "input": 49152,
+      "output": 16384
+    },
+    {
+      "source_id": 17214,
+      "source_line": 1257,
+      "source_line_text": "\t\taMat = MT.Ad;                   aRegistry.add(\"Vibramantium Steam Turbine Main Housing\"             , \"Multiblock Machines\", 17214, 17101, MultiTileEntityLargeTurbineSteam.class   , aMat.mToolQuality, 16, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS, 100.0F, NBT_RESISTANCE, 100.0F, NBT_TEXTURE, \"largeturbine\"            , NBT_DESIGN, 18025, NBT_INPUT, 196608*STEAM_PER_EU, NBT_OUTPUT, 131072, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.STEAM, NBT_ENERGY_EMITTED, TD.Energy.RU), \"PPP\", \"PMP\", \"PPP\", 'M', aRegistry.getItem(18025), 'P', OP.blockPlate.dat(MT.Vibramantium));",
+      "name": "Vibramantium Steam Turbine Main Housing",
+      "hull_material": "MT.Ad",
+      "nbt_expressions": {
+        "NBT_INPUT": "196608*STEAM_PER_EU",
+        "NBT_OUTPUT": "131072"
+      },
+      "input": 393216,
+      "output": 131072
+    },
+    {
+      "source_id": 17221,
+      "source_line": 1259,
+      "source_line_text": "\t\taMat = MT.StainlessSteel;       aRegistry.add(\"Stainless Steel Dynamo Main Housing\"                 , \"Multiblock Machines\", 17221, 17101, MultiTileEntityLargeDynamo.class         , aMat.mToolQuality, 16, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   6.0F, NBT_RESISTANCE,   6.0F, NBT_TEXTURE, \"largedynamo\"             , NBT_DESIGN, 18022, NBT_INPUT,   4096, NBT_OUTPUT,   3072, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.RU, NBT_ENERGY_EMITTED, TD.Energy.EU), \"SwS\", \"CMC\", \"SBS\", 'M', aRegistry.getItem(18022), 'S', OP.stickLong.dat(aMat), 'C', OD_CIRCUITS[6], 'B', \"gt:re-battery1\");",
+      "name": "Stainless Steel Dynamo Main Housing",
+      "hull_material": "MT.StainlessSteel",
+      "nbt_expressions": {
+        "NBT_INPUT": "4096",
+        "NBT_OUTPUT": "3072"
+      },
+      "input": 4096,
+      "output": 3072
+    },
+    {
+      "source_id": 17222,
+      "source_line": 1260,
+      "source_line_text": "\t\taMat = MT.Ti;                   aRegistry.add(\"Titanium Dynamo Main Housing\"                        , \"Multiblock Machines\", 17222, 17101, MultiTileEntityLargeDynamo.class         , aMat.mToolQuality, 16, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   9.0F, NBT_RESISTANCE,   9.0F, NBT_TEXTURE, \"largedynamo\"             , NBT_DESIGN, 18026, NBT_INPUT,   8192, NBT_OUTPUT,   6144, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.RU, NBT_ENERGY_EMITTED, TD.Energy.EU), \"SwS\", \"CMC\", \"SBS\", 'M', aRegistry.getItem(18026), 'S', OP.stickLong.dat(aMat), 'C', OD_CIRCUITS[6], 'B', \"gt:re-battery1\");",
+      "name": "Titanium Dynamo Main Housing",
+      "hull_material": "MT.Ti",
+      "nbt_expressions": {
+        "NBT_INPUT": "8192",
+        "NBT_OUTPUT": "6144"
+      },
+      "input": 8192,
+      "output": 6144
+    },
+    {
+      "source_id": 17223,
+      "source_line": 1261,
+      "source_line_text": "\t\taMat = MT.TungstenSteel;        aRegistry.add(\"Tungstensteel Dynamo Main Housing\"                   , \"Multiblock Machines\", 17223, 17101, MultiTileEntityLargeDynamo.class         , aMat.mToolQuality, 16, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,  12.5F, NBT_RESISTANCE,  12.5F, NBT_TEXTURE, \"largedynamo\"             , NBT_DESIGN, 18023, NBT_INPUT,  16384, NBT_OUTPUT,  12288, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.RU, NBT_ENERGY_EMITTED, TD.Energy.EU), \"SwS\", \"CMC\", \"SBS\", 'M', aRegistry.getItem(18023), 'S', OP.stickLong.dat(aMat), 'C', OD_CIRCUITS[6], 'B', \"gt:re-battery1\");",
+      "name": "Tungstensteel Dynamo Main Housing",
+      "hull_material": "MT.TungstenSteel",
+      "nbt_expressions": {
+        "NBT_INPUT": "16384",
+        "NBT_OUTPUT": "12288"
+      },
+      "input": 16384,
+      "output": 12288
+    },
+    {
+      "source_id": 17224,
+      "source_line": 1262,
+      "source_line_text": "\t\taMat = MT.Ad;                   aRegistry.add(\"Adamantium Dynamo Main Housing\"                      , \"Multiblock Machines\", 17224, 17101, MultiTileEntityLargeDynamo.class         , aMat.mToolQuality, 16, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS, 100.0F, NBT_RESISTANCE, 100.0F, NBT_TEXTURE, \"largedynamo\"             , NBT_DESIGN, 18025, NBT_INPUT, 131072, NBT_OUTPUT,  98304, NBT_WASTE_ENERGY, T, NBT_ENERGY_ACCEPTED, TD.Energy.RU, NBT_ENERGY_EMITTED, TD.Energy.EU), \"SwS\", \"CMC\", \"SBS\", 'M', aRegistry.getItem(18025), 'S', OP.stickLong.dat(aMat), 'C', OD_CIRCUITS[6], 'B', \"gt:re-battery1\");",
+      "name": "Adamantium Dynamo Main Housing",
+      "hull_material": "MT.Ad",
+      "nbt_expressions": {
+        "NBT_INPUT": "131072",
+        "NBT_OUTPUT": "98304"
+      },
+      "input": 131072,
+      "output": 98304
+    },
+    {
+      "source_id": 17231,
+      "source_line": 1264,
+      "source_line_text": "\t\taMat = MT.StainlessSteel;       aRegistry.add(\"Magnalium Gas Turbine Main Housing\"                  , \"Multiblock Machines\", 17231, 17101, MultiTileEntityLargeTurbineGas.class     , aMat.mToolQuality, 16, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   6.0F, NBT_RESISTANCE,   6.0F, NBT_TEXTURE, \"gasturbine\"              , NBT_DESIGN, 18022, NBT_INPUT,   6144, NBT_OUTPUT,   4096, NBT_WASTE_ENERGY, F, NBT_LIMIT_CONSUMPTION, T, NBT_ENERGY_ACCEPTED, TD.Energy.HU, NBT_ENERGY_EMITTED, TD.Energy.RU, NBT_FUELMAP, FM.Gas), \"PwP\", \"BMC\", \"PEP\", 'M', aRegistry.getItem(17211), 'B', \"gt:re-battery1\", 'C', OD_CIRCUITS[6], 'E', IL.MOTORS[1], 'P', OP.plateDense.dat(MT.Invar));",
+      "name": "Magnalium Gas Turbine Main Housing",
+      "hull_material": "MT.StainlessSteel",
+      "nbt_expressions": {
+        "NBT_INPUT": "6144",
+        "NBT_OUTPUT": "4096"
+      },
+      "input": 6144,
+      "output": 4096
+    },
+    {
+      "source_id": 17232,
+      "source_line": 1265,
+      "source_line_text": "\t\taMat = MT.Ti;                   aRegistry.add(\"Trinitanium Gas Turbine Main Housing\"                , \"Multiblock Machines\", 17232, 17101, MultiTileEntityLargeTurbineGas.class     , aMat.mToolQuality, 16, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   9.0F, NBT_RESISTANCE,   9.0F, NBT_TEXTURE, \"gasturbine\"              , NBT_DESIGN, 18026, NBT_INPUT,  12288, NBT_OUTPUT,   8192, NBT_WASTE_ENERGY, F, NBT_LIMIT_CONSUMPTION, T, NBT_ENERGY_ACCEPTED, TD.Energy.HU, NBT_ENERGY_EMITTED, TD.Energy.RU, NBT_FUELMAP, FM.Gas), \"PwP\", \"BMC\", \"PEP\", 'M', aRegistry.getItem(17212), 'B', \"gt:re-battery2\", 'C', OD_CIRCUITS[6], 'E', IL.MOTORS[2], 'P', OP.plateDense.dat(MT.TungstenSteel));",
+      "name": "Trinitanium Gas Turbine Main Housing",
+      "hull_material": "MT.Ti",
+      "nbt_expressions": {
+        "NBT_INPUT": "12288",
+        "NBT_OUTPUT": "8192"
+      },
+      "input": 12288,
+      "output": 8192
+    },
+    {
+      "source_id": 17233,
+      "source_line": 1266,
+      "source_line_text": "\t\taMat = MT.TungstenSteel;        aRegistry.add(\"Graphene Gas Turbine Main Housing\"                   , \"Multiblock Machines\", 17233, 17101, MultiTileEntityLargeTurbineGas.class     , aMat.mToolQuality, 16, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,  12.5F, NBT_RESISTANCE,  12.5F, NBT_TEXTURE, \"gasturbine\"              , NBT_DESIGN, 18023, NBT_INPUT,  24576, NBT_OUTPUT,  16384, NBT_WASTE_ENERGY, F, NBT_LIMIT_CONSUMPTION, T, NBT_ENERGY_ACCEPTED, TD.Energy.HU, NBT_ENERGY_EMITTED, TD.Energy.RU, NBT_FUELMAP, FM.Gas), \"PwP\", \"BMC\", \"PEP\", 'M', aRegistry.getItem(17213), 'B', \"gt:re-battery3\", 'C', OD_CIRCUITS[6], 'E', IL.MOTORS[3], 'P', OP.plateDense.dat(MT.W));",
+      "name": "Graphene Gas Turbine Main Housing",
+      "hull_material": "MT.TungstenSteel",
+      "nbt_expressions": {
+        "NBT_INPUT": "24576",
+        "NBT_OUTPUT": "16384"
+      },
+      "input": 24576,
+      "output": 16384
+    },
+    {
+      "source_id": 17234,
+      "source_line": 1267,
+      "source_line_text": "\t\taMat = MT.Ad;                   aRegistry.add(\"Vibramantium Gas Turbine Main Housing\"               , \"Multiblock Machines\", 17234, 17101, MultiTileEntityLargeTurbineGas.class     , aMat.mToolQuality, 16, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS, 100.0F, NBT_RESISTANCE, 100.0F, NBT_TEXTURE, \"gasturbine\"              , NBT_DESIGN, 18025, NBT_INPUT, 196608, NBT_OUTPUT, 131072, NBT_WASTE_ENERGY, F, NBT_LIMIT_CONSUMPTION, T, NBT_ENERGY_ACCEPTED, TD.Energy.HU, NBT_ENERGY_EMITTED, TD.Energy.RU, NBT_FUELMAP, FM.Gas), \"PwP\", \"BMC\", \"PEP\", 'M', aRegistry.getItem(17214), 'B', \"gt:re-battery4\", 'C', OD_CIRCUITS[6], 'E', IL.MOTORS[4], 'P', OP.plateDense.dat(MT.Ad));",
+      "name": "Vibramantium Gas Turbine Main Housing",
+      "hull_material": "MT.Ad",
+      "nbt_expressions": {
+        "NBT_INPUT": "196608",
+        "NBT_OUTPUT": "131072"
+      },
+      "input": 196608,
+      "output": 131072
+    }
+  ],
+  "source_extraction_note": "The older parse_source scalar helper drops the *STEAM_PER_EU suffix. Do not use its partial steam input as a rated quantity. This receipt preserves raw source lines/expressions, evaluates the explicitly verified source constant2, and records true litre input.",
+  "known_material_source_rows": [
+    {
+      "path": "magnalium_steam_turbine_main_housing",
+      "source_id": 17211,
+      "source_line": 1254,
+      "components": {
+        "Magnalium": 46702656000,
+        "StainlessSteel": 23351328000
+      },
+      "pattern": [
+        "PPP",
+        "PMP",
+        "PPP"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem(18022)",
+        "P": "OP.blockPlate.dat(MT.Magnalium)"
+      }
+    },
+    {
+      "path": "trinitanium_steam_turbine_main_housing",
+      "source_id": 17212,
+      "source_line": 1255,
+      "components": {
+        "Trinitanium": 46702656000,
+        "Ti": 23351328000
+      },
+      "pattern": [
+        "PPP",
+        "PMP",
+        "PPP"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem(18026)",
+        "P": "OP.blockPlate.dat(MT.Trinitanium)"
+      }
+    },
+    {
+      "path": "graphene_steam_turbine_main_housing",
+      "source_id": 17213,
+      "source_line": 1256,
+      "components": {
+        "Graphene": 46702656000,
+        "TungstenSteel": 23351328000
+      },
+      "pattern": [
+        "PPP",
+        "PMP",
+        "PPP"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem(18023)",
+        "P": "OP.blockPlate.dat(MT.Graphene)"
+      }
+    },
+    {
+      "path": "vibramantium_steam_turbine_main_housing",
+      "source_id": 17214,
+      "source_line": 1257,
+      "components": {
+        "Vibramantium": 46702656000,
+        "Ad": 23351328000
+      },
+      "pattern": [
+        "PPP",
+        "PMP",
+        "PPP"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem(18025)",
+        "P": "OP.blockPlate.dat(MT.Vibramantium)"
+      }
+    },
+    {
+      "path": "stainless_steel_dynamo_main_housing",
+      "source_id": 17221,
+      "source_line": 1259,
+      "components": {
+        "StainlessSteel": 25945920000
+      },
+      "pattern": [
+        "SwS",
+        "CMC",
+        "SBS"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem(18022)",
+        "S": "OP.stickLong.dat(aMat)",
+        "C": "OD_CIRCUITS[6]",
+        "B": "\"gt:re-battery1\""
+      }
+    },
+    {
+      "path": "titanium_dynamo_main_housing",
+      "source_id": 17222,
+      "source_line": 1260,
+      "components": {
+        "Ti": 25945920000
+      },
+      "pattern": [
+        "SwS",
+        "CMC",
+        "SBS"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem(18026)",
+        "S": "OP.stickLong.dat(aMat)",
+        "C": "OD_CIRCUITS[6]",
+        "B": "\"gt:re-battery1\""
+      }
+    },
+    {
+      "path": "tungstensteel_dynamo_main_housing",
+      "source_id": 17223,
+      "source_line": 1261,
+      "components": {
+        "TungstenSteel": 25945920000
+      },
+      "pattern": [
+        "SwS",
+        "CMC",
+        "SBS"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem(18023)",
+        "S": "OP.stickLong.dat(aMat)",
+        "C": "OD_CIRCUITS[6]",
+        "B": "\"gt:re-battery1\""
+      }
+    },
+    {
+      "path": "adamantium_dynamo_main_housing",
+      "source_id": 17224,
+      "source_line": 1262,
+      "components": {
+        "Ad": 25945920000
+      },
+      "pattern": [
+        "SwS",
+        "CMC",
+        "SBS"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem(18025)",
+        "S": "OP.stickLong.dat(aMat)",
+        "C": "OD_CIRCUITS[6]",
+        "B": "\"gt:re-battery1\""
+      }
+    },
+    {
+      "path": "magnalium_gas_turbine_main_housing",
+      "source_id": 17231,
+      "source_line": 1264,
+      "components": {
+        "Invar": 23351328000,
+        "Magnalium": 46702656000,
+        "StainlessSteel": 23351328000,
+        "Sn": 648648000,
+        "Rubber": 1297296000,
+        "Cu": 1297296000,
+        "SteelGalvanized": 972972000,
+        "IronMagnetic": 324324000
+      },
+      "pattern": [
+        "PwP",
+        "BMC",
+        "PEP"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem(17211)",
+        "B": "\"gt:re-battery1\"",
+        "C": "OD_CIRCUITS[6]",
+        "E": "IL.MOTORS[1]",
+        "P": "OP.plateDense.dat(MT.Invar)"
+      }
+    },
+    {
+      "path": "trinitanium_gas_turbine_main_housing",
+      "source_id": 17232,
+      "source_line": 1265,
+      "components": {
+        "TungstenSteel": 23351328000,
+        "Trinitanium": 46702656000,
+        "Ti": 23351328000,
+        "Cu": 3243240000,
+        "Rubber": 1297296000,
+        "Al": 972972000,
+        "SteelMagnetic": 324324000
+      },
+      "pattern": [
+        "PwP",
+        "BMC",
+        "PEP"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem(17212)",
+        "B": "\"gt:re-battery2\"",
+        "C": "OD_CIRCUITS[6]",
+        "E": "IL.MOTORS[2]",
+        "P": "OP.plateDense.dat(MT.TungstenSteel)"
+      }
+    },
+    {
+      "path": "graphene_gas_turbine_main_housing",
+      "source_id": 17233,
+      "source_line": 1266,
+      "components": {
+        "W": 23351328000,
+        "Graphene": 46702656000,
+        "TungstenSteel": 23351328000,
+        "Au": 648648000,
+        "Rubber": 1297296000,
+        "Cu": 3891888000,
+        "StainlessSteel": 972972000,
+        "SteelMagnetic": 324324000
+      },
+      "pattern": [
+        "PwP",
+        "BMC",
+        "PEP"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem(17213)",
+        "B": "\"gt:re-battery3\"",
+        "C": "OD_CIRCUITS[6]",
+        "E": "IL.MOTORS[3]",
+        "P": "OP.plateDense.dat(MT.W)"
+      }
+    },
+    {
+      "path": "vibramantium_gas_turbine_main_housing",
+      "source_id": 17234,
+      "source_line": 1267,
+      "components": {
+        "Ad": 46702656000,
+        "Vibramantium": 46702656000,
+        "Al": 648648000,
+        "Rubber": 1297296000,
+        "AnnealedCopper": 5189184000,
+        "Cr": 972972000,
+        "NeodymiumMagnetic": 324324000
+      },
+      "pattern": [
+        "PwP",
+        "BMC",
+        "PEP"
+      ],
+      "keys": {
+        "M": "aRegistry.getItem(17214)",
+        "B": "\"gt:re-battery4\"",
+        "C": "OD_CIRCUITS[6]",
+        "E": "IL.MOTORS[4]",
+        "P": "OP.plateDense.dat(MT.Ad)"
+      }
+    }
+  ],
+  "material_audit": {
+    "path": "C:\\Dev\\GregTech6\\work\\advanced-controller-material-source-20261007.json",
+    "sha256": "f68f57adbd85dad837d701f08fd463a4a54268f6e403743ed8cc53b8b495a9f2",
+    "bytes": 1153127
+  },
+  "harvest_reextract_audit": {
+    "path": "C:\\Dev\\GregTech6\\work\\generator-source-properties-20261007.json",
+    "sha256": "c087adc0866ae5903061f220ebdf187bdd408f6f70dca1626b5fa10efa08a1ce",
+    "bytes": 296733
+  },
+  "implementation": {
+    "structure": "Steam4/dynamo3/gas4 original specialized rows. Steam/gas first row appends original localized dense-wall name; gas fourth row orange. Native parent tools builder wand/magnifier/facing wrench once, common harvest/blast/material owner retained.",
+    "energy": "Source EnergyStats nominal and half..double range; steam input in actual litres, RU output; dynamo RU input/EU output; gas hides HU fuel input entirely. No energy capacity/recipes/fuel-map row invented.",
+    "efficiency": "LH ALL_EU includes RU and HU. Steam uses STEAM_PER_EU2. Source integer truncate: steam/gas6666=66.66%, dynamo7500=75.00%. Steam used-steam(Sides,95%) row follows energy rows.",
+    "identity_and_material": "Twelve one-item legacy controller conversions preserve their actual original core CR.REV composition and original source/tool/material/quality metadata. Shared alias map updates lookup and complete enumerations. Original625 named material/667 named harvest lines unchanged; dynamic720storage/120hoppers retained. Full maps1465->1477 materials,1507->1519 harvest. Original265 basic rows preserved.",
+    "known_quantities": "Steam controller72U rotor-material+36U hull. Dynamo40U hull. Gas retains existing exact known source composition, including motor/component data; no arbitrary battery/circuit/tag member guessed. Whole multiblock structure is not counted as controller construction."
+  },
+  "preservation": {
+    "original_named_material_literal_rows": 625,
+    "original_named_harvest_literal_rows": 667,
+    "unchanged": true,
+    "basic_rows": 265,
+    "reextracted_harvest_literal_rows_identical": true,
+    "regenerator_retains_shared_alias_registration": true
+  },
+  "remaining": [
+    "Current installed probes, ordinary dual packaging and pooled native advanced scenario pending",
+    "Actual player hover/complete natural energy/recycling chains/independent world restart/historical-save backups/ordinary dedicated server",
+    "Arbitrary original saved input/output/converter overrides and old format remain unimplemented; tooltips use source fixed native grades",
+    "Other multiblock generators/heat exchanger/lightning/manual GUI/tooltips and all remaining block material/config gaps",
+    "Existing original large boiler stage acceptance not repeated or claimed from this read-only inspection"
+  ]
+}

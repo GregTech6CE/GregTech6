@@ -1,0 +1,732 @@
+{
+  "date": "2026-10-07",
+  "status": "passed",
+  "scope": "Three pooled tooltip/material batches: ordinary dual packaging and installed title-screen checks; development world evidence separate",
+  "production_source_commit": "c0b870146ca9e8a6536966bbb2e647188567f827",
+  "pooled_commits": [
+    "3434af735",
+    "08a076ab3",
+    "68016a9bc",
+    "6146c57c1",
+    "c0b870146"
+  ],
+  "authors": [
+    "GregTech-6 Team",
+    "Gregorius Techneticies"
+  ],
+  "license": "LGPL-3.0-or-later",
+  "ordinary_build": {
+    "log": {
+      "path": "C:\\Dev\\GregTech6\\work\\tooltip-pooled-dual-build-20261007.log",
+      "sha256": "dbb5c43d8975657c80e292ca27b4f46d3c19b9acae220740b0790e59f2193f96",
+      "bytes": 32273
+    },
+    "exit_code": 0,
+    "seconds": 54,
+    "direct_core_packaging": false,
+    "tasks": [
+      ":build",
+      ":neoforge:build",
+      ":productionSmokeJar",
+      ":reobfProductionSmokeJar",
+      ":neoforge:productionSmokeJar"
+    ],
+    "required_core_check": "Required dependency of root check/build; assertions listed here are from the final ordinary build. Initial and magnetic-repair builds are recorded separately."
+  },
+  "prior_failed_delivery_attempt": {
+    "source_commit": "68016a9bc9b8fd892149385006915dca53a31509",
+    "ordinary_build": {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\tooltip-pooled-first-dual-build-20261007.log",
+        "sha256": "ebc363c1d70f134de5aab4fcafb90dec64c9895a12056a809162105dd2acb571",
+        "bytes": 32217
+      },
+      "exit_code": 0,
+      "seconds": 244,
+      "machine_source_assertions": 7568
+    },
+    "packaging_report": {
+      "path": "C:\\Dev\\GregTech6\\work\\tooltip-pooled-first-artifacts-20261007.json",
+      "sha256": "d9165786889ee640e5fc619924ac6a476930b2fa65b70192f39565d6f1a80523",
+      "bytes": 327114
+    },
+    "packaging_only_manifest": {
+      "path": "C:\\Dev\\GregTech6\\work\\tooltip-pooled-first-verified-20261007.json",
+      "sha256": "e146ce9309b43464a45bf4a8b1f6a00e27049d61e7209b5b4771739b696ae4fc",
+      "bytes": 1082
+    },
+    "wrapper_log": {
+      "path": "C:\\Dev\\GregTech6\\work\\tooltip-pooled-first-production-20261007.log",
+      "sha256": "f82804ec19b9368cb54d4a1537b287d0e6ee3f099547af55e340c77848dd0cae",
+      "bytes": 415
+    },
+    "wrapper_exit_code": 1,
+    "failed_forge_native_log": {
+      "path": "C:\\Dev\\GregTech6\\build\\production-smoke\\forge-11c339d1-91b9-470f-ad20-e700dedcfe3e\\launch.log",
+      "sha256": "4e65632f88ef539b41878fefdb8a4cc5828a22204907c1a1869cfc04f68e9dd0",
+      "bytes": 157024
+    },
+    "failed_probe_copy": {
+      "path": "C:\\Dev\\GregTech6\\build\\production-smoke\\forge-11c339d1-91b9-470f-ad20-e700dedcfe3e\\mods\\gregtech-delivery-probe-0.0.0.jar",
+      "sha256": "3f1d2a1dac0409a02f76fcf5da5538b9f6c5ed7c9ae7d7487efc3e530eb04d39",
+      "bytes": 113111
+    },
+    "reason": "Production OriginalBasicMachineRules.unitKey omitted source MU. Actual installed item tooltip throws IllegalArgumentException: Source energy:MU at title-screen material check. This is a production bug, not a mistaken probe assertion; NeoForge not launched in first attempt.",
+    "acceptance": "Initial jars passed packaging only and are not accepted installed artifacts"
+  },
+  "second_failed_delivery_attempt": {
+    "source_commit": "6146c57c1e7e395dd0f6e811701dde833e64fe5e",
+    "ordinary_build": {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\tooltip-pooled-second-dual-build-20261007.log",
+        "sha256": "3a523a1a2dd5e833fe47f032643d95478a9b5329048877228acbf39f2204b2ce",
+        "bytes": 32899
+      },
+      "exit_code": 0,
+      "seconds": 84,
+      "machine_source_assertions": 7569
+    },
+    "packaging_report": {
+      "path": "C:\\Dev\\GregTech6\\work\\tooltip-pooled-second-artifacts-20261007.json",
+      "sha256": "35b55612533b1d6e77fa2f233dfaa182532d75a350175dff702c12eb4848c80a",
+      "bytes": 327114
+    },
+    "packaging_only_manifest": {
+      "path": "C:\\Dev\\GregTech6\\work\\tooltip-pooled-second-verified-20261007.json",
+      "sha256": "5b31660fc9215586167f022ff1eb426f0a559094f3e3a700f251eabc5035985d",
+      "bytes": 1082
+    },
+    "wrapper_log": {
+      "path": "C:\\Dev\\GregTech6\\work\\tooltip-pooled-second-production-20261007.log",
+      "sha256": "af4582c5ceaf142c996a09be0e1c4ce32485702acf4ab69d3b7cb4ba5b6df2d6",
+      "bytes": 415
+    },
+    "wrapper_exit_code": 1,
+    "failed_forge_native_log": {
+      "path": "C:\\Dev\\GregTech6\\build\\production-smoke\\forge-ef228b54-aa32-4c50-87ed-b26002282619\\launch.log",
+      "sha256": "a464be6d4ae342eb7b51389201200669e48dd2f45f38c8a73f3ee5112750eadb",
+      "bytes": 155135
+    },
+    "failed_probe_copy": {
+      "path": "C:\\Dev\\GregTech6\\build\\production-smoke\\forge-ef228b54-aa32-4c50-87ed-b26002282619\\mods\\gregtech-delivery-probe-0.0.0.jar",
+      "sha256": "420dec6c6783b3d14b46a7b68b127b92f4053f7cf859d29f067771176e0feca5",
+      "bytes": 113876
+    },
+    "reason": "Magnetic and all247 basic-machine probes passed; next advanced-controller check found Forge fusion_reactor_main missing source structure/recipe rows. Forge MachineBlockRegistration uses plain BlockItem, but Fusion block lacked appendHoverText, so item-spec path never ran. Production boundary wiring defect; NeoForge not launched in this attempt.",
+    "repair_commit": "c0b870146ca9e8a6536966bbb2e647188567f827",
+    "acceptance": "Second jars passed packaging only and are not accepted installed artifacts"
+  },
+  "magnetic_unit_repair": {
+    "commit": "6146c57c1e7e395dd0f6e811701dde833e64fe5e",
+    "original_sources": [
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\TD.java",
+        "sha256": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea",
+        "bytes": 53981
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\machines\\MultiTileEntityBasicMachine.java",
+        "sha256": "1798706545c33c801735ac5fb56b0ae37a8b6e3b7819f40f41183a2057b0c860",
+        "bytes": 53507
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+        "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+        "bytes": 791265
+      }
+    ],
+    "source_contract": "TD.Energy.MAGNETIC alias MU; gt.td.short.energy.magnetic; LH.Chat.DGRAY; source20221-20225 polarizers/20301-20305 magnetic separators",
+    "repair": "Shared unit name plus both native dark-gray styles; one pinned shared source assertion and each loader ten actual MU item checks; existing Chinese/English MU translation reused without modifying language files"
+  },
+  "core_assertions": {
+    "base": 2474,
+    "machine_source": 7569,
+    "material": 7947,
+    "thermal": 53
+  },
+  "packaging_before_clients": {
+    "path": "C:\\Dev\\GregTech6\\work\\tooltip-pooled-artifacts-20261007.json",
+    "sha256": "30f2c575e4d18d00cebbf4798031b6ee0eb9ab7947311bdfa1e29124fbc27113",
+    "bytes": 327114
+  },
+  "stable_manifest": {
+    "path": "C:\\Dev\\GregTech6\\work\\tooltip-pooled-verified-20261007.json",
+    "sha256": "15994c5927f8961fa8eee383c3c0682f26a953f8d8caf0e39181bcc6d58b574c",
+    "bytes": 1082
+  },
+  "stable_artifacts": {
+    "forge": {
+      "name": "gregtech6-1.20.1-forge-0.0.0.jar",
+      "bytes": 41637337,
+      "sha256": "10bc6a82e3d85c481263e0abbf2826354497ec9f1b1755cb8e44e9836421c8a1",
+      "zip_crc_checked": true,
+      "path": "C:\\Dev\\GregTech6\\build\\verified\\20261007-061418Z-10bc6a82\\gregtech6-1.20.1-forge-0.0.0.jar"
+    },
+    "neoforge": {
+      "name": "gregtech6-neoforge-1.21.1-0.0.0.jar",
+      "bytes": 39859863,
+      "sha256": "5b6cd982b767ee8409e2ea78e4bb05969c072fe8d19167926856b9622bfd528e",
+      "zip_crc_checked": true,
+      "path": "C:\\Dev\\GregTech6\\build\\verified\\20261007-061418Z-10bc6a82\\gregtech6-neoforge-1.21.1-0.0.0.jar"
+    }
+  },
+  "installed_wrapper_log": {
+    "path": "C:\\Dev\\GregTech6\\work\\tooltip-pooled-production-20261007.log",
+    "sha256": "81f20ce307cde7972ad21d895b576b100f2f9d10927128f7ec25c023773901a7",
+    "bytes": 749
+  },
+  "installed_wrapper_exit_code": 0,
+  "installed": {
+    "forge": {
+      "receipt_file": {
+        "path": "C:\\Dev\\GregTech6\\work\\tooltip-pooled-forge-production-20261007.json",
+        "sha256": "3a83f7129ff608eb67715d62deb480b472089cc895539d0b5a885de9da50b13c",
+        "bytes": 12163
+      },
+      "version": "1.20.1-Forge_47.4.26",
+      "java": "openjdk version \"25.0.2\" 2026-01-20 LTS\nOpenJDK Runtime Environment Zulu25.32+21-CA (build 25.0.2+10-LTS)\nOpenJDK 64-Bit Server VM Zulu25.32+21-CA (build 25.0.2+10-LTS, mixed mode, sharing)",
+      "exit_code": 0,
+      "elapsed_seconds": 53.39,
+      "installed_files_modified": false,
+      "distribution": {
+        "path": "C:\\Dev\\GregTech6\\build\\verified\\20261007-061418Z-10bc6a82\\gregtech6-1.20.1-forge-0.0.0.jar",
+        "sha256": "10bc6a82e3d85c481263e0abbf2826354497ec9f1b1755cb8e44e9836421c8a1",
+        "bytes": 41637337
+      },
+      "probe": {
+        "path": "C:\\Dev\\GregTech6\\build\\production-probe\\gregtech-delivery-probe-0.0.0.jar",
+        "sha256": "1b007f711a1f0d2a0644d9485d3ef22095d5b64619c70d24368c82386f1784cc",
+        "bytes": 113876
+      },
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\build\\production-smoke\\forge-c6ff546c-1459-4486-bfe5-4b760dae16cc\\launch.log",
+        "sha256": "05029ef7aae7b48c51b0ade75f0cb548fd46b188b455450887d74f1d238052da",
+        "bytes": 159087
+      },
+      "screenshot": {
+        "path": "C:\\Dev\\GregTech6\\build\\production-smoke\\forge-c6ff546c-1459-4486-bfe5-4b760dae16cc\\screenshots\\production-forge-06b2f856-3868-410d-8495-da2b5691257c.png",
+        "sha256": "35119fba9db5516e5c449254ec8ab09482533cfbc92e2eb93e3ebb3912e0cab5",
+        "bytes": 144508
+      },
+      "visually_reviewed": true,
+      "visual_scope": "Actual1280x720 title-screen capture showing the existing panel item-render atlas; visible textures/colors without missing checkerboards. This is not a new machine tooltip hover or world screenshot.",
+      "rendered_frames": 182,
+      "width": 1280,
+      "height": 720,
+      "source_basic": {
+        "sourceBasicMachines": 247,
+        "magneticMachines": 10,
+        "exactAdvancedMaterialSections": 247,
+        "scope": "installed actual tooltip calls/events at title screen; not player hover or world operations"
+      },
+      "advanced_controllers": {
+        "controllers": 3,
+        "sourceStructureRows": 17,
+        "scope": "installed actual tooltip calls/events only; not player hover, natural processing or restart"
+      },
+      "source_generators": {
+        "items": 24,
+        "sourceStructureRows": 88,
+        "materialAndHarvestAliases": 12,
+        "scope": "installed actual tooltip calls/events and registrations; not natural generation/recycling or player hover/restart"
+      },
+      "source_block_identity_and_tooltips": {
+        "sourceBlockAndHopperIdentities": 1519,
+        "actualSourceBasicMachines": 264,
+        "nativeBlockClasses": 150,
+        "overlappingNamedBasicMachines": 4,
+        "nativeSavedCoverFaces": 12,
+        "scope": "native installed item tooltip events, source policy and sparse saved face data; no hover screenshot, actual harvest or world restart claim",
+        "storageTooltips": {
+          "safes": 120,
+          "drawers": 60,
+          "craftingTables": 120,
+          "bottleCrates": 90,
+          "massStorages": 121,
+          "hoppers": 120,
+          "bookShelves": 75,
+          "scaffolds": 60,
+          "savedMassConfigurations": 4,
+          "scope": "actual native tooltip calls/events and saved item state; no world interaction or screen hover claim"
+        }
+      },
+      "material_registry_and_exact_quantities": {
+        "sourceBlockIdentities": 1477,
+        "nativeBasicMachinesAndControllers": 264,
+        "singleAdvancedMaterialSection": true,
+        "exactSourceComponentAmounts": true,
+        "scope": "installed item methods and tooltip event at title screen; no recovery gameplay claim"
+      },
+      "scope": "Actual installed native item tooltip methods/events, factories and resource checks at title screen; no player hover/world-operation claim"
+    },
+    "neoforge": {
+      "receipt_file": {
+        "path": "C:\\Dev\\GregTech6\\work\\tooltip-pooled-neoforge-production-20261007.json",
+        "sha256": "e86d94375197fccba05ca4e927e51c74cdd82eb0789ddbc61a008bb96fef5338",
+        "bytes": 12092
+      },
+      "version": "1.21.1-NeoForge_21.1.252",
+      "java": "openjdk version \"25.0.2\" 2026-01-20 LTS\nOpenJDK Runtime Environment Zulu25.32+21-CA (build 25.0.2+10-LTS)\nOpenJDK 64-Bit Server VM Zulu25.32+21-CA (build 25.0.2+10-LTS, mixed mode, sharing)",
+      "exit_code": 0,
+      "elapsed_seconds": 45.77,
+      "installed_files_modified": false,
+      "distribution": {
+        "path": "C:\\Dev\\GregTech6\\build\\verified\\20261007-061418Z-10bc6a82\\gregtech6-neoforge-1.21.1-0.0.0.jar",
+        "sha256": "5b6cd982b767ee8409e2ea78e4bb05969c072fe8d19167926856b9622bfd528e",
+        "bytes": 39859863
+      },
+      "probe": {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\build\\production-probe\\gregtech-delivery-probe-0.0.0.jar",
+        "sha256": "2c68ef1ddf52c63f5fd9f8a1d3fbf9c6f2db5418f5678626e1579a0ac59323ed",
+        "bytes": 114335
+      },
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\build\\production-smoke\\neoforge-ac971d37-ee13-43ee-9d01-28ddc16c4b96\\launch.log",
+        "sha256": "6976c6e921fd884905e69d12c18f2bcbe5b08996f874376cacebe867a621731d",
+        "bytes": 158948
+      },
+      "screenshot": {
+        "path": "C:\\Dev\\GregTech6\\build\\production-smoke\\neoforge-ac971d37-ee13-43ee-9d01-28ddc16c4b96\\screenshots\\production-neoforge-dca3aaa1-09f1-4483-963a-20e815340ed1.png",
+        "sha256": "ef4e66c7362d0aba27f5ca01a1ef8cafe740689d0dd8cf3f9c9cd16010bfee8c",
+        "bytes": 146338
+      },
+      "visually_reviewed": true,
+      "visual_scope": "Actual1280x720 title-screen capture showing the existing panel item-render atlas; visible textures/colors without missing checkerboards. This is not a new machine tooltip hover or world screenshot.",
+      "rendered_frames": 181,
+      "width": 1280,
+      "height": 720,
+      "source_basic": {
+        "sourceBasicMachines": 247,
+        "magneticMachines": 10,
+        "exactAdvancedMaterialSections": 247,
+        "scope": "installed actual tooltip calls/events at title screen; not player hover or world operations"
+      },
+      "advanced_controllers": {
+        "controllers": 3,
+        "sourceStructureRows": 17,
+        "scope": "installed actual tooltip calls/events only; not player hover, natural processing or restart"
+      },
+      "source_generators": {
+        "items": 24,
+        "sourceStructureRows": 88,
+        "materialAndHarvestAliases": 12,
+        "scope": "installed actual tooltip calls/events and registrations; not natural generation/recycling or player hover/restart"
+      },
+      "source_block_identity_and_tooltips": {
+        "sourceBlockAndHopperIdentities": 1519,
+        "actualSourceBasicMachines": 265,
+        "nativeBlockClasses": 147,
+        "overlappingNamedBasicMachines": 5,
+        "nativeSavedCoverFaces": 12,
+        "scope": "native installed item tooltip events, source policy and sparse saved face data; no hover screenshot, actual harvest or world restart claim",
+        "storageTooltips": {
+          "safes": 120,
+          "drawers": 60,
+          "craftingTables": 120,
+          "bottleCrates": 90,
+          "massStorages": 121,
+          "hoppers": 120,
+          "bookShelves": 75,
+          "scaffolds": 60,
+          "savedMassConfigurations": 4,
+          "scope": "default rows through native tooltip calls/events; four saved-template rows through actual BlockItem.appendHoverText with built-in item lookup at title; no world interaction or screen hover claim"
+        }
+      },
+      "material_registry_and_exact_quantities": {
+        "sourceBlockIdentities": 1477,
+        "nativeBasicMachinesAndControllers": 265,
+        "singleAdvancedMaterialSection": true,
+        "exactSourceComponentAmounts": true,
+        "scope": "installed item methods and tooltip event at title screen; no recovery gameplay claim"
+      },
+      "scope": "Actual installed native item tooltip methods/events, factories and resource checks at title screen; no player hover/world-operation claim"
+    }
+  },
+  "post_client_packaging": {
+    "report": {
+      "path": "C:\\Dev\\GregTech6\\work\\tooltip-pooled-post-client-artifacts-20261007.json",
+      "sha256": "ad7efa4a0f459ea4e225b3b1474b575e1557ba5d1b8049289726e077f9242d71",
+      "bytes": 327166
+    },
+    "status": "passed",
+    "shared_classes": 770,
+    "complete_crc_and_stable_sha_unchanged": true
+  },
+  "current_source_references": [
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\machine\\BasicMachineCatalog.java",
+      "sha256": "e2ee8a78f891db3c3df08b91d18a1f05322a12b6c84950e3d4bf823970333973",
+      "bytes": 40168
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\machine\\MachineConstructionMaterials.java",
+      "sha256": "2dca313a0614a872a01e031247c500a35c834d40e74c8339c45da5dbd561171f",
+      "bytes": 2154
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\machine\\OriginalBasicMachineFaces.java",
+      "sha256": "77a5f349535ba0bf180947acc9190c3db32ae90288217a8a1293c115d9f6a290",
+      "bytes": 5029
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\machine\\OriginalBasicMachineRules.java",
+      "sha256": "1611a1acad22bf778b017655b5d683f01a4cb5de546dfa7442458ec24234a9a8",
+      "bytes": 4121
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\machine\\OriginalMachineMaterialData.java",
+      "sha256": "5f6f442f8fb7d3265531b00c667c93850fa41d28e2f93d9ec307c59ec14e20c9",
+      "bytes": 206052
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\OriginalAdvancedControllerData.java",
+      "sha256": "e3698e7674a5e1860f2f30b01fafd94b3483318cef3660d7568f9dc69601ebf3",
+      "bytes": 2549
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\OriginalGeneratorTooltipData.java",
+      "sha256": "be235dc14ac3dc9b29dc1e00544833de58ad2689d0bae27e5e2e1209973bf7f2",
+      "bytes": 3398
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\OriginalMultiblockMachineParameters.java",
+      "sha256": "c9704435f9115d7e9990c74ba78d823e92a23efa118b24407e59a2cb99ca65a6",
+      "bytes": 2030
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\data\\BasicMachineOriginalParams.java",
+      "sha256": "7432073717be1f3239fb9bd36e508950f4e594ebb0de953850bd449ad986fb47",
+      "bytes": 28758
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\data\\SourceBlockProperties.java",
+      "sha256": "c58e637a9530c77d59cf956d6ff78b45e53c619562e9a58bc406c07736154183",
+      "bytes": 105070
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\lang\\en_us.json",
+      "sha256": "fa0b0d1d1d5700c61d905ef1bb5e963001166eb20a3afb5499180957576f124a",
+      "bytes": 756285
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\lang\\zh_cn.json",
+      "sha256": "d7a2e538298152e9d2a1c72db0f4d9f83b0196502d6587bb14bc827c9bbed4c8",
+      "bytes": 8454354
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\test\\java\\com\\gregtech\\gregtech\\core\\BasicMachineSourceContracts.java",
+      "sha256": "193947412a667ef8b15bb5f1882a187bbd1c97e1b8a8414516a6203f61c22748",
+      "bytes": 4443
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\test\\java\\com\\gregtech\\gregtech\\core\\GeneratorTooltipContracts.java",
+      "sha256": "ffdab977ba98042632d7aba3d0e9e14df8af03a8271f88b3b6ce0bdedcee9592",
+      "bytes": 3747
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\test\\java\\com\\gregtech\\gregtech\\core\\MachineSpecBehaviorContracts.java",
+      "sha256": "8519fd377652cdbf3843fcd10da4f385b29234d9c55756ec402d9266ba3e0d67",
+      "bytes": 91207
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\test\\resources\\gregtech\\basic-machine-source-flags.tsv",
+      "sha256": "0e69b10f60911b5cf8f4900e32b83dfc3568f29679777d9a44cdcfa68687bc3e",
+      "bytes": 16278
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\AdvancedControllerSourceTests.java",
+      "sha256": "4ffc59082103002c34e63b757545f4c4a17d52e91ce1b838a0c074ea217577cf",
+      "bytes": 3647
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\BasicMachineSourceTests.java",
+      "sha256": "c22a5b27a750c511e2a5a30e12a449b5551c18afaea6e9924dc373ff5617bbc5",
+      "bytes": 6461
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\resources\\data\\gregtech_advanced_source\\structure\\test_empty.nbt",
+      "sha256": "ea4b3ed88dbb879fc3b86b9bceca2961af8248069c6420a4136eba192ec7b9b7",
+      "bytes": 113
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\resources\\data\\gregtech_basic_source\\structure\\test_empty.nbt",
+      "sha256": "ea4b3ed88dbb879fc3b86b9bceca2961af8248069c6420a4136eba192ec7b9b7",
+      "bytes": 113
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\AxialGeneratorBlock.java",
+      "sha256": "85e32f843019def14db242f3f9568537d57c55f0db73c63caab175c16d79be13",
+      "bytes": 6126
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\LargeGasTurbineControllerBlock.java",
+      "sha256": "a77a200d5c900130d25638dcfd9ed6c9e646411ea2fd2731d0002d6280a6910a",
+      "bytes": 5658
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\BasicMachineBlockEntity.java",
+      "sha256": "5a5dad8d5501354ff87b416342faa712081a2fcba6761e2df3a6cb14715d1c88",
+      "bytes": 88534
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\ImplosionCompressorControllerBlockEntity.java",
+      "sha256": "2f3d9f37fd64409f8d07d19346103b5e0a687a8828aefb9a8480c5ad72eb5572",
+      "bytes": 3703
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeRecipeMachineBlockEntity.java",
+      "sha256": "79d2c086e4ee79f3caf993027094b287b9145ad67affb9a46619beee634d9eab",
+      "bytes": 14313
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\client\\AdvancedControllerTooltips.java",
+      "sha256": "3029f9ae9c96c66ace315d0159969f263231bff85667abb5083f1408c26228f5",
+      "bytes": 1167
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\client\\BasicMachineSourceTooltips.java",
+      "sha256": "42d47ebb62c2c6f5333dd32cb715a0bfe58e97edc08ae9e2f9911f551bcdba94",
+      "bytes": 5975
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\client\\GeneratorSourceTooltips.java",
+      "sha256": "e9aadcd08635666399d4c704176883efe1aef26b52b6b21ded49d9e12900304d",
+      "bytes": 3021
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\client\\MachineTooltips.java",
+      "sha256": "562b2cd3d8b0cc981f751a49c52c3538a824673b5774c0b215261a8d1e306e36",
+      "bytes": 9743
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\content\\machine\\BasicMachineDefinitions.java",
+      "sha256": "633640f543eacff1a4644413bd500a89137860654e59fc0b1e34ff79fa1c4307",
+      "bytes": 1365
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\AdvancedControllerDeliveryChecks.java",
+      "sha256": "f91ae148cfc1971beec677307b22505c08c79ad81837cd8cdc2c2e78c1ed5b28",
+      "bytes": 3582
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\BasicMachineSourceDeliveryChecks.java",
+      "sha256": "1982e0ad6909ebef02c56e4d11d34b91db7abf9ea5abd161453b7e2d017e05a2",
+      "bytes": 4735
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\CommonBlockDeliveryChecks.java",
+      "sha256": "aa61ec6bc60d9eeb9dfd46369e979deb09ca94cc4552aa49b3fd8d9d7a2a3a7e",
+      "bytes": 20528
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\GeneratorTooltipDeliveryChecks.java",
+      "sha256": "270b31e286497ef24ea841cbe7b6f17484551063abca74c76fcee9af41f0ece6",
+      "bytes": 4255
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\ProductionClientSmoke.java",
+      "sha256": "0ae5a68ffb84f46ae8610ed0d63311cfcdd9d02ddefaa162bcdd218c492ae242",
+      "bytes": 5273
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\AdvancedControllerSourceTests.java",
+      "sha256": "0af8bc753f376b05d39a162f3aa1c324fd0c967396ab962aa7a096afcb0e7db1",
+      "bytes": 3562
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\BasicMachineSourceTests.java",
+      "sha256": "55ed5cb55741054610856117564cef483775ac94c0d2fe4be7af760126a1517e",
+      "bytes": 6376
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\resources\\data\\gregtech_advanced_source\\structures\\test_empty.nbt",
+      "sha256": "147ef3e2c39e8d261ff2287395af00d734ccd13b196abdea0c0334e11fdde075",
+      "bytes": 110
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\resources\\data\\gregtech_basic_source\\structures\\test_empty.nbt",
+      "sha256": "147ef3e2c39e8d261ff2287395af00d734ccd13b196abdea0c0334e11fdde075",
+      "bytes": 110
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\AxialGeneratorBlock.java",
+      "sha256": "3a239ad5e14c872d6252ea4e6375bcfaac0addcbb73725a762c2057de41e15c1",
+      "bytes": 4962
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\FusionReactorControllerBlock.java",
+      "sha256": "3ba142172746146a43104513aab0bd76c75f411064baf9c873466aa85db4625b",
+      "bytes": 2102
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\ImplosionCompressorControllerBlock.java",
+      "sha256": "371997485e2d4454df29fee07fec5fcb65b9296c76cfab7bc287df89127bb444",
+      "bytes": 4477
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\LargeGasTurbineControllerBlock.java",
+      "sha256": "7c08d3d85252d8961bc3548761a6e83e3da0fb53a75e2fb157d13f28d8503965",
+      "bytes": 4524
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\BasicMachineBlockEntity.java",
+      "sha256": "e8c10a0a3093cc1d22ed63ff217e21560a604fe7fb2f6d5219ece935071aef35",
+      "bytes": 90935
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\ImplosionCompressorControllerBlockEntity.java",
+      "sha256": "d5d2d1acf0eb3c18430382d81ea39ae2996aac180ba67747e2b2fbc1bd348db3",
+      "bytes": 3747
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeRecipeMachineBlockEntity.java",
+      "sha256": "7bd6fd36ed34c283eaef2533fce795cf61beb8234ff2d4a0519f7aaef22db43b",
+      "bytes": 14396
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\client\\AdvancedControllerTooltips.java",
+      "sha256": "3029f9ae9c96c66ace315d0159969f263231bff85667abb5083f1408c26228f5",
+      "bytes": 1167
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\client\\BasicMachineSourceTooltips.java",
+      "sha256": "42d47ebb62c2c6f5333dd32cb715a0bfe58e97edc08ae9e2f9911f551bcdba94",
+      "bytes": 5975
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\client\\GeneratorSourceTooltips.java",
+      "sha256": "e9aadcd08635666399d4c704176883efe1aef26b52b6b21ded49d9e12900304d",
+      "bytes": 3021
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\client\\MachineTooltips.java",
+      "sha256": "de3aaf02ddf2f7f543c81c2677c86db66dfa0d029a91a469d9059cbe3410cfe1",
+      "bytes": 9950
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\content\\machine\\BasicMachineDefinitions.java",
+      "sha256": "efe978e86e442f8b4fb90329d768959b550e6fcee1a2b683fd752b7b5b8da79c",
+      "bytes": 972
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\MultiblockDefinitions.java",
+      "sha256": "4ab67571b25fd083de37b81e12c1e1606611ce7522ea89ebe07c57d457c6ec46",
+      "bytes": 7674
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\AdvancedControllerDeliveryChecks.java",
+      "sha256": "b0a836d3b1f2f71a6c5c1461959e8d490216c0239c81f67e3ee8b162a34d9f7b",
+      "bytes": 3530
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\BasicMachineSourceDeliveryChecks.java",
+      "sha256": "727dd0183bb0e47ea9f79c8ba2cbf50ea9a3dd20d2363e3acb5a79acdee6fa0a",
+      "bytes": 4683
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\CommonBlockDeliveryChecks.java",
+      "sha256": "47b18b86da03d25d98f9d273a15ad56ebde74bba7019e2de9463c67b59df4b34",
+      "bytes": 18942
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\GeneratorTooltipDeliveryChecks.java",
+      "sha256": "a9c2bbe14e4f1dac44b2b80666dac059b63e663e33edf23285e89ad78bbe0f92",
+      "bytes": 4158
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\ProductionClientSmoke.java",
+      "sha256": "bee3b25b52a364dc3d3e86e171b3894fed9cf0b47e5ab0bbdea0febd5ab99b28",
+      "bytes": 7435
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\generate_basic_machine_face_defaults.py",
+      "sha256": "d44d865085c4cda2f7c0925af1e950d109b55640f99739d6f30a3b40c6a077d5",
+      "bytes": 3719
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\generate_machine_params_table.py",
+      "sha256": "db59f8b6bfac2d3b0398fece7ec1531ca35bd7a7735c6ea13fd4f9b2016f525a",
+      "bytes": 6180
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\gt6_machine_map.py",
+      "sha256": "fb673b786ec36ee9524be4a2e9dfd2aaef8040efe28016ad35fd9eae757d0cfe",
+      "bytes": 8091
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\integration\\generate_source_block_properties.py",
+      "sha256": "c0429cc61365c563411debe6c5561474233437a640fe70d797eb5cf9879a7bf3",
+      "bytes": 7742
+    }
+  ],
+  "current_finite_world_receipt": {
+    "path": "C:\\Dev\\GregTech6\\docs\\integration\\verification\\tooltip-pooled-runtime-20261007.json",
+    "sha256": "2758dfd01fbac29b574e31b626b56c38f0a1b5635c06a525c4d437a0076bdd65",
+    "bytes": 3900
+  },
+  "historical_source_and_verification_receipts": [
+    {
+      "path": "C:\\Dev\\GregTech6\\docs\\integration\\verification\\basic-machine-source-20261007.json",
+      "sha256": "fa881466799cc3730697bc2fd7b13943e1bc98124529ec68b5c5f235c95e31c9",
+      "bytes": 18286
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\docs\\integration\\verification\\basic-machine-runtime-20261007.json",
+      "sha256": "5e7f749289ab7aad3918ed8c76edde15efe728e8b3a3e34a7ea6bc6b0cb086b1",
+      "bytes": 11843
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\docs\\integration\\verification\\advanced-controller-source-20261007.json",
+      "sha256": "855ff6e2694d0068222f715209e97a3d9465471b9e68357f2134a5e5501776cf",
+      "bytes": 26384
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\docs\\integration\\verification\\advanced-controller-verification-20261007.json",
+      "sha256": "1f9d024e121edbbd11c48f43d62404ccb15a15b311c8583d80bc33b0bfe2f73c",
+      "bytes": 8660
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\docs\\integration\\verification\\generator-tooltip-source-20261007.json",
+      "sha256": "bb3293d7c16d1e07f35e9eeb994f26ad3e0704d483163e18ce744e98138e1a6a",
+      "bytes": 42465
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\docs\\integration\\verification\\generator-tooltip-verification-20261007.json",
+      "sha256": "b26caad6c65cae58b90a4e80b4aa14d30e55d07e86866c75a47c18cd4ef09996",
+      "bytes": 8222
+    }
+  ],
+  "historical_reference_scope": "Nested current paths in prior receipts describe original commits and may have changed; current references above are newly captured, not assumed from historical hashes",
+  "chinese_source_patch": {
+    "path": "C:\\Dev\\GregTech_zh_cn.lang",
+    "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0",
+    "bytes": 7375784
+  },
+  "existing_model_reference_warnings": {
+    "report": {
+      "path": "C:\\Dev\\GregTech6\\work\\tooltip-pooled-model-warnings-20261007.json",
+      "sha256": "079d1561d699367016ca6cdb1d661f30ada1541cf2701d242e8e8812a56e99e0",
+      "bytes": 46155
+    },
+    "baseline_delivery_receipt": {
+      "path": "C:\\Dev\\GregTech6\\docs\\integration\\verification\\large-recipe-pooled-delivery-20261007.json",
+      "sha256": "16c773e6638b568cf72d877c650c69cbaf3b11751b8ba7ec54faff26af2e50bd",
+      "bytes": 15492
+    },
+    "unique_missing_model_references_per_loader": 421,
+    "introduced_references": 0,
+    "removed_references": 0,
+    "scope": "Exact logged reference sets match prior accepted ordinary clients; tooltip acceptance is not a warning-free catalog or proof that every model renders correctly. Remaining iconset/pipe model-reference audit remains open."
+  },
+  "unverified": [
+    "remaining all-block tooltip/material/source configuration gaps",
+    "natural full survival and generator/recycling chains",
+    "remaining existing iconset/pipe model-reference warnings",
+    "player-hover screenshot",
+    "independent saved-world restart",
+    "historical-save compatibility",
+    "ordinary standalone dedicated server"
+  ],
+  "publication": "local commits only; no push or PR",
+  "goal": "active"
+}

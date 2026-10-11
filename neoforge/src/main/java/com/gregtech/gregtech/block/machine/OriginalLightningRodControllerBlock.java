@@ -39,9 +39,7 @@ public final class OriginalLightningRodControllerBlock extends Block implements 
 
     @Override public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
                                           List<Component> tooltip, TooltipFlag flag) {
-        for (int line = 1; line <= 9; line++)
-            tooltip.add(Component.translatable("gt.tooltip.multiblock.lightningrod." + line));
-        tooltip.add(Component.translatable("gt.tooltip.multiblock.lightningrod.output"));
+        com.gregtech.gregtech.client.UtilityControllerTooltips.lightning(tooltip);
     }
 
     @Override public List<ItemStack> getDrops(BlockState state, LootParams.Builder context) {

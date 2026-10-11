@@ -1,0 +1,107 @@
+{
+  "authors": "Original GregTech-6 Team / Gregorius Techneticies, LGPL-3.0-or-later; Chinese copied from unchanged user source.",
+  "base_commit": "6152212c6",
+  "changes": {
+    "en_us": {
+      "gt.lang.has.shapeless": {
+        "after": "Has Shapeless Recipes with Amounts: ",
+        "before": null
+      },
+      "gt.lang.wire.stats.amperage": {
+        "after": "Amperage: ",
+        "before": null
+      },
+      "gt.lang.wire.stats.loss": {
+        "after": "Loss: ",
+        "before": null
+      },
+      "gt.lang.wire.stats.voltage": {
+        "after": "Voltage: ",
+        "before": null
+      }
+    },
+    "zh_cn": {}
+  },
+  "checks": {
+    "dual_compile": {
+      "elapsed": "41s",
+      "passed": true
+    },
+    "external_original_bytes": true,
+    "new_ordinary_artifacts": false,
+    "new_runtime_tests": false,
+    "source_gate": {
+      "java_sources": 2602,
+      "passed": true,
+      "seconds": 2.144
+    }
+  },
+  "language_gate": {
+    "changes": {
+      "changed": 0,
+      "missing": 0,
+      "unexpected": 0
+    },
+    "chinese_keys": 141372,
+    "english": {
+      "exact_original_declarations": 12836,
+      "formatted_keys": 391,
+      "intentional_empty_tooltips": 689,
+      "keys": 15521,
+      "original_english_without_chinese_source": 477
+    },
+    "english_fallback_count": 3091,
+    "native_aliases": 12624,
+    "source_keys": 125676,
+    "source_sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0"
+  },
+  "last_accepted_artifacts": "build/verified/20261008-040242Z-2b6e0982; includes machine-label batch, excludes this wire-label batch.",
+  "limitations": "This small label-only batch has source validation and dual compile, not another client run or rebuilt ordinary JAR. All Chinese not complete: original missing-source translations still await user choice. Goal remains in language/self-check scope, no push.",
+  "native_files": [
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\client\\WireTooltips.java",
+      "sha256": "f47d1130348c31eefd85e1dee077b1ef126ad2cc724aa697edde190494623fdb"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\client\\WireTooltips.java",
+      "sha256": "9356b74d5ba8497350577acc1ae78ad04661e839b80c909ef9320eb1bde8f642"
+    }
+  ],
+  "raw_reports": [
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-wire-labels-import-20261008.json",
+      "sha256": "81cf21f5a1a89792b6988ae92a175d0ec2a17b0c66a14a8a744492b490cea6f6"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-wire-labels-pins-20261008.json",
+      "sha256": "acc87755a9e0e67bf32e9fad198ffe95be92679003bf1e2a3dbdbaa293669e72"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-wire-labels-sourcecheck-20261008.json",
+      "sha256": "ad6d02429f0ecc9f96a318302b41bb2d0896f585591833cba70c0bf60d8ac04c"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-wire-labels-localization-20261008.json",
+      "sha256": "a8f4c3689fd2880ff90dfcd81d123241863231ca5e74784df835689233d2cb4f"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-wire-labels-compile-20261008.log",
+      "sha256": "bf522c48fae2ef2d8c185a21109b3868a59eee5c98deb179ebab01be859f31b5"
+    }
+  ],
+  "scope": "Wire voltage/amperage/loss, cutter harvest label and shapeless recipe label now use existing original Chinese. Values, tiers and gameplay unchanged.",
+  "source_files": [
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+      "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\connectors\\MultiTileEntityWireElectric.java",
+      "sha256": "60dd3bf9147a220ab327a1aed3f0081382678eb0d6190e865e84e1b7dae89724"
+    }
+  ]
+}

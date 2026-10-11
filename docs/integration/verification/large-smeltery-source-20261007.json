@@ -1,0 +1,399 @@
+{
+  "date": "2026-10-07",
+  "base_commit": "a0ab7487d169595c00dd008a0c860d9326805bed",
+  "scope": "8 original large crucibles and retained legacy controller; specialized original tooltips and source runtime gas/fire/contact/meltdown parameters for large and ordinary crucibles",
+  "authors": [
+    "GregTech-6 Team",
+    "Gregorius Techneticies"
+  ],
+  "license": "LGPL-3.0-or-later; Chinese copied verbatim from user patch",
+  "original_files": [
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityCrucible.java",
+      "sha256": "2b04eaab46ae4e48dbd4a7500ed1b5fac533933649cc8a0dbf4baab1b99fa96c",
+      "bytes": 37825
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntitySmeltery.java",
+      "sha256": "eaf9b833c4c439a102bb346c6c4e032d88b6d97b823003232f45d185f23597f1",
+      "bytes": 35922
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\multiblocks\\MultiTileEntityMultiBlockPart.java",
+      "sha256": "b00725df4301983e6fd51aea6519ab3304e85315ec01f338cc27b6a448a6bfda",
+      "bytes": 31052
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\base\\TileEntityBase01Root.java",
+      "sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+      "bytes": 59432
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\util\\WD.java",
+      "sha256": "c8335988b7bd9dbf44df6790d867ac6cfe2e6414793abb0cdd14c32cd342f095",
+      "bytes": 72414
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\util\\UT.java",
+      "sha256": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709",
+      "bytes": 213872
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "bytes": 153449
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+      "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8",
+      "bytes": 51085
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "bytes": 791265
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577",
+      "bytes": 694
+    }
+  ],
+  "comparison_files": [
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityCrucible.java",
+      "sha256": "b5fc1a34b96521a7f9bb9b2ea1f0ecc13bf29ab6f78114cb8793bc082300e363",
+      "bytes": 40604
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntitySmeltery.java",
+      "sha256": "5e57ee96a7e73d02507f76ec3992fcea2865c9c11a5284da23d7416de0ba55fe",
+      "bytes": 38597
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\multiblocks\\MultiTileEntityMultiBlockPart.java",
+      "sha256": "50ee4bb1545a6d4f4bfd29da7fa262429b9607f1688820719c1dbc6b31c99bfb",
+      "bytes": 36588
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\base\\TileEntityBase01Root.java",
+      "sha256": "cdc9aacd740d024dd92d002c6deb5cfecf0a07668a88f8dd7b1fe64b9313a7a2",
+      "bytes": 73028
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\util\\WD.java",
+      "sha256": "19d153335bcdabd67e1994a2121ef47374c1c4335c2a202440378f40f4881ce2",
+      "bytes": 216189
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\util\\UT.java",
+      "sha256": "464429017d2a7f5332eb283a698cd4a28ee4bbbf4ba2f23228d401e3b46a7774",
+      "bytes": 243859
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\data\\CS.java",
+      "sha256": "e6e330961c416e104ea5a58dd8282d286d1e27292a9f6d9955c9569c39af87c9",
+      "bytes": 172344
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\data\\LH.java",
+      "sha256": "2df45cee1047b522593f4f42c70a3acb2c5d8a425399b9a3c83ed022b7115b0f",
+      "bytes": 51804
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "4d87cacde8defa33df30359d345046daa8e901ab0419dca2766d2140d8af1562",
+      "bytes": 791308
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577",
+      "bytes": 694
+    }
+  ],
+  "chinese_patch": {
+    "path": "C:\\Dev\\GregTech_zh_cn.lang",
+    "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0",
+    "bytes": 7375784
+  },
+  "current_port_files": [
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\api\\machine\\crucible\\CrucibleHazards.java",
+      "sha256": "6f9e1203643d477aa7ed68746ee0d74f8327bf255dee251c427d0af062b8229d",
+      "bytes": 2400
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\api\\machine\\crucible\\CrucibleProcess.java",
+      "sha256": "6e87a39733bb0f9990acba2a81203996b2bf8daac33cbaa176f38aa342392c8e",
+      "bytes": 5496
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\machine\\OriginalMachineMaterialData.java",
+      "sha256": "c9d5a38ebca543f6bb1f057e3b13e5408e3f30a724a0036fa3fb64f723373d2a",
+      "bytes": 204005
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\OriginalLargeCrucibleParameters.java",
+      "sha256": "efbd0e57b4de98460cc3162aca0063c1f95e63ba6aa90f82293dec8956c3d564",
+      "bytes": 1596
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\lang\\en_us.json",
+      "sha256": "e632bb0b07c5aa64015df4018ece5cb28b2cf8de07849c97299d8450dc439923",
+      "bytes": 744912
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\test\\java\\com\\gregtech\\gregtech\\core\\CrucibleHazardContracts.java",
+      "sha256": "f2f4755220365037af333657f2be5c17a8aa75b94bbb5be496c6d2ec987fa732",
+      "bytes": 5014
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\test\\java\\com\\gregtech\\gregtech\\core\\MachineSpecBehaviorContracts.java",
+      "sha256": "a7f629dd9a22b4eab1726f859fdb343c39c25b3f400acd73b5171e3a9c63f252",
+      "bytes": 74829
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\CrucibleHazardSourceTests.java",
+      "sha256": "e032c469d737044f91b6395de6d692e3fcec595f341717a42b2bb821357e08d9",
+      "bytes": 7333
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\resources\\data\\gregtech_crucible_hazards\\structure\\test_empty.nbt",
+      "sha256": "ea4b3ed88dbb879fc3b86b9bceca2961af8248069c6420a4136eba192ec7b9b7",
+      "bytes": 113
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\api\\fluid\\PipeIgnition.java",
+      "sha256": "b646aff1d62af3d5357f9225dcaaf7db27e756af8af618b8aefd8707f4f242c0",
+      "bytes": 2362
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\LargeCrucibleControllerBlock.java",
+      "sha256": "723ad4d83a2bf9e5b4f0e5ec6a0f44a735a2eeed8add154c3afbc0827953b067",
+      "bytes": 6911
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\MultiblockPortBlock.java",
+      "sha256": "d545ea25bb8add23fa33fb5dc68be618ccf97085f262ebe5b76864d7b68806ef",
+      "bytes": 5689
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeCrucibleControllerBlockEntity.java",
+      "sha256": "2268b749a4182d0cbe020940a23c11a45987d0695996c71b4574aaa1345b263a",
+      "bytes": 17206
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\SmelteryFireHelper.java",
+      "sha256": "7296cb0ce0ebbebfe4817cb495ac2d698cc2267f3979853e58ce47b58190d05b",
+      "bytes": 5978
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\client\\CrucibleTooltips.java",
+      "sha256": "6cbbce92d7ef87eb6d5c8958e211e3f39fa16b74c93de69e0f88151e79e1d180",
+      "bytes": 3640
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\platform\\neoforge\\smeltery\\SmeltingCrucibleEntity.java",
+      "sha256": "78ded3520467507b67a2982064249e841524ed7593e84025ad0ab5147a965df3",
+      "bytes": 28740
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\util\\GTEntityHelper.java",
+      "sha256": "870b63171f28b14b3073c61520cfef2d1d703a281ed4ed04133b1a3586f195ab",
+      "bytes": 9636
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\SmelteryDeliveryChecks.java",
+      "sha256": "a418e3c47809482e6a324a7d40d41970ed94d7f4e41213a65de6a1fa799228a8",
+      "bytes": 12381
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\CrucibleHazardSourceTests.java",
+      "sha256": "be628bb1b41aabba5a00e43d7ff27006f15f41a1c980f6e52544ae2ccc5d4543",
+      "bytes": 7372
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\resources\\data\\gregtech_crucible_hazards\\structures\\test_empty.nbt",
+      "sha256": "147ef3e2c39e8d261ff2287395af00d734ccd13b196abdea0c0334e11fdde075",
+      "bytes": 110
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\api\\fluid\\PipeIgnition.java",
+      "sha256": "24f2e9a4b415b144304d53b9638cde8e45b6714468b2fc9aaa231ff8c7d662a5",
+      "bytes": 2316
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\LargeCrucibleControllerBlock.java",
+      "sha256": "81df8d07e981b6d4b8618ecadee76390681a6cfd521f9524fa9b8bd530b017b2",
+      "bytes": 5189
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\MultiblockPortBlock.java",
+      "sha256": "36015d1525f128609c635b5288fb526683c15694255f8b67c634a8ef8d8c8260",
+      "bytes": 4621
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeCrucibleControllerBlockEntity.java",
+      "sha256": "f0bb89547073e99cfd374d7493d32b13d0a135656ca15207d9cc66b175ca5790",
+      "bytes": 18015
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\SmelteryFireHelper.java",
+      "sha256": "7296cb0ce0ebbebfe4817cb495ac2d698cc2267f3979853e58ce47b58190d05b",
+      "bytes": 5978
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\SmeltingCrucibleBlockEntity.java",
+      "sha256": "185c7ce206c45c3e22e3b6a2faefef654d711ceb50b9e45dc7ad167b6e9818fa",
+      "bytes": 40105
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\client\\CrucibleTooltips.java",
+      "sha256": "6cbbce92d7ef87eb6d5c8958e211e3f39fa16b74c93de69e0f88151e79e1d180",
+      "bytes": 3640
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\util\\GTEntityHelper.java",
+      "sha256": "870b63171f28b14b3073c61520cfef2d1d703a281ed4ed04133b1a3586f195ab",
+      "bytes": 9636
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\SmelteryDeliveryChecks.java",
+      "sha256": "96c8f0001e9318ff2f954cdedc0b82cba972bd12fe238771f80b0a502c5ac2c3",
+      "bytes": 12225
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\integration\\import_source_tooltip_lang.py",
+      "sha256": "a115ebdfb0491c28723b185b428ae0360db90f2b4e477714144d3178f0de19d4",
+      "bytes": 5531
+    }
+  ],
+  "language_import": {
+    "keys": [
+      "gt.lang.energy.convert.from",
+      "gt.lang.energy.convert.per",
+      "gt.lang.energy.convert.to",
+      "gt.lang.hazard.contact",
+      "gt.lang.hazard.fire",
+      "gt.lang.hazard.meltdown",
+      "gt.lang.proof.acid",
+      "gt.lang.structure",
+      "gt.lang.thermal.mass",
+      "gt.lang.use.shovel.to.empty",
+      "gt.lang.use.thermometer.to.measure",
+      "gt.td.short.energy.heat",
+      "gt.tooltip.crucible.1",
+      "gt.tooltip.multiblock.crucible.1",
+      "gt.tooltip.multiblock.crucible.2",
+      "gt.tooltip.multiblock.crucible.3",
+      "gt.tooltip.multiblock.crucible.4",
+      "gt.tooltip.multiblock.crucible.5"
+    ],
+    "aliases": {},
+    "changes": {
+      "en_us": {
+        "gt.tooltip.multiblock.crucible.1": {
+          "before": null,
+          "after": "3x3x3 Hollow of Walls with opening on Top."
+        },
+        "gt.tooltip.multiblock.crucible.2": {
+          "before": null,
+          "after": "Main at Bottom-Center."
+        },
+        "gt.tooltip.multiblock.crucible.3": {
+          "before": null,
+          "after": "Energy IN from Bottom Layer, Stuff IN from Top Layer."
+        },
+        "gt.tooltip.multiblock.crucible.4": {
+          "before": null,
+          "after": "Molds usable at second Layer of Walls"
+        },
+        "gt.tooltip.multiblock.crucible.5": {
+          "before": null,
+          "after": "KU at Bottom Layer will turn into Air for Steelmaking"
+        }
+      },
+      "zh_cn": {}
+    },
+    "missing_chinese": [],
+    "source_files": [
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+        "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+        "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\RM.java",
+        "sha256": "c7cb07faef0235ace4bb26656fddaabfa10da6aa4a2689a7f4cdcaef10d366e6"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\TD.java",
+        "sha256": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\OP.java",
+        "sha256": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\..\\GT_API_Proxy_Client.java",
+        "sha256": "4ea2be4bb978e989127552dfb057e6f15415b84fe997382828123ba62c1576c8"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\..\\code\\TagData.java",
+        "sha256": "afa72881ee6c421c094ce27e3cef2701374257cb1dd2f099293cceb3e91b4a64"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityCrucible.java",
+        "sha256": "2b04eaab46ae4e48dbd4a7500ed1b5fac533933649cc8a0dbf4baab1b99fa96c"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntitySmeltery.java",
+        "sha256": "eaf9b833c4c439a102bb346c6c4e032d88b6d97b823003232f45d185f23597f1"
+      },
+      {
+        "path": "C:\\Dev\\GregTech_zh_cn.lang",
+        "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0"
+      }
+    ],
+    "license": "Original LH/CS/RM/TD/TagData: LGPL-3.0-or-later; Chinese strings copied verbatim from the user-provided patch."
+  },
+  "source_parameters": {
+    "small": {
+      "gas_and_flame_range": 3,
+      "damage_multiplier": 2,
+      "explosion_scale": 6,
+      "capacity_U": 16,
+      "displayed_fire_range_m": 4
+    },
+    "large": {
+      "gas_and_flame_range": 5,
+      "damage_multiplier": 4,
+      "explosion_scale": 8,
+      "capacity_U": 432,
+      "displayed_fire_range_m": 6,
+      "thermal_hull_U": 100,
+      "controller_REV_U": 4,
+      "meltdown_multiplier": 1.1,
+      "Steel_limit_K": 2250
+    }
+  },
+  "decisions": [
+    "Original large tooltip order and conditional acid proof; no fabricated thermometer or standalone capacity row.",
+    "Large thermal hull100U remains separate from controller construction REV4U; existing8 precise source compositions unchanged.",
+    "Low-density rejection only fizzes; true vapor captures its material boiling point and amount before the thermal step.",
+    "Gas damage uses material BP and source2/4 multipliers in original bounds; fire needs BP>=2000 and max(1,floor9amount/U) attempts.",
+    "Explosive vapor clears contents and pending conversions; original stepped UT.Code.scale1..6/8 feeds existing modern world explosion boundary.",
+    "Source fire targets y=-1..range and x/z=-range..range,2/3 neighbor-flammability checking; collision/carpet/GT-owned/protected-node guards.",
+    "Large contact delegates uncapped original temperature damage on main and bound walls; generic mold/basin proximity burn unchanged.",
+    "Source meltdown uses T/25 fire attempts and flowing lava metadata1; ordinary1 block, large all27 positions."
+  ],
+  "boundaries": [
+    "Modern vanilla world explosion physics and immediate adapter execution differ from original ExplosionGT/post-tick implementation; strength inputs are source-aligned.",
+    "Existing pipe-fire protected tag represents external protected nodes rather than hardcoded Thaumcraft INode support.",
+    "Source death-to-material absorption, hot-break behavior and generic companion proximity hazards remain outside this batch.",
+    "Cold targetSolidifying mapping, any other phase/reaction gaps and full natural heat/alloy chain are not declared complete."
+  ]
+}

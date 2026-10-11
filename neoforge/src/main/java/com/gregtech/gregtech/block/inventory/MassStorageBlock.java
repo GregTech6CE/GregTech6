@@ -127,16 +127,6 @@ public class MassStorageBlock extends Block implements EntityBlock, SimpleWaterl
     @Override
     public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
             List<net.minecraft.network.chat.Component> tooltip, net.minecraft.world.item.TooltipFlag flag) {
-        tooltip.add(net.minecraft.network.chat.Component.translatable("gt.tooltip.mass_storage.1"));
-        tooltip.add(net.minecraft.network.chat.Component.translatable("gt.tooltip.mass_storage.2"));
-        tooltip.add(net.minecraft.network.chat.Component.translatable("gt.tooltip.mass_storage.3"));
-        var component = stack.get(DataComponents.BLOCK_ENTITY_DATA);
-        if (component == null || context.registries() == null) return;
-        var stored = component.copyTag();
-        if (stored.contains("gt.template") && stored.getLong("gt.stored") > 0) {
-            var template = ItemStack.parseOptional(context.registries(), stored.getCompound("gt.template"));
-            if (!template.isEmpty()) tooltip.add(net.minecraft.network.chat.Component.translatable(
-                    "message.gregtech.mass_storage.status", stored.getLong("gt.stored"), template.getHoverName()));
-        }
+        com.gregtech.gregtech.client.StorageBlockTooltips.massStorage(stack, context, tooltip);
     }
 }

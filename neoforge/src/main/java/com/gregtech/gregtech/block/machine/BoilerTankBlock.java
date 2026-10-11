@@ -123,17 +123,9 @@ public class BoilerTankBlock extends Block implements EntityBlock, com.gregtech.
 
     @Override
     public void appendHoverText(ItemStack stack,net.minecraft.world.item.Item.TooltipContext context,List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.literal("1 L Water + 80 HU → 160 L Steam")
-                .withStyle(ChatFormatting.AQUA));
-        tooltip.add(Component.translatable("tooltip.gregtech.machine.energy_in")
-                .withStyle(ChatFormatting.GREEN)
-                .append(Component.literal(spec.heatInputRecommended() + " HU/t (any face)")
-                        .withStyle(ChatFormatting.WHITE)));
-        tooltip.add(Component.translatable("tooltip.gregtech.machine.energy_out")
-                .withStyle(ChatFormatting.RED)
-                .append(Component.literal(spec.steamOutput() + " L/t Steam (top)")
-                        .withStyle(ChatFormatting.WHITE)));
-        tooltip.add(Component.literal("Needs water — runs dry or over-pressure → explodes")
-                .withStyle(ChatFormatting.DARK_RED));
+        var component = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
+        var data = component == null ? null : component.copyTag();
+        int efficiency = data != null && data.contains("gt.efficiency") ? data.getShort("gt.efficiency") : 10000;
+        com.gregtech.gregtech.client.FunctionalBlockTooltips.appendBoiler(spec, efficiency, getExplosionResistance(), tooltip);
     }
 }

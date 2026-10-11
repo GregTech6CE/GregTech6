@@ -1,0 +1,993 @@
+{
+  "date": "2026-10-07",
+  "baseline": "a1b36036e88c3d00434fbef12ab0b9178aa6b5e2",
+  "authors": [
+    "GregTech-6 Team",
+    "Gregorius Techneticies"
+  ],
+  "license": {
+    "code": "LGPL-3.0-or-later",
+    "assets": "CC0-1.0 per preserved LICENSE.assets"
+  },
+  "source_files": [
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemTechnological.java",
+      "sha256": "7367922c4938318dd50b1320e7fc7a7453c33cffa46f75a437325314d2536ddc"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\MT.java",
+      "sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\ANY.java",
+      "sha256": "6a26fa2293c4a315d2594c5ac80eba689389f9b1922a33547bdd20d2df724f71"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\OP.java",
+      "sha256": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\load\\LoaderItemData.java",
+      "sha256": "0dc916611c9a743f477e473b75b3fa3462a47d22dd75ef086c33ea18aaa9f968"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\load\\LoaderOreDictReRegistrations.java",
+      "sha256": "d34719309a5ddf5bd7fc01c0462b57af52b4cf980a69fae4d4042c2ab78b07ef"
+    },
+    {
+      "path": "C:\\Dev\\GregTech_zh_cn.lang",
+      "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\LICENSE.assets",
+      "sha256": "e2aaec4ccc681649063335b6c4991fd52570d15f45bd0af97c1cee3cb0375299"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+      "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\RM.java",
+      "sha256": "c7cb07faef0235ace4bb26656fddaabfa10da6aa4a2689a7f4cdcaef10d366e6"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\TD.java",
+      "sha256": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\code\\TagData.java",
+      "sha256": "afa72881ee6c421c094ce27e3cef2701374257cb1dd2f099293cceb3e91b4a64"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\energy\\TileEntityBase10EnergyBatBox.java",
+      "sha256": "21ee1d11820ce91c0f693d4bf7684503ed29d8b8fa2cf7b434ebbd2143338fd7"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityTurbineSteam.java",
+      "sha256": "04dd3fa44dea387bc8b293035b6c0e787a900b4e4c5f107d8f94c201fe1713cf"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\energy\\TileEntityBase11Motor.java",
+      "sha256": "debce53cfd8ccea8a4ff5da9bade918c0ba0f1be3bc88786d5b2dd530e78b6d8"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\energy\\TileEntityBase10EnergyConverter.java",
+      "sha256": "52cb409c7d35a8731338527301e09c8b779548e1851d5fe7fe91242fd25b9c44"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\behavior\\TE_Behavior_Energy_Stats.java",
+      "sha256": "d66cd7885b7053510d40c054dd6b87ef7a2aab23ee6e554e33af726fc4dddbbf"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\behavior\\TE_Behavior_Energy_Converter.java",
+      "sha256": "db1e31ed18e62bc9d261e33edcf338ed9717fc1ee088eab8de2baff69c9e59d4"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\behavior\\TE_Behavior_Active_Trinary.java",
+      "sha256": "ba735871ca3e15360a39824c1c1eca4d4e79ada8ec08e1f90129dd8c5533af34"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\behavior\\TE_Behavior_Energy_Capacitor.java",
+      "sha256": "4977ba698373a42ddadfbc5de00daf67d38a4daa2062103aa038ba84318f57c4"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\energy\\ITileEntityEnergy.java",
+      "sha256": "cea0d5624209029f4d8b77d52be7b5fbff7a2d6ed73e9632a89d98e13b86a904"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\machines\\ITileEntityAdjacentOnOff.java",
+      "sha256": "cad19d3c3d6a418fdda7b8a844c9781f76a1d686ffa455a32671cfe694902e59"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\machines\\ITileEntitySwitchableOnOff.java",
+      "sha256": "c51180b3f3f6918b838a682af7850b3a26036f9491c0052e899e806a39ea8a35"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\machines\\ITileEntitySwitchableMode.java",
+      "sha256": "854a13a4879b9b27a66b4889a0d6922cb7b3d48b23eb4a854cbf2353b738dbc2"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\fluid\\FluidTankGT.java",
+      "sha256": "9e9c1500fb947048cc8ddcd4a19f44561d6d1278e2208381936b1ad483b25d7d"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\base\\TileEntityBase07Paintable.java",
+      "sha256": "5d1319131c91d93690e5f6ece787210de15756283103a4ec6b94738bb07c5b28"
+    }
+  ],
+  "comparison_files": [
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityTurbineSteam.java",
+      "sha256": "b553b4e19107db00efcaf4672b1eb901d2b67aaf57614e1f68cf3f9217d90b99",
+      "role": "Read-only comparison; source1.7.10 registration, quantities and behavior adopted."
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\energy\\TileEntityBase11Motor.java",
+      "sha256": "ac9a048368786133d42a96a59e18d54c93b5e26fa86088d5c849c802deceba26",
+      "role": "Read-only comparison; source1.7.10 registration, quantities and behavior adopted."
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\energy\\TileEntityBase10EnergyConverter.java",
+      "sha256": "442b940b7b21519e73b8bcdccadf8e568ac9ece7d953152c117d10b6984b1389",
+      "role": "Read-only comparison; source1.7.10 registration, quantities and behavior adopted."
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\behavior\\TE_Behavior_Energy_Converter.java",
+      "sha256": "afd8078303cd1be0341cdcf0400a1eb37d5fa2086680009360e8434028773085",
+      "role": "Read-only comparison; source1.7.10 registration, quantities and behavior adopted."
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "4d87cacde8defa33df30359d345046daa8e901ab0419dca2766d2140d8af1562",
+      "role": "Read-only comparison; source1.7.10 registration, quantities and behavior adopted."
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\data\\MT.java",
+      "sha256": "22591e92616d6f503191ba58548d68cd6b113fc615f118e987a1353b1db84858",
+      "role": "Read-only comparison; source1.7.10 registration, quantities and behavior adopted."
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\data\\OP.java",
+      "sha256": "d51273c614c5845c42a53c92f86c9a9b3f31a4d3256001198f4fee50e23c70cf",
+      "role": "Read-only comparison; source1.7.10 registration, quantities and behavior adopted."
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\data\\ANY.java",
+      "sha256": "6a26fa2293c4a315d2594c5ac80eba689389f9b1922a33547bdd20d2df724f71",
+      "role": "Read-only comparison; source1.7.10 registration, quantities and behavior adopted."
+    }
+  ],
+  "assets": {
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\turbines\\rotation_steam\\colored\\front.png": {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\turbines\\rotation_steam\\colored\\front.png",
+      "sha256": "b94934858d010e0381fd5056dbc0ec00e964cad00c152944b2e6e0918991f977"
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\turbines\\rotation_steam\\colored\\back.png": {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\turbines\\rotation_steam\\colored\\back.png",
+      "sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e"
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\turbines\\rotation_steam\\colored\\side.png": {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\turbines\\rotation_steam\\colored\\side.png",
+      "sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e"
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\turbines\\rotation_steam\\overlay\\front.png": {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\turbines\\rotation_steam\\overlay\\front.png",
+      "sha256": "3670c7f45fb371b957db44cb03c5614a9a473e76d67a582b2590b78d35f0ecb9"
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\turbines\\rotation_steam\\overlay\\back.png": {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\turbines\\rotation_steam\\overlay\\back.png",
+      "sha256": "8dd1d34cc36cd9ddccdc23f6f3be16be70d90337a290bc4a6da997f1f9c64236"
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\turbines\\rotation_steam\\overlay\\side.png": {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\turbines\\rotation_steam\\overlay\\side.png",
+      "sha256": "464acaaedfdb995ece3c60390b2e6c826101e564ecccc969cb63d85783250fe8"
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\turbines\\rotation_steam\\overlay_active_ls\\front.png": {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\turbines\\rotation_steam\\overlay_active_ls\\front.png",
+      "sha256": "759f681539ae692e1b34f37705aedf3b9d6af314d79341e1cd93d6cf0e730ac6"
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\turbines\\rotation_steam\\overlay_active_ls\\front.png.mcmeta": {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\turbines\\rotation_steam\\overlay_active_ls\\front.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\turbines\\rotation_steam\\overlay_active_ls\\back.png": {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\turbines\\rotation_steam\\overlay_active_ls\\back.png",
+      "sha256": "8dd1d34cc36cd9ddccdc23f6f3be16be70d90337a290bc4a6da997f1f9c64236"
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\turbines\\rotation_steam\\overlay_active_ls\\side.png": {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\turbines\\rotation_steam\\overlay_active_ls\\side.png",
+      "sha256": "464acaaedfdb995ece3c60390b2e6c826101e564ecccc969cb63d85783250fe8"
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\turbines\\rotation_steam\\overlay_active_lf\\front.png": {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\turbines\\rotation_steam\\overlay_active_lf\\front.png",
+      "sha256": "214726f7649170674685c96a1bf4567430dab41e76f5293d2ccdda869090eb58"
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\turbines\\rotation_steam\\overlay_active_lf\\front.png.mcmeta": {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\turbines\\rotation_steam\\overlay_active_lf\\front.png.mcmeta",
+      "sha256": "01a4ea56f3505704d42cfa5437d69d4dab7815a3ffbec1761cc4c66e270bfdf4"
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\turbines\\rotation_steam\\overlay_active_lf\\back.png": {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\turbines\\rotation_steam\\overlay_active_lf\\back.png",
+      "sha256": "8dd1d34cc36cd9ddccdc23f6f3be16be70d90337a290bc4a6da997f1f9c64236"
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\turbines\\rotation_steam\\overlay_active_lf\\side.png": {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\turbines\\rotation_steam\\overlay_active_lf\\side.png",
+      "sha256": "464acaaedfdb995ece3c60390b2e6c826101e564ecccc969cb63d85783250fe8"
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\turbines\\rotation_steam\\overlay_active_rs\\front.png": {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\turbines\\rotation_steam\\overlay_active_rs\\front.png",
+      "sha256": "eaa068d3a6ef1952e955c326784671d190c905a71f5f2cb71cf498efce524729"
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\turbines\\rotation_steam\\overlay_active_rs\\front.png.mcmeta": {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\turbines\\rotation_steam\\overlay_active_rs\\front.png.mcmeta",
+      "sha256": "20c309d9ff4175bf0f04b4c57efbd58fa1915f1c69907abd3bd91d6d01b70138"
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\turbines\\rotation_steam\\overlay_active_rs\\back.png": {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\turbines\\rotation_steam\\overlay_active_rs\\back.png",
+      "sha256": "8dd1d34cc36cd9ddccdc23f6f3be16be70d90337a290bc4a6da997f1f9c64236"
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\turbines\\rotation_steam\\overlay_active_rs\\side.png": {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\turbines\\rotation_steam\\overlay_active_rs\\side.png",
+      "sha256": "464acaaedfdb995ece3c60390b2e6c826101e564ecccc969cb63d85783250fe8"
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\turbines\\rotation_steam\\overlay_active_rf\\front.png": {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\turbines\\rotation_steam\\overlay_active_rf\\front.png",
+      "sha256": "cf29579c91d2128da5974d2b22f78763e07982ebeada4edbf0d97dda8ab8dc4b"
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\turbines\\rotation_steam\\overlay_active_rf\\front.png.mcmeta": {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\turbines\\rotation_steam\\overlay_active_rf\\front.png.mcmeta",
+      "sha256": "01a4ea56f3505704d42cfa5437d69d4dab7815a3ffbec1761cc4c66e270bfdf4"
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\turbines\\rotation_steam\\overlay_active_rf\\back.png": {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\turbines\\rotation_steam\\overlay_active_rf\\back.png",
+      "sha256": "8dd1d34cc36cd9ddccdc23f6f3be16be70d90337a290bc4a6da997f1f9c64236"
+    },
+    "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\turbines\\rotation_steam\\overlay_active_rf\\side.png": {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\turbines\\rotation_steam\\overlay_active_rf\\side.png",
+      "sha256": "464acaaedfdb995ece3c60390b2e6c826101e564ecccc969cb63d85783250fe8"
+    }
+  },
+  "static_models": {
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_bronze.json": "1026487c725424909407ac7134889962008b9892ca82caba3fe87abd8532a0a2",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_bronze_ls.json": "ee1ba6d7a7b5afb4b1a0efa5f9f1ea68e8477a40de9ed064582341c1694df83b",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_bronze_lf.json": "65138afc15231118a0128b5061d759f03b433782be29d2a61132095062c39f18",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_bronze_rs.json": "83a61b6f01b83ce1b7404838cc2ddd58591f2ea605d84bed0091702f35a6b1e2",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_bronze_rf.json": "56ffc104816737deeca69a6574ef46f49192763fcdf79c8f64b78b1bdbdaffef",
+    "src\\main\\resources\\assets\\gregtech\\blockstates\\steam_turbine_bronze.json": "acb5c1ffbbb4b3db86878d8d160321da1dbeb62008427e622bd6db87c972dbbd",
+    "src\\main\\resources\\assets\\gregtech\\models\\item\\steam_turbine_bronze.json": "dbcdc2781cf432c07d731ece841d81d5fe8b81dd67bab37735cc11dff07de0bb",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_bronze.json": "2542f82bb002db4d5ca8e61cbc7ea70a6b7ee66353b20526b4e1c1f210b8633f",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_bronze_ls.json": "876751c242e1f4bef51aa4b8a46eebe1014c0b309ccc3124c53498d06eb5db4c",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_bronze_lf.json": "c59462c75b4d7477aa2ccc9fcba7d4556e6063565cd316c903ad7199b6ecd8fb",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_bronze_rs.json": "19a1985db1754e9e43eb79be4c24fff12ad44f3788a251b0bd8e896813cf1cb9",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_bronze_rf.json": "1bfa4cc5ca7dfe185cc6b4ab73f787ff3ff5cee8a5d1d96e7fd843f3e71c3ce6",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\steam_turbine_bronze.json": "acb5c1ffbbb4b3db86878d8d160321da1dbeb62008427e622bd6db87c972dbbd",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\steam_turbine_bronze.json": "dbcdc2781cf432c07d731ece841d81d5fe8b81dd67bab37735cc11dff07de0bb",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_brass.json": "1026487c725424909407ac7134889962008b9892ca82caba3fe87abd8532a0a2",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_brass_ls.json": "ee1ba6d7a7b5afb4b1a0efa5f9f1ea68e8477a40de9ed064582341c1694df83b",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_brass_lf.json": "65138afc15231118a0128b5061d759f03b433782be29d2a61132095062c39f18",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_brass_rs.json": "83a61b6f01b83ce1b7404838cc2ddd58591f2ea605d84bed0091702f35a6b1e2",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_brass_rf.json": "56ffc104816737deeca69a6574ef46f49192763fcdf79c8f64b78b1bdbdaffef",
+    "src\\main\\resources\\assets\\gregtech\\blockstates\\steam_turbine_brass.json": "e1ee59c2f2628b12c9b161edf138d7035df73afc64f3218e6c9459d908e6a61c",
+    "src\\main\\resources\\assets\\gregtech\\models\\item\\steam_turbine_brass.json": "45665057d882492211539bfee429a9a9f687a6fc11925f35f4a06e75a77ee87a",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_brass.json": "2542f82bb002db4d5ca8e61cbc7ea70a6b7ee66353b20526b4e1c1f210b8633f",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_brass_ls.json": "876751c242e1f4bef51aa4b8a46eebe1014c0b309ccc3124c53498d06eb5db4c",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_brass_lf.json": "c59462c75b4d7477aa2ccc9fcba7d4556e6063565cd316c903ad7199b6ecd8fb",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_brass_rs.json": "19a1985db1754e9e43eb79be4c24fff12ad44f3788a251b0bd8e896813cf1cb9",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_brass_rf.json": "1bfa4cc5ca7dfe185cc6b4ab73f787ff3ff5cee8a5d1d96e7fd843f3e71c3ce6",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\steam_turbine_brass.json": "e1ee59c2f2628b12c9b161edf138d7035df73afc64f3218e6c9459d908e6a61c",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\steam_turbine_brass.json": "45665057d882492211539bfee429a9a9f687a6fc11925f35f4a06e75a77ee87a",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_invar.json": "1026487c725424909407ac7134889962008b9892ca82caba3fe87abd8532a0a2",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_invar_ls.json": "ee1ba6d7a7b5afb4b1a0efa5f9f1ea68e8477a40de9ed064582341c1694df83b",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_invar_lf.json": "65138afc15231118a0128b5061d759f03b433782be29d2a61132095062c39f18",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_invar_rs.json": "83a61b6f01b83ce1b7404838cc2ddd58591f2ea605d84bed0091702f35a6b1e2",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_invar_rf.json": "56ffc104816737deeca69a6574ef46f49192763fcdf79c8f64b78b1bdbdaffef",
+    "src\\main\\resources\\assets\\gregtech\\blockstates\\steam_turbine_invar.json": "c3701b0e5fb6b469db4a1aca2186644cf4cd1d3416e04f430972c286e9e10718",
+    "src\\main\\resources\\assets\\gregtech\\models\\item\\steam_turbine_invar.json": "713a5dd869e376f53bf58317cb3c4411278af9b7716d899ff1f50fc818805582",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_invar.json": "2542f82bb002db4d5ca8e61cbc7ea70a6b7ee66353b20526b4e1c1f210b8633f",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_invar_ls.json": "876751c242e1f4bef51aa4b8a46eebe1014c0b309ccc3124c53498d06eb5db4c",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_invar_lf.json": "c59462c75b4d7477aa2ccc9fcba7d4556e6063565cd316c903ad7199b6ecd8fb",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_invar_rs.json": "19a1985db1754e9e43eb79be4c24fff12ad44f3788a251b0bd8e896813cf1cb9",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_invar_rf.json": "1bfa4cc5ca7dfe185cc6b4ab73f787ff3ff5cee8a5d1d96e7fd843f3e71c3ce6",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\steam_turbine_invar.json": "c3701b0e5fb6b469db4a1aca2186644cf4cd1d3416e04f430972c286e9e10718",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\steam_turbine_invar.json": "713a5dd869e376f53bf58317cb3c4411278af9b7716d899ff1f50fc818805582",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_steel.json": "1026487c725424909407ac7134889962008b9892ca82caba3fe87abd8532a0a2",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_steel_ls.json": "ee1ba6d7a7b5afb4b1a0efa5f9f1ea68e8477a40de9ed064582341c1694df83b",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_steel_lf.json": "65138afc15231118a0128b5061d759f03b433782be29d2a61132095062c39f18",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_steel_rs.json": "83a61b6f01b83ce1b7404838cc2ddd58591f2ea605d84bed0091702f35a6b1e2",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_steel_rf.json": "56ffc104816737deeca69a6574ef46f49192763fcdf79c8f64b78b1bdbdaffef",
+    "src\\main\\resources\\assets\\gregtech\\blockstates\\steam_turbine_steel.json": "9012560cf77733d8fc25d1540e59da9464cf3b171a9ce1836e77637e012e338a",
+    "src\\main\\resources\\assets\\gregtech\\models\\item\\steam_turbine_steel.json": "f04338754b6cdbf50841250090477c651f4eadc381c02ea2394c153f80f3b958",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_steel.json": "2542f82bb002db4d5ca8e61cbc7ea70a6b7ee66353b20526b4e1c1f210b8633f",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_steel_ls.json": "876751c242e1f4bef51aa4b8a46eebe1014c0b309ccc3124c53498d06eb5db4c",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_steel_lf.json": "c59462c75b4d7477aa2ccc9fcba7d4556e6063565cd316c903ad7199b6ecd8fb",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_steel_rs.json": "19a1985db1754e9e43eb79be4c24fff12ad44f3788a251b0bd8e896813cf1cb9",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_steel_rf.json": "1bfa4cc5ca7dfe185cc6b4ab73f787ff3ff5cee8a5d1d96e7fd843f3e71c3ce6",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\steam_turbine_steel.json": "9012560cf77733d8fc25d1540e59da9464cf3b171a9ce1836e77637e012e338a",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\steam_turbine_steel.json": "f04338754b6cdbf50841250090477c651f4eadc381c02ea2394c153f80f3b958",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_chromium.json": "1026487c725424909407ac7134889962008b9892ca82caba3fe87abd8532a0a2",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_chromium_ls.json": "ee1ba6d7a7b5afb4b1a0efa5f9f1ea68e8477a40de9ed064582341c1694df83b",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_chromium_lf.json": "65138afc15231118a0128b5061d759f03b433782be29d2a61132095062c39f18",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_chromium_rs.json": "83a61b6f01b83ce1b7404838cc2ddd58591f2ea605d84bed0091702f35a6b1e2",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_chromium_rf.json": "56ffc104816737deeca69a6574ef46f49192763fcdf79c8f64b78b1bdbdaffef",
+    "src\\main\\resources\\assets\\gregtech\\blockstates\\steam_turbine_chromium.json": "6101e33ec86eab0bbe41e08c2556c273f4a9834e07d888b022f07b444d12f8fa",
+    "src\\main\\resources\\assets\\gregtech\\models\\item\\steam_turbine_chromium.json": "f613f1b248a524951efe43ebaffceccc3af1789fd1b870b4e686886f07fabbc1",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_chromium.json": "2542f82bb002db4d5ca8e61cbc7ea70a6b7ee66353b20526b4e1c1f210b8633f",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_chromium_ls.json": "876751c242e1f4bef51aa4b8a46eebe1014c0b309ccc3124c53498d06eb5db4c",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_chromium_lf.json": "c59462c75b4d7477aa2ccc9fcba7d4556e6063565cd316c903ad7199b6ecd8fb",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_chromium_rs.json": "19a1985db1754e9e43eb79be4c24fff12ad44f3788a251b0bd8e896813cf1cb9",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_chromium_rf.json": "1bfa4cc5ca7dfe185cc6b4ab73f787ff3ff5cee8a5d1d96e7fd843f3e71c3ce6",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\steam_turbine_chromium.json": "6101e33ec86eab0bbe41e08c2556c273f4a9834e07d888b022f07b444d12f8fa",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\steam_turbine_chromium.json": "f613f1b248a524951efe43ebaffceccc3af1789fd1b870b4e686886f07fabbc1",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_ironwood.json": "1026487c725424909407ac7134889962008b9892ca82caba3fe87abd8532a0a2",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_ironwood_ls.json": "ee1ba6d7a7b5afb4b1a0efa5f9f1ea68e8477a40de9ed064582341c1694df83b",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_ironwood_lf.json": "65138afc15231118a0128b5061d759f03b433782be29d2a61132095062c39f18",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_ironwood_rs.json": "83a61b6f01b83ce1b7404838cc2ddd58591f2ea605d84bed0091702f35a6b1e2",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_ironwood_rf.json": "56ffc104816737deeca69a6574ef46f49192763fcdf79c8f64b78b1bdbdaffef",
+    "src\\main\\resources\\assets\\gregtech\\blockstates\\steam_turbine_ironwood.json": "7309871c9c07bfced7ddd8e4572cac9f4f61901da05d97c3e3b0d0e7f99c18e1",
+    "src\\main\\resources\\assets\\gregtech\\models\\item\\steam_turbine_ironwood.json": "1216c4e3c6bc5c9948b4c284368134211e3239cd8bae1a3f3463054483913ba8",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_ironwood.json": "2542f82bb002db4d5ca8e61cbc7ea70a6b7ee66353b20526b4e1c1f210b8633f",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_ironwood_ls.json": "876751c242e1f4bef51aa4b8a46eebe1014c0b309ccc3124c53498d06eb5db4c",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_ironwood_lf.json": "c59462c75b4d7477aa2ccc9fcba7d4556e6063565cd316c903ad7199b6ecd8fb",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_ironwood_rs.json": "19a1985db1754e9e43eb79be4c24fff12ad44f3788a251b0bd8e896813cf1cb9",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_ironwood_rf.json": "1bfa4cc5ca7dfe185cc6b4ab73f787ff3ff5cee8a5d1d96e7fd843f3e71c3ce6",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\steam_turbine_ironwood.json": "7309871c9c07bfced7ddd8e4572cac9f4f61901da05d97c3e3b0d0e7f99c18e1",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\steam_turbine_ironwood.json": "1216c4e3c6bc5c9948b4c284368134211e3239cd8bae1a3f3463054483913ba8",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_steeleaf.json": "1026487c725424909407ac7134889962008b9892ca82caba3fe87abd8532a0a2",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_steeleaf_ls.json": "ee1ba6d7a7b5afb4b1a0efa5f9f1ea68e8477a40de9ed064582341c1694df83b",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_steeleaf_lf.json": "65138afc15231118a0128b5061d759f03b433782be29d2a61132095062c39f18",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_steeleaf_rs.json": "83a61b6f01b83ce1b7404838cc2ddd58591f2ea605d84bed0091702f35a6b1e2",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_steeleaf_rf.json": "56ffc104816737deeca69a6574ef46f49192763fcdf79c8f64b78b1bdbdaffef",
+    "src\\main\\resources\\assets\\gregtech\\blockstates\\steam_turbine_steeleaf.json": "05e60fdf67fe9af662242968c2c1f75e321e9287f62f68cd548d634c7b21aeca",
+    "src\\main\\resources\\assets\\gregtech\\models\\item\\steam_turbine_steeleaf.json": "70151dd13ea57156202014bf86e2a88c53baafee37bd2711f32f0ddad3cebef0",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_steeleaf.json": "2542f82bb002db4d5ca8e61cbc7ea70a6b7ee66353b20526b4e1c1f210b8633f",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_steeleaf_ls.json": "876751c242e1f4bef51aa4b8a46eebe1014c0b309ccc3124c53498d06eb5db4c",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_steeleaf_lf.json": "c59462c75b4d7477aa2ccc9fcba7d4556e6063565cd316c903ad7199b6ecd8fb",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_steeleaf_rs.json": "19a1985db1754e9e43eb79be4c24fff12ad44f3788a251b0bd8e896813cf1cb9",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_steeleaf_rf.json": "1bfa4cc5ca7dfe185cc6b4ab73f787ff3ff5cee8a5d1d96e7fd843f3e71c3ce6",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\steam_turbine_steeleaf.json": "05e60fdf67fe9af662242968c2c1f75e321e9287f62f68cd548d634c7b21aeca",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\steam_turbine_steeleaf.json": "70151dd13ea57156202014bf86e2a88c53baafee37bd2711f32f0ddad3cebef0",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_thaumium.json": "1026487c725424909407ac7134889962008b9892ca82caba3fe87abd8532a0a2",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_thaumium_ls.json": "ee1ba6d7a7b5afb4b1a0efa5f9f1ea68e8477a40de9ed064582341c1694df83b",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_thaumium_lf.json": "65138afc15231118a0128b5061d759f03b433782be29d2a61132095062c39f18",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_thaumium_rs.json": "83a61b6f01b83ce1b7404838cc2ddd58591f2ea605d84bed0091702f35a6b1e2",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_thaumium_rf.json": "56ffc104816737deeca69a6574ef46f49192763fcdf79c8f64b78b1bdbdaffef",
+    "src\\main\\resources\\assets\\gregtech\\blockstates\\steam_turbine_thaumium.json": "9c19583759ba3fec83a8df3b6c58a1fc3d7587002782b74ed4637bd840896ca1",
+    "src\\main\\resources\\assets\\gregtech\\models\\item\\steam_turbine_thaumium.json": "b70bda944e52acc5f2fe346ffcab549f2f94f767657ef47a87e2454b7021f435",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_thaumium.json": "2542f82bb002db4d5ca8e61cbc7ea70a6b7ee66353b20526b4e1c1f210b8633f",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_thaumium_ls.json": "876751c242e1f4bef51aa4b8a46eebe1014c0b309ccc3124c53498d06eb5db4c",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_thaumium_lf.json": "c59462c75b4d7477aa2ccc9fcba7d4556e6063565cd316c903ad7199b6ecd8fb",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_thaumium_rs.json": "19a1985db1754e9e43eb79be4c24fff12ad44f3788a251b0bd8e896813cf1cb9",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_thaumium_rf.json": "1bfa4cc5ca7dfe185cc6b4ab73f787ff3ff5cee8a5d1d96e7fd843f3e71c3ce6",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\steam_turbine_thaumium.json": "9c19583759ba3fec83a8df3b6c58a1fc3d7587002782b74ed4637bd840896ca1",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\steam_turbine_thaumium.json": "b70bda944e52acc5f2fe346ffcab549f2f94f767657ef47a87e2454b7021f435",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_titanium.json": "1026487c725424909407ac7134889962008b9892ca82caba3fe87abd8532a0a2",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_titanium_ls.json": "ee1ba6d7a7b5afb4b1a0efa5f9f1ea68e8477a40de9ed064582341c1694df83b",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_titanium_lf.json": "65138afc15231118a0128b5061d759f03b433782be29d2a61132095062c39f18",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_titanium_rs.json": "83a61b6f01b83ce1b7404838cc2ddd58591f2ea605d84bed0091702f35a6b1e2",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_titanium_rf.json": "56ffc104816737deeca69a6574ef46f49192763fcdf79c8f64b78b1bdbdaffef",
+    "src\\main\\resources\\assets\\gregtech\\blockstates\\steam_turbine_titanium.json": "7b5da55e3856245cb67c65f95008af51df733d3f190d9a4022c7f50e48ffedcb",
+    "src\\main\\resources\\assets\\gregtech\\models\\item\\steam_turbine_titanium.json": "70949be5d105f161d8c6962f02d077632801e7481a181d381d2ed707869ea091",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_titanium.json": "2542f82bb002db4d5ca8e61cbc7ea70a6b7ee66353b20526b4e1c1f210b8633f",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_titanium_ls.json": "876751c242e1f4bef51aa4b8a46eebe1014c0b309ccc3124c53498d06eb5db4c",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_titanium_lf.json": "c59462c75b4d7477aa2ccc9fcba7d4556e6063565cd316c903ad7199b6ecd8fb",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_titanium_rs.json": "19a1985db1754e9e43eb79be4c24fff12ad44f3788a251b0bd8e896813cf1cb9",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_titanium_rf.json": "1bfa4cc5ca7dfe185cc6b4ab73f787ff3ff5cee8a5d1d96e7fd843f3e71c3ce6",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\steam_turbine_titanium.json": "7b5da55e3856245cb67c65f95008af51df733d3f190d9a4022c7f50e48ffedcb",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\steam_turbine_titanium.json": "70949be5d105f161d8c6962f02d077632801e7481a181d381d2ed707869ea091",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_fiery_steel.json": "1026487c725424909407ac7134889962008b9892ca82caba3fe87abd8532a0a2",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_fiery_steel_ls.json": "ee1ba6d7a7b5afb4b1a0efa5f9f1ea68e8477a40de9ed064582341c1694df83b",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_fiery_steel_lf.json": "65138afc15231118a0128b5061d759f03b433782be29d2a61132095062c39f18",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_fiery_steel_rs.json": "83a61b6f01b83ce1b7404838cc2ddd58591f2ea605d84bed0091702f35a6b1e2",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_fiery_steel_rf.json": "56ffc104816737deeca69a6574ef46f49192763fcdf79c8f64b78b1bdbdaffef",
+    "src\\main\\resources\\assets\\gregtech\\blockstates\\steam_turbine_fiery_steel.json": "a08382adfcfe729fdca7d1905015325056e1887fe37fd6ee453395d01278fd76",
+    "src\\main\\resources\\assets\\gregtech\\models\\item\\steam_turbine_fiery_steel.json": "26e4ff6dd9e7fb8b4ba0c5aaa9449105084b95598d57da2ee53d9838500e4f71",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_fiery_steel.json": "2542f82bb002db4d5ca8e61cbc7ea70a6b7ee66353b20526b4e1c1f210b8633f",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_fiery_steel_ls.json": "876751c242e1f4bef51aa4b8a46eebe1014c0b309ccc3124c53498d06eb5db4c",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_fiery_steel_lf.json": "c59462c75b4d7477aa2ccc9fcba7d4556e6063565cd316c903ad7199b6ecd8fb",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_fiery_steel_rs.json": "19a1985db1754e9e43eb79be4c24fff12ad44f3788a251b0bd8e896813cf1cb9",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_fiery_steel_rf.json": "1bfa4cc5ca7dfe185cc6b4ab73f787ff3ff5cee8a5d1d96e7fd843f3e71c3ce6",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\steam_turbine_fiery_steel.json": "a08382adfcfe729fdca7d1905015325056e1887fe37fd6ee453395d01278fd76",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\steam_turbine_fiery_steel.json": "26e4ff6dd9e7fb8b4ba0c5aaa9449105084b95598d57da2ee53d9838500e4f71",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_aluminium.json": "1026487c725424909407ac7134889962008b9892ca82caba3fe87abd8532a0a2",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_aluminium_ls.json": "ee1ba6d7a7b5afb4b1a0efa5f9f1ea68e8477a40de9ed064582341c1694df83b",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_aluminium_lf.json": "65138afc15231118a0128b5061d759f03b433782be29d2a61132095062c39f18",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_aluminium_rs.json": "83a61b6f01b83ce1b7404838cc2ddd58591f2ea605d84bed0091702f35a6b1e2",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_aluminium_rf.json": "56ffc104816737deeca69a6574ef46f49192763fcdf79c8f64b78b1bdbdaffef",
+    "src\\main\\resources\\assets\\gregtech\\blockstates\\steam_turbine_aluminium.json": "c9e9cb36c9dd73a5cd74cd5715128e7863b6035f232d7cc2c645886e6ea3aea2",
+    "src\\main\\resources\\assets\\gregtech\\models\\item\\steam_turbine_aluminium.json": "9c7b35f6197393f8edffcca9cfbf3805750f797d5a513c5cc7cc226f44803480",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_aluminium.json": "2542f82bb002db4d5ca8e61cbc7ea70a6b7ee66353b20526b4e1c1f210b8633f",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_aluminium_ls.json": "876751c242e1f4bef51aa4b8a46eebe1014c0b309ccc3124c53498d06eb5db4c",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_aluminium_lf.json": "c59462c75b4d7477aa2ccc9fcba7d4556e6063565cd316c903ad7199b6ecd8fb",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_aluminium_rs.json": "19a1985db1754e9e43eb79be4c24fff12ad44f3788a251b0bd8e896813cf1cb9",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_aluminium_rf.json": "1bfa4cc5ca7dfe185cc6b4ab73f787ff3ff5cee8a5d1d96e7fd843f3e71c3ce6",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\steam_turbine_aluminium.json": "c9e9cb36c9dd73a5cd74cd5715128e7863b6035f232d7cc2c645886e6ea3aea2",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\steam_turbine_aluminium.json": "9c7b35f6197393f8edffcca9cfbf3805750f797d5a513c5cc7cc226f44803480",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_magnalium.json": "1026487c725424909407ac7134889962008b9892ca82caba3fe87abd8532a0a2",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_magnalium_ls.json": "ee1ba6d7a7b5afb4b1a0efa5f9f1ea68e8477a40de9ed064582341c1694df83b",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_magnalium_lf.json": "65138afc15231118a0128b5061d759f03b433782be29d2a61132095062c39f18",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_magnalium_rs.json": "83a61b6f01b83ce1b7404838cc2ddd58591f2ea605d84bed0091702f35a6b1e2",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_magnalium_rf.json": "56ffc104816737deeca69a6574ef46f49192763fcdf79c8f64b78b1bdbdaffef",
+    "src\\main\\resources\\assets\\gregtech\\blockstates\\steam_turbine_magnalium.json": "6b37f891ab5817bc6efd7441c8ddcea09b526334451d33ff2225d5b9d73bf636",
+    "src\\main\\resources\\assets\\gregtech\\models\\item\\steam_turbine_magnalium.json": "5aba89a8afe028f28a60f58ae97ca9dad6010ff32657e6c459cf1c6f777daf17",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_magnalium.json": "2542f82bb002db4d5ca8e61cbc7ea70a6b7ee66353b20526b4e1c1f210b8633f",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_magnalium_ls.json": "876751c242e1f4bef51aa4b8a46eebe1014c0b309ccc3124c53498d06eb5db4c",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_magnalium_lf.json": "c59462c75b4d7477aa2ccc9fcba7d4556e6063565cd316c903ad7199b6ecd8fb",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_magnalium_rs.json": "19a1985db1754e9e43eb79be4c24fff12ad44f3788a251b0bd8e896813cf1cb9",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_magnalium_rf.json": "1bfa4cc5ca7dfe185cc6b4ab73f787ff3ff5cee8a5d1d96e7fd843f3e71c3ce6",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\steam_turbine_magnalium.json": "6b37f891ab5817bc6efd7441c8ddcea09b526334451d33ff2225d5b9d73bf636",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\steam_turbine_magnalium.json": "5aba89a8afe028f28a60f58ae97ca9dad6010ff32657e6c459cf1c6f777daf17",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_void_metal.json": "1026487c725424909407ac7134889962008b9892ca82caba3fe87abd8532a0a2",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_void_metal_ls.json": "ee1ba6d7a7b5afb4b1a0efa5f9f1ea68e8477a40de9ed064582341c1694df83b",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_void_metal_lf.json": "65138afc15231118a0128b5061d759f03b433782be29d2a61132095062c39f18",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_void_metal_rs.json": "83a61b6f01b83ce1b7404838cc2ddd58591f2ea605d84bed0091702f35a6b1e2",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_void_metal_rf.json": "56ffc104816737deeca69a6574ef46f49192763fcdf79c8f64b78b1bdbdaffef",
+    "src\\main\\resources\\assets\\gregtech\\blockstates\\steam_turbine_void_metal.json": "b6aa9f4e675c869811850b7fe283ca299d736449d760a8300b9cdb89a79a9058",
+    "src\\main\\resources\\assets\\gregtech\\models\\item\\steam_turbine_void_metal.json": "d8bd0462d103a801eb0c220962fc4dd0b7e8ebce19c5c893512976f69538ee99",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_void_metal.json": "2542f82bb002db4d5ca8e61cbc7ea70a6b7ee66353b20526b4e1c1f210b8633f",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_void_metal_ls.json": "876751c242e1f4bef51aa4b8a46eebe1014c0b309ccc3124c53498d06eb5db4c",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_void_metal_lf.json": "c59462c75b4d7477aa2ccc9fcba7d4556e6063565cd316c903ad7199b6ecd8fb",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_void_metal_rs.json": "19a1985db1754e9e43eb79be4c24fff12ad44f3788a251b0bd8e896813cf1cb9",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_void_metal_rf.json": "1bfa4cc5ca7dfe185cc6b4ab73f787ff3ff5cee8a5d1d96e7fd843f3e71c3ce6",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\steam_turbine_void_metal.json": "b6aa9f4e675c869811850b7fe283ca299d736449d760a8300b9cdb89a79a9058",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\steam_turbine_void_metal.json": "d8bd0462d103a801eb0c220962fc4dd0b7e8ebce19c5c893512976f69538ee99",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_trinitanium.json": "1026487c725424909407ac7134889962008b9892ca82caba3fe87abd8532a0a2",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_trinitanium_ls.json": "ee1ba6d7a7b5afb4b1a0efa5f9f1ea68e8477a40de9ed064582341c1694df83b",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_trinitanium_lf.json": "65138afc15231118a0128b5061d759f03b433782be29d2a61132095062c39f18",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_trinitanium_rs.json": "83a61b6f01b83ce1b7404838cc2ddd58591f2ea605d84bed0091702f35a6b1e2",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_trinitanium_rf.json": "56ffc104816737deeca69a6574ef46f49192763fcdf79c8f64b78b1bdbdaffef",
+    "src\\main\\resources\\assets\\gregtech\\blockstates\\steam_turbine_trinitanium.json": "a2323ba6df60aefae913bc4b2c041363a34c38b078d1abf68fa0169ac322f17b",
+    "src\\main\\resources\\assets\\gregtech\\models\\item\\steam_turbine_trinitanium.json": "6d73a40b302349bb18530ede40105801ed7cffd252312ecbfbe663a6f2fce6ac",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_trinitanium.json": "2542f82bb002db4d5ca8e61cbc7ea70a6b7ee66353b20526b4e1c1f210b8633f",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_trinitanium_ls.json": "876751c242e1f4bef51aa4b8a46eebe1014c0b309ccc3124c53498d06eb5db4c",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_trinitanium_lf.json": "c59462c75b4d7477aa2ccc9fcba7d4556e6063565cd316c903ad7199b6ecd8fb",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_trinitanium_rs.json": "19a1985db1754e9e43eb79be4c24fff12ad44f3788a251b0bd8e896813cf1cb9",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_trinitanium_rf.json": "1bfa4cc5ca7dfe185cc6b4ab73f787ff3ff5cee8a5d1d96e7fd843f3e71c3ce6",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\steam_turbine_trinitanium.json": "a2323ba6df60aefae913bc4b2c041363a34c38b078d1abf68fa0169ac322f17b",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\steam_turbine_trinitanium.json": "6d73a40b302349bb18530ede40105801ed7cffd252312ecbfbe663a6f2fce6ac",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_graphene.json": "1026487c725424909407ac7134889962008b9892ca82caba3fe87abd8532a0a2",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_graphene_ls.json": "ee1ba6d7a7b5afb4b1a0efa5f9f1ea68e8477a40de9ed064582341c1694df83b",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_graphene_lf.json": "65138afc15231118a0128b5061d759f03b433782be29d2a61132095062c39f18",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_graphene_rs.json": "83a61b6f01b83ce1b7404838cc2ddd58591f2ea605d84bed0091702f35a6b1e2",
+    "src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_graphene_rf.json": "56ffc104816737deeca69a6574ef46f49192763fcdf79c8f64b78b1bdbdaffef",
+    "src\\main\\resources\\assets\\gregtech\\blockstates\\steam_turbine_graphene.json": "91064859b6e61d3b7f9b1b73740f67643c836078f8c20c62fb4039a1516f191f",
+    "src\\main\\resources\\assets\\gregtech\\models\\item\\steam_turbine_graphene.json": "beabc1d61d308ce460cb41489f6f77eee25a99762604352778cece573f17d1cc",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_graphene.json": "2542f82bb002db4d5ca8e61cbc7ea70a6b7ee66353b20526b4e1c1f210b8633f",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_graphene_ls.json": "876751c242e1f4bef51aa4b8a46eebe1014c0b309ccc3124c53498d06eb5db4c",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_graphene_lf.json": "c59462c75b4d7477aa2ccc9fcba7d4556e6063565cd316c903ad7199b6ecd8fb",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_graphene_rs.json": "19a1985db1754e9e43eb79be4c24fff12ad44f3788a251b0bd8e896813cf1cb9",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\energy\\steam_turbine_graphene_rf.json": "1bfa4cc5ca7dfe185cc6b4ab73f787ff3ff5cee8a5d1d96e7fd843f3e71c3ce6",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\blockstates\\steam_turbine_graphene.json": "91064859b6e61d3b7f9b1b73740f67643c836078f8c20c62fb4039a1516f191f",
+    "neoforge\\src\\main\\resources\\assets\\gregtech\\models\\item\\steam_turbine_graphene.json": "beabc1d61d308ce460cb41489f6f77eee25a99762604352778cece573f17d1cc"
+  },
+  "variants": {
+    "steam_turbine_bronze": {
+      "source_id": 1512,
+      "source_key": "gt.multitileentity.1512",
+      "name": "Steam Turbine (Bronze)",
+      "zh_cn": "蒸汽涡轮机 (青铜)",
+      "source_order": 380
+    },
+    "steam_turbine_brass": {
+      "source_id": 1515,
+      "source_key": "gt.multitileentity.1515",
+      "name": "Steam Turbine (Brass)",
+      "zh_cn": "蒸汽涡轮机 (黄铜)",
+      "source_order": 381
+    },
+    "steam_turbine_invar": {
+      "source_id": 1518,
+      "source_key": "gt.multitileentity.1518",
+      "name": "Steam Turbine (Invar)",
+      "zh_cn": "蒸汽涡轮机 (殷钢)",
+      "source_order": 382
+    },
+    "steam_turbine_steel": {
+      "source_id": 1522,
+      "source_key": "gt.multitileentity.1522",
+      "name": "Steam Turbine (Steel)",
+      "zh_cn": "蒸汽涡轮机 (钢)",
+      "source_order": 383
+    },
+    "steam_turbine_chromium": {
+      "source_id": 1525,
+      "source_key": "gt.multitileentity.1525",
+      "name": "Steam Turbine (Chromium)",
+      "zh_cn": "蒸汽涡轮机 (铬)",
+      "source_order": 384
+    },
+    "steam_turbine_ironwood": {
+      "source_id": 1527,
+      "source_key": "gt.multitileentity.1527",
+      "name": "Steam Turbine (Ironwood)",
+      "zh_cn": "蒸汽涡轮机 (铁木)",
+      "source_order": 385
+    },
+    "steam_turbine_steeleaf": {
+      "source_id": 1528,
+      "source_key": "gt.multitileentity.1528",
+      "name": "Steam Turbine (Steeleaf)",
+      "zh_cn": "蒸汽涡轮机 (钢叶)",
+      "source_order": 386
+    },
+    "steam_turbine_thaumium": {
+      "source_id": 1529,
+      "source_key": "gt.multitileentity.1529",
+      "name": "Steam Turbine (Thaumium)",
+      "zh_cn": "蒸汽涡轮机 (神秘锭)",
+      "source_order": 387
+    },
+    "steam_turbine_titanium": {
+      "source_id": 1530,
+      "source_key": "gt.multitileentity.1530",
+      "name": "Steam Turbine (Titanium)",
+      "zh_cn": "蒸汽涡轮机 (钛)",
+      "source_order": 388
+    },
+    "steam_turbine_fiery_steel": {
+      "source_id": 1531,
+      "source_key": "gt.multitileentity.1531",
+      "name": "Steam Turbine (Fiery Steel)",
+      "zh_cn": "蒸汽涡轮机 (炙热钢)",
+      "source_order": 389
+    },
+    "steam_turbine_aluminium": {
+      "source_id": 1535,
+      "source_key": "gt.multitileentity.1535",
+      "name": "Steam Turbine (Aluminium)",
+      "zh_cn": "蒸汽涡轮机 (铝)",
+      "source_order": 390
+    },
+    "steam_turbine_magnalium": {
+      "source_id": 1538,
+      "source_key": "gt.multitileentity.1538",
+      "name": "Steam Turbine (Magnalium)",
+      "zh_cn": "蒸汽涡轮机 (镁铝合金)",
+      "source_order": 391
+    },
+    "steam_turbine_void_metal": {
+      "source_id": 1540,
+      "source_key": "gt.multitileentity.1540",
+      "name": "Steam Turbine (Void Metal)",
+      "zh_cn": "蒸汽涡轮机 (虚空金属)",
+      "source_order": 392
+    },
+    "steam_turbine_trinitanium": {
+      "source_id": 1545,
+      "source_key": "gt.multitileentity.1545",
+      "name": "Steam Turbine (Trinitanium)",
+      "zh_cn": "蒸汽涡轮机 (特林钛合金)",
+      "source_order": 393
+    },
+    "steam_turbine_graphene": {
+      "source_id": 1548,
+      "source_key": "gt.multitileentity.1548",
+      "name": "Steam Turbine (Graphene)",
+      "zh_cn": "蒸汽涡轮机 (石墨烯)",
+      "source_order": 394
+    }
+  },
+  "known_materials": [
+    {
+      "path": "steam_turbine_bronze",
+      "source_id": 1512,
+      "source_line": 794,
+      "components": {
+        "Bronze": 25945920000
+      },
+      "pattern": [
+        "TwT",
+        "GSG",
+        "TMT"
+      ],
+      "keys": {
+        "S": "OP.stickLong.dat(aMat)",
+        "M": "OP.casingMachineDouble.dat(aMat)",
+        "G": "OP.gearGt.dat(aMat)",
+        "T": "OP.rotor.dat(MT.Bronze           )"
+      }
+    },
+    {
+      "path": "steam_turbine_brass",
+      "source_id": 1515,
+      "source_line": 795,
+      "components": {
+        "Brass": 11027016000,
+        "Bronze": 14918904000
+      },
+      "pattern": [
+        "TwT",
+        "GSG",
+        "TMT"
+      ],
+      "keys": {
+        "S": "OP.stickLong.dat(aMat)",
+        "M": "OP.casingMachineDouble.dat(aMat)",
+        "G": "OP.gearGt.dat(aMat)",
+        "T": "OP.rotor.dat(MT.Brass            )"
+      }
+    },
+    {
+      "path": "steam_turbine_invar",
+      "source_id": 1518,
+      "source_line": 796,
+      "components": {
+        "Invar": 11027016000,
+        "Bronze": 14918904000
+      },
+      "pattern": [
+        "TwT",
+        "GSG",
+        "TMT"
+      ],
+      "keys": {
+        "S": "OP.stickLong.dat(aMat)",
+        "M": "OP.casingMachineDouble.dat(aMat)",
+        "G": "OP.gearGt.dat(aMat)",
+        "T": "OP.rotor.dat(MT.Invar            )"
+      }
+    },
+    {
+      "path": "steam_turbine_steel",
+      "source_id": 1522,
+      "source_line": 798,
+      "components": {
+        "Steel": 25945920000
+      },
+      "pattern": [
+        "TwT",
+        "GSG",
+        "TMT"
+      ],
+      "keys": {
+        "S": "OP.stickLong.dat(aMat)",
+        "M": "OP.casingMachineDouble.dat(aMat)",
+        "G": "OP.gearGt.dat(aMat)",
+        "T": "OP.rotor.dat(ANY.Steel           )"
+      }
+    },
+    {
+      "path": "steam_turbine_chromium",
+      "source_id": 1525,
+      "source_line": 799,
+      "components": {
+        "Cr": 11027016000,
+        "Steel": 14918904000
+      },
+      "pattern": [
+        "TwT",
+        "GSG",
+        "TMT"
+      ],
+      "keys": {
+        "S": "OP.stickLong.dat(aMat)",
+        "M": "OP.casingMachineDouble.dat(aMat)",
+        "G": "OP.gearGt.dat(aMat)",
+        "T": "OP.rotor.dat(MT.Cr               )"
+      }
+    },
+    {
+      "path": "steam_turbine_ironwood",
+      "source_id": 1527,
+      "source_line": 800,
+      "components": {
+        "IronWood": 11027016000,
+        "Steel": 14918904000
+      },
+      "pattern": [
+        "TwT",
+        "GSG",
+        "TMT"
+      ],
+      "keys": {
+        "S": "OP.stickLong.dat(aMat)",
+        "M": "OP.casingMachineDouble.dat(aMat)",
+        "G": "OP.gearGt.dat(aMat)",
+        "T": "OP.rotor.dat(MT.IronWood         )"
+      }
+    },
+    {
+      "path": "steam_turbine_steeleaf",
+      "source_id": 1528,
+      "source_line": 801,
+      "components": {
+        "Steeleaf": 11027016000,
+        "Steel": 14918904000
+      },
+      "pattern": [
+        "TwT",
+        "GSG",
+        "TMT"
+      ],
+      "keys": {
+        "S": "OP.stickLong.dat(aMat)",
+        "M": "OP.casingMachineDouble.dat(aMat)",
+        "G": "OP.gearGt.dat(aMat)",
+        "T": "OP.rotor.dat(MT.Steeleaf         )"
+      }
+    },
+    {
+      "path": "steam_turbine_thaumium",
+      "source_id": 1529,
+      "source_line": 802,
+      "components": {
+        "Thaumium": 11027016000,
+        "Steel": 14918904000
+      },
+      "pattern": [
+        "TwT",
+        "GSG",
+        "TMT"
+      ],
+      "keys": {
+        "S": "OP.stickLong.dat(aMat)",
+        "M": "OP.casingMachineDouble.dat(aMat)",
+        "G": "OP.gearGt.dat(aMat)",
+        "T": "OP.rotor.dat(MT.Thaumium         )"
+      }
+    },
+    {
+      "path": "steam_turbine_titanium",
+      "source_id": 1530,
+      "source_line": 804,
+      "components": {
+        "Ti": 25945920000
+      },
+      "pattern": [
+        "TwT",
+        "GSG",
+        "TMT"
+      ],
+      "keys": {
+        "S": "OP.stickLong.dat(aMat)",
+        "M": "OP.casingMachineDouble.dat(aMat)",
+        "G": "OP.gearGt.dat(aMat)",
+        "T": "OP.rotor.dat(MT.Ti               )"
+      }
+    },
+    {
+      "path": "steam_turbine_fiery_steel",
+      "source_id": 1531,
+      "source_line": 805,
+      "components": {
+        "FierySteel": 11027016000,
+        "Ti": 14918904000
+      },
+      "pattern": [
+        "TwT",
+        "GSG",
+        "TMT"
+      ],
+      "keys": {
+        "S": "OP.stickLong.dat(aMat)",
+        "M": "OP.casingMachineDouble.dat(aMat)",
+        "G": "OP.gearGt.dat(aMat)",
+        "T": "OP.rotor.dat(MT.FierySteel       )"
+      }
+    },
+    {
+      "path": "steam_turbine_aluminium",
+      "source_id": 1535,
+      "source_line": 806,
+      "components": {
+        "Al": 11027016000,
+        "Ti": 14918904000
+      },
+      "pattern": [
+        "TwT",
+        "GSG",
+        "TMT"
+      ],
+      "keys": {
+        "S": "OP.stickLong.dat(aMat)",
+        "M": "OP.casingMachineDouble.dat(aMat)",
+        "G": "OP.gearGt.dat(aMat)",
+        "T": "OP.rotor.dat(MT.Al               )"
+      }
+    },
+    {
+      "path": "steam_turbine_magnalium",
+      "source_id": 1538,
+      "source_line": 807,
+      "components": {
+        "Magnalium": 11027016000,
+        "Ti": 14918904000
+      },
+      "pattern": [
+        "TwT",
+        "GSG",
+        "TMT"
+      ],
+      "keys": {
+        "S": "OP.stickLong.dat(aMat)",
+        "M": "OP.casingMachineDouble.dat(aMat)",
+        "G": "OP.gearGt.dat(aMat)",
+        "T": "OP.rotor.dat(MT.Magnalium        )"
+      }
+    },
+    {
+      "path": "steam_turbine_void_metal",
+      "source_id": 1540,
+      "source_line": 809,
+      "components": {
+        "VoidMetal": 11027016000,
+        "TungstenSteel": 14918904000
+      },
+      "pattern": [
+        "TwT",
+        "GSG",
+        "TMT"
+      ],
+      "keys": {
+        "S": "OP.stickLong.dat(aMat)",
+        "M": "OP.casingMachineDouble.dat(aMat)",
+        "G": "OP.gearGt.dat(aMat)",
+        "T": "OP.rotor.dat(MT.VoidMetal        )"
+      }
+    },
+    {
+      "path": "steam_turbine_trinitanium",
+      "source_id": 1545,
+      "source_line": 810,
+      "components": {
+        "Trinitanium": 11027016000,
+        "TungstenSteel": 14918904000
+      },
+      "pattern": [
+        "TwT",
+        "GSG",
+        "TMT"
+      ],
+      "keys": {
+        "S": "OP.stickLong.dat(aMat)",
+        "M": "OP.casingMachineDouble.dat(aMat)",
+        "G": "OP.gearGt.dat(aMat)",
+        "T": "OP.rotor.dat(MT.Trinitanium      )"
+      }
+    },
+    {
+      "path": "steam_turbine_graphene",
+      "source_id": 1548,
+      "source_line": 811,
+      "components": {
+        "Graphene": 11027016000,
+        "TungstenSteel": 14918904000
+      },
+      "pattern": [
+        "TwT",
+        "GSG",
+        "TMT"
+      ],
+      "keys": {
+        "S": "OP.stickLong.dat(aMat)",
+        "M": "OP.casingMachineDouble.dat(aMat)",
+        "G": "OP.gearGt.dat(aMat)",
+        "T": "OP.rotor.dat(MT.Graphene         )"
+      }
+    }
+  ],
+  "material_preservation": {
+    "prior_fixed_entries_identical": 459,
+    "current_fixed_entries": 469,
+    "prior_machine_tiers_identical": 252,
+    "existing_hoppers": 120
+  },
+  "selected_tooltip_keys": [
+    "gt.lang.accepts.redstoneflux.lossless",
+    "gt.lang.efficiency",
+    "gt.lang.emits.redstoneflux.lossless",
+    "gt.lang.emits.used.steam",
+    "gt.lang.energy.input",
+    "gt.lang.energy.output",
+    "gt.lang.face.any.but.front",
+    "gt.lang.face.any.but.front.back",
+    "gt.lang.face.back",
+    "gt.lang.face.front",
+    "gt.lang.face.front.back",
+    "gt.lang.face.sides",
+    "gt.lang.hazard.contact",
+    "gt.lang.reminder.extenders",
+    "gt.lang.tool.name.wrench",
+    "gt.lang.use.monkey.wrench.to.toggle.direction",
+    "gt.lang.use.x.to.toggle.facing.post",
+    "gt.lang.use.x.to.toggle.facing.pre",
+    "gt.td.short.energy.cryo",
+    "gt.td.short.energy.electricity",
+    "gt.td.short.energy.heat",
+    "gt.td.short.energy.kinetic_rotation",
+    "gt.td.short.energy.magnetic",
+    "gt.td.short.energy.redstone_flux",
+    "gt.td.short.energy.steam",
+    "gt.tooltip.energybattery.1",
+    "gt.tooltip.energybattery.2",
+    "gt.tooltip.energybattery.3"
+  ],
+  "verbatim_chinese_values_checked": 43,
+  "recipes": {
+    "shared_rows_added": 15,
+    "shared_catalog_total": 539,
+    "native_ids": "gregtech:hand/turbines/<id>",
+    "shape": [
+      "TwT",
+      "GSG",
+      "TMT"
+    ],
+    "components": "four4.25U rotors +14U double casing +two4U gears +1U long rod",
+    "source_group_boundary": "ANY.Steel stays a recipe group; source Steel appearance is concrete at native block boundary.",
+    "empty_input_guard": true
+  },
+  "behavior": {
+    "steam_per_water_local": 200,
+    "boiler_constant_unchanged": 160,
+    "steam_tank_capacity": "8N, reset after native load",
+    "base_energy_capacity": "2N",
+    "steam_input": "whole batch split equally this tick and next; source fixed waste once per tick",
+    "source_efficiency_display": "66.66%",
+    "back_input_front_signed_RU": true,
+    "runtime_rotor_required": false,
+    "mode": "0..15; stops new input but processes old tank/pending/buffer; Monkey Wrench clears only buffer",
+    "plunger": "whole fluid tank only; pending, condensate counter and energy unchanged",
+    "condensate": "four perpendicular sides; discard unaccepted remainder",
+    "fluid_boundary": "source five non-output tank views, fill only dynamic back, no drain; existing modern unsided insertion retained"
+  },
+  "verification": {
+    "core_behavior_assertions": 2474,
+    "source_machine_assertions": 835,
+    "native_main_and_production_probe_compile": [
+      "Forge1.20.1",
+      "NeoForge1.21.1"
+    ],
+    "native_world_fixture_compile": true,
+    "baked_states_prepared_per_platform": 2160,
+    "attempts": [
+      {
+        "log": "work/steam-turbine-compile-20261007.log",
+        "result": "failed",
+        "seconds": 8,
+        "reason": "Port Tungstensteel field spelling."
+      },
+      {
+        "log": "work/steam-turbine-compile-retry-20261007.log",
+        "result": "failed",
+        "seconds": 10,
+        "reason": "Source ANY.Steel is a recipe group, not a valid native hull identity."
+      },
+      {
+        "log": "work/steam-turbine-compile-retry2-20261007.log",
+        "result": "main/core/probes passed, Forge fixture failed",
+        "seconds": 42,
+        "reason": "Forge FluidStack lacks Neo copyWithAmount; native game source compiled."
+      },
+      {
+        "log": "work/steam-turbine-fixture-compile-20261007.log",
+        "result": "passed",
+        "scope": "Only both finite-world fixture compiles rerun after using shared registered stack factory."
+      }
+    ],
+    "native_patch_attempt": "Forge native files completed; Neo load API takes HolderLookup argument. Adapted the patch before writing Neo files.",
+    "ordinary_dual_build_this_batch": true,
+    "runtime_probe": true,
+    "runtime_world_fixtures": true,
+    "saved_world_restart": false,
+    "ordinary_packages_and_installed_client": "passed pooled delivery; see converter-pooled-delivery-20261007.json",
+    "native_world": "Each platform two corresponding fixtures passed within six-test pool; see converter-pooled-runtime-20261007.json",
+    "source_and_asset_references_rechecked_after_startup": 262
+  },
+  "pending": [
+    "Full survival, independent world restart, historical saves, dedicated server and actual player hover.",
+    "Other engine/turbine families, universal block tooltip/material gaps and source configuration/rated-save overrides."
+  ],
+  "publication": "Local commit only; no push or PR; overall goal active.",
+  "delivery_ledger": "converter-pooled-delivery-20261007.json"
+}

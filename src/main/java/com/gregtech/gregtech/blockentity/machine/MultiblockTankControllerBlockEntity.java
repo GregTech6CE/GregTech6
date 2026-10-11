@@ -52,7 +52,7 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
         if (size != 3 && size != 5) throw new IllegalArgumentException("Tank size: " + size);
         if (valveSpec != null && valveSpec.size() != size) throw new IllegalArgumentException("Tank valve size: " + size);
         this.size = size;
-        tank.setCapacity(valveSpec == null ? (size == 5 ? 1_024_000 : 320_000) : valveSpec.capacity());
+        com.gregtech.gregtech.api.fluid.MultiblockTankData.setCapacity(tank, valveSpec == null ? (size == 5 ? 1_024_000 : 320_000) : valveSpec.capacity());
         if (valveSpec != null) tank.setGasProof(valveSpec.gasProof()).setAcidProof(valveSpec.acidProof())
                 .setPlasmaProof(valveSpec.plasmaProof()).setMagicProof(valveSpec.magicProof())
                 .setMaxTemperature(valveSpec.meltingPoint());
@@ -260,8 +260,8 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
-        if (tag.contains("gt.tank")) tank.readFromNBT(tag.getCompound("gt.tank"));
+        setSize(size); // The placed valve owns size/capacity/proof flags; contents keep their source long amount.
+        com.gregtech.gregtech.api.fluid.MultiblockTankData.readContents(tank,tag,tank.baseCapacity());
         tank.setOnChanged(this::setChanged);
-        setSize(size); // The placed valve, not item NBT, owns capacity and proof flags.
     }
 }

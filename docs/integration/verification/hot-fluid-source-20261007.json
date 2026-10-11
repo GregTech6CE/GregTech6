@@ -1,0 +1,250 @@
+{
+  "date": "2026-10-07",
+  "base_commit": "95b582253bc476726509574a0fa45f6bc163d13b",
+  "authors": "GregTech-6 Team / Gregorius Techneticies",
+  "license": "LGPL-3.0-or-later",
+  "sources": [
+    {
+      "tree": "original",
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\FL.java",
+      "bytes": 106275,
+      "sha256": "87ec6759b7c3b1ad7d7c6d574e24ec7d7371fa285e93ab67cfa26cd83f2b18b3"
+    },
+    {
+      "tree": "original",
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+      "bytes": 153449,
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5"
+    },
+    {
+      "tree": "original",
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\a\\Loader_Fluids.java",
+      "bytes": 190445,
+      "sha256": "fdc9a697adc7822159cb8ea82389cc83e6494fc9723551f2983607ed46505fcb"
+    },
+    {
+      "tree": "original",
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_Fuels.java",
+      "bytes": 18640,
+      "sha256": "df4517a5c621527c62adee8245601a420b53f7e4d5e871283ac16fbcd4e68edc"
+    },
+    {
+      "tree": "original",
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\FM.java",
+      "bytes": 4536,
+      "sha256": "374772472db8a786a8a0af2408ad71ae2500481e258ee1c6815fcd87f7cbec64"
+    },
+    {
+      "tree": "original",
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\Recipe.java",
+      "bytes": 105155,
+      "sha256": "8bb9a0bd00aa839a48a2c082281a988e9a796a540137d1cf50249d2250ad1c7e"
+    },
+    {
+      "tree": "original",
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\machines\\MultiTileEntitySensorTE.java",
+      "bytes": 15676,
+      "sha256": "494f1305c7e2a0a20fb60d20dd1f5cbcfb8c96024cb344ac6fe48826c7aa5a94"
+    },
+    {
+      "tree": "original",
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\LICENSE",
+      "bytes": 694,
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577"
+    },
+    {
+      "tree": "comparison",
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\data\\FL.java",
+      "bytes": 121916,
+      "sha256": "c0236a11ef88293c102fd853cd8e9a874e4a4858a06b5c6ad5c0e0de20228b64"
+    },
+    {
+      "tree": "comparison",
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\data\\CS.java",
+      "bytes": 172344,
+      "sha256": "e6e330961c416e104ea5a58dd8282d286d1e27292a9f6d9955c9569c39af87c9"
+    },
+    {
+      "tree": "comparison",
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\loaders\\a\\Loader_Fluids.java",
+      "bytes": 191572,
+      "sha256": "0eed6f6a0f03b5da800e57f8171205d46f5c5122df829cbfbcdf48e52412cd53"
+    },
+    {
+      "tree": "comparison",
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\loaders\\b\\Loader_Fuels.java",
+      "bytes": 18845,
+      "sha256": "5a70a06d1ced0e0200f97c64fe5d633234e88661bb44b695788c838900280722"
+    },
+    {
+      "tree": "comparison",
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\data\\FM.java",
+      "bytes": 4672,
+      "sha256": "9d701b7f7df6e0d86b50d8381372c908e54c3911f77c5314e49916fbfed037f6"
+    },
+    {
+      "tree": "comparison",
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\recipes\\Recipe.java",
+      "bytes": 111161,
+      "sha256": "f4bfe8c7cb5206b3379acedf66c3fc5211992ed359d29b22b9b87cb6e7bc94fd"
+    },
+    {
+      "tree": "comparison",
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\tileentity\\machines\\MultiTileEntitySensorTE.java",
+      "bytes": 15980,
+      "sha256": "c186cd16e9a60f4a3baff2fadf588b96eddf75d6101f191f8ce746ea5fab52dd"
+    },
+    {
+      "tree": "comparison",
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\LICENSE",
+      "bytes": 694,
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577"
+    },
+    {
+      "tree": "original",
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapFuel.java",
+      "bytes": 3266,
+      "sha256": "86d8ee81bd5842dc624bd031a66fe4c87ab6599225e596531462e9d7ab28cf27"
+    },
+    {
+      "tree": "comparison",
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapFuel.java",
+      "bytes": 3453,
+      "sha256": "f06e211612228da7812a317bd85124850fa9d00375285ef89c0c60ae5f10e728"
+    }
+  ],
+  "current": [
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\recipe\\OriginalFuelRecipeRows.java",
+      "bytes": 3638,
+      "sha256": "ebe786dcf7373811eb0cee01b355d671c15e1e1e5ebaa6951f3c2f15e04f6c30"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\data\\FluidCatalog.java",
+      "bytes": 85878,
+      "sha256": "6b7a3219ebeadd593754cfdc351ab796ebc8565f2780c1704a02791ac0f9bd9e"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\lang\\en_us.json",
+      "bytes": 758766,
+      "sha256": "4b804b02e6d35c0cdbad4c419bb76003f4822c73f8f98e69756660da39089f36"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\test\\java\\com\\gregtech\\gregtech\\core\\MachineSpecBehaviorContracts.java",
+      "bytes": 91528,
+      "sha256": "af4e763e41794fa474a73ccc1cee18794f9518939564c5e368dba5bc99fed60c"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\SensorSourceTests.java",
+      "bytes": 45406,
+      "sha256": "023d1febd3698bda9bb0dccbc15562650278b4ea0a075e79c297a7dc98c63dd9"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\api\\recipe\\RecipeMap.java",
+      "bytes": 55888,
+      "sha256": "c642d98eef5ce7439110ce4a59e934a4a679a6c0ec3e2ed029191d938c4b03c4"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\content\\food\\GTDrinks.java",
+      "bytes": 8053,
+      "sha256": "50fea8a21977a647dc8cf605edf5c0d057f2d7d43eb681bf7cdd48c30a6f7961"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\c\\GTGeneratedChem.java",
+      "bytes": 19853,
+      "sha256": "c94448354dd5a7a6d1afa0416442b37d4a4fcdd7ac47bdf0aad3230d346e71b8"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\c\\Loader_Recipes_Fuels.java",
+      "bytes": 4663,
+      "sha256": "6031389c8740f94c6523364b76a0f3a0fdbb7a50fcfe7212e2e560866e29ad31"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\platform\\neoforge\\fluid\\FluidRegistries.java",
+      "bytes": 4271,
+      "sha256": "2c479fe5dafecbaef08de44404b27240681be6580d7cebe361e858af4b68fbfd"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTFluids.java",
+      "bytes": 4660,
+      "sha256": "b828119408189caccf06dacb9e7651da0f885c32986ac5f8e855761d04268cda"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\UtilityControllerDeliveryChecks.java",
+      "bytes": 11719,
+      "sha256": "81af6fcd9a3f2e2f743e89e6bc5fc18b2c66509f94b831334f28ebda1fac440f"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\SensorSourceTests.java",
+      "bytes": 44309,
+      "sha256": "8bdc4177bd7714894889006866211970e650b93a0ad0fe8186c2c4a98e1e6286"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\api\\recipe\\RecipeMap.java",
+      "bytes": 55824,
+      "sha256": "ec1f1b853f020579824da6fdf8b0d7992a48eb9b6bb8be38abd93c10df760e9d"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\content\\food\\GTDrinks.java",
+      "bytes": 8202,
+      "sha256": "84c6ed68343566b00cb0008df81e9d9d4b05fa32a1829fd77c28b033ed1bf1ef"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\a\\Loader_Fluids.java",
+      "bytes": 7110,
+      "sha256": "bd74339381a70bfc0693de49a2df2ede4c89b9da6a15ef77c3f5d464d09638ea"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\c\\GTGeneratedChem.java",
+      "bytes": 19491,
+      "sha256": "d6e8f70ec07ceacbd7441191df8d693b412adc2542d63abb63567f9d649bfbf9"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\loaders\\c\\Loader_Recipes_Fuels.java",
+      "bytes": 4651,
+      "sha256": "93c78c4d206574e243ee55c77e9b5f713ae14ed76d80bdb9fd536abca3254dc4"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\registry\\GTFluids.java",
+      "bytes": 13204,
+      "sha256": "ded4de34645e0d9bcae31f5d4a755ae9e6b17f2f897bb08d74b75a54645c587b"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\UtilityControllerDeliveryChecks.java",
+      "bytes": 11532,
+      "sha256": "cccd99a5f125a56f6d0917d0e746f179fa8be9849d2f9a3f5032336be8e36e17"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\test\\java\\com\\gregtech\\gregtech\\core\\HotFluidSourceContracts.java",
+      "bytes": 3015,
+      "sha256": "013b8e4292f863b256f482fdd31a742c549ef97093ef1c49872fedeb234e5b8c"
+    }
+  ],
+  "source_energy_per_litre": {
+    "LAVA": 80,
+    "COOLANT": 20,
+    "SODIUM": 30,
+    "TIN": 40,
+    "HEAVY_WATER": 50,
+    "SEMI_HEAVY_WATER": 40,
+    "TRITIATED_WATER": 60,
+    "CO2": 20,
+    "HELIUM": 30,
+    "LICL": 15
+  },
+  "translation": {
+    "source": {
+      "path": "C:\\Dev\\GregTech_zh_cn.lang",
+      "bytes": 7375784,
+      "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0"
+    },
+    "key": "S:fluid.ic2pahoehoelava",
+    "value": "熔岩岩浆",
+    "chinese_modified": false
+  },
+  "notes": [
+    "Comparison code read only; native implementation remains shared core plus loader boundaries.",
+    "Compatible volcanic/pure fluids follow existing complete-catalog registration policy; no new source/world block.",
+    "Previous accepted artifacts remain valid only at their recorded source revision."
+  ]
+}

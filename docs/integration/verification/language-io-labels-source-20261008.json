@@ -1,0 +1,815 @@
+{
+  "authors": "GregTech-6 Team / Gregorius Techneticies, original Java LGPL-3.0-or-later. User Chinese patch unchanged, local work only.",
+  "base_commit": "eca23d0fb",
+  "changed_native_and_tool_files": [
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\block\\energy\\EnergyNodeBlock.java",
+      "sha256": "b162f9abc119e7e3b39962f1b47169145b05a816efa11b765d1aa17c739e1dde"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\client\\EngineTooltips.java",
+      "sha256": "bf7240474a0417f76cbeb420fa9899b46ef48f222180dfa9f12e9914ac24949c"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\client\\MachineTooltips.java",
+      "sha256": "6311e4c91b35715ce2030982b6e115f34c17aaecbe848621d39300dae4532c94"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\client\\TooltipHelper.java",
+      "sha256": "595866a8820c73b2be175301fef0be433247a80c901fbf8b4d22ef22d8d80de5"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\LanguageDeliveryChecks.java",
+      "sha256": "2fc0ccfed590c877d0c6b4de34e1ab0654ef1b6b47682ae85425c4f43d9bc13d"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\block\\energy\\EnergyNodeBlock.java",
+      "sha256": "9786f434ef064df9c91aac24229ef593bb25ad793e609a8292b06daeb8fe2b86"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\client\\EngineTooltips.java",
+      "sha256": "bfe056b75b7ff7cda251ce5d2c5dbf512d39a94f8127494c863d4855ecbe6291"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\client\\MachineTooltips.java",
+      "sha256": "e9d42a994ba07ec0cd7156ba728a344621db3117e0eaf4d13d7918ae0ff65b27"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\client\\TooltipHelper.java",
+      "sha256": "37ec023a22768bca656a5c31803eaca5d1e23ada7dcfc820cc2342fcb383f20f"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\LanguageDeliveryChecks.java",
+      "sha256": "fbd349e072c43698ce10fcdbaf433ea0fbbd61e91ba0f4739273a80408eeefaf"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\integration\\check_source.py",
+      "sha256": "3c6ababd0589249f0f571558f1b76d19e55798750eb6171da1ab720775d86da7"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\integration\\import_identity_localization.py",
+      "sha256": "f2615ef15033e1404f2211eb9413d3218559131e5ee7975a06fe21a113b5bf34"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\integration\\launch_production_smoke.py",
+      "sha256": "c43517d8136c2082d8e507ddb2b2fda21b7b789cc08d9e380bcbe84c45387120"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\localization\\english_source.json",
+      "sha256": "b364d2d86d9355719755a7c969a3b3419839793eed2412e590fa0712ddaf50eb"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\tests\\test_delivery_language.py",
+      "sha256": "74701975d5b23c5e6e65de27a6d0341d8ff1044ee6d8f932a6d3ddde62c4b87e"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\tests\\test_identity_localization.py",
+      "sha256": "a9fce6a6d475e9870485dd020e99d2791967c05e3d0b03990f0baec8d51c22ba"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\tools\\integration\\source_recipe_language.py",
+      "sha256": "67840a7846b0b1cd9b972a01bb9325fe1e86d94d48701b3ddca33c92995ced9a"
+    }
+  ],
+  "checks": {
+    "exact_external_chinese_bytes": true,
+    "fast_checks": {
+      "passed": true,
+      "seconds": 1.832,
+      "tests": 75
+    },
+    "import_idempotence": true,
+    "ordinary_dual_build": {
+      "elapsed": "3m 5s",
+      "passed": true
+    },
+    "packaging": {
+      "current_shared_classes": 790,
+      "passed": true
+    },
+    "probe_only_rebuild": {
+      "elapsed": "29s",
+      "passed": true
+    },
+    "single_lexical_pass_comparison": {
+      "after_seconds": 2.155,
+      "all_counts_and_results_identical": true,
+      "before_seconds": 2.827,
+      "note": "One local measurement, not a general benchmark; no checks removed."
+    },
+    "source_gate": {
+      "java_sources": 2602,
+      "passed": true,
+      "seconds": 2.149
+    }
+  },
+  "language_gate": {
+    "changes": {
+      "changed": 0,
+      "missing": 0,
+      "unexpected": 0
+    },
+    "chinese_keys": 141372,
+    "english": {
+      "exact_original_declarations": 12832,
+      "formatted_keys": 391,
+      "intentional_empty_tooltips": 689,
+      "keys": 15517,
+      "original_english_without_chinese_source": 477
+    },
+    "english_fallback_count": 3091,
+    "native_aliases": 12624,
+    "source_keys": 125676,
+    "source_sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0"
+  },
+  "language_values_and_aliases_unchanged": true,
+  "limitations": "Native actual item tooltip callbacks and resource loading at the title screen, not player hover, world, survival, old-save or dedicated-server acceptance. Original Chinese gaps remain English. Conditional pause has not been reached; missing-source translation choice is unanswered. No remote push.",
+  "new_english_checks": {
+    "gt.recipe.autoclave": {
+      "source_key": "gt.recipe.autoclave",
+      "value": "Autoclave"
+    },
+    "gt.recipe.autocrafting": {
+      "source_key": "gt.recipe.autocrafting",
+      "value": "Crafting"
+    },
+    "gt.recipe.bath": {
+      "source_key": "gt.recipe.bath",
+      "value": "Bath"
+    },
+    "gt.recipe.boxinator": {
+      "source_key": "gt.recipe.boxinator",
+      "value": "Boxinator"
+    },
+    "gt.recipe.bumblelyzer": {
+      "source_key": "gt.recipe.bumblelyzer",
+      "value": "Bumblelyzer"
+    },
+    "gt.recipe.burnmixer": {
+      "source_key": "gt.recipe.burnmixer",
+      "value": "Burner Mixer"
+    },
+    "gt.recipe.canner": {
+      "source_key": "gt.recipe.canner",
+      "value": "Canning Machine"
+    },
+    "gt.recipe.catalyticcracking": {
+      "source_key": "gt.recipe.catalyticcracking",
+      "value": "Catalytic Cracking"
+    },
+    "gt.recipe.centrifuge": {
+      "source_key": "gt.recipe.centrifuge",
+      "value": "Centrifuge"
+    },
+    "gt.recipe.clustermill": {
+      "source_key": "gt.recipe.clustermill",
+      "value": "Cluster Mill"
+    },
+    "gt.recipe.coagulator": {
+      "source_key": "gt.recipe.coagulator",
+      "value": "Coagulator"
+    },
+    "gt.recipe.cokeoven": {
+      "source_key": "gt.recipe.cokeoven",
+      "value": "Coke Oven"
+    },
+    "gt.recipe.compressor": {
+      "source_key": "gt.recipe.compressor",
+      "value": "Compressor"
+    },
+    "gt.recipe.crusher": {
+      "source_key": "gt.recipe.crusher",
+      "value": "Crusher"
+    },
+    "gt.recipe.cryodistillationtower": {
+      "source_key": "gt.recipe.cryodistillationtower",
+      "value": "Cryo Distillation Tower"
+    },
+    "gt.recipe.cryomixer": {
+      "source_key": "gt.recipe.cryomixer",
+      "value": "Cryo Mixer"
+    },
+    "gt.recipe.crystallisationcrucible": {
+      "source_key": "gt.recipe.crystallisationcrucible",
+      "value": "Crystallisation Crucible"
+    },
+    "gt.recipe.cutter": {
+      "source_key": "gt.recipe.cutter",
+      "value": "Cutter"
+    },
+    "gt.recipe.distillationtower": {
+      "source_key": "gt.recipe.distillationtower",
+      "value": "Distillation Tower"
+    },
+    "gt.recipe.distillery": {
+      "source_key": "gt.recipe.distillery",
+      "value": "Distillery"
+    },
+    "gt.recipe.drying": {
+      "source_key": "gt.recipe.drying",
+      "value": "Dryer"
+    },
+    "gt.recipe.electrolyzer": {
+      "source_key": "gt.recipe.electrolyzer",
+      "value": "Electrolyzer"
+    },
+    "gt.recipe.extruder": {
+      "source_key": "gt.recipe.extruder",
+      "value": "Extruder"
+    },
+    "gt.recipe.fermenter": {
+      "source_key": "gt.recipe.fermenter",
+      "value": "Fermenter"
+    },
+    "gt.recipe.freezer": {
+      "source_key": "gt.recipe.freezer",
+      "value": "Freezer"
+    },
+    "gt.recipe.fuels.hot": {
+      "source_key": "gt.recipe.fuels.hot",
+      "value": "Hot Fuels"
+    },
+    "gt.recipe.fusionreactor": {
+      "source_key": "gt.recipe.fusionreactor",
+      "value": "Fusion Reactor"
+    },
+    "gt.recipe.generifier": {
+      "source_key": "gt.recipe.generifier",
+      "value": "Generifier"
+    },
+    "gt.recipe.implosioncompressor": {
+      "source_key": "gt.recipe.implosioncompressor",
+      "value": "Implosion Compressor"
+    },
+    "gt.recipe.injector": {
+      "source_key": "gt.recipe.injector",
+      "value": "Injector"
+    },
+    "gt.recipe.juicer": {
+      "source_key": "gt.recipe.juicer",
+      "value": "Juicer"
+    },
+    "gt.recipe.laminator": {
+      "source_key": "gt.recipe.laminator",
+      "value": "Laminator"
+    },
+    "gt.recipe.laserengraver": {
+      "source_key": "gt.recipe.laserengraver",
+      "value": "Precision Laser Engraver"
+    },
+    "gt.recipe.lathe": {
+      "source_key": "gt.recipe.lathe",
+      "value": "Lathe"
+    },
+    "gt.recipe.lightning": {
+      "source_key": "gt.recipe.lightning",
+      "value": "Lightning Processor"
+    },
+    "gt.recipe.loom": {
+      "source_key": "gt.recipe.loom",
+      "value": "Loom"
+    },
+    "gt.recipe.magneticseparator": {
+      "source_key": "gt.recipe.magneticseparator",
+      "value": "Magnetic Separator"
+    },
+    "gt.recipe.massfab": {
+      "source_key": "gt.recipe.massfab",
+      "value": "Matter Fabricator"
+    },
+    "gt.recipe.melter": {
+      "source_key": "gt.recipe.melter",
+      "value": "Melter"
+    },
+    "gt.recipe.mixer": {
+      "source_key": "gt.recipe.mixer",
+      "value": "Mixer"
+    },
+    "gt.recipe.mortar": {
+      "source_key": "gt.recipe.mortar",
+      "value": "Mortar"
+    },
+    "gt.recipe.nanofab": {
+      "source_key": "gt.recipe.nanofab",
+      "value": "Nanoscale Fabricator"
+    },
+    "gt.recipe.plantalyzer": {
+      "source_key": "gt.recipe.plantalyzer",
+      "value": "Plantalyzer"
+    },
+    "gt.recipe.polarizer": {
+      "source_key": "gt.recipe.polarizer",
+      "value": "Polarizer"
+    },
+    "gt.recipe.press": {
+      "source_key": "gt.recipe.press",
+      "value": "Press"
+    },
+    "gt.recipe.pressurewasher": {
+      "source_key": "gt.recipe.pressurewasher",
+      "value": "Pressure Washer"
+    },
+    "gt.recipe.printer": {
+      "source_key": "gt.recipe.printer",
+      "value": "Printer"
+    },
+    "gt.recipe.replicator": {
+      "source_key": "gt.recipe.replicator",
+      "value": "Matter Replicator"
+    },
+    "gt.recipe.roaster": {
+      "source_key": "gt.recipe.roaster",
+      "value": "Roaster"
+    },
+    "gt.recipe.rollbender": {
+      "source_key": "gt.recipe.rollbender",
+      "value": "Roll Bender"
+    },
+    "gt.recipe.rollformer": {
+      "source_key": "gt.recipe.rollformer",
+      "value": "Roll Former"
+    },
+    "gt.recipe.rollingmill": {
+      "source_key": "gt.recipe.rollingmill",
+      "value": "Rolling Mill"
+    },
+    "gt.recipe.scannermolecular": {
+      "source_key": "gt.recipe.scannermolecular",
+      "value": "Molecular Scanner"
+    },
+    "gt.recipe.scannervisuals": {
+      "source_key": "gt.recipe.scannervisuals",
+      "value": "Scanner (Visuals)"
+    },
+    "gt.recipe.sharpener": {
+      "source_key": "gt.recipe.sharpener",
+      "value": "Sharpener"
+    },
+    "gt.recipe.shredder": {
+      "source_key": "gt.recipe.shredder",
+      "value": "Shredder"
+    },
+    "gt.recipe.sifter": {
+      "source_key": "gt.recipe.sifter",
+      "value": "Sifter"
+    },
+    "gt.recipe.slicer": {
+      "source_key": "gt.recipe.slicer",
+      "value": "Slicer"
+    },
+    "gt.recipe.sluice": {
+      "source_key": "gt.recipe.sluice",
+      "value": "Sluice"
+    },
+    "gt.recipe.smelter": {
+      "source_key": "gt.recipe.smelter",
+      "value": "Smelter"
+    },
+    "gt.recipe.squeezer": {
+      "source_key": "gt.recipe.squeezer",
+      "value": "Squeezer"
+    },
+    "gt.recipe.steamcracking": {
+      "source_key": "gt.recipe.steamcracking",
+      "value": "Steam Cracking"
+    },
+    "gt.recipe.unboxinator": {
+      "source_key": "gt.recipe.unboxinator",
+      "value": "Unboxinator"
+    },
+    "gt.recipe.welder": {
+      "source_key": "gt.recipe.welder",
+      "value": "Welding Machine"
+    },
+    "gt.recipe.wiremill": {
+      "source_key": "gt.recipe.wiremill",
+      "value": "Wiremill"
+    },
+    "mc.recipe.furnace": {
+      "source_key": "mc.recipe.furnace",
+      "value": "Furnace"
+    }
+  },
+  "next_language_work": "WireTooltips shapeless-recipe title still bypasses original LH key because of trailing whitespace; source-present harvest labels are normalized by CommonBlockTooltips and pipe labels already use originals. Review the live path before changing resources.",
+  "raw_reports": [
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-io-labels-artifacts-20261008.json",
+      "sha256": "a9f2792e4ace9b928e75f30f9cb0586e8b74f87e1e7766b32e5a81751ade8acc"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-io-labels-forge-20261008.json",
+      "sha256": "9785a2591fc384637f8843d668d186cc85c7a3605f6a0f2695034332947d6de0"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-io-labels-neoforge-20261008.json",
+      "sha256": "67e948038e060bed9702fb5ae0354ecb4825a0a5207e5d3ef1d1a28a425433fe"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-io-labels-copies-20261008.json",
+      "sha256": "a536799aefe5af85a5dbf140aca378494a97ee243ec25e359967d95bb7f75ca2"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-io-labels-localization-20261008.json",
+      "sha256": "29f67d82b77ffb77a95c6f531df75f5d69f9d35c200a7c3a81998c5ab5879146"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-io-labels-sourcecheck-20261008.json",
+      "sha256": "3e5e5177f0dbe8061b356c1e234bf99131f3930b32cb0aaf8c4209794abc1f3f"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-io-labels-before-parser-20261008.json",
+      "sha256": "4ec0b56e2b4f1106dee89256254d57da5a670e0fa71e55cd748e51f0bd0958c3"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-io-labels-after-parser-20261008.json",
+      "sha256": "d5de24ed2139ed705ab9df9569f68e751c96df56a5bc53fd2022323328be5b7b"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-io-labels-idempotence-20261008.json",
+      "sha256": "623be493f3259b69e49dfc9725317efcdcc1191908955d02ee15b2d127e43638"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-io-labels-rejected-20261008.json",
+      "sha256": "16f075c15fd2a8c0680790faa4c98e8e4a4b8f3167872637131eb1921ed87c2b"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-io-labels-build-20261008.log",
+      "sha256": "976d0a0c4b02cc0bd2cde84dbdb259b7963a0904e0388351e4a6b18e55dc52df"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-io-labels-probe-20261008.log",
+      "sha256": "65b7a83ac5e43099827ae4d04317a1045347846d197457ab26a5d99d59c40a0a"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-recipe-labels-proposal-20261008.json",
+      "sha256": "623be493f3259b69e49dfc9725317efcdcc1191908955d02ee15b2d127e43638"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\work\\language-recipe-labels-import-20261008.json",
+      "sha256": "623be493f3259b69e49dfc9725317efcdcc1191908955d02ee15b2d127e43638"
+    }
+  ],
+  "rejected_run": {
+    "checker_exit_code": 1,
+    "log": "build\\production-smoke\\forge-5b084920-3872-4acb-b6a3-870fd7a2c257\\launch.log",
+    "log_sha256": "5c7e0c60bfba38cf6bd9049b8c6e48e3c9fa806cc1996e12dea4faee5a1023e4",
+    "neoforge_run": false,
+    "production_jars_unchanged": true,
+    "reason": "Engine material-row check also counted harvest-level material; restrict the material-row check to its top-level component."
+  },
+  "runtime": {
+    "forge": {
+      "actual_language_checks": {
+        "additionalSourceBlockNamesChinese": 708,
+        "additionalSourceBlockNamesEnglish": 708,
+        "anvilNames": 35,
+        "assembledToolNames": 3,
+        "beeDescriptions": 360,
+        "beeNames": 640,
+        "bushNamesAndOutputsChinese": 1044,
+        "bushNamesAndOutputsEnglish": 1044,
+        "chineseItemNames": 75856,
+        "coinNamesAndMaterialsChinese": 597,
+        "coinNamesAndMaterialsEnglish": 597,
+        "coloredConstructionNamesChinese": 144,
+        "coloredConstructionNamesEnglish": 144,
+        "declaredFluidNamesChinese": 916,
+        "declaredFluidNamesEnglish": 916,
+        "emptyBeeDescriptions": 280,
+        "englishItemNames": 75856,
+        "fluidNameSamples": 3,
+        "fluidPropertySamples": 7,
+        "generatedNamesChinese": {
+          "anvils": 35,
+          "bees": 640,
+          "books": 28,
+          "bottles": 169,
+          "canvases": 16,
+          "creativeTabs": 185,
+          "engineDescriptions": 59,
+          "faceMasks": 64,
+          "machineLabels": 7,
+          "panels": 83
+        },
+        "generatedNamesEnglish": {
+          "anvils": 35,
+          "bees": 640,
+          "books": 28,
+          "bottles": 169,
+          "canvases": 16,
+          "creativeTabs": 185,
+          "engineDescriptions": 59,
+          "faceMasks": 64,
+          "machineLabels": 7,
+          "panels": 83
+        },
+        "hotRecipeValues": 2,
+        "latinNameCandidates": 13825,
+        "locale": "zh_cn",
+        "lootChestNamesChinese": 18,
+        "lootChestNamesEnglish": 18,
+        "machineNamesChinese": 949,
+        "machineNamesEnglish": 949,
+        "materialFluidFallbackNamesChinese": 12,
+        "materialFluidFallbackNamesEnglish": 12,
+        "materialFormNames": {
+          "exactOriginal": 53695,
+          "missingOriginal": 13750,
+          "originalCasingNames": 309,
+          "registered": 67445
+        },
+        "moltenIronTooltip": [
+          "Amount: 144 L",
+          "Fe",
+          "Temperature: 1811 K (1538°C)",
+          "State: Liquid (Might able to cast into Molds)",
+          "Density: 3000 ; Heavier than Air (typically moves down)",
+          "Viscosity: 6000",
+          "Fluid owned by GT6"
+        ],
+        "newSourceDescriptions": 1,
+        "originalEnglishMaterialFormSamples": 18,
+        "scope": "Installed resource-manager language and actual item callbacks; explicitly supplied native lookup for Neo payloads at title screen; no in-world player hover or survival claim",
+        "sourceIdentitySamples": 20,
+        "sourceStoneNamesChinese": 544,
+        "sourceStoneNamesEnglish": 544,
+        "sourceTechnologyNamesChinese": 86,
+        "sourceTechnologyNamesEnglish": 86,
+        "toolHintsChinese": 10,
+        "toolHintsEnglish": 10
+      },
+      "distribution": {
+        "path": "C:\\Dev\\GregTech6\\build\\libs\\gregtech6-1.20.1-forge-0.0.0.jar",
+        "sha256": "2b6e09820a58b8b281c4a89756353d71922de8b796a305104359829a241f5fdb"
+      },
+      "elapsed_seconds": 53.64,
+      "exit_code": 0,
+      "installed_files_modified": false,
+      "java": "C:\\Program Files\\Zulu\\zulu-25\\bin\\java.exe",
+      "language_name_inventory": {
+        "latin_candidates": 13825,
+        "path": "C:\\Dev\\GregTech6\\build\\production-smoke\\forge-e9f236dd-862d-47c7-b3fb-8561ffa06fd3\\language-names.json",
+        "registered_items": 75856,
+        "sha256": "43ba76471f039545e5c7cd97c94fd31aa8a46855310a7e07c6136d431871fa34"
+      },
+      "log_sha256": "8bd6bb65f91a953cf2a452a2631b3c049f389882dd99d327b2da60f70be8c62c",
+      "probe": {
+        "path": "C:\\Dev\\GregTech6\\build\\production-probe\\gregtech-delivery-probe-0.0.0.jar",
+        "sha256": "4c5266e2fb75c5ee9ce34d7dc5111dc57fd39f36096efe8b6c7113507ac1d44a"
+      },
+      "screenshot": "C:\\Dev\\GregTech6\\build\\production-smoke\\forge-e9f236dd-862d-47c7-b3fb-8561ffa06fd3\\screenshots\\production-forge-bbcda6cc-40e3-43ff-b21c-87b8be56a3e1.png",
+      "screenshot_sha256": "7eeb7b26a91b6828cb2542c09e2219fa1971b1854d024330c8d60ea2c1b32e3d",
+      "version": "1.20.1-Forge_47.4.26",
+      "visual_review_scope": "Viewed 1280x720 fluid/bee/anvil preview; existing original Chinese names render, source-missing English remains. Engine/I/O labels checked by installed native callbacks, not a player-hover screenshot.",
+      "visually_reviewed": true
+    },
+    "neoforge": {
+      "actual_language_checks": {
+        "additionalSourceBlockNamesChinese": 707,
+        "additionalSourceBlockNamesEnglish": 707,
+        "anvilNames": 35,
+        "assembledToolNames": 3,
+        "beeDescriptions": 360,
+        "beeNames": 640,
+        "bushNamesAndOutputsChinese": 1044,
+        "bushNamesAndOutputsEnglish": 1044,
+        "chineseItemNames": 75855,
+        "coinNamesAndMaterialsChinese": 597,
+        "coinNamesAndMaterialsEnglish": 597,
+        "coloredConstructionNamesChinese": 144,
+        "coloredConstructionNamesEnglish": 144,
+        "declaredFluidNamesChinese": 916,
+        "declaredFluidNamesEnglish": 916,
+        "emptyBeeDescriptions": 280,
+        "englishItemNames": 75855,
+        "fluidNameSamples": 3,
+        "fluidPropertySamples": 7,
+        "generatedNamesChinese": {
+          "anvils": 35,
+          "bees": 640,
+          "books": 28,
+          "bottles": 169,
+          "canvases": 16,
+          "creativeTabs": 185,
+          "engineDescriptions": 59,
+          "faceMasks": 64,
+          "machineLabels": 7,
+          "panels": 83
+        },
+        "generatedNamesEnglish": {
+          "anvils": 35,
+          "bees": 640,
+          "books": 28,
+          "bottles": 169,
+          "canvases": 16,
+          "creativeTabs": 185,
+          "engineDescriptions": 59,
+          "faceMasks": 64,
+          "machineLabels": 7,
+          "panels": 83
+        },
+        "hotRecipeValues": 2,
+        "latinNameCandidates": 13825,
+        "locale": "zh_cn",
+        "lootChestNamesChinese": 18,
+        "lootChestNamesEnglish": 18,
+        "machineNamesChinese": 516,
+        "machineNamesEnglish": 516,
+        "materialFluidFallbackNamesChinese": 12,
+        "materialFluidFallbackNamesEnglish": 12,
+        "materialFormNames": {
+          "exactOriginal": 53695,
+          "missingOriginal": 13750,
+          "originalCasingNames": 309,
+          "registered": 67445
+        },
+        "moltenIronTooltip": [
+          "Amount: 144 L",
+          "Fe",
+          "Temperature: 1811 K (1538°C)",
+          "State: Liquid (Might able to cast into Molds)",
+          "Density: 3000 ; Heavier than Air (typically moves down)",
+          "Viscosity: 6000",
+          "Fluid owned by GT6"
+        ],
+        "newSourceDescriptions": 1,
+        "originalEnglishMaterialFormSamples": 18,
+        "scope": "Installed resource-manager language and actual item callbacks; explicitly supplied native lookup for Neo payloads at title screen; no in-world player hover or survival claim",
+        "sourceIdentitySamples": 20,
+        "sourceStoneNamesChinese": 544,
+        "sourceStoneNamesEnglish": 544,
+        "sourceTechnologyNamesChinese": 86,
+        "sourceTechnologyNamesEnglish": 86,
+        "toolHintsChinese": 10,
+        "toolHintsEnglish": 10
+      },
+      "distribution": {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\build\\libs\\gregtech6-neoforge-1.21.1-0.0.0.jar",
+        "sha256": "047275aae9196ed22d3c2abb469f6fa72c3e67bd499b88cb92f666cc79ec59f1"
+      },
+      "elapsed_seconds": 46.06,
+      "exit_code": 0,
+      "installed_files_modified": false,
+      "java": "C:\\Program Files\\Zulu\\zulu-25\\bin\\java.exe",
+      "language_name_inventory": {
+        "latin_candidates": 13825,
+        "path": "C:\\Dev\\GregTech6\\build\\production-smoke\\neoforge-76fb5bd1-b162-44fc-8c69-2b1f7e07d059\\language-names.json",
+        "registered_items": 75855,
+        "sha256": "be239a1142cdd5dbbf8ae96b7005a5475e990af9f25c7567aced6aa686e91d52"
+      },
+      "log_sha256": "9ea9e44c01be69dcb7692941d04adeac0e56f741f4fa4c6dff061897a4eca0d7",
+      "probe": {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\build\\production-probe\\gregtech-delivery-probe-0.0.0.jar",
+        "sha256": "46fb4702d1eb5883b29bfe05e9c3c715b7afa8b7b8e9c14484b940ccac19e222"
+      },
+      "screenshot": "C:\\Dev\\GregTech6\\build\\production-smoke\\neoforge-76fb5bd1-b162-44fc-8c69-2b1f7e07d059\\screenshots\\production-neoforge-9629a38a-521a-499c-a70d-9c711035072f.png",
+      "screenshot_sha256": "6d0ba9f8b1b018aa167ca016da7ae330cba6188e86523060e933cc8d7d5d1411",
+      "version": "1.21.1-NeoForge_21.1.252",
+      "visual_review_scope": "Viewed 1280x720 fluid/bee/anvil preview; existing original Chinese names render, source-missing English remains. Engine/I/O labels checked by installed native callbacks, not a player-hover screenshot.",
+      "visually_reviewed": true
+    }
+  },
+  "scope": "Original machine I/O, efficiency, recipes and capacity labels; localized engine materials and steam in both platforms. One lexical pass per Java file and independent RM/FM English declarations.",
+  "source_files": [
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\Recipe.java",
+      "sha256": "8bb9a0bd00aa839a48a2c082281a988e9a796a540137d1cf50249d2250ad1c7e"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\RM.java",
+      "sha256": "c7cb07faef0235ace4bb26656fddaabfa10da6aa4a2689a7f4cdcaef10d366e6"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\FM.java",
+      "sha256": "374772472db8a786a8a0af2408ad71ae2500481e258ee1c6815fcd87f7cbec64"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapAssembler.java",
+      "sha256": "bcc79d20d72a4ba7bb4cc73b4c752c5d5d4be27bdc0dc4799b301d7c4ac94722"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapAutocrafting.java",
+      "sha256": "76c79b611b286bfbe331f516fed22ce7877b366ceb656a56749a9d8aab9a04e9"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapBath.java",
+      "sha256": "69a915045f1ee5f524394ee87d33da3441e85d562cb7deb9f4e97387497f9f6c"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapBumblelyzer.java",
+      "sha256": "cfb0dd2b0d70ef363b87b6878c7a515b61cefa128209db30a28ed91982a837fc"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapChisel.java",
+      "sha256": "fc320baceaecf5d8b2f56418a20cf5755c5fddf455ce05f40c90c63f2ddef2ce"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapSpecialSingleInput.java",
+      "sha256": "3891676abaeba568318cf814af0ac31de492e85842f369126cd8aff0bf4a1288"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapCrucible.java",
+      "sha256": "48e87b089b6460cb2d55d32bcbcf8485af3565722e466f86b8e417e5ee3de1ab"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapFluidCanner.java",
+      "sha256": "cb2f6a82e98b4c18186ad870c152c70fe167e2dc3d7678b77fcaf15849e7fc89"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapFormingPress.java",
+      "sha256": "5e6af03456f73670e8ff7396aad39330825b3e197d64a825ef87cab14e62b275"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapNonGTRecipes.java",
+      "sha256": "1196da054405c5c30b7536c26415da593ed5d00cce8fe75a761d6d2825011b63"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapFurnace.java",
+      "sha256": "38c1db59cb30550295d62e0eefcd6c2ae6f24b749ea52665b86de3a3a5aa830d"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapHammer.java",
+      "sha256": "a38bc4d24b890094fd113633dae8bec2206a6ed4b2f1bc0203f41834977f8e78"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapMicrowave.java",
+      "sha256": "5ad605429254c0b3792768874f1300c6afd353dc33c80ed6d7f980a0074e98be"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapPlantalyzer.java",
+      "sha256": "c6943362dd53d0ab31e5a038db19c3e2367d3b48f86d2b2e3fae0419a5970d53"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapPrinter.java",
+      "sha256": "84a1536f4865fa03c9670c529078fdbfaf273a531be331d1919e8f856d67508c"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapReplicator.java",
+      "sha256": "27842d2b10e83052f10a0985b5a289600185df5092a8fe4bafa2c18eee8d6bd3"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapScannerMolecular.java",
+      "sha256": "1530afad7f0701d7bbb2b0061b97d3516a4ae995a44e30f92102e9b9a316c42a"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapScannerVisuals.java",
+      "sha256": "eb79301ab2ffd0c7320d94f414699aeadfead0972156ce02cdfff030a707a135"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapShredder.java",
+      "sha256": "b963307f82df8cb595f4d0927d969b603f57a792596ec642bb31f6aaee01d1f4"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapUnboxinator.java",
+      "sha256": "34d81f6198e7311dc42aee2aaa5cb67ddc53fee9e9dd90ce98f8c93d6116096f"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapFuel.java",
+      "sha256": "86d8ee81bd5842dc624bd031a66fe4c87ab6599225e596531462e9d7ab28cf27"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapFurnaceFuel.java",
+      "sha256": "8ba67c06a0083c52e5ef500902dc1af8747839cbb1d077266a0a0cb53a0481a6"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+      "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\MT.java",
+      "sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\machines\\MultiTileEntityBasicMachine.java",
+      "sha256": "1798706545c33c801735ac5fb56b0ae37a8b6e3b7819f40f41183a2057b0c860"
+    }
+  ],
+  "source_recipe_declarations": 94,
+  "verified_copies": {
+    "artifacts": {
+      "forge": {
+        "bytes": 40140589,
+        "name": "gregtech6-1.20.1-forge-0.0.0.jar",
+        "path": "C:\\Dev\\GregTech6\\build\\verified\\20261008-040242Z-2b6e0982\\gregtech6-1.20.1-forge-0.0.0.jar",
+        "sha256": "2b6e09820a58b8b281c4a89756353d71922de8b796a305104359829a241f5fdb",
+        "zip_crc_checked": true
+      },
+      "neoforge": {
+        "bytes": 39995464,
+        "name": "gregtech6-neoforge-1.21.1-0.0.0.jar",
+        "path": "C:\\Dev\\GregTech6\\build\\verified\\20261008-040242Z-2b6e0982\\gregtech6-neoforge-1.21.1-0.0.0.jar",
+        "sha256": "047275aae9196ed22d3c2abb469f6fa72c3e67bd499b88cb92f666cc79ec59f1",
+        "zip_crc_checked": true
+      }
+    },
+    "directory": "C:\\Dev\\GregTech6\\build\\verified\\20261008-040242Z-2b6e0982",
+    "scope": "Verified complete copies; runtime evidence is recorded separately",
+    "status": "passed",
+    "verification_report": "C:\\Dev\\GregTech6\\work\\language-io-labels-artifacts-20261008.json",
+    "verification_report_sha256": "a9f2792e4ace9b928e75f30f9cb0586e8b74f87e1e7766b32e5a81751ade8acc"
+  }
+}

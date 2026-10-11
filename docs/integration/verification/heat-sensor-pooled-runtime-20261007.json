@@ -1,0 +1,97 @@
+{
+  "date": "2026-10-07",
+  "status": "passed",
+  "source_base_commit": "e26ab55dfabfe8b7f0ba3010e36af3c010ea6ee5",
+  "attempts": [
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\heat-sensor-pooled-world-20261007.log",
+        "sha256": "e22015c948b639345861f481460637d71b9946cc6ed881ab94c2ab7c5dfc5010",
+        "bytes": 251720
+      },
+      "seconds": 297,
+      "exit_code": 0,
+      "required_passed_per_loader": 4,
+      "limitation": "Neo initial empty-tank envelopes logged two decode errors despite passing assertions; corrected and rerun."
+    },
+    {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\work\\heat-sensor-pooled-world-neo-r2-20261007.log",
+        "sha256": "62080b4da653a8bd7ec75916aad2c1216885dac107bab7c73abe99ce49b3e836",
+        "bytes": 38999
+      },
+      "seconds": 93,
+      "exit_code": 0,
+      "platform": "neoforge",
+      "required_passed": 4,
+      "empty_fluid_decode_errors": 0
+    }
+  ],
+  "correction": {
+    "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\api\\fluid\\HeatExchangerData.java",
+    "sha256": "7302992f6e45972d4e0f9d3836e0cf709a07fd8aab2fcfccd16bca991f3cc307",
+    "bytes": 2324
+  },
+  "settings": {
+    "namespace": "gregtech_sensor_source",
+    "heap": "3GiB",
+    "offline": true,
+    "no_parallel": true,
+    "direct_core_classpath": true,
+    "direct_core_resources": true
+  },
+  "platforms": {
+    "forge": {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\build\\heat-sensor-pooled-20261007\\logs\\latest.log",
+        "sha256": "3ee4d9f26b11b809e13146664aec9fa27c219502b2338c069aa64b2f7311f854",
+        "bytes": 44753
+      },
+      "required_passed": 4,
+      "world_saved": true,
+      "empty_fluid_decode_errors": 0,
+      "fixture": {
+        "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\SensorSourceTests.java",
+        "sha256": "91498354a4093bde89a755bdbf4e8773beb7331ffdd3adf14cb9d55e31469ff4",
+        "bytes": 17533
+      }
+    },
+    "neoforge": {
+      "log": {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\build\\heat-sensor-pooled-20261007-r2\\logs\\latest.log",
+        "sha256": "764bdf486ca3c310cd2b57e17fd10e2d93d807fbae66256e709297a1f46f9c5a",
+        "bytes": 43057
+      },
+      "required_passed": 4,
+      "world_saved": true,
+      "empty_fluid_decode_errors": 0,
+      "fixture": {
+        "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\SensorSourceTests.java",
+        "sha256": "62dde619d94789ce250b58bc447d1ad0a993a601790ec13dca323f2dddb47b27",
+        "bytes": 18442
+      }
+    }
+  },
+  "actual_scope": [
+    "Four required native scenarios per platform: sensor factories/independent side/pressure, controller delegation, original raw range and actual vanilla spawner countdown, heat exchanger real fuel and long state.",
+    "Heat fixture uses real formed shell, actual Hot recipe, fixed saved500000000 rate /6250eff /5000000000 cold fluid and native save/load calls, then broken shell /legacy data checks.",
+    "Neo empty envelope regression explicitly preserves5000000000 capacity and zero content; no invalid-fluid decode errors after correction."
+  ],
+  "limits": [
+    "Uses developer classpaths and fixed prepared inputs; not ordinary packaged client acceptance.",
+    "Native save/load methods and world shutdown saves do not prove a fresh-process saved-world reload, old-save migration, manual hover or complete survival chain."
+  ],
+  "source_receipts": [
+    {
+      "path": "C:\\Dev\\GregTech6\\docs\\integration\\verification\\special-controller-source-20261007.json",
+      "sha256": "4f4ea79bbc879e527f124abca9e26f2e285c17aeba7eba539e8344532d53e416",
+      "bytes": 15910
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\docs\\integration\\verification\\heat-state-source-20261007.json",
+      "sha256": "c173dc669763883b1a9ed6e917b7085d137f389e43f19ea2fffe226e09ea2bcc",
+      "bytes": 13491
+    }
+  ],
+  "goal": "active"
+}

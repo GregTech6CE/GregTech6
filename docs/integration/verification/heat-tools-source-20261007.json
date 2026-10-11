@@ -1,0 +1,300 @@
+{
+  "date": "2026-10-07",
+  "source_base_commit": "304e6bc3955a257c09a560cc5704016d9b7989c7",
+  "authors": [
+    "GregTech-6 Team",
+    "Gregorius Techneticies"
+  ],
+  "license": "LGPL-3.0-or-later",
+  "primary_sources": [
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeHeatExchanger.java",
+      "bytes": 15439,
+      "sha256": "17e76c7595c2a229efe93dcf728d9a32a3301789ee843fa2c9e9aecfca885bfb"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\multiblocks\\TileEntityBase10MultiBlockBase.java",
+      "bytes": 11378,
+      "sha256": "42ec92430ff6af7fb8d192aebfa424cc1af519d40ba2ff53a8e8c6afe8f9e738"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\multiblocks\\MultiTileEntityMultiBlockPart.java",
+      "bytes": 31052,
+      "sha256": "b00725df4301983e6fd51aea6519ab3304e85315ec01f338cc27b6a448a6bfda"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\base\\TileEntityBase09FacingSingle.java",
+      "bytes": 5485,
+      "sha256": "b172aadf76d09c37ee4c7793cb784dcc97a19d999ad1737bafc60cc064bece7f"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\tileentity\\base\\TileEntityBase01Root.java",
+      "bytes": 59432,
+      "sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntityFluidTap.java",
+      "bytes": 12073,
+      "sha256": "ff88e9dd2e8d8d98d8f8a919feee268769408250dfba454635b4bc0eff861b6f"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntityFluidNozzle.java",
+      "bytes": 8765,
+      "sha256": "f081e3ca88a30f4ee4c8d0771ef07571c8f9853f1097441716d611758cfaf09e"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntityFluidFunnel.java",
+      "bytes": 7911,
+      "sha256": "17bdef3e48e49f10448ebb10231d115cf0a7aa19cbf96a60021251a0bde8ed28"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntityFluidCapNozzle.java",
+      "bytes": 6964,
+      "sha256": "61580b99c8d1a8bcaf4b2302221e89c0369d741aaec54222974b7fc319ab5ee0"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\multiitem\\behaviors\\Behavior_Tool.java",
+      "bytes": 3982,
+      "sha256": "f41879dadcb2b4cf8b55c1156b903fc6e00e5dbb9644b1158869849be4b48daf"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\tools\\machine\\GT_Tool_Wrench.java",
+      "bytes": 4874,
+      "sha256": "cb7b2f4408121951891f658d76598ca51d14af2d5222991377c67154fcd74515"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "bytes": 791265,
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393"
+    }
+  ],
+  "comparison_sources": [
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLargeHeatExchanger.java",
+      "bytes": 16200,
+      "sha256": "2e8df8a7fd02888364fc9eb9ab487b30bc5df73f816bbde2b7c33c852284b432"
+    }
+  ],
+  "license_evidence": [
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\resources\\LICENSE",
+      "bytes": 694,
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\resources\\COPYING.LESSER",
+      "bytes": 7652,
+      "sha256": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\LICENSE",
+      "bytes": 694,
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577"
+    }
+  ],
+  "translation_patch": {
+    "path": "C:\\Dev\\GregTech_zh_cn.lang",
+    "bytes": 7375784,
+    "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0"
+  },
+  "language_changes": "none; existing original tooltips retained",
+  "changed_files": [
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\HeatExchangerRules.java",
+      "bytes": 2832,
+      "sha256": "1ca9f242712b562ee7d646de91d1c392176c25654878131a83a8198433a3c09e"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\blockstates\\heat_exchanger_main.json",
+      "bytes": 118,
+      "sha256": "bb774fc17a6c035688dde1cb8371f7da56061976c151165f0c0c078967f3b633"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\test\\java\\com\\gregtech\\gregtech\\core\\HeatExchangerContracts.java",
+      "bytes": 3008,
+      "sha256": "60f7ed66a76bf60c7744c85477f896248e3fec2182fb69c1be678beb771e6b5d"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\SensorSourceTests.java",
+      "bytes": 26146,
+      "sha256": "2f6e4872adeca0e46b75e814cded5843d19b2d6be8328152ba93cc5f5caf1115"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\api\\fluid\\FluidToolTarget.java",
+      "bytes": 1737,
+      "sha256": "09778125e1f2cc4a3ad3d625df4fc41eea44c24e8e30958318c0719c738d0f26"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\api\\tool\\ToolInteractions.java",
+      "bytes": 6666,
+      "sha256": "05af72dfd75dce1790ddcaa650b020234d59c80c25df853574c21a228bf2597c"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\LargeHeatExchangerControllerBlock.java",
+      "bytes": 5657,
+      "sha256": "19b24af76b4f9e35286f2d8cab02416d126f8ee53224710848bb450cfb5a8b44"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\MachineRotationType.java",
+      "bytes": 3159,
+      "sha256": "a3a076cbb256c6c9945ad910794a56f2eb1b604bdf30a6e0001a92464566e110"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\block\\tool\\FluidAttachmentBlock.java",
+      "bytes": 11478,
+      "sha256": "180ca27e3bd91cb1e278339ca3851f48763c88d029504b4fcb6a8518e85f94d5"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeHeatExchangerControllerBlockEntity.java",
+      "bytes": 13279,
+      "sha256": "563131e151ea5274d1544750bb3ce16e4167e1edd5274601677a2f543f31b00a"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\MultiblockPortBlockEntity.java",
+      "bytes": 11180,
+      "sha256": "9d4d892032cdfcdd247d31d63518b1153bee58f036bab11d9e8908578277d190"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\multiblock\\heat_exchanger_main.json",
+      "bytes": 3595,
+      "sha256": "53d7a0872c35ba8649b3a7bfb61be58560fe3faad1307bdf9be1d0af357fccba"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\neoforge\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\UtilityControllerDeliveryChecks.java",
+      "bytes": 9680,
+      "sha256": "47f5a579e48a6c270b1c745d1391291e5b4c2476ecd8300f26d60acf1423a1dc"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\SensorSourceTests.java",
+      "bytes": 25208,
+      "sha256": "e46a4028c4840c815bc49f13db0e62f5d93d192837b967c9dd6fd31b0bafb8e8"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\api\\fluid\\FluidToolTarget.java",
+      "bytes": 1703,
+      "sha256": "7bbca3d073380a61ff52836119ef63603c350af3534da78930c92281321dd9f2"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\api\\tool\\ToolInteractions.java",
+      "bytes": 6591,
+      "sha256": "b7d181a06f894fbd09fc3987ec46699e33c33c87b9cadafb498f936a8644d323"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\LargeHeatExchangerControllerBlock.java",
+      "bytes": 4533,
+      "sha256": "00418c643fede9d1e26aa61f3ac3d6ef86e21b2742929acccbb1939af61e6e09"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\block\\machine\\MachineRotationType.java",
+      "bytes": 3159,
+      "sha256": "a3a076cbb256c6c9945ad910794a56f2eb1b604bdf30a6e0001a92464566e110"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\block\\tool\\FluidAttachmentBlock.java",
+      "bytes": 10404,
+      "sha256": "546121f6b33bd9b55cf600e48722afb4948e2eb11e00fea1cfe5bfad0dba4c50"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\LargeHeatExchangerControllerBlockEntity.java",
+      "bytes": 13489,
+      "sha256": "5b9e7062d8068710300d5a8ce312b934d8295d446179f59f118790eee9511f74"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\java\\com\\gregtech\\gregtech\\blockentity\\machine\\MultiblockPortBlockEntity.java",
+      "bytes": 11698,
+      "sha256": "7f8f9425e35aaefafc2410d57a6b57bb2d3a778c9d9fc5c85851443f12b6123a"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\main\\resources\\assets\\gregtech\\models\\block\\machine\\multiblock\\heat_exchanger_main.json",
+      "bytes": 3592,
+      "sha256": "ee3419959cf06317ec467a0cff08853aec84faea2e71c41fc7b1e4b5dcb37f92"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\src\\productionSmoke\\java\\com\\gregtech\\gregtech\\integration\\client\\UtilityControllerDeliveryChecks.java",
+      "bytes": 9493,
+      "sha256": "a8582fa3fa93706f1c9a023ac6073e3610fb610849871e2c36cd89c757a7873e"
+    }
+  ],
+  "existing_texture_references": [
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\multiblockmains\\largeheatexchanger\\colored_front\\bottom.png",
+      "bytes": 443,
+      "sha256": "37dab1b9c5e4acbb51dd8df66cb4ffb391d9eae3c6ee95c8fc5d15b3969e8810"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\multiblockmains\\largeheatexchanger\\colored\\top.png",
+      "bytes": 443,
+      "sha256": "37dab1b9c5e4acbb51dd8df66cb4ffb391d9eae3c6ee95c8fc5d15b3969e8810"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\multiblockmains\\largeheatexchanger\\colored\\side.png",
+      "bytes": 443,
+      "sha256": "37dab1b9c5e4acbb51dd8df66cb4ffb391d9eae3c6ee95c8fc5d15b3969e8810"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\multiblockmains\\largeheatexchanger\\overlay_front\\bottom.png",
+      "bytes": 228,
+      "sha256": "7cb53218fd3a8a9e8dfe1eb08e29990993c58e1c8ff0f0e517b65c1d264161da"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\multiblockmains\\largeheatexchanger\\overlay\\top.png",
+      "bytes": 141,
+      "sha256": "f1c5fa5625303ba20b7bf175eb94dcc5a25e4a2ed2daa79082cee56628247e32"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\multiblockmains\\largeheatexchanger\\overlay\\side.png",
+      "bytes": 141,
+      "sha256": "f1c5fa5625303ba20b7bf175eb94dcc5a25e4a2ed2daa79082cee56628247e32"
+    }
+  ],
+  "new_asset_imports": [],
+  "accepted_checks": {
+    "source_default_and_tap_priority_match_primary_and_comparison": true,
+    "source_renderer_uses_world_face_not_activity": true,
+    "model_layers_faces_and_existing_textures": 24,
+    "machine_source_assertions": 7840,
+    "compile_attempts": [
+      {
+        "log": {
+          "path": "C:\\Dev\\GregTech6\\work\\heat-tools-compile-20261007.log",
+          "bytes": 80261,
+          "sha256": "2a4f911384b866e010484d2b39a6de23d4c895b88700f0add757dbc36524a5fb"
+        },
+        "exit_code": 0,
+        "seconds": 78,
+        "scope": "shared source checks and both platform/probe/fixture compilation"
+      },
+      {
+        "log": {
+          "path": "C:\\Dev\\GregTech6\\work\\heat-tools-wrench-compile-20261007.log",
+          "bytes": 31583,
+          "sha256": "124cd16ddf53da72c3a05cfbace85de0909dff5b19c38feca4317561fae89e20"
+        },
+        "exit_code": 0,
+        "seconds": 35,
+        "scope": "only affected main and native fixture incremental compilation"
+      }
+    ]
+  },
+  "pending_checks": {
+    "world_fixture": "gregtech_sensor_source:heat_exchanger_tool_ports_and_fixed_front; five namespace tests now compiled, not run this batch",
+    "world_scope": [
+      "native old horizontal state onLoad conversion",
+      "six wrench permissions and shared server/manual 100 durability handling",
+      "cold-first typed tap/simulate/execute and hot fallback",
+      "17 formed part tool routes versus automatic capability roles",
+      "retained handles close on broken shell and controller removal"
+    ],
+    "installed_probe": "Six native facing-state models, each six faces with original tinted base and untinted overlay; compiled, not executed"
+  },
+  "limitations": [
+    "No new ordinary JAR, client or world run; final accepted bf3e6884/2fb321ec artifacts do not contain this batch.",
+    "Native onLoad fixture is not independent-process reload or historical save migration.",
+    "Magnifying-glass details and builder-wand actions still need source alignment; other controllers retain existing native capability fallback until source tool semantics are ported.",
+    "Shared facing-tool wear change is based on FacingSingle return10000 and Behavior_Tool/mDamage100; connection-toggle wear unchanged.",
+    "Source has no active texture selection here; no invented active model added.",
+    "JAR size cleanup remains unimplemented."
+  ],
+  "publication": "local only; no push or PR",
+  "goal": "active"
+}
