@@ -28,6 +28,26 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction;
 /** Finite native regression set for issues 19-24; registered blocks, held tools and harvest path. */
 @GameTestHolder("gregtech_cover_issues") @PrefixGameTestTemplate(false)
 public final class CoverIssueTests {
+    @GameTest(template="test_empty",timeoutTicks=60)
+    public static void solarHasNoWaterAndCoverPlateHasDepth(GameTestHelper h) {
+        var level=h.getLevel();var pos=site(120);
+        var solar=(SolarPanelBlock)BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech","solar_panel_silicon"));
+        var state=solar.defaultBlockState();
+        h.assertTrue(!state.hasProperty(net.minecraft.world.level.block.state.properties.BlockStateProperties.WATERLOGGED),"solar has no waterlogged property");
+        level.setBlockAndUpdate(pos,Blocks.WATER.defaultBlockState());
+        place(h,pos,solar);
+        h.assertTrue(state.getFluidState().isEmpty()&&!solar.canPlaceLiquid(null,level,pos,state,net.minecraft.world.level.material.Fluids.WATER),"solar neither retains nor accepts water");
+        h.assertTrue(!solar.placeLiquid(level,pos,state,net.minecraft.world.level.material.Fluids.WATER.defaultFluidState())
+                &&solar.pickupBlock(null,level,pos,state).isEmpty(),"bucket fill and pickup are safely rejected");
+        for(var side:Direction.values()) {
+            h.assertTrue(CoverWorldInteraction.isCoverSurface(level.getBlockEntity(pos),side),"full solar face stays flush "+side);
+            var box=CoverPlateGeometry.plate(side.ordinal());
+            double width=switch(side.getAxis()){case X->box.maxX()-box.minX();case Y->box.maxY()-box.minY();case Z->box.maxZ()-box.minZ();};
+            h.assertTrue(width==.125,"original two-pixel cover thickness "+side);
+        }
+        h.succeed();
+    }
+
     private static BlockPos site(int x) { return new BlockPos(113200+x,180,113200); }
     private static net.minecraft.world.level.block.entity.BlockEntity place(GameTestHelper h,BlockPos pos,Block block) {
         h.getLevel().getChunkAt(pos);
@@ -225,6 +245,7 @@ public final class CoverIssueTests {
         var thin=(ItemPipeBlockEntity)place(h,site(158),GTItemPipes.PIPE_MEDIUM_BRASS.get());
         h.assertTrue(thin.getBlockState().getCollisionShape(h.getLevel(),thin.getBlockPos()).max(Direction.Axis.Y)<1,"uncovered native pipe is narrow");
         h.assertTrue(thin.attachCover(Direction.UP,cover("blank_cover"))&&thin.getBlockState().getCollisionShape(h.getLevel(),thin.getBlockPos()).max(Direction.Axis.Y)==1,"native cached collision incorporates cover on thin pipe");
+        for(var side:Direction.values())h.assertTrue(!CoverWorldInteraction.isCoverSurface(thin,side),"installed cover must not turn a pipe into a full host face "+side);
         h.assertTrue(UtilityCoverInteraction.sample(new ItemStack(Items.WATER_BUCKET)).getFluid()==net.minecraft.world.level.material.Fluids.WATER,"vanilla container sampling returns fluid");h.succeed();
     }
     @GameTest(template="test_empty",timeoutTicks=60)

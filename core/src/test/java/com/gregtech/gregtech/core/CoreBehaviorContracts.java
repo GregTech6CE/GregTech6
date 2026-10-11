@@ -54,7 +54,17 @@ public final class CoreBehaviorContracts {
         assertions += OriginWorldgenSamples.verify();
         assertions += LongDistanceSourceContracts.verify();
         assertions += CanvasSourceContracts.verify();
-        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 32 groups (Java 17; no game dependencies)");
+        coverAttachmentBounds();
+        System.out.println("Core behavior contracts passed: " + assertions + " assertions in 33 groups (Java 17; no game dependencies)");
+    }
+
+    private static void coverAttachmentBounds() {
+        var down=com.gregtech.gregtech.content.cover.CoverPlateGeometry.plate(0);
+        var east=com.gregtech.gregtech.content.cover.CoverPlateGeometry.plate(5);
+        check(down.minY()==0 && down.maxY()==.125 && down.maxX()==1 && down.maxZ()==1, "ICover down plate bounds");
+        check(east.minX()==.875 && east.maxX()==1 && east.minY()==0 && east.maxZ()==1, "ICover east plate bounds");
+        var north=com.gregtech.gregtech.content.cover.CoverPlateGeometry.holder(2);
+        check(north.minX()==.4375 && north.maxX()==.5625 && north.minZ()==0 && north.maxZ()==.5, "ICover centred north holder");
     }
 
     private static void externalGrindingSourceSamples() {

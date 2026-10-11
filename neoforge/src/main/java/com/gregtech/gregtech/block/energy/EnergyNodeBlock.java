@@ -55,9 +55,11 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
     public EnergyNodeBlock(EnergyNodeSpec spec, Properties properties) {
         super(properties);
         this.spec = spec;
-        registerDefaultState(defaultBlockState().setValue(FACING,
-                spec.kind() == EnergyNodeSpec.Kind.SOLAR ? Direction.DOWN : Direction.NORTH)
-                .setValue(GTWaterloggable.WATERLOGGED, false));
+        BlockState initial = defaultBlockState().setValue(FACING,
+                spec.kind() == EnergyNodeSpec.Kind.SOLAR ? Direction.DOWN : Direction.NORTH);
+        if (initial.hasProperty(GTWaterloggable.WATERLOGGED))
+            initial = initial.setValue(GTWaterloggable.WATERLOGGED, false);
+        registerDefaultState(initial);
     }
 
     public EnergyNodeSpec spec() { return spec; }
@@ -74,12 +76,15 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
                 ? ctx.getClickedFace().getOpposite()
                 : spec.id().startsWith("battery_eu") ? Direction.DOWN : ctx.getNearestLookingDirection();
         if (spec.kind() == EnergyNodeSpec.Kind.SOLAR && facing == Direction.UP) facing = Direction.DOWN;
-        return GTWaterloggable.getStateForPlacement(defaultBlockState().setValue(FACING, facing), ctx);
+        BlockState placed = defaultBlockState().setValue(FACING, facing);
+        return placed.hasProperty(GTWaterloggable.WATERLOGGED)
+                ? GTWaterloggable.getStateForPlacement(placed, ctx) : placed;
     }
 
     @Override
     public FluidState getFluidState(BlockState state) {
-        return GTWaterloggable.getFluidState(state);
+        return state.hasProperty(GTWaterloggable.WATERLOGGED)
+                ? GTWaterloggable.getFluidState(state) : net.minecraft.world.level.material.Fluids.EMPTY.defaultFluidState();
     }
 
     @Override
@@ -95,7 +100,7 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
     @Override
     public BlockState updateShape(BlockState state, Direction dir, BlockState neighborState,
                                   LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
-        GTWaterloggable.updateShape(state, level, pos);
+        if (state.hasProperty(GTWaterloggable.WATERLOGGED)) GTWaterloggable.updateShape(state, level, pos);
         return state;
     }
 
