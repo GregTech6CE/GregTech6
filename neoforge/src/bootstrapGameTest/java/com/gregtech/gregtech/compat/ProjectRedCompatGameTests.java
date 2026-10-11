@@ -43,6 +43,8 @@ public final class ProjectRedCompatGameTests {
         helper.assertTrue(manager.byKey(replaced).isEmpty(), "Project Red red iron recipe is disabled");
         helper.assertTrue(manager.byKey(added).isPresent(), "GT red iron recipe is present");
         helper.assertTrue(manager.byKey(silicon).isPresent(), "GT silicon wafer recipe is present");
+        helper.assertTrue(manager.byKey(silicon).orElseThrow().value() instanceof com.gregtech.gregtech.recipe.ToolShapedRecipe,
+                "hand sawing uses the recipe that returns and wears tools");
         var server = helper.getLevel().getServer();
         server.reloadResources(new ArrayList<>(server.getPackRepository().getSelectedIds())).join();
         helper.assertTrue(CompatRecipes.errors() == 0, "reload left unresolved rows: " + CompatRecipes.problems());

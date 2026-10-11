@@ -97,7 +97,11 @@ public final class CompatCraftingPack extends AbstractPackResources {
         var output = ingredient(row.output());
         if (!(output instanceof Map<?, ?> result)) return;
         var json = new LinkedHashMap<String, Object>();
-        json.put("type", "minecraft:crafting_shaped");
+        json.put("type", row.toolRecipe() ? "gregtech:tool_shaped" : "minecraft:crafting_shaped");
+        if (row.toolRecipe()) {
+            json.put("allow_mirror", false);
+            json.put("gregtech_autocraftable", false);
+        }
         json.put("group", "gt.compat");
         json.put("pattern", row.pattern());
         json.put("key", key);

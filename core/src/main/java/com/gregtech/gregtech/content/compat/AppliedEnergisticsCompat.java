@@ -120,7 +120,7 @@ public final class AppliedEnergisticsCompat {
                                String output, String source) {
         rows.add(new CompatSpecs.MachineRow(id, "Press", CompatSpecs.Op.TWO,
                 List.of(item(press, 1), input), List.of(item(output, 1)),
-                null, 0, 16, 64, false, 0, true, source));
+                null, 0, 16, 64, false, 0, true, source, List.of(0)));
     }
 
     private static void press3(List<CompatSpecs.MachineRow> rows, String id, String printed, String output, String source) {

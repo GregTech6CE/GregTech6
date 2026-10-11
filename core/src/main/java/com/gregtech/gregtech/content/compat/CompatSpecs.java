@@ -21,14 +21,30 @@ public final class CompatSpecs {
 
     public record MachineRow(String id, String map, Op op, List<Stack> inputs, List<Stack> outputs,
                               String fluid, int fluidAmount, long eut, long duration, boolean food,
-                              long lubricant, boolean optimize, String source) {}
+                              long lubricant, boolean optimize, String source, List<Integer> catalysts) {
+        public MachineRow {
+            catalysts = List.copyOf(catalysts);
+            for (int index : catalysts) if (index < 0 || index >= inputs.size())
+                throw new IllegalArgumentException("Catalyst outside inputs: " + id);
+        }
+        public MachineRow(String id, String map, Op op, List<Stack> inputs, List<Stack> outputs,
+                          String fluid, int fluidAmount, long eut, long duration, boolean food,
+                          long lubricant, boolean optimize, String source) {
+            this(id, map, op, inputs, outputs, fluid, fluidAmount, eut, duration, food,
+                    lubricant, optimize, source, List.of());
+        }
+    }
 
     public record CraftingRow(String id, Stack output, List<Stack> inputs, String source) {}
 
     /** One-character pattern symbols. The platform writes a shaped crafting recipe. */
     public record ShapedKey(String symbol, Stack stack) {}
 
-    public record ShapedRow(String id, Stack output, List<String> pattern, List<ShapedKey> keys, String source) {}
+    public record ShapedRow(String id, Stack output, List<String> pattern, List<ShapedKey> keys, String source, boolean toolRecipe) {
+        public ShapedRow(String id, Stack output, List<String> pattern, List<ShapedKey> keys, String source) {
+            this(id, output, pattern, keys, source, false);
+        }
+    }
 
     public record Removal(String recipeId, String source) {}
 
@@ -136,6 +152,10 @@ public final class CompatSpecs {
                 case "Press", "Compressor", "Cutter", "Hammer", "Crusher" -> true;
                 default -> false;
             }) throw new IllegalStateException("Unknown AE map " + row.map());
+            if (row.op() == Op.TWO && !row.catalysts().equals(List.of(0)))
+                throw new IllegalStateException("AE press must be reusable: " + row.id());
+            if (row.op() == Op.THREE && !row.catalysts().isEmpty())
+                throw new IllegalStateException("AE printed circuits must be consumed: " + row.id());
             if (row.op() == Op.THREE && row.inputs().size() != 3)
                 throw new IllegalStateException(row.id());
             assertions++;
@@ -157,6 +177,11 @@ public final class CompatSpecs {
                 || !module.machines().get(0).map().equals("Cutter"))
             throw new IllegalStateException("Project Red saw");
         assertions++;
+        for (var row : module.shaped()) {
+            if (row.id().endsWith("silicon") && !row.toolRecipe())
+                throw new IllegalStateException("Hand sawing must return a worn saw: " + row.id());
+            assertions++;
+        }
         if (module.deferred().isEmpty()) throw new IllegalStateException("deferred Project Red notes");
         assertions++;
         return assertions;
