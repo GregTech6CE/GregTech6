@@ -42,6 +42,8 @@ public final class AppliedEnergisticsCompatGameTests {
                 MachineRecipeMaps.Press.mInputItemsCount, MachineRecipeMaps.Press.mOutputItemsCount);
         helper.assertTrue(printed != null && printed.mOutputs[0].is(ae("ae2:printed_calculation_processor").getItem()),
                 "calculation press prints a certus crystal");
+        helper.assertTrue(printed.isCatalystInput(0) && !printed.isCatalystInput(1),
+                "the press is retained and the crystal is consumed, as in GT6");
         var anchor = MachineRecipeMaps.Cutter.findRecipe(List.of(GTItems.getStack(MaterialPrefix.ingot, Materials.Iron, 1)),
                 List.of(DyeProcessingRecipes.fluid("Water", 40)), false,
                 MachineRecipeMaps.Cutter.mInputItemsCount, MachineRecipeMaps.Cutter.mOutputItemsCount);

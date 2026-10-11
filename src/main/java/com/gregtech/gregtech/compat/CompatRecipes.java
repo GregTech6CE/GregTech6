@@ -144,6 +144,9 @@ public final class CompatRecipes {
             problem(row.source(), row.id() + " was rejected");
             return;
         }
+        // GT6's zero-count templates are explicit retained inputs in modern recipes.
+        if (!row.catalysts().isEmpty())
+            recipe.withCatalystInputs(row.catalysts().stream().mapToInt(Integer::intValue).toArray());
         OWNED.computeIfAbsent(map, unused -> Collections.newSetFromMap(new IdentityHashMap<>())).add(recipe);
         added++;
     }
