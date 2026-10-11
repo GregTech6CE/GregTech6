@@ -36,8 +36,22 @@ new Row("burn",16,2,"Oil_Sunflower",1,"CarbonDioxide",1,null,0),
 new Row("burn",16,2,"Oil_Seed",1,"CarbonDioxide",1,null,0),
 new Row("burn",16,4,"Oil_Fish",1,"CarbonDioxide",1,null,0),
 new Row("burn",16,8,"Oil_Whale",1,"CarbonDioxide",1,null,0),
-new Row("hot",16,1250,"Lava",1,"Lava_Pahoehoe",1,null,0),
-new Row("hot",16,20000,"Lava_Volcanic",1,"Lava_Pahoehoe",1,null,0),
+// GregTech-6 Team / Gregorius Techneticies, LGPL-3.0-or-later:
+// Loader_Fuels:191-213 and CS:216-234. Energy constants are per litre, not per bucket.
+new Row("hot",16,6,"Blaze",1,null,0,null,0),
+new Row("hot",16,5,"Lava",1,"Lava_Pahoehoe",1,null,0),
+new Row("hot",16,80,"Lava_Volcanic",1,"Lava_Pahoehoe",1,null,0),
 new Row("hot",2,1,"Hot_Water",1,"water",1,null,0),
-new Row("hot",16,6,"Blaze",1,null,0,null,0));
+new Row("hot",2,1,"Water_Hot",1,"water",1,null,0),
+new Row("hot",2,1,"Water_Boiling",1,"water",1,null,0),
+new Row("hot",16,4,"Water_Geothermal",1,"MnWtr",1,null,0),
+new Row("hot",1,20,"Coolant_IC2_Hot",1,"Coolant_IC2",1,null,0),
+new Row("hot",1,30,"Hot_Molten_Sodium",1,"GenMolten_Sodium",1,null,0),
+new Row("hot",1,40,"Hot_Molten_Tin",1,"GenMolten_Tin",1,null,0),
+new Row("hot",1,50,"Hot_Heavy_Water",1,"GenLiquid_HeavyWater",1,null,0),
+new Row("hot",1,40,"Hot_Semi_Heavy_Water",1,"GenLiquid_SemiheavyWater",1,null,0),
+new Row("hot",1,60,"Hot_Tritiated_Water",1,"GenLiquid_TritiatedWater",1,null,0),
+new Row("hot",1,20,"Hot_Carbon_Dioxide",1,"CarbonDioxide",1,null,0),
+new Row("hot",1,30,"Hot_Helium",1,"Helium",1,null,0),
+new Row("hot",1,15,"Hot_Molten_LiCl",1,"GenLiquid_LithiumChloride",1,null,0));
 }

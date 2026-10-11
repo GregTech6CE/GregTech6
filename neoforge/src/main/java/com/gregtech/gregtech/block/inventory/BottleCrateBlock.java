@@ -159,7 +159,6 @@ public class BottleCrateBlock extends HorizontalDirectionalBlock implements Enti
     @Override
     public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip,
                                 TooltipFlag flag) {
-        tooltip.add(Component.translatable("gt.tooltip.bottle_crate")
-                .withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
+        com.gregtech.gregtech.client.StorageBlockTooltips.bottleCrate(tooltip);
     }
 }

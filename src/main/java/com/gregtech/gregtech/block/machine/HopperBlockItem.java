@@ -25,6 +25,6 @@ public class HopperBlockItem extends BlockItem {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, level, tooltip, flag);
-        HopperTooltips.appendHopper(spec, tooltip, flag);
+        HopperTooltips.appendHopper(spec, stack, tooltip);
     }
 }

@@ -34,7 +34,7 @@ public final class MagnetMachineBlock extends EnergyNodeBlock {
 
     @Override
     public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
-        // The monkey wrench changes field strength; an ordinary wrench rotates the poles.
+        // Only an ordinary wrench rotates the source bipolar poles.
         return GTToolHelper.isMonkeyWrench(tool) ? null : super.toolInteraction(state, tool);
     }
 
@@ -49,14 +49,6 @@ public final class MagnetMachineBlock extends EnergyNodeBlock {
                     boolean on = node.toggleMagnetEnabled();
                     player.displayClientMessage(Component.translatable(on
                             ? "message.gregtech.magnet.enabled" : "message.gregtech.magnet.disabled"), true);
-                }
-                return InteractionResult.sidedSuccess(level.isClientSide);
-            }
-            if (GTToolHelper.isMonkeyWrench(tool)) {
-                if (!level.isClientSide) {
-                    int mode = node.cycleMagnetMode();
-                    GTToolHelper.damageForUse(tool, 1, player);
-                    player.displayClientMessage(Component.translatable("message.gregtech.magnet.mode", mode), true);
                 }
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }

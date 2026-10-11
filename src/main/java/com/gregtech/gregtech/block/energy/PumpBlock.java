@@ -73,7 +73,12 @@ public class PumpBlock extends Block implements EntityBlock {
 
     @Override
     public void appendHoverText(ItemStack stack, BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("gt.tooltip.pump.speed", spec.inputSpeed()));
-        tooltip.add(Component.translatable("gt.tooltip.pump.desc"));
+        tooltip.add(Component.translatable("gt.tooltip.pump.1").withStyle(net.minecraft.ChatFormatting.AQUA));
+        tooltip.add(Component.translatable("gt.lang.energy.input").withStyle(net.minecraft.ChatFormatting.GREEN)
+                .append(": " + spec.inputSpeed() + " ")
+                .append(Component.translatable("gt.td.short.energy.kinetic_rotation"))
+                .append("/t (").append(Component.translatable("gt.lang.face.back")).append(")"));
+        tooltip.add(Component.translatable("gt.tooltip.pump.2").withStyle(net.minecraft.ChatFormatting.GOLD));
+        tooltip.add(Component.translatable("gt.tooltip.pump.3").withStyle(net.minecraft.ChatFormatting.GOLD));
     }
 }

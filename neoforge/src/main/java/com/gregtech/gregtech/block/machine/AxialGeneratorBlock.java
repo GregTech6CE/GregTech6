@@ -62,7 +62,6 @@ public abstract class AxialGeneratorBlock extends DirectionalBlock implements En
         return List.of(stack);
     }
     @Override public void appendHoverText(ItemStack stack,net.minecraft.world.item.Item.TooltipContext context,List<net.minecraft.network.chat.Component> lines,TooltipFlag flag) {
-        lines.add(net.minecraft.network.chat.Component.translatable(grade.steam()?"gt.tooltip.axial.steam":"gt.tooltip.axial.dynamo",grade.input(),grade.output()));
-        lines.add(net.minecraft.network.chat.Component.translatable("gt.tooltip.axial.control"));
+        com.gregtech.gregtech.client.GeneratorSourceTooltips.append(com.gregtech.gregtech.content.multiblock.OriginalGeneratorTooltipData.find(grade.id()),lines);
     }
 }

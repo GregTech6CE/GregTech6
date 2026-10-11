@@ -61,7 +61,6 @@ public class AdvancedCraftingTableBlock extends HorizontalDirectionalBlock imple
     }
     @Override public void appendHoverText(net.minecraft.world.item.ItemStack stack,net.minecraft.world.item.Item.TooltipContext context,
             java.util.List<net.minecraft.network.chat.Component> tooltip,net.minecraft.world.item.TooltipFlag flag) {
-        tooltip.add(net.minecraft.network.chat.Component.translatable("gt.tooltip.advanced_crafting.access"));
-        tooltip.add(net.minecraft.network.chat.Component.translatable("gt.tooltip.advanced_crafting.tools"));
+        com.gregtech.gregtech.client.StorageBlockTooltips.craftingTable(tooltip);
     }
 }

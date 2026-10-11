@@ -4,6 +4,7 @@ import com.gregtech.gregtech.blockentity.tool.ProcessingToolBlockEntity;
 import net.minecraft.core.*;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -51,5 +52,8 @@ public final class ProcessingToolBlock extends ShapedToolBlock implements Entity
             stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(data));
         }
         return java.util.List.of(stack);
+    }
+    @Override public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, java.util.List<net.minecraft.network.chat.Component> tooltip, net.minecraft.world.item.TooltipFlag flag) {
+        com.gregtech.gregtech.client.FunctionalBlockTooltips.appendManual(toolId(), getExplosionResistance(), tooltip);
     }
 }

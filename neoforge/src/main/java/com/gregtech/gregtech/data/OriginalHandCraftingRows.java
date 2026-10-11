@@ -258,7 +258,7 @@ public final class OriginalHandCraftingRows {
         for(var row:com.gregtech.gregtech.content.transport.TransportCraftingCatalog.rows()) {
             var json=com.gregtech.gregtech.content.recipe.TransportCraftingInputs.json(row);
             if(json.isEmpty()) { com.mojang.logging.LogUtils.getLogger().warn("Missing original transport crafting form: {}",row.path()); continue; }
-            var location=id("recipe/hand/"+row.path()+".json");
+            var location=id("recipe/"+(row.path().startsWith("magnets/")?"":"hand/")+row.path()+".json");
             if(recipes.putIfAbsent(location,json.get().toString().getBytes(StandardCharsets.UTF_8))!=null)throw new IllegalStateException("Duplicate transport recipe "+location);
             count++;
         }

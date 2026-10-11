@@ -44,6 +44,19 @@ public class BottleItem extends Item {
         return fluidKey;
     }
 
+    @Override
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context,
+            java.util.List<net.minecraft.network.chat.Component> tooltip,
+            net.minecraft.world.item.TooltipFlag flag) {
+        super.appendHoverText(stack, context, tooltip, flag);
+        // Original MultiItemBottles inherits MultiItem's per-item description.
+        String key = getDescriptionId() + ".tooltip";
+        if (net.minecraft.locale.Language.getInstance().has(key)) {
+            var line = net.minecraft.network.chat.Component.translatable(key);
+            if (!line.getString().isEmpty()) tooltip.add(line.withStyle(net.minecraft.ChatFormatting.GRAY));
+        }
+    }
+
     /** The port fluid this bottle holds, or {@code null} when the port has no such fluid. */
     public Fluid fluid() {
         return GTDrinks.fluidForField(fluidKey);

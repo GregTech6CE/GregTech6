@@ -287,12 +287,7 @@ def deliveryProbeJar = tasks.register('productionSmokeJar', Jar) {
     destinationDirectory = layout.buildDirectory.dir('production-probe')
     from(sourceSets.productionSmoke.output) {
         include 'com/gregtech/gregtech/integration/client/ProductionClientSmoke*.class'
-        include 'com/gregtech/gregtech/integration/client/SurfaceDeliveryChecks*.class'
-        include 'com/gregtech/gregtech/integration/client/SandwichDeliveryChecks*.class'
-        include 'com/gregtech/gregtech/integration/client/CannedFoodDeliveryChecks*.class'
-        include 'com/gregtech/gregtech/integration/client/CanvasDeliveryChecks*.class'
-        include 'com/gregtech/gregtech/integration/client/DecorativePanelDeliveryChecks*.class'
-        include 'com/gregtech/gregtech/integration/client/TankItemDeliveryChecks*.class'
+        include 'com/gregtech/gregtech/integration/client/*DeliveryChecks*.class'
     }
     from('tools/integration/production-probe/forge')
     // The probe must not supply the production mod's mapping or Mixin discovery.
@@ -404,6 +399,14 @@ publishing {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+}
+
+tasks.register('sourcePolicyCheck', Exec) {
+    description = 'Checks source-set/platform boundaries, Chinese literals and exact original language without starting a game.'
+    group = 'verification'
+    workingDir rootDir
+    commandLine (findProperty('pythonExecutable') ?: 'python'), '-X', 'utf8',
+            'tools/integration/check_source.py', '--output', 'build/reports/source-policy.json'
 }
 
 tasks.named('check').configure { dependsOn ':core:check' }

@@ -103,9 +103,7 @@ public class DrawerQuadBlock extends DirectionalBlock implements EntityBlock, Si
 
     @Override
     public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("gt.tooltip.drawer.1"));
-        tooltip.add(Component.translatable("gt.tooltip.drawer.2"));
-
+        com.gregtech.gregtech.client.StorageBlockTooltips.drawer(tooltip);
     }
     @Override public void onRemove(net.minecraft.world.level.block.state.BlockState state,
             net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos,

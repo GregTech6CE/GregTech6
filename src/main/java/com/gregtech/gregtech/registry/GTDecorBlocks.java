@@ -115,7 +115,9 @@ public final class GTDecorBlocks {
     private static <T extends Block> RegistryObject<T> reg(String id, Supplier<T> blockSupplier) {
         RegistryObject<T> ro = GTBlocks.BLOCKS.register(id, blockSupplier);
         ALL.add(ro);
-        GTBlocks.BLOCK_ITEMS.register(id, () -> new BlockItem(ro.get(), new Item.Properties()));
+        GTBlocks.BLOCK_ITEMS.register(id, () -> ro.get() instanceof com.gregtech.gregtech.block.misc.ColoredConstructionBlock
+                ? new com.gregtech.gregtech.block.misc.ColoredConstructionBlockItem(ro.get(), new Item.Properties())
+                : new BlockItem(ro.get(), new Item.Properties()));
         return ro;
     }
 

@@ -28,6 +28,11 @@ public final class PrefixRegistry {
         return name;
     }
 
+    /** Original whole-name language key; registry and recipe identities stay unchanged. */
+    public static String sourceTranslationKey(String prefixName, String materialName) {
+        return "oredict." + sourceName(prefixName) + materialName;
+    }
+
     public static void register(MaterialPrefix prefix) {
         ALL.add(prefix);
     }

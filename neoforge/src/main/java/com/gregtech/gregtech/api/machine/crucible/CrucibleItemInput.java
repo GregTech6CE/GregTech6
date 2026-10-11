@@ -35,12 +35,7 @@ public final class CrucibleItemInput {
                     if (weighted.material().isValid()) CrucibleMaterialStack.of(weighted.material(), weighted.amount()).addToList(result);
                 return result;
             }
-            if (block instanceof com.gregtech.gregtech.block.machine.SmeltingCrucibleBlock crucibleBlock) {
-                var spec = crucibleBlock.spec();
-                var hull = spec.material().resolve();
-                if (hull.isValid()) result.add(CrucibleMaterialStack.of(hull, spec.hullMaterialUnits()));
-                return result;
-            }
+
             java.util.List<com.gregtech.gregtech.api.material.MaterialChemistry.WeightedMaterial> weights =
                     block instanceof com.gregtech.gregtech.block.stone.GTStoneBlock stone
                             ? com.gregtech.gregtech.block.stone.StoneMaterialWeights.contained(stone.stoneMaterial(), stone.variant(), false)

@@ -69,7 +69,10 @@ public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBl
 
     @Override protected long maxMaterialAmount() { return MAX_AMOUNT; }
     @Override public long getMeltDownLimitK() {
-        return Math.round(variant.material().getMeltingPoint() * 1.10D);
+        return com.gregtech.gregtech.content.multiblock.OriginalLargeCrucibleParameters.meltDownTemperatureK(variant.material().getMeltingPoint());
+    }
+    @Override protected com.gregtech.gregtech.api.machine.crucible.CrucibleHazards.Profile hazardProfile() {
+        return com.gregtech.gregtech.api.machine.crucible.CrucibleHazards.LARGE;
     }
     @Override protected AABB itemSuctionArea() {
         return new AABB(worldPosition.getX() - 0.5D, worldPosition.getY() + 0.125D,

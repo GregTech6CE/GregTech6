@@ -37,8 +37,8 @@ public final class GTFluids {
     public static FluidStack stack(String field, int mb) {
         var entry = RegisteredFluids.get(field);
         if (entry == null || mb <= 0) return FluidStack.EMPTY;
-        if (entry.textureMode() == RegisteredFluids.FluidTextureMode.VANILLA_WATER) return new FluidStack(net.minecraft.world.level.material.Fluids.WATER, mb);
-        if (entry.textureMode() == RegisteredFluids.FluidTextureMode.VANILLA_LAVA) return new FluidStack(net.minecraft.world.level.material.Fluids.LAVA, mb);
+        if (entry.isVanillaWater()) return new FluidStack(net.minecraft.world.level.material.Fluids.WATER, mb);
+        if (entry.isVanillaLava()) return new FluidStack(net.minecraft.world.level.material.Fluids.LAVA, mb);
         var holder = still(field);
         return holder == null || !holder.isBound() ? FluidStack.EMPTY : new FluidStack(holder.get(), mb);
     }

@@ -50,6 +50,18 @@ public final class ProductionClientSmoke {
                 surfaceChecks.add("canvas",CanvasDeliveryChecks.capture(client,graphics));
             } finally { graphics.pose().popPose(); }
             surfaceChecks.add("decorativePanels",DecorativePanelDeliveryChecks.capture(client,graphics));
+            surfaceChecks.add("commonBlockTooltips",CommonBlockDeliveryChecks.verify());
+            surfaceChecks.add("smelteryTooltipsAndMaterials",SmelteryDeliveryChecks.verify());
+            surfaceChecks.add("multiblockTankTooltipsAndMaterials",MultiblockTankDeliveryChecks.verify());
+            surfaceChecks.add("processControllerTooltipsAndMaterials",ProcessControllerDeliveryChecks.verify());
+            surfaceChecks.add("largeRecipeControllerTooltipsAndMaterials",LargeRecipeControllerDeliveryChecks.verify());
+            surfaceChecks.add("sourceBasicMachineTooltips",BasicMachineSourceDeliveryChecks.verify());
+            surfaceChecks.add("advancedControllerTooltipsAndMaterials",AdvancedControllerDeliveryChecks.verify());
+            surfaceChecks.add("generatorSourceTooltipsAndMaterials",GeneratorTooltipDeliveryChecks.verify());
+            surfaceChecks.add("utilityControllerTooltipsAndMaterials",UtilityControllerDeliveryChecks.verify());
+            surfaceChecks.add("sensorSourceTooltipsAndMaterials",SensorSourceDeliveryChecks.verify());
+            surfaceChecks.add("originalMultiblockParts",MultiblockPartDeliveryChecks.verify());
+            surfaceChecks.add("originalChinese",LanguageDeliveryChecks.capture(client,graphics));
         }
         catch(Throwable error){terminal.set(true);LogUtils.getLogger().error("PRODUCTION_SMOKE_FAILED",error);client.execute(client::stop);return;}
         String name = "production-neoforge-" + UUID.randomUUID() + ".png";

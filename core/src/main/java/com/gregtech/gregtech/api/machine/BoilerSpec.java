@@ -17,9 +17,19 @@ public record BoilerSpec(
         boolean strong,
         long steamOutput,
         float hardness,
-        String displayEn,
-        String displayZh
+        String displayEn
 ) {
+    /** Legacy constructor retained for addons; translations belong to language resources. */
+    @Deprecated
+    public BoilerSpec(String id, GTMaterial material, boolean strong, long steamOutput,
+                      float hardness, String displayEn, String ignoredTranslation) {
+        this(id, material, strong, steamOutput, hardness, displayEn);
+    }
+
+    /** The core only supplies the English fallback, never a second translation catalog. */
+    @Deprecated
+    public String displayZh() { return displayEn; }
+
     /** HU consumed per litre of water boiled (GT6 fixed value). */
     public static final long HU_PER_WATER = 80;
     /** Steam produced per litre of water at full efficiency (GT6 fixed value). */

@@ -4,7 +4,7 @@ import com.gregtech.gregtech.content.material.Materials;
 import com.gregtech.gregtech.content.material.generated.CompoundMaterials;
 
 /** The first real smeltery tiers, shared by both platform registries.
- * Values retain saltnya GTMachines/MachineRegistry's exact hull parameters.
+ * Hull definitions use original Loader_MultiTileEntities material statistics and explicit ceramic data.
  */
 public final class InitialSmelteryDefinitions {
     private InitialSmelteryDefinitions() {}
@@ -16,14 +16,10 @@ public final class InitialSmelteryDefinitions {
     }
 
     public static CrucibleSpec ceramicCrucible() {
-        return CrucibleSpec.of("smelting_crucible_ceramic", Materials.Ceramic, 1005,
-                5.0F, 5.0F, false, 2000, 4000, 0.8181818181818182D);
+        return OriginalSmelteryDefinitions.get(1005);
     }
 
     public static CrucibleSpec ceramicMold() {
-        CrucibleSpec base = ceramicCrucible();
-        return new CrucibleSpec("mold_ceramic", base.material(), base.gt6MetaId() + 50,
-                base.meltingPointK(), base.boilingPointK(), base.hullDensity(), base.hardness(),
-                base.blastResistance(), base.acidProof(), CrucibleSpec.MOLD_HULL_UNITS);
+        return OriginalSmelteryDefinitions.get(1055);
     }
 }

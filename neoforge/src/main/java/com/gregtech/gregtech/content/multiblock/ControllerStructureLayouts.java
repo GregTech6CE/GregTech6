@@ -15,7 +15,27 @@ public final class ControllerStructureLayouts {
     }
     public static Map<Block,Map<BlockPos,Block>> all(){return Registered.LAYOUTS;}
     public static Map<BlockPos,Block> cells(Block controller){return all().get(controller);}
-    public static boolean matches(BlockEntity controller){var level=controller.getLevel();if(level==null)return false;var state=controller.getBlockState();boolean coke=state.is(GTMultiblocks.COKE_OVEN_MAIN.get());if(!coke&&!state.is(GTMultiblocks.CRYO_DISTILLATION_MAIN.get()))return false;var wall=coke?GTMultiblocks.COKE_OVEN_WALL.get():GTMultiblocks.CRYO_DISTILLATION_WALL.get();var front=state.getValue(HorizontalDirectionalBlock.FACING);for(var cell:SharedHollowControllerGeometry.cells(1,coke?-1:0,coke?1:4)){var pos=controller.getBlockPos().relative(front.getClockWise(),cell.x()).above(cell.y()).relative(front.getOpposite(),cell.z());if(!level.hasChunkAt(pos)||!level.getBlockState(pos).is(wall))return false;}return true;}
+    public static boolean matches(BlockEntity controller){
+        var level=controller.getLevel();if(level==null)return false;
+        var state=controller.getBlockState();var cells=cells(state.getBlock());if(cells==null)return false;
+        var front=state.hasProperty(DirectionalBlock.FACING)?state.getValue(DirectionalBlock.FACING)
+                :state.hasProperty(HorizontalDirectionalBlock.FACING)?state.getValue(HorizontalDirectionalBlock.FACING):Direction.NORTH;
+        for(var entry:cells.entrySet()){
+            var local=entry.getKey();
+            BlockPos pos;
+            if (state.getBlock() instanceof com.gregtech.gregtech.block.machine.AxialGeneratorBlock)
+                pos=AxialStructureTransform.at(controller.getBlockPos(),front,local.getX(),local.getY(),local.getZ());
+            else if (state.getBlock() instanceof com.gregtech.gregtech.block.machine.TankControllerBlock tank
+                    && tank.valveSpec()!=null) {
+                int radius=tank.size()/2;
+                pos=controller.getBlockPos().relative(front.getOpposite(),radius)
+                        .offset(local.getX(),local.getY(),local.getZ()-radius);
+            } else pos=controller.getBlockPos().relative(front.getClockWise(),local.getX())
+                    .above(local.getY()).relative(front.getOpposite(),local.getZ());
+            if(!level.hasChunkAt(pos)||!level.getBlockState(pos).is(entry.getValue()))return false;
+        }
+        return true;
+    }
     private static Map<Block,Map<BlockPos,Block>> create(){
         var result=new LinkedHashMap<Block,Map<BlockPos,Block>>();
         var coke=new LinkedHashMap<BlockPos,Block>();
@@ -31,7 +51,7 @@ public final class ControllerStructureLayouts {
         result.put(LargeMachineParts.block(17996), vonDaGraagg());
         result.put(LargeMachineParts.block(17998), OriginalHighTechControllerLayouts.lightningRod());
         result.put(LargeMachineParts.block(17999), OriginalHighTechControllerLayouts.bedrockDrill());
-        result.put(GTMultiblocks.CRYO_DISTILLATION_MAIN.get(),hollow(GTMultiblocks.CRYO_DISTILLATION_WALL.get(),1,0,4));
+
         for(boolean steam:new boolean[]{true,false})for(var entry:AxialGeneratorDefinitions.blocks(steam))
             result.put(entry.get(),AxialGeneratorDefinitions.grade(entry.get()).cells());
         for (int grade = 0; grade < 4; grade++) {
@@ -43,6 +63,7 @@ public final class ControllerStructureLayouts {
         var tower=new LinkedHashMap<BlockPos,Block>();
         for(var cell:SharedDistillationTowerStructure.CELLS)tower.put(new BlockPos(cell.right(),cell.up(),cell.back()),cell.part()==18101?GTMultiblocks.HEAT_TRANSMITTER.get():GTMultiblocks.DISTILLATION_TOWER_PART.get());
         result.put(com.gregtech.gregtech.jei.RecipeMachines.machine("distillation_tower_main"),Map.copyOf(tower));
+        result.put(GTMultiblocks.CRYO_DISTILLATION_MAIN.get(),Map.copyOf(tower));
         return Collections.unmodifiableMap(result);
     }
     private static Map<BlockPos,Block> hollow(Block wall,int radius,int minY,int maxY){

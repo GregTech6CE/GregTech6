@@ -46,14 +46,6 @@ public final class MagnetMachineBlock extends EnergyNodeBlock {
                 }
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
-            if (com.gregtech.gregtech.platform.neoforge.NeoToolBindings.isMonkeyWrench(tool)) {
-                if (!level.isClientSide) {
-                    int mode = node.cycleMagnetMode();
-                    com.gregtech.gregtech.platform.neoforge.NeoToolBindings.damageForUse(tool, 1, player);
-                    player.displayClientMessage(Component.translatable("message.gregtech.magnet.mode", mode), true);
-                }
-                return InteractionResult.sidedSuccess(level.isClientSide);
-            }
         }
         return super.interact(state, level, pos, player, hand, hit);
     }

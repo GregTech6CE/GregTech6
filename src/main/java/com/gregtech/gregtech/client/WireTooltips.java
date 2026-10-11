@@ -18,20 +18,18 @@ public final class WireTooltips {
                 spec.voltage() >= 2048 ? ChatFormatting.DARK_GREEN :
                 spec.voltage() >= 512 ? ChatFormatting.DARK_AQUA :
                 ChatFormatting.AQUA;
-        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".wire.voltage",
-                Component.literal(String.valueOf(spec.voltage())).withStyle(ChatFormatting.WHITE),
-                Component.literal(voltageTierName(spec.voltage())).withStyle(voltColor)
-        ).withStyle(ChatFormatting.AQUA));
+        tooltip.add(Component.translatable("gt.lang.wire.stats.voltage")
+                .append(Component.literal(String.valueOf(spec.voltage())).withStyle(ChatFormatting.WHITE))
+                .append(" EU (").append(Component.literal(voltageTierName(spec.voltage())).withStyle(voltColor))
+                .append(")").withStyle(ChatFormatting.AQUA));
 
-        // Amperage
-        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".wire.amperage",
-                Component.literal(String.valueOf(spec.amperage())).withStyle(ChatFormatting.WHITE)
-        ).withStyle(ChatFormatting.AQUA));
+        tooltip.add(Component.translatable("gt.lang.wire.stats.amperage")
+                .append(Component.literal(String.valueOf(spec.amperage())).withStyle(ChatFormatting.WHITE))
+                .withStyle(ChatFormatting.AQUA));
 
-        // Loss
-        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".wire.loss",
-                Component.literal(String.valueOf(spec.lossPerBlock())).withStyle(ChatFormatting.WHITE)
-        ).withStyle(ChatFormatting.AQUA));
+        tooltip.add(Component.translatable("gt.lang.wire.stats.loss")
+                .append(Component.literal(String.valueOf(spec.lossPerBlock())).withStyle(ChatFormatting.WHITE))
+                .append(" EU/m").withStyle(ChatFormatting.AQUA));
 
         // Insulated / damage warning
         if (spec.insulated()) {
@@ -45,16 +43,16 @@ public final class WireTooltips {
         // Use hint
         tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".wire.use_cutter")
                 .withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".wire.harvest_tool")
+        tooltip.add(Component.translatable("gt.lang.tool.to.harvest").append(":")
                 .withStyle(ChatFormatting.GRAY)
                 .append(Component.literal(" ")
-                        .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".wire.harvest_cutter")
+                        .append(Component.translatable("gt.lang.tool.name.cutter")
                                 .withStyle(ChatFormatting.WHITE))));
 
         // Shapeless recipes
-        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".wire.shapeless_recipes")
+        tooltip.add(Component.translatable("gt.lang.has.shapeless")
                 .withStyle(ChatFormatting.DARK_AQUA)
-                .append(Component.literal(" [2, 3, 4, 5, 6, 7, 8, 9]")
+                .append(Component.literal("[2, 3, 4, 5, 6, 7, 8, 9]")
                         .withStyle(ChatFormatting.WHITE)));
     }
 

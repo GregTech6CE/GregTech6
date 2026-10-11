@@ -104,7 +104,13 @@ import java.util.Set;
  * ({@code CoverPressureValve:51}) and can only be attached when the pipe has a single tank, so
  * {@code tanks[0]} and "the pipe" coincide there.</p>
  */
-public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, PanelCoverHost {
+public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, PanelCoverHost, com.gregtech.gregtech.api.sensor.CompressionSensorSource {
+    @Override public long gibblValue(int side) {
+        long total = 0;
+        for (var tank : tanks) total += tank.getAmount();
+        return total;
+    }
+    @Override public long gibblMaximum(int side) { return spec.capacity() * tanks.length; }
     private final PipeSpec spec;
     private final FluidTankGT[] tanks;
     private final byte[] lastReceivedFrom;

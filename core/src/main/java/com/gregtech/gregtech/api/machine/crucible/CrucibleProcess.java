@@ -10,18 +10,24 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Material phase/admission rules extracted from saltnya's real smelting crucible.
+/** Material phase/admission rules from saltnya and original GT6 (Gregorius Techneticies,
+ * GregTech-6 Team, LGPL-3.0-or-later).
  * World removal, sound, inventory and temperature storage stay on the platform.
  */
 public final class CrucibleProcess {
     private CrucibleProcess() {}
 
-    public record PhaseResult(int vaporizedStacks, boolean acidDestroyedHull) {}
+    public record Vapor(GTMaterial material, long amount) {}
+    public record PhaseResult(int fizzCount, List<Vapor> vapors, boolean acidDestroyedHull, long explosiveAmount) {
+        public PhaseResult { vapors = List.copyOf(vapors); }
+        public int vaporizedStacks() { return vapors.size(); }
+    }
 
     /** Run before the thermal step, preserving the original conversion/reaction order. */
     public static PhaseResult process(List<CrucibleMaterialStack> content, long temperature,
                                       long previousTemperature, boolean newContent, boolean acidProof) {
-        int vaporized = 0;
+        int fizzCount = 0;
+        List<Vapor> vapors = new ArrayList<>();
         // GT6 alloys before discarding gases, so injected air can react with wrought iron.
         CrucibleReactions.react(content, temperature);
         List<CrucibleMaterialStack> pending = new ArrayList<>();
@@ -33,16 +39,27 @@ public final class CrucibleProcess {
                 continue;
             }
             GTMaterial material = stack.material;
-            if (material.getDensity() <= 0.0012F || temperature >= material.getBoilingPoint()
+            // The source's low-density branch fizzes but has no gas, fire or explosion effects.
+            if (material.getDensity() <= 0.0012F) {
+                content.remove(i--);
+                fizzCount++;
+                continue;
+            }
+            if (temperature >= material.getBoilingPoint()
                     || (temperature > GregTechConstants.C + 40 && material.has(MaterialProperty.FLAMMABLE)
                     && !material.hasAny(MaterialProperty.UNBURNABLE, MaterialProperty.MELTING))) {
                 content.remove(i--);
-                vaporized++;
+                fizzCount++;
+                vapors.add(new Vapor(material, stack.amount));
+                if (material.has(MaterialProperty.EXPLOSIVE)) {
+                    content.clear();
+                    return new PhaseResult(fizzCount, vapors, false, stack.amount);
+                }
                 continue;
             }
             if (material.has(MaterialProperty.ACID) && !acidProof) {
                 content.clear();
-                return new PhaseResult(vaporized, true);
+                return new PhaseResult(fizzCount + 1, vapors, true, 0);
             }
             if (temperature >= material.getMeltingPoint()
                     && (material.getTargetSmeltingMaterial().resolve() != material
@@ -58,7 +75,7 @@ public final class CrucibleProcess {
             }
         }
         for (CrucibleMaterialStack stack : pending) stack.addToList(content);
-        return new PhaseResult(vaporized, false);
+        return new PhaseResult(fizzCount, vapors, false, 0);
     }
 
     /** Returns the new mixed temperature, or null on rejection without changing content. */

@@ -10,7 +10,20 @@ import net.minecraft.world.level.block.*;
 public final class BlockHarvestPolicy {
  private BlockHarvestPolicy() {}
  public enum Tool { PICKAXE, AXE, SHOVEL, SWORD, WRENCH, CROWBAR, CUTTER, SHEARS, HAND }
+ public static java.util.Optional<SourceBlockProperties.Params> source(Block block) {
+  var id=net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(block);
+  if(!id.getNamespace().equals("gregtech"))return java.util.Optional.empty();
+  var original=SourceBlockProperties.block(id.getPath());
+  if(original.isEmpty() && block instanceof com.gregtech.gregtech.block.machine.BasicMachineBlock machine)
+   original=SourceBlockProperties.basic(machine.basicSpec().machineName(),machine.basicSpec().tier());
+  return original;
+ }
+ public static boolean handHarvestable(Block block) {
+  return source(block).map(SourceBlockProperties.Params::handHarvestable).orElse(!block.defaultBlockState().requiresCorrectToolForDrops());
+ }
  public static Tool tool(Block block) {
+  var original=source(block);
+  if(original.isPresent())return Tool.valueOf(original.get().tool().toUpperCase(java.util.Locale.ROOT));
   if(block instanceof com.gregtech.gregtech.block.misc.LongDistPipeBlock line) return line.isWire()?Tool.CUTTER:Tool.WRENCH;
   if(block instanceof com.gregtech.gregtech.block.misc.LongDistEndpointBlock || block instanceof com.gregtech.gregtech.block.misc.LongDistanceTransformerBlock) return Tool.WRENCH;
   if(block instanceof LiquidBlock || block instanceof BushBlock || block instanceof com.gregtech.gregtech.block.RockBlock || block instanceof com.gregtech.gregtech.block.TwigBlock) return Tool.HAND;
@@ -45,6 +58,7 @@ public final class BlockHarvestPolicy {
   return Tool.PICKAXE;
  }
  public static int level(Block block) {
+  var original=source(block);if(original.isPresent())return original.get().level();
   if(block instanceof com.gregtech.gregtech.block.misc.LongDistPipeBlock) return 3;
   if(block instanceof com.gregtech.gregtech.block.misc.LongDistEndpointBlock endpoint) return endpoint.material().getToolQuality();
   if(block instanceof com.gregtech.gregtech.block.misc.LongDistanceTransformerBlock endpoint) return endpoint.material().getToolQuality();

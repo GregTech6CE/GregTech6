@@ -20,12 +20,12 @@ public final class TooltipHelper {
 
     public static String dirName(int dir) {
         return switch (dir) {
-            case FaceConfig.BOTTOM -> "Bottom";
-            case FaceConfig.TOP    -> "Top";
-            case FaceConfig.LEFT   -> "Left";
-            case FaceConfig.RIGHT  -> "Right";
-            case FaceConfig.FRONT  -> "Front";
-            case FaceConfig.BACK   -> "Back";
+            case FaceConfig.BOTTOM -> Component.translatable("gt.lang.face.bottom").getString();
+            case FaceConfig.TOP    -> Component.translatable("gt.lang.face.top").getString();
+            case FaceConfig.LEFT   -> Component.translatable("gt.lang.face.left").getString();
+            case FaceConfig.RIGHT  -> Component.translatable("gt.lang.face.right").getString();
+            case FaceConfig.FRONT  -> Component.translatable("gt.lang.face.front").getString();
+            case FaceConfig.BACK   -> Component.translatable("gt.lang.face.back").getString();
             default -> "Unknown";
         };
     }
@@ -33,13 +33,13 @@ public final class TooltipHelper {
     /** Converts a direction bitmask to a human-readable string.
      *  All 6 directions = "Any Side", otherwise comma-separated. */
     public static String dirMaskToString(int mask) {
-        if (mask == 0b111111) return "Any Side";
+        if (mask == 0b111111) return Component.translatable("gt.lang.face.any").getString();
         List<String> names = new ArrayList<>(6);
         for (int d : new int[]{FaceConfig.BOTTOM, FaceConfig.TOP, FaceConfig.LEFT,
                 FaceConfig.RIGHT, FaceConfig.FRONT, FaceConfig.BACK}) {
             if (FaceConfig.has(mask, d)) names.add(dirName(d));
         }
-        return names.isEmpty() ? "None" : String.join(", ", names);
+        return names.isEmpty() ? Component.translatable("gt.lang.face.none").getString() : String.join(", ", names);
     }
 
     /** Returns "(auto)" if the auto-direction matches, "(no auto)" otherwise. */
@@ -52,7 +52,7 @@ public final class TooltipHelper {
     /** "32 HU/t (16 to 64, Bottom)" */
     public static Component energyInLine(long nominal, long min, long max, String unit, String dirLabel) {
         return Component.empty()
-                .append(Component.translatable("tooltip." + MOD + ".machine.energy_in")
+                .append(Component.translatable("gt.lang.energy.input").append(": ")
                         .withStyle(ChatFormatting.GREEN))
                 .append(Component.literal(formatLong(nominal)).withStyle(ChatFormatting.WHITE))
                 .append(Component.literal(" " + unit + "/t").withStyle(ChatFormatting.GREEN))
@@ -63,14 +63,14 @@ public final class TooltipHelper {
     /** "Energy OUT: 32 HU/t" */
     public static MutableComponent energyOutLine(long amount, String unit) {
         return Component.empty()
-                .append(Component.translatable("tooltip." + MOD + ".machine.energy_out")
+                .append(Component.translatable("gt.lang.energy.output").append(": ")
                         .withStyle(ChatFormatting.RED))
                 .append(Component.literal(formatLong(amount) + " " + unit + "/t")
                         .withStyle(ChatFormatting.WHITE));
     }
 
     public static Component energyInNone() {
-        return Component.translatable("tooltip." + MOD + ".machine.energy_in")
+        return Component.translatable("gt.lang.energy.input").append(": ")
                 .append(Component.translatable("tooltip." + MOD + ".machine.none")
                         .withStyle(ChatFormatting.WHITE))
                 .withStyle(ChatFormatting.RED);
@@ -81,6 +81,13 @@ public final class TooltipHelper {
     /** "Items IN: Left (auto), Right (no auto)" */
     public static Component ioLine(String typeKey, int mask, int autoMask, ChatFormatting color) {
         if (mask == 0) return null;
+        MutableComponent title = switch (typeKey) {
+            case "items_in" -> Component.translatable("gt.lang.item.input").append(": ");
+            case "items_out" -> Component.translatable("gt.lang.item.output").append(": ");
+            case "fluids_in" -> Component.translatable("gt.lang.fluid.input").append(": ");
+            case "fluids_out" -> Component.translatable("gt.lang.fluid.output").append(": ");
+            default -> Component.translatable("tooltip." + MOD + ".machine.io." + typeKey);
+        };
         List<MutableComponent> parts = new ArrayList<>();
         for (int d : new int[]{FaceConfig.BOTTOM, FaceConfig.TOP, FaceConfig.LEFT,
                 FaceConfig.RIGHT, FaceConfig.FRONT, FaceConfig.BACK}) {
@@ -94,8 +101,7 @@ public final class TooltipHelper {
             else list = list.append(", ").append(parts.get(i));
         }
         return Component.empty()
-                .append(Component.translatable("tooltip." + MOD + ".machine.io." + typeKey)
-                        .withStyle(color))
+                .append(title.withStyle(color))
                 .append(list != null ? list.withStyle(ChatFormatting.WHITE) : Component.literal(""));
     }
 
@@ -114,25 +120,19 @@ public final class TooltipHelper {
     // ── Blast resistance ────────────────────────────────────────────────
 
     public static void appendBlastResistance(float resistance, List<Component> tooltip) {
-        ChatFormatting blastColor;
-        String blastKey;
-        if (resistance >= 12.0F) {
-            blastColor = ChatFormatting.GREEN;
-            blastKey = "tooltip." + MOD + ".machine.blast.creeper";
-        } else if (resistance >= 7.0F) {
-            blastColor = ChatFormatting.RED;
-            blastKey = "tooltip." + MOD + ".machine.blast.ghast";
-        } else {
-            blastColor = ChatFormatting.RED;
-            blastKey = "tooltip." + MOD + ".machine.blast.terrible";
-        }
-        tooltip.add(Component.empty()
-                .append(Component.translatable("tooltip." + MOD + ".machine.blast_resistance")
-                        .withStyle(ChatFormatting.WHITE))
-                .append(Component.literal(formatFloat(resistance))
-                        .withStyle(ChatFormatting.WHITE))
-                .append(" ")
-                .append(Component.translatable(blastKey).withStyle(blastColor)));
+        if (!com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.showMultitileBlast(resistance)) return;
+        var rating = com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.blastRating(resistance);
+        ChatFormatting color = switch (rating) {
+            case TERRIBLE, GHAST -> ChatFormatting.RED;
+            case CREEPER -> ChatFormatting.YELLOW;
+            case TNT, DYNAMITE -> ChatFormatting.GREEN;
+            case IC2_NUKE_UNPROTECTED -> ChatFormatting.AQUA;
+        };
+        tooltip.add(Component.translatable("gt.lang.blastresistance").withStyle(ChatFormatting.WHITE)
+                .append(Component.literal(com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.blastNumber(resistance))
+                        .withStyle(ChatFormatting.GOLD))
+                .append(Component.literal(" "))
+                .append(Component.translatable(rating.key()).withStyle(color)));
     }
 
     // ── Harvest tool ───────────────────────────────────────────────────

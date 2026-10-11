@@ -51,7 +51,7 @@ public final class ControllerStructureLayouts {
         result.put(LargeMachineParts.block(17996), vonDaGraagg());
         result.put(LargeMachineParts.block(17998), OriginalHighTechControllerLayouts.lightningRod());
         result.put(LargeMachineParts.block(17999), OriginalHighTechControllerLayouts.bedrockDrill());
-        result.put(GTMultiblocks.CRYO_DISTILLATION_MAIN.get(),hollow(GTMultiblocks.CRYO_DISTILLATION_WALL.get(),1,0,4));
+
         for(boolean steam:new boolean[]{true,false})for(var entry:AxialGeneratorDefinitions.blocks(steam))
             result.put(entry.get(),AxialGeneratorDefinitions.grade(entry.get()).cells());
         for (int grade = 0; grade < 4; grade++) {
@@ -63,6 +63,7 @@ public final class ControllerStructureLayouts {
         var tower=new LinkedHashMap<BlockPos,Block>();
         for(var cell:SharedDistillationTowerStructure.CELLS)tower.put(new BlockPos(cell.right(),cell.up(),cell.back()),cell.part()==18101?GTMultiblocks.HEAT_TRANSMITTER.get():GTMultiblocks.DISTILLATION_TOWER_PART.get());
         result.put(GTMultiblocks.DISTILLATION_TOWER_MAIN.get(),Map.copyOf(tower));
+        result.put(GTMultiblocks.CRYO_DISTILLATION_MAIN.get(),Map.copyOf(tower));
         return Collections.unmodifiableMap(result);
     }
     private static Map<BlockPos,Block> hollow(Block wall,int radius,int minY,int maxY){

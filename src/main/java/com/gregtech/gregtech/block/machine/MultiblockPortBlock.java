@@ -13,12 +13,29 @@ public final class MultiblockPortBlock extends Block implements EntityBlock {
                 && level.getBlockEntity(pos) instanceof com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity port) {
             var crucible = port.crucibleController();
             if (crucible != null)
-                com.gregtech.gregtech.util.GTEntityHelper.applyTemperatureDamage(entity, crucible.getTemperature(), 1F, 10F);
+                com.gregtech.gregtech.util.GTEntityHelper.applyTemperatureDamage(entity, crucible.getTemperature());
         }
         super.stepOn(level, pos, state, entity);
     }
+    @Override public void appendHoverText(net.minecraft.world.item.ItemStack stack,
+            @javax.annotation.Nullable net.minecraft.world.level.BlockGetter level, java.util.List<net.minecraft.network.chat.Component> lines,
+            net.minecraft.world.item.TooltipFlag flag) {
+        var id = net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(this);
+        if (com.gregtech.gregtech.content.multiblock.OriginalMultiblockPartData.byPath(id.getPath()).isEmpty()) return;
+        for (var key : com.gregtech.gregtech.content.multiblock.OriginalMultiblockPartData.TOOLTIP_KEYS)
+            if (!com.gregtech.gregtech.client.CommonBlockTooltips.containsKey(lines, key))
+                lines.add(net.minecraft.network.chat.Component.translatable(key).withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
+    }
     public static final net.minecraft.world.level.block.state.properties.BooleanProperty CRUCIBLE_FORMED =
             net.minecraft.world.level.block.state.properties.BooleanProperty.create("crucible_formed");
+    @Override public int getFlammability(BlockState state, net.minecraft.world.level.BlockGetter level,
+            BlockPos pos, net.minecraft.core.Direction side) {
+        var id = net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(this);
+        return com.gregtech.gregtech.content.multiblock.OriginalMultiblockPartData.byPath(id.getPath())
+                .map(com.gregtech.gregtech.content.multiblock.OriginalMultiblockPartData.Part::flammability).orElse(0);
+    }
+    @Override public int getFireSpreadSpeed(BlockState state, net.minecraft.world.level.BlockGetter level,
+            BlockPos pos, net.minecraft.core.Direction side) { return getFlammability(state,level,pos,side); }
     public MultiblockPortBlock(Properties properties) {
         super(properties);
         registerDefaultState(stateDefinition.any().setValue(CRUCIBLE_FORMED, false));

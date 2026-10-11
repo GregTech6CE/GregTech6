@@ -90,13 +90,9 @@ public final class OriginalLargeBoilerControllerBlock extends HorizontalDirectio
 
     @Override public void appendHoverText(ItemStack stack, @Nullable BlockGetter level,
                                           List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("gt.tooltip.multiblock.largeboiler.1"));
-        tooltip.add(Component.translatable("gt.tooltip.multiblock.largeboiler.2"));
-        tooltip.add(Component.translatable("gt.tooltip.multiblock.largeboiler.4"));
-        tooltip.add(Component.translatable("gt.tooltip.multiblock.largeboiler.water_steam"));
-        tooltip.add(Component.translatable("gt.tooltip.multiblock.largeboiler.tier",
-                variant.heatInputRecommended(), variant.steamOutput()));
-        tooltip.add(Component.translatable("gt.tooltip.multiblock.largeboiler.wall", variant.wall().getName()));
+        var data = stack.getTagElement("BlockEntityTag");
+        int efficiency = data != null && data.contains("gt.efficiency") ? data.getInt("gt.efficiency") : 10000;
+        com.gregtech.gregtech.client.FunctionalBlockTooltips.appendLargeBoiler(variant.originalId(), efficiency, getExplosionResistance(), tooltip);
     }
 
     @Override public List<ItemStack> getDrops(BlockState state, LootParams.Builder context) {

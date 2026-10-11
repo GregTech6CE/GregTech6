@@ -15,7 +15,8 @@ import java.util.*;
 public final class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
         com.gregtech.gregtech.content.logistics.LogisticsCoverHost,
         com.gregtech.gregtech.api.machine.ITileEntityCrucible,
-        com.gregtech.gregtech.api.multiblock.BoundMachinePort {
+        com.gregtech.gregtech.api.multiblock.BoundMachinePort,
+        com.gregtech.gregtech.api.fluid.FluidToolTarget, MultiblockToolTarget {
     private final com.gregtech.gregtech.content.logistics.LogisticsCovers covers =
             new com.gregtech.gregtech.content.logistics.LogisticsCovers(this, this);
     private BlockPos controller;
@@ -27,6 +28,42 @@ public final class MultiblockPortBlockEntity extends GTEnergyBlockEntity impleme
     private MultiblockPortOwner owner() {
         if(isRemoved() || level==null || controller==null || !level.hasChunkAt(controller)) return null;
         return level.getBlockEntity(controller) instanceof MultiblockPortOwner owner?owner:null;
+    }
+    /** Original SensorTE reads the cached controller directly, preserving the measured side.
+     * This does not expose an item/fluid transport capability or bypass its role restrictions. */
+    public net.minecraft.world.level.block.entity.BlockEntity sensorTarget() {
+        var target = owner();
+        return target instanceof net.minecraft.world.level.block.entity.BlockEntity entity && !entity.isRemoved()
+                ? entity : this;
+    }
+    /** Original part funnel/tap access checks the formed controller, not transport role bits. */
+    @Override public IFluidHandler fluidToolHandler(Direction side,boolean filling) {
+        return com.gregtech.gregtech.api.fluid.FluidToolTarget.relay(()->{
+            var host=owner();
+            if(host==null||!host.isStructureOk())return null;
+            if(host instanceof com.gregtech.gregtech.api.fluid.FluidToolTarget tools)
+                return tools.fluidToolHandler(side,filling);
+            // Preserve existing access for controllers whose original tool path is not ported yet.
+            return getCapability(ForgeCapabilities.FLUID_HANDLER,side).orElse(null);
+        });
+    }
+    @Override public boolean containsToolPosition(BlockPos pos) { return worldPosition.equals(pos); }
+    @Override public long useMultiblockTool(net.minecraft.world.item.context.UseOnContext context,
+                                           List<net.minecraft.network.chat.Component> messages) {
+        if(level==null||level.isClientSide||isRemoved())return 0;
+        var held=context.getItemInHand();
+        if(!com.gregtech.gregtech.api.tool.GTToolHelper.matchesTool(held,com.gregtech.gregtech.api.tool.GTToolType.BUILDER_WAND)
+                &&!com.gregtech.gregtech.api.tool.GTToolHelper.matchesTool(held,com.gregtech.gregtech.api.tool.GTToolType.MAGNIFYING_GLASS))return 0;
+        var host=owner();
+        if(host==null) {
+            messages.add(net.minecraft.network.chat.Component.literal(MultiblockToolRules.NO_CONTROLLER));
+            return MultiblockToolRules.MAGNIFIER_COST;
+        }
+        if(host instanceof MultiblockToolTarget tools) {
+            if(tools.containsToolPosition(worldPosition)) return tools.useMultiblockTool(context,messages);
+            release(controller); // A stale cache must not route a click outside the owner's shell.
+        }
+        return 0;
     }
     public boolean isBoundTo(BlockPos owner) {return owner.equals(controller);}
     public boolean canBind(BlockPos owner) { return controller==null || controller.equals(owner) || owner()==null; }

@@ -31,6 +31,10 @@ public enum MachineRotationType {
     BOTTOM_HORIZONTAL {
         @Override public boolean isValid(Direction facing) { return facing != Direction.UP; }
     },
+    /** Original heat exchanger: only the bottom is a valid front. */
+    BOTTOM {
+        @Override public boolean isValid(Direction facing) { return facing == Direction.DOWN; }
+    },
     /** 6-way: all directions are valid. */
     ALL {
         @Override

@@ -2,7 +2,7 @@ package com.gregtech.gregtech.content.tool;
 import java.util.List;
 /** Original finite open-vessel profiles and fill/rain gates, independent of loader and storage. */
 public final class OpenVesselRules {private OpenVesselRules(){}public record Profile(String id,boolean wooden,boolean bowl,boolean juicer,float hardness,float resistance){}
- public static final List<Profile> ALL=List.of(new Profile("mixing_bowl",false,true,false,1,5),new Profile("mixing_bowl_table",false,true,false,1,5),new Profile("juicer",false,false,true,3,6),new Profile("bathing_pot",false,false,false,3,6),new Profile("bathing_pot_table",false,false,false,1,6),new Profile("bathing_pot_wood",true,false,false,1,5),new Profile("bathing_pot_table_wood",true,false,false,1,5));
+ public static final List<Profile> ALL=List.of(new Profile("mixing_bowl",false,true,false,1,5),new Profile("mixing_bowl_table",false,true,false,1,5),new Profile("juicer",false,false,true,1,5),new Profile("bathing_pot",false,false,false,1,6),new Profile("bathing_pot_table",false,false,false,1,6),new Profile("bathing_pot_wood",true,false,false,1,5),new Profile("bathing_pot_table_wood",true,false,false,1,5));
  public static Profile profile(String id){return ALL.stream().filter(p->p.id().equals(id)).findFirst().orElseThrow();}
  public static int inputCapacity(boolean wooden){return wooden?4000:8000;}public static int outputCapacity(boolean juicer,boolean wooden){return juicer?1000000:inputCapacity(wooden);}
  public static boolean rainDue(long time){return time%600==10;}

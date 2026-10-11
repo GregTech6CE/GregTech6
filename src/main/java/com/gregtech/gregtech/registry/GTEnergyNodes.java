@@ -39,6 +39,16 @@ public final class GTEnergyNodes {
                             .strength(4.0f, 4.0f)
                             .requiresCorrectToolForDrops();
                     if (spec.kind() == EnergyNodeSpec.Kind.SOLAR) props = props.noOcclusion();
+                    if (com.gregtech.gregtech.content.energy.OriginalSteamTurbines.handles(spec))
+                        return new com.gregtech.gregtech.block.energy.OriginalMotorBlock(spec, props);
+                    if (com.gregtech.gregtech.content.energy.OriginalThermalConverter.handles(spec))
+                        return com.gregtech.gregtech.content.energy.OriginalThermalConverter.cooler(spec)
+                                ? new com.gregtech.gregtech.block.energy.RotaryConverterBlock(spec, props)
+                                : new com.gregtech.gregtech.block.energy.OriginalHeaterBlock(spec, props);
+                    if (com.gregtech.gregtech.content.energy.OriginalRotaryConverter.handles(spec))
+                        return com.gregtech.gregtech.content.energy.OriginalRotaryConverter.motor(spec)
+                                ? new com.gregtech.gregtech.block.energy.OriginalMotorBlock(spec, props)
+                                : new com.gregtech.gregtech.block.energy.RotaryConverterBlock(spec, props);
                     return spec.kind() == EnergyNodeSpec.Kind.MAGNET
                             ? new MagnetMachineBlock(spec, props)
                             : spec.batterySlots() > 0
@@ -46,7 +56,9 @@ public final class GTEnergyNodes {
                                 : spec.id().startsWith("transformer_") ? new com.gregtech.gregtech.block.energy.ElectricTransformerBlock(spec,props) : spec.kind() == Kind.SOLAR ? new com.gregtech.gregtech.block.energy.SolarPanelBlock(spec, props) : new EnergyNodeBlock(spec, props);
                 });
         ALL.add(block);
-        GTBlocks.BLOCK_ITEMS.register(spec.id(), () -> new BlockItem(block.get(), new Item.Properties()));
+        GTBlocks.BLOCK_ITEMS.register(spec.id(), () -> new BlockItem(block.get(),
+                com.gregtech.gregtech.content.energy.OriginalSteamTurbines.handles(spec)
+                        ? new Item.Properties().stacksTo(16) : new Item.Properties()));
     }
 
     public static net.minecraftforge.registries.RegistryObject<com.gregtech.gregtech.block.energy.ReactorCoreBlock> REACTOR_CORE_BLOCK;
