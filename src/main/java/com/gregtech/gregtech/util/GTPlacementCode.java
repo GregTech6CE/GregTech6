@@ -6,6 +6,14 @@ import net.minecraft.core.Direction;
 public final class GTPlacementCode {
     private GTPlacementCode() {}
 
+    /** Converts the placement hit to block-local coordinates for every GT face-grid slab. */
+    public static Direction resolveSlabFace(net.minecraft.world.item.context.BlockPlaceContext context) {
+        var pos = context.getClickedPos();
+        var hit = context.getClickLocation();
+        return resolveSlabFace(context.getClickedFace(), (float) (hit.x - pos.getX()),
+                (float) (hit.y - pos.getY()), (float) (hit.z - pos.getZ()));
+    }
+
     /**
      * Resolves which half of a block a GT slab should occupy from the clicked face and hit position.
      * Hit coordinates must be in block-local space ({@code 0..1}).

@@ -40,7 +40,7 @@ import java.util.List;
 import java.util.Map;
 
 /** GT6-style oriented stone half-block (any axis, including vertical). */
-public final class GTStoneSlabBlock extends Block implements SimpleWaterloggedBlock {
+public final class GTStoneSlabBlock extends Block implements SimpleWaterloggedBlock, com.gregtech.gregtech.api.block.FaceGridSlab {
     public static final EnumProperty<Direction> FACING = BlockStateProperties.FACING;
 
     private static final Map<Direction, VoxelShape> SHAPES = new EnumMap<>(Direction.class);
