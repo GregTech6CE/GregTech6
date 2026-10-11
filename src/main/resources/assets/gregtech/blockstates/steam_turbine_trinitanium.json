@@ -1,0 +1,280 @@
+{
+  "variants": {
+    "facing=north,activity=0,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium"
+    },
+    "facing=north,activity=0,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium"
+    },
+    "facing=north,activity=0,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium"
+    },
+    "facing=north,activity=0,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium"
+    },
+    "facing=north,activity=1,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_rs"
+    },
+    "facing=north,activity=1,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_rf"
+    },
+    "facing=north,activity=1,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_ls"
+    },
+    "facing=north,activity=1,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_lf"
+    },
+    "facing=north,activity=2,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_rs"
+    },
+    "facing=north,activity=2,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_rf"
+    },
+    "facing=north,activity=2,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_ls"
+    },
+    "facing=north,activity=2,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_lf"
+    },
+    "facing=east,activity=0,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium",
+      "y": 90
+    },
+    "facing=east,activity=0,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium",
+      "y": 90
+    },
+    "facing=east,activity=0,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium",
+      "y": 90
+    },
+    "facing=east,activity=0,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium",
+      "y": 90
+    },
+    "facing=east,activity=1,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_rs",
+      "y": 90
+    },
+    "facing=east,activity=1,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_rf",
+      "y": 90
+    },
+    "facing=east,activity=1,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_ls",
+      "y": 90
+    },
+    "facing=east,activity=1,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_lf",
+      "y": 90
+    },
+    "facing=east,activity=2,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_rs",
+      "y": 90
+    },
+    "facing=east,activity=2,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_rf",
+      "y": 90
+    },
+    "facing=east,activity=2,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_ls",
+      "y": 90
+    },
+    "facing=east,activity=2,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_lf",
+      "y": 90
+    },
+    "facing=south,activity=0,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium",
+      "y": 180
+    },
+    "facing=south,activity=0,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium",
+      "y": 180
+    },
+    "facing=south,activity=0,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium",
+      "y": 180
+    },
+    "facing=south,activity=0,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium",
+      "y": 180
+    },
+    "facing=south,activity=1,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_rs",
+      "y": 180
+    },
+    "facing=south,activity=1,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_rf",
+      "y": 180
+    },
+    "facing=south,activity=1,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_ls",
+      "y": 180
+    },
+    "facing=south,activity=1,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_lf",
+      "y": 180
+    },
+    "facing=south,activity=2,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_rs",
+      "y": 180
+    },
+    "facing=south,activity=2,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_rf",
+      "y": 180
+    },
+    "facing=south,activity=2,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_ls",
+      "y": 180
+    },
+    "facing=south,activity=2,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_lf",
+      "y": 180
+    },
+    "facing=west,activity=0,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium",
+      "y": 270
+    },
+    "facing=west,activity=0,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium",
+      "y": 270
+    },
+    "facing=west,activity=0,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium",
+      "y": 270
+    },
+    "facing=west,activity=0,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium",
+      "y": 270
+    },
+    "facing=west,activity=1,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_rs",
+      "y": 270
+    },
+    "facing=west,activity=1,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_rf",
+      "y": 270
+    },
+    "facing=west,activity=1,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_ls",
+      "y": 270
+    },
+    "facing=west,activity=1,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_lf",
+      "y": 270
+    },
+    "facing=west,activity=2,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_rs",
+      "y": 270
+    },
+    "facing=west,activity=2,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_rf",
+      "y": 270
+    },
+    "facing=west,activity=2,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_ls",
+      "y": 270
+    },
+    "facing=west,activity=2,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_lf",
+      "y": 270
+    },
+    "facing=up,activity=0,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium",
+      "x": 270
+    },
+    "facing=up,activity=0,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium",
+      "x": 270
+    },
+    "facing=up,activity=0,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium",
+      "x": 270
+    },
+    "facing=up,activity=0,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium",
+      "x": 270
+    },
+    "facing=up,activity=1,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_rs",
+      "x": 270
+    },
+    "facing=up,activity=1,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_rf",
+      "x": 270
+    },
+    "facing=up,activity=1,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_ls",
+      "x": 270
+    },
+    "facing=up,activity=1,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_lf",
+      "x": 270
+    },
+    "facing=up,activity=2,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_rs",
+      "x": 270
+    },
+    "facing=up,activity=2,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_rf",
+      "x": 270
+    },
+    "facing=up,activity=2,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_ls",
+      "x": 270
+    },
+    "facing=up,activity=2,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_lf",
+      "x": 270
+    },
+    "facing=down,activity=0,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium",
+      "x": 90
+    },
+    "facing=down,activity=0,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium",
+      "x": 90
+    },
+    "facing=down,activity=0,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium",
+      "x": 90
+    },
+    "facing=down,activity=0,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium",
+      "x": 90
+    },
+    "facing=down,activity=1,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_rs",
+      "x": 90
+    },
+    "facing=down,activity=1,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_rf",
+      "x": 90
+    },
+    "facing=down,activity=1,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_ls",
+      "x": 90
+    },
+    "facing=down,activity=1,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_lf",
+      "x": 90
+    },
+    "facing=down,activity=2,counter_clockwise=false,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_rs",
+      "x": 90
+    },
+    "facing=down,activity=2,counter_clockwise=false,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_rf",
+      "x": 90
+    },
+    "facing=down,activity=2,counter_clockwise=true,fast=false": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_ls",
+      "x": 90
+    },
+    "facing=down,activity=2,counter_clockwise=true,fast=true": {
+      "model": "gregtech:block/machine/energy/steam_turbine_trinitanium_lf",
+      "x": 90
+    }
+  }
+}

@@ -23,7 +23,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 /** GT6 17996: 41 galvanized base walls, 5 copper coils and the dense-steel top. */
-public final class VonDaGraaggControllerBlockEntity extends GTEnergyBlockEntity implements MultiblockPortOwner {
+public final class VonDaGraaggControllerBlockEntity extends GTEnergyBlockEntity implements MultiblockPortOwner, com.gregtech.gregtech.api.sensor.ProgressSensorSource, com.gregtech.gregtech.api.sensor.CompressionSensorSource {
     public static final long CAPACITY = VonDaGraaggRules.CAPACITY;
     private final PartBindings<BlockPos, MultiblockLayout.Role> bindings = new PartBindings<>();
     private long energy;
@@ -35,6 +35,10 @@ public final class VonDaGraaggControllerBlockEntity extends GTEnergyBlockEntity 
 
     public long storedEnergy() { return energy; }
     public int currentRange() { return range; }
+    @Override public long progressValue(int side) { return range; }
+    @Override public long progressMaximum(int side) { return com.gregtech.gregtech.content.multiblock.VonDaGraaggRules.SENSOR_MAXIMUM; }
+    @Override public long gibblValue(int side) { return 1000L * range; }
+    @Override public long gibblMaximum(int side) { return 1000L * progressMaximum(side); }
 
     @Override public boolean isStructureOk() {
         if (level == null || isRemoved() || worldPosition.getY() + 7 >= level.getMaxBuildHeight())

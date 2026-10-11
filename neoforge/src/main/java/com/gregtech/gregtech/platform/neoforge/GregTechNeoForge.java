@@ -127,6 +127,12 @@ public final class GregTechNeoForge {
         com.gregtech.gregtech.registry.GTDungeonBlocks.registerPotPlants();
         registerBlockCompositions();
         com.gregtech.gregtech.platform.neoforge.machine.BasicMachineRegistries.registerCompositions();
+        for (var block : net.minecraft.core.registries.BuiltInRegistries.BLOCK) {
+            var id = net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(block);
+            if (!id.getNamespace().equals("gregtech")) continue;
+            com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block(id.getPath())
+                    .ifPresent(data -> ItemMaterialRegistry.register(block.asItem(), data));
+        }
         com.gregtech.gregtech.registry.GTSpecialOreBlocks.registerCompositions();
         com.gregtech.gregtech.content.recipe.DiggableRecipes.registerMaterials();
         com.gregtech.gregtech.content.recipe.RegisteredWoodSurvivalRecipes.registerMaterials();

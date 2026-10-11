@@ -1,26 +1,72 @@
 {
   "variants": {
-    "facing=north": {
+    "facing=north,activity=0": {
       "model": "gregtech:block/machine/energy/electric_dynamo_mv"
     },
-    "facing=east": {
+    "facing=north,activity=1": {
+      "model": "gregtech:block/machine/energy/electric_dynamo_mv_active"
+    },
+    "facing=north,activity=2": {
+      "model": "gregtech:block/machine/energy/electric_dynamo_mv_active"
+    },
+    "facing=east,activity=0": {
       "model": "gregtech:block/machine/energy/electric_dynamo_mv",
       "y": 90
     },
-    "facing=south": {
+    "facing=east,activity=1": {
+      "model": "gregtech:block/machine/energy/electric_dynamo_mv_active",
+      "y": 90
+    },
+    "facing=east,activity=2": {
+      "model": "gregtech:block/machine/energy/electric_dynamo_mv_active",
+      "y": 90
+    },
+    "facing=south,activity=0": {
       "model": "gregtech:block/machine/energy/electric_dynamo_mv",
       "y": 180
     },
-    "facing=west": {
+    "facing=south,activity=1": {
+      "model": "gregtech:block/machine/energy/electric_dynamo_mv_active",
+      "y": 180
+    },
+    "facing=south,activity=2": {
+      "model": "gregtech:block/machine/energy/electric_dynamo_mv_active",
+      "y": 180
+    },
+    "facing=west,activity=0": {
       "model": "gregtech:block/machine/energy/electric_dynamo_mv",
       "y": 270
     },
-    "facing=up": {
+    "facing=west,activity=1": {
+      "model": "gregtech:block/machine/energy/electric_dynamo_mv_active",
+      "y": 270
+    },
+    "facing=west,activity=2": {
+      "model": "gregtech:block/machine/energy/electric_dynamo_mv_active",
+      "y": 270
+    },
+    "facing=up,activity=0": {
       "model": "gregtech:block/machine/energy/electric_dynamo_mv",
       "x": 270
     },
-    "facing=down": {
+    "facing=up,activity=1": {
+      "model": "gregtech:block/machine/energy/electric_dynamo_mv_active",
+      "x": 270
+    },
+    "facing=up,activity=2": {
+      "model": "gregtech:block/machine/energy/electric_dynamo_mv_active",
+      "x": 270
+    },
+    "facing=down,activity=0": {
       "model": "gregtech:block/machine/energy/electric_dynamo_mv",
+      "x": 90
+    },
+    "facing=down,activity=1": {
+      "model": "gregtech:block/machine/energy/electric_dynamo_mv_active",
+      "x": 90
+    },
+    "facing=down,activity=2": {
+      "model": "gregtech:block/machine/energy/electric_dynamo_mv_active",
       "x": 90
     }
   }

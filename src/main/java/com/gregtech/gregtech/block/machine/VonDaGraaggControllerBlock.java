@@ -36,10 +36,7 @@ public final class VonDaGraaggControllerBlock extends Block implements EntityBlo
 
     @Override public void appendHoverText(ItemStack stack, @Nullable BlockGetter level,
                                            List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("gt.tooltip.multiblock.von.da.graagg.1"));
-        tooltip.add(Component.translatable("gt.tooltip.multiblock.von.da.graagg.2"));
-        tooltip.add(Component.translatable("gt.tooltip.multiblock.von.da.graagg.3"));
-        tooltip.add(Component.translatable("gt.tooltip.multiblock.von.da.graagg.4"));
+        com.gregtech.gregtech.client.UtilityControllerTooltips.vonDaGraagg(tooltip);
     }
 
     @Override public List<ItemStack> getDrops(BlockState state,

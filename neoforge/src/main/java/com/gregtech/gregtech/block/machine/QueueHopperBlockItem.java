@@ -25,6 +25,6 @@ public class QueueHopperBlockItem extends BlockItem {
     @Override
     public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack,context,tooltip,flag);
-        HopperTooltips.appendQueueHopper(spec, tooltip, flag);
+        HopperTooltips.appendQueueHopper(spec, stack, tooltip);
     }
 }

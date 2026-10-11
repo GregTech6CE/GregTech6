@@ -25,6 +25,6 @@ public class QueueHopperBlockItem extends BlockItem {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, level, tooltip, flag);
-        HopperTooltips.appendQueueHopper(spec, tooltip, flag);
+        HopperTooltips.appendQueueHopper(spec, stack, tooltip);
     }
 }

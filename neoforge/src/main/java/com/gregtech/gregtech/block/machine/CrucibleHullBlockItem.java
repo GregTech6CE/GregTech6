@@ -30,7 +30,7 @@ public class CrucibleHullBlockItem extends BlockItem {
         super.appendHoverText(stack,context,tooltip,flag);
         Block block = getBlock();
         if (block instanceof MoldBlock) {
-            SmelteryCompanionTooltips.appendMold(spec, tooltip);
+            SmelteryCompanionTooltips.appendMold(stack, spec, tooltip);
         } else if (block instanceof MoldBasinBlock) {
             SmelteryCompanionTooltips.appendMoldBasin(spec, tooltip);
         } else if (block instanceof CrucibleFaucetBlock) {

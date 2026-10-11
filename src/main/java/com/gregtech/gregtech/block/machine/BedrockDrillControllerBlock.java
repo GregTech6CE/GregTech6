@@ -18,6 +18,12 @@ import javax.annotation.Nullable;
 
 /** F6.9: Bedrock Drilling Rig controller. */
 public class BedrockDrillControllerBlock extends HorizontalDirectionalBlock implements EntityBlock {
+    @Override public void appendHoverText(net.minecraft.world.item.ItemStack stack, @Nullable net.minecraft.world.level.BlockGetter level,
+            java.util.List<net.minecraft.network.chat.Component> tooltip, net.minecraft.world.item.TooltipFlag flag) {
+        com.gregtech.gregtech.client.OriginalControllerTooltips.standalone(
+                com.gregtech.gregtech.content.multiblock.OriginalControllerTooltipData.Family.BEDROCK_DRILL, tooltip);
+    }
+
     public BedrockDrillControllerBlock(Properties properties) {
         super(properties);
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));

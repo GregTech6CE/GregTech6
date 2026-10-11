@@ -159,7 +159,9 @@ public class GearboxBlock extends Block implements EntityBlock {
 
     @Override
     public void appendHoverText(ItemStack stack, BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("gt.tooltip.gearbox.speed", spec.maxSpeed()));
-        tooltip.add(Component.translatable("gt.tooltip.gearbox.use"));
+        var data = stack.getTagElement("BlockEntityTag");
+        int gears = data == null ? 0 : data.getByte("gearMask") & 63;
+        int axis = data == null ? 0 : Math.min(3, data.getByte("axisCode") & 255);
+        com.gregtech.gregtech.client.MechanicalBlockTooltips.appendGearbox(spec, gears, axis, getExplosionResistance(), tooltip);
     }
 }

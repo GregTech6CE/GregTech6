@@ -57,36 +57,27 @@ public final class GTMaterialRegistration {
         // Source pipe associations and ordinary barrel REV data, shared with NeoForge.
         count += com.gregtech.gregtech.content.recipe.TransportMaterialRegistration.register();
 
-        // Hoppers
-        count += registerMachineList(MachineRegistry.hoppers(), GTValues.U);
-        count += registerMachineList(MachineRegistry.queueHoppers(), GTValues.U);
-
-        // Burning boxes (MachineSpec doesn't store GTMaterial — look up by materialName)
-        for (RegistryObject<SolidBurningBoxBlock> entry : MachineRegistry.solidBurningBoxes()) {
-            if (!entry.isPresent()) continue;
-            SolidBurningBoxBlock block = entry.get();
-            MachineSpec spec = block.spec();
-            GTMaterial mat = GTMaterialRegistry.get(spec.materialName());
-            if (mat.getId() <= 0) continue;
-            count++;
-            ItemMaterialRegistry.register(block.asItem(), null, mat, GTValues.U);
+        // Original CR.REV components, including tier parts and multiblock controllers.
+        // Iterate the native registry: several families use their own registration holder.
+        for (var block : net.minecraft.core.registries.BuiltInRegistries.BLOCK) {
+            var id = net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(block);
+            if (!id.getNamespace().equals(GregTech.NAMESPACE)) continue;
+            if (block instanceof BasicMachineBlock machine) {
+                var spec = machine.basicSpec();
+                var data = com.gregtech.gregtech.content.machine.OriginalMachineMaterialData.find(spec.machineName(), spec.tier());
+                if (data.isPresent()) {
+                    ItemMaterialRegistry.register(block.asItem(), data.get());
+                    count++;
+                }
+            }
+            var data = com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block(id.getPath());
+            if (data.isPresent()) {
+                ItemMaterialRegistry.register(block.asItem(), data.get());
+                count++;
+            }
         }
 
-        // Smelting crucibles
-        for (RegistryObject<SmeltingCrucibleBlock> entry : MachineRegistry.smeltingCrucibles()) {
-            if (!entry.isPresent()) continue;
-            SmeltingCrucibleBlock block = entry.get();
-            CrucibleSpec spec = block.spec();
-            if (spec == null || spec.material() == null) continue;
-            count++;
-            ItemMaterialRegistry.register(block.asItem(), null, spec.material(), spec.hullMaterialUnits());
-        }
-
-        // Smeltery companion blocks
-        count += registerSmelteryList(MachineRegistry.molds(), CrucibleSpec.MOLD_HULL_UNITS);
-        count += registerSmelteryList(MachineRegistry.moldBasins(), CrucibleSpec.BASIN_HULL_UNITS);
-        count += registerSmelteryList(MachineRegistry.crucibleCrossings(), CrucibleSpec.CROSSING_HULL_UNITS);
-        count += registerSmelteryList(MachineRegistry.crucibleFaucets(), CrucibleSpec.FAUCET_HULL_UNITS);
+        // Smeltery compositions are registered from audited source data in the block loop above.
 
         com.gregtech.gregtech.content.recipe.DiggableRecipes.registerMaterials();
         com.gregtech.gregtech.content.recipe.RegisteredWoodSurvivalRecipes.registerMaterials();
@@ -170,21 +161,6 @@ public final class GTMaterialRegistration {
             if (!entry.isPresent()) continue;
             Block block = entry.get();
             GTMaterial mat = extractMaterial(block);
-            if (mat == null) continue;
-            ItemMaterialRegistry.register(block.asItem(), null, mat, amount);
-            count++;
-        }
-        return count;
-    }
-
-    @SuppressWarnings("unchecked")
-    private static int registerSmelteryList(List<?> list, long amount) {
-        int count = 0;
-        for (Object obj : list) {
-            RegistryObject<? extends Block> entry = (RegistryObject<? extends Block>) obj;
-            if (!entry.isPresent()) continue;
-            Block block = entry.get();
-            GTMaterial mat = extractCrucibleMaterial(block);
             if (mat == null) continue;
             ItemMaterialRegistry.register(block.asItem(), null, mat, amount);
             count++;

@@ -132,6 +132,7 @@ jobs:
             build/test-results/
             core/build/reports/
             core/build/test-results/
+            build/reports/source-policy.json
             neoforge/build/reports/
             neoforge/build/test-results/
           if-no-files-found: ignore

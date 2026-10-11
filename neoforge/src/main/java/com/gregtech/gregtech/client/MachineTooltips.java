@@ -24,13 +24,30 @@ public final class MachineTooltips {
     // ── Basic machine tooltip ────────────────────────────────────────────
 
     public static void appendBasicMachine(BasicMachineSpec spec, List<Component> tooltip) {
+        if(com.gregtech.gregtech.content.multiblock.OriginalAdvancedControllerData.handles(spec.machineName())) {
+            AdvancedControllerTooltips.append(spec,tooltip);return;
+        }
+        if(com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.handles(spec.machineName())) {
+            if(!CommonBlockTooltips.containsKey(tooltip,"gt.lang.recipes")) LargeRecipeMachineTooltips.append(spec,tooltip);
+            return;
+        }
+        if(com.gregtech.gregtech.content.multiblock.OriginalControllerTooltipData.basicFamily(spec.machineName())!=null) {
+            if(!CommonBlockTooltips.containsKey(tooltip,"gt.lang.recipes")) OriginalControllerTooltips.basic(spec,tooltip);
+            return; // Dedicated blocks own the original inherited rows; their item must not append them twice.
+        }
+        if(com.gregtech.gregtech.content.machine.OriginalBasicMachineRules.handles(spec.machineName(),spec.tier())) {
+            BasicMachineSourceTooltips.append(spec,tooltip);
+            return;
+        }
         FaceConfig fc = spec.faceConfig();
 
         // Recipes
         var recipeMap = MachineRecipeMaps.byMachineName(spec.machineName());
-        String recipeName = recipeMap != null ? recipeMap.mNameLocal : spec.machineName();
-        tooltip.add(Component.translatable("tooltip." + "gregtech" + ".machine.recipes")
-                .append(Component.literal(recipeName).withStyle(ChatFormatting.WHITE))
+        Component recipeName = recipeMap != null
+                ? Component.translatableWithFallback(recipeMap.mNameInternal, recipeMap.mNameLocal)
+                : Component.literal(spec.machineName());
+        tooltip.add(Component.translatable("gt.lang.recipes").append(": ")
+                .append(recipeName.copy().withStyle(ChatFormatting.WHITE))
                 .withStyle(ChatFormatting.AQUA));
 
         // Energy IN
@@ -80,14 +97,8 @@ public final class MachineTooltips {
         // Harvest tool
         TooltipHelper.appendHarvestWrench(tooltip);
 
-        // Contained materials
-        if (spec.constructionMaterials() != null && !spec.constructionMaterials().isEmpty()) {
-            tooltip.add(Component.translatable("tooltip." + "gregtech" + ".machine.contained_materials")
-                    .withStyle(ChatFormatting.AQUA));
-            for (WeightedMaterial wm : spec.constructionMaterials()) {
-                tooltip.add(MaterialTooltips.containedMaterialLine(wm.material(), wm.amount()));
-            }
-        }
+        // The material event adds the shared exact ItemComposition once in F3+H.
+
     }
 
     // ── Solid burning box tooltip (new format) ──────────────────────────
@@ -103,7 +114,7 @@ public final class MachineTooltips {
         appendEnergyOutHu(spec, tooltip);
 
         // Energy IN: None
-        tooltip.add(Component.translatable("tooltip." + "gregtech" + ".machine.energy_in")
+        tooltip.add(Component.translatable("gt.lang.energy.input").append(": ")
                 .append(Component.translatable("tooltip." + "gregtech" + ".machine.none")
                         .withStyle(ChatFormatting.WHITE))
                 .withStyle(ChatFormatting.RED));
@@ -130,7 +141,7 @@ public final class MachineTooltips {
     // ── Shared line helpers ─────────────────────────────────────────────
 
     public static void appendFurnaceFuelRecipes(List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip." + "gregtech" + ".machine.recipes")
+        tooltip.add(Component.translatable("gt.lang.recipes").append(": ")
                 .append(Component.translatable("tooltip." + "gregtech" + ".machine.recipes.furnace_fuels")
                         .withStyle(ChatFormatting.WHITE))
                 .withStyle(ChatFormatting.AQUA));
@@ -138,7 +149,7 @@ public final class MachineTooltips {
 
     public static void appendEfficiency(MachineSpec spec, List<Component> tooltip) {
         tooltip.add(Component.empty()
-                .append(Component.translatable("tooltip." + "gregtech" + ".machine.efficiency.label")
+                .append(Component.translatable("gt.lang.efficiency").append(": ")
                         .withStyle(ChatFormatting.GREEN))
                 .append(Component.literal(formatEfficiencyPercent(spec.efficiency()) + "%")
                         .withStyle(ChatFormatting.WHITE)));
@@ -146,7 +157,7 @@ public final class MachineTooltips {
 
     public static void appendEnergyOutHu(MachineSpec spec, List<Component> tooltip) {
         tooltip.add(Component.empty()
-                .append(Component.translatable("tooltip." + "gregtech" + ".machine.energy_out")
+                .append(Component.translatable("gt.lang.energy.output").append(": ")
                         .withStyle(ChatFormatting.RED))
                 .append(Component.literal(TooltipHelper.formatLong(spec.outputRate()) + " HU/t")
                         .withStyle(ChatFormatting.WHITE)));

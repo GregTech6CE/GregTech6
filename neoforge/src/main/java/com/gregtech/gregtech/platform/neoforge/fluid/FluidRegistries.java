@@ -35,7 +35,7 @@ public final class FluidRegistries {
         var paths = new HashSet<String>();
         for (var definition : RegisteredFluids.all().entrySet()) {
             String field = definition.getKey(); var entry = definition.getValue();
-            if (entry.textureMode() == RegisteredFluids.FluidTextureMode.VANILLA_WATER || entry.textureMode() == RegisteredFluids.FluidTextureMode.VANILLA_LAVA) continue;
+            if (entry.usesVanillaFluid()) continue;
             String path = RegisteredFluids.sanitizePath(entry.registryName());
             if (!paths.add(path)) continue;
             var type = GTFluids.FLUID_TYPES.register(path, () -> GTFluids.createFluidType(entry));

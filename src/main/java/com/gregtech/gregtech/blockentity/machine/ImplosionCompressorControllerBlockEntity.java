@@ -20,10 +20,7 @@ public class ImplosionCompressorControllerBlockEntity extends BasicMachineBlockE
     public static final MultiblockLayout LAYOUT=MultiblockLayout.fromShared(com.gregtech.gregtech.content.multiblock.SharedImplosionStructure.LAYOUT);
     public ImplosionCompressorControllerBlockEntity(BlockPos pos,BlockState state) {
         super(GTBlockEntities.IMPLOSION_COMPRESSOR.get(),pos,state);
-        setSpec(BasicMachineSpec.builder("implosion_compressor_main",com.gregtech.gregtech.api.material.GTMaterialRegistry.get("TungstenSteel"))
-                .machineType("implosioncompressor").recipes(MachineRecipeMaps.ImplosionCompressor)
-                .energy(GregTechTags.Energy.TU,1).parallel(64)
-                .faces(new FaceConfig(63,63,0,0,0,0,-1,FaceConfig.BOTTOM,-1,-1)).build());
+        setSpec(com.gregtech.gregtech.content.machine.BasicMachineDefinitions.from(com.gregtech.gregtech.content.multiblock.OriginalMultiblockMachineParameters.implosionCompressor()));
     }
     public static void serverTick(Level level,BlockPos pos,BlockState state,ImplosionCompressorControllerBlockEntity machine) {
         if(machine.isStructureOk()) BasicMachineBlockEntity.serverTick(level,pos,state,machine);

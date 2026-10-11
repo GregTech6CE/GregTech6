@@ -246,11 +246,19 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements EntityBlo
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
+    @Override public void neighborChanged(BlockState state, Level level, BlockPos pos,
+            Block neighbor, BlockPos neighborPos, boolean moving) {
+        if (!level.isClientSide && level.getBlockEntity(pos) instanceof BasicMachineBlockEntity machine)
+            machine.adjacentEnergySourcesChanged();
+        super.neighborChanged(state, level, pos, neighbor, neighborPos, moving);
+    }
     @Override public void onRemove(net.minecraft.world.level.block.state.BlockState state,
             net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos,
             net.minecraft.world.level.block.state.BlockState next, boolean moving) {
         if (!state.is(next.getBlock()) && !level.isClientSide
                 && level.getBlockEntity(pos) instanceof com.gregtech.gregtech.api.inventory.BlockContents contents) {
+            // Source BasicMachine.breakBlock releases stopped adjacent sources before removing the controller.
+            if (contents instanceof BasicMachineBlockEntity machine) machine.machineControl(null).setEnabled(true);
             contents.dropContents();
             level.updateNeighbourForOutputSignal(pos, this);
         }

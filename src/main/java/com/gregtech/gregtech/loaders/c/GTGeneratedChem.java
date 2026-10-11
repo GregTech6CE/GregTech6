@@ -319,9 +319,9 @@ public final class GTGeneratedChem {
         if (entry == null) return null;
         // Water/Lava declarations reuse the vanilla fluids; Loader_Fluids registers no still/flowing
         // pair for them, so the vanilla stacks have to be returned here (same as GTFluids.stack).
-        if (entry.textureMode() == RegisteredFluids.FluidTextureMode.VANILLA_WATER)
+        if (entry.isVanillaWater())
             return new FluidStack(Fluids.WATER, mb);
-        if (entry.textureMode() == RegisteredFluids.FluidTextureMode.VANILLA_LAVA)
+        if (entry.isVanillaLava())
             return new FluidStack(Fluids.LAVA, mb);
         RegistryObject<Fluid> fluid = GTFluids.still(key);
         if (fluid == null || !fluid.isPresent()) return null;

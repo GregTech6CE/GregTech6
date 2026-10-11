@@ -4,7 +4,6 @@ import com.gregtech.gregtech.data.RegisteredFluids;
 import com.gregtech.gregtech.registry.GTFluidType;
 import com.gregtech.gregtech.registry.GTFluids;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -70,15 +69,12 @@ public class BasicMachineScreen extends AbstractContainerScreen<BasicMachineCont
             RegisteredFluids.FluidEntry entry = fluidId != null ? GTFluids.entryForFluid(f) : null;
             // Name line (GTFluidType.describeTooltip doesn't include the name)
             if (entry != null) {
-                String path = RegisteredFluids.sanitizePath(entry.registryName()).replace('-', '_');
+                String path = RegisteredFluids.sanitizePath(entry.registryName());
                 tooltip.add(GTFluidType.describe(entry, path));
-                tooltip.addAll(GTFluidType.describeTooltip(entry));
             } else {
                 tooltip.add(fluid.getDisplayName());
             }
-            // Amount line at bottom
-            tooltip.add(Component.translatable("gregtech.fluid.amount", fluid.getAmount())
-                    .withStyle(ChatFormatting.GRAY));
+            tooltip.addAll(GTFluidType.describeTooltip(fluid, fluid.getAmount(), false));
             graphics.renderTooltip(font, tooltip, Optional.empty(), mouseX, mouseY);
             break;
         }

@@ -12,5 +12,5 @@ public final class GTConstructionBlocks {private GTConstructionBlocks(){}public 
  }
  private static DeferredHolder<Block,ConcreteBlock> concrete(String id,boolean reinforced,float hardness,float resistance){var b=GTBlocks.BLOCKS.register(id,()->new ConcreteBlock(reinforced,BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(hardness,resistance).requiresCorrectToolForDrops().sound(SoundType.STONE)));GTBlocks.BLOCK_ITEMS.register(id,()->new ConcreteBlockItem(b.get(),new Item.Properties()));return b;}
  private static DeferredHolder<Block,ColoredGlassBlock> glass(String id,boolean glow){var b=GTBlocks.BLOCKS.register(id,()->new ColoredGlassBlock(glow,BlockBehaviour.Properties.of().mapColor(MapColor.NONE).strength(.75f,5).sound(SoundType.GLASS).lightLevel(state->glow?15:0).noOcclusion().isValidSpawn((s,l,p,e)->false)));GTBlocks.BLOCK_ITEMS.register(id,()->new ColoredGlassBlockItem(b.get(),new Item.Properties()));return b;}
- private static void item(String id,DeferredHolder<Block,? extends Block> b){GTBlocks.BLOCK_ITEMS.register(id,()->new net.minecraft.world.item.BlockItem(b.get(),new Item.Properties()));}
+ private static void item(String id,DeferredHolder<Block,? extends Block> b){GTBlocks.BLOCK_ITEMS.register(id,()->new ColoredConstructionBlockItem(b.get(),new Item.Properties()));}
 }

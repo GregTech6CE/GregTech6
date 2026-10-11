@@ -88,9 +88,8 @@ public final class LogisticsCoreControllerBlock extends DirectionalBlock impleme
 
     @Override public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
                                           List<Component> tooltip, TooltipFlag flag) {
-        for (int i = 1; i <= 10; i++)
-            tooltip.add(Component.translatable("gt.tooltip.multiblock.logisticscore." + i));
-        tooltip.add(Component.translatable("gt.tooltip.multiblock.logisticscore.energy"));
+        com.gregtech.gregtech.client.OriginalControllerTooltips.standalone(
+                com.gregtech.gregtech.content.multiblock.OriginalControllerTooltipData.Family.LOGISTICS_CORE,tooltip);
     }
 
     @Override public List<ItemStack> getDrops(BlockState state, LootParams.Builder context) {
