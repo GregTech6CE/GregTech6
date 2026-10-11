@@ -56,7 +56,7 @@ public final class MaterialTagPack extends AbstractPackResources {
             if(item instanceof BlockItem pane && (pane.getBlock() instanceof net.minecraft.world.level.block.StainedGlassPaneBlock
                     || id.toString().equals("minecraft:glass_pane")))
                 add(tags,"forge","items","glass_panes",id.toString());
-            var form=MaterialEquivalence.form(new ItemStack(item));
+            var form=registeredForm(item);
             if(form!=null) {
                 for(var moldForm:moldForms.getOrDefault(form.prefix().getName(),java.util.List.of()))
                     if(moldForm.accepts(form.prefix(),form.material()))
@@ -86,7 +86,7 @@ public final class MaterialTagPack extends AbstractPackResources {
                         +MaterialEquivalence.materialName(form.material()),id.toString());
             } else {
                 // Vanilla-unified items (minecraft:iron_block, ...) carry a material without a prefix.
-                var data=com.gregtech.gregtech.api.material.ItemMaterialRegistry.base(item).orElse(null);
+                var data=com.gregtech.gregtech.api.material.ItemMaterialRegistry.explicit(item).orElse(null);
                 if(data!=null&&data.components().size()==1) {
                     var material=data.components().get(0).material().resolve();
                     if(material.isValid()) {
@@ -220,7 +220,7 @@ public final class MaterialTagPack extends AbstractPackResources {
                 tags.computeIfAbsent("gregtech:tags/item/wooden_beams.json",key->new TreeSet<>()).add(id.toString());
         }
         // Common spelling aliases used by Forge 1.20 packs. References keep datapack additions shared.
-        var aliases=Map.of("aluminium","aluminum","quartz","nether_quartz","sulfur","sulphur","tungsten_steel","tungstensteel");
+        var aliases=com.gregtech.gregtech.api.material.MaterialTagAliases.ALTERNATE_SPELLINGS;
         for(var path:new ArrayList<>(tags.keySet())) for(var alias:aliases.entrySet()) {
             String suffix="/"+alias.getKey()+".json";
             if(path.startsWith("forge:")&&path.endsWith(suffix)) {
@@ -258,6 +258,16 @@ public final class MaterialTagPack extends AbstractPackResources {
             }
         }
         return result;
+    }
+
+    /** Owned items and explicitly registered compositions only. Tag-derived data must not re-enter this pack. */
+    private static MaterialEquivalence.Form registeredForm(Item item) {
+        if (item instanceof com.gregtech.gregtech.api.material.MaterialFormItem materialItem)
+            return new MaterialEquivalence.Form(materialItem.getPrefix(), materialItem.getMaterial().resolve());
+        var data = com.gregtech.gregtech.api.material.ItemMaterialRegistry.explicit(item).orElse(null);
+        if (data == null || data.prefix() == null || data.components().size() != 1
+                || data.amount() != data.prefix().getMaterialWeight()) return null;
+        return new MaterialEquivalence.Form(data.prefix(), data.material().resolve());
     }
 
     /** Aggregate tag value list for one material (forms + its blocks). */
