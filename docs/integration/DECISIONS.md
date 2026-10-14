@@ -948,3 +948,8 @@ Sensors null-NBT源登记可合法携带REV，生成器只为这组解析，避�
 ## 2026-10-08 / 完整导线原名与英文缺译独立检查
 
 导线按原尺寸/材料辅助注册及电缆条件读取完整原名；矿石按原构造器元数据，不从图标猜译。英文缺中文时也固定独立原英文，缺译标记不得绕过已存在的原中文。46快检、2601源码门禁、逐字原文件/幂等校验与56秒双主/自检编译通过；新增688双语实际名称入口仅编译，普通双包及客户端合批待验，最后233043Z不含本批。全汉化尚未完成，条件暂停未达，保持语言范围。见[完整证据和边界](verification/language-wires-ores-20261008.md)。仅本地，无推送。
+
+
+## 2026-10-14 / addon 接口由 lombinaxmasson 推进，材料物品 ID 先核心后 addon
+
+saltnya 同意 addon 接口第二版由 lombinaxmasson 全权修改。第一项落地是材料物品 ID：`MaterialItemDefinitions.all()` 先为 `init()` 结束时的核心材料分配 ID，再分配之后注册的材料。addon 材料撞上已有 ID 时启动失败，不把核心物品挤成带数字后缀的新 ID。核心材料之间原来的后缀回退保留。当前目录没有 addon 材料，56085 条物品 ID 与改动前逐条一致。`:core:check` 通过。两个平台的 `:compileJava` 后来都通过：EMI 用本机 `work/local-maven`，没有改仓库依赖。开发启动、成品包和存档重载未跑。见 [验证记录](verification/material-item-id-order-20261014.md)。
