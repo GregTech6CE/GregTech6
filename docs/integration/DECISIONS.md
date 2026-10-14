@@ -952,4 +952,4 @@ Sensors null-NBT源登记可合法携带REV，生成器只为这组解析，避�
 
 ## 2026-10-14 / addon 接口由 lombinaxmasson 推进，材料物品 ID 先核心后 addon
 
-saltnya 同意 addon 接口第二版由 lombinaxmasson 全权修改。第一项落地是材料物品 ID：`MaterialItemDefinitions.all()` 先为 `init()` 结束时的核心材料分配 ID，再分配之后注册的材料。addon 材料撞上已有 ID 时启动失败，不把核心物品挤成带数字后缀的新 ID。核心材料之间原来的后缀回退保留。当前目录没有 addon 材料，56085 条物品 ID 与改动前逐条一致。`:core:check` 通过。两个平台的 `:compileJava` 后来都通过：EMI 用本机 `work/local-maven`，没有改仓库依赖。开发启动、成品包和存档重载未跑。见 [验证记录](verification/material-item-id-order-20261014.md)。
+saltnya 同意 addon 接口第二版由 lombinaxmasson 全权修改。第一项落地是材料物品 ID：`MaterialItemDefinitions.all()` 先为 `init()` 结束时的核心材料分配 ID，再分配之后注册的材料。addon 材料撞上已有 ID 时启动失败，不把核心物品挤成带数字后缀的新 ID。核心材料之间原来的后缀回退保留。当前目录没有 addon 材料，56085 条物品 ID 与改动前逐条一致。`:core:check` 通过。两个平台的 `:compileJava` 后来都通过：EMI 用本机 `work/local-maven`，没有改仓库依赖。两边开发专服都进入 `Done`，材料物品排队数都是 56159，与改动前的专服日志相同。客户端、成品包和存档重载未跑。见 [验证记录](verification/material-item-id-order-20261014.md)。

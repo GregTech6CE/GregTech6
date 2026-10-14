@@ -2,7 +2,7 @@
 
 ## 2026-10-14 / 材料物品 ID 先核心后 addon
 
-改动前金样 56085 行、后缀 0、SHA-256 `c3360a6cdc2ac4aa396b7a9bb778f11663171afb4e949709c65f3903f25a5fef`。`:core:materialBehaviorContracts` 7959 条断言通过，核心指纹不变，`Aaaaddon` 保持基础 ID，`iron` 抢 `dust_iron` 时拒绝。`:core:check` 随后通过。依赖仓库第一次超时之后，EMI 改从本机 `work/local-maven` 解析，Forge `:compileJava` 全量通过，NeoForge `:neoforge:compileJava` 增量通过。没有游戏启动、成品包或存档重载。详见 [记录](verification/material-item-id-order-20261014.md)。
+改动前金样 56085 行、后缀 0、SHA-256 `c3360a6cdc2ac4aa396b7a9bb778f11663171afb4e949709c65f3903f25a5fef`。`:core:materialBehaviorContracts` 7959 条断言通过，核心指纹不变，`Aaaaddon` 保持基础 ID，`iron` 抢 `dust_iron` 时拒绝。`:core:check` 随后通过。依赖仓库第一次超时之后，EMI 改从本机 `work/local-maven` 解析，Forge `:compileJava` 全量通过，NeoForge `:neoforge:compileJava` 增量通过。两边开发专服都进入 `Done`，材料物品排队数都是 56159，与 2026-10-06 的旧专服日志相同。没有客户端、成品包或存档重载。详见 [记录](verification/material-item-id-order-20261014.md)。
 
 ## 2026-10-12 / 半砖九宫格增量编译
 

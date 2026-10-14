@@ -14,4 +14,6 @@
 
 随后用已有的 `work/local-maven.init.gradle` 把 EMI 指到 `work/local-maven`。Gradle 8.8 在 Java 25 上重编构建脚本会遇到 class file 69，所以这次启动器用的是 Java 21。Forge `:compileJava` 在 22:28 全量通过，1502 个 class。NeoForge `:neoforge:compileJava` 在 22:43 增量通过，1605 个 class 里刷新了 198 个。紧接着再跑这两个任务是 UP-TO-DATE，`BUILD SUCCESSFUL`。
 
-没有启动游戏，没有打成品包，没有做存档重载。现有目录里没有 addon 材料，所以这次本身不改变已注册物品。
+开发专服两边都启动过。Forge 在 23:07:58 排队 56159 个材料物品，23:10:53 进入 `Done (46.673s)`。NeoForge 在 23:14:01 排队同样的 56159 个，23:15:47 进入 `Done (14.285s)`。2026-10-06 改动前的 Forge 和 NeoForge 专服日志也是 56159。独立金样的 56085 是只跑 `init()` 的目录；专服还会多出这套金样程序没有加载的材料，所以两个数不一样，但和改动前的游戏日志相同。
+
+没有启动客户端，没有打成品包，没有做存档重载。现有目录里没有 addon 材料，所以这次本身不改变已注册物品。
