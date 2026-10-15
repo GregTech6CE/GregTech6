@@ -1,9 +1,15 @@
 package com.gregtech.gregtech.blockentity.energy;
 
 import com.gregtech.gregtech.api.machine.MachineControl;
+import com.gregtech.gregtech.api.signal.GtSignalCarrier;
+import com.gregtech.gregtech.api.signal.GtSignalReceiver;
+import com.gregtech.gregtech.api.signal.GtSignalSource;
 import com.gregtech.gregtech.block.energy.*;
 import com.gregtech.gregtech.registry.GTBlockEntities;
 import net.minecraft.core.*;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.piston.PistonBaseBlock;
@@ -14,8 +20,10 @@ import java.util.*;
 /** GT6 fractional redstone attenuation. Rebuild from sources so disconnected loops cannot latch.
  * Loaded components are solved once per server tick; no static world/network cache or chunk loading.
  */
-public final class SignalWireBlockEntity extends BlockEntity implements MachineControl.Provider {
-    public static final long UNIT=Integer.MAX_VALUE;
+public final class SignalWireBlockEntity extends BlockEntity implements MachineControl.Provider, GtSignalCarrier {
+    public static final long UNIT=GtSignalCarrier.UNIT;
+    /** Addon blocks that accept signal power and are not sources. Vanilla receivers stay on the instanceof list. */
+    public static final TagKey<Block> RECEIVERS=TagKey.create(Registries.BLOCK,ResourceLocation.fromNamespaceAndPath("gregtech","signal_wire_receivers"));
     private static final ThreadLocal<Boolean> SAMPLING=ThreadLocal.withInitial(()->false);
     private long signal, solvedTick=Long.MIN_VALUE;
     private int mode;
@@ -87,7 +95,15 @@ public final class SignalWireBlockEntity extends BlockEntity implements MachineC
                             || state.getBlock() instanceof TntBlock || state.getBlock() instanceof NoteBlock
                             || state.getBlock() instanceof TrapDoorBlock || state.getBlock() instanceof DoorBlock
                             || state.getBlock() instanceof PoweredRailBlock || state.getBlock() instanceof RedstoneLampBlock)continue;
-                    long candidate=level.getSignal(pos,side)*UNIT-wire.loss();
+                    if(state.is(RECEIVERS))continue;
+                    long emitted;
+                    if(state.hasBlockEntity()){
+                        var entity=level.getBlockEntity(pos);
+                        if(entity instanceof GtSignalReceiver)continue;
+                        if(entity instanceof GtSignalSource source)emitted=GtSignalCarrier.clamp(source.gtSignal(side.ordinal()));
+                        else emitted=level.getSignal(pos,side)*UNIT;
+                    }else emitted=level.getSignal(pos,side)*UNIT;
+                    long candidate=emitted-wire.loss();
                     if(candidate>value){value=candidate;inputs.put(wire,side);}
                 }
                 values.put(wire,value);if(value>0)waves.add(new Wave(wire,value));
