@@ -1,5 +1,9 @@
 # 实现选择记录
 
+## 2026-10-15 / 动态配方先查固定表，addon provider 往后追加
+
+现有查找顺序是固定表、再动态 provider、再带世界的 context provider，这次保持不变。`dynamicRecipes` 只替换最前面那个内置 provider，Bumblelyzer、分子扫描、打印机、复制机四处调用不用改。`addDynamicRecipes` 按调用顺序追加，传入 null 直接拒绝。第一个返回非空配方的 provider 生效，后面的不再询问。这条结果如果被禁用、是展示行，或者输入对不上，也不再问后面的 addon provider；context provider 仍按原来的方式兜底。没有动态 provider 时不分配列表。API 版本仍是 1。Plantalyzer 继续没有内置 provider，种子扫描留在 gt6-crops。见[本批](verification/dynamic-recipe-providers-20261015.md)。
+
 ## 2026-10-12 / 排水只消耗流体方块，降雨按高度判定
 
 含水实体的 FluidState 不能证明方块可被排水销毁；仅真实流体方块进入消耗路径。GT 河/海/沼泽水沿原版特判为持续的 16000 mB 供应，普通有限水源维持整桶和重力约束。原版 getRain 使用降雨高度而非天空亮度，两版统一采用现代降雨高度图；产物和降雨量在 core 共用。见[来源与验证](verification/drain-issues-20261012.md)。

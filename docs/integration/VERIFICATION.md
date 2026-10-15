@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-15 / 多动态配方 provider
+
+两边主源码编译通过。`gregtech_dynamic_recipes` 在 Forge 09:25:44、NeoForge 09:28:13 各 3 项通过，整次 7 分 53 秒。现有分子数据链 `gregtech_material_data` 在 Forge 09:34:31、NeoForge 09:37:34 各 3 项通过，整次 8 分 3 秒。`BumbleBeeScanningTests` 仍在 `gregtech` 大套件里，这次没有单独重跑。gt6-crops 没有挂上 Plantalyzer，也没有做没扫过的种子 64 tick、16 EU/t，以及扫过的种子 1 tick 原样出来的开发环境实测。没有回复 issue #13。详见 [记录](verification/dynamic-recipe-providers-20261015.md)。
+
 ## 2026-10-14 / 材料物品 ID 先核心后 addon
 
 改动前金样 56085 行、后缀 0、SHA-256 `c3360a6cdc2ac4aa396b7a9bb778f11663171afb4e949709c65f3903f25a5fef`。`:core:materialBehaviorContracts` 7959 条断言通过，核心指纹不变，`Aaaaddon` 保持基础 ID，`iron` 抢 `dust_iron` 时拒绝。`:core:check` 随后通过。依赖仓库第一次超时之后，EMI 改从本机 `work/local-maven` 解析，Forge `:compileJava` 全量通过，NeoForge `:neoforge:compileJava` 增量通过。两边开发专服都进入 `Done`，材料物品排队数都是 56159，与 2026-10-06 的旧专服日志相同。没有客户端、成品包或存档重载。详见 [记录](verification/material-item-id-order-20261014.md)。
