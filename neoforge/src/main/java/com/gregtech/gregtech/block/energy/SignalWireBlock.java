@@ -23,7 +23,7 @@ import net.minecraft.world.phys.shapes.*;
 import java.util.List;
 
 /** Six independent ports; the common cutter spec also drives the client face overlay. */
-public final class SignalWireBlock extends Block implements EntityBlock, ToolInteractionTarget {
+public final class SignalWireBlock extends Block implements EntityBlock, ToolInteractionTarget, com.gregtech.gregtech.api.tool.ScrewdriverUseTarget {
     public static final IntegerProperty POWER = IntegerProperty.create("power", 0, 15);
     private final GTMaterial material;
     private final int range;
@@ -63,6 +63,7 @@ public final class SignalWireBlock extends Block implements EntityBlock, ToolInt
         }
         return InteractionResult.PASS;
     }
+    @Override public InteractionResult useScrewdriver(BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return interact(state,level,pos,player,hand,hit);}
     @Override protected ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return interact(state,level,pos,player,hand,hit).consumesAction()?ItemInteractionResult.sidedSuccess(level.isClientSide):ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;}
     @Override public void onPlace(BlockState state,Level level,BlockPos pos,BlockState old,boolean moving){
         super.onPlace(state,level,pos,old,moving);
@@ -76,7 +77,8 @@ public final class SignalWireBlock extends Block implements EntityBlock, ToolInt
             if(other.getBlock() instanceof SignalWireBlock){
                 next=next.setValue(ElectricWireBlock.propFor(side),true);
                 level.setBlockAndUpdate(neighbor,other.setValue(ElectricWireBlock.propFor(side.getOpposite()),true));
-            } else if(!other.isAir() && (other.isSignalSource() || other.isRedstoneConductor(level,neighbor))) {
+            } else if(other.isSignalSource()) {
+                // Conductors such as stone still carry strong power, but only a wire cutter opens that port.
                 next=next.setValue(ElectricWireBlock.propFor(side),true);
             }
         }

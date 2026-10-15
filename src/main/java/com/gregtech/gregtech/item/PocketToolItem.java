@@ -32,6 +32,7 @@ public final class PocketToolItem extends GTToolItem {
   var player=context.getPlayer();var level=context.getLevel();
   if(player!=null&&player.isShiftKeyDown()&&GTToolHelper.isUsable(stack)&&player.mayBuild()){
    var pos=context.getClickedPos();var key=net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(level.getBlockState(pos).getBlock());
+   if(activeType()==GTToolType.SCREWDRIVER&&level.getBlockState(pos).getBlock() instanceof com.gregtech.gregtech.block.energy.SignalWireBlock)return InteractionResult.PASS;
    if(!level.mayInteract(player,pos)||level.getBlockEntity(pos)!=null&&!key.getNamespace().equals("gregtech"))return InteractionResult.PASS;
    if(!level.isClientSide){
     int index=java.util.Arrays.asList(MODES).indexOf(toolType());var next=new ItemStack(GTToolItems.get(MODES[(index+1)%MODES.length]));
@@ -43,7 +44,7 @@ public final class PocketToolItem extends GTToolItem {
   return super.onItemUseFirst(stack,context);
  }
  @Override public InteractionResult useOn(UseOnContext context){if(activeType()==GTToolType.SAW)return com.gregtech.gregtech.item.behavior.BehaviorPlaceWoodworkingSupplies.use(context);if(activeType()==GTToolType.SCREWDRIVER){var state=context.getLevel().getBlockState(context.getClickedPos());
-    if(state.getBlock() instanceof com.gregtech.gregtech.block.machine.HopperBlock||state.getBlock() instanceof com.gregtech.gregtech.block.machine.QueueHopperBlock){var hit=new net.minecraft.world.phys.BlockHitResult(context.getClickLocation(),context.getClickedFace(),context.getClickedPos(),context.isInside());return state.use(context.getLevel(),context.getPlayer(),context.getHand(),hit);}}
+    if(state.getBlock() instanceof com.gregtech.gregtech.block.machine.HopperBlock||state.getBlock() instanceof com.gregtech.gregtech.block.machine.QueueHopperBlock||state.getBlock() instanceof com.gregtech.gregtech.block.energy.SignalWireBlock){var hit=new net.minecraft.world.phys.BlockHitResult(context.getClickLocation(),context.getClickedFace(),context.getClickedPos(),context.isInside());return state.use(context.getLevel(),context.getPlayer(),context.getHand(),hit);}}
    return super.useOn(context);}
  @Override public net.minecraft.world.InteractionResult interactLivingEntity(ItemStack stack,net.minecraft.world.entity.player.Player player,net.minecraft.world.entity.LivingEntity entity,net.minecraft.world.InteractionHand hand){
   if(activeType()!=GTToolType.SCISSORS||!GTToolHelper.isUsable(stack)||player.isSpectator())return net.minecraft.world.InteractionResult.PASS;

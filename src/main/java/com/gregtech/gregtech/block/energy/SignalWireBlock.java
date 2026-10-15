@@ -70,7 +70,8 @@ public final class SignalWireBlock extends Block implements EntityBlock, ToolInt
             if(other.getBlock() instanceof SignalWireBlock){
                 next=next.setValue(ElectricWireBlock.propFor(side),true);
                 level.setBlockAndUpdate(neighbor,other.setValue(ElectricWireBlock.propFor(side.getOpposite()),true));
-            } else if(!other.isAir() && (other.isSignalSource() || other.isRedstoneConductor(level,neighbor))) {
+            } else if(other.isSignalSource()) {
+                // Conductors such as stone still carry strong power, but only a wire cutter opens that port.
                 next=next.setValue(ElectricWireBlock.propFor(side),true);
             }
         }
