@@ -11,6 +11,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LeverBlock;
 import net.minecraft.world.level.block.state.properties.AttachFace;
@@ -39,6 +40,21 @@ public final class SignalWireAddonTests {
     private static void solve(SignalWireBlockEntity wire) {
         wire.setMode(wire.mode());
         wire.tickNetwork();
+    }
+
+    /** The production tag file must stay empty. A same-path test datapack is rejected as a test-only jar entry. 1.21.1 makes bindTags package-private. */
+    private static void includeInReceiverTag(Block block) {
+        var holder = block.builtInRegistryHolder();
+        var tags = new java.util.ArrayList<>(holder.tags().toList());
+        if (tags.contains(SignalWireBlockEntity.RECEIVERS)) return;
+        tags.add(SignalWireBlockEntity.RECEIVERS);
+        try {
+            var method = holder.getClass().getDeclaredMethod("bindTags", java.util.Collection.class);
+            method.setAccessible(true);
+            method.invoke(holder, java.util.List.copyOf(tags));
+        } catch (ReflectiveOperationException failure) {
+            throw new IllegalStateException("cannot add the signal receiver tag", failure);
+        }
     }
 
     /** A powered wall lever strongly powers the block it is attached to. A redstone block only weakly powers its neighbors. */
@@ -135,6 +151,7 @@ public final class SignalWireAddonTests {
     public static void taggedBlockIsNotASource(GameTestHelper helper) {
         var pos = helper.absolutePos(new BlockPos(6, 4, 4));
         var tagged = pos.west();
+        includeInReceiverTag(SignalProbes.TAGGED);
         helper.getLevel().setBlockAndUpdate(tagged, SignalProbes.TAGGED.defaultBlockState());
         stronglyPower(helper, tagged);
         helper.assertTrue(helper.getLevel().getBlockState(tagged).is(SignalWireBlockEntity.RECEIVERS), "tagged probe is in the receiver tag");
