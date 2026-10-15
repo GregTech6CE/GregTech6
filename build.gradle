@@ -33,6 +33,14 @@ sourceSets {
         compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
         runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
     }
+    if (findProperty('addonSample') == 'true') {
+        addonSample {
+            java { srcDir 'work/addon-sample/forge/java' }
+            resources { srcDir 'work/addon-sample/forge/resources' }
+            compileClasspath += sourceSets.main.compileClasspath + project(':core').sourceSets.main.output
+            runtimeClasspath += sourceSets.main.runtimeClasspath + project(':core').sourceSets.main.output
+        }
+    }
 }
 minecraft {
     // The mappings can be changed at any time and must be in the following format.
@@ -97,6 +105,11 @@ minecraft {
                     source sourceSets.main
                     source project(':core').sourceSets.main
                     source sourceSets.bootstrapGameTest
+                }
+                if (findProperty('addonSample') == 'true') {
+                    addon_sample {
+                        source sourceSets.addonSample
+                    }
                 }
             }
         }

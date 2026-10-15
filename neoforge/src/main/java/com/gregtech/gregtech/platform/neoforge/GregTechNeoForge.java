@@ -39,6 +39,7 @@ public final class GregTechNeoForge {
         PrefixRegistry.ensurePrefixesLoaded();
         ModReferences.UNKNOWN.getClass();
         MaterialGroups.Glowstone.getClass();
+        com.gregtech.gregtech.api.addon.AddonMaterials.collectContributors();
         GTMaterialRegistry.init();
         MaterialRoleFlags.apply();
         com.gregtech.gregtech.platform.neoforge.fluid.FluidRegistries.register(modEventBus);
