@@ -38,7 +38,7 @@ import java.util.Set;
  * {@code item.gregtech.<id>} keys every other bee uses - and {@code MaterialCompatibilityTests}
  * demands one in both languages for every registered item.</p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gregtech_bumble_scan")
 @PrefixGameTestTemplate(false)
 public final class BumbleBeeScanningTests {
 
@@ -125,7 +125,8 @@ public final class BumbleBeeScanningTests {
         helper.assertTrue("Wild Bumblebee Drone (Scanned)"
                         .equals(english.get("item.gregtech.wild_bumblebee_scanned_drone").getAsString()),
                 "the scanned drone is GT6's \"<name> Drone (Scanned)\"");
-        helper.assertTrue("Wild Bumblebee (Dead, Scanned)"
+        // The shipped name is GT6's own "(Dead & Scanned)".
+        helper.assertTrue("Wild Bumblebee (Dead & Scanned)"
                         .equals(english.get("item.gregtech.wild_bumblebee_scanned_dead").getAsString()),
                 "the scanned dead bee keeps one pair of parentheses");
         helper.succeed();
