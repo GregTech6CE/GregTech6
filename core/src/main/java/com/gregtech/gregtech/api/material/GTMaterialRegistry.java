@@ -27,10 +27,21 @@ public final class GTMaterialRegistry {
     private static final Set<GTMaterial> ALL_MATERIALS = new HashSet<>();
 
     private static boolean initialized = false;
+    /** Materials present when {@link #init()} finished. Later registrations are addon materials. */
+    private static Set<GTMaterial> coreMaterials = Set.of();
     public enum RegistrationPhase { DEFINITIONS, LINKS, READY, FAILED }
     private static RegistrationPhase phase = RegistrationPhase.DEFINITIONS;
 
     public static RegistrationPhase registrationPhase() { return phase; }
+
+    /**
+     * Whether this material was registered by the built-in directory.
+     * The snapshot is taken after linking, so link-time groups stay core.
+     * Addon materials registered afterwards are not.
+     */
+    public static boolean isCoreMaterial(GTMaterial material) {
+        return material != null && coreMaterials.contains(material.resolve());
+    }
 
     /** Binds loader logging without making the material model depend on a game logging API. */
     public static void setLogSink(java.util.function.BiConsumer<Boolean, String> sink) {
@@ -163,6 +174,9 @@ public final class GTMaterialRegistry {
             com.gregtech.gregtech.content.material.MaterialDefinitions.declare();
             phase = RegistrationPhase.LINKS;
             com.gregtech.gregtech.content.material.MaterialDefinitions.link();
+            var resolved = new HashSet<GTMaterial>();
+            for (GTMaterial material : ALL_MATERIALS) resolved.add(material.resolve());
+            coreMaterials = Set.copyOf(resolved);
             phase = RegistrationPhase.READY;
         } catch (RuntimeException | Error failure) {
             phase = RegistrationPhase.FAILED;
