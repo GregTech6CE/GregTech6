@@ -89,7 +89,8 @@ public final class GregTechJEIPlugin implements IModPlugin {
         registration.addRecipes(WorldgenInfoCategories.LAYER_TYPE, WorldgenInfoCategories.buildLayers());
         registration.addRecipes(WorldgenInfoCategories.BEDROCK_TYPE, WorldgenInfoCategories.buildBedrockOres());
         }
-        registration.addRecipes(ToolAssemblyCategory.TYPE, com.gregtech.gregtech.recipe.ToolAssemblyCatalog.build());
+        if (!net.minecraftforge.fml.ModList.get().isLoaded("emi"))
+            registration.addRecipes(ToolAssemblyCategory.TYPE, com.gregtech.gregtech.recipe.ToolAssemblyCatalog.build());
         // EMI registers these same rows natively; keep JEI's bridge from duplicating them.
         if (net.minecraftforge.fml.ModList.get().isLoaded("emi")) return;
         for (Map.Entry<RecipeMap, RecipeMapCategory> entry : categories.entrySet()) {
