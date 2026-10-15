@@ -3,6 +3,7 @@ import com.gregtech.gregtech.api.material.MaterialPresentation;
 
 
 import com.gregtech.gregtech.api.material.GTMaterial;
+import com.gregtech.gregtech.api.material.GTMaterialRegistry;
 import com.gregtech.gregtech.api.material.GTValues;
 import com.gregtech.gregtech.api.material.ItemMaterialRegistry;
 import com.gregtech.gregtech.api.material.MaterialChemistry;
@@ -135,7 +136,10 @@ public final class MaterialTooltips {
                     .withStyle(ChatFormatting.BLUE));
             return;
         }
-        tooltip.add(Component.translatable("tooltip." + "gregtech" + ".material_from_mod", source.name)
+        String sourceKey = com.gregtech.gregtech.api.material.GTMaterialRegistry.isCoreMaterial(mat)
+                ? "tooltip." + "gregtech" + ".material_from_mod"
+                : "tooltip." + "gregtech" + ".material_from_addon";
+        tooltip.add(Component.translatable(sourceKey, source.name)
                 .withStyle(ChatFormatting.BLUE));
     }
 

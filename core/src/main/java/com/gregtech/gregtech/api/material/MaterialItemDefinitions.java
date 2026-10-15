@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.api.material;
 
+import com.gregtech.gregtech.api.addon.AddonMaterials;
 import com.gregtech.gregtech.api.prefix.PrefixRegistry;
 import com.gregtech.gregtech.data.MaterialPrefix;
 import java.util.ArrayList;
@@ -153,13 +154,37 @@ public final class MaterialItemDefinitions {
         claim(core, true, seenIds, claimed);
         claim(addon, false, seenIds, claimed);
         List<Definition> definitions = new ArrayList<>();
-        for (MaterialPrefix prefix : candidatePrefixes()) {
+        List<MaterialPrefix> automatic = candidatePrefixes();
+        Set<MaterialPrefix> automaticPrefixes = new HashSet<>(automatic);
+        for (MaterialPrefix prefix : automatic) {
             for (GTMaterial material : GTMaterialRegistry.sortedMaterials()) {
                 if (!generates(prefix, material)) continue;
                 definitions.add(new Definition(claimed.get(material).get(prefix), prefix.getItemId(material), prefix, material));
             }
         }
+        rejectUngeneratedForms(automaticPrefixes);
         return List.copyOf(definitions);
+    }
+
+    /**
+     * An addon form may only name a prefix this list already generates. A pair that is already
+     * emitted is left as that one item. A prefix outside the list is rejected instead of creating
+     * an item the client has no icon or translation for.
+     */
+    private static void rejectUngeneratedForms(Set<MaterialPrefix> automaticPrefixes) {
+        for (AddonMaterials.AcceptedForm form : AddonMaterials.acceptedForms()) {
+            MaterialPrefix prefix = PrefixRegistry.byName(form.prefixName());
+            GTMaterial material = GTMaterialRegistry.get(form.materialName()).resolve();
+            if (prefix == null || !material.isValid())
+                throw new IllegalStateException("Addon '" + form.addonId() + "' form '" + form.prefixName()
+                        + " / " + form.materialName() + "' did not survive material startup");
+            if (!automaticPrefixes.contains(prefix))
+                throw new IllegalStateException("Addon '" + form.addonId() + "' form '" + prefix.getName()
+                        + " / " + material.getName() + "' is not a generated form");
+            if (!generates(prefix, material))
+                throw new IllegalStateException("Addon '" + form.addonId() + "' form '" + prefix.getName()
+                        + " / " + material.getName() + "' is not generated for that material");
+        }
     }
 
     private static void claim(List<GTMaterial> materials, boolean core, Set<String> seenIds, Map<GTMaterial, Map<MaterialPrefix, String>> claimed) {

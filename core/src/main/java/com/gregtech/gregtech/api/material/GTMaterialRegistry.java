@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.api.material;
 
+import com.gregtech.gregtech.api.addon.AddonMaterials;
 import com.gregtech.gregtech.content.material.Materials;
 import com.gregtech.gregtech.data.ImportedMaterialData;
 
@@ -27,7 +28,12 @@ public final class GTMaterialRegistry {
     private static final Set<GTMaterial> ALL_MATERIALS = new HashSet<>();
 
     private static boolean initialized = false;
-    /** Materials present when {@link #init()} finished. Later registrations are addon materials. */
+    /** True only while built-in declare() and the queued addon install are registering definitions. */
+    private static boolean definitionsOpen = false;
+    /**
+     * Built-in materials present when {@link #init()} finished linking.
+     * Link-time groups stay in this set. Queued addon materials, including ones created by an addon link callback, do not.
+     */
     private static Set<GTMaterial> coreMaterials = Set.of();
     public enum RegistrationPhase { DEFINITIONS, LINKS, READY, FAILED }
     private static RegistrationPhase phase = RegistrationPhase.DEFINITIONS;
@@ -35,9 +41,9 @@ public final class GTMaterialRegistry {
     public static RegistrationPhase registrationPhase() { return phase; }
 
     /**
-     * Whether this material was registered by the built-in directory.
+     * Whether this material belongs to the built-in directory.
      * The snapshot is taken after linking, so link-time groups stay core.
-     * Addon materials registered afterwards are not.
+     * Queued addon materials are excluded from that snapshot.
      */
     public static boolean isCoreMaterial(GTMaterial material) {
         return material != null && coreMaterials.contains(material.resolve());
@@ -50,7 +56,7 @@ public final class GTMaterialRegistry {
 
     /** Strict entry point for new definitions; historical GT6 ID reuse stays confined to createMaterial. */
     public static GTMaterial registerDefinition(MaterialDefinition definition) {
-        if (phase != RegistrationPhase.DEFINITIONS)
+        if (!definitionsOpen || phase != RegistrationPhase.DEFINITIONS)
             throw new IllegalStateException("Material definitions are closed (" + phase + "): " + definition.name());
         String key = GTMaterial.sanitize(definition.name());
         if (BY_NAME.containsKey(key) || BY_ID[definition.id()] != null)
@@ -165,20 +171,35 @@ public final class GTMaterialRegistry {
         return Collections.unmodifiableList(sortedMaterialsCache);
     }
 
-    public static void init() {
+    public static synchronized void init() {
         if (phase == RegistrationPhase.FAILED)
             throw new IllegalStateException("Material initialization previously failed");
         if (initialized) return;
         initialized = true;
         try {
-            com.gregtech.gregtech.content.material.MaterialDefinitions.declare();
+            AddonMaterials.collectContributors();
+            AddonMaterials.closeQueue();
+            definitionsOpen = true;
+            try {
+                com.gregtech.gregtech.content.material.MaterialDefinitions.declare();
+                AddonMaterials.installDefinitions();
+            } finally {
+                definitionsOpen = false;
+            }
             phase = RegistrationPhase.LINKS;
             com.gregtech.gregtech.content.material.MaterialDefinitions.link();
+            AddonMaterials.linkAddons();
             var resolved = new HashSet<GTMaterial>();
-            for (GTMaterial material : ALL_MATERIALS) resolved.add(material.resolve());
+            for (GTMaterial material : ALL_MATERIALS) {
+                GTMaterial canonical = material.resolve();
+                if (AddonMaterials.owns(canonical)) continue;
+                resolved.add(canonical);
+            }
             coreMaterials = Set.copyOf(resolved);
+            AddonMaterials.publishForms();
             phase = RegistrationPhase.READY;
         } catch (RuntimeException | Error failure) {
+            definitionsOpen = false;
             phase = RegistrationPhase.FAILED;
             throw failure;
         }

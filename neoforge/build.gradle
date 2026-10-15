@@ -23,6 +23,14 @@ sourceSets {
         compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
         runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
     }
+    if (rootProject.findProperty('addonSample') == 'true') {
+        addonSample {
+            java { srcDir '../work/addon-sample/neoforge/java' }
+            resources { srcDir '../work/addon-sample/neoforge/resources' }
+            compileClasspath += sourceSets.main.compileClasspath + project(':core').sourceSets.main.output
+            runtimeClasspath += sourceSets.main.runtimeClasspath + project(':core').sourceSets.main.output
+        }
+    }
 }
 
 repositories {
@@ -154,6 +162,11 @@ neoForge {
             sourceSet sourceSets.main
             sourceSet project(':core').sourceSets.main
             sourceSet sourceSets.bootstrapGameTest
+        }
+        if (rootProject.findProperty('addonSample') == 'true') {
+            addon_sample {
+                sourceSet sourceSets.addonSample
+            }
         }
     }
 }
