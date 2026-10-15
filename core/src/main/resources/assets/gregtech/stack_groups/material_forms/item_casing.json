@@ -1,0 +1,13 @@
+{
+  "type": "remi:group",
+  "name": "itemGroup.gregtech.item_casing",
+  "contents": [
+    "#gregtech:item_casing"
+  ],
+  "exclusions": [
+    "#minecraft:planks",
+    "#gregtech:wooden_planks",
+    "item:gregtech:planks_treated"
+  ],
+  "priority": 100
+}

@@ -1,0 +1,13 @@
+{
+  "type": "remi:group",
+  "name": "itemGroup.gregtech.ingot_triple",
+  "contents": [
+    "#gregtech:ingot_triple"
+  ],
+  "exclusions": [
+    "#minecraft:planks",
+    "#gregtech:wooden_planks",
+    "item:gregtech:planks_treated"
+  ],
+  "priority": 100
+}
