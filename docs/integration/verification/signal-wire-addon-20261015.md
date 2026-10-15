@@ -15,4 +15,6 @@ Forge 1.20.1 命名空间 `gregtech_signal_wire`：
 
 NeoForge 1.21.1 同一命名空间：11:56:32，12 项通过，游戏内 1.660 秒（含 Gradle 的整次 `:core:check :neoforge:runGameTestServer` 为 `BUILD SUCCESSFUL in 2m 4s`）。这 12 项是 6 项 addon 测试，加上按 Forge 原断言移植的 6 项 `SignalWireTests`。NeoForge 的移植测试留在 `gregtech_signal_wire`，不放进默认的 `gregtech_bootstrap` 全套。
 
-两端主源码和 gametest 源码在这些运行里编译通过（后续运行为 UP-TO-DATE）。没有跑 `gregtech` 全套 GameTest、客户端、专服或成品包。开发世界里手摆红石加信号线、以及独立进程保存后重启，都没有做。
+两端主源码和 gametest 源码在这些运行里编译通过（后续运行为 UP-TO-DATE）。没有跑 `gregtech` 全套 GameTest、专服或成品包。
+
+Forge 开发客户端实际进过世界。第一次进程里，红色合金线会向周围实心方块自动伸接头，螺丝刀潜行右键没有减档。随后收紧放置连接，并让潜行螺丝刀点击回到信号线。12:57 重新启动客户端后，玩家回到同一世界，灯和线仍然亮着：内置 `mode` 被读回，信号按该档位重算。这次是新的客户端进程，不是只在同一局内重新打开菜单。放置和螺丝刀的修正还没有在这次重进里单独再看一遍。NeoForge 客户端没有开。

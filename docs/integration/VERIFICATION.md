@@ -2,7 +2,7 @@
 
 ## 2026-10-15 / 信号线 addon 接口
 
-`:core:check` 通过（2806/8035/7947/53 条共享断言，11:31，11:54 复用）。Forge `gregtech_signal_wire` 先有 3 项因红石块弱充能失败，改用拉杆强充能后 6 项 addon 测试于 11:51:51 通过；12:01:55 再跑 12 项，含断言未改的原 `SignalWireTests`（临时换 holder，已还原）。NeoForge 11:56:32 的 12 项通过。没有手摆世界，也没有独立进程存档重启。见[本批](verification/signal-wire-addon-20261015.md)。
+`:core:check` 通过（2806/8035/7947/53 条共享断言，11:31，11:54 复用）。Forge `gregtech_signal_wire` 先有 3 项因红石块弱充能失败，改用拉杆强充能后 6 项 addon 测试于 11:51:51 通过；12:01:55 再跑 12 项，含断言未改的原 `SignalWireTests`（临时换 holder，已还原）。NeoForge 11:56:32 的 12 项通过。Forge 开发世界里，退出后于 12:57 新开客户端再进同一世界，灯和线仍然亮着。放置过宽和螺丝刀潜行减档已改，这两项还没有在重进后单独再看。见[本批](verification/signal-wire-addon-20261015.md)。
 
 ## 2026-10-12 / 半砖九宫格增量编译
 
