@@ -1,5 +1,9 @@
 # 实现选择记录
 
+## 2026-10-15 / 信号线 addon 用接口和标签，原版接收端仍走 instanceof
+
+信号线的精细单位 `UNIT` 放到 `GtSignalCarrier`，数值仍是 `Integer.MAX_VALUE`。addon 方块实体用 `GtSignalSource.gtSignal(side)` 交精细强度，线先把它夹到 `[0, 15 * UNIT]`，再按原来的损耗衰减。只收不发的 addon 实现 `GtSignalReceiver`，或把方块放进空的 `gregtech:signal_wire_receivers` 标签。原版发射器、投掷器、漏斗、活塞、TNT、音符盒、活板门、门、动力铁轨和红石灯继续用现有 `instanceof`，不进标签。衰减、求解和只存 `mode` 的存档格式不变。见[本批](verification/signal-wire-addon-20261015.md)。
+
 ## 2026-10-12 / 排水只消耗流体方块，降雨按高度判定
 
 含水实体的 FluidState 不能证明方块可被排水销毁；仅真实流体方块进入消耗路径。GT 河/海/沼泽水沿原版特判为持续的 16000 mB 供应，普通有限水源维持整桶和重力约束。原版 getRain 使用降雨高度而非天空亮度，两版统一采用现代降雨高度图；产物和降雨量在 core 共用。见[来源与验证](verification/drain-issues-20261012.md)。
