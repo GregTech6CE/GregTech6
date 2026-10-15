@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-15 / 附属材料入口与形态
+
+`ordering="BEFORE"` 在 NeoForge 开发专服三次都是同一线程、附属构造结束后 GT 才开始；Forge 开发专服三次里有两次构造重叠，成品 Forge 专服也重叠。两边开发环境和分开安装的成品 jar 上，GT 自己的 `ServiceLoader` 都能看到另一个 mod 的 services 文件（own=1，context=1）。成品专服读到这行后被停掉，没有等世界加载完。构造方法里碰 `Materials` 会把初始化弄失败，Gradle 退出码 0 不能算通过。`:core:check` 17:05 通过，核心物品 id 金样不变。Forge 开发专服 17:15:07、NeoForge 开发专服 17:17:50 都查到 `gregtech:dust_ammoniumnitrate` 和 `gregtech:crystal_diamond` 后停服。两边材料物品排队都是 56166，比 2026-10-14 的 56159 多 7。没有重跑不带样例的专服，没有客户端贴图、EMI、成品样例包、存档重开或卸载。详见 [记录](verification/addon-entry-materials-20261015.md)。
+
 ## 2026-10-15 / 信号线 addon 接口
 
 `:core:check` 通过（2806/8035/7947/53 条共享断言，11:31，11:54 复用）。Forge `gregtech_signal_wire` 先有 3 项因红石块弱充能失败，改用拉杆强充能后 6 项 addon 测试于 11:51:51 通过；12:01:55 再跑 12 项，含断言未改的原 `SignalWireTests`（临时换 holder，已还原）。NeoForge 11:56:32 的 12 项通过。Forge 开发世界里，退出后于 12:57 新开客户端再进同一世界，灯和线仍然亮着。放置过宽和螺丝刀潜行减档已改，这两项还没有在重进后单独再看。GitHub 打包检查曾把同路径测试标签判成测试文件；删掉那份测试数据包后，Forge 13:35 的 6 项和 NeoForge 13:38 的 12 项再次通过。见[本批](verification/signal-wire-addon-20261015.md)。
