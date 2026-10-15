@@ -16,7 +16,8 @@ import java.util.*;
  * {@code findRecipe()} to build a row from the <em>contents</em> of the inputs (the scanner, the
  * printer and the replicator read the NBT of a USB stick) are ported through
  * {@link #dynamicRecipes(DynamicRecipes)}: the port keeps the table-driven lookup and asks the
- * provider only when no static row matches.</p>
+ * providers only when no static row matches. The built-in provider stays first. Each
+ * {@link #addDynamicRecipes(DynamicRecipes)} call appends another provider behind it.</p>
  */
 public class RecipeMap {
 
@@ -34,6 +35,8 @@ public class RecipeMap {
 
     @javax.annotation.Nullable
     private DynamicRecipes mDynamicRecipes;
+    private static final DynamicRecipes[] NO_ADDON_DYNAMIC_RECIPES = new DynamicRecipes[0];
+    private DynamicRecipes[] mAddonDynamicRecipes = NO_ADDON_DYNAMIC_RECIPES;
 
     /** Original findRecipe overrides that also need the machine world and special slot. */
     @FunctionalInterface
@@ -47,16 +50,32 @@ public class RecipeMap {
 
 
     /**
-     * Installs GT6's per-map {@code findRecipe()} override. One provider per map (GT6 has one
-     * subclass per map); calling it again replaces the previous provider.
+     * Installs the built-in {@code findRecipe()} override at the front of this map.
+     * Calling it again replaces that front provider and leaves providers added by
+     * {@link #addDynamicRecipes(DynamicRecipes)} where they are.
      */
     public RecipeMap dynamicRecipes(DynamicRecipes provider) {
         mDynamicRecipes = provider;
         return this;
     }
 
+    /**
+     * Appends a provider behind the built-in one. A null answer means this provider does not
+     * handle the input; the next provider is asked. The first non-null answer is the dynamic
+     * row, and later providers are not asked.
+     */
+    public RecipeMap addDynamicRecipes(DynamicRecipes provider) {
+        if (provider == null) throw new IllegalArgumentException("dynamic recipe provider");
+        var next = Arrays.copyOf(mAddonDynamicRecipes, mAddonDynamicRecipes.length + 1);
+        next[mAddonDynamicRecipes.length] = provider;
+        mAddonDynamicRecipes = next;
+        return this;
+    }
+
     /** Whether this map computes rows from input NBT (reported by the start-up log line). */
-    public boolean hasDynamicRecipes() { return mDynamicRecipes != null || mContextRecipes != null; }
+    public boolean hasDynamicRecipes() {
+        return mDynamicRecipes != null || mAddonDynamicRecipes.length != 0 || mContextRecipes != null;
+    }
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public static final Map<String, RecipeMap> RECIPE_MAPS = new LinkedHashMap<>();
@@ -618,8 +637,8 @@ public class RecipeMap {
         }
         // GT6's subclass overrides run only when the table had no answer, exactly like GT6's
         // `if (rRecipe != null) return rRecipe;` guards at the top of those findRecipe() bodies.
-        if (mDynamicRecipes != null) {
-            Recipe dynamic = mDynamicRecipes.find(inputItems, inputFluids);
+        if (mDynamicRecipes != null || mAddonDynamicRecipes.length != 0) {
+            Recipe dynamic = firstDynamicRecipe(inputItems, inputFluids);
             if (dynamic != null && dynamic.mEnabled && !dynamic.mFakeRecipe) {
                 if (needsOutputs && dynamic.mNeedsEmptyOutput
                         && !allOutputSlotsEmpty(items, inputSlotCount, outputSlotCount)) return null;
@@ -632,6 +651,19 @@ public class RecipeMap {
                     && (!needsOutputs || !dynamic.mNeedsEmptyOutput
                             || allOutputSlotsEmpty(items, inputSlotCount, outputSlotCount))
                     && RecipeInputs.consume(dynamic, inputItems, inputFluids, 1) != null) return dynamic;
+        }
+        return null;
+    }
+
+    @javax.annotation.Nullable
+    private Recipe firstDynamicRecipe(List<ItemStack> inputItems, List<FluidStack> inputFluids) {
+        if (mDynamicRecipes != null) {
+            Recipe recipe = mDynamicRecipes.find(inputItems, inputFluids);
+            if (recipe != null) return recipe;
+        }
+        for (int i = 0; i < mAddonDynamicRecipes.length; i++) {
+            Recipe recipe = mAddonDynamicRecipes[i].find(inputItems, inputFluids);
+            if (recipe != null) return recipe;
         }
         return null;
     }

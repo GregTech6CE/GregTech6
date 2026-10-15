@@ -124,7 +124,7 @@ minecraft {
                 args '--width', '1280', '--height', '720'
             }
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
-            property 'forge.enabledGameTestNamespaces', 'gregtech'
+            property 'forge.enabledGameTestNamespaces', 'gregtech,gregtech_bumble_scan'
             // Jade dev: remap mixin refmaps (https://jademc.readthedocs.io/en/latest/plugins22/getting-started/)
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
@@ -146,7 +146,7 @@ minecraft {
                 workingDirectory project.file(project.property('serverDirectory'))
             }
             jvmArgs '-Xmx4g', '-XX:+UseSerialGC'
-            property 'forge.enabledGameTestNamespaces', 'gregtech'
+            property 'forge.enabledGameTestNamespaces', 'gregtech,gregtech_bumble_scan'
             args '--nogui'
         }
 
@@ -164,7 +164,7 @@ minecraft {
             def gateJvmArgs = ["-Xmx${project.findProperty('gameTestHeap') ?: '1536m'}".toString()]
             if (extraJvmArgs) gateJvmArgs.addAll(extraJvmArgs.toString().trim().split('\\s+') as List)
             jvmArgs(gateJvmArgs)
-            property 'forge.enabledGameTestNamespaces', project.findProperty('gameTestNamespaces') ?: 'gregtech,gregtech_repair'
+            property 'forge.enabledGameTestNamespaces', project.findProperty('gameTestNamespaces') ?: 'gregtech,gregtech_repair,gregtech_bumble_scan'
             if (project.findProperty('gameTestReport')) {
                 property 'gregtech.integration.gameTestReport', project.file(project.property('gameTestReport')).absolutePath
             }

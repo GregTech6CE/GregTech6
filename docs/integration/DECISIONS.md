@@ -4,6 +4,10 @@
 
 信号线的精细单位 `UNIT` 放到 `GtSignalCarrier`，数值仍是 `Integer.MAX_VALUE`。addon 方块实体用 `GtSignalSource.gtSignal(side)` 交精细强度，线先把它夹到 `[0, 15 * UNIT]`，再按原来的损耗衰减。只收不发的 addon 实现 `GtSignalReceiver`，或把方块放进空的 `gregtech:signal_wire_receivers` 标签。原版发射器、投掷器、漏斗、活塞、TNT、音符盒、活板门、门、动力铁轨和红石灯继续用现有 `instanceof`，不进标签。衰减、求解和只存 `mode` 的存档格式不变。见[本批](verification/signal-wire-addon-20261015.md)。
 
+## 2026-10-15 / 动态配方先查固定表，addon provider 往后追加
+
+现有查找顺序是固定表、再动态 provider、再带世界的 context provider，这次保持不变。`dynamicRecipes` 只替换最前面那个内置 provider，Bumblelyzer、分子扫描、打印机、复制机四处调用不用改。`addDynamicRecipes` 按调用顺序追加，传入 null 直接拒绝。第一个返回非空配方的 provider 生效，后面的不再询问。这条结果如果被禁用、是展示行，或者输入对不上，也不再问后面的 addon provider；context provider 仍按原来的方式兜底。没有动态 provider 时不分配列表。API 版本仍是 1。Plantalyzer 继续没有内置 provider。gt6-crops 用 `addDynamicRecipes` 追加种子扫描：没扫过的种子 64 tick、16 EU/t，已经扫过的 1 tick、16 EU/t 原样返回。LV 分析仪每次只收一包 16 EU 时，前者在第 64 下完成，后者在第 1 下原样出来。见[本批](verification/dynamic-recipe-providers-20261015.md)。
+
 ## 2026-10-12 / 排水只消耗流体方块，降雨按高度判定
 
 含水实体的 FluidState 不能证明方块可被排水销毁；仅真实流体方块进入消耗路径。GT 河/海/沼泽水沿原版特判为持续的 16000 mB 供应，普通有限水源维持整桶和重力约束。原版 getRain 使用降雨高度而非天空亮度，两版统一采用现代降雨高度图；产物和降雨量在 core 共用。见[来源与验证](verification/drain-issues-20261012.md)。
@@ -952,3 +956,8 @@ Sensors null-NBT源登记可合法携带REV，生成器只为这组解析，避�
 ## 2026-10-08 / 完整导线原名与英文缺译独立检查
 
 导线按原尺寸/材料辅助注册及电缆条件读取完整原名；矿石按原构造器元数据，不从图标猜译。英文缺中文时也固定独立原英文，缺译标记不得绕过已存在的原中文。46快检、2601源码门禁、逐字原文件/幂等校验与56秒双主/自检编译通过；新增688双语实际名称入口仅编译，普通双包及客户端合批待验，最后233043Z不含本批。全汉化尚未完成，条件暂停未达，保持语言范围。见[完整证据和边界](verification/language-wires-ores-20261008.md)。仅本地，无推送。
+
+
+## 2026-10-14 / addon 接口由 lombinaxmasson 推进，材料物品 ID 先核心后 addon
+
+saltnya 同意 addon 接口第二版由 lombinaxmasson 全权修改。第一项落地是材料物品 ID：`MaterialItemDefinitions.all()` 先为 `init()` 结束时的核心材料分配 ID，再分配之后注册的材料。addon 材料撞上已有 ID 时启动失败，不把核心物品挤成带数字后缀的新 ID。核心材料之间原来的后缀回退保留。当前目录没有 addon 材料，56085 条物品 ID 与改动前逐条一致。`:core:check` 通过。两个平台的 `:compileJava` 后来都通过：EMI 用本机 `work/local-maven`，没有改仓库依赖。两边开发专服都进入 `Done`，材料物品排队数都是 56159，与改动前的专服日志相同。客户端、成品包和存档重载未跑。见 [验证记录](verification/material-item-id-order-20261014.md)。
