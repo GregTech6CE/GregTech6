@@ -6,7 +6,7 @@ import java.util.TreeMap;
 
 /** SPDX-License-Identifier: LGPL-3.0-or-later. Shared, deterministic addon lifecycle for both loaders. */
 public final class GregTechAddons {
-    public static final int API_VERSION = 1;
+    public static final int API_VERSION = 2;
     private static final TreeMap<String, GregTechAddon> ADDONS = new TreeMap<>();
     public enum Phase { COLLECTING, DISPATCHING, READY, FAILED }
     private static Phase phase = Phase.COLLECTING;

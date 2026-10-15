@@ -1,5 +1,19 @@
 # 实现选择记录
 
+## 2026-10-15 / 附属只能要内置目录已经生成的形态
+
+新材料的物品来自 `dust()` 这类属性，走 `MaterialItemDefinitions.candidatePrefixes()` 里已经有图标和 `item.gregtech.<前缀>` 翻译的前缀。`forms()` 只能点名这份列表里的前缀。已经生成的一对不再发第二个物品。列表之外的前缀，例如 `crystal`，启动失败，报 `is not a generated form`。`crystal` 有 `isValidFor`，但内置目录从不生成它，没有 `crystal.json`，也没有翻译键，所以不能靠附属请求把第一件物品造出来。列表之内但 `isValidFor` 不通过的，例如钻石的板，仍然启动失败。
+
+## 2026-10-15 / 附属材料走 ServiceLoader，不靠构造顺序
+
+`mods.toml` 的 `ordering="BEFORE"` 不能当材料入口。NeoForge 1.21.1 开发专服三次都是同一条 `modloading-worker-0`，附属构造结束之后 GT 构造才开始，间隔大约 17、18、23 毫秒。Forge 1.20.1 开发专服打出 “Using 32 threads for parallel mod-loading”。三次里有两次 GT 构造在附属构造返回之前就开始，线程 id 不同；第三次晚了大约 0.7 毫秒。成品 Forge 专服同样重叠。构造方法里排队不稳定。
+
+选定的入口是 `GregTechMaterialContributor`。GT 在 `GTMaterialRegistry.init()` 开头、平台已经 `ModData.bindPresence` 之后，用自己的类加载器 `ServiceLoader.load`。开发环境的共享 `TransformingClassLoader`，以及分开安装的成品 jar，都能读到另一个 mod 里的 `META-INF/services`（own=1，context=1）。服务构造、`materials()` 和 `forms()` 只返回纯数据，不碰 `Materials`。`link()` 排在内置 `link()` 之后，核心快照排除 addon 拥有的材料，`MaterialGroups` 在 link 期间造出来的材料仍算核心。
+
+构造方法里引用 `Materials` 会提前跑 `init()`。Forge 上随后是 `Material initialization previously failed`。NeoForge 上还没 `bindPresence`，报 `Mod presence has not been bound by the platform`。这不是一条干净的“队列已关闭”。队列关闭之后再 `submit`，共享断言抛 `Addon material queue is closed`。
+
+addon 依赖的模组 id 是 `gregtech6`（`gradle.properties` 的 `mod_id`）。自动生成的形态留在命名空间 `gregtech`，手写物品、方块和机器留在 addon 自己的命名空间。材料数字 id 用 **4291–7899**（含两端）。内置目录里 1–4290 已被占用，7900–7912 是原版物质，矿石从 8000 起。空队列扫描这段全部空闲；段内撞名或撞 id 仍然启动失败，并写出双方，不加数字后缀。`GregTechAddons.API_VERSION` 升到 2，`onRecipesReady` 不变。见[本批](verification/addon-entry-materials-20261015.md)。
+
 ## 2026-10-15 / 信号线 addon 用接口和标签，原版接收端仍走 instanceof
 
 信号线的精细单位 `UNIT` 放到 `GtSignalCarrier`，数值仍是 `Integer.MAX_VALUE`。addon 方块实体用 `GtSignalSource.gtSignal(side)` 交精细强度，线先把它夹到 `[0, 15 * UNIT]`，再按原来的损耗衰减。只收不发的 addon 实现 `GtSignalReceiver`，或把方块放进空的 `gregtech:signal_wire_receivers` 标签。原版发射器、投掷器、漏斗、活塞、TNT、音符盒、活板门、门、动力铁轨和红石灯继续用现有 `instanceof`，不进标签。衰减、求解和只存 `mode` 的存档格式不变。见[本批](verification/signal-wire-addon-20261015.md)。
