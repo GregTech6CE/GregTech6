@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-15 / 信号线 addon 接口
+
+`:core:check` 通过（2806/8035/7947/53 条共享断言，11:31，11:54 复用）。Forge `gregtech_signal_wire` 先有 3 项因红石块弱充能失败，改用拉杆强充能后 6 项 addon 测试于 11:51:51 通过；12:01:55 再跑 12 项，含断言未改的原 `SignalWireTests`（临时换 holder，已还原）。NeoForge 11:56:32 的 12 项通过。Forge 开发世界里，退出后于 12:57 新开客户端再进同一世界，灯和线仍然亮着。放置过宽和螺丝刀潜行减档已改，这两项还没有在重进后单独再看。GitHub 打包检查曾把同路径测试标签判成测试文件；删掉那份测试数据包后，Forge 13:35 的 6 项和 NeoForge 13:38 的 12 项再次通过。见[本批](verification/signal-wire-addon-20261015.md)。
+
 ## 2026-10-15 / 多动态配方 provider
 
 两边主源码编译通过。`gregtech_dynamic_recipes` 在 Forge 09:25:44、NeoForge 09:28:13 各 3 项通过，整次 7 分 53 秒。现有分子数据链 `gregtech_material_data` 在 Forge 09:34:31、NeoForge 09:37:34 各 3 项通过，整次 8 分 3 秒。Bumblelyzer 扫描单独放在 `gregtech_bumble_scan`，Forge 10:44:52 报告 `All 5 required tests passed`，整次 3 分 3 秒。NeoForge 没有这组测试。gt6-crops 把种子扫描追加到 Plantalyzer。LV 分析仪每次喂一包 16 EU 时，没扫过的种子在第 64 下变成扫过的同一颗，扫过的种子在第 1 下原样出来。NeoForge GameTest 于 10:51:42 报告 `All 5 required tests passed`，整次 1 分 45 秒。没有回复 issue #13。详见 [记录](verification/dynamic-recipe-providers-20261015.md)。

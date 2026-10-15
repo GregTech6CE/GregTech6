@@ -119,7 +119,8 @@ public class GTToolItem extends Item {
             return InteractionResult.PASS;
         }
         BlockState state = context.getLevel().getBlockState(context.getClickedPos());
-        if (state.getBlock() instanceof HopperBlock || state.getBlock() instanceof QueueHopperBlock) {
+        if (state.getBlock() instanceof HopperBlock || state.getBlock() instanceof QueueHopperBlock
+                || state.getBlock() instanceof com.gregtech.gregtech.block.energy.SignalWireBlock) {
             Player player = context.getPlayer();
             InteractionHand hand = context.getHand();
             BlockHitResult hit = new BlockHitResult(

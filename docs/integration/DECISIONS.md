@@ -1,5 +1,9 @@
 # 实现选择记录
 
+## 2026-10-15 / 信号线 addon 用接口和标签，原版接收端仍走 instanceof
+
+信号线的精细单位 `UNIT` 放到 `GtSignalCarrier`，数值仍是 `Integer.MAX_VALUE`。addon 方块实体用 `GtSignalSource.gtSignal(side)` 交精细强度，线先把它夹到 `[0, 15 * UNIT]`，再按原来的损耗衰减。只收不发的 addon 实现 `GtSignalReceiver`，或把方块放进空的 `gregtech:signal_wire_receivers` 标签。原版发射器、投掷器、漏斗、活塞、TNT、音符盒、活板门、门、动力铁轨和红石灯继续用现有 `instanceof`，不进标签。衰减、求解和只存 `mode` 的存档格式不变。见[本批](verification/signal-wire-addon-20261015.md)。
+
 ## 2026-10-15 / 动态配方先查固定表，addon provider 往后追加
 
 现有查找顺序是固定表、再动态 provider、再带世界的 context provider，这次保持不变。`dynamicRecipes` 只替换最前面那个内置 provider，Bumblelyzer、分子扫描、打印机、复制机四处调用不用改。`addDynamicRecipes` 按调用顺序追加，传入 null 直接拒绝。第一个返回非空配方的 provider 生效，后面的不再询问。这条结果如果被禁用、是展示行，或者输入对不上，也不再问后面的 addon provider；context provider 仍按原来的方式兜底。没有动态 provider 时不分配列表。API 版本仍是 1。Plantalyzer 继续没有内置 provider。gt6-crops 用 `addDynamicRecipes` 追加种子扫描：没扫过的种子 64 tick、16 EU/t，已经扫过的 1 tick、16 EU/t 原样返回。LV 分析仪每次只收一包 16 EU 时，前者在第 64 下完成，后者在第 1 下原样出来。见[本批](verification/dynamic-recipe-providers-20261015.md)。
