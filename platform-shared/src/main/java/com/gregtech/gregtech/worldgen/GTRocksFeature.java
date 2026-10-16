@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.worldgen;
 
+import com.gregtech.gregtech.platform.Mc;
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
 import com.gregtech.gregtech.api.material.MaterialStackItemHelper;
@@ -18,7 +19,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraft.core.registries.BuiltInRegistries;
 
 import java.util.Set;
 
@@ -155,7 +155,7 @@ public class GTRocksFeature extends Feature<NoneFeatureConfiguration> {
         if (resolved == null || !resolved.resolve().isValid()) return null;
         ItemStack stack = MaterialStackItemHelper.mat(prefix, resolved.resolve(), 1);
         if (stack.isEmpty()) return null;
-        ResourceLocation id = BuiltInRegistries.ITEM.getKey(stack.getItem());
+        ResourceLocation id = Mc.itemId(stack.getItem());
         return id == null ? null : id.toString();
     }
 

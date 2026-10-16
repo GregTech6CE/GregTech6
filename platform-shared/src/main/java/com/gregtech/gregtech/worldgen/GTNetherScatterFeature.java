@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.worldgen;
 
+import com.gregtech.gregtech.platform.Mc;
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
 import com.gregtech.gregtech.api.material.MaterialStackItemHelper;
@@ -21,7 +22,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraft.core.registries.BuiltInRegistries;
 
 /**
  * Port of GT6's {@code WorldgenRacks} ({@code Loader_Worldgen:619}) — despite the name it does not
@@ -149,7 +149,7 @@ public class GTNetherScatterFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     private static String key(ItemStack stack) {
-        ResourceLocation id = BuiltInRegistries.ITEM.getKey(stack.getItem());
+        ResourceLocation id = Mc.itemId(stack.getItem());
         return id == null ? "" : id.toString();
     }
 

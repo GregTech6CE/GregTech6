@@ -1,10 +1,10 @@
 package com.gregtech.gregtech.loader;
 
+import com.gregtech.gregtech.platform.Mc;
 import com.google.gson.*;
 import com.gregtech.gregtech.api.material.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.registries.ForgeRegistries;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -18,7 +18,7 @@ public final class VanillaCompositionLoader {
             var json = JsonParser.parseReader(new InputStreamReader(stream, StandardCharsets.UTF_8)).getAsJsonObject();
             var errors = new ArrayList<String>();
             for (var entry : json.entrySet()) {
-                var item = ForgeRegistries.ITEMS.getValue(ResourceLocation.withDefaultNamespace(entry.getKey()));
+                var item = Mc.item(ResourceLocation.withDefaultNamespace(entry.getKey()));
                 if (item == null || item == Items.AIR) continue; // Model variants are not registered items.
                 var row = entry.getValue().getAsJsonObject();
                 var components = new ArrayList<MaterialComponent>();

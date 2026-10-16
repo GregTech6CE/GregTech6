@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.worldgen;
 
+import com.gregtech.gregtech.platform.Mc;
 import com.gregtech.gregtech.block.stone.StoneType;
 import com.gregtech.gregtech.registry.GTDungeonKeys;
 import com.gregtech.gregtech.worldgen.dungeon.GTDungeonChunk;
@@ -175,7 +176,7 @@ public class GTDungeonFeature extends Feature<NoneFeatureConfiguration> {
                     GTDungeonChunkRoomFarmMobs.generateOuterPlatform(platformData);
                     generated = true;
                 } catch (Throwable error) {
-                    com.gregtech.gregtech.GregTech.LOGGER.warn("[gregtech] dungeon mob farm outer cell {}/{} failed: {}",
+                    Mc.logger().warn("[gregtech] dungeon mob farm outer cell {}/{} failed: {}",
                             i, j, error.toString());
                     return generated;
                 }
@@ -190,7 +191,7 @@ public class GTDungeonFeature extends Feature<NoneFeatureConfiguration> {
         try {
             return chunk.generate(data);
         } catch (Throwable error) {
-            com.gregtech.gregtech.GregTech.LOGGER.warn("[gregtech] dungeon cell {} failed: {}",
+            Mc.logger().warn("[gregtech] dungeon cell {} failed: {}",
                     chunk.id(), error.toString());
             return false;
         }

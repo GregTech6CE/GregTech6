@@ -1,4 +1,6 @@
 package com.gregtech.gregtech.registry;
+
+import com.gregtech.gregtech.platform.Mc;
 import com.gregtech.gregtech.content.book.ColoredBookRules;
 import net.minecraft.world.item.*;
 import java.util.*;
@@ -21,7 +23,7 @@ public final class GTColoredBooks {
             var book=stack(variant.originalId());
             com.gregtech.gregtech.data.MachineRecipeMaps.generify(book,new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.WRITTEN_BOOK));
             var usb=new ItemStack(GTTechnological.get("usb1_stick"));var scanned=usb.copy();
-            scanned.setHoverName(net.minecraft.network.chat.Component.literal("Containing scanned Book"));
+            Mc.setCustomName(scanned, net.minecraft.network.chat.Component.literal("Containing scanned Book"));
             com.gregtech.gregtech.data.MachineRecipeMaps.ScannerVisuals.addFakeRecipe(false,new ItemStack[]{book,usb},new ItemStack[]{scanned,book.copy()},null,null,null,512,16,0);
         }
     }

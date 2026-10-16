@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.content.cover;
 
+import com.gregtech.gregtech.platform.Mc;
 import net.minecraft.world.item.ItemStack;
 
 
@@ -19,7 +20,7 @@ public enum PanelCover {
     public boolean invertible(){return this==PROGRESS||this==ENERGY||this==CONTROLLER||this==SHUTTER;}
     public static PanelCover of(ItemStack stack){
         if(stack.isEmpty())return null;
-        var key=net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem());
+        var key=Mc.itemId(stack.getItem());
         if(key!=null&&key.getNamespace().equals("gregtech"))for(var cover:values())if(cover.id.equals(key.getPath()))return cover;
         return null;
     }

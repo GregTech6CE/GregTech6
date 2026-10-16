@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.worldgen;
 
+import com.gregtech.gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -16,7 +17,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 import java.util.Set;
@@ -144,7 +144,7 @@ public class GTPitFeature extends Feature<NoneFeatureConfiguration> {
 
     /** GT6's {@code BlocksGT.oreSand} family — the port keeps its sands as icon set blocks. */
     public static boolean isSandLike(BlockState state) {
-        ResourceLocation id = ForgeRegistries.BLOCKS.getKey(state.getBlock());
+        ResourceLocation id = Mc.blockId(state.getBlock());
         return id != null && id.getNamespace().equals("gregtech") && id.getPath().startsWith("sand_");
     }
 
@@ -158,7 +158,7 @@ public class GTPitFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     private static BlockState blockState(String id) {
-        Block block = ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse(id));
+        Block block = Mc.block(ResourceLocation.parse(id));
         return block == null || block == Blocks.AIR ? null : block.defaultBlockState();
     }
 

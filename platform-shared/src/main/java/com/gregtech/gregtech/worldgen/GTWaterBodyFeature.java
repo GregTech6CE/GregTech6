@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.worldgen;
 
+import com.gregtech.gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -13,7 +14,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 import java.util.Set;
@@ -156,14 +156,14 @@ public class GTWaterBodyFeature extends Feature<NoneFeatureConfiguration> {
     private static boolean isWater(BlockState state, boolean waterlike) {
         if (state.is(Blocks.WATER)) return true;
         if (!waterlike) return false;
-        ResourceLocation id = ForgeRegistries.BLOCKS.getKey(state.getBlock());
+        ResourceLocation id = Mc.blockId(state.getBlock());
         if (id == null || !id.getNamespace().equals("gregtech")) return false;
         return id.getPath().equals("seawater") || id.getPath().equals("riverwater")
                 || id.getPath().equals("swampwater");
     }
 
     private static BlockState blockState(String id) {
-        Block block = ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse(id));
+        Block block = Mc.block(ResourceLocation.parse(id));
         if (block == null || block == Blocks.AIR) return null;
         if (!(block instanceof LiquidBlock)) return null;
         return block.defaultBlockState();

@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.client;
 
+import com.gregtech.gregtech.platform.Mc;
 
 import com.gregtech.gregtech.block.BookShelfBlock;
 import com.gregtech.gregtech.blockentity.inventory.BookShelfBlockEntity;
@@ -27,7 +28,7 @@ public final class BookShelfRenderer implements BlockEntityRenderer<BookShelfBlo
         if (stack.is(Items.FILLED_MAP)) return "folder_red";
         if (stack.is(Items.PAPER) || stack.is(Items.MAP) || stack.is(Items.NAME_TAG)) return "folder";
         if (stack.is(Items.ITEM_FRAME) || stack.is(Items.PAINTING)) return "frame";
-        var key = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem());
+        var key = Mc.itemId(stack.getItem());
         if (key != null && key.getPath().equals("dusty_guide_book")) return "book_dusty";
         if (key != null && key.getPath().equals("dusty_material_dictionary")) return "book_matdict";
         return "book_vanilla";
@@ -36,7 +37,7 @@ public final class BookShelfRenderer implements BlockEntityRenderer<BookShelfBlo
     private static ResourceLocation bookTexture(ItemStack stack, String texture, String face) {
         return stack.is(Items.COBBLESTONE)
                 ? ResourceLocation.parse("minecraft:textures/block/cobblestone.png")
-                : ResourceLocation.fromNamespaceAndPath("gregtech","textures/block/books/" + texture + "_" + face + ".png");
+                : Mc.gregtechId("textures/block/books/" + texture + "_" + face + ".png");
     }
 
     @Override

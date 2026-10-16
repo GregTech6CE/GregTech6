@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.worldgen;
 
+import com.gregtech.gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -14,7 +15,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraft.core.registries.BuiltInRegistries;
 
 import java.util.Set;
 
@@ -55,7 +55,7 @@ public class GTTurfFeature extends Feature<NoneFeatureConfiguration> {
         Set<ResourceLocation> biomes = GTWorldgenBiomes.chunkBiomes(level, minX, minZ);
         if (!GTWorldgenBiomes.anyOf(biomes, GTWorldgenBiomes.SWAMP)) return false;
 
-        Block block = BuiltInRegistries.BLOCK.get(ResourceLocation.parse(TURF));
+        Block block = Mc.block(ResourceLocation.parse(TURF));
         if (block == null || block == Blocks.AIR) return false;
         BlockState fill = block.defaultBlockState();
 

@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.worldgen;
 
+import com.gregtech.gregtech.platform.Mc;
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.block.OreHostStone;
 import com.gregtech.gregtech.block.stone.GTStoneBlock;
@@ -17,7 +18,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraft.core.registries.BuiltInRegistries;
 
 /**
  * Port of GT6's {@code WorldgenDeepOcean} ({@code Loader_Worldgen:580}, registered as
@@ -133,7 +133,7 @@ public class GTDeepOceanFeature extends Feature<NoneFeatureConfiguration> {
     /** GT6's {@code WD.anywater}: vanilla water or GT's own sea water (§49). */
     public static boolean isWater(BlockState state) {
         if (state.is(Blocks.WATER)) return true;
-        ResourceLocation id = BuiltInRegistries.BLOCK.getKey(state.getBlock());
+        ResourceLocation id = Mc.blockId(state.getBlock());
         return id != null && id.getNamespace().equals("gregtech")
                 && (id.getPath().equals("seawater") || id.getPath().equals("riverwater")
                     || id.getPath().equals("swampwater"));
