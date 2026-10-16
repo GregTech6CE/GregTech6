@@ -39,6 +39,13 @@ public final class CompatRecipes {
     private CompatRecipes() {}
 
     public static synchronized int added() { return added; }
+
+    /** Rows this pass currently owns. The datapack overlay excludes them from its baseline. */
+    public static synchronized Set<Recipe> owned() {
+        var all = Collections.newSetFromMap(new IdentityHashMap<Recipe, Boolean>());
+        for (var rows : OWNED.values()) all.addAll(rows);
+        return all;
+    }
     public static synchronized int errors() { return errors; }
     public static synchronized List<String> problems() { return List.copyOf(PROBLEMS); }
 

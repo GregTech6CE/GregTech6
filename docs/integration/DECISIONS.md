@@ -1,5 +1,25 @@
 # 实现选择记录
 
+## 2026-10-16 / 电线和传动轴不让原版缓存碰撞箱
+
+原版在启动、`/reload` 和客户端收尾配置阶段调用 `Blocks.rebuildCache()`，给每个没有标 `dynamicShape` 的方块状态在空世界里算一遍碰撞箱、面支撑和整块判断。`ElectricWireBlock` 和 `AxleBlock` 的连接臂长度取决于邻居粗细，每次调用都现场合并几个长方体，这一步拖到 Forge 专服 `/reload` 约 25 秒、首次撞上 60 秒看门狗，NeoForge 独立客户端超过 15 秒被服务端断开。缓存出来的形状也是错的：空世界里没有更粗的邻居，伸进粗邻居的那段臂在碰撞里被漏掉。两个平台的电线和传动轴改为 `.dynamicShape()`，和流体管、物品管一致，碰撞箱每次按真实邻居计算。信号线的形状只看自身连接状态，继续让原版缓存，按 64 种连接组合记住各自的形状，不再重复合并。
+
+## 2026-10-15 / 机器配方数据包盖在静态表上，不搬进 RecipeManager
+
+约 24.8 万条机器配方继续留在 `RecipeMap`。数据包只放两种标记：`gregtech:machine` 和 `gregtech:machine_removal`。字段定义在 core 的 record 里。Forge 1.20.1 用 JSON 序列化，NeoForge 1.21.1 用 Codec，两边读同一套字段。
+
+启动快照只收内置行和 `onRecipesReady` 加的行。兼容层与外部矿物行由它们自己的 `owned()` 标出来，快照排除这些对象，重载时先恢复快照，再按当前标签重建它们，然后按配方 id 先删后加。这样标签变化能进机器表，同一轮新增也不会被同一轮删除清掉。整张表清空只接受显式的 `clear: true`，而且不能再带匹配列表；空匹配会被拒绝，避免一份空白删除把表清光。
+
+标签输入展开成每个成员一条具体物品配方，组合上限 4096。碰撞规则沿用现有 `findCollision`：已有配方的输入被新配方的输入覆盖时，新行被拒绝。动态 provider 不在 `mRecipeList` 里，删除碰不到它们。
+
+`TagsUpdatedEvent` 上原来各自重建的兼容层和外部矿物监听改由覆盖层在 LOW 统一调用。`ServerStoppedEvent` 仍清空这两组 owned 行。熔炉镜像本来就由数据包同步在标签事件之后重做；外部矿物重建仍会先清镜像，顺序和改之前一样。存档首次启动时集成服务端还拿不到，标签事件里的应用会落空，所以 `ServerStartedEvent` 再补一次，优先级 HIGHEST，赶在 HIGH 的熔炉镜像之前，否则镜像行会被收进基线、随后又被外部矿物重建清掉。
+
+JSON 根上以 `_` 开头的字段视为注释并忽略，例如 `_comment` 和 KubeJS 7 给 `event.custom` 加的 `_kubejs_changed_marker`；其他未知字段和嵌套对象里的任何未知字段仍让整条配方被拒。
+
+单人游戏里服务端和客户端共用静态表。服务端在标签事件里应用；客户端见到集成服务端就跳过。专服客户端在 `RecipesUpdatedEvent` 的最高优先级应用，JEI/EMI 随后重读。正在加工的机器产出已经写进 `pendingOutputs`，重载不重算这一轮。
+
+KubeJS 不加插件。开发环境用 `-PkubejsRuntime=true`，默认关闭，不进成品，也不占用 `-PcompatRuntime`。材料表仍然不随数据包重载。
+
 ## 2026-10-15 / 附属只能要内置目录已经生成的形态
 
 新材料的物品来自 `dust()` 这类属性，走 `MaterialItemDefinitions.candidatePrefixes()` 里已经有图标和 `item.gregtech.<前缀>` 翻译的前缀。`forms()` 只能点名这份列表里的前缀。已经生成的一对不再发第二个物品。列表之外的前缀，例如 `crystal`，启动失败，报 `is not a generated form`。`crystal` 有 `isValidFor`，但内置目录从不生成它，没有 `crystal.json`，也没有翻译键，所以不能靠附属请求把第一件物品造出来。列表之内但 `isValidFor` 不通过的，例如钻石的板，仍然启动失败。

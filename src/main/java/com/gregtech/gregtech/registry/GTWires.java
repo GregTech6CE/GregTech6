@@ -31,7 +31,9 @@ public final class GTWires {
                         .mapColor(MapColor.METAL)
                         .strength(1.0f, 2.0f)
                         .sound(SoundType.METAL)
-                        .noOcclusion()));
+                        .noOcclusion()
+                        // Arms depend on neighbour thickness, so no per-state shape cache.
+                        .dynamicShape()));
         (insulated ? ALL_CABLES : ALL_WIRES).add(block);
         ALL.add(block);
         GTBlocks.BLOCK_ITEMS.register(id,
