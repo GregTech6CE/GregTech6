@@ -128,7 +128,7 @@ public final class StoneAndToolSurvivalRecipes {
 
     private static ItemStack blockItem(String id) {
         var item = Mc.item(
-                Mc.gregtechId(id));
+                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech", id));
         return item == null || item == Items.AIR ? ItemStack.EMPTY : new ItemStack(item);
     }
 }
