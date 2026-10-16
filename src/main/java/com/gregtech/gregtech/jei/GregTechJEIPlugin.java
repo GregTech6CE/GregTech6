@@ -29,6 +29,11 @@ public final class GregTechJEIPlugin implements IModPlugin {
 
     /** Categories created in {@link #registerCategories}, reused in {@link #registerRecipes}. */
     private final Map<RecipeMap, RecipeMapCategory> categories = new LinkedHashMap<>();
+    private static int overlayGeneration;
+
+    /** The client overlay calls this before JEI re-registers, so the next pass reads the live maps. */
+    public static void overlayChanged() { overlayGeneration++; }
+    public static int overlayGeneration() { return overlayGeneration; }
 
     private Map<RecipeMap,List<ItemStack>> machines = Map.of();
 
@@ -77,6 +82,7 @@ public final class GregTechJEIPlugin implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
+        // Reads the live RecipeMap lists, including a datapack overlay applied earlier in this reload.
         // EMI has its own native pages. Its JEI bridge must not import a second copy.
         if (!net.minecraftforge.fml.ModList.get().isLoaded("emi")) {
             registration.addRecipes(LootInfoCategories.LOOT, com.gregtech.gregtech.content.loot.LootViewerData.lootGroups());

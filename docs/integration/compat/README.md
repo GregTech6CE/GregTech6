@@ -2,7 +2,7 @@
 
 共享规格在 `core` 的 `content/compat`。平台只解析注册名、标签和 GT 形态，不引用第三方模组的类。目标模组没装时整组跳过，打一行日志，配方数量不变。装了模组但某个登记过的注册名找不到时，这一行不生成，按来源行号计数，不生成空气产物。
 
-机器行在 `TagsUpdatedEvent`（`shouldUpdateStaticData()`）先清掉本批加过的对象再重建，`ServerStoppedEvent` 时清空。合成表新增和按配方 id 删除走内存数据包，位置在 TOP。Forge 用 `forge:false`，NeoForge 用 `neoforge:false`。后注册的模组数据包仍可能盖掉这份删除文件，所以配方管理器应用完之后，`AddReloadListenerEvent` 再按删除名单摘掉仍在的配方 id。不改 `GregTech.java` / `GregTechNeoForge.java`。检测用现代 mod id 问 `ModList`，不用 `ModReferences`。
+机器行不再由兼容层自己的 `TagsUpdatedEvent` 监听重建。机器配方覆盖层在恢复启动快照之后调用 `rebuild()`，再执行数据包删除和新增。`ServerStoppedEvent` 仍清空本批加过的对象。合成表新增和按配方 id 删除走内存数据包，位置在 TOP。Forge 用 `forge:false`，NeoForge 用 `neoforge:false`。后注册的模组数据包仍可能盖掉这份删除文件，所以配方管理器应用完之后，`AddReloadListenerEvent` 再按删除名单摘掉仍在的配方 id。不改 `GregTech.java` / `GregTechNeoForge.java`。检测用现代 mod id 问 `ModList`，不用 `ModReferences`。
 
 开发期运行依赖用 `-PcompatRuntime=<id>`，默认关闭，不打进成品。一次只能开一个：`ie`、`mek`、`ae`、`pr` 或 `hc`。
 

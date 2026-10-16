@@ -26,7 +26,11 @@
     "CoverWalkMixin",
     "CoverCollisionMixin",
     "CoverSignalMixin",
-    "CoverHarvestMixin"
+    "CoverHarvestMixin",
+    "PacketFrameEncoderMixin",
+    "PacketFrameDecoderMixin",
+    "LoginQueryPayloadMixin",
+    "CustomPayloadLimitMixin"
   ],
   "injectors": {
     "defaultRequire": 0

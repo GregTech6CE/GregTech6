@@ -69,6 +69,12 @@ dependencies {
     if (rootProject.findProperty('compatRuntime') == 'hc') {
         runtimeOnly "maven.modrinth:pams-harvestcraft-2-food-core:${rootProject.property('neoforge_hc_version')}"
     }
+    // Dev-only. KubeJS submits the same gregtech:machine JSON via event.custom(). Not in the production jar.
+    if (rootProject.findProperty('kubejsRuntime') == 'true') {
+        runtimeOnly "maven.modrinth:kubejs:2101.7.2-build.377"
+        runtimeOnly "maven.modrinth:rhino:2101.2.8-build.91+Rhino-1.21"
+        runtimeOnly "maven.modrinth:architectury-api:13.0.11+neoforge"
+    }
 
     if (rootProject.findProperty('directCoreClasspath')?.toString() == 'true') {
         // Local development can use the same compiled core output directly.
@@ -110,6 +116,19 @@ neoForge {
                 if (rootProject.findProperty('clientCreateWorldSmoke') == 'true') gameDirectory = project.file('build/world-creation-smoke-run')
                 jvmArgument '-Xmx' + (rootProject.findProperty('clientSmokeHeap') ?: '2g').toString()
                 programArguments.addAll('--width', '1280', '--height', '720')
+            }
+            systemProperty 'gregtech.integration.machineOverlayViewerSmoke', (rootProject.findProperty('machineOverlayViewerSmoke') ?: 'false').toString()
+            systemProperty 'gregtech.integration.machineOverlayViewerPhase', (rootProject.findProperty('machineOverlayViewerPhase') ?: 'create').toString()
+            systemProperty 'gregtech.integration.machineOverlayVictim', (rootProject.findProperty('machineOverlayVictim') ?: '').toString()
+            if (rootProject.findProperty('machineOverlayViewerSmoke') == 'true') {
+                def overlayPhase = (rootProject.findProperty('machineOverlayViewerPhase') ?: 'create').toString()
+                sourceSet = sourceSets.bootstrapGameTest
+                gameDirectory = project.file(rootProject.findProperty('machineOverlayDirectory')
+                        ?: (overlayPhase == 'join' ? 'build/machine-overlay-join-client' : 'build/machine-overlay-client'))
+                jvmArguments.addAll('-Xmx6g', '-XX:+UseSerialGC')
+                programArguments.addAll('--width', '1280', '--height', '720')
+                if (overlayPhase == 'reopen') programArguments.addAll('--quickPlaySingleplayer', 'overlay-viewer')
+                if (overlayPhase == 'join') programArguments.addAll('--quickPlayMultiplayer', 'localhost')
             }
         }
         server {

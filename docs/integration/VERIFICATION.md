@@ -1,5 +1,39 @@
 # 验证账本
 
+## 2026-10-15 / 机器配方数据包覆盖层
+
+`machineRecipeOverlayContracts` 通过 44 条断言。没有重跑完整 `:core:check`。两边主源码和 GameTest 源码都编译通过。
+
+Forge `gregtech_machine_overlay`：默认 1536m 在准备出生区时 `OutOfMemoryError`，这次不算通过。换到空目录后又因缺少 `test_empty` 结构在开测前崩溃，补上结构并把机器放在结构内之后重跑。`-PgameTestHeap=3g -PgameTestJvmArgs=-XX:+UseSerialGC -PgameTestDirectory=build/machine-overlay-gametest` 于 21:21:36 报告 `All 1 required tests passed`，Gradle 6 分 38 秒退出 0。基线 214604 行，恢复 35–57 ms，整表重建 77 ms。探针包删除 1 条、加入 3 条，拒绝 0。第二次重载的静态行数与第一次相同。粉碎机按数据包把海洋之心加工成下界之星；加工途中重载后仍交出已经结算的下界之星。卸掉数据包后，被删输入重新只有 1 条，静态行数回到探针前。
+
+NeoForge 第一次把 JSON 写在 `data/gregtech/recipes/`。1.21.1 不读这个目录，覆盖层 removed 0、added 0，21:27:09 报告 `1 required tests failed`。改到 `data/gregtech/recipe/` 后，同一命名空间于 21:35:38 报告 `All 1 required tests passed`，Gradle 6 分 22 秒退出 0。基线 214595 行，恢复 49–124 ms，整表重建 64 ms。同样是删除 1 条、加入 3 条、拒绝 0，卸包后行数回到探针前。
+
+2026-10-16 Forge 客户端实测（只装 JEI，没装 EMI）。单人新建世界写入探针包，`/reload` 两次，覆盖层日志正好两行，`applications` 每次加 1，客户端没有第二次应用；JEI 粉碎机页有海洋之心到下界之星，被删的 `gregtech:rock_gt_celenegil` 查不到。存档后第一次重进失败：集成服务端绑定标签时还没有 `getCurrentServer()`，覆盖层一次都没应用。两个平台在 `ServerStartedEvent` LOW 补一次应用后，重进回执 `applications=1`、新增 3、删除 1、拒绝 0，JEI 两项检查通过。
+
+同一存档复制到开发专服，启动时覆盖层新增 3、删除 1、拒绝 0。独立客户端起初进不去：Forge 登录时把 75856 个物品的注册表放在一个约 2.8MB 的登录包里，先撞上 3 字节帧长度，再撞上登录自定义包 1MB 上限。这是改动前就有的专服问题，加了 4 个放宽上限的 mixin（`PacketFrameEncoderMixin`、`PacketFrameDecoderMixin`、`LoginQueryPayloadMixin`、`CustomPayloadLimitMixin`），之后客户端收齐 19 个注册表。手工拼的客户端启动命令一开始只带 6 个输出目录，映射 0 条、没有 JEI 和 Jade，那几次不算；换成 Gradle 的完整运行时类路径（125 项、映射 33222 条）后重跑。客户端先收到配方、18 秒后才收到标签，标签输入展开为空（新增 1、拒绝 1）。客户端改成收到标签包时再应用一次后，10:18:24 回执 `integratedServer=false`、`applications=2`、新增 3、删除 1、拒绝 0，JEI 两项检查通过。用 `localhost` 连接 4 次里有 2 次握手卡住、30 秒后被服务端断开，原因未查；通过的那次是第二次连接。
+
+客户端改动后两个平台的 GameTest 于 10:36:07（Forge）和 10:42:42（NeoForge）通过；`:core:check` 通过，覆盖层契约强制重跑 44 条。NeoForge 单人新建世界 `applications` 1→2→3，每次重载一次，新增 3、删除 1、拒绝 0，JEI 两项通过；重进回执 `applications=1`，结果相同。
+
+逐表诊断发现启动顺序回归：`ServerStartedEvent` HIGH 先把原版熔炉配方镜像进 GT 熔炉表，覆盖层在 LOW 才首次应用，把镜像行捕获进基线，随后外部矿石重建里的 `clearMirrors()` 又撤掉镜像。开服或重进后熔炉表少 63 行，要等一次 `/reload` 才恢复；数据包删掉原版熔炉配方时，旧镜像行还会被基线恢复。改动前外部矿石重建跟着标签事件，早于 `ServerStartedEvent`，没有这个问题。两个平台的 `started` 改为 HIGHEST 后，熔炉表每次恢复都是丢 134、补 71，基线变为 Forge 214541、NeoForge 214532，与专服客户端收到标签前一致。修复后两个平台 GameTest 通过（11:20:48、11:26:00），重进存档的总行数等于重载后（Forge 215145、NeoForge 215136，修复前 215082、215073），JEI 检查通过。
+
+EMI（`-PemiSmoke=true -PemiOnlySmoke=true`，不装 JEI，检查程序分成 JEI、EMI 两个内部类）：Forge 单人新建世界 11:54:12 通过，EMI 粉碎机分类 6625 行（6623+3−1）；NeoForge 12:03:25 通过，EMI 先登记 6623 行，覆盖层应用后 6625 行。
+
+KubeJS（`-PkubejsRuntime=true`，专服用 RCON 发命令）：Forge 的 Rhino 坐标少了 `+forge` 后缀，已改正。世界数据包加配方 A，脚本用 `event.remove({type:'gregtech:machine'})`、`event.custom` 加配方 B 和一条删除。Forge 开服删 1、加 1；去掉 `event.remove` 后 `/reload` 删 1、加 2；加回后删 1、加 1。NeoForge 第一次两条 `event.custom` 都被拒：KubeJS 7 往 JSON 里加了 `_kubejs_changed_marker`，共享解析拒绝未知字段。顶层 `_` 开头的字段改为忽略（嵌套对象仍严格），契约 47 条通过；之后 NeoForge 开服和两次重载结果与 Forge 相同。
+
+Forge 专服第一次 `/reload` 被看门狗杀掉（单 tick 60 秒），之后两次重载各约 25 秒；NeoForge 独立客户端两次进专服都在配置阶段超时。两处都卡在 `Blocks.rebuildCache()` 里电线、信号线、传动轴的碰撞箱计算，另作修复，见下一条。修复后 NeoForge 专服开服覆盖层新增 3、删除 1、拒绝 0，独立客户端 12:57:33 开始连接、12:57:38 进服，12:58:04 回执 `integratedServer=false`、`applications=1`、新增 3、删除 1、拒绝 0、`viewer=jei`，两项 JEI 检查通过。专服客户端不跑熔炉镜像，`staticRows` 215073 比服务端少 63 行。
+
+专服 EMI（`-PemiSmoke=true -PemiOnlySmoke=true`，不装 JEI）：NeoForge 客户端先因新建目录弹出无障碍引导，没有去连服务器；拷入已有的 `options.txt`（`onboardAccessibility:false`）后，13:57:57 开始连接，13:59:48 回执 `viewer=emi`、`applications=1`、新增 3、删除 1、拒绝 0，被删的 `gregtech:stone_quartzite_bricks_redstone` 不在粉碎机页，海洋之心到下界之星在。Forge 14:21:26 连接，14:22:29 回执 `viewer=emi`、`applications=2`、新增 3、删除 1、拒绝 0，`staticRows` 215082。`applications=2` 是配方包和标签包各应用一次，标签到达前那次是新增 1、拒绝 1。被删的是这份存档里的 `gregtech:rock_gt_celenegil`。
+
+未修：Forge 首次开服时 KubeJS 解析一条带 `gregtech:finite_fluid_container_1000` 原料的配方报 null，之后开服和重载都正常。
+
+## 2026-10-16 / 电线和传动轴碰撞箱不进原版缓存
+
+两个平台编译通过。NeoForge 专服加独立客户端由超时变为 5 秒进服，结果记在上一条。Forge 专服保持默认 60 秒看门狗，13:01:12 和 13:01:21 两次 `/reload` 各约 5 秒完成，只报一次 `Can't keep up` 6490 ms，修复前约 25 秒且第一次被看门狗杀掉。
+
+Forge 默认三组命名空间的 GameTest 跑了四次：带修复两次、去掉修复两次。四次都在 `LongDistancePowerTests$Sink` 转型 `LongDistanceTransformerBlockEntity` 的 `ClassCastException` 处中止，每次都失败同样 24 个；另外 `headandhandlerowsstayshapeless` 在三次里失败（含一次去掉修复），`anitempipedropsitscoverswhenbroken` 除第一次带修复外都失败，两者时好时坏，都和电线、传动轴形状无关。带修复没有新增失败。NeoForge 跑 `gregtech_bootstrap`、`gregtech_signal_wire`、`gregtech_cover_issues` 共 28 个，带不带修复都是同样 3 个材料目录黄金值失败，信号线和覆盖板测试全过。这些已有失败没有查。
+
+没有实测：玩家站在粗细不同的电线、传动轴交界处的碰撞手感，以及大片电线区域的运行时帧率。
+
 ## 2026-10-15 / 附属材料入口与形态
 
 `ordering="BEFORE"` 在 NeoForge 开发专服三次都是同一线程、附属构造结束后 GT 才开始；Forge 开发专服三次里有两次构造重叠，成品 Forge 专服也重叠。两边开发环境和分开安装的成品 jar 上，GT 自己的 `ServiceLoader` 都能看到另一个 mod 的 services 文件（own=1，context=1）。成品专服读到这行后被停掉，没有等世界加载完。构造方法里碰 `Materials` 会把初始化弄失败，Gradle 退出码 0 不能算通过。`:core:check` 17:05 通过，核心物品 id 金样不变。Forge 开发专服 17:15:07、NeoForge 开发专服 17:17:50 都查到 `gregtech:dust_ammoniumnitrate` 和 `gregtech:crystal_diamond` 后停服。两边材料物品排队都是 56166，比 2026-10-14 的 56159 多 7。没有重跑不带样例的专服，没有客户端贴图、EMI、成品样例包、存档重开或卸载。详见 [记录](verification/addon-entry-materials-20261015.md)。
