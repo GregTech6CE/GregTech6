@@ -1,5 +1,5 @@
 {
-  "loader": "neoforge:composite",
+  "loader": "forge:composite",
   "parent": "minecraft:block/block",
   "textures": {
     "particle": "gregtech:block/machines/extenders/filter_prefix/colored/side"

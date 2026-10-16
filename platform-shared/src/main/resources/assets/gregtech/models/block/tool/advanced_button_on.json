@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/block",
-  "loader": "neoforge:composite",
+  "loader": "forge:composite",
   "textures": {
     "particle": "gregtech:block/machines/redstone/buttons/advanced/0/0/colored_off"
   },
