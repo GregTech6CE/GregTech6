@@ -1,0 +1,102 @@
+{
+  "date": "2026-10-16",
+  "source_commit": "41a751a6110c0d479df4f5aead20c71d49a54742",
+  "artifacts": {
+    "forge": {
+      "name": "gregtech6-1.20.1-forge-0.0.0.jar",
+      "bytes": 40235056,
+      "sha256": "c723eb93d05566fc7e0474d212346e66a515a8e14cdd81cf8f474a4a0c3f1c83",
+      "zip_crc_checked": true,
+      "path": "C:\\Dev\\GregTech6\\build\\verified\\20261016-153358Z-c723eb93\\gregtech6-1.20.1-forge-0.0.0.jar"
+    },
+    "neoforge": {
+      "name": "gregtech6-neoforge-1.21.1-0.0.0.jar",
+      "bytes": 40091053,
+      "sha256": "4985a3d084b7e2e316dad8773115ba749ba1e0445718c45d426d2cd60555fd5a",
+      "zip_crc_checked": true,
+      "path": "C:\\Dev\\GregTech6\\build\\verified\\20261016-153358Z-c723eb93\\gregtech6-neoforge-1.21.1-0.0.0.jar"
+    }
+  },
+  "build_duration": "6m52s",
+  "shared_classes": 812,
+  "new_resources": {
+    "forge": {
+      "material_form_groups_exact": 56,
+      "new_classes_present": true
+    },
+    "neoforge": {
+      "material_form_groups_exact": 56,
+      "new_classes_present": true
+    }
+  },
+  "clients": {
+    "forge": {
+      "version": "1.20.1-Forge_47.4.26",
+      "java_version": "openjdk version \"25.0.2\" 2026-01-20 LTS\nOpenJDK Runtime Environment Zulu25.32+21-CA (build 25.0.2+10-LTS)\nOpenJDK 64-Bit Server VM Zulu25.32+21-CA (build 25.0.2+10-LTS, mixed mode, sharing)",
+      "elapsed_seconds": 67.17,
+      "exit_code": 0,
+      "installed_files_modified": false,
+      "log": "C:\\Dev\\GregTech6\\build\\production-smoke\\forge-76b7007b-abe6-4328-bb3d-6e9049e48bd5\\launch.log",
+      "log_sha256": "7c4ddbda9eaff3363fe17b20d09c8179e46cd0e374064d4dc013f5d10b8fbd39",
+      "receipt_file": "C:\\Dev\\GregTech6\\work\\delivery-20261016\\forge-startup.json",
+      "receipt_sha256": "dc33b7afdbfdfe9c544faea259a8af6533b774ea4e62b3035355bbce1d05ee95",
+      "screenshot": "C:\\Dev\\GregTech6\\build\\production-smoke\\forge-76b7007b-abe6-4328-bb3d-6e9049e48bd5\\screenshots\\production-forge-64e10a58-e475-4d96-8c87-cedcce4ec11c.png",
+      "screenshot_sha256": "7eeb7b26a91b6828cb2542c09e2219fa1971b1854d024330c8d60ea2c1b32e3d",
+      "screenshot_reviewed": true,
+      "screenshot_scope": "Existing fluid/bee/anvil samples only",
+      "unable_to_load_model_warning_count": 421,
+      "mods": [
+        "gregtech6-1.20.1-forge-0.0.0.jar",
+        "gregtech-delivery-probe-0.0.0.jar",
+        "Jade-1.20.1-Forge-11.13.3.jar",
+        "jei-1.20.1-forge-15.62.0.217.jar",
+        "mezz_config-1.20.1-forge-0.6.8.jar"
+      ]
+    },
+    "neoforge": {
+      "version": "1.21.1-NeoForge_21.1.252",
+      "java_version": "openjdk version \"25.0.2\" 2026-01-20 LTS\nOpenJDK Runtime Environment Zulu25.32+21-CA (build 25.0.2+10-LTS)\nOpenJDK 64-Bit Server VM Zulu25.32+21-CA (build 25.0.2+10-LTS, mixed mode, sharing)",
+      "elapsed_seconds": 56.88,
+      "exit_code": 0,
+      "installed_files_modified": false,
+      "log": "C:\\Dev\\GregTech6\\build\\production-smoke\\neoforge-b0eb8558-31e2-4173-ba83-f568b93e51ec\\launch.log",
+      "log_sha256": "14b0445dc482928f99b68d7685312dc9f5f2fe3f389b890c4f6b7d61508ee6e7",
+      "receipt_file": "C:\\Dev\\GregTech6\\work\\delivery-20261016\\neoforge-startup.json",
+      "receipt_sha256": "0ba0a9dbf6c17a8fe17b356777b8d7439ec87a6ae6bd3832d02f6a46553a0c7f",
+      "screenshot": "C:\\Dev\\GregTech6\\build\\production-smoke\\neoforge-b0eb8558-31e2-4173-ba83-f568b93e51ec\\screenshots\\production-neoforge-c8be03d4-5f36-45cc-8897-1ecf9a73515f.png",
+      "screenshot_sha256": "23cf780c1b1391e2d5e9d9418eccc82f7b374277aa58220a7542bb320e3d1dae",
+      "screenshot_reviewed": true,
+      "screenshot_scope": "Existing fluid/bee/anvil samples only",
+      "unable_to_load_model_warning_count": 421,
+      "mods": [
+        "gregtech6-neoforge-1.21.1-0.0.0.jar",
+        "gregtech-delivery-probe-0.0.0.jar",
+        "emi-1.1.24+1.21.1+neoforge.jar",
+        "Jade-1.21.1-NeoForge-15.10.6.jar"
+      ]
+    }
+  },
+  "limits": [
+    "Title-screen startup and existing item/render/language callback checks only; no world gameplay acceptance",
+    "No Reliable EMI folding interaction or native tool-assembly usage click acceptance",
+    "No old-save restart or complete survival-chain acceptance"
+  ],
+  "logs": {
+    "build.log": {
+      "path": "C:\\Dev\\GregTech6\\work\\delivery-20261016\\build.log",
+      "sha256": "8a7938ea14d4660d26ed32384b640ebaaf3c32fe160f4708c9df5827a1985b35"
+    },
+    "artifacts.json": {
+      "path": "C:\\Dev\\GregTech6\\work\\delivery-20261016\\artifacts.json",
+      "sha256": "00e9d78e58a69a13bb025ddee4825716c8e8a11a60feb53a1c92a666871c23a3"
+    },
+    "new-resources.json": {
+      "path": "C:\\Dev\\GregTech6\\work\\delivery-20261016\\new-resources.json",
+      "sha256": "cd1a33202ecbb89014dc82d76ff7a1066d255b93f12450c54df560824930bc94"
+    },
+    "copies.json": {
+      "path": "C:\\Dev\\GregTech6\\work\\delivery-20261016\\copies.json",
+      "sha256": "450fd31d1d1200a55038b3128d29d598c38bbaa09ddeb1e745198352a0c943d2"
+    }
+  }
+}
