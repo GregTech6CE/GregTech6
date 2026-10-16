@@ -1,6 +1,7 @@
 package com.gregtech.gregtech.content.recipe;
 
-import com.gregtech.gregtech.GregTech;
+import com.gregtech.gregtech.platform.Mc;
+
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
 import com.gregtech.gregtech.api.material.GTValues;
@@ -70,7 +71,7 @@ public final class AnvilShreddingRecipes {
             if (material.has(MaterialProperty.ANTIMATTER)) continue;
             for (Row row : ROWS) grind(material, row);
         }
-        GregTech.LOGGER.info("Registered {} GT6 anvil shredding recipes ({} notes: {})",
+        Mc.logger().info("Registered {} GT6 anvil shredding recipes ({} notes: {})",
                 ENTRIES.size(), SKIPPED.size(), SKIPPED);
         return ENTRIES.size();
     }

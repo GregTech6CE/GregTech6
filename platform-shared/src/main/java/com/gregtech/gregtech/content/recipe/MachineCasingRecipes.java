@@ -1,6 +1,7 @@
 package com.gregtech.gregtech.content.recipe;
 
-import com.gregtech.gregtech.GregTech;
+import com.gregtech.gregtech.platform.Mc;
+
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
 import com.gregtech.gregtech.api.material.MaterialProperty;
@@ -50,7 +51,7 @@ public final class MachineCasingRecipes {
             }
             if (count > before) materials++;
         }
-        GregTech.LOGGER.info("Registered {} GT6 machine casing welds for {} materials", count, materials);
+        Mc.logger().info("Registered {} GT6 machine casing welds for {} materials", count, materials);
         return count;
     }
 

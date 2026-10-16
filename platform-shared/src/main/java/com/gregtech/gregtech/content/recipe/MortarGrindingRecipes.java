@@ -1,6 +1,6 @@
 package com.gregtech.gregtech.content.recipe;
 
-import com.gregtech.gregtech.GregTech;
+import com.gregtech.gregtech.platform.Mc;
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
 import com.gregtech.gregtech.api.material.GTValues;
@@ -85,7 +85,7 @@ public final class MortarGrindingRecipes {
                 for (String row : WOOD_ROWS) grind(material, row);
             }
         }
-        GregTech.LOGGER.info("Registered {} GT6 mortar grinding recipes ({} GT6 rows skipped: {})",
+        Mc.logger().info("Registered {} GT6 mortar grinding recipes ({} GT6 rows skipped: {})",
                 ENTRIES.size(), SKIPPED.size(), SKIPPED);
         return ENTRIES.size();
     }
