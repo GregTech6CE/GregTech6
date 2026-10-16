@@ -1,0 +1,58 @@
+// platform-shared is one source tree compiled by both loaders. It is not a Gradle subproject
+// and it is not core: Forge still reobfuscates its classes, and each loader keeps its own mixin refmap.
+def sharedJava = rootProject.file('platform-shared/src/main/java')
+def sharedResources = rootProject.file('platform-shared/src/main/resources')
+
+sourceSets.main.java.srcDir sharedJava
+sourceSets.main.resources {
+    srcDir sharedResources
+    // Placeholder files keep the empty directories in git. They are not mod resources.
+    exclude '**/.gitkeep'
+}
+
+def findDuplicateResourcePaths = { File sharedDir, Collection<File> platformDirs ->
+    if (!sharedDir.isDirectory()) {
+        return []
+    }
+    def failures = []
+    def present = platformDirs.findAll { it != null && it.isDirectory() && it.canonicalFile != sharedDir.canonicalFile }
+    fileTree(dir: sharedDir, exclude: '**/.gitkeep').visit { details ->
+        if (details.directory) {
+            return
+        }
+        def relative = details.relativePath.pathString
+        present.each { dir ->
+            if (new File(dir, relative).isFile()) {
+                failures << "${relative} is in ${sharedDir} and ${dir}"
+            }
+        }
+    }
+    failures
+}
+
+// The Forge incremental copy replaces Copy.copy() and does not apply DuplicatesStrategy.
+// NeoForge's processResources defaults to including the first copy. Fail before either writes output.
+tasks.named('processResources').configure {
+    doFirst {
+        def failures = findDuplicateResourcePaths(sharedResources, sourceSets.main.resources.srcDirs)
+        if (!failures.isEmpty()) {
+            throw new GradleException("Shared resources also exist in a platform directory:\n" + failures.join('\n'))
+        }
+    }
+}
+
+if (project == rootProject && project.hasProperty('sharedDuplicateFixture')) {
+    tasks.register('verifySharedResourceDuplicates') {
+        doLast {
+            def root = file(project.property('sharedDuplicateFixture'))
+            def duplicated = findDuplicateResourcePaths(new File(root, 'duplicated/shared'), [new File(root, 'duplicated/platform')])
+            def distinct = findDuplicateResourcePaths(new File(root, 'distinct/shared'), [new File(root, 'distinct/platform')])
+            if (!duplicated.any { it.startsWith('assets/probe.txt ') }) {
+                throw new GradleException('duplicate fixture was not reported: ' + duplicated)
+            }
+            if (!distinct.isEmpty()) {
+                throw new GradleException('distinct fixture reported duplicates: ' + distinct)
+            }
+        }
+    }
+}

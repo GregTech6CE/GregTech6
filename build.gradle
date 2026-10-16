@@ -357,6 +357,8 @@ tasks.named('processResources', ProcessResources).configure {
     }
 }
 
+apply from: 'gradle/platform-shared.gradle'
+
 // Example for how to get properties into the manifest for reading at runtime.
 tasks.named('jar', Jar).configure {
     // ForgeGradle rewrites every class in this jar, including pure Java constant pools.
