@@ -6,6 +6,7 @@ import shutil
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 GT6 = ROOT.parent / "gregtech6-master" / "gregtech6-master" / "src" / "main" / "resources" / "assets" / "gregtech" / "textures" / "blocks" / "machines"
 ASSETS = ROOT / "src" / "main" / "resources" / "assets" / "gregtech"
 TEXTURES = ASSETS / "textures" / "block" / "machines"
@@ -61,10 +62,10 @@ def main():
                              (f"flux_magnet_{tier}", "magnet_flux")):
             for active in (False, True):
                 model_name = name + ("_active" if active else "")
-                write_json(ASSETS / "models" / "block" / "machine" / "energy" / f"{model_name}.json",
+                write_json(SHARED_ASSETS / "models" / "block" / "machine" / "energy" / f"{model_name}.json",
                            model(folder, active))
-            write_json(ASSETS / "blockstates" / f"{name}.json", blockstate(name))
-            write_json(ASSETS / "models" / "item" / f"{name}.json",
+            write_json(SHARED_ASSETS / "blockstates" / f"{name}.json", blockstate(name))
+            write_json(SHARED_ASSETS / "models" / "item" / f"{name}.json",
                        {"parent": f"gregtech:block/machine/energy/{name}"})
     # Recipes are resolved once from core OriginalMagnetCrafting by both native
     # loaders. Never recreate the old unguarded static JSON recipes here.

@@ -25,11 +25,12 @@ import zlib
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ASSETS = ROOT / "src/main/resources/assets/gregtech"
 ORIGINAL = ROOT.parent / "gregtech6-master/gregtech6-master"
 MANIFEST = ROOT / "tools/gt6_texture_sources.json"
 ICONS = ASSETS / "textures/item/material_icons"
-MODELS = ASSETS / "models/item/material"
+MODELS = SHARED_ASSETS / "models/item/material"
 SOURCE_ICON = "src/main/resources/assets/gregtech/textures/blocks/iconsets/COIN.png"
 
 # (english, chinese) - the two names every registered gregtech item must have in both files

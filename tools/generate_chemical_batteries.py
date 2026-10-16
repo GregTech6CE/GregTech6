@@ -4,6 +4,7 @@ import re
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ORIGINAL=ROOT.parent/'gregtech6-master/gregtech6-master/src/main'
 ASSETS=ROOT/'src/main/resources/assets/gregtech'
 DATA=ROOT/'src/main/resources/data/gregtech'
@@ -36,7 +37,7 @@ def run():
                     elements.append({'from':[inset-.032,1,inset-.032],'to':[16-inset+.032,energy+1,16-inset+.032],'faces':{face:{'texture':'#bar','tintindex':0} for face in ['north','south','east','west']}})
                 model={'parent':'minecraft:block/block','render_type':'minecraft:cutout','textures':{face:f'gregtech:{folder}/{face}' for face in ['bottom','top','sides','bar']},'elements':elements}
                 model['textures']['particle']=model['textures']['sides']
-                write(ASSETS/f'models/block/chemical_battery/{kind}_{voltage}_{energy}.json',model)
+                write(SHARED_ASSETS/f'models/block/chemical_battery/{kind}_{voltage}_{energy}.json',model)
     for chemistry,(old,name,en,cell) in enumerate(CHEM):
         for tier,suffix in enumerate(TIERS):
             number=14000+chemistry*10+tier;voltage=8*4**tier;ident=f'battery_{name}_{suffix}'
@@ -51,9 +52,9 @@ def run():
             keys={symbol:value for symbol,value in keys.items() if symbol in ''.join(rows)}
             write(DATA/f'recipes/chemical_batteries/{ident}.json',{'type':'gregtech:tool_shaped','allow_mirror':False,'pattern':rows,'key':keys,'result':{'item':'gregtech:'+ident}})
             kind='advanced' if chemistry>=3 else 'standard';stem=f'gregtech:block/chemical_battery/{kind}_{voltage}_'
-            write(ASSETS/f'blockstates/{ident}.json',{'variants':{'':{'model':stem+'0'}}})
+            write(SHARED_ASSETS/f'blockstates/{ident}.json',{'variants':{'':{'model':stem+'0'}}})
             scale=[4,7,7,7,9][tier]
-            write(ASSETS/f'models/item/{ident}.json',{'parent':stem+'0','overrides':[{'predicate':{'gregtech:battery_charge':energy/scale},'model':stem+str(energy)} for energy in range(1,scale+1)]})
+            write(SHARED_ASSETS/f'models/item/{ident}.json',{'parent':stem+'0','overrides':[{'predicate':{'gregtech:battery_charge':energy/scale},'model':stem+str(energy)} for energy in range(1,scale+1)]})
             translations['en_us']['block.gregtech.'+ident]=f'{en} Battery ({suffix.upper()})'
             translations['zh_cn']['block.gregtech.'+ident]=re.search(r'S:gt\.multitileentity\.'+str(number)+r'=([^\r\n]+)',cn).group(1)
     # Retained prototype IDs use the very same chemistry assets, never the old generic-node models.

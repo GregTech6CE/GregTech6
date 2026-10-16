@@ -8,10 +8,11 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ASSETS = ROOT / "src/main/resources/assets/gregtech"
-BLOCKSTATES = ASSETS / "blockstates"
-MODELS = ASSETS / "models/block"
-ITEM_MODELS = ASSETS / "models/item"
+BLOCKSTATES = SHARED_ASSETS / "blockstates"
+MODELS = SHARED_ASSETS / "models/block"
+ITEM_MODELS = SHARED_ASSETS / "models/item"
 LANG_EN = ASSETS / "lang/en_us.json"
 LANG_ZH = ASSETS / "lang/zh_cn.json"
 JAVA_MATERIALS = ROOT / "tools/generated/materials-source.java.txt"

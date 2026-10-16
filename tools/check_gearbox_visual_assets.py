@@ -7,6 +7,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ASSETS = ROOT / "src/main/resources/assets/gregtech"
 SOURCE = ROOT.parent / "gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech/textures/blocks/iconsets"
 NAMES = (
@@ -26,9 +27,9 @@ def check() -> None:
     for name in NAMES:
         assert f'"{name}"' in registered, f"{name} is not a registered icon set block"
         assert f'"block/iconsets/{name}"' in model, f"dynamic gearbox model does not use {name}"
-        state = json.loads((ASSETS / f"blockstates/{name}.json").read_text(encoding="utf-8"))
+        state = json.loads((SHARED_ASSETS / f"blockstates/{name}.json").read_text(encoding="utf-8"))
         assert state["variants"][""]["model"] == f"gregtech:block/iconsets/{name}"
-        block_model = json.loads((ASSETS / f"models/block/iconsets/{name}.json").read_text(encoding="utf-8"))
+        block_model = json.loads((SHARED_ASSETS / f"models/block/iconsets/{name}.json").read_text(encoding="utf-8"))
         assert block_model["textures"]["all"] == f"gregtech:block/iconsets/{name}"
         texture = (ASSETS / f"textures/block/iconsets/{name}.png").read_bytes()
         assert texture.startswith(b"\x89PNG\r\n\x1a\n"), f"{name} is not PNG"

@@ -3,9 +3,10 @@ import json
 from pathlib import Path
 import unittest
 ASSETS = Path(__file__).resolve().parents[2] / 'src/main/resources/assets/gregtech'
+SHARED_ASSETS = Path(__file__).resolve().parents[2] / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 class ScaffoldModelTests(unittest.TestCase):
     def test_all_structural_designs(self):
-        variants = json.loads((ASSETS / 'blockstates/scaffold.json').read_text())['variants']
+        variants = json.loads((SHARED_ASSETS / 'blockstates/scaffold.json').read_text())['variants']
         self.assertEqual(16, len(variants))
         for design, count in ((0, 4), (1, 7), (2, 6), (3, 1)):
             for facing in ('north', 'east', 'south', 'west'):
@@ -21,7 +22,7 @@ class ScaffoldModelTests(unittest.TestCase):
     def test_original_plate_rod_and_hatch_layers(self):
         for design in range(4):
             suffix = '_' + str(design) if design else ''
-            model = json.loads((ASSETS / f'models/block/tool/scaffold{suffix}.json').read_text())
+            model = json.loads((SHARED_ASSETS / f'models/block/tool/scaffold{suffix}.json').read_text())
             base = model.get('children', {}).get('base', model)
             rod_indices = {0: {1, 2, 3}, 1: {1, 2, 3, 4}, 2: {0, 1, 2, 3}, 3: set()}[design]
             for i, element in enumerate(base['elements']):
@@ -41,7 +42,7 @@ class ScaffoldModelTests(unittest.TestCase):
                 self.assertNotIn('hatch', model.get('children', {}))
 
     def test_item_uses_standing_hatch(self):
-        item = json.loads((ASSETS / 'models/item/scaffold.json').read_text())
+        item = json.loads((SHARED_ASSETS / 'models/item/scaffold.json').read_text())
         self.assertEqual('gregtech:block/tool/scaffold_1', item['parent'])
 if __name__ == '__main__':
     unittest.main()

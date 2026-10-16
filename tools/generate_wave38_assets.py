@@ -3,7 +3,7 @@
 
 import json, os
 
-ASSETS = "src/main/resources/assets/gregtech"
+ASSETS = "platform-shared/src/main/resources/assets/gregtech"
 BLOCKSTATES = f"{ASSETS}/blockstates"
 MODELS_BLOCK = f"{ASSETS}/models/block"
 MODELS_ITEM = f"{ASSETS}/models/item"

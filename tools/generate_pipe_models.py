@@ -12,11 +12,12 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ASSETS = ROOT / "src/main/resources/assets/gregtech"
-BLOCKSTATES = ASSETS / "blockstates"
-MODELS_MACHINE = ASSETS / "models/block/machine"
-MODELS_BLOCKS = ASSETS / "models/block/blocks"
-MODELS_ITEM = ASSETS / "models/item"
+BLOCKSTATES = SHARED_ASSETS / "blockstates"
+MODELS_MACHINE = SHARED_ASSETS / "models/block/machine"
+MODELS_BLOCKS = SHARED_ASSETS / "models/block/blocks"
+MODELS_ITEM = SHARED_ASSETS / "models/item"
 
 # ── Material → texture set folder mapping (extracted from original blockstates) ──
 TEX_FOLDER: dict[str, str] = {

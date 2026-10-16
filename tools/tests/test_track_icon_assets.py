@@ -6,15 +6,16 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[2]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ASSETS = ROOT / "src/main/resources/assets/gregtech"
 
 
 class TrackIconAssetsTest(unittest.TestCase):
     def test_real_tracks_resolve_their_textures(self):
-        blockstates = ASSETS / "blockstates"
+        blockstates = SHARED_ASSETS / "blockstates"
         track_states = sorted(blockstates.glob("track_*.json"))
         self.assertEqual(30, len(track_states))
-        models = ASSETS / "models/block"
+        models = SHARED_ASSETS / "models/block"
         referenced_textures = set()
         for path in track_states:
             for variant in json.loads(path.read_text(encoding="utf-8"))["variants"].values():
@@ -27,7 +28,7 @@ class TrackIconAssetsTest(unittest.TestCase):
                 referenced_textures.add(png)
         self.assertEqual(60, len(referenced_textures))  # six shapes x ten GT6 materials
 
-        item_models = sorted((ASSETS / "models/item").glob("track_*.json"))
+        item_models = sorted((SHARED_ASSETS / "models/item").glob("track_*.json"))
         self.assertEqual(30, len(item_models))
         for item_model in item_models:
             parent = json.loads(item_model.read_text(encoding="utf-8"))["parent"]

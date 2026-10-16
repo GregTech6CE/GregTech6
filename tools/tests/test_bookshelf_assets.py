@@ -6,6 +6,7 @@ import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[2]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 spec = importlib.util.spec_from_file_location("bookshelf_assets", ROOT / "tools/generate_bookshelf_assets.py")
 assets = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(assets)
@@ -33,7 +34,7 @@ class BookShelfAssets(unittest.TestCase):
             self.assertEqual((assets.ASSETS / relative).read_bytes(), source.read_bytes())
 
     def test_double_sided_frame_and_four_rotations(self):
-        model = json.loads((assets.ASSETS / "models/block/bookshelf.json").read_text())
+        model = json.loads((assets.SHARED_ASSETS / "models/block/bookshelf.json").read_text())
         self.assertEqual(len(model["elements"]), 7)
         self.assertEqual(model["textures"]["wood"], "minecraft:block/oak_planks")
         self.assertEqual(
@@ -51,7 +52,7 @@ class BookShelfAssets(unittest.TestCase):
         for element in model["elements"]:
             for face in element["faces"].values():
                 self.assertIn(face["texture"].removeprefix("#"), model["textures"])
-        states = json.loads((assets.ASSETS / "blockstates/bookshelf.json").read_text())["variants"]
+        states = json.loads((assets.SHARED_ASSETS / "blockstates/bookshelf.json").read_text())["variants"]
         self.assertEqual([states["facing=" + d]["y"] for d in ("north", "east", "south", "west")], [0, 90, 180, 270])
 
 

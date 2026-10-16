@@ -9,9 +9,10 @@ GT6 = r"F:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main\resources\as
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "gregtech")
 TEX = os.path.join(ASSETS, "textures", "block", "machines", "multiblockparts")
-MODELS = os.path.join(ASSETS, "models", "block", "machine", "multiblock")
-BLOCKSTATES = os.path.join(ASSETS, "blockstates")
-ITEM_MODELS = os.path.join(ASSETS, "models", "item")
+SHARED = os.path.join(ROOT, "platform-shared", "src", "main", "resources", "assets", "gregtech")
+MODELS = os.path.join(SHARED, "models", "block", "machine", "multiblock")
+BLOCKSTATES = os.path.join(SHARED, "blockstates")
+ITEM_MODELS = os.path.join(SHARED, "models", "item")
 
 # (id, gt6 folder, en, zh)
 PARTS = [

@@ -36,6 +36,7 @@ from pathlib import Path
 from PIL import Image, ImageChops
 
 ROOT = Path(__file__).resolve().parents[1]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 RESOURCES = ROOT / "src/main/resources"
 ASSETS = RESOURCES / "assets/gregtech"
 LANG = ASSETS / "lang"
@@ -175,19 +176,19 @@ def portal_models() -> int:
         frame = {"render_type": "minecraft:cutout",
                  "textures": {"frame": frame_texture, "particle": frame_texture},
                  "elements": [element(box, "#frame") for box in BOUNDS[1:]]}
-        written += write_json(ASSETS / "models/block/dungeon" / (block_id + "_frame.json"), frame)
+        written += write_json(SHARED_ASSETS / "models/block/dungeon" / (block_id + "_frame.json"), frame)
         # The open portal: the same frame plus GT6's inner portal cube.
         open_model = {"render_type": "minecraft:translucent",
                       "textures": {"frame": frame_texture, "portal": plane_texture,
                                    "particle": plane_texture},
                       "elements": [element(box, "#frame") for box in BOUNDS[1:]]
                                   + [element(BOUNDS[0], "#portal")]}
-        written += write_json(ASSETS / "models/block/dungeon" / (block_id + ".json"), open_model)
+        written += write_json(SHARED_ASSETS / "models/block/dungeon" / (block_id + ".json"), open_model)
         state = {"variants": {
             "active=false": {"model": "gregtech:block/dungeon/%s_frame" % block_id},
             "active=true": {"model": "gregtech:block/dungeon/%s" % block_id}}}
-        written += write_json(ASSETS / "blockstates" / (block_id + ".json"), state)
-        written += write_json(ASSETS / "models/item" / (block_id + ".json"),
+        written += write_json(SHARED_ASSETS / "blockstates" / (block_id + ".json"), state)
+        written += write_json(SHARED_ASSETS / "models/item" / (block_id + ".json"),
                               {"parent": "gregtech:block/dungeon/%s" % block_id})
     return written
 
@@ -195,7 +196,7 @@ def portal_models() -> int:
 def key_models() -> int:
     written = 0
     for _item_id, port_id, _en, _zh in KEYS:
-        written += write_json(ASSETS / "models/item" / (port_id + ".json"),
+        written += write_json(SHARED_ASSETS / "models/item" / (port_id + ".json"),
                               {"parent": "minecraft:item/generated",
                                "textures": {"layer0": "gregtech:item/" + port_id}})
     return written

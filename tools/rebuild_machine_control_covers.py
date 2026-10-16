@@ -5,6 +5,7 @@ import shutil
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ASSETS = ROOT / 'src/main/resources/assets/gregtech'
 SPECS = [
     ('automatic_machine_switch', 'autoswitch', ['BW', 'CQ'], 1, 'lever', None),
@@ -46,7 +47,7 @@ def main(original=None):
         write(ledger_path, ledger)
     for name, texture, pattern, tier, component, extra in SPECS:
         foreground = f'gregtech:block/machines/covers/{texture}/circuit'
-        write(ASSETS / f'models/item/{name}.json', {'parent': 'minecraft:item/generated',
+        write(SHARED_ASSETS / f'models/item/{name}.json', {'parent': 'minecraft:item/generated',
               'textures': {'layer0': 'gregtech:block/machines/covers/base', 'layer1': foreground, 'particle': foreground}})
         keys = {'Q': 'gregtech:blank_cover', 'C': 'gregtech:circuit_' + CIRCUITS[tier],
                 'W': 'gregtech:cable_01_' + ('copper' if name == 'auto_redstone_machine_switch' else 'tin'),

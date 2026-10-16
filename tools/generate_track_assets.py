@@ -11,9 +11,9 @@ side for them:
   repo). Vanilla's rail models take the texture variable `rail`, so every stub is a one-liner.
 
 Inputs : none (the table below mirrors `GTTrackBlocks.java` / GT6 `Loader_Rails:41-72`)
-Output : src/main/resources/assets/gregtech/blockstates/track*.json
-         src/main/resources/assets/gregtech/models/block/tracks/*.json
-         src/main/resources/assets/gregtech/models/item/track*.json
+Output : platform-shared/src/main/resources/assets/gregtech/blockstates/track*.json
+         platform-shared/src/main/resources/assets/gregtech/models/block/tracks/*.json
+         platform-shared/src/main/resources/assets/gregtech/models/item/track*.json
 """
 
 from __future__ import annotations
@@ -22,9 +22,9 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-BLOCKSTATES = ROOT / "src/main/resources/assets/gregtech/blockstates"
-MODELS = ROOT / "src/main/resources/assets/gregtech/models/block/tracks"
-ITEM_MODELS = ROOT / "src/main/resources/assets/gregtech/models/item"
+BLOCKSTATES = ROOT / "platform-shared/src/main/resources/assets/gregtech/blockstates"
+MODELS = ROOT / "platform-shared/src/main/resources/assets/gregtech/models/block/tracks"
+ITEM_MODELS = ROOT / "platform-shared/src/main/resources/assets/gregtech/models/item"
 
 # material slug -> the GT6 iconset texture stem (upper case, as in the resource pack)
 # `LoadTracks.java` uses RAIL_STRAIGHT_/RAIL_TURNED_/RAIL_BOOSTER(_ACTIVE)_/RAIL_DETECTOR(_ACTIVE)_.

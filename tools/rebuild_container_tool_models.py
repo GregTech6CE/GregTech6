@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ASSETS = ROOT / 'src/main/resources/assets/gregtech'
 DIRECTIONS = ('west', 'east', 'north', 'south', 'up', 'down')
 
@@ -103,7 +104,9 @@ TOOLS = {
 
 
 def write(path, data):
-    path = ASSETS / path
+    relative = Path(path)
+    root = SHARED_ASSETS if relative.parts and relative.parts[0] in ('models', 'blockstates') else ASSETS
+    path = root / relative
     path.parent.mkdir(parents=True, exist_ok=True)
     text = json.dumps(data, indent=2) + '\n'
     if not path.exists() or path.read_text(encoding='utf-8') != text:
@@ -172,8 +175,8 @@ def main():
     # Fuel rods are rendered from the original single rod mesh, not invented flat sprites.
     layered('models/block/machine/container/reactor_rod.json', 'generators/reactor_rods',
             [box([6,0,6],[10,16,10],up='top',down='top')])
-    for path in (ASSETS/'models/item').glob('fuel_rod_*.json'):
-        write(path.relative_to(ASSETS), {'parent': 'gregtech:block/machine/container/reactor_rod'})
+    for path in (SHARED_ASSETS/'models/item').glob('fuel_rod_*.json'):
+        write(path.relative_to(SHARED_ASSETS), {'parent': 'gregtech:block/machine/container/reactor_rod'})
     for name, voltage, inset, height in [('lv',32,5,11),('mv',128,4,11),('hv',512,3,11),('ev',2048,2,13),('iv',2048,2,13)]:
         # The old port's extra IV item retains the largest GT6 standard battery shell.
         parts = [box([inset,0,inset],[16-inset,height,16-inset],up='top',down='bottom')]
@@ -188,14 +191,14 @@ def main():
     for name, (body, tip) in tools.items():
         write(f'models/item/{name}.json', {'parent':'minecraft:item/handheld', 'textures': {
             f'layer{i}': 'gregtech:item/' + texture for i,texture in enumerate([body,body+'_overlay',tip,tip+'_overlay'])}})
-    for path in (ASSETS/'models/block/magnet').glob('magnet_*.json'):
+    for path in (SHARED_ASSETS/'models/block/magnet').glob('magnet_*.json'):
         if 'electromagnetic' in path.stem:
-            layered(path.relative_to(ASSETS), 'magnets/magnet_electric',
+            layered(path.relative_to(SHARED_ASSETS), 'magnets/magnet_electric',
                     [box([0,0,0],[16,16,16],'side',north='front',south='back')])
         else:
             parts = [box([0,0,0],[16,16,16])]
             for face in parts[0]['faces'].values(): face['tintindex'] = 0
-            write(path.relative_to(ASSETS), {'parent':'minecraft:block/block',
+            write(path.relative_to(SHARED_ASSETS), {'parent':'minecraft:block/block',
                   'textures':{'sides':'gregtech:block/material_icons/magnetic/blocksolid'}, 'elements':parts})
     print(f'Rebuilt {len(VESSELS)} portable vessels, {len(TOOLS)} tool meshes, fuel rods, batteries, electric tools and magnets')
 

@@ -3,9 +3,18 @@ from pathlib import Path
 import unittest
 
 ROOT = Path(__file__).resolve().parents[2]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ASSETS = ROOT / 'src/main/resources/assets/gregtech'
 
-def read(path): return json.loads((ASSETS / path).read_text(encoding='utf-8'))
+CORE_ASSETS = ROOT / 'core/src/main/resources/assets/gregtech'
+
+def read(path):
+    relative = Path(path)
+    for root in (SHARED_ASSETS, CORE_ASSETS, ASSETS):
+        candidate = root / relative
+        if candidate.is_file():
+            return json.loads(candidate.read_text(encoding='utf-8'))
+    raise FileNotFoundError(path)
 
 class ManualRebuildTests(unittest.TestCase):
     def test_original_mortar_is_hollow_with_pestle(self):
@@ -40,7 +49,7 @@ class ManualRebuildTests(unittest.TestCase):
 
     def test_chest_items_use_shared_custom_mesh(self):
         self.assertEqual('builtin/entity', read('models/item/metal_chest.json')['parent'])
-        for path in (ASSETS / 'models/item').glob('chest_*.json'):
+        for path in (SHARED_ASSETS / 'models/item').glob('chest_*.json'):
             self.assertEqual('gregtech:item/metal_chest', json.loads(path.read_text(encoding='utf-8'))['parent'])
 
 if __name__ == '__main__': unittest.main()

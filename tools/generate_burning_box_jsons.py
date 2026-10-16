@@ -4,7 +4,7 @@ import json, os, shutil
 
 BASE = "src/main/resources/assets/gregtech"
 BS_DIR = os.path.join(BASE, "blockstates")
-MODEL_DIR = os.path.join(BASE, "models/block/machine")
+MODEL_DIR = os.path.join("platform-shared/src/main/resources/assets/gregtech", "models/block/machine")
 
 # Texture set name -> directory name
 TEXTURE_SETS = {

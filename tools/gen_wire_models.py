@@ -163,8 +163,8 @@ def make_side_model(size, insulated):
 
     return {'parent': 'block/block', 'textures': textures, 'elements': elements}
 
-base_blocks = Path(__file__).resolve().parents[1] / 'src/main/resources/assets/gregtech/models/block/blocks'
-base_machine = Path(__file__).resolve().parents[1] / 'src/main/resources/assets/gregtech/models/block/machine'
+base_blocks = Path(__file__).resolve().parents[1] / 'platform-shared/src/main/resources/assets/gregtech/models/block/blocks'
+base_machine = Path(__file__).resolve().parents[1] / 'platform-shared/src/main/resources/assets/gregtech/models/block/machine'
 
 count = 0
 

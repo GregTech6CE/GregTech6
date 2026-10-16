@@ -3,6 +3,7 @@ import json
 import re
 import unittest
 from pathlib import Path
+SHARED_ASSETS = Path(__file__).resolve().parents[2] / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 from tools.rebuild_machine_control_covers import SPECS, ASSETS, ROOT
 from tools.check_render_resources import check
 
@@ -12,7 +13,7 @@ class MachineControlCoverResources(unittest.TestCase):
         ledger = json.loads((ROOT / 'tools/gt6_texture_sources.json').read_text(encoding='utf-8'))
         paths = []
         for name, texture, *_ in SPECS:
-            path = ASSETS / f'models/item/{name}.json'
+            path = SHARED_ASSETS / f'models/item/{name}.json'
             paths.append(path)
             model = json.loads(path.read_text(encoding='utf-8'))
             self.assertEqual(model['textures']['layer0'], 'gregtech:block/machines/covers/base')

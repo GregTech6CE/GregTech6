@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-MODELS = ROOT / "src/main/resources/assets/gregtech/models/item/material"
+MODELS = ROOT / "platform-shared/src/main/resources/assets/gregtech/models/item/material"
 LANG_EN = ROOT / "src/main/resources/assets/gregtech/lang/en_us.json"
 LANG_ZH = ROOT / "src/main/resources/assets/gregtech/lang/zh_cn.json"
 

@@ -11,7 +11,8 @@ BOOKS = ("book_vanilla", "book_enchanted", "book_matdict", "book_dusty", "folder
 
 def generate(assets=ASSETS):
     def write(relative, data):
-        path = assets / relative
+        path = (ROOT / "platform-shared/src/main/resources/assets/gregtech"
+                if Path(relative).parts[0] in ("models", "blockstates") else assets) / relative
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
 

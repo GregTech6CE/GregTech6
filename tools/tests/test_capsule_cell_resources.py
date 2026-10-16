@@ -5,6 +5,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ASSETS = ROOT / 'src/main/resources/assets/gregtech'
 sys.path.insert(0, str(ROOT / 'tools'))
 from check_render_resources import check
@@ -16,7 +17,7 @@ class CapsuleCellResources(unittest.TestCase):
         self.assertEqual(len({r['id'] for r in rows}), 40)
         paths = []
         for row in rows:
-            paths.extend([ASSETS / f"blockstates/fluid_{row['id']}.json", ASSETS / f"models/item/fluid_{row['id']}.json"])
+            paths.extend([SHARED_ASSETS / f"blockstates/fluid_{row['id']}.json", SHARED_ASSETS / f"models/item/fluid_{row['id']}.json"])
         issues, _ = check(paths)
         self.assertFalse(issues)
         for locale in ['en_us', 'zh_cn']:

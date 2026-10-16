@@ -22,13 +22,13 @@ class WireSpecs(unittest.TestCase):
    self.assertEqual(16 if kind=='wire' else 5,len(rows))
    for size,width in rows:
     width=int(width)
-    model=json.loads((ROOT/f'src/main/resources/assets/gregtech/models/block/blocks/{kind}_item_{size}.json').read_text())
+    model=json.loads((ROOT/f'platform-shared/src/main/resources/assets/gregtech/models/block/blocks/{kind}_item_{size}.json').read_text())
     elements=model['elements']
     self.assertEqual(width,max(e['to'][0] for e in elements)-min(e['from'][0] for e in elements))
     self.assertEqual(width,max(e['to'][1] for e in elements)-min(e['from'][1] for e in elements))
     self.assertEqual(0,min(e['from'][2] for e in elements));self.assertEqual(16,max(e['to'][2] for e in elements))
  def test_generated_model_dependencies(self):
-  base=ROOT/'src/main/resources/assets/gregtech/models/block'
+  base=ROOT/'platform-shared/src/main/resources/assets/gregtech/models/block'
   paths=[]
   for kind,sizes in [('wire',range(1,17)),('cable',[1,2,4,8,12])]:
    for size in sizes:

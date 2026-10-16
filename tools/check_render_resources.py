@@ -9,11 +9,53 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ASSETS = ROOT / 'src/main/resources/assets/gregtech'
+CORE_ASSETS = ROOT / 'core/src/main/resources/assets/gregtech'
+ASSET_ROOTS = (SHARED_ASSETS, CORE_ASSETS, ASSETS)
 CONTROLLERS = ('bedrock_drill_main', 'fusion_reactor_main', 'implosion_compressor_main', 'lightning_rod_main')
 
 
-def check(paths, assets=ASSETS):
+def resource_root(path):
+    for root in ASSET_ROOTS:
+        try:
+            path.relative_to(root)
+        except ValueError:
+            continue
+        return root
+    return ASSETS
+
+
+def shipped(relative):
+    for root in ASSET_ROOTS:
+        candidate = root / relative
+        if candidate.is_file():
+            return candidate
+    return None
+
+
+def collect(relative, pattern):
+    found = []
+    for root in ASSET_ROOTS:
+        folder = root / relative
+        if folder.is_dir():
+            found.extend(folder.glob(pattern))
+    return found
+
+
+def locate(kind, relative, assets):
+    folder = 'models' if kind == 'model' else 'textures'
+    suffix = '.json' if kind == 'model' else '.png'
+    name = Path(folder) / (relative + suffix)
+    roots = [assets, *ASSET_ROOTS]
+    for root in roots:
+        candidate = root / name
+        if candidate.is_file():
+            return candidate
+    return None
+
+
+def check(paths, assets=None):
     pending = list(paths)
     visited = set()
     issues = set()
@@ -22,7 +64,11 @@ def check(paths, assets=ASSETS):
         if path in visited:
             continue
         visited.add(path)
-        source = path.relative_to(assets).as_posix()
+        root = assets or resource_root(path)
+        try:
+            source = path.relative_to(root).as_posix()
+        except ValueError:
+            source = path.as_posix()
         try:
             data = json.loads(path.read_text(encoding='utf-8-sig'))
         except (ValueError, OSError) as error:
@@ -33,8 +79,8 @@ def check(paths, assets=ASSETS):
             if not isinstance(value, str) or not value.startswith('gregtech:'):
                 return
             relative = value.split(':', 1)[1]
-            target = assets / ('models' if kind == 'model' else 'textures') / (relative + ('.json' if kind == 'model' else '.png'))
-            if not target.is_file():
+            target = locate(kind, relative, root)
+            if target is None:
                 issues.add((source, kind, value))
             elif kind == 'model':
                 pending.append(target)
@@ -60,37 +106,39 @@ def main():
     parser.add_argument('--all', action='store_true')
     parser.add_argument('--report', type=Path)
     args = parser.parse_args()
-    paths = list((ASSETS / 'blockstates').glob('panel_*.json'))
-    paths += [ASSETS / f'blockstates/{name}.json' for name in CONTROLLERS]
-    paths += [ASSETS / f'blockstates/{name}.json' for name in ('mortar_block', 'grindstone_block', 'sifting_table', 'crank')]
-    paths += list((ASSETS / 'models/item').glob('chest_*.json'))
-    paths += [ASSETS / f'models/block/machine/engine/engine_{name}.json' for name in ('electric', 'flux')]
+    paths = collect('blockstates', 'panel_*.json')
+    paths += [path for name in CONTROLLERS if (path := shipped(f'blockstates/{name}.json'))]
+    paths += [path for name in ('mortar_block', 'grindstone_block', 'sifting_table', 'crank') if (path := shipped(f'blockstates/{name}.json'))]
+    paths += collect('models/item', 'chest_*.json')
+    paths += [path for name in ('electric', 'flux') if (path := shipped(f'models/block/machine/engine/engine_{name}.json'))]
     from rebuild_container_tool_models import TOOLS
-    paths += [ASSETS / f'blockstates/{name}.json' for name in TOOLS]
+    paths += [path for name in TOOLS if (path := shipped(f'blockstates/{name}.json'))]
     for pattern in ('fluid_*.json', 'battery_*.json', 'fuel_rod_*.json', 'electric_*.json', 'magnet_*.json'):
-        paths += list((ASSETS / 'models/item').glob(pattern))
-    paths += list((ASSETS / 'blockstates').glob('sensor_*.json'))
+        paths += collect('models/item', pattern)
+    paths += collect('blockstates', 'sensor_*.json')
     for pattern in ('reactor_rod_*.json', 'fuel_rod_*.json', 'tap*.json', 'cap_nozzle*.json', 'fluid_funnel*.json', 'fluid_cell_*.json'):
-        paths += list((ASSETS / 'blockstates').glob(pattern))
-    paths += list((ASSETS / 'models/item').glob('radiation_suit_*.json'))
+        paths += collect('blockstates', pattern)
+    paths += collect('models/item', 'radiation_suit_*.json')
     from rebuild_source_extenders import SPECS as EXTENDERS
     from rebuild_source_filters import FILTERS
     from rebuild_panel_covers import MODELS as PANEL_COVERS
     from rebuild_signal_wires import IDS as SIGNAL_WIRES
     for name in SIGNAL_WIRES:
-        paths += [ASSETS / f'blockstates/{name}.json', ASSETS / f'models/item/{name}.json']
-    paths += [ASSETS / f'models/item/{name}.json' for name in PANEL_COVERS]
+        paths += [path for relative in (f'blockstates/{name}.json', f'models/item/{name}.json') if (path := shipped(relative))]
+    paths += [path for name in PANEL_COVERS if (path := shipped(f'models/item/{name}.json'))]
     from rebuild_machine_control_covers import SPECS as CONTROL_COVERS
-    paths += [ASSETS / f'models/item/{row[0]}.json' for row in CONTROL_COVERS]
+    paths += [path for row in CONTROL_COVERS if (path := shipped(f'models/item/{row[0]}.json'))]
     for name, _, _ in FILTERS:
-        paths += [ASSETS / f'blockstates/{name}.json', ASSETS / f'models/item/{name}.json']
-    paths += [ASSETS / f'models/item/{name}.json' for name in ('blank_cover','item_filter','fluid_filter')]
+        paths += [path for relative in (f'blockstates/{name}.json', f'models/item/{name}.json') if (path := shipped(relative))]
+    paths += [path for name in ('blank_cover','item_filter','fluid_filter') if (path := shipped(f'models/item/{name}.json'))]
     for name, _, _ in EXTENDERS:
-        paths += [ASSETS / f'blockstates/{name}.json', ASSETS / f'models/item/{name}.json']
+        paths += [path for relative in (f'blockstates/{name}.json', f'models/item/{name}.json') if (path := shipped(relative))]
     for folder in ('energy', 'container'):
-        paths += list((ASSETS / f'models/block/machine/{folder}').rglob('*.json'))
+        paths += collect(f'models/block/machine/{folder}', '**/*.json')
     if args.all:
-        paths = list((ASSETS / 'models').rglob('*.json')) + list((ASSETS / 'blockstates').glob('*.json'))
+        paths = []
+        for root in ASSET_ROOTS:
+            paths += list((root / 'models').rglob('*.json')) + list((root / 'blockstates').glob('*.json'))
     issues, count = check(paths)
     report = {'scope': 'all-declarations' if args.all else 'repaired-content',
               'filesChecked': count, 'issues': [{'source': s, 'kind': k, 'target': t} for s, k, t in issues]}

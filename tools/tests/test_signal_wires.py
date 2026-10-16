@@ -1,3 +1,5 @@
+from pathlib import Path
+SHARED_ASSETS = Path(__file__).resolve().parents[2] / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 import json
 import unittest
 from tools.rebuild_signal_wires import ROOT, ASSETS, IDS
@@ -8,8 +10,8 @@ class SignalWireResources(unittest.TestCase):
     def test_six_models_have_textures_and_north_south_item_fallbacks(self):
         paths=[]
         for name in IDS:
-            paths += [ASSETS/f'blockstates/{name}.json', ASSETS/f'models/item/{name}.json']
-            model=json.loads((ASSETS/f'models/block/signal_wire/{name}.json').read_text())
+            paths += [SHARED_ASSETS/f'blockstates/{name}.json', SHARED_ASSETS/f'models/item/{name}.json']
+            model=json.loads((SHARED_ASSETS/f'models/block/signal_wire/{name}.json').read_text())
             self.assertEqual(model['elements'][0]['from'][2],0)
             self.assertEqual(model['elements'][0]['to'][2],16)
             for locale in ['en_us','zh_cn']:

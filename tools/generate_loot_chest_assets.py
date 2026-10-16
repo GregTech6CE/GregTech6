@@ -23,10 +23,11 @@ import pathlib
 import shutil
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ASSETS = ROOT / "src" / "main" / "resources" / "assets" / "gregtech"
 GT6 = pathlib.Path(r"F:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main\resources\assets\gregtech")
-CHEST_MODEL = ASSETS / "models" / "block" / "machine" / "storage" / "metal_chest.json"
-LOOT_MODEL = ASSETS / "models" / "block" / "machine" / "storage" / "loot_chest.json"
+CHEST_MODEL = SHARED_ASSETS / "models" / "block" / "machine" / "storage" / "metal_chest.json"
+LOOT_MODEL = SHARED_ASSETS / "models" / "block" / "machine" / "storage" / "loot_chest.json"
 LOOT_TEXTURE = ASSETS / "textures" / "block" / "machines" / "lootchest" / "colored.png"
 
 # suffix -> (GT6 table, English label from LH.java, Chinese label)
@@ -87,13 +88,13 @@ def main() -> None:
     write_json(LOOT_MODEL, model)
 
     for suffix in TABLES:
-        write_json(ASSETS / "blockstates" / f"loot_chest_{suffix}.json", {
+        write_json(SHARED_ASSETS / "blockstates" / f"loot_chest_{suffix}.json", {
             "variants": {
                 f"facing={facing}": {"model": "gregtech:block/machine/storage/loot_chest", **({"y": y} if y else {})}
                 for facing, y in FACINGS.items()
             },
         })
-        write_json(ASSETS / "models" / "item" / f"loot_chest_{suffix}.json",
+        write_json(SHARED_ASSETS / "models" / "item" / f"loot_chest_{suffix}.json",
                    {"parent": "gregtech:item/metal_chest"})
 
     lang = ASSETS / "lang"

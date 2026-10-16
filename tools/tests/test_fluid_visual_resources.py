@@ -4,6 +4,7 @@ import json
 import unittest
 
 ROOT=Path(__file__).resolve().parents[2]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ASSETS=ROOT/'src/main/resources/assets/gregtech'
 
 class FluidVisualResources(unittest.TestCase):
@@ -21,7 +22,7 @@ class FluidVisualResources(unittest.TestCase):
     def test_fluid_atlas_and_tinted_shared_model_are_declared(self):
         atlas=json.loads((ROOT/'src/main/resources/assets/minecraft/atlases/blocks.json').read_text())
         self.assertTrue(any(s.get('source')=='block/fluids' for s in atlas['sources']))
-        model=json.loads((ASSETS/'models/item/fluid_item.json').read_text())
+        model=json.loads((SHARED_ASSETS/'models/item/fluid_item.json').read_text())
         self.assertEqual(model['parent'],'minecraft:item/generated')
         self.assertIn('layer0',model['textures'])
 

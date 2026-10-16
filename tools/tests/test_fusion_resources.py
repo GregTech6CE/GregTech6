@@ -5,6 +5,7 @@ from pathlib import Path
 from collections import Counter
 
 ROOT = Path(__file__).resolve().parents[2]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ASSETS = ROOT / 'src/main/resources/assets/gregtech'
 
 
@@ -18,7 +19,7 @@ class FusionResources(unittest.TestCase):
         self.assertEqual({(int(x),int(y),int(z)) for x,y,z,_,r in cells if r=='ENERGY_OUTPUT'}, {(-9,0,2),(9,0,2),(0,0,-7),(0,0,11)})
 
     def test_part_models_use_existing_original_textures_and_separate_tint(self):
-        for path in (ASSETS/'models/block/machine/fusion').glob('*.json'):
+        for path in (SHARED_ASSETS/'models/block/machine/fusion').glob('*.json'):
             model=json.loads(path.read_text(encoding='utf8'))
             for name,child in model['children'].items():
                 for texture in child['textures'].values():
@@ -26,7 +27,7 @@ class FusionResources(unittest.TestCase):
                 for element in child['elements']:
                     for face in element['faces'].values():
                         self.assertEqual('tintindex' in face,name=='base')
-        states=json.loads((ASSETS/'blockstates/fusion_reactor_main.json').read_text(encoding='utf8'))
+        states=json.loads((SHARED_ASSETS/'blockstates/fusion_reactor_main.json').read_text(encoding='utf8'))
         self.assertEqual(len(states['variants']),16)
 
     def test_source_reaction_values_are_preserved(self):

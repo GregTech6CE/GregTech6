@@ -1,3 +1,5 @@
+from pathlib import Path
+SHARED_ASSETS = Path(__file__).resolve().parents[1] / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 """Original matter-fabricator parts and obtainable controller/processor recipes."""
 import json,shutil,hashlib
 from tools.restore_laser_models import ROOT,ORIGINAL,ASSETS,SOURCE,write,cube,layer
@@ -44,8 +46,8 @@ def main():
     craft('conversion_processor_unit',['PCP','CMC','PCP'],{'P':'crystal_processor_sapphire','C':'circuit_ultimate','M':'casing_machine_steelgalvanized'})
     # As with the fusion coil recipe, hand-tool wear is a separate outstanding crafting concern.
     craft('large_osmium_coil',['WWW','W W','WWW'],{'W':'wire_04_osmium'})
-    states=json.loads((ASSETS/'blockstates/massfab_osmium.json').read_text(encoding='utf8'))
-    item=json.loads((ASSETS/'models/item/massfab_osmium.json').read_text(encoding='utf8'))
+    states=json.loads((SHARED_ASSETS/'blockstates/massfab_osmium.json').read_text(encoding='utf8'))
+    item=json.loads((SHARED_ASSETS/'models/item/massfab_osmium.json').read_text(encoding='utf8'))
     for tier,emitter in enumerate(['lv','mv','hv','ev','iv'],1):
         name='massfab_osmium' if tier==1 else 'massfab_osmiridium_t'+str(tier)
         if tier>1:

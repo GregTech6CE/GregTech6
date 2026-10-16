@@ -5,6 +5,7 @@ import re
 import unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ASSETS=ROOT/'src/main/resources/assets/gregtech'
 DATA=ROOT/'src/main/resources/data/gregtech'
 ORIGINAL=ROOT.parent/'gregtech6-master/gregtech6-master/src/main'
@@ -24,13 +25,13 @@ class ChemicalBatteryResources(unittest.TestCase):
         for c,chem in enumerate(CHEM):
             for t,tier in enumerate(TIERS):
                 ident=f'battery_{chem}_{tier}'
-                model=json.loads((ASSETS/f'models/item/{ident}.json').read_text())
+                model=json.loads((SHARED_ASSETS/f'models/item/{ident}.json').read_text())
                 self.assertEqual(len(model['overrides']),[4,7,7,7,9][t])
                 self.assertEqual(model['overrides'][-1]['predicate']['gregtech:battery_charge'],1)
                 for override in model['overrides']:
                     fraction=override['predicate']['gregtech:battery_charge']
                     self.assertTrue(0<fraction<=1,'Minecraft clamps property functions to 0..1')
-                    path=ASSETS/('models/'+override['model'].split(':')[1]+'.json')
+                    path=SHARED_ASSETS/('models/'+override['model'].split(':')[1]+'.json')
                     charged=json.loads(path.read_text())
                     body,bar=charged['elements']
                     inset=[5,5,4,3,2][t]
@@ -38,7 +39,7 @@ class ChemicalBatteryResources(unittest.TestCase):
                     self.assertEqual(body['to'],[16-inset,[8,11,11,11,13][t],16-inset])
                     self.assertEqual(set(bar['faces']),{'north','south','west','east'})
                     self.assertTrue(all(f['tintindex']==0 for f in bar['faces'].values()))
-                state=json.loads((ASSETS/f'blockstates/{ident}.json').read_text())
+                state=json.loads((SHARED_ASSETS/f'blockstates/{ident}.json').read_text())
                 self.assertEqual(state['variants']['']['model'],model['parent'])
 
     def test_original_recipes_standard_chinese_and_circuit_substitution(self):
@@ -65,7 +66,7 @@ class ChemicalBatteryResources(unittest.TestCase):
         self.assertNotIn('gregtech:circuit_basic',values)
 
     def test_generator_is_idempotent(self):
-        paths=list((ASSETS/'models/block/chemical_battery').glob('*.json'))+list((ASSETS/'models/item').glob('battery_*_*.json'))+list((DATA/'recipes/chemical_batteries').glob('*.json'))+[ASSETS/'lang/en_us.json',ASSETS/'lang/zh_cn.json']
+        paths=list((SHARED_ASSETS/'models/block/chemical_battery').glob('*.json'))+list((SHARED_ASSETS/'models/item').glob('battery_*_*.json'))+list((DATA/'recipes/chemical_batteries').glob('*.json'))+[ASSETS/'lang/en_us.json',ASSETS/'lang/zh_cn.json']
         before={p:hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
         spec=importlib.util.spec_from_file_location('battery_generator',ROOT/'tools/generate_chemical_batteries.py')
         module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module);module.run()

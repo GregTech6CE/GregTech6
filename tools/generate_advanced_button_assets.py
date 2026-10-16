@@ -6,6 +6,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ASSETS = ROOT / "src/main/resources/assets/gregtech"
 ORIGINAL = ROOT.parent / "gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech/textures/blocks/machines/redstone/buttons/advanced/0/0"
 TARGET = ASSETS / "textures/block/machines/redstone/buttons/advanced/0/0"
@@ -42,7 +43,7 @@ def main():
     for suffix in ("off", "on"):
         for layer in ("colored", "overlay", "glowing", "glowverlay"):
             shutil.copy2(ORIGINAL / f"{layer}_{suffix}.png", TARGET / f"{layer}_{suffix}.png")
-        write(ASSETS / f"models/block/tool/advanced_button_{suffix}.json", model(suffix))
+        write(SHARED_ASSETS / f"models/block/tool/advanced_button_{suffix}.json", model(suffix))
 
     variants = {}
     rotations = {
@@ -56,8 +57,8 @@ def main():
                     "model": f"gregtech:block/tool/advanced_button_{'on' if lit == 'true' else 'off'}",
                     "x": x, "y": y,
                 }
-    write(ASSETS / "blockstates/advanced_button.json", {"variants": variants})
-    write(ASSETS / "models/item/advanced_button.json",
+    write(SHARED_ASSETS / "blockstates/advanced_button.json", {"variants": variants})
+    write(SHARED_ASSETS / "models/item/advanced_button.json",
           {"parent": "gregtech:block/tool/advanced_button_off"})
 
 

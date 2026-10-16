@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/block",
-  "loader": "neoforge:composite",
+  "loader": "forge:composite",
   "render_type": "minecraft:cutout",
   "textures": {
     "particle": "gregtech:block/machines/tools/tap/colored/bottom"

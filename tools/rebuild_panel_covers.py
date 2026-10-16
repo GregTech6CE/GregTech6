@@ -5,6 +5,7 @@ import shutil
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ASSETS=ROOT/'src/main/resources/assets/gregtech'
 BUTTON_STYLES=['underlay','underlay_0_to_15','underlay_0_to_F','underlay_1_to_16','underlay_16_1_to_15','underlay_keypad_1_to_9','underlay_keypad_9_to_1','underlay_bits']
 MODE_FOLDERS=['manualselector','redstoneselector','buttonselector','redstoneemitter']
@@ -63,7 +64,7 @@ def main(original):
     for name,layers in MODELS.items():
         textures={f'layer{i}':'gregtech:block/machines/covers/'+value for i,value in enumerate(layers)}
         textures['particle']=textures['layer0']
-        write(ASSETS/f'models/item/{name}.json',{'parent':'minecraft:item/generated','textures':textures})
+        write(SHARED_ASSETS/f'models/item/{name}.json',{'parent':'minecraft:item/generated','textures':textures})
     for name,(pattern,overrides) in RECIPES.items():
         keys=COMMON|overrides;used=set(''.join(pattern))-{' '}
         write(ROOT/f'src/main/resources/data/gregtech/recipes/panel_covers/{name}.json',{

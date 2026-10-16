@@ -3,15 +3,22 @@ import json
 import sys
 import unittest
 from pathlib import Path
+SHARED_ASSETS = Path(__file__).resolve().parents[2] / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 
 TOOLS_DIR = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(TOOLS_DIR))
 from rebuild_container_tool_models import ASSETS, TOOLS
-from check_render_resources import check
+from check_render_resources import check, shipped
 
 
 def read(path):
-    return json.loads((ASSETS / path).read_text(encoding='utf-8'))
+    relative = Path(path)
+    roots = (SHARED_ASSETS, Path(__file__).resolve().parents[2] / 'core/src/main/resources/assets/gregtech', ASSETS)
+    for root in roots:
+        candidate = root / relative
+        if candidate.is_file():
+            return json.loads(candidate.read_text(encoding='utf-8'))
+    raise FileNotFoundError(path)
 
 
 class RestoredContainerTests(unittest.TestCase):
@@ -33,7 +40,7 @@ class RestoredContainerTests(unittest.TestCase):
             self.assertEqual(set(variants), expected)
             self.assertEqual([variants[f'facing={f}']['y'] for f in ('north', 'east', 'south', 'west')],
                              [0, 90, 180, 270])
-            issues, _ = check([ASSETS / f'blockstates/{name}.json'])
+            issues, _ = check([shipped(f'blockstates/{name}.json')])
             self.assertEqual(issues, [])
 
     def test_original_assets_preserved(self):

@@ -14,9 +14,10 @@ GT6 = r"F:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main\resources\as
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "gregtech")
 TEX = os.path.join(ASSETS, "textures", "block", "machines")
-MODELS = os.path.join(ASSETS, "models", "block", "machine", "energy")
-BLOCKSTATES = os.path.join(ASSETS, "blockstates")
-ITEM_MODELS = os.path.join(ASSETS, "models", "item")
+SHARED = os.path.join(ROOT, "platform-shared", "src", "main", "resources", "assets", "gregtech")
+MODELS = os.path.join(SHARED, "models", "block", "machine", "energy")
+BLOCKSTATES = os.path.join(SHARED, "blockstates")
+ITEM_MODELS = os.path.join(SHARED, "models", "item")
 
 TIERS = [("lv", 32), ("mv", 128), ("hv", 512), ("ev", 2048), ("iv", 8192)]
 STEPS = ["ulv_lv", "lv_mv", "mv_hv", "hv_ev", "ev_iv", "iv_luv", "luv_zpm", "zpm_uv", "uv_xv"]

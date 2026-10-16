@@ -22,6 +22,7 @@ Usage::
 from pathlib import Path
 import hashlib,json,shutil,sys
 ROOT=Path(__file__).resolve().parents[1]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ORIGINAL=ROOT.parent/'gregtech6-master/gregtech6-master'
 ASSETS=ROOT/'src/main/resources/assets/gregtech'
 SOURCE=ORIGINAL/'src/main/resources/assets/gregtech/textures/blocks/machines'
@@ -107,7 +108,7 @@ def owned_directory(name):
     generators; only a part that points at - or still lacks - `block/machine/multiblock/<name>` is
     this tool's business.
     """
-    path=ASSETS/f'blockstates/{name}.json'
+    path=SHARED_ASSETS/f'blockstates/{name}.json'
     if not path.is_file():return None
     refs={variant['model'] for variant in json.loads(path.read_text(encoding='utf-8'))['variants'].values()}
     folders={ref.rsplit('/',1)[0] for ref in refs if ref.startswith('gregtech:')}
@@ -176,8 +177,8 @@ def restore():
                     faces=element['faces'];side='up' if name=='bedrock_drill_main' else 'down'
                     faces[side],faces['north']=faces['north'],faces[side]
                     faces[side]['cullface']=side;faces['north']['cullface']='north'
-        write(ASSETS/f'models/block/machine/multiblock/{name}.json',base_model)
-        path=ASSETS/f'blockstates/{name}.json'
+        write(SHARED_ASSETS/f'models/block/machine/multiblock/{name}.json',base_model)
+        path=SHARED_ASSETS/f'blockstates/{name}.json'
         if path.is_file():
             states=json.loads(path.read_text(encoding='utf-8'))
         elif name in LEGACY:
@@ -191,10 +192,10 @@ def restore():
             elif 'running=true' in key and (SOURCE/folder/'overlay_running').is_dir():suffix='_running'
             vertical='up' if 'facing=up' in key else 'down' if 'facing=down' in key else None
             output_suffix=suffix+('_'+vertical if vertical else '')
-            write(ASSETS/f'models/block/machine/multiblock/{name}{output_suffix}.json',base_model if name in ('bedrock_drill_main','heat_exchanger_main') else model(folder,suffix,'top' if vertical=='up' else 'bottom' if vertical=='down' else 'side'))
+            write(SHARED_ASSETS/f'models/block/machine/multiblock/{name}{output_suffix}.json',base_model if name in ('bedrock_drill_main','heat_exchanger_main') else model(folder,suffix,'top' if vertical=='up' else 'bottom' if vertical=='down' else 'side'))
             variant['model']=ref+output_suffix
         write(path,states)
-        write(ASSETS/f'models/item/{name}.json',{'parent':ref})
+        write(SHARED_ASSETS/f'models/item/{name}.json',{'parent':ref})
     write(manifest_path,manifest)
     print(f'Restored {len(MAPPING)} block definitions ({len(GENERATED)} from LargeMachineParts); '
           f'{synthesised} blockstates synthesised, {copied} texture/metadata files copied')
@@ -202,9 +203,9 @@ def restore():
 
 def model_refs(name):
     """Every model this part's blockstate and item model point at."""
-    states=json.loads((ASSETS/f'blockstates/{name}.json').read_text(encoding='utf-8'))
+    states=json.loads((SHARED_ASSETS/f'blockstates/{name}.json').read_text(encoding='utf-8'))
     refs=[variant['model'] for variant in states['variants'].values()]
-    item=json.loads((ASSETS/f'models/item/{name}.json').read_text(encoding='utf-8'))
+    item=json.loads((SHARED_ASSETS/f'models/item/{name}.json').read_text(encoding='utf-8'))
     if 'parent' in item:refs.append(item['parent'])
     return refs
 
@@ -213,14 +214,14 @@ def check():
     """Report parts that are still missing a blockstate, a model or an item model."""
     missing=[]
     for name in sorted(MAPPING):
-        blockstate=ASSETS/f'blockstates/{name}.json'
-        item=ASSETS/f'models/item/{name}.json'
+        blockstate=SHARED_ASSETS/f'blockstates/{name}.json'
+        item=SHARED_ASSETS/f'models/item/{name}.json'
         if not blockstate.is_file():missing.append(f'{name}: no blockstate');continue
         if not item.is_file():missing.append(f'{name}: no item model');continue
         for ref in model_refs(name):
             if not ref.startswith('gregtech:'):
                 raise ValueError(f'{name}: unexpected namespace in {ref}')
-            if not (ASSETS/f'models/{ref.split(":",1)[1]}.json').is_file():
+            if not (SHARED_ASSETS/f'models/{ref.split(":",1)[1]}.json').is_file():
                 missing.append(f'{name}: {ref} missing')
     print(f'checked {len(MAPPING)} part definitions')
     for problem in missing:print('  MISSING',problem)

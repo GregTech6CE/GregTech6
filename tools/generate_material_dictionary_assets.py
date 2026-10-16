@@ -21,13 +21,14 @@ import pathlib
 import shutil
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 GT6_TEX = pathlib.Path(
     r"F:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main\resources\assets\gregtech"
     r"\textures\items\gt.multiitem.books\32766.png")
 ASSETS = ROOT / "src" / "main" / "resources" / "assets" / "gregtech"
 ITEM_ID = "dusty_material_dictionary"
 TEXTURE = ASSETS / "textures" / "item" / "books" / f"{ITEM_ID}.png"
-MODEL = ASSETS / "models" / "item" / f"{ITEM_ID}.json"
+MODEL = SHARED_ASSETS / "models" / "item" / f"{ITEM_ID}.json"
 
 EN = {
     f"item.gregtech.{ITEM_ID}": "Dusty Material Dictionary",

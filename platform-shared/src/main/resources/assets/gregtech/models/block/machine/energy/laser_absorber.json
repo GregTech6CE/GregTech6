@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/block",
-  "loader": "neoforge:composite",
+  "loader": "forge:composite",
   "textures": {
     "particle": "gregtech:block/machines/laserabsorbers/electric_laser/colored/side"
   },

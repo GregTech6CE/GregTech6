@@ -37,24 +37,23 @@ def main():
         source_key=f'gt.multitileentity.{source_id}'
         langs['en_us']['block.gregtech.'+id]='Steam Turbine ('+name+')';langs['zh_cn']['block.gregtech.'+id]=chinese[source_key]
         variants[id]={'source_id':source_id,'source_key':source_key,'name':'Steam Turbine ('+name+')','zh_cn':chinese[source_key],'source_order':ordinal}
-        for platform in ('src','neoforge/src'):
-            root=ns.repo/platform/'main/resources/assets/gregtech'
-            base=json.loads((root/'models/block/machine/energy/steam_turbine_bronze.json').read_text(encoding='utf-8'))
-            if base['loader']!=('forge:composite' if platform=='src' else 'neoforge:composite'):raise ValueError('platform loader')
-            for kind in ('','ls','lf','rs','rf'):
-                model=copy.deepcopy(base)
-                if kind:
-                    tex=model['children']['layer1']['textures']
-                    for face,ref in tex.items():tex[face]=ref.replace('/overlay/','/overlay_active_'+kind+'/')
-                out=root/f'models/block/machine/energy/{id}{"_"+kind if kind else ""}.json';write(out,model);models[str(out.relative_to(ns.repo))]=sha(out)
-            states={}
-            for face,rotation in ROTATIONS.items():
-                for activity,left,fast in itertools.product(range(3),(False,True),(False,True)):
-                    key=f'facing={face},activity={activity},counter_clockwise={str(left).lower()},fast={str(fast).lower()}'
-                    ext='_'+('l' if left else 'r')+('f' if fast else 's') if activity else ''
-                    states[key]={'model':f'gregtech:block/machine/energy/{id}{ext}',**rotation}
-            out=root/f'blockstates/{id}.json';write(out,{'variants':states});models[str(out.relative_to(ns.repo))]=sha(out)
-            out=root/f'models/item/{id}.json';write(out,{'parent':f'gregtech:block/machine/energy/{id}'});models[str(out.relative_to(ns.repo))]=sha(out)
+        root=ns.repo/'platform-shared/src/main/resources/assets/gregtech'
+        base=json.loads((root/'models/block/machine/energy/steam_turbine_bronze.json').read_text(encoding='utf-8'))
+        if base['loader']!='forge:composite':raise ValueError('platform loader')
+        for kind in ('','ls','lf','rs','rf'):
+            model=copy.deepcopy(base)
+            if kind:
+                tex=model['children']['layer1']['textures']
+                for face,ref in tex.items():tex[face]=ref.replace('/overlay/','/overlay_active_'+kind+'/')
+            out=root/f'models/block/machine/energy/{id}{"_"+kind if kind else ""}.json';write(out,model);models[str(out.relative_to(ns.repo))]=sha(out)
+        states={}
+        for face,rotation in ROTATIONS.items():
+            for activity,left,fast in itertools.product(range(3),(False,True),(False,True)):
+                key=f'facing={face},activity={activity},counter_clockwise={str(left).lower()},fast={str(fast).lower()}'
+                ext='_'+('l' if left else 'r')+('f' if fast else 's') if activity else ''
+                states[key]={'model':f'gregtech:block/machine/energy/{id}{ext}',**rotation}
+        out=root/f'blockstates/{id}.json';write(out,{'variants':states});models[str(out.relative_to(ns.repo))]=sha(out)
+        out=root/f'models/item/{id}.json';write(out,{'parent':f'gregtech:block/machine/energy/{id}'});models[str(out.relative_to(ns.repo))]=sha(out)
     for key,data in langs.items():write(ns.repo/f'core/src/main/resources/assets/gregtech/lang/{key}.json',data)
     p=ns.repo/'core/src/main/java/com/gregtech/gregtech/content/creative/SourceCreativeCatalog.java'
     s=p.read_text(encoding='utf-8')

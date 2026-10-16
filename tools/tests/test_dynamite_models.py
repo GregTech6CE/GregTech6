@@ -5,13 +5,14 @@ import math
 from pathlib import Path
 import unittest
 ROOT = Path(__file__).resolve().parents[2]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ASSETS = ROOT / 'src/main/resources/assets/gregtech'
 ORIGINAL = ROOT.parent / 'gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech/textures/blocks/machines/tools/dynamite'
 class DynamiteModelTests(unittest.TestCase):
     def test_all_states_match_the_visible_and_collision_bounds(self):
         directions={'east':(0,1),'west':(0,-1),'up':(1,1),'down':(1,-1),'south':(2,1),'north':(2,-1)}
         for name in ('dynamite','boomstick','strong_dynamite'):
-            variants=json.loads((ASSETS/f'blockstates/{name}.json').read_text())['variants']
+            variants=json.loads((SHARED_ASSETS/f'blockstates/{name}.json').read_text())['variants']
             self.assertEqual(24,len(variants))
             for key,variant in variants.items():
                 state=dict(part.split('=') for part in key.split(','))

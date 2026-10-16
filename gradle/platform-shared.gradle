@@ -41,6 +41,87 @@ tasks.named('processResources').configure {
     }
 }
 
+// Shared models store forge:composite. NeoForge rewrites that exact byte sequence after copying.
+// The Forge incremental copy does not rewrite: its output has to stay byte-identical to the shared file.
+def forgeCompositeLoader = '"loader": "forge:composite"'.getBytes('US-ASCII')
+def neoCompositeLoader = '"loader": "neoforge:composite"'.getBytes('US-ASCII')
+
+def replaceExactBytes = { byte[] input, byte[] from, byte[] to ->
+    if (from.length == 0 || input.length < from.length) return input
+    int extra = 0
+    int count = 0
+    int limit = input.length - from.length
+    for (int i = 0; i <= limit; i++) {
+        boolean same = true
+        for (int j = 0; j < from.length; j++) {
+            if (input[i + j] != from[j]) {
+                same = false
+                break
+            }
+        }
+        if (!same) continue
+        count++
+        extra += to.length - from.length
+        i += from.length - 1
+    }
+    if (count == 0) return input
+    byte[] output = new byte[input.length + extra]
+    int inPos = 0
+    int outPos = 0
+    limit = input.length - from.length
+    for (int i = 0; i <= limit; i++) {
+        boolean same = true
+        for (int j = 0; j < from.length; j++) {
+            if (input[i + j] != from[j]) {
+                same = false
+                break
+            }
+        }
+        if (!same) continue
+        int gap = i - inPos
+        System.arraycopy(input, inPos, output, outPos, gap)
+        outPos += gap
+        System.arraycopy(to, 0, output, outPos, to.length)
+        outPos += to.length
+        inPos = i + from.length
+        i += from.length - 1
+    }
+    System.arraycopy(input, inPos, output, outPos, input.length - inPos)
+    return output
+}
+
+if (project.path == ':neoforge') {
+    tasks.named('processResources').configure {
+        inputs.property('gregtech.compositeLoader', 'neoforge:composite')
+        doLast {
+            def output = destinationDir
+            fileTree(dir: output, include: '**/*.json').each { File file ->
+                def original = file.bytes
+                def replaced = replaceExactBytes(original, forgeCompositeLoader, neoCompositeLoader)
+                if (!Arrays.equals(original, replaced)) file.bytes = replaced
+            }
+        }
+    }
+}
+
+if (project == rootProject && project.hasProperty('compositeLoaderFixture')) {
+    tasks.register('verifyCompositeLoaderRewrite') {
+        doLast {
+            def root = file(project.property('compositeLoaderFixture'))
+            def source = new File(root, 'source.json').bytes
+            def rewritten = replaceExactBytes(source, forgeCompositeLoader, neoCompositeLoader)
+            new File(root, 'rewritten.json').bytes = rewritten
+            def untouched = replaceExactBytes('{"parent":"block"}\r\n'.getBytes('US-ASCII'), forgeCompositeLoader, neoCompositeLoader)
+            if (!Arrays.equals(untouched, '{"parent":"block"}\r\n'.getBytes('US-ASCII'))) {
+                throw new GradleException('rewrite changed a file that has no composite loader')
+            }
+            if (rewritten.length != source.length + (neoCompositeLoader.length - forgeCompositeLoader.length)) {
+                throw new GradleException('rewrite changed the file length by more than the loader id')
+            }
+        }
+    }
+}
+
 if (project == rootProject && project.hasProperty('sharedDuplicateFixture')) {
     tasks.register('verifySharedResourceDuplicates') {
         doLast {
