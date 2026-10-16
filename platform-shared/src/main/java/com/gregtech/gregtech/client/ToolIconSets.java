@@ -1,5 +1,7 @@
 package com.gregtech.gregtech.client;
 
+import com.gregtech.gregtech.platform.Mc;
+
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
@@ -40,7 +42,7 @@ public final class ToolIconSets {
     private ToolIconSets() {}
 
     public static ResourceLocation icon(String name) {
-        return ResourceLocation.fromNamespaceAndPath("gregtech","item/iconsets/" + name);
+        return Mc.gregtechId("item/iconsets/" + name);
     }
 
     public static ResourceLocation overlayTexture(ResourceLocation base) {

@@ -1,8 +1,11 @@
 package com.gregtech.gregtech.platform;
 
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +34,27 @@ public final class Mc {
         return BuiltInRegistries.ITEM.get(id);
     }
 
+    public static ResourceLocation itemId(Item item) {
+        return BuiltInRegistries.ITEM.getKey(item);
+    }
+
+    public static Block block(ResourceLocation id) {
+        return BuiltInRegistries.BLOCK.get(id);
+    }
+
+    public static ResourceLocation blockId(Block block) {
+        return BuiltInRegistries.BLOCK.getKey(block);
+    }
+
     public static Iterable<Block> blocks() {
         return BuiltInRegistries.BLOCK;
+    }
+
+    public static boolean sameItemData(ItemStack a, ItemStack b) {
+        return ItemStack.isSameItemSameComponents(a, b);
+    }
+
+    public static void setCustomName(ItemStack stack, Component name) {
+        stack.set(DataComponents.CUSTOM_NAME, name);
     }
 }

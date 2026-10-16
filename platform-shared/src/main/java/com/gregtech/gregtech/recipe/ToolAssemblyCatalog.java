@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.recipe;
 
+import com.gregtech.gregtech.platform.Mc;
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
 import com.gregtech.gregtech.api.tool.GTToolHelper;
@@ -310,7 +311,7 @@ public final class ToolAssemblyCatalog {
 
     private static boolean sameItem(List<ItemStack> stacks, ItemStack stack) {
         for (ItemStack other : stacks) {
-            if (ItemStack.isSameItemSameTags(other, stack)) return true;
+            if (Mc.sameItemData(other, stack)) return true;
         }
         return false;
     }

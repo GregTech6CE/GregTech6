@@ -1,6 +1,8 @@
 package com.gregtech.gregtech.worldgen.dungeon;
 
-import com.gregtech.gregtech.GregTech;
+import com.gregtech.gregtech.platform.Mc;
+
+import com.gregtech.gregtech.registry.*;
 import com.gregtech.gregtech.content.book.GTBooks;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
@@ -8,7 +10,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.NetherWartBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Port of GT6's {@code DungeonChunkRoomPortalNether}
@@ -118,7 +119,7 @@ public class GTDungeonChunkRoomPortalNether extends GTDungeonChunkRoomPortal {
         slots[22] = GTBooks.bookStack("Manual_Hunting_Blaze");
         slots[29] = new ItemStack(Items.GHAST_TEAR, 4);
         slots[33] = new ItemStack(Items.BLAZE_ROD, 4);
-        var matchBox = ForgeRegistries.ITEMS.getValue(GregTech.id("match_box_full"));
+        var matchBox = Mc.item(Mc.gregtechId("match_box_full"));
         if (matchBox == null || matchBox == Items.AIR) {
             throw new IllegalStateException("Missing GT6 dungeon supply item: gregtech:match_box_full");
         }

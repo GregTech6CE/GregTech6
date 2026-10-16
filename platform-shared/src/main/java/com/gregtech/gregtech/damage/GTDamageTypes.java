@@ -1,6 +1,7 @@
 package com.gregtech.gregtech.damage;
 
-import com.gregtech.gregtech.GregTech;
+import com.gregtech.gregtech.platform.Mc;
+
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -78,7 +79,7 @@ public final class GTDamageTypes {
     private GTDamageTypes() {}
 
     private static ResourceKey<DamageType> key(String path) {
-        return ResourceKey.create(Registries.DAMAGE_TYPE, GregTech.id(path));
+        return ResourceKey.create(Registries.DAMAGE_TYPE, Mc.gregtechId(path));
     }
 
     /** The {@code ResourceLocation} of a type key, for building its {@code death.attack.<message_id>} key. */

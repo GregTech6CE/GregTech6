@@ -1,5 +1,7 @@
 package com.gregtech.gregtech.client;
 
+import com.gregtech.gregtech.platform.Mc;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureAtlas;
@@ -8,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 
 /** Block-atlas sprites for crucible interior fill (atlas-safe, with fallbacks). */
 public final class CrucibleRenderSprites {
-    private static final ResourceLocation FALLBACK = ResourceLocation.fromNamespaceAndPath("gregtech","block/material_icons/metallic/blockraw");
+    private static final ResourceLocation FALLBACK = Mc.gregtechId("block/material_icons/metallic/blockraw");
 
     private CrucibleRenderSprites() {}
 
