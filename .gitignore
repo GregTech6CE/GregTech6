@@ -4,6 +4,7 @@ run-data/
 .gradle/
 *.iml
 .idea/
+.vscode/
 __pycache__/
 
 # Integration scratch, local runs and generated evidence. Summaries live in docs/integration.
