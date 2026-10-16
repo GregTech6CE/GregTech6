@@ -70,6 +70,34 @@ def read_properties(path):
     return properties
 
 
+def platform_shared_class_names(repo):
+    """Top-level classes compiled from platform-shared. They are not core classes.
+
+    Each loader compiles this tree itself, and Forge reobfuscates the result, so
+    these classes are checked with the platform classes and not across loaders.
+    """
+    root = repo / 'platform-shared/src/main/java'
+    if not root.is_dir():
+        raise ValueError('Missing platform-shared source directory')
+    names = sorted(path.relative_to(root).with_suffix('.class').as_posix()
+                   for path in root.rglob('*.java') if path.name != 'package-info.java')
+    if not names:
+        raise ValueError('No platform-shared sources')
+    return names
+
+
+def check_platform_shared_classes(names, core, targets):
+    counted_as_core = [name for name in names if name in core]
+    if counted_as_core:
+        raise ValueError(f'platform-shared classes counted as core: {counted_as_core[:10]}')
+    for platform, jar in targets.items():
+        with zipfile.ZipFile(jar) as archive:
+            present = set(archive.namelist())
+        missing = [name for name in names if name not in present]
+        if missing:
+            raise ValueError(f'{platform}: platform-shared classes missing from the jar: {missing[:10]}')
+
+
 def compiled_core_hashes(core_output):
     classes = sorted(core_output.rglob('*.class'))
     if not classes:
@@ -300,11 +328,15 @@ def main():
         language = synchronize(repo)
         properties = read_properties(repo / 'gradle.properties')
         core = compiled_core_hashes(repo / 'core/build/classes/java/main')
+        shared_platform = platform_shared_class_names(repo)
         forbidden_tests = test_only_entries(repo)
         artifacts = {platform: inspect(path, platform, core, properties, forbidden_tests)
                      for platform, path in targets.items()}
+        # Only core bytecode must match across loaders. Platform classes, including
+        # everything compiled from platform-shared, are reobfuscated on Forge.
         if len(artifacts) == 2 and artifacts['forge']['core_class_sha256'] != artifacts['neoforge']['core_class_sha256']:
             raise ValueError('Shared-core bytecode differs between platform jars')
+        check_platform_shared_classes(shared_platform, core, targets)
     except (OSError, ValueError, TypeError, zipfile.BadZipFile) as error:
         parser.exit(1, f'Packaging failed: {error}\n')
     result = {'status': 'passed', 'scope': 'packaging-only; no gameplay or runtime claim',
@@ -312,11 +344,19 @@ def main():
               'build_commit': os.environ.get('GITHUB_SHA'),
               'language_source_sha256': language['source_sha256'],
               'language_aliases': language['native_aliases'],
-              'shared_classes': len(core), 'compiled_core_class_sha256': core, **artifacts}
+              'shared_classes': len(core),
+              'platform_classes': {platform: report['current_platform_classes_checked']
+                                   for platform, report in artifacts.items()},
+              'platform_shared_classes': len(shared_platform),
+              'compiled_core_class_sha256': core, **artifacts}
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(result, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
-    print(f"Packaging passed: {len(core)} current shared classes; verified {' + '.join(targets)} metadata; no duplicate or test-only entries")
+    platform_counts = ', '.join(f'{platform} {report["current_platform_classes_checked"]}'
+                                for platform, report in artifacts.items())
+    print(f"Packaging passed: {len(core)} shared core classes; {platform_counts} platform classes; "
+          f"{len(shared_platform)} platform-shared classes counted as platform; "
+          f"verified {' + '.join(targets)} metadata; no duplicate or test-only entries")
 
 
 if __name__ == '__main__':
