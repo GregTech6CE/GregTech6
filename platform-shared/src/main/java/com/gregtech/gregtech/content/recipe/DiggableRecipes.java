@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.content.recipe;
 
+import com.gregtech.gregtech.platform.Mc;
 
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.GTValues;
@@ -14,7 +15,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.core.registries.BuiltInRegistries;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -129,7 +129,7 @@ public final class DiggableRecipes {
     }
 
     private static Item item(String id) {
-        Item value = BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",id));
+        Item value = Mc.item(Mc.gregtechId(id));
         if (value == null || value == Items.AIR) throw new IllegalStateException("Missing GT6 diggable item " + id);
         return value;
     }

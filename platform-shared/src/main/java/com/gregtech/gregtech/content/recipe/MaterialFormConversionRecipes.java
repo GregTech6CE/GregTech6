@@ -1,6 +1,6 @@
 package com.gregtech.gregtech.content.recipe;
 
-import com.gregtech.gregtech.GregTech;
+import com.gregtech.gregtech.platform.Mc;
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
 import com.gregtech.gregtech.api.material.MaterialProperty;
@@ -81,7 +81,7 @@ public final class MaterialFormConversionRecipes {
             unboxinator(material);
             boxinator(material);
         }
-        GregTech.LOGGER.info("Registered {} GT6 material form conversions ({} GT6 pairs skipped: {})",
+        Mc.logger().info("Registered {} GT6 material form conversions ({} GT6 pairs skipped: {})",
                 ENTRIES.size(), SKIPPED.size(), SKIPPED);
         return ENTRIES.size();
     }

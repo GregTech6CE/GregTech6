@@ -1,12 +1,12 @@
 package com.gregtech.gregtech.content.recipe;
 
+import com.gregtech.gregtech.platform.Mc;
 import com.gregtech.gregtech.api.fluid.PortableFluidContainerSpec;
 import com.gregtech.gregtech.api.recipe.Recipe;
 import com.gregtech.gregtech.data.*;
 import com.gregtech.gregtech.registry.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.registries.ForgeRegistries;
 
 /** capcellcon is a 1/9 U placeable vessel, not a second flat material item.
  * The forty variants all inherit EXTRUDER; only waxes, Plastic, Tin, TinAlloy and Aluminium inherit EXTRUDER_SIMPLE. */
@@ -21,7 +21,7 @@ public final class CapsuleCellRecipes {
                 var input=GTItems.getStack(prefix,spec.material(),1);
                 if(input.isEmpty())continue;
                 boolean tiny=prefix==MaterialPrefix.nugget||prefix==MaterialPrefix.dustTiny;
-                var output=new ItemStack(ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech","fluid_"+spec.id())),tiny?1:9);
+                var output=new ItemStack(Mc.item(Mc.gregtechId("fluid_"+spec.id())),tiny?1:9);
                 for(String mold:new String[]{"extruder_shape_capsulecellcontainer","low_heat_extruder_shape_capsulecellcontainer"}) {
                     if(!simple&&mold.startsWith("low_heat_"))continue;
                     if(output.isEmpty()||GTTechnological.get(mold)==null)throw new IllegalStateException("Missing capsule cell or mold: "+spec.id());
@@ -48,7 +48,7 @@ public final class CapsuleCellRecipes {
         for(var spec:PortableFluidContainerSpec.values())if(spec.shapeId().equals("cell")) {
             var output=GTItems.getStack(MaterialPrefix.dustTiny,spec.material(),1);
             if(output.isEmpty())throw new IllegalStateException("Missing capsule recycling dust: "+spec.id());
-            var input=new ItemStack(ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech","fluid_"+spec.id())));
+            var input=new ItemStack(Mc.item(Mc.gregtechId("fluid_"+spec.id())));
             boolean brittle=spec.id().startsWith("cell_wax")||spec.id().equals("cell_plastic");
             long work=(brittle?2L:256L)*Math.max(1,spec.material().getToolQuality()+1);
             if(MachineRecipeMaps.Shredder.addRecipe(new Recipe(new ItemStack[]{input},new ItemStack[]{output},null,null,null,null,(work+8)/9,16,0))!=null)count++;

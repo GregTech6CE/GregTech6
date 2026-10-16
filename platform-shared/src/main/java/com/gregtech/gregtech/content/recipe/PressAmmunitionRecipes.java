@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.content.recipe;
 
+import com.gregtech.gregtech.platform.Mc;
 import com.gregtech.gregtech.content.recipe.PressAmmunitionRecipeRows.PressRow;
 import com.gregtech.gregtech.content.recipe.PressAmmunitionRecipeRows.UnboxRow;
 
@@ -54,7 +55,7 @@ public final class PressAmmunitionRecipes {
             for (PressRow row : PRESS_ROWS) press(material, row);
             for (UnboxRow row : UNBOX_ROWS) unbox(material, row);
         }
-        com.mojang.logging.LogUtils.getLogger().info("Registered {} GT6 ammunition recipes ({} GT6 rows skipped: {})",
+        Mc.logger().info("Registered {} GT6 ammunition recipes ({} GT6 rows skipped: {})",
                 ENTRIES.size(), SKIPPED.size(), SKIPPED);
         return ENTRIES.size();
     }

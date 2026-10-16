@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.content.recipe;
 
+import com.gregtech.gregtech.platform.Mc;
 
 import com.gregtech.gregtech.api.machine.crucible.CrucibleMath;
 import com.gregtech.gregtech.api.material.GTMaterial;
@@ -113,7 +114,7 @@ public final class FurnaceSmeltingRecipes {
         }
         ceramic();
         ClayMoldRecipes.register();
-        com.mojang.logging.LogUtils.getLogger().info("Registered {} GT6 furnace smelting rows ({} GT6 rows skipped: {})",
+        Mc.logger().info("Registered {} GT6 furnace smelting rows ({} GT6 rows skipped: {})",
                 ENTRIES.size(), SKIPPED.size(), SKIPPED);
         return ENTRIES.size();
     }

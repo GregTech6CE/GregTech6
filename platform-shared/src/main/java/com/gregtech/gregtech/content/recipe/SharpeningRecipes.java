@@ -1,6 +1,6 @@
 package com.gregtech.gregtech.content.recipe;
 
-import com.gregtech.gregtech.GregTech;
+import com.gregtech.gregtech.platform.Mc;
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
 import com.gregtech.gregtech.api.material.GTValues;
@@ -87,7 +87,7 @@ public final class SharpeningRecipes {
                 sharpen(material, row[0], 1, row[1], Integer.parseInt(row[2]), 256, "T".equals(row[3]));
             }
         }
-        GregTech.LOGGER.info("Registered {} GT6 sharpening recipes ({} notes: {})",
+        Mc.logger().info("Registered {} GT6 sharpening recipes ({} notes: {})",
                 ENTRIES.size(), SKIPPED.size(), SKIPPED);
         return ENTRIES.size();
     }

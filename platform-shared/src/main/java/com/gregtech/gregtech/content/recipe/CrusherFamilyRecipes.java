@@ -1,8 +1,9 @@
 package com.gregtech.gregtech.content.recipe;
 
+import com.gregtech.gregtech.platform.Mc;
 import com.gregtech.gregtech.content.recipe.CrusherFamilyRecipeRows.Row;
 
-import com.gregtech.gregtech.GregTech;
+
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
 import com.gregtech.gregtech.api.material.GTValues;
@@ -56,7 +57,7 @@ public final class CrusherFamilyRecipes {
             if (material.has(MaterialProperty.ANTIMATTER)) continue;
             for (Row row : ROWS) crush(material, row);
         }
-        GregTech.LOGGER.info("Registered {} GT6 crusher rows ({} notes: {})",
+        Mc.logger().info("Registered {} GT6 crusher rows ({} notes: {})",
                 ENTRIES.size(), SKIPPED.size(), SKIPPED);
         return ENTRIES.size();
     }

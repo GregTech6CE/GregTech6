@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.content.recipe;
 
+import com.gregtech.gregtech.platform.Mc;
 import com.gregtech.gregtech.content.recipe.WelderFamilyRecipeRows.Row;
 
 import com.gregtech.gregtech.api.material.GTMaterial;
@@ -73,7 +74,7 @@ public final class WelderFamilyRecipes {
             if (!material.has(MaterialProperty.SMITHABLE)) continue;
             for (Row row : ROWS) weld(material, row);
         }
-        com.gregtech.gregtech.GregTech.LOGGER.info(
+        Mc.logger().info(
                 "Registered {} GT6 welder rows ({} GT6 rows skipped: {})",
                 ENTRIES.size(), SKIPPED.size(), SKIPPED);
         return ENTRIES.size();

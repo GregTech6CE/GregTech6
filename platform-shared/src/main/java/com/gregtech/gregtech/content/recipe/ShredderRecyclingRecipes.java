@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.content.recipe;
 
+import com.gregtech.gregtech.platform.Mc;
 
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
@@ -64,7 +65,7 @@ public final class ShredderRecyclingRecipes {
             }
         }
         if (!missing.isEmpty()) SKIPPED.add("prefixes the port does not have: " + missing);
-        com.mojang.logging.LogUtils.getLogger().info("Registered {} GT6 shredder recycling recipes ({} prefixes missing: {})",
+        Mc.logger().info("Registered {} GT6 shredder recycling recipes ({} prefixes missing: {})",
                 ENTRIES.size(), missing.size(), missing);
         return ENTRIES.size();
     }

@@ -1,12 +1,12 @@
 package com.gregtech.gregtech.content.recipe;
 
+import com.gregtech.gregtech.platform.Mc;
 import com.gregtech.gregtech.api.material.*;
 import com.gregtech.gregtech.api.recipe.*;
 import com.gregtech.gregtech.block.stone.*;
 import com.gregtech.gregtech.data.*;
 import com.gregtech.gregtech.registry.GTItems;
 import net.minecraft.world.item.*;
-import net.minecraftforge.registries.ForgeRegistries;
 import java.util.*;
 
 /** Survival entries from GT6 BlockStones and Loader_Recipes_Handlers (157,403-416). */
@@ -86,7 +86,7 @@ public final class StoneAndToolSurvivalRecipes {
     public static String[] stoneExtrusionMolds(){return STONE_EXTRUDER_MOLDS.clone();}
 
     private static void registerStoneExtrusions() {
-        for (var block : ForgeRegistries.BLOCKS.getValues()) {
+        for (var block : Mc.blocks()) {
             if (!(block instanceof GTStoneBlock stone)) continue;
             var variant = stone.variant();
             if (variant != StoneVariant.STONE && variant != StoneVariant.COBBLE) continue;
@@ -127,8 +127,8 @@ public final class StoneAndToolSurvivalRecipes {
     }
 
     private static ItemStack blockItem(String id) {
-        var item = ForgeRegistries.ITEMS.getValue(
-                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech", id));
+        var item = Mc.item(
+                Mc.gregtechId(id));
         return item == null || item == Items.AIR ? ItemStack.EMPTY : new ItemStack(item);
     }
 }

@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.content.recipe;
 
+import com.gregtech.gregtech.platform.Mc;
 import com.gregtech.gregtech.api.recipe.Recipe;
 import com.gregtech.gregtech.block.stone.StoneType;
 import com.gregtech.gregtech.block.stone.StoneVariant;
@@ -11,7 +12,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -246,7 +246,7 @@ public final class StoneVariantRecipes {
 
     /** GT6 {@code RM.generify(block, vanillaBlock)} — lets GT machines treat the rock as the vanilla block. */
     private static void generify(ItemStack in, String vanillaPath) {
-        var item = ForgeRegistries.ITEMS.getValue(ResourceLocation.withDefaultNamespace(vanillaPath));
+        var item = Mc.item(ResourceLocation.withDefaultNamespace(vanillaPath));
         if (item == null || item == Items.AIR) {
             SKIPPED.add("generify target missing: " + vanillaPath);
             return;
@@ -287,7 +287,7 @@ public final class StoneVariantRecipes {
     }
 
     private static void report() {
-        com.gregtech.gregtech.GregTech.LOGGER.info("Registered {} GT6 masonry rows {} ({} skipped: {})",
+        Mc.logger().info("Registered {} GT6 masonry rows {} ({} skipped: {})",
                 ENTRIES.size(), COUNTS, SKIPPED.size(), SKIPPED);
     }
 }
