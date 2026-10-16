@@ -599,6 +599,68 @@ public class RecipeMap {
         return aRecipe;
     }
 
+    private List<Recipe> mBaseline;
+
+    public boolean hasBaseline() { return mBaseline != null; }
+    public int baselineSize() { return mBaseline == null ? 0 : mBaseline.size(); }
+
+    /** The first capture is kept. Rows in {@code exclude} are rebuilt from tags after every restore. */
+    public synchronized void captureBaseline(Set<Recipe> exclude) {
+        if (mBaseline != null) return;
+        var rows = new ArrayList<Recipe>(mRecipeList.size());
+        for (var recipe : mRecipeList) if (exclude == null || !exclude.contains(recipe)) rows.add(recipe);
+        mBaseline = List.copyOf(rows);
+    }
+
+    /** Drops rows outside the baseline and puts missing baseline rows back. Returns how many rows moved. */
+    public synchronized int restoreBaseline() {
+        if (mBaseline == null) throw new IllegalStateException("Recipe baseline was not captured for " + mNameInternal);
+        var keep = Collections.newSetFromMap(new IdentityHashMap<Recipe, Boolean>());
+        keep.addAll(mBaseline);
+        var drop = new ArrayList<Recipe>();
+        for (var recipe : mRecipeList) if (!keep.contains(recipe)) drop.add(recipe);
+        for (var recipe : drop) unlink(recipe);
+        var present = Collections.newSetFromMap(new IdentityHashMap<Recipe, Boolean>());
+        present.addAll(mRecipeList);
+        int restored = 0;
+        for (var recipe : mBaseline) if (present.add(recipe)) {
+            add(recipe);
+            restored++;
+        }
+        return drop.size() + restored;
+    }
+
+    /** Clears the indexes and inserts the baseline again, for timing a full rebuild. */
+    public synchronized int reindexBaseline() {
+        if (mBaseline == null) throw new IllegalStateException("Recipe baseline was not captured for " + mNameInternal);
+        mRecipeList.clear();
+        mRecipeItemMap.clear();
+        mRecipeFluidMap.clear();
+        for (var recipe : mBaseline) add(recipe);
+        return mBaseline.size();
+    }
+
+    /** Removes one stored row and its input indexes. */
+    public synchronized boolean unlink(Recipe recipe) {
+        if (recipe == null || !mRecipeList.remove(recipe)) return false;
+        for (ItemStack in : recipe.mInputs) {
+            if (empty(in)) continue;
+            var pool = mRecipeItemMap.get(in.getItem());
+            if (pool == null) continue;
+            pool.remove(recipe);
+            if (pool.isEmpty()) mRecipeItemMap.remove(in.getItem());
+        }
+        for (FluidStack fluid : recipe.mFluidInputs) {
+            if (fluid == null || fluid.isEmpty()) continue;
+            String key = fluidKey(fluid);
+            var pool = mRecipeFluidMap.get(key);
+            if (pool == null) continue;
+            pool.remove(recipe);
+            if (pool.isEmpty()) mRecipeFluidMap.remove(key);
+        }
+        return true;
+    }
+
     /** Removes all recipes that use the given item as one of their inputs. */
     public boolean removeRecipesByInput(ItemStack aInput) {
         if (empty(aInput)) return false;

@@ -37,7 +37,53 @@ if (com.gregtech.gregtech.data.MachineRecipeMaps.Mortar.addRecipe(recipe) == nul
     throw new IllegalStateException("my_addon mortar recipe rejected");
 ```
 
-This uses the existing GT recipe system, not a parallel addon recipe registry. Choose inputs/outputs and power/duration appropriate for your addon. New rows are available to the existing machine recipe lookup and viewers; overlapping inputs retain that map's original precedence rules. A recipe-ready callback is a startup extension, not a datapack reload callback.
+This uses the existing GT recipe system, not a parallel addon recipe registry. Choose inputs/outputs and power/duration appropriate for your addon. New rows are available to the existing machine recipe lookup and viewers; overlapping inputs retain that map's original precedence rules. `onRecipesReady` runs once at startup. Datapack and KubeJS changes use the overlay below; they do not call the addon callback again.
+
+## Machine recipe datapacks
+
+A datapack can add or remove static rows on a machine recipe map that already exists. Put the JSON in the vanilla recipe directory: `data/<namespace>/recipes/` on Forge 1.20.1, and `data/<namespace>/recipe/` on NeoForge 1.21.1. It cannot create a map, and it does not see or edit dynamic providers. The same JSON is what KubeJS `event.custom()` submits. There is no KubeJS plugin. `event.remove({type: "gregtech:machine"})` removes the marker recipes from the vanilla recipe manager; the next reload then rebuilds the machine maps from the markers that remain.
+
+Rebuild order, after tags are bound:
+
+1. Restore the startup snapshot. That snapshot is the built-in rows plus addon rows from `onRecipesReady`. Compat and tagged external-ore rows are left out of it.
+2. Rebuild those compat and external-ore rows from the current tags.
+3. Apply every `gregtech:machine_removal`, sorted by recipe id.
+4. Apply every `gregtech:machine`, in the same id order.
+
+A second `/reload` repeats that sequence, so additions do not pile up. Singleplayer keeps one static table: the integrated server applies the overlay, and the client skips its own pass. A dedicated client applies the markers it received from the vanilla recipe sync, then JEI and EMI read the maps again.
+
+```json
+{
+  "type": "gregtech:machine",
+  "map": "gt.recipe.crusher",
+  "item_inputs": [{ "item": "minecraft:heart_of_the_sea" }, { "tag": "minecraft:coals", "count": 1 }],
+  "fluid_inputs": [{ "fluid": "minecraft:water", "amount": 1000 }],
+  "item_outputs": [{ "item": "minecraft:emerald", "count": 1, "chance": 5000 }],
+  "fluid_outputs": [{ "fluid": "minecraft:lava", "amount": 1 }],
+  "eu_per_tick": 16,
+  "duration": 64,
+  "special": 0
+}
+```
+
+`map` is an existing recipe-map name such as `gt.recipe.crusher`. An item input is either `item` or `tag`, never both. Counts default to 1. Fluid amounts are millibuckets and are required on an addition. Output `chance` is parts per 10000 and defaults to 10000; 0 is rejected. `eu_per_tick` is at least 0, `duration` is at least 1, and omitted `special` is 0. Item, tag and fluid ids are `namespace:path` using `[a-z0-9_./-]`. The map name uses `[a-z0-9_.]`. A tag input expands to one concrete row per item in the tag, sorted by item id. The row is rejected when the tag is empty, an id is missing, the slot counts do not fit the map, the expansion passes 4096 combinations, or the map already has a recipe whose inputs are covered by the new inputs. Remove the old row in the same pack; removals run first.
+
+```json
+{
+  "type": "gregtech:machine_removal",
+  "map": "gt.recipe.crusher",
+  "item_inputs": [{ "item": "minecraft:iron_ingot", "count": 1 }, { "tag": "minecraft:coals" }],
+  "fluid_inputs": [{ "fluid": "minecraft:water", "amount": 1000 }],
+  "item_outputs": [{ "item": "minecraft:emerald", "chance": 10000 }],
+  "fluid_outputs": [{ "fluid": "minecraft:lava" }]
+}
+```
+
+Every listed input and output must match a distinct slot. A count, amount, or chance of 0, or an omitted one, matches any value. A tag matches when the recipe's item is in that tag. `{"map":"gt.recipe.crusher","clear":true}` removes every static row on that map. `clear` cannot be combined with a match list, and a removal with neither is rejected. Fake display rows are static rows and can be removed. A running machine already stored its outputs, so a reload still finishes that job.
+
+An unknown field rejects the recipe. Top-level fields that start with `_` are ignored, such as `_comment` or the `_kubejs_changed_marker` that KubeJS 7 adds to `event.custom()` JSON.
+
+Development runs can add KubeJS with `-PkubejsRuntime=true`. The dependency stays out of the production jar and is independent of `-PcompatRuntime`.
 
 ## Signal wires
 
@@ -115,8 +161,9 @@ Declare a required loader dependency on **`gregtech6`** (the internal content na
 - Queued materials and extra forms of existing prefixes, in the 4291–7899 id band, generated as `gregtech:` items.
 - Existing `GTMaterialRegistry`, `MaterialPrefix`, `GTValues.U`, `GTVoltageTiers` and energy packet contracts.
 - Existing platform `MachineRecipeMaps`, `Recipe`, item/material lookup and `IEnergyBlock` adapters.
+- Datapack types `gregtech:machine` and `gregtech:machine_removal` on maps that already exist.
 - `GtSignalCarrier`, `GtSignalSource`, `GtSignalReceiver`, and the empty `gregtech:signal_wire_receivers` block tag.
 
-API version 2 does **not** promise new prefixes, fluids, machine types, datapack reloads of the material table, old-save migration, cross-loader Minecraft stacks or a complete old GregAPI replacement. Only the documented entries are the compatibility surface; internal classes may change during the 0.0.0 integration. Use [the voltage guide](VOLTAGE_TIERS.md) rather than GT5/GTCE tier labels.
+API version 2 does **not** promise new prefixes, fluids, machine types, datapack-created recipe maps, edits to dynamic providers, datapack reloads of the material table, old-save migration, cross-loader Minecraft stacks or a complete old GregAPI replacement. Only the documented entries are the compatibility surface; internal classes may change during the 0.0.0 integration. Use [the voltage guide](VOLTAGE_TIERS.md) rather than GT5/GTCE tier labels.
 
 The SDK/project code license is LGPL-3.0-or-later. Preserve applicable source/asset notices; consult `LICENSE`, `COPYING` and `NOTICE` for the actual declarations.

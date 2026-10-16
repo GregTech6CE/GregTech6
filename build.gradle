@@ -116,6 +116,18 @@ minecraft {
 
         client {
             property 'gregtech.integration.clientCreateWorldSmoke', (project.findProperty('clientCreateWorldSmoke') ?: 'false').toString()
+            property 'gregtech.integration.machineOverlayViewerSmoke', (project.findProperty('machineOverlayViewerSmoke') ?: 'false').toString()
+            property 'gregtech.integration.machineOverlayViewerPhase', (project.findProperty('machineOverlayViewerPhase') ?: 'create').toString()
+            property 'gregtech.integration.machineOverlayVictim', (project.findProperty('machineOverlayVictim') ?: '').toString()
+            if (project.findProperty('machineOverlayViewerSmoke') == 'true') {
+                def overlayPhase = (project.findProperty('machineOverlayViewerPhase') ?: 'create').toString()
+                workingDirectory project.file(project.findProperty('machineOverlayDirectory')
+                        ?: (overlayPhase == 'join' ? 'build/machine-overlay-join-client' : 'build/machine-overlay-client'))
+                jvmArgs '-Xmx6g', '-XX:+UseSerialGC'
+                args '--width', '1280', '--height', '720'
+                if (overlayPhase == 'reopen') args '--quickPlaySingleplayer', 'overlay-viewer'
+                if (overlayPhase == 'join') args '--quickPlayMultiplayer', 'localhost'
+            }
             property 'gregtech.integration.viewerFeedbackOnly', (project.findProperty('viewerFeedbackOnly') ?: 'false').toString()
             property 'gregtech.integration.recipePresentationRuntimeOnly', (project.findProperty('recipePresentationRuntimeOnly') ?: 'false').toString()
             property 'gregtech.integration.materialDataBrowserRuntimeOnly', (project.findProperty('materialDataBrowserRuntimeOnly') ?: 'false').toString()
@@ -261,6 +273,12 @@ dependencies {
     }
     if (project.findProperty('compatRuntime') == 'hc') {
         runtimeOnly fg.deobf("maven.modrinth:pams-harvestcraft-2-food-core:${hc_version}")
+    }
+    // Dev-only. KubeJS submits the same gregtech:machine JSON via event.custom(). Not in the production jar.
+    if (project.findProperty('kubejsRuntime') == 'true') {
+        runtimeOnly fg.deobf("maven.modrinth:kubejs:2001.6.5-build.16+forge")
+        runtimeOnly fg.deobf("maven.modrinth:rhino:2001.2.3-build.10+forge")
+        runtimeOnly fg.deobf("maven.modrinth:architectury-api:9.2.14+forge")
     }
 
     // §105: the mixin annotation processor generates gregtech.refmap.json (named -> SRG), which is what

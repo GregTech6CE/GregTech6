@@ -107,9 +107,17 @@ public final class SignalWireBlock extends Block implements EntityBlock, ToolInt
     }
     @Override public VoxelShape getShape(BlockState state,BlockGetter level,BlockPos pos,CollisionContext context){
         if(context instanceof EntityCollisionContext e && e.getEntity() instanceof Player p && NeoToolBindings.isWireCutter(p.getMainHandItem()))return Shapes.block();
-        int a=8-halfThickness(),b=8+halfThickness();
+        int mask=0;
+        for(var side:Direction.values())if(state.getValue(ElectricWireBlock.propFor(side)))mask|=1<<side.ordinal();
+        var shape=shapes[mask];
+        if(shape==null)shapes[mask]=shape=connectionShape(halfThickness(),mask);
+        return shape;
+    }
+    private final VoxelShape[] shapes=new VoxelShape[64];
+    private static VoxelShape connectionShape(int half,int mask){
+        int a=8-half,b=8+half;
         var shape=Block.box(a,a,a,b,b,b);
-        for(var side:Direction.values())if(state.getValue(ElectricWireBlock.propFor(side)))shape=Shapes.or(shape,
+        for(var side:Direction.values())if((mask&1<<side.ordinal())!=0)shape=Shapes.or(shape,
                 Block.box(side==Direction.WEST?0:a,side==Direction.DOWN?0:a,side==Direction.NORTH?0:a,
                         side==Direction.EAST?16:b,side==Direction.UP?16:b,side==Direction.SOUTH?16:b));
         return shape;
