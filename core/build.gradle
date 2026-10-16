@@ -98,3 +98,20 @@ tasks.register('addonApiJar', Jar) {
     }
     tasks.named('check').configure { dependsOn contract }
 }
+
+def machineRecipeOverlayContracts = tasks.register('machineRecipeOverlayContracts', JavaExec) {
+    description = 'Runs machine recipe datapack document and match contracts without Minecraft.'
+    group = 'verification'
+    dependsOn tasks.named('testClasses')
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'com.gregtech.gregtech.core.MachineRecipeOverlayContracts'
+    javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
+    def marker = layout.buildDirectory.file('reports/contracts/machineRecipeOverlayContracts.passed')
+    outputs.file(marker)
+    doFirst { marker.get().asFile.delete() }
+    doLast {
+        marker.get().asFile.parentFile.mkdirs()
+        marker.get().asFile.setText("MachineRecipeOverlayContracts: passed\n", 'UTF-8')
+    }
+}
+tasks.named('check').configure { dependsOn machineRecipeOverlayContracts }

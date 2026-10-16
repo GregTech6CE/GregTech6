@@ -41,7 +41,9 @@ public final class GTAxles {
                         .mapColor(spec.material() == WoodMaterials.WoodTreated ? MapColor.WOOD : MapColor.METAL)
                         .strength(2.0f, 6.0f)
                         .sound(spec.material() == WoodMaterials.WoodTreated ? SoundType.WOOD : SoundType.METAL)
-                        .noOcclusion()));
+                        .noOcclusion()
+                        // Arms depend on neighbour thickness, so no per-state shape cache.
+                        .dynamicShape()));
         ALL.add(block);
         ITEMS.register(spec.id(),
                 () -> new net.minecraft.world.item.BlockItem(block.get(), new Item.Properties().stacksTo(spec.size()<=2?64:spec.size()==3?32:16)));

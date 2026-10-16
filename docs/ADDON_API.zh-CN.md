@@ -17,7 +17,53 @@ GregTechAddons.register(new GregTechAddon() {
 });
 ```
 
-导入 `com.gregtech.gregtech.api.addon.GregTechAddon` 与 `GregTechAddons`。可直接使用现有 `GTMaterialRegistry`、`MaterialPrefix`、`GTValues.U`、`GTVoltageTiers`，机器配方仍进入原有 `MachineRecipeMaps`，不建立另一套配方底层。英文说明提供完整配方示例；你的输入物品须先由自己的加载器注册。
+导入 `com.gregtech.gregtech.api.addon.GregTechAddon` 与 `GregTechAddons`。可直接使用现有 `GTMaterialRegistry`、`MaterialPrefix`、`GTValues.U`、`GTVoltageTiers`，机器配方仍进入原有 `MachineRecipeMaps`，不建立另一套配方底层。英文说明提供完整配方示例；你的输入物品须先由自己的加载器注册。`onRecipesReady` 只在启动时走一次。数据包和 KubeJS 走下面的覆盖层，不会再次调用这个回调。
+
+## 机器配方数据包
+
+数据包可以给已经存在的机器配方表加静态行、删静态行。JSON 放在该版本的原版配方目录：Forge 1.20.1 用 `data/<命名空间>/recipes/`，NeoForge 1.21.1 用 `data/<命名空间>/recipe/`。不能新建配方表，也看不到、改不了动态配方。KubeJS 的 `event.custom()` 提交的就是同一份 JSON，没有单独的 KubeJS 插件。`event.remove({type: "gregtech:machine"})` 删的是原版配方管理器里的标记配方；下一次重载按剩下的标记重建机器表。
+
+标签绑定之后的重建顺序：
+
+1. 恢复启动快照。快照是内置行加上 `onRecipesReady` 里 addon 加的行。兼容层和带标签的外部矿物行不在快照里。
+2. 按当前标签重建这些兼容层和外部矿物行。
+3. 按配方 id 排序，执行全部 `gregtech:machine_removal`。
+4. 按同样的 id 顺序，执行全部 `gregtech:machine`。
+
+再执行一次 `/reload` 会重走这四步，新增不会叠上去。单人游戏只有一张静态表：集成服务端应用覆盖层，客户端不再做第二次。专服客户端用原版配方同步收到标记，在本地做同样的覆盖，然后 JEI 和 EMI 重新读这些表。
+
+```json
+{
+  "type": "gregtech:machine",
+  "map": "gt.recipe.crusher",
+  "item_inputs": [{ "item": "minecraft:heart_of_the_sea" }, { "tag": "minecraft:coals", "count": 1 }],
+  "fluid_inputs": [{ "fluid": "minecraft:water", "amount": 1000 }],
+  "item_outputs": [{ "item": "minecraft:emerald", "count": 1, "chance": 5000 }],
+  "fluid_outputs": [{ "fluid": "minecraft:lava", "amount": 1 }],
+  "eu_per_tick": 16,
+  "duration": 64,
+  "special": 0
+}
+```
+
+`map` 是已有配方表名字，例如 `gt.recipe.crusher`。物品输入要么写 `item`，要么写 `tag`，不能同时写。数量省略时是 1。流体数量是毫桶，新增时必填。输出 `chance` 是万分比，省略时是 10000；写 0 会被拒绝。`eu_per_tick` 至少为 0，`duration` 至少为 1，省略的 `special` 是 0。物品、标签和流体 id 必须是 `namespace:path`，字符只允许 `[a-z0-9_./-]`。配方表名字只用 `[a-z0-9_.]`。标签输入会按物品 id 排序，展开成每个成员一条具体配方。标签为空、id 不存在、槽位装不进这张表、展开组合超过 4096，或者这张表里已经有一条配方的输入被新配方的输入覆盖，这条新增都会被拒绝。要换掉旧行，就在同一个包里先写删除；删除先执行。
+
+```json
+{
+  "type": "gregtech:machine_removal",
+  "map": "gt.recipe.crusher",
+  "item_inputs": [{ "item": "minecraft:iron_ingot", "count": 1 }, { "tag": "minecraft:coals" }],
+  "fluid_inputs": [{ "fluid": "minecraft:water", "amount": 1000 }],
+  "item_outputs": [{ "item": "minecraft:emerald", "chance": 10000 }],
+  "fluid_outputs": [{ "fluid": "minecraft:lava" }]
+}
+```
+
+列出的每一项输入和输出都要各自对上一个不同的槽。数量、流体量或几率写 0，或者省略，表示任意值。标签在配方物品属于该标签时命中。`{"map":"gt.recipe.crusher","clear":true}` 删掉这张表上的全部静态行。`clear` 不能再带匹配列表；两者都没有的删除会被拒绝。展示用的假配方也是静态行，可以被删掉。正在加工的机器已经把产出记进存档，重载后这一轮仍会出产。
+
+出现未知字段时这条配方会被拒绝。顶层以 `_` 开头的字段会被忽略，例如 `_comment`，以及 KubeJS 7 往 `event.custom()` 的 JSON 里加的 `_kubejs_changed_marker`。
+
+开发环境可以用 `-PkubejsRuntime=true` 装上 KubeJS。这个依赖不进成品，也不占用 `-PcompatRuntime`。
 
 ## 信号线
 
@@ -87,6 +133,6 @@ public final class MyMaterials implements GregTechMaterialContributor {
 
 Addon须声明必需依赖模组 **`gregtech6`**；GT内容和保存命名空间仍为 **`gregtech`**。分别构建Forge和NeoForge版本，SDK不会让Forge二进制自动跨加载器运行。
 
-当前支持注册和配方就绪生命周期、4291–7899 号段的排队材料和已有前缀的追加形态（生成 `gregtech:` 物品）、已有材料查询、现有机器配方、能源合同，以及 `GtSignalCarrier`、`GtSignalSource`、`GtSignalReceiver` 和空的 `gregtech:signal_wire_receivers` 方块标签。它不是数据包重载事件。API 版本 2 不承诺新前缀、流体、新机器类型、材料表的数据包重载、旧存档迁移、跨加载器物品栈或完整旧 GregAPI 替代。0.0.0 阶段仅文档列出的入口作为兼容面，内部实现可能调整。电压等级以[原GT6电压说明](VOLTAGE_TIERS.md)为准。
+当前支持注册和配方就绪生命周期、4291–7899 号段的排队材料和已有前缀的追加形态（生成 `gregtech:` 物品）、已有材料查询、现有机器配方、能源合同、`gregtech:machine` 与 `gregtech:machine_removal` 两种数据包配方，以及 `GtSignalCarrier`、`GtSignalSource`、`GtSignalReceiver` 和空的 `gregtech:signal_wire_receivers` 方块标签。`onRecipesReady` 仍不是数据包重载事件。API 版本 2 不承诺新前缀、流体、新机器类型、数据包新建配方表、修改动态配方、材料表的数据包重载、旧存档迁移、跨加载器物品栈或完整旧 GregAPI 替代。0.0.0 阶段仅文档列出的入口作为兼容面，内部实现可能调整。电压等级以[原GT6电压说明](VOLTAGE_TIERS.md)为准。
 
 SDK与项目代码采用LGPL-3.0-or-later；原作者、第三方代码和资产各自声明继续保留，见根LICENSE、COPYING、NOTICE。

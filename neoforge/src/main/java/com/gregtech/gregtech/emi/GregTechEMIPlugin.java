@@ -16,6 +16,12 @@ import java.util.Locale;
 /** Native EMI integration: machine maps are independent of the vanilla RecipeManager and JEI. */
 @EmiEntrypoint
 public final class GregTechEMIPlugin implements EmiPlugin {
+    private static int overlayGeneration;
+
+    /** The client overlay calls this before EMI re-registers, so this pass reads the live maps. */
+    public static void overlayChanged() { overlayGeneration++; }
+    public static int overlayGeneration() { return overlayGeneration; }
+
     @Override
     public void register(EmiRegistry registry) {
         for(var item:com.gregtech.gregtech.api.recipe.UsbRecipeDisplayBinding.sticks())
@@ -57,7 +63,7 @@ public final class GregTechEMIPlugin implements EmiPlugin {
                     "[gregtech] EMI registered {} recipes for {} in {} ms", rows - before, map.mNameInternal,
                     (System.nanoTime() - mapStarted) / 1_000_000);
         }
-        com.mojang.logging.LogUtils.getLogger().info("[gregtech] EMI registered {} machine recipes in {} categories in {} ms", rows, categories,
-                (System.nanoTime() - started) / 1_000_000);
+        com.mojang.logging.LogUtils.getLogger().info("[gregtech] EMI registered {} machine recipes in {} categories in {} ms (overlay {})",
+                rows, categories, (System.nanoTime() - started) / 1_000_000, overlayGeneration);
     }
 }
