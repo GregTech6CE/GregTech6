@@ -1,14 +1,11 @@
 package com.gregtech.gregtech.block.misc;
 
-import com.gregtech.gregtech.blockentity.CFoamBlockEntity;
 import com.gregtech.gregtech.registry.GTBlockEntities;
 import com.gregtech.gregtech.registry.GTDecorBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
@@ -43,17 +40,6 @@ public class CFoamBlock extends ColoredConstructionBlock {
     @Override
     public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
         entity.causeFallDamage(fallDistance, 0.5f, level.damageSources().fall());
-    }
-
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return fresh ? new CFoamBlockEntity(pos, state) : null;
-    }
-
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        if (!fresh || level.isClientSide) return null;
-        return (l, p, s, be) -> {
-            if (be instanceof CFoamBlockEntity foam) foam.tick();
-        };
     }
 
     /** GT6's {@code removeFoam}: wet foam is scraped away, only the hardened block drops itself. */
