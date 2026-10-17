@@ -35,6 +35,7 @@
   "client": [
     "BlockPaintColorMixin",
     "ItemPaintColorMixin",
-    "ReliableEmiNamespaceMixin"
+    "ReliableEmiNamespaceMixin",
+    "ReliableEmiGearboxIconMixin"
   ]
 }

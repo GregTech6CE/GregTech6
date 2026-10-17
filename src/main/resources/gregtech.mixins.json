@@ -36,6 +36,7 @@
     "ItemPaintColorMixin",
     "ColoredBookOpenPacketMixin",
     "ColoredBookLecternScreenMixin",
-    "ReliableEmiNamespaceMixin"
+    "ReliableEmiNamespaceMixin",
+    "ReliableEmiGearboxIconMixin"
   ]
 }
