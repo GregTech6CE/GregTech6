@@ -1,0 +1,28 @@
+{
+  "dynamic_calls_requiring_catalog_or_runtime_checks": 463,
+  "java_sources": 2635,
+  "language": {
+    "changes": {
+      "changed": 0,
+      "missing": 0,
+      "unexpected": 0
+    },
+    "chinese_keys": 141782,
+    "derived_emi_headings": 315,
+    "english": {
+      "exact_original_declarations": 12896,
+      "formatted_keys": 391,
+      "intentional_empty_tooltips": 689,
+      "keys": 15931,
+      "original_english_without_chinese_source": 477
+    },
+    "english_fallback_count": 3093,
+    "native_aliases": 12717,
+    "source_keys": 125676,
+    "source_sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0"
+  },
+  "literal_language_calls": 859,
+  "scope": "Code boundaries, exact-source Chinese, pinned English declarations, encoding/format parity and literal call-site keys/arity; dynamic registry names require the separate installed-client probe. Not gameplay acceptance.",
+  "seconds": 2.655,
+  "status": "passed"
+}

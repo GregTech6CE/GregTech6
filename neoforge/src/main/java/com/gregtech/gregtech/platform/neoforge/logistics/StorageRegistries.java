@@ -27,7 +27,7 @@ public final class StorageRegistries {
     private StorageRegistries() {}
     public static List<java.util.function.Supplier<? extends Block>> all() { return java.util.stream.Stream.concat(STORAGES.stream(),LOGISTICS_STORAGES.stream()).toList(); }
     public static void register(IEventBus bus) {
-        bind("mass_storage",null,6,6);
+        // The old material-less ID is a registry alias to stainless steel.
         for(var spec:GTStorageMetals.ALL)bind("mass_storage_"+spec.suffix(),spec.material(),spec.hardness(),spec.resistance());
         for(var spec:GTStorageMetals.ALL)bindLogistics("logistics_mass_storage_"+spec.suffix(),spec.material(),spec.hardness(),spec.resistance());
         BLOCKS.register(bus);ITEMS.register(bus);TYPES.register(bus);

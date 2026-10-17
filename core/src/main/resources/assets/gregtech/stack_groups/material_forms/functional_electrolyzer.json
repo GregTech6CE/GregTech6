@@ -4,6 +4,7 @@
   "contents": [
     "item:gregtech:electrolyzer_aluminium",
     "item:gregtech:electrolyzer_chromium",
+    "item:gregtech:electrolyzer_galvanized_steel",
     "item:gregtech:electrolyzer_stainless_steel",
     "item:gregtech:electrolyzer_titanium"
   ],

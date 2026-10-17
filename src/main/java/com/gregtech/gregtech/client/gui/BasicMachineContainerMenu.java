@@ -102,8 +102,8 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu {
         int outputCount = recipeMap.mOutputItemsCount;
         int totalFluids = recipeMap.mInputFluidCount + recipeMap.mOutputFluidCount;
 
-        addGrid(inv,0,inputCount,true,totalFluids);
-        addGrid(inv,inputCount,outputCount,false,totalFluids);
+        addGrid(inv,0,inputCount,true,recipeMap.mInputFluidCount);
+        addGrid(inv,inputCount,outputCount,false,recipeMap.mOutputFluidCount);
     }
 
     private void addGrid(net.minecraftforge.items.IItemHandler inv,int start,int count,boolean input,int fluids) {

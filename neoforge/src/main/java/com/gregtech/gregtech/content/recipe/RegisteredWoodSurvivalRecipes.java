@@ -26,6 +26,11 @@ public final class RegisteredWoodSurvivalRecipes extends OriginalRecipeBatch {
   for(var species:WoodSpecies.values()) INSTANCE.wood(species);
   for(String species:new String[]{"crimson","warped"}) INSTANCE.netherWood(species);
   for(var wood:NaturalWoodCraftingRows.SPECIES) INSTANCE.naturalWood(wood);
+  for(String wood:com.gregtech.gregtech.content.plant.WoodSlabCatalog.WOODS)
+   for(var coolant:SawingCoolants.variants(false))
+    INSTANCE.add("saw/slab/"+wood+"/"+coolant.field(),MachineRecipeMaps.Cutter,72L*coolant.multiplier(),16,
+     items(item("gregtech:planks_"+wood,1)),items(item("gregtech:slab_"+wood,2)),
+     fluids(fluid(coolant.field(),3*coolant.multiplier())),null);
   return INSTANCE.entries().size();
  }
  /**
@@ -35,7 +40,7 @@ public final class RegisteredWoodSurvivalRecipes extends OriginalRecipeBatch {
   */
  public static int expectedRows(){
   int coolants=SawingCoolants.variants(false).size();
-  return WoodSpecies.values().length*(2*coolants+5)+2*2*2*coolants+NaturalWoodCraftingRows.SPECIES.size()*(coolants+3);
+  return com.gregtech.gregtech.content.plant.WoodSlabCatalog.WOODS.size()*coolants+WoodSpecies.values().length*(2*coolants+5)+2*2*2*coolants+NaturalWoodCraftingRows.SPECIES.size()*(coolants+3);
  }
  private void saw(String id,ItemStack input,ItemStack... output){
   for(var coolant:SawingCoolants.variants(false))

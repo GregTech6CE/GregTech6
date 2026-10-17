@@ -30,8 +30,12 @@ import java.util.List;
 /** GT6 Locker: right-click swaps your whole armor set with the stored one. */
 public class LockerBlock extends HorizontalDirectionalBlock implements EntityBlock, SimpleWaterloggedBlock {
 
-    public LockerBlock(Properties properties) {
+    private final com.gregtech.gregtech.api.material.GTMaterial material;
+    public com.gregtech.gregtech.api.material.GTMaterial material() { return material; }
+    public LockerBlock(Properties properties) { this(com.gregtech.gregtech.content.material.Materials.StainlessSteel, properties); }
+    public LockerBlock(com.gregtech.gregtech.api.material.GTMaterial material, Properties properties) {
         super(properties);
+        this.material = material;
         registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH).setValue(GTWaterloggable.WATERLOGGED, false));
     }
 

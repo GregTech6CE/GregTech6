@@ -236,6 +236,7 @@ public class Loader_Creative implements IGTLoader {
             java.util.stream.Stream.concat(com.gregtech.gregtech.registry.GTStorage.SAFES.stream(), com.gregtech.gregtech.registry.GTStorage.KEY_SAFES.stream())
                     .forEach(entry -> event.accept(new net.minecraft.world.item.ItemStack(entry.get())));
             com.gregtech.gregtech.registry.GTStorage.DRAWERS.forEach(entry -> event.accept(new net.minecraft.world.item.ItemStack(entry.get())));
+            com.gregtech.gregtech.registry.GTStorage.LOCKERS.forEach(entry -> event.accept(new net.minecraft.world.item.ItemStack(entry.get())));
             for (var storage : com.gregtech.gregtech.registry.GTStorage.MASS_STORAGES) {
                 if (storage.isPresent()) event.accept(new net.minecraft.world.item.ItemStack(storage.get()));
             }

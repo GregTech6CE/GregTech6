@@ -52920,6 +52920,246 @@
     "tooltip.gregtech.wire.damage_warning": {
       "source_key": "gt.lang.hazard.contact",
       "value": "Causes Damage when touched while active!"
+    },
+    "block.gregtech.locker_lead": {
+      "source_key": "gt.multitileentity.7300",
+      "value": "Locker (Lead)"
+    },
+    "block.gregtech.locker_bismuth": {
+      "source_key": "gt.multitileentity.7316",
+      "value": "Locker (Bismuth)"
+    },
+    "block.gregtech.locker_antimony": {
+      "source_key": "gt.multitileentity.7347",
+      "value": "Locker (Antimony)"
+    },
+    "block.gregtech.locker_nickel": {
+      "source_key": "gt.multitileentity.7322",
+      "value": "Locker (Nickel)"
+    },
+    "block.gregtech.locker_constantan": {
+      "source_key": "gt.multitileentity.7337",
+      "value": "Locker (Constantan)"
+    },
+    "block.gregtech.locker_bronze": {
+      "source_key": "gt.multitileentity.7309",
+      "value": "Locker (Bronze)"
+    },
+    "block.gregtech.locker_arsenic_copper": {
+      "source_key": "gt.multitileentity.7357",
+      "value": "Locker (Arsenic Copper)"
+    },
+    "block.gregtech.locker_aluminium": {
+      "source_key": "gt.multitileentity.7301",
+      "value": "Locker (Aluminium)"
+    },
+    "block.gregtech.locker_brass": {
+      "source_key": "gt.multitileentity.7308",
+      "value": "Locker (Brass)"
+    },
+    "block.gregtech.locker_tin_alloy": {
+      "source_key": "gt.multitileentity.7305",
+      "value": "Locker (Tin Alloy)"
+    },
+    "block.gregtech.locker_cobalt": {
+      "source_key": "gt.multitileentity.7321",
+      "value": "Locker (Cobalt)"
+    },
+    "block.gregtech.locker_ardite": {
+      "source_key": "gt.multitileentity.7338",
+      "value": "Locker (Ardite)"
+    },
+    "block.gregtech.locker_arsenic_bronze": {
+      "source_key": "gt.multitileentity.7358",
+      "value": "Locker (Arsenic Bronze)"
+    },
+    "block.gregtech.locker_bismuth_bronze": {
+      "source_key": "gt.multitileentity.7356",
+      "value": "Locker (Bismuth Bronze)"
+    },
+    "block.gregtech.locker_germanium": {
+      "source_key": "gt.multitileentity.7323",
+      "value": "Locker (Germanium)"
+    },
+    "block.gregtech.locker_invar": {
+      "source_key": "gt.multitileentity.7306",
+      "value": "Locker (Invar)"
+    },
+    "block.gregtech.locker_steel": {
+      "source_key": "gt.multitileentity.7310",
+      "value": "Locker (Steel)"
+    },
+    "block.gregtech.locker_hsla": {
+      "source_key": "gt.multitileentity.7318",
+      "value": "Locker (HSLA-Steel)"
+    },
+    "block.gregtech.locker_gold": {
+      "source_key": "gt.multitileentity.7302",
+      "value": "Locker (Gold)"
+    },
+    "block.gregtech.locker_silver": {
+      "source_key": "gt.multitileentity.7303",
+      "value": "Locker (Silver)"
+    },
+    "block.gregtech.locker_manganese": {
+      "source_key": "gt.multitileentity.7346",
+      "value": "Locker (Manganese)"
+    },
+    "block.gregtech.locker_manyullyn": {
+      "source_key": "gt.multitileentity.7339",
+      "value": "Locker (Manyullyn)"
+    },
+    "block.gregtech.locker_lumium": {
+      "source_key": "gt.multitileentity.7354",
+      "value": "Locker (Lumium)"
+    },
+    "block.gregtech.locker_knightmetal": {
+      "source_key": "gt.multitileentity.7325",
+      "value": "Locker (Knightmetal)"
+    },
+    "block.gregtech.locker_steel_galvanized": {
+      "source_key": "gt.multitileentity.7319",
+      "value": "Locker (Galvanized Steel)"
+    },
+    "block.gregtech.locker_meteorite": {
+      "source_key": "gt.multitileentity.7343",
+      "value": "Locker (Meteorite)"
+    },
+    "block.gregtech.locker_meteoric_steel": {
+      "source_key": "gt.multitileentity.7324",
+      "value": "Locker (Meteoric Steel)"
+    },
+    "block.gregtech.locker_gilded_iron": {
+      "source_key": "gt.multitileentity.7320",
+      "value": "Locker (Gilded Iron)"
+    },
+    "block.gregtech.locker_molybdenum": {
+      "source_key": "gt.multitileentity.7349",
+      "value": "Locker (Molybdenum)"
+    },
+    "block.gregtech.locker_syrmorite": {
+      "source_key": "gt.multitileentity.7344",
+      "value": "Locker (Syrmorite)"
+    },
+    "block.gregtech.locker_electrum": {
+      "source_key": "gt.multitileentity.7307",
+      "value": "Locker (Electrum)"
+    },
+    "block.gregtech.locker": {
+      "source_key": "gt.multitileentity.7311",
+      "value": "Locker (Stainless Steel)"
+    },
+    "block.gregtech.locker_thaumium": {
+      "source_key": "gt.multitileentity.7327",
+      "value": "Locker (Thaumium)"
+    },
+    "block.gregtech.locker_manasteel": {
+      "source_key": "gt.multitileentity.7340",
+      "value": "Locker (Manasteel)"
+    },
+    "block.gregtech.locker_efrine": {
+      "source_key": "gt.multitileentity.7353",
+      "value": "Locker (Efrine)"
+    },
+    "block.gregtech.locker_tungsten_alloy": {
+      "source_key": "gt.multitileentity.7352",
+      "value": "Locker (Tungsten Alloy)"
+    },
+    "block.gregtech.locker_titanium": {
+      "source_key": "gt.multitileentity.7312",
+      "value": "Locker (Titanium)"
+    },
+    "block.gregtech.locker_netherite": {
+      "source_key": "gt.multitileentity.7351",
+      "value": "Locker (Netherite)"
+    },
+    "block.gregtech.locker_chromium": {
+      "source_key": "gt.multitileentity.7313",
+      "value": "Locker (Chromium)"
+    },
+    "block.gregtech.locker_platinum": {
+      "source_key": "gt.multitileentity.7304",
+      "value": "Locker (Platinum)"
+    },
+    "block.gregtech.locker_octine": {
+      "source_key": "gt.multitileentity.7345",
+      "value": "Locker (Octine)"
+    },
+    "block.gregtech.locker_desh": {
+      "source_key": "gt.multitileentity.7330",
+      "value": "Locker (Desh)"
+    },
+    "block.gregtech.locker_terrasteel": {
+      "source_key": "gt.multitileentity.7342",
+      "value": "Locker (Terrasteel)"
+    },
+    "block.gregtech.locker_tungstensteel": {
+      "source_key": "gt.multitileentity.7314",
+      "value": "Locker (Tungstensteel)"
+    },
+    "block.gregtech.locker_tungsten_carbide": {
+      "source_key": "gt.multitileentity.7317",
+      "value": "Locker (Tungsten Carbide)"
+    },
+    "block.gregtech.locker_duranium": {
+      "source_key": "gt.multitileentity.7331",
+      "value": "Locker (Duranium Alloy)"
+    },
+    "block.gregtech.locker_draconium": {
+      "source_key": "gt.multitileentity.7335",
+      "value": "Locker (Draconium)"
+    },
+    "block.gregtech.locker_ultimet": {
+      "source_key": "gt.multitileentity.7348",
+      "value": "Locker (Ultimet)"
+    },
+    "block.gregtech.locker_desh_alloy": {
+      "source_key": "gt.multitileentity.7355",
+      "value": "Locker (Workers Alloy)"
+    },
+    "block.gregtech.locker_tungsten": {
+      "source_key": "gt.multitileentity.7326",
+      "value": "Locker (Tungsten)"
+    },
+    "block.gregtech.locker_palladium": {
+      "source_key": "gt.multitileentity.7359",
+      "value": "Locker (Palladium)"
+    },
+    "block.gregtech.locker_iridium": {
+      "source_key": "gt.multitileentity.7315",
+      "value": "Locker (Iridium)"
+    },
+    "block.gregtech.locker_osmium": {
+      "source_key": "gt.multitileentity.7329",
+      "value": "Locker (Osmium)"
+    },
+    "block.gregtech.locker_void_metal": {
+      "source_key": "gt.multitileentity.7328",
+      "value": "Locker (Void Metal)"
+    },
+    "block.gregtech.locker_elven_elementium": {
+      "source_key": "gt.multitileentity.7341",
+      "value": "Locker (Elementium)"
+    },
+    "block.gregtech.locker_tritanium": {
+      "source_key": "gt.multitileentity.7332",
+      "value": "Locker (Tritanium Alloy)"
+    },
+    "block.gregtech.locker_adamantium": {
+      "source_key": "gt.multitileentity.7333",
+      "value": "Locker (Adamantium)"
+    },
+    "block.gregtech.locker_bedrock_hsla": {
+      "source_key": "gt.multitileentity.7334",
+      "value": "Locker (Bedrock-HSLA-Alloy)"
+    },
+    "block.gregtech.locker_draconium_awakened": {
+      "source_key": "gt.multitileentity.7336",
+      "value": "Locker (Awakened Draconium)"
+    },
+    "block.gregtech.locker_infinity": {
+      "source_key": "gt.multitileentity.7350",
+      "value": "Locker (Infinity)"
     }
   }
 }

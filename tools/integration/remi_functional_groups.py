@@ -11,7 +11,7 @@ import re
 
 # Functional boundaries mirror the native registries/catalogs. Do not merge the
 # whole creative category (e.g. every engine, every mold-related item) into a group.
-STEMS = """chest reinforced_wood_chest advanced_crafting_table drawer_quad
+STEMS = """locker chest reinforced_wood_chest advanced_crafting_table drawer_quad
 mass_storage logistics_mass_storage hopper queue_hopper scaffold
 smelting_crucible crucible_faucet crucible_crossing mold mold_basin
 steam_boiler strong_steam_boiler gearbox rotation_transformer rotational_pump
@@ -46,6 +46,7 @@ def catalog(root):
     machine_source = (java / "content/machine/BasicMachineCatalog.java").read_text(encoding="utf-8")
     machines = set(re.findall(r'new MachineDef\("([^"]+)"', machine_source))
     materials = {k.removeprefix("material.gregtech.").replace("_", "") for k in en if k.startswith("material.gregtech.")}
+    materials.update(v.replace("_", "") for v in re.findall(r'MAT_SHORT.put\(Materials.\w+, "([^"]+)"', machine_source))
     # Restrict basic-machine groups to exact tier/material registry identities;
     # machine parts and extruder shape items are not machines.
     stems = sorted(set(STEMS) | machines, key=lambda s: (-len(s), s))
@@ -61,6 +62,15 @@ def catalog(root):
                 continue
             groups[stem].append(item)
             break
+    groups["bumble_hive"].append("clay_comb")
+    # Use the actual native ore definitions, not display-name or broad ore substring guesses.
+    ores = (java / "block/SpecialOreDefinitions.java").read_text(encoding="utf-8")
+    groups["special_ores"] = ["block_" + icon for icon in re.findall(r'new VanillaSpec\("([^"]+)"', ores)]
+    groups["rock_ores"] = ["block_" + icon for icon in re.findall(r'Map.entry\("([^"]+)", new RockSpec', ores)]
+    groups["crystal_ores"] = sorted(set(re.findall(r'"(crystal_ore_[a-z_]+)"', ores)))
+    assert tuple(len(groups[g]) for g in ("special_ores", "rock_ores", "crystal_ores")) == (16, 9, 12)
+    assert all(item in ids for g in ("special_ores", "rock_ores", "crystal_ores") for item in groups[g])
+
     # Axle thickness is an independent specification, just as pipe/wire size is.
     for item in ids:
         match = re.fullmatch(r"axle_.+_([1-4])", item)

@@ -103,7 +103,7 @@ public final class MachineEmiRecipe implements EmiRecipe {
         int count = input ? map.mInputItemsCount : map.mOutputItemsCount;
         for (int i = 0; i < items.length; i++) {
             if (items[i] == null || items[i].isEmpty()) continue;
-            var p = MachineGuiLayout.item(input, i, count, map.mInputFluidCount + map.mOutputFluidCount);
+            var p = MachineGuiLayout.item(input, i, count, input ? map.mInputFluidCount : map.mOutputFluidCount);
             var slot = widgets.add(new FittedSlot(input ? ingredients.ingredient(recipe,i) : EmiStack.of(items[i]).setChance(recipe.getOutputChance(i) / 10000f),p.x()-1,p.y()-1,scale,offset));
             if (input && recipe.isCatalystInput(i)) slot.catalyst(true).appendTooltip(Component.translatable("gregtech.jei.catalyst"));
             if (!input) slot.recipeContext(this);

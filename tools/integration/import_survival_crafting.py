@@ -18,7 +18,17 @@ props=(ROOT / 'core/src/main/java/com/gregtech/gregtech/data/SourceBlockProperti
 ids={int(n):(p,m) for p,n,m in re.findall(r'BLOCKS.put\("([^"]+)", new Params\((\d+),"[^"]+",(ImportedMaterialData\.[\w.]+)',props)}
 smelt=(ROOT / 'core/src/main/java/com/gregtech/gregtech/api/machine/OriginalSmelteryDefinitions.java').read_text(encoding='utf-8')
 ids.update({int(n):(p,m) for p,n,m in re.findall(r'add\("([^"]+)", (\d+), (ImportedMaterialData\.[\w.]+)',smelt)})
-wanted=lambda p:p.startswith(('mold_','crucible_crossing_','crucible_faucet_','burning_box_gas_','spike_')) or p in {'storage_quadcore_processor_unit','bedrock_mining_drill_head','lightning_rod','coke_oven_wall','tank_plastic'}
+# Missing utility registrations, including source rows whose harvest table had no material.
+for source_id,path,material in [
+ (32711,'advanced_button','TinAlloy'), (32701,'coin_mold','Steel'),
+ (32065,'plant_pot','Ceramic'), (32704,'dust_funnel','Steel'),
+ (32703,'grindstone_block','Steel'), (32702,'sifting_table','Steel'),
+ (32709,'ender_garbage_bin','Steel'), (32737,'fluid_thermos','Al'),
+ (32758,'greg_lantern','Wood'), (31019,'sensor_tachometer','TinAlloy'),
+ (31015,'sensor_electrometer','TinAlloy')]:
+ ids[source_id]=(path,'com.gregtech.gregtech.data.generated.GT6Materials.Woods.Wood' if material=='Wood' else 'ImportedMaterialData.'+material)
+extra_ids={p for n,(p,m) in ids.items() if n in {32711,32701,32065,32704,32703,32702,32709,32737,32758,31019,31015,10050,10051}}
+wanted=lambda p:p in extra_ids or p.startswith(('mold_','crucible_crossing_','crucible_faucet_','burning_box_gas_','spike_')) or p in {'storage_quadcore_processor_unit','bedrock_mining_drill_head','lightning_rod','coke_oven_wall','tank_plastic'}
 tools={'h':'hammer','w':'wrench','y':'chisel','s':'saw','f':'file','x':'wire_cutter','d':'screwdriver','k':'knife'}
 rows=[];missing=[];evidence=[]
 for line,txt in enumerate(source.splitlines(),1):
@@ -33,13 +43,16 @@ for line,txt in enumerate(source.splitlines(),1):
   keys={};bad=[]
   for i,v in enumerate(a):
    if not re.fullmatch("'.'",v):continue
-   exp=a[i+1];key=v[1];m=re.fullmatch(r'OP\.(\w+)\.dat\(([^)]+)\)',exp)
+   exp=a[i+1];key=v[1]
+   if key not in ''.join(patterns):continue
+   m=re.fullmatch(r'OP\.(\w+)\.dat\(([^)]+)\)',exp)
    if m:
-    form,material=m.groups();prefix='block' if form.startswith('casingMachine') else 'wire' if form.startswith('wireGt') else 'mat'
-    if prefix=='wire':form=str(int(form[-2:]))
+    form,material=(x.strip() for x in m.groups());prefix='block' if form.startswith('casingMachine') else 'wire' if form.startswith('wireGt') else 'cable' if form.startswith('cableGt') else 'pipe' if form.startswith('pipe') else 'mat'
+    if prefix in {'wire','cable'}:form=str(int(form[-2:]))
+    if prefix=='pipe':form=form.removeprefix('pipe').lower()
     if material=='aMat':spec=prefix+':'+form
     else:
-     names={'ANY.Cu':'Copper','ANY.Diamond':'Diamond','MT.Ir':'Iridium','MT.NiobiumTitanium':'NiobiumTitanium','MT.Brick':'Brick','ANY.Clay':'Clay','MT.Graphene':'Graphene','ANY.Quartz':'NetherQuartz','MT.Ceramic':'Ceramic','ANY.Plastic':'Plastic'}
+     names={'ANY.Cu':'Copper','ANY.Diamond':'Diamond','MT.Ir':'Iridium','MT.NiobiumTitanium':'NiobiumTitanium','MT.Brick':'Brick','ANY.Clay':'Clay','MT.Graphene':'Graphene','ANY.Quartz':'NetherQuartz','MT.Ceramic':'Ceramic','ANY.Plastic':'Plastic','ANY.Iron':'Iron','ANY.Si':'Silicon','MT.Ge':'Germanium','MT.AnnealedCopper':'AnnealedCopper','MT.TinAlloy':'TinAlloy','MT.RedAlloy':'RedAlloy','MT.Lumium':'Lumium','MT.Brass':'Brass','MT.Ag':'Silver','ANY.Stone':'Stone','MT.Bone':'Bone','MT.Endstone':'Endstone','MT.SoulSand':'SoulSand','MT.Sand':'Sand','MT.Obsidian':'Obsidian','MT.EnderEye':'EnderEye'}
      if material not in names:bad.append(exp);continue
      spec=prefix+':'+form+'@'+names[material]
     if form=='stone':
@@ -47,9 +60,17 @@ for line,txt in enumerate(source.splitlines(),1):
      spec='item:minecraft:nether_bricks' if stone=='NetherBrick' else 'item:gregtech:stone_'+slugs.get(stone,stone.lower())+'_stone'
     keys[key]=spec
    elif exp in {'Blocks.stone','Blocks.brick_block'}:keys[key]='item:minecraft:'+{'Blocks.stone':'stone','Blocks.brick_block':'bricks'}[exp]
-   elif exp=='OD_CIRCUITS[6]':keys[key]='circuit:6'
+   elif re.fullmatch(r'OD_CIRCUITS\[\d+\]',exp):keys[key]='circuit:'+re.search(r'\d+',exp)[0]
    elif exp=='IL.Processor_Crystal_Emerald':keys[key]='item:gregtech:crystal_processor_emerald'
    elif exp=='OD.container1000water':keys[key]='item:minecraft:water_bucket'
+   elif exp in {'Blocks.hopper','Blocks.pumpkin'}:keys[key]='item:minecraft:'+exp.removeprefix('Blocks.')
+   elif exp=='OD.blockTorch':keys[key]='item:minecraft:torch'
+   elif exp=='OD.itemMud':keys[key]='tag:gregtech:plant_pot_mud'
+   elif exp=='OD.listAllmushroom':keys[key]='tag:gregtech:mushrooms'
+   elif exp=='OD.blockGlassColorless':keys[key]='item:minecraft:glass'
+   elif exp=='IL.Ceramic_Basin':keys[key]='item:gregtech:mold_basin_ceramic'
+   elif exp=='IL.Tacho_Meter':keys[key]='item:gregtech:tachometer'
+   elif exp=='IL.Electro_Meter':keys[key]='item:gregtech:electrometer'
    else:bad.append(exp)
   for ch in set(''.join(patterns))-{' '}-set(keys):
    if ch in tools:keys[ch]='item:gregtech:tool_'+tools[ch]
