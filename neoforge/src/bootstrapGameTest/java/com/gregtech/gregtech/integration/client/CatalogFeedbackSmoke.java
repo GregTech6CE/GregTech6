@@ -68,9 +68,10 @@ final class CatalogFeedbackSmoke {
             var recipe=server.getRecipeManager().byKey(id("survival_repairs/" + row.id()));
             require(recipe.isPresent(), "missing source crafting recipe " + row.id());
             for (var input : recipe.orElseThrow().value().getIngredients())
-                require(input == net.minecraft.world.item.crafting.Ingredient.EMPTY || input.getItems().length > 0,
+                require(input == net.minecraft.world.item.crafting.Ingredient.EMPTY || java.util.Arrays.stream(input.getItems()).anyMatch(s -> !s.isEmpty() && !s.is(net.minecraft.world.item.Items.BARRIER)),
                         "empty crafting ingredient in " + row.id());
         }
+        checkRecipeTags(server, receipt);
         require(com.gregtech.gregtech.registry.GTStorageContainers.LOCKERS.size()==60,"incomplete locker metalset");
         for(var holder:com.gregtech.gregtech.registry.GTStorageContainers.LOCKERS) {
             var locker=holder.get();
@@ -114,5 +115,56 @@ final class CatalogFeedbackSmoke {
         receipt.addProperty("woodSlabFamilies", com.gregtech.gregtech.content.plant.WoodSlabCatalog.WOODS.size());
         receipt.addProperty("canonicalWallRecipeAlternatives", true);
         com.mojang.logging.LogUtils.getLogger().info("CATALOG_FEEDBACK_SERVER_SUCCESS aliases={} keys=10 sands=3 baleDryWetRot=true", aliases);
+    }
+    private static void checkRecipeTags(MinecraftServer server, JsonObject receipt) {
+        var failures = new java.util.ArrayList<String>();
+        for (String name : java.util.List.of("forge:chests/wooden", "gregtech:bumble_hives", "gregtech:plant_pot_mud",
+                "gregtech:clay_balls", "gregtech:quicksilver", "minecraft:music_discs", "forge:slimeballs",
+                "gregtech:ingot/brick", "forge:sandstone", "forge:plates/osmium", "forge:plates/ad", "forge:plates/bedrock_hsla_alloy")) {
+            var tag = net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM, ResourceLocation.parse(name));
+            if (BuiltInRegistries.ITEM.getTag(tag).map(v -> v.size() == 0).orElse(true)) failures.add(name);
+        }
+        for (var color : net.minecraft.world.item.DyeColor.values()) {
+            var tag = net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM, ResourceLocation.parse("forge:dyes/"+color.getName()));
+            if (BuiltInRegistries.ITEM.getTag(tag).map(v -> v.size() == 0).orElse(true)) failures.add(tag.location().toString());
+        }
+        for (var item : BuiltInRegistries.ITEM) {
+            var path=BuiltInRegistries.ITEM.getKey(item).getPath();
+            if(item instanceof net.minecraft.world.item.BlockItem bi && bi.getBlock() instanceof com.gregtech.gregtech.api.energy.WireMaterialLike wire) {
+                String form=(wire.spec().insulated()?"cable_gt":"wire_gt")+String.format(java.util.Locale.ROOT,"%02d",wire.spec().size());
+                var tag=net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM,id(form+"/"+com.gregtech.gregtech.api.material.MaterialEquivalence.materialName(wire.spec().material())));
+                require(new net.minecraft.world.item.ItemStack(item).is(tag),"missing wire tag "+tag.location());
+            }
+            if (path.startsWith("axle_") || path.startsWith("log_") || path.startsWith("planks_")) {
+                var stack=new net.minecraft.world.item.ItemStack(item);
+                require(stack.getTags().noneMatch(t -> t.location().getPath().startsWith("ores/")), "false ore tag: "+path);
+            }
+        }
+        int imprints=0, spikes=0, tapes=0;
+        for(var holder:server.getRecipeManager().getRecipes()) {
+            var path=holder.id().getPath();
+            if(!holder.id().getNamespace().equals("gregtech") || !(path.startsWith("clay_molds/") || path.startsWith("catalog_repairs/spike_") || path.contains("tape")))continue;
+            for(var input:holder.value().getIngredients())
+                if(input!=net.minecraft.world.item.crafting.Ingredient.EMPTY && java.util.Arrays.stream(input.getItems()).noneMatch(s->!s.isEmpty()&&!s.is(net.minecraft.world.item.Items.BARRIER))) failures.add(holder.id().toString());
+            if(path.startsWith("clay_molds/imprint_"))imprints++;
+            if(path.startsWith("catalog_repairs/spike_"))spikes++;
+            if(path.startsWith("catalog_repairs/") && path.contains("tape"))tapes++;
+            if(path.startsWith("catalog_repairs/spike_")) require(holder.value().getResultItem(server.registryAccess()).has(net.minecraft.core.component.DataComponents.BLOCK_STATE), "spike output lost block state");
+        }
+        for(var raw:com.gregtech.gregtech.content.recipe.ClayMoldCatalog.RAW) {
+            var input=com.gregtech.gregtech.content.recipe.ClayMoldRecipes.input(raw);
+            for(var type:java.util.List.of(net.minecraft.world.item.crafting.RecipeType.SMELTING,net.minecraft.world.item.crafting.RecipeType.BLASTING))
+                if(server.getRecipeManager().getRecipes().stream().noneMatch(h->h.value().getType()==type && h.value().getIngredients().stream().anyMatch(i->i.test(input))
+                    && com.gregtech.gregtech.block.machine.MoldItemData.shape(h.value().getResultItem(server.registryAccess()))==raw.shape()))failures.add(raw.id()+" missing shaped "+type);
+            if(server.getRecipeManager().byKey(id("clay_molds/reclaim_"+raw.id())).isEmpty())failures.add(raw.id()+" reclaim");
+            if(server.getRecipeManager().getRecipes().stream().noneMatch(h->h.value().getType()==net.minecraft.world.item.crafting.RecipeType.CRAFTING
+                    && h.value().getResultItem(server.registryAccess()).is(input.getItem())))failures.add(raw.id()+" forming");
+        }
+        require(spikes==20 && tapes==6,"missing feedback recipes: spikes="+spikes+" tapes="+tapes);
+        require(failures.isEmpty(),"recipe tag/firing failures: "+failures);
+        require(imprints>0,"all clay imprints disappeared");
+        receipt.addProperty("validClayImprints",imprints);
+        receipt.addProperty("clayMoldFiringAndReclaim",com.gregtech.gregtech.content.recipe.ClayMoldCatalog.RAW.size());
+        receipt.addProperty("reportedEmptyTagsResolved",true);
     }
 }

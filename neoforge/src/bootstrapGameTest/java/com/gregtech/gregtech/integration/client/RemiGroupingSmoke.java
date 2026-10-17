@@ -52,6 +52,32 @@ final class RemiGroupingSmoke {
             index = (List<EmiStack>) manager.getField("indexStacks").get(null);
             List<EmiStack> displayed = displayed(manager);
             check(displayed, receipt, "all");
+            var holes=displayed.stream().filter(s->groupId(s).endsWith("/functional_log_hole")).findFirst().orElseThrow();
+            var holeIds=members(holes).stream().map(s->s.getId().getPath()).toList();
+            require(holeIds.containsAll(List.of("tapped_maple","tapped_rainbowood")),"tapped logs missing from folder");
+            var mc=net.minecraft.client.Minecraft.getInstance();
+            int gearboxes=0;
+            for(var item:net.minecraft.core.registries.BuiltInRegistries.ITEM) {
+                var id=net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(item);
+                if(!id.getNamespace().equals("gregtech")||!id.getPath().startsWith("gearbox_")||id.getPath().equals("gearbox_axle"))continue;
+                var stack=new net.minecraft.world.item.ItemStack(item);
+                var model=mc.getItemRenderer().getModel(stack,mc.level,mc.player,0);
+                int faces=0;
+                for(var face:net.minecraft.core.Direction.values()) {
+                    var quads=model.getQuads(null,face,net.minecraft.util.RandomSource.create(0));
+                    for(var quad:quads) {
+                        require(quad.getSprite().contents().name().toString().equals("gregtech:block/iconsets/gearbox"),"wrong gearbox item texture: "+id);
+                        require(quad.isTinted(),"uncolored gearbox item: "+id);
+                    }
+                    faces+=quads.size();
+                }
+                require(faces==6,"transparent gearbox item model: "+id+" faces="+faces);
+                require((mc.getItemColors().getColor(stack,0)>>>24)==255,"transparent gearbox item color: "+id);
+                gearboxes++;
+            }
+            require(gearboxes==13,"gearbox model count: "+gearboxes);
+            receipt.addProperty("gearboxInventoryTexturedFaces",gearboxes*6);
+            receipt.addProperty("tappedLogsFolded",true);
             var springNames = new HashSet<String>();
             for (var spring : com.gregtech.gregtech.worldgen.FluidSpringRules.SPRINGS) {
                 var block = com.gregtech.gregtech.registry.GTFluidSprings.byFluid(spring.fluidId());

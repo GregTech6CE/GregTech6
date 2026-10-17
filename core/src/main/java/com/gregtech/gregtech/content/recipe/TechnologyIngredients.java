@@ -14,6 +14,13 @@ public final class TechnologyIngredients {
         }
     }
     public static final List<Family> FAMILIES = List.of(
+        new Family("any_plastic_foil",MaterialPrefix.foil,MaterialGroups.Plastic),
+        new Family("any_tungsten_foil",MaterialPrefix.foil,MaterialGroups.W),
+        new Family("any_steel_bolt",MaterialPrefix.bolt,MaterialGroups.Steel),
+        new Family("any_iron_gear",MaterialPrefix.gearGt,MaterialGroups.Iron),
+        new Family("any_iron_rod",MaterialPrefix.stick,MaterialGroups.Iron),
+        new Family("any_iron_long_rod",MaterialPrefix.stickLong,MaterialGroups.Iron),
+        new Family("any_silicon_gem_plate",MaterialPrefix.plateGem,MaterialGroups.Si),
         new Family("any_plastic_curved_plate",MaterialPrefix.plateCurved,MaterialGroups.Plastic),
         new Family("any_rubber_hammer_head",MaterialPrefix.toolHeadHammer,MaterialGroups.Rubber),
         new Family("any_steel_rod",MaterialPrefix.stick,MaterialGroups.Steel),

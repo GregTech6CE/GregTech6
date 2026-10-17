@@ -1,0 +1,29 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "BTB",
+    "TPT",
+    "BTB"
+  ],
+  "key": {
+    "B": {
+      "tag": "gregtech:tool_head_sword/titanium"
+    },
+    "T": {
+      "tag": "gregtech:screw/titanium"
+    },
+    "P": {
+      "tag": "gregtech:plate/titanium"
+    }
+  },
+  "result": {
+    "item": "gregtech:spike_sharp",
+    "count": 1,
+    "nbt": {
+      "BlockStateTag": {
+        "mode": "wall",
+        "secondary": "true"
+      }
+    }
+  }
+}
