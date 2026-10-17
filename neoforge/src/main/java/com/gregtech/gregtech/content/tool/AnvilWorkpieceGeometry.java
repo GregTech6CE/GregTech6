@@ -1,3 +1,0 @@
-package com.gregtech.gregtech.content.tool;
-import net.minecraft.core.Direction;import net.minecraft.world.phys.AABB;
-public final class AnvilWorkpieceGeometry {private AnvilWorkpieceGeometry(){}public static int shape(String prefix){return AnvilWorkpieceBounds.shape(prefix);}public static AABB bounds(int shape,int slot,Direction facing){if(facing.getAxis()==Direction.Axis.Y)throw new IllegalArgumentException("Horizontal anvil slot required");var b=AnvilWorkpieceBounds.bounds(shape,slot,facing.getAxis()==Direction.Axis.Z);return new AABB(b.minX(),b.minY(),b.minZ(),b.maxX(),b.maxY(),b.maxZ());}}

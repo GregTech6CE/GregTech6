@@ -1,5 +1,15 @@
 # 实现选择记录
 
+## 2026-10-16 / 平台实现分成共享源码和加载器专有源码
+
+`core` 仍是纯 Java 17，编译一次，两个成品里的字节相同，不放 Minecraft 或加载器类型。
+
+两边都能编译的平台代码放 `platform-shared/src/main`，挂进两个项目的 `sourceSets.main`，各编译一次。它不是 Gradle 子项目，也不是第二个 `core`。Forge 照常 reobf。共享模型存 `forge:composite`，NeoForge 的 `processResources` 换成 `neoforge:composite`。
+
+加载器类型、两边方法签名不同的覆盖、只在一边有的功能留在 `src/main` 和 `neoforge/src/main`。只在一边的 486 个 Java 文件见 [清单](platform-one-sided-sources.md)，这次不补。建卡时这组合计 483，到 `0480522d` 时 Forge 多了 3 个。
+
+垫片是两边各一份的 `com.gregtech.gregtech.platform.Mc`。方法签名相同，方法体是该平台原来的那一行调用。`gregtechId` 在 Forge 上继续把路径转成小写，NeoForge 不转。只给重复出现的差异加方法，不把 `FluidStack` 包成第三种类型。
+
 ## 2026-10-16 / 电线和传动轴不让原版缓存碰撞箱
 
 原版在启动、`/reload` 和客户端收尾配置阶段调用 `Blocks.rebuildCache()`，给每个没有标 `dynamicShape` 的方块状态在空世界里算一遍碰撞箱、面支撑和整块判断。`ElectricWireBlock` 和 `AxleBlock` 的连接臂长度取决于邻居粗细，每次调用都现场合并几个长方体，这一步拖到 Forge 专服 `/reload` 约 25 秒、首次撞上 60 秒看门狗，NeoForge 独立客户端超过 15 秒被服务端断开。缓存出来的形状也是错的：空世界里没有更粗的邻居，伸进粗邻居的那段臂在碰撞里被漏掉。两个平台的电线和传动轴改为 `.dynamicShape()`，和流体管、物品管一致，碰撞箱每次按真实邻居计算。信号线的形状只看自身连接状态，继续让原版缓存，按 64 种连接组合记住各自的形状，不再重复合并。

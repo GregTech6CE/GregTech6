@@ -4,7 +4,7 @@ User scope: integrate the three preserved source snapshots into this repository 
 
 - Do all integration edits here. Source trees under `../Libs` are read-only references.
 - Preserve saltnya baseline behavior until a recorded, verified replacement is ready. Evaluate each system using code and runtime evidence.
-- Share domain logic in `core`; keep loader, Minecraft, client and storage boundary types in platform code. One material identity/precision model, registry namespace and recipe contract.
+- Share domain logic in `core` (pure Java 17; no Minecraft or loader types). Code both loaders can compile lives in `platform-shared` and is compiled separately by each loader; Forge still reobfuscates it. Keep loader-specific types, signature-different overrides and one-sided features in `src/main` and `neoforge/src/main`. `com.gregtech.gregtech.platform.Mc` is the shim: same methods, one implementation per loader. One material identity/precision model, registry namespace and recipe contract.
 - Do not copy unrelated source-agent workflows or execute scripts containing old hardcoded output paths.
 - Give parallel agents nonoverlapping file scopes. Coordinate changes to build configuration and core APIs before implementation. Never run overlapping Gradle invocations in this shared checkout.
 - Record adopted source files, hashes, original authors and license evidence; retain notices. Unresolved authorization blocks publication, and must not be silently replaced with a new license.
