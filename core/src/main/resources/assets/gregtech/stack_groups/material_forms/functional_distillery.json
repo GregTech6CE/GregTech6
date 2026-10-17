@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.distillery_invar",
+  "contents": [
+    "item:gregtech:distillery_invar",
+    "item:gregtech:distillery_steel",
+    "item:gregtech:distillery_titanium",
+    "item:gregtech:distillery_tungsten_carbide"
+  ],
+  "priority": 110
+}

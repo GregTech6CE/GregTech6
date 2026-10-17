@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.sifter_bronze",
+  "contents": [
+    "item:gregtech:sifter_bronze",
+    "item:gregtech:sifter_steel",
+    "item:gregtech:sifter_titanium",
+    "item:gregtech:sifter_tungsten_steel"
+  ],
+  "priority": 110
+}

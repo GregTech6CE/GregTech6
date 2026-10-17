@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.oven_invar",
+  "contents": [
+    "item:gregtech:oven_invar",
+    "item:gregtech:oven_steel",
+    "item:gregtech:oven_titanium",
+    "item:gregtech:oven_tungsten_carbide"
+  ],
+  "priority": 110
+}

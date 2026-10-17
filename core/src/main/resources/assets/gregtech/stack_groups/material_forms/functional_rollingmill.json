@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.rollingmill_bronze",
+  "contents": [
+    "item:gregtech:rollingmill_bronze",
+    "item:gregtech:rollingmill_steel",
+    "item:gregtech:rollingmill_titanium",
+    "item:gregtech:rollingmill_tungsten_steel"
+  ],
+  "priority": 110
+}

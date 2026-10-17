@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.buzzsaw_bronze",
+  "contents": [
+    "item:gregtech:buzzsaw_bronze",
+    "item:gregtech:buzzsaw_steel",
+    "item:gregtech:buzzsaw_titanium",
+    "item:gregtech:buzzsaw_tungsten_steel"
+  ],
+  "priority": 110
+}

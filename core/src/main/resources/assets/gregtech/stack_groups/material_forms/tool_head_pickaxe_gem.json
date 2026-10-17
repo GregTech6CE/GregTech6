@@ -1,0 +1,13 @@
+{
+  "type": "remi:group",
+  "name": "itemGroup.gregtech.tool_head_pickaxe_gem",
+  "contents": [
+    "#gregtech:tool_head_pickaxe_gem"
+  ],
+  "exclusions": [
+    "#minecraft:planks",
+    "#gregtech:wooden_planks",
+    "item:gregtech:planks_treated"
+  ],
+  "priority": 100
+}

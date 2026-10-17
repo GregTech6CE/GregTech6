@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.press_bronze",
+  "contents": [
+    "item:gregtech:press_bronze",
+    "item:gregtech:press_steel",
+    "item:gregtech:press_titanium",
+    "item:gregtech:press_tungsten_steel"
+  ],
+  "priority": 110
+}

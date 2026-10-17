@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.flux_heater_ev",
+  "contents": [
+    "item:gregtech:flux_heater_ev",
+    "item:gregtech:flux_heater_hv",
+    "item:gregtech:flux_heater_iv",
+    "item:gregtech:flux_heater_lv",
+    "item:gregtech:flux_heater_mv"
+  ],
+  "priority": 110
+}

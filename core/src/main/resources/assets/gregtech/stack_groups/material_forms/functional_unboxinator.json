@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.unboxinator_aluminium",
+  "contents": [
+    "item:gregtech:unboxinator_aluminium",
+    "item:gregtech:unboxinator_chromium",
+    "item:gregtech:unboxinator_galvanized_steel",
+    "item:gregtech:unboxinator_stainless_steel",
+    "item:gregtech:unboxinator_titanium"
+  ],
+  "priority": 110
+}

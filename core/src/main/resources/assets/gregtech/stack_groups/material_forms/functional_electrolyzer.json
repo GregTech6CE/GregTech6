@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.electrolyzer_aluminium",
+  "contents": [
+    "item:gregtech:electrolyzer_aluminium",
+    "item:gregtech:electrolyzer_chromium",
+    "item:gregtech:electrolyzer_galvanized_steel",
+    "item:gregtech:electrolyzer_stainless_steel",
+    "item:gregtech:electrolyzer_titanium"
+  ],
+  "priority": 110
+}

@@ -1,0 +1,6 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.bush",
+  "regex": "^gregtech:bush_plant_gt_berry_[a-z0-9_]+$",
+  "priority": 110
+}

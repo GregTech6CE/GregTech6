@@ -1,0 +1,6 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.wire_14_copper",
+  "regex": "^gregtech:wire_14_[a-z0-9_]+$",
+  "priority": 100
+}

@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.engine_flux_electrum",
+  "contents": [
+    "item:gregtech:engine_flux_electrum",
+    "item:gregtech:engine_flux_enderium",
+    "item:gregtech:engine_flux_enderium_base",
+    "item:gregtech:engine_flux_invar",
+    "item:gregtech:engine_flux_lead"
+  ],
+  "priority": 110
+}

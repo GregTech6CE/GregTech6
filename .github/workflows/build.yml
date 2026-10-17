@@ -46,6 +46,8 @@ jobs:
           tools.tests.test_identity_localization tools.tests.test_numbered_language
           tools.tests.test_material_names tools.tests.test_creative_language
           tools.tests.test_delivery_language
+      - name: Check Reliable EMI grouping resources
+        run: python -X utf8 tools/integration/generate_remi_material_groups.py --check
       - name: Install JDK 21 toolchain
         uses: actions/setup-java@v4
         with:

@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.flux_magnet_ev",
+  "contents": [
+    "item:gregtech:flux_magnet_ev",
+    "item:gregtech:flux_magnet_hv",
+    "item:gregtech:flux_magnet_iv",
+    "item:gregtech:flux_magnet_lv",
+    "item:gregtech:flux_magnet_mv"
+  ],
+  "priority": 110
+}

@@ -1,0 +1,9 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.flux_dynamo_lv",
+  "contents": [
+    "item:gregtech:flux_dynamo_lv",
+    "item:gregtech:flux_dynamo_mv"
+  ],
+  "priority": 110
+}

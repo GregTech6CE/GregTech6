@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.sander_bronze",
+  "contents": [
+    "item:gregtech:sander_bronze",
+    "item:gregtech:sander_steel",
+    "item:gregtech:sander_titanium",
+    "item:gregtech:sander_tungsten_steel"
+  ],
+  "priority": 110
+}

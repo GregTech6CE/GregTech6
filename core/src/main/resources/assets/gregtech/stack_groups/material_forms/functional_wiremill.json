@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.wiremill_bronze",
+  "contents": [
+    "item:gregtech:wiremill_bronze",
+    "item:gregtech:wiremill_steel",
+    "item:gregtech:wiremill_titanium",
+    "item:gregtech:wiremill_tungsten_steel"
+  ],
+  "priority": 110
+}

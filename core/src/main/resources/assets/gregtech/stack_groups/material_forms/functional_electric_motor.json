@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.electric_motor_ev",
+  "contents": [
+    "item:gregtech:electric_motor_ev",
+    "item:gregtech:electric_motor_hv",
+    "item:gregtech:electric_motor_iv",
+    "item:gregtech:electric_motor_lv",
+    "item:gregtech:electric_motor_mv"
+  ],
+  "priority": 110
+}

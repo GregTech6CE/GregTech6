@@ -1,0 +1,13 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.electric_heater_ev",
+  "contents": [
+    "item:gregtech:electric_heater_ev",
+    "item:gregtech:electric_heater_hv",
+    "item:gregtech:electric_heater_iv",
+    "item:gregtech:electric_heater_lv",
+    "item:gregtech:electric_heater_mv",
+    "item:gregtech:electric_heater_ulv"
+  ],
+  "priority": 110
+}

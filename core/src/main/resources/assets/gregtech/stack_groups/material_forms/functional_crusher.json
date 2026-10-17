@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.crusher_bronze",
+  "contents": [
+    "item:gregtech:crusher_bronze",
+    "item:gregtech:crusher_steel",
+    "item:gregtech:crusher_titanium",
+    "item:gregtech:crusher_tungsten_steel",
+    "item:gregtech:crusher_wheels"
+  ],
+  "priority": 110
+}

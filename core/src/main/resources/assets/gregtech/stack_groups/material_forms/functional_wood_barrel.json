@@ -1,0 +1,19 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.wood_barrel_bronze",
+  "contents": [
+    "item:gregtech:wood_barrel",
+    "item:gregtech:wood_barrel_bismuth",
+    "item:gregtech:wood_barrel_brass",
+    "item:gregtech:wood_barrel_bronze",
+    "item:gregtech:wood_barrel_dreamwood",
+    "item:gregtech:wood_barrel_greatwood",
+    "item:gregtech:wood_barrel_ironwood",
+    "item:gregtech:wood_barrel_livingwood",
+    "item:gregtech:wood_barrel_shimmerwood",
+    "item:gregtech:wood_barrel_silverwood",
+    "item:gregtech:wood_barrel_skyroot",
+    "item:gregtech:wood_barrel_treated"
+  ],
+  "priority": 110
+}

@@ -1,0 +1,18 @@
+{
+  "type": "remi:group",
+  "name": "item.gregtech.compact_robot_arm_ev",
+  "contents": [
+    "item:gregtech:compact_robot_arm_ev",
+    "item:gregtech:compact_robot_arm_hv",
+    "item:gregtech:compact_robot_arm_iv",
+    "item:gregtech:compact_robot_arm_luv",
+    "item:gregtech:compact_robot_arm_lv",
+    "item:gregtech:compact_robot_arm_mv",
+    "item:gregtech:compact_robot_arm_puv1",
+    "item:gregtech:compact_robot_arm_ulv",
+    "item:gregtech:compact_robot_arm_uv",
+    "item:gregtech:compact_robot_arm_xv",
+    "item:gregtech:compact_robot_arm_zpm"
+  ],
+  "priority": 110
+}

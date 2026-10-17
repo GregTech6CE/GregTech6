@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "item.gregtech.reactor_rod_9410",
+  "contents": [
+    "item:gregtech:reactor_rod_9410",
+    "item:gregtech:reactor_rod_9420",
+    "item:gregtech:reactor_rod_9430",
+    "item:gregtech:reactor_rod_9440"
+  ],
+  "priority": 110
+}

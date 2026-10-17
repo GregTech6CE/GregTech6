@@ -1,0 +1,14 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.magnet_alnico",
+  "contents": [
+    "item:gregtech:magnet_alnico",
+    "item:gregtech:magnet_cobalt",
+    "item:gregtech:magnet_ferrite",
+    "item:gregtech:magnet_iron",
+    "item:gregtech:magnet_neodymium",
+    "item:gregtech:magnet_steel",
+    "item:gregtech:magnet_tungsten_steel"
+  ],
+  "priority": 110
+}

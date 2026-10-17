@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.squeezer_bronze",
+  "contents": [
+    "item:gregtech:squeezer_bronze",
+    "item:gregtech:squeezer_steel",
+    "item:gregtech:squeezer_titanium",
+    "item:gregtech:squeezer_tungsten_steel"
+  ],
+  "priority": 110
+}

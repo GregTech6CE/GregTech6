@@ -1,5 +1,11 @@
 # 整合状态
 
+## 2026-10-17 / Reliable EMI 全部列表折叠补全
+
+共享资源从 56 组扩至 346 组，按形态、功能、规格跨材质折叠；新增 FluidItem，27 种石材按 16 种形态与完整方块／半砖分为 32 组。NeoForge + REMI 4.7.12 实际验证此前 313 份资源产生的 299 个组：全部列表、异步 `@gregtech` 搜索、保险箱 60 成员展开／收回通过。最新 33 组仅静态与入包核验，Forge + REMI 实机和物品栏视觉仍未验收；未跑全套测试。见[本批范围与失败记录](verification/remi-folding-20261017.md)、[运行回执](verification/remi-folding-runtime-20261017.json)。
+
+双版包与 812 共享类验包通过；346 份资源及双语逐字节入包。最新构建 `build/verified/20261017-105627Z-11189bb4/`，见[交付回执](verification/remi-folding-delivery-20261017.json)。
+
 ## 2026-10-16 / 最新双版成品交付
 
 `41a751a61` 普通双版构建 6m52s、812 共享类及完整 CRC 验包通过；56 份折叠资源逐字节入包。正式 Forge/NeoForge 各一次隔离启动到主菜单并正常退出，67.17/56.88 秒；原安装未改。最新交付 `build/verified/20261016-153358Z-c723eb93/`，包含排水、半砖和 EMI 新修复；游戏内交互仍待[人工核验](MANUAL_CHECKLIST_20261016.md)。见[交付记录](verification/dual-delivery-20261016.md)。未推送。

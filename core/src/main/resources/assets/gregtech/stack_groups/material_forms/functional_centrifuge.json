@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.centrifuge_bronze",
+  "contents": [
+    "item:gregtech:centrifuge_bronze",
+    "item:gregtech:centrifuge_steel",
+    "item:gregtech:centrifuge_titanium",
+    "item:gregtech:centrifuge_tungsten_steel"
+  ],
+  "priority": 110
+}

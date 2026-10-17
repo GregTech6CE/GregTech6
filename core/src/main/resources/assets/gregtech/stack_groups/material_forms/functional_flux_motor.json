@@ -1,0 +1,9 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.flux_motor_lv",
+  "contents": [
+    "item:gregtech:flux_motor_lv",
+    "item:gregtech:flux_motor_mv"
+  ],
+  "priority": 110
+}

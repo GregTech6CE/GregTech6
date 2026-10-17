@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.dryer_invar",
+  "contents": [
+    "item:gregtech:dryer_invar",
+    "item:gregtech:dryer_steel",
+    "item:gregtech:dryer_titanium",
+    "item:gregtech:dryer_tungsten_carbide"
+  ],
+  "priority": 110
+}

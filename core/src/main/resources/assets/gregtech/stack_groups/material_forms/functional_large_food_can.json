@@ -1,0 +1,16 @@
+{
+  "type": "remi:group",
+  "name": "item.gregtech.large_food_can_bread",
+  "contents": [
+    "item:gregtech:large_food_can_bread",
+    "item:gregtech:large_food_can_chum",
+    "item:gregtech:large_food_can_cookies",
+    "item:gregtech:large_food_can_fish",
+    "item:gregtech:large_food_can_fruits",
+    "item:gregtech:large_food_can_meat",
+    "item:gregtech:large_food_can_rotten",
+    "item:gregtech:large_food_can_unknown",
+    "item:gregtech:large_food_can_vegetables"
+  ],
+  "priority": 110
+}
