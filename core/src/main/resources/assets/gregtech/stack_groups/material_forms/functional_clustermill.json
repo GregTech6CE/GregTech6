@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.clustermill_bronze",
+  "name": "emi.group.gregtech.functional_clustermill",
   "contents": [
     "item:gregtech:clustermill_bronze",
     "item:gregtech:clustermill_steel",

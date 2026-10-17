@@ -1,0 +1,16 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_transformer",
+  "contents": [
+    "item:gregtech:transformer_ev_iv",
+    "item:gregtech:transformer_hv_ev",
+    "item:gregtech:transformer_iv_luv",
+    "item:gregtech:transformer_luv_zpm",
+    "item:gregtech:transformer_lv_mv",
+    "item:gregtech:transformer_mv_hv",
+    "item:gregtech:transformer_ulv_lv",
+    "item:gregtech:transformer_uv_xv",
+    "item:gregtech:transformer_zpm_uv"
+  ],
+  "priority": 110
+}

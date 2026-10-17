@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.wiremill_bronze",
+  "name": "emi.group.gregtech.functional_wiremill",
   "contents": [
     "item:gregtech:wiremill_bronze",
     "item:gregtech:wiremill_steel",

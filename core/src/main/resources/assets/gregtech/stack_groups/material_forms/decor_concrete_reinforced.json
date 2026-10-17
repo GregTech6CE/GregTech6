@@ -1,0 +1,8 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.concrete_reinforced",
+  "contents": [
+    "item:gregtech:concrete_reinforced"
+  ],
+  "priority": 120
+}

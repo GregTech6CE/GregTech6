@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.engine_diesel_arsenic_bronze",
+  "name": "emi.group.gregtech.functional_engine_diesel",
   "contents": [
     "item:gregtech:engine_diesel_arsenic_bronze",
     "item:gregtech:engine_diesel_arsenic_copper",

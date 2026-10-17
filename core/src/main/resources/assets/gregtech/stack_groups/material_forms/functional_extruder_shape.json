@@ -1,0 +1,6 @@
+{
+  "type": "remi:group",
+  "name": "item.gregtech.extruder_shape_bottle",
+  "regex": "^item:gregtech:extruder_shape_[a-z0-9_]+$",
+  "priority": 120
+}

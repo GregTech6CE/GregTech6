@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.track_detector_bronze",
+  "name": "emi.group.gregtech.functional_track_detector",
   "contents": [
     "item:gregtech:track_detector_adamantium",
     "item:gregtech:track_detector_aluminium",

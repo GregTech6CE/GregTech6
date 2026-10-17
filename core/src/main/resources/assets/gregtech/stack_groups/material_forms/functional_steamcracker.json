@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.steamcracker_invar",
+  "name": "emi.group.gregtech.functional_steamcracker",
   "contents": [
     "item:gregtech:steamcracker_invar",
     "item:gregtech:steamcracker_steel",

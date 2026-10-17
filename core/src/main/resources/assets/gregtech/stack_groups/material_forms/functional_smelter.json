@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.smelter_invar",
+  "name": "emi.group.gregtech.functional_smelter",
   "contents": [
     "item:gregtech:smelter_invar",
     "item:gregtech:smelter_steel",

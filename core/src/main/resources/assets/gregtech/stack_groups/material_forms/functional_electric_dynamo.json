@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.electric_dynamo_ev",
+  "name": "emi.group.gregtech.functional_electric_dynamo",
   "contents": [
     "item:gregtech:electric_dynamo_ev",
     "item:gregtech:electric_dynamo_hv",

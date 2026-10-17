@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.dryer_invar",
+  "name": "emi.group.gregtech.functional_dryer",
   "contents": [
     "item:gregtech:dryer_invar",
     "item:gregtech:dryer_steel",

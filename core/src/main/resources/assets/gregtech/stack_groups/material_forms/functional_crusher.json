@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.crusher_bronze",
+  "name": "emi.group.gregtech.functional_crusher",
   "contents": [
     "item:gregtech:crusher_bronze",
     "item:gregtech:crusher_steel",

@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.boxinator_aluminium",
+  "name": "emi.group.gregtech.functional_boxinator",
   "contents": [
     "item:gregtech:boxinator_aluminium",
     "item:gregtech:boxinator_chromium",

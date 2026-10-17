@@ -30,7 +30,18 @@ final class RemiGroupingSmoke {
             "functional_steam_boiler", "functional_strong_steam_boiler", "functional_scaffold", "functional_hopper",
             "fluid_item", "functional_stone_stone", "functional_stone_stone_slab",
             "functional_stone_smooth", "functional_stone_smooth_slab",
-            "functional_stone_bricks_redstone", "functional_stone_bricks_redstone_slab"};
+            "functional_stone_bricks_redstone", "functional_stone_bricks_redstone_slab",
+            "decor_asphalt", "decor_cfoam", "decor_cfoam_fresh", "decor_cfoam_slab",
+            "decor_concrete", "decor_concrete_reinforced", "decor_glass_clear", "decor_glass_glow", "decor_glass_glow_slab",
+            "functional_integrated_circuit", "functional_loot_chest", "functional_glowtus",
+            "functional_extruder_shape", "functional_low_heat_extruder_shape", "functional_sensor",
+            "functional_fluid_spring", "functional_bookshelf", "functional_bars", "functional_bottle_crate", "functional_beam",
+            "functional_auto_igniter", "functional_auto_hammer", "functional_charging_crafting_table",
+            "functional_co2_laser", "functional_laser_absorber", "functional_clay_molds", "functional_canvas",
+            "functional_single_use", "functional_drinks", "functional_foods", "functional_ice_cream",
+            "functional_book", "functional_large_book", "glass_panes", "real_fluids",
+            "functional_burning_box_liquid", "functional_burning_box_liquid_dense", "functional_long_dist_wire",
+            "functional_long_dist_transformer", "functional_electromagnet", "functional_energy_storage", "functional_transformer"};
 
     @SuppressWarnings("unchecked")
     static boolean frame(JsonObject receipt) throws ReflectiveOperationException {
@@ -40,6 +51,13 @@ final class RemiGroupingSmoke {
             index = (List<EmiStack>) manager.getField("indexStacks").get(null);
             List<EmiStack> displayed = displayed(manager);
             check(displayed, receipt, "all");
+            var springNames = new HashSet<String>();
+            for (var spring : com.gregtech.gregtech.worldgen.FluidSpringRules.SPRINGS) {
+                var block = com.gregtech.gregtech.registry.GTFluidSprings.byFluid(spring.fluidId());
+                String name = new net.minecraft.world.item.ItemStack(block).getHoverName().getString();
+                require(springNames.add(name) && name.contains(" ("), "ambiguous spring name " + name);
+            }
+            receipt.addProperty("distinctFluidSpringNames", springNames.size());
             receipt.addProperty("remiRawIndex", index.size());
             receipt.addProperty("remiVersion", net.neoforged.fml.ModList.get().getModContainerById("remi")
                     .orElseThrow().getModInfo().getVersion().toString());
@@ -143,15 +161,23 @@ final class RemiGroupingSmoke {
             require(!(boolean) stack.getClass().getField("isExpanded").get(stack), "unexpected expanded group " + id);
             for (EmiStack member : members) {
                 String item = member.getId().toString();
-                foldedItems.add(item);
+                foldedItems.add(member.getClass().getName() + ":" + item);
+                if (form.equals("plate")) require(!item.equals("minecraft:glass_pane") && !item.equals("minecraft:paper"),
+                        "vanilla pane/paper still classified as plate");
+                if (form.equals("real_fluids")) require(member.getItemStack().isEmpty() && item.startsWith("gregtech:"),
+                        "item or foreign fluid mixed into real fluids " + item);
                 if (form.startsWith("wire_") || form.startsWith("cable_") || form.startsWith("pipe_") || form.startsWith("item_pipe_"))
                     require(item.startsWith("gregtech:" + form + "_"), "mixed transport specification " + id + " / " + item);
             }
             counts.addProperty(form, members.size());
         }
-        for (String expected : REQUIRED) require(found.contains(expected), "missing folded group in " + phase + ": " + expected);
+        for (String expected : REQUIRED) {
+            // @gregtech correctly filters out the vanilla-only pane family.
+            if (phase.equals("search") && expected.equals("glass_panes")) continue;
+            require(found.contains(expected), "missing folded group in " + phase + ": " + expected);
+        }
         for (EmiStack stack : displayed) if (groupId(stack).isEmpty())
-            require(!foldedItems.contains(stack.getId().toString()), "folded member still displayed separately: " + stack.getId());
+            require(!foldedItems.contains(stack.getClass().getName() + ":" + stack.getId()), "folded member still displayed separately: " + stack.getId());
         receipt.add("remi" + phase + "Groups", counts);
         receipt.addProperty("remi" + phase + "Displayed", displayed.size());
         receipt.addProperty("remi" + phase + "FoldedItems", foldedItems.size());

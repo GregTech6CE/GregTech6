@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.wood_barrel_bronze",
+  "name": "emi.group.gregtech.functional_wood_barrel",
   "contents": [
     "item:gregtech:wood_barrel",
     "item:gregtech:wood_barrel_bismuth",

@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.tap",
+  "name": "emi.group.gregtech.functional_tap",
   "contents": [
     "item:gregtech:tap",
     "item:gregtech:tap_adamantium",

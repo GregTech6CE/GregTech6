@@ -1,0 +1,8 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.glass_glow",
+  "contents": [
+    "item:gregtech:glass_glow"
+  ],
+  "priority": 120
+}

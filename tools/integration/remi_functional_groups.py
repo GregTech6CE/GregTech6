@@ -26,7 +26,12 @@ drum wood_barrel fluid_cell fluid_capsule fluid_measure
 tap fluid_funnel cap_nozzle nozzle anvil bush bumble_hive
 track track_booster track_detector
 panel_wood panel_concrete panel_cfoam panel_asphalt
-compact_electric_pump compact_electric_conveyor compact_robot_arm""".split()
+compact_electric_pump compact_electric_conveyor compact_robot_arm
+burning_box_liquid burning_box_liquid_dense long_dist_wire long_dist_transformer
+electromagnet energy_storage transformer
+integrated_circuit sensor compact_sensor fluid_spring bookshelf bars bottle_crate beam
+auto_igniter auto_hammer charging_crafting_table co2_laser laser_absorber
+canvas single_use book large_book glowtus""".split()
 
 def catalog(root):
     java = root / "core/src/main/java/com/gregtech/gregtech"
@@ -92,15 +97,21 @@ def catalog(root):
 
 def resources(root):
     groups, ids = catalog(root)
+    from remi_group_titles import headings
+    language = json.loads((root / "core/src/main/resources/assets/gregtech/lang/en_us.json").read_text(encoding="utf-8"))
+    titles = headings(root, language)
     for group, items in groups.items():
         chosen = next((i for i in items if i.endswith("_bronze")), items[0])
         if group.startswith("stone_"):
             chosen = "stone_basalt_" + group.removeprefix("stone_")
         # Reuse an exact existing label, including its source-bound translation.
         # The representative's material never limits membership of the group.
-        yield "functional_" + group, {"type": "remi:group", "name": ids[chosen],
+        title_key = "emi.group.gregtech.functional_" + group
+        yield "functional_" + group, {"type": "remi:group", "name": title_key if title_key in titles else ids[chosen],
                 "contents": ["item:gregtech:" + item for item in items], "priority": 110}
     yield "functional_material_bush", {"type": "remi:group", "name": "block.gregtech.bush",
             "regex": "^gregtech:bush_plant_gt_berry_[a-z0-9_]+$", "priority": 110}
     yield "fluid_item", {"type": "remi:group", "name": "itemGroup.gregtech.fluids",
             "regex": "^gregtech:fluid_item_[a-z0-9_]+$", "priority": 110}
+    from remi_extra_groups import resources as extra_resources
+    yield from extra_resources(root)

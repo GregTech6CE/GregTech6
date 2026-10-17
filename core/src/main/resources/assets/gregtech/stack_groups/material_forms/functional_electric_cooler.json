@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.electric_cooler_ev",
+  "name": "emi.group.gregtech.functional_electric_cooler",
   "contents": [
     "item:gregtech:electric_cooler_ev",
     "item:gregtech:electric_cooler_hv",

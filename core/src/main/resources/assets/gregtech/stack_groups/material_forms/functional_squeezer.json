@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.squeezer_bronze",
+  "name": "emi.group.gregtech.functional_squeezer",
   "contents": [
     "item:gregtech:squeezer_bronze",
     "item:gregtech:squeezer_steel",

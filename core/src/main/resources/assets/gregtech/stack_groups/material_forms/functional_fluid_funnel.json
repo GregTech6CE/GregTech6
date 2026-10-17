@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.fluid_funnel",
+  "name": "emi.group.gregtech.functional_fluid_funnel",
   "contents": [
     "item:gregtech:fluid_funnel",
     "item:gregtech:fluid_funnel_adamantium",

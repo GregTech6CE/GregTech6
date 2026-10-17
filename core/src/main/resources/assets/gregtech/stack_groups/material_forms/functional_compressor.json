@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.compressor_bronze",
+  "name": "emi.group.gregtech.functional_compressor",
   "contents": [
     "item:gregtech:compressor_bronze",
     "item:gregtech:compressor_steel",

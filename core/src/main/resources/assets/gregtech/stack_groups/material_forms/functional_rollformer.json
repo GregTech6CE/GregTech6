@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.rollformer_bronze",
+  "name": "emi.group.gregtech.functional_rollformer",
   "contents": [
     "item:gregtech:rollformer_bronze",
     "item:gregtech:rollformer_steel",

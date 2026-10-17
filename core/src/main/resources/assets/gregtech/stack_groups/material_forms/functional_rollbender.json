@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.rollbender_bronze",
+  "name": "emi.group.gregtech.functional_rollbender",
   "contents": [
     "item:gregtech:rollbender_bronze",
     "item:gregtech:rollbender_steel",

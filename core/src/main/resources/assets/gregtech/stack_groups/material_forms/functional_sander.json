@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.sander_bronze",
+  "name": "emi.group.gregtech.functional_sander",
   "contents": [
     "item:gregtech:sander_bronze",
     "item:gregtech:sander_steel",

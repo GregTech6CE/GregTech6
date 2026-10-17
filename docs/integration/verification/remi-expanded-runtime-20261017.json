@@ -1,0 +1,31 @@
+{
+  "status": "partial",
+  "runtime": "NeoForge 21.1.243 / Reliable EMI 4.7.12 / EMI 1.1.24",
+  "world_id": "8a337a6a-79f4-4388-b081-f9059b0e5d6b",
+  "all_index_checks": "passed",
+  "all_displayed": 1652,
+  "distinct_spring_names_checked": 7,
+  "search_checks": "failed: harness incorrectly required minecraft glass panes in @gregtech search",
+  "harness_fixed_not_rerun": true,
+  "post_runtime_changes": [
+    "derived machine headings",
+    "legacy foam IDs included"
+  ],
+  "log_sha256": "150cb91a8acb80848c2b437cfb5ab32e4c890b7784af277e06d767c67c71cae5",
+  "sources": {
+    "1.20.1": {
+      "path": "work\\pr-review-20261016\\remi\\1.20.1-EmiStackGroup.java",
+      "sha256": "f9a18126bbe0287203dcebe95d7e82a1bc2d3caae7e4f8f0c1ac64843b4c25e7",
+      "origin": "https://github.com/evanbones/Reliable-EMI",
+      "author": "Evan Bowness",
+      "license": "MIT"
+    },
+    "1.21.1": {
+      "path": "work\\pr-review-20261016\\remi\\1.21.1-EmiStackGroup.java",
+      "sha256": "d7a8d154333172e081c9cb4b33f10bc554efbb0a96ebf2b799cf3c1800712095",
+      "origin": "https://github.com/evanbones/Reliable-EMI",
+      "author": "Evan Bowness",
+      "license": "MIT"
+    }
+  }
+}

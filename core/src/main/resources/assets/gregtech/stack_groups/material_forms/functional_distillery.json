@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.distillery_invar",
+  "name": "emi.group.gregtech.functional_distillery",
   "contents": [
     "item:gregtech:distillery_invar",
     "item:gregtech:distillery_steel",

@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.nozzle",
+  "name": "emi.group.gregtech.functional_nozzle",
   "contents": [
     "item:gregtech:nozzle",
     "item:gregtech:nozzle_adamantium",

@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.crucible_faucet_bronze",
+  "name": "emi.group.gregtech.functional_crucible_faucet",
   "contents": [
     "item:gregtech:crucible_faucet_ad",
     "item:gregtech:crucible_faucet_basalt",

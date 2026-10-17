@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.press_bronze",
+  "name": "emi.group.gregtech.functional_press",
   "contents": [
     "item:gregtech:press_bronze",
     "item:gregtech:press_steel",

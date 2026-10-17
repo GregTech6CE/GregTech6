@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.magneticseparator_aluminium",
+  "name": "emi.group.gregtech.functional_magneticseparator",
   "contents": [
     "item:gregtech:magneticseparator_aluminium",
     "item:gregtech:magneticseparator_chromium",

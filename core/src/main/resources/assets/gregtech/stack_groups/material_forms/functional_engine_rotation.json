@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.engine_rotation_arsenic_bronze",
+  "name": "emi.group.gregtech.functional_engine_rotation",
   "contents": [
     "item:gregtech:engine_rotation_adamantium",
     "item:gregtech:engine_rotation_arsenic_bronze",

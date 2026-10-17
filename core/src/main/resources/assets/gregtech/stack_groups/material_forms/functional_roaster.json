@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.roaster_invar",
+  "name": "emi.group.gregtech.functional_roaster",
   "contents": [
     "item:gregtech:roaster_invar",
     "item:gregtech:roaster_steel",

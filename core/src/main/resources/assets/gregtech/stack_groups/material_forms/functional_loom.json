@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.loom_bronze",
+  "name": "emi.group.gregtech.functional_loom",
   "contents": [
     "item:gregtech:loom_bronze",
     "item:gregtech:loom_steel",

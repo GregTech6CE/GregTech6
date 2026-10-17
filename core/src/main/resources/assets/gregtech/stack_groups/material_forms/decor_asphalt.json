@@ -1,0 +1,8 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.asphalt",
+  "contents": [
+    "item:gregtech:asphalt"
+  ],
+  "priority": 120
+}

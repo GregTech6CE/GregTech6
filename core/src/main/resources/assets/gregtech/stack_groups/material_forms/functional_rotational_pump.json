@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.rotational_pump_bronze",
+  "name": "emi.group.gregtech.functional_rotational_pump",
   "contents": [
     "item:gregtech:rotational_pump_bronze",
     "item:gregtech:rotational_pump_steel",

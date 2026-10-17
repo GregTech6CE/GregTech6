@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.hopper_arsenic_bronze",
+  "name": "emi.group.gregtech.functional_hopper",
   "contents": [
     "item:gregtech:hopper_adamantium",
     "item:gregtech:hopper_aluminium",

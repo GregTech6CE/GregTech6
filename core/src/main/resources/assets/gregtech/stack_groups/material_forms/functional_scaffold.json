@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.scaffold_arsenic_bronze",
+  "name": "emi.group.gregtech.functional_scaffold",
   "contents": [
     "item:gregtech:scaffold",
     "item:gregtech:scaffold_adamantium",

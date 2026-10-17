@@ -1,0 +1,17 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_energy_storage",
+  "contents": [
+    "item:gregtech:energy_storage_ev",
+    "item:gregtech:energy_storage_hv",
+    "item:gregtech:energy_storage_iv",
+    "item:gregtech:energy_storage_luv",
+    "item:gregtech:energy_storage_lv",
+    "item:gregtech:energy_storage_mv",
+    "item:gregtech:energy_storage_ulv",
+    "item:gregtech:energy_storage_uv",
+    "item:gregtech:energy_storage_xv",
+    "item:gregtech:energy_storage_zpm"
+  ],
+  "priority": 110
+}

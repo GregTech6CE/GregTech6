@@ -1,0 +1,9 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.cfoam_fresh",
+  "contents": [
+    "item:gregtech:cfoam_fresh",
+    "item:gregtech:cfoam_fresh_owned"
+  ],
+  "priority": 120
+}

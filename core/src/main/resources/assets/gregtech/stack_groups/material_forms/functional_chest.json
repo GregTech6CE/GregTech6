@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.chest_arsenic_bronze",
+  "name": "emi.group.gregtech.functional_chest",
   "contents": [
     "item:gregtech:chest_adamantium",
     "item:gregtech:chest_aluminium",

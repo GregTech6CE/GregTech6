@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.centrifuge_bronze",
+  "name": "emi.group.gregtech.functional_centrifuge",
   "contents": [
     "item:gregtech:centrifuge_bronze",
     "item:gregtech:centrifuge_steel",

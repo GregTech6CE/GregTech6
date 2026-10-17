@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.smelting_crucible_bronze",
+  "name": "emi.group.gregtech.functional_smelting_crucible",
   "contents": [
     "item:gregtech:smelting_crucible_ad",
     "item:gregtech:smelting_crucible_basalt",

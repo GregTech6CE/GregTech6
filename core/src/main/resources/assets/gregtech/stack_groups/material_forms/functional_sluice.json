@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.sluice_bronze",
+  "name": "emi.group.gregtech.functional_sluice",
   "contents": [
     "item:gregtech:sluice_bronze",
     "item:gregtech:sluice_steel",

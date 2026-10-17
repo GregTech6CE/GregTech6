@@ -141,7 +141,7 @@ def load_source(repo=ROOT, external=None):
     return source, meta
 
 
-def expected_chinese(english, source, aliases):
+def expected_chinese(english, source, aliases, *, repo=ROOT):
     for label, mapping in [('English', english), ('source', source), ('aliases', aliases)]:
         if not isinstance(mapping, dict) or any(not isinstance(k, str) or not isinstance(v, str)
                                                for k, v in mapping.items()):
@@ -157,6 +157,9 @@ def expected_chinese(english, source, aliases):
         if native in source and native != original:
             raise ValueError(f'Alias must not override an original key: {native}')
         result[native] = source[original]
+    if any(k.startswith('emi.group.gregtech.functional_') for k in english):
+        from integration.remi_group_titles import headings
+        result.update(headings(repo, result))
     return result
 
 
@@ -172,7 +175,18 @@ def synchronize(repo=ROOT, *, write=False, external=None):
     source, meta = load_source(repo, external)
     aliases = read_json(repo / CONFIG_PATH / 'aliases.json')
     english = read_json(repo / LANG_PATH / 'en_us.json')
-    expected = expected_chinese(english, source, aliases)
+    expected = expected_chinese(english, source, aliases, repo=repo)
+    derived_titles = {}
+    # Viewer headings have an explicitly requested presentation-only projection:
+    # remove material/voltage qualifiers from the already source-bound names.
+    # Native item/block translations remain under the exact-source rules above.
+    if any(k.startswith('emi.group.gregtech.functional_') for k in english):
+        from integration.remi_group_titles import headings
+        derived_titles = headings(repo, expected)
+        expected.update(derived_titles)
+        for key, value in headings(repo, english).items():
+            if english.get(key) != value:
+                raise ValueError('English EMI heading differs from its native source: ' + key)
     target = repo / LANG_PATH / 'zh_cn.json'
     current = read_json(target)
     delta = differences(expected, current)
@@ -182,9 +196,9 @@ def synchronize(repo=ROOT, *, write=False, external=None):
             raise ValueError('Chinese differs from exact source/aliases/English fallback: ' +
                              json.dumps({k: {'count': len(v), 'examples': v[:8]} for k, v in delta.items()}))
         target.write_text(json_text(expected), encoding='utf-8', newline='\n')
-    fallback = sorted(english.keys() - source.keys() - aliases.keys())
+    fallback = sorted(english.keys() - source.keys() - aliases.keys() - derived_titles.keys())
     return {'source_sha256': meta['sha256'], 'source_keys': len(source), 'english': english_report,
-            'native_aliases': len(aliases), 'chinese_keys': len(expected),
+            'native_aliases': len(aliases), 'chinese_keys': len(expected), 'derived_emi_headings': len(derived_titles),
             'english_fallback_count': len(fallback), 'english_fallback_keys': fallback,
             'changes': {k: len(v) for k, v in delta.items()}}
 

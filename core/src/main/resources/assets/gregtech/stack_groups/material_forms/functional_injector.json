@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.injector_aluminium",
+  "name": "emi.group.gregtech.functional_injector",
   "contents": [
     "item:gregtech:injector_aluminium",
     "item:gregtech:injector_chromium",

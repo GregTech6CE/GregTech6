@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.battery_box_ev",
+  "name": "emi.group.gregtech.functional_battery_box",
   "contents": [
     "item:gregtech:battery_box_ev",
     "item:gregtech:battery_box_hv",

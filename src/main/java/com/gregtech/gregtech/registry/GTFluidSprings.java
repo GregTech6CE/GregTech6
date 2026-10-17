@@ -22,7 +22,15 @@ public final class GTFluidSprings {
         var block=GTBlocks.BLOCKS.register(path,()->new FluidSpringBlock(spring,BlockBehaviour.Properties.of()
                 .mapColor(MapColor.WATER).strength(3,3).requiresCorrectToolForDrops().sound(SoundType.STONE)));
         VARIANTS.put(path,block);
-        GTBlocks.BLOCK_ITEMS.register(path,()->new BlockItem(block.get(),new Item.Properties()));return block;
+        GTBlocks.BLOCK_ITEMS.register(path,()->new BlockItem(block.get(),new Item.Properties()) {
+            @Override public net.minecraft.network.chat.Component getName(ItemStack stack) {
+                if (spring == null) return super.getName(stack);
+                var fluid = net.minecraft.core.registries.BuiltInRegistries.FLUID.get(
+                        net.minecraft.resources.ResourceLocation.tryParse(spring.fluidId()));
+                return net.minecraft.network.chat.Component.translatable("block.gregtech.fluid_spring")
+                        .append(" (").append(new net.minecraftforge.fluids.FluidStack(fluid, 1000).getDisplayName()).append(")");
+            }
+        });return block;
     }
     public static FluidSpringBlock byFluid(String fluid) {
         var spring=FluidSpringRules.byFluid(fluid);if(spring==null)return null;

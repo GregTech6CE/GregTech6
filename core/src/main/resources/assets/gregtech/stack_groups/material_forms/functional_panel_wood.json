@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.panel_wood",
+  "name": "emi.group.gregtech.functional_panel_wood",
   "contents": [
     "item:gregtech:panel_wood",
     "item:gregtech:panel_wood_acacia",

@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.catalyticcracker_invar",
+  "name": "emi.group.gregtech.functional_catalyticcracker",
   "contents": [
     "item:gregtech:catalyticcracker_invar",
     "item:gregtech:catalyticcracker_steel",

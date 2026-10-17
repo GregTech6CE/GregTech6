@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.laserengraver_aluminium",
+  "name": "emi.group.gregtech.functional_laserengraver",
   "contents": [
     "item:gregtech:laserengraver_aluminium",
     "item:gregtech:laserengraver_chromium",

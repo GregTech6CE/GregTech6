@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.electricloom_aluminium",
+  "name": "emi.group.gregtech.functional_electricloom",
   "contents": [
     "item:gregtech:electricloom_aluminium",
     "item:gregtech:electricloom_chromium",

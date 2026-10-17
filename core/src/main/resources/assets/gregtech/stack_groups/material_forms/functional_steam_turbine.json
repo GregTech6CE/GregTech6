@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.steam_turbine_bronze",
+  "name": "emi.group.gregtech.functional_steam_turbine",
   "contents": [
     "item:gregtech:steam_turbine_aluminium",
     "item:gregtech:steam_turbine_brass",

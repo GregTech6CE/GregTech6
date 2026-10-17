@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.fluid_cell_adamantium",
+  "name": "emi.group.gregtech.functional_fluid_cell",
   "contents": [
     "item:gregtech:fluid_cell_adamantium",
     "item:gregtech:fluid_cell_aluminium",

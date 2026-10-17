@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.electricsifter_aluminium",
+  "name": "emi.group.gregtech.functional_electricsifter",
   "contents": [
     "item:gregtech:electricsifter_aluminium",
     "item:gregtech:electricsifter_chromium",

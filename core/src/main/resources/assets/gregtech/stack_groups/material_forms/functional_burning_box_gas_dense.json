@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.burning_box_gas_dense_arsenic_bronze",
+  "name": "emi.group.gregtech.functional_burning_box_gas_dense",
   "contents": [
     "item:gregtech:burning_box_gas_dense_arsenic_bronze",
     "item:gregtech:burning_box_gas_dense_arsenic_copper",

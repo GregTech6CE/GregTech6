@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.bumble_hive",
+  "name": "emi.group.gregtech.functional_bumble_hive",
   "contents": [
     "item:gregtech:bumble_hive",
     "item:gregtech:bumble_hive_black",

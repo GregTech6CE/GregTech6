@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.axle_adamantium_4",
+  "name": "emi.group.gregtech.functional_axle_4",
   "contents": [
     "item:gregtech:axle_adamantium_4",
     "item:gregtech:axle_arsenic_bronze_4",

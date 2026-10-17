@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.autocrafter_aluminium",
+  "name": "emi.group.gregtech.functional_autocrafter",
   "contents": [
     "item:gregtech:autocrafter_aluminium",
     "item:gregtech:autocrafter_chromium",

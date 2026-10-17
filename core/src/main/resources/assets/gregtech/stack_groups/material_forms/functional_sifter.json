@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.sifter_bronze",
+  "name": "emi.group.gregtech.functional_sifter",
   "contents": [
     "item:gregtech:sifter_bronze",
     "item:gregtech:sifter_steel",

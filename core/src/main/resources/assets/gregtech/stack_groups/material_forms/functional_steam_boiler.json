@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.steam_boiler_arsenic_bronze",
+  "name": "emi.group.gregtech.functional_steam_boiler",
   "contents": [
     "item:gregtech:steam_boiler_arsenic_bronze",
     "item:gregtech:steam_boiler_arsenic_copper",

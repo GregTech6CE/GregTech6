@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.cryomixer_aluminium",
+  "name": "emi.group.gregtech.functional_cryomixer",
   "contents": [
     "item:gregtech:cryomixer_aluminium",
     "item:gregtech:cryomixer_chromium",

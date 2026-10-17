@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.flux_laser_ev",
+  "name": "emi.group.gregtech.functional_flux_laser",
   "contents": [
     "item:gregtech:flux_laser_ev",
     "item:gregtech:flux_laser_hv",

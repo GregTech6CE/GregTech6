@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.flux_heater_ev",
+  "name": "emi.group.gregtech.functional_flux_heater",
   "contents": [
     "item:gregtech:flux_heater_ev",
     "item:gregtech:flux_heater_hv",
