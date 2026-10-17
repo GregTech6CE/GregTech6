@@ -1,5 +1,15 @@
 # 验证账本
 
+## 2026-10-17 / 附属 API 版本号与加载器拦截
+
+`mod_version` 是 `0.3.0`。`:core:addonApiVersionContracts` 通过，输出 `addon API version contracts passed: 49 assertions, 0 scheduled removals`。随后 `:core:check` 通过，里面包含 `sourcePolicyCheck`、这项版本契约，以及原有的 core 契约和 `test`。同一次构建还编译了 Forge、NeoForge，以及两边带 `-PaddonSample=true` 的样例源码集。`BUILD SUCCESSFUL`，用时 3 分 48 秒。
+
+样例 addon 的 `versionRange` 是 `[0.3,)`。开发客户端到达标题画面后自行退出：Forge `CLIENT_SMOKE_SUCCESS`，222 秒，1280×720；NeoForge 43 秒，1280×720。两边都打印 `GT addon API 3 ready: [addon_sample]`。专服目录是 `build/card13-forge-server` 和 `neoforge/build/card13-neo-server`。Forge 打印 `Done (26.934s)`，NeoForge 打印 `Done (7.717s)`，两边同样是 `ready: [addon_sample]`。专服没有自行退出，看到 `Done` 后结束进程。
+
+把两边样例临时改成 `[0.4,)` 后再开专服。Forge 加载器打印 `Missing or unsupported mandatory dependencies: Mod ID: 'gregtech6', Requested by: 'addon_sample', Expected range: '[0.4,)', Actual version: '0.3.0'`，随后在 mixin 初始化时因为读不到 `gregtech.mixins.json` 退出，进程码 1。没有 `GT addon API` 日志，也没有进到 GregTech 的模组代码。NeoForge 先打印同一句缺依赖，然后 `Mod addon_sample requires gregtech6 0.4 or above` / `Currently, gregtech6 is 0.3.0`，`ModLoadingException` 后服务器没有启动。NeoForge 的 Gradle 任务本身返回 0。样例范围已改回 `[0.3,)`。
+
+成品是 `build/libs/gregtech6-1.20.1-forge-0.3.0.jar` 和 `neoforge/build/libs/gregtech6-neoforge-1.21.1-0.3.0.jar`。`tools/integration/verify_artifacts.py` 通过：845 个共享 core 类，Forge 1520 个平台类，NeoForge 1619 个平台类，报告里的 `mod_version` 是 `0.3.0`。这次没有启动成品 jar，也没有做玩法、重启或旧档。
+
 ## 2026-10-17 / C 步之前的单方块存档
 
 打开的是副本，原世界没有改。两份都来自 2026-10-15 的 `card03-material-data`，早于这张卡的注册改动。Forge 副本在 `build/card11-oldsave-forge`，机器在 (48, -58, 3)。NeoForge 副本在 `neoforge/build/card11-oldsave-neo`，机器在 (-9806961, -58, -11702620)。专服在进入主循环前读方块并退出。
