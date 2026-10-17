@@ -1,0 +1,15 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_circuit_plate",
+  "contents": [
+    "item:gregtech:circuit_plate",
+    "item:gregtech:circuit_plate_copper",
+    "item:gregtech:circuit_plate_enderium",
+    "item:gregtech:circuit_plate_gold",
+    "item:gregtech:circuit_plate_hsla",
+    "item:gregtech:circuit_plate_magic",
+    "item:gregtech:circuit_plate_platinum",
+    "item:gregtech:circuit_plate_signalum"
+  ],
+  "priority": 110
+}

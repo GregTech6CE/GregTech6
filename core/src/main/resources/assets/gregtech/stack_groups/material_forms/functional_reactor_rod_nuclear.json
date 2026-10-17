@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "item.gregtech.fuel_rod_am_241",
+  "name": "emi.group.gregtech.functional_reactor_rod_nuclear",
   "contents": [
     "item:gregtech:fuel_rod_am_241",
     "item:gregtech:fuel_rod_co_60",

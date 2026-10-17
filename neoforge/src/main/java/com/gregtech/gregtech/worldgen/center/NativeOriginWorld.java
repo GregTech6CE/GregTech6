@@ -63,7 +63,7 @@ public final class NativeOriginWorld implements OriginWorld {
             if(fluid==net.minecraft.world.level.material.Fluids.EMPTY) throw new IllegalStateException("Missing original river water");
             return fluid.defaultFluidState().createLegacyBlock();
         }
-        if(blockId.equals("source:sands")) blockId="gregtech:block_dust_"+new String[]{"magnetite","basalticmineralsand","graniticmineralsand"}[key.metadata%3];
+        if(blockId.equals("source:sands")) blockId="gregtech:"+com.gregtech.gregtech.block.BlackSandDefinitions.IDS.get(key.metadata%3);
         if(blockId.equals("source:diggables")) blockId="gregtech:"+new String[]{"mud","clay_brown","turf","clay_red","clay_yellow","clay_blue","clay_white"}[key.metadata];
         if(blockId.equals("source:glowtus")) blockId="gregtech:glowtus_"+DyeColor.byId(15-key.metadata).getName();
         if(blockId.equals("source:flower")) blockId="minecraft:"+new String[]{"poppy","blue_orchid","allium","azure_bluet","red_tulip","orange_tulip","white_tulip","pink_tulip","oxeye_daisy"}[key.metadata%9];

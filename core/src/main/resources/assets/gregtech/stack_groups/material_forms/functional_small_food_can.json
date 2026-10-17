@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "item.gregtech.small_food_can_bread",
+  "name": "emi.group.gregtech.functional_small_food_can",
   "contents": [
     "item:gregtech:small_food_can_bread",
     "item:gregtech:small_food_can_chum",

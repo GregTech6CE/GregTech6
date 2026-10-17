@@ -60,7 +60,7 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
                 var expected=y==-4
                         ? originalId?LargeMachineParts.block(18103):GTMultiblocks.BEDROCK_DRILL_WALL.get()
                         : LargeMachineParts.block(18026);
-                if(!level.getBlockState(pos).is(expected)||!(level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity)){bindings.clear(this::release);return false;}
+                if(!com.gregtech.gregtech.registry.LegacyContentBinding.samePart(level.getBlockState(pos).getBlock(), expected)||!(level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity)){bindings.clear(this::release);return false;}
                 parts.put(pos,role(x,y,z));
             }
         }

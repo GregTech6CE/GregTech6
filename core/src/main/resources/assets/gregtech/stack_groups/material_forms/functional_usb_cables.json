@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_usb_cables",
+  "contents": [
+    "item:gregtech:usb1_cable",
+    "item:gregtech:usb2_cable",
+    "item:gregtech:usb3_cable",
+    "item:gregtech:usb4_cable"
+  ],
+  "priority": 110
+}

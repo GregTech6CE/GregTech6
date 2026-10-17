@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_compass",
+  "contents": [
+    "item:gregtech:compass_center",
+    "item:gregtech:compass_death",
+    "item:gregtech:compass_face",
+    "item:gregtech:compass_north",
+    "item:gregtech:compass_spawn"
+  ],
+  "priority": 110
+}

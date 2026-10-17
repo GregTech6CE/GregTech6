@@ -70,7 +70,7 @@ public final class MultiblockPortBlock extends Block implements EntityBlock {
     /** Structural bindings are transient; breaking a part returns only the part itself. */
     @Override public java.util.List<net.minecraft.world.item.ItemStack> getDrops(BlockState state,
             net.minecraft.world.level.storage.loot.LootParams.Builder context) {
-        return java.util.List.of(new net.minecraft.world.item.ItemStack(this));
+        return java.util.List.of(new net.minecraft.world.item.ItemStack(com.gregtech.gregtech.registry.LegacyContentBinding.canonicalItem(asItem())));
     }
     @Override public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity(pos,state);

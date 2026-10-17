@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.stone_basalt_square_bricks",
+  "name": "emi.group.gregtech.functional_stone_square_bricks",
   "contents": [
     "item:gregtech:stone_andesite_square_bricks",
     "item:gregtech:stone_basalt_square_bricks",

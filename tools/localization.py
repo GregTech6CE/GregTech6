@@ -157,7 +157,7 @@ def expected_chinese(english, source, aliases, *, repo=ROOT):
         if native in source and native != original:
             raise ValueError(f'Alias must not override an original key: {native}')
         result[native] = source[original]
-    if any(k.startswith('emi.group.gregtech.functional_') for k in english):
+    if any(k.startswith('emi.group.gregtech.') for k in english):
         from integration.remi_group_titles import headings
         result.update(headings(repo, result))
     return result
@@ -178,9 +178,9 @@ def synchronize(repo=ROOT, *, write=False, external=None):
     expected = expected_chinese(english, source, aliases, repo=repo)
     derived_titles = {}
     # Viewer headings have an explicitly requested presentation-only projection:
-    # remove material/voltage qualifiers from the already source-bound names.
+    # use generic category headings derived from source names or the requested UI vocabulary.
     # Native item/block translations remain under the exact-source rules above.
-    if any(k.startswith('emi.group.gregtech.functional_') for k in english):
+    if any(k.startswith('emi.group.gregtech.') for k in english):
         from integration.remi_group_titles import headings
         derived_titles = headings(repo, expected)
         expected.update(derived_titles)

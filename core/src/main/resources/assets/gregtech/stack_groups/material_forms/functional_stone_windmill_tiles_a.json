@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.stone_basalt_windmill_tiles_a",
+  "name": "emi.group.gregtech.functional_stone_windmill_tiles_a",
   "contents": [
     "item:gregtech:stone_andesite_windmill_tiles_a",
     "item:gregtech:stone_basalt_windmill_tiles_a",

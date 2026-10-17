@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_fluid_measure",
+  "contents": [
+    "item:gregtech:fluid_measuring_pot",
+    "item:gregtech:fluid_measuring_pot_stainless_steel",
+    "item:gregtech:fluid_measuring_pot_tantalum_hafnium_carbide",
+    "item:gregtech:fluid_measuring_pot_tungsten"
+  ],
+  "priority": 110
+}

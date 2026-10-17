@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.pipe_quadruple_copper",
+  "name": "emi.group.gregtech.pipe_quadruple",
   "regex": "^gregtech:pipe_quadruple_[a-z0-9_]+$",
   "priority": 100
 }

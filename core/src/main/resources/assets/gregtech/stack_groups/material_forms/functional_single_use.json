@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "item.gregtech.single_use_blade",
+  "name": "emi.group.gregtech.functional_single_use",
   "contents": [
     "item:gregtech:single_use_blade",
     "item:gregtech:single_use_chisel",

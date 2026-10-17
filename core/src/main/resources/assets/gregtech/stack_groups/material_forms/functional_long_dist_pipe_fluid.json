@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_long_dist_pipe_fluid",
+  "contents": [
+    "item:gregtech:long_dist_pipe_adamantium",
+    "item:gregtech:long_dist_pipe_draconium",
+    "item:gregtech:long_dist_pipe_fluid",
+    "item:gregtech:long_dist_pipe_tungsten"
+  ],
+  "priority": 110
+}

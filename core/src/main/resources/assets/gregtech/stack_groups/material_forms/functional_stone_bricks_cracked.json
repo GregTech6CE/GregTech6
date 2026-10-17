@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.stone_basalt_bricks_cracked",
+  "name": "emi.group.gregtech.functional_stone_bricks_cracked",
   "contents": [
     "item:gregtech:stone_andesite_bricks_cracked",
     "item:gregtech:stone_basalt_bricks_cracked",

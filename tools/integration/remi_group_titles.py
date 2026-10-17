@@ -1,14 +1,16 @@
-"""Source-derived machine group headings requested by the user.
+"""Generic viewer group headings requested by the user.
 
-Only material identities and voltage qualifiers are removed. Actual item names
-and functional qualifiers (solid/gas, dense, reinforced, axle size) stay intact.
+Representative material, voltage, colour, flavour and species do not name a group.
+Actual item names and functional boundaries (dense, reinforced, axle size) stay intact.
 """
 import json
 import re
 try:
     from .remi_functional_groups import catalog
+    from .remi_title_labels import LABELS
 except ImportError:
     from remi_functional_groups import catalog
+    from remi_title_labels import LABELS
 
 VOLTAGE = r"(?:ULV|LV|MV|HV|EV|IV|LuV|ZPM|UV|PUV1|XV|T\d+)(?:[-–](?:ULV|LV|MV|HV|EV|IV|LuV|ZPM|UV|PUV1|XV))?"
 
@@ -22,13 +24,15 @@ def headings(root, language):
         for key, value in data.items():
             if key.startswith("material.gregtech."):
                 by_id.setdefault(key.removeprefix("material.gregtech.").replace("_", ""), set()).add(value)
+    chinese = language.get("item.gregtech.clay_mold") != english.get("item.gregtech.clay_mold")
     result = {}
     for group, members in groups.items():
-        chosen = next((i for i in members if i.endswith("_bronze")), members[0])
+        chosen = next((i for i in members if i == group + "_bronze"), next((i for i in members if i.endswith("_lv")), members[0]))
         key = ids[chosen]
-        if not key.startswith("block.") or group.startswith("stone_"):
-            continue
         original = language[key]
+        if group.startswith("stone_"):
+            chosen = "stone_basalt_" + group.removeprefix("stone_")
+            original = language[ids[chosen]].replace("玄武岩", "石头").replace("Basalt", "Stone")
         def qualifier(match):
             parts = [p.strip() for p in re.split(r"[,，]", match[1])]
             keep = [p for p in parts if p not in materials and not re.fullmatch(VOLTAGE, p)]
@@ -40,6 +44,27 @@ def headings(root, language):
                 if value.startswith(material): value = value[len(material):]
             else:
                 value = re.sub(r"\b" + re.escape(material) + r"\b\s*", "", value).strip()
+        if group.endswith("_food_can") or group == "spray_paint":
+            value = re.sub(r"\s*[（(].*?[)）]", "", value)
+        # Axle thickness is retained while the representative material is removed.
+        if group.startswith("axle_"):
+            material_id = chosen.removeprefix("axle_").rsplit("_", 1)[0].replace("_", "")
+            for material in sorted(by_id.get(material_id, ()), key=len, reverse=True):
+                value = value.replace(material, "").replace("  ", " ").strip()
         # Stable keys in both languages, even if only one source needs stripping.
         result["emi.group.gregtech.functional_" + group] = value
+    # Explicit headings are UI vocabulary, not translations of representative items.
+    for group, labels in LABELS.items():
+        path = group if group.startswith("decor_") or group in {"fluid_item", "real_fluids", "safe", "key_safe"} else "functional_" + group
+        result["emi.group.gregtech." + path] = labels[1 if chinese else 0]
+    # Transport groups must show only size/type, never the chosen copper/brass.
+    try:
+        from .generate_remi_material_groups import transport_groups
+    except ImportError:
+        from generate_remi_material_groups import transport_groups
+    for path, material, names in transport_groups():
+        value = language[f"block.gregtech.{path}_{material}"]
+        for name in names:
+            value = value.replace(name, "")
+        result["emi.group.gregtech." + path] = value.replace("  ", " ").strip()
     return result

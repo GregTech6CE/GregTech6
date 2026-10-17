@@ -106,6 +106,10 @@ public final class GTMultiItems {
             String name = entries[i + 1];
             String category = entries[i + 2];
             final boolean hasTooltip = !entries[i + 3].isEmpty();
+            if (LegacyContentAliases.originalKey(id)) {
+                BY_ID.put(id, ITEMS.register(id, () -> new com.gregtech.gregtech.item.GTDungeonKeyItem(new Item.Properties().stacksTo(64))));
+                continue;
+            }
             // §108: GT6's own food numbers (MultiItemFood's FoodStat tables) instead of one blanket
             // placeholder. GTFoodItems.itemProperties falls back to the plain 64-stack properties for
             // the 59 rows that are display-only in GT6 as well, so nothing stops being edible by

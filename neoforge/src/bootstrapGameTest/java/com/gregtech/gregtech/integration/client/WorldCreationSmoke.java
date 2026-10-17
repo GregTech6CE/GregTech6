@@ -99,7 +99,7 @@ public final class WorldCreationSmoke {
                 var server = minecraft.getSingleplayerServer();
                 probe = server.submit(() -> {
                     var result = receipt();
-                    if(REMI_ONLY)return result;
+                    if(REMI_ONLY){CatalogFeedbackSmoke.server(server,result);return result;}
                     int checked = 0;
                     for (var item : net.minecraft.core.registries.BuiltInRegistries.ITEM) {
                         var input = new ItemStack(item,2); if (input.isEmpty()) continue;

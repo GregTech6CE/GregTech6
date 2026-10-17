@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.asphalt",
+  "name": "emi.group.gregtech.decor_asphalt",
   "contents": [
     "item:gregtech:asphalt"
   ],

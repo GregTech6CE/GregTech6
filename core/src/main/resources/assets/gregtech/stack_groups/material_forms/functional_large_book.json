@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "item.gregtech.large_book_bronze",
+  "name": "emi.group.gregtech.functional_large_book",
   "contents": [
     "item:gregtech:large_book_black",
     "item:gregtech:large_book_blue",

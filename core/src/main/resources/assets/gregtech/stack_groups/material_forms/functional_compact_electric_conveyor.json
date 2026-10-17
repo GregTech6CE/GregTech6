@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "item.gregtech.compact_electric_conveyor_ev",
+  "name": "emi.group.gregtech.functional_compact_electric_conveyor",
   "contents": [
     "item:gregtech:compact_electric_conveyor_ev",
     "item:gregtech:compact_electric_conveyor_hv",

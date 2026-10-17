@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "item.gregtech.aero_bumble_scanned_dead",
+  "name": "emi.group.gregtech.functional_bumblebee_scanned_dead",
   "contents": [
     "item:gregtech:aero_bumble_scanned_dead",
     "item:gregtech:alienated_bumblebee_scanned_dead",

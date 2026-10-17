@@ -1,0 +1,21 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_food_shapes",
+  "contents": [
+    "item:gregtech:foodmold_shape_baguette",
+    "item:gregtech:foodmold_shape_bread",
+    "item:gregtech:foodmold_shape_bun",
+    "item:gregtech:foodmold_shape_cylinder",
+    "item:gregtech:foodmold_shape_empty",
+    "item:gregtech:foodmold_shape_toast",
+    "item:gregtech:slicer_shape_eights",
+    "item:gregtech:slicer_shape_eights_hollow",
+    "item:gregtech:slicer_shape_empty",
+    "item:gregtech:slicer_shape_flat",
+    "item:gregtech:slicer_shape_grid",
+    "item:gregtech:slicer_shape_quaters",
+    "item:gregtech:slicer_shape_quaters_hollow",
+    "item:gregtech:slicer_shape_split"
+  ],
+  "priority": 110
+}

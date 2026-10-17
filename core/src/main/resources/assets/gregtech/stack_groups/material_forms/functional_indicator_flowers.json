@@ -1,0 +1,24 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_indicator_flowers",
+  "contents": [
+    "item:gregtech:flower_alpine_catchfly",
+    "item:gregtech:flower_altered_andesite_buckwheat",
+    "item:gregtech:flower_copper_plant",
+    "item:gregtech:flower_crosby_buckwheat",
+    "item:gregtech:flower_desert_trumpet",
+    "item:gregtech:flower_four_wing_saltbush",
+    "item:gregtech:flower_hexalily",
+    "item:gregtech:flower_narcissus_sheldonia",
+    "item:gregtech:flower_orechid",
+    "item:gregtech:flower_pandanus_candelabrum",
+    "item:gregtech:flower_prince_s_plume",
+    "item:gregtech:flower_sagebrush",
+    "item:gregtech:flower_thlaspi_lereschianum",
+    "item:gregtech:flower_thompsons_locoweed",
+    "item:gregtech:flower_tufted_evening_primrose",
+    "item:gregtech:flower_tungstus",
+    "item:gregtech:flower_viola_calaminaria"
+  ],
+  "priority": 110
+}

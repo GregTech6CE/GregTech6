@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "itemGroup.gregtech.fluids",
+  "name": "emi.group.gregtech.real_fluids",
   "regex": "^fluid:gregtech:[a-z0-9_./-]+$",
   "priority": 120
 }

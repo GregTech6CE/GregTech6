@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.glass_glow",
+  "name": "emi.group.gregtech.decor_glass_glow",
   "contents": [
     "item:gregtech:glass_glow"
   ],

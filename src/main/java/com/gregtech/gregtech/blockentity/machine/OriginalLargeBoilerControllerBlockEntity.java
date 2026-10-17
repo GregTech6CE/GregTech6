@@ -96,7 +96,7 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
             }
             var required=cell.role()==com.gregtech.gregtech.api.multiblock.StructureGrid.Role.HEAT_INPUT
                     ?GTMultiblocks.HEAT_TRANSMITTER.get():variant.wall();
-            if(!level.getBlockState(position).is(required)
+            if(!com.gregtech.gregtech.registry.LegacyContentBinding.samePart(level.getBlockState(position).getBlock(), required)
                     ||!(level.getBlockEntity(position) instanceof MultiblockPortBlockEntity port)||!port.canBind(worldPosition)) {
                 complete=false;continue;
             }
