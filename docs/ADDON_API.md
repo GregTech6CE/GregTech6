@@ -2,7 +2,28 @@
 
 [English](ADDON_API.md) | [中文](ADDON_API.zh-CN.md)
 
-API version **3** provides the version 2 entries plus recipe machines, on Forge 1.20.1 and NeoForge 1.21.1. Version 2 contributors keep working: no method was removed from `GregTechAddon` or `GregTechMaterialContributor`, and `onRecipesReady` is unchanged. Check `context.apiVersion() >= 2`. Do not require equality with 2. Register a `GregTechAddon` in your own mod constructor for recipes. GregTech calls `onRecipesReady` once from common setup, after its material/item linking and built-in machine recipes. Callbacks run in ascending addon mod ID order. Duplicate IDs, late registration and a second dispatch fail explicitly; callback failures stop initialization and leave the lifecycle `FAILED`.
+API version **3** is mod version **0.3.0** on Forge 1.20.1 and NeoForge 1.21.1. It provides the version 2 entries plus recipe machines. Version 2 contributors keep working: no method was removed from `GregTechAddon` or `GregTechMaterialContributor`, and `onRecipesReady` is unchanged. Register a `GregTechAddon` in your own mod constructor for recipes. GregTech calls `onRecipesReady` once from common setup, after its material/item linking and built-in machine recipes. Callbacks run in ascending addon mod ID order. Duplicate IDs, late registration and a second dispatch fail explicitly; callback failures stop initialization and leave the lifecycle `FAILED`.
+
+## Version
+
+Depend on mod id `gregtech6` with `versionRange="[0.3,)"` in `mods.toml` or `neoforge.mods.toml`. The loader rejects an older GregTech jar before addon classes load. `context.apiVersion()` returns the minor number for an optional branch, such as `context.apiVersion() >= 2`. It does not replace `versionRange`, and callers should not require equality with one version.
+
+`gradle.properties` `mod_version` is `0.MINOR.PATCH`. `GregTechAddons.API_VERSION` is that MINOR. A patch release does not change this API. Before 1.0 a minor release may break addon callers. Breaking a documented entry waits on the removal table below, or the same release names the break in the change table.
+
+Mark a doomed entry with `@Deprecated(since = "0.N", forRemoval = true)` and `@AddonApiRemoval(id = "<binary name>", removeAt = "0.M")` under one Javadoc. `id` is the package and type, plus `#member` for a method or field. The `@deprecated` note names the replacement with `{@link}` or `{@code}` and includes `0.M`. `M` is at least `N + 2`: an entry deprecated in `0.N` is still present in `0.(N+1)`. The build fails when `M` is less than or equal to the current minor. Delete the entry, or set a later `removeAt` and write the reason in this file. `@Deprecated` without `forRemoval = true` is not on this schedule.
+
+## API changes
+
+| Minor | Change |
+| --- | --- |
+| 3 | Recipe machines and large recipe machines. Mod version starts at 0.3.0. Version 2 registration, materials and `onRecipesReady` stay. |
+| 2 | Queued materials and extra forms. |
+| 1 | Addon registration and `onRecipesReady`. |
+
+## Deprecation and removal
+
+| Entry | Deprecated | Replacement | Remove at |
+| --- | --- | --- | --- |
 
 New materials and extra forms use a separate `ServiceLoader` entry, described below. Do not submit them from the mod constructor: on Forge 1.20.1 the addon constructor and the GregTech constructor can overlap.
 
@@ -16,6 +37,7 @@ GregTechAddons.register(new GregTechAddon() {
     public void onRecipesReady(Context context) {
         // context.platform(): "forge" or "neoforge"
         // context.minecraftVersion(): "1.20.1" or "1.21.1"
+        // context.apiVersion(): 3, optional feature branch only
         // Query existing GTMaterialRegistry / MaterialPrefix domain here.
         // Register additional rows into existing MachineRecipeMaps here.
     }
@@ -186,9 +208,9 @@ Version 3 does not add addon casings, custom block-entity subclasses, custom str
 
 ## Building an addon
 
-Run `./gradlew :core:addonApiJar` (Windows: `gradlew.bat :core:addonApiJar`). The shared compile-only SDK is `core/build/libs/gregtech6-addon-api-0.0.0.jar`. It contains the shared domain/API classes and notices, without Minecraft assets. Use `compileOnly files("libs/gregtech6-addon-api-0.0.0.jar")`; never shade or bundle these classes, since the installed GregTech mod supplies them. For the platform-specific recipe/stack/energy adapters, also use the corresponding GregTech mod sources/development dependency in a Forge or NeoForge workspace. A production reobfuscated mod JAR is not a universal development dependency. No Maven coordinate is published yet.
+Run `./gradlew :core:addonApiJar` (Windows: `gradlew.bat :core:addonApiJar`). The shared compile-only SDK is `core/build/libs/gregtech6-addon-api-0.3.0.jar`. It contains the shared domain/API classes and notices, without Minecraft assets. Use `compileOnly files("libs/gregtech6-addon-api-0.3.0.jar")`; never shade or bundle these classes, since the installed GregTech mod supplies them. For the platform-specific recipe/stack/energy adapters, also use the corresponding GregTech mod sources/development dependency in a Forge or NeoForge workspace. A production reobfuscated mod JAR is not a universal development dependency. No Maven coordinate is published yet.
 
-Declare a required loader dependency on **`gregtech6`** (the internal content namespace remains **`gregtech`**). Build your addon separately for each loader, using that loader's supported Java/Minecraft toolchain. The shared SDK does not make a Forge addon binary load on NeoForge.
+Declare a required loader dependency on **`gregtech6`** with `versionRange="[0.3,)"` (the internal content namespace remains **`gregtech`**). Build your addon separately for each loader, using that loader's supported Java/Minecraft toolchain. The shared SDK does not make a Forge addon binary load on NeoForge.
 
 ## Supported scope
 
@@ -200,6 +222,6 @@ Declare a required loader dependency on **`gregtech6`** (the internal content na
 - Datapack types `gregtech:machine` and `gregtech:machine_removal` on maps that already exist.
 - `GtSignalCarrier`, `GtSignalSource`, `GtSignalReceiver`, and the empty `gregtech:signal_wire_receivers` block tag.
 
-API version 3 does **not** promise new prefixes, fluids, addon casings, custom machine block entities, a fuel-energy machine template, datapack-created recipe maps without a contributor, edits to dynamic providers, datapack reloads of the material table, old-save migration, cross-loader Minecraft stacks or a complete old GregAPI replacement. Only the documented entries are the compatibility surface; internal classes may change during the 0.0.0 integration. Use [the voltage guide](VOLTAGE_TIERS.md) rather than GT5/GTCE tier labels.
+API version 3 does **not** promise new prefixes, fluids, addon casings, custom machine block entities, a fuel-energy machine template, datapack-created recipe maps without a contributor, edits to dynamic providers, datapack reloads of the material table, old-save migration, cross-loader Minecraft stacks or a complete old GregAPI replacement. Only the documented entries are the compatibility surface; internal classes may change before 1.0. Use [the voltage guide](VOLTAGE_TIERS.md) rather than GT5/GTCE tier labels.
 
 The SDK/project code license is LGPL-3.0-or-later. Preserve applicable source/asset notices; consult `LICENSE`, `COPYING` and `NOTICE` for the actual declarations.

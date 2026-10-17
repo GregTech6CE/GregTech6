@@ -135,3 +135,29 @@ def machineRecipeOverlayContracts = tasks.register('machineRecipeOverlayContract
     }
 }
 tasks.named('check').configure { dependsOn machineRecipeOverlayContracts }
+
+def addonApiVersionContracts = tasks.register('addonApiVersionContracts', JavaExec) {
+    description = 'Checks mod_version minor against API_VERSION and that forRemoval entries are not due.'
+    group = 'verification'
+    dependsOn tasks.named('testClasses')
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'com.gregtech.gregtech.core.AddonApiVersionContracts'
+    workingDir = rootProject.projectDir
+    args 'gradle.properties', 'core/src/main/java', 'docs/ADDON_API.md', 'docs/ADDON_API.zh-CN.md'
+    inputs.file(rootProject.file('gradle.properties')).withPropertyName('modVersionProperties')
+    inputs.dir(rootProject.file('core/src/main/java'))
+            .withPropertyName('addonApiSources')
+            .withPathSensitivity(org.gradle.api.tasks.PathSensitivity.RELATIVE)
+    inputs.files(rootProject.file('docs/ADDON_API.md'), rootProject.file('docs/ADDON_API.zh-CN.md'))
+            .withPropertyName('addonApiDocs')
+            .withPathSensitivity(org.gradle.api.tasks.PathSensitivity.RELATIVE)
+    javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
+    def marker = layout.buildDirectory.file('reports/contracts/addonApiVersionContracts.passed')
+    outputs.file(marker)
+    doFirst { marker.get().asFile.delete() }
+    doLast {
+        marker.get().asFile.parentFile.mkdirs()
+        marker.get().asFile.setText("AddonApiVersionContracts: passed\n", 'UTF-8')
+    }
+}
+tasks.named('check').configure { dependsOn addonApiVersionContracts }
