@@ -1,0 +1,15 @@
+// This node produces sources, not an independent mod or another copy of core.
+// Native compilation and packaging remain in the existing Forge/NeoForge projects.
+configurations {
+    versionedSources {
+        canBeConsumed = true
+        canBeResolved = false
+    }
+}
+
+artifacts.add('versionedSources', layout.buildDirectory.dir('generated/stonecutter/main/java')) {
+    builtBy tasks.named('stonecutterGenerate')
+}
+
+tasks.withType(JavaCompile).configureEach { enabled = false }
+tasks.withType(Jar).configureEach { enabled = false }
