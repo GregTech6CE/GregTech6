@@ -17,9 +17,17 @@ final class EmiCatalogRepair {
         for (var stack : original) {
             if (!stack.getId().getNamespace().equals("gregtech")) continue;
             var item = stack.getItemStack();
-            var fluid = com.gregtech.gregtech.api.fluid.FluidDisplayBinding.resolveCurrent(item);
+//? if >=1.21.1 {
+/*            var fluid = com.gregtech.gregtech.api.fluid.FluidDisplayBinding.resolveCurrent(item);
+*///?} else {
+            var fluid = com.gregtech.gregtech.api.fluid.FluidDisplayBinding.resolve(item);
+//?}
             sorted.add(fluid.isEmpty() ? stack : new FluidDisplayEmiStack(
-                    EmiStack.of(fluid.getFluid(), fluid.getComponentsPatch(), fluid.getAmount()), stack, true));
+//? if >=1.21.1 {
+/*                    EmiStack.of(fluid.getFluid(), fluid.getComponentsPatch(), fluid.getAmount()), stack, true));
+*///?} else {
+                    EmiStack.of(fluid.getFluid(), fluid.getTag(), fluid.getAmount()), stack, true));
+//?}
         }
         var order = new java.util.IdentityHashMap<EmiStack,String>();
         for (var stack : sorted) order.put(stack, order(stack));

@@ -1,5 +1,9 @@
 # 整合状态
 
+## 2026-10-18 / Stonecutter EMI 分支试点完成
+
+独立分支 `experiment/stonecutter-emi` 已接入真实源码：12 对 EMI 类合并为 12 份条件源码，4 个类保留平台 API 分支，原生编译自动依赖生成目录。双版 24 个生成结果与迁移前代码／字符串签名一致；源策略 2629 Java 通过；双版编译和打包 8m48s 通过，成品检查各包含 12 个 EMI 类、13 份普通变速箱修复和 24 件服装分类，ZIP CRC 通过。统一入口 `compileBothPlatforms` / `assembleBothPlatforms`，CI 纳入签名校验。未启动游戏、未跑全套测试、未合回 main 或推送；其它平台模块尚未迁入 Stonecutter。见[试验说明](verification/stonecutter-emi-20261018.md)、[构建回执](verification/stonecutter-emi-build-20261018.json)。
+
 ## 2026-10-18 / 普通变速箱根因与服装分类
 
 新截图确认问题为 `rotation_transformer` 普通变速箱，先前核验对象为 `gearbox` 可调变速箱。修正双版 26 份物品 JSON 错用 `model` 而非 `parent` 导致的空模型，并修正生成器，删除此前无关的 REMI 绘制回退。六套服装 24 件归入统一分类，总计 451 组。52 物品模型父链定向检查和分组静态检查通过；本批未启动或构建。随后继续独立 Stonecutter 分支试验。见[根因、边界与目标](verification/transformer-gearbox-clothing-20261018.md)。

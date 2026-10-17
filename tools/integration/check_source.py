@@ -12,7 +12,7 @@ from localization import ROOT, LANG_PATH, read_json, json_text, synchronize, for
 from extract_basic_machine_recipes import match_paren, split_top_level
 
 SOURCE_ROOTS = ('core/src/main', 'src/main', 'src/generated',
-                'neoforge/src/main', 'neoforge/src/generated')
+                'neoforge/src/main', 'neoforge/src/generated', 'multiversion/src/main')
 CJK = re.compile(r'[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\U00020000-\U000323af]')
 # Text blocks precede ordinary strings. Comments/characters must also be consumed
 # whole so quotes inside them cannot manufacture apparent imports or translations.

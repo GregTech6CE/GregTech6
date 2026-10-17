@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-18 / Stonecutter 生成、双版编译与打包
+
+实际生成两版各 12 个 EMI 类，代码及字符串签名与 `1e3a60d0a` 基线一致。源策略 2629 Java 通过；`compileBothPlatforms assembleBothPlatforms` 8m48s 成功。各成品确认 12 个 EMI 类、13 个普通变速箱 parent 修正、服装分类 24 成员；无 Stonecutter 构建插件类和旧分类回退 mixin，ZIP CRC 通过。生成任务不再是 NO-SOURCE，原生编译通过目录 artifact 自动依赖生成。未启动客户端／服务端或跑完整测试，GUI 视觉、生存、旧存档继续待验。见[记录](verification/stonecutter-emi-20261018.md)、[构建回执](verification/stonecutter-emi-build-20261018.json)。
+
 ## 2026-10-18 / 普通与可调变速箱区分
 
 52 个双版变速箱物品根模型／父链定向回归检查通过，普通变速箱的 26 份原 JSON 缺少有效继承是本次根因。451 分组及双语检查通过。删除针对另一家族的绘制回退；更新运行探针，同时检查两个家族与 24 件服装，不运行客户端或全套测试。详见[修复记录](verification/transformer-gearbox-clothing-20261018.md)。

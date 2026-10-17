@@ -74,7 +74,7 @@ jobs:
             -Dorg.gradle.java.home="$JAVA17_HOME" \
             -Dorg.gradle.java.installations.fromEnv=JAVA17_HOME,JAVA21_HOME \
             -Dorg.gradle.java.installations.auto-download=false \
-            :core:check :core:addonApiJar "$PLATFORM_TASK" 2>&1 | tee work/ci-build.log
+            :verifyStonecutterEmiSources :core:check :core:addonApiJar "$PLATFORM_TASK" 2>&1 | tee work/ci-build.log
       - name: Verify current platform packaging and preserve its checksum
         env:
           LIBS_DIR: ${{ matrix.libs }}

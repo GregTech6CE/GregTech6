@@ -3,6 +3,8 @@ plugins {
     id 'net.neoforged.moddev' version '2.0.142'
 }
 
+apply from: rootProject.file('gradle/stonecutter-emi.gradle')
+
 group = rootProject.property('mod_group_id')
 version = rootProject.property('mod_version')
 

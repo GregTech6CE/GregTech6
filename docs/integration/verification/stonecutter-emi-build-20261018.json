@@ -1,0 +1,36 @@
+{
+  "status": "passed",
+  "branch": "experiment/stonecutter-emi",
+  "native_baseline": "1e3a60d0a",
+  "build": "compileBothPlatforms assembleBothPlatforms",
+  "duration": "8m 48s",
+  "source_signature_checks": 24,
+  "runtime_started": false,
+  "full_tests_run": false,
+  "build_log_sha256": "3456e0bb160ba557f89be0b596c444a3dc20604469339f393112343159730b11",
+  "migration_manifest_sha256": "254e30fc645999dac19d9e4850f9ce38a589881618116d0aab5e2356862d6dd6",
+  "artifacts": {
+    "forge": {
+      "path": "C:\\Dev\\GregTech6\\build\\deliveries\\20261018-stonecutter-072932\\gregtech6-1.20.1-forge-0.0.0.jar",
+      "bytes": 40675478,
+      "sha256": "b11b419651b0567b48315a467c5df6492ef1c66a230a3e35b17b7e1a802a0ffc",
+      "zip_crc": true,
+      "emi_classes_present": 12,
+      "transformer_item_roots": 13,
+      "clothing_group_members": 24,
+      "build_plugin_classes_absent": true,
+      "obsolete_folder_mixin_absent": true
+    },
+    "neoforge": {
+      "path": "C:\\Dev\\GregTech6\\build\\deliveries\\20261018-stonecutter-072932\\gregtech6-neoforge-1.21.1-0.0.0.jar",
+      "bytes": 40528991,
+      "sha256": "813000284f37e22cfd466331ac4b24d140920d4973f4e7e4e2a56a91993a11b2",
+      "zip_crc": true,
+      "emi_classes_present": 12,
+      "transformer_item_roots": 13,
+      "clothing_group_members": 24,
+      "build_plugin_classes_absent": true,
+      "obsolete_folder_mixin_absent": true
+    }
+  }
+}
