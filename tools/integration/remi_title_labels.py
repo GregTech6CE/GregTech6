@@ -5,6 +5,7 @@ material and grade. Composite categories explicitly requested by the user have
 their own labels rather than claiming to be an original GT item translation.
 """
 LABELS = {
+    "clothing": ("Clothing", "服装"),
     "bars": ("Bars", "栏杆"), "cap_nozzle": ("Capped Nozzles", "有盖喷嘴"),
     "nozzle": ("Nozzles", "喷嘴"), "fluid_funnel": ("Fluid Funnels", "流体漏斗"),
     "tap": ("Taps", "龙头"),

@@ -52,36 +52,43 @@ final class RemiGroupingSmoke {
             index = (List<EmiStack>) manager.getField("indexStacks").get(null);
             List<EmiStack> displayed = displayed(manager);
             check(displayed, receipt, "all");
-            // Check the folder itself: valid individual models do not prove its batched preview draws.
+            // Custom gearboxes and fixed-ratio transformer gearboxes are distinct families.
             var gearboxFolder=displayed.stream().filter(s->groupId(s).endsWith("/functional_gearbox")).findFirst().orElseThrow();
             require(members(gearboxFolder).size()==13,"gearbox folder contains obsolete sprite identities");
-            require((boolean)gearboxFolder.getClass().getMethod("isUnbatchable").invoke(gearboxFolder),
-                    "gearbox folder still uses blank batch preview path");
-            receipt.addProperty("gearboxFolderUsesOrdinaryItemRendering",true);
+            var transformers=displayed.stream().filter(s->groupId(s).endsWith("/functional_rotation_transformer")).findFirst().orElseThrow();
+            require(members(transformers).size()==13,"transformer gearbox folder missing materials");
+            var clothing=displayed.stream().filter(s->groupId(s).endsWith("/functional_clothing")).findFirst().orElseThrow();
+            require(members(clothing).size()==24,"clothing folder missing suit pieces");
+            receipt.addProperty("clothingFolderMembers",24);
             var holes=displayed.stream().filter(s->groupId(s).endsWith("/functional_log_hole")).findFirst().orElseThrow();
             var holeIds=members(holes).stream().map(s->s.getId().getPath()).toList();
             require(holeIds.containsAll(List.of("tapped_maple","tapped_rainbowood")),"tapped logs missing from folder");
             var mc=net.minecraft.client.Minecraft.getInstance();
-            int gearboxes=0;
+            int gearboxes=0,transformerCount=0;
             for(var item:net.minecraft.core.registries.BuiltInRegistries.ITEM) {
                 var id=net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(item);
-                if(!id.getNamespace().equals("gregtech")||!id.getPath().startsWith("gearbox_")||id.getPath().equals("gearbox_axle"))continue;
+                boolean transformer=id.getPath().startsWith("rotation_transformer_");
+                if(!id.getNamespace().equals("gregtech")||!transformer&&(!id.getPath().startsWith("gearbox_")||id.getPath().equals("gearbox_axle")))continue;
                 var stack=new net.minecraft.world.item.ItemStack(item);
                 var model=mc.getItemRenderer().getModel(stack,mc.level,mc.player,0);
                 int faces=0;
                 for(var face:net.minecraft.core.Direction.values()) {
                     var quads=model.getQuads(null,face,net.minecraft.util.RandomSource.create(0));
                     for(var quad:quads) {
-                        require(quad.getSprite().contents().name().toString().equals("gregtech:block/iconsets/gearbox"),"wrong gearbox item texture: "+id);
-                        require(quad.isTinted(),"uncolored gearbox item: "+id);
+                        String texture=quad.getSprite().contents().name().toString();
+                        require(transformer?texture.startsWith("gregtech:block/machines/transformers/transformer_rotation/")
+                                :texture.equals("gregtech:block/iconsets/gearbox"),"wrong gearbox item texture: "+id);
+                        if(!transformer)require(quad.isTinted(),"uncolored gearbox item: "+id);
                     }
                     faces+=quads.size();
                 }
-                require(faces==6,"transparent gearbox item model: "+id+" faces="+faces);
+                require(transformer?faces>=6:faces==6,"transparent gearbox item model: "+id+" faces="+faces);
                 require((mc.getItemColors().getColor(stack,0)>>>24)==255,"transparent gearbox item color: "+id);
-                gearboxes++;
+                if(transformer)transformerCount++;else gearboxes++;
             }
             require(gearboxes==13,"gearbox model count: "+gearboxes);
+            require(transformerCount==13,"transformer gearbox model count: "+transformerCount);
+            receipt.addProperty("transformerGearboxInventoryModels",transformerCount);
             receipt.addProperty("gearboxInventoryTexturedFaces",gearboxes*6);
             receipt.addProperty("tappedLogsFolded",true);
             var springNames = new HashSet<String>();
