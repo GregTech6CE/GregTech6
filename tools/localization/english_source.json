@@ -53160,6 +53160,198 @@
     "block.gregtech.locker_infinity": {
       "source_key": "gt.multitileentity.7350",
       "value": "Locker (Infinity)"
+    },
+    "item.gregtech.insect_suit_helmet": {
+      "source_key": "gt.armor.hazmat.insect.head",
+      "value": "Bumblehead"
+    },
+    "gt.armor.hazmat.insect.head.tooltip_main": {
+      "source_key": "gt.armor.hazmat.insect.head.tooltip_main",
+      "value": "Full Set protects against any Insects"
+    },
+    "item.gregtech.insect_suit_chestplate": {
+      "source_key": "gt.armor.hazmat.insect.chest",
+      "value": "Bumbleshirt"
+    },
+    "gt.armor.hazmat.insect.chest.tooltip_main": {
+      "source_key": "gt.armor.hazmat.insect.chest.tooltip_main",
+      "value": "Full Set protects against any Insects"
+    },
+    "item.gregtech.insect_suit_leggings": {
+      "source_key": "gt.armor.hazmat.insect.legs",
+      "value": "Bumblepants"
+    },
+    "gt.armor.hazmat.insect.legs.tooltip_main": {
+      "source_key": "gt.armor.hazmat.insect.legs.tooltip_main",
+      "value": "Full Set protects against any Insects"
+    },
+    "item.gregtech.insect_suit_boots": {
+      "source_key": "gt.armor.hazmat.insect.boots",
+      "value": "Bumbleboots"
+    },
+    "gt.armor.hazmat.insect.boots.tooltip_main": {
+      "source_key": "gt.armor.hazmat.insect.boots.tooltip_main",
+      "value": "Full Set protects against any Insects"
+    },
+    "item.gregtech.frost_suit_helmet": {
+      "source_key": "gt.armor.hazmat.frost.head",
+      "value": "Frost Protection Suit Mask"
+    },
+    "gt.armor.hazmat.frost.head.tooltip_main": {
+      "source_key": "gt.armor.hazmat.frost.head.tooltip_main",
+      "value": "Full Set protects against Cold"
+    },
+    "item.gregtech.frost_suit_chestplate": {
+      "source_key": "gt.armor.hazmat.frost.chest",
+      "value": "Frost Protection Suit Shirt"
+    },
+    "gt.armor.hazmat.frost.chest.tooltip_main": {
+      "source_key": "gt.armor.hazmat.frost.chest.tooltip_main",
+      "value": "Full Set protects against Cold"
+    },
+    "item.gregtech.frost_suit_leggings": {
+      "source_key": "gt.armor.hazmat.frost.legs",
+      "value": "Frost Protection Suit Pants"
+    },
+    "gt.armor.hazmat.frost.legs.tooltip_main": {
+      "source_key": "gt.armor.hazmat.frost.legs.tooltip_main",
+      "value": "Full Set protects against Cold"
+    },
+    "item.gregtech.frost_suit_boots": {
+      "source_key": "gt.armor.hazmat.frost.boots",
+      "value": "Frost Protection Suit Boots"
+    },
+    "gt.armor.hazmat.frost.boots.tooltip_main": {
+      "source_key": "gt.armor.hazmat.frost.boots.tooltip_main",
+      "value": "Full Set protects against Cold"
+    },
+    "item.gregtech.heat_suit_helmet": {
+      "source_key": "gt.armor.hazmat.heat.head",
+      "value": "Heat Protection Suit Mask"
+    },
+    "gt.armor.hazmat.heat.head.tooltip_main": {
+      "source_key": "gt.armor.hazmat.heat.head.tooltip_main",
+      "value": "Full Set protects against Heat"
+    },
+    "item.gregtech.heat_suit_chestplate": {
+      "source_key": "gt.armor.hazmat.heat.chest",
+      "value": "Heat Protection Suit Shirt"
+    },
+    "gt.armor.hazmat.heat.chest.tooltip_main": {
+      "source_key": "gt.armor.hazmat.heat.chest.tooltip_main",
+      "value": "Full Set protects against Heat"
+    },
+    "item.gregtech.heat_suit_leggings": {
+      "source_key": "gt.armor.hazmat.heat.legs",
+      "value": "Heat Protection Suit Pants"
+    },
+    "gt.armor.hazmat.heat.legs.tooltip_main": {
+      "source_key": "gt.armor.hazmat.heat.legs.tooltip_main",
+      "value": "Full Set protects against Heat"
+    },
+    "item.gregtech.heat_suit_boots": {
+      "source_key": "gt.armor.hazmat.heat.boots",
+      "value": "Heat Protection Suit Boots"
+    },
+    "gt.armor.hazmat.heat.boots.tooltip_main": {
+      "source_key": "gt.armor.hazmat.heat.boots.tooltip_main",
+      "value": "Full Set protects against Heat"
+    },
+    "item.gregtech.radiation_suit_helmet": {
+      "source_key": "gt.armor.hazmat.radiation.head",
+      "value": "Radiation Hazard Suit Mask"
+    },
+    "gt.armor.hazmat.radiation.head.tooltip_main": {
+      "source_key": "gt.armor.hazmat.radiation.head.tooltip_main",
+      "value": "Full Set protects against Radiation"
+    },
+    "item.gregtech.radiation_suit_chestplate": {
+      "source_key": "gt.armor.hazmat.radiation.chest",
+      "value": "Radiation Hazard Suit Shirt"
+    },
+    "gt.armor.hazmat.radiation.chest.tooltip_main": {
+      "source_key": "gt.armor.hazmat.radiation.chest.tooltip_main",
+      "value": "Full Set protects against Radiation"
+    },
+    "item.gregtech.radiation_suit_leggings": {
+      "source_key": "gt.armor.hazmat.radiation.legs",
+      "value": "Radiation Hazard Suit Pants"
+    },
+    "gt.armor.hazmat.radiation.legs.tooltip_main": {
+      "source_key": "gt.armor.hazmat.radiation.legs.tooltip_main",
+      "value": "Full Set protects against Radiation"
+    },
+    "item.gregtech.radiation_suit_boots": {
+      "source_key": "gt.armor.hazmat.radiation.boots",
+      "value": "Radiation Hazard Suit Boots"
+    },
+    "gt.armor.hazmat.radiation.boots.tooltip_main": {
+      "source_key": "gt.armor.hazmat.radiation.boots.tooltip_main",
+      "value": "Full Set protects against Radiation"
+    },
+    "item.gregtech.biochemgas_suit_helmet": {
+      "source_key": "gt.armor.hazmat.biochemgas.head",
+      "value": "Biochemical Gas Hazard Suit Mask"
+    },
+    "gt.armor.hazmat.biochemgas.head.tooltip_main": {
+      "source_key": "gt.armor.hazmat.biochemgas.head.tooltip_main",
+      "value": "Full Set protects against Chemicals and Gases"
+    },
+    "item.gregtech.biochemgas_suit_chestplate": {
+      "source_key": "gt.armor.hazmat.biochemgas.chest",
+      "value": "Biochemical Gas Hazard Suit Shirt"
+    },
+    "gt.armor.hazmat.biochemgas.chest.tooltip_main": {
+      "source_key": "gt.armor.hazmat.biochemgas.chest.tooltip_main",
+      "value": "Full Set protects against Chemicals and Gases"
+    },
+    "item.gregtech.biochemgas_suit_leggings": {
+      "source_key": "gt.armor.hazmat.biochemgas.legs",
+      "value": "Biochemical Gas Hazard Suit Pants"
+    },
+    "gt.armor.hazmat.biochemgas.legs.tooltip_main": {
+      "source_key": "gt.armor.hazmat.biochemgas.legs.tooltip_main",
+      "value": "Full Set protects against Chemicals and Gases"
+    },
+    "item.gregtech.biochemgas_suit_boots": {
+      "source_key": "gt.armor.hazmat.biochemgas.boots",
+      "value": "Biochemical Gas Hazard Suit Boots"
+    },
+    "gt.armor.hazmat.biochemgas.boots.tooltip_main": {
+      "source_key": "gt.armor.hazmat.biochemgas.boots.tooltip_main",
+      "value": "Full Set protects against Chemicals and Gases"
+    },
+    "item.gregtech.universal_suit_helmet": {
+      "source_key": "gt.armor.hazmat.universal.head",
+      "value": "Universal Hazard Suit Mask"
+    },
+    "gt.armor.hazmat.universal.head.tooltip_main": {
+      "source_key": "gt.armor.hazmat.universal.head.tooltip_main",
+      "value": "Full Set protects against Hazards"
+    },
+    "item.gregtech.universal_suit_chestplate": {
+      "source_key": "gt.armor.hazmat.universal.chest",
+      "value": "Universal Hazard Suit Shirt"
+    },
+    "gt.armor.hazmat.universal.chest.tooltip_main": {
+      "source_key": "gt.armor.hazmat.universal.chest.tooltip_main",
+      "value": "Full Set protects against Hazards"
+    },
+    "item.gregtech.universal_suit_leggings": {
+      "source_key": "gt.armor.hazmat.universal.legs",
+      "value": "Universal Hazard Suit Pants"
+    },
+    "gt.armor.hazmat.universal.legs.tooltip_main": {
+      "source_key": "gt.armor.hazmat.universal.legs.tooltip_main",
+      "value": "Full Set protects against Hazards"
+    },
+    "item.gregtech.universal_suit_boots": {
+      "source_key": "gt.armor.hazmat.universal.boots",
+      "value": "Universal Hazard Suit Boots"
+    },
+    "gt.armor.hazmat.universal.boots.tooltip_main": {
+      "source_key": "gt.armor.hazmat.universal.boots.tooltip_main",
+      "value": "Full Set protects against Hazards"
     }
   }
 }

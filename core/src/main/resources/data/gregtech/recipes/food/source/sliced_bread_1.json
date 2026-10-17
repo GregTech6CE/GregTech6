@@ -1,0 +1,20 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "kX"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:bread"
+    },
+    "k": {
+      "tag": "forge:tools/knife"
+    }
+  },
+  "result": {
+    "item": "gregtech:sliced_bread",
+    "count": 2
+  },
+  "allow_mirror": false,
+  "gregtech_autocraftable": false
+}

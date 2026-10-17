@@ -31,11 +31,14 @@ public final class ComponentCoverEvents {
     public static void use(PlayerInteractEvent.RightClickBlock event) {
         if(!(event.getLevel().getBlockEntity(event.getPos()) instanceof PanelCoverHost host))return;
         if(ComponentCoverFallback.fallbackClass(host.coverOwner())&&!ComponentCoverFallback.eligible(host.coverOwner()))return;
+        var hit=event.getHitVec();
+        if(CoverItems.isCover(event.getEntity().getItemInHand(event.getHand())))
+            hit=hit.withDirection(com.gregtech.gregtech.api.tool.ToolInteractions.selectedFace(hit));
         var result=host instanceof com.gregtech.gregtech.content.logistics.LogisticsCoverHost logistics
-                ?com.gregtech.gregtech.content.logistics.LogisticsCoverInteraction.use(logistics,event.getLevel(),event.getEntity(),event.getHand(),event.getHitVec().getDirection()):InteractionResult.PASS;
-        if(result==InteractionResult.PASS)result=ComponentCoverInteraction.use(host,event.getEntity(),event.getHand(),event.getHitVec());
-        if(result==InteractionResult.PASS)result=UtilityCoverInteraction.use(host,event.getEntity(),event.getHand(),event.getHitVec());
-        if(result==InteractionResult.PASS)result=PanelCoverInteraction.use(host,event.getEntity(),event.getHand(),event.getHitVec(),true);
+                ?com.gregtech.gregtech.content.logistics.LogisticsCoverInteraction.use(logistics,event.getLevel(),event.getEntity(),event.getHand(),hit.getDirection()):InteractionResult.PASS;
+        if(result==InteractionResult.PASS)result=ComponentCoverInteraction.use(host,event.getEntity(),event.getHand(),hit);
+        if(result==InteractionResult.PASS)result=UtilityCoverInteraction.use(host,event.getEntity(),event.getHand(),hit);
+        if(result==InteractionResult.PASS)result=PanelCoverInteraction.use(host,event.getEntity(),event.getHand(),hit,true);
         if(result!=InteractionResult.PASS){event.setCanceled(true);event.setCancellationResult(result);}
     }
 }

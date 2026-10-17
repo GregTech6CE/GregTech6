@@ -1,0 +1,13 @@
+{
+  "type": "gregtech:tool_shapeless",
+  "ingredients": [
+    {
+      "tag": "gregtech:food/fooddough"
+    }
+  ],
+  "result": {
+    "item": "gregtech:dough_bun",
+    "count": 1
+  },
+  "gregtech_autocraftable": true
+}

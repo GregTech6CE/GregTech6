@@ -1,4 +1,13 @@
 {
   "replace": false,
-  "values": []
+  "values": [
+    "gregtech:biochemgas_suit_helmet",
+    "gregtech:biochemgas_suit_chestplate",
+    "gregtech:biochemgas_suit_leggings",
+    "gregtech:biochemgas_suit_boots",
+    "gregtech:universal_suit_helmet",
+    "gregtech:universal_suit_chestplate",
+    "gregtech:universal_suit_leggings",
+    "gregtech:universal_suit_boots"
+  ]
 }

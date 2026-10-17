@@ -69,7 +69,7 @@ public class Loader_Creative implements IGTLoader {
         }
 
         if (GTCreativeTabs.TOOLS_TAB != null && event.getTabKey().equals(GTCreativeTabs.TOOLS_TAB.getKey())) {
-            for (var suit : com.gregtech.gregtech.registry.GTRadiationProtection.SUIT.values()) event.accept(suit.get());
+            for (var suit : com.gregtech.gregtech.registry.GTRadiationProtection.ALL.values()) event.accept(suit.get());
             for (var entry : com.gregtech.gregtech.registry.GTToolBlocks.manual()) {
                 if (entry.isPresent()) event.accept(new net.minecraft.world.item.ItemStack(entry.get()));
             }

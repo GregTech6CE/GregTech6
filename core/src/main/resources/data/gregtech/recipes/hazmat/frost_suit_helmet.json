@@ -1,0 +1,27 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "MMM",
+    "MGM",
+    "q l"
+  ],
+  "key": {
+    "M": {
+      "tag": "gregtech:plate/asbestos"
+    },
+    "G": {
+      "item": "minecraft:black_stained_glass_pane"
+    },
+    "l": {
+      "tag": "forge:tools/file"
+    },
+    "q": {
+      "tag": "forge:tools/scissors"
+    }
+  },
+  "result": {
+    "item": "gregtech:frost_suit_helmet"
+  },
+  "allow_mirror": false,
+  "gregtech_autocraftable": false
+}

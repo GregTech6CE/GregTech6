@@ -1,0 +1,30 @@
+{
+  "author": "Gregorius Techneticies / GregTech-6 Team",
+  "license": "LGPL-3.0-or-later",
+  "sources": [
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\recipes\\maps\\RecipeMapFluidCanner.java",
+      "sha256": "cb2f6a82e98b4c18186ad870c152c70fe167e2dc3d7678b77fcaf15849e7fc89"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\c\\Loader_Recipes_Food.java",
+      "sha256": "dc9162de4c889164383b30d4a665fabba052ad67dd7840a0241bf740665e6b82"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\c\\Loader_Recipes_Woods.java",
+      "sha256": "c91d081abaad62fdda8774873473516d269c7b6da9e8c0cb0fdb1270bd51aa68"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityBedrockDrill.java",
+      "sha256": "fd111e1e53ff208b425ad166419b1a381c8ef5b0e2d26d586bd1da8ac07abd08"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\ItemArmorBase.java",
+      "sha256": "947898c5516d022533ec0437c8cfa22d897b6179aa55b772e9259152f2d3a82d"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\load\\LoaderOreDictReRegistrations.java",
+      "sha256": "d34719309a5ddf5bd7fc01c0462b57af52b4cf980a69fae4d4042c2ab78b07ef"
+    }
+  ]
+}

@@ -1,0 +1,359 @@
+{
+  "author": "GregTech-6 Team / Gregorius Techneticies",
+  "license": "LGPL-3.0-or-later",
+  "source_sha256": {
+    "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemFood.java": "bc66d27a6428a3d62e3000b6bae4c8b0f1a775dad00d139bff507b201acd6598",
+    "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemBottles.java": "13431979eaef01d2a8b3b77d7affc821c22559e8835ed799b6fd3787b7d171d4"
+  },
+  "rows": [
+    {
+      "file": "food/source/lemon_slice_1.json",
+      "source_call": "(IL.Food_Lemon_Sliced.get(4), CR.DEF_NCC, \"kX\", 'X', \"cropLemon\")"
+    },
+    {
+      "file": "food/source/tomato_slice_1.json",
+      "source_call": "(IL.Food_Tomato_Sliced.get(4), CR.DEF_NCC, \"kX\", 'X', \"cropTomato\")"
+    },
+    {
+      "file": "food/source/onion_slice_1.json",
+      "source_call": "(IL.Food_Onion_Sliced.get(4), CR.DEF_NCC, \"kX\", 'X', \"cropOnion\")"
+    },
+    {
+      "file": "food/source/cucumber_slice_1.json",
+      "source_call": "(IL.Food_Cucumber_Sliced.get(4), CR.DEF_NCC, \"kX\", 'X', \"cropCucumber\")"
+    },
+    {
+      "file": "food/source/pickle_slice_1.json",
+      "source_call": "(IL.Food_Pickle_Sliced.get(4), CR.DEF_NCC, \"kX\", 'X', \"cropPickle\")"
+    },
+    {
+      "file": "food/source/pickle_slice_2.json",
+      "source_call": "(IL.Food_Pickle_Sliced.get(4), CR.DEF_NCC, \"kX\", 'X', \"foodPickles\")"
+    },
+    {
+      "file": "food/source/carrot_slice_1.json",
+      "source_call": "(IL.Food_Carrot_Sliced.get(4), CR.DEF_NCC, \"kX\", 'X', \"cropCarrot\")"
+    },
+    {
+      "file": "food/source/potato_on_a_stick_1.json",
+      "source_call": "(IL.Food_Potato_On_Stick.get(1), CR.DEF, new Object[] {OP.stick.dat(ANY.Wood), \"cropPotato\"})"
+    },
+    {
+      "file": "food/source/roasted_potato_on_a_stick_1.json",
+      "source_call": "(IL.Food_Potato_On_Stick_Roasted.get(1), CR.DEF, new Object[] {OP.stick.dat(ANY.Wood), IL.Food_Potato_Baked})"
+    },
+    {
+      "file": "food/source/potato_strips_1.json",
+      "source_call": "(IL.Food_Fries_Raw.get(1), CR.DEF_NCC, \"k\", \"X\", 'X', \"cropPotato\")"
+    },
+    {
+      "file": "food/source/fries_2_1.json",
+      "source_call": "(IL.Food_Fries_Packaged.get(1), CR.DEF_NCC, new Object[] {OP.plateDouble.dat(MT.Paper), IL.Food_Fries})"
+    },
+    {
+      "file": "food/source/potato_chips_raw_1.json",
+      "source_call": "(IL.Food_PotatoChips_Raw.get(1), CR.DEF_NCC, \"kX\", 'X', \"cropPotato\")"
+    },
+    {
+      "file": "food/source/bag_of_potato_chips_1.json",
+      "source_call": "(IL.Food_PotatoChips_Packaged.get(1), CR.DEF_NCC, new Object[] {OP.foil.dat(MT.Al), IL.Food_PotatoChips})"
+    },
+    {
+      "file": "food/source/bag_of_chili_chips_1.json",
+      "source_call": "(IL.Food_ChiliChips_Packaged.get(1), CR.DEF_NCC, new Object[] {OP.foil.dat(MT.Al), IL.Food_ChiliChips})"
+    },
+    {
+      "file": "food/source/banana_slice_1.json",
+      "source_call": "(IL.Food_Banana_Sliced.get(4), CR.DEF_NCC, \"kX\", 'X', \"cropBanana\")"
+    },
+    {
+      "file": "food/source/apple_slice_1.json",
+      "source_call": "(IL.Food_Apple_Green_Sliced    .get(4), CR.DEF_NCC, \"kX\", 'X', \"cropAppleGreen\")"
+    },
+    {
+      "file": "food/source/apple_slice_2_1.json",
+      "source_call": "(IL.Food_Apple_Yellow_Sliced   .get(4), CR.DEF_NCC, \"kX\", 'X', \"cropAppleYellow\")"
+    },
+    {
+      "file": "food/source/apple_slice_3_1.json",
+      "source_call": "(IL.Food_Apple_Red_Sliced      .get(4), CR.DEF_NCC, \"kX\", 'X', \"cropAppleRed\")"
+    },
+    {
+      "file": "food/source/apple_slice_4_1.json",
+      "source_call": "(IL.Food_Apple_DarkRed_Sliced  .get(4), CR.DEF_NCC, \"kX\", 'X', \"cropAppleDarkRed\")"
+    },
+    {
+      "file": "food/source/ananas_slice_1.json",
+      "source_call": "(IL.Food_Ananas_Sliced.get(4), CR.DEF_NCC, \"kX\", 'X', \"cropAnanas\")"
+    },
+    {
+      "file": "food/source/cheese_slice_1.json",
+      "source_call": "(IL.Food_Cheese_Sliced.get(4), CR.DEF_NCC, \"kX\", 'X', \"foodCheese\")"
+    },
+    {
+      "file": "food/source/sliced_egg_1.json",
+      "source_call": "(IL.Food_Egg_Sliced.get(4), CR.DEF_NCC, \"kX\", 'X', \"foodBoiledegg\")"
+    },
+    {
+      "file": "food/source/raw_ham_slice_1.json",
+      "source_call": "(IL.Food_Ham_Slice_Raw.get(4), CR.DEF_NCC, \"kX\", 'X', \"foodHamraw\")"
+    },
+    {
+      "file": "food/source/cooked_ham_slice_1.json",
+      "source_call": "(IL.Food_Ham_Slice_Cooked.get(4), CR.DEF_NCC, \"kX\", 'X', \"foodHamcooked\")"
+    },
+    {
+      "file": "food/source/barbecue_ribs_1.json",
+      "source_call": "(IL.Food_Rib_BBQ.get(1), CR.DEF_NCC, new Object[] {\"foodRibcooked\", \"foodBarbecuesauce\"})"
+    },
+    {
+      "file": "food/source/cookie_shaped_dough_1.json",
+      "source_call": "(IL.Food_Cookie_Raw.get(4), CR.DEF_NCC, \"kX\", 'X', \"foodChocolateDough\")"
+    },
+    {
+      "file": "food/source/cookie_shaped_raisin_dough_1.json",
+      "source_call": "(IL.Food_Cookie_Raisins_Raw.get(4), CR.DEF_NCC, \"kX\", 'X', IL.Food_Dough_Sugar_Raisins)"
+    },
+    {
+      "file": "food/source/cookie_shaped_chocolate_raisin_dough_1.json",
+      "source_call": "(IL.Food_Cookie_Chocolate_Raisins_Raw.get(4), CR.DEF_NCC, \"kX\", 'X', IL.Food_Dough_Sugar_Chocolate_Raisins)"
+    },
+    {
+      "file": "food/source/cookie_shaped_abyssal_dough_1.json",
+      "source_call": "(IL.Food_Cookie_Abyssal_Raw.get(4), CR.DEF_NCC, \"kX\", 'X', \"foodAbyssalDough\")"
+    },
+    {
+      "file": "food/source/raw_cake_bottom_1.json",
+      "source_call": "(IL.Food_CakeBottom_Raw.get(1), CR.DEF_NCC, new Object[] {\"foodSugarDough\", \"foodSugarDough\", \"foodSugarDough\", \"foodSugarDough\"})"
+    },
+    {
+      "file": "food/source/cake_1.json",
+      "source_call": "(ST.make(Items.cake, 1, 0), CR.DEF_NCC, \"C\", \"Z\", 'Z', IL.Food_CakeBottom, 'C', \"foodHeavycream\")"
+    },
+    {
+      "file": "food/source/flattened_dough_1.json",
+      "source_call": "(IL.Food_Dough_Flat.get(1), CR.DEF, new Object[] {\"foodDough\", OreDictToolNames.rollingpin})"
+    },
+    {
+      "file": "food/source/flat_dough_with_ketchup_1.json",
+      "source_call": "(IL.Food_Dough_Flat_Ketchup.get(1), CR.DEF, new Object[] {\"foodKetchup\", IL.Food_Dough_Flat})"
+    },
+    {
+      "file": "food/source/flat_dough_with_ketchup_2.json",
+      "source_call": "(IL.Food_Dough_Flat_Ketchup.get(2), CR.DEF, new Object[] {\"foodKetchup\", IL.Food_Dough_Flat, IL.Food_Dough_Flat})"
+    },
+    {
+      "file": "food/source/flat_dough_with_ketchup_3.json",
+      "source_call": "(IL.Food_Dough_Flat_Ketchup.get(3), CR.DEF, new Object[] {\"foodKetchup\", IL.Food_Dough_Flat, IL.Food_Dough_Flat, IL.Food_Dough_Flat})"
+    },
+    {
+      "file": "food/source/flat_dough_with_ketchup_4.json",
+      "source_call": "(IL.Food_Dough_Flat_Ketchup.get(4), CR.DEF, new Object[] {\"foodKetchup\", IL.Food_Dough_Flat, IL.Food_Dough_Flat, IL.Food_Dough_Flat, IL.Food_Dough_Flat})"
+    },
+    {
+      "file": "food/source/flat_dough_with_ketchup_5.json",
+      "source_call": "(IL.Food_Dough_Flat_Ketchup.get(5), CR.DEF, new Object[] {\"foodKetchup\", IL.Food_Dough_Flat, IL.Food_Dough_Flat, IL.Food_Dough_Flat, IL.Food_Dough_Flat, IL.Food_Dough_Flat})"
+    },
+    {
+      "file": "food/source/raw_pizza_margherita_1.json",
+      "source_call": "(IL.Food_Pizza_Cheese_Raw.get(1), CR.DEF, new Object[] {IL.Food_Dough_Flat_Ketchup, IL.Food_Cheese_Sliced, IL.Food_Cheese_Sliced, IL.Food_Cheese_Sliced})"
+    },
+    {
+      "file": "food/source/raw_mince_meat_pizza_1.json",
+      "source_call": "(IL.Food_Pizza_Meat_Raw.get(1), CR.DEF, new Object[] {IL.Food_Dough_Flat_Ketchup, OP.dust.dat(MT.MeatCooked)})"
+    },
+    {
+      "file": "food/source/raw_veggie_pizza_1.json",
+      "source_call": "(IL.Food_Pizza_Veggie_Raw.get(1), CR.DEF, new Object[] {IL.Food_Dough_Flat_Ketchup, IL.Food_Cucumber_Sliced, IL.Food_Tomato_Sliced, IL.Food_Onion_Sliced})"
+    },
+    {
+      "file": "food/source/raw_pizza_hawaii_1.json",
+      "source_call": "(IL.Food_Pizza_Ananas_Raw.get(1), CR.DEF, new Object[] {IL.Food_Dough_Flat_Ketchup, IL.Food_Ananas_Sliced, IL.Food_Ananas_Sliced, IL.Food_Ham_Slice_Cooked, IL.Food_Cheese_Sliced})"
+    },
+    {
+      "file": "food/source/sliced_bun_1.json",
+      "source_call": "(IL.Food_Bun_Sliced.get(2), CR.DEF_NCC, \"kX\", 'X', IL.Food_Bun)"
+    },
+    {
+      "file": "food/source/dough_bun_1.json",
+      "source_call": "(IL.Food_Bun_Raw.get(1), CR.DEF, new Object[] {\"foodDough\"})"
+    },
+    {
+      "file": "food/source/buns_1.json",
+      "source_call": "(IL.Food_Buns_Sliced.get(1), CR.DEF, new Object[] {IL.Food_Bun_Sliced, IL.Food_Bun_Sliced})"
+    },
+    {
+      "file": "food/source/sliced_bun_2.json",
+      "source_call": "(IL.Food_Bun_Sliced.get(2), CR.DEF, new Object[] {IL.Food_Buns_Sliced})"
+    },
+    {
+      "file": "food/source/veggie_burger_1.json",
+      "source_call": "(IL.Food_Burger_Veggie.get(1)   , CR.DEF, new Object[] {IL.Food_Buns_Sliced, IL.Food_Cucumber_Sliced, IL.Food_Tomato_Sliced, IL.Food_Onion_Sliced})"
+    },
+    {
+      "file": "food/source/veggie_burger_2.json",
+      "source_call": "(IL.Food_Burger_Veggie.get(1)   , CR.DEF, new Object[] {IL.Food_Bun_Sliced, IL.Food_Bun_Sliced, IL.Food_Cucumber_Sliced, IL.Food_Tomato_Sliced, IL.Food_Onion_Sliced})"
+    },
+    {
+      "file": "food/source/cheese_burger_1.json",
+      "source_call": "(IL.Food_Burger_Cheese.get(1)   , CR.DEF, new Object[] {IL.Food_Buns_Sliced, IL.Food_Cheese_Sliced, IL.Food_Cheese_Sliced, IL.Food_Cheese_Sliced})"
+    },
+    {
+      "file": "food/source/cheese_burger_2.json",
+      "source_call": "(IL.Food_Burger_Cheese.get(1)   , CR.DEF, new Object[] {IL.Food_Bun_Sliced, IL.Food_Bun_Sliced, IL.Food_Cheese_Sliced, IL.Food_Cheese_Sliced, IL.Food_Cheese_Sliced})"
+    },
+    {
+      "file": "food/source/hamburger_1.json",
+      "source_call": "(IL.Food_Burger_Meat.get(1)     , CR.DEF, new Object[] {IL.Food_Buns_Sliced, OP.ingot.dat(MT.MeatCooked)})"
+    },
+    {
+      "file": "food/source/hamburger_2.json",
+      "source_call": "(IL.Food_Burger_Meat.get(1)     , CR.DEF, new Object[] {IL.Food_Bun_Sliced, IL.Food_Bun_Sliced, OP.ingot.dat(MT.MeatCooked)})"
+    },
+    {
+      "file": "food/source/tofu_burger_1.json",
+      "source_call": "(IL.Food_Burger_Tofu.get(1)     , CR.DEF, new Object[] {IL.Food_Buns_Sliced, OP.ingot.dat(MT.Tofu)})"
+    },
+    {
+      "file": "food/source/tofu_burger_2.json",
+      "source_call": "(IL.Food_Burger_Tofu.get(1)     , CR.DEF, new Object[] {IL.Food_Bun_Sliced, IL.Food_Bun_Sliced, OP.ingot.dat(MT.Tofu)})"
+    },
+    {
+      "file": "food/source/soylent_burger_1.json",
+      "source_call": "(IL.Food_Burger_Soylent.get(1)  , CR.DEF, new Object[] {IL.Food_Buns_Sliced, OP.ingot.dat(MT.SoylentGreen)})"
+    },
+    {
+      "file": "food/source/soylent_burger_2.json",
+      "source_call": "(IL.Food_Burger_Soylent.get(1)  , CR.DEF, new Object[] {IL.Food_Bun_Sliced, IL.Food_Bun_Sliced, OP.ingot.dat(MT.SoylentGreen)})"
+    },
+    {
+      "file": "food/source/fish_burger_1.json",
+      "source_call": "(IL.Food_Burger_Fish.get(1)     , CR.DEF, new Object[] {IL.Food_Buns_Sliced, OP.ingot.dat(MT.FishCooked)})"
+    },
+    {
+      "file": "food/source/fish_burger_2.json",
+      "source_call": "(IL.Food_Burger_Fish.get(1)     , CR.DEF, new Object[] {IL.Food_Bun_Sliced, IL.Food_Bun_Sliced, OP.ingot.dat(MT.FishCooked)})"
+    },
+    {
+      "file": "food/source/chum_burger_1.json",
+      "source_call": "(IL.Food_Burger_Chum.get(1)     , CR.DEF, new Object[] {IL.Food_Buns_Sliced, \"foodChum\"})"
+    },
+    {
+      "file": "food/source/chum_burger_2.json",
+      "source_call": "(IL.Food_Burger_Chum.get(1)     , CR.DEF, new Object[] {IL.Food_Bun_Sliced, IL.Food_Bun_Sliced, \"foodChum\"})"
+    },
+    {
+      "file": "food/source/sliced_bread_1.json",
+      "source_call": "(IL.Food_Bread_Sliced.get(2), CR.DEF_NCC, \"kX\", 'X', IL.Food_Bread)"
+    },
+    {
+      "file": "food/source/dough_bread_1.json",
+      "source_call": "(IL.Food_Bread_Raw.get(1), CR.DEF, new Object[] {\"foodDough\", \"foodDough\"})"
+    },
+    {
+      "file": "food/source/breads_1.json",
+      "source_call": "(IL.Food_Breads_Sliced.get(1), CR.DEF, new Object[] {IL.Food_Bread_Sliced, IL.Food_Bread_Sliced})"
+    },
+    {
+      "file": "food/source/sliced_bread_2.json",
+      "source_call": "(IL.Food_Bread_Sliced.get(2), CR.DEF, new Object[] {IL.Food_Breads_Sliced})"
+    },
+    {
+      "file": "food/source/veggie_sandwich_1.json",
+      "source_call": "(IL.Food_Sandwich_Veggie.get(1) , CR.DEF, new Object[] {IL.Food_Breads_Sliced, IL.Food_Cucumber_Sliced, IL.Food_Cucumber_Sliced, IL.Food_Tomato_Sliced, IL.Food_Tomato_Sliced, IL.Food_Onion_Sliced})"
+    },
+    {
+      "file": "food/source/veggie_sandwich_2.json",
+      "source_call": "(IL.Food_Sandwich_Veggie.get(1) , CR.DEF, new Object[] {IL.Food_Bread_Sliced, IL.Food_Bread_Sliced, IL.Food_Cucumber_Sliced, IL.Food_Cucumber_Sliced, IL.Food_Tomato_Sliced, IL.Food_Tomato_Sliced, IL.Food_Onion_Sliced})"
+    },
+    {
+      "file": "food/source/cheese_sandwich_1.json",
+      "source_call": "(IL.Food_Sandwich_Cheese.get(1) , CR.DEF, new Object[] {IL.Food_Breads_Sliced, IL.Food_Cheese_Sliced, IL.Food_Cheese_Sliced, IL.Food_Cheese_Sliced, IL.Food_Cheese_Sliced, IL.Food_Cheese_Sliced})"
+    },
+    {
+      "file": "food/source/cheese_sandwich_2.json",
+      "source_call": "(IL.Food_Sandwich_Cheese.get(1) , CR.DEF, new Object[] {IL.Food_Bread_Sliced, IL.Food_Bread_Sliced, IL.Food_Cheese_Sliced, IL.Food_Cheese_Sliced, IL.Food_Cheese_Sliced, IL.Food_Cheese_Sliced, IL.Food_Cheese_Sliced})"
+    },
+    {
+      "file": "food/source/bacon_sandwich_1.json",
+      "source_call": "(IL.Food_Sandwich_Bacon.get(1)  , CR.DEF, new Object[] {IL.Food_Breads_Sliced, \"foodBaconcooked\", \"foodBaconcooked\", \"foodBaconcooked\"})"
+    },
+    {
+      "file": "food/source/bacon_sandwich_2.json",
+      "source_call": "(IL.Food_Sandwich_Bacon.get(1)  , CR.DEF, new Object[] {IL.Food_Bread_Sliced, IL.Food_Bread_Sliced, \"foodBaconcooked\", \"foodBaconcooked\", \"foodBaconcooked\"})"
+    },
+    {
+      "file": "food/source/steak_sandwich_1.json",
+      "source_call": "(IL.Food_Sandwich_Steak.get(1)  , CR.DEF, new Object[] {IL.Food_Breads_Sliced, Items.cooked_beef})"
+    },
+    {
+      "file": "food/source/steak_sandwich_2.json",
+      "source_call": "(IL.Food_Sandwich_Steak.get(1)  , CR.DEF, new Object[] {IL.Food_Bread_Sliced, IL.Food_Bread_Sliced, Items.cooked_beef})"
+    },
+    {
+      "file": "food/source/sliced_baguette_1.json",
+      "source_call": "(IL.Food_Baguette_Sliced.get(2), CR.DEF_NCC, \"kX\", 'X', IL.Food_Baguette)"
+    },
+    {
+      "file": "food/source/dough_baguette_1.json",
+      "source_call": "(IL.Food_Baguette_Raw.get(1), CR.DEF, new Object[] {\"foodDough\", \"foodDough\", \"foodDough\"})"
+    },
+    {
+      "file": "food/source/baguettes_1.json",
+      "source_call": "(IL.Food_Baguettes_Sliced.get(1), CR.DEF, new Object[] {IL.Food_Baguette_Sliced, IL.Food_Baguette_Sliced})"
+    },
+    {
+      "file": "food/source/sliced_baguette_2.json",
+      "source_call": "(IL.Food_Baguette_Sliced.get(2), CR.DEF, new Object[] {IL.Food_Baguettes_Sliced})"
+    },
+    {
+      "file": "food/source/large_veggie_sandwich_1.json",
+      "source_call": "(IL.Food_Large_Sandwich_Veggie.get(1)   , CR.DEF, new Object[] {IL.Food_Baguettes_Sliced, IL.Food_Cucumber_Sliced, IL.Food_Cucumber_Sliced, IL.Food_Cucumber_Sliced, IL.Food_Tomato_Sliced, IL.Food_Tomato_Sliced, IL.Food_Tomato_Sliced, IL.Food_Onion_Sliced})"
+    },
+    {
+      "file": "food/source/large_veggie_sandwich_2.json",
+      "source_call": "(IL.Food_Large_Sandwich_Veggie.get(1)   , CR.DEF, new Object[] {IL.Food_Baguette_Sliced, IL.Food_Baguette_Sliced, IL.Food_Cucumber_Sliced, IL.Food_Cucumber_Sliced, IL.Food_Cucumber_Sliced, IL.Food_Tomato_Sliced, IL.Food_Tomato_Sliced, IL.Food_Tomato_Sliced, IL.Food_Onion_Sliced})"
+    },
+    {
+      "file": "food/source/large_cheese_sandwich_1.json",
+      "source_call": "(IL.Food_Large_Sandwich_Cheese.get(1)   , CR.DEF, new Object[] {IL.Food_Baguettes_Sliced, IL.Food_Cheese_Sliced, IL.Food_Cheese_Sliced, IL.Food_Cheese_Sliced, IL.Food_Cheese_Sliced, IL.Food_Cheese_Sliced, IL.Food_Cheese_Sliced, IL.Food_Cheese_Sliced})"
+    },
+    {
+      "file": "food/source/large_cheese_sandwich_2.json",
+      "source_call": "(IL.Food_Large_Sandwich_Cheese.get(1)   , CR.DEF, new Object[] {IL.Food_Baguette_Sliced, IL.Food_Baguette_Sliced, IL.Food_Cheese_Sliced, IL.Food_Cheese_Sliced, IL.Food_Cheese_Sliced, IL.Food_Cheese_Sliced, IL.Food_Cheese_Sliced, IL.Food_Cheese_Sliced, IL.Food_Cheese_Sliced})"
+    },
+    {
+      "file": "food/source/large_bacon_sandwich_1.json",
+      "source_call": "(IL.Food_Large_Sandwich_Bacon.get(1)    , CR.DEF, new Object[] {IL.Food_Baguettes_Sliced, \"foodBaconcooked\", \"foodBaconcooked\", \"foodBaconcooked\", \"foodBaconcooked\", \"foodBaconcooked\", \"foodBaconcooked\"})"
+    },
+    {
+      "file": "food/source/large_bacon_sandwich_2.json",
+      "source_call": "(IL.Food_Large_Sandwich_Bacon.get(1)    , CR.DEF, new Object[] {IL.Food_Baguette_Sliced, IL.Food_Baguette_Sliced, \"foodBaconcooked\", \"foodBaconcooked\", \"foodBaconcooked\", \"foodBaconcooked\", \"foodBaconcooked\", \"foodBaconcooked\"})"
+    },
+    {
+      "file": "food/source/large_steak_sandwich_1.json",
+      "source_call": "(IL.Food_Large_Sandwich_Steak.get(1)    , CR.DEF, new Object[] {IL.Food_Baguettes_Sliced, Items.cooked_beef, Items.cooked_beef})"
+    },
+    {
+      "file": "food/source/large_steak_sandwich_2.json",
+      "source_call": "(IL.Food_Large_Sandwich_Steak.get(1)    , CR.DEF, new Object[] {IL.Food_Baguette_Sliced, IL.Food_Baguette_Sliced, Items.cooked_beef, Items.cooked_beef})"
+    },
+    {
+      "file": "food/source/toast_1.json",
+      "source_call": "(IL.Food_Toast_Sliced.get(8), CR.DEF_NCC, \"kX\", 'X', IL.Food_Toast)"
+    },
+    {
+      "file": "food/source/dough_toast_loaf_1.json",
+      "source_call": "(IL.Food_Toast_Raw.get(1), CR.DEF, new Object[] {\"foodDough\", \"foodDough\", \"foodDough\", \"foodDough\"})"
+    },
+    {
+      "file": "food/source/chum_on_a_stick_1.json",
+      "source_call": "(IL.Food_Chum_On_Stick.get(1), CR.DEF_NCC, new Object[] {OP.stick.dat(ANY.Wood), \"foodChum\"})"
+    },
+    {
+      "file": "food/source/flattened_egg_dough_1.json",
+      "source_call": "(IL.Food_Dough_Egg_Flat.get(1), CR.DEF, new Object[] {IL.Food_Dough_Egg, OreDictToolNames.rollingpin})"
+    }
+  ],
+  "unresolved": []
+}

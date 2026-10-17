@@ -236,6 +236,13 @@ public final class MaterialTagPack extends AbstractPackResources {
                     && blockItem.getBlock() instanceof com.gregtech.gregtech.block.wood.WoodBeamBlock)
                 tags.computeIfAbsent("gregtech:tags/item/wooden_beams.json",key->new TreeSet<>()).add(id.toString());
         }
+        // GT6 LIST_SLABS / slabAnyWood: native slabs participate in normal slab crafting.
+        for(String wood:com.gregtech.gregtech.content.plant.WoodSlabCatalog.WOODS){
+            String id="gregtech:slab_"+wood;
+            for(String tag:new String[]{"minecraft:tags/item/wooden_slabs.json","minecraft:tags/item/slabs.json",
+                    "minecraft:tags/block/wooden_slabs.json","minecraft:tags/block/slabs.json"})
+                tags.computeIfAbsent(tag,k->new TreeSet<>()).add(id);
+        }
         // Common spelling aliases used by Forge 1.20 packs. References keep datapack additions shared.
         var aliases=com.gregtech.gregtech.api.material.MaterialTagAliases.ALTERNATE_SPELLINGS;
         for(var path:new ArrayList<>(tags.keySet())) for(var alias:aliases.entrySet()) {

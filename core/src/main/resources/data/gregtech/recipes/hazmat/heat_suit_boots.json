@@ -1,0 +1,23 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "MlM",
+    "MxM"
+  ],
+  "key": {
+    "M": {
+      "tag": "gregtech:foil/aluminium"
+    },
+    "l": {
+      "tag": "forge:tools/file"
+    },
+    "x": {
+      "tag": "forge:tools/wire_cutter"
+    }
+  },
+  "result": {
+    "item": "gregtech:heat_suit_boots"
+  },
+  "allow_mirror": false,
+  "gregtech_autocraftable": false
+}

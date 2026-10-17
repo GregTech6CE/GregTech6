@@ -108,7 +108,7 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
         }
         return new ItemStack(stoneType%2==0?Blocks.COBBLED_DEEPSLATE:Blocks.COBBLESTONE);
     }
-    public IItemHandler itemCapability(Direction side){return !isRemoved()&&(side==null||side==Direction.UP)?output:null;}
+    public IItemHandler itemCapability(Direction side){return !isRemoved()?output:null;}
     public IFluidHandler fluidCapability(Direction side){return isRemoved()?null:lubricant;}
     @Override public void setRemoved(){bindings.clear(this::release);super.setRemoved();}
     @Override public void dropContents(){BlockContents.drop(this,output);}
@@ -120,20 +120,20 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
     @Override public long portEnergyStored(MultiblockLayout.Role role,GregTechTags.Tag type){return type==GregTechTags.Energy.RU?energy:0;}
     @Override public long portEnergyCapacity(MultiblockLayout.Role role,GregTechTags.Tag type){return type==GregTechTags.Energy.RU?ENERGY_CAPACITY:0;}
     @Override public long injectPortEnergy(MultiblockLayout.Role role,GregTechTags.Tag type,long size,long amount,boolean execute){return role==MultiblockLayout.Role.ENERGY_INPUT&&isStructureOk()?doInject(type,null,size,amount,execute):0;}
-    @Override public boolean isEnergyType(GregTechTags.Tag type,Direction side,boolean emitting){return !emitting&&type==GregTechTags.Energy.RU&&side==null;}
-    @Override public Collection<GregTechTags.Tag> getEnergyTypes(Direction side){return side==null?List.of(GregTechTags.Energy.RU):List.of();}
+    @Override public boolean isEnergyType(GregTechTags.Tag type,Direction side,boolean emitting){return !emitting&&type==GregTechTags.Energy.RU;}
+    @Override public Collection<GregTechTags.Tag> getEnergyTypes(Direction side){return List.of(GregTechTags.Energy.RU);}
     @Override public long getEnergySizeInputRecommended(GregTechTags.Tag type,Direction side){return 2048;}
     @Override public long getEnergySizeInputMin(GregTechTags.Tag type,Direction side){return 1024;}
     @Override public long getEnergySizeInputMax(GregTechTags.Tag type,Direction side){return 4096;}
     @Override public long getEnergySizeOutputRecommended(GregTechTags.Tag type,Direction side){return 0;}
     @Override public long getEnergyOffered(GregTechTags.Tag type,Direction side,long size){return 0;}
     @Override public long getEnergyDemanded(GregTechTags.Tag type,Direction side,long size){
-        if(type!=GregTechTags.Energy.RU||side!=null||size==Long.MIN_VALUE)return 0;
+        if(type!=GregTechTags.Energy.RU||size==Long.MIN_VALUE)return 0;
         long magnitude=Math.abs(size);
         return magnitude>=1024&&magnitude<=4096?(ENERGY_CAPACITY-energy)/magnitude:0;
     }
     @Override public long doInject(GregTechTags.Tag type,Direction side,long size,long amount,boolean execute){
-        if(type!=GregTechTags.Energy.RU||side!=null||size==Long.MIN_VALUE||amount<=0||!isStructureOk())return 0;
+        if(type!=GregTechTags.Energy.RU||size==Long.MIN_VALUE||amount<=0||!isStructureOk())return 0;
         size=Math.abs(size);if(size<1024)return 0;
         if(size>4096){if(execute)level.explode(null,worldPosition.getX()+.5,worldPosition.getY()+.5,worldPosition.getZ()+.5,6,Level.ExplosionInteraction.BLOCK);return amount;}
         long accepted=Math.min(amount,(ENERGY_CAPACITY-energy)/size);if(execute&&accepted>0){energy+=size*accepted;setChanged();}return accepted;

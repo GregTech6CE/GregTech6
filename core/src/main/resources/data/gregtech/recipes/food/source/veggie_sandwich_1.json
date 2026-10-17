@@ -1,0 +1,28 @@
+{
+  "type": "gregtech:tool_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:breads"
+    },
+    {
+      "item": "gregtech:cucumber_slice"
+    },
+    {
+      "item": "gregtech:cucumber_slice"
+    },
+    {
+      "item": "gregtech:tomato_slice"
+    },
+    {
+      "item": "gregtech:tomato_slice"
+    },
+    {
+      "item": "gregtech:onion_slice"
+    }
+  ],
+  "result": {
+    "item": "gregtech:veggie_sandwich",
+    "count": 1
+  },
+  "gregtech_autocraftable": true
+}
