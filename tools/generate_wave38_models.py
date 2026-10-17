@@ -2,7 +2,7 @@
 """Generate forge:composite model JSONs and update blockstate JSONs for Wave 38 blocks."""
 import json, os
 
-BASE = "src/main/resources/assets/gregtech"
+BASE = "platform-shared/src/main/resources/assets/gregtech"
 MODEL_DIR = f"{BASE}/models/block/machine"
 BLOCKSTATE_DIR = f"{BASE}/blockstates"
 

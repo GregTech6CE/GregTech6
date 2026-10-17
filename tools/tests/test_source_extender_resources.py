@@ -5,6 +5,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ASSETS = ROOT / 'src/main/resources/assets/gregtech'
 sys.path.insert(0, str(ROOT / 'tools'))
 from rebuild_source_extenders import SPECS, DIRECTIONS
@@ -15,14 +16,14 @@ class SourceExtenderResources(unittest.TestCase):
     def test_all_faces_and_secondary_faces_have_source_models(self):
         paths = []
         for name, texture, _ in SPECS:
-            path = ASSETS / f'blockstates/{name}.json'
-            paths.extend([path, ASSETS / f'models/item/{name}.json'])
+            path = SHARED_ASSETS / f'blockstates/{name}.json'
+            paths.extend([path, SHARED_ASSETS / f'models/item/{name}.json'])
             data = json.loads(path.read_text(encoding='utf-8'))
             if not texture.startswith('bridge_'):
                 self.assertEqual(set(data['variants']), {f'facing={a},secondary={b}' for a in DIRECTIONS for b in DIRECTIONS})
                 for a in DIRECTIONS:
                     for b in DIRECTIONS:
-                        model = json.loads((ASSETS / f'models/block/logistics/{name}/{a}_{b}.json').read_text(encoding='utf-8'))
+                        model = json.loads((SHARED_ASSETS / f'models/block/logistics/{name}/{a}_{b}.json').read_text(encoding='utf-8'))
                         for layer, child in model['children'].items():
                             faces = child['elements'][0]['faces']
                             self.assertEqual(faces[a]['texture'], '#in')

@@ -42,10 +42,9 @@ def shell(folder, sub, hot, cold):
 
 
 def main():
-    for platform in ('src/main', 'neoforge/src/main'):
-        assets = ROOT / platform / 'resources/assets/gregtech'
-        for name, folder in (('reactor_core', 'reactor_core_1x1'),
-                             ('reactor_core_2x2', 'reactor_core_2x2')):
+    assets = ROOT / 'platform-shared/src/main/resources/assets/gregtech'
+    for name, folder in (('reactor_core', 'reactor_core_1x1'),
+                         ('reactor_core_2x2', 'reactor_core_2x2')):
             path = assets / f'models/block/machine/energy/{name}.json'
             previous = json.loads(path.read_text(encoding='utf-8'))
             variants = {}

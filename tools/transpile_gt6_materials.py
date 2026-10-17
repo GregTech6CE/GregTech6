@@ -13,7 +13,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT.parent / "gregtech6-master/gregtech6-master/src/main/java/gregapi/data/MT.java"
 OUT = ROOT / "src/main/java/com/gregtech/gregtech/data/generated"
-MODELS = ROOT / "src/main/resources/assets/gregtech/models/item/material"
+MODELS = ROOT / "platform-shared/src/main/resources/assets/gregtech/models/item/material"
 TEXTURES = ROOT / "src/main/resources/assets/gregtech/textures/item/material_icons"
 PREFIXES = ("dust", "ingot", "nugget", "plate", "oreraw", "gem")
 

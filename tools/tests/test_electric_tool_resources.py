@@ -3,12 +3,13 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ASSETS = ROOT / "src/main/resources/assets/gregtech"
 
 class ElectricToolResources(unittest.TestCase):
     def test_all_four_layered_models_resolve_textures(self):
         for tool in ("drill", "chainsaw", "wrench", "screwdriver"):
-            model = json.loads((ASSETS / f"models/item/electric_{tool}.json").read_text(encoding="utf-8"))
+            model = json.loads((SHARED_ASSETS / f"models/item/electric_{tool}.json").read_text(encoding="utf-8"))
             self.assertEqual(set(model["textures"]), {f"layer{i}" for i in range(4)})
             for texture in model["textures"].values():
                 namespace, path = texture.split(":", 1)

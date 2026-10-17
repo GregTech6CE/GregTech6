@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ASSETS = ROOT / "src/main/resources/assets/gregtech"
 
 
@@ -32,7 +33,7 @@ def generate(assets=ASSETS):
     root = assets / "models/item/coin_minted.json"
     root.parent.mkdir(parents=True, exist_ok=True)
     root.write_text(json.dumps(model, indent=2) + "\n", encoding="utf-8")
-    for path in (ASSETS / "models/item/material").glob("*/coin.json"):
+    for path in (SHARED_ASSETS / "models/item/material").glob("*/coin.json"):
         target = assets / path.relative_to(ASSETS)
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text('{"parent": "gregtech:item/coin_minted"}\n', encoding="utf-8")

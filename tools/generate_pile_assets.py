@@ -40,10 +40,11 @@ import shutil
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ASSETS = ROOT / "src/main/resources/assets/gregtech"
 ORIGINAL = ROOT.parent / "gregtech6-master/gregtech6-master"
 MANIFEST = ROOT / "tools/gt6_texture_sources.json"
-MODELS = ASSETS / "models/block/decoration/pile"
+MODELS = SHARED_ASSETS / "models/block/decoration/pile"
 MODEL_ROOT = "gregtech:block/decoration/pile"
 
 # port texture folder -> GT6 texture folder
@@ -229,11 +230,11 @@ def material_pile(block_id: str, kind: str, folder: str, faces: dict, build) -> 
         write_model(MODELS / f"{kind}_{stack}.json", particle, build(stack, faces))
         variants[f"stack={stack}"] = {"model": f"{MODEL_ROOT}/{kind}_{stack}"}
         written += 1
-    write_json(ASSETS / f"blockstates/{block_id}.json", {"variants": variants})
+    write_json(SHARED_ASSETS / f"blockstates/{block_id}.json", {"variants": variants})
     written += 1
     # The item form shows a representative pile, not a full block: one layer of ingots or the four
     # plates of a stack of eight.
-    write_json(ASSETS / f"models/item/{block_id}.json", {"parent": f"{MODEL_ROOT}/{kind}_8"})
+    write_json(SHARED_ASSETS / f"models/item/{block_id}.json", {"parent": f"{MODEL_ROOT}/{kind}_8"})
     written += 1
     return written
 
@@ -250,9 +251,9 @@ def coin_pile() -> int:
                         coin_elements(coins, fill, COIN_FACES))
             variants[f"coins={coins},fill={fill}"] = {"model": f"{MODEL_ROOT}/coin_{coins}_{fill}"}
             written += 1
-    write_json(ASSETS / "blockstates/coin_pile.json", {"variants": variants})
+    write_json(SHARED_ASSETS / "blockstates/coin_pile.json", {"variants": variants})
     written += 1
-    write_json(ASSETS / "models/item/coin_pile.json", {"parent": "gregtech:item/coin_minted"})
+    write_json(SHARED_ASSETS / "models/item/coin_pile.json", {"parent": "gregtech:item/coin_minted"})
     written += 1
     return written
 
@@ -265,12 +266,12 @@ def main() -> None:
         faces = material_faces(port_folder)
         build = ingot_elements if kind == "ingot" else plate_elements
         written += material_pile(block_id, kind, port_folder, faces, build)
-        obsolete = ASSETS / f"models/block/decoration/{block_id}.json"
+        obsolete = SHARED_ASSETS / f"models/block/decoration/{block_id}.json"
         if obsolete.exists():
             obsolete.unlink()
 
     written += coin_pile()
-    obsolete = ASSETS / "models/block/decoration/coin_pile.json"
+    obsolete = SHARED_ASSETS / "models/block/decoration/coin_pile.json"
     if obsolete.exists():
         obsolete.unlink()
 

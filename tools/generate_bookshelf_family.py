@@ -10,6 +10,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ASSETS = ROOT / "src/main/resources/assets/gregtech"
 MANIFEST = ROOT / "src/main/resources/data/gregtech/bookshelf_variants.json"
 RECIPES = ROOT / "src/main/resources/data/gregtech/recipes/bookshelves"
@@ -65,9 +66,9 @@ def refresh_manifest():
     variants = []
     for index, species, display, texture in WOODS:
         if texture is None:
-            model_path = ASSETS / f"models/block/wood/planks_{species}.json"
+            model_path = SHARED_ASSETS / f"models/block/wood/planks_{species}.json"
             if not model_path.is_file():
-                model_path = ASSETS / f"models/block/iconsets/planks_{species}.json"
+                model_path = SHARED_ASSETS / f"models/block/iconsets/planks_{species}.json"
             model = json.loads(model_path.read_text(encoding="utf-8"))
             texture = model["textures"]["all"]
         variants.append(dict(path="bookshelf" if index == 0 else f"bookshelf_{species}",
@@ -109,7 +110,7 @@ def refresh_manifest():
 def generate(assets=ASSETS, variants=None):
     if variants is None:
         variants = json.loads(MANIFEST.read_text(encoding="utf-8"))["variants"]
-    frame = json.loads((ASSETS / "models/block/bookshelf.json").read_text(encoding="utf-8"))
+    frame = json.loads((SHARED_ASSETS / "models/block/bookshelf.json").read_text(encoding="utf-8"))
     for variant in variants:
         if variant["path"] == "bookshelf":
             continue  # The legacy oak ID is owned by generate_bookshelf_assets.py.

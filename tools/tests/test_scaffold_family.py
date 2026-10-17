@@ -5,6 +5,7 @@ from pathlib import Path
 import re
 import unittest
 ROOT = Path(__file__).resolve().parents[2]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ASSETS = ROOT / 'src/main/resources/assets/gregtech'
 class ScaffoldFamilyTests(unittest.TestCase):
     def test_all_sixty_families_have_models_and_recipes(self):
@@ -13,7 +14,7 @@ class ScaffoldFamilyTests(unittest.TestCase):
         self.assertEqual(60, len(suffixes))
         for suffix in suffixes:
             name = 'scaffold' if suffix == 'steel' else 'scaffold_' + suffix
-            states = json.loads((ASSETS / f'blockstates/{name}.json').read_text())['variants']
+            states = json.loads((SHARED_ASSETS / f'blockstates/{name}.json').read_text())['variants']
             self.assertEqual(16, len(states))
             for variant in states.values():
                 model = json.loads((ASSETS / ('models/' + variant['model'].split(':')[1] + '.json')).read_text())

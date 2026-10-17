@@ -9,6 +9,8 @@ import json
 from pathlib import Path
 from check_render_resources import ASSETS, check
 
+SHARED_ASSETS = Path(__file__).resolve().parents[1] / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
+
 RENAMES = {
     '/machines/heaters/electric/': '/machines/heaters/heat_electric/',
     '/machines/coolers/electric/': '/machines/cooler/cryo_electric/',
@@ -37,7 +39,7 @@ def restore(original):
     originals = {p.relative_to(textures).as_posix().lower(): p for p in textures.rglob('*.png')}
     manifest_path = ASSETS.parents[4] / 'tools/gt6_texture_sources.json'
     manifest = json.loads(manifest_path.read_text(encoding='utf-8')) if manifest_path.exists() else {}
-    models = list((ASSETS / 'models').rglob('*.json'))
+    models = list((SHARED_ASSETS / 'models').rglob('*.json'))
     changed = 0
     for path in models:
         before = path.read_text(encoding='utf-8')
@@ -60,7 +62,7 @@ def restore(original):
         if after != before:
             path.write_text(after, encoding='utf-8')
             changed += 1
-    issues, _ = check(models + list((ASSETS / 'blockstates').glob('*.json')))
+    issues, _ = check(models + list((SHARED_ASSETS / 'blockstates').glob('*.json')))
     copied = 0
     for _, kind, resource in issues:
         if kind != 'texture':

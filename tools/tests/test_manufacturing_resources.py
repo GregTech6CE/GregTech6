@@ -15,7 +15,7 @@ class ManufacturingResources(unittest.TestCase):
             for value in data['key'].values():
                 name=value['item'].split(':')[1]
                 if not name.startswith('plate_'):ids.add(name)
-        issues,_=check([ROOT/'src/main/resources/assets/gregtech/models/item'/f'{name}.json' for name in ids])
+        issues,_=check([ROOT/'platform-shared/src/main/resources/assets/gregtech/models/item'/f'{name}.json' for name in ids])
         self.assertEqual([],issues)
     def test_wire_resources_conserve_width_and_material(self):
         recipes=list((ROOT/'src/main/resources/data/gregtech/recipes/wire_working').glob('*.json'))

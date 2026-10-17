@@ -5,8 +5,9 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ASSETS = ROOT / "src/main/resources/assets/gregtech"
-BOWL_DIR = ASSETS / "models/block/machine/crucible_bowl"
+BOWL_DIR = SHARED_ASSETS / "models/block/machine/crucible_bowl"
 EN_LANG = ASSETS / "lang/en_us.json"
 
 # GT6 MultiTileEntityBasin — 1px walls, same inner/outer face pattern as crucible bowl (2px)
@@ -161,7 +162,7 @@ def write_shared_models(texture_set: str) -> None:
         "crucible_crossing": CROSSING_BOXES,
     }
     for folder, boxes in simple_models.items():
-        out_dir = ASSETS / f"models/block/machine/{folder}/{texture_set}"
+        out_dir = SHARED_ASSETS / f"models/block/machine/{folder}/{texture_set}"
         out_dir.mkdir(parents=True, exist_ok=True)
         model = composite_model(
             base,
@@ -171,7 +172,7 @@ def write_shared_models(texture_set: str) -> None:
         )
         (out_dir / "blocksolid.json").write_text(json.dumps(model, indent=2) + "\n", encoding="utf-8")
 
-    faucet_dir = ASSETS / f"models/block/machine/crucible_faucet/{texture_set}"
+    faucet_dir = SHARED_ASSETS / f"models/block/machine/crucible_faucet/{texture_set}"
     faucet_dir.mkdir(parents=True, exist_ok=True)
     for facing, boxes in FAUCET_BOXES_BY_FACING.items():
         model = composite_model(
@@ -189,7 +190,7 @@ def write_shared_models(texture_set: str) -> None:
 def crucible_suffixes() -> list[str]:
     return sorted(
         path.stem[len("smelting_crucible_") :]
-        for path in (ASSETS / "blockstates").glob("smelting_crucible_*.json")
+        for path in (SHARED_ASSETS / "blockstates").glob("smelting_crucible_*.json")
     )
 
 
@@ -197,7 +198,7 @@ def write_blockstates(suffixes: list[str]) -> None:
     for suffix in suffixes:
         for prefix in ("mold", "mold_basin", "crucible_crossing"):
             data = {"variants": {"": {"model": f"gregtech:block/blocks/{prefix}_{suffix}"}}}
-            (ASSETS / "blockstates" / f"{prefix}_{suffix}.json").write_text(
+            (SHARED_ASSETS / "blockstates" / f"{prefix}_{suffix}.json").write_text(
                 json.dumps(data, indent=2) + "\n", encoding="utf-8")
         faucet = {
             "variants": {
@@ -205,7 +206,7 @@ def write_blockstates(suffixes: list[str]) -> None:
                 for facing in ("north", "south", "east", "west")
             }
         }
-        (ASSETS / "blockstates" / f"crucible_faucet_{suffix}.json").write_text(
+        (SHARED_ASSETS / "blockstates" / f"crucible_faucet_{suffix}.json").write_text(
             json.dumps(faucet, indent=2) + "\n", encoding="utf-8")
 
 
@@ -214,7 +215,7 @@ def write_item_models(suffixes: list[str]) -> None:
         for prefix in ("mold", "mold_basin", "crucible_crossing", "crucible_faucet"):
             block_id = f"{prefix}_{suffix}"
             data = {"parent": f"gregtech:block/blocks/{block_id}"}
-            (ASSETS / "models/item" / f"{block_id}.json").write_text(
+            (SHARED_ASSETS / "models/item" / f"{block_id}.json").write_text(
                 json.dumps(data, indent=2) + "\n", encoding="utf-8")
 
 

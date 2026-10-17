@@ -2,7 +2,7 @@
 """Generate item model JSONs for liquid/gas/fluidized-bed burning boxes."""
 import json, os
 
-ITEM_DIR = "src/main/resources/assets/gregtech/models/item"
+ITEM_DIR = "platform-shared/src/main/resources/assets/gregtech/models/item"
 
 MATERIALS = [
     "lead", "bismuth", "bronze", "arsenic_copper", "arsenic_bronze",

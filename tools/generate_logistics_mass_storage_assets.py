@@ -13,6 +13,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 GT6 = ROOT.parent / "gregtech6-master" / "gregtech6-master"
 ASSETS = ROOT / "src/main/resources/assets/gregtech"
 TEXTURE_SOURCE = GT6 / "src/main/resources/assets/gregtech/textures/blocks/machines/massstorage/logistics"
@@ -31,10 +32,10 @@ def expected_files() -> dict[Path, bytes]:
             source = TEXTURE_SOURCE / group / f"{face}.png"
             expected[TEXTURE_TARGET / group / source.name] = source.read_bytes()
 
-    standard = json.loads((ASSETS / "models/block/machine/storage/mass_storage.json").read_text(encoding="utf-8"))
+    standard = json.loads((SHARED_ASSETS / "models/block/machine/storage/mass_storage.json").read_text(encoding="utf-8"))
     logistics = json.loads(json.dumps(standard).replace("massstorage/standard/", "massstorage/logistics/"))
     model_path = "gregtech:block/machine/storage/logistics_mass_storage"
-    expected[ASSETS / "models/block/machine/storage/logistics_mass_storage.json"] = (
+    expected[SHARED_ASSETS / "models/block/machine/storage/logistics_mass_storage.json"] = (
         json.dumps(logistics, indent=2, ensure_ascii=False) + "\n"
     ).encode("utf-8")
     facing = {
@@ -49,8 +50,8 @@ def expected_files() -> dict[Path, bytes]:
     item_model = (json.dumps({"parent": model_path}, indent=2) + "\n").encode("utf-8")
     for suffix in suffixes:
         name = f"logistics_mass_storage_{suffix}.json"
-        expected[ASSETS / "blockstates" / name] = blockstate
-        expected[ASSETS / "models/item" / name] = item_model
+        expected[SHARED_ASSETS / "blockstates" / name] = blockstate
+        expected[SHARED_ASSETS / "models/item" / name] = item_model
     return expected
 
 

@@ -15,9 +15,10 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ASSETS = ROOT / "src/main/resources/assets/gregtech"
-BLOCKSTATES = ASSETS / "blockstates"
-MODELS_MACHINE = ASSETS / "models/block/machine"
+BLOCKSTATES = SHARED_ASSETS / "blockstates"
+MODELS_MACHINE = SHARED_ASSETS / "models/block/machine"
 
 PIPE_RE = re.compile(r"^(item_)?pipe_(tiny|small|medium|large|huge|quadruple|nonuple)_(.+)\.json$")
 WIRE_RE = re.compile(r"^(wire|cable)_(\d{2})_(.+)\.json$")

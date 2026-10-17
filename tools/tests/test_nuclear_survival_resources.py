@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ASSETS = ROOT / 'src/main/resources/assets/gregtech'
 sys.path.insert(0, str(ROOT / 'tools'))
 from check_render_resources import check
@@ -12,9 +13,9 @@ from check_render_resources import check
 class NuclearSurvivalResources(unittest.TestCase):
     def test_placed_rods_and_suit_resolve_real_assets(self):
         rods = json.loads((ROOT / 'docs/reactor-rod-source.json').read_text(encoding='utf-8'))
-        paths = [ASSETS / f"blockstates/{r['id']}.json" for r in rods]
+        paths = [SHARED_ASSETS / f"blockstates/{r['id']}.json" for r in rods]
         for part in ['helmet', 'chestplate', 'leggings', 'boots']:
-            paths.append(ASSETS / f'models/item/radiation_suit_{part}.json')
+            paths.append(SHARED_ASSETS / f'models/item/radiation_suit_{part}.json')
         issues, count = check(paths)
         self.assertFalse(issues)
         self.assertGreater(count, 49)
@@ -22,11 +23,11 @@ class NuclearSurvivalResources(unittest.TestCase):
             self.assertTrue((ASSETS / f'textures/armor/hazard_radiation/{i}.png').is_file())
 
     def test_funnel_bottom_mesh_matches_gt6(self):
-        model = json.loads((ASSETS / 'models/block/tool/fluid_funnel_down.json').read_text(encoding='utf-8'))
+        model = json.loads((SHARED_ASSETS / 'models/block/tool/fluid_funnel_down.json').read_text(encoding='utf-8'))
         expected = [([5, 2, 5], [11, 3, 11]), ([6, 1, 6], [10, 2, 10]), ([7, 0, 7], [9, 1, 9])]
         for child in model['children'].values():
             self.assertEqual([(e['from'], e['to']) for e in child['elements']], expected)
-        for p in (ASSETS / 'blockstates').glob('fluid_funnel*.json'):
+        for p in (SHARED_ASSETS / 'blockstates').glob('fluid_funnel*.json'):
             d = json.loads(p.read_text(encoding='utf-8'))
             self.assertEqual(d['variants']['facing=down']['model'], 'gregtech:block/tool/fluid_funnel_down')
             issues, _ = check([p])

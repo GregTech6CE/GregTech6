@@ -3,6 +3,7 @@ import unittest
 from pathlib import Path
 
 ASSETS = Path(__file__).resolve().parents[2] / 'src/main/resources/assets/gregtech'
+SHARED_ASSETS = Path(__file__).resolve().parents[2] / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 
 
 class InventoryRootTests(unittest.TestCase):
@@ -10,7 +11,7 @@ class InventoryRootTests(unittest.TestCase):
         for directory in ('burning_liquid', 'burning_gas', 'burning_fluidbed'):
             for direction in ('north', 'east', 'south', 'west'):
                 for active in ('on', 'off'):
-                    path = ASSETS / f'models/block/machine/{directory}/{direction}_{active}.json'
+                    path = SHARED_ASSETS / f'models/block/machine/{directory}/{direction}_{active}.json'
                     model = json.loads(path.read_text(encoding='utf-8'))
                     base = model['children']['layer0']
                     tops = [part['faces']['up'] for part in base['elements'] if 'up' in part['faces']]
@@ -22,7 +23,7 @@ class InventoryRootTests(unittest.TestCase):
     def test_composite_inventory_roots_inherit_block_transforms(self):
         for name in ('machine/energy/reactor_casing', 'machine/tank_barrel',
                      'machine/burning_liquid/north_off', 'machine/burning_fluidbed/north_off'):
-            model = json.loads((ASSETS / f'models/block/{name}.json').read_text(encoding='utf-8'))
+            model = json.loads((SHARED_ASSETS / f'models/block/{name}.json').read_text(encoding='utf-8'))
             self.assertEqual(model.get('parent'), 'minecraft:block/block', name)
 
     def test_axle_sprite_is_available_in_dynamic_block_atlas(self):

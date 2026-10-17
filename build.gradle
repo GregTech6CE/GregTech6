@@ -357,6 +357,8 @@ tasks.named('processResources', ProcessResources).configure {
     }
 }
 
+apply from: 'gradle/platform-shared.gradle'
+
 // Example for how to get properties into the manifest for reading at runtime.
 tasks.named('jar', Jar).configure {
     // ForgeGradle rewrites every class in this jar, including pure Java constant pools.
@@ -391,8 +393,10 @@ tasks.named('jar', Jar).configure {
 // reobfJar finishes, while the shared Java 17 classes remain byte-identical on both loaders.
 def distributionJar = tasks.register('distributionJar', Jar) {
     dependsOn 'reobfJar', ':core:classes'
+    def platformJar = tasks.named('jar', Jar).flatMap { it.archiveFile }
+    inputs.file(platformJar)
     destinationDirectory = layout.buildDirectory.dir('libs')
-    from({ zipTree(tasks.named('jar', Jar).get().archiveFile.get().asFile) }) {
+    from({ zipTree(platformJar.get().asFile) }) {
         exclude 'META-INF/MANIFEST.MF'
     }
     from(project(':core').sourceSets.main.output)
@@ -402,7 +406,7 @@ def distributionJar = tasks.register('distributionJar', Jar) {
     zip64 = true
     // Merge the complete platform manifest, including MixinGradle's late additions.
     doFirst {
-        def platformManifest = zipTree(tasks.named('jar', Jar).get().archiveFile.get().asFile)
+        def platformManifest = zipTree(platformJar.get().asFile)
                 .matching { include 'META-INF/MANIFEST.MF' }.singleFile
         manifest.from(platformManifest)
     }

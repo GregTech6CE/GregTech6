@@ -13,6 +13,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ASSETS = ROOT / "src/main/resources/assets/gregtech"
 ORIGINAL = ROOT.parent / "gregtech6-master/gregtech6-master"
 SOURCE = ORIGINAL / "src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java"
@@ -21,7 +22,7 @@ CHINESE = ROOT.parent / "GregTech.lang"
 REGISTRY = ROOT / "src/main/java/com/gregtech/gregtech/registry/GTGearboxes.java"
 ORIGINAL_TEXTURES = ORIGINAL / "src/main/resources/assets/gregtech/textures/blocks/machines/transformers/transformer_rotation"
 PORT_TEXTURES = ASSETS / "textures/block/machines/transformers/transformer_rotation"
-MODEL = ASSETS / "models/block/machine/transformer/rotation_transformer.json"
+MODEL = SHARED_ASSETS / "models/block/machine/transformer/rotation_transformer.json"
 
 # Source's first axle numeric ID, material's English name, and port ID suffix.
 TIERS = (
@@ -110,12 +111,12 @@ def expected() -> tuple[dict[Path, bytes], dict[str, str], dict[str, str]]:
         int(match.group(1)): match.group(2)
         for match in re.finditer(r"S:gt\.multitileentity\.(\d+)=(.*)", CHINESE.read_text(encoding="utf-8"))
     }
-    gearbox_state = (ASSETS / "blockstates/gearbox_bronze.json").read_bytes()
-    gearbox_item = (ASSETS / "models/item/gearbox_bronze.json").read_bytes()
-    gearbox_model = (ASSETS / "models/block/gearbox_bronze.json").read_bytes()
-    transformer_state = (ASSETS / "blockstates/rotation_transformer_bronze.json").read_bytes()
-    transformer_item = (ASSETS / "models/item/rotation_transformer_bronze.json").read_bytes()
-    transformer_model = (ASSETS / "models/block/rotation_transformer_bronze.json").read_bytes()
+    gearbox_state = (SHARED_ASSETS / "blockstates/gearbox_bronze.json").read_bytes()
+    gearbox_item = (SHARED_ASSETS / "models/item/gearbox_bronze.json").read_bytes()
+    gearbox_model = (SHARED_ASSETS / "models/block/gearbox_bronze.json").read_bytes()
+    transformer_state = (SHARED_ASSETS / "blockstates/rotation_transformer_bronze.json").read_bytes()
+    transformer_item = (SHARED_ASSETS / "models/item/rotation_transformer_bronze.json").read_bytes()
+    transformer_model = (SHARED_ASSETS / "models/block/rotation_transformer_bronze.json").read_bytes()
 
     files: dict[Path, bytes] = {}
     english: dict[str, str] = {}
@@ -150,13 +151,13 @@ def expected() -> tuple[dict[Path, bytes], dict[str, str], dict[str, str]]:
         chinese[f"block.gregtech.{transform_resource}"] = translations[transformer_id]
         chinese[f"block.gregtech.{gearbox_resource}"] = translations[gearbox_id]
         if suffix not in OLD_GEARBOXES:
-            files[ASSETS / "blockstates" / f"{gearbox_resource}.json"] = gearbox_state
-            files[ASSETS / "models/item" / f"{gearbox_resource}.json"] = gearbox_item
-            files[ASSETS / "models/block" / f"{gearbox_resource}.json"] = gearbox_model
+            files[SHARED_ASSETS / "blockstates" / f"{gearbox_resource}.json"] = gearbox_state
+            files[SHARED_ASSETS / "models/item" / f"{gearbox_resource}.json"] = gearbox_item
+            files[SHARED_ASSETS / "models/block" / f"{gearbox_resource}.json"] = gearbox_model
         if suffix not in OLD_TRANSFORMERS:
-            files[ASSETS / "blockstates" / f"{transform_resource}.json"] = transformer_state
-            files[ASSETS / "models/item" / f"{transform_resource}.json"] = transformer_item
-            files[ASSETS / "models/block" / f"{transform_resource}.json"] = transformer_model
+            files[SHARED_ASSETS / "blockstates" / f"{transform_resource}.json"] = transformer_state
+            files[SHARED_ASSETS / "models/item" / f"{transform_resource}.json"] = transformer_item
+            files[SHARED_ASSETS / "models/block" / f"{transform_resource}.json"] = transformer_model
 
     if len(registered) != 13 or len(english) != 26 or len(chinese) != 26 or len(files) != 51:
         raise AssertionError("Expected 13+13 GT6 gearboxes and 17 × 3 new resource files")

@@ -12,9 +12,10 @@ import os
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "gregtech")
 TEX = os.path.join(ASSETS, "textures", "block", "machines", "basicmachines")
-MODELS = os.path.join(ASSETS, "models", "block", "machine", "basic")
-BLOCKSTATES = os.path.join(ASSETS, "blockstates")
-ITEM_MODELS = os.path.join(ASSETS, "models", "item")
+SHARED = os.path.join(ROOT, "platform-shared", "src", "main", "resources", "assets", "gregtech")
+MODELS = os.path.join(SHARED, "models", "block", "machine", "basic")
+BLOCKSTATES = os.path.join(SHARED, "blockstates")
+ITEM_MODELS = os.path.join(SHARED, "models", "item")
 
 # name -> (material id suffix, en display, zh display)
 MACHINES = {

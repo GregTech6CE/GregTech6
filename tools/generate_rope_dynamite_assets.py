@@ -14,6 +14,7 @@ import pathlib
 import shutil
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ASSETS = ROOT / "src/main/resources/assets/gregtech"
 LANG = ASSETS / "lang"
 
@@ -38,12 +39,12 @@ def write(path: pathlib.Path, data) -> None:
 
 def main() -> None:
     for new_id, (template, english, chinese) in NEW.items():
-        source = ASSETS / "blockstates" / f"{template}.json"
+        source = SHARED_ASSETS / "blockstates" / f"{template}.json"
         state = json.loads(source.read_text(encoding="utf-8"))
         for variant in state["variants"].values():
             variant["model"] = variant["model"].replace(f"/{template}", f"/{template}")
-        write(ASSETS / "blockstates" / f"{new_id}.json", state)
-        write(ASSETS / "models/item" / f"{new_id}.json",
+        write(SHARED_ASSETS / "blockstates" / f"{new_id}.json", state)
+        write(SHARED_ASSETS / "models/item" / f"{new_id}.json",
               {"parent": f"gregtech:block/machine/tool/{template}"})
 
     for name, key_en, key_zh in (("en_us.json", "english", "chinese"), ("zh_cn.json", "chinese", "english")):

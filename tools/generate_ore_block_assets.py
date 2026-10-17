@@ -44,10 +44,11 @@ from pathlib import Path
 from modular_materials import parse_catalog
 
 ROOT = Path(__file__).resolve().parents[1]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ASSETS = ROOT / "src/main/resources/assets/gregtech"
-BLOCKSTATES = ASSETS / "blockstates"
-MODELS = ASSETS / "models/block/ores"
-ITEM_MODELS = ASSETS / "models/item"
+BLOCKSTATES = SHARED_ASSETS / "blockstates"
+MODELS = SHARED_ASSETS / "models/block/ores"
+ITEM_MODELS = SHARED_ASSETS / "models/item"
 
 JAVA = ROOT / "src/main/java/com/gregtech/gregtech"
 GEN_MATERIALS = ROOT / "tools/generated/materials-source.java.txt"

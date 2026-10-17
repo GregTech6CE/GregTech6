@@ -2,6 +2,7 @@
 from pathlib import Path
 import json, shutil, hashlib
 ROOT=Path(__file__).resolve().parents[1]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ORIGINAL=ROOT.parent/'gregtech6-master/gregtech6-master'
 ASSETS=ROOT/'src/main/resources/assets/gregtech'
 MAPPING={
@@ -41,13 +42,13 @@ def main():
     if layer=='colored': faces[face]['tintindex']=0
    children[layer]={'textures':textures,'elements':[{'from':[0,0,0],'to':[16,16,16],'faces':faces}],'render_type':'minecraft:cutout'}
   model={'loader':'forge:composite','parent':'minecraft:block/block','textures':{'particle':children['colored']['textures']['down']},'children':children}
-  write(ASSETS/f'models/block/misc/{name}.json',model)
+  write(SHARED_ASSETS/f'models/block/misc/{name}.json',model)
  for name,icon in {'asphalt':'ASPHALT','concrete':'CONCRETE','concrete_reinforced':'CONCRETE_REINFORCED','cfoam':'CFOAM_HARDENED','cfoam_fresh':'CFOAM_FRESH'}.items():
   source=ORIGINAL/f'src/main/resources/assets/gregtech/textures/blocks/iconsets/{icon}.png'
   copy(source,ASSETS/f'textures/block/iconsets/{icon.lower()}.png')
   texture=f'gregtech:block/iconsets/{icon.lower()}'
-  write(ASSETS/f'models/block/decoration/{name}.json',{'parent':'minecraft:block/cube_all','textures':{'all':texture}})
-  panel=ASSETS/f'models/block/misc/panel_{name}.json'
+  write(SHARED_ASSETS/f'models/block/decoration/{name}.json',{'parent':'minecraft:block/cube_all','textures':{'all':texture}})
+  panel=SHARED_ASSETS/f'models/block/misc/panel_{name}.json'
   if panel.exists():
    data=json.loads(panel.read_text(encoding='utf-8'))
    # Preserve the panel mesh and its existing orientation/UV structure.

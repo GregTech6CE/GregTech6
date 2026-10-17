@@ -8,7 +8,7 @@ from check_render_resources import check
 
 class ElectronicsResources(unittest.TestCase):
     def test_new_material_forms_have_complete_shared_textures(self):
-        assets=ROOT/'src/main/resources/assets/gregtech/models/item/material'
+        assets=ROOT/'platform-shared/src/main/resources/assets/gregtech/models/item/material'
         paths=[assets/texture/(form+'.json') for texture in ['copper','metallic'] for form in ['boulegt','plategem','plategemtiny']]
         paths += [assets/texture/(form+'.json') for texture in ['rubber','dull'] for form in ['ingot','plate','ring']]
         issues,_=check(paths)

@@ -7,7 +7,7 @@ from pathlib import Path
 import copy
 import json
 
-ROOT = Path(__file__).resolve().parents[1] / 'src/main/resources/assets/gregtech'
+ROOT = Path(__file__).resolve().parents[1] / 'platform-shared/src/main/resources/assets/gregtech'
 SIDES = ('down', 'up', 'north', 'south', 'west', 'east')
 
 def box(lo, hi, texture, **faces):

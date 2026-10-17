@@ -3,6 +3,7 @@ import copy
 import json
 import re
 from pathlib import Path
+SHARED_ASSETS = Path(__file__).resolve().parents[1] / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 from generate_reinforced_chest_assets import specs, ROOT, ASSETS
 
 def generate():
@@ -14,7 +15,7 @@ def generate():
     materials = dict(re.findall(r'new Spec\("([^"]+)", [^,]+\.(\w+),', source))
     names = dict(re.findall(r'^\s*S:gt.multitileentity\.(\d+)=(.*)$', (ROOT.parent / 'GregTech.lang').read_text(encoding='utf-8'), re.M))
     langs = {locale: json.loads((ASSETS / f'lang/{locale}.json').read_text(encoding='utf-8')) for locale in ('en_us','zh_cn')}
-    states = json.loads((ASSETS / 'blockstates/scaffold.json').read_text())
+    states = json.loads((SHARED_ASSETS / 'blockstates/scaffold.json').read_text())
     for suffix, chest_id in specs():
         old_id = chest_id - 500
         name = 'scaffold' if suffix == 'steel' else 'scaffold_' + suffix
@@ -24,14 +25,14 @@ def generate():
             mapping = copy.deepcopy(states)
             for variant in mapping['variants'].values():
                 variant['model'] = variant['model'].replace('tool/scaffold', 'tool/' + name)
-            write(ASSETS / f'blockstates/{name}.json', mapping)
+            write(SHARED_ASSETS / f'blockstates/{name}.json', mapping)
             for design in range(4):
                 tail = '_' + str(design) if design else ''
-                model = json.loads((ASSETS / f'models/block/tool/scaffold{tail}.json').read_text())
+                model = json.loads((SHARED_ASSETS / f'models/block/tool/scaffold{tail}.json').read_text())
                 base = model.get('children', {}).get('base', model)
                 base['textures']['rod'] = texture
-                write(ASSETS / f'models/block/tool/{name}{tail}.json', model)
-            write(ASSETS / f'models/item/{name}.json', {'parent': f'gregtech:block/tool/{name}_1'})
+                write(SHARED_ASSETS / f'models/block/tool/{name}{tail}.json', model)
+            write(SHARED_ASSETS / f'models/item/{name}.json', {'parent': f'gregtech:block/tool/{name}_1'})
         material = re.sub(r'([a-z0-9])([A-Z])', r'\1_\2', materials[suffix]).lower()
         write(ROOT / f'src/main/resources/data/gregtech/recipes/scaffolds/{name}.json', {
             'type': 'gregtech:tool_shaped', '_comment': f'GT6 Loader_MultiTileEntities:147 ({8400 + old_id})',

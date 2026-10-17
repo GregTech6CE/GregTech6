@@ -6,12 +6,23 @@ from pathlib import Path
 from generate_reinforced_chest_assets import specs, ROOT, ASSETS, ORIGINAL
 
 
+SHARED_ASSETS = ROOT / 'platform-shared/src/main/resources/assets/gregtech'
+LANG = ROOT / 'core/src/main/resources/assets/gregtech'
+
+
 def generate(assets=ASSETS):
+    model_root = assets if assets != ASSETS else SHARED_ASSETS
     def write(relative, data):
-        p=assets/relative
+        if relative.startswith(('models/', 'blockstates/')):
+            root = model_root
+        elif relative.startswith('lang/'):
+            root = assets if assets != ASSETS else LANG
+        else:
+            root = assets
+        p=root/relative
         p.parent.mkdir(parents=True,exist_ok=True)
         p.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-    lang={locale:json.loads((ASSETS/f'lang/{locale}.json').read_text(encoding='utf-8')) for locale in ('en_us','zh_cn')}
+    lang={locale:json.loads((LANG/f'lang/{locale}.json').read_text(encoding='utf-8')) for locale in ('en_us','zh_cn')}
     chinese=dict(re.findall(r'^\s*S:gt.multitileentity\.(\d+)=(.*)$',(ROOT.parent/'GregTech.lang').read_text(encoding='utf-8'),re.M))
     textures={}
     for kind,phase in [('mechanical',''),('keylocked',''),('keylocked','_open')]:

@@ -5,6 +5,7 @@ import unittest
 
 PORT = Path(__file__).resolve().parents[2]
 ASSETS = PORT / "src/main/resources/assets/gregtech"
+SHARED_ASSETS = Path(__file__).resolve().parents[2] / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 SOURCE = (PORT.parent / "gregtech6-master/gregtech6-master/src/main/resources"
           / "assets/gregtech/textures/blocks/iconsets")
 ICONS = ("mud", "clay_brown", "turf", "clay_red", "clay_yellow",
@@ -15,9 +16,9 @@ class DiggableAssets(unittest.TestCase):
     def test_original_textures_and_canonical_models(self):
         for icon in ICONS:
             texture = ASSETS / f"textures/block/iconsets/{icon}.png"
-            model = ASSETS / f"models/block/iconsets/{icon}.json"
-            state = ASSETS / f"blockstates/{icon}.json"
-            item = ASSETS / f"models/item/{icon}.json"
+            model = SHARED_ASSETS / f"models/block/iconsets/{icon}.json"
+            state = SHARED_ASSETS / f"blockstates/{icon}.json"
+            item = SHARED_ASSETS / f"models/item/{icon}.json"
             self.assertTrue(texture.is_file(), str(texture))
             self.assertEqual(json.loads(model.read_text(encoding="utf-8"))["textures"]["all"],
                              f"gregtech:block/iconsets/{icon}")
@@ -31,10 +32,10 @@ class DiggableAssets(unittest.TestCase):
 
     def test_legacy_ids_use_real_clay_and_turf_texture(self):
         for block_id, icon in (("diggable_clay", "clay_brown"), ("diggable_peat", "turf")):
-            model = ASSETS / f"models/block/decoration/{block_id}.json"
+            model = SHARED_ASSETS / f"models/block/decoration/{block_id}.json"
             self.assertEqual(json.loads(model.read_text(encoding="utf-8"))["parent"],
                              f"gregtech:block/iconsets/{icon}")
-            self.assertEqual(json.loads((ASSETS / f"models/item/{block_id}.json")
+            self.assertEqual(json.loads((SHARED_ASSETS / f"models/item/{block_id}.json")
                                         .read_text(encoding="utf-8"))["parent"],
                              f"gregtech:block/decoration/{block_id}")
 

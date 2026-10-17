@@ -2,14 +2,15 @@ import json, sys, unittest
 from pathlib import Path
 from PIL import Image
 ROOT=Path(__file__).resolve().parents[2]
-ASSETS=ROOT/'src/main/resources/assets/gregtech'
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
+CORE_ASSETS = ROOT / 'core/src/main/resources/assets/gregtech'
 sys.path.insert(0,str(ROOT/'tools'))
 from restore_misc_block_textures import MAPPING
 from check_render_resources import check
 
 class GlyphAndMiscTests(unittest.TestCase):
     def test_original_character_tile_is_not_the_whole_sheet(self):
-        p=ASSETS/'textures/block/overlays/characters/8.png'
+        p=CORE_ASSETS/'textures/block/overlays/characters/8.png'
         with Image.open(p) as source:
             image=source.convert('RGBA')
             self.assertEqual(image.size,(64,64))
@@ -28,11 +29,11 @@ class GlyphAndMiscTests(unittest.TestCase):
             self.assertIn('SixCellDisplayRenderer.draw',source)
             self.assertIn('DisplayFaceOrientation.rotation(facing)',source)
         for name in ['hex','percent','greater','equal','smaller','scale','liter','eu','kelvin','ru','ton','cubicmeter','cubicdecameter','gibbl','lumin','greg','clock','neutron','lu']+[f'0x{x:x}' for x in range(16)]:
-            self.assertTrue((ASSETS/f'textures/block/overlays/characters/{name}.png').exists(),name)
+            self.assertTrue((CORE_ASSETS/f'textures/block/overlays/characters/{name}.png').exists(),name)
 
     def test_misc_models_have_specific_original_layers(self):
         for name,folder in MAPPING.items():
-            path=ASSETS/f'models/block/misc/{name}.json'
+            path=SHARED_ASSETS/f'models/block/misc/{name}.json'
             model=json.loads(path.read_text(encoding='utf-8'))
             self.assertEqual(model['loader'],'forge:composite')
             self.assertEqual(model['parent'],'minecraft:block/block')
@@ -44,7 +45,7 @@ class GlyphAndMiscTests(unittest.TestCase):
 
     def test_tank_models_cover_all_six_directions(self):
         for name in ['tank_3x3','tank_5x5']:
-            path=ASSETS/f'blockstates/{name}.json'
+            path=CORE_ASSETS/f'blockstates/{name}.json'
             variants=json.loads(path.read_text(encoding='utf-8'))['variants']
             self.assertEqual(set(variants),{f'facing={face}' for face in ['north','south','east','west','up','down']})
             self.assertEqual(variants['facing=up']['x'],270)
@@ -56,7 +57,7 @@ class GlyphAndMiscTests(unittest.TestCase):
               'assembly','assembly_boiler','assembly_tank','part.controller','part.air',
               'part.heat_input','part.fluid_input','part.fluid_output','part.fluid_io']
         for lang in ['en_us','zh_cn']:
-            values=json.loads((ASSETS/f'lang/{lang}.json').read_text(encoding='utf-8'))
+            values=json.loads((CORE_ASSETS/f'lang/{lang}.json').read_text(encoding='utf-8'))
             for key in keys: self.assertTrue(values.get('gregtech.jei.'+key),key)
 
 if __name__=='__main__': unittest.main()

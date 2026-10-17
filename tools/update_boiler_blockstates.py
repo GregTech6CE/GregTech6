@@ -2,7 +2,7 @@
 """Update boiler blockstate JSONs to include HORIZONTAL_FACING variants."""
 import json, os
 
-BASE = "src/main/resources/assets/gregtech"
+BASE = "platform-shared/src/main/resources/assets/gregtech"
 BS_DIR = os.path.join(BASE, "blockstates")
 
 updated = 0

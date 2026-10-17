@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 
 
-ROOT = Path(__file__).resolve().parents[1] / "src/main/resources/assets/gregtech"
+ROOT = Path(__file__).resolve().parents[1] / "platform-shared/src/main/resources/assets/gregtech"
 
 
 def cube(bounds, texture="plate"):

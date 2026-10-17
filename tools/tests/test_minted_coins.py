@@ -6,6 +6,7 @@ import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[2]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ASSETS = ROOT / "src/main/resources/assets/gregtech"
 spec = importlib.util.spec_from_file_location("minted_coins", ROOT / "tools/generate_minted_coin_assets.py")
 generator = importlib.util.module_from_spec(spec)
@@ -44,7 +45,7 @@ class MintedCoins(unittest.TestCase):
             generator.generate(output)
             for path in output.rglob("*.json"):
                 self.assertEqual(path.read_bytes(), (ASSETS / path.relative_to(output)).read_bytes())
-        model = json.loads((ASSETS / "models/item/coin_minted.json").read_text())
+        model = json.loads((SHARED_ASSETS / "models/item/coin_minted.json").read_text())
         heights = {e["to"][1] for e in model["elements"]}
         self.assertEqual(heights, {8.5, 8.75, 9})
         self.assertLess(len(model["elements"]), 256)  # Cut-away corners are genuinely absent.
@@ -55,7 +56,7 @@ class MintedCoins(unittest.TestCase):
 
     def test_item_relief_hides_the_same_internal_faces_as_gt6(self):
         shape = json.loads((ASSETS / "geometry/coin_shape.json").read_text())
-        model = json.loads((ASSETS / "models/item/coin_minted.json").read_text())
+        model = json.loads((SHARED_ASSETS / "models/item/coin_minted.json").read_text())
 
         def depth(x, z):
             return ((shape[0][x] >> z) & 1) + 2 * ((shape[1][x] >> z) & 1)

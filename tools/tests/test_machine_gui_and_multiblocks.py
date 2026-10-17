@@ -2,6 +2,7 @@
 import hashlib
 import json
 from pathlib import Path
+SHARED_ASSETS = Path(__file__).resolve().parents[2] / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 import sys
 import unittest
 
@@ -12,16 +13,16 @@ from check_render_resources import check
 
 class MachineAppearanceTests(unittest.TestCase):
     def test_all_multiblock_resource_graphs(self):
-        issues, _ = check([ASSETS / f'blockstates/{name}.json' for name in MAPPING])
+        issues, _ = check([SHARED_ASSETS / f'blockstates/{name}.json' for name in MAPPING])
         self.assertEqual([], issues)
 
     def test_multiblock_layers_and_item_parent(self):
         for name in MAPPING:
             with self.subTest(name=name):
                 ref = f'gregtech:block/machine/multiblock/{name}'
-                item = json.loads((ASSETS / f'models/item/{name}.json').read_text())
+                item = json.loads((SHARED_ASSETS / f'models/item/{name}.json').read_text())
                 self.assertEqual(ref, item['parent'])
-                model = json.loads((ASSETS / f'models/block/machine/multiblock/{name}.json').read_text())
+                model = json.loads((SHARED_ASSETS / f'models/block/machine/multiblock/{name}.json').read_text())
                 self.assertEqual('forge:composite', model['loader'])
                 faces = model['children']['colored']['elements'][0]['faces']
                 self.assertEqual(6, len(faces))
@@ -39,16 +40,16 @@ class MachineAppearanceTests(unittest.TestCase):
     def test_restored_stone_and_ice_shared_models(self):
         paths = []
         for family in ('stone', 'cube_shiny'):
-            models = list((ASSETS / 'models/item/material' / family).glob('*.json'))
+            models = list((SHARED_ASSETS / 'models/item/material' / family).glob('*.json'))
             self.assertTrue(models, family)
             paths.extend(models)
         issues, _ = check(paths)
         self.assertEqual([], issues)
 
     def test_mortar_variant_resources_and_separate_tint(self):
-        issues, _ = check(list((ASSETS / 'blockstates').glob('mortar_*.json')))
+        issues, _ = check(list((SHARED_ASSETS / 'blockstates').glob('mortar_*.json')))
         self.assertEqual([], issues)
-        model = json.loads((ASSETS / 'models/block/machine/tool/mortar_block.json').read_text())
+        model = json.loads((SHARED_ASSETS / 'models/block/machine/tool/mortar_block.json').read_text())
         elements = model['children']['colored']['elements']
         self.assertTrue(all(f['tintindex'] == 1 for f in elements[-1]['faces'].values()))
         self.assertTrue(all(f['tintindex'] == 0 for part in elements[:-1] for f in part['faces'].values()))

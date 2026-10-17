@@ -6,6 +6,7 @@ from pathlib import Path
 import unittest
 
 ASSETS = Path(__file__).resolve().parents[2] / 'src/main/resources/assets/gregtech'
+SHARED_ASSETS = Path(__file__).resolve().parents[2] / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 
 class AdvancedButtonModelTests(unittest.TestCase):
     def test_legacy_regeneration_preserves_specialized_states(self):
@@ -20,18 +21,19 @@ class AdvancedButtonModelTests(unittest.TestCase):
             root = Path(folder)
             assets = root / 'src/main/resources/assets/gregtech'
             with patch.object(legacy, 'ROOT', root), patch.object(legacy, 'ASSETS', assets), \
-                    patch.object(button, 'ASSETS', assets), \
+                    patch.object(legacy, 'SHARED_ASSETS', assets), \
+                    patch.object(button, 'ASSETS', assets), patch.object(button, 'SHARED_ASSETS', assets), \
                     patch.object(button, 'TARGET', assets / 'textures/block/machines/redstone/buttons/advanced/0/0'), \
                     patch.object(scaffold, 'ROOT', assets):
                 legacy.main()
                 legacy.main()
             for block in ('advanced_button', 'scaffold'):
                 generated = json.loads((assets / f'blockstates/{block}.json').read_text())
-                shipped = json.loads((ASSETS / f'blockstates/{block}.json').read_text())
+                shipped = json.loads((SHARED_ASSETS / f'blockstates/{block}.json').read_text())
                 self.assertEqual(shipped, generated, block)
 
     def test_six_faces_touch_support(self):
-        variants = json.loads((ASSETS / 'blockstates/advanced_button.json').read_text())['variants']
+        variants = json.loads((SHARED_ASSETS / 'blockstates/advanced_button.json').read_text())['variants']
         self.assertEqual(24, len(variants), 'all six faces and both active/lit states must exist')
         directions = {'east': (0, 1), 'west': (0, -1), 'up': (1, 1),
                       'down': (1, -1), 'south': (2, 1), 'north': (2, -1)}

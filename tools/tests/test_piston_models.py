@@ -4,12 +4,13 @@ from pathlib import Path
 import unittest
 
 ASSETS = Path(__file__).resolve().parents[2] / 'src/main/resources/assets/gregtech'
+SHARED_ASSETS = Path(__file__).resolve().parents[2] / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 
 
 class PistonModelTests(unittest.TestCase):
     def test_plate_face_roles_and_separate_core_tint(self):
         for kind in ('electric', 'flux'):
-            model = json.loads((ASSETS / f'models/block/machine/engine/engine_{kind}.json').read_text(encoding='utf-8'))
+            model = json.loads((SHARED_ASSETS / f'models/block/machine/engine/engine_{kind}.json').read_text(encoding='utf-8'))
             for name, child in model['children'].items():
                 for element in child['elements']:
                     for direction, face in element['faces'].items():

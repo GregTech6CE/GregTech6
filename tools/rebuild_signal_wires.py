@@ -1,3 +1,5 @@
+from pathlib import Path
+SHARED_ASSETS = Path(__file__).resolve().parents[1] / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 """GT6 redstone wire resources. Dynamic models reuse the existing original wire/rubber sprites."""
 try:
     from tools.rebuild_panel_covers import ROOT, ASSETS, write
@@ -15,12 +17,12 @@ def main():
         # JSON declares atlas dependencies and a usable south/north item fallback. Baking replaces
         # every state with PipeWireBakedModel, the same geometry path as the existing EU wires.
         faces={side:{'texture':'#body','tintindex':1 if cable else 0} for side in ['down','up','north','south','west','east']}
-        write(ASSETS/f'models/block/signal_wire/{name}.json',{
+        write(SHARED_ASSETS/f'models/block/signal_wire/{name}.json',{
             'parent':'minecraft:block/block','textures':{'body':texture,'particle':texture,
                 'core':'gregtech:block/material_icons/metallic/wire'},
             'elements':[{'from':[a,a,0],'to':[b,b,16],'faces':faces}]})
-        write(ASSETS/f'blockstates/{name}.json',{'variants':{'':{'model':'gregtech:block/signal_wire/'+name}}})
-        write(ASSETS/f'models/item/{name}.json',{'parent':'gregtech:block/signal_wire/'+name})
+        write(SHARED_ASSETS/f'blockstates/{name}.json',{'variants':{'':{'model':'gregtech:block/signal_wire/'+name}}})
+        write(SHARED_ASSETS/f'models/item/{name}.json',{'parent':'gregtech:block/signal_wire/'+name})
     for locale,index in [('en_us',0),('zh_cn',1)]:
         path=ASSETS/f'lang/{locale}.json'; data=json.loads(path.read_text(encoding='utf-8'))
         for material,names in MATERIALS.items():

@@ -7,6 +7,7 @@ import shutil
 ROOT = Path(__file__).resolve().parents[1]
 ORIGINAL = ROOT.parent / 'gregtech6-master/gregtech6-master'
 ASSETS = ROOT / 'src/main/resources/assets/gregtech'
+SHARED_ASSETS = ROOT / 'platform-shared' / 'src' / 'main' / 'resources' / 'assets' / 'gregtech'
 SOURCE = ORIGINAL / 'src/main/resources/assets/gregtech/textures/blocks'
 FAMILIES = {
     'co2_laser': ('machines/lasers/laser_electric', ['lv', 'mv', 'hv', 'ev', 'iv']),
@@ -16,7 +17,9 @@ FAMILIES = {
 }
 
 def write(path, value):
-    path = ASSETS / path
+    relative = Path(path)
+    root = SHARED_ASSETS if relative.parts and relative.parts[0] in ('models', 'blockstates') else ASSETS
+    path = root / relative
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(value, indent=2) + '\n', encoding='utf8')
 

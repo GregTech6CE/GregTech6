@@ -9,6 +9,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ASSETS = ROOT / "src/main/resources/assets/gregtech"
 ORIGINAL = ROOT.parent / "gregtech6-master/gregtech6-master/src/main/java"
 SOURCE = ORIGINAL / "gregtech/loaders/b/Loader_MultiTileEntities.java"
@@ -49,8 +50,8 @@ def expected() -> tuple[dict[Path, bytes], dict[str, str], dict[str, str]]:
         int(match.group(1)): match.group(2)
         for match in re.finditer(r"S:gt\.multitileentity\.(\d+)=(.*)", CHINESE.read_text(encoding="utf-8"))
     }
-    blockstate_template = (ASSETS / "blockstates/engine_rotation_bronze.json").read_bytes()
-    item_template = (ASSETS / "models/item/engine_rotation_bronze.json").read_bytes()
+    blockstate_template = (SHARED_ASSETS / "blockstates/engine_rotation_bronze.json").read_bytes()
+    item_template = (SHARED_ASSETS / "models/item/engine_rotation_bronze.json").read_bytes()
     files: dict[Path, bytes] = {}
     english: dict[str, str] = {}
     chinese: dict[str, str] = {}
@@ -75,8 +76,8 @@ def expected() -> tuple[dict[Path, bytes], dict[str, str], dict[str, str]]:
         key = f"block.gregtech.{block_id}"
         english[key] = f"{name} Rotation Engine"
         chinese[key] = translations[original_id]
-        files[ASSETS / "blockstates" / f"{block_id}.json"] = blockstate_template
-        files[ASSETS / "models/item" / f"{block_id}.json"] = item_template
+        files[SHARED_ASSETS / "blockstates" / f"{block_id}.json"] = blockstate_template
+        files[SHARED_ASSETS / "models/item" / f"{block_id}.json"] = item_template
 
     if len(files) != 26 or len(english) != 13 or len(registered) != 13:
         raise AssertionError("The port must register exactly 13 original rotation engines")
@@ -104,7 +105,7 @@ def lang_bytes(path: Path, entries: dict[str, str]) -> bytes:
 
 def check_textures() -> None:
     for model_name in ("engine_rotation", "engine_rotation_active"):
-        model = json.loads((ASSETS / "models/block/machine/engine" / f"{model_name}.json").read_text(encoding="utf-8"))
+        model = json.loads((SHARED_ASSETS / "models/block/machine/engine" / f"{model_name}.json").read_text(encoding="utf-8"))
         for layer in model["children"].values():
             for texture in layer["textures"].values():
                 namespace, resource = texture.split(":", 1)

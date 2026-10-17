@@ -1,3 +1,5 @@
+from pathlib import Path
+SHARED_ASSETS = Path(__file__).resolve().parents[2] / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 import hashlib
 import json
 import re
@@ -13,7 +15,7 @@ class PanelCoverResources(unittest.TestCase):
             path=f'textures/block/machines/covers/{texture}.png'
             self.assertEqual(hashlib.sha256((ASSETS/path).read_bytes()).hexdigest(),ledger[path]['sha256'],path)
             self.assertTrue(ledger[path]['source'].endswith(f'/machines/covers/{texture}.png'))
-        issues,_=check([ASSETS/f'models/item/{name}.json' for name in MODELS])
+        issues,_=check([SHARED_ASSETS/f'models/item/{name}.json' for name in MODELS])
         self.assertEqual(issues,[])
 
     def test_every_runtime_panel_has_model_recipe_and_bilingual_help(self):

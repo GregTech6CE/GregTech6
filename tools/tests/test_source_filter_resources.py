@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[2]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ASSETS=ROOT/'src/main/resources/assets/gregtech'
 sys.path.insert(0,str(ROOT/'tools'))
 from rebuild_source_filters import FILTERS
@@ -16,7 +17,7 @@ class SourceFilterResources(unittest.TestCase):
         paths=[]
         opposite=dict(zip(DIRECTIONS,('up','down','south','north','east','west')))
         for name,texture,_ in FILTERS:
-            p=ASSETS/f'blockstates/{name}.json';paths.extend([p,ASSETS/f'models/item/{name}.json'])
+            p=SHARED_ASSETS/f'blockstates/{name}.json';paths.extend([p,SHARED_ASSETS/f'models/item/{name}.json'])
             variants=json.loads(p.read_text(encoding='utf-8'))['variants']
             self.assertEqual(len(variants),72)
             for front in DIRECTIONS:
@@ -24,7 +25,7 @@ class SourceFilterResources(unittest.TestCase):
                     for explicit in ['false','true']:
                         actual=secondary if explicit=='true' else opposite[front]
                         self.assertEqual(variants[f'facing={front},secondary={secondary},secondary_set={explicit}']['model'],f'gregtech:block/logistics/{texture}/{front}_{actual}')
-        paths += [ASSETS/f'models/item/{name}.json' for name in ['blank_cover','item_filter','fluid_filter']]
+        paths += [SHARED_ASSETS/f'models/item/{name}.json' for name in ['blank_cover','item_filter','fluid_filter']]
         issues,_=check(paths)
         self.assertFalse(issues)
 

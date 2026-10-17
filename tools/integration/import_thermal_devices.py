@@ -77,25 +77,24 @@ def main():
                 variants.append({'id': id, 'source_id': source_id, 'source_key': source_key,
                                  'en_us': name, 'zh_cn': chinese[source_key], 'folder': folder,
                                  'creative_family': group.lower(), 'source_order': order[source_id]})
-                for platform in ('src', 'neoforge/src'):
-                    root = ns.repo / platform / 'main/resources/assets/gregtech'
-                    model_path = root / f'models/block/machine/energy/{id}.json'
-                    template_id = 'electric_' + ('cooler_' if cooler else 'heater_') + tier
-                    template = json.loads((root / f'models/block/machine/energy/{template_id}.json').read_text(encoding='utf-8'))
-                    if rf:
-                        template = json.loads(json.dumps(template).replace('/cryo_electric/', '/cryo_flux/').replace('/heat_electric/', '/heat_flux/'))
-                        model_path.write_text(json.dumps(template, indent=2) + '\n', encoding='utf-8')
-                        (root / f'models/item/{id}.json').write_text(json.dumps({'parent': f'gregtech:block/machine/energy/{id}'}, indent=2)+'\n', encoding='utf-8')
-                    active = copy.deepcopy(template)
-                    textures = active['children']['layer1']['textures']
-                    for face, texture in textures.items():
-                        textures[face] = texture.replace('/overlay/', '/overlay_active/')
-                    (root / f'models/block/machine/energy/{id}_active.json').write_text(json.dumps(active, indent=2)+'\n', encoding='utf-8')
-                    rotations = {'north': {}, 'east': {'y': 90}, 'south': {'y': 180}, 'west': {'y': 270}, 'up': {'x': 270}, 'down': {'x': 90}}
-                    states = {f'activity={activity},facing={face},waterlogged={str(water).lower()}':
-                              {'model': f'gregtech:block/machine/energy/{id}' + ('_active' if activity else ''), **rotation}
-                              for activity in range(3) for face, rotation in rotations.items() for water in (False, True)}
-                    (root / f'blockstates/{id}.json').write_text(json.dumps({'variants': states}, indent=2)+'\n', encoding='utf-8')
+                root = ns.repo / 'platform-shared/src/main/resources/assets/gregtech'
+                model_path = root / f'models/block/machine/energy/{id}.json'
+                template_id = 'electric_' + ('cooler_' if cooler else 'heater_') + tier
+                template = json.loads((root / f'models/block/machine/energy/{template_id}.json').read_text(encoding='utf-8'))
+                if rf:
+                    template = json.loads(json.dumps(template).replace('/cryo_electric/', '/cryo_flux/').replace('/heat_electric/', '/heat_flux/'))
+                    model_path.write_text(json.dumps(template, indent=2) + '\n', encoding='utf-8')
+                    (root / f'models/item/{id}.json').write_text(json.dumps({'parent': f'gregtech:block/machine/energy/{id}'}, indent=2)+'\n', encoding='utf-8')
+                active = copy.deepcopy(template)
+                textures = active['children']['layer1']['textures']
+                for face, texture in textures.items():
+                    textures[face] = texture.replace('/overlay/', '/overlay_active/')
+                (root / f'models/block/machine/energy/{id}_active.json').write_text(json.dumps(active, indent=2)+'\n', encoding='utf-8')
+                rotations = {'north': {}, 'east': {'y': 90}, 'south': {'y': 180}, 'west': {'y': 270}, 'up': {'x': 270}, 'down': {'x': 90}}
+                states = {f'activity={activity},facing={face},waterlogged={str(water).lower()}':
+                          {'model': f'gregtech:block/machine/energy/{id}' + ('_active' if activity else ''), **rotation}
+                          for activity in range(3) for face, rotation in rotations.items() for water in (False, True)}
+                (root / f'blockstates/{id}.json').write_text(json.dumps({'variants': states}, indent=2)+'\n', encoding='utf-8')
     for locale, data in locales.items():
         (ns.repo / f'core/src/main/resources/assets/gregtech/lang/{locale}.json').write_text(json.dumps(data, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
     catalog = ns.repo / 'core/src/main/java/com/gregtech/gregtech/content/creative/SourceCreativeCatalog.java'

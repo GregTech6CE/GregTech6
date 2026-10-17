@@ -3,6 +3,7 @@ import json
 import shutil
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ASSETS = ROOT / 'src/main/resources/assets/gregtech'
 ORIGINAL = ROOT.parent / 'gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech/textures/blocks/machines/tools/dynamite'
 def generate():
@@ -26,7 +27,7 @@ def generate():
                     for face in faces.values(): face['tintindex']=0
                 children[layer]={'textures': {f:f'gregtech:block/machines/tools/dynamite/{folder}/{f}' for f in ('front','back','side')},
                     'elements':[{'from':[5,5,14 if sunk else 0],'to':[11,11,16],'faces':faces}], 'render_type':'minecraft:cutout'}
-            write(ASSETS/f'models/block/machine/tool/dynamite{suffix}.json', {'parent':'minecraft:block/block','loader':'forge:composite',
+            write(SHARED_ASSETS/f'models/block/machine/tool/dynamite{suffix}.json', {'parent':'minecraft:block/block','loader':'forge:composite',
                 'textures':{'particle':'gregtech:block/machines/tools/dynamite/colored/side'},'children':children})
     states={}
     for facing,x,y in (('north',0,0),('east',0,90),('south',0,180),('west',0,270),('up',270,0),('down',90,0)):
@@ -35,6 +36,6 @@ def generate():
                 suffix=('_active' if active else '')+('_sunk' if sunk else '')
                 states[f'armed={str(active).lower()},facing={facing},sunk={str(sunk).lower()}']={'model':'gregtech:block/machine/tool/dynamite'+suffix,'x':x,'y':y}
     for name in ('dynamite','boomstick','strong_dynamite'):
-        write(ASSETS/f'blockstates/{name}.json',{'variants':states})
-        write(ASSETS/f'models/item/{name}.json',{'parent':'gregtech:block/machine/tool/dynamite'})
+        write(SHARED_ASSETS/f'blockstates/{name}.json',{'variants':states})
+        write(SHARED_ASSETS/f'models/item/{name}.json',{'parent':'gregtech:block/machine/tool/dynamite'})
 if __name__=='__main__': generate()

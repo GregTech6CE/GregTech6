@@ -19,7 +19,9 @@ def generate(assets=ASSETS):
               ([0, 0, 0], [1, 8, 16]), ([15, 0, 0], [16, 8, 16]),
               ([1, 5, 0], [15, 7, 1]), ([1, 5, 15], [15, 7, 16])]
     def write(name, data):
-        path = assets / name
+        relative = Path(name)
+        root = ROOT / "platform-shared/src/main/resources/assets/gregtech" if relative.parts[0] in ("models", "blockstates") else assets
+        path = root / relative
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     faces = {side: {"texture": "#wood"} for side in ("up", "down", "north", "south", "east", "west")}

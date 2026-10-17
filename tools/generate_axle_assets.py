@@ -13,6 +13,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 ASSETS = ROOT / "src/main/resources/assets/gregtech"
 GT6 = ROOT.parent / "gregtech6-master/gregtech6-master"
 GT6_SOURCE = GT6 / "src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java"
@@ -65,7 +66,7 @@ def resource_sets() -> tuple[dict[Path, str], dict[str, str], dict[str, str]]:
             chinese[block_key] = names[original_id]
 
             blockstate = {"variants": {"": {"model": f"gregtech:block/{resource_id}"}}}
-            files[ASSETS / "blockstates" / f"{resource_id}.json"] = pretty(blockstate)
+            files[SHARED_ASSETS / "blockstates" / f"{resource_id}.json"] = pretty(blockstate)
 
             lo = (16 - diameter) / 2
             hi = (16 + diameter) / 2
@@ -89,8 +90,8 @@ def resource_sets() -> tuple[dict[Path, str], dict[str, str], dict[str, str]]:
                 },
                 "elements": [{"from": [lo, lo, 0], "to": [hi, hi, 16], "faces": faces}],
             }
-            files[ASSETS / "models/block" / f"{resource_id}.json"] = pretty(model)
-            files[ASSETS / "models/item" / f"{resource_id}.json"] = pretty(
+            files[SHARED_ASSETS / "models/block" / f"{resource_id}.json"] = pretty(model)
+            files[SHARED_ASSETS / "models/item" / f"{resource_id}.json"] = pretty(
                 {"parent": f"gregtech:block/{resource_id}"}
             )
 

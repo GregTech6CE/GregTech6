@@ -53,30 +53,29 @@ def main():
             locales['en_us'][key], locales['zh_cn'][key] = name, chinese[source_key]
             variants.append({'id': id, 'source_id': source_id, 'source_key': source_key, 'en_us': name,
                              'zh_cn': chinese[source_key], 'source_order': ordinal, 'creative_family': 'magnets'})
-            for platform in ('src', 'neoforge/src'):
-                root = ns.repo/platform/'main/resources/assets/gregtech'
-                state_path = root/f'blockstates/{id}.json'
-                states = json.loads(state_path.read_text())['variants']
-                # These twelve selectors intentionally omit waterlogged and cover both native values.
-                if len(states) != 12: raise ValueError('Expected six facing / two overlay selectors')
-                for key, state in states.items():
-                    properties = dict(pair.split('=') for pair in key.split(','))
-                    if state['model'] != f'gregtech:block/machine/energy/{id}' + ('_active' if properties['active'] == 'true' else ''):
-                        raise ValueError((key,state))
-                for active in (False, True):
-                    model_path = root/f'models/block/machine/energy/{id}{"_active" if active else ""}.json'
-                    model = json.loads(model_path.read_text())
-                    layers = model['children']
-                    for layer, subdir in (('colored', 'colored'), ('overlay', 'overlay_active' if active else 'overlay')):
-                        if not all('/'+folder+'/'+subdir+'/' in t for t in layers[layer]['textures'].values()):
-                            raise ValueError('Incorrect source layer '+str(model_path))
-                    if not all(e['faces'][f].get('tintindex') == 0 for e in layers['colored']['elements'] for f in e['faces']):
-                        raise ValueError('Missing material tint '+str(model_path))
-                    models[str(model_path.relative_to(ns.repo))] = sha(model_path)
-                models[str(state_path.relative_to(ns.repo))] = sha(state_path)
-                item_path = root/f'models/item/{id}.json'
-                if json.loads(item_path.read_text())['parent'] != f'gregtech:block/machine/energy/{id}': raise ValueError(item_path)
-                models[str(item_path.relative_to(ns.repo))] = sha(item_path)
+            root = ns.repo/'platform-shared/src/main/resources/assets/gregtech'
+            state_path = root/f'blockstates/{id}.json'
+            states = json.loads(state_path.read_text())['variants']
+            # These twelve selectors intentionally omit waterlogged and cover both native values.
+            if len(states) != 12: raise ValueError('Expected six facing / two overlay selectors')
+            for key, state in states.items():
+                properties = dict(pair.split('=') for pair in key.split(','))
+                if state['model'] != f'gregtech:block/machine/energy/{id}' + ('_active' if properties['active'] == 'true' else ''):
+                    raise ValueError((key,state))
+            for active in (False, True):
+                model_path = root/f'models/block/machine/energy/{id}{"_active" if active else ""}.json'
+                model = json.loads(model_path.read_text())
+                layers = model['children']
+                for layer, subdir in (('colored', 'colored'), ('overlay', 'overlay_active' if active else 'overlay')):
+                    if not all('/'+folder+'/'+subdir+'/' in t for t in layers[layer]['textures'].values()):
+                        raise ValueError('Incorrect source layer '+str(model_path))
+                if not all(e['faces'][f].get('tintindex') == 0 for e in layers['colored']['elements'] for f in e['faces']):
+                    raise ValueError('Missing material tint '+str(model_path))
+                models[str(model_path.relative_to(ns.repo))] = sha(model_path)
+            models[str(state_path.relative_to(ns.repo))] = sha(state_path)
+            item_path = root/f'models/item/{id}.json'
+            if json.loads(item_path.read_text())['parent'] != f'gregtech:block/machine/energy/{id}': raise ValueError(item_path)
+            models[str(item_path.relative_to(ns.repo))] = sha(item_path)
     for locale, data in locales.items():
         (ns.repo/f'core/src/main/resources/assets/gregtech/lang/{locale}.json').write_text(json.dumps(data, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
     catalog = ns.repo/'core/src/main/java/com/gregtech/gregtech/content/creative/SourceCreativeCatalog.java'

@@ -20,13 +20,14 @@ import pathlib
 import shutil
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
+SHARED_ASSETS = ROOT / "platform-shared" / "src" / "main" / "resources" / "assets" / "gregtech"
 GT6_TEX = pathlib.Path(
     r"F:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main\resources\assets\gregtech"
     r"\textures\items\gt.multiitem.bottles\32761.png")
 ASSETS = ROOT / "src" / "main" / "resources" / "assets" / "gregtech"
 ITEM_ID = "loot_bottle"
 TEXTURE = ASSETS / "textures" / "item" / "bottles" / f"{ITEM_ID}.png"
-MODEL = ASSETS / "models" / "item" / f"{ITEM_ID}.json"
+MODEL = SHARED_ASSETS / "models" / "item" / f"{ITEM_ID}.json"
 
 EN = {
     f"item.gregtech.{ITEM_ID}": "Clouded Bottle",
