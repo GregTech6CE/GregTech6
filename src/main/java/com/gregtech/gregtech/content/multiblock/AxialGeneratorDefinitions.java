@@ -21,7 +21,7 @@ public final class AxialGeneratorDefinitions {
             return Collections.unmodifiableMap(cells);
         }
         public boolean accepts(BlockPos cell, Block block) {
-            if (OriginalGeneratorParameters.usesCopperCoil(steam,cell.getZ())) return block == LargeMachineParts.block(18040);
+            if (OriginalGeneratorParameters.usesCopperCoil(steam,cell.getZ())) return com.gregtech.gregtech.registry.LegacyContentBinding.samePart(block, LargeMachineParts.block(18040));
             return materials.accepts(block) || steam && materials.wallId()==18022 && block==GTMultiblocks.TURBINE_WALL.get();
         }
     }

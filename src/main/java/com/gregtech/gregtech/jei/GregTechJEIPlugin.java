@@ -32,6 +32,13 @@ public final class GregTechJEIPlugin implements IModPlugin {
 
     private Map<RecipeMap,List<ItemStack>> machines = Map.of();
 
+    @Override public void onRuntimeAvailable(mezz.jei.api.runtime.IJeiRuntime runtime) {
+        var aliases = new java.util.ArrayList<ItemStack>();
+        for (var item : net.minecraft.core.registries.BuiltInRegistries.ITEM)
+            if (com.gregtech.gregtech.registry.LegacyContentBinding.legacy(item)) aliases.add(new ItemStack(item));
+        runtime.getIngredientManager().removeIngredientsAtRuntime(mezz.jei.api.constants.VanillaTypes.ITEM_STACK, aliases);
+    }
+
     @Override
     public ResourceLocation getPluginUid() {
         return GregTech.id("jei_plugin");

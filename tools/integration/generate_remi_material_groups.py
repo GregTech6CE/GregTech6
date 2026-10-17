@@ -63,12 +63,23 @@ def resources():
     from remi_functional_groups import resources as functional_resources
     yield from functional_resources(ROOT)
 
+
+def titled_resources():
+    from remi_group_titles import headings
+    language = json.loads((ASSETS / "lang/en_us.json").read_text(encoding="utf-8"))
+    titles = headings(ROOT, language)
+    for path, group in resources():
+        title = "emi.group.gregtech." + path
+        if title in titles:
+            group["name"] = title
+        yield path, group
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
     base = ROOT / "core/src/main/resources/assets/gregtech/stack_groups/material_forms"
-    expected = dict(resources())
+    expected = dict(titled_resources())
     languages = []
     for index, lang in enumerate(("en_us", "zh_cn")):
         file = ASSETS / f"lang/{lang}.json"

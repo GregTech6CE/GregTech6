@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "item.gregtech.canvas_black",
+  "name": "emi.group.gregtech.functional_canvas",
   "contents": [
     "item:gregtech:canvas_black",
     "item:gregtech:canvas_blue",

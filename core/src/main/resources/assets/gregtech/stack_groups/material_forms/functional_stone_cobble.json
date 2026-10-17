@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.stone_basalt_cobble",
+  "name": "emi.group.gregtech.functional_stone_cobble",
   "contents": [
     "item:gregtech:stone_andesite_cobble",
     "item:gregtech:stone_basalt_cobble",

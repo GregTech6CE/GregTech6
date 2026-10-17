@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.stone_basalt_small_tiles_slab",
+  "name": "emi.group.gregtech.functional_stone_small_tiles_slab",
   "contents": [
     "item:gregtech:stone_andesite_small_tiles_slab",
     "item:gregtech:stone_basalt_small_tiles_slab",

@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "item.gregtech.integrated_circuit_0",
+  "name": "emi.group.gregtech.functional_integrated_circuit",
   "contents": [
     "item:gregtech:integrated_circuit_0",
     "item:gregtech:integrated_circuit_1",

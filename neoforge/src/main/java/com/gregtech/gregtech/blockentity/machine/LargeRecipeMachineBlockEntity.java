@@ -97,7 +97,7 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
     @Override protected boolean structureComplete() { return isStructureOk(); }
     protected java.util.List<LargeMachineLayouts.Cell> structureCells() { return LargeMachineLayouts.cells(spec().machineName()); }
     protected boolean validStructureParts() {return true;}
-    protected boolean matchesPart(LargeMachineLayouts.Cell cell,net.minecraft.world.level.block.Block expected,net.minecraft.world.level.block.Block actual) {return actual==expected;}
+    protected boolean matchesPart(LargeMachineLayouts.Cell cell,net.minecraft.world.level.block.Block expected,net.minecraft.world.level.block.Block actual) {return com.gregtech.gregtech.registry.LegacyContentBinding.samePart(actual, expected);}
     @Override public boolean isStructureOk() {
         if(level==null||spec()==null||isRemoved()) return false;
         var layout=structureCells();if(layout==null)return false;

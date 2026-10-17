@@ -1,0 +1,18 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_dense_walls",
+  "contents": [
+    "item:gregtech:dense_adamantium_wall",
+    "item:gregtech:dense_bronze_wall",
+    "item:gregtech:dense_galvanized_steel_wall",
+    "item:gregtech:dense_invar_wall",
+    "item:gregtech:dense_lead_wall",
+    "item:gregtech:dense_steel_wall",
+    "item:gregtech:dense_tantalum_hafnium_carbide_wall",
+    "item:gregtech:dense_titanium_wall",
+    "item:gregtech:dense_tungsten_wall",
+    "item:gregtech:implosion_compressor_wall",
+    "item:gregtech:tank_wall_dense"
+  ],
+  "priority": 110
+}

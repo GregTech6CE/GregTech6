@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "item.gregtech.reactor_rod_9310",
+  "name": "emi.group.gregtech.functional_reactor_rod_depleted",
   "contents": [
     "item:gregtech:reactor_rod_9310",
     "item:gregtech:reactor_rod_9319",

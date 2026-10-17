@@ -5,8 +5,7 @@
     "item:gregtech:massfab_osmiridium_t2",
     "item:gregtech:massfab_osmiridium_t3",
     "item:gregtech:massfab_osmiridium_t4",
-    "item:gregtech:massfab_osmiridium_t5",
-    "item:gregtech:massfab_osmium"
+    "item:gregtech:massfab_osmiridium_t5"
   ],
   "priority": 110
 }

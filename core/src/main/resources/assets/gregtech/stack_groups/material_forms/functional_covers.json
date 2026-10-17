@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "item.gregtech.activity_detector_possible",
+  "name": "emi.group.gregtech.functional_covers",
   "contents": [
     "item:gregtech:activity_detector_possible",
     "item:gregtech:activity_detector_processing",

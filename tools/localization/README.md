@@ -75,8 +75,9 @@ python -X utf8 tools/integration/import_identity_localization.py --source <原�
 旧结构部件可按已确认的材质和原贴图家族复用原部件名称，但必须在 `source.json` 记录名字别名的边界，不把名字当作原编号/配方/完整行为证明。旧中继器按真实能力转接类型取原家族名。工具的编号说明来自共享 `ToolDefinition`；已有独立 LH 行为说明不被空编号说明覆盖，空中文说明也不生成空提示行。双版自检目录须保留明确的平台差异，不用另一个版本不存在的旧 ID 凑齐样本数。
 ## EMI 分组标题的显示投影（2026-10-17）
 
-用户明确要求机器分组标题去掉材质与电压，而具体物品名称保持完整。
+用户明确要求所有分组使用通用标题，去掉代表物品的材质、电压、颜色、种类和口味，而具体物品名称保持完整。
 `tools/integration/remi_group_titles.py` 从既有源绑定名称移除这些限定，保留
-液体／气体等功能类型。派生键仅用于 `emi.group.gregtech.functional_*`；
-`localization.py` 对中英文重新计算并校验，不允许任意填写译文，也不修改原文键、
+液体／气体等功能类型。派生键仅用于 `emi.group.gregtech.*`；
+对无法由一个代表物品描述的类别，`remi_title_labels.py` 固定用户要求的中英文类别词（例如切片器刀片与食用模具），这些是界面标题，不冒充原版物品翻译。
+`localization.py` 对中英文重新计算并校验，也不修改原文键、
 原生物品别名或英文声明。导入工具的 `expected_chinese` 使用相同规则。

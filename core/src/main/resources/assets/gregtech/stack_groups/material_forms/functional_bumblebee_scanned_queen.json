@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "item.gregtech.aero_bumble_scanned_queen",
+  "name": "emi.group.gregtech.functional_bumblebee_scanned_queen",
   "contents": [
     "item:gregtech:aero_bumble_scanned_queen",
     "item:gregtech:alienated_bumblebee_scanned_queen",

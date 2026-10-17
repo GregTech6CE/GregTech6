@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.glass_clear",
+  "name": "emi.group.gregtech.decor_glass_clear",
   "contents": [
     "item:gregtech:glass_clear"
   ],

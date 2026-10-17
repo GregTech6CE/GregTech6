@@ -14,7 +14,7 @@ public final class GasTurbineDefinitions {
         public int outputMaximum() { return output * 2; }
         public int tint() { return GTMaterialRegistry.get(casingMaterial).getColor(); }
         public Block wall() { return wallId == 18022 ? GTMultiblocks.TANK_WALL_DENSE.get() : LargeMachineParts.block(wallId); }
-        public boolean accepts(Block block) { return block == wall() || wallId == 18022 && block == GTMultiblocks.LARGE_GAS_TURBINE_WALL.get(); }
+        public boolean accepts(Block block) { return com.gregtech.gregtech.registry.LegacyContentBinding.samePart(block, wall()) || wallId == 18022 && block == GTMultiblocks.LARGE_GAS_TURBINE_WALL.get(); }
     }
     public static final List<Grade> GRADES=OriginalGeneratorParameters.GRADES.stream().map(p->new Grade(p.id(),p.rotor(),p.casingMaterial(),p.input(),p.output(),p.wallId(),p.hardness())).toList();
     private static final List<RegistryObject<Block>> BLOCKS = new ArrayList<>();

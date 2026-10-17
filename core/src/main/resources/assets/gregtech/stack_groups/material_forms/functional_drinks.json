@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "itemGroup.gregtech.fluids",
+  "name": "emi.group.gregtech.functional_drinks",
   "contents": [
     "item:gregtech:alcopops",
     "item:gregtech:ambrosia",

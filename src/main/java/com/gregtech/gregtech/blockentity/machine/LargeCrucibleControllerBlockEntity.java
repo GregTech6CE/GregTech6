@@ -120,7 +120,7 @@ public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBl
             BlockPos pos=worldPosition.offset(cell.x(),cell.y(),cell.z());
             if(!level.hasChunkAt(pos)){bindings.clear(this::release);return false;}
             if(cell.air()){if(!level.getBlockState(pos).isAir()){bindings.clear(this::release);return false;}continue;}
-            if(!level.getBlockState(pos).is(wall)){bindings.clear(this::release);return false;}
+            if(!com.gregtech.gregtech.registry.LegacyContentBinding.samePart(level.getBlockState(pos).getBlock(), wall)){bindings.clear(this::release);return false;}
             candidates.put(pos,MultiblockLayout.Role.valueOf(cell.role().name()));
         }
         return bindings.update(candidates,

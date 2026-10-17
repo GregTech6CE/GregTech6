@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "item.gregtech.clay_mold",
-  "regex": "^item:gregtech:clay_(?:[a-z0-9_]+_)?mold$",
+  "name": "emi.group.gregtech.functional_clay_molds",
+  "regex": "^item:gregtech:clay_(?:(?:[a-z0-9_]+_)?mold|tap|funnel|jug|measuring_pot|juicer|bowl|comb|basin|crossing|crucible|faucet)$",
   "priority": 120
 }

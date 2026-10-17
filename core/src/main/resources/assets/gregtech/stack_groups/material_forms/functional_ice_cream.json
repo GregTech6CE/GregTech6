@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "item.gregtech.ice_cream",
+  "name": "emi.group.gregtech.functional_ice_cream",
   "contents": [
     "item:gregtech:ananas_ice_cream",
     "item:gregtech:apple_ice_cream",

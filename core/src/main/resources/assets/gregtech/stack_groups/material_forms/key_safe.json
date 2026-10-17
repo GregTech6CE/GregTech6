@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "itemGroup.gregtech.safes",
+  "name": "emi.group.gregtech.key_safe",
   "contents": [
     "item:gregtech:key_safe_adamantium",
     "item:gregtech:key_safe_aluminium",

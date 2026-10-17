@@ -40,6 +40,9 @@ public final class GTDungeonKeys {
     /** GT6's {@code IL.KEYS[aIndex]}, by that array's index. */
     public static GTDungeonKeyItem byIndex(int index) {
         if (index < 0 || index >= ALL.size()) return null;
+        var original = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(
+                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech", MATERIALS.get(index) + "_key"));
+        if (original instanceof GTDungeonKeyItem nativeKey) return nativeKey;
         RegistryObject<GTDungeonKeyItem> key = ALL.get(index);
         return key.isPresent() ? key.get() : null;
     }

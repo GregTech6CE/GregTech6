@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.stone_basalt_smooth",
+  "name": "emi.group.gregtech.functional_stone_smooth",
   "contents": [
     "item:gregtech:stone_andesite_smooth",
     "item:gregtech:stone_basalt_smooth",

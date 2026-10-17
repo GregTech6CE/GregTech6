@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.cfoam_slab",
+  "name": "emi.group.gregtech.decor_cfoam_slab",
   "contents": [
     "item:gregtech:cfoam_slab"
   ],

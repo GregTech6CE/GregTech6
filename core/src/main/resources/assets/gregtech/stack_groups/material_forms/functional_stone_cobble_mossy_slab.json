@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.stone_basalt_cobble_mossy_slab",
+  "name": "emi.group.gregtech.functional_stone_cobble_mossy_slab",
   "contents": [
     "item:gregtech:stone_andesite_cobble_mossy_slab",
     "item:gregtech:stone_basalt_cobble_mossy_slab",

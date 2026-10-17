@@ -1,0 +1,10 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_log_hole",
+  "contents": [
+    "item:gregtech:log_hole_maple",
+    "item:gregtech:log_hole_rainbowood",
+    "item:gregtech:log_hole_rubber"
+  ],
+  "priority": 110
+}

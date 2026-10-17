@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.glass_glow_slab",
+  "name": "emi.group.gregtech.decor_glass_glow_slab",
   "contents": [
     "item:gregtech:glass_glow_slab"
   ],

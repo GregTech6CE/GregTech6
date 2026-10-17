@@ -32,6 +32,10 @@ electromagnet energy_storage transformer
 integrated_circuit sensor compact_sensor fluid_spring bookshelf bars bottle_crate beam
 auto_igniter auto_hammer charging_crafting_table co2_laser laser_absorber
 canvas single_use book large_book glowtus""".split()
+STEMS += """quantum_energizer compact_electric_motor compact_electric_piston compact_force_field_emitter compact_signal_emitter
+spray_paint leaves sapling planks log_hole grassblock robot_arm compass rope bale mortar
+circuit_board circuit_part circuit_plate circuit_wire circuit_wiring crystal_circuit
+magic_research_paper""".split()
 
 def catalog(root):
     java = root / "core/src/main/java/com/gregtech/gregtech"
@@ -41,6 +45,7 @@ def catalog(root):
            if re.fullmatch(r"(?:item|block)\.gregtech\.[a-z0-9_]+", k) and "%" not in v}
     machine_source = (java / "content/machine/BasicMachineCatalog.java").read_text(encoding="utf-8")
     machines = set(re.findall(r'new MachineDef\("([^"]+)"', machine_source))
+    materials = {k.removeprefix("material.gregtech.").replace("_", "") for k in en if k.startswith("material.gregtech.")}
     # Restrict basic-machine groups to exact tier/material registry identities;
     # machine parts and extruder shape items are not machines.
     stems = sorted(set(STEMS) | machines, key=lambda s: (-len(s), s))
@@ -49,7 +54,8 @@ def catalog(root):
         for stem in stems:
             if item != stem and not item.startswith(stem + "_"):
                 continue
-            if stem in machines and (not key.startswith("block.") or item.endswith("_part")):
+            suffix = re.sub(r"_t\d+$", "", item.removeprefix(stem + "_")).replace("_", "")
+            if stem in machines and (not key.startswith("block.") or suffix not in materials):
                 continue
             if stem in {"anvil"} and not key.startswith("block."):
                 continue
@@ -93,6 +99,11 @@ def catalog(root):
             items = ["stone_" + rock + "_" + form + shape for rock in rocks]
             assert all(item in ids for item in items), items
             groups["stone_" + form + shape] = items
+    try:
+        from .remi_catalog_groups import extend
+    except ImportError:
+        from remi_catalog_groups import extend
+    extend(root, groups, ids)
     return {g: sorted(set(items)) for g, items in sorted(groups.items()) if len(set(items)) > 1}, ids
 
 def resources(root):

@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "itemGroup.gregtech.nature_foods",
+  "name": "emi.group.gregtech.functional_foods",
   "contents": [
     "item:gregtech:abyssal_dough",
     "item:gregtech:aero_comb",
@@ -31,14 +31,12 @@
     "item:gregtech:barley",
     "item:gregtech:black_currants",
     "item:gregtech:blackberry",
-    "item:gregtech:blue_clay",
     "item:gregtech:blue_pill",
     "item:gregtech:blueberry",
     "item:gregtech:boar_tusk",
     "item:gregtech:boiled_egg",
     "item:gregtech:boiled_egg_2",
     "item:gregtech:breads",
-    "item:gregtech:brown_clay",
     "item:gregtech:bun",
     "item:gregtech:buns",
     "item:gregtech:butter",
@@ -60,7 +58,6 @@
     "item:gregtech:chum_burger",
     "item:gregtech:chum_on_a_stick",
     "item:gregtech:cinnamon_bark",
-    "item:gregtech:clay_comb",
     "item:gregtech:coconut",
     "item:gregtech:cooked_fish_bar",
     "item:gregtech:cooked_ham",
@@ -181,7 +178,6 @@
     "item:gregtech:raw_rib_eye_steak",
     "item:gregtech:raw_ribs",
     "item:gregtech:raw_veggie_pizza",
-    "item:gregtech:red_clay",
     "item:gregtech:red_currants",
     "item:gregtech:red_grapes",
     "item:gregtech:red_pill",
@@ -226,11 +222,9 @@
     "item:gregtech:veggie_pizza",
     "item:gregtech:veggie_sandwich",
     "item:gregtech:water_comb",
-    "item:gregtech:white_clay",
     "item:gregtech:white_currants",
     "item:gregtech:white_grapes",
-    "item:gregtech:white_raisins",
-    "item:gregtech:yellow_clay"
+    "item:gregtech:white_raisins"
   ],
   "priority": 120
 }

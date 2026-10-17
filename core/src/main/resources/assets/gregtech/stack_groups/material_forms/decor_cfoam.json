@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.cfoam",
+  "name": "emi.group.gregtech.decor_cfoam",
   "contents": [
     "item:gregtech:cfoam",
     "item:gregtech:cfoam_hardened",

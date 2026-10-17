@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.loot_chest_dungeon",
+  "name": "emi.group.gregtech.functional_loot_chest",
   "regex": "^item:gregtech:loot_chest_[a-z0-9_]+$",
   "priority": 120
 }

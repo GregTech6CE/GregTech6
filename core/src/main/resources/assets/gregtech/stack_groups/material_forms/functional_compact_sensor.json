@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "item.gregtech.compact_sensor_ev",
+  "name": "emi.group.gregtech.functional_compact_sensor",
   "contents": [
     "item:gregtech:compact_sensor_ev",
     "item:gregtech:compact_sensor_hv",

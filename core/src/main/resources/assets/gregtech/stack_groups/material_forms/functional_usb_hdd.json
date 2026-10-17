@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_usb_hdd",
+  "contents": [
+    "item:gregtech:usb1_hdd",
+    "item:gregtech:usb2_hdd",
+    "item:gregtech:usb3_hdd",
+    "item:gregtech:usb4_hdd"
+  ],
+  "priority": 110
+}

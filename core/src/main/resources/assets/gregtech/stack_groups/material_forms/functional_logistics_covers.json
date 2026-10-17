@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "item.gregtech.filtered_logistics_export_bus_fluid",
+  "name": "emi.group.gregtech.functional_logistics_covers",
   "contents": [
     "item:gregtech:filtered_logistics_export_bus_fluid",
     "item:gregtech:filtered_logistics_export_bus_item",

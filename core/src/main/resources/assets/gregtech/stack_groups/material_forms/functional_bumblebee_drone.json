@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "item.gregtech.aero_bumble_drone",
+  "name": "emi.group.gregtech.functional_bumblebee_drone",
   "contents": [
     "item:gregtech:aero_bumble_drone",
     "item:gregtech:alienated_bumblebee_drone",

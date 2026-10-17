@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "itemGroup.gregtech.safes",
+  "name": "emi.group.gregtech.safe",
   "contents": [
     "item:gregtech:safe",
     "item:gregtech:safe_adamantium",

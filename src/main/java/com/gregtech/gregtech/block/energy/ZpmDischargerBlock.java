@@ -35,7 +35,7 @@ public final class ZpmDischargerBlock extends AutoToolBlock {
         return InteractionResult.sidedSuccess(l.isClientSide);
     }
     @Override public java.util.List<net.minecraft.world.item.ItemStack> getDrops(BlockState s,net.minecraft.world.level.storage.loot.LootParams.Builder b){
-        var stack=new net.minecraft.world.item.ItemStack(this);
+        var stack=new net.minecraft.world.item.ItemStack(com.gregtech.gregtech.registry.LegacyContentBinding.canonicalItem(asItem()));
         if(b.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof ZpmDischargerBlockEntity z)stack.getOrCreateTag().put("BlockEntityTag",com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(z,z.saveWithoutMetadata()));
         return java.util.List.of(stack);
     }

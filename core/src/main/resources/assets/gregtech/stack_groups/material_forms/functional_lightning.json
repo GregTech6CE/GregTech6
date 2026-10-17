@@ -4,12 +4,6 @@
   "contents": [
     "item:gregtech:lightning_aluminium",
     "item:gregtech:lightning_chromium",
-    "item:gregtech:lightning_galvanized_steel",
-    "item:gregtech:lightning_rod",
-    "item:gregtech:lightning_rod_electric_output",
-    "item:gregtech:lightning_rod_main",
-    "item:gregtech:lightning_rod_pillar",
-    "item:gregtech:lightning_rod_wall",
     "item:gregtech:lightning_stainless_steel",
     "item:gregtech:lightning_titanium"
   ],

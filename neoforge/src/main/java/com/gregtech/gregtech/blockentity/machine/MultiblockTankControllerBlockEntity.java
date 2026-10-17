@@ -70,7 +70,7 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
         var candidates=new java.util.LinkedHashMap<BlockPos,com.gregtech.gregtech.api.multiblock.MultiblockLayout.Role>();
         boolean valid=com.gregtech.gregtech.api.multiblock.HollowTankStructure.validate(worldPosition,facing(),size,
                 level::hasChunkAt,pos -> {
-                    if (!level.getBlockState(pos).is(wall)) return false;
+                    if (!com.gregtech.gregtech.registry.LegacyContentBinding.samePart(level.getBlockState(pos).getBlock(), wall)) return false;
                     candidates.put(pos,com.gregtech.gregtech.api.multiblock.MultiblockLayout.Role.FLUID_IO);
                     return true;
                 },pos -> level.getBlockState(pos).isAir());
