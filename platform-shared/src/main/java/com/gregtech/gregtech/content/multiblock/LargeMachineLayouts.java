@@ -22,6 +22,19 @@ public final class LargeMachineLayouts {
         }; }
     }
     public static List<Cell> fromShared(List<SharedLargeMachineLayouts.Cell> cells){return cells==null?null:cells.stream().map(cell->new Cell(cell.right(),cell.up(),cell.back(),cell.part(),Role.valueOf(cell.role().name()))).toList();}
-    private static final Map<String,List<Cell>> DEFINITIONS=create();public static List<Cell> cells(String machine){return DEFINITIONS.get(machine);}public static Set<String> machines(){return DEFINITIONS.keySet();}
-    private static Map<String,List<Cell>> create(){var result=new LinkedHashMap<String,List<Cell>>();for(String machine:SharedLargeMachineLayouts.machines())result.put(machine,fromShared(SharedLargeMachineLayouts.cells(machine)));return Collections.unmodifiableMap(result);}
+    private static final Map<String,List<Cell>> CACHE=new LinkedHashMap<>();
+    static { for (String machine : SharedLargeMachineLayouts.machines()) CACHE.put(machine, fromShared(SharedLargeMachineLayouts.cells(machine))); }
+    public static List<Cell> cells(String machine) {
+        var cached = CACHE.get(machine);
+        if (cached != null) return cached;
+        var shared = SharedLargeMachineLayouts.cells(machine);
+        if (shared == null) return null;
+        var converted = fromShared(shared);
+        CACHE.put(machine, converted);
+        return converted;
+    }
+    public static Set<String> machines() {
+        for (String machine : SharedLargeMachineLayouts.machines()) cells(machine);
+        return Set.copyOf(CACHE.keySet());
+    }
 }

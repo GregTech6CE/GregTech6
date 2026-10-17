@@ -79,11 +79,13 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements EntityBlo
     public BasicMachineBlockEntity createBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         if(basicSpec.machineName().equals("fusionreactor"))return new com.gregtech.gregtech.blockentity.machine.FusionReactorControllerBlockEntity(type,pos,state);
         if(basicSpec.machineName().equals("implosioncompressor"))return new com.gregtech.gregtech.blockentity.machine.ImplosionCompressorControllerBlockEntity(type,pos,state);
-        if(basicSpec.machineName().equals("distillationtower"))return new com.gregtech.gregtech.blockentity.machine.DistillationTowerControllerBlockEntity(type,pos,state);
-        if(basicSpec.machineName().equals("massfab"))return new com.gregtech.gregtech.blockentity.machine.CompactMatterFabricatorBlockEntity(type,pos,state);
-        if(basicSpec.machineName().equals("largemassfab"))return new com.gregtech.gregtech.blockentity.machine.MatterFabricatorBlockEntity(type,pos,state);
-        if(com.gregtech.gregtech.content.multiblock.LargeMachineLayouts.cells(basicSpec.machineName())!=null)return new com.gregtech.gregtech.blockentity.machine.LargeRecipeMachineBlockEntity(type,pos,state);
-        return new BasicMachineBlockEntity(type, pos, state);
+        return switch (basicSpec.controllerKind()) {
+            case DISTILLATION -> new com.gregtech.gregtech.blockentity.machine.DistillationTowerControllerBlockEntity(type,pos,state);
+            case COMPACT_MATTER -> new com.gregtech.gregtech.blockentity.machine.CompactMatterFabricatorBlockEntity(type,pos,state);
+            case MATTER -> new com.gregtech.gregtech.blockentity.machine.MatterFabricatorBlockEntity(type,pos,state);
+            case LARGE_RECIPE -> new com.gregtech.gregtech.blockentity.machine.LargeRecipeMachineBlockEntity(type,pos,state);
+            case BASIC -> new BasicMachineBlockEntity(type, pos, state);
+        };
     }
 
     @Nullable

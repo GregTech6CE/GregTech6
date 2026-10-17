@@ -4,8 +4,11 @@ import com.gregtech.gregtech.api.energy.FaceConfig;
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.MaterialChemistry.WeightedMaterial;
 import com.gregtech.gregtech.api.recipe.RecipeMap;
+import com.gregtech.gregtech.content.multiblock.LargeMachineProcessingRules;
+import com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData;
 import com.gregtech.gregtech.data.GregTechTags;
 import com.gregtech.gregtech.data.MachineRecipeMaps;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.List;
 import java.util.Objects;
@@ -28,7 +31,14 @@ public record BasicMachineSpec(
         /** Minimum energy per tick accepted, from GT6 {@code NBT_INPUT_MIN}. */
         long energyInMin,
         /** Maximum energy per tick accepted, from GT6 {@code NBT_INPUT_MAX}. */
-        long energyInMax
+        long energyInMax,
+        String namespace,
+        MachineControllerKind controllerKind,
+        /** Parts per 10000. Built-in values come from {@link LargeMachineProcessingRules#efficiency}. */
+        int processingEfficiency,
+        /** Constant draw while the machine is not using TU. */
+        boolean constantEnergy,
+        List<String> structureKeys
 ) {
     public BasicMachineSpec {
         if (id == null || !id.matches("[a-z0-9/._-]+"))
@@ -45,7 +55,26 @@ public record BasicMachineSpec(
         if (energyInMin < 1 || energyInMax < energyInMin)
             throw new IllegalArgumentException("Invalid energy range for " + id + ": "
                     + energyInMin + ".." + energyInMax);
+        if (namespace == null || !namespace.matches("[a-z][a-z0-9_]{1,63}"))
+            throw new IllegalArgumentException("Invalid machine namespace: " + namespace);
+        Objects.requireNonNull(controllerKind, "controller kind");
+        if (processingEfficiency < 1 || processingEfficiency > 100_000)
+            throw new IllegalArgumentException("Invalid processing efficiency for " + id);
         constructionMaterials = List.copyOf(constructionMaterials);
+        structureKeys = List.copyOf(structureKeys == null ? List.of() : structureKeys);
+    }
+
+    /** Built-in machines stay in {@code gregtech} and keep the historical name-based rules. */
+    public BasicMachineSpec(String id, GTMaterial material, String machineName, String energyType,
+                            int tier, long energyIn, long energyOut, float hardness, float blastResistance,
+                            FaceConfig faceConfig, List<WeightedMaterial> constructionMaterials,
+                            RecipeMap recipeMap, int parallelLimit, long energyInMin, long energyInMax) {
+        this(id, material, machineName, energyType, tier, energyIn, energyOut, hardness, blastResistance,
+                faceConfig, constructionMaterials, recipeMap, parallelLimit, energyInMin, energyInMax,
+                "gregtech", MachineControllerKind.builtIn(machineName),
+                LargeMachineProcessingRules.efficiency(machineName),
+                LargeMachineProcessingRules.constantEnergy(false, machineName),
+                OriginalLargeRecipeMachineData.structureKeys(machineName));
     }
 
     /**
@@ -107,6 +136,13 @@ public record BasicMachineSpec(
         private List<WeightedMaterial> construction;
         private long energyInMin;
         private long energyInMax;
+        private String namespace = "gregtech";
+        private MachineControllerKind kind;
+        private int efficiency;
+        private boolean efficiencySet;
+        private boolean constantEnergy = true;
+        private boolean constantEnergySet;
+        private List<String> structureKeys;
 
         private Builder(String id, GTMaterial casing) {
             this.id = id; material = casing; machineType = id;
@@ -123,13 +159,26 @@ public record BasicMachineSpec(
         public Builder strength(float hardness, float resistance) { this.hardness = hardness; this.resistance = resistance; return this; }
         public Builder faces(FaceConfig value) { faces = value; return this; }
         public Builder constructionMaterials(List<WeightedMaterial> value) { construction = List.copyOf(value); return this; }
+        public Builder namespace(String value) { namespace = value; return this; }
+        public Builder controllerKind(MachineControllerKind value) { kind = value; return this; }
+        public Builder processingEfficiency(int value) { efficiency = value; efficiencySet = true; return this; }
+        public Builder constantEnergy(boolean value) { constantEnergy = value; constantEnergySet = true; return this; }
+        public Builder structureKeys(List<String> value) { structureKeys = List.copyOf(value); return this; }
         public BasicMachineSpec build() {
             Objects.requireNonNull(energy, "Choose the machine energy type explicitly");
             return new BasicMachineSpec(id, material, machineType, energy.getShortName(), tier, energyIn, energyOut,
                     hardness, resistance, faces, construction, recipes, parallel,
                     energyInMin > 0 ? energyInMin : defaultEnergyInMin(energy.getShortName(), energyIn),
-                    energyInMax > 0 ? energyInMax : defaultEnergyInMax(energy.getShortName(), energyIn));
+                    energyInMax > 0 ? energyInMax : defaultEnergyInMax(energy.getShortName(), energyIn),
+                    namespace,
+                    kind != null ? kind : MachineControllerKind.builtIn(machineType),
+                    efficiencySet ? efficiency : LargeMachineProcessingRules.efficiency(machineType),
+                    constantEnergySet ? constantEnergy : LargeMachineProcessingRules.constantEnergy(false, machineType),
+                    structureKeys != null ? structureKeys : OriginalLargeRecipeMachineData.structureKeys(machineType));
         }
     }
     public String textureFolder() { return machineName; }
+    public ResourceLocation modelId(String suffix) {
+        return ResourceLocation.fromNamespaceAndPath(namespace, "block/machine/basic/" + machineName + suffix);
+    }
 }

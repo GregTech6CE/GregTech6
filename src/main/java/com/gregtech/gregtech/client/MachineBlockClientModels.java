@@ -38,7 +38,7 @@ public final class MachineBlockClientModels {
         java.util.Set<ResourceLocation> shared = new java.util.HashSet<>();
         for (var entry : MachineRegistry.basicMachines()) {
             for (String suffix : new String[]{"", "_running", "_active"}) {
-                var id = GregTech.id("block/machine/basic/" + entry.get().basicSpec().machineName() + suffix);
+                var id = entry.get().basicSpec().modelId(suffix);
                 if (shared.add(id)) event.register(id);
             }
         }
@@ -171,7 +171,7 @@ public final class MachineBlockClientModels {
             BasicMachineSpec spec = block.basicSpec();
 
             // Idle model (base overlay, used for off state)
-            ResourceLocation staticModelId = GregTech.id("block/machine/basic/" + spec.machineName());
+            ResourceLocation staticModelId = spec.modelId("");
             BakedModel staticModel = lookupModel(models, staticModelId);
             if (staticModel == null) {
                 basicMissing++;
@@ -180,12 +180,12 @@ public final class MachineBlockClientModels {
             BakedModel tintedIdleModel = new MaterialBlockBakedModel(staticModel);
 
             // Running model (standby overlay, used when powered but idle)
-            ResourceLocation runningModelId = GregTech.id("block/machine/basic/" + spec.machineName() + "_running");
+            ResourceLocation runningModelId = spec.modelId("_running");
             BakedModel runningRaw = lookupModel(models, runningModelId);
             BakedModel tintedRunningModel = runningRaw != null ? new MaterialBlockBakedModel(runningRaw) : null;
 
             // Active model (working overlay, used when processing recipe)
-            ResourceLocation activeModelId = GregTech.id("block/machine/basic/" + spec.machineName() + "_active");
+            ResourceLocation activeModelId = spec.modelId("_active");
             BakedModel activeRaw = lookupModel(models, activeModelId);
             BakedModel tintedActiveModel = activeRaw != null ? new MaterialBlockBakedModel(activeRaw) : null;
 

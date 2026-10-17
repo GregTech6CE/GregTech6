@@ -30,12 +30,19 @@ public final class BasicMachineRegistries {
  public static List<DeferredHolder<Block,BasicMachineBlock>> all(){return Collections.unmodifiableList(MACHINES);}
  public static List<DeferredHolder<BlockEntityType<?>,BlockEntityType<BasicMachineBlockEntity>>> types(){return Collections.unmodifiableList(TYPES);}
  public static void register(IEventBus bus){
+  var blocks=new LinkedHashMap<String,DeferredRegister<Block>>();
+  var items=new LinkedHashMap<String,DeferredRegister<Item>>();
+  var entities=new LinkedHashMap<String,DeferredRegister<BlockEntityType<?>>>();
+  blocks.put("gregtech",BLOCKS);items.put("gregtech",ITEMS);entities.put("gregtech",ENTITIES);
   for(BasicMachineSpec spec:BasicMachineDefinitions.specifications()){
-
-   var block=BLOCKS.register(spec.id(),()->spec.machineName().equals("distillationtower")?new com.gregtech.gregtech.block.machine.MultiblockControllerBlock(spec,BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(spec.hardness(),spec.blastResistance()).requiresCorrectToolForDrops()):new BasicMachineBlock(spec,BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(spec.hardness(),spec.blastResistance()).requiresCorrectToolForDrops()));
+   String namespace=spec.namespace();
+   var blockReg=blocks.computeIfAbsent(namespace,ns->{var created=DeferredRegister.create(Registries.BLOCK,ns);created.register(bus);return created;});
+   var itemReg=items.computeIfAbsent(namespace,ns->{var created=DeferredRegister.create(Registries.ITEM,ns);created.register(bus);return created;});
+   var entityReg=entities.computeIfAbsent(namespace,ns->{var created=DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE,ns);created.register(bus);return created;});
+   var block=blockReg.register(spec.id(),()->spec.controllerKind()==com.gregtech.gregtech.api.machine.MachineControllerKind.DISTILLATION?new com.gregtech.gregtech.block.machine.MultiblockControllerBlock(spec,BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(spec.hardness(),spec.blastResistance()).requiresCorrectToolForDrops()):new BasicMachineBlock(spec,BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(spec.hardness(),spec.blastResistance()).requiresCorrectToolForDrops()));
    MACHINES.add(block);
-   ITEMS.register(spec.id(),()->new BasicMachineItem(block.get(),new Item.Properties().stacksTo(16)));
-   var type=ENTITIES.register("be_"+spec.id(),()->{
+   itemReg.register(spec.id(),()->new BasicMachineItem(block.get(),new Item.Properties().stacksTo(16)));
+   var type=entityReg.register("be_"+spec.id(),()->{
     AtomicReference<BlockEntityType<BasicMachineBlockEntity>> ref=new AtomicReference<>();
     var value=BlockEntityType.Builder.of((pos,state)->{var be=block.get().createBlockEntity(ref.get(),pos,state);be.setSpec(spec);return be;},block.get()).build(null);
     ref.set(value);block.get().setBeTypeSupplier(()->value);return value;

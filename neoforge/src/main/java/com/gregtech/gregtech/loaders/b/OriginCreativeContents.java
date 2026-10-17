@@ -80,7 +80,12 @@ public final class OriginCreativeContents {
         for(String family:CreativeTabCatalog.FAMILIES)result.put(family,new ArrayList<>());
         var items=new ArrayList<Item>();
         for(var item:BuiltInRegistries.ITEM) {
-            if(!BuiltInRegistries.ITEM.getKey(item).getNamespace().equals("gregtech")||item instanceof MaterialFormItem||item instanceof CreativeTabIconItem)continue;
+            var itemId = BuiltInRegistries.ITEM.getKey(item);
+            boolean addonMachine = item instanceof BlockItem blockItem
+                    && blockItem.getBlock() instanceof com.gregtech.gregtech.block.machine.BasicMachineBlock machine
+                    && !"gregtech".equals(machine.basicSpec().namespace());
+            if ((!itemId.getNamespace().equals("gregtech") && !addonMachine)
+                    || item instanceof MaterialFormItem || item instanceof CreativeTabIconItem) continue;
             if(item instanceof BlockItem b && b.getBlock() instanceof MaterialBlockLike)continue;
             if(java.util.Set.of("fluid_spring","bumble_hive","tap","fluid_funnel","cap_nozzle","nozzle","cure_all").contains(BuiltInRegistries.ITEM.getKey(item).getPath()))continue;
             if(item instanceof com.gregtech.gregtech.platform.neoforge.fluid.FluidDisplayItem fluid && fluid.fluidEntry().isHidden())continue;

@@ -34,7 +34,7 @@ public final class MachineBlockClientModels {
         java.util.Set<ResourceLocation> registered = new java.util.HashSet<>();
         for (var entry : com.gregtech.gregtech.platform.neoforge.machine.BasicMachineRegistries.all()) {
             for (String suffix : new String[]{"", "_running", "_active"}) {
-                ResourceLocation id = ResourceLocation.fromNamespaceAndPath("gregtech", "block/machine/basic/" + entry.get().basicSpec().machineName() + suffix);
+                ResourceLocation id = entry.get().basicSpec().modelId(suffix);
                 if (registered.add(id)) event.register(ModelResourceLocation.standalone(id));
             }
         }
@@ -167,7 +167,7 @@ public final class MachineBlockClientModels {
             BasicMachineSpec spec = block.basicSpec();
 
             // Idle model (base overlay, used for off state)
-            ResourceLocation staticModelId = ResourceLocation.fromNamespaceAndPath("gregtech","block/machine/basic/" + spec.machineName());
+            ResourceLocation staticModelId = spec.modelId("");
             BakedModel staticModel = lookupModel(models, staticModelId);
             if (staticModel == null) {
                 basicMissing++;
@@ -176,12 +176,12 @@ public final class MachineBlockClientModels {
             BakedModel tintedIdleModel = new MaterialBlockBakedModel(staticModel);
 
             // Running model (standby overlay, used when powered but idle)
-            ResourceLocation runningModelId = ResourceLocation.fromNamespaceAndPath("gregtech","block/machine/basic/" + spec.machineName() + "_running");
+            ResourceLocation runningModelId = spec.modelId("_running");
             BakedModel runningRaw = lookupModel(models, runningModelId);
             BakedModel tintedRunningModel = runningRaw != null ? new MaterialBlockBakedModel(runningRaw) : null;
 
             // Active model (working overlay, used when processing recipe)
-            ResourceLocation activeModelId = ResourceLocation.fromNamespaceAndPath("gregtech","block/machine/basic/" + spec.machineName() + "_active");
+            ResourceLocation activeModelId = spec.modelId("_active");
             BakedModel activeRaw = lookupModel(models, activeModelId);
             BakedModel tintedActiveModel = activeRaw != null ? new MaterialBlockBakedModel(activeRaw) : null;
 

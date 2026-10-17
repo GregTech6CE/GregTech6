@@ -13,7 +13,7 @@ public final class RecipeMachines {
     public static Map<RecipeMap,List<ItemStack>> collect() {
         Map<RecipeMap,List<ItemStack>> result=new LinkedHashMap<>();
         for (var entry:MachineRegistry.basicMachines()) if(entry.isPresent() && !entry.get().basicSpec().machineName().equals("fusionreactor"))
-            add(result,MachineRecipeMaps.byMachineName(entry.get().basicSpec().machineName()),new ItemStack(entry.get()));
+            add(result,entry.get().basicSpec().recipeMap(),new ItemStack(entry.get()));
         for (var entry:GTToolBlocks.manual()) if(entry.isPresent())
             add(result,entry.get().kind().recipeMap(),new ItemStack(entry.get()));
         for (var entry:GTToolBlocks.simpleBlocks()) if(entry.isPresent() && entry.get() instanceof com.gregtech.gregtech.block.tool.ProcessingToolBlock tool) {
