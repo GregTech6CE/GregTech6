@@ -46,10 +46,10 @@ public final class GTMiscBlocks {
     public static RegistryObject<FilterBlock> FILTER_OREDICT;
 
     // N8: Extenders (4)
-    public static RegistryObject<ExtenderBlock> EXTENDER_BASIC;
-    public static RegistryObject<ExtenderBlock> EXTENDER_ADVANCED;
-    public static RegistryObject<ExtenderBlock> EXTENDER_ELITE;
-    public static RegistryObject<ExtenderBlock> EXTENDER_WIRELESS;
+    public static RegistryObject<Block> EXTENDER_BASIC;
+    public static RegistryObject<Block> EXTENDER_ADVANCED;
+    public static RegistryObject<Block> EXTENDER_ELITE;
+    public static RegistryObject<Block> EXTENDER_WIRELESS;
     public static final java.util.Map<com.gregtech.gregtech.content.logistics.ExtenderSpec,RegistryObject<SourceExtenderBlock>> SOURCE_EXTENDERS=new java.util.EnumMap<>(com.gregtech.gregtech.content.logistics.ExtenderSpec.class);
     public static Block[] extenderBlocks(){
         return java.util.stream.Stream.concat(java.util.stream.Stream.of(EXTENDER_BASIC.get(),EXTENDER_ADVANCED.get(),EXTENDER_ELITE.get(),EXTENDER_WIRELESS.get()),SOURCE_EXTENDERS.values().stream().map(RegistryObject::get)).toArray(Block[]::new);
@@ -132,10 +132,10 @@ public final class GTMiscBlocks {
         FILTER_OREDICT = reg("filter_oredict", () -> new FilterBlock("oredict", props(MapColor.METAL, 6f)));
 
         // N8: Extenders
-        EXTENDER_BASIC = reg("extender_basic", () -> new ExtenderBlock(props(MapColor.METAL, 4f)));
-        EXTENDER_ADVANCED = reg("extender_advanced", () -> new ExtenderBlock(props(MapColor.METAL, 6f)));
-        EXTENDER_ELITE = reg("extender_elite", () -> new ExtenderBlock(props(MapColor.METAL, 8f)));
-        EXTENDER_WIRELESS = reg("extender_wireless", () -> new ExtenderBlock(props(MapColor.METAL, 10f)));
+        EXTENDER_BASIC = RegistryObject.create(com.gregtech.gregtech.GregTech.id("inventory_tank_extender"), net.minecraftforge.registries.ForgeRegistries.BLOCKS);
+        EXTENDER_ADVANCED = RegistryObject.create(com.gregtech.gregtech.GregTech.id("inventory_tank_extender"), net.minecraftforge.registries.ForgeRegistries.BLOCKS);
+        EXTENDER_ELITE = RegistryObject.create(com.gregtech.gregtech.GregTech.id("inventory_tank_extender"), net.minecraftforge.registries.ForgeRegistries.BLOCKS);
+        EXTENDER_WIRELESS = RegistryObject.create(com.gregtech.gregtech.GregTech.id("inventory_tank_extender"), net.minecraftforge.registries.ForgeRegistries.BLOCKS);
         for(var spec:com.gregtech.gregtech.content.logistics.ExtenderSpec.values()){
             var block=GTBlocks.BLOCKS.register(spec.id,()->new SourceExtenderBlock(spec,props(MapColor.METAL,6f)));
             SOURCE_EXTENDERS.put(spec,block);ALL.add(block);
@@ -171,8 +171,8 @@ public final class GTMiscBlocks {
         reg("long_dist_pipe_tungsten", () -> new LongDistPipeBlock(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.get("long_dist_pipe_tungsten"),longDistanceProperties("long_dist_pipe_tungsten")));
         reg("long_dist_pipe_adamantium", () -> new LongDistPipeBlock(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.get("long_dist_pipe_adamantium"),longDistanceProperties("long_dist_pipe_adamantium")));
         reg("long_dist_pipe_draconium", () -> new LongDistPipeBlock(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.get("long_dist_pipe_draconium"),longDistanceProperties("long_dist_pipe_draconium")));
-        LONG_DIST_PIPE = reg("long_dist_pipe", () -> new LongDistPipeBlock(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.get("long_dist_pipe"), longDistanceProperties("long_dist_pipe")));
-        LONG_DIST_WIRE = reg("long_dist_wire", () -> new LongDistPipeBlock(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.get("long_dist_wire"), longDistanceProperties("long_dist_wire")));
+        LONG_DIST_PIPE = RegistryObject.create(com.gregtech.gregtech.GregTech.id("long_dist_pipe_fluid"), net.minecraftforge.registries.ForgeRegistries.BLOCKS);
+        LONG_DIST_WIRE = RegistryObject.create(com.gregtech.gregtech.GregTech.id("long_dist_wire_ev"), net.minecraftforge.registries.ForgeRegistries.BLOCKS);
         LONG_DIST_ENDPOINT_ITEM = reg("long_dist_endpoint_item", () -> new LongDistEndpointBlock(false, longDistanceProperties("long_dist_endpoint_item")));
         LONG_DIST_ENDPOINT_FLUID = reg("long_dist_endpoint_fluid", () -> new LongDistEndpointBlock(true, longDistanceProperties("long_dist_endpoint_fluid")));
         LONG_DIST_TRANSFORMER_ULV = reg("long_dist_transformer_ulv", () -> new LongDistanceTransformerBlock(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.voltage("long_dist_transformer_ulv"), props(MapColor.METAL, 4f)));

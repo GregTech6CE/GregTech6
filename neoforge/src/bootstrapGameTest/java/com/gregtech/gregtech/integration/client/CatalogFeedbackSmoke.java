@@ -63,8 +63,32 @@ final class CatalogFeedbackSmoke {
         var ingredient = com.gregtech.gregtech.data.MachineRecipeIngredients.resolve("item:gregtech:boiler_wall",
                 com.gregtech.gregtech.content.material.Materials.StainlessSteel, 1);
         require(ingredient.equals(java.util.Map.of("item", "gregtech:tank_wall")), "canonical wall recipe lost");
-        for (var row : com.gregtech.gregtech.data.OriginalSurvivalRecipes.ROWS)
-            require(server.getRecipeManager().byKey(id("survival_repairs/" + row.id())).isPresent(), "missing source crafting recipe " + row.id());
+        for (var row : java.util.stream.Stream.concat(com.gregtech.gregtech.data.OriginalSurvivalRecipes.ROWS.stream(),
+                com.gregtech.gregtech.data.UtilityCraftingRows.ROWS.stream()).toList()) {
+            var recipe=server.getRecipeManager().byKey(id("survival_repairs/" + row.id()));
+            require(recipe.isPresent(), "missing source crafting recipe " + row.id());
+            for (var input : recipe.orElseThrow().value().getIngredients())
+                require(input == net.minecraft.world.item.crafting.Ingredient.EMPTY || input.getItems().length > 0,
+                        "empty crafting ingredient in " + row.id());
+        }
+        require(com.gregtech.gregtech.registry.GTStorageContainers.LOCKERS.size()==60,"incomplete locker metalset");
+        for(var holder:com.gregtech.gregtech.registry.GTStorageContainers.LOCKERS) {
+            var locker=holder.get();
+            require(locker.material()!=null,"uncolored locker");
+            require(locker.newBlockEntity(new BlockPos(0,height,0),locker.defaultBlockState()).getType().isValid(locker.defaultBlockState()),"locker entity rejects material variant");
+        }
+        require(!server.getRecipeManager().byKey(id("fusion/fusion_reactor_main")).isPresent(),"duplicate fusion crafting still loaded");
+        var bath=com.gregtech.gregtech.data.MachineRecipeMaps.Bath;
+        require(com.gregtech.gregtech.api.recipe.MachineGuiCoordinates.item(true,0,bath.mInputItemsCount,bath.mInputFluidCount).y()==16,"Bath input does not align with texture");
+        require(com.gregtech.gregtech.api.recipe.MachineGuiCoordinates.item(false,0,bath.mOutputItemsCount,bath.mOutputFluidCount).y()==16,"Bath output does not align with texture");
+        require(server.getRecipeManager().byKey(id("technology/plastic_lighter_empty")).isPresent(),"missing original plastic lighter recipe");
+        var omitted = new com.google.gson.JsonArray();
+        com.gregtech.gregtech.content.recipe.UtilityProcessingRecipes.UNAVAILABLE_OPTIONAL_FORMS.forEach(omitted::add);
+        receipt.add("unavailableOptionalMaterialForms", omitted);
+        receipt.addProperty("utilityCraftingRows",com.gregtech.gregtech.data.UtilityCraftingRows.ROWS.size());
+        receipt.addProperty("lockerMaterials",60);
+        receipt.addProperty("bathSlotY",16);
+        receipt.addProperty("utilityProcessingRows",com.gregtech.gregtech.content.recipe.UtilityProcessingRecipes.INSTANCE.entries().size());
         require(server.getRecipeManager().byKey(id("bales/bale_grass_pack")).isPresent(), "missing grass bale recipe");
         for (var wood : com.gregtech.gregtech.content.plant.WoodSlabCatalog.WOODS) {
             var slab = BuiltInRegistries.BLOCK.get(id("slab_" + wood));
@@ -72,6 +96,7 @@ final class CatalogFeedbackSmoke {
             require(server.getRecipeManager().byKey(id("catalog_repairs/slab_" + wood)).isPresent(), "missing wood slab recipe " + wood);
         }
         for(var alias : LegacyContentAliases.ALIASES.entrySet()) {
+            require(BuiltInRegistries.ITEM.get(id(alias.getValue())) != net.minecraft.world.item.Items.AIR,"alias points to missing target " + alias);
             require(BuiltInRegistries.ITEM.get(id(alias.getKey())) == BuiltInRegistries.ITEM.get(id(alias.getValue())), "duplicate identity " + alias);
             require(!BuiltInRegistries.ITEM.keySet().contains(id(alias.getKey())), "old item still registered " + alias);
         }

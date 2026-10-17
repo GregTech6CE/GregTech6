@@ -108,12 +108,12 @@
     "layer0": {
       "parent": "minecraft:block/block",
       "textures": {
-        "up": "gregtech:block/machines/lockers/charging/colored/top",
-        "down": "gregtech:block/machines/lockers/charging/colored/bottom",
-        "north": "gregtech:block/machines/lockers/charging/colored/front",
-        "south": "gregtech:block/machines/lockers/charging/colored/back",
-        "west": "gregtech:block/machines/lockers/charging/colored/side",
-        "east": "gregtech:block/machines/lockers/charging/colored/side"
+        "up": "gregtech:block/machines/lockers/normal/colored/top",
+        "down": "gregtech:block/machines/lockers/normal/colored/bottom",
+        "north": "gregtech:block/machines/lockers/normal/colored/front",
+        "south": "gregtech:block/machines/lockers/normal/colored/back",
+        "west": "gregtech:block/machines/lockers/normal/colored/side",
+        "east": "gregtech:block/machines/lockers/normal/colored/side"
       },
       "elements": [
         {
@@ -166,12 +166,12 @@
     "layer1": {
       "parent": "minecraft:block/block",
       "textures": {
-        "up": "gregtech:block/machines/lockers/charging/overlay/top",
-        "down": "gregtech:block/machines/lockers/charging/overlay/bottom",
-        "north": "gregtech:block/machines/lockers/charging/overlay/front",
-        "south": "gregtech:block/machines/lockers/charging/overlay/back",
-        "west": "gregtech:block/machines/lockers/charging/overlay/side",
-        "east": "gregtech:block/machines/lockers/charging/overlay/side"
+        "up": "gregtech:block/machines/lockers/normal/overlay/top",
+        "down": "gregtech:block/machines/lockers/normal/overlay/bottom",
+        "north": "gregtech:block/machines/lockers/normal/overlay/front",
+        "south": "gregtech:block/machines/lockers/normal/overlay/back",
+        "west": "gregtech:block/machines/lockers/normal/overlay/side",
+        "east": "gregtech:block/machines/lockers/normal/overlay/side"
       },
       "elements": [
         {
@@ -218,6 +218,6 @@
   },
   "parent": "minecraft:block/block",
   "textures": {
-    "particle": "gregtech:block/machines/lockers/charging/colored/top"
+    "particle": "gregtech:block/machines/lockers/normal/colored/top"
   }
 }

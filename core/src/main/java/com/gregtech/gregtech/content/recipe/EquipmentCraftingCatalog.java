@@ -4,6 +4,7 @@ package com.gregtech.gregtech.content.recipe;
 public final class EquipmentCraftingCatalog {
     private EquipmentCraftingCatalog() {}
     public static final java.util.List<String> FILES = java.util.List.of(
+            "catalog_repairs/juicer_firing.json",
             "catalog_repairs/compass_north.json",
             "catalog_repairs/slab_blue_mahoe.json",
             "catalog_repairs/slab_bluemahoe.json",
@@ -482,7 +483,6 @@ public final class EquipmentCraftingCatalog {
             "machines/multiblock/large_titanium_crucible.json",
             "machines/multiblock/large_tungsten_crucible.json",
             "machines/multiblock/large_tungstensteel_crucible.json",
-            "machines/multiblock/lightning_rod_wall_from_tungsten_wall.json",
             "machines/multiblock/stainless_steel_boiler_main_barometer.json",
             "machines/multiblock/titanium_boiler_main_barometer.json",
             "machines/multiblock/tungstensteel_boiler_main_barometer.json",
@@ -2007,7 +2007,6 @@ public final class EquipmentCraftingCatalog {
             "diggable/mud_unpack.json",
             "diggable/vanilla_clay_unpack.json",
             "fusion/control_processor_unit.json",
-            "fusion/fusion_reactor_main.json",
             "fusion/fusion_ventilation_unit.json",
             "fusion/logic_processor_unit.json",
             "fusion/versatile_processor_unit.json",
@@ -2247,7 +2246,6 @@ public final class EquipmentCraftingCatalog {
             "long_distance/long_dist_pipe_tungsten.json",
             "long_distance/long_dist_pipe_adamantium.json",
             "long_distance/long_dist_pipe_draconium.json",
-            "long_distance/long_dist_wire.json",
             "long_distance/long_dist_wire_ev.json",
             "long_distance/long_dist_wire_iv.json",
             "long_distance/long_dist_wire_luv.json",

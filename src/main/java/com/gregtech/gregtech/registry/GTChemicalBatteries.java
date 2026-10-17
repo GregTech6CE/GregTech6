@@ -25,12 +25,6 @@ public final class GTChemicalBatteries {
             ALL.add(block);
             GTBlocks.BLOCK_ITEMS.register(spec.id(),()->new ChemicalBatteryItem(block.get()));
         }
-        for(int tier=0;tier<5;tier++){
-            var spec=new ChemicalBatterySpec(ChemicalBatterySpec.Chemistry.LITHIUM_COBALT,tier);
-            String id="battery_eu_"+spec.voltage();
-            var block=GTBlocks.BLOCKS.register(id,()->new ChemicalBatteryBlock(spec));
-            LEGACY.add(block);
-            GTBlocks.BLOCK_ITEMS.register(id,()->new ChemicalBatteryItem(block.get()));
-        }
+
     }
 }

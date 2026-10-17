@@ -13,6 +13,7 @@ import java.util.*;
 /** Named source rows make unresolved ingredients and rejected recipes actionable. */
 public abstract class OriginalRecipeBatch {
     public record Entry(String id, RecipeMap map, Recipe recipe) {}
+    private final Set<String> rowIds = new HashSet<>();
     private final List<Entry> entries = new ArrayList<>();
     public final List<Entry> entries() { return Collections.unmodifiableList(entries); }
     protected final void add(String id, RecipeMap map, long ticks, long power,
@@ -20,7 +21,7 @@ public abstract class OriginalRecipeBatch {
         Recipe recipe = new Recipe(inputs, outputs, null, null, fluids, results, ticks, power, 0);
         for (var stack : recipe.mInputs) if (stack.isEmpty()) throw new IllegalStateException(id + ": empty input");
         for (var stack : recipe.mOutputs) if (stack.isEmpty()) throw new IllegalStateException(id + ": empty output");
-        if (entries.stream().anyMatch(e -> e.id().equals(id))) throw new IllegalStateException("Duplicate source row " + id);
+        if (!rowIds.add(id)) throw new IllegalStateException("Duplicate source row " + id);
         if (map.addRecipe(recipe) == null) throw new IllegalStateException("Rejected " + id + " in " + map);
         entries.add(new Entry(id, map, recipe));
     }

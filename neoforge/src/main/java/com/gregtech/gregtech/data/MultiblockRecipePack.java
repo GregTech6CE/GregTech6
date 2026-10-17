@@ -77,6 +77,7 @@ public final class MultiblockRecipePack extends AbstractPackResources {
         EMITTED.clear();
 
         for (MultiblockCraftingRecipes.Entry entry : MultiblockCraftingRecipes.ENTRIES) {
+            if (com.gregtech.gregtech.registry.LegacyContentAliases.legacy(entry.blockId())) continue;
             ResourceLocation blockId = ResourceLocation.fromNamespaceAndPath("gregtech", entry.blockId());
             Block block = BuiltInRegistries.BLOCK.get(blockId);
             if (block == null || block == net.minecraft.world.level.block.Blocks.AIR) continue;
@@ -94,7 +95,7 @@ public final class MultiblockRecipePack extends AbstractPackResources {
         }
 
         com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original multiblock crafting datapack: {} emitted, {} not registered or unresolved", generated.size(), MultiblockCraftingRecipes.ENTRIES.size()-generated.size());
-        for (var row : OriginalSurvivalRecipes.ROWS) {
+        for (var row : java.util.stream.Stream.concat(OriginalSurvivalRecipes.ROWS.stream(), UtilityCraftingRows.ROWS.stream()).toList()) {
             var blockId = ResourceLocation.fromNamespaceAndPath("gregtech", row.id());
             Item item = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(blockId);
             if (item == null || item == net.minecraft.world.item.Items.AIR)

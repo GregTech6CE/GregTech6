@@ -117,6 +117,7 @@ public final class DyeProcessingRecipes {
         add(MachineRecipeMaps.Canner,new Recipe(new ItemStack[]{item("gregtech:empty_spray_can",1)},new ItemStack[]{item("gregtech:fire_extinguisher_co2",1)},null,null,
                 new FluidStack[]{co2},null,256,16,0));
 
+        UtilityProcessingRecipes.register();
         return ENTRIES.size();
 
     }

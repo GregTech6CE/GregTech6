@@ -76,6 +76,7 @@ public final class DyeProcessingRecipes {
         if(co2==null||co2.isEmpty())throw new IllegalStateException("Missing CO2");
         add(MachineRecipeMaps.Canner,new Recipe(new ItemStack[]{item("gregtech:empty_spray_can",1)},new ItemStack[]{item("gregtech:fire_extinguisher_co2",1)},null,null,
                 new FluidStack[]{co2},null,256,16,0));
+        UtilityProcessingRecipes.register();
         return ENTRIES.size();
     }
     /** GT6 Loader_Recipes_Crops seed oils and Loader_Recipes_Other foam hydration. */

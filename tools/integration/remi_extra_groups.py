@@ -5,7 +5,7 @@ excludes item stacks with identical registry paths and other mods' fluids.
 """
 import re
 
-UNFIRED_CLAY = r"clay_(?:(?:[a-z0-9_]+_)?mold|tap|funnel|jug|measuring_pot|juicer|bowl|comb|basin|crossing|crucible|faucet)"
+UNFIRED_CLAY = r"clay_(?:(?:[a-z0-9_]+_)?mold|tap|funnel|jug|measuring_pot|juicer|bowl|basin|crossing|crucible|faucet)"
 
 
 def resources(root):
@@ -28,7 +28,7 @@ def resources(root):
     # MultiItemFood also registers non-food clay balls. Their explicit clay
     # family must not be swallowed by this higher-priority broad food group.
     foods = [item for item, category in rows if category == "food"
-             and not item.endswith("ice_cream")
+             and item != "clay_comb" and not item.endswith("ice_cream")
              and not re.fullmatch(UNFIRED_CLAY, item)
              and item not in {"blue_clay", "brown_clay", "red_clay", "white_clay", "yellow_clay"}]
     drinks = [item for item, category in rows if category == "bottles"]

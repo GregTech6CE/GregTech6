@@ -26,8 +26,8 @@ public final class LargeCrucibleSpecs {
 
     private static final List<Variant> VARIANTS = OriginalLargeCrucibleParameters.DEFINITIONS.stream().map(d -> new Variant(d.originalId(), d.path(), com.gregtech.gregtech.api.material.GTMaterialRegistry.get(d.material()), d.wallId(), d.hardness(), d.acidProof())).toList();
 
-    /** The older port-only main stays usable in existing test worlds. */
-    public static final Variant LEGACY = new Variant(-1, "large_crucible_main", Materials.StainlessSteel, -1, 5, true);
+    /** Compatibility callers use the sole original stainless-steel vessel. */
+    public static final Variant LEGACY = byOriginalId(17302);
 
     private LargeCrucibleSpecs() {}
 

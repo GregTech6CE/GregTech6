@@ -49,7 +49,7 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
         int count=input?map.mInputItemsCount:map.mOutputItemsCount;
         for(int i=0;i<items.length;i++) {
             if(items[i]==null||items[i].isEmpty()) continue;
-            var point=MachineGuiLayout.item(input,i,count,map.mInputFluidCount+map.mOutputFluidCount);
+            var point=MachineGuiLayout.item(input,i,count,input ? map.mInputFluidCount : map.mOutputFluidCount);
             var itemSlot=builder.addSlot(role,point.x(),point.y()).setSlotName(role.name()+"_item_"+i);
             var choices=input?recipe.viewerInputAlternatives(i):java.util.List.<ItemStack>of();
             if(choices.isEmpty())itemSlot.addItemStack(items[i]);else itemSlot.addItemStacks(choices);
@@ -82,7 +82,7 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
         for(boolean input:new boolean[]{true,false}) {
             int count=input?map.mInputItemsCount:map.mOutputItemsCount;
             for(int i=0;i<count;i++) {
-                var point=MachineGuiLayout.item(input,i,count,map.mInputFluidCount+map.mOutputFluidCount);
+                var point=MachineGuiLayout.item(input,i,count,input ? map.mInputFluidCount : map.mOutputFluidCount);
                 slot.draw(graphics,point.x()-1,point.y()-1);
             }
             int fluids=input?map.mInputFluidCount:map.mOutputFluidCount;

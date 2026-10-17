@@ -11,7 +11,7 @@
       "tag": "forge:plates/wood_treated"
     },
     "B": {
-      "item": "gregtech:bumble_hive"
+      "tag": "gregtech:bumble_hives"
     },
     "T": {
       "tag": "gregtech:screws/any_iron_or_steel"

@@ -83,3 +83,9 @@ LABELS.update({
 })
 
 LABELS["other_gt"] = ("Other GregTech Items", "其他格雷科技物品")
+
+LABELS.update({
+    "special_ores": ("Special Ores", "特殊矿石"),
+    "crystal_ores": ("Crystal Ores", "晶体矿物"),
+    "rock_ores": ("Rock Ores", "岩层矿物"),
+})

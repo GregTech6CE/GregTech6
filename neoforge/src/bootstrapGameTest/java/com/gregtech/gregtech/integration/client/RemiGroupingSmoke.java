@@ -16,7 +16,7 @@ final class RemiGroupingSmoke {
     private static int before, expandedMembers;
     private static JsonObject result;
     private static List<EmiStack> index;
-    private static final String[] REQUIRED = {"tool_head_pickaxe", "tool_head_shovel", "tool_head_axe",
+    private static final String[] REQUIRED = {"functional_locker", "ores", "functional_electrolyzer", "functional_bumble_hive", "tool_head_pickaxe", "tool_head_shovel", "tool_head_axe",
             "block_ingot", "block_solid", "crate_gt64_ingot", "safe", "key_safe",
             "wire_01", "wire_02", "wire_16", "cable_01", "cable_02", "cable_12",
             "pipe_tiny", "pipe_medium", "pipe_quadruple", "pipe_nonuple",
@@ -191,6 +191,10 @@ final class RemiGroupingSmoke {
                 require(order.equals(List.of("electric_motor_lv","electric_motor_mv","electric_motor_hv","electric_motor_ev","electric_motor_iv")), "motors not in voltage order " + order);
                 receipt.addProperty("motorVoltageOrder", String.join(",", order));
             }
+            require(!form.equals("other_gt"), "obsolete catchall folder");
+            if (form.equals("functional_bumble_hive")) require(members.stream().anyMatch(m -> m.getId().getPath().equals("clay_comb")), "clay hive missing");
+            if (form.equals("functional_electrolyzer")) require(members.stream().anyMatch(m -> m.getId().getPath().contains("galvanized_steel")), "LV electrolyzer missing");
+            if (form.equals("functional_locker")) require(members.size()==60,"locker group incomplete");
             counts.addProperty(form, members.size());
         }
         for (String expected : REQUIRED) {

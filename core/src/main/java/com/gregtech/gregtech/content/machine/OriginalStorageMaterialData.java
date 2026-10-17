@@ -89,6 +89,7 @@ public final class OriginalStorageMaterialData {
         add(suffix.equals("steel")?"safe":"safe_"+suffix,id+2000,metal,"wrench",-1,false,MaterialComponent.of(metal,17837820000L));
         add("key_safe_"+suffix,id+3000,metal,"wrench",-1,false,MaterialComponent.of(metal,17837820000L));
         add(suffix.equals("stainless_steel")?"drawer_quad":"drawer_quad_"+suffix,id+4000,metal,"wrench",-1,false,MaterialComponent.of(metal,13261248000L));
+        add(suffix.equals("stainless_steel")?"locker":"locker_"+suffix,id+7300,metal,"wrench",-1,false,MaterialComponent.of(metal,9225216000L));
         add("mass_storage_"+suffix,id+6000,metal,"wrench",-1,false,MaterialComponent.of(metal,11963952000L));
         add("bottle_crate_"+suffix,id+8600,metal,"pickaxe",0,true,MaterialComponent.of(metal,1117116000L));
         add(suffix.equals("steel")?"advanced_crafting_table":"advanced_crafting_table_"+suffix,id+5000,metal,"wrench",-1,false,MaterialComponent.of(metal,2738736000L),MaterialComponent.of(com.gregtech.gregtech.data.generated.GT6Materials.Woods.Wood,2594592000L));

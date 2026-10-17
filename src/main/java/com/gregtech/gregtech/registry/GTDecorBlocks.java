@@ -266,8 +266,7 @@ public final class GTDecorBlocks {
                 SANDWICH_BLOCK.get(), new Item.Properties()));
 
         // WorldgenHives: the wild bumblebee colonies.
-        BUMBLE_HIVE = reg("bumble_hive", () -> new com.gregtech.gregtech.block.misc.BumbleHiveBlock(
-                com.gregtech.gregtech.block.misc.BumbleHiveBlock.properties()));
+        BUMBLE_HIVE = RegistryObject.create(com.gregtech.gregtech.GregTech.id("bumble_hive_light_gray"), net.minecraftforge.registries.ForgeRegistries.BLOCKS);
         for (var color : net.minecraft.world.item.DyeColor.values()) {
             HIVE_VARIANTS.put(color, reg("bumble_hive_" + color.getName(), () ->
                     new com.gregtech.gregtech.block.misc.FixedBumbleHiveBlock(BumbleHiveBlock.properties(), color)));

@@ -1,0 +1,23 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_special_ores",
+  "contents": [
+    "item:gregtech:block_ore_amber",
+    "item:gregtech:block_ore_amethyst",
+    "item:gregtech:block_ore_apatite",
+    "item:gregtech:block_ore_bastnasite",
+    "item:gregtech:block_ore_borax",
+    "item:gregtech:block_ore_cassiterite",
+    "item:gregtech:block_ore_galena",
+    "item:gregtech:block_ore_graphite",
+    "item:gregtech:block_ore_pentlandite",
+    "item:gregtech:block_ore_pitchblende",
+    "item:gregtech:block_ore_ruby",
+    "item:gregtech:block_ore_rutile",
+    "item:gregtech:block_ore_scheelite",
+    "item:gregtech:block_ore_sheldonite",
+    "item:gregtech:block_ore_sulfur",
+    "item:gregtech:block_ore_tetrahedrite"
+  ],
+  "priority": 110
+}

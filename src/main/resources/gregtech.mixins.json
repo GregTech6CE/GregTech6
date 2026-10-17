@@ -35,6 +35,7 @@
     "BlockPaintColorMixin",
     "ItemPaintColorMixin",
     "ColoredBookOpenPacketMixin",
-    "ColoredBookLecternScreenMixin"
+    "ColoredBookLecternScreenMixin",
+    "ReliableEmiNamespaceMixin"
   ]
 }

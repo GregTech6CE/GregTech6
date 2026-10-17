@@ -69,14 +69,7 @@ public final class MultiblockDefinitions {
 
         // Large Crucible multiblock
         LARGE_CRUCIBLE_WALL = part("large_crucible_wall");
-        LARGE_CRUCIBLE_MAIN = GTBlocks.BLOCKS.register("large_crucible_main", () ->
-                new com.gregtech.gregtech.block.machine.LargeCrucibleControllerBlock(
-                        BlockBehaviour.Properties.of()
-                                .mapColor(MapColor.STONE)
-                                .strength(5.0f, 10.0f)
-                                .requiresCorrectToolForDrops()));
-        GTBlocks.BLOCK_ITEMS.register("large_crucible_main",
-                () -> new BlockItem(LARGE_CRUCIBLE_MAIN.get(), new Item.Properties()));
+        LARGE_CRUCIBLE_MAIN = RegistryObject.create(com.gregtech.gregtech.GregTech.id("large_stainless_steel_crucible"), net.minecraftforge.registries.ForgeRegistries.BLOCKS);
 
         // Wave 44 multiblock walls
         CRYO_DISTILLATION_WALL = part("cryo_distillation_wall");

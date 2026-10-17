@@ -18,7 +18,8 @@
     "item:gregtech:bumble_hive_purple",
     "item:gregtech:bumble_hive_red",
     "item:gregtech:bumble_hive_white",
-    "item:gregtech:bumble_hive_yellow"
+    "item:gregtech:bumble_hive_yellow",
+    "item:gregtech:clay_comb"
   ],
   "priority": 110
 }
