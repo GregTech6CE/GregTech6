@@ -23,7 +23,7 @@ public final class GearboxClientSetup {
   var wire=ResourceLocation.fromNamespaceAndPath("gregtech","block/material_icons/metallic/wire");var rubber=ResourceLocation.fromNamespaceAndPath("gregtech","block/material_icons/rubber/pipeside");
   for(var entry:GTGearboxes.allGearboxes()){
    var block=entry.get();var model=new GearboxBakedModel().itemTransforms(transforms);
-   var key=BuiltInRegistries.BLOCK.getKey(block);for(var state:block.getStateDefinition().getPossibleStates())models.put(BlockModelShaper.stateToModelLocation(key,state),model);models.put(ModelResourceLocation.inventory(key),model);
+   var key=BuiltInRegistries.BLOCK.getKey(block);for(var state:block.getStateDefinition().getPossibleStates())models.put(BlockModelShaper.stateToModelLocation(key,state),model);// Keep the baked static housing for item rendering.
   }
  }
 }

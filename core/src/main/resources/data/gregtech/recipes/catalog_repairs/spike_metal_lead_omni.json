@@ -1,0 +1,29 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "TBT",
+    "BPB",
+    "TBT"
+  ],
+  "key": {
+    "B": {
+      "tag": "gregtech:tool_head_sword/lead"
+    },
+    "T": {
+      "tag": "gregtech:screw/lead"
+    },
+    "P": {
+      "tag": "gregtech:plate/lead"
+    }
+  },
+  "result": {
+    "item": "gregtech:spike_metal",
+    "count": 1,
+    "nbt": {
+      "BlockStateTag": {
+        "mode": "omni",
+        "secondary": "true"
+      }
+    }
+  }
+}

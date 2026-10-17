@@ -29,6 +29,8 @@ public final class UtilityProcessingRecipes extends OriginalRecipeBatch {
             int count=java.util.Set.of("LiveRoot","Livingwood","Greatwood").contains(wood)?2:java.util.Set.of("Dreamwood","Shimmerwood","Silverwood").contains(wood)?4:1;
             add("pellet/"+wood,MachineRecipeMaps.Mixer,16L*count,16,items(powder),items(item("gregtech:wood_pellet",count)),fluids(fluid("Glue",25*count)),null);
         }
+        add("pellet_planks",MachineRecipeMaps.Compressor,16,16,items(item("gregtech:wood_pellet",2)),items(item("gregtech:planks_compressed",1)),null,null);
+        add("pellet_coke",MachineRecipeMaps.CokeOven,900,0,items(item("gregtech:wood_pellet",1)),items(mat(MaterialPrefix.chunkGt,"Charcoal",1)),null,fluids(fluid("Oil_Creosote",25)));
         for(String acid:new String[]{"SulfuricAcid","NitricAcid"})
             add("foam_remover/"+acid,MachineRecipeMaps.Canner,256,16,items(item("gregtech:empty_spray_can",1)),items(item("gregtech:c_foam_removal_spray",1)),
                 fluids(com.gregtech.gregtech.loaders.c.GTGeneratedChem.materialFluid(acid,16000)),null);

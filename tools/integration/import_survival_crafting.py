@@ -25,10 +25,16 @@ for source_id,path,material in [
  (32703,'grindstone_block','Steel'), (32702,'sifting_table','Steel'),
  (32709,'ender_garbage_bin','Steel'), (32737,'fluid_thermos','Al'),
  (32758,'greg_lantern','Wood'), (31019,'sensor_tachometer','TinAlloy'),
- (31015,'sensor_electrometer','TinAlloy')]:
+ (31015,'sensor_electrometer','TinAlloy'), (32111,'crank','Fe'),
+ *[(10151+i,'laser_absorber_'+tier,mat) for i,(tier,mat) in enumerate(zip(
+   ['lv','mv','hv','ev','iv'], ['SteelGalvanized','Al','StainlessSteel','Cr','Ti']))],
+ *[(15001+i,'auto_hammer_'+name,mat) for i,(name,mat) in enumerate(zip(
+   ['steel','aluminium','titanium','tungsten'], ['Bronze','Steel','Ti','TungstenSteel']))],
+ *[(15010+i,'auto_igniter_'+name,mat) for i,(name,mat) in enumerate(zip(
+   ['steel','aluminium','stainless','titanium','tungsten','ultimet'], ['TinAlloy','SteelGalvanized','Al','StainlessSteel','Cr','Ti']))]]:
  ids[source_id]=(path,'com.gregtech.gregtech.data.generated.GT6Materials.Woods.Wood' if material=='Wood' else 'ImportedMaterialData.'+material)
 extra_ids={p for n,(p,m) in ids.items() if n in {32711,32701,32065,32704,32703,32702,32709,32737,32758,31019,31015,10050,10051}}
-wanted=lambda p:p in extra_ids or p.startswith(('mold_','crucible_crossing_','crucible_faucet_','burning_box_gas_','spike_')) or p in {'storage_quadcore_processor_unit','bedrock_mining_drill_head','lightning_rod','coke_oven_wall','tank_plastic'}
+wanted=lambda p:p in extra_ids or p.startswith(('mold_','crucible_crossing_','crucible_faucet_','burning_box_gas_','spike_','laser_absorber_','auto_hammer_','auto_igniter_')) or p in {'crank','storage_quadcore_processor_unit','bedrock_mining_drill_head','lightning_rod','coke_oven_wall','tank_plastic'}
 tools={'h':'hammer','w':'wrench','y':'chisel','s':'saw','f':'file','x':'wire_cutter','d':'screwdriver','k':'knife'}
 rows=[];missing=[];evidence=[]
 for line,txt in enumerate(source.splitlines(),1):
@@ -53,14 +59,21 @@ for line,txt in enumerate(source.splitlines(),1):
     if material=='aMat':spec=prefix+':'+form
     else:
      names={'ANY.Cu':'Copper','ANY.Diamond':'Diamond','MT.Ir':'Iridium','MT.NiobiumTitanium':'NiobiumTitanium','MT.Brick':'Brick','ANY.Clay':'Clay','MT.Graphene':'Graphene','ANY.Quartz':'NetherQuartz','MT.Ceramic':'Ceramic','ANY.Plastic':'Plastic','ANY.Iron':'Iron','ANY.Si':'Silicon','MT.Ge':'Germanium','MT.AnnealedCopper':'AnnealedCopper','MT.TinAlloy':'TinAlloy','MT.RedAlloy':'RedAlloy','MT.Lumium':'Lumium','MT.Brass':'Brass','MT.Ag':'Silver','ANY.Stone':'Stone','MT.Bone':'Bone','MT.Endstone':'Endstone','MT.SoulSand':'SoulSand','MT.Sand':'Sand','MT.Obsidian':'Obsidian','MT.EnderEye':'EnderEye'}
+     names['ANY.Steel']='Steel'
      if material not in names:bad.append(exp);continue
      spec=prefix+':'+form+'@'+names[material]
     if form=='stone':
      stone=mat.rsplit('.',1)[-1];slugs={'Basalt':'basalt','GraniteBlack':'granite_black','GraniteRed':'granite_red','Umber':'umber','Livingrock':'livingrock','Holystone':'holystone','Betweenstone':'betweenstone','NetherBrick':'nether_brick'}
      spec='item:minecraft:nether_bricks' if stone=='NetherBrick' else 'item:gregtech:stone_'+slugs.get(stone,stone.lower())+'_stone'
+    if material=='ANY.Steel' and form=='bolt':spec='tag:gregtech:technology/any_steel_bolt'
+    if material=='ANY.Iron' and form in {'gearGt','stick','stickLong'}:
+     spec='tag:gregtech:technology/any_iron_'+{'gearGt':'gear','stick':'rod','stickLong':'long_rod'}[form]
+    if material=='ANY.Si' and form=='plateGem':spec='tag:gregtech:technology/any_silicon_gem_plate'
     keys[key]=spec
    elif exp in {'Blocks.stone','Blocks.brick_block'}:keys[key]='item:minecraft:'+{'Blocks.stone':'stone','Blocks.brick_block':'bricks'}[exp]
    elif re.fullmatch(r'OD_CIRCUITS\[\d+\]',exp):keys[key]='circuit:'+re.search(r'\d+',exp)[0]
+   elif re.fullmatch(r'MT.DATA.CABLES_01\[\d+\]',exp):keys[key]='cabletier:'+re.search(r'\[(\d+)\]',exp)[1]
+   elif exp=='IL.Processor_Crystal_Sapphire':keys[key]='item:gregtech:crystal_processor_sapphire'
    elif exp=='IL.Processor_Crystal_Emerald':keys[key]='item:gregtech:crystal_processor_emerald'
    elif exp=='OD.container1000water':keys[key]='item:minecraft:water_bucket'
    elif exp in {'Blocks.hopper','Blocks.pumpkin'}:keys[key]='item:minecraft:'+exp.removeprefix('Blocks.')

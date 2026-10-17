@@ -29,7 +29,6 @@ public final class GearboxClientModels {
         Map<ResourceLocation, BakedModel> models = event.getModels();
         BlockItemModelHelper.captureFromVanillaBlockItem(models);
         GearboxBakedModel shared = new GearboxBakedModel();
-        BakedModel itemModel = BlockItemClientModels.asBlockItem(shared);
         int replaced = 0;
         for (var entry : GTGearboxes.allGearboxes()) {
             if (!entry.isPresent()) continue;
@@ -40,7 +39,7 @@ public final class GearboxClientModels {
                 models.put(BlockModelShaper.stateToModelLocation(id, state), shared);
                 replaced++;
             }
-            BlockItemClientModels.aliasItemInventory(models, id, itemModel);
+            // Inventory JSON uses the original fresh six-sided housing.
         }
         LOGGER.info("[{}] GT6 custom gearbox face models: {} blockstate variants replaced", GregTech.NAMESPACE, replaced);
     }

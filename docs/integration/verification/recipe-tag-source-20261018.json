@@ -1,0 +1,19 @@
+{
+  "authors": "GregTech-6 Team (2025 source headers)",
+  "license": "LGPL-3.0-or-later; original file notices retained",
+  "scope": "42 crafting rows: 16 machine/hand crank, 20 material/shape spike variants, 6 tape recipes; 2 wood-pellet downstream processing rows",
+  "sources": [
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemRandomTools.java",
+      "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\block\\misc\\BlockBaseSpike.java",
+      "sha256": "e4866643ed5d95731c09cee16a66bb6544f4054e87952d7b0aae55366284abf4"
+    }
+  ]
+}
