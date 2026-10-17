@@ -235,3 +235,5 @@ tasks.register("productionSmokeJar", Jar) {
     }
     from(rootProject.file("tools/integration/production-probe/neoforge"))
 }
+
+apply from: rootProject.file('gradle/platform-shared.gradle')
