@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.printer_aluminium",
+  "name": "emi.group.gregtech.functional_printer",
   "contents": [
     "item:gregtech:printer_aluminium",
     "item:gregtech:printer_chromium",

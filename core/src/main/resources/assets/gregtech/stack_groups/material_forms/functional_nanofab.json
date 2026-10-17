@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.nanofab_aluminium",
+  "name": "emi.group.gregtech.functional_nanofab",
   "contents": [
     "item:gregtech:nanofab_aluminium",
     "item:gregtech:nanofab_chromium",

@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.rollingmill_bronze",
+  "name": "emi.group.gregtech.functional_rollingmill",
   "contents": [
     "item:gregtech:rollingmill_bronze",
     "item:gregtech:rollingmill_steel",

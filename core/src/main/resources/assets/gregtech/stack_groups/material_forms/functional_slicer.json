@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.slicer_aluminium",
+  "name": "emi.group.gregtech.functional_slicer",
   "contents": [
     "item:gregtech:slicer_aluminium",
     "item:gregtech:slicer_chromium",

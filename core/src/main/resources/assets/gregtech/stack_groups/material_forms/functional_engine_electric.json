@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.engine_electric_aluminium",
+  "name": "emi.group.gregtech.functional_engine_electric",
   "contents": [
     "item:gregtech:engine_electric_aluminium",
     "item:gregtech:engine_electric_chromium",

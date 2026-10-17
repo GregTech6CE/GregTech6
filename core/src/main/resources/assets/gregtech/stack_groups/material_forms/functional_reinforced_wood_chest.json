@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.reinforced_wood_chest_arsenic_bronze",
+  "name": "emi.group.gregtech.functional_reinforced_wood_chest",
   "contents": [
     "item:gregtech:reinforced_wood_chest_adamantium",
     "item:gregtech:reinforced_wood_chest_aluminium",

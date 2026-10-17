@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.track_bronze",
+  "name": "emi.group.gregtech.functional_track",
   "contents": [
     "item:gregtech:track_adamantium",
     "item:gregtech:track_aluminium",

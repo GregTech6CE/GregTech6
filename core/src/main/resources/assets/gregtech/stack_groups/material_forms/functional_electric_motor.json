@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.electric_motor_ev",
+  "name": "emi.group.gregtech.functional_electric_motor",
   "contents": [
     "item:gregtech:electric_motor_ev",
     "item:gregtech:electric_motor_hv",

@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.engine_steam_strong_arsenic_bronze",
+  "name": "emi.group.gregtech.functional_engine_steam_strong",
   "contents": [
     "item:gregtech:engine_steam_strong_arsenic_bronze",
     "item:gregtech:engine_steam_strong_arsenic_copper",

@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.advanced_crafting_table_arsenic_bronze",
+  "name": "emi.group.gregtech.functional_advanced_crafting_table",
   "contents": [
     "item:gregtech:advanced_crafting_table",
     "item:gregtech:advanced_crafting_table_adamantium",

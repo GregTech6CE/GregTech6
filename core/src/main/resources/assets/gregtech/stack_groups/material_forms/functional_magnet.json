@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.magnet_alnico",
+  "name": "emi.group.gregtech.functional_magnet",
   "contents": [
     "item:gregtech:magnet_alnico",
     "item:gregtech:magnet_cobalt",

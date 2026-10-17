@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.lightning_aluminium",
+  "name": "emi.group.gregtech.functional_lightning",
   "contents": [
     "item:gregtech:lightning_aluminium",
     "item:gregtech:lightning_chromium",

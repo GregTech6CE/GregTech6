@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.drum_bronze",
+  "name": "emi.group.gregtech.functional_drum",
   "contents": [
     "item:gregtech:drum_adamantium",
     "item:gregtech:drum_awakened_draconium",

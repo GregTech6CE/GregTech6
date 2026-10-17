@@ -42,7 +42,9 @@ def resources():
             "contents": ["#gregtech:" + path],
             # Treated planks have the plate material prefix but are still decorative blocks.
             "exclusions": ["#minecraft:planks", "#gregtech:wooden_planks",
-                           "item:gregtech:planks_treated"], "priority": 100,
+                           "item:gregtech:planks_treated"] + (
+                               ["item:minecraft:glass_pane", "item:minecraft:paper", "item:gregtech:plate_paper"]
+                               if path == "plate" else []), "priority": 100,
         }
     for path, material, _ in transport_groups():
         # Crafting wire/pipe tags only cover selected metals. Match the exact native
@@ -71,9 +73,18 @@ def main():
     for index, lang in enumerate(("en_us", "zh_cn")):
         file = ASSETS / f"lang/{lang}.json"
         language = json.loads(file.read_text(encoding="utf-8"))
+        from remi_group_titles import headings
+        for key, value in headings(ROOT, language).items():
+            if args.check:
+                assert language.get(key) == value, key
+            else:
+                language[key] = value
+        if not args.check:
+            file.write_text(json.dumps(dict(sorted(language.items())), ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         languages.append(language)
     for path, group in expected.items():
-        assert all(group["name"] in lang for lang in languages), group["name"]
+        assert group["name"] in {"block.minecraft.glass_pane", "item.minecraft.paper"} or all(
+                group["name"] in lang for lang in languages), group["name"]
         dest = base / (path + ".json")
         content = json.dumps(group, ensure_ascii=False, indent=2) + "\n"
         if args.check:

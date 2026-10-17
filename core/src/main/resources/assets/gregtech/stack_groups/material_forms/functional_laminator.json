@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.laminator_invar",
+  "name": "emi.group.gregtech.functional_laminator",
   "contents": [
     "item:gregtech:laminator_invar",
     "item:gregtech:laminator_steel",

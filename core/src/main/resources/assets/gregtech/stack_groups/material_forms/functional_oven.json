@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.oven_invar",
+  "name": "emi.group.gregtech.functional_oven",
   "contents": [
     "item:gregtech:oven_invar",
     "item:gregtech:oven_steel",

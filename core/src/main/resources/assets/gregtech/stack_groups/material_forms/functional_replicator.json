@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.replicator_osmiridium_t2",
+  "name": "emi.group.gregtech.functional_replicator",
   "contents": [
     "item:gregtech:replicator_osmiridium_t2",
     "item:gregtech:replicator_osmiridium_t3",

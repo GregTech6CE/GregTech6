@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.panel_asphalt",
+  "name": "emi.group.gregtech.functional_panel_asphalt",
   "contents": [
     "item:gregtech:panel_asphalt",
     "item:gregtech:panel_asphalt_black",

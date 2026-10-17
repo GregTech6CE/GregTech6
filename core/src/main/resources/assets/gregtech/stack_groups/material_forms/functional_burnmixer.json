@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.burnmixer_bronze",
+  "name": "emi.group.gregtech.functional_burnmixer",
   "contents": [
     "item:gregtech:burnmixer_bronze",
     "item:gregtech:burnmixer_steel",

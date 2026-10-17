@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.massfab_osmiridium_t2",
+  "name": "emi.group.gregtech.functional_massfab",
   "contents": [
     "item:gregtech:massfab_osmiridium_t2",
     "item:gregtech:massfab_osmiridium_t3",

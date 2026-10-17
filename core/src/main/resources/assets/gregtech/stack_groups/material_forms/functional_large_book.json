@@ -1,0 +1,21 @@
+{
+  "type": "remi:group",
+  "name": "item.gregtech.large_book_bronze",
+  "contents": [
+    "item:gregtech:large_book_black",
+    "item:gregtech:large_book_blue",
+    "item:gregtech:large_book_bronze",
+    "item:gregtech:large_book_brown",
+    "item:gregtech:large_book_cyan",
+    "item:gregtech:large_book_dictionary",
+    "item:gregtech:large_book_green",
+    "item:gregtech:large_book_magenta",
+    "item:gregtech:large_book_orange",
+    "item:gregtech:large_book_purple",
+    "item:gregtech:large_book_radiation",
+    "item:gregtech:large_book_red",
+    "item:gregtech:large_book_white",
+    "item:gregtech:large_book_yellow"
+  ],
+  "priority": 110
+}

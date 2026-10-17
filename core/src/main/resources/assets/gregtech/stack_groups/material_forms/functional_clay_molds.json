@@ -1,0 +1,6 @@
+{
+  "type": "remi:group",
+  "name": "item.gregtech.clay_mold",
+  "regex": "^item:gregtech:clay_(?:[a-z0-9_]+_)?mold$",
+  "priority": 120
+}

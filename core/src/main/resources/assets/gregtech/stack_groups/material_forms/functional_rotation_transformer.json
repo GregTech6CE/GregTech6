@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.rotation_transformer_arsenic_bronze",
+  "name": "emi.group.gregtech.functional_rotation_transformer",
   "contents": [
     "item:gregtech:rotation_transformer_adamantium",
     "item:gregtech:rotation_transformer_arsenic_bronze",

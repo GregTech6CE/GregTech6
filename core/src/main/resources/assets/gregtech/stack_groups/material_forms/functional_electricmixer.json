@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.electricmixer_aluminium",
+  "name": "emi.group.gregtech.functional_electricmixer",
   "contents": [
     "item:gregtech:electricmixer_aluminium",
     "item:gregtech:electricmixer_chromium",

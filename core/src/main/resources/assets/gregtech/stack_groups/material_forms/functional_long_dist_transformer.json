@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_long_dist_transformer",
+  "contents": [
+    "item:gregtech:long_dist_transformer_lv",
+    "item:gregtech:long_dist_transformer_mv",
+    "item:gregtech:long_dist_transformer_ulv",
+    "item:gregtech:long_dist_transformer_uv",
+    "item:gregtech:long_dist_transformer_zpm"
+  ],
+  "priority": 110
+}

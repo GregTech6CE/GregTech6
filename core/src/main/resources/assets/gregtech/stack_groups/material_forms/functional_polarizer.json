@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.polarizer_aluminium",
+  "name": "emi.group.gregtech.functional_polarizer",
   "contents": [
     "item:gregtech:polarizer_aluminium",
     "item:gregtech:polarizer_chromium",

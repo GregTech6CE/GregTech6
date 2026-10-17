@@ -1,0 +1,10 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.cfoam",
+  "contents": [
+    "item:gregtech:cfoam",
+    "item:gregtech:cfoam_hardened",
+    "item:gregtech:cfoam_hardened_owned"
+  ],
+  "priority": 120
+}

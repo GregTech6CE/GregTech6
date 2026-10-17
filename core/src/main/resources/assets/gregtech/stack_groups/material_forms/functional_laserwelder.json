@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.laserwelder_aluminium",
+  "name": "emi.group.gregtech.functional_laserwelder",
   "contents": [
     "item:gregtech:laserwelder_aluminium",
     "item:gregtech:laserwelder_chromium",

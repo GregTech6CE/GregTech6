@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_auto_hammer",
+  "contents": [
+    "item:gregtech:auto_hammer_aluminium",
+    "item:gregtech:auto_hammer_steel",
+    "item:gregtech:auto_hammer_titanium",
+    "item:gregtech:auto_hammer_tungsten"
+  ],
+  "priority": 110
+}

@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.electrolyzer_aluminium",
+  "name": "emi.group.gregtech.functional_electrolyzer",
   "contents": [
     "item:gregtech:electrolyzer_aluminium",
     "item:gregtech:electrolyzer_chromium",

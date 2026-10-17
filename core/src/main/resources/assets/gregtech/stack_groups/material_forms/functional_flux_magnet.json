@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.flux_magnet_ev",
+  "name": "emi.group.gregtech.functional_flux_magnet",
   "contents": [
     "item:gregtech:flux_magnet_ev",
     "item:gregtech:flux_magnet_hv",

@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.plantalyzer_aluminium",
+  "name": "emi.group.gregtech.functional_plantalyzer",
   "contents": [
     "item:gregtech:plantalyzer_aluminium",
     "item:gregtech:plantalyzer_chromium",

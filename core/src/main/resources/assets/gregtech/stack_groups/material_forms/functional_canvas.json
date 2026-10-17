@@ -1,0 +1,23 @@
+{
+  "type": "remi:group",
+  "name": "item.gregtech.canvas_black",
+  "contents": [
+    "item:gregtech:canvas_black",
+    "item:gregtech:canvas_blue",
+    "item:gregtech:canvas_brown",
+    "item:gregtech:canvas_cyan",
+    "item:gregtech:canvas_gray",
+    "item:gregtech:canvas_green",
+    "item:gregtech:canvas_light_blue",
+    "item:gregtech:canvas_light_gray",
+    "item:gregtech:canvas_lime",
+    "item:gregtech:canvas_magenta",
+    "item:gregtech:canvas_orange",
+    "item:gregtech:canvas_pink",
+    "item:gregtech:canvas_purple",
+    "item:gregtech:canvas_red",
+    "item:gregtech:canvas_white",
+    "item:gregtech:canvas_yellow"
+  ],
+  "priority": 110
+}

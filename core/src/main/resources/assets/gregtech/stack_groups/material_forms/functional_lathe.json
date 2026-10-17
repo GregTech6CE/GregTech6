@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.lathe_bronze",
+  "name": "emi.group.gregtech.functional_lathe",
   "contents": [
     "item:gregtech:lathe_bronze",
     "item:gregtech:lathe_steel",

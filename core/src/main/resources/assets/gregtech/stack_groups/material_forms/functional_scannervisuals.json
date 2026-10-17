@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.scannervisuals_aluminium",
+  "name": "emi.group.gregtech.functional_scannervisuals",
   "contents": [
     "item:gregtech:scannervisuals_aluminium",
     "item:gregtech:scannervisuals_chromium",

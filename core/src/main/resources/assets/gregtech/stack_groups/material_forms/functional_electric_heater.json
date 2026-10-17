@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.electric_heater_ev",
+  "name": "emi.group.gregtech.functional_electric_heater",
   "contents": [
     "item:gregtech:electric_heater_ev",
     "item:gregtech:electric_heater_hv",

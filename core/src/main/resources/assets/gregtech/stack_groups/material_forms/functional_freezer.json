@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.freezer_aluminium",
+  "name": "emi.group.gregtech.functional_freezer",
   "contents": [
     "item:gregtech:freezer_aluminium",
     "item:gregtech:freezer_chromium",

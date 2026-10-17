@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.canner_aluminium",
+  "name": "emi.group.gregtech.functional_canner",
   "contents": [
     "item:gregtech:canner_aluminium",
     "item:gregtech:canner_chromium",

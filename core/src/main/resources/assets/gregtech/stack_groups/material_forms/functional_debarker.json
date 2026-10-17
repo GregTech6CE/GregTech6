@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.debarker_bronze",
+  "name": "emi.group.gregtech.functional_debarker",
   "contents": [
     "item:gregtech:debarker_bronze",
     "item:gregtech:debarker_steel",

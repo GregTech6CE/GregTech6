@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.magnet_electromagnetic_aluminium",
+  "name": "emi.group.gregtech.functional_magnet_electromagnetic",
   "contents": [
     "item:gregtech:magnet_electromagnetic_aluminium",
     "item:gregtech:magnet_electromagnetic_galvanized",

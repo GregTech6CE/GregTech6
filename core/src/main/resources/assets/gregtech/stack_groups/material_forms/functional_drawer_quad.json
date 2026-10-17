@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.drawer_quad_arsenic_bronze",
+  "name": "emi.group.gregtech.functional_drawer_quad",
   "contents": [
     "item:gregtech:drawer_quad",
     "item:gregtech:drawer_quad_adamantium",

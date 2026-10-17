@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.panel_cfoam",
+  "name": "emi.group.gregtech.functional_panel_cfoam",
   "contents": [
     "item:gregtech:panel_cfoam",
     "item:gregtech:panel_cfoam_black",

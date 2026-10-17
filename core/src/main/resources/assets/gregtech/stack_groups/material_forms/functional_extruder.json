@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.extruder_invar",
+  "name": "emi.group.gregtech.functional_extruder",
   "contents": [
     "item:gregtech:extruder_invar",
     "item:gregtech:extruder_steel",

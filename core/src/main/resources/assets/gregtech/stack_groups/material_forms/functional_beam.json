@@ -1,0 +1,32 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_beam",
+  "contents": [
+    "item:gregtech:beam_acacia",
+    "item:gregtech:beam_birch",
+    "item:gregtech:beam_blue_mahoe",
+    "item:gregtech:beam_bluemahoe",
+    "item:gregtech:beam_bluespruce",
+    "item:gregtech:beam_cinnamon",
+    "item:gregtech:beam_coconut",
+    "item:gregtech:beam_darkoak",
+    "item:gregtech:beam_darkwood",
+    "item:gregtech:beam_ebony",
+    "item:gregtech:beam_greatwood",
+    "item:gregtech:beam_hazel",
+    "item:gregtech:beam_jungle",
+    "item:gregtech:beam_maple",
+    "item:gregtech:beam_oak",
+    "item:gregtech:beam_pine",
+    "item:gregtech:beam_rainbowood",
+    "item:gregtech:beam_rubber",
+    "item:gregtech:beam_rubberwood",
+    "item:gregtech:beam_silverwood",
+    "item:gregtech:beam_skyroot",
+    "item:gregtech:beam_spruce",
+    "item:gregtech:beam_white_mahoe",
+    "item:gregtech:beam_willow",
+    "item:gregtech:beam_wood"
+  ],
+  "priority": 110
+}

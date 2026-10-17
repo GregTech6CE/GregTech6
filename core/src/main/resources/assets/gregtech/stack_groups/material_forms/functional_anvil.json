@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.anvil_bronze",
+  "name": "emi.group.gregtech.functional_anvil",
   "contents": [
     "item:gregtech:anvil",
     "item:gregtech:anvil_adamantium",

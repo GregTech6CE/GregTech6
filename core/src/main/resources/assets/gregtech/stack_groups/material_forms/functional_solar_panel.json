@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.solar_panel_germanium",
+  "name": "emi.group.gregtech.functional_solar_panel",
   "contents": [
     "item:gregtech:solar_panel_germanium",
     "item:gregtech:solar_panel_silicon"

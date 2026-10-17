@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.buzzsaw_bronze",
+  "name": "emi.group.gregtech.functional_buzzsaw",
   "contents": [
     "item:gregtech:buzzsaw_bronze",
     "item:gregtech:buzzsaw_steel",

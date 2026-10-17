@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.crucible_crossing_bronze",
+  "name": "emi.group.gregtech.functional_crucible_crossing",
   "contents": [
     "item:gregtech:crucible_crossing_ad",
     "item:gregtech:crucible_crossing_basalt",

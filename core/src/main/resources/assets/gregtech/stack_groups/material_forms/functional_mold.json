@@ -1,6 +1,6 @@
 {
   "type": "remi:group",
-  "name": "block.gregtech.mold_bronze",
+  "name": "emi.group.gregtech.functional_mold",
   "contents": [
     "item:gregtech:mold_ad",
     "item:gregtech:mold_basalt",
