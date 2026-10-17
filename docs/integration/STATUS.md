@@ -1,5 +1,9 @@
 # 整合状态
 
+## 2026-10-16 / 两平台共享平台源码
+
+相同的资源和 Java 收到 `platform-shared`，差几处调用的 32 个类经 `Mc` 垫片合并。验包通过：共享 core 833，Forge 平台 1516，NeoForge 平台 1616，其中共享目录顶层类 301 个算作平台 class，两边平台 class 不要求逐字节相同。只在一边的 486 个 Java 文件已列清单，未补功能。GameTest 整组在 3g 堆上内存溢出，没有跑完，不算通过。本地提交，未推送。见[清单](platform-one-sided-sources.md)、[验包回执](verification/platform-shared-source-artifacts-20261016.json)。
+
 ## 2026-10-12 / 新增半砖九宫格接线
 
 建筑泡沫、发光玻璃所有颜色半砖接入九宫格显示与实际选向；双版按方块能力标记识别，复用既有石材半砖方向算法。双版增量编译 38 秒通过，未新打包或客户端验收。见[范围](verification/slab-grid-20261012.md)。本地提交、未推送。
