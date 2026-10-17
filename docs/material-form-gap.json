@@ -14,16 +14,16 @@
     },
     "DUSTS": {
       "prefix": "dust",
-      "gt6Materials": 948,
-      "portMaterials": 947,
+      "gt6Materials": 952,
+      "portMaterials": 951,
       "examplesMissing": [
         "Magic"
       ]
     },
     "FOILS": {
       "prefix": "foil",
-      "gt6Materials": 457,
-      "portMaterials": 456,
+      "gt6Materials": 461,
+      "portMaterials": 460,
       "examplesMissing": [
         "Magic"
       ]
@@ -78,24 +78,24 @@
     },
     "PLANTS": {
       "prefix": "plantGtFiber",
-      "gt6Materials": 1031,
-      "portMaterials": 1030,
+      "gt6Materials": 1035,
+      "portMaterials": 1034,
       "examplesMissing": [
         "Magic"
       ]
     },
     "PLATES": {
       "prefix": "plate",
-      "gt6Materials": 551,
-      "portMaterials": 550,
+      "gt6Materials": 555,
+      "portMaterials": 554,
       "examplesMissing": [
         "Magic"
       ]
     },
     "PROJECTILES": {
       "prefix": "arrowGtWood",
-      "gt6Materials": 716,
-      "portMaterials": 715,
+      "gt6Materials": 720,
+      "portMaterials": 719,
       "examplesMissing": [
         "Magic"
       ]
@@ -108,8 +108,8 @@
     },
     "STICKS": {
       "prefix": "stick",
-      "gt6Materials": 712,
-      "portMaterials": 711,
+      "gt6Materials": 716,
+      "portMaterials": 715,
       "examplesMissing": [
         "Magic"
       ]
