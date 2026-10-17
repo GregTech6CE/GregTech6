@@ -52,6 +52,12 @@ final class RemiGroupingSmoke {
             index = (List<EmiStack>) manager.getField("indexStacks").get(null);
             List<EmiStack> displayed = displayed(manager);
             check(displayed, receipt, "all");
+            // Check the folder itself: valid individual models do not prove its batched preview draws.
+            var gearboxFolder=displayed.stream().filter(s->groupId(s).endsWith("/functional_gearbox")).findFirst().orElseThrow();
+            require(members(gearboxFolder).size()==13,"gearbox folder contains obsolete sprite identities");
+            require((boolean)gearboxFolder.getClass().getMethod("isUnbatchable").invoke(gearboxFolder),
+                    "gearbox folder still uses blank batch preview path");
+            receipt.addProperty("gearboxFolderUsesOrdinaryItemRendering",true);
             var holes=displayed.stream().filter(s->groupId(s).endsWith("/functional_log_hole")).findFirst().orElseThrow();
             var holeIds=members(holes).stream().map(s->s.getId().getPath()).toList();
             require(holeIds.containsAll(List.of("tapped_maple","tapped_rainbowood")),"tapped logs missing from folder");

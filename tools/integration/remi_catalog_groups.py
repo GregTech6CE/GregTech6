@@ -8,6 +8,11 @@ import re
 
 def extend(root, groups, ids):
     java = root / "core/src/main/java/com/gregtech/gregtech"
+    # A translated sprite name is not a registered gearbox. Match the same 13 tiers
+    # used by both native registries; never include the obsolete bare "gearbox" ID.
+    gearboxes = (java / "content/energy/GearboxCatalog.java").read_text(encoding="utf-8")
+    groups["gearbox"] = ["gearbox_" + suffix for suffix in re.findall(r'new Tier\("([^"]+)"', gearboxes)]
+    assert len(groups["gearbox"]) == 13 and all(item in ids for item in groups["gearbox"])
     def select(group, pattern):
         groups[group] = [i for i in ids if re.fullmatch(pattern, i)]
 

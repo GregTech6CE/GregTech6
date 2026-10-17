@@ -2,7 +2,6 @@
   "type": "remi:group",
   "name": "emi.group.gregtech.functional_gearbox",
   "contents": [
-    "item:gregtech:gearbox",
     "item:gregtech:gearbox_adamantium",
     "item:gregtech:gearbox_arsenic_bronze",
     "item:gregtech:gearbox_arsenic_copper",
