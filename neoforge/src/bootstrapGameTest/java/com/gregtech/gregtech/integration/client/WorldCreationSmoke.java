@@ -21,6 +21,7 @@ import org.slf4j.Logger;
 /** Opt-in fresh normal-world preflight. Bootstrap sources never enter the production jar. */
 public final class WorldCreationSmoke {
     private static final boolean ENABLED = Boolean.getBoolean("gregtech.integration.clientCreateWorldSmoke");
+    private static final boolean REMI_ONLY=Boolean.getBoolean("gregtech.integration.remiGroupingOnly");
     private static final boolean VIEWER_ONLY=Boolean.getBoolean("gregtech.integration.viewerFeedbackOnly");
     private static final boolean PRESENTATION_ONLY=Boolean.getBoolean("gregtech.integration.recipePresentationRuntimeOnly");
     private static final boolean MATERIAL_BUSH_ONLY=Boolean.getBoolean("gregtech.integration.materialBushRuntimeOnly");
@@ -56,14 +57,14 @@ public final class WorldCreationSmoke {
             event.getGuiGraphics().flush();
             if(PRESENTATION_ONLY)RecipePresentationRuntimeSmoke.screen(minecraft,event.getScreen());
             else if(COKE_ONLY){CokeOvenRuntimeSmoke.screen(minecraft,event.getScreen());ColoredBooksRuntimeSmoke.screen(minecraft,event.getScreen());}
-            else if(!LONG_ONLY&&!MATERIAL_BUSH_ONLY&&!PRESENTATION_ONLY&&!NEW_ISSUES_ONLY) LootBrowserSmoke.frame(event.getScreen());
+            else if(!LONG_ONLY&&!MATERIAL_BUSH_ONLY&&!PRESENTATION_ONLY&&!NEW_ISSUES_ONLY&&!REMI_ONLY) LootBrowserSmoke.frame(event.getScreen());
             if (stage == 0 && event.getScreen() instanceof TitleScreen) {
                 minecraft.options.pauseOnLostFocus = false;
-                if(NEW_ISSUES_ONLY){minecraft.options.renderDistance().set(4);minecraft.options.simulationDistance().set(4);}
+                if(NEW_ISSUES_ONLY||REMI_ONLY){minecraft.options.renderDistance().set(4);minecraft.options.simulationDistance().set(4);}
                 var root = minecraft.gameDirectory.toPath().toAbsolutePath().normalize();
                 if (!root.endsWith("world-creation-smoke-run") || Files.exists(root.resolve("saves").resolve(WORLD)))
                     throw new IllegalStateException("Preflight needs an isolated fresh save");
-                OriginFeedbackChecks.registry();
+                if(!REMI_ONLY)OriginFeedbackChecks.registry();
                 stage = 1;
                 CreateWorldScreen.openFresh(minecraft,event.getScreen());
             } else if (stage == 1 && event.getScreen() instanceof CreateWorldScreen creation) {
@@ -89,7 +90,7 @@ public final class WorldCreationSmoke {
     public static void world(net.neoforged.neoforge.client.event.RenderGuiEvent.Post event) {
         if (!ENABLED || TERMINAL.get() || stage < 2 || stage >= 4) return;
         var minecraft = Minecraft.getInstance();
-        if (minecraft.level == null || minecraft.player == null || minecraft.screen != null || minecraft.getOverlay() != null
+        if (minecraft.level == null || minecraft.player == null || minecraft.screen != null && !REMI_ONLY || minecraft.getOverlay() != null
                 || minecraft.getSingleplayerServer() == null) return;
         observedScreen = "in_game";
         try {
@@ -98,6 +99,7 @@ public final class WorldCreationSmoke {
                 var server = minecraft.getSingleplayerServer();
                 probe = server.submit(() -> {
                     var result = receipt();
+                    if(REMI_ONLY)return result;
                     int checked = 0;
                     for (var item : net.minecraft.core.registries.BuiltInRegistries.ITEM) {
                         var input = new ItemStack(item,2); if (input.isEmpty()) continue;
@@ -119,7 +121,7 @@ public final class WorldCreationSmoke {
                         throw new IllegalStateException("Known iron form no longer unifies");
                     int recipes = server.getRecipeManager().getRecipes().size();
                     if (recipes < 1000) throw new IllegalStateException("Incomplete actual recipe registry: " + recipes);
-                    if(!VIEWER_ONLY&&!COKE_ONLY&&!LONG_ONLY&&!MATERIAL_BUSH_ONLY&&!PRESENTATION_ONLY&&!NEW_ISSUES_ONLY) {
+                    if(!VIEWER_ONLY&&!COKE_ONLY&&!LONG_ONLY&&!MATERIAL_BUSH_ONLY&&!PRESENTATION_ONLY&&!NEW_ISSUES_ONLY&&!REMI_ONLY) {
                     checkBatteries(server,result);
                     OriginFeedbackChecks.server(server,result);
                     LootFeedbackChecks.server(server,result);
@@ -146,20 +148,21 @@ public final class WorldCreationSmoke {
             }
             if (++frames < 30 || !probe.isDone() || !emiReady()) return;
             var result = probe.join();
+            if(REMI_ONLY&&!RemiGroupingSmoke.frame(result))return;
             if(NEW_ISSUES_ONLY&&!NewIssuesRuntimeSmoke.client(minecraft,result))return;
             if(PRESENTATION_ONLY){if(!RecipePresentationRuntimeSmoke.frame(minecraft,result))return;}
             else if(COKE_ONLY) {if(!CokeOvenRuntimeSmoke.frame(minecraft,result))return;}
-            else if (!LONG_ONLY&&!MATERIAL_BUSH_ONLY&&!PRESENTATION_ONLY&&!NEW_ISSUES_ONLY && !LootBrowserSmoke.start(result)) return;
+            else if (!LONG_ONLY&&!MATERIAL_BUSH_ONLY&&!PRESENTATION_ONLY&&!NEW_ISSUES_ONLY&&!REMI_ONLY && !LootBrowserSmoke.start(result)) return;
             if(MATERIAL_BUSH_ONLY)MaterialBushRuntimeSmoke.client(minecraft,result);
             if(LONG_ONLY) LongDistanceRuntimeSmoke.client(minecraft,result);
-            if(!VIEWER_ONLY&&!COKE_ONLY&&!LONG_ONLY&&!MATERIAL_BUSH_ONLY&&!PRESENTATION_ONLY&&!NEW_ISSUES_ONLY) {
+            if(!VIEWER_ONLY&&!COKE_ONLY&&!LONG_ONLY&&!MATERIAL_BUSH_ONLY&&!PRESENTATION_ONLY&&!NEW_ISSUES_ONLY&&!REMI_ONLY) {
             MachineFeedbackChecks.client(minecraft,result);
             SurfaceFeedbackChecks.client(minecraft,result);
             SandwichFeedbackChecks.client(minecraft,result);
             CannedFoodFeedbackChecks.client(minecraft,result);
             OriginFeedbackChecks.client(minecraft,result);
             }
-            if(!COKE_ONLY&&!LONG_ONLY&&!MATERIAL_BUSH_ONLY&&!PRESENTATION_ONLY&&!NEW_ISSUES_ONLY&&!ViewerGlassChecks.capture(minecraft,result))return;
+            if(!COKE_ONLY&&!LONG_ONLY&&!MATERIAL_BUSH_ONLY&&!PRESENTATION_ONLY&&!NEW_ISSUES_ONLY&&!REMI_ONLY&&!ViewerGlassChecks.capture(minecraft,result))return;
             result.addProperty("renderedWorldFrames",frames);
             result.addProperty("emiLoaded",EMI_PRESENT);
             if(EMI_PRESENT)result.addProperty("emiPostReloadIndexReady",true);
@@ -167,7 +170,7 @@ public final class WorldCreationSmoke {
                 throw new IllegalStateException("Fresh world has no level.dat");
             stage = 4;
             String file = "world-creation-neoforge-" + ID + ".png";
-            if(!VIEWER_ONLY&&!COKE_ONLY&&!LONG_ONLY&&!MATERIAL_BUSH_ONLY&&!PRESENTATION_ONLY&&!NEW_ISSUES_ONLY) {
+            if(!VIEWER_ONLY&&!COKE_ONLY&&!LONG_ONLY&&!MATERIAL_BUSH_ONLY&&!PRESENTATION_ONLY&&!NEW_ISSUES_ONLY&&!REMI_ONLY) {
             OriginFeedbackChecks.renderInventory(event.getGuiGraphics(),minecraft,result);
             SurfaceFeedbackChecks.render(event.getGuiGraphics(),minecraft,result);
             SandwichFeedbackChecks.render(event.getGuiGraphics(),minecraft,result);

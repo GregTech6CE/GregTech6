@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.steamcracker_invar",
+  "contents": [
+    "item:gregtech:steamcracker_invar",
+    "item:gregtech:steamcracker_steel",
+    "item:gregtech:steamcracker_titanium",
+    "item:gregtech:steamcracker_tungsten_carbide"
+  ],
+  "priority": 110
+}

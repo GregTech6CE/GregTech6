@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.rollformer_bronze",
+  "contents": [
+    "item:gregtech:rollformer_bronze",
+    "item:gregtech:rollformer_steel",
+    "item:gregtech:rollformer_titanium",
+    "item:gregtech:rollformer_tungsten_steel"
+  ],
+  "priority": 110
+}

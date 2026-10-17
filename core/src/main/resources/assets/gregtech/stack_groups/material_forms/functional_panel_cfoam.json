@@ -1,0 +1,24 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.panel_cfoam",
+  "contents": [
+    "item:gregtech:panel_cfoam",
+    "item:gregtech:panel_cfoam_black",
+    "item:gregtech:panel_cfoam_blue",
+    "item:gregtech:panel_cfoam_brown",
+    "item:gregtech:panel_cfoam_cyan",
+    "item:gregtech:panel_cfoam_gray",
+    "item:gregtech:panel_cfoam_green",
+    "item:gregtech:panel_cfoam_light_blue",
+    "item:gregtech:panel_cfoam_light_gray",
+    "item:gregtech:panel_cfoam_lime",
+    "item:gregtech:panel_cfoam_magenta",
+    "item:gregtech:panel_cfoam_orange",
+    "item:gregtech:panel_cfoam_pink",
+    "item:gregtech:panel_cfoam_purple",
+    "item:gregtech:panel_cfoam_red",
+    "item:gregtech:panel_cfoam_white",
+    "item:gregtech:panel_cfoam_yellow"
+  ],
+  "priority": 110
+}

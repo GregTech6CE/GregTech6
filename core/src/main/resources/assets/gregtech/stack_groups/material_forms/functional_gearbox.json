@@ -1,0 +1,21 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.gearbox_arsenic_bronze",
+  "contents": [
+    "item:gregtech:gearbox",
+    "item:gregtech:gearbox_adamantium",
+    "item:gregtech:gearbox_arsenic_bronze",
+    "item:gregtech:gearbox_arsenic_copper",
+    "item:gregtech:gearbox_brass",
+    "item:gregtech:gearbox_bronze",
+    "item:gregtech:gearbox_iridium",
+    "item:gregtech:gearbox_iritanium",
+    "item:gregtech:gearbox_steel",
+    "item:gregtech:gearbox_titanium",
+    "item:gregtech:gearbox_trinaquadalloy",
+    "item:gregtech:gearbox_trinitanium",
+    "item:gregtech:gearbox_tungstensteel",
+    "item:gregtech:gearbox_wood"
+  ],
+  "priority": 110
+}

@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.shredder_bronze",
+  "contents": [
+    "item:gregtech:shredder_blades",
+    "item:gregtech:shredder_bronze",
+    "item:gregtech:shredder_steel",
+    "item:gregtech:shredder_titanium",
+    "item:gregtech:shredder_tungsten_steel"
+  ],
+  "priority": 110
+}

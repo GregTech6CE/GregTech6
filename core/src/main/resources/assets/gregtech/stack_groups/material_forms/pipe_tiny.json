@@ -1,0 +1,6 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.pipe_tiny_copper",
+  "regex": "^gregtech:pipe_tiny_[a-z0-9_]+$",
+  "priority": 100
+}

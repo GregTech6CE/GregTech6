@@ -1,0 +1,9 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.solar_panel_germanium",
+  "contents": [
+    "item:gregtech:solar_panel_germanium",
+    "item:gregtech:solar_panel_silicon"
+  ],
+  "priority": 110
+}

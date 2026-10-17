@@ -1,0 +1,17 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.track_bronze",
+  "contents": [
+    "item:gregtech:track_adamantium",
+    "item:gregtech:track_aluminium",
+    "item:gregtech:track_bronze",
+    "item:gregtech:track_magnalium",
+    "item:gregtech:track_stainlesssteel",
+    "item:gregtech:track_steel",
+    "item:gregtech:track_titanium",
+    "item:gregtech:track_tungsten",
+    "item:gregtech:track_tungstencarbide",
+    "item:gregtech:track_tungstensteel"
+  ],
+  "priority": 110
+}

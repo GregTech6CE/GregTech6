@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.mixer_bronze",
+  "contents": [
+    "item:gregtech:mixer_bronze",
+    "item:gregtech:mixer_steel",
+    "item:gregtech:mixer_titanium",
+    "item:gregtech:mixer_tungsten_steel"
+  ],
+  "priority": 110
+}

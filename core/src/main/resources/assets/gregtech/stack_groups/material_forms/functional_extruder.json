@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.extruder_invar",
+  "contents": [
+    "item:gregtech:extruder_invar",
+    "item:gregtech:extruder_steel",
+    "item:gregtech:extruder_titanium",
+    "item:gregtech:extruder_tungsten_carbide"
+  ],
+  "priority": 110
+}

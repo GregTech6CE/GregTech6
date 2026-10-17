@@ -1,0 +1,6 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.item_pipe_restrictive_huge_brass",
+  "regex": "^gregtech:item_pipe_restrictive_huge_[a-z0-9_]+$",
+  "priority": 100
+}

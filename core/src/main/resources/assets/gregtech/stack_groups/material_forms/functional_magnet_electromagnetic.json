@@ -1,0 +1,10 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.magnet_electromagnetic_aluminium",
+  "contents": [
+    "item:gregtech:magnet_electromagnetic_aluminium",
+    "item:gregtech:magnet_electromagnetic_galvanized",
+    "item:gregtech:magnet_electromagnetic_steel"
+  ],
+  "priority": 110
+}

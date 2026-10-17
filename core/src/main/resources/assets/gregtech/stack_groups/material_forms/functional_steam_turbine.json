@@ -1,0 +1,22 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.steam_turbine_bronze",
+  "contents": [
+    "item:gregtech:steam_turbine_aluminium",
+    "item:gregtech:steam_turbine_brass",
+    "item:gregtech:steam_turbine_bronze",
+    "item:gregtech:steam_turbine_chromium",
+    "item:gregtech:steam_turbine_fiery_steel",
+    "item:gregtech:steam_turbine_graphene",
+    "item:gregtech:steam_turbine_invar",
+    "item:gregtech:steam_turbine_ironwood",
+    "item:gregtech:steam_turbine_magnalium",
+    "item:gregtech:steam_turbine_steel",
+    "item:gregtech:steam_turbine_steeleaf",
+    "item:gregtech:steam_turbine_thaumium",
+    "item:gregtech:steam_turbine_titanium",
+    "item:gregtech:steam_turbine_trinitanium",
+    "item:gregtech:steam_turbine_void_metal"
+  ],
+  "priority": 110
+}

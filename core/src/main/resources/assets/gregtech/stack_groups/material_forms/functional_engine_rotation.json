@@ -1,0 +1,20 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.engine_rotation_arsenic_bronze",
+  "contents": [
+    "item:gregtech:engine_rotation_adamantium",
+    "item:gregtech:engine_rotation_arsenic_bronze",
+    "item:gregtech:engine_rotation_arsenic_copper",
+    "item:gregtech:engine_rotation_brass",
+    "item:gregtech:engine_rotation_bronze",
+    "item:gregtech:engine_rotation_iridium",
+    "item:gregtech:engine_rotation_iritanium",
+    "item:gregtech:engine_rotation_steel",
+    "item:gregtech:engine_rotation_titanium",
+    "item:gregtech:engine_rotation_trinaquadalloy",
+    "item:gregtech:engine_rotation_trinitanium",
+    "item:gregtech:engine_rotation_tungsten_steel",
+    "item:gregtech:engine_rotation_wood"
+  ],
+  "priority": 110
+}

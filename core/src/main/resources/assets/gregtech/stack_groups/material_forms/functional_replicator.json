@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.replicator_osmiridium_t2",
+  "contents": [
+    "item:gregtech:replicator_osmiridium_t2",
+    "item:gregtech:replicator_osmiridium_t3",
+    "item:gregtech:replicator_osmiridium_t4",
+    "item:gregtech:replicator_osmiridium_t5",
+    "item:gregtech:replicator_osmium"
+  ],
+  "priority": 110
+}

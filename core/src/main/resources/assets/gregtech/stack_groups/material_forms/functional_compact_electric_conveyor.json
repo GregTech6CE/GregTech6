@@ -1,0 +1,18 @@
+{
+  "type": "remi:group",
+  "name": "item.gregtech.compact_electric_conveyor_ev",
+  "contents": [
+    "item:gregtech:compact_electric_conveyor_ev",
+    "item:gregtech:compact_electric_conveyor_hv",
+    "item:gregtech:compact_electric_conveyor_iv",
+    "item:gregtech:compact_electric_conveyor_luv",
+    "item:gregtech:compact_electric_conveyor_lv",
+    "item:gregtech:compact_electric_conveyor_mv",
+    "item:gregtech:compact_electric_conveyor_puv1",
+    "item:gregtech:compact_electric_conveyor_ulv",
+    "item:gregtech:compact_electric_conveyor_uv",
+    "item:gregtech:compact_electric_conveyor_xv",
+    "item:gregtech:compact_electric_conveyor_zpm"
+  ],
+  "priority": 110
+}

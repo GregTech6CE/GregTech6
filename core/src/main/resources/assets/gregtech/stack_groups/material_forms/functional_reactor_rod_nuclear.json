@@ -1,0 +1,24 @@
+{
+  "type": "remi:group",
+  "name": "item.gregtech.fuel_rod_am_241",
+  "contents": [
+    "item:gregtech:fuel_rod_am_241",
+    "item:gregtech:fuel_rod_co_60",
+    "item:gregtech:fuel_rod_pu_239",
+    "item:gregtech:fuel_rod_th_232",
+    "item:gregtech:fuel_rod_u_235",
+    "item:gregtech:fuel_rod_u_238",
+    "item:gregtech:reactor_rod_9219",
+    "item:gregtech:reactor_rod_9222",
+    "item:gregtech:reactor_rod_9229",
+    "item:gregtech:reactor_rod_9230",
+    "item:gregtech:reactor_rod_9231",
+    "item:gregtech:reactor_rod_9232",
+    "item:gregtech:reactor_rod_9239",
+    "item:gregtech:reactor_rod_9240",
+    "item:gregtech:reactor_rod_9249",
+    "item:gregtech:reactor_rod_9260",
+    "item:gregtech:reactor_rod_9261"
+  ],
+  "priority": 110
+}

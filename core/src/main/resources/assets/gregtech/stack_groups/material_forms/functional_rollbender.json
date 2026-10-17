@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.rollbender_bronze",
+  "contents": [
+    "item:gregtech:rollbender_bronze",
+    "item:gregtech:rollbender_steel",
+    "item:gregtech:rollbender_titanium",
+    "item:gregtech:rollbender_tungsten_steel"
+  ],
+  "priority": 110
+}

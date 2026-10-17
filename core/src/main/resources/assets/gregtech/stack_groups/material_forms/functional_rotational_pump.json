@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "block.gregtech.rotational_pump_bronze",
+  "contents": [
+    "item:gregtech:rotational_pump_bronze",
+    "item:gregtech:rotational_pump_steel",
+    "item:gregtech:rotational_pump_titanium",
+    "item:gregtech:rotational_pump_tungstensteel"
+  ],
+  "priority": 110
+}

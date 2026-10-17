@@ -1,0 +1,16 @@
+{
+  "type": "remi:group",
+  "name": "item.gregtech.tiny_food_can_bread",
+  "contents": [
+    "item:gregtech:tiny_food_can_bread",
+    "item:gregtech:tiny_food_can_chum",
+    "item:gregtech:tiny_food_can_cookies",
+    "item:gregtech:tiny_food_can_fish",
+    "item:gregtech:tiny_food_can_fruits",
+    "item:gregtech:tiny_food_can_meat",
+    "item:gregtech:tiny_food_can_rotten",
+    "item:gregtech:tiny_food_can_unknown",
+    "item:gregtech:tiny_food_can_vegetables"
+  ],
+  "priority": 110
+}
