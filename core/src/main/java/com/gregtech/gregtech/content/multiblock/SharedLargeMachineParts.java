@@ -93,4 +93,23 @@ public final class SharedLargeMachineParts {private SharedLargeMachineParts(){}
             new Part(18104,"lightning_rod","SteelGalvanized"),
             new Part(18203,"storage_quadcore_processor_unit","SteelGalvanized"),
             new Part(18108,"shredder_blades","TungstenSteel"));
+    /**
+     * Numeric id for a part name. {@code air} is 0. Names absent from {@link #DEFINITIONS} but used by
+     * large-recipe structures are resolved here so addon layouts never see the numeric ids.
+     * Returns -1 when the name is not a GregTech structure part.
+     */
+    public static int idForName(String name) {
+        if (name == null) return -1;
+        if (name.equals("air")) return 0;
+        for (Part part : DEFINITIONS) if (part.name().equals(name)) return part.originalId();
+        return switch (name) {
+            case "tank_wall" -> 18002;
+            case "tank_wall_dense" -> 18022;
+            case "centrifuge_part" -> 18100;
+            case "heat_transmitter" -> 18101;
+            case "distillation_tower_part" -> 18102;
+            case "electrolyzer_part" -> 18105;
+            default -> -1;
+        };
+    }
 }

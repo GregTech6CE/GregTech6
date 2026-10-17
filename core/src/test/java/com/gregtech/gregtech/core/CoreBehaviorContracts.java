@@ -855,7 +855,7 @@ public final class CoreBehaviorContracts {
             com.gregtech.gregtech.api.addon.GregTechAddons.register(new com.gregtech.gregtech.api.addon.GregTechAddon() {
                 public String id() { return id; }
                 public void onRecipesReady(Context actual) {
-                    check(actual.equals(context) && actual.apiVersion()==2, "addon receives exact platform context");
+                    check(actual.equals(context) && actual.apiVersion()==3, "addon receives exact platform context");
                     calls.add(id);
                 }
             });

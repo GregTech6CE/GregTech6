@@ -1,5 +1,51 @@
 # 验证账本
 
+## 2026-10-17 / C 步之前的单方块存档
+
+打开的是副本，原世界没有改。两份都来自 2026-10-15 的 `card03-material-data`，早于这张卡的注册改动。Forge 副本在 `build/card11-oldsave-forge`，机器在 (48, -58, 3)。NeoForge 副本在 `neoforge/build/card11-oldsave-neo`，机器在 (-9806961, -58, -11702620)。专服在进入主循环前读方块并退出。
+
+两边日志都是 `OLD_SAVE_VERIFIED`：方块 `gregtech:replicator_osmium`，方块实体 `gregtech:be_replicator_osmium`，能量 0，进度 0/0，0 号槽一个 `gregtech:usb3_cable` 且 `gt.usb.dir` 为 2，3 号槽一个 `gregtech:ingot_iron`。这与区块里的原 NBT 一致。
+
+2026-10-16 之前写下的世界里，带 `gt.energy` 的内置机器只有这台复制机，以及 NeoForge 上的一台 `crusher_bronze`。没有 `largeoven`、`largecrusher`、蒸馏塔、聚变或焦炉控制器。多方块旧档这一项没有对应的存档可开。
+
+这张卡不再把成品 jar 启动算进验收。`work/production-smoke.json` 不在仓库里，它指向的 Forge 47.4.26 / NeoForge 21.1.252 安装也不在这台机器上。
+
+C 步之前的存档用 HEAD 代码现写，因为仓库里没有更早的多方块世界。Forge 写在 `GregTech6-prec/build/prec-forge`，NeoForge 写在同一次检出的 `neoforge/build/prec-neo`。两台机器是 `gregtech:press_steel`（木棍，能量 0，进度 0/0）和 `gregtech:largecentrifuge_tungsten_steel`（端口铁锭，能量 4096，进度 0/0，17 格离心外壳）。当前代码打开副本后，Forge 与 NeoForge 都打印 `PRE_C_SAVE_VERIFIED`，方块、方块实体、物品、能量、进度和离心机结构与写下时一致。
+
+`RegistrationContracts` 在 Forge 主源码 classpath 上通过，输出 `PASS registration contracts: 260 machine variants; 80 energy devices`。测试原先在 `init()` 之前调用 `register()`，而 `definitionsOpen` 只在 `init()` 内部为 true，所以抛出 `Material definitions are closed (DEFINITIONS)`。材料注册表保持这个窗口。测试改为把这次调用当成关闭错误，并在入口绑定 `minecraft`、`forge`、`gregtech` 的存在性，否则 `init()` 在 `ModReferences` 处停住。
+
+## 2026-10-17 / 附属样例机器的注册表、配方和重启
+
+带样例 addon 的 GameTest 命名空间 `gregtech_card11_sample` 在 Forge 和 NeoForge 各 4 项通过。单方块 `sample_press` 消耗铁锭和 EU，产出金粒。`large_sample_press` 放上 17 块 `tank_wall` 后成形，铁块和 EU 从外壳端口进入，金锭从物品端口取出。两张数据包配方在 `RecipeMap.RECIPE_MAP_LIST` 里。`RecipeMachines.collect` 把两台机器列为催化剂，`MultiblockInfoData.recipes` 包含大型压机和 17 个外壳格。JEI 和 EMI 用的就是这张机器索引和配方表，这次没有打开查看器界面。
+
+带样例的注册表快照：
+
+- Forge：`build/card11-sample-forge/card11-registry.txt`，264 个 `gregtech` 机器方块、2 个 `addon_sample` 方块。方块实体同数。`gregtech:coke_oven`、`gregtech:cryo_distillation`、`gregtech:fusion_reactor` 仍是原来的方块实体 id，其余机器是 `be_<方块路径>`。
+- NeoForge：`neoforge/build/card11-sample-neo/card11-registry.txt`，265 个 `gregtech` 机器方块、2 个样例方块。多出来的是 `implosion_compressor_main`，聚变方块实体是 `gregtech:be_fusion_reactor_main`。这是两边原来的注册差异。
+- 无样例的 `specifications()` 260 条 id 都在两份快照里。`BasicMachineCatalog` 相对 HEAD 只增加 `machineTypeNames()`。样例方块和方块实体只出现在 `addon_sample:sample_press`、`addon_sample:large_sample_press` 和对应的 `be_` id。菜单只有 `gregtech:basic_machine`。
+
+独立重启用专服目录里的 `addon-sample-persistence.txt`。准备进程放好两台机器后立刻保存退出。Forge 记下单方块进度 64/640、能量 64，大型进度 4096/10240、能量 4096，物品槽是木棍。新的 Forge 进程和 NeoForge 的同样两次进程都读回了结构、进度、能量和木棍。
+
+成品 jar、`RegistrationContracts`、`productionSmoke` 和 C 步之前的旧存档没有跑。
+
+## 2026-10-17 / 附属配方机器的 GameTest 和开发环境启动
+
+Forge 窄 GameTest 命名空间 `gregtech_large_recipe`、`gregtech_basic_source`、`gregtech_multiblock_tanks` 共 4 项通过。NeoForge 同一组 4 项通过。Forge 上 `GasTurbineGradeTests`、`JeiMachineIndexTests`、`MultiblockCraftingTests`、`MultiblockCoverageTests`、`BasicMachineCraftingTests` 临时改到独立命名空间后共 15 项通过，注解已改回 `gregtech`。`:core:check` 里的 `machineSpecBehaviorContracts` 已覆盖 `LargeRecipeControllerContracts` 和 `BasicMachineSourceContracts`。
+
+`tools/check_registration.py --offline` 没有跑到 `RegistrationContracts` 的机器断言。它的 classpath 任务写在 `allprojects` 上，最后被 NeoForge 工程覆盖，测试源码按 1.21.1 编译失败。改用 Forge 测试 classpath 单独跑 `RegistrationContracts.main` 时，在材料 `register()` 就停了：`definitionsOpen` 默认是 false，定义窗口只在 `GTMaterialRegistry.init()` 内部打开。`GTMaterialRegistry` 不在本卡 diff 里。`productionSmoke` 的 `LargeRecipeControllerDeliveryChecks` 没有跑。
+
+无样例的开发客户端到达标题画面后自行退出：Forge 用时 92 秒，NeoForge 用时 51 秒。带样例时，Forge 第一次停在 `LoadingErrorScreen`，样例资源没有 `pack.mcmeta`，模型也没有进资源包。补上 `pack.mcmeta` 之后，Forge 带样例的客户端 195 秒到达标题画面，NeoForge 带样例 98 秒到达标题画面，两边日志都是 `GT addon API 3 ready: [addon_sample]`。这次 Forge 日志里没有出现跨命名空间的 "Potentially Dangerous alternative prefix"。
+
+专服都打印了 `Done`：Forge 无样例 77.6 秒、`ready: []`；Forge 带样例 76.5 秒、`ready: [addon_sample]`；NeoForge 无样例 20.7 秒、`ready: []`；NeoForge 带样例 20.2 秒、`ready: [addon_sample]`。
+
+没有导出启动前后的注册表快照。无样例时 `BasicMachineDefinitions.specifications()` 导出 260 条，命名空间都是 `gregtech`，id 不重复；`BasicMachineCatalog` 相对 HEAD 只多了 `machineTypeNames()`。成品 jar、游戏内成形和跑配方、JEI/EMI/预览、重启持久化、旧存档都没有做。
+
+## 2026-10-16 / 附属配方机器编译和 core 契约
+
+Forge 1.20.1 与 NeoForge 1.21.1 的主源码，以及 `-PaddonSample=true` 下的样例 addon，都编译通过。`:core:check` 通过。其中七个 `addonMachineContracts_*` 场景（控制器种类、重复机器名、未知零件、未知配方表、未知能量、没有控制器的结构、ServiceLoader）各自在独立 JVM 里通过。`coreBehaviorContracts` 里的 addon 生命周期断言改为当前 API 版本 3。
+
+没有导出注册表快照，没有跑卡片列出的 GameTest，没有启动开发客户端、专服或成品 jar，没有带样例 addon 进游戏，也没有做重启或旧存档对照。注册命名空间是按两个加载器的 `DeferredRegister` API 定的，没有用启动游戏确认 Forge 的跨命名空间警告。
+
 ## 2026-10-16 / 共享平台源码的成品对照和验包
 
 这是打包和字节对照，不是玩法通过。

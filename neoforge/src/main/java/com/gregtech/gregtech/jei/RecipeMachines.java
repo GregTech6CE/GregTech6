@@ -10,14 +10,15 @@ import java.util.*;
 /** One machine-to-recipe index feeds both category icons and JEI catalysts. */
 public final class RecipeMachines {
     public static net.minecraft.world.level.block.Block machine(String id) {
-        return BasicMachineRegistries.all().stream().filter(h -> h.get().basicSpec().id().equals(id))
+        return BasicMachineRegistries.all().stream()
+                .filter(h -> h.get().basicSpec().id().equals(id) && "gregtech".equals(h.get().basicSpec().namespace()))
                 .findFirst().orElseThrow(() -> new IllegalStateException("Missing native machine: "+id)).get();
     }
     private RecipeMachines() {}
     public static Map<RecipeMap,List<ItemStack>> collect() {
         Map<RecipeMap,List<ItemStack>> result=new LinkedHashMap<>();
         for (var entry:BasicMachineRegistries.all()) if(entry.isBound() && !entry.get().basicSpec().machineName().equals("fusionreactor"))
-            add(result,MachineRecipeMaps.byMachineName(entry.get().basicSpec().machineName()),new ItemStack(entry.get()));
+            add(result,entry.get().basicSpec().recipeMap(),new ItemStack(entry.get()));
         for (var entry:com.gregtech.gregtech.registry.GTManualStations.MANUAL) if(entry.isBound())
             add(result,entry.get().kind().recipeMap(),new ItemStack(entry.get()));
         for (var entry:com.gregtech.gregtech.registry.GTManualStations.VESSELS) if(entry.isBound() && entry.get() instanceof com.gregtech.gregtech.block.tool.ProcessingToolBlock tool) {

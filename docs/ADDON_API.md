@@ -2,7 +2,7 @@
 
 [English](ADDON_API.md) | [中文](ADDON_API.zh-CN.md)
 
-API version **2** provides two shared entries on Forge 1.20.1 and NeoForge 1.21.1. Register a `GregTechAddon` in your own mod constructor for recipes. GregTech calls `onRecipesReady` once from common setup, after its material/item linking and built-in machine recipes. Callbacks run in ascending addon mod ID order. Duplicate IDs, late registration and a second dispatch fail explicitly; callback failures stop initialization and leave the lifecycle `FAILED`.
+API version **3** provides the version 2 entries plus recipe machines, on Forge 1.20.1 and NeoForge 1.21.1. Version 2 contributors keep working: no method was removed from `GregTechAddon` or `GregTechMaterialContributor`, and `onRecipesReady` is unchanged. Check `context.apiVersion() >= 2`. Do not require equality with 2. Register a `GregTechAddon` in your own mod constructor for recipes. GregTech calls `onRecipesReady` once from common setup, after its material/item linking and built-in machine recipes. Callbacks run in ascending addon mod ID order. Duplicate IDs, late registration and a second dispatch fail explicitly; callback failures stop initialization and leave the lifecycle `FAILED`.
 
 New materials and extra forms use a separate `ServiceLoader` entry, described below. Do not submit them from the mod constructor: on Forge 1.20.1 the addon constructor and the GregTech constructor can overlap.
 
@@ -149,6 +149,41 @@ The translation key is `material.gregtech.<lowercasename>`, from `GTMaterial.get
 
 A `dust()` material such as ammonium nitrate generates **6** items. Iron’s automatic forms are **96**. A metal can therefore add on the order of a hundred items. Phase C recipe generators walk every material, so a new material receives the furnace, macerator and similar rows its properties already imply. Removing the addon leaves those `gregtech:` items missing under the usual Minecraft rules. Crucible contents store the numeric material id and skip an id that no longer resolves, so a saved addon material becomes the invalid sentinel instead of crashing the load. That crucible path is covered by the existing NBT reader; a world reload after uninstall has not been run.
 
+## Recipe machines
+
+List a `GregTechMachineContributor` in `META-INF/services/com.gregtech.gregtech.api.addon.GregTechMachineContributor`. GregTech loads that file with its own class loader after materials are initialized and before it registers machine blocks. Return pure data from `recipeMaps()`, `machines()` and `layouts()`. Do not register blocks yourself, and do not touch `Materials` from the service constructor. `machines()` runs after material initialization, so `GTMaterialRegistry.get` is valid there.
+
+```java
+public final class MyMachines implements GregTechMachineContributor {
+    public String addonId() { return "my_addon"; }
+    public List<RecipeMapSpec> recipeMaps() {
+        return List.of(new RecipeMapSpec(null, "my_addon.recipe.press", "Press",
+                "my_addon:textures/gui/machines/press",
+                1, 1, 1, 0, 0, 0, 1, true, false, false, false));
+    }
+    public List<AddonMachineDefinition> machines() {
+        return List.of(new AddonMachineDefinition(
+                BasicMachineParameters.builder("press", GTMaterialRegistry.get("Steel"))
+                        .machineType("mypress").energy(GregTechTags.Energy.EU, 32).tier(1).build(),
+                "my_addon.recipe.press", MachineControllerKind.BASIC, 10_000, true, List.of()));
+    }
+}
+```
+
+GregTech registers the block, item and block-entity type in the addon's namespace, on GregTech's own mod bus. The block id is `my_addon:press` and the block-entity id is `my_addon:be_press`. Built-in ids stay `gregtech:<path>` and `gregtech:be_<path>`. Forge can log `Potentially Dangerous alternative prefix` for that bus; the register call is still the Forge `DeferredRegister` API. NeoForge accepts `DeferredRegister.create(registry, addonNamespace)` on GregTech's bus. This choice comes from those loader APIs. It has not been confirmed by launching the game. One shared menu, `gregtech:basic_machine`, serves every basic machine. The client menu looks up the recipe map by machine-type name.
+
+`addonId()` is the loader mod id. `gregtech`, `gregtech6` and `minecraft` are reserved. The registry path may repeat across namespaces. `machineType` (the machine name) is global: it must not be a built-in catalog or layout name. Two blocks may share a machine name when they are the same addon and agree on recipe map, controller kind, efficiency, the constant-energy flag and structure keys. That is how two tiers of one machine share a GUI and a structure. A second addon cannot reuse the name.
+
+A machine is `MachineControllerKind.BASIC` or `LARGE_RECIPE`. Distillation, matter fabricators and the other built-in controllers stay inside GregTech. `efficiency` is parts per 10000, from 1 to 100000. `constantEnergy` is the non-timed rule: while the machine is not a TU machine it draws a constant amount. Parallel limits use `BasicMachineParameters` (`parallel`, default 1). Built-in machines keep the old name-based efficiency, constant-energy and parallel values; those rules are copied onto the spec when the built-in spec is constructed.
+
+A `LARGE_RECIPE` machine needs one `AddonMachineLayout` with the same machine name. Cells use `right`, `up`, `back`, a part name and a `StructureGrid.Role`. The controller is the origin and must not be a cell. Part names are `SharedLargeMachineParts` names, `air`, or `tank_wall`, `tank_wall_dense`, `centrifuge_part`, `heat_transmitter`, `distillation_tower_part` and `electrolyzer_part`. There is no addon casing or port block. An empty layout, a duplicated position, an unknown part, a layout with no `LARGE_RECIPE` machine, or a `LARGE_RECIPE` machine with no layout fails startup and names the addon. Unknown energy types and unknown recipe maps do the same. Recipe map names use `[a-z0-9_.]+` and must be a map this contributor returned, or a built-in machine map. Fuel maps are not machine maps. `structureKeys` are translation keys (`[a-z0-9_.]+`) for the structure tooltip.
+
+The GUI path keeps a namespace written before `:`. Both `textures/gui/machines/Press` and `gregtech:textures/gui/machines/Gas` still resolve to `gregtech:textures/gui/recipes/<file>.png`. An addon path `my_addon:textures/gui/machines/press` resolves to `my_addon:textures/gui/recipes/press.png`, so the file on disk is `assets/my_addon/textures/gui/recipes/press.png`. Block models resolve to `<namespace>:block/machine/basic/<machineName>` plus `_running` and `_active`. GregTech still generates item models only for the `gregtech` namespace; the addon ships its own models and blockstates. The display name is `block.<namespace>.<id>`.
+
+New maps are created before `onRecipesReady`, JEI, EMI and the datapack baseline, and they join `RecipeMap.RECIPE_MAP_LIST`. Add rows from `onRecipesReady` or with a `gregtech:machine` datapack. JEI catalysts and the multiblock preview follow the registered machine list. A large machine with a layout is included in the preview. The crafting recipe is the addon's own datapack; GregTech does not generate one.
+
+Version 3 does not add addon casings, custom block-entity subclasses, custom structure checks, the oven-coil either-or rule, adjacent-face item or energy output, a fuel-to-energy template, new prefixes or fluids, a KubeJS plugin, material-id allocation, or a migration for old addons such as gt6-crops. KubeJS still submits `gregtech:machine` markers for maps that already exist, including a map this entry created. Built-in `OriginalLargeRecipeMachineData` name branches stay in place for built-in machines. An addon large machine uses the default port path.
+
 ## Building an addon
 
 Run `./gradlew :core:addonApiJar` (Windows: `gradlew.bat :core:addonApiJar`). The shared compile-only SDK is `core/build/libs/gregtech6-addon-api-0.0.0.jar`. It contains the shared domain/API classes and notices, without Minecraft assets. Use `compileOnly files("libs/gregtech6-addon-api-0.0.0.jar")`; never shade or bundle these classes, since the installed GregTech mod supplies them. For the platform-specific recipe/stack/energy adapters, also use the corresponding GregTech mod sources/development dependency in a Forge or NeoForge workspace. A production reobfuscated mod JAR is not a universal development dependency. No Maven coordinate is published yet.
@@ -160,10 +195,11 @@ Declare a required loader dependency on **`gregtech6`** (the internal content na
 - Shared addon registration, version/context and recipe-ready lifecycle.
 - Queued materials and extra forms of existing prefixes, in the 4291–7899 id band, generated as `gregtech:` items.
 - Existing `GTMaterialRegistry`, `MaterialPrefix`, `GTValues.U`, `GTVoltageTiers` and energy packet contracts.
+- Recipe machines and large recipe machines that consume a `GregTechTags.Energy` type and, for a multiblock, use existing GregTech casings. GregTech registers them in the addon's namespace.
 - Existing platform `MachineRecipeMaps`, `Recipe`, item/material lookup and `IEnergyBlock` adapters.
 - Datapack types `gregtech:machine` and `gregtech:machine_removal` on maps that already exist.
 - `GtSignalCarrier`, `GtSignalSource`, `GtSignalReceiver`, and the empty `gregtech:signal_wire_receivers` block tag.
 
-API version 2 does **not** promise new prefixes, fluids, machine types, datapack-created recipe maps, edits to dynamic providers, datapack reloads of the material table, old-save migration, cross-loader Minecraft stacks or a complete old GregAPI replacement. Only the documented entries are the compatibility surface; internal classes may change during the 0.0.0 integration. Use [the voltage guide](VOLTAGE_TIERS.md) rather than GT5/GTCE tier labels.
+API version 3 does **not** promise new prefixes, fluids, addon casings, custom machine block entities, a fuel-energy machine template, datapack-created recipe maps without a contributor, edits to dynamic providers, datapack reloads of the material table, old-save migration, cross-loader Minecraft stacks or a complete old GregAPI replacement. Only the documented entries are the compatibility surface; internal classes may change during the 0.0.0 integration. Use [the voltage guide](VOLTAGE_TIERS.md) rather than GT5/GTCE tier labels.
 
 The SDK/project code license is LGPL-3.0-or-later. Preserve applicable source/asset notices; consult `LICENSE`, `COPYING` and `NOTICE` for the actual declarations.

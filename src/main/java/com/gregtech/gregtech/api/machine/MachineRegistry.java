@@ -276,7 +276,13 @@ public final class MachineRegistry {
      * {@code MachineRegistry} does not need to import {@code GTBlockEntities}.
      */
     public static RegistryObject<BasicMachineBlock> registerBasicMachine(BasicMachineSpec spec) {
+        com.gregtech.gregtech.api.addon.RegisteredMachineIndex.bind(spec);
         return registerBasicMachine(spec, props -> new BasicMachineBlock(spec, props));
+    }
+
+    /** Addon blocks are registered on their own namespace and still appear in {@link #basicMachines()}. */
+    public static void trackBasicMachine(RegistryObject<BasicMachineBlock> block) {
+        BASIC_MACHINES.add(block);
     }
 
     /** Variant taking a custom block factory (multiblock controllers etc.). */
