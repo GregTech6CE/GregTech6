@@ -1,0 +1,24 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_panel_asphalt",
+  "contents": [
+    "item:gregtech:panel_asphalt",
+    "item:gregtech:panel_asphalt_black",
+    "item:gregtech:panel_asphalt_blue",
+    "item:gregtech:panel_asphalt_brown",
+    "item:gregtech:panel_asphalt_cyan",
+    "item:gregtech:panel_asphalt_gray",
+    "item:gregtech:panel_asphalt_green",
+    "item:gregtech:panel_asphalt_light_blue",
+    "item:gregtech:panel_asphalt_light_gray",
+    "item:gregtech:panel_asphalt_lime",
+    "item:gregtech:panel_asphalt_magenta",
+    "item:gregtech:panel_asphalt_orange",
+    "item:gregtech:panel_asphalt_pink",
+    "item:gregtech:panel_asphalt_purple",
+    "item:gregtech:panel_asphalt_red",
+    "item:gregtech:panel_asphalt_white",
+    "item:gregtech:panel_asphalt_yellow"
+  ],
+  "priority": 110
+}

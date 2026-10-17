@@ -27,7 +27,7 @@ public final class SourceBlockProperties {
         com.gregtech.gregtech.content.multiblock.OriginalUtilityControllerData.aliases().forEach((alias,source)->
                 BLOCKS.put(alias,Objects.requireNonNull(BLOCKS.get(source),source)));
     }
-    public static Optional<Params> block(String path) { return Optional.ofNullable(BLOCKS.get(path)); }
+    public static Optional<Params> block(String path) { return Optional.ofNullable(BLOCKS.get(path.equals("fire_bricks") ? "coke_oven_wall" : path)); }
     public static Optional<Params> basic(String machine, int tier) { return Optional.ofNullable(BASICS.get(machine+"/"+tier)); }
     public static Map<String, Params> blocks() { return Collections.unmodifiableMap(BLOCKS); }
     public static Map<String, Params> basics() { return Collections.unmodifiableMap(BASICS); }

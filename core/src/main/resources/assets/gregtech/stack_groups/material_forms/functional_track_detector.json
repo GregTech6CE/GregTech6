@@ -1,0 +1,17 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_track_detector",
+  "contents": [
+    "item:gregtech:track_detector_adamantium",
+    "item:gregtech:track_detector_aluminium",
+    "item:gregtech:track_detector_bronze",
+    "item:gregtech:track_detector_magnalium",
+    "item:gregtech:track_detector_stainlesssteel",
+    "item:gregtech:track_detector_steel",
+    "item:gregtech:track_detector_titanium",
+    "item:gregtech:track_detector_tungsten",
+    "item:gregtech:track_detector_tungstencarbide",
+    "item:gregtech:track_detector_tungstensteel"
+  ],
+  "priority": 110
+}

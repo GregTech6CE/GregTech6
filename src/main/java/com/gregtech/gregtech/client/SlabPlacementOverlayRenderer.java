@@ -67,8 +67,9 @@ public final class SlabPlacementOverlayRenderer {
         BlockHitResult target = (BlockHitResult) hitResult;
         BlockState state = mc.level.getBlockState(target.getBlockPos());
         boolean holdingSlab = isHoldingSlab(player);
+        boolean holdingCover = com.gregtech.gregtech.content.cover.CoverPlacement.coverGrid(mc.level,target.getBlockPos(),player);
         var interaction = interaction(state, player);
-        if (!holdingSlab && interaction == null) return;
+        if (!holdingSlab && !holdingCover && interaction == null) return;
 
         BlockPos blockPos = target.getBlockPos();
         float shade = GTRenderHelper.wrenchOverlayShade(clientTime);
@@ -85,7 +86,7 @@ public final class SlabPlacementOverlayRenderer {
         GTRenderHelper.beginWrenchOverlayLines();
         var bufferSource = mc.renderBuffers().bufferSource();
         var consumer = bufferSource.getBuffer(RenderType.lines());
-        if (holdingSlab) {
+        if (holdingSlab || holdingCover) {
             GTRenderHelper.drawWrenchOverlay(poseStack, consumer, target.getDirection(), shade);
         } else {
             GTRenderHelper.drawPipeWrenchOverlay(poseStack, consumer, target.getDirection(), interaction.activeFaces(state), shade);

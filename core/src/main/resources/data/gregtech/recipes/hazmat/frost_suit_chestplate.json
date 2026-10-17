@@ -1,0 +1,21 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "MqM",
+    "MMM",
+    "MMM"
+  ],
+  "key": {
+    "M": {
+      "tag": "gregtech:plate/asbestos"
+    },
+    "q": {
+      "tag": "forge:tools/scissors"
+    }
+  },
+  "result": {
+    "item": "gregtech:frost_suit_chestplate"
+  },
+  "allow_mirror": false,
+  "gregtech_autocraftable": false
+}

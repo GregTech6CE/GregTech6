@@ -284,7 +284,7 @@ public final class GTBlockEntities {
     public static final RegistryObject<BlockEntityType<com.gregtech.gregtech.blockentity.inventory.LockerBlockEntity>> LOCKER =
             BLOCK_ENTITY_TYPES.register("locker", () -> BlockEntityType.Builder.of(
                     com.gregtech.gregtech.blockentity.inventory.LockerBlockEntity::new,
-                    GTStorage.LOCKER.get()).build(null));
+                    GTStorage.LOCKERS.stream().map(java.util.function.Supplier::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
 
     public static final RegistryObject<BlockEntityType<com.gregtech.gregtech.blockentity.inventory.EnderGarbageBlockEntity>> ENDER_GARBAGE =
             BLOCK_ENTITY_TYPES.register("ender_garbage", () -> BlockEntityType.Builder.of(

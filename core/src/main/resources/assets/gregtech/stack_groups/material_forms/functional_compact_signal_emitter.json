@@ -1,0 +1,18 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_compact_signal_emitter",
+  "contents": [
+    "item:gregtech:compact_signal_emitter_ev",
+    "item:gregtech:compact_signal_emitter_hv",
+    "item:gregtech:compact_signal_emitter_iv",
+    "item:gregtech:compact_signal_emitter_luv",
+    "item:gregtech:compact_signal_emitter_lv",
+    "item:gregtech:compact_signal_emitter_mv",
+    "item:gregtech:compact_signal_emitter_puv1",
+    "item:gregtech:compact_signal_emitter_ulv",
+    "item:gregtech:compact_signal_emitter_uv",
+    "item:gregtech:compact_signal_emitter_xv",
+    "item:gregtech:compact_signal_emitter_zpm"
+  ],
+  "priority": 110
+}

@@ -1,0 +1,21 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_engine_steam_strong",
+  "contents": [
+    "item:gregtech:engine_steam_strong_arsenic_bronze",
+    "item:gregtech:engine_steam_strong_arsenic_copper",
+    "item:gregtech:engine_steam_strong_brass",
+    "item:gregtech:engine_steam_strong_bronze",
+    "item:gregtech:engine_steam_strong_chromium",
+    "item:gregtech:engine_steam_strong_fiery_steel",
+    "item:gregtech:engine_steam_strong_invar",
+    "item:gregtech:engine_steam_strong_ironwood",
+    "item:gregtech:engine_steam_strong_lead",
+    "item:gregtech:engine_steam_strong_steel",
+    "item:gregtech:engine_steam_strong_tin_alloy",
+    "item:gregtech:engine_steam_strong_titanium",
+    "item:gregtech:engine_steam_strong_tungsten",
+    "item:gregtech:engine_steam_strong_tungsten_steel"
+  ],
+  "priority": 110
+}

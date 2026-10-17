@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_roaster",
+  "contents": [
+    "item:gregtech:roaster_invar",
+    "item:gregtech:roaster_steel",
+    "item:gregtech:roaster_titanium",
+    "item:gregtech:roaster_tungsten_carbide"
+  ],
+  "priority": 110
+}

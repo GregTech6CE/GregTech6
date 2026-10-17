@@ -16,6 +16,9 @@ public final class AutomaticToolClientColors {
     private AutomaticToolClientColors() {}
     private static int rgb(Block block, int layer) {
         if (layer != 0) return 0xffffff;
+        String id=BuiltInRegistries.BLOCK.getKey(block).getPath();
+        if (id.equals("advanced_button")) return Materials.TinAlloy.getColor();
+        if (id.equals("dust_funnel")) return Materials.Steel.getColor();
         if (block instanceof com.gregtech.gregtech.block.inventory.UsbSwitchBlock) return Materials.SteelGalvanized.getColor();
         return AutomaticToolRules.material(AutomaticToolRules.profile(BuiltInRegistries.BLOCK.getKey(block).getPath())).getColor();
     }
@@ -23,7 +26,7 @@ public final class AutomaticToolClientColors {
         var result = new java.util.ArrayList<Block>();
         var ids = new java.util.ArrayList<String>();
         AutomaticToolRules.ALL.forEach(spec -> ids.add(spec.id()));
-        ids.add("usb_switch"); ids.add("hdd_switch");
+        ids.add("usb_switch"); ids.add("hdd_switch"); ids.add("advanced_button"); ids.add("dust_funnel");
         for (String id : ids) result.add(BuiltInRegistries.BLOCK.get(new net.minecraft.resources.ResourceLocation("gregtech", id)));
         return result;
     }

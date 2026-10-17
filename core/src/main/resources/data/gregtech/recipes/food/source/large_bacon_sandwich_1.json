@@ -1,0 +1,31 @@
+{
+  "type": "gregtech:tool_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:baguettes"
+    },
+    {
+      "tag": "gregtech:food/foodbaconcooked"
+    },
+    {
+      "tag": "gregtech:food/foodbaconcooked"
+    },
+    {
+      "tag": "gregtech:food/foodbaconcooked"
+    },
+    {
+      "tag": "gregtech:food/foodbaconcooked"
+    },
+    {
+      "tag": "gregtech:food/foodbaconcooked"
+    },
+    {
+      "tag": "gregtech:food/foodbaconcooked"
+    }
+  ],
+  "result": {
+    "item": "gregtech:large_bacon_sandwich",
+    "count": 1
+  },
+  "gregtech_autocraftable": true
+}

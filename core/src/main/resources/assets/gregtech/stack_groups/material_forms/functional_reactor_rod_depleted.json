@@ -1,0 +1,24 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_reactor_rod_depleted",
+  "contents": [
+    "item:gregtech:reactor_rod_9310",
+    "item:gregtech:reactor_rod_9319",
+    "item:gregtech:reactor_rod_9320",
+    "item:gregtech:reactor_rod_9321",
+    "item:gregtech:reactor_rod_9322",
+    "item:gregtech:reactor_rod_9329",
+    "item:gregtech:reactor_rod_9330",
+    "item:gregtech:reactor_rod_9331",
+    "item:gregtech:reactor_rod_9332",
+    "item:gregtech:reactor_rod_9333",
+    "item:gregtech:reactor_rod_9339",
+    "item:gregtech:reactor_rod_9340",
+    "item:gregtech:reactor_rod_9341",
+    "item:gregtech:reactor_rod_9349",
+    "item:gregtech:reactor_rod_9350",
+    "item:gregtech:reactor_rod_9360",
+    "item:gregtech:reactor_rod_9361"
+  ],
+  "priority": 110
+}

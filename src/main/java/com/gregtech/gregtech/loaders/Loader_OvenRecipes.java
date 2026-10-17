@@ -65,6 +65,13 @@ public final class Loader_OvenRecipes {
         int unsmelted = 0;
 
         for (Recipe<?> recipe : new ArrayList<>(manager.getRecipes())) {
+            // GT6 imprint listeners only create a row when its optional form actually exists.
+            // NeoForge represents unresolved tags as a barrier stack; length alone is insufficient.
+            var recipeId = recipe.getId();
+            if (recipeId.getNamespace().equals("gregtech") && recipeId.getPath().startsWith("clay_molds/imprint_")
+                    && recipe.getIngredients().stream().anyMatch(input -> input != Ingredient.EMPTY
+                    && java.util.Arrays.stream(input.getItems()).noneMatch(stack -> !stack.isEmpty()
+                    && !stack.is(net.minecraft.world.item.Items.BARRIER)))) continue;
             ItemStack result = resultOf(recipe, access);
             boolean cooking = recipe.getType() == RecipeType.SMELTING || recipe.getType() == RecipeType.BLASTING;
             boolean neverFurnace = cooking && MachineRecipeMaps.isNeverFurnace(result);

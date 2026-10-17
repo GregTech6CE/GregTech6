@@ -14,7 +14,7 @@ public final class GasTurbineDefinitions {
         public int outputMaximum() { return output * 2; }
         public int tint() { return GTMaterialRegistry.get(casingMaterial).getColor(); }
         public Block wall() { return wallId == 18022 ? GTMultiblocks.TANK_WALL_DENSE.get() : LargeMachineParts.block(wallId); }
-        public boolean accepts(Block block) { return block == wall() || wallId == 18022 && block == GTMultiblocks.LARGE_GAS_TURBINE_WALL.get(); }
+        public boolean accepts(Block block) { return com.gregtech.gregtech.registry.LegacyContentBinding.samePart(block, wall()) || wallId == 18022 && block == GTMultiblocks.LARGE_GAS_TURBINE_WALL.get(); }
     }
     public static final List<Grade> GRADES=OriginalGeneratorParameters.GRADES.stream().map(p->new Grade(p.id(),p.rotor(),p.casingMaterial(),p.input(),p.output(),p.wallId(),p.hardness())).toList();
     private static final List<DeferredHolder<Block,Block>> BLOCKS = new ArrayList<>();
@@ -25,7 +25,7 @@ public final class GasTurbineDefinitions {
         return java.util.stream.Stream.concat(
                 BLOCKS.stream().map(DeferredHolder::get),
                 java.util.stream.IntStream.range(17231, 17235).mapToObj(LargeMachineParts::block))
-                .toArray(Block[]::new);
+                .distinct().toArray(Block[]::new);
     }
     public static Grade grade(Block block) { return ((LargeGasTurbineControllerBlock) block).grade(); }
     public static boolean isController(net.minecraft.world.item.ItemStack stack) {

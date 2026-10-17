@@ -1,0 +1,10 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_dynamite",
+  "contents": [
+    "item:gregtech:boomstick",
+    "item:gregtech:dynamite",
+    "item:gregtech:strong_dynamite"
+  ],
+  "priority": 110
+}

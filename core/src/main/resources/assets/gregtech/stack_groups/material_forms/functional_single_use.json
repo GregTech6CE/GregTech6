@@ -1,0 +1,17 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_single_use",
+  "contents": [
+    "item:gregtech:single_use_blade",
+    "item:gregtech:single_use_chisel",
+    "item:gregtech:single_use_cutter",
+    "item:gregtech:single_use_drill",
+    "item:gregtech:single_use_file",
+    "item:gregtech:single_use_hammer",
+    "item:gregtech:single_use_rubber_hammer",
+    "item:gregtech:single_use_saw",
+    "item:gregtech:single_use_screwdriver",
+    "item:gregtech:single_use_wrench"
+  ],
+  "priority": 110
+}

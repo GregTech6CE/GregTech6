@@ -1,0 +1,24 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "MMM",
+    "MqM",
+    "MlM"
+  ],
+  "key": {
+    "M": {
+      "tag": "gregtech:plate/asbestos"
+    },
+    "l": {
+      "tag": "forge:tools/file"
+    },
+    "q": {
+      "tag": "forge:tools/scissors"
+    }
+  },
+  "result": {
+    "item": "gregtech:frost_suit_leggings"
+  },
+  "allow_mirror": false,
+  "gregtech_autocraftable": false
+}

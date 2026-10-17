@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_polarizer",
+  "contents": [
+    "item:gregtech:polarizer_aluminium",
+    "item:gregtech:polarizer_chromium",
+    "item:gregtech:polarizer_galvanized_steel",
+    "item:gregtech:polarizer_stainless_steel",
+    "item:gregtech:polarizer_titanium"
+  ],
+  "priority": 110
+}

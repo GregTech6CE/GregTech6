@@ -1,0 +1,19 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_crystal_ores",
+  "contents": [
+    "item:gregtech:crystal_ore_arsenopyrite",
+    "item:gregtech:crystal_ore_chalcopyrite",
+    "item:gregtech:crystal_ore_cinnabar",
+    "item:gregtech:crystal_ore_cobaltite",
+    "item:gregtech:crystal_ore_galena",
+    "item:gregtech:crystal_ore_kesterite",
+    "item:gregtech:crystal_ore_molybdenite",
+    "item:gregtech:crystal_ore_pyrite",
+    "item:gregtech:crystal_ore_sphalerite",
+    "item:gregtech:crystal_ore_stannite",
+    "item:gregtech:crystal_ore_stibnite",
+    "item:gregtech:crystal_ore_tetrahedrite"
+  ],
+  "priority": 110
+}

@@ -1,0 +1,49 @@
+package com.gregtech.gregtech.emi;
+
+import dev.emi.emi.api.stack.EmiStack;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+
+/** Apply before EMI bakes its indices and REMI derives its groups. Preserve every stack's data. */
+final class EmiCatalogRepair {
+    @SuppressWarnings("unchecked")
+    static void apply() {
+        try {
+        // EMI publishes only its API at compile time. Keep this version-specific index bridge isolated.
+        var field = Class.forName("dev.emi.emi.registry.EmiStackList").getField("stacks");
+        var original = (java.util.List<EmiStack>) field.get(null);
+        var sorted = new ArrayList<EmiStack>();
+        for (var stack : original) {
+            if (!stack.getId().getNamespace().equals("gregtech")) continue;
+            var item = stack.getItemStack();
+            var fluid = com.gregtech.gregtech.api.fluid.FluidDisplayBinding.resolveCurrent(item);
+            sorted.add(fluid.isEmpty() ? stack : new FluidDisplayEmiStack(
+                    EmiStack.of(fluid.getFluid(), fluid.getComponentsPatch(), fluid.getAmount()), stack, true));
+        }
+        var order = new java.util.IdentityHashMap<EmiStack,String>();
+        for (var stack : sorted) order.put(stack, order(stack));
+        sorted.sort(Comparator.comparing(order::get));
+        // Keep other mods and vanilla in place, replacing just the GT subsequence.
+        var result = new ArrayList<EmiStack>(original.size());
+        var next = sorted.iterator();
+        for (var stack : original) result.add(stack.getId().getNamespace().equals("gregtech") ? next.next() : stack);
+        field.set(null, result);
+        } catch (ReflectiveOperationException failure) {
+            throw new IllegalStateException("EMI index integration needs updating", failure);
+        }
+    }
+    private static String order(EmiStack stack) {
+        String path = stack.getId().getPath();
+        var item = stack.getItemStack();
+        if (item.getItem() instanceof net.minecraft.world.item.BlockItem block
+                && block.getBlock() instanceof com.gregtech.gregtech.block.machine.BasicMachineBlock machine) {
+            var spec = machine.basicSpec();
+            return com.gregtech.gregtech.content.creative.EmiCatalogOrder.machineKey(path, spec.machineName(), spec.tier(),
+                    com.gregtech.gregtech.content.multiblock.LargeMachineLayouts.cells(spec.machineName()) != null);
+        }
+        return com.gregtech.gregtech.content.creative.EmiCatalogOrder.key(path, item.isEmpty() ? "fluids"
+                : com.gregtech.gregtech.loaders.b.OriginCreativeContents.family(item.getItem()));
+    }
+
+}

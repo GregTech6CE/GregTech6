@@ -1,0 +1,20 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_steam_boiler",
+  "contents": [
+    "item:gregtech:steam_boiler_arsenic_bronze",
+    "item:gregtech:steam_boiler_arsenic_copper",
+    "item:gregtech:steam_boiler_bismuth",
+    "item:gregtech:steam_boiler_bronze",
+    "item:gregtech:steam_boiler_chromium",
+    "item:gregtech:steam_boiler_invar",
+    "item:gregtech:steam_boiler_lead",
+    "item:gregtech:steam_boiler_netherite",
+    "item:gregtech:steam_boiler_steel",
+    "item:gregtech:steam_boiler_titanium",
+    "item:gregtech:steam_boiler_tungsten",
+    "item:gregtech:steam_boiler_tungsten_steel",
+    "item:gregtech:steam_boiler_ultimet"
+  ],
+  "priority": 110
+}

@@ -1,0 +1,20 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_axle_3",
+  "contents": [
+    "item:gregtech:axle_adamantium_3",
+    "item:gregtech:axle_arsenic_bronze_3",
+    "item:gregtech:axle_arsenic_copper_3",
+    "item:gregtech:axle_brass_3",
+    "item:gregtech:axle_bronze_3",
+    "item:gregtech:axle_iridium_3",
+    "item:gregtech:axle_iritanium_3",
+    "item:gregtech:axle_steel_3",
+    "item:gregtech:axle_titanium_3",
+    "item:gregtech:axle_trinaquadalloy_3",
+    "item:gregtech:axle_trinitanium_3",
+    "item:gregtech:axle_tungstensteel_3",
+    "item:gregtech:axle_wood_3"
+  ],
+  "priority": 110
+}

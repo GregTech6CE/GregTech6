@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_burnmixer",
+  "contents": [
+    "item:gregtech:burnmixer_bronze",
+    "item:gregtech:burnmixer_steel",
+    "item:gregtech:burnmixer_titanium",
+    "item:gregtech:burnmixer_tungsten_steel"
+  ],
+  "priority": 110
+}

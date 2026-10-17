@@ -1,0 +1,6 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_loot_chest",
+  "regex": "^item:gregtech:loot_chest_[a-z0-9_]+$",
+  "priority": 120
+}

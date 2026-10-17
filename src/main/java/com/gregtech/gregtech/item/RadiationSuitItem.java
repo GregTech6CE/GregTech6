@@ -7,16 +7,22 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 
-/** GT6 lead hazard suit: four pieces, 128 durability per piece, one armor point each. */
+/** The six GT6 hazard suits: four pieces each, 128 durability and one armor point per piece. */
 public final class RadiationSuitItem extends ArmorItem {
-    public RadiationSuitItem(Type type) { super(SuitMaterial.INSTANCE, type, new Properties()); }
+    private final String family;
+    public RadiationSuitItem(Type type) { this(type, "radiation"); }
+    public RadiationSuitItem(Type type, String family) {
+        super(SuitMaterial.INSTANCE, type, new Properties());
+        com.gregtech.gregtech.content.hazard.HazmatSuitCatalog.texture(family);
+        this.family=family;
+    }
     @Override public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String layer) {
         int index = switch (slot) { case HEAD -> 0; case CHEST -> 1; case LEGS -> 2; default -> 3; };
-        return "gregtech:textures/armor/hazard_radiation/" + index + ".png";
+        return "gregtech:textures/armor/" + com.gregtech.gregtech.content.hazard.HazmatSuitCatalog.texture(family) + "/" + index + ".png";
     }
     @Override public void appendHoverText(ItemStack stack, net.minecraft.world.level.Level level,
             java.util.List<net.minecraft.network.chat.Component> lines, TooltipFlag flags) {
-        lines.add(net.minecraft.network.chat.Component.translatable("gt.tooltip.radiation_suit"));
+        lines.add(net.minecraft.network.chat.Component.translatable(com.gregtech.gregtech.content.hazard.HazmatSuitCatalog.tooltip(family)));
     }
     private enum SuitMaterial implements ArmorMaterial {
         INSTANCE;

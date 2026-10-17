@@ -1,14 +1,13 @@
 {
+  "parent": "minecraft:block/block",
   "loader": "forge:composite",
   "children": {
-    "layer0": {
-      "parent": "minecraft:block/block",
+    "colored": {
       "textures": {
         "top": "gregtech:block/machines/tools/dust_funnel/colored/top",
-        "sides": "gregtech:block/machines/tools/dust_funnel/colored/sides",
         "bottom": "gregtech:block/machines/tools/dust_funnel/colored/bottom",
-        "hole": "gregtech:block/machines/tools/dust_funnel/colored/hole",
-        "particle": "gregtech:block/machines/tools/dust_funnel/colored/top"
+        "sides": "gregtech:block/machines/tools/dust_funnel/colored/sides",
+        "hole": "gregtech:block/machines/tools/dust_funnel/colored/hole"
       },
       "elements": [
         {
@@ -24,22 +23,28 @@
           ],
           "faces": {
             "up": {
-              "texture": "#top"
+              "texture": "#top",
+              "tintindex": 0
             },
             "down": {
-              "texture": "#bottom"
+              "texture": "#bottom",
+              "tintindex": 0
             },
             "north": {
-              "texture": "#sides"
+              "texture": "#sides",
+              "tintindex": 0
             },
             "south": {
-              "texture": "#sides"
+              "texture": "#sides",
+              "tintindex": 0
             },
             "west": {
-              "texture": "#sides"
+              "texture": "#sides",
+              "tintindex": 0
             },
             "east": {
-              "texture": "#sides"
+              "texture": "#sides",
+              "tintindex": 0
             }
           }
         },
@@ -56,31 +61,206 @@
           ],
           "faces": {
             "down": {
-              "texture": "#hole"
+              "texture": "#bottom",
+              "tintindex": 0
             },
             "north": {
-              "texture": "#sides"
+              "texture": "#sides",
+              "tintindex": 0
             },
             "south": {
-              "texture": "#sides"
+              "texture": "#sides",
+              "tintindex": 0
             },
             "west": {
-              "texture": "#sides"
+              "texture": "#sides",
+              "tintindex": 0
             },
             "east": {
-              "texture": "#sides"
+              "texture": "#sides",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            2,
+            8,
+            2
+          ],
+          "faces": {
+            "down": {
+              "texture": "#bottom",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#sides",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            0,
+            14
+          ],
+          "to": [
+            2,
+            8,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#bottom",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#sides",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            14,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            8,
+            2
+          ],
+          "faces": {
+            "down": {
+              "texture": "#bottom",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#sides",
+              "tintindex": 0
+            }
+          }
+        },
+        {
+          "from": [
+            14,
+            0,
+            14
+          ],
+          "to": [
+            16,
+            8,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#bottom",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#sides",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#sides",
+              "tintindex": 0
             }
           }
         }
       ],
-      "render_type": "minecraft:solid"
+      "render_type": "minecraft:cutout"
     },
-    "layer1": {
-      "parent": "minecraft:block/block",
+    "colored_hole": {
+      "textures": {
+        "top": "gregtech:block/machines/tools/dust_funnel/colored/top",
+        "bottom": "gregtech:block/machines/tools/dust_funnel/colored/bottom",
+        "sides": "gregtech:block/machines/tools/dust_funnel/colored/sides",
+        "hole": "gregtech:block/machines/tools/dust_funnel/colored/hole"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            16.001,
+            0
+          ],
+          "to": [
+            16,
+            16.001,
+            16
+          ],
+          "faces": {
+            "up": {
+              "texture": "#hole",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "tintindex": 0
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    },
+    "overlay": {
       "textures": {
         "top": "gregtech:block/machines/tools/dust_funnel/overlay/top",
-        "sides": "gregtech:block/machines/tools/dust_funnel/overlay/sides",
         "bottom": "gregtech:block/machines/tools/dust_funnel/overlay/bottom",
+        "sides": "gregtech:block/machines/tools/dust_funnel/overlay/sides",
         "hole": "gregtech:block/machines/tools/dust_funnel/overlay/hole"
       },
       "elements": [
@@ -129,7 +309,123 @@
           ],
           "faces": {
             "down": {
-              "texture": "#hole"
+              "texture": "#bottom"
+            },
+            "north": {
+              "texture": "#sides"
+            },
+            "south": {
+              "texture": "#sides"
+            },
+            "west": {
+              "texture": "#sides"
+            },
+            "east": {
+              "texture": "#sides"
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            2,
+            8,
+            2
+          ],
+          "faces": {
+            "down": {
+              "texture": "#bottom"
+            },
+            "north": {
+              "texture": "#sides"
+            },
+            "south": {
+              "texture": "#sides"
+            },
+            "west": {
+              "texture": "#sides"
+            },
+            "east": {
+              "texture": "#sides"
+            }
+          }
+        },
+        {
+          "from": [
+            0,
+            0,
+            14
+          ],
+          "to": [
+            2,
+            8,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#bottom"
+            },
+            "north": {
+              "texture": "#sides"
+            },
+            "south": {
+              "texture": "#sides"
+            },
+            "west": {
+              "texture": "#sides"
+            },
+            "east": {
+              "texture": "#sides"
+            }
+          }
+        },
+        {
+          "from": [
+            14,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            8,
+            2
+          ],
+          "faces": {
+            "down": {
+              "texture": "#bottom"
+            },
+            "north": {
+              "texture": "#sides"
+            },
+            "south": {
+              "texture": "#sides"
+            },
+            "west": {
+              "texture": "#sides"
+            },
+            "east": {
+              "texture": "#sides"
+            }
+          }
+        },
+        {
+          "from": [
+            14,
+            0,
+            14
+          ],
+          "to": [
+            16,
+            8,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#bottom"
             },
             "north": {
               "texture": "#sides"
@@ -147,10 +443,62 @@
         }
       ],
       "render_type": "minecraft:cutout"
+    },
+    "overlay_hole": {
+      "textures": {
+        "top": "gregtech:block/machines/tools/dust_funnel/overlay/top",
+        "bottom": "gregtech:block/machines/tools/dust_funnel/overlay/bottom",
+        "sides": "gregtech:block/machines/tools/dust_funnel/overlay/sides",
+        "hole": "gregtech:block/machines/tools/dust_funnel/overlay/hole"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            16.001,
+            0
+          ],
+          "to": [
+            16,
+            16.001,
+            16
+          ],
+          "faces": {
+            "up": {
+              "texture": "#hole",
+              "uv": [
+                0,
+                0,
+                16,
+                16
+              ]
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
     }
   },
-  "parent": "minecraft:block/block",
   "textures": {
     "particle": "gregtech:block/machines/tools/dust_funnel/colored/top"
+  },
+  "display": {
+    "gui": {
+      "rotation": [
+        30,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.625,
+        0.625,
+        0.625
+      ]
+    }
   }
 }

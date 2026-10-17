@@ -26,6 +26,12 @@ public final class RegisteredWoodSurvivalRecipes extends OriginalRecipeBatch {
   for(var species:WoodSpecies.values()) INSTANCE.wood(species);
   for(String species:new String[]{"crimson","warped"}) INSTANCE.netherWood(species);
   for(var wood:NaturalWoodCraftingRows.SPECIES) INSTANCE.naturalWood(wood);
+  for(String wood:com.gregtech.gregtech.content.plant.WoodSlabCatalog.WOODS)
+   for(var coolant:SawingCoolants.variants(false))
+    INSTANCE.add("saw/slab/"+wood+"/"+coolant.field(),MachineRecipeMaps.Cutter,72L*coolant.multiplier(),16,
+     items(item("gregtech:planks_"+wood,1)),items(item("gregtech:slab_"+wood,2)),
+     fluids(fluid(coolant.field(),3*coolant.multiplier())),null);
+  for(String wood:com.gregtech.gregtech.content.plant.WoodSlabCatalog.WOODS) INSTANCE.slabUses(wood);
   return INSTANCE.entries().size();
  }
  /**
@@ -35,7 +41,22 @@ public final class RegisteredWoodSurvivalRecipes extends OriginalRecipeBatch {
   */
  public static int expectedRows(){
   int coolants=SawingCoolants.variants(false).size();
-  return WoodSpecies.values().length*(2*coolants+5)+2*2*2*coolants+NaturalWoodCraftingRows.SPECIES.size()*(coolants+3);
+  return com.gregtech.gregtech.content.plant.WoodSlabCatalog.WOODS.size()*(coolants+1)+WoodSpecies.values().length*(2*coolants+5)+2*2*2*coolants+NaturalWoodCraftingRows.SPECIES.size()*(coolants+3);
+ }
+ /** Loader_Recipes_Woods:296-304: half a unit of wood, or petrify nine slabs. */
+ private void slabUses(String wood){
+  String name=com.gregtech.gregtech.content.plant.WoodSlabCatalog.material(wood);
+  var material=com.gregtech.gregtech.api.material.GTMaterialRegistry.get(name);
+  var slab=item("gregtech:slab_"+wood,1);
+  com.gregtech.gregtech.api.material.ItemMaterialRegistry.register(slab.getItem(),null,material,
+          com.gregtech.gregtech.api.material.GTValues.U/2);
+  var dust=MortarGrindingRecipes.pulverize(material,com.gregtech.gregtech.api.material.GTValues.U/2);
+  // pulverizing registers both the crusher and the shredder, as in the original helper.
+  if(dust.isEmpty())throw new IllegalStateException("Missing wood slab pulverization material "+name);
+  MachineRecipeMaps.pulverizing(slab,dust);
+  MachineRecipeMaps.generify(slab,new ItemStack(net.minecraft.world.level.block.Blocks.OAK_SLAB));
+  add("petrify/slab/"+wood,MachineRecipeMaps.Injector,64,16,items(item("gregtech:slab_"+wood,9)),
+          items(mat(MaterialPrefix.rockGt,"PetrifiedWood",2)),fluids(fluid("MnWtr",500)),null);
  }
  private void saw(String id,ItemStack input,ItemStack... output){
   for(var coolant:SawingCoolants.variants(false))

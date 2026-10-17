@@ -1,0 +1,58 @@
+{
+  "variants": {
+    "facing=down,type=bottom": {
+      "model": "gregtech:block/wood_slabs/pine_down"
+    },
+    "facing=down,type=top": {
+      "model": "gregtech:block/wood_slabs/pine_up"
+    },
+    "facing=down,type=double": {
+      "model": "gregtech:block/wood/planks_pine"
+    },
+    "facing=up,type=bottom": {
+      "model": "gregtech:block/wood_slabs/pine_up"
+    },
+    "facing=up,type=top": {
+      "model": "gregtech:block/wood_slabs/pine_up"
+    },
+    "facing=up,type=double": {
+      "model": "gregtech:block/wood/planks_pine"
+    },
+    "facing=north,type=bottom": {
+      "model": "gregtech:block/wood_slabs/pine_north"
+    },
+    "facing=north,type=top": {
+      "model": "gregtech:block/wood_slabs/pine_north"
+    },
+    "facing=north,type=double": {
+      "model": "gregtech:block/wood/planks_pine"
+    },
+    "facing=south,type=bottom": {
+      "model": "gregtech:block/wood_slabs/pine_south"
+    },
+    "facing=south,type=top": {
+      "model": "gregtech:block/wood_slabs/pine_south"
+    },
+    "facing=south,type=double": {
+      "model": "gregtech:block/wood/planks_pine"
+    },
+    "facing=west,type=bottom": {
+      "model": "gregtech:block/wood_slabs/pine_west"
+    },
+    "facing=west,type=top": {
+      "model": "gregtech:block/wood_slabs/pine_west"
+    },
+    "facing=west,type=double": {
+      "model": "gregtech:block/wood/planks_pine"
+    },
+    "facing=east,type=bottom": {
+      "model": "gregtech:block/wood_slabs/pine_east"
+    },
+    "facing=east,type=top": {
+      "model": "gregtech:block/wood_slabs/pine_east"
+    },
+    "facing=east,type=double": {
+      "model": "gregtech:block/wood/planks_pine"
+    }
+  }
+}

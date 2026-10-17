@@ -1,0 +1,42 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "AlB",
+    "CqD",
+    "ExF"
+  ],
+  "key": {
+    "A": {
+      "item": "gregtech:biochemgas_suit_chestplate"
+    },
+    "B": {
+      "item": "gregtech:insect_suit_chestplate"
+    },
+    "C": {
+      "item": "gregtech:frost_suit_chestplate"
+    },
+    "D": {
+      "item": "gregtech:heat_suit_chestplate"
+    },
+    "E": {
+      "item": "gregtech:radiation_suit_chestplate"
+    },
+    "F": {
+      "item": "minecraft:chainmail_chestplate"
+    },
+    "l": {
+      "tag": "forge:tools/file"
+    },
+    "q": {
+      "tag": "forge:tools/scissors"
+    },
+    "x": {
+      "tag": "forge:tools/wire_cutter"
+    }
+  },
+  "result": {
+    "item": "gregtech:universal_suit_chestplate"
+  },
+  "allow_mirror": false,
+  "gregtech_autocraftable": false
+}

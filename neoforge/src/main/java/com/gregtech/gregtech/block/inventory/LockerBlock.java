@@ -31,8 +31,12 @@ import java.util.List;
 public class LockerBlock extends HorizontalDirectionalBlock implements EntityBlock, SimpleWaterloggedBlock {
 
     @Override protected com.mojang.serialization.MapCodec<? extends HorizontalDirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-    public LockerBlock(Properties properties) {
+    private final com.gregtech.gregtech.api.material.GTMaterial material;
+    public com.gregtech.gregtech.api.material.GTMaterial material() { return material; }
+    public LockerBlock(Properties properties) { this(com.gregtech.gregtech.content.material.Materials.StainlessSteel, properties); }
+    public LockerBlock(com.gregtech.gregtech.api.material.GTMaterial material, Properties properties) {
         super(properties);
+        this.material = material;
         registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH).setValue(GTWaterloggable.WATERLOGGED, false));
     }
 

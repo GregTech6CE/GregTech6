@@ -163,6 +163,14 @@ def check(repo):
                 path = resources / f'assets/gregtech/lang/{locale}.json'
                 if path.exists():
                     errors.append('Platform language shadows shared core: ' + str(path.relative_to(repo)))
+    tag_catalog = repo / 'core/src/main/java/com/gregtech/gregtech/content/recipe/EquipmentCraftingCatalog.java'
+    if tag_catalog.exists():
+        listed = set(re.findall(r'"([^"\n]+)"', tag_catalog.read_text(encoding='utf-8').split(' TAGS = ',1)[1]))
+        data = repo / 'core/src/main/resources/data'
+        expected = {p.relative_to(data).parts[0]+':'+p.relative_to(data).as_posix().split('/tags/items/')[1][:-5]
+                    for p in data.glob('*/tags/items/**/*.json')}
+        if listed != expected:
+            errors.append('Shared item-tag adapter drift: missing='+str(sorted(expected-listed))+' stale='+str(sorted(listed-expected)))
     if errors:
         raise ValueError('\n'.join(errors))
     language = synchronize(repo)

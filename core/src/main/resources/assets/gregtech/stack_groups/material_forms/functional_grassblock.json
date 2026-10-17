@@ -1,0 +1,13 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_grassblock",
+  "contents": [
+    "item:gregtech:grassblock_brown",
+    "item:gregtech:grassblock_dark",
+    "item:gregtech:grassblock_light",
+    "item:gregtech:grassblock_medium",
+    "item:gregtech:grassblock_normal",
+    "item:gregtech:grassblock_yellow"
+  ],
+  "priority": 110
+}

@@ -1,7 +1,58 @@
 {
   "variants": {
-    "type=bottom": {"model": "gregtech:block/wood/slab_bluespruce"},
-    "type=top": {"model": "gregtech:block/wood/slab_bluespruce_top"},
-    "type=double": {"model": "gregtech:block/iconsets/planks_bluespruce"}
+    "facing=down,type=bottom": {
+      "model": "gregtech:block/wood_slabs/bluespruce_down"
+    },
+    "facing=down,type=top": {
+      "model": "gregtech:block/wood_slabs/bluespruce_up"
+    },
+    "facing=down,type=double": {
+      "model": "gregtech:block/iconsets/planks_bluespruce"
+    },
+    "facing=up,type=bottom": {
+      "model": "gregtech:block/wood_slabs/bluespruce_up"
+    },
+    "facing=up,type=top": {
+      "model": "gregtech:block/wood_slabs/bluespruce_up"
+    },
+    "facing=up,type=double": {
+      "model": "gregtech:block/iconsets/planks_bluespruce"
+    },
+    "facing=north,type=bottom": {
+      "model": "gregtech:block/wood_slabs/bluespruce_north"
+    },
+    "facing=north,type=top": {
+      "model": "gregtech:block/wood_slabs/bluespruce_north"
+    },
+    "facing=north,type=double": {
+      "model": "gregtech:block/iconsets/planks_bluespruce"
+    },
+    "facing=south,type=bottom": {
+      "model": "gregtech:block/wood_slabs/bluespruce_south"
+    },
+    "facing=south,type=top": {
+      "model": "gregtech:block/wood_slabs/bluespruce_south"
+    },
+    "facing=south,type=double": {
+      "model": "gregtech:block/iconsets/planks_bluespruce"
+    },
+    "facing=west,type=bottom": {
+      "model": "gregtech:block/wood_slabs/bluespruce_west"
+    },
+    "facing=west,type=top": {
+      "model": "gregtech:block/wood_slabs/bluespruce_west"
+    },
+    "facing=west,type=double": {
+      "model": "gregtech:block/iconsets/planks_bluespruce"
+    },
+    "facing=east,type=bottom": {
+      "model": "gregtech:block/wood_slabs/bluespruce_east"
+    },
+    "facing=east,type=top": {
+      "model": "gregtech:block/wood_slabs/bluespruce_east"
+    },
+    "facing=east,type=double": {
+      "model": "gregtech:block/iconsets/planks_bluespruce"
+    }
   }
 }

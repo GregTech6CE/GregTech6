@@ -7,7 +7,10 @@
   "exclusions": [
     "#minecraft:planks",
     "#gregtech:wooden_planks",
-    "item:gregtech:planks_treated"
+    "item:gregtech:planks_treated",
+    "item:minecraft:glass_pane",
+    "item:minecraft:paper",
+    "item:gregtech:plate_paper"
   ],
   "priority": 100
 }

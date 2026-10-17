@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_crystal_circuit",
+  "contents": [
+    "item:gregtech:crystal_circuit_diamond",
+    "item:gregtech:crystal_circuit_emerald",
+    "item:gregtech:crystal_circuit_ruby",
+    "item:gregtech:crystal_circuit_sapphire"
+  ],
+  "priority": 110
+}

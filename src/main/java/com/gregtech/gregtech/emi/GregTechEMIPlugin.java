@@ -18,6 +18,9 @@ import java.util.Locale;
 public final class GregTechEMIPlugin implements EmiPlugin {
     @Override
     public void register(EmiRegistry registry) {
+        EmiCatalogRepair.apply();
+        registry.removeEmiStacks(stack -> !stack.getItemStack().isEmpty()
+                && com.gregtech.gregtech.registry.LegacyContentBinding.legacy(stack.getItemStack().getItem()));
         for(var item:com.gregtech.gregtech.api.recipe.UsbRecipeDisplayBinding.sticks())
             registry.setDefaultComparison(item,dev.emi.emi.api.stack.Comparison.compareData(
                     stack->com.gregtech.gregtech.api.recipe.UsbRecipeDisplayBinding.subtype(stack.getItemStack())));

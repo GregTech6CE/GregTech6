@@ -1,0 +1,8 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.decor_glass_glow_slab",
+  "contents": [
+    "item:gregtech:glass_glow_slab"
+  ],
+  "priority": 120
+}

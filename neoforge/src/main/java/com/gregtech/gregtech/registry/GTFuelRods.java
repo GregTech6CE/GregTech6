@@ -27,6 +27,7 @@ public final class GTFuelRods {
     public static final DeferredHolder<Item,FuelRodItem> FUEL_ROD_NAQUADAH = register("fuel_rod_naquadah", FuelType.Naquadah, 2);
 
     private static DeferredHolder<Item,FuelRodItem> register(String id, FuelType type, int tier) {
+        if (LegacyContentAliases.legacy(id)) return DeferredHolder.create(net.minecraft.core.registries.Registries.ITEM, net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech", LegacyContentAliases.canonical(id)));
         var block = GTBlocks.BLOCKS.register(id, com.gregtech.gregtech.block.energy.ReactorRodBlock::new);
         BLOCKS.put(id, block);
         Item.Properties props = new Item.Properties().stacksTo(switch(type){case MOX,Am_243,Naquadah->1;default->16;});

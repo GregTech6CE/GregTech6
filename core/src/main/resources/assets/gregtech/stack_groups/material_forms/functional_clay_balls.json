@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_clay_balls",
+  "contents": [
+    "item:gregtech:blue_clay",
+    "item:gregtech:brown_clay",
+    "item:gregtech:red_clay",
+    "item:gregtech:white_clay",
+    "item:gregtech:yellow_clay"
+  ],
+  "priority": 110
+}

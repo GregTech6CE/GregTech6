@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:duct_tape_2"
+    },
+    {
+      "item": "gregtech:duct_tape_2"
+    },
+    {
+      "item": "gregtech:duct_tape_2"
+    },
+    {
+      "item": "gregtech:duct_tape_2"
+    }
+  ],
+  "result": {
+    "item": "gregtech:duct_tape",
+    "count": 1
+  }
+}

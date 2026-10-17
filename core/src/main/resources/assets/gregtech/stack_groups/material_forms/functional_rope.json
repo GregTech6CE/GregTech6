@@ -1,0 +1,13 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_rope",
+  "contents": [
+    "item:gregtech:rope",
+    "item:gregtech:rope_grass",
+    "item:gregtech:rope_plastic",
+    "item:gregtech:rope_silk",
+    "item:gregtech:rope_steel",
+    "item:gregtech:rope_vine"
+  ],
+  "priority": 110
+}

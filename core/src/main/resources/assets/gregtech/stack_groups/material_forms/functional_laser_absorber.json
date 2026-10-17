@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_laser_absorber",
+  "contents": [
+    "item:gregtech:laser_absorber_ev",
+    "item:gregtech:laser_absorber_hv",
+    "item:gregtech:laser_absorber_iv",
+    "item:gregtech:laser_absorber_lv",
+    "item:gregtech:laser_absorber_mv"
+  ],
+  "priority": 110
+}

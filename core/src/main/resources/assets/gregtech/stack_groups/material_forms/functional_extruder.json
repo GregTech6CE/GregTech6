@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_extruder",
+  "contents": [
+    "item:gregtech:extruder_invar",
+    "item:gregtech:extruder_steel",
+    "item:gregtech:extruder_titanium",
+    "item:gregtech:extruder_tungsten_carbide"
+  ],
+  "priority": 110
+}

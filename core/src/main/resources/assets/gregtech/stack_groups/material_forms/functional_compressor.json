@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_compressor",
+  "contents": [
+    "item:gregtech:compressor_bronze",
+    "item:gregtech:compressor_steel",
+    "item:gregtech:compressor_titanium",
+    "item:gregtech:compressor_tungsten_steel"
+  ],
+  "priority": 110
+}

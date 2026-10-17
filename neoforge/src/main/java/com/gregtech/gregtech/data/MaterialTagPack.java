@@ -47,6 +47,12 @@ public final class MaterialTagPack extends AbstractPackResources {
         add(tags,"gregtech","item","ammunition/sticks_wood","minecraft:stick");
         add(tags,"forge","items","clay_balls","minecraft:clay_ball");
         add(tags,"gregtech","items","molds/forms/ingot/brick","minecraft:brick");
+        add(tags,"gregtech","items","ingot/brick","minecraft:brick");
+        add(tags,"forge","items","chests/wooden","minecraft:chest");
+        add(tags,"forge","items","chests/wooden","minecraft:trapped_chest");
+        add(tags,"forge","items","slimeballs","minecraft:slime_ball");
+        for (String sandstone : java.util.List.of("sandstone","cut_sandstone","smooth_sandstone","red_sandstone","cut_red_sandstone","smooth_red_sandstone"))
+            add(tags,"forge","items","sandstone","minecraft:"+sandstone);
         var moldForms=com.gregtech.gregtech.content.recipe.ClayMoldCatalog.FORMS.stream()
                 .collect(java.util.stream.Collectors.groupingBy(f -> f.prefix().equals("casingSmall") ? "itemCasing" : f.prefix()));
         var byMaterial=new TreeMap<String,Set<String>>();
@@ -56,6 +62,9 @@ public final class MaterialTagPack extends AbstractPackResources {
             if(item instanceof BlockItem pane && (pane.getBlock() instanceof net.minecraft.world.level.block.StainedGlassPaneBlock
                     || id.toString().equals("minecraft:glass_pane")))
                 add(tags,"forge","items","glass_panes",id.toString());
+            if (item instanceof DyeItem dye) add(tags,"forge","items","dyes/"+dye.getDyeColor().getName(),id.toString());
+            if (id.getNamespace().equals("minecraft") && id.getPath().startsWith("music_disc_"))
+                add(tags,"minecraft","items","music_discs",id.toString());
             var form=registeredForm(item);
             if(form!=null) {
                 for(var moldForm:moldForms.getOrDefault(form.prefix().getName(),java.util.List.of()))
@@ -92,10 +101,13 @@ public final class MaterialTagPack extends AbstractPackResources {
                     if(material.isValid()) {
                         addMaterial(byMaterial,material,id.toString());
                         String name=MaterialEquivalence.materialName(material);
-                        if(data.prefix()==null&&data.components().get(0).amount()==GTValues.U*9)
-                            add(tags,"forge","item","storage_blocks/"+name,id.toString());
-                        else if(data.prefix()==null&&data.components().get(0).amount()==GTValues.U*2)
-                            add(tags,"forge","item","ores/"+name,id.toString());
+                        // Vanilla block shapes are explicit; a 2U axle/log is not an ore.
+                        if (item instanceof BlockItem && id.getNamespace().equals("minecraft")) {
+                            if (java.util.Set.of("iron_block","gold_block","copper_block","netherite_block","diamond_block","emerald_block","lapis_block","coal_block","redstone_block").contains(id.getPath()))
+                                add(tags,"forge","items","storage_blocks/"+name,id.toString());
+                            else if (id.getPath().endsWith("_ore") || id.getPath().equals("ancient_debris"))
+                                add(tags,"forge","items","ores/"+name,id.toString());
+                        }
                     }
                 }
             }
@@ -106,8 +118,9 @@ public final class MaterialTagPack extends AbstractPackResources {
                 if(id.getNamespace().equals("gregtech") && (tool.tip().equals(id.getPath()) || tool.token().equals(id.getPath())))
                     for(String toolKind:tool.kinds()) add(tags,"forge","item","tools/"+toolKind,id.toString());
             // GT tools: standard Forge convention, e.g. forge:tools/wrench.
-            String toolKind=com.gregtech.gregtech.platform.neoforge.NeoToolBindings.craftKind(new ItemStack(item));
-            if(!toolKind.isEmpty()) add(tags,"forge","item","tools/"+toolKind,id.toString());
+            // Registry tags describe tool identities, before any stack receives material/durability data.
+            if(item instanceof com.gregtech.gregtech.item.GTToolItem tool)
+                add(tags,"forge","item","tools/"+tool.toolType().id(),id.toString());
             // GT6 fluid containers: one item per fluid, so a material's fluid forms belong to that
             // material's tag (RegisteredFluids knows which material a fluid was created from).
             if(item instanceof FluidDisplayItem fluidItem) {
@@ -161,6 +174,10 @@ public final class MaterialTagPack extends AbstractPackResources {
                     add(tags,"gregtech","item","pipe_"+pipe.spec().size().name().toLowerCase(java.util.Locale.ROOT)+"/any_iron_or_steel",id.toString());
                 if(block instanceof com.gregtech.gregtech.api.energy.WireMaterialLike wire) {
                     String wireForm=(wire.spec().insulated()?"cable_":"wire_")+String.format(java.util.Locale.ROOT,"%02d",wire.spec().size());
+                    String wireMaterial=MaterialEquivalence.materialName(wire.spec().material());
+                    add(tags,"gregtech","items",wireForm+"/"+wireMaterial,id.toString());
+                    String sourceForm=(wire.spec().insulated()?"cable_gt":"wire_gt")+String.format(java.util.Locale.ROOT,"%02d",wire.spec().size());
+                    add(tags,"gregtech","items",sourceForm+"/"+wireMaterial,id.toString());
                     if(copperMaterials.contains(wire.spec().material().resolve()))
                         add(tags,"gregtech","item",wireForm+"/any_copper",id.toString());
                     if(ironMaterials.contains(wire.spec().material().resolve()))
@@ -218,6 +235,13 @@ public final class MaterialTagPack extends AbstractPackResources {
             if(item instanceof net.minecraft.world.item.BlockItem blockItem
                     && blockItem.getBlock() instanceof com.gregtech.gregtech.block.wood.WoodBeamBlock)
                 tags.computeIfAbsent("gregtech:tags/item/wooden_beams.json",key->new TreeSet<>()).add(id.toString());
+        }
+        // GT6 LIST_SLABS / slabAnyWood: native slabs participate in normal slab crafting.
+        for(String wood:com.gregtech.gregtech.content.plant.WoodSlabCatalog.WOODS){
+            String id="gregtech:slab_"+wood;
+            for(String tag:new String[]{"minecraft:tags/item/wooden_slabs.json","minecraft:tags/item/slabs.json",
+                    "minecraft:tags/block/wooden_slabs.json","minecraft:tags/block/slabs.json"})
+                tags.computeIfAbsent(tag,k->new TreeSet<>()).add(id);
         }
         // Common spelling aliases used by Forge 1.20 packs. References keep datapack additions shared.
         var aliases=com.gregtech.gregtech.api.material.MaterialTagAliases.ALTERNATE_SPELLINGS;

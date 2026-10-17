@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_crusher",
+  "contents": [
+    "item:gregtech:crusher_bronze",
+    "item:gregtech:crusher_steel",
+    "item:gregtech:crusher_titanium",
+    "item:gregtech:crusher_tungsten_steel"
+  ],
+  "priority": 110
+}

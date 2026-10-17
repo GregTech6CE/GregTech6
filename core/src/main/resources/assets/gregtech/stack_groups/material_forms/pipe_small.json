@@ -1,0 +1,6 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.pipe_small",
+  "regex": "^gregtech:pipe_small_[a-z0-9_]+$",
+  "priority": 100
+}

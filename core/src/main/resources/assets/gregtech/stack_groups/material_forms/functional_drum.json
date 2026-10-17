@@ -1,0 +1,28 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_drum",
+  "contents": [
+    "item:gregtech:drum_adamantium",
+    "item:gregtech:drum_awakened_draconium",
+    "item:gregtech:drum_bronze",
+    "item:gregtech:drum_desh",
+    "item:gregtech:drum_draconium",
+    "item:gregtech:drum_efrine",
+    "item:gregtech:drum_gaia_spirit",
+    "item:gregtech:drum_infinity",
+    "item:gregtech:drum_invar",
+    "item:gregtech:drum_manasteel",
+    "item:gregtech:drum_netherite",
+    "item:gregtech:drum_stainless_steel",
+    "item:gregtech:drum_steel",
+    "item:gregtech:drum_syrmorite",
+    "item:gregtech:drum_tantalum_hafnium_carbide",
+    "item:gregtech:drum_thaumium",
+    "item:gregtech:drum_titanium",
+    "item:gregtech:drum_tungsten",
+    "item:gregtech:drum_tungsten_alloy",
+    "item:gregtech:drum_tungsten_steel",
+    "item:gregtech:drum_void_metal"
+  ],
+  "priority": 110
+}

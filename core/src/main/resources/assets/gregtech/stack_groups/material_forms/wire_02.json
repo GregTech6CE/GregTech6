@@ -1,0 +1,6 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.wire_02",
+  "regex": "^gregtech:wire_02_[a-z0-9_]+$",
+  "priority": 100
+}

@@ -1,0 +1,23 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_glowtus",
+  "contents": [
+    "item:gregtech:glowtus_black",
+    "item:gregtech:glowtus_blue",
+    "item:gregtech:glowtus_brown",
+    "item:gregtech:glowtus_cyan",
+    "item:gregtech:glowtus_gray",
+    "item:gregtech:glowtus_green",
+    "item:gregtech:glowtus_light_blue",
+    "item:gregtech:glowtus_light_gray",
+    "item:gregtech:glowtus_lime",
+    "item:gregtech:glowtus_magenta",
+    "item:gregtech:glowtus_orange",
+    "item:gregtech:glowtus_pink",
+    "item:gregtech:glowtus_purple",
+    "item:gregtech:glowtus_red",
+    "item:gregtech:glowtus_white",
+    "item:gregtech:glowtus_yellow"
+  ],
+  "priority": 110
+}

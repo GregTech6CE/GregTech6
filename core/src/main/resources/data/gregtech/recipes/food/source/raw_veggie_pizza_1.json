@@ -1,0 +1,22 @@
+{
+  "type": "gregtech:tool_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:flat_dough_with_ketchup"
+    },
+    {
+      "item": "gregtech:cucumber_slice"
+    },
+    {
+      "item": "gregtech:tomato_slice"
+    },
+    {
+      "item": "gregtech:onion_slice"
+    }
+  ],
+  "result": {
+    "item": "gregtech:raw_veggie_pizza",
+    "count": 1
+  },
+  "gregtech_autocraftable": true
+}

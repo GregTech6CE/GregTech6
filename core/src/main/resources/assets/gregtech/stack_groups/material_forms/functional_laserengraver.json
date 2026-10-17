@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_laserengraver",
+  "contents": [
+    "item:gregtech:laserengraver_aluminium",
+    "item:gregtech:laserengraver_chromium",
+    "item:gregtech:laserengraver_galvanized_steel",
+    "item:gregtech:laserengraver_stainless_steel",
+    "item:gregtech:laserengraver_titanium"
+  ],
+  "priority": 110
+}

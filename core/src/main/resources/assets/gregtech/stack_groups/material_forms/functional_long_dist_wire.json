@@ -1,0 +1,24 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_long_dist_wire",
+  "contents": [
+    "item:gregtech:long_dist_wire",
+    "item:gregtech:long_dist_wire_aluminium",
+    "item:gregtech:long_dist_wire_blue_alloy",
+    "item:gregtech:long_dist_wire_electrotine_alloy",
+    "item:gregtech:long_dist_wire_electrum",
+    "item:gregtech:long_dist_wire_ev",
+    "item:gregtech:long_dist_wire_gold",
+    "item:gregtech:long_dist_wire_graphene",
+    "item:gregtech:long_dist_wire_iv",
+    "item:gregtech:long_dist_wire_lead",
+    "item:gregtech:long_dist_wire_luv",
+    "item:gregtech:long_dist_wire_naquadah",
+    "item:gregtech:long_dist_wire_platinum",
+    "item:gregtech:long_dist_wire_tungsten",
+    "item:gregtech:long_dist_wire_tungsten_steel",
+    "item:gregtech:long_dist_wire_uv",
+    "item:gregtech:long_dist_wire_zpm"
+  ],
+  "priority": 110
+}

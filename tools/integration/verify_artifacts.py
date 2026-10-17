@@ -240,10 +240,10 @@ def inspect(path, platform, required_core, properties, forbidden_tests):
             mappings = refmap.get('mappings', {})
             if not mappings or mappings != refmap.get('data', {}).get('searge'):
                 raise ValueError(f'{path}: incomplete named-to-SRG Mixin mappings')
-            # These two mixins target Forge API methods with remap=false.
+            # These mixins target Forge/GT/optional REMI API methods with remap=false.
             # ComponentCoverCapabilitiesMixin targets getCapability on GT classes;
             # neither those classes nor Forge capability method names are obfuscated.
-            api_mixins = {"WaterContainerMixin", "ComponentCoverCapabilitiesMixin"}
+            api_mixins = {"WaterContainerMixin", "ComponentCoverCapabilitiesMixin", "ReliableEmiNamespaceMixin", "ReliableEmiGearboxIconMixin"}
             required_mappings = {config['package'].replace('.', '/') + '/' + name
                                  for name in config['mixins'] + config.get('client', [])
                                  if name not in api_mixins}

@@ -79,6 +79,13 @@ public final class PortableCraftingRecipePack extends AbstractPackResources {
             } else {
                 var object = result.getAsJsonObject();
                 if (object.has("item")) object.add("id", object.remove("item"));
+                // Shared spike outputs carry only vanilla BlockStateTag; translate it to 1.21's component.
+                if (file.startsWith("catalog_repairs/spike_") && object.has("nbt")) {
+                    var state = object.remove("nbt").getAsJsonObject().getAsJsonObject("BlockStateTag");
+                    var components = new com.google.gson.JsonObject();
+                    components.add("minecraft:block_state", state);
+                    object.add("components", components);
+                }
             }
             var id = ResourceLocation.fromNamespaceAndPath("gregtech", "recipe/" + file);
             if (generated.putIfAbsent(id, GSON.toJson(recipe).getBytes(StandardCharsets.UTF_8)) != null)
