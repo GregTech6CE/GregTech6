@@ -1,0 +1,19 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "sP"
+  ],
+  "key": {
+    "s": {
+      "item": "gregtech:tool_saw"
+    },
+    "P": {
+      "item": "gregtech:planks_frozen"
+    }
+  },
+  "result": {
+    "item": "gregtech:slab_frozen",
+    "count": 2
+  },
+  "allow_mirror": false
+}

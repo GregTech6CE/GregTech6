@@ -12,7 +12,7 @@ def resources(root):
     java = root / "core/src/main/java/com/gregtech/gregtech"
     # Colours are stack components/NBT on these blocks, not suffixed registry IDs.
     for stem in ("asphalt", "cfoam_fresh", "cfoam", "cfoam_slab", "concrete",
-                 "concrete_reinforced", "glass_clear", "glass_glow", "glass_glow_slab"):
+                 "concrete_reinforced", "glass_clear", "glass_glow", "glass_glow_slab", "glass_clear_slab"):
         yield "decor_" + stem, {"type": "remi:group", "name": "block.gregtech." + stem,
                 "contents": ["item:gregtech:" + item for item in
                              {"cfoam": ("cfoam", "cfoam_hardened", "cfoam_hardened_owned"),
@@ -45,6 +45,6 @@ def resources(root):
     yield "glass_panes", {"type": "remi:group", "name": "block.minecraft.glass_pane",
             "regex": "^item:minecraft:(?:[a-z_]+_stained_)?glass_pane$", "priority": 120}
     yield "paper", {"type": "remi:group", "name": "item.minecraft.paper",
-            "contents": ["item:minecraft:paper", "item:gregtech:plate_paper"], "priority": 120}
+            "contents": ["item:gregtech:plate_paper"], "priority": 120}
     yield "real_fluids", {"type": "remi:group", "name": "itemGroup.gregtech.fluids",
-            "regex": "^fluid:gregtech:[a-z0-9_./-]+$", "priority": 120}
+            "regex": "^fluid:gregtech:(?!fluid_item_)[a-z0-9_./-]+$", "priority": 120}

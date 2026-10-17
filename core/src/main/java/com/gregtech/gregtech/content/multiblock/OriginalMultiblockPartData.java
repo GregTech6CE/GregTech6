@@ -15,7 +15,7 @@ public final class OriginalMultiblockPartData {
     public static final List<String> TOOLTIP_KEYS = List.of(
             "gt.lang.use.builder.wand.to.ease.building", "gt.lang.use.magnifyingglass.to.detail");
     public static final List<Part> ALL = List.of(
-            new Part(18000, "coke_oven_wall", 5.0f, 5.0f),
+            new Part(18000, "fire_bricks", 5.0f, 5.0f),
             new Part(18001, "wood_wall", 5.0f, 5.0f),
             new Part(18011, "lead_wall", 6.0f, 6.0f),
             new Part(18010, "bronze_wall", 6.0f, 6.0f),

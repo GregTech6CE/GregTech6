@@ -42,7 +42,7 @@ final class RemiGroupingSmoke {
             "functional_book", "functional_large_book", "glass_panes", "real_fluids",
             "functional_burning_box_liquid", "functional_burning_box_liquid_dense", "functional_long_dist_wire",
             "functional_long_dist_transformer", "functional_electromagnet", "functional_energy_storage", "functional_transformer",
-            "functional_long_dist_pipe_fluid", "functional_quantum_energizer", "functional_food_shapes", "functional_compact_electric_motor", "functional_compact_electric_piston", "functional_compact_force_field_emitter", "functional_compact_signal_emitter", "functional_spray_paint", "functional_leaves", "functional_sapling", "functional_indicator_flowers", "functional_walls", "functional_dense_walls", "functional_coils", "functional_multiblock_tanks", "functional_multiblock_dense_tanks", "functional_large_crucibles", "functional_gas_turbine_cores", "functional_steam_turbine_cores", "functional_planks", "functional_circuit_board", "functional_circuit", "functional_circuit_part", "functional_circuit_plate", "functional_circuit_wire", "functional_crystal_circuit", "functional_magic_research_paper", "functional_log_hole", "functional_grassblock", "functional_barometer_bottle", "functional_clay_blocks", "functional_clay_balls", "functional_fluid_measure", "functional_rope", "functional_dynamite", "functional_robot_arm", "functional_compass", "functional_keys", "functional_bale", "functional_usb_sticks", "functional_usb_cables", "functional_usb_hdd", "functional_repeaters", "functional_bridges", "functional_mortar"};
+            "functional_long_dist_pipe_fluid", "functional_quantum_energizer", "functional_food_shapes", "functional_compact_electric_motor", "functional_compact_electric_piston", "functional_compact_force_field_emitter", "functional_compact_signal_emitter", "functional_spray_paint", "functional_leaves", "functional_sapling", "functional_indicator_flowers", "functional_walls", "functional_dense_walls", "functional_coils", "functional_multiblock_tanks", "functional_multiblock_dense_tanks", "functional_large_crucibles", "functional_gas_turbine_cores", "functional_steam_turbine_cores", "functional_planks", "functional_circuit_board", "functional_circuit", "functional_circuit_part", "functional_circuit_plate", "functional_circuit_wire", "functional_crystal_circuit", "functional_magic_research_paper", "functional_log_hole", "functional_grassblock", "functional_barometer_bottle", "functional_clay_blocks", "functional_clay_balls", "functional_fluid_measure", "functional_rope", "functional_dynamite", "functional_robot_arm", "functional_compass", "functional_keys", "functional_bale", "functional_usb_sticks", "functional_usb_cables", "functional_usb_hdd", "functional_repeaters", "functional_bridges", "functional_mortar", "functional_laser_emitters", "functional_batteries", "functional_filters", "functional_wall_spikes", "functional_logs", "functional_crystal_processors", "functional_loot_items", "functional_generator_cores", "functional_wood_slabs", "decor_glass_clear_slab"};
 
     @SuppressWarnings("unchecked")
     static boolean frame(JsonObject receipt) throws ReflectiveOperationException {
@@ -63,6 +63,14 @@ final class RemiGroupingSmoke {
                     || !com.gregtech.gregtech.registry.LegacyContentBinding.legacy(raw.getItemStack().getItem()),
                     "legacy duplicate remains in EMI index: " + raw.getId());
             receipt.addProperty("legacyAliasesHidden", com.gregtech.gregtech.registry.LegacyContentAliases.ALIASES.size());
+            int fluidQueries = 0;
+            for (var raw : index) if (raw.getId().getPath().equals("fluid_item_water") || raw.getId().getPath().equals("fluid_item_carbondioxide")) {
+                require(raw.getKey() instanceof net.minecraft.world.level.material.Fluid, "fluid item has item lookup key");
+                require(!dev.emi.emi.api.EmiApi.getRecipeManager().getRecipesByInput(raw).isEmpty(), "fluid item cannot find usage recipes " + raw.getId());
+                fluidQueries++;
+            }
+            require(fluidQueries > 0, "no water fluid display checked");
+            receipt.addProperty("fluidItemUsageQueries", fluidQueries);
             receipt.addProperty("remiRawIndex", index.size());
             receipt.addProperty("remiVersion", net.neoforged.fml.ModList.get().getModContainerById("remi")
                     .orElseThrow().getModInfo().getVersion().toString());
@@ -158,6 +166,8 @@ final class RemiGroupingSmoke {
         JsonObject counts = new JsonObject();
         for (EmiStack stack : displayed) {
             String id = groupId(stack);
+            if (!id.isEmpty() && !id.startsWith("gregtech:"))
+                for (var member : members(stack)) require(!member.getId().getNamespace().equals("gregtech"), "GT member in foreign folder " + id + " / " + member.getId());
             if (!id.startsWith("gregtech:material_forms/")) continue;
             String form = id.substring(id.indexOf('/') + 1);
             require(found.add(form), "duplicate group " + id);
@@ -175,6 +185,11 @@ final class RemiGroupingSmoke {
                         "item or foreign fluid mixed into real fluids " + item);
                 if (form.startsWith("wire_") || form.startsWith("cable_") || form.startsWith("pipe_") || form.startsWith("item_pipe_"))
                     require(item.startsWith("gregtech:" + form + "_"), "mixed transport specification " + id + " / " + item);
+            }
+            if (form.equals("functional_electric_motor")) {
+                var order = members.stream().map(m -> m.getId().getPath()).toList();
+                require(order.equals(List.of("electric_motor_lv","electric_motor_mv","electric_motor_hv","electric_motor_ev","electric_motor_iv")), "motors not in voltage order " + order);
+                receipt.addProperty("motorVoltageOrder", String.join(",", order));
             }
             counts.addProperty(form, members.size());
         }

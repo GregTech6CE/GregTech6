@@ -4,6 +4,7 @@
   "contents": [
     "item:gregtech:inventory_bridge",
     "item:gregtech:inventory_tank_bridge",
+    "item:gregtech:tank_bridge",
     "item:gregtech:universal_bridge"
   ],
   "priority": 110

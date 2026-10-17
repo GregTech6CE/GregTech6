@@ -24,7 +24,7 @@ public static List<Info> recipes() {
         implosionCells.put(BlockPos.ZERO,MultiblockLayout.Role.ITEM_IO);
         for(var cell:com.gregtech.gregtech.blockentity.machine.ImplosionCompressorControllerBlockEntity.LAYOUT.cells()) implosionCells.put(cell.at(BlockPos.ZERO,Direction.NORTH),cell.role());
         var implosion=new Info(new ItemStack(RecipeMachines.machine("implosion_compressor_main")),new ItemStack(GTMultiblocks.IMPLOSION_COMPRESSOR_WALL.get(),25),ItemStack.EMPTY,Map.copyOf(implosionCells),false);
-        var result=new ArrayList<Info>(List.of(boiler,tank(3),tank(5),implosion));
+        var result=new ArrayList<Info>(List.of(boiler,implosion));
         for(var entry:com.gregtech.gregtech.platform.neoforge.machine.BasicMachineRegistries.all()) {
             var block=entry.get();var layout=com.gregtech.gregtech.content.multiblock.LargeMachineLayouts.cells(block.basicSpec().machineName());if(layout==null)continue;
             var diagram=new LinkedHashMap<BlockPos,MultiblockLayout.Role>();diagram.put(BlockPos.ZERO,MultiblockLayout.Role.ITEM_IO);
@@ -81,18 +81,9 @@ public static List<Info> recipes() {
         for(var cell:com.gregtech.gregtech.content.multiblock.FusionStructure.CELLS)
             fusion.put(cell.at(BlockPos.ZERO,Direction.NORTH),cell.role());
         result.add(new Info(new ItemStack(RecipeMachines.machine("fusion_reactor_main")),ItemStack.EMPTY,ItemStack.EMPTY,Map.copyOf(fusion),false));
-        return result;
-    }
-private static Info tank(int size) {
-        var cells=new LinkedHashMap<BlockPos,MultiblockLayout.Role>();
-        cells.put(BlockPos.ZERO,MultiblockLayout.Role.FLUID_IO);
-        HollowTankStructure.validate(BlockPos.ZERO,Direction.NORTH,size,p->true,
-                p->{cells.put(p,MultiblockLayout.Role.FLUID_IO);return true;},
-                p->{cells.put(p,MultiblockLayout.Role.AIR);return true;});
-        int walls=(int)cells.values().stream().filter(role->role!=MultiblockLayout.Role.AIR).count()-1;
-        return new Info(new ItemStack(size==3?GTMultiblocks.TANK_3X3.get():GTMultiblocks.TANK_5X5.get()),
-                new ItemStack(size==3?GTMultiblocks.TANK_WALL.get():GTMultiblocks.TANK_WALL_DENSE.get(),walls),
-                ItemStack.EMPTY,Map.copyOf(cells),false);
+        var canonical = new LinkedHashMap<net.minecraft.world.item.Item, Info>();
+        for (var info : result) canonical.put(info.controller().getItem(), info);
+        return List.copyOf(canonical.values());
     }
 public static ItemStack expectedPart(Info info,BlockPos pos) {
         if(pos.equals(BlockPos.ZERO))return info.controller();
