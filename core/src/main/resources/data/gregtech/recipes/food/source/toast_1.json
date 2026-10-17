@@ -1,0 +1,20 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "kX"
+  ],
+  "key": {
+    "X": {
+      "item": "gregtech:loaf_of_toast"
+    },
+    "k": {
+      "tag": "forge:tools/knife"
+    }
+  },
+  "result": {
+    "item": "gregtech:toast",
+    "count": 8
+  },
+  "allow_mirror": false,
+  "gregtech_autocraftable": false
+}

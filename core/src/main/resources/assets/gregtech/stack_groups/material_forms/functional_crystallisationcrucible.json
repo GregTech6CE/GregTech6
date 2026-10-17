@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_crystallisationcrucible",
+  "contents": [
+    "item:gregtech:crystallisationcrucible_invar",
+    "item:gregtech:crystallisationcrucible_steel",
+    "item:gregtech:crystallisationcrucible_titanium",
+    "item:gregtech:crystallisationcrucible_tungsten_carbide"
+  ],
+  "priority": 110
+}

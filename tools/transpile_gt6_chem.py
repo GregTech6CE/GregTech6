@@ -112,10 +112,10 @@ KNOWN_PREFIXES = _port_prefixes() | {
     "blockDust", "blockIngot", "blockGem", "rawOreChunk"}
 
 # GT6 item names (IL.*) that the port registers under a known id. Compound_<Material> is GT6's
-# alloy ingot item, so it maps onto the port's ingot prefix; the shape items keep their name with
+# unmelted alloy mixture, with one ninth of a material unit per item. Shape items retain
 # GT6's `Plate_Curved`/`Gear_Small` word order normalised to the port's `curvedplate`/`smallgear`.
 IL_ITEM_PREFIXES = {
-    "Compound_": "i:ingot:",
+    "Compound_": "tech:",
 }
 
 SHAPE_WORDS = {
@@ -165,7 +165,8 @@ def il_item_spec(arg):
     name, count = m.group(1), int(m.group(2))
     for prefix, spec in IL_ITEM_PREFIXES.items():
         if name.startswith(prefix):
-            return [f"{spec}{name[len(prefix):]}:{max(1, count)}"]
+            material = re.sub(r'(?!^)([A-Z])', r'_\1', name[len(prefix):]).lower()
+            return [f"tech:{material}_compound:{max(1, count)}"]
     for gt_prefix, port_prefix in IL_SHAPE_PREFIXES.items():
         if name.startswith(gt_prefix):
             return [f"tech:{_shape_id(gt_prefix, port_prefix, name)}:{max(1, count)}"]

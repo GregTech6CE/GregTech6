@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "scope": "Verified complete copies; runtime evidence is recorded separately",
+  "directory": "C:\\Dev\\GregTech6\\build\\verified\\20261017-120656Z-0e5c77a2",
+  "verification_report": "C:\\Dev\\GregTech6\\work\\emi-folding-20261017\\expanded-artifacts.json",
+  "verification_report_sha256": "4ba3f3e798624896c5c11a4b7edc7bacb574995c9309ded5fb10470b0008249a",
+  "artifacts": {
+    "forge": {
+      "name": "gregtech6-1.20.1-forge-0.0.0.jar",
+      "bytes": 40384155,
+      "sha256": "0e5c77a2154fe539f85d93b175ebdd40f7f89724fb237bb5526f3b6a5d953232",
+      "zip_crc_checked": true,
+      "path": "C:\\Dev\\GregTech6\\build\\verified\\20261017-120656Z-0e5c77a2\\gregtech6-1.20.1-forge-0.0.0.jar"
+    },
+    "neoforge": {
+      "name": "gregtech6-neoforge-1.21.1-0.0.0.jar",
+      "bytes": 40240163,
+      "sha256": "ecdac8998233abf4d541fa0c2b68bf24c8b21794eec76301f3d6f94b4971c668",
+      "zip_crc_checked": true,
+      "path": "C:\\Dev\\GregTech6\\build\\verified\\20261017-120656Z-0e5c77a2\\gregtech6-neoforge-1.21.1-0.0.0.jar"
+    }
+  },
+  "stack_group_resources": 390,
+  "derived_machine_headings": 140,
+  "source_resource_bytes_equal": true,
+  "runtime_evidence": "remi-expanded-runtime-20261017.json (partial; search harness failure documented)"
+}

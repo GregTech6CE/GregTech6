@@ -1,0 +1,21 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_book",
+  "contents": [
+    "item:gregtech:book_black",
+    "item:gregtech:book_blue",
+    "item:gregtech:book_bronze",
+    "item:gregtech:book_brown",
+    "item:gregtech:book_cyan",
+    "item:gregtech:book_dictionary",
+    "item:gregtech:book_green",
+    "item:gregtech:book_magenta",
+    "item:gregtech:book_orange",
+    "item:gregtech:book_purple",
+    "item:gregtech:book_radiation",
+    "item:gregtech:book_red",
+    "item:gregtech:book_white",
+    "item:gregtech:book_yellow"
+  ],
+  "priority": 110
+}

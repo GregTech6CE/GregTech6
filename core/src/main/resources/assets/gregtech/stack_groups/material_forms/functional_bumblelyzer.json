@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_bumblelyzer",
+  "contents": [
+    "item:gregtech:bumblelyzer_aluminium",
+    "item:gregtech:bumblelyzer_chromium",
+    "item:gregtech:bumblelyzer_galvanized_steel",
+    "item:gregtech:bumblelyzer_stainless_steel",
+    "item:gregtech:bumblelyzer_titanium"
+  ],
+  "priority": 110
+}

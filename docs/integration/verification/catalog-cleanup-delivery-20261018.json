@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "scope": "Verified complete copies; runtime evidence is recorded separately",
+  "directory": "C:\\Dev\\GregTech6\\build\\verified\\20261017-183842Z-6d2b933c",
+  "verification_report": "C:\\Dev\\GregTech6\\work\\catalog-20261018-artifacts.json",
+  "verification_report_sha256": "f628fea99ed2e6f2a429c819445dff97093c42d9922c91835d662932499d9b86",
+  "artifacts": {
+    "forge": {
+      "name": "gregtech6-1.20.1-forge-0.0.0.jar",
+      "bytes": 40569051,
+      "sha256": "6d2b933cd62867cfd60f7567787ae32d5f2196e3c583738c60ae59dd33f7624b",
+      "zip_crc_checked": true,
+      "path": "C:\\Dev\\GregTech6\\build\\verified\\20261017-183842Z-6d2b933c\\gregtech6-1.20.1-forge-0.0.0.jar"
+    },
+    "neoforge": {
+      "name": "gregtech6-neoforge-1.21.1-0.0.0.jar",
+      "bytes": 40422301,
+      "sha256": "cd9929080181034ad0a74ecbab5a27a88d2d99d042b0ab92816a47e6d3d8c8f1",
+      "zip_crc_checked": true,
+      "path": "C:\\Dev\\GregTech6\\build\\verified\\20261017-183842Z-6d2b933c\\gregtech6-neoforge-1.21.1-0.0.0.jar"
+    }
+  }
+}

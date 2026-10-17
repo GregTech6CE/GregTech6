@@ -1,4 +1,13 @@
 {
   "replace": false,
-  "values": []
+  "values": [
+    "gregtech:insect_suit_helmet",
+    "gregtech:insect_suit_chestplate",
+    "gregtech:insect_suit_leggings",
+    "gregtech:insect_suit_boots",
+    "gregtech:universal_suit_helmet",
+    "gregtech:universal_suit_chestplate",
+    "gregtech:universal_suit_leggings",
+    "gregtech:universal_suit_boots"
+  ]
 }

@@ -1,0 +1,106 @@
+{
+  "code": {
+    "authors": "GregTech-6 Team / Gregorius Techneticies",
+    "license": "LGPL-3.0-or-later",
+    "files": [
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\LICENSE",
+        "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+        "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemRandomTools.java",
+        "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemBottles.java",
+        "sha256": "13431979eaef01d2a8b3b77d7affc821c22559e8835ed799b6fd3787b7d171d4"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\c\\Loader_Recipes_Other.java",
+        "sha256": "60d8832d969461869f1b224a9cc28578515fcd60c591cd0992f4e26b8951a1a3"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\c\\Loader_Recipes_Handlers.java",
+        "sha256": "b6e4973cd8fe16038868f6fafd28528234b8299c6da8f448aad18414055c382b"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\c\\Loader_Recipes_Woods.java",
+        "sha256": "c91d081abaad62fdda8774873473516d269c7b6da9e8c0cb0fdb1270bd51aa68"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntityDustFunnel.java",
+        "sha256": "62406bd934a0c67a0338b4c3afa17dda74fd5d4699b446604f9f4de91311372d"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityLightningRod.java",
+        "sha256": "c6129225a4ed16acbb0b10661bf1e4dac0a3c5c4c7c62010c1e56308a276c83a"
+      },
+      {
+        "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityBedrockDrill.java",
+        "sha256": "fd111e1e53ff208b425ad166419b1a381c8ef5b0e2d26d586bd1da8ac07abd08"
+      }
+    ]
+  },
+  "assets": {
+    "authors": "GregTech-6 Team, preserved in w-main snapshot",
+    "license": "CC0-1.0",
+    "license_path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\LICENSE.assets",
+    "license_sha256": "e2aaec4ccc681649063335b6c4991fd52570d15f45bd0af97c1cee3cb0375299",
+    "files": [
+      {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\lockers\\normal\\colored\\back.png",
+        "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\lockers\\normal\\colored\\back.png",
+        "sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e"
+      },
+      {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\lockers\\normal\\colored\\bottom.png",
+        "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\lockers\\normal\\colored\\bottom.png",
+        "sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e"
+      },
+      {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\lockers\\normal\\colored\\front.png",
+        "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\lockers\\normal\\colored\\front.png",
+        "sha256": "8f2d6b21e56e98018f117d11206faac3d77a225c455e5647eb3735be32a7fbbc"
+      },
+      {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\lockers\\normal\\colored\\side.png",
+        "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\lockers\\normal\\colored\\side.png",
+        "sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e"
+      },
+      {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\lockers\\normal\\colored\\top.png",
+        "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\lockers\\normal\\colored\\top.png",
+        "sha256": "db9560d38648fee70a0c8618e793d5c262cb269a408af0fdba99518343e4372e"
+      },
+      {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\lockers\\normal\\overlay\\back.png",
+        "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\lockers\\normal\\overlay\\back.png",
+        "sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f"
+      },
+      {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\lockers\\normal\\overlay\\bottom.png",
+        "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\lockers\\normal\\overlay\\bottom.png",
+        "sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f"
+      },
+      {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\lockers\\normal\\overlay\\front.png",
+        "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\lockers\\normal\\overlay\\front.png",
+        "sha256": "2660369d62e9c5c7364caed24d1c83cb5720cefae3d1d6aff1a26849b667e04e"
+      },
+      {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\lockers\\normal\\overlay\\side.png",
+        "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\lockers\\normal\\overlay\\side.png",
+        "sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f"
+      },
+      {
+        "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\lockers\\normal\\overlay\\top.png",
+        "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\block\\machines\\lockers\\normal\\overlay\\top.png",
+        "sha256": "9530007bcf67b1bcd7246c12f3cc93d6c4794547b15038bcb45abb7418ac231f"
+      }
+    ]
+  }
+}

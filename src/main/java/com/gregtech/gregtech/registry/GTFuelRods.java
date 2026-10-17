@@ -27,6 +27,7 @@ public final class GTFuelRods {
     public static final RegistryObject<FuelRodItem> FUEL_ROD_NAQUADAH = register("fuel_rod_naquadah", FuelType.Naquadah, 2);
 
     private static RegistryObject<FuelRodItem> register(String id, FuelType type, int tier) {
+        if (LegacyContentAliases.legacy(id)) return RegistryObject.create(com.gregtech.gregtech.GregTech.id(LegacyContentAliases.canonical(id)), net.minecraftforge.registries.ForgeRegistries.ITEMS);
         var block = GTBlocks.BLOCKS.register(id, com.gregtech.gregtech.block.energy.ReactorRodBlock::new);
         BLOCKS.put(id, block);
         Item.Properties props = new Item.Properties().stacksTo(switch(type){case MOX,Am_243,Naquadah->1;default->16;});

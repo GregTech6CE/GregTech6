@@ -1,0 +1,16 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_log_hole",
+  "contents": [
+    "item:gregtech:log_hole_maple",
+    "item:gregtech:log_hole_rainbowood",
+    "item:gregtech:log_hole_rubber",
+    "item:gregtech:log_resin_rubber",
+    "item:gregtech:log_sap_maple",
+    "item:gregtech:log_sap_rainbowood",
+    "item:gregtech:resin_hole_rubber",
+    "item:gregtech:tapped_maple",
+    "item:gregtech:tapped_rainbowood"
+  ],
+  "priority": 110
+}

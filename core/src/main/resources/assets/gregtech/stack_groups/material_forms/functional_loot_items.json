@@ -1,0 +1,15 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_loot_items",
+  "contents": [
+    "item:gregtech:bagged_sapling",
+    "item:gregtech:clouded_bottle",
+    "item:gregtech:dusty_guide_book",
+    "item:gregtech:dusty_material_dictionary",
+    "item:gregtech:gem_pouch",
+    "item:gregtech:loot_bottle",
+    "item:gregtech:loot_pouch",
+    "item:gregtech:seed_pouch"
+  ],
+  "priority": 110
+}

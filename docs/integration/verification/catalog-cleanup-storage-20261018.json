@@ -1,0 +1,833 @@
+{
+  "families": {
+    "0": {
+      "source_offset": 0,
+      "pattern": [
+        "sPw",
+        "RSR",
+        "PPP"
+      ],
+      "ingredients": {
+        "P": "OP.plate.dat(aMat)",
+        "R": "OP.ring.dat(aMat)",
+        "S": "OP.stick.dat(aMat)"
+      },
+      "harvest": "0",
+      "group": "aMetal",
+      "tool": "pickaxe",
+      "hand": false,
+      "material_units": {
+        "metal": 3243240000
+      },
+      "unknown_automatic_inputs": {}
+    },
+    "500": {
+      "source_offset": 500,
+      "pattern": [
+        "sSw",
+        "RCR",
+        "SSS"
+      ],
+      "ingredients": {
+        "C": "OD.craftingChest",
+        "R": "OP.ring.dat(aMat)",
+        "S": "OP.stick.dat(aMat)"
+      },
+      "harvest": "0",
+      "group": "aWooden",
+      "tool": "axe",
+      "hand": true,
+      "material_units": {
+        "metal": 1621620000,
+        "Wood": 2594592000
+      },
+      "unknown_automatic_inputs": {}
+    },
+    "2000": {
+      "source_offset": 2000,
+      "pattern": [
+        "PGP",
+        "GOS",
+        "PGP"
+      ],
+      "ingredients": {
+        "P": "OP.plateQuintuple.dat(aMat)",
+        "G": "OP.gearGtSmall.dat(aMat)",
+        "O": "OP.gearGt.dat(aMat)",
+        "S": "OP.stick.dat(aMat)"
+      },
+      "harvest": "aMat.mToolQuality",
+      "group": "aMachine",
+      "tool": "wrench",
+      "hand": false,
+      "material_units": {
+        "metal": 17837820000
+      },
+      "unknown_automatic_inputs": {}
+    },
+    "3000": {
+      "source_offset": 3000,
+      "pattern": [
+        "PGP",
+        "OGS",
+        "PGP"
+      ],
+      "ingredients": {
+        "P": "OP.plateQuintuple.dat(aMat)",
+        "G": "OP.gearGtSmall.dat(aMat)",
+        "O": "OP.gearGt.dat(aMat)",
+        "S": "OP.stick.dat(aMat)"
+      },
+      "harvest": "aMat.mToolQuality",
+      "group": "aMachine",
+      "tool": "wrench",
+      "hand": false,
+      "material_units": {
+        "metal": 17837820000
+      },
+      "unknown_automatic_inputs": {}
+    },
+    "5000": {
+      "source_offset": 5000,
+      "pattern": [
+        "PdP",
+        "TWT",
+        "PCP"
+      ],
+      "ingredients": {
+        "T": "OP.screw.dat(aMat)",
+        "P": "OP.plate.dat(aMat)",
+        "W": "OD.craftingWorkBench",
+        "C": "OD.craftingChest"
+      },
+      "harvest": "aMat.mToolQuality",
+      "group": "aMachine",
+      "tool": "wrench",
+      "hand": false,
+      "material_units": {
+        "metal": 2738736000,
+        "Wood": 2594592000
+      },
+      "unknown_automatic_inputs": {
+        "OD.craftingWorkBench": 1
+      }
+    },
+    "5500": {
+      "source_offset": 5500,
+      "pattern": [
+        "WTW",
+        "dMx",
+        "WTW"
+      ],
+      "ingredients": {
+        "T": "OP.screw.dat(aMat)",
+        "M": "aRegistry.getItem(5000+aID)",
+        "W": "MT.DATA.CABLES_04[3]"
+      },
+      "harvest": "aMat.mToolQuality",
+      "group": "aMachine",
+      "tool": "wrench",
+      "hand": false,
+      "material_units": {
+        "Au": 5189184000,
+        "Rubber": 5189184000,
+        "metal": 2882880000,
+        "Wood": 2594592000
+      },
+      "unknown_automatic_inputs": {
+        "OD.craftingWorkBench": 1
+      }
+    },
+    "7300": {
+      "source_offset": 7300,
+      "pattern": [
+        "SdS",
+        "LCL",
+        "TMT"
+      ],
+      "ingredients": {
+        "T": "OP.screw.dat(aMat)",
+        "C": "aRegistry.getItem(aID)",
+        "M": "OP.casingMachine.dat(aMat)",
+        "S": "OP.stick.dat(aMat)",
+        "L": "OD.craftingLeather"
+      },
+      "harvest": "aMat.mToolQuality",
+      "group": "aMachine",
+      "tool": "wrench",
+      "hand": false,
+      "material_units": {
+        "metal": 9225216000
+      },
+      "unknown_automatic_inputs": {
+        "OD.craftingLeather": 2
+      }
+    },
+    "4000": {
+      "source_offset": 4000,
+      "pattern": [
+        "CTC",
+        "TdT",
+        "CTC"
+      ],
+      "ingredients": {
+        "T": "OP.screw.dat(aMat)",
+        "C": "aRegistry.getItem(aID)"
+      },
+      "harvest": "aMat.mToolQuality",
+      "group": "aMachine",
+      "tool": "wrench",
+      "hand": false,
+      "material_units": {
+        "metal": 13261248000
+      },
+      "unknown_automatic_inputs": {}
+    },
+    "6000": {
+      "source_offset": 6000,
+      "pattern": [
+        "TCT",
+        "wMd",
+        "TCT"
+      ],
+      "ingredients": {
+        "T": "OP.screw.dat(aMat)",
+        "C": "aRegistry.getItem(aID)",
+        "M": "OP.casingMachine.dat(aMat)"
+      },
+      "harvest": "aMat.mToolQuality",
+      "group": "aMachine",
+      "tool": "wrench",
+      "hand": false,
+      "material_units": {
+        "metal": 11963952000
+      },
+      "unknown_automatic_inputs": {}
+    },
+    "6200": {
+      "source_offset": 6200,
+      "pattern": [
+        "TQT",
+        "wCd",
+        "TMT"
+      ],
+      "ingredients": {
+        "T": "OP.screw.dat(aMat)",
+        "M": "aRegistry.getItem(6000+aID)",
+        "Q": "IL.Cover_Logistics_Generic_Storage",
+        "C": "OD_CIRCUITS[4]"
+      },
+      "harvest": "aMat.mToolQuality",
+      "group": "aMachine",
+      "tool": "wrench",
+      "hand": false,
+      "material_units": {
+        "metal": 12252240000,
+        "Os": 162162000,
+        "Al": 720720000,
+        "Pt": 648648000,
+        "Emerald": 648648000
+      },
+      "unknown_automatic_inputs": {
+        "OD_CIRCUITS[4]": 3
+      }
+    },
+    "7100": {
+      "source_offset": 7100,
+      "pattern": [
+        "PTP",
+        "sdh",
+        "PTP"
+      ],
+      "ingredients": {
+        "T": "OP.screw.dat(aMat)",
+        "P": "OP.plate.dat(aMat)"
+      },
+      "harvest": "aMat.mToolQuality",
+      "group": "aMachine",
+      "tool": "wrench",
+      "hand": false,
+      "material_units": {
+        "metal": 2738736000
+      },
+      "unknown_automatic_inputs": {}
+    },
+    "8600": {
+      "source_offset": 8600,
+      "pattern": [
+        "CdC",
+        "TCT"
+      ],
+      "ingredients": {
+        "T": "OP.screw.dat(aMat)",
+        "C": "OP.casingSmall.dat(aMat)"
+      },
+      "harvest": "0",
+      "group": "aUtilMetal",
+      "tool": "pickaxe",
+      "hand": true,
+      "material_units": {
+        "metal": 1117116000
+      },
+      "unknown_automatic_inputs": {}
+    },
+    "8400": {
+      "source_offset": 8400,
+      "pattern": [
+        "TPT",
+        "SdS"
+      ],
+      "ingredients": {
+        "T": "OP.screw.dat(aMat)",
+        "P": "OP.plate.dat(aMat)",
+        "S": "OP.stick.dat(aMat)"
+      },
+      "harvest": "0",
+      "group": "aMachine",
+      "tool": "wrench",
+      "hand": false,
+      "material_units": {
+        "metal": 1441440000
+      },
+      "unknown_automatic_inputs": {}
+    }
+  },
+  "metalsets": [
+    {
+      "suffix": "lead",
+      "source_id": 0,
+      "source_material": "MT.Pb",
+      "java_material": "ImportedMaterialData.Pb",
+      "source_line": 186,
+      "bookshelf_path": "bookshelf_metal_lead"
+    },
+    {
+      "suffix": "bismuth",
+      "source_id": 16,
+      "source_material": "MT.Bi",
+      "java_material": "ImportedMaterialData.Bi",
+      "source_line": 187,
+      "bookshelf_path": "bookshelf_metal_bismuth"
+    },
+    {
+      "suffix": "antimony",
+      "source_id": 47,
+      "source_material": "MT.Sb",
+      "java_material": "ImportedMaterialData.Sb",
+      "source_line": 188,
+      "bookshelf_path": "bookshelf_metal_antimony"
+    },
+    {
+      "suffix": "nickel",
+      "source_id": 22,
+      "source_material": "MT.Ni",
+      "java_material": "ImportedMaterialData.Ni",
+      "source_line": 189,
+      "bookshelf_path": "bookshelf_metal_nickel"
+    },
+    {
+      "suffix": "constantan",
+      "source_id": 37,
+      "source_material": "MT.Constantan",
+      "java_material": "ImportedMaterialData.Constantan",
+      "source_line": 190,
+      "bookshelf_path": "bookshelf_metal_constantan"
+    },
+    {
+      "suffix": "bronze",
+      "source_id": 9,
+      "source_material": "MT.Bronze",
+      "java_material": "ImportedMaterialData.Bronze",
+      "source_line": 191,
+      "bookshelf_path": "bookshelf_metal_bronze"
+    },
+    {
+      "suffix": "arsenic_copper",
+      "source_id": 57,
+      "source_material": "MT.ArsenicCopper",
+      "java_material": "ImportedMaterialData.ArsenicCopper",
+      "source_line": 192,
+      "bookshelf_path": "bookshelf_metal_arsenic_copper"
+    },
+    {
+      "suffix": "aluminium",
+      "source_id": 1,
+      "source_material": "MT.Al",
+      "java_material": "ImportedMaterialData.Al",
+      "source_line": 193,
+      "bookshelf_path": "bookshelf_metal_aluminium"
+    },
+    {
+      "suffix": "brass",
+      "source_id": 8,
+      "source_material": "MT.Brass",
+      "java_material": "ImportedMaterialData.Brass",
+      "source_line": 194,
+      "bookshelf_path": "bookshelf_metal_brass"
+    },
+    {
+      "suffix": "tin_alloy",
+      "source_id": 5,
+      "source_material": "MT.TinAlloy",
+      "java_material": "ImportedMaterialData.TinAlloy",
+      "source_line": 195,
+      "bookshelf_path": "bookshelf_metal_tin_alloy"
+    },
+    {
+      "suffix": "cobalt",
+      "source_id": 21,
+      "source_material": "MT.Co",
+      "java_material": "ImportedMaterialData.Co",
+      "source_line": 196,
+      "bookshelf_path": "bookshelf_metal_cobalt"
+    },
+    {
+      "suffix": "ardite",
+      "source_id": 38,
+      "source_material": "MT.Ardite",
+      "java_material": "ImportedMaterialData.Ardite",
+      "source_line": 197,
+      "bookshelf_path": "bookshelf_metal_ardite"
+    },
+    {
+      "suffix": "arsenic_bronze",
+      "source_id": 58,
+      "source_material": "MT.ArsenicBronze",
+      "java_material": "ImportedMaterialData.ArsenicBronze",
+      "source_line": 198,
+      "bookshelf_path": "bookshelf_metal_arsenic_bronze"
+    },
+    {
+      "suffix": "bismuth_bronze",
+      "source_id": 56,
+      "source_material": "MT.BismuthBronze",
+      "java_material": "ImportedMaterialData.BismuthBronze",
+      "source_line": 199,
+      "bookshelf_path": "bookshelf_metal_bismuth_bronze"
+    },
+    {
+      "suffix": "germanium",
+      "source_id": 23,
+      "source_material": "MT.Ge",
+      "java_material": "ImportedMaterialData.Ge",
+      "source_line": 200,
+      "bookshelf_path": "bookshelf_metal_germanium"
+    },
+    {
+      "suffix": "invar",
+      "source_id": 6,
+      "source_material": "MT.Invar",
+      "java_material": "ImportedMaterialData.Invar",
+      "source_line": 201,
+      "bookshelf_path": "bookshelf_metal_invar"
+    },
+    {
+      "suffix": "steel",
+      "source_id": 10,
+      "source_material": "MT.Steel",
+      "java_material": "ImportedMaterialData.Steel",
+      "source_line": 202,
+      "bookshelf_path": "bookshelf_metal_steel"
+    },
+    {
+      "suffix": "hsla",
+      "source_id": 18,
+      "source_material": "MT.HSLA",
+      "java_material": "ImportedMaterialData.HSLA",
+      "source_line": 203,
+      "bookshelf_path": "bookshelf_metal_h_s_l_a_steel"
+    },
+    {
+      "suffix": "gold",
+      "source_id": 2,
+      "source_material": "MT.Au",
+      "java_material": "ImportedMaterialData.Au",
+      "source_line": 204,
+      "bookshelf_path": "bookshelf_metal_gold"
+    },
+    {
+      "suffix": "silver",
+      "source_id": 3,
+      "source_material": "MT.Ag",
+      "java_material": "ImportedMaterialData.Ag",
+      "source_line": 205,
+      "bookshelf_path": "bookshelf_metal_silver"
+    },
+    {
+      "suffix": "manganese",
+      "source_id": 46,
+      "source_material": "MT.Mn",
+      "java_material": "ImportedMaterialData.Mn",
+      "source_line": 206,
+      "bookshelf_path": "bookshelf_metal_manganese"
+    },
+    {
+      "suffix": "manyullyn",
+      "source_id": 39,
+      "source_material": "MT.Manyullyn",
+      "java_material": "ImportedMaterialData.Manyullyn",
+      "source_line": 207,
+      "bookshelf_path": "bookshelf_metal_manyullyn"
+    },
+    {
+      "suffix": "lumium",
+      "source_id": 54,
+      "source_material": "MT.Lumium",
+      "java_material": "ImportedMaterialData.Lumium",
+      "source_line": 208,
+      "bookshelf_path": "bookshelf_metal_lumium"
+    },
+    {
+      "suffix": "knightmetal",
+      "source_id": 25,
+      "source_material": "MT.Knightmetal",
+      "java_material": "ImportedMaterialData.Knightmetal",
+      "source_line": 209,
+      "bookshelf_path": "bookshelf_metal_knightmetal"
+    },
+    {
+      "suffix": "steel_galvanized",
+      "source_id": 19,
+      "source_material": "MT.SteelGalvanized",
+      "java_material": "ImportedMaterialData.SteelGalvanized",
+      "source_line": 210,
+      "bookshelf_path": "bookshelf_metal_steel_galvanized"
+    },
+    {
+      "suffix": "meteorite",
+      "source_id": 43,
+      "source_material": "MT.Meteorite",
+      "java_material": "ImportedMaterialData.Meteorite",
+      "source_line": 211,
+      "bookshelf_path": "bookshelf_metal_meteorite"
+    },
+    {
+      "suffix": "meteoric_steel",
+      "source_id": 24,
+      "source_material": "MT.MeteoricSteel",
+      "java_material": "ImportedMaterialData.MeteoricSteel",
+      "source_line": 212,
+      "bookshelf_path": "bookshelf_metal_meteoric_steel"
+    },
+    {
+      "suffix": "gilded_iron",
+      "source_id": 20,
+      "source_material": "MT.GildedIron",
+      "java_material": "ImportedMaterialData.GildedIron",
+      "source_line": 213,
+      "bookshelf_path": "bookshelf_metal_gilded_iron"
+    },
+    {
+      "suffix": "molybdenum",
+      "source_id": 49,
+      "source_material": "MT.Mo",
+      "java_material": "ImportedMaterialData.Mo",
+      "source_line": 214,
+      "bookshelf_path": "bookshelf_metal_molybdenum"
+    },
+    {
+      "suffix": "syrmorite",
+      "source_id": 44,
+      "source_material": "MT.Syrmorite",
+      "java_material": "ImportedMaterialData.Syrmorite",
+      "source_line": 215,
+      "bookshelf_path": "bookshelf_metal_syrmorite"
+    },
+    {
+      "suffix": "electrum",
+      "source_id": 7,
+      "source_material": "MT.Electrum",
+      "java_material": "ImportedMaterialData.Electrum",
+      "source_line": 216,
+      "bookshelf_path": "bookshelf_metal_electrum"
+    },
+    {
+      "suffix": "stainless_steel",
+      "source_id": 11,
+      "source_material": "MT.StainlessSteel",
+      "java_material": "ImportedMaterialData.StainlessSteel",
+      "source_line": 217,
+      "bookshelf_path": "bookshelf_metal_stainless_steel"
+    },
+    {
+      "suffix": "thaumium",
+      "source_id": 27,
+      "source_material": "MT.Thaumium",
+      "java_material": "ImportedMaterialData.Thaumium",
+      "source_line": 218,
+      "bookshelf_path": "bookshelf_metal_thaumium"
+    },
+    {
+      "suffix": "manasteel",
+      "source_id": 40,
+      "source_material": "MT.Manasteel",
+      "java_material": "ImportedMaterialData.Manasteel",
+      "source_line": 219,
+      "bookshelf_path": "bookshelf_metal_manasteel"
+    },
+    {
+      "suffix": "efrine",
+      "source_id": 53,
+      "source_material": "MT.Efrine",
+      "java_material": "ImportedMaterialData.Efrine",
+      "source_line": 220,
+      "bookshelf_path": "bookshelf_metal_efrine"
+    },
+    {
+      "suffix": "tungsten_alloy",
+      "source_id": 52,
+      "source_material": "MT.TungstenAlloy",
+      "java_material": "ImportedMaterialData.TungstenAlloy",
+      "source_line": 221,
+      "bookshelf_path": "bookshelf_metal_h_s_l_a_tungsten_alloy"
+    },
+    {
+      "suffix": "titanium",
+      "source_id": 12,
+      "source_material": "MT.Ti",
+      "java_material": "ImportedMaterialData.Ti",
+      "source_line": 222,
+      "bookshelf_path": "bookshelf_metal_titanium"
+    },
+    {
+      "suffix": "netherite",
+      "source_id": 51,
+      "source_material": "MT.Netherite",
+      "java_material": "ImportedMaterialData.Netherite",
+      "source_line": 223,
+      "bookshelf_path": "bookshelf_metal_netherite"
+    },
+    {
+      "suffix": "chromium",
+      "source_id": 13,
+      "source_material": "MT.Cr",
+      "java_material": "ImportedMaterialData.Cr",
+      "source_line": 224,
+      "bookshelf_path": "bookshelf_metal_chromium"
+    },
+    {
+      "suffix": "platinum",
+      "source_id": 4,
+      "source_material": "MT.Pt",
+      "java_material": "ImportedMaterialData.Pt",
+      "source_line": 225,
+      "bookshelf_path": "bookshelf_metal_platinum"
+    },
+    {
+      "suffix": "octine",
+      "source_id": 45,
+      "source_material": "MT.Octine",
+      "java_material": "ImportedMaterialData.Octine",
+      "source_line": 226,
+      "bookshelf_path": "bookshelf_metal_octine"
+    },
+    {
+      "suffix": "desh",
+      "source_id": 30,
+      "source_material": "MT.Desh",
+      "java_material": "ImportedMaterialData.Desh",
+      "source_line": 227,
+      "bookshelf_path": "bookshelf_metal_desh"
+    },
+    {
+      "suffix": "terrasteel",
+      "source_id": 42,
+      "source_material": "MT.Terrasteel",
+      "java_material": "ImportedMaterialData.Terrasteel",
+      "source_line": 228,
+      "bookshelf_path": "bookshelf_metal_terrasteel"
+    },
+    {
+      "suffix": "tungstensteel",
+      "source_id": 14,
+      "source_material": "MT.TungstenSteel",
+      "java_material": "ImportedMaterialData.TungstenSteel",
+      "source_line": 229,
+      "bookshelf_path": "bookshelf_metal_tungstensteel"
+    },
+    {
+      "suffix": "tungsten_carbide",
+      "source_id": 17,
+      "source_material": "MT.TungstenCarbide",
+      "java_material": "ImportedMaterialData.TungstenCarbide",
+      "source_line": 230,
+      "bookshelf_path": "bookshelf_metal_tungsten_carbide"
+    },
+    {
+      "suffix": "duranium",
+      "source_id": 31,
+      "source_material": "MT.DuraniumAlloy",
+      "java_material": "ImportedMaterialData.DuraniumAlloy",
+      "source_line": 231,
+      "bookshelf_path": "bookshelf_metal_duranium"
+    },
+    {
+      "suffix": "draconium",
+      "source_id": 35,
+      "source_material": "MT.Draconium",
+      "java_material": "ImportedMaterialData.Draconium",
+      "source_line": 232,
+      "bookshelf_path": "bookshelf_metal_draconium"
+    },
+    {
+      "suffix": "ultimet",
+      "source_id": 48,
+      "source_material": "MT.Ultimet",
+      "java_material": "ImportedMaterialData.Ultimet",
+      "source_line": 233,
+      "bookshelf_path": "bookshelf_metal_ultimet"
+    },
+    {
+      "suffix": "desh_alloy",
+      "source_id": 55,
+      "source_material": "MT.DeshAlloy",
+      "java_material": "ImportedMaterialData.DeshAlloy",
+      "source_line": 234,
+      "bookshelf_path": "bookshelf_metal_workers_alloy"
+    },
+    {
+      "suffix": "tungsten",
+      "source_id": 26,
+      "source_material": "ANY.W",
+      "java_material": "ImportedMaterialData.W",
+      "source_line": 235,
+      "bookshelf_path": "bookshelf_metal_tungsten"
+    },
+    {
+      "suffix": "palladium",
+      "source_id": 59,
+      "source_material": "MT.Pd",
+      "java_material": "ImportedMaterialData.Pd",
+      "source_line": 236,
+      "bookshelf_path": "bookshelf_metal_palladium"
+    },
+    {
+      "suffix": "iridium",
+      "source_id": 15,
+      "source_material": "MT.Ir",
+      "java_material": "ImportedMaterialData.Ir",
+      "source_line": 237,
+      "bookshelf_path": "bookshelf_metal_iridium"
+    },
+    {
+      "suffix": "osmium",
+      "source_id": 29,
+      "source_material": "MT.Os",
+      "java_material": "ImportedMaterialData.Os",
+      "source_line": 238,
+      "bookshelf_path": "bookshelf_metal_osmium_elemental"
+    },
+    {
+      "suffix": "void_metal",
+      "source_id": 28,
+      "source_material": "MT.VoidMetal",
+      "java_material": "ImportedMaterialData.VoidMetal",
+      "source_line": 239,
+      "bookshelf_path": "bookshelf_metal_void_metal"
+    },
+    {
+      "suffix": "elven_elementium",
+      "source_id": 41,
+      "source_material": "MT.ElvenElementium",
+      "java_material": "ImportedMaterialData.ElvenElementium",
+      "source_line": 240,
+      "bookshelf_path": "bookshelf_metal_elven_elementium"
+    },
+    {
+      "suffix": "tritanium",
+      "source_id": 32,
+      "source_material": "MT.TritaniumAlloy",
+      "java_material": "ImportedMaterialData.TritaniumAlloy",
+      "source_line": 241,
+      "bookshelf_path": "bookshelf_metal_tritanium"
+    },
+    {
+      "suffix": "adamantium",
+      "source_id": 33,
+      "source_material": "MT.Ad",
+      "java_material": "ImportedMaterialData.Ad",
+      "source_line": 242,
+      "bookshelf_path": "bookshelf_metal_adamantium"
+    },
+    {
+      "suffix": "bedrock_hsla",
+      "source_id": 34,
+      "source_material": "MT.Bedrock_HSLA_Alloy",
+      "java_material": "ImportedMaterialData.Bedrock_HSLA_Alloy",
+      "source_line": 243,
+      "bookshelf_path": "bookshelf_metal_bedrock_h_s_l_a_alloy"
+    },
+    {
+      "suffix": "draconium_awakened",
+      "source_id": 36,
+      "source_material": "MT.DraconiumAwakened",
+      "java_material": "ImportedMaterialData.DraconiumAwakened",
+      "source_line": 244,
+      "bookshelf_path": "bookshelf_metal_draconium_awakened"
+    },
+    {
+      "suffix": "infinity",
+      "source_id": 50,
+      "source_material": "MT.Infinity",
+      "java_material": "ImportedMaterialData.Infinity",
+      "source_line": 245,
+      "bookshelf_path": "bookshelf_metal_infinity"
+    }
+  ],
+  "identities": 780,
+  "item_recipe_lines": {
+    "IL.Cover_Blank": 139,
+    "IL.Cover_Logistics_Generic_Storage": 786
+  },
+  "known_item_data": {
+    "IL.Cover_Blank": {
+      "Al": 720720000
+    },
+    "IL.Cover_Logistics_Generic_Storage": {
+      "Os": 162162000,
+      "Al": 720720000,
+      "Pt": 648648000,
+      "Emerald": 648648000
+    },
+    "IL.Processor_Crystal_Emerald": {
+      "Pt": 648648000,
+      "Emerald": 648648000
+    }
+  },
+  "source_files": [
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\OP.java",
+      "sha256": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\load\\LoaderOreDictReRegistrations.java",
+      "sha256": "d34719309a5ddf5bd7fc01c0462b57af52b4cf980a69fae4d4042c2ab78b07ef"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\ANY.java",
+      "sha256": "6a26fa2293c4a315d2594c5ac80eba689389f9b1922a33547bdd20d2df724f71"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\MT.java",
+      "sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemTechnological.java",
+      "sha256": "7367922c4938318dd50b1320e7fc7a7453c33cffa46f75a437325314d2536ddc"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577"
+    }
+  ],
+  "authors": [
+    "GregTech-6 Team",
+    "Gregorius Techneticies"
+  ],
+  "license": "LGPL-3.0-or-later",
+  "boundaries": "Thirteen native metalset families, including normal lockers; exact original known REV units, cables with insulation and recursive logistics cover/processor data. Unknown workbench/circuit/leather automatic data stays absent. Charging lockers and unrelated legacy IDs excluded; native paths/source IDs and materials verified by shared source contracts."
+}

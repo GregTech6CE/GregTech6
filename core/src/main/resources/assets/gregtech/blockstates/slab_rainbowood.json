@@ -1,0 +1,58 @@
+{
+  "variants": {
+    "facing=down,type=bottom": {
+      "model": "gregtech:block/wood_slabs/rainbowood_down"
+    },
+    "facing=down,type=top": {
+      "model": "gregtech:block/wood_slabs/rainbowood_up"
+    },
+    "facing=down,type=double": {
+      "model": "gregtech:block/iconsets/planks_rainbowood"
+    },
+    "facing=up,type=bottom": {
+      "model": "gregtech:block/wood_slabs/rainbowood_up"
+    },
+    "facing=up,type=top": {
+      "model": "gregtech:block/wood_slabs/rainbowood_up"
+    },
+    "facing=up,type=double": {
+      "model": "gregtech:block/iconsets/planks_rainbowood"
+    },
+    "facing=north,type=bottom": {
+      "model": "gregtech:block/wood_slabs/rainbowood_north"
+    },
+    "facing=north,type=top": {
+      "model": "gregtech:block/wood_slabs/rainbowood_north"
+    },
+    "facing=north,type=double": {
+      "model": "gregtech:block/iconsets/planks_rainbowood"
+    },
+    "facing=south,type=bottom": {
+      "model": "gregtech:block/wood_slabs/rainbowood_south"
+    },
+    "facing=south,type=top": {
+      "model": "gregtech:block/wood_slabs/rainbowood_south"
+    },
+    "facing=south,type=double": {
+      "model": "gregtech:block/iconsets/planks_rainbowood"
+    },
+    "facing=west,type=bottom": {
+      "model": "gregtech:block/wood_slabs/rainbowood_west"
+    },
+    "facing=west,type=top": {
+      "model": "gregtech:block/wood_slabs/rainbowood_west"
+    },
+    "facing=west,type=double": {
+      "model": "gregtech:block/iconsets/planks_rainbowood"
+    },
+    "facing=east,type=bottom": {
+      "model": "gregtech:block/wood_slabs/rainbowood_east"
+    },
+    "facing=east,type=top": {
+      "model": "gregtech:block/wood_slabs/rainbowood_east"
+    },
+    "facing=east,type=double": {
+      "model": "gregtech:block/iconsets/planks_rainbowood"
+    }
+  }
+}

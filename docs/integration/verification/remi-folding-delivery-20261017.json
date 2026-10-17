@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "scope": "Dual packaging verified; runtime scope and failures: remi-folding-20261017.md",
+  "directory": "C:\\Dev\\GregTech6\\build\\verified\\20261017-105627Z-11189bb4",
+  "verification_report": "C:\\Dev\\GregTech6\\work\\emi-folding-20261017\\artifacts.json",
+  "verification_report_sha256": "457f30385b1a42d5eca0726414fa5b25fe18a9e878f785eb8f7d31fad6277618",
+  "artifacts": {
+    "forge": {
+      "name": "gregtech6-1.20.1-forge-0.0.0.jar",
+      "bytes": 40349500,
+      "sha256": "11189bb4a6189550d32456ca48dcd9ffe22ca5e18aee730dab9a2e8af1bdeb7d",
+      "zip_crc_checked": true,
+      "path": "C:\\Dev\\GregTech6\\build\\verified\\20261017-105627Z-11189bb4\\gregtech6-1.20.1-forge-0.0.0.jar"
+    },
+    "neoforge": {
+      "name": "gregtech6-neoforge-1.21.1-0.0.0.jar",
+      "bytes": 40205497,
+      "sha256": "3510354389473fc8386ee855e1348ad232d3694a77042ce58447a73272eff52e",
+      "zip_crc_checked": true,
+      "path": "C:\\Dev\\GregTech6\\build\\verified\\20261017-105627Z-11189bb4\\gregtech6-neoforge-1.21.1-0.0.0.jar"
+    }
+  },
+  "stack_group_resources": 346,
+  "source_resources_byte_equal": true
+}

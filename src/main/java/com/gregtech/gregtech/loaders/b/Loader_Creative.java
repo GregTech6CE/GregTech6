@@ -69,7 +69,7 @@ public class Loader_Creative implements IGTLoader {
         }
 
         if (GTCreativeTabs.TOOLS_TAB != null && event.getTabKey().equals(GTCreativeTabs.TOOLS_TAB.getKey())) {
-            for (var suit : com.gregtech.gregtech.registry.GTRadiationProtection.SUIT.values()) event.accept(suit.get());
+            for (var suit : com.gregtech.gregtech.registry.GTRadiationProtection.ALL.values()) event.accept(suit.get());
             for (var entry : com.gregtech.gregtech.registry.GTToolBlocks.manual()) {
                 if (entry.isPresent()) event.accept(new net.minecraft.world.item.ItemStack(entry.get()));
             }
@@ -236,6 +236,7 @@ public class Loader_Creative implements IGTLoader {
             java.util.stream.Stream.concat(com.gregtech.gregtech.registry.GTStorage.SAFES.stream(), com.gregtech.gregtech.registry.GTStorage.KEY_SAFES.stream())
                     .forEach(entry -> event.accept(new net.minecraft.world.item.ItemStack(entry.get())));
             com.gregtech.gregtech.registry.GTStorage.DRAWERS.forEach(entry -> event.accept(new net.minecraft.world.item.ItemStack(entry.get())));
+            com.gregtech.gregtech.registry.GTStorage.LOCKERS.forEach(entry -> event.accept(new net.minecraft.world.item.ItemStack(entry.get())));
             for (var storage : com.gregtech.gregtech.registry.GTStorage.MASS_STORAGES) {
                 if (storage.isPresent()) event.accept(new net.minecraft.world.item.ItemStack(storage.get()));
             }

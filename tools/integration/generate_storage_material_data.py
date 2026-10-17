@@ -11,7 +11,7 @@ sys.path.insert(0,str(REPO/'tools/integration'))
 from generate_machine_material_data import masked, norm, calls, recipe, amount, java_material, U, split_top_level
 
 FAMILIES={0:'chest_',500:'reinforced_wood_chest_',2000:'safe_',3000:'key_safe_',
-          4000:'drawer_quad_',6000:'mass_storage_',8600:'bottle_crate_',
+          4000:'drawer_quad_',7300:'locker_',6000:'mass_storage_',8600:'bottle_crate_',
           5000:'advanced_crafting_table_',5500:'charging_crafting_table_',6200:'logistics_mass_storage_',
           7100:'bookshelf_metal_',8400:'scaffold_'}
 GROUPS={'aMetal':('pickaxe',False),'aWooden':('axe',True),'aMachine':('wrench',False),'aUtilMetal':('pickaxe',True)}
@@ -58,7 +58,7 @@ def main():
  assert set(item_recipes)=={'IL.Cover_Blank','IL.Cover_Logistics_Generic_Storage'}
  assert 'IL.Processor_Crystal_Emerald' in direct
  # CR uses automatic data for these strings, not the selected tag member's data.
- unknown_keys={'OD.craftingWorkBench','OD_CIRCUITS[4]'}
+ unknown_keys={'OD.craftingLeather','OD.craftingWorkBench','OD_CIRCUITS[4]'}
  automatic_keys={norm(a[0]) for _,a in calls(automatic,'OreDictManager.INSTANCE.setAutomaticItemData')}
  assert not (unknown_keys & automatic_keys) and '"gt:circuit4"' not in automatic_keys
  end=mte.index('\n\t}',mte.index('private static void metalset('))
@@ -147,6 +147,7 @@ public final class OriginalStorageMaterialData {
  for offset,prefix in FAMILIES.items():
   v=family_rows[offset];units=v['material_units'];expr=f'"{prefix}"+suffix'
   if offset==2000:expr='suffix.equals("steel")?"safe":'+expr
+  if offset==7300:expr='suffix.equals("stainless_steel")?"locker":'+expr
   if offset==4000:expr='suffix.equals("stainless_steel")?"drawer_quad":'+expr
   if offset in (5000,5500,8400):expr=f'suffix.equals("steel")?"{prefix[:-1]}":'+expr
   if offset==7100:expr='bookshelfPath'
@@ -159,7 +160,7 @@ public final class OriginalStorageMaterialData {
              known_item_data={key:dict(resolve(key)[0]) for key in sorted(adopted_items)},
              source_files=[dict(path=str(ns.source/p),sha256=hashlib.sha256((ns.source/p).read_bytes()).hexdigest()) for p in relatives],
              authors=['GregTech-6 Team','Gregorius Techneticies'],license='LGPL-3.0-or-later',
-             boundaries='Twelve existing native metalset families; exact original known REV units, cables with insulation and recursive logistics cover/processor data. Unknown workbench/circuit automatic data stays absent. Normal/charging lockers and unrelated legacy IDs excluded; native paths/source IDs and materials verified by shared source contracts.')
+             boundaries='Thirteen native metalset families, including normal lockers; exact original known REV units, cables with insulation and recursive logistics cover/processor data. Unknown workbench/circuit/leather automatic data stays absent. Charging lockers and unrelated legacy IDs excluded; native paths/source IDs and materials verified by shared source contracts.')
  ns.out.parent.mkdir(parents=True,exist_ok=True);ns.out.write_text(''.join(java),encoding='utf-8')
  ns.audit.parent.mkdir(parents=True,exist_ok=True);ns.audit.write_text(json.dumps(audit,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
  print(json.dumps(dict(identities=identities,families=len(FAMILIES),metalsets=len(rows),units={k:v['material_units'] for k,v in family_rows.items()})))

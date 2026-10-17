@@ -1,0 +1,13 @@
+{
+  "type": "remi:group",
+  "name": "itemGroup.gregtech.crate_gt64_dust",
+  "contents": [
+    "#gregtech:crate_gt64_dust"
+  ],
+  "exclusions": [
+    "#minecraft:planks",
+    "#gregtech:wooden_planks",
+    "item:gregtech:planks_treated"
+  ],
+  "priority": 100
+}

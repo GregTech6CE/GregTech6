@@ -1,0 +1,29 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "BTB",
+    "TPT",
+    "BTB"
+  ],
+  "key": {
+    "B": {
+      "tag": "gregtech:tool_head_sword/adamantium"
+    },
+    "T": {
+      "tag": "gregtech:screw/adamantium"
+    },
+    "P": {
+      "tag": "gregtech:plate/adamantium"
+    }
+  },
+  "result": {
+    "item": "gregtech:spike_super",
+    "count": 1,
+    "nbt": {
+      "BlockStateTag": {
+        "mode": "wall",
+        "secondary": "true"
+      }
+    }
+  }
+}

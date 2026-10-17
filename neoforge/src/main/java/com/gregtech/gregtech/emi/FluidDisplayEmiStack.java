@@ -12,14 +12,19 @@ import java.util.List;
 /** A visible GT fluid item with the actual fluid key and components for EMI recipe queries. */
 final class FluidDisplayEmiStack extends EmiStack {
     private final EmiStack fluid, icon;
+    private final boolean indexIcon;
     FluidDisplayEmiStack(EmiStack fluid, EmiStack icon) {
+        this(fluid, icon, false);
+    }
+    FluidDisplayEmiStack(EmiStack fluid, EmiStack icon, boolean indexIcon) {
+        this.indexIcon = indexIcon;
         this.fluid = fluid;
         this.icon = icon;
         amount = fluid.getAmount();
         chance = fluid.getChance();
     }
     @Override public EmiStack copy() {
-        var copy = new FluidDisplayEmiStack(fluid.copy(), icon.copy());
+        var copy = new FluidDisplayEmiStack(fluid.copy(), icon.copy(), indexIcon);
         copy.amount = amount;
         copy.chance = chance;
         copy.comparison = comparison;
@@ -29,7 +34,8 @@ final class FluidDisplayEmiStack extends EmiStack {
     @Override public boolean isEmpty() { return fluid.isEmpty(); }
     @Override public DataComponentPatch getComponentChanges() { return fluid.getComponentChanges(); }
     @Override public Object getKey() { return fluid.getKey(); }
-    @Override public ResourceLocation getId() { return fluid.getId(); }
+    @Override public ResourceLocation getId() { return indexIcon ? icon.getId() : fluid.getId(); }
+    @Override public net.minecraft.world.item.ItemStack getItemStack() { return indexIcon ? icon.getItemStack() : net.minecraft.world.item.ItemStack.EMPTY; }
     @Override public Component getName() { return icon.getName(); }
     @Override public void render(GuiGraphics graphics, int x, int y, float delta, int flags) {
         icon.render(graphics, x, y, delta, flags & ~RENDER_AMOUNT);

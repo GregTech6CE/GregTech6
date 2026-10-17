@@ -1,0 +1,249 @@
+{
+  "author": "Gregorius Techneticies / GregTech-6 Team; item icon reference distributed by wolfram0108",
+  "code_source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\a\\Loader_Tools.java",
+  "code_sha256": "e791f2cd6972bfa10767663f78557d2722cac2b7c80f29595815b4a520577b6e",
+  "code_license": "LGPL-3.0-or-later",
+  "asset_license": "CC0-1.0; original and reference LICENSE.assets",
+  "assets": [
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_insects\\0.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_insects\\0.png",
+      "sha256": "249173e1ccf72d2be3a66256b3d1a4aa3880c0d60d88934babedfedc707c0d08"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_insects\\0.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_insects\\0.png",
+      "sha256": "4701ffbfd697b0a50b034b05dc816e29a16c5b3f28a914128103db7543c0d123"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_insects\\1.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_insects\\1.png",
+      "sha256": "2e06101f09cf27c462f7847370e8d4bc20aa1cb71123eb0e86179c1939951856"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_insects\\1.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_insects\\1.png",
+      "sha256": "10899f7c1453d63366da53cbd09cdcec7547fab340b3a0d5107f0cfa5516aa1c"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_insects\\2.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_insects\\2.png",
+      "sha256": "2105c99664d52e642107cce83e9758bbf526c1c74473a84bc026e3a267281668"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_insects\\2.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_insects\\2.png",
+      "sha256": "b30894c6b373f0324c9d29e88f65cabea61eb125cdbbf77736b366d11808fc5f"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_insects\\3.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_insects\\3.png",
+      "sha256": "40498aa4635f616a6f71fa2d9fda78a08b19c9a58536121a1a66fa61f93b0eb1"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_insects\\3.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_insects\\3.png",
+      "sha256": "f879e9e0dbe7c844f18627ab6e23c11a17df80e0994b5e85f1a0991a709a9747"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_frost\\0.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_frost\\0.png",
+      "sha256": "db7761eae2768a567f4edc3ee0008a09f98114f501c7feffda9a42331516f306"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_frost\\0.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_frost\\0.png",
+      "sha256": "868baee9800a5cd88794625bb73512313fb74101cd5d1cd35896f600e105b5ce"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_frost\\1.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_frost\\1.png",
+      "sha256": "948f5c492580a3424a917fc035571480ff8c6ba299303993f04f039f43282306"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_frost\\1.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_frost\\1.png",
+      "sha256": "de5d62c7cd6a661adf7fc30cc7bc468c4bbe532bac69fa4e3b288520b13a22a1"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_frost\\2.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_frost\\2.png",
+      "sha256": "18ee253ae0b7327e3aca12dec41c8f5fe97f58e129d0ac6dbe548c7018dba1a1"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_frost\\2.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_frost\\2.png",
+      "sha256": "5e9f8b0b3f5afda1ebd80aca480509c2dbe6fb810cae2ebe39460296eb7ddd21"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_frost\\3.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_frost\\3.png",
+      "sha256": "67d15bae24aeb91861a2c1835c8d8aa6d5ca67ba4ad4e4a7d2d49858c8fa4de0"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_frost\\3.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_frost\\3.png",
+      "sha256": "ea698b262968be47cefcfdf25fc8ccd1745c502243aa9303892db4768f81a88f"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_heat\\0.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_heat\\0.png",
+      "sha256": "80c0ed52ef98ff97a1ff0c93ec5c5d7a55de8a30f40c6f012dc73606a7b7c703"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_heat\\0.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_heat\\0.png",
+      "sha256": "8698cd7fbb77e8c48744a82af0f355554c6a6bed35f7797cc6198cb7427f94d7"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_heat\\1.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_heat\\1.png",
+      "sha256": "203bd2e92a51d6625c4996b963efeecfc0df1132eaed08174eba1064cce10945"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_heat\\1.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_heat\\1.png",
+      "sha256": "191b792f6712b9937b622239ad6504a1819b54746dec4fbdb908ebcef5ba78d0"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_heat\\2.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_heat\\2.png",
+      "sha256": "c19c7ff02f30179c2f5c292bd88a0c2e6abed51273c5efe69613c4dbe628eb8d"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_heat\\2.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_heat\\2.png",
+      "sha256": "2b60332415ad2ea2cabe1a27f488c37541c0a1336a9d9cb0a586904a8c8e6f55"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_heat\\3.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_heat\\3.png",
+      "sha256": "3abd7eb34abaddd147bdea99d82e5905e7f6405759d730981749bb3fbddfe9bd"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_heat\\3.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_heat\\3.png",
+      "sha256": "0363b5952edbc7f5a45ba48cef65a3105bb86afe1179d51fc17db98eb1fbc28b"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_radiation\\0.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_radiation\\0.png",
+      "sha256": "5b9575c7e6d8a7eb057eee29e03a18631bbc8470b2dcb75796e94f16b5f903eb"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_radiation\\0.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_radiation\\0.png",
+      "sha256": "b3d232a6722b58177bb350ef7450365a56050c4f1308b13f5fb25dfeb16948d2"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_radiation\\1.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_radiation\\1.png",
+      "sha256": "d74001cc7901c139a4b7442fd91753fa593b42a24a8f1889f1af1e4939d66d38"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_radiation\\1.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_radiation\\1.png",
+      "sha256": "edfbccf0d8ddcfe42e6f4aad82eeb1d24fab379779abbe6d0433f70c326ebef4"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_radiation\\2.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_radiation\\2.png",
+      "sha256": "6832bd55d31eea3b1b4b0c4e2caa6c99761b4bf94fc06233c193efa7071ce22b"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_radiation\\2.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_radiation\\2.png",
+      "sha256": "9ca714952ecd02852d14283c7afc82272d485d46814c18396890cb95782d21d5"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_radiation\\3.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_radiation\\3.png",
+      "sha256": "c4187193f409ecfee75ba4f1a0f4b67e8c0eba81d815433a996d96700f90438a"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_radiation\\3.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_radiation\\3.png",
+      "sha256": "3ab5a7e388f71bc0e2a98051ede2582f21d90260dd42b01d48e2b92caf38ce53"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_biochemgas\\0.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_biochemgas\\0.png",
+      "sha256": "f6d8af1e50198ce0bdcb61826d9a48a6a8987792e87fa3a1d559817f93e9ba17"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_biochemgas\\0.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_biochemgas\\0.png",
+      "sha256": "a2944ae808226d22aae1da081e7f0996ec2990944888567fbfed65ca61354d40"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_biochemgas\\1.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_biochemgas\\1.png",
+      "sha256": "1bd13667611434a9bcbbe020cc82ef1a7ddbc789d14a27598670c6c40ac1a404"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_biochemgas\\1.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_biochemgas\\1.png",
+      "sha256": "b01afe80d5944eb95d0cf9c50ae9b4bf61ae7d4adcf5a67e3a6425e219321a46"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_biochemgas\\2.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_biochemgas\\2.png",
+      "sha256": "3896ae66c2fdfeda3043dfd29ff369e07daffa6e4870c36a9af5731df9fac877"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_biochemgas\\2.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_biochemgas\\2.png",
+      "sha256": "f81454b0dda8c3f9a066d97702f8639c4da90102c8cef4ff12f6f516f7151016"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_biochemgas\\3.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_biochemgas\\3.png",
+      "sha256": "be9c0c2caf39e27e2fb4d7b5c7c82aa7e51c41ae624a9c1c1a44912b30122838"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_biochemgas\\3.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_biochemgas\\3.png",
+      "sha256": "1f8a5d65a0c391c68bca83fb36fa71e433e2fa9d8594e04d67ef98d8a43b530f"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_universal\\0.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_universal\\0.png",
+      "sha256": "45ffdf2f88608d1c16d02bfef3a8f187abddda7a37b9fb0e5d42cedc12cf1650"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_universal\\0.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_universal\\0.png",
+      "sha256": "88916f606c401b79cdd53bb7b75f227a19f09e649904f229581888af92bd33b2"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_universal\\1.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_universal\\1.png",
+      "sha256": "948f5c492580a3424a917fc035571480ff8c6ba299303993f04f039f43282306"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_universal\\1.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_universal\\1.png",
+      "sha256": "de5d62c7cd6a661adf7fc30cc7bc468c4bbe532bac69fa4e3b288520b13a22a1"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_universal\\2.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_universal\\2.png",
+      "sha256": "18ee253ae0b7327e3aca12dec41c8f5fe97f58e129d0ac6dbe548c7018dba1a1"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_universal\\2.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_universal\\2.png",
+      "sha256": "5e9f8b0b3f5afda1ebd80aca480509c2dbe6fb810cae2ebe39460296eb7ddd21"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_universal\\3.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\armor\\hazard_universal\\3.png",
+      "sha256": "984bdeb30238eaa153f4d819e6b0a411175a1c4969a51644a3c3482483a6c9c1"
+    },
+    {
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_universal\\3.png",
+      "destination": "core\\src\\main\\resources\\assets\\gregtech\\textures\\items\\armor\\hazard_universal\\3.png",
+      "sha256": "ea698b262968be47cefcfdf25fc8ccd1745c502243aa9303892db4768f81a88f"
+    }
+  ]
+}

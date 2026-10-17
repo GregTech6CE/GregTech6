@@ -1,0 +1,19 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_walls",
+  "contents": [
+    "item:gregtech:adamantium_wall",
+    "item:gregtech:bronze_wall",
+    "item:gregtech:galvanized_steel_wall",
+    "item:gregtech:invar_wall",
+    "item:gregtech:lead_wall",
+    "item:gregtech:steel_wall",
+    "item:gregtech:tank_wall",
+    "item:gregtech:tantalum_hafnium_carbide_wall",
+    "item:gregtech:titanium_wall",
+    "item:gregtech:tungsten_wall",
+    "item:gregtech:tungstensteel_wall",
+    "item:gregtech:wood_wall"
+  ],
+  "priority": 110
+}

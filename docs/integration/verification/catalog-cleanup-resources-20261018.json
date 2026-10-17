@@ -1,0 +1,32 @@
+{
+  "forge": {
+    "exact_changed_resources": 171,
+    "deleted_resources_absent": [
+      "assets/gregtech/stack_groups/material_forms/other_gt.json",
+      "data/gregtech/recipes/fusion/fusion_reactor_main.json",
+      "data/gregtech/recipes/long_distance/long_dist_wire.json",
+      "data/gregtech/recipes/machines/multiblock/lightning_rod_wall_from_tungsten_wall.json"
+    ],
+    "special_ore_groups": {
+      "special_ores": 16,
+      "crystal_ores": 12,
+      "rock_ores": 9
+    },
+    "sha256": "6d2b933cd62867cfd60f7567787ae32d5f2196e3c583738c60ae59dd33f7624b"
+  },
+  "neoforge": {
+    "exact_changed_resources": 171,
+    "deleted_resources_absent": [
+      "assets/gregtech/stack_groups/material_forms/other_gt.json",
+      "data/gregtech/recipes/fusion/fusion_reactor_main.json",
+      "data/gregtech/recipes/long_distance/long_dist_wire.json",
+      "data/gregtech/recipes/machines/multiblock/lightning_rod_wall_from_tungsten_wall.json"
+    ],
+    "special_ore_groups": {
+      "special_ores": 16,
+      "crystal_ores": 12,
+      "rock_ores": 9
+    },
+    "sha256": "cd9929080181034ad0a74ecbab5a27a88d2d99d042b0ab92816a47e6d3d8c8f1"
+  }
+}

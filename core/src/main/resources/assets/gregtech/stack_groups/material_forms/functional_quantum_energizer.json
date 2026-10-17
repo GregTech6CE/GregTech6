@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_quantum_energizer",
+  "contents": [
+    "item:gregtech:quantum_energizer_ev",
+    "item:gregtech:quantum_energizer_iv",
+    "item:gregtech:quantum_energizer_luv",
+    "item:gregtech:quantum_energizer_uv",
+    "item:gregtech:quantum_energizer_zpm"
+  ],
+  "priority": 110
+}

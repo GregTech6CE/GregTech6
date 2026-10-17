@@ -1,0 +1,13 @@
+{
+  "type": "remi:group",
+  "name": "itemGroup.gregtech.plant_gt_berry",
+  "contents": [
+    "#gregtech:plant_gt_berry"
+  ],
+  "exclusions": [
+    "#minecraft:planks",
+    "#gregtech:wooden_planks",
+    "item:gregtech:planks_treated"
+  ],
+  "priority": 100
+}

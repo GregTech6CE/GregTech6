@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_laserwelder",
+  "contents": [
+    "item:gregtech:laserwelder_aluminium",
+    "item:gregtech:laserwelder_chromium",
+    "item:gregtech:laserwelder_galvanized_steel",
+    "item:gregtech:laserwelder_stainless_steel",
+    "item:gregtech:laserwelder_titanium"
+  ],
+  "priority": 110
+}

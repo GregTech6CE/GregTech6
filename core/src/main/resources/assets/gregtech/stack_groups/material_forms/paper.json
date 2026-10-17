@@ -1,0 +1,8 @@
+{
+  "type": "remi:group",
+  "name": "item.minecraft.paper",
+  "contents": [
+    "item:gregtech:plate_paper"
+  ],
+  "priority": 120
+}

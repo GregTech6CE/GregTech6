@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_loom",
+  "contents": [
+    "item:gregtech:loom_bronze",
+    "item:gregtech:loom_steel",
+    "item:gregtech:loom_titanium",
+    "item:gregtech:loom_tungsten_steel"
+  ],
+  "priority": 110
+}

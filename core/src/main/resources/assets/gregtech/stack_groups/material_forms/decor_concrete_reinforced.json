@@ -1,0 +1,8 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.decor_concrete_reinforced",
+  "contents": [
+    "item:gregtech:concrete_reinforced"
+  ],
+  "priority": 120
+}

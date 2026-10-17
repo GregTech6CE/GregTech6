@@ -14,6 +14,7 @@ public final class OriginCreativeContents {
     private static Map<String,List<ItemStack>> pages;
     public static String family(Item item) {
         String id=BuiltInRegistries.ITEM.getKey(item).getPath();
+        if(item instanceof RadiationSuitItem)return "equipment";
         if(item instanceof CanvasItem)return "equipment";
         if(item instanceof ColoredBookItem || id.equals("dusty_guide_book") || id.equals("dusty_material_dictionary"))return "books";
         if(item instanceof GTToolItem) return "tools";
@@ -82,6 +83,7 @@ public final class OriginCreativeContents {
         for(var item:BuiltInRegistries.ITEM) {
             if(!BuiltInRegistries.ITEM.getKey(item).getNamespace().equals("gregtech")||item instanceof MaterialFormItem||item instanceof CreativeTabIconItem)continue;
             if(item instanceof BlockItem b && b.getBlock() instanceof MaterialBlockLike)continue;
+            if(com.gregtech.gregtech.registry.LegacyContentBinding.legacy(item))continue;
             if(java.util.Set.of("fluid_spring","bumble_hive","tap","fluid_funnel","cap_nozzle","nozzle","cure_all").contains(BuiltInRegistries.ITEM.getKey(item).getPath()))continue;
             if(item instanceof com.gregtech.gregtech.platform.neoforge.fluid.FluidDisplayItem fluid && fluid.fluidEntry().isHidden())continue;
             if (item instanceof CannedFoodItem can && can.spec().hidden()) continue;

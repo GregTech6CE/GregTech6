@@ -76,6 +76,7 @@ public final class MultiblockRecipePack extends AbstractPackResources {
         EMITTED.clear();
 
         for (MultiblockCraftingRecipes.Entry entry : MultiblockCraftingRecipes.ENTRIES) {
+            if (com.gregtech.gregtech.registry.LegacyContentAliases.legacy(entry.blockId())) continue;
             ResourceLocation blockId = ResourceLocation.fromNamespaceAndPath("gregtech", entry.blockId());
             Block block = ForgeRegistries.BLOCKS.getValue(blockId);
             if (block == null || block == net.minecraft.world.level.block.Blocks.AIR) continue;
@@ -90,6 +91,19 @@ public final class MultiblockRecipePack extends AbstractPackResources {
                     "recipes/machines/multiblock/" + entry.blockId() + ".json"),
                     GSON.toJson(recipe).getBytes(StandardCharsets.UTF_8));
             EMITTED.add(entry.blockId());
+        }
+
+        for (var row : java.util.stream.Stream.concat(OriginalSurvivalRecipes.ROWS.stream(), UtilityCraftingRows.ROWS.stream()).toList()) {
+            var blockId = ResourceLocation.fromNamespaceAndPath("gregtech", row.id());
+            Item item = ForgeRegistries.ITEMS.getValue(blockId);
+            if (item == null || item == net.minecraft.world.item.Items.AIR)
+                throw new IllegalStateException("Unregistered original recipe output " + row.id());
+            var recipe = buildRecipe(row.entry(), row.material(), item);
+            if (recipe == null) throw new IllegalStateException("Unresolved original recipe " + row.id());
+            recipe.put("result", Map.of("item", row.id().contains(":") ? row.id() : "gregtech:" + row.id(), "count", row.count()));
+            generated.put(ResourceLocation.fromNamespaceAndPath("gregtech", "recipes/survival_repairs/" + row.id() + ".json"),
+                    GSON.toJson(recipe).getBytes(StandardCharsets.UTF_8));
+            EMITTED.add(row.id());
         }
 
         resources = Collections.unmodifiableMap(generated);

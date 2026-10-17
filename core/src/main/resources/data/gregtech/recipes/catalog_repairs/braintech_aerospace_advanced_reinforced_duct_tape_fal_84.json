@@ -1,0 +1,19 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "PPP",
+    " G "
+  ],
+  "key": {
+    "P": {
+      "tag": "gregtech:technology/any_tungsten_foil"
+    },
+    "G": {
+      "tag": "forge:glue"
+    }
+  },
+  "result": {
+    "item": "gregtech:braintech_aerospace_advanced_reinforced_duct_tape_fal_84",
+    "count": 1
+  }
+}

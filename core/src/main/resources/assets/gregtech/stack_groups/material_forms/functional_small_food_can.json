@@ -1,0 +1,16 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_small_food_can",
+  "contents": [
+    "item:gregtech:small_food_can_bread",
+    "item:gregtech:small_food_can_chum",
+    "item:gregtech:small_food_can_cookies",
+    "item:gregtech:small_food_can_fish",
+    "item:gregtech:small_food_can_fruits",
+    "item:gregtech:small_food_can_meat",
+    "item:gregtech:small_food_can_rotten",
+    "item:gregtech:small_food_can_unknown",
+    "item:gregtech:small_food_can_vegetables"
+  ],
+  "priority": 110
+}

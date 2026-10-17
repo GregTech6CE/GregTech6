@@ -30,7 +30,7 @@ public class LightningRodControllerBlockEntity extends GTEnergyBlockEntity imple
             var required = originalId
                     ? LargeMachineParts.block(y%2==0?18004:18041)
                     : y%2==0?GTMultiblocks.LIGHTNING_ROD_WALL.get():GTMultiblocks.LARGE_NIOBIUM_TITANIUM_COIL.get();
-            if(!level.hasChunkAt(pos)||!level.getBlockState(pos).is(required)) return false;
+            if(!level.hasChunkAt(pos)||!com.gregtech.gregtech.registry.LegacyContentBinding.samePart(level.getBlockState(pos).getBlock(), required)) return false;
         }
         var pillar = originalId?LargeMachineParts.block(18104):GTMultiblocks.LIGHTNING_ROD_PILLAR.get();
         while(worldPosition.getY()+5+rodLength<level.getMaxBuildHeight()

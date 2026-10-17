@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:braintech_aerospace_advanced_reinforced_duct_tape_fal_84_2"
+    },
+    {
+      "item": "gregtech:braintech_aerospace_advanced_reinforced_duct_tape_fal_84_2"
+    },
+    {
+      "item": "gregtech:braintech_aerospace_advanced_reinforced_duct_tape_fal_84_2"
+    },
+    {
+      "item": "gregtech:braintech_aerospace_advanced_reinforced_duct_tape_fal_84_2"
+    }
+  ],
+  "result": {
+    "item": "gregtech:braintech_aerospace_advanced_reinforced_duct_tape_fal_84",
+    "count": 1
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "C",
+    "Z"
+  ],
+  "key": {
+    "Z": {
+      "item": "gregtech:cake_bottom"
+    },
+    "C": {
+      "tag": "gregtech:food/foodheavycream"
+    }
+  },
+  "result": {
+    "item": "minecraft:cake",
+    "count": 1
+  },
+  "allow_mirror": false,
+  "gregtech_autocraftable": false
+}

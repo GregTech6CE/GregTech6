@@ -95,7 +95,7 @@ public final class GTLasers {
         ZPM = reg("zpm", () -> new com.gregtech.gregtech.block.energy.ZpmModuleBlock(BlockBehaviour.Properties.of().strength(0.5f,1f)));
         ZPM_DISCHARGER_BASIC = reg("zpm_discharger_basic", () -> new com.gregtech.gregtech.block.energy.ZpmDischargerBlock(BlockBehaviour.Properties.of().strength(4f,50f).requiresCorrectToolForDrops(),false));
         ZPM_DISCHARGER_ADVANCED = reg("zpm_discharger_advanced", () -> new com.gregtech.gregtech.block.energy.ZpmDischargerBlock(BlockBehaviour.Properties.of().strength(4f,50f).requiresCorrectToolForDrops(),true));
-        ZPM_DISCHARGER_ELITE = reg("zpm_discharger_elite", () -> new com.gregtech.gregtech.block.energy.ZpmDischargerBlock(BlockBehaviour.Properties.of().strength(4f,50f).requiresCorrectToolForDrops(),false));
+        ZPM_DISCHARGER_ELITE = ZPM_DISCHARGER_BASIC;
 
         // F8: Logistics Core
         LOGISTICS_CORE = reg("logistics_core", () -> new com.gregtech.gregtech.block.machine.LogisticsCoreControllerBlock(laserProps()));

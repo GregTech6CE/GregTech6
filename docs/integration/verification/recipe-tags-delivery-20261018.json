@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "scope": "Verified complete copies; runtime evidence is recorded separately",
+  "directory": "C:\\Dev\\GregTech6\\build\\verified\\20261017-195955Z-5ae5ea6e",
+  "verification_report": "C:\\Dev\\GregTech6\\docs\\integration\\verification\\recipe-tags-packaging-20261018.json",
+  "verification_report_sha256": "b4fa3501120cf08c3c056572b267d0d867a797417ed5f813158e6ec3822f1ca8",
+  "artifacts": {
+    "forge": {
+      "name": "gregtech6-1.20.1-forge-0.0.0.jar",
+      "bytes": 40583759,
+      "sha256": "5ae5ea6e2eee0fd1cc35ac2aff2b4c0497f66fb329dd7291d890359acdd8e7fb",
+      "zip_crc_checked": true,
+      "path": "C:\\Dev\\GregTech6\\build\\verified\\20261017-195955Z-5ae5ea6e\\gregtech6-1.20.1-forge-0.0.0.jar"
+    },
+    "neoforge": {
+      "name": "gregtech6-neoforge-1.21.1-0.0.0.jar",
+      "bytes": 40437267,
+      "sha256": "ad810f110c6da1839a3a38e9a5f6ae5a0d44b8f482eea747f8bd5006d7359115",
+      "zip_crc_checked": true,
+      "path": "C:\\Dev\\GregTech6\\build\\verified\\20261017-195955Z-5ae5ea6e\\gregtech6-neoforge-1.21.1-0.0.0.jar"
+    }
+  }
+}

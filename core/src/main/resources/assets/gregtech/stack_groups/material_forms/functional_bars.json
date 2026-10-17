@@ -1,0 +1,14 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_bars",
+  "contents": [
+    "item:gregtech:bars_brass",
+    "item:gregtech:bars_bronze",
+    "item:gregtech:bars_iron",
+    "item:gregtech:bars_stainless",
+    "item:gregtech:bars_steel",
+    "item:gregtech:bars_tungsten_steel",
+    "item:gregtech:bars_wrought_iron"
+  ],
+  "priority": 110
+}

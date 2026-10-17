@@ -56,6 +56,11 @@ public final class BaleBlock extends RotatedPillarBlock {
         if (random.nextInt(3) > 0 && !sunny) return;
 
         boolean wet = level.getBiome(pos).value().getModifiedClimateSettings().downfall() > 0.8F;
+        var biome = level.getBiome(pos);
+        wet |= biome.is(net.minecraft.tags.BiomeTags.IS_OCEAN)
+                || biome.is(net.minecraft.tags.BiomeTags.IS_RIVER)
+                || biome.is(net.minecraft.tags.BiomeTags.IS_BEACH)
+                || biome.unwrapKey().map(key -> com.gregtech.gregtech.worldgen.center.OriginBiomeNames.water(key.location().getPath())).orElse(false);
         if (!wet) {
             for (Direction direction : Direction.values()) {
                 if (level.getFluidState(pos.relative(direction)).is(FluidTags.WATER)) {

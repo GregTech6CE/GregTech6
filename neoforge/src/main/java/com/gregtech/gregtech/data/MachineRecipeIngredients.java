@@ -129,6 +129,11 @@ public final class MachineRecipeIngredients {
                 GTMaterial target = parts[1] == null ? material : fixedMaterial(parts[1], material, "pipe " + parts[0]);
                 return pipeIngredient(parts[0], target, material);
             }
+            case "cable": {
+                String[] parts = splitMaterial(argument);
+                GTMaterial target = parts[1] == null ? material : fixedMaterial(parts[1], material, "cable " + parts[0]);
+                return wireIngredient(parts[0], target, material, true);
+            }
             case "wire": {
                 String[] parts = splitMaterial(argument);
                 GTMaterial target = parts[1] == null ? material : fixedMaterial(parts[1], material, "wire " + parts[0]);
@@ -193,6 +198,9 @@ public final class MachineRecipeIngredients {
     }
 
     private static Object materialIngredient(String prefixName, GTMaterial target, GTMaterial machineMaterial) {
+        // Original ore-dictionary aliases for vanilla forms are not generated GT material items.
+        if (prefixName.equals("plate") && target.getName().equals("Glass")) return Map.of("item", "minecraft:glass_pane");
+        if (prefixName.equals("ingot") && target.getName().equals("ClayBrick")) return Map.of("item", "minecraft:brick");
         MaterialPrefix prefix = prefix(prefixName);
         if (prefix == null) {
             note("material prefix " + prefixName, "machine casing block");
@@ -316,6 +324,8 @@ public final class MachineRecipeIngredients {
     private static Object byItemId(String id) {
         ResourceLocation key = ResourceLocation.tryParse(id.trim());
         if (key == null) return null;
+        if (key.getNamespace().equals("gregtech")) key = ResourceLocation.fromNamespaceAndPath("gregtech",
+                com.gregtech.gregtech.registry.LegacyContentAliases.canonical(key.getPath()));
         Item item = BuiltInRegistries.ITEM.get(key);
         if (item == null || item == Items.AIR) return null;
         return Map.of("item", key.toString());

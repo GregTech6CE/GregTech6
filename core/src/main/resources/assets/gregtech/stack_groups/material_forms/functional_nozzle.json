@@ -1,0 +1,14 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_nozzle",
+  "contents": [
+    "item:gregtech:nozzle",
+    "item:gregtech:nozzle_adamantium",
+    "item:gregtech:nozzle_plastic",
+    "item:gregtech:nozzle_stainless_steel",
+    "item:gregtech:nozzle_steel",
+    "item:gregtech:nozzle_tantalum_hafnium_carbide",
+    "item:gregtech:nozzle_tungsten"
+  ],
+  "priority": 110
+}

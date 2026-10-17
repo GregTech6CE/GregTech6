@@ -1,0 +1,21 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_burning_box_liquid",
+  "contents": [
+    "item:gregtech:burning_box_liquid_arsenic_bronze",
+    "item:gregtech:burning_box_liquid_arsenic_copper",
+    "item:gregtech:burning_box_liquid_bismuth",
+    "item:gregtech:burning_box_liquid_bronze",
+    "item:gregtech:burning_box_liquid_chromium",
+    "item:gregtech:burning_box_liquid_invar",
+    "item:gregtech:burning_box_liquid_lead",
+    "item:gregtech:burning_box_liquid_netherite",
+    "item:gregtech:burning_box_liquid_steel",
+    "item:gregtech:burning_box_liquid_ta4hfc5",
+    "item:gregtech:burning_box_liquid_titanium",
+    "item:gregtech:burning_box_liquid_tungsten",
+    "item:gregtech:burning_box_liquid_tungsten_steel",
+    "item:gregtech:burning_box_liquid_ultimet"
+  ],
+  "priority": 110
+}

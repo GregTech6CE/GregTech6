@@ -3,7 +3,7 @@ package com.gregtech.gregtech.content.multiblock;
 public final class OriginalMultiblockTintPolicy {private OriginalMultiblockTintPolicy(){}public static String material(String path){
         return switch (path) {
             case "heat_transmitter", "heat_exchanger_wall" -> "Invar";
-            case "coke_oven_wall", "large_crucible_wall", "coke_oven_main", "large_crucible_main" -> "Ceramic";
+            case "fire_bricks", "coke_oven_wall", "large_crucible_wall", "coke_oven_main", "large_crucible_main" -> "Ceramic";
             case "bedrock_drill_wall", "implosion_compressor_wall", "implosion_compressor_main" -> "Tungstensteel";
             case "heat_exchanger_main" -> "Tungsten";
             case "bedrock_drill_main" -> "Titanium";

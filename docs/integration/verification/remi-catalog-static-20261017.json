@@ -1,0 +1,19 @@
+{
+  "groups": 435,
+  "machinePartsExcluded": true,
+  "normalDenseFamiliesDisjoint": true,
+  "clayFoodFamiliesDisjoint": true,
+  "unfiredClayVesselsIncluded": true,
+  "unchangedNonHeadingLanguageKeys": {
+    "en_us": 15521,
+    "zh_cn": 141372
+  },
+  "sourceFiles": {
+    "gregtech/worldgen/center/WorldgenCenterBiomes.java": "948e24ca9b41b189d11b9c4ac0a20881443d68184d12cb56e4a74c8e01b2d8d6",
+    "gregtech/blocks/BlockBaleGrass.java": "fe78f45ec9730432ac54eedbf16a739456ca8363f17ec5fe2afef0e5cdccd10f",
+    "gregtech/loaders/b/Loader_MultiTileEntities.java": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+    "gregtech/items/MultiItemRandomTools.java": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d"
+  },
+  "unfiredClayFoodFamiliesDisjoint": true,
+  "finalArchiveGroupsAndLanguagesMatchSource": true
+}

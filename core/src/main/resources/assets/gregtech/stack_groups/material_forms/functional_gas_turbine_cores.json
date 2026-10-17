@@ -1,0 +1,15 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_gas_turbine_cores",
+  "contents": [
+    "item:gregtech:graphene_gas_turbine_main_housing",
+    "item:gregtech:large_gas_turbine_graphene",
+    "item:gregtech:large_gas_turbine_main",
+    "item:gregtech:large_gas_turbine_trinitanium",
+    "item:gregtech:large_gas_turbine_vibramantium",
+    "item:gregtech:magnalium_gas_turbine_main_housing",
+    "item:gregtech:trinitanium_gas_turbine_main_housing",
+    "item:gregtech:vibramantium_gas_turbine_main_housing"
+  ],
+  "priority": 110
+}

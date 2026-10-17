@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_flux_cooler",
+  "contents": [
+    "item:gregtech:flux_cooler_ev",
+    "item:gregtech:flux_cooler_hv",
+    "item:gregtech:flux_cooler_iv",
+    "item:gregtech:flux_cooler_lv",
+    "item:gregtech:flux_cooler_mv"
+  ],
+  "priority": 110
+}

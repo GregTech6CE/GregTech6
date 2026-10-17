@@ -67,7 +67,7 @@ public class LargeBoilerControllerBlockEntity extends GTEnergyBlockEntity implem
             if(pos.equals(worldPosition)) return true;
             if(role==com.gregtech.gregtech.api.multiblock.MultiblockLayout.Role.AIR) return level.getBlockState(pos).isAir();
             var expected=role==com.gregtech.gregtech.api.multiblock.MultiblockLayout.Role.HEAT_INPUT?GTMultiblocks.HEAT_TRANSMITTER.get():GTMultiblocks.BOILER_WALL.get();
-            return level.getBlockState(pos).is(expected) && level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity port && port.canBind(worldPosition);
+            return com.gregtech.gregtech.registry.LegacyContentBinding.samePart(level.getBlockState(pos).getBlock(), expected) && level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity port && port.canBind(worldPosition);
         });
     }
 

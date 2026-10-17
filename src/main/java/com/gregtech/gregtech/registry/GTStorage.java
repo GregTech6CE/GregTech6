@@ -9,6 +9,7 @@ import net.minecraftforge.registries.RegistryObject;
 /** GT6 storage blocks (mass storage; drawers/lockers/safes to follow). */
 public final class GTStorage {
 
+    public static final java.util.List<RegistryObject<com.gregtech.gregtech.block.inventory.LockerBlock>> LOCKERS = new java.util.ArrayList<>();
     public static RegistryObject<com.gregtech.gregtech.block.inventory.MassStorageBlock> MASS_STORAGE;
     /** Per-material variants in GT6 metalset order. */
     public static final java.util.List<RegistryObject<com.gregtech.gregtech.block.inventory.MassStorageBlock>> MASS_STORAGES =
@@ -63,14 +64,7 @@ public final class GTStorage {
 
 
     public static void registerAll() {
-        MASS_STORAGE = GTBlocks.BLOCKS.register("mass_storage", () ->
-                new com.gregtech.gregtech.block.inventory.MassStorageBlock(
-                        BlockBehaviour.Properties.of()
-                                .mapColor(MapColor.METAL)
-                                .strength(4.0f, 4.0f)
-                                .requiresCorrectToolForDrops()));
-        GTBlocks.BLOCK_ITEMS.register("mass_storage",
-                () -> new BlockItem(MASS_STORAGE.get(), new Item.Properties().stacksTo(16)));   // GT6 Storage: 16
+        MASS_STORAGE = RegistryObject.create(com.gregtech.gregtech.GregTech.id("mass_storage_stainless_steel"), net.minecraftforge.registries.ForgeRegistries.BLOCKS);
         for (GTStorageMetals.Spec spec : GTStorageMetals.ALL) {
             String id = spec.suffix().equals("stainless_steel") ? "drawer_quad" : "drawer_quad_" + spec.suffix();
             var drawer = GTBlocks.BLOCKS.register(id, () -> new com.gregtech.gregtech.block.inventory.DrawerQuadBlock(spec.material(),
@@ -130,14 +124,15 @@ public final class GTStorage {
                                 .requiresCorrectToolForDrops()));
         GTBlocks.BLOCK_ITEMS.register("safe",
                 () -> new BlockItem(SAFE.get(), new Item.Properties().stacksTo(16)));
-        LOCKER = GTBlocks.BLOCKS.register("locker", () ->
-                new com.gregtech.gregtech.block.inventory.LockerBlock(
-                        BlockBehaviour.Properties.of()
-                                .mapColor(MapColor.METAL)
-                                .strength(3.0f, 3.0f)
-                                .requiresCorrectToolForDrops()));
-        GTBlocks.BLOCK_ITEMS.register("locker",
-                () -> new BlockItem(LOCKER.get(), new Item.Properties()));
+        for (var spec : GTStorageMetals.ALL) {
+            String id = spec.suffix().equals("stainless_steel") ? "locker" : "locker_" + spec.suffix();
+            var locker = GTBlocks.BLOCKS.register(id, () -> new com.gregtech.gregtech.block.inventory.LockerBlock(
+                    spec.material(), BlockBehaviour.Properties.of().mapColor(MapColor.METAL)
+                            .strength(spec.hardness(),spec.resistance()).requiresCorrectToolForDrops()));
+            LOCKERS.add(locker);
+            if (id.equals("locker")) LOCKER = locker;
+            GTBlocks.BLOCK_ITEMS.register(id, () -> new net.minecraft.world.item.BlockItem(locker.get(),new net.minecraft.world.item.Item.Properties().stacksTo(16)));
+        }
         ENDER_GARBAGE = GTBlocks.BLOCKS.register("ender_garbage_bin", () ->
                 new com.gregtech.gregtech.block.inventory.EnderGarbageBlock(
                         BlockBehaviour.Properties.of()

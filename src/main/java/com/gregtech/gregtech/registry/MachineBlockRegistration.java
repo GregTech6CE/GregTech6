@@ -33,6 +33,9 @@ public final class MachineBlockRegistration {
         public RegistryObject<Block> register() {
             if (registered) throw new IllegalStateException("Block definition already registered: " + id);
             registered = true;
+            if (LegacyContentAliases.legacy(id)) return RegistryObject.create(
+                    new net.minecraft.resources.ResourceLocation("gregtech", LegacyContentAliases.canonical(id)),
+                    net.minecraftforge.registries.ForgeRegistries.BLOCKS);
             // Capture a snapshot: later changes to the builder cannot change deferred construction.
             float blockHardness = hardness, blockResistance = resistance;
             RegistryObject<Block> block = GTBlocks.BLOCKS.register(id, () -> factory.apply(

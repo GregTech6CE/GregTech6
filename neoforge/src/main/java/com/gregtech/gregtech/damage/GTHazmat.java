@@ -26,11 +26,8 @@ import net.minecraft.world.item.ItemStack;
  * In 1.20.1 the sets become item tags, which is also how the port already ships its lead hazard suit
  * ({@code gregtech:radiation_protection}, see {@link ReactorRadiation#PROTECTION}).
  *
- * <p><b>State of the sets:</b> the port has ported GT6's lead/radiation suit only, so
- * {@link #RADIATION} is populated and the other seven tags are deliberately empty - GT6 sources most
- * of them from IC2's hazmat suit, which does not exist here. The checks below are wired anyway so
- * that a later armour batch only has to add items to a tag; {@code HazardDamageTests} pins the
- * current emptiness so it cannot be mistaken for protection.
+ * <p>All six original Loader_Tools suits populate the corresponding shared tags. Protection
+ * requires four equipped pieces in the hazard set; universal pieces belong to every set.
  */
 public final class GTHazmat {
     /** Chemical protection (GT6 {@code ArmorsGT.HAZMATS_CHEM}, IC2's hazmat suit). */

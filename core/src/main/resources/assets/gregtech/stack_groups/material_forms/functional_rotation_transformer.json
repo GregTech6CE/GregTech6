@@ -1,0 +1,20 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_rotation_transformer",
+  "contents": [
+    "item:gregtech:rotation_transformer_adamantium",
+    "item:gregtech:rotation_transformer_arsenic_bronze",
+    "item:gregtech:rotation_transformer_arsenic_copper",
+    "item:gregtech:rotation_transformer_brass",
+    "item:gregtech:rotation_transformer_bronze",
+    "item:gregtech:rotation_transformer_iridium",
+    "item:gregtech:rotation_transformer_iritanium",
+    "item:gregtech:rotation_transformer_steel",
+    "item:gregtech:rotation_transformer_titanium",
+    "item:gregtech:rotation_transformer_trinaquadalloy",
+    "item:gregtech:rotation_transformer_trinitanium",
+    "item:gregtech:rotation_transformer_tungstensteel",
+    "item:gregtech:rotation_transformer_wood"
+  ],
+  "priority": 110
+}

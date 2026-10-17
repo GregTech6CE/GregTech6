@@ -353,7 +353,7 @@ def main():
     # Port controllers and structural parts retain their original numeric identities.
     bindings.update({17000: 'coke_oven_main', 17997: 'logistics_core', 17110: 'implosion_compressor_main',
                      17198: 'fusion_reactor_main', 17197: 'heat_exchanger_main', 17101: 'distillation_tower_main',
-                     17111: 'cryo_distillation_main', 18000: 'coke_oven_wall',
+                     17111: 'cryo_distillation_main', 18000: 'fire_bricks',
                      18002: 'tank_wall', 18022: 'tank_wall_dense', 18023: 'implosion_compressor_wall',
                      18041: 'large_niobium_titanium_coil', 18100: 'centrifuge_part',
                      18101: 'heat_transmitter', 18102: 'distillation_tower_part', 18105: 'electrolyzer_part'})

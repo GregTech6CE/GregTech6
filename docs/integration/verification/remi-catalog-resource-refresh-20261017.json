@@ -1,0 +1,16 @@
+{
+  "scope": "Final single-resource refresh after normal Gradle build; compiled classes unchanged",
+  "entries": [
+    "assets/gregtech/stack_groups/material_forms/functional_foods.json"
+  ],
+  "artifacts": {
+    "forge": {
+      "gradle_sha256": "ab739274d45e838916ffbc9041097f208e812630e4d2632c180624a99ffb8fec",
+      "final_sha256": "a256755ae2a6b0466c1556e601299800fb47dcd61d5bdd54813b9e796763e29d"
+    },
+    "neoforge": {
+      "gradle_sha256": "9bf9d2679b66e2f85ecfdc0d8756a6938a43d41504223ef5708dcdf7857f1bf6",
+      "final_sha256": "f2c65a28c5617f2eb46ea5a39de5e4eed5ca41c30a61837f2c4c8b0930a774b5"
+    }
+  }
+}

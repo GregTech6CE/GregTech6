@@ -1,0 +1,19 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "PPP",
+    " G "
+  ],
+  "key": {
+    "P": {
+      "item": "minecraft:paper"
+    },
+    "G": {
+      "tag": "forge:glue"
+    }
+  },
+  "result": {
+    "item": "gregtech:tape",
+    "count": 1
+  }
+}
