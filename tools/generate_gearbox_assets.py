@@ -114,7 +114,9 @@ def expected() -> tuple[dict[Path, bytes], dict[str, str], dict[str, str]]:
     gearbox_item = (ASSETS / "models/item/gearbox_bronze.json").read_bytes()
     gearbox_model = (ASSETS / "models/block/gearbox_bronze.json").read_bytes()
     transformer_state = (ASSETS / "blockstates/rotation_transformer_bronze.json").read_bytes()
-    transformer_item = (ASSETS / "models/item/rotation_transformer_bronze.json").read_bytes()
+    # An item model inherits with `parent`; `model` belongs to blockstate variants
+    # and silently bakes an empty inventory model in both Minecraft versions.
+    transformer_item = (json.dumps({"parent": "gregtech:block/machine/transformer/rotation_transformer"}, indent=2) + "\n").encode("utf-8")
     transformer_model = (ASSETS / "models/block/rotation_transformer_bronze.json").read_bytes()
 
     files: dict[Path, bytes] = {}

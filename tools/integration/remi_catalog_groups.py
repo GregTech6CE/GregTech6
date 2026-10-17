@@ -13,6 +13,11 @@ def extend(root, groups, ids):
     gearboxes = (java / "content/energy/GearboxCatalog.java").read_text(encoding="utf-8")
     groups["gearbox"] = ["gearbox_" + suffix for suffix in re.findall(r'new Tier\("([^"]+)"', gearboxes)]
     assert len(groups["gearbox"]) == 13 and all(item in ids for item in groups["gearbox"])
+    suits = (java / "content/hazard/HazmatSuitCatalog.java").read_text(encoding="utf-8")
+    families = re.findall(r'"([a-z]+)"', suits.split("FAMILIES = List.of(", 1)[1].split(");", 1)[0])
+    groups["clothing"] = [family + "_suit_" + slot for family in families
+                          for slot in ("helmet", "chestplate", "leggings", "boots")]
+    assert len(groups["clothing"]) == 24 and all(item in ids for item in groups["clothing"])
     def select(group, pattern):
         groups[group] = [i for i in ids if re.fullmatch(pattern, i)]
 
