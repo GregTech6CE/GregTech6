@@ -1,0 +1,27 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "MMM",
+    "MGM",
+    "q l"
+  ],
+  "key": {
+    "M": {
+      "tag": "gregtech:technology/any_rubber_plate"
+    },
+    "G": {
+      "item": "minecraft:glass_pane"
+    },
+    "l": {
+      "tag": "forge:tools/file"
+    },
+    "q": {
+      "tag": "forge:tools/scissors"
+    }
+  },
+  "result": {
+    "item": "gregtech:biochemgas_suit_helmet"
+  },
+  "allow_mirror": false,
+  "gregtech_autocraftable": false
+}

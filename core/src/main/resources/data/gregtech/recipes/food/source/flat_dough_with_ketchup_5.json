@@ -1,0 +1,28 @@
+{
+  "type": "gregtech:tool_shapeless",
+  "ingredients": [
+    {
+      "tag": "gregtech:food/foodketchup"
+    },
+    {
+      "item": "gregtech:flattened_dough"
+    },
+    {
+      "item": "gregtech:flattened_dough"
+    },
+    {
+      "item": "gregtech:flattened_dough"
+    },
+    {
+      "item": "gregtech:flattened_dough"
+    },
+    {
+      "item": "gregtech:flattened_dough"
+    }
+  ],
+  "result": {
+    "item": "gregtech:flat_dough_with_ketchup",
+    "count": 5
+  },
+  "gregtech_autocraftable": true
+}

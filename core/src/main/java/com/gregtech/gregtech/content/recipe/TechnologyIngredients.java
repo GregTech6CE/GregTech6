@@ -22,6 +22,8 @@ public final class TechnologyIngredients {
         new Family("any_iron_long_rod",MaterialPrefix.stickLong,MaterialGroups.Iron),
         new Family("any_silicon_gem_plate",MaterialPrefix.plateGem,MaterialGroups.Si),
         new Family("any_plastic_curved_plate",MaterialPrefix.plateCurved,MaterialGroups.Plastic),
+        new Family("any_rubber_foil",MaterialPrefix.foil,MaterialGroups.Rubber),
+        new Family("any_rubber_plate",MaterialPrefix.plate,MaterialGroups.Rubber),
         new Family("any_rubber_hammer_head",MaterialPrefix.toolHeadHammer,MaterialGroups.Rubber),
         new Family("any_steel_rod",MaterialPrefix.stick,MaterialGroups.Steel),
         new Family("any_diamond_dust",MaterialPrefix.dust,MaterialGroups.Diamond),

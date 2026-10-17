@@ -1,0 +1,25 @@
+{
+  "type": "gregtech:tool_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:flat_dough_with_ketchup"
+    },
+    {
+      "item": "gregtech:ananas_slice"
+    },
+    {
+      "item": "gregtech:ananas_slice"
+    },
+    {
+      "item": "gregtech:cooked_ham_slice"
+    },
+    {
+      "item": "gregtech:cheese_slice"
+    }
+  ],
+  "result": {
+    "item": "gregtech:raw_pizza_hawaii",
+    "count": 1
+  },
+  "gregtech_autocraftable": true
+}

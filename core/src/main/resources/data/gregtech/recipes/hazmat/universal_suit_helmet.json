@@ -1,0 +1,42 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "AlB",
+    "CqD",
+    "ExF"
+  ],
+  "key": {
+    "A": {
+      "item": "gregtech:biochemgas_suit_helmet"
+    },
+    "B": {
+      "item": "gregtech:insect_suit_helmet"
+    },
+    "C": {
+      "item": "gregtech:frost_suit_helmet"
+    },
+    "D": {
+      "item": "gregtech:heat_suit_helmet"
+    },
+    "E": {
+      "item": "gregtech:radiation_suit_helmet"
+    },
+    "F": {
+      "item": "minecraft:chainmail_helmet"
+    },
+    "l": {
+      "tag": "forge:tools/file"
+    },
+    "q": {
+      "tag": "forge:tools/scissors"
+    },
+    "x": {
+      "tag": "forge:tools/wire_cutter"
+    }
+  },
+  "result": {
+    "item": "gregtech:universal_suit_helmet"
+  },
+  "allow_mirror": false,
+  "gregtech_autocraftable": false
+}

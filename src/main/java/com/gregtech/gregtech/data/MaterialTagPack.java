@@ -235,6 +235,13 @@ public final class MaterialTagPack extends AbstractPackResources {
                         .add(id.toString());
             }
         }
+        // GT6 LIST_SLABS / slabAnyWood: native slabs participate in normal slab crafting.
+        for(String wood:com.gregtech.gregtech.content.plant.WoodSlabCatalog.WOODS){
+            String id="gregtech:slab_"+wood;
+            for(String tag:new String[]{"minecraft:tags/items/wooden_slabs.json","minecraft:tags/items/slabs.json",
+                    "minecraft:tags/blocks/wooden_slabs.json","minecraft:tags/blocks/slabs.json"})
+                tags.computeIfAbsent(tag,k->new TreeSet<>()).add(id);
+        }
         // Common spelling aliases used by Forge 1.20 packs. References keep datapack additions shared.
         var aliases=com.gregtech.gregtech.api.material.MaterialTagAliases.ALTERNATE_SPELLINGS;
         for(var path:new ArrayList<>(tags.keySet())) for(var alias:aliases.entrySet()) {

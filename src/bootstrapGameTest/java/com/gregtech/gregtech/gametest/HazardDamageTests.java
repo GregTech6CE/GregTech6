@@ -364,14 +364,14 @@ public final class HazardDamageTests {
     public static void hazmatSetsMatchWhatIsPorted(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
 
-        // Only the lead/radiation suit is ported, so exactly that tag is populated.
+        // Loader_Tools: all six native suits, with universal pieces in every hazard set.
         var radiation = net.minecraftforge.registries.ForgeRegistries.ITEMS.tags().getTag(GTHazmat.RADIATION);
-        helper.assertTrue(radiation.size() == 4,
-                "gregtech:radiation_protection holds the four lead suit pieces, got " + radiation.size());
-        for (TagKey<Item> empty : List.of(GTHazmat.CHEM, GTHazmat.HEAT, GTHazmat.FROST, GTHazmat.ELECTRIC,
+        helper.assertTrue(radiation.size() == 8,
+                "gregtech:radiation_protection holds the lead and universal suit pieces, got " + radiation.size());
+        for (TagKey<Item> protection : List.of(GTHazmat.CHEM, GTHazmat.HEAT, GTHazmat.FROST, GTHazmat.ELECTRIC,
                 GTHazmat.BIO, GTHazmat.INSECT, GTHazmat.GAS)) {
-            helper.assertTrue(net.minecraftforge.registries.ForgeRegistries.ITEMS.tags().getTag(empty).size() == 0,
-                    empty.location() + " is empty until those suits are ported (GT6 sources them from IC2)");
+            helper.assertTrue(net.minecraftforge.registries.ForgeRegistries.ITEMS.tags().getTag(protection).size() == (protection.equals(GTHazmat.ELECTRIC) ? 4 : 8),
+                    protection.location() + " must contain its original suit and universal protection");
         }
 
         Player suited = helper.makeMockSurvivalPlayer();

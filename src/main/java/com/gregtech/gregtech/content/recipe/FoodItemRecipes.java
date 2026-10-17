@@ -39,12 +39,10 @@ import java.util.List;
  *       three pills.</li>
  * </ol>
  *
- * <p>Recorded rather than done, with reasons: every crafting-grid row (GT6's {@code CR.shaped}/
- * {@code CR.shapeless} rows live in this port's datapack JSON, which this batch may not write), every
- * row whose fluid volume GT6 writes in <em>material units</em> ({@code U}, {@code U4}, {@code L} - the
- * unit-to-mB conversion belongs to the material system, not the food line), the
- * {@code RM.replicateOrganic} / {@code RM.generify} / {@code RM.food_can} generic mechanics, and the
- * crops {@code Loader_Recipes_Crops} drives (already ported in {@link CropProcessingRecipes}).
+ * <p>Crafting-grid rows are imported into shared datapack JSON by import_food_crafting.py.
+ * Material-unit ice cream rows use the native dust and molten-fluid units. Bottle filling/draining
+ * and canned food are registered through their dedicated helpers; crops are handled by
+ * {@link CropProcessingRecipes}. Remaining unsupported rows are recorded in {@link #skipped()}.
  */
 public final class FoodItemRecipes {
     private static final List<String> SKIPPED = new ArrayList<>();
@@ -71,6 +69,7 @@ public final class FoodItemRecipes {
         mixing();
         packaging();
         registered += CannedFoodRecipes.register();
+        registered += BottleMachineRecipes.register();
         GregTech.LOGGER.info("Registered {} GT6 food item recipes ({} rows recorded as not expressible: {})",
                 registered, SKIPPED.size(), SKIPPED);
         return registered;
@@ -248,19 +247,40 @@ public final class FoodItemRecipes {
                 registered++;
             }
         }
-        // MultiItemFood.java:875,881-900 — the ice creams GT6 flavours with a material fluid or dust.
-        SKIPPED.add("ice cream + MT.Chocolate.liquid(U4) -> chocolate ice cream (MultiItemFood.java:875): "
-                + "GT6 writes the volume in material units (U4 = U/4), which is the material system's "
-                + "conversion, not the food line's");
-        SKIPPED.add("ice cream + OM.dust(MT.Chocolate/Vanilla/Coffee/Mint/Pistachio/MeatCooked, U4|U) -> "
-                + "stracciatella/vanilla/mocha/mint/pistachio/bear ice cream (MultiItemFood.java:881-892): "
-                + "the same material-unit amounts, in dust form");
-        SKIPPED.add("ice cream mixes (Neapolitan, Spumoni, Superman) (MultiItemFood.java:897-900): "
-                + "RM.Mixer.addRecipeX with three inputs; the rows themselves are expressible but the "
-                + "port's Mixer map holds 6 item inputs, so they belong to a mixer batch that can test "
-                + "the 3-input shape");
+        iceCream();
         SKIPPED.add("mayonnaise from MT.X.liquid(U/100) oils (MultiItemFood.java:509): the oil volume is "
                 + "in material units");
+    }
+
+    /** Source material-unit rows: U/4 is one small dust, or 36 mB molten chocolate. */
+    private static void iceCream() {
+        for (var water : SawingCoolants.variants(true)) for(int count:new int[]{1,4}) {
+            ItemStack salt=GTItems.getStack(count==1?MaterialPrefix.dustSmall:MaterialPrefix.dust,
+                    com.gregtech.gregtech.data.ImportedMaterialData.NaCl,1);
+            FluidStack cream=fluid("Cream",250*count), liquid=fluid(water.field(),250*count);
+            ItemStack output=food("ice_cream",count);
+            if(!salt.isEmpty()&&!cream.isEmpty()&&!liquid.isEmpty()&&!output.isEmpty()
+                    &&MachineRecipeMaps.CryoMixer.addRecipeX(false,16,16*count,new ItemStack[]{salt},
+                    new FluidStack[]{liquid,cream},new FluidStack[0],output)!=null)registered++;
+        }
+        for(var row:com.gregtech.gregtech.content.food.IceCreamRecipes.DUSTS)for(int count:new int[]{1,4}) {
+            var dust=GTItems.getStack(count==1?MaterialPrefix.dustSmall:MaterialPrefix.dust,GTMaterialRegistry.get(row.material()),1);
+            var input=food(row.base(),count);var output=food(row.result(),count);
+            if(dust.isEmpty()||input.isEmpty()||output.isEmpty()) {SKIPPED.add("ice cream dust flavor: "+row.material());continue;}
+            if(MachineRecipeMaps.Mixer.addRecipe2(false,16,16*count,input,dust,output)!=null)registered++;
+        }
+        for(var row:com.gregtech.gregtech.content.food.IceCreamRecipes.BLENDS){
+            var a=food(row.first(),1);var b=food(row.second(),1);var c=food(row.third(),1);var output=food(row.result(),3);
+            if(!a.isEmpty()&&!b.isEmpty()&&!c.isEmpty()&&!output.isEmpty()
+                    &&MachineRecipeMaps.Mixer.addRecipeX(false,16,48,new ItemStack[]{a,b,c},output)!=null)registered++;
+        }
+        var chocolate=fluid("Molten_Chocolate",36);
+        if(!chocolate.isEmpty()&&MachineRecipeMaps.Mixer.addRecipe1(false,16,16,food("ice_cream",1),
+                chocolate,FluidStack.EMPTY,food("chocolate_ice_cream",1))!=null)registered++;
+        for(String raisins:new String[]{"green_raisins","red_raisins"})mixerPair("ice_cream",raisins,"raisin_ice_cream",1,"Loader_Recipes_Food:156");
+        mixerPair("ice_cream","grilled_bacon","bacon_ice_cream",1,"Loader_Recipes_Food:231");
+        var chum=food("chum",1);
+        if(!chum.isEmpty()&&MachineRecipeMaps.Mixer.addRecipe2(false,16,16,food("ice_cream",4),chum,food("chum_ice_cream",4))!=null)registered++;
     }
 
     private static void mixerDust(String inputId, String material, String outputId, int count, String source) {

@@ -1,0 +1,19 @@
+{
+  "type": "gregtech:tool_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:baguettes"
+    },
+    {
+      "item": "minecraft:cooked_beef"
+    },
+    {
+      "item": "minecraft:cooked_beef"
+    }
+  ],
+  "result": {
+    "item": "gregtech:large_steak_sandwich",
+    "count": 1
+  },
+  "gregtech_autocraftable": true
+}

@@ -1,0 +1,21 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "k",
+    "X"
+  ],
+  "key": {
+    "X": {
+      "tag": "gregtech:food/croppotato"
+    },
+    "k": {
+      "tag": "forge:tools/knife"
+    }
+  },
+  "result": {
+    "item": "gregtech:potato_strips",
+    "count": 1
+  },
+  "allow_mirror": false,
+  "gregtech_autocraftable": false
+}

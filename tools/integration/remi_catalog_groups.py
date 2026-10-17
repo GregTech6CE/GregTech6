@@ -23,7 +23,7 @@ def extend(root, groups, ids):
         "filters": r"filter_(?:items|fluids|items_fluids|oredict)",
         "wall_spikes": r"spike_.+",
         "logs": r"log_(?!hole_|sap_|resin_).+",
-        "log_hole": r"(?:log_(?:hole|sap|resin)_.+|tapped_.+)",
+        "log_hole": r"(?:log_(?:hole|sap|resin)_.+|resin_hole_.+|tapped_.+)",
         "crystal_processors": r"crystal_processor_.+",
         "loot_items": r"(?:loot_bottle|clouded_bottle|gem_pouch|seed_pouch|loot_pouch|bagged_sapling|dusty_guide_book|dusty_material_dictionary)",
         "wood_slabs": r"slab_.+",

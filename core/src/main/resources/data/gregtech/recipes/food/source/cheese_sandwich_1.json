@@ -1,0 +1,28 @@
+{
+  "type": "gregtech:tool_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:breads"
+    },
+    {
+      "item": "gregtech:cheese_slice"
+    },
+    {
+      "item": "gregtech:cheese_slice"
+    },
+    {
+      "item": "gregtech:cheese_slice"
+    },
+    {
+      "item": "gregtech:cheese_slice"
+    },
+    {
+      "item": "gregtech:cheese_slice"
+    }
+  ],
+  "result": {
+    "item": "gregtech:cheese_sandwich",
+    "count": 1
+  },
+  "gregtech_autocraftable": true
+}

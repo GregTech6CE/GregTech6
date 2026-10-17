@@ -1,0 +1,16 @@
+{
+  "type": "gregtech:tool_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:breads"
+    },
+    {
+      "item": "minecraft:cooked_beef"
+    }
+  ],
+  "result": {
+    "item": "gregtech:steak_sandwich",
+    "count": 1
+  },
+  "gregtech_autocraftable": true
+}

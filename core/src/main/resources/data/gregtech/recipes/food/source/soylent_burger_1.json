@@ -1,0 +1,16 @@
+{
+  "type": "gregtech:tool_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:buns"
+    },
+    {
+      "tag": "gregtech:ingot/soylent_green"
+    }
+  ],
+  "result": {
+    "item": "gregtech:soylent_burger",
+    "count": 1
+  },
+  "gregtech_autocraftable": true
+}

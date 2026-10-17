@@ -14,6 +14,7 @@ public final class OriginCreativeContents {
     private static Map<String,List<ItemStack>> pages;
     public static String family(Item item) {
         String id=BuiltInRegistries.ITEM.getKey(item).getPath();
+        if(item instanceof RadiationSuitItem)return "equipment";
         if(item instanceof CanvasItem)return "equipment";
         if(item instanceof ColoredBookItem || id.equals("dusty_guide_book") || id.equals("dusty_material_dictionary"))return "books";
         if(item instanceof GTToolItem) return "tools";

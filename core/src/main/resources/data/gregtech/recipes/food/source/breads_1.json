@@ -1,0 +1,16 @@
+{
+  "type": "gregtech:tool_shapeless",
+  "ingredients": [
+    {
+      "item": "gregtech:sliced_bread"
+    },
+    {
+      "item": "gregtech:sliced_bread"
+    }
+  ],
+  "result": {
+    "item": "gregtech:breads",
+    "count": 1
+  },
+  "gregtech_autocraftable": true
+}
