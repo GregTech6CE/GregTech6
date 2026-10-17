@@ -18,7 +18,11 @@ final class MachineEmiIngredients {
         return new MachineEmiIngredient(choices.stream().map(stack -> EmiStack.of(stack.copyWithCount(1))).toList(), recipe.mInputs[index].getCount());
     }
     EmiIngredient ingredient(ItemStack stack) {
-        if (!stack.getComponentsPatch().isEmpty()) return create(stack);
+//? if >=1.21.1 {
+/*        if (!stack.getComponentsPatch().isEmpty()) return create(stack);
+*///?} else {
+        if (stack.hasTag()) return create(stack);
+//?}
         return plain.computeIfAbsent(stack.getItem(), item -> create(new ItemStack(item)))
                 .copy().setAmount(stack.getCount());
     }

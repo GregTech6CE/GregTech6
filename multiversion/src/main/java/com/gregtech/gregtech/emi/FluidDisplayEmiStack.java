@@ -3,7 +3,11 @@ package com.gregtech.gregtech.emi;
 import dev.emi.emi.api.stack.EmiStack;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
-import net.minecraft.core.component.DataComponentPatch;
+//? if >=1.21.1 {
+/*import net.minecraft.core.component.DataComponentPatch;
+*///?} else {
+import net.minecraft.nbt.CompoundTag;
+//?}
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import java.util.ArrayList;
@@ -32,7 +36,11 @@ final class FluidDisplayEmiStack extends EmiStack {
         return copy;
     }
     @Override public boolean isEmpty() { return fluid.isEmpty(); }
-    @Override public DataComponentPatch getComponentChanges() { return fluid.getComponentChanges(); }
+//? if >=1.21.1 {
+/*    @Override public DataComponentPatch getComponentChanges() { return fluid.getComponentChanges(); }
+*///?} else {
+    @Override public CompoundTag getNbt() { return fluid.getNbt(); }
+//?}
     @Override public Object getKey() { return fluid.getKey(); }
     @Override public ResourceLocation getId() { return indexIcon ? icon.getId() : fluid.getId(); }
     @Override public net.minecraft.world.item.ItemStack getItemStack() { return indexIcon ? icon.getItemStack() : net.minecraft.world.item.ItemStack.EMPTY; }

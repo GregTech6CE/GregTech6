@@ -1,0 +1,149 @@
+{
+  "baseline_commit": "1e3a60d0a",
+  "classes": [
+    {
+      "class": "EmiCatalogRepair",
+      "conditional_regions": 2,
+      "baseline": {
+        "forge": "4c832a84ce7ea9fbfe6fdcd583cdef59d0cda718a934bc0b98afc7e64f93f0d5",
+        "neoforge": "19a6f97423d9e8ee3b9437f1dab5304f767c22f8a94130f2d13ac2aa8154374f"
+      },
+      "native_signature": {
+        "forge": "8e3357b726ad8ed693663b69c37708c57d4e3690c782c37d2a8ff4fc2f2706ef",
+        "neoforge": "f26824a8282e6ed34a401ca9107ae658309471cd78871dea12d1c251e7a21341"
+      }
+    },
+    {
+      "class": "EmiInteractiveWidget",
+      "conditional_regions": 0,
+      "baseline": {
+        "forge": "dbc605b8738536367eb9ae7a3e35c96604293b5bc7e685abacc4229a07573a0b",
+        "neoforge": "dbc605b8738536367eb9ae7a3e35c96604293b5bc7e685abacc4229a07573a0b"
+      },
+      "native_signature": {
+        "forge": "a95b23d8224b3b19752309cfa1f0320166e6f53464c76cbda2359ec156c1bf5a",
+        "neoforge": "a95b23d8224b3b19752309cfa1f0320166e6f53464c76cbda2359ec156c1bf5a"
+      }
+    },
+    {
+      "class": "EmiWidgetInput",
+      "conditional_regions": 0,
+      "baseline": {
+        "forge": "b347ea668c61403bcdee858d5701bbc7b72efb185c12d4f57fd2c1a2790915fd",
+        "neoforge": "b347ea668c61403bcdee858d5701bbc7b72efb185c12d4f57fd2c1a2790915fd"
+      },
+      "native_signature": {
+        "forge": "b675e561dfd2679df1bf53663e7d742dfead7217ab54a08999ede2d9f1de6310",
+        "neoforge": "b675e561dfd2679df1bf53663e7d742dfead7217ab54a08999ede2d9f1de6310"
+      }
+    },
+    {
+      "class": "FluidDisplayEmiStack",
+      "conditional_regions": 2,
+      "baseline": {
+        "forge": "ddee3e5ad3e0575d46bc7098b4eb2b2ec9723f577b179edb8c708c69d1b6df9c",
+        "neoforge": "2918a496c6863c61e2a349d87a3f8b61dc3f29de9830ea4ba70df240b03d50a6"
+      },
+      "native_signature": {
+        "forge": "967435b5c9a5c444476354c9b8d100441e958be53f08ef317ee936cdc838d84d",
+        "neoforge": "678ec98a093830f292d8107b02e976dc1a4dc98dbf18daee2e503a4477252ebe"
+      }
+    },
+    {
+      "class": "GregTechEMIPlugin",
+      "conditional_regions": 0,
+      "baseline": {
+        "forge": "157fb819b7fd0531f15e8753d8727e4cc1c1fb59b8d3602cc55a0a847188ca28",
+        "neoforge": "157fb819b7fd0531f15e8753d8727e4cc1c1fb59b8d3602cc55a0a847188ca28"
+      },
+      "native_signature": {
+        "forge": "e7e9e9088049b254fc95a4809a84667e4eda172743af5ae01477ed34aa625bba",
+        "neoforge": "e7e9e9088049b254fc95a4809a84667e4eda172743af5ae01477ed34aa625bba"
+      }
+    },
+    {
+      "class": "LootEmiRecipe",
+      "conditional_regions": 0,
+      "baseline": {
+        "forge": "7e657289686a316b572b11d0c1ca1989d2dd9285cdb49754897bbfd4f101e1ab",
+        "neoforge": "7e657289686a316b572b11d0c1ca1989d2dd9285cdb49754897bbfd4f101e1ab"
+      },
+      "native_signature": {
+        "forge": "f9a5a70cef95c8fdfb0b0f951cd9912ff36e32e53c6e6e6da80838b057ed76ed",
+        "neoforge": "f9a5a70cef95c8fdfb0b0f951cd9912ff36e32e53c6e6e6da80838b057ed76ed"
+      }
+    },
+    {
+      "class": "MachineEmiIngredient",
+      "conditional_regions": 0,
+      "baseline": {
+        "forge": "4b33d3b0a93f2bbfb6a2b327f843926ff0698af50b225ee776509f1f9cbffd4c",
+        "neoforge": "4b33d3b0a93f2bbfb6a2b327f843926ff0698af50b225ee776509f1f9cbffd4c"
+      },
+      "native_signature": {
+        "forge": "5a307e23e46b8e877cebb068122aba793d54b690b2282c4918d100c9d5b22c55",
+        "neoforge": "5a307e23e46b8e877cebb068122aba793d54b690b2282c4918d100c9d5b22c55"
+      }
+    },
+    {
+      "class": "MachineEmiIngredients",
+      "conditional_regions": 1,
+      "baseline": {
+        "forge": "00753ed1f1f1a736477d545d258207383743693b7dc00b8cf9fb4216c09e0082",
+        "neoforge": "bb733d3b788a5617e0a83e35c4bb3d890b3e56ce83c9eca2a2a059022ecb6215"
+      },
+      "native_signature": {
+        "forge": "b9b7fe69401a78113bf91fa15adc0bfeab05f887b6c26232ba7fe1fb2ebdd219",
+        "neoforge": "47600781a9f5d879cabad583ffb1cec593e13d9c476a127d8de726dd32720713"
+      }
+    },
+    {
+      "class": "MachineEmiRecipe",
+      "conditional_regions": 4,
+      "baseline": {
+        "forge": "2077d3b1ccaf87f001d6e8e2fc7ecf96944bd28a3a6f2d86f0934b46dfe50bd0",
+        "neoforge": "a396b2a86f9853442ba3f97747303bded3d4ba214ecd4171d82e1ecbea4e2018"
+      },
+      "native_signature": {
+        "forge": "8234733d3760d0fa916715fd0b01bd38e722e91fb2ff4f06ed28a99c833402ab",
+        "neoforge": "2205d42524dd9b47d95fdb6b7f1731aaf4f9cc6e379a3d6fccb6028683631a61"
+      }
+    },
+    {
+      "class": "StructureEmiRecipe",
+      "conditional_regions": 0,
+      "baseline": {
+        "forge": "00d2008b901b54acfefadef1523e725bccc5a24c6f18041baedd4d7884372da7",
+        "neoforge": "00d2008b901b54acfefadef1523e725bccc5a24c6f18041baedd4d7884372da7"
+      },
+      "native_signature": {
+        "forge": "f4950505d1144d89f34c9f3f92a99d59d5303399edea2265e326af439c380b51",
+        "neoforge": "f4950505d1144d89f34c9f3f92a99d59d5303399edea2265e326af439c380b51"
+      }
+    },
+    {
+      "class": "ToolAssemblyEmiRecipe",
+      "conditional_regions": 0,
+      "baseline": {
+        "forge": "08eee5dd2265d551d23139cd1167f25543ebea5879a1258aa7c8630788f9abce",
+        "neoforge": "08eee5dd2265d551d23139cd1167f25543ebea5879a1258aa7c8630788f9abce"
+      },
+      "native_signature": {
+        "forge": "c969c96b213e088434ed66043f3ccb133b6243b77c57465acc37aba7745443a9",
+        "neoforge": "c969c96b213e088434ed66043f3ccb133b6243b77c57465acc37aba7745443a9"
+      }
+    },
+    {
+      "class": "WorldgenEmiRecipe",
+      "conditional_regions": 0,
+      "baseline": {
+        "forge": "9359cde582fe8ce7638233ab06b813a09e9363b99e374cdfa36b1c4f50b899f0",
+        "neoforge": "9359cde582fe8ce7638233ab06b813a09e9363b99e374cdfa36b1c4f50b899f0"
+      },
+      "native_signature": {
+        "forge": "159d9250fd5831fd8d8e08600b331d61ca4618ee8e95adcdfd284a068ab77ed3",
+        "neoforge": "159d9250fd5831fd8d8e08600b331d61ca4618ee8e95adcdfd284a068ab77ed3"
+      }
+    }
+  ]
+}

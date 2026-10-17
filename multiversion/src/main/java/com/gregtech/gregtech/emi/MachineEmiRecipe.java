@@ -41,15 +41,28 @@ public final class MachineEmiRecipe implements EmiRecipe {
         for (var fluid : recipe.mFluidOutputs) if (fluid != null && !fluid.isEmpty()) outputs.add(fluid(fluid));
         this.inputs = List.copyOf(inputs); this.catalysts = List.copyOf(catalysts); this.outputs = List.copyOf(outputs);
     }
-    private static EmiStack fluid(net.neoforged.neoforge.fluids.FluidStack stack) {
+//? if >=1.21.1 {
+/*    private static EmiStack fluid(net.neoforged.neoforge.fluids.FluidStack stack) {
         return EmiStack.of(stack.getFluid(), stack.getComponentsPatch(), stack.getAmount());
+*///?} else {
+    private static EmiStack fluid(net.minecraftforge.fluids.FluidStack stack) {
+        return EmiStack.of(stack.getFluid(), stack.getTag(), stack.getAmount());
+//?}
     }
     /** Only the visible slot gets the GT icon; indexing and R/U retain the real fluid key/components. */
-    private static EmiStack displayFluid(net.neoforged.neoforge.fluids.FluidStack stack) {
+//? if >=1.21.1 {
+/*    private static EmiStack displayFluid(net.neoforged.neoforge.fluids.FluidStack stack) {
+*///?} else {
+    private static EmiStack displayFluid(net.minecraftforge.fluids.FluidStack stack) {
+//?}
         var nativeStack = fluid(stack);
         var client = net.minecraft.client.Minecraft.getInstance();
         if (client.level == null) return nativeStack;
-        var display = com.gregtech.gregtech.api.fluid.FluidDisplayBinding.display(client.level.registryAccess(), stack);
+//? if >=1.21.1 {
+/*        var display = com.gregtech.gregtech.api.fluid.FluidDisplayBinding.display(client.level.registryAccess(), stack);
+*///?} else {
+        var display = com.gregtech.gregtech.api.fluid.FluidDisplayBinding.display(stack);
+//?}
         return display.isEmpty() ? nativeStack : new FluidDisplayEmiStack(nativeStack, EmiStack.of(display));
     }
     @Override public EmiRecipeCategory getCategory() { return category; }
@@ -99,7 +112,11 @@ public final class MachineEmiRecipe implements EmiRecipe {
         }
     }
     private void side(WidgetHolder widgets, boolean input, ItemStack[] items,
-                      net.neoforged.neoforge.fluids.FluidStack[] fluids,float scale,float offset) {
+//? if >=1.21.1 {
+/*                      net.neoforged.neoforge.fluids.FluidStack[] fluids,float scale,float offset) {
+*///?} else {
+                      net.minecraftforge.fluids.FluidStack[] fluids,float scale,float offset) {
+//?}
         int count = input ? map.mInputItemsCount : map.mOutputItemsCount;
         for (int i = 0; i < items.length; i++) {
             if (items[i] == null || items[i].isEmpty()) continue;
